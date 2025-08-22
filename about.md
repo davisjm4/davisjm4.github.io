@@ -1,7 +1,3 @@
----
-layout: default
-title: About Me
----
 # About Me
 I’m Davisjm4. I love dogs, traveling, and being outdoors.  
 My dream is to become a Teacher because I want to inspire and guide the next generation.  
