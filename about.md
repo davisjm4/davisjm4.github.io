@@ -11,3 +11,5 @@ This class will help me achieve these goals by building my skills in problem-sol
   <img src="https://i.ytimg.com/vi/0-gOLD2omhU/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAv0gSozt8T0P1oEFVtQz_O0ah8Dg" alt="Dog" width="200">
   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ20tbnSmlHFw1XY9eTgIBCQ1RocZVifp9sow&s" alt="Travel" width="200">
 </div>
+<img width="319" height="158" alt="image" src="https://github.com/user-attachments/assets/1419a2e2-b4a1-442c-8414-b4659b021b26" />
+
