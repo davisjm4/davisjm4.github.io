@@ -18,21 +18,11 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 ## Code Definitions
 
 | Term | Definition | Base Structure / Syntax | Real Life Example | App Example |
 |------|------------|--------------------------|-------------------|-------------|
-| variable | A named container used to store a value that may change. | `var x = 5;` | Goals in soccer |  |
+| Variable | A named container used to store a value that may change. | `var x = 5;` | score |  |
 |      | A fixed value that cannot change once set. | `const PI = 3.14;` |  |  |
 |      | The kind of value a variable holds, like numbers or text. | `int`, `String`, `bool` |  |  |
 |      | A sequence of characters used to represent words or text. | `"Hello World"` |  |  |
@@ -53,6 +43,9 @@
 |      | Hiding the inner workings of code so users only interact with what they need. | (Concept — not specific code) |  |  |
 |      | Changing how a built-in or inherited function behaves. | `@override` |  |  |
 |      | A function that does not return a value. | `void printMessage() {}` |  |  |
+
+
+
 
 
 
