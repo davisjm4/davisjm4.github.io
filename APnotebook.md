@@ -1,24 +1,40 @@
 # My Coding Notebook
 
 ## Table of Contents
-- [Flutter Notes](#day-1)
-  - [Notes](#notes)
-  - [Practice](#practice)
-- [Code Definitions](#code-definitions)
+- [Binary Notes](#binary-notes)
+  - [Binary Conversion Table](#binary-conversion-table)
+  - [From Decimal Conversion Table](#convert-from-decimal)
+- [Coding](coding)
+  - [Code Definitions](#code-definitions)
+  - [Pseudocode and Java Table](pseudocode-java-reference)  
 - [Notebook Style Guide](#markdown-style-guide-for-coding-notebooks)
 
 
+## Binary notes
+### Binary conversion Table
 
-## 8/28/25 Binary notes
-### Binary Flippy-do/number system - use a third # to create subsections
-| Power  | 2^7 | 2^6 | 2^5 | 2^4 | 2^3 | 2^2 | 2^1 | 2^0 | solution |
-|-|-|-|-|-|-|-|-|-|-|
-| Value  | 128 |  64 |  32 |  16 |   8 |   4 |   2 |   1 | |
-| Binary |  1  |  1  |  0  |  1  |  1  |  0  |  1  |  1  |= 219 |
+Convert 110101 from Binary (base 2) to Decimal (base 10)
+| Value        | 1   | 1   | 0   | 1   | 0   | 1   |
+|--------------|-----|-----|-----|-----|-----|-----|
+| base^Exponent (B^E) | 2^5 | 2^4 | 2^3 | 2^2 | 2^1 | 2^0 |  
+| (B^E) * value       | 32*1 | 16*1 | 8*0 | 4*1 | 2*0 | 1*1 |    
+| Results added       | 32+  | 16+  | 0+  | 4+  | 0+  | 1 |
+
+**Result is 53**
+
+### Convert from decimal
+
+Convert 2989 from decimal (base 10) to hexadecimal (base 16)
+| Value/base | 2989/16 | 186/16 | 11/16 |
+|------------|----------|---------|--------|
+| Result     | 186      | 11      | 0      |   
+| Remainder  | D (13)   | A (10)  | B (11) |   
+
+**Result is BAD**
 
 
-
-## Code Definitions
+## Coding
+### Code Definitions
 
 | Term | Definition | Base Structure / Syntax | Real Life Example | App Example |
 |------|------------|--------------------------|-------------------|-------------|
@@ -46,6 +62,25 @@
 
 
 
+
+
+
+
+# Pseudocode Java Reference  
+
+| **Concept** | **CSP Pseudocode** | **Java** |
+|-------------|--------------------|----------|
+| **Variables** | `x ← 5`<br/>`name ← "Alex"` | `int x = 5;`<br/>`String name = "Alex";` |
+| **If/Else** | `IF score ≥ 60`<br/>`    DISPLAY "Pass"`<br/>`ELSE`<br/>`    DISPLAY "Fail"` | `if (score >= 60) {`<br/>`    System.out.println("Pass");`<br/>`} else {`<br/>`    System.out.println("Fail");`<br/>`}` |
+| **Else If Chains** | `IF score ≥ 90`<br/>`    DISPLAY "A"`<br/>`ELSE IF score ≥ 80`<br/>`    DISPLAY "B"`<br/>`ELSE`<br/>`    DISPLAY "C or below"` | `if (score >= 90) {`<br/>`    System.out.println("A");`<br/>`} else if (score >= 80) {`<br/>`    System.out.println("B");`<br/>`} else {`<br/>`    System.out.println("C or below");`<br/>`}` |
+| **For Loop** | `FOR i ← 1 TO 10`<br/>`    DISPLAY i` | `for (int i = 1; i <= 10; i++) {`<br/>`    System.out.println(i);`<br/>`}` |
+| **While Loop** | `REPEAT UNTIL guess = secret`<br/>`    guess ← INPUT()` | `while (guess != secret) {`<br/>`    guess = input.nextInt();`<br/>`}` |
+| **Lists (ArrayList)** | `numbers ← [2, 4, 6]`<br/>`APPEND 8 TO numbers`<br/>`REMOVE numbers[1]`<br/>`x ← LENGTH(numbers)` | `ArrayList<Integer> numbers = new ArrayList<>();`<br/>`numbers.add(2);`<br/>`numbers.add(4);`<br/>`numbers.add(6);`<br/>`numbers.add(8); // APPEND`<br/>`numbers.remove(1); // REMOVE`<br/>`int x = numbers.size(); // LENGTH` |
+| **Traversal (For Each)** | `FOR EACH num IN numbers`<br/>`    DISPLAY num` | `for (int num : numbers) {`<br/>`    System.out.println(num);`<br/>`}` |
+| **Traversal (Index)** | `FOR i ← 0 TO LENGTH(numbers)-1`<br/>`    DISPLAY numbers[i]` | `for (int i = 0; i < numbers.size(); i++) {`<br/>`    System.out.println(numbers.get(i));`<br/>`}` |
+| **Procedure (Void)** | `PROCEDURE greet(name)`<br/>`    DISPLAY "Hello " + name` | `public static void greet(String name) {`<br/>`    System.out.println("Hello " + name);`<br/>`}` |
+| **Procedure (Return)** | `PROCEDURE square(num)`<br/>`    RETURN num * num` | `public static int square(int num) {`<br/>`    return num * num;`<br/>`}` |
+| **Procedure (Boolean)** | `PROCEDURE isEven(num)`<br/>`    IF num MOD 2 = 0`<br/>`        RETURN true`<br/>`    ELSE`<br/>`        RETURN false` | `public static boolean isEven(int num) {`<br/>`    if (num % 2 == 0) {`<br/>`        return true;`<br/>`    } else {`<br/>`        return false;`<br/>`    }`<br/>`}` |
 
 
 
