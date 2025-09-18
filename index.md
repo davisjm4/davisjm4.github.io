@@ -9,4 +9,5 @@ title: Home
 Click here to learn more → [About Me](about.md)
 
 ## Go to my coding notebook
-[Coding Notebook](notebook.md)
+[AP Coding Notebook](APnotebook.md)
+[ACS Coding Notebook](ACSnotebook.md)
