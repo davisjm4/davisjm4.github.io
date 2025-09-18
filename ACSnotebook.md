@@ -52,9 +52,9 @@
 
 | Term | Definition and Description | Base Structure | Real Life Example | App Example |
 |------|----------------------------|----------------|-------------------|-------------|
-|      | A function that runs when your app starts. It tells Flutter what app to show. | `void main() => runApp(MyApp());` |  |  |
-|      | The widget that sets up your whole app’s look and navigation. | `MaterialApp(...)` |  |  |
-|      | A widget that gives you the basic layout: background, navigation bar, floating button, etc. | `Scaffold(...)` |  |  |
+|      | A function that runs when your app starts. It tells Flutter what app to show. | `void main() => runApp(MyApp());` |  | in main.dart, void main() => runApp(MyPortfolioApp()); |
+|      | The widget that sets up your whole app’s look and navigation. | `MaterialApp(...)` |  | main.dart, return MaterialApp(debugShowCheckedModeBanner: false, title: 'TSA Portfolio', and more |
+|      | A widget that gives you the basic layout: background, navigation bar, floating button, etc. | `Scaffold(...)` |  | in showcase.dart, return Scaffold( body: Column( mainAxisAlignment: MainAxisAlignment.start, children: [ |
 |      | A widget that holds and displays your content in a straight line from top to bottom. | `Column(...)` |  |  |
 |      | A widget that shows things side-by-side. | `Row(...)` |  |  |
 |      | A box that holds other widgets. You can add color, padding, borders, or size. | `Container(...)` |  |  |
@@ -90,9 +90,9 @@
 
 | Term | Definition | Base Structure / Syntax | Real Life Example | App Example |
 |------|------------|--------------------------|-------------------|-------------|
-| Variable | A named container used to store a value that may change. | `var x = 5;` | score |  |
-|      | A fixed value that cannot change once set. | `const PI = 3.14;` |  |  |
-|      | The kind of value a variable holds, like numbers or text. | `int`, `String`, `bool` |  |  |
+| Variable | A named container used to store a value that may change. | `var x = 5;` | score | mn.dart, String title: 'TSA Portfolio', |
+|      | A fixed value that cannot change once set. | `const PI = 3.14;` |  | main.dart, const MyPortfolioApp({super.key}); |
+|      | The kind of value a variable holds, like numbers or text. | `int`, `String`, `bool` |  | main.dart, bool, debugShowCheckedModeBanner: false, |
 |      | A sequence of characters used to represent words or text. | `"Hello World"` |  |  |
 |      | Whole number values. | `int age = 16;` |  |  |
 |      | Number values with decimals. | `double age = 16.2;` |  |  |
