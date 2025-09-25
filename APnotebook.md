@@ -109,6 +109,7 @@ Object dataTypes, they're too big for 1 byte, so instead of storing the data, it
 Examples: String, ArrayList, and objects created from a class
 
 **Semicolon ;**
+
 Is like a period. It's the end of your code statement.
 
 
