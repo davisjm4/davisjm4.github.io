@@ -117,6 +117,49 @@ Is like a period. It's the end of your code statement.
 
 
 ## Functions
+Base structure:
+AccessModifier static* returnType functionname(parameter(s) dateType parameter1, dataType parameter2)
+{
+  //body of function, write code block here
+}
+Defining the parts of the function:
+AccessModifier:
+  public: can be accessed outside of the file/class
+  private: can only be accessed within the file/class
+
+Static: common, but optional, means that is can be used outside of a class
+
+ReturnType: the dataType to be returned by the function: int, data, String, Student, Car, etc.
+  Void returnType means nothing will be returned.
+
+FunctionName: name of the function, should be descriptive of the purpose of the function
+
+Parameters: in the parenthesis ( ), defines the data required to change the behavior of the function
+
+Body: within curly brackets { } and contains the code that runs when the function is used
+
+//Example:
+```Java
+public static void greet(String name)
+{
+System.out.println(“Hello, “ + name + “!”);
+}
+
+public double multiply(double x, double y)
+{
+return x*y;
+}
+
+public static void sayHello ()
+{
+  System.out.println("Hello");
+}
+
+```
+
+
+
+
 
 
 ## For Loops
