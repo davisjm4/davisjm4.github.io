@@ -8,6 +8,8 @@
   - [Code Definitions](#code-definitions)
   - [Pseudocode and Java Table](pseudocode-java-reference)
   - [Variables and dataTypes](#variables-and-datatypes)
+  - [Functions]
+  - [For loops]
 - [Notebook Style Guide](#markdown-style-guide-for-coding-notebooks)
 
 
@@ -113,6 +115,24 @@ Examples: String, ArrayList, and objects created from a class
 Is like a period. It's the end of your code statement.
 
 
+
+## Functions
+
+
+## For Loops
+
+```java
+for (int i = 1; i <= 10; i++) {
+    // body of code
+}
+```
+Components of the for loop:
+for: specifies the type of loop
+(parenthesis): contains the rules for the loop
+int i = 1; : creates the counter variable starting at 0 or 1 most often, standard naming calls it "i" which is short for index, but could be named counter, score, or any other relevant name
+i <= 10; : the condition that it runs if it is true
+i++ : increments "i" by 1, could be replaced with i = i + 1, i+=2 which would add 2, i*=3 which would multiply it by 3, or any other modifiers
+{curly brackets}: the body of the code that runs during the loop
 
 
 ## Markdown Style Guide for Coding Notebooks
