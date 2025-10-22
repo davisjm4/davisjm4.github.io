@@ -112,9 +112,15 @@
 |      | Hiding the inner workings of code so users only interact with what they need. | (Concept — not specific code) |  |  |
 |      | Changing how a built-in or inherited function behaves. | `@override` |  |  |
 |      | A function that does not return a value. | `void printMessage() {}` |  |  |
-
-
-
+|      |  |  |  |  |
+|      |  |  |  |  |
+| Scanner | Creates a scanner object to take input from user | Scanner in = new Scanner(System.in); | | |
+| import Scanner | Gives access to Scanner class, required at top | import java.util.Scanner; | | |
+| print statement | prints the content in the parenthesis, adds line after | System.out.println(" "); | | |
+| input nextLine | reads in a String from the user | input.nextLine(); | | |
+| input nextInt | reads in an int from the user  | input.nextInt(); | | |
+| input nextDouble |  reads in a double (decimal) from the user | input.nextDouble(); | | |
+| input nextBoolean |  reads in a boolean (true/false) from the user | input.nextBoolean(); | | |
 
 
 
