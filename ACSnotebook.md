@@ -116,18 +116,14 @@
 |      |  |  |  |  |
 | Scanner | Creates a scanner object to take input from user | Scanner in = new Scanner(System.in); | | |
 | import Scanner | Gives access to Scanner class, required at top | import java.util.Scanner; | | |
-| print line statement | prints the content in the parenthesis, adds line after | System.out.println(" "); | | |
+| print line statement | prints what's in the parenthesis, adds line after | System.out.println(" "); | | |
 | print statement | prints the content in the parenthesis | System.out.print(" "); | | |
 | input nextLine | reads in a String from the user | input.nextLine(); | | |
 | input nextInt | reads in an int from the user  | input.nextInt(); | | |
 | input nextDouble |  reads in a double (decimal) from the user | input.nextDouble(); | | |
 | input nextBoolean |  reads in a boolean (true/false) from the user | input.nextBoolean(); | | |
-
-
-
-
-
-
+| Arithmetic operators |  -       *       /      % (modulus, returns the remainder from dividing) |  |  |  |
+| Compound operators (applies the result to the variable) | +=      -=       *=      /=     %=   ++ (adds 1) |  |  |  |
 
 ## Markdown Style Guide for Coding Notebooks
 
