@@ -62,6 +62,7 @@ Convert 2989 from decimal (base 10) to hexadecimal (base 16)
 |      | Hiding the inner workings of code so users only interact with what they need. | (Concept — not specific code) |  |  |
 |      | Changing how a built-in or inherited function behaves. | `@override` |  |  |
 |      | A function that does not return a value. | `void printMessage() {}` |  |  |
+| Escape characters | break out of a String to do something | \n new line, \t add tab, \" adds ", \' adds ' | | |
 
 
 
