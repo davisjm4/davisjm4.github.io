@@ -7,6 +7,7 @@
   - [Layout and Design Widgets](layout-and-design-widgets)
   - [Definitions with Structures](#flutter-definitions-with-structures)
 - [Code Definitions](#code-definitions)
+  - [String notes](#string-notes)
 - [Notebook Style Guide](#markdown-style-guide-for-coding-notebooks)
 
 ## Flutter Notes
@@ -33,9 +34,7 @@
 | Container        |                                                  |                                           |
 | Text             |                                                  |                                           |
 | Image.network    |                                                  |                                           |
-
 | Padding    |                    |                     |
-
 | Center |                        |                     |
 
 ---
@@ -129,7 +128,15 @@
 | integer overflow | Integer.MAX_VALUE + 1 == MIN_VALUE, it wraps around | | | |
 | Integer underflow | Integer.MIN_VALUE-1 == MAX_VALUE, it wraps around| | | |
 | round-off error | an approx. of the actual value, result is rounded to the nearest value that fits within the available bits | | | |
+| Overloaded method/function or constructor | Uses the same name, but has different parameters | Pizza(), Pizza(String toppings) 2 constructors, first is a default cheese pizza, 2nd has 1 topping | | |
+| dot notation | Methods are called on objects using a dot after the object name | object.method(value);| | |
+| Concatenate | To combine Strings with other Strings and/or variables | String greeting = "Hello" + "My name is " + name ". "; | | |
 | | | | | |
+
+[String notes](#string-notes)
+### String Notes
+  Strings have indices (plural for index,) which start at 0. "Hello" has indices 0(H), 1(e), 2(l), 3(l), 4(o).
+
 
 ## Markdown Style Guide for Coding Notebooks
 
