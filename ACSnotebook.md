@@ -133,11 +133,16 @@
 | Overloaded method/function or constructor | Uses the same name, but has different parameters | Pizza(), Pizza(String toppings) 2 constructors, first is a default cheese pizza, 2nd has 1 topping | | |
 | dot notation | Methods are called on objects using a dot after the object name | object.method(value);| | |
 | Concatenate | To combine Strings with other Strings and/or variables | String greeting = "Hello" + "My name is " + name ". "; | | |
-| | | | | |
+| Index | The numeric value of the location of a value in a list, starting a 0 in Java | Ex. 'e' is index 1 in "Hello" | | |
 
 [String notes](#string-notes)
 ### String Notes
-  Strings have indices (plural for index,) which start at 0. "Hello" has indices 0(H), 1(e), 2(l), 3(l), 4(o).
+  - Strings have indices (plural for index,) which start at 0. "Hello" has indices 0(H), 1(e), 2(l), 3(l), 4(o).
+  -  Final index location is length-1
+
+### String Methods Table
+
+<img width="2367" height="1185" alt="image" src="https://github.com/user-attachments/assets/b77319ba-17e2-45ba-af0e-bd3b653604ac" />
 
 
 ## Markdown Style Guide for Coding Notebooks
