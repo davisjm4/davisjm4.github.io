@@ -24,5 +24,4 @@ Or you can check out the coding notebooks for my CS classes:
 <a href="https://sastharam.github.io/ChefsKiss/"><img width="206" height="61" alt="image" src="https://github.com/user-attachments/assets/22b1d1fd-e979-43fa-af99-9124120fb1b7" />
 <a href="https://jonahlee9.github.io/Winged-Words/"><img width="206" height="61" alt="image" src="https://github.com/user-attachments/assets/3caac8aa-f4fc-4fe8-80e9-0f3ef081e14c" /></a>
 
-## Go to my coding notebook
 
