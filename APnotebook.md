@@ -17,6 +17,7 @@
 ### Binary conversion Table
 
 Convert 110101 from Binary (base 2) to Decimal (base 10)
+
 | Value        | 1   | 1   | 0   | 1   | 0   | 1   |
 |--------------|-----|-----|-----|-----|-----|-----|
 | base^Exponent (B^E) | 2^5 | 2^4 | 2^3 | 2^2 | 2^1 | 2^0 |  
