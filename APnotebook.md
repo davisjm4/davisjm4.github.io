@@ -19,11 +19,9 @@
 Convert 110101 from Binary (base 2) to Decimal (base 10)
 
 | Value        | 1   | 1   | 0   | 1   | 0   | 1   |
-
+|------|-----|-----|-----|-----|-----|-----|
 | base^Exponent (B^E) | 2^5 | 2^4 | 2^3 | 2^2 | 2^1 | 2^0 |  
-
 | (B^E) * value       | 32*1 | 16*1 | 8*0 | 4*1 | 2*0 | 1*1 |    
-
 | Results added       | 32+  | 16+  | 0+  | 4+  | 0+  | 1 |
 
 **Result is 53**
