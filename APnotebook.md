@@ -30,7 +30,7 @@ Convert 110101 from Binary (base 2) to Decimal (base 10)
 
 Convert 2989 from decimal (base 10) to hexadecimal (base 16)
 | Value/base | 2989/16 | 186/16 | 11/16 |
-|------------|----------|---------|--------|
+|------------|---------|--------|--------|
 | Result     | 186      | 11      | 0      |   
 | Remainder  | D (13)   | A (10)  | B (11) |   
 
