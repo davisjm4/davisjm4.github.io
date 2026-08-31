@@ -4,7 +4,11 @@
 - [Vocab](#vocab)
 - [Important blocks](#important-blocks)
 - [On the AP Exam](#on-the-ap-exam)
+- [BJC LABS](#bjc-labs)
+  - [Lab 1 - Click Alonzo](#lab-1---click-alonzo)  
 - [Notebook Style Guide](#markdown-style-guide-for-coding-notebooks)
+  - [Headings](#headings)
+  - [Text Formatting](#text-formatting)  
 
 ## Vocab
 <details>
@@ -29,6 +33,8 @@
      (Click help on the block to learned more about it in order to complete this definition)
 </details>
 
+
+
 ## On the AP Exam
 <img width="1006" height="120" alt="image" src="https://github.com/user-attachments/assets/6737cdf0-ff72-4591-a0d7-fe3be93836c7" />
   - Many languages (and the AP CS Principles Exam) use return instead of report as the name of the command to give a value back at the end of a function call.
@@ -36,6 +42,10 @@
 
 
 
+## BJC LABS
+  ### Lab 1 - Click Alonzo
+    In this lab, we made a game in which we had to click Alonzo and he would disappear, we learned about making custom blocks, abstraction, decisions, and looping.
+    
 
 ## Markdown Style Guide for Coding Notebooks
 
