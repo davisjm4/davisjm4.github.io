@@ -2,6 +2,8 @@
 
 ## Table of Contents
 - [Vocab](#vocab)
+- [Important blocks](#important-blocks)
+- [On the AP Exam](#on-the-ap-exam)
 - [Notebook Style Guide](#markdown-style-guide-for-coding-notebooks)
 
 ## Vocab
@@ -14,6 +16,24 @@
   <summary>Procedural abstraction</summary>
     Using a procedure to name an idea, ex. the procedure "who" to the idea of picking an item from the list of people or cats.
 </details>
+
+
+## Important Blocks
+<details>
+  <summary>broadcast</summary>
+     Sends a message to all the sprites. To set the message, click the down arrow and select "new..."
+</details>
+
+<details>
+  <summary>when I receive</summary>
+     (Click help on the block to learned more about it in order to complete this definition)
+</details>
+
+## On the AP Exam
+<img width="1006" height="120" alt="image" src="https://github.com/user-attachments/assets/6737cdf0-ff72-4591-a0d7-fe3be93836c7" />
+  - Many languages (and the AP CS Principles Exam) use return instead of report as the name of the command to give a value back at the end of a function call.
+  - The exam uses "value of a procedure" to mean the value the procedure returns when called. For example, "the value of double(5)" means 10.
+
 
 
 
