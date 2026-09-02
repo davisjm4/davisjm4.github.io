@@ -44,7 +44,9 @@
 
 ## BJC LABS
   ### Lab 1 - Click Alonzo
-    In this lab, we made a game in which we had to click Alonzo and he would disappear, we learned about making custom blocks, abstraction, decisions, and looping.
+    In this lab, we made a game in which we had to click Alonzo and he would disappear
+    
+    we learned about making custom blocks, abstraction, decisions, and looping.
     
 
 ## Markdown Style Guide for Coding Notebooks
