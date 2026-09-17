@@ -12,7 +12,7 @@ Or you can check out the coding notebooks for my CS classes:
   - [Portfolio/notebook assignment/instructions](https://docs.google.com/document/d/1V8qptaXiQ71AR3VKCmc-Ml-D89BPllDeG6mWLh3TA1o/view)
 - My sites
  
-<a href="https://sites.google.com/d/1N3WEreZI-bjYREWvws7Ul-NYZp0Dk4sa/p/1oyzftToelqkGv0XkSQa6A9heLr8V-2sG/edit"><img width="242" height="243" alt="image" src="https://github.com/user-attachments/assets/96706078-bd62-4623-be6b-bebd0c7bd178" /></a>
+<a href="devcatstudios.com"><img width="242" height="243" alt="image" src="https://github.com/user-attachments/assets/96706078-bd62-4623-be6b-bebd0c7bd178" /></a>
 <a href="https://sites.google.com/d/1N3WEreZI-bjYREWvws7Ul-NYZp0Dk4sa/p/1oyzftToelqkGv0XkSQa6A9heLr8V-2sG/edit"><img width="242" height="243" alt="image" src="https://github.com/user-attachments/assets/84bb1501-50e9-40e6-b082-007681094f0c" /></a>
 
 
