@@ -5,7 +5,9 @@ Or you can check out the coding notebooks for my CS classes:
 
 [AP Coding Notebook](APnotebook.md)
 
-[ACS Coding Notebook](ACSnotebook.md)
+[ACS1 Coding Notebook](ACSnotebook.md)
+
+[ACS2 Coding Notebook](notebookACS2.md)
 
 ## My Projects
 - [Empowering Students with GitHub Portfolios Presentation](https://drive.google.com/file/d/1JVTsdxz6YwYWTh_alcdE0YXu4FDaVkOL/view)
