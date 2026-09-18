@@ -3,7 +3,6 @@
 <details>
 <summary><strong>Basics</strong></summary>
 <ul>
-<li><a href="#basics">Basics</a></li>
 <li><a href="#algorithm">algorithm</a></li>
 <li><a href="#computer-algorithm">computer algorithm</a></li>
 <li><a href="#pseudocode">pseudocode</a></li>
@@ -289,7 +288,6 @@
 <details>
 <summary><strong>Code Examples</strong></summary>
 <ul>
-<li><a href="#code-examples">Code Examples</a></li>
 <li><a href="#code-print-statements">Print Statements</a></li>
 <li><a href="#code-java-1-part-1-catch-up-examples">Java 1 Part 1 Catch-Up Examples</a></li>
 <li><a href="#code-basic-class">Basic Class</a></li>
@@ -309,9 +307,7 @@
 
 ## Vocab
 
-<a id="basics"></a>
-
-Basics
+### Basics
 
 <a id="algorithm"></a>
 
@@ -1724,9 +1720,7 @@ Random Numbers
 </code></pre>
 </details>
 
-<a id="control-structures"></a>
-
-Control Structures
+### Control Structures
 
 <a id="selection"></a>
 
@@ -2110,9 +2104,7 @@ count++;
 
 </details>
 
-<a id="classes"></a>
-
-Classes
+### Classes
 
 <a id="class"></a>
 
@@ -2546,9 +2538,7 @@ Math Methods
 </code></pre>
 </details>
 
-<a id="code-examples"></a>
-
-Code Examples
+### Code Examples
 
 <a id="code-print-statements"></a>
 
