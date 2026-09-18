@@ -1,4 +1,4 @@
-Table of Contents
+## Table of Contents
 
 <details>
 <summary><strong>Vocab</strong></summary>
@@ -25,6 +25,7 @@ Table of Contents
 </ul>
 </details>
 </li>
+
 <li>
 <details>
 <summary><strong>Methods</strong></summary>
@@ -42,6 +43,7 @@ Table of Contents
 </ul>
 </details>
 </li>
+
 <li>
 <details>
 <summary><strong>User Input</strong></summary>
@@ -52,6 +54,7 @@ Table of Contents
 </ul>
 </details>
 </li>
+
 <li>
 <details>
 <summary><strong>Operators</strong></summary>
@@ -64,6 +67,7 @@ Table of Contents
 </ul>
 </details>
 </li>
+
 <li>
 <details>
 <summary><strong>Control Structures</strong></summary>
@@ -75,16 +79,17 @@ Table of Contents
 <li><a href="#nested-if-statement">nested if statement</a></li>
 <li><a href="#logical-operators">logical operators</a></li>
 <li><a href="#compound-boolean-expression">compound boolean expression</a></li>
-<li><a href="#de-morgans-law">De Morgan&#x27;s Law</a></li>
+<li><a href="#de-morgans-law">De Morgan's Law</a></li>
 <li><a href="#for-loop">for loop</a></li>
 <li><a href="#while-loop">while loop</a></li>
 <li><a href="#infinite-loop">infinite loop</a></li>
 </ul>
 </details>
 </li>
+
 <li>
 <details>
-<summary><strong>Classes &amp; Objects</strong></summary>
+<summary><strong>Classes and Objects</strong></summary>
 <ul>
 <li><a href="#class">class</a></li>
 <li><a href="#object">object</a></li>
@@ -99,6 +104,7 @@ Table of Contents
 </ul>
 </details>
 </li>
+
 <li>
 <details>
 <summary><strong>Useful Java Tools</strong></summary>
@@ -116,793 +122,593 @@ Table of Contents
 <summary><strong>Code Examples</strong></summary>
 
 <ul>
-<li><a href="#code-starter-program">Starter Program</a></li>
-<li><a href="#code-variables-and-updating-values">Variables and Updating Values</a></li>
-<li><a href="#code-strings-and-concatenation">Strings and Concatenation</a></li>
-<li><a href="#code-user-input">User Input</a></li>
-<li><a href="#code-comparison-operators">Comparison Operators</a></li>
-<li><a href="#code-if-statement">If Statement</a></li>
-<li><a href="#code-if-else">If / Else</a></li>
-<li><a href="#code-if-else-if-else">If / Else If / Else</a></li>
-<li><a href="#code-compound-booleans">Compound Booleans</a></li>
-<li><a href="#code-de-morgans-law">De Morgan&#x27;s Law</a></li>
-<li><a href="#code-for-loop">For Loop</a></li>
-<li><a href="#code-while-loop">While Loop</a></li>
-<li><a href="#code-arithmetic-and-modulus">Arithmetic and Modulus</a></li>
-<li><a href="#code-method-with-parameters">Method with Parameters</a></li>
-<li><a href="#code-method-that-returns-a-value">Method that Returns a Value</a></li>
-<li><a href="#code-scope">Scope</a></li>
-<li><a href="#code-method-overloading">Method Overloading</a></li>
-<li><a href="#code-class-with-instance-fields">Class with Instance Fields</a></li>
-<li><a href="#code-constructor-and-object-creation">Constructor and Object Creation</a></li>
-<li><a href="#code-dot-notation-and-non-static-method">Dot Notation and Non-Static Method</a></li>
+<li><a href="#starter-program-example">Starter Program Example</a></li>
+<li><a href="#variables-and-updating-values-example">Variables and Updating Values Example</a></li>
+<li><a href="#strings-and-concatenation-example">Strings and Concatenation Example</a></li>
+<li><a href="#user-input-example">User Input Example</a></li>
+<li><a href="#comparison-operators-example">Comparison Operators Example</a></li>
+<li><a href="#if-statement-example">If Statement Example</a></li>
+<li><a href="#if--else-example">If / Else Example</a></li>
+<li><a href="#if--else-if--else-example">If / Else If / Else Example</a></li>
+<li><a href="#compound-booleans-example">Compound Booleans Example</a></li>
+<li><a href="#de-morgans-law-example">De Morgan's Law Example</a></li>
+<li><a href="#for-loop-example">For Loop Example</a></li>
+<li><a href="#while-loop-example">While Loop Example</a></li>
+<li><a href="#arithmetic-and-modulus-example">Arithmetic and Modulus Example</a></li>
+<li><a href="#method-with-parameters-example">Method with Parameters Example</a></li>
+<li><a href="#method-that-returns-a-value-example">Method that Returns a Value Example</a></li>
+<li><a href="#scope-example">Scope Example</a></li>
+<li><a href="#method-overloading-example">Method Overloading Example</a></li>
+<li><a href="#class-with-instance-fields-example">Class with Instance Fields Example</a></li>
+<li><a href="#constructor-and-object-creation-example">Constructor and Object Creation Example</a></li>
+<li><a href="#dot-notation-and-non-static-method-example">Dot Notation and Non-Static Method Example</a></li>
 </ul>
 
 </details>
 
 <a href="#notebook-style-guide">Notebook Style Guide</a>
 
-<a id="vocab"></a>
+## Vocab
 
-Vocab
+### Basics
 
-<a id="section-basics"></a>
-
-Basics
-
-<details markdown="1">
+<details>
 <summary id="algorithm">algorithm</summary>
-
-Definition: A step-by-step process used to complete a task or solve a problem.
-
-Java example:
-
-int total = price1 + price2;
+<p><strong>Definition:</strong> A step-by-step process used to complete a task or solve a problem.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">int total = price1 + price2;
 System.out.println(total);
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="sequencing">sequencing</summary>
-
-Definition: The order in which instructions are completed. Changing the order can change the result.
-
+<p><strong>Definition:</strong> The order in which instructions are completed. Changing the order can change the result.</p>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="variable">variable</summary>
-
-Definition: A named storage location that holds a value that can change.
-
-Java example:
-
-int score = 10;
+<p><strong>Definition:</strong> A named storage location that holds a value that can change.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">int score = 10;
 score = 15;
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="variable-declaration">variable declaration</summary>
-
-Definition: Creating a variable by giving Java its data type and name.
-
-Structure / syntax:
-
-dataType variableName;
-```java
-
-**Java example:**
-
-```java
-String weather;
-
+<p><strong>Definition:</strong> Creating a variable by giving Java its data type and name.</p>
+<p><strong>Structure / syntax:</strong></p>
+<pre><code class="language-java">dataType variableName;
+</code></pre>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">String weather;
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="variable-initialization">variable initialization</summary>
-
-Definition: Giving a variable its first value when it is created.
-
-Structure / syntax:
-
-dataType variableName = value;
-```java
-
-**Java example:**
-
-```java
-String weather = "sunny";
-
+<p><strong>Definition:</strong> Giving a variable its first value when it is created.</p>
+<p><strong>Structure / syntax:</strong></p>
+<pre><code class="language-java">dataType variableName = value;
+</code></pre>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">String weather = "sunny";
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="assignment">assignment</summary>
-
-Definition: Using = to store or replace a value in a variable.
-
-Java example:
-
-weather = "rainy";
-
+<p><strong>Definition:</strong> Using <code>=</code> to store or replace a value in a variable.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">weather = "rainy";
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="data-types">data types</summary>
-
-Definition: Categories that tell Java what kind of value a variable can store.
-
-Java example:
-
-String name = "Alex";
+<p><strong>Definition:</strong> Categories that tell Java what kind of value a variable can store.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">String name = "Alex";
 int age = 16;
 double height = 5.8;
 boolean hasPermit = true;
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="string">String</summary>
-
-Definition: A Java type used to store text.
-
-Java example:
-
-String playerName = "Alex";
-
+<p><strong>Definition:</strong> A Java type used to store text.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">String playerName = "Alex";
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="int">int</summary>
-
-Definition: A Java type used to store whole numbers.
-
-Java example:
-
-int lives = 3;
-
+<p><strong>Definition:</strong> A Java type used to store whole numbers.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">int lives = 3;
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="double">double</summary>
-
-Definition: A Java type used to store numbers that may contain decimals.
-
-Java example:
-
-double price = 12.99;
-
+<p><strong>Definition:</strong> A Java type used to store numbers that may contain decimals.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">double price = 12.99;
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="boolean">boolean</summary>
-
-Definition: A Java type that stores only true or false.
-
-Java example:
-
-boolean isLoggedIn = false;
-
+<p><strong>Definition:</strong> A Java type that stores only <code>true</code> or <code>false</code>.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">boolean isLoggedIn = false;
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="console-output">console / output</summary>
-
-Definition: The console displays information produced by a program. Information sent out by a program is output.
-
-Java example:
-
-System.out.println("Hello World!");
-
+<p><strong>Definition:</strong> The console displays information produced by a program. Information sent out by a program is output.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">System.out.println("Hello World!");
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="concatenation">concatenation</summary>
-
-Definition: Combining Strings together with the + operator.
-
-Java example:
-
-String fullName = firstName + " " + lastName;
-
+<p><strong>Definition:</strong> Combining Strings together with the <code>+</code> operator.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">String fullName = firstName + " " + lastName;
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="type-conversion-casting">type conversion / casting</summary>
-
-Definition: Changing a value from one data type to another.
-
-Java example:
-
-int age = Integer.parseInt("16");
+<p><strong>Definition:</strong> Changing a value from one data type to another.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">int age = Integer.parseInt("16");
 double price = 19.99;
 int wholePrice = (int) price;
-```java
-
-Casting a `double` to an `int` removes the decimal portion; it does not round.
-
+</code></pre>
+<p>Casting a <code>double</code> to an <code>int</code> removes the decimal portion; it does not round.</p>
 </details>
 
-<a id="section-methods"></a>
 ### Methods
 
-<details markdown="1">
+<details>
 <summary id="method">method</summary>
-
-**Definition:** A reusable block of code that performs a task.
-
-**Java example:**
-
-```java
-static void sayHi() {
+<p><strong>Definition:</strong> A reusable block of code that performs a task.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">static void sayHi() {
     System.out.println("Hi!");
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="method-declaration">method declaration</summary>
-
-Definition: The code that defines a method's name, return type, parameters, and body.
-
-Java example:
-
-static void greet(String name) {
+<p><strong>Definition:</strong> The code that defines a method's name, return type, parameters, and body.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">static void greet(String name) {
     System.out.println("Hello, " + name);
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="method-call">method call</summary>
-
-Definition: An instruction that tells Java to run a method.
-
-Java example:
-
-greet("Jordan");
-
+<p><strong>Definition:</strong> An instruction that tells Java to run a method.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">greet("Jordan");
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="parameter">parameter</summary>
-
-Definition: A variable listed in a method declaration that receives information.
-
-Java example:
-
-static void greet(String name) {
+<p><strong>Definition:</strong> A variable listed in a method declaration that receives information.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">static void greet(String name) {
     System.out.println("Hello, " + name);
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="argument">argument</summary>
-
-Definition: A value supplied to a method when it is called.
-
-Java example:
-
-greet("Jordan");
-
+<p><strong>Definition:</strong> A value supplied to a method when it is called.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">greet("Jordan");
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="void">void</summary>
-
-Definition: A method return type that means the method does not send a value back.
-
-Java example:
-
-static void printMessage() {
+<p><strong>Definition:</strong> A method return type that means the method does not send a value back.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">static void printMessage() {
     System.out.println("Hello");
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="return-type">return type</summary>
-
-Definition: The data type written before a method name that tells Java what type of value the method returns.
-
-Java example:
-
-static int getScore() {
+<p><strong>Definition:</strong> The data type written before a method name that tells Java what type of value the method returns.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">static int getScore() {
     return 100;
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="return-statement">return statement</summary>
-
-Definition: Sends a value back from a method and ends that method.
-
-Java example:
-
-static int add(int a, int b) {
+<p><strong>Definition:</strong> Sends a value back from a method and ends that method.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">static int add(int a, int b) {
     return a + b;
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="scope-local-variable">scope / local variable</summary>
-
-Definition: Scope is where a name can be used. A local variable exists only inside the method or block where it is declared.
-
-Java example:
-
-static void example() {
+<p><strong>Definition:</strong> Scope is where a name can be used. A local variable exists only inside the method or block where it is declared.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">static void example() {
     int score = 10;
     System.out.println(score);
 }
 // score cannot be used here
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="method-overloading">method overloading</summary>
-
-Definition: Creating multiple methods with the same name but different parameter lists.
-
-Java example:
-
-static void show(int number) { }
+<p><strong>Definition:</strong> Creating multiple methods with the same name but different parameter lists.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">static void show(int number) { }
 static void show(String text) { }
-
+</code></pre>
 </details>
 
-<a id="section-user-input"></a>
+### User Input
 
-User Input
-
-<details markdown="1">
+<details>
 <summary id="scanner">Scanner</summary>
-
-Definition: A Java class commonly used to read keyboard input.
-
-Java example:
-
-import java.util.Scanner;
+<p><strong>Definition:</strong> A Java class commonly used to read keyboard input.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">import java.util.Scanner;
 
 Scanner input = new Scanner(System.in);
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="user-input">user input</summary>
-
-Definition: Information entered into a program by the user while the program is running.
-
-Java example:
-
-System.out.print("Enter your age: ");
+<p><strong>Definition:</strong> Information entered into a program by the user while the program is running.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">System.out.print("Enter your age: ");
 int age = input.nextInt();
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="scanner-input-methods">Scanner input methods</summary>
-
-Definition: Methods used to read different kinds of input with a Scanner.
-
-Java example:
-
-String name = input.nextLine();
+<p><strong>Definition:</strong> Methods used to read different kinds of input with a <code>Scanner</code>.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">String name = input.nextLine();
 int age = input.nextInt();
 double price = input.nextDouble();
-```java
-
-`nextLine()` reads text, `nextInt()` reads an integer, and `nextDouble()` reads a decimal number.
-
+</code></pre>
+<p><code>nextLine()</code> reads text, <code>nextInt()</code> reads an integer, and <code>nextDouble()</code> reads a decimal number.</p>
 </details>
 
-<a id="section-operators"></a>
 ### Operators
 
-<details markdown="1">
+<details>
 <summary id="arithmetic-operators">arithmetic operators</summary>
-
-**Definition:** Operators used for math: `+`, `-`, `*`, and `/`.
-
-**Java example:**
-
-```java
-int total = 5 + 2;
+<p><strong>Definition:</strong> Operators used for math: <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code>.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">int total = 5 + 2;
 int product = 5 * 2;
 double quotient = 5.0 / 2.0;
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="modulus">modulus (%)</summary>
-
-Definition: Returns the remainder after division.
-
-Java example:
-
-System.out.println(10 % 3); // 1
-
+<p><strong>Definition:</strong> Returns the remainder after division.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">System.out.println(10 % 3); // 1
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="increment-decrement">increment / decrement</summary>
-
-Definition: ++ increases by 1. -- decreases by 1.
-
-Java example:
-
-score++;
+<p><strong>Definition:</strong> <code>++</code> increases by 1. <code>--</code> decreases by 1.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">score++;
 lives--;
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="compound-assignment">compound assignment</summary>
-
-Definition: Combines an operation with assignment, such as +=, -=, *=, and /=.
-
-Java example:
-
-score += 5;
+<p><strong>Definition:</strong> Combines an operation with assignment, such as <code>+=</code>, <code>-=</code>, <code>*=</code>, and <code>/=</code>.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">score += 5;
 health -= 10;
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="comparison-operators">comparison operators</summary>
-
-Definition: Compare two values and produce true or false: ==, !=, <, >, <=, >=.
-
-Java example:
-
-System.out.println(score >= 70);
+<p><strong>Definition:</strong> Compare two values and produce <code>true</code> or <code>false</code>: <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">System.out.println(score &gt;= 70);
 System.out.println(lives != 0);
-
+</code></pre>
 </details>
 
-<a id="section-control-structures"></a>
+### Control Structures
 
-Control Structures
-
-<details markdown="1">
+<details>
 <summary id="conditional-statement">conditional statement</summary>
-
-Definition: A statement that makes a decision based on a boolean condition.
-
-Java example:
-
-if (temperature < 50) {
+<p><strong>Definition:</strong> A statement that makes a decision based on a boolean condition.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">if (temperature &lt; 50) {
     System.out.println("Wear a jacket.");
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="if-statement">if statement</summary>
-
-Definition: Runs a block of code only when its condition is true.
-
-Java example:
-
-if (score >= 90) {
+<p><strong>Definition:</strong> Runs a block of code only when its condition is true.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">if (score &gt;= 90) {
     System.out.println("A");
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="if-else">if / else</summary>
-
-Definition: Chooses between two paths.
-
-Java example:
-
-if (age >= 18) {
+<p><strong>Definition:</strong> Chooses between two paths.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">if (age &gt;= 18) {
     System.out.println("Adult");
 } else {
     System.out.println("Minor");
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="if-else-if-else">if / else if / else</summary>
-
-Definition: Checks multiple conditions in order and runs the first matching branch.
-
-Java example:
-
-if (score >= 90) {
+<p><strong>Definition:</strong> Checks multiple conditions in order and runs the first matching branch.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">if (score &gt;= 90) {
     System.out.println("A");
-} else if (score >= 80) {
+} else if (score &gt;= 80) {
     System.out.println("B");
 } else {
     System.out.println("Below B");
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="nested-if-statement">nested if statement</summary>
-
-Definition: An if statement placed inside another conditional statement.
-
-Java example:
-
-if (age >= 16) {
+<p><strong>Definition:</strong> An <code>if</code> statement placed inside another conditional statement.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">if (age &gt;= 16) {
     if (hasPermit) {
         System.out.println("Can practice driving");
     }
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="logical-operators">logical operators</summary>
-
-Definition: Operators used with booleans: && means AND, || means OR, and ! means NOT.
-
-Java example:
-
-boolean canDrive = age >= 16 && hasPermit;
+<p><strong>Definition:</strong> Operators used with booleans: <code>&amp;&amp;</code> means AND, <code>||</code> means OR, and <code>!</code> means NOT.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">boolean canDrive = age &gt;= 16 &amp;&amp; hasPermit;
 boolean canEnter = hasID || hasPass;
 boolean unlocked = !isLocked;
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="compound-boolean-expression">compound boolean expression</summary>
-
-Definition: A boolean expression made by combining two or more conditions.
-
-Java example:
-
-boolean eligible = age >= 16 && hasPermit;
-
+<p><strong>Definition:</strong> A boolean expression made by combining two or more conditions.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">boolean eligible = age &gt;= 16 &amp;&amp; hasPermit;
+</code></pre>
 </details>
 
-<details markdown="1">
-<summary id="de-morgans-law">De Morgan&#x27;s Law</summary>
-
-Definition: Rules for rewriting negated compound boolean expressions.
-
-Java example:
-
-!(A && B)  // same as !A || !B
-!(A || B)  // same as !A && !B
-
+<details>
+<summary id="de-morgans-law">De Morgan's Law</summary>
+<p><strong>Definition:</strong> Rules for rewriting negated compound boolean expressions.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">!(A &amp;&amp; B)  // same as !A || !B
+!(A || B)  // same as !A &amp;&amp; !B
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="for-loop">for loop</summary>
-
-Definition: A loop commonly used when initialization, condition, and update can be written together.
-
-Structure / syntax:
-
-for (initialization; condition; update) {
+<p><strong>Definition:</strong> A loop commonly used when initialization, condition, and update can be written together.</p>
+<p><strong>Structure / syntax:</strong></p>
+<pre><code class="language-java">for (initialization; condition; update) {
     // repeated code
 }
-```java
-
-**Java example:**
-
-```java
-for (int i = 0; i < 5; i++) {
+</code></pre>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">for (int i = 0; i &lt; 5; i++) {
     System.out.println(i);
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="while-loop">while loop</summary>
-
-Definition: A loop that repeats while its condition remains true.
-
-Java example:
-
-int count = 0;
-while (count < 5) {
+<p><strong>Definition:</strong> A loop that repeats while its condition remains true.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">int count = 0;
+while (count &lt; 5) {
     System.out.println(count);
     count++;
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="infinite-loop">infinite loop</summary>
-
-Definition: A loop that never stops because its condition never becomes false.
-
-Java example:
-
-int count = 0;
-while (count < 5) {
+<p><strong>Definition:</strong> A loop that never stops because its condition never becomes false.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">int count = 0;
+while (count &lt; 5) {
     System.out.println(count);
     // count never changes
 }
-
+</code></pre>
 </details>
 
-<a id="section-classes-objects"></a>
+### Classes and Objects
 
-Classes & Objects
-
-<details markdown="1">
+<details>
 <summary id="class">class</summary>
-
-Definition: A blueprint that describes the data and behaviors objects of that type can have.
-
-Java example:
-
-public class Friend {
+<p><strong>Definition:</strong> A blueprint that describes the data and behaviors objects of that type can have.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">public class Friend {
 
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="object">object</summary>
-
-Definition: A specific object created from a class.
-
-Java example:
-
-Friend jasmine = new Friend("Jasmine", 15);
-
+<p><strong>Definition:</strong> A specific object created from a class.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">Friend jasmine = new Friend("Jasmine", 15);
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="instance">instance</summary>
-
-Definition: Another name for an object created from a class.
-
-Java example:
-
-Friend jasmine = new Friend("Jasmine", 15);
-
+<p><strong>Definition:</strong> Another name for an object created from a class.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">Friend jasmine = new Friend("Jasmine", 15);
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="instance-field">instance field</summary>
-
-Definition: A variable declared in a class that stores information for each object.
-
-Java example:
-
-public class Friend {
+<p><strong>Definition:</strong> A variable declared in a class that stores information for each object.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">public class Friend {
     String name;
     int age;
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="constructor">constructor</summary>
-
-Definition: A special part of a class that runs when a new object is created and usually gives it starting values.
-
-Structure / syntax:
-
-public ClassName(parameters) {
+<p><strong>Definition:</strong> A special part of a class that runs when a new object is created and usually gives it starting values.</p>
+<p><strong>Structure / syntax:</strong></p>
+<pre><code class="language-java">public ClassName(parameters) {
     // setup code
 }
-```java
-
-**Java example:**
-
-```java
-public Friend(String friendName, int friendAge) {
+</code></pre>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">public Friend(String friendName, int friendAge) {
     name = friendName;
     age = friendAge;
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="constructor-parameter">constructor parameter</summary>
-
-Definition: A parameter in a constructor that receives a value when a new object is created.
-
-Java example:
-
-public Friend(String friendName, int friendAge) {
+<p><strong>Definition:</strong> A parameter in a constructor that receives a value when a new object is created.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">public Friend(String friendName, int friendAge) {
     name = friendName;
     age = friendAge;
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="new-keyword">new keyword</summary>
-
-Definition: The keyword used to create a new object from a class.
-
-Java example:
-
-Friend jasmine = new Friend("Jasmine", 15);
-
+<p><strong>Definition:</strong> The keyword used to create a new object from a class.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">Friend jasmine = new Friend("Jasmine", 15);
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="dot-notation">dot notation</summary>
-
-Definition: Using a dot after an object name to access one of its fields or methods.
-
-Java example:
-
-System.out.println(jasmine.name);
+<p><strong>Definition:</strong> Using a dot after an object name to access one of its fields or methods.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">System.out.println(jasmine.name);
 jasmine.greeting();
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="static-vs-non-static-methods">static vs. non-static methods</summary>
-
-Definition: A static method belongs to the class. A non-static method belongs to an object and can directly use that object's instance fields.
-
-Java example:
-
-static void classMessage() {
+<p><strong>Definition:</strong> A static method belongs to the class. A non-static method belongs to an object and can directly use that object's instance fields.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">static void classMessage() {
     System.out.println("Class method");
 }
 
 void greeting() {
     System.out.println("Hello, " + name);
 }
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="abstraction">abstraction</summary>
-
-Definition: Using a simpler name or interface without handling all internal details every time.
-
-Java example:
-
-Friend jasmine = new Friend("Jasmine", 15);
+<p><strong>Definition:</strong> Using a simpler name or interface without handling all internal details every time.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">Friend jasmine = new Friend("Jasmine", 15);
 System.out.println(jasmine.name);
-
+</code></pre>
 </details>
 
-<a id="section-useful-java-tools"></a>
+### Useful Java Tools
 
-Useful Java Tools
-
-<details markdown="1">
+<details>
 <summary id="math-class">Math class</summary>
-
-Definition: A built-in Java class containing useful static math methods and constants.
-
-Java example:
-
-double root = Math.sqrt(25);
+<p><strong>Definition:</strong> A built-in Java class containing useful static math methods and constants.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">double root = Math.sqrt(25);
 double power = Math.pow(2, 3);
 double absolute = Math.abs(-7);
-
+</code></pre>
 </details>
 
-<details markdown="1">
+<details>
 <summary id="math-random">Math.random()</summary>
-
-Definition: Returns a random double from 0.0 up to, but not including, 1.0.
-
-Java example:
-
-int randomNumber = (int) (Math.random() * 10) + 1;
-```java
-
-This example creates a random integer from 1 through 10.
-
+<p><strong>Definition:</strong> Returns a random <code>double</code> from 0.0 up to, but not including, 1.0.</p>
+<p><strong>Java example:</strong></p>
+<pre><code class="language-java">int randomNumber = (int) (Math.random() * 10) + 1;
+</code></pre>
+<p>This example creates a random integer from 1 through 10.</p>
 </details>
 
-<a id="code-examples"></a>
 ## Code Examples
 
-<a id="code-starter-program"></a>
-### Starter Program
+### Starter Program Example
 
 ```java
 public class Hello {
@@ -910,64 +716,64 @@ public class Hello {
         System.out.println("Hello World!");
     }
 }
+```
 
-<a id="code-variables-and-updating-values"></a>
+### Variables and Updating Values Example
 
-Variables and Updating Values
-
+```java
 int score = 10;
 score = 15;
 System.out.println(score);
+```
 
-<a id="code-strings-and-concatenation"></a>
+### Strings and Concatenation Example
 
-Strings and Concatenation
-
+```java
 String firstName = "Dev";
 String lastName = "Cat";
 System.out.println(firstName + " " + lastName);
+```
 
-<a id="code-user-input"></a>
+### User Input Example
 
-User Input
-
+```java
 import java.util.Scanner;
 
 Scanner input = new Scanner(System.in);
 System.out.print("Enter your name: ");
 String name = input.nextLine();
+```
 
-<a id="code-comparison-operators"></a>
+### Comparison Operators Example
 
-Comparison Operators
-
+```java
 int score = 85;
 System.out.println(score == 85);
 System.out.println(score != 100);
 System.out.println(score >= 70);
+```
 
-<a id="code-if-statement"></a>
+### If Statement Example
 
-If Statement
-
+```java
 if (score >= 90) {
     System.out.println("A");
 }
+```
 
-<a id="code-if-else"></a>
+### If / Else Example
 
-If / Else
-
+```java
 if (age >= 18) {
     System.out.println("Adult");
 } else {
     System.out.println("Minor");
 }
+```
 
-<a id="code-if-else-if-else"></a>
+### If / Else If / Else Example
 
-If / Else If / Else
-
+```java
 if (score >= 90) {
     System.out.println("A");
 } else if (score >= 80) {
@@ -975,97 +781,97 @@ if (score >= 90) {
 } else {
     System.out.println("Below B");
 }
+```
 
-<a id="code-compound-booleans"></a>
+### Compound Booleans Example
 
-Compound Booleans
-
+```java
 boolean canDrive = age >= 16 && hasPermit;
 boolean canEnter = hasID || hasPass;
 boolean lockedOut = !hasAccess;
+```
 
-<a id="code-de-morgans-law"></a>
+### De Morgan's Law Example
 
-De Morgan's Law
-
+```java
 !(A && B)   // same as !A || !B
 !(A || B)   // same as !A && !B
+```
 
-<a id="code-for-loop"></a>
+### For Loop Example
 
-For Loop
-
+```java
 for (int i = 0; i < 5; i++) {
     System.out.println(i);
 }
+```
 
-<a id="code-while-loop"></a>
+### While Loop Example
 
-While Loop
-
+```java
 int count = 0;
 while (count < 5) {
     System.out.println(count);
     count++;
 }
+```
 
-<a id="code-arithmetic-and-modulus"></a>
+### Arithmetic and Modulus Example
 
-Arithmetic and Modulus
-
+```java
 int total = 7 + 3;
 int product = 7 * 3;
 int remainder = 10 % 3;
+```
 
-<a id="code-method-with-parameters"></a>
+### Method with Parameters Example
 
-Method with Parameters
-
+```java
 static void greet(String name) {
     System.out.println("Hello, " + name);
 }
 
 greet("Jordan");
+```
 
-<a id="code-method-that-returns-a-value"></a>
+### Method that Returns a Value Example
 
-Method that Returns a Value
-
+```java
 static int add(int a, int b) {
     return a + b;
 }
 
 int total = add(4, 6);
+```
 
-<a id="code-scope"></a>
+### Scope Example
 
-Scope
-
+```java
 static void example() {
     int score = 10;
 }
 // score cannot be used here
+```
 
-<a id="code-method-overloading"></a>
+### Method Overloading Example
 
-Method Overloading
-
+```java
 static void show(int number) { }
 static void show(String text) { }
+```
 
-<a id="code-class-with-instance-fields"></a>
+### Class with Instance Fields Example
 
-Class with Instance Fields
-
+```java
 public class Friend {
     String name;
     int age;
 }
+```
 
-<a id="code-constructor-and-object-creation"></a>
+### Constructor and Object Creation Example
 
-Constructor and Object Creation
-
+```java
 public class Friend {
     String name;
     int age;
@@ -1079,11 +885,11 @@ public class Friend {
         Friend jasmine = new Friend("Jasmine", 15);
     }
 }
+```
 
-<a id="code-dot-notation-and-non-static-method"></a>
+### Dot Notation and Non-Static Method Example
 
-Dot Notation and Non-Static Method
-
+```java
 public void greeting() {
     System.out.println("Hello, " + name);
 }
@@ -1091,27 +897,29 @@ public void greeting() {
 Friend jasmine = new Friend("Jasmine", 15);
 System.out.println(jasmine.name);
 jasmine.greeting();
+```
 
-<a id="notebook-style-guide"></a>
+## Notebook Style Guide
 
-Notebook Style Guide
+Keep your notebook useful for **you**. Add examples, corrections, and notes as you learn.
 
-Keep your notebook useful for you. Add examples, corrections, and notes as you learn.
+- Use `##` for major sections.
+- Use `###` for categories and examples.
+- Use **bold** for important ideas.
+- Use `inline code` for short Java syntax.
+- Use fenced Java code blocks for multi-line examples:
 
-Use ## for major topics and ### for subsections.
+````markdown
+```java
+System.out.println("Hello World!");
+```
+````
 
-Use bold for important ideas.
+- Add comments when they explain **why** something is happening.
+- Keep examples small enough that you can quickly understand them later.
+- When you make a mistake, add the corrected example if it will help you avoid the same mistake again.
 
-Use inline code for short Java syntax.
+### Bottom Line
 
-Use fenced java code blocks for multi-line examples.
-
-Add comments when they explain why something is happening.
-
-Keep examples small enough that you can quickly understand them later.
-
-When you make a mistake, add the corrected example if it will help you avoid the same mistake again.
-
-Bottom Line
-
-Definitions tell you what something means. Code examples show you how to use it. Your notebook should have both.
+**Definitions tell you what something means. Code examples show you how to use it. Your notebook should have both.**
+`````
