@@ -261,7 +261,6 @@
 <details>
 <summary>main Method</summary>
 <ul>
-<li><a href="#section-main-method">main Method</a></li>
 <li><a href="#main-method">main method</a></li>
 </ul>
 </details>
