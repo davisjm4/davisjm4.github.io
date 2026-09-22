@@ -148,7 +148,29 @@
 
 <a href="#notebook-style-guide">Notebook Style Guide</a>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Vocab
+
+
+
+
+
+
 
 ### Basics
 
@@ -275,6 +297,16 @@ int wholePrice = (int) price;
 <p>Casting a <code>double</code> to an <code>int</code> removes the decimal portion; it does not round.</p>
 </details>
 
+
+
+
+
+
+
+
+
+
+
 ### Methods
 
 <details>
@@ -374,6 +406,22 @@ static void show(String text) { }
 </code></pre>
 </details>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### User Input
 
 <details>
@@ -405,6 +453,22 @@ double price = input.nextDouble();
 </code></pre>
 <p><code>nextLine()</code> reads text, <code>nextInt()</code> reads an integer, and <code>nextDouble()</code> reads a decimal number.</p>
 </details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Operators
 
@@ -452,6 +516,21 @@ health -= 10;
 System.out.println(lives != 0);
 </code></pre>
 </details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Control Structures
 
@@ -579,6 +658,21 @@ while (count &lt; 5) {
 </code></pre>
 </details>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Classes and Objects
 
 <details>
@@ -685,6 +779,21 @@ System.out.println(jasmine.name);
 </code></pre>
 </details>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Useful Java Tools
 
 <details>
@@ -705,6 +814,24 @@ double absolute = Math.abs(-7);
 </code></pre>
 <p>This example creates a random integer from 1 through 10.</p>
 </details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Code Examples
 
@@ -898,6 +1025,55 @@ Friend jasmine = new Friend("Jasmine", 15);
 System.out.println(jasmine.name);
 jasmine.greeting();
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Notebook Style Guide
 
