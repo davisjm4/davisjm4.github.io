@@ -1,0 +1,11 @@
+{
+  "name": "csp-games",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests.mjs && node ui-tests.mjs"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.12"
+  }
+}
