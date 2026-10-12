@@ -10,6 +10,8 @@ Or you can check out the coding notebooks for my CS classes:
 [ACS2 Coding Notebook](notebookACS2.md)
 
 ## My Projects
+- [Network Breaker](network-breaker.html)
+
 - [Empowering Students with GitHub Portfolios Presentation](https://drive.google.com/file/d/1JVTsdxz6YwYWTh_alcdE0YXu4FDaVkOL/view)
   - [Portfolio/notebook assignment/instructions](https://docs.google.com/document/d/1V8qptaXiQ71AR3VKCmc-Ml-D89BPllDeG6mWLh3TA1o/view)
 - My sites
