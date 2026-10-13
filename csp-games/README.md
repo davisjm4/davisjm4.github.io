@@ -6,7 +6,7 @@ Buildless HTML, CSS, and native JavaScript modules. Each game folder has an inde
 
 ## Games
 
-- Code Concepts: rapid one-concept practice across procedures, selection, iteration, variables/expressions, and lists. Mixed Practice opens automatically. Annotated syntax-tree metadata supplies every answer; no tracing or QTI export.
+- Code Concepts: rapid one-concept practice across procedures, selection, iteration, variables/expressions, and lists. Mixed Practice opens automatically. Incorrect responses receive three levels of spoiler-free conceptual hints. Show Answer permanently closes scoring for that challenge. First-try accuracy, independent retry successes, and reveals are tracked separately; revealing before any submission counts as an attempted challenge. Annotated syntax-tree metadata supplies every answer; no tracing or QTI export.
 
 - Binary Builder: 4, 6, 8, or 16 unsigned bits.
 - Boolean Gatekeeper: nested Boolean expressions; evaluate or adjust integer inputs 0–12. Solvability is enumerated.
@@ -39,3 +39,5 @@ Code Concepts is playable at /csp-games/code-concepts/. Possible future extensio
 Pseudocode follows the College Board exam reference sheet: https://apcentral.collegeboard.org/media/pdf/ap-computer-science-principles-exam-reference-sheet.pdf .
 
 Code Concepts tests: `node concepts-tests.mjs` and `node concepts-ui-tests.mjs` (the latter uses the same test-only linkedom dependency).
+
+Feedback/scoring regression tests: `node concepts-feedback-tests.mjs`, plus per-variant incorrect/retry/reveal UI checks in `concepts-ui-tests.mjs`. First-try accuracy uses engaged challenges (a valid check or an answer reveal) as its denominator; retries never increase it.

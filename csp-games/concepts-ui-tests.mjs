@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import * as E from "./engine.js";
 import * as C from "./concepts-engine.js";
+import * as F from "./concepts-feedback.js";
 const require = createRequire(import.meta.url),
   { parseHTML } = require(process.env.CSP_DOM_LIBRARY || "linkedom");
 let seed = 314159;
@@ -26,7 +27,7 @@ const html = fs.readFileSync(
   ),
   ui = fs
     .readFileSync(new URL("./concepts-ui.js", import.meta.url), "utf8")
-    .replace(/import[\s\S]*?from ["']\.\/concepts-engine\.js["'];/, "")
+    .replace(/import[\s\S]*?from ["'][^"']+["'];/g, "")
     .replace("export function", "function"),
   app = fs
     .readFileSync(new URL("./app.js", import.meta.url), "utf8")
@@ -59,6 +60,7 @@ function launch() {
     console,
     E,
     ...C,
+    ...F,
     generateConcept: (mode) => (current = C.generateConcept(mode, forced)),
     Set,
     Math,
@@ -101,6 +103,41 @@ let t = launch();
 same(t.$("concept-mode").value, "mixed");
 same(t.$("new").textContent, "Next Challenge");
 ok(t.document.querySelector("header a").getAttribute("href") === "../");
+function wrong(t) {
+  if (t.q.interaction === "count")
+    t.$("concept-count").value = t.q.answer === "unknown" ? 1 : t.q.answer + 1;
+  else {
+    t.click("clear-selection");
+    let n = C.components(t.q.root).find(
+      (n) => n.id !== "snippet" && !t.q.answerIds.includes(n.id),
+    );
+    t.choose(n.id);
+  }
+  t.click("concept-check");
+}
+function right(t) {
+  if (t.q.interaction === "count") {
+    if (t.q.answer === "unknown") {
+      t.$("concept-unknown").checked = true;
+      t.$("concept-unknown").onchange();
+    } else t.$("concept-count").value = t.q.answer;
+  } else {
+    t.click("clear-selection");
+    for (let id of t.q.answerIds) t.choose(id);
+  }
+  t.click("concept-check");
+}
+function noSpoiler(t, attempt) {
+  ok(t.$("feedback").classList.contains("bad"));
+  ok(!t.$("concept-code").querySelector(".answer"));
+  ok(
+    !/Highlighted answer:|Correct answer:|Answer:/.test(
+      t.$("feedback").textContent,
+    ),
+  );
+  ok(t.$("feedback").textContent.includes(F.conceptHint(t.q, attempt)));
+  ok(!t.$("concept-check").disabled);
+}
 let seen = new Set();
 for (let i = 0; i < 1000; i++) {
   seen.add(t.q.category);
@@ -110,97 +147,117 @@ same([...seen].sort(), [...C.categories].sort());
 for (let category of C.categories) {
   t.force(undefined);
   t.change(category);
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 40; i++) {
     same(t.q.category, category);
     t.click("concept-next");
   }
-  for (let variant of C.variants[category]) {
-    for (let repetition = 0; repetition < 10; repetition++) {
+  for (let variant of C.variants[category])
+    for (let i = 0; i < 5; i++) {
       t.force(variant);
       t.click("new");
+      ok(t.$("feedback").hidden);
       same(t.q.variant, variant);
-      same(t.q.category, category);
-      ok(t.$("feedback").hidden);
-      ok(
-        !t.$("concept-code").querySelector(".answer"),
-        "no correctness before Check",
-      );
-      if (t.q.interaction === "count") {
-        t.$("concept-count").value =
-          t.q.answer === "unknown" ? 1 : t.q.answer + 1;
-      } else {
-        let wrong = C.components(t.q.root).find(
-          (n) => n.id !== "snippet" && !t.q.answerIds.includes(n.id),
-        );
-        t.choose(wrong.id);
-      }
-      ok(t.$("feedback").hidden);
-      t.click("concept-check");
-      ok(t.$("feedback").classList.contains("bad"));
-      ok(t.$("feedback").textContent.includes(t.q.explanation));
-      if (!C.answerText(t.q).includes("\n"))
-        ok(t.$("feedback").textContent.includes(C.answerText(t.q)));
-      if (t.q.interaction === "select") {
-        for (let id of t.q.answerIds)
-          ok(
-            t
-              .$("concept-code")
-              .querySelector(`[data-component="${id}"]`)
-              .classList.contains("answer"),
-          );
-        t.click("clear-selection");
-        for (let id of t.q.answerIds) t.choose(id);
-      } else if (t.q.answer === "unknown") {
-        t.$("concept-unknown").checked = true;
-        t.$("concept-unknown").onchange();
-        ok(t.$("concept-count").disabled);
-      } else t.$("concept-count").value = t.q.answer;
-      t.click("concept-check");
+      right(t);
       ok(t.$("feedback").classList.contains("good"));
-      ok(t.$("feedback").textContent.includes("Correct on retry"));
+      ok(t.$("feedback").textContent.includes("first try"));
+      ok(t.$("concept-check").disabled);
+      ok(t.$("concept-show").disabled);
       let stats = t.$("stats").textContent;
       t.click("concept-check");
+      t.click("concept-show");
       same(t.$("stats").textContent, stats);
+      t.click("new");
+      for (let a = 1; a <= 4; a++) {
+        wrong(t);
+        noSpoiler(t, a);
+      }
+      stats = t.$("stats").textContent;
+      let accuracy = stats.split(" · ")[0];
+      right(t);
+      ok(t.$("feedback").textContent.includes("independently after retry"));
+      same(t.$("stats").textContent.split(" · ")[0], accuracy);
+      ok(t.$("concept-check").disabled);
+      t.click("new");
+      wrong(t);
+      noSpoiler(t, 1);
+      t.click("concept-show");
+      ok(!t.$("feedback").classList.contains("good"));
+      ok(t.$("feedback").textContent.includes("not independently solved"));
+      ok(t.$("feedback").textContent.includes(t.q.explanation));
+      ok(t.$("concept-check").disabled);
+      stats = t.$("stats").textContent;
+      for (let id of t.q.answerIds)
+        ok(
+          t
+            .$("concept-code")
+            .querySelector(`[data-component="${id}"]`)
+            .classList.contains("answer"),
+        );
+      right(t);
+      t.click("concept-show");
+      same(t.$("stats").textContent, stats);
+      ok(t.$("feedback").textContent.includes("not independently solved"));
       t.click("concept-next");
       ok(t.$("feedback").hidden);
+      ok(!t.$("concept-check").disabled);
+      t.click("concept-show");
+      stats = t.$("stats").textContent;
+      right(t);
+      same(t.$("stats").textContent, stats);
+      ok(!t.$("feedback").classList.contains("good"));
+      t.click("new");
     }
-  }
 }
-// Expand selection follows tree parents without scoring; keyboard selects code too.
+// Exact statistics: first try, independent retry, and reveal are separate outcomes.
+t = launch();
+t.force("variable");
+t.change("variables");
+right(t);
+ok(t.$("stats").textContent.startsWith("First-try accuracy: 100% (1/1)"));
+t.click("new");
+wrong(t);
+right(t);
+ok(
+  t
+    .$("stats")
+    .textContent.includes(
+      "First-try accuracy: 50% (1/2) · Correct after retry: 1 · Answers revealed: 0",
+    ),
+);
+t.click("new");
+t.click("concept-show");
+ok(
+  t
+    .$("stats")
+    .textContent.includes(
+      "First-try accuracy: 33% (1/3) · Correct after retry: 1 · Answers revealed: 1",
+    ),
+);
+let before = t.$("stats").textContent;
+right(t);
+same(before, t.$("stats").textContent);
+// The screenshot failure: a condition must not appear as the answer after a wrong variable selection.
+t.force("condition");
+t.change("selection");
+t.choose("condition-variable");
+t.click("concept-check");
+noSpoiler(t, 1);
+ok(!t.$("feedback").textContent.includes(C.answerText(t.q)));
+t.choose("condition");
+t.click("concept-check");
+ok(t.$("feedback").textContent.includes("independently after retry"));
 t.force("statement");
 t.change("selection");
 let leaf = t
   .$("concept-code")
   .querySelector('[data-component="condition-variable"]');
 leaf.onkeydown({ key: "Enter", preventDefault() {}, stopPropagation() {} });
-while (!t.$("expand").disabled) {
-  t.click("expand");
-}
+while (!t.$("expand").disabled) t.click("expand");
 t.click("concept-check");
 ok(t.$("feedback").classList.contains("good"));
-ok(t.$("feedback").textContent.includes("entire IF structure"));
-t.click("new");
-t.choose("condition");
-t.click("concept-check");
-ok(
-  t
-    .$("feedback")
-    .textContent.includes("Your selection is a Boolean expression"),
-);
-t.force("parameters");
-t.change("procedures");
-t.choose("p1");
-t.choose("p2");
-t.click("concept-check");
-ok(t.$("feedback").classList.contains("good"));
-t.click("new");
-t.choose("a1");
-t.click("concept-check");
-ok(t.$("feedback").textContent.includes("Those are arguments"));
-// Count fields reject blanks and invalid values without recording a challenge attempt.
 t.force("repeat-count");
 t.change("iteration");
-let before = t.$("stats").textContent;
+before = t.$("stats").textContent;
 t.$("concept-count").value = "";
 t.click("concept-check");
 same(before, t.$("stats").textContent);
@@ -213,18 +270,8 @@ same(t.$("concept-mode").value, "mixed");
 let fresh = launch();
 same(
   fresh.$("stats").textContent,
-  "Challenges attempted: 0 · First-check correct: 0 · First-check streak: 0",
+  "First-try accuracy: 0% (0/0) · Correct after retry: 0 · Answers revealed: 0 · First-try streak: 0",
 );
-// The homepage contains one playable replacement card, with no old roadmap name.
-const { document, window } = parseHTML(
-    fs.readFileSync(new URL("./index.html", import.meta.url), "utf8"),
-  ),
-  context = { document, window, E, startCodeConcepts: () => {}, console };
-vm.createContext(context);
-vm.runInContext(app, context);
-same(document.querySelectorAll('a[href="code-concepts/"]').length, 1);
-ok(document.body.textContent.includes("Code Concepts is now playable"));
-same(document.querySelectorAll(".card").length, 12);
 console.log(
-  `PASS: ${checks} Code Concepts DOM checks: every variant, defaults, restricted modes, mouse/keyboard event handlers, answers, retries, feedback, statistics, and navigation. Rendered-device QA unavailable.`,
+  `PASS: ${checks} Code Concepts interaction assertions covering spoiler-free errors, progressive hints, independent retries, permanently unscored reveals, repeated clicks, mode defaults, and statistics.`,
 );

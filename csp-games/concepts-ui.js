@@ -1,8 +1,8 @@
+import { createConceptSession } from "./concepts-feedback.js";
 import {
   generateConcept,
   categoryLabels,
   components,
-  assess,
   answerText,
   source,
 } from "./concepts-engine.js";
@@ -19,11 +19,7 @@ export function startCodeConcepts() {
   let question,
     selected = new Set(),
     revealed = false,
-    attempted = 0,
-    correct = 0,
-    streak = 0,
-    counted = false,
-    firstTry = true;
+    session = createConceptSession();
   $("controls").innerHTML =
     `<label>Practice mode <select id="concept-mode"><option value="mixed" selected>Mixed Practice</option>${Object.entries(
       categoryLabels,
@@ -33,7 +29,7 @@ export function startCodeConcepts() {
   $("new").textContent = "Next Challenge";
   const stats = () =>
     ($("stats").textContent =
-      `Challenges attempted: ${attempted} · First-check correct: ${correct} · First-check streak: ${streak}`);
+      `First-try accuracy: ${session.totals.attempted ? Math.round((session.totals.firstTry / session.totals.attempted) * 100) : 0}% (${session.totals.firstTry}/${session.totals.attempted}) · Correct after retry: ${session.totals.retry} · Answers revealed: ${session.totals.revealed} · First-try streak: ${session.totals.streak}`);
   function renderNode(n) {
     if (typeof n === "string") return escape(n);
     if (n.id === "snippet") return n.children.map(renderNode).join("");
@@ -67,6 +63,7 @@ export function startCodeConcepts() {
       node.parent === "snippet";
   }
   function choose(id) {
+    if (session.round.status !== "active") return;
     revealed = false;
     $("feedback").hidden = true;
     if (question.multiple) {
@@ -78,12 +75,11 @@ export function startCodeConcepts() {
     question = generateConcept($("concept-mode").value);
     selected.clear();
     revealed = false;
-    counted = false;
-    firstTry = true;
+    session.begin(question);
     $("feedback").hidden = true;
     let numeric = question.interaction === "count";
     $("stage").innerHTML =
-      `<div class="eyebrow">${categoryLabels[question.category]}</div><h2 id="concept-prompt">${escape(question.prompt)}</h2><p class="muted">${numeric ? "Enter a count. No full execution trace is needed." : question.multiple ? "Tap each requested component, then check. Tap again to deselect." : "Tap a code component. Use Expand selection to include its surrounding expression, statement, or block."}</p><pre id="concept-code" class="concept-code" aria-label="AP CSP pseudocode">${numeric ? escape(question.code) : renderNode(question.root)}</pre>${numeric ? `<label>Loop count <input id="concept-count" type="number" min="0" step="1" inputmode="numeric"></label>${question.allowUnknown ? '<label class="concept-unknown"><input id="concept-unknown" type="checkbox"> Cannot be determined from the information provided</label>' : ""}` : `<div class="row"><button id="expand" class="secondary" disabled>Expand selection</button><button id="clear-selection" class="secondary">Clear selection</button></div><pre id="selection-summary" class="concept-summary">No code selected.</pre>`}<div class="actions"><button id="concept-check">Check</button><button id="concept-next" class="secondary">Next Challenge</button></div>`;
+      `<div class="eyebrow">${categoryLabels[question.category]}</div><h2 id="concept-prompt">${escape(question.prompt)}</h2><p class="muted">${numeric ? "Enter a count. No full execution trace is needed." : question.multiple ? "Tap each requested component, then check. Tap again to deselect." : "Tap a code component. Use Expand selection to include its surrounding expression, statement, or block."}</p><pre id="concept-code" class="concept-code" aria-label="AP CSP pseudocode">${numeric ? escape(question.code) : renderNode(question.root)}</pre>${numeric ? `<label>Loop count <input id="concept-count" type="number" min="0" step="1" inputmode="numeric"></label>${question.allowUnknown ? '<label class="concept-unknown"><input id="concept-unknown" type="checkbox"> Cannot be determined from the information provided</label>' : ""}` : `<div class="row"><button id="expand" class="secondary" disabled>Expand selection</button><button id="clear-selection" class="secondary">Clear selection</button></div><pre id="selection-summary" class="concept-summary">No code selected.</pre>`}<div class="actions"><button id="concept-check">Check</button><button id="concept-show" class="secondary">Show Answer</button><button id="concept-next" class="secondary">Next Challenge</button></div>`;
     if (!numeric) {
       for (let el of $("concept-code").querySelectorAll("[data-component]")) {
         el.onclick = (e) => {
@@ -104,6 +100,7 @@ export function startCodeConcepts() {
         if (n?.parent && n.parent !== "snippet") choose(n.parent);
       };
       $("clear-selection").onclick = () => {
+        if (session.round.status !== "active") return;
         selected.clear();
         revealed = false;
         $("feedback").hidden = true;
@@ -112,18 +109,22 @@ export function startCodeConcepts() {
     } else {
       if ($("concept-unknown"))
         $("concept-unknown").onchange = () => {
+          if (session.round.status !== "active") return;
           $("concept-count").disabled = $("concept-unknown").checked;
           $("feedback").hidden = true;
         };
       $("concept-count").oninput = () => {
+        if (session.round.status !== "active") return;
         $("feedback").hidden = true;
       };
     }
     $("concept-next").onclick = next;
     $("concept-check").onclick = submit;
+    $("concept-show").onclick = showAnswer;
     stats();
   }
   function submit() {
+    if (session.round.status !== "active") return;
     let numeric = question.interaction === "count",
       response = numeric
         ? $("concept-unknown")?.checked
@@ -146,48 +147,81 @@ export function startCodeConcepts() {
         : "Select a code component before checking.";
       return;
     }
-    let ok = assess(question, response);
-    if (!counted) {
-      attempted++;
-      counted = true;
-      if (ok) {
-        correct++;
-        streak++;
-      } else {
-        streak = 0;
-        firstTry = false;
-      }
+    const result = session.submit(response);
+    if (!result.correct) {
+      revealed = false;
+      if (!numeric) paint();
+      message(
+        false,
+        "Not quite. Hint " +
+          Math.min(3, session.round.wrong) +
+          ": " +
+          result.hint +
+          "\nAdjust your response and try again, or choose Show Answer.",
+      );
+      return;
     }
-    revealed = true;
-    if (!numeric) paint();
-    let intro = ok
-      ? firstTry
-        ? "Correct."
-        : "Correct on retry."
-      : "Not quite.";
-    const selectedNodes = components(question.root).filter((n) =>
-        selected.has(n.id),
-      ),
-      confusion =
-        !ok &&
-        question.variant === "statement" &&
-        question.category === "selection" &&
-        selectedNodes.some((n) =>
-          ["boolean-expression", "comparison"].includes(n.role),
-        )
-          ? "Your selection is a Boolean expression, which evaluates to TRUE or FALSE. The complete IF structure is the selection statement. "
-          : !ok &&
-              question.category === "procedures" &&
-              question.variant.startsWith("parameter") &&
-              selectedNodes.some((n) => n.role === "argument")
-            ? "Those are arguments supplied by the call; parameters are input names in the definition. "
-            : "";
+    finishRound(
+      false,
+      result.firstTry
+        ? "Correct on the first try."
+        : "Correct independently after retry.",
+    );
+  }
+  function message(good, text) {
     $("feedback").hidden = false;
-    $("feedback").className = "feedback " + (ok ? "good" : "bad");
-    $("feedback").textContent =
-      `${ok ? "✓" : "↻"} ${intro}\n${confusion || question.explanation}\n${numeric ? "Correct answer: " + answerText(question) : answerText(question).includes("\n") ? "The correct code region is highlighted above." : "Highlighted answer: " + answerText(question)}${!ok ? "\nAdjust your response to retry, or continue to the next challenge." : ""}`;
+    $("feedback").className = "feedback " + (good ? "good" : "bad");
+    $("feedback").textContent = text;
     $("feedback").focus();
     stats();
+  }
+  function finishRound(shown, intro) {
+    revealed = true;
+    const numeric = question.interaction === "count";
+    if (numeric) {
+      $("concept-count").value =
+        question.answer === "unknown" ? "" : question.answer;
+      $("concept-count").classList.add("concept-answer-value");
+      if ($("concept-unknown")) {
+        $("concept-unknown").checked = question.answer === "unknown";
+        $("concept-unknown").classList.add("concept-answer-value");
+      }
+      $("concept-count").disabled = true;
+      if ($("concept-unknown")) $("concept-unknown").disabled = true;
+    } else {
+      paint();
+      $("expand").disabled = true;
+      $("clear-selection").disabled = true;
+      for (const element of $("concept-code").querySelectorAll(
+        "[data-component]",
+      )) {
+        element.setAttribute("aria-disabled", "true");
+        element.tabIndex = -1;
+      }
+    }
+    $("concept-check").disabled = true;
+    $("concept-show").disabled = true;
+    const answer = numeric
+      ? "Answer: " + answerText(question)
+      : answerText(question).includes("\n")
+        ? "The correct code region is highlighted above."
+        : "Highlighted answer: " + answerText(question);
+    message(
+      !shown,
+      intro +
+        "\n" +
+        question.explanation +
+        "\n" +
+        answer +
+        (shown
+          ? "\nThis challenge is revealed and cannot earn independent credit. Choose Next Challenge to continue."
+          : ""),
+    );
+    if (shown) $("feedback").className = "feedback";
+  }
+  function showAnswer() {
+    if (!session.reveal()) return;
+    finishRound(true, "Answer revealed — not independently solved.");
   }
   $("concept-mode").addEventListener("change", next);
   $("new").onclick = next;

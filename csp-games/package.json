@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests.mjs && node ui-tests.mjs && node concepts-tests.mjs && node concepts-ui-tests.mjs"
+    "test": "node tests.mjs && node ui-tests.mjs && node concepts-tests.mjs && node concepts-ui-tests.mjs && node concepts-feedback-tests.mjs"
   },
   "devDependencies": {
     "linkedom": "^0.18.12"
