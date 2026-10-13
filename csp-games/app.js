@@ -1,5 +1,10 @@
+import {
+  sessionTracker,
+  addSessionNavigation,
+  roundSummary,
+} from "./session.js";
 import * as E from "./engine.js";
-import { startCodeConcepts } from "./concepts-ui.js";
+import { startCodeConcepts } from "./concepts-ui.js?v=platform-session-v1";
 const $ = (id) => document.getElementById(id),
   esc = (s) =>
     String(s).replace(
@@ -113,22 +118,108 @@ export const catalog = [
 ];
 const slug = document.body.dataset.game || "",
   game = catalog.find((g) => g[0] === slug);
-let attempts = 0,
-  successes = 0;
-function feedback(ok, message) {
-  attempts++;
-  if (ok) successes++;
+let currentInstance = null,
+  roundTopic = "",
+  inCheck = false,
+  generating = false;
+const tracker = sessionTracker();
+const gameHints = {
+  "binary-builder": [
+    "Each 1 contributes its place value; each 0 contributes nothing.",
+    "Add the values under your 1 bits and compare that total with the target.",
+    "Start with the largest place value that fits, then consider the remaining amount.",
+  ],
+  "boolean-gatekeeper": [
+    "A Boolean expression evaluates to TRUE or FALSE.",
+    "Evaluate comparisons before applying AND, OR, and NOT.",
+    "AND needs both sides true, OR needs at least one, and NOT reverses a truth value.",
+  ],
+  "list-lab": [
+    "List indices start at one and refer to the current list.",
+    "After insertion or removal, later positions shift.",
+    "Work through operations in order; compare the resulting ordered values with the requested state.",
+  ],
+  "binary-search-hunt": [
+    "Binary search inspects the midpoint of the active range.",
+    "Eliminate the side ruled out by the inspected value, then find the new midpoint.",
+    "Use the lower midpoint of an even-sized range. Absence is established only when the active range is empty.",
+  ],
+  "packet-router": [
+    "A route needs a working connection between every consecutive pair of nodes.",
+    "Inspect unavailable links and look for alternate connections.",
+    "A valid route begins at the source, ends at the destination, and uses only available links.",
+  ],
+  "compression-challenge": [
+    "Lossless encoding must reconstruct every original symbol in order.",
+    "Each run needs a count and symbol; scan order affects where runs begin and end.",
+    "Compare run overhead with raw storage and merge adjacent runs of the same symbol when permitted.",
+  ],
+  "data-detective": [
+    "Use the stated goal and the data shown; avoid unsupported assumptions.",
+    "Check every required condition and the meaning of each axis or selected row.",
+    "Distinguish categorical comparisons, changes over time, and relationships between numeric variables.",
+  ],
+  "algorithm-race": [
+    "Efficiency depends on the specified input and step model.",
+    "Compare how much work each algorithm performs, not just its name.",
+    "Count repeated work or shrinking search regions under the conditions in this round.",
+  ],
+  "cybersecurity-defender": [
+    "Evaluate evidence and protections in context. Urgency alone is not phishing evidence.",
+    "Check known identities, actual destinations, requests, and account protections.",
+    "Separate suspicious evidence from ordinary context; long unique credentials and an additional factor address different risks.",
+  ],
+  "parallel-processing-race": [
+    "The finishing time is determined by the last processor to finish.",
+    "Balance workloads; dependencies can cause waiting time.",
+    "Consider both total work and prerequisite tasks, not just the number of processors.",
+  ],
+};
+function beginRound(topic = roundTopic || slug) {
+  if (currentInstance) tracker.skip(currentInstance);
+  currentInstance = tracker.begin(
+    slug,
+    game[1],
+    topic,
+    topic.replaceAll("-", " "),
+  );
+}
+function feedback(ok, message, score = inCheck) {
+  let outcome = null;
+  if (score) {
+    outcome = tracker.submit(currentInstance, ok);
+    if (!outcome.accepted) {
+      $("feedback").hidden = false;
+      $("feedback").className = "feedback";
+      $("feedback").textContent =
+        "This challenge is already complete or belongs to a reset session. Choose New Challenge to continue.";
+      return;
+    }
+  }
+  if (score && !ok) {
+    const record = tracker.snapshot().records[currentInstance],
+      hints = gameHints[slug] || ["Review the concept and retry."];
+    message = hints[Math.min(2, record.submissions - 1)];
+    if ($("simulation")) $("simulation").innerHTML = "";
+  }
   $("feedback").className = "feedback " + (ok ? "good" : "bad");
   $("feedback").textContent = (ok ? "✓ " : "↻ ") + message;
   $("feedback").hidden = false;
-  $("stats").textContent =
-    `This visit: ${successes} successful checks / ${attempts} checks`;
+  $("stats").textContent = roundSummary(slug);
   $("feedback").focus();
 }
+if (typeof window !== "undefined")
+  window.addEventListener("pagehide", () => {
+    if (currentInstance) tracker.skip(currentInstance);
+  });
 function clearFeedback() {
   $("feedback").hidden = true;
 }
 function mount(content) {
+  if (generating) {
+    beginRound();
+    generating = false;
+  }
   $("stage").innerHTML = content;
 }
 const button = (id, text, secondary = false) =>
@@ -139,23 +230,37 @@ const numeric = (id, label, value, min = 0, max = 12) =>
   `<label>${label} <input id="${id}" type="number" value="${value}" min="${min}" max="${max}" step="1"></label>`;
 function setup(controls, newRound) {
   $("controls").innerHTML = controls;
-  for (let s of $("controls").querySelectorAll("select"))
-    s.addEventListener("change", newRound);
-  $("new").onclick = newRound;
-  newRound();
+  const generate = () => {
+    generating = true;
+    roundTopic = slug;
+    newRound();
+    generating = false;
+  };
+  for (const control of $("controls").querySelectorAll("select"))
+    control.addEventListener("change", generate);
+  $("new").onclick = generate;
+  generate();
 }
 function check(id, fn) {
   $(id).onclick = () => {
+    if (tracker.status(currentInstance) !== "active") {
+      feedback(false, "", true);
+      return;
+    }
+    inCheck = true;
     try {
       fn();
     } catch (e) {
-      feedback(false, e.message);
+      feedback(false, e.message, false);
+    } finally {
+      inCheck = false;
     }
   };
 }
-const modeOptions = (items) => [["mixed", "Random mix"], ...items];
+const modeOptions = (items) => [["mixed", "Mixed Practice"], ...items];
 function chosenMode(items) {
-  return $("mode").value === "mixed" ? E.pick(items) : $("mode").value;
+  roundTopic = $("mode").value === "mixed" ? E.pick(items) : $("mode").value;
+  return roundTopic;
 }
 if (!game) {
   document.title = "CSP Games | DevCat Studios";
@@ -173,11 +278,11 @@ if (!game) {
             .join("")}</div></section>`,
       )
       .join("") +
-    `<section class="panel roadmap"><div class="eyebrow">Development roadmap</div><h2>More concept practice</h2><p>Code Concepts is now playable. Future activities may explore execution paths and Create written-response preparation. Teacher Tools and Canvas QTI export remain future work.</p><p class="muted">Big Idea 1: Creative Development will be addressed by future concept-based activities. This collection does not yet cover the entire curriculum.</p></section>`;
+    `<section class="panel roadmap"><div class="eyebrow">Development roadmap</div><h2>Platform expansion roadmap</h2><p><a href="coverage.html">View the 35-topic curriculum coverage matrix</a> · <a href="session-summary/">Open your Session Summary</a></p><p>The shared Session Summary is available across all games. Planned next: expand Code Concepts, then Response Builder, Test Case Builder, Algorithm Architect, Computing Impact Lab, Simulation Lab, and Mixed AP Exam Practice.</p><p class="muted">Big Idea 1: Creative Development will be addressed by future concept-based activities. This collection does not yet cover the entire curriculum.</p></section>`;
 } else {
   document.title = game[1] + " | CSP Games";
   $("main").innerHTML =
-    `<div class="eyebrow">Big Idea ${game[2]} · Topics ${game[3]}</div><h1>${game[1]}</h1><p class="intro">${game[5]}</p><div class="toolbar"><div id="controls" class="row"></div>${button("new", "New Challenge", true)}</div><section id="stage" class="panel"></section><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div><p id="stats" class="stats">Session-only practice. No student information collected.</p>`;
+    `<div class="eyebrow">Big Idea ${game[2]} · Topics ${game[3]}</div><h1>${game[1]}</h1><p class="intro">${game[5]}</p><div class="toolbar"><div id="controls" class="row"></div>${button("new", "New Challenge", true)}</div><section id="stage" class="panel"></section><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div><p id="stats" class="stats">Practice results are stored in this browser. Open Session Summary to share a report.</p>`;
   const loaders = {
     "code-concepts": startCodeConcepts,
     "binary-builder": binary,
@@ -204,6 +309,7 @@ function binary() {
     () => {
       clearFeedback();
       n = +$("length").value;
+      roundTopic = "unsigned-" + n + "-bit";
       target = E.int(0, 2 ** n - 1);
       bits = Array(n).fill(0);
       mount(
@@ -248,6 +354,18 @@ function booleanGame() {
       clearFeedback();
       c = E.booleanChallenge();
       mode = chosenMode(["evaluate", "make"]);
+      if (mode === "make" && E.evaluate(c.e, c.values)) {
+        let found = false;
+        for (let x = 0; x <= 12 && !found; x++) {
+          for (let y = 0; y <= 12; y++) {
+            if (!E.evaluate(c.e, { x, y })) {
+              c.values = { x, y };
+              found = true;
+              break;
+            }
+          }
+        }
+      }
       answer = null;
       mount(
         `<p>${mode === "evaluate" ? "Set the output switch to the result of this expression." : "Adjust x and y (whole numbers 0–12) to open the gate. A valid combination exists."}</p>${mode === "evaluate" ? `<pre>x ← ${c.values.x}\ny ← ${c.values.y}</pre>` : `<div class="row">${numeric("x", "x", c.values.x)}${numeric("y", "y", c.values.y)}</div>`}<pre>${esc(E.formatExpression(c.e))}</pre>${mode === "evaluate" ? `<div class="row">${button("true", "Output: TRUE", true)}${button("false", "Output: FALSE", true)}</div>` : ""}<div class="actions">${button("check", "Check Answer")}</div>`,
@@ -565,6 +683,7 @@ function router() {
         }
         g.broken.delete(k);
       }
+      if (blocked) beginRound("rerouting");
       phase++;
       $("failure").textContent = blocked
         ? "Another link failed. A working route still exists. Reset or edit your route and send again."
@@ -854,6 +973,7 @@ function detective() {
                 : Math.round(70 + trend * 3 * (i - 4) + E.int(-2, 2)),
           }));
         }
+        roundTopic = "graph / " + task;
         expected =
           task === "maximum"
             ? new Set(
@@ -914,6 +1034,7 @@ function detective() {
         });
       } else {
         scenario = E.pick(["relationship", "time", "category"]);
+        roundTopic = "visualization / " + scenario;
         if (scenario === "time")
           data = data.slice(0, 7).map((d, i) => ({ ...d, day: i + 1 }));
         let x =
@@ -992,6 +1113,7 @@ function race() {
     () => {
       clearFeedback();
       c = E.raceChallenge($("mode").value);
+      roundTopic = c.kind;
       choice = null;
       mount(
         `<p>${c.kind === "search" ? `Search ${c.n} sorted even numbers (2 through ${c.n * 2}) for target ${c.target}.` : c.kind === "duplicates" ? `Check whether ${c.n} items are all distinct. In this round every item is distinct.` : `Compute the total of ${c.n} numbers.`}</p><div class="split">${c.labels.map((name, i) => `<div><h3>${name}</h3><pre>${esc(c.kind === "search" ? (i === 0 ? "FOR EACH value IN numbers\n{\n  IF (value = target)\n  { RETURN(TRUE) }\n}\nRETURN(FALSE)" : "Compare the middle item with target.\nKeep the lower or upper half.\nRepeat until found or range is empty.") : c.kind === "duplicates" ? (i === 0 ? "Compare each item with every later item." : "Visit each item once: check the lookup\nset, then add the item.") : i === 0 ? "total ← 0\nFOR EACH value IN numbers\n{ total ← total + value }" : "For every prefix, recompute its total.\nReturn the last prefix total.")}</pre></div>`).join("")}</div><p>Step model: ${c.kind === "search" ? "one comparison per inspected value" : c.kind === "duplicates" ? "one step per pair comparison or combined lookup-set check/insertion" : "one step per addition"}. Place the finish flag on the algorithm that takes fewer steps.</p><div class="row">${button("a", c.labels[0], true)}${button("b", c.labels[1], true)}${button("tie", "Finish together", true)}</div><div class="actions">${button("check", "Run the race")}</div><div id="simulation"></div>`,
@@ -1016,8 +1138,9 @@ function race() {
         let answer =
             c.steps[0] === c.steps[1] ? 2 : c.steps[0] < c.steps[1] ? 0 : 1,
           max = Math.max(...c.steps);
-        $("simulation").innerHTML =
-          `<div class="sim">${c.labels.map((name, i) => `<p>${name}: <strong>${c.steps[i]} steps</strong></p><div class="bar-track"><div class="bar-fill" style="--width:100%;--duration:${Math.max(0.2, (c.steps[i] / max) * 3)}s"></div></div>`).join("")}</div>`;
+        if (choice === answer)
+          $("simulation").innerHTML =
+            `<div class="sim">${c.labels.map((name, i) => `<p>${name}: <strong>${c.steps[i]} steps</strong></p><div class="bar-track"><div class="bar-fill" style="--width:100%;--duration:${Math.max(0.2, (c.steps[i] / max) * 3)}s"></div></div>`).join("")}</div>`;
         feedback(
           choice === answer,
           `${choice === answer ? "Correct prediction." : "The prediction does not match the counts."} ${c.labels[0]}: ${c.steps[0]}; ${c.labels[1]}: ${c.steps[1]} steps.\n${c.explain}\nAnimation represents this step model, not real hardware timing.`,
@@ -1168,13 +1291,20 @@ function parallel() {
       [3, "3 processors"],
     ]) +
       select("dependencies", "Task type", [
+        ["mixed", "Mixed Practice"],
         ["independent", "Independent tasks"],
         ["dependent", "With dependencies"],
       ]),
     () => {
       clearFeedback();
       p = +$("processors").value;
-      dependent = $("dependencies").value === "dependent";
+      dependent =
+        $("dependencies").value === "mixed"
+          ? E.pick([true, false])
+          : $("dependencies").value === "dependent";
+      roundTopic = dependent
+        ? "dependent-scheduling"
+        : "independent-scheduling";
       times = Array.from({ length: 6 }, () => E.int(1, 9));
       deps = times.map(() => []);
       if (dependent) {
@@ -1229,8 +1359,9 @@ function parallel() {
         let r = E.simulateSchedule(times, assignment, p, deps),
           seq = times.reduce((s, t) => s + t, 0),
           max = r.time;
-        $("simulation").innerHTML =
-          `${Array.from({ length: p }, (_, j) => `<p>Processor ${j + 1}</p><div class="bar-track" style="position:relative;height:42px">${times.map((t, i) => (assignment[i] === j ? `<div style="position:absolute;left:${(r.starts[i] / max) * 100}%;width:${(t / max) * 100}%;height:42px;background:${["#66e4c4", "#ffd37d", "#97bfff", "#dc9bff", "#fca6a6", "#a9dc88"][i]};color:#09201c;text-align:center;font-weight:800">${String.fromCharCode(65 + i)}</div>` : "")).join("")}<div class="time-mask" style="position:absolute;inset:0;background:#0c1c2b;animation:unmask 4s linear forwards;transform-origin:right"></div></div>`).join("")}<p>Sequential: <strong>${seq}s</strong> · Parallel: <strong>${r.time}s</strong> · Speedup: <strong>${(seq / r.time).toFixed(2)}×</strong></p><div class="table-wrap"><table><thead><tr><th>Task</th><th>Processor</th><th>Start</th><th>Finish</th></tr></thead><tbody>${times.map((t, i) => `<tr><td>${String.fromCharCode(65 + i)}</td><td>${assignment[i] + 1}</td><td>${r.starts[i]}s</td><td>${r.ends[i]}s</td></tr>`).join("")}</tbody></table></div>`;
+        if (r.time === opt.time)
+          $("simulation").innerHTML =
+            `${Array.from({ length: p }, (_, j) => `<p>Processor ${j + 1}</p><div class="bar-track" style="position:relative;height:42px">${times.map((t, i) => (assignment[i] === j ? `<div style="position:absolute;left:${(r.starts[i] / max) * 100}%;width:${(t / max) * 100}%;height:42px;background:${["#66e4c4", "#ffd37d", "#97bfff", "#dc9bff", "#fca6a6", "#a9dc88"][i]};color:#09201c;text-align:center;font-weight:800">${String.fromCharCode(65 + i)}</div>` : "")).join("")}<div class="time-mask" style="position:absolute;inset:0;background:#0c1c2b;animation:unmask 4s linear forwards;transform-origin:right"></div></div>`).join("")}<p>Sequential: <strong>${seq}s</strong> · Parallel: <strong>${r.time}s</strong> · Speedup: <strong>${(seq / r.time).toFixed(2)}×</strong></p><div class="table-wrap"><table><thead><tr><th>Task</th><th>Processor</th><th>Start</th><th>Finish</th></tr></thead><tbody>${times.map((t, i) => `<tr><td>${String.fromCharCode(65 + i)}</td><td>${assignment[i] + 1}</td><td>${r.starts[i]}s</td><td>${r.ends[i]}s</td></tr>`).join("")}</tbody></table></div>`;
         feedback(
           r.time === opt.time,
           `${r.time === opt.time ? "Optimal arrangement!" : "A faster arrangement exists. Reassign and retry."} Your makespan: ${r.time}s. True optimum: ${opt.time}s.\n${dependent ? "The optimum covers all assignments under the stated alphabetical queue rule. Dependencies create waiting time." : "The optimum is calculated by exhaustive scheduling with symmetry pruning. The longest processor workload determines finishing time."}\nThe animation scales execution to four seconds of screen time.`,
@@ -1239,3 +1370,5 @@ function parallel() {
     },
   );
 }
+
+addSessionNavigation(game ? "../" : "./");

@@ -1,4 +1,5 @@
-import { createConceptSession } from "./concepts-feedback.js";
+import { sessionTracker, roundSummary } from "./session.js";
+import { createConceptSession } from "./concepts-feedback.js?v=platform-session-v1";
 import {
   generateConcept,
   categoryLabels,
@@ -19,7 +20,7 @@ export function startCodeConcepts() {
   let question,
     selected = new Set(),
     revealed = false,
-    session = createConceptSession();
+    session = createConceptSession({ tracker: sessionTracker() });
   $("controls").innerHTML =
     `<label>Practice mode <select id="concept-mode"><option value="mixed" selected>Mixed Practice</option>${Object.entries(
       categoryLabels,
@@ -27,9 +28,7 @@ export function startCodeConcepts() {
       .map(([v, label]) => `<option value="${v}">${escape(label)}</option>`)
       .join("")}</select></label>`;
   $("new").textContent = "Next Challenge";
-  const stats = () =>
-    ($("stats").textContent =
-      `First-try accuracy: ${session.totals.attempted ? Math.round((session.totals.firstTry / session.totals.attempted) * 100) : 0}% (${session.totals.firstTry}/${session.totals.attempted}) · Correct after retry: ${session.totals.retry} · Answers revealed: ${session.totals.revealed} · First-try streak: ${session.totals.streak}`);
+  const stats = () => ($("stats").textContent = roundSummary("code-concepts"));
   function renderNode(n) {
     if (typeof n === "string") return escape(n);
     if (n.id === "snippet") return n.children.map(renderNode).join("");
@@ -148,6 +147,13 @@ export function startCodeConcepts() {
       return;
     }
     const result = session.submit(response);
+    if (!result.scored) {
+      message(
+        false,
+        "This challenge is no longer active. Choose Next Challenge to continue.",
+      );
+      return;
+    }
     if (!result.correct) {
       revealed = false;
       if (!numeric) paint();
@@ -226,4 +232,5 @@ export function startCodeConcepts() {
   $("concept-mode").addEventListener("change", next);
   $("new").onclick = next;
   next();
+  window.addEventListener("pagehide", () => session.skip());
 }

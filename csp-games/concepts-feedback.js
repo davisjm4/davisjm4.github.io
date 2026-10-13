@@ -204,7 +204,7 @@ export function conceptHint(q, wrongAttempts) {
   if (!family) throw Error("Missing concept hint");
   return hints[family][Math.min(2, Math.max(0, wrongAttempts - 1))];
 }
-export function createConceptSession() {
+export function createConceptSession({ tracker } = {}) {
   const totals = {
     attempted: 0,
     firstTry: 0,
@@ -214,8 +214,15 @@ export function createConceptSession() {
   };
   let round;
   function begin(question) {
+    if (tracker && round?.instance) tracker.skip(round.instance);
     round = {
       question,
+      instance: tracker?.begin(
+        "code-concepts",
+        "Code Concepts",
+        question.category + "/" + question.variant,
+        question.category + " — " + question.variant,
+      ),
       status: "active",
       submissions: 0,
       wrong: 0,
@@ -235,6 +242,13 @@ export function createConceptSession() {
     engage();
     round.submissions++;
     const correct = assess(round.question, response);
+    if (tracker) {
+      const result = tracker.submit(round.instance, correct);
+      if (!result.accepted) {
+        round.status = result.status;
+        return { status: result.status, scored: false };
+      }
+    }
     if (correct) {
       round.status = "solved";
       if (round.submissions === 1) {
@@ -259,6 +273,7 @@ export function createConceptSession() {
   }
   function reveal() {
     if (round.status !== "active") return false;
+    if (tracker && !tracker.reveal(round.instance)) return false;
     engage();
     round.status = "revealed";
     totals.revealed++;
@@ -270,6 +285,7 @@ export function createConceptSession() {
     begin,
     submit,
     reveal,
+    skip: () => tracker?.skip(round?.instance),
     get round() {
       return round;
     },

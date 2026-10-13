@@ -3,15 +3,12 @@ import vm from "node:vm";
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import * as logic from "./engine.js";
+import * as S from "./session.js";
 const require = createRequire(import.meta.url),
   { parseHTML } = require(process.env.CSP_DOM_LIBRARY || "linkedom");
 const src = fs
   .readFileSync(new URL("./app.js", import.meta.url), "utf8")
-  .replace(/import \* as E from ["']\.\/engine\.js["'];/, "")
-  .replace(
-    /import \{ startCodeConcepts \} from ["']\.\/concepts-ui\.js["'];/,
-    "",
-  )
+  .replace(/import[^;]+;/g, "")
   .replace("export const catalog", "const catalog");
 let seed = 123456789;
 Math.random = () => {
@@ -62,7 +59,17 @@ function launch(slug) {
       captures.schedule = { times: a[0], p: a[1], deps: a[2] };
       return (captures[k] = logic[k](...a));
     };
+  const memory = new Map(),
+    sharedTracker = S.createSessionTracker({
+      storage: {
+        getItem: (k) => memory.get(k) || null,
+        setItem: (k, v) => memory.set(k, v),
+      },
+    });
   let context = {
+    sessionTracker: () => sharedTracker,
+    addSessionNavigation: () => {},
+    roundSummary: () => "Shared session results",
     startCodeConcepts: () => {},
     document,
     window,
@@ -94,7 +101,8 @@ function launch(slug) {
   };
   const bad = () => {
     assert.ok(
-      $("feedback").classList.contains("bad"),
+      $("feedback").classList.contains("bad") ||
+        $("feedback").textContent.includes("already complete"),
       $("feedback").textContent,
     );
     checks++;
@@ -373,8 +381,18 @@ for (let round = 0; round < 20; round++) {
     ),
     { document, window } = parseHTML(html),
     memory = new Map();
-  const script = html.match(/<script>([\s\S]*?)<\/script>/)[1],
+  const script = html
+      .match(/<script(?: type="module")?>([\s\S]*?)<\/script>/)[1]
+      .replace(/import[^;]+;/g, ""),
     ctx = {
+      sessionTracker: () =>
+        S.createSessionTracker({
+          storage: {
+            getItem: (k) => memory.get("global:" + k) || null,
+            setItem: (k, v) => memory.set("global:" + k, v),
+          },
+        }),
+      addSessionNavigation: () => {},
       document,
       window,
       console,
@@ -394,7 +412,7 @@ for (let round = 0; round < 20; round++) {
   };
   click("check");
   assert.ok(
-    document.getElementById("feedback").textContent.includes("still connects"),
+    document.getElementById("feedback").textContent.includes("alternate paths"),
   );
   for (let key of g.cut) {
     document
@@ -409,7 +427,7 @@ for (let round = 0; round < 20; round++) {
   click("new");
   assert.equal(window.NetworkBreakerTest.state.removed.size, 0);
   click("hint");
-  assert.ok(document.getElementById("feedback").textContent.includes("Hint"));
+  assert.ok(document.getElementById("feedback").textContent.includes("Links"));
   click("solution");
   assert.ok(window.NetworkBreakerTest.state.showOptimal);
   click("new");

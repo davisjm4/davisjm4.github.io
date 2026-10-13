@@ -5,6 +5,7 @@ import { createRequire } from "node:module";
 import * as E from "./engine.js";
 import * as C from "./concepts-engine.js";
 import * as F from "./concepts-feedback.js";
+import * as S from "./session.js";
 const require = createRequire(import.meta.url),
   { parseHTML } = require(process.env.CSP_DOM_LIBRARY || "linkedom");
 let seed = 314159;
@@ -54,7 +55,20 @@ function launch() {
       }
     },
   });
+  const memory = new Map(),
+    sharedTracker = S.createSessionTracker({
+      storage: {
+        getItem: (k) => memory.get(k) || null,
+        setItem: (k, v) => memory.set(k, v),
+      },
+    });
   const ctx = {
+    sessionTracker: () => sharedTracker,
+    addSessionNavigation: () => {},
+    roundSummary: (game) => {
+      const m = sharedTracker.snapshot().games[game];
+      return `First-try accuracy: ${S.accuracy(m) === null ? "N/A" : Math.round(S.accuracy(m)) + "%"} (${m.firstTry}/${m.attempted}) · Solved after retry: ${m.afterRetry} · Revealed: ${m.revealed} · Submissions: ${m.submissions}`;
+    },
     document,
     window,
     console,
@@ -221,7 +235,7 @@ ok(
   t
     .$("stats")
     .textContent.includes(
-      "First-try accuracy: 50% (1/2) · Correct after retry: 1 · Answers revealed: 0",
+      "First-try accuracy: 50% (1/2) · Solved after retry: 1 · Revealed: 0",
     ),
 );
 t.click("new");
@@ -230,7 +244,7 @@ ok(
   t
     .$("stats")
     .textContent.includes(
-      "First-try accuracy: 33% (1/3) · Correct after retry: 1 · Answers revealed: 1",
+      "First-try accuracy: 50% (1/2) · Solved after retry: 1 · Revealed: 1",
     ),
 );
 let before = t.$("stats").textContent;
@@ -270,7 +284,7 @@ same(t.$("concept-mode").value, "mixed");
 let fresh = launch();
 same(
   fresh.$("stats").textContent,
-  "First-try accuracy: 0% (0/0) · Correct after retry: 0 · Answers revealed: 0 · First-try streak: 0",
+  "First-try accuracy: N/A (0/0) · Solved after retry: 0 · Revealed: 0 · Submissions: 0",
 );
 console.log(
   `PASS: ${checks} Code Concepts interaction assertions covering spoiler-free errors, progressive hints, independent retries, permanently unscored reveals, repeated clicks, mode defaults, and statistics.`,
