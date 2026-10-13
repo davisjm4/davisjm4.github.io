@@ -1,4 +1,5 @@
 import * as E from "./engine.js";
+import { startCodeConcepts } from "./concepts-ui.js";
 const $ = (id) => document.getElementById(id),
   esc = (s) =>
     String(s).replace(
@@ -13,6 +14,14 @@ const $ = (id) => document.getElementById(id),
         })[c],
     );
 export const catalog = [
+  [
+    "code-concepts",
+    "Code Concepts",
+    "3 · Algorithms and Programming",
+    "3.1–3.6 / 3.8 / 3.10 / 3.12–3.13",
+    "{ }",
+    "Identify parameters, selection, iteration, variables, and list concepts in short snippets.",
+  ],
   [
     "binary-builder",
     "Binary Builder",
@@ -151,7 +160,7 @@ function chosenMode(items) {
 if (!game) {
   document.title = "CSP Games | DevCat Studios";
   $("main").innerHTML =
-    `<div class="eyebrow">DevCat Studios · AP Computer Science Principles</div><h1>Think it. Try it.<br>Make it work.</h1><p class="intro">Interactive practice for curious problem solvers. Build, route, search, and experiment—with fresh challenges every time.</p><p><span class="status">11 games</span> &nbsp; No sign-in · Unlimited practice · Immediate feedback</p>` +
+    `<div class="eyebrow">DevCat Studios · AP Computer Science Principles</div><h1>Think it. Try it.<br>Make it work.</h1><p class="intro">Interactive practice for curious problem solvers. Build, route, search, and experiment—with fresh challenges every time.</p><p><span class="status">${catalog.length} games</span> &nbsp; No sign-in · Unlimited practice · Immediate feedback</p>` +
     [...new Set(catalog.map((g) => g[2]))]
       .map(
         (group) =>
@@ -164,12 +173,13 @@ if (!game) {
             .join("")}</div></section>`,
       )
       .join("") +
-    `<section class="panel roadmap"><div class="eyebrow">Development roadmap</div><h2>Procedure Playground</h2><p>In design: parameters and arguments, return values, valid inputs, matching outputs, and execution paths for Create written-response preparation. No playable version yet.</p><p class="muted">Big Idea 1: Creative Development will be addressed by future concept-based activities. This collection does not yet cover the entire curriculum.</p></section>`;
+    `<section class="panel roadmap"><div class="eyebrow">Development roadmap</div><h2>More concept practice</h2><p>Code Concepts is now playable. Future activities may explore execution paths and Create written-response preparation. Teacher Tools and Canvas QTI export remain future work.</p><p class="muted">Big Idea 1: Creative Development will be addressed by future concept-based activities. This collection does not yet cover the entire curriculum.</p></section>`;
 } else {
   document.title = game[1] + " | CSP Games";
   $("main").innerHTML =
     `<div class="eyebrow">Big Idea ${game[2]} · Topics ${game[3]}</div><h1>${game[1]}</h1><p class="intro">${game[5]}</p><div class="toolbar"><div id="controls" class="row"></div>${button("new", "New Challenge", true)}</div><section id="stage" class="panel"></section><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div><p id="stats" class="stats">Session-only practice. No student information collected.</p>`;
   const loaders = {
+    "code-concepts": startCodeConcepts,
     "binary-builder": binary,
     "boolean-gatekeeper": booleanGame,
     "list-lab": listLab,

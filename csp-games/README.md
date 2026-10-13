@@ -6,6 +6,8 @@ Buildless HTML, CSS, and native JavaScript modules. Each game folder has an inde
 
 ## Games
 
+- Code Concepts: rapid one-concept practice across procedures, selection, iteration, variables/expressions, and lists. Mixed Practice opens automatically. Annotated syntax-tree metadata supplies every answer; no tracing or QTI export.
+
 - Binary Builder: 4, 6, 8, or 16 unsigned bits.
 - Boolean Gatekeeper: nested Boolean expressions; evaluate or adjust integer inputs 0–12. Solvability is enumerated.
 - List Lab: one-based INSERT, REMOVE, APPEND; final-state editing or program building, accepting any valid transformation.
@@ -32,6 +34,8 @@ Deploy by committing only this subdirectory to the existing main branch. GitHub 
 
 ## Roadmap
 
-Procedure Playground is intentionally not playable: parameters/arguments, returned values, matching outputs, execution paths, validity requirements, and impossible input-pair challenges still require interaction design. Variable Tracker, Procedure Tracer, and Bug Hunter are deferred. This collection does not claim full AP CSP curriculum coverage.
+Code Concepts is playable at /csp-games/code-concepts/. Possible future extensions include matching outputs and execution paths; Teacher Tools and Canvas QTI export are deferred. Variable Tracker, Procedure Tracer, and Bug Hunter are deferred. This collection does not claim full AP CSP curriculum coverage.
 
 Pseudocode follows the College Board exam reference sheet: https://apcentral.collegeboard.org/media/pdf/ap-computer-science-principles-exam-reference-sheet.pdf .
+
+Code Concepts tests: `node concepts-tests.mjs` and `node concepts-ui-tests.mjs` (the latter uses the same test-only linkedom dependency).

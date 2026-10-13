@@ -524,3 +524,74 @@ footer {
     display: none;
   }
 }
+/* Code Concepts: one snippet, one concept, one selection. */
+.concept-code {
+  line-height: 2.25;
+  font-size: clamp(1rem, 2.7vw, 1.18rem);
+  padding: 20px;
+  overflow-wrap: normal;
+  white-space: pre;
+  overflow-x: auto;
+  touch-action: pan-x pan-y;
+}
+.concept-component {
+  cursor: pointer;
+  border-radius: 4px;
+  outline: 1px solid transparent;
+  outline-offset: 2px;
+  min-height: 44px;
+  display: inline;
+  padding: 6px 1px;
+}
+.concept-component:hover {
+  outline-color: #68849b;
+  background: #29445d;
+}
+.concept-component:focus-visible {
+  outline: 3px solid var(--gold);
+}
+.concept-component.chosen {
+  outline: 2px solid var(--gold);
+  background: #594c2c;
+  color: #fff4d7;
+}
+.concept-component.answer {
+  outline: 3px solid var(--accent);
+  background: #1f574d;
+  color: #e2fff7;
+}
+.concept-summary {
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  margin: 12px 0;
+  color: var(--muted);
+}
+.concept-unknown {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  max-width: 100%;
+}
+.concept-unknown input {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .concept-code {
+    padding: 14px 10px;
+    font-size: 1rem;
+  }
+  .concept-component {
+    padding: 9px 1px;
+  }
+}
+.concept-component:not(:has([data-component])) {
+  display: inline-block;
+  min-width: 44px;
+  min-height: 44px;
+  text-align: center;
+  line-height: 1.7;
+  padding: 6px 4px;
+}

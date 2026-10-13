@@ -8,6 +8,10 @@ const require = createRequire(import.meta.url),
 const src = fs
   .readFileSync(new URL("./app.js", import.meta.url), "utf8")
   .replace(/import \* as E from ["']\.\/engine\.js["'];/, "")
+  .replace(
+    /import \{ startCodeConcepts \} from ["']\.\/concepts-ui\.js["'];/,
+    "",
+  )
   .replace("export const catalog", "const catalog");
 let seed = 123456789;
 Math.random = () => {
@@ -59,6 +63,7 @@ function launch(slug) {
       return (captures[k] = logic[k](...a));
     };
   let context = {
+    startCodeConcepts: () => {},
     document,
     window,
     E,
@@ -347,8 +352,8 @@ for (let repetition = 0; repetition < 20; repetition++) {
   t.click("new");
 }
 let home = launch("");
-assert.equal(home.document.querySelectorAll(".card").length, 11);
-assert.equal(home.document.querySelectorAll("a.button").length, 11);
+assert.equal(home.document.querySelectorAll(".card").length, 12);
+assert.equal(home.document.querySelectorAll("a.button").length, 12);
 // All same-site links and assets have physical targets on Pages (no SPA fallback).
 for (let name of fs
   .readdirSync(new URL("./", import.meta.url), { withFileTypes: true })
