@@ -38,7 +38,8 @@ export function components(root) {
   return result;
 }
 export function assess(q, response) {
-  if (q.interaction === "count") return response === q.answer;
+  if (q.interaction === "count" || q.interaction === "term")
+    return response === q.answer;
   let actual = [...new Set(response)].sort(),
     expected = [...q.answerIds].sort();
   return (

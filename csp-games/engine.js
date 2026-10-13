@@ -411,3 +411,84 @@ export function raceChallenge(mode = "mixed") {
       "Both compute the same final sum. Count additions: a running total adds each item once; recomputing prefixes adds 1 + 2 + … + n items.",
   };
 }
+// Supplemental generators: answers derive from explicit representation/cleaning rules.
+export function binaryExtension(mode, bits) {
+  if (![4, 6, 8, 16].includes(bits)) throw Error("Unsupported bit width");
+  const capacity = 2 ** bits,
+    max = capacity - 1;
+  if (mode === "overflow") {
+    const overflow = pick([true, false]),
+      a = overflow
+        ? int(Math.floor(capacity / 2), max)
+        : int(0, Math.floor(max / 2)),
+      b = overflow
+        ? int(
+            capacity - a,
+            Math.min(max, capacity - a + Math.floor(capacity / 3)),
+          )
+        : int(0, max - a);
+    return {
+      mode,
+      bits,
+      a,
+      b,
+      overflow: a + b > max,
+      result: (a + b) % capacity,
+      capacity,
+      max,
+    };
+  }
+  if (mode === "pixels") {
+    const pixels = Array.from({ length: 9 }, () => int(0, max)),
+      index = int(0, 8);
+    return {
+      mode,
+      bits,
+      pixels,
+      index,
+      target: pixels[index],
+      size: pixels.length * bits,
+      capacity,
+      max,
+    };
+  }
+  return { mode, bits, capacity, max };
+}
+export function cleaningChallenge() {
+  const categories = ["robotics", "design", "coding"],
+    complete = Array.from({ length: 4 }, (_, i) => ({
+      id: i + 1,
+      category: pick(categories),
+      cm: int(20, 300),
+    }));
+  const rows = complete.map((d) => ({
+    id: d.id,
+    category: pick([
+      d.category.toUpperCase(),
+      " " + d.category + " ",
+      d.category,
+    ]),
+    meters: (d.cm / 100).toFixed(2),
+  }));
+  const duplicate = pick(rows);
+  rows.push({ ...duplicate });
+  rows.push({ id: 5, category: pick(categories), meters: "" });
+  return { rows: shuffle(rows), complete };
+}
+export function validateCleaning(c, submitted) {
+  const kept = submitted.filter((r) => r.keep);
+  if (
+    kept.length !== c.complete.length ||
+    new Set(kept.map((r) => r.id)).size !== kept.length
+  )
+    return false;
+  return c.complete.every((expected) =>
+    kept.some(
+      (r) =>
+        r.id === expected.id &&
+        r.category === expected.category &&
+        String(r.cm).trim() !== "" &&
+        Number(r.cm) === expected.cm,
+    ),
+  );
+}

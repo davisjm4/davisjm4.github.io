@@ -167,3 +167,22 @@ for (let game of Object.values(long.games)) {
 console.log(
   `PASS: ${checks} shared-session assertions: deduplication, first-try formula, retries, reveal/skip exclusion, cross-page persistence, reset, corrupt/older data, unavailable storage, and bounded 5,000-round history.`,
 );
+{
+  let timestamp = "2026-10-13T12:00:00Z";
+  const memory = new Map(),
+    tracker = createSessionTracker({
+      storage: {
+        getItem: (k) => memory.get(k) || null,
+        setItem: (k, v) => memory.set(k, v),
+      },
+      now: () => timestamp,
+    });
+  const id = tracker.begin("simulation-lab", "Simulation Lab", "trials");
+  const totals = tracker.snapshot().totals;
+  timestamp = "2026-10-13T12:03:00Z";
+  assert.ok(tracker.interact(id));
+  assert.equal(tracker.snapshot().lastActivityAt, timestamp);
+  assert.deepEqual(tracker.snapshot().totals, totals);
+  tracker.reveal(id);
+  assert.equal(tracker.interact(id), false);
+}

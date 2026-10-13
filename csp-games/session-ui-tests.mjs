@@ -1,3 +1,4 @@
+import { practiceGames } from "./practice-engine.js";
 import fs from "node:fs";
 import vm from "node:vm";
 import assert from "node:assert/strict";
@@ -78,6 +79,7 @@ function launch(slug) {
       (captures[key] = E[key](...args))
     );
   const ctx = {
+    practiceGames,
     document,
     window,
     console,
@@ -121,6 +123,7 @@ function launch(slug) {
       $(id).dispatchEvent(new window.Event("change"));
     };
   return {
+    practiceGames,
     document,
     window,
     ctx,
@@ -134,6 +137,8 @@ function launch(slug) {
 function correct(t, slug) {
   const c = t.captures;
   if (slug === "binary-builder") {
+    if (t.$("mode").value !== "representation")
+      t.change("mode", "representation");
     let n = +t.$("length").value,
       target = +t.document.querySelector(".big-number").textContent,
       bits = target.toString(2).padStart(n, "0");
@@ -283,8 +288,9 @@ for (let slug of slugs) {
 let data = launch("binary-builder").tracker.snapshot();
 eq(data.totals.firstTry, 12);
 eq(data.totals.attempted, 12); // data shared across page visits.
-let t = launch("binary-builder"),
-  target = +t.document.querySelector(".big-number").textContent;
+let t = launch("binary-builder");
+t.change("mode", "representation");
+let target = +t.document.querySelector(".big-number").textContent;
 if (target === 0) t.click("bit0");
 t.click("check");
 ok(t.$("feedback").classList.contains("bad"));

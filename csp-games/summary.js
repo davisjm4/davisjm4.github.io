@@ -1,4 +1,4 @@
-import { sessionTracker, accuracy } from "./session.js";
+import { sessionTracker, accuracy } from "./session.js?v=platform-expansion-v2";
 const $ = (id) => document.getElementById(id),
   esc = (s) =>
     String(s).replace(

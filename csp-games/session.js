@@ -248,6 +248,12 @@ export function createSessionTracker({
   return {
     begin,
     submit,
+    interact: (instance) => {
+      read();
+      if (data.records[instance]?.status !== "active") return false;
+      activity();
+      return true;
+    },
     reveal: (instance) => close(instance, "revealed"),
     skip: (instance) => close(instance, "skipped"),
     snapshot,

@@ -2,15 +2,11 @@
   "audited": "2026-10-13",
   "source": "https://apcentral.collegeboard.org/media/pdf/ap-computer-science-principles-course-and-exam-description.pdf",
   "sourceEdition": "Effective Fall 2023, current official AP Central CED retrieved 2026-10-13",
-  "scope": "35 topics, six practices. Status describes current practice, not the implementation of planned games. No topic is marked Reinforced without independent explanation practice.",
+  "scope": "35 topics and six practices. Every topic has at least introductory practice, but no topic is claimed comprehensively covered. Classifications describe the listed modes, not every objective or essential-knowledge item. No topic is marked Reinforced: unrestricted explanation and authentic project work remain teacher-reviewed.",
   "topics": [
     {
       "topic": "1.1",
-      "objectives": [
-        "CRD-1.A",
-        "CRD-1.B",
-        "CRD-1.C"
-      ],
+      "objectives": ["CRD-1.A", "CRD-1.B", "CRD-1.C"],
       "essentialKnowledge": [
         "CRD-1.A.1",
         "CRD-1.A.2",
@@ -24,27 +20,22 @@
       ],
       "pdfPage": 39,
       "title": "Collaboration",
-      "coverage": "Not covered",
+      "coverage": "Introduced",
       "objectiveSummary": "Develop with diverse contributors; communicate and resolve disagreements.",
       "knowledgeSummary": "Perspectives, feedback, shared tools.",
-      "activity": "Computing Impact Lab (planned)",
-      "modes": "Team roles; evidence of collaboration",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "Authentic team work and peer feedback required."
+      "activity": "Code Concepts / Mixed AP Exam Practice",
+      "modes": "Collaboration evidence; shared feedback",
+      "identification": "Implemented for listed concepts",
+      "application": "Limited recognition/application in listed modes",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Authentic teamwork, resolving disagreement, and incorporating diverse perspectives require teacher-reviewed projects."
     },
     {
       "topic": "1.2",
-      "objectives": [
-        "CRD-2.A",
-        "CRD-2.B",
-        "CRD-2.C",
-        "CRD-2.D"
-      ],
+      "objectives": ["CRD-2.A", "CRD-2.B", "CRD-2.C", "CRD-2.D"],
       "essentialKnowledge": [
         "CRD-2.A.1",
         "CRD-2.A.2",
@@ -64,27 +55,22 @@
       ],
       "pdfPage": 41,
       "title": "Program Function and Purpose",
-      "coverage": "Not covered",
+      "coverage": "Introduced",
       "objectiveSummary": "Relate purpose, behavior, inputs, and outputs.",
       "knowledgeSummary": "Events; intended behavior; program execution.",
-      "activity": "Response Builder (planned)",
-      "modes": "Purpose/input/output explanations",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "Explain purpose and function of student-created programs."
+      "activity": "Code Concepts / Response Builder / Mixed AP Exam Practice",
+      "modes": "Program purpose; behavior/evidence explanations",
+      "identification": "Implemented for listed concepts",
+      "application": "Limited recognition/application in listed modes",
+      "explanation": "Structured response construction in relevant Response Builder / Impact Lab modes; unstructured reflection is unscored",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Students still need to explain purpose, inputs, and outputs of their own programs; limited template contexts do not certify all objectives."
     },
     {
       "topic": "1.3",
-      "objectives": [
-        "CRD-2.E",
-        "CRD-2.F",
-        "CRD-2.G",
-        "CRD-2.H"
-      ],
+      "objectives": ["CRD-2.E", "CRD-2.F", "CRD-2.G", "CRD-2.H"],
       "essentialKnowledge": [
         "CRD-2.E.1",
         "CRD-2.E.2",
@@ -107,25 +93,22 @@
       ],
       "pdfPage": 43,
       "title": "Program Design and Development",
-      "coverage": "Not covered",
+      "coverage": "Introduced",
       "objectiveSummary": "Plan, iterate, document, and refine programs.",
       "knowledgeSummary": "User needs, prototypes, incremental development, comments.",
-      "activity": "Algorithm Architect / Response Builder (planned)",
-      "modes": "Design choices; documentation",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "Authentic design artifacts, revisions, and documentation required."
+      "activity": "Code Concepts / Algorithm Architect",
+      "modes": "Iterative development; documentation; algorithm construction",
+      "identification": "Implemented for listed concepts",
+      "application": "Limited recognition/application in listed modes",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "User research, prototypes, full design cycles, and documentation of original projects remain authentic work."
     },
     {
       "topic": "1.4",
-      "objectives": [
-        "CRD-2.I",
-        "CRD-2.J"
-      ],
+      "objectives": ["CRD-2.I", "CRD-2.J"],
       "essentialKnowledge": [
         "CRD-2.I.1",
         "CRD-2.I.2",
@@ -138,26 +121,22 @@
       ],
       "pdfPage": 46,
       "title": "Identifying and Correcting Errors",
-      "coverage": "Not covered",
+      "coverage": "Practiced",
       "objectiveSummary": "Find and fix errors; design revealing tests.",
       "knowledgeSummary": "Syntax, logic, runtime errors; expected vs actual results.",
-      "activity": "Test Case Builder (planned)",
-      "modes": "Boundary/branch/error tests",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "No dedicated testing or debugging game yet."
+      "activity": "Test Case Builder / Response Builder / Algorithm Architect",
+      "modes": "Normal/boundary/branch cases; error-exposing and nonexposing tests; expected/actual output; structured test explanations",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Structured response construction in relevant Response Builder / Impact Lab modes; unstructured reflection is unscored",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Broader syntax/run-time errors, debugging original programs, and justifying a full test strategy remain partial."
     },
     {
       "topic": "2.1",
-      "objectives": [
-        "DAT-1.A",
-        "DAT-1.B",
-        "DAT-1.C"
-      ],
+      "objectives": ["DAT-1.A", "DAT-1.B", "DAT-1.C"],
       "essentialKnowledge": [
         "DAT-1.A.1",
         "DAT-1.A.2",
@@ -183,21 +162,19 @@
       "coverage": "Practiced",
       "objectiveSummary": "Convert representations and explain finite precision.",
       "knowledgeSummary": "Bits, positional values, capacity, overflow, analog/digital.",
-      "activity": "Binary Builder",
-      "modes": "Unsigned decimal → binary (4/6/8/16 bits)",
-      "identification": "Partial",
-      "application": "Implemented in listed modes",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Missing capacity, overflow, rounding, and analog representations."
+      "activity": "Binary Builder / Mixed AP Exam Practice",
+      "modes": "Representation; capacity/maximum; specified unsigned overflow model; grayscale pixels and raw storage",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Analog sampling, precision trade-offs, and richer color representations remain partial. Wrap behavior is explicitly a game model, not universal hardware behavior."
     },
     {
       "topic": "2.2",
-      "objectives": [
-        "DAT-1.D"
-      ],
+      "objectives": ["DAT-1.D"],
       "essentialKnowledge": [
         "DAT-1.D.1",
         "DAT-1.D.2",
@@ -213,23 +190,19 @@
       "coverage": "Practiced",
       "objectiveSummary": "Evaluate lossless/lossy trade-offs.",
       "knowledgeSummary": "Storage reduction; reversibility; loss of detail.",
-      "activity": "Compression Challenge",
-      "modes": "Text RLE; pixels; raw/RLE and scan optimization",
-      "identification": "Partial",
-      "application": "Implemented in listed modes",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Lossy compression, image representation, and trade-off explanations missing."
+      "activity": "Compression Challenge / Code Concepts / Mixed AP Exam Practice",
+      "modes": "Text/image RLE; exact optimization under stated rules; lossless/lossy concepts",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Lossy compression trade-offs are introduced rather than fully simulated. Optimization is limited to specified encodings."
     },
     {
       "topic": "2.3",
-      "objectives": [
-        "DAT-2.A",
-        "DAT-2.B",
-        "DAT-2.C"
-      ],
+      "objectives": ["DAT-2.A", "DAT-2.B", "DAT-2.C"],
       "essentialKnowledge": [
         "DAT-2.A.1",
         "DAT-2.A.2",
@@ -254,22 +227,19 @@
       "coverage": "Practiced",
       "objectiveSummary": "Use patterns and tools to draw supported conclusions.",
       "knowledgeSummary": "Metadata, scale, trends, correlation, processing.",
-      "activity": "Data Detective",
-      "modes": "Tables; trends; correlation; graph configuration",
-      "identification": "Partial",
-      "application": "Implemented in listed modes",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Metadata, data cleaning, collection limits, and explanation missing."
+      "activity": "Data Detective / Code Concepts",
+      "modes": "Tables/charts; data cleaning; metadata; limited samples and causation",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Authentic collection, large-scale data exploration, missing-data policies, and varied sampling methods remain partial."
     },
     {
       "topic": "2.4",
-      "objectives": [
-        "DAT-2.D",
-        "DAT-2.E"
-      ],
+      "objectives": ["DAT-2.D", "DAT-2.E"],
       "essentialKnowledge": [
         "DAT-2.D.1",
         "DAT-2.D.2",
@@ -288,22 +258,19 @@
       "coverage": "Practiced",
       "objectiveSummary": "Use computation to transform and analyze data.",
       "knowledgeSummary": "Filtering, grouping, visualization; insights and limits.",
-      "activity": "Data Detective",
-      "modes": "Sort/filter/select; visualization",
-      "identification": "Partial",
-      "application": "Implemented in listed modes",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "No independent data-cleaning or large-data investigation."
+      "activity": "Data Detective / Response Builder",
+      "modes": "Filtering/sorting; visualizations; normalize formats/units/deduplicate; evidence judgments",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Real datasets, transformations beyond bounded rules, and open-ended findings need authentic investigation."
     },
     {
       "topic": "3.1",
-      "objectives": [
-        "AAP-1.A",
-        "AAP-1.B"
-      ],
+      "objectives": ["AAP-1.A", "AAP-1.B"],
       "essentialKnowledge": [
         "AAP-1.A.1",
         "AAP-1.A.2",
@@ -318,22 +285,19 @@
       "coverage": "Introduced",
       "objectiveSummary": "Represent values and use assignment.",
       "knowledgeSummary": "Types, names, storing and changing values.",
-      "activity": "Code Concepts",
-      "modes": "Variable/value/assignment identification",
-      "identification": "Implemented",
-      "application": "Partial / not targeted",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Application with changing values and explanation missing."
+      "activity": "Code Concepts / Algorithm Architect",
+      "modes": "Forward/reverse variable/value/assignment identification; initialized state in constructions",
+      "identification": "Implemented for listed concepts",
+      "application": "Limited recognition/application in listed modes",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Rich state changes and choosing representations in original programs remain partial; dedicated tracing is intentionally delegated to DeltaMath."
     },
     {
       "topic": "3.2",
-      "objectives": [
-        "AAP-1.C",
-        "AAP-1.D"
-      ],
+      "objectives": ["AAP-1.C", "AAP-1.D"],
       "essentialKnowledge": [
         "AAP-1.C.1",
         "AAP-1.C.2",
@@ -350,26 +314,22 @@
       ],
       "pdfPage": 72,
       "title": "Data Abstraction",
-      "coverage": "Introduced",
+      "coverage": "Practiced",
       "objectiveSummary": "Use collections and explain complexity management.",
       "knowledgeSummary": "Lists group data; representation independence.",
-      "activity": "Code Concepts / List Lab",
-      "modes": "List/element/name identification; list edits",
-      "identification": "Implemented",
-      "application": "Partial / not targeted",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "List manipulation is practiced; abstraction explanations are not."
+      "activity": "List Lab / Code Concepts / Response Builder",
+      "modes": "List manipulation; data abstraction; structured complexity explanations",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Structured response construction in relevant Response Builder / Impact Lab modes; unstructured reflection is unscored",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Designing and defending an appropriate abstraction for an original project requires teacher review."
     },
     {
       "topic": "3.3",
-      "objectives": [
-        "AAP-2.A",
-        "AAP-2.B",
-        "AAP-2.C"
-      ],
+      "objectives": ["AAP-2.A", "AAP-2.B", "AAP-2.C"],
       "essentialKnowledge": [
         "AAP-2.A.1",
         "AAP-2.A.2",
@@ -389,49 +349,41 @@
       ],
       "pdfPage": 75,
       "title": "Mathematical Expressions",
-      "coverage": "Not covered",
+      "coverage": "Practiced",
       "objectiveSummary": "Use arithmetic and evaluate expressions.",
       "knowledgeSummary": "Order of operations, arithmetic, remainder.",
-      "activity": "Algorithm Architect (planned)",
-      "modes": "Configure calculations",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "Arithmetic-expression application and explanations missing."
+      "activity": "Algorithm Architect / Mixed AP Exam Practice",
+      "modes": "Configure arithmetic expression blocks; accumulator totals; alternative order/offset constructions",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Division, MOD, operator precedence, and the full range of arithmetic expression transformations remain partial."
     },
     {
       "topic": "3.4",
-      "objectives": [
-        "AAP-2.D"
-      ],
-      "essentialKnowledge": [
-        "AAP-2.D.1",
-        "AAP-2.D.2"
-      ],
+      "objectives": ["AAP-2.D"],
+      "essentialKnowledge": ["AAP-2.D.1", "AAP-2.D.2"],
       "pdfPage": 77,
       "title": "Strings",
-      "coverage": "Not covered",
+      "coverage": "Practiced",
       "objectiveSummary": "Manipulate text values.",
       "knowledgeSummary": "Concatenation and substring operations.",
-      "activity": "Algorithm Architect (planned)",
-      "modes": "Text construction",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "String literals occur, but string manipulation is not practiced."
+      "activity": "Test Case Builder / Code Concepts",
+      "modes": "Strings; concatenation using documented library; empty/nonempty input and exact result",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Substring extraction, length, searching strings, and broader string processing remain gaps."
     },
     {
       "topic": "3.5",
-      "objectives": [
-        "AAP-2.E",
-        "AAP-2.F"
-      ],
+      "objectives": ["AAP-2.E", "AAP-2.F"],
       "essentialKnowledge": [
         "AAP-2.E.1",
         "AAP-2.E.2",
@@ -446,22 +398,19 @@
       "coverage": "Practiced",
       "objectiveSummary": "Construct and evaluate Boolean logic.",
       "knowledgeSummary": "Comparison, AND/OR/NOT, compound conditions.",
-      "activity": "Boolean Gatekeeper / Code Concepts",
-      "modes": "Evaluate; make TRUE; expression identification",
-      "identification": "Partial",
-      "application": "Implemented in listed modes",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Independent explanations and varied contexts need expansion."
+      "activity": "Boolean Gatekeeper / Code Concepts / Algorithm Architect",
+      "modes": "Nested AND/OR/NOT; comparison/Boolean value vs expression; equivalent negated comparisons",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Logical-equivalence explanations and complex contextual conditions remain partial."
     },
     {
       "topic": "3.6",
-      "objectives": [
-        "AAP-2.G",
-        "AAP-2.H"
-      ],
+      "objectives": ["AAP-2.G", "AAP-2.H"],
       "essentialKnowledge": [
         "AAP-2.G.1",
         "AAP-2.H.1",
@@ -470,48 +419,41 @@
       ],
       "pdfPage": 80,
       "title": "Conditionals",
-      "coverage": "Introduced",
+      "coverage": "Practiced",
       "objectiveSummary": "Use selection to govern execution.",
       "knowledgeSummary": "IF; IF/ELSE; conditions and branches.",
-      "activity": "Code Concepts",
-      "modes": "Whole structure vs condition; true/false body",
-      "identification": "Implemented",
-      "application": "Partial / not targeted",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "No algorithm-construction or branch-testing application yet."
+      "activity": "Code Concepts / Algorithm Architect / Test Case Builder",
+      "modes": "Entire selection vs condition; true/false branches; conditional constructions and boundary tests",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Creating general original selections and extended explanations remain partial."
     },
     {
       "topic": "3.7",
-      "objectives": [
-        "AAP-2.I"
-      ],
-      "essentialKnowledge": [
-        "AAP-2.I.1"
-      ],
+      "objectives": ["AAP-2.I"],
+      "essentialKnowledge": ["AAP-2.I.1"],
       "pdfPage": 82,
       "title": "Nested Conditionals",
-      "coverage": "Not covered",
+      "coverage": "Practiced",
       "objectiveSummary": "Use nested selection.",
       "knowledgeSummary": "Conditions within branches and decision paths.",
-      "activity": "Algorithm Architect / Test Case Builder (planned)",
-      "modes": "Nested rules; branch coverage",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "Nested-selection application missing."
+      "activity": "Algorithm Architect",
+      "modes": "Nested IF range filter; nested structures and edge-case validation",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Other nested branch shapes, ELSE combinations, and transformations between equivalent selections remain partial."
     },
     {
       "topic": "3.8",
-      "objectives": [
-        "AAP-2.J",
-        "AAP-2.K"
-      ],
+      "objectives": ["AAP-2.J", "AAP-2.K"],
       "essentialKnowledge": [
         "AAP-2.J.1",
         "AAP-2.K.1",
@@ -522,25 +464,22 @@
       ],
       "pdfPage": 83,
       "title": "Iteration",
-      "coverage": "Introduced",
+      "coverage": "Practiced",
       "objectiveSummary": "Use repetition and determine stopping behavior.",
       "knowledgeSummary": "Fixed repetition, condition-controlled loops, traversal.",
-      "activity": "Code Concepts",
-      "modes": "Loop/body/item/count/stopping-condition identification",
-      "identification": "Implemented",
-      "application": "Partial / not targeted",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Loop construction, accumulators, and stopping-condition application missing."
+      "activity": "Code Concepts / Algorithm Architect / Test Case Builder",
+      "modes": "REPEAT/FOR EACH/REPEAT UNTIL identification; known and unknown counts; accumulators/traversals",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Constructing arbitrary stopping-condition loops and termination arguments remain partial."
     },
     {
       "topic": "3.9",
-      "objectives": [
-        "AAP-2.L",
-        "AAP-2.M"
-      ],
+      "objectives": ["AAP-2.L", "AAP-2.M"],
       "essentialKnowledge": [
         "AAP-2.L.1",
         "AAP-2.L.2",
@@ -553,25 +492,22 @@
       ],
       "pdfPage": 85,
       "title": "Developing Algorithms",
-      "coverage": "Not covered",
+      "coverage": "Practiced",
       "objectiveSummary": "Design, compare, and combine algorithms.",
       "knowledgeSummary": "Sequencing, selection, repetition, equivalent solutions.",
-      "activity": "Algorithm Architect (planned)",
-      "modes": "Construct and test solutions",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "Authentic algorithm design and alternative-solution validation needed."
+      "activity": "Algorithm Architect / List Lab",
+      "modes": "Sequencing, filters, counters, sums, search, nested conditions/loops; equivalent configurations",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Original algorithms, refinement, and more diverse alternative approaches require additional work."
     },
     {
       "topic": "3.10",
-      "objectives": [
-        "AAP-2.N",
-        "AAP-2.O"
-      ],
+      "objectives": ["AAP-2.N", "AAP-2.O"],
       "essentialKnowledge": [
         "AAP-2.N.1",
         "AAP-2.N.2",
@@ -586,46 +522,38 @@
       "coverage": "Practiced",
       "objectiveSummary": "Access, modify, and traverse lists.",
       "knowledgeSummary": "One-based indexing; insertion/removal; traversal.",
-      "activity": "List Lab / Code Concepts",
-      "modes": "Execute operations; build transformations; index/element",
-      "identification": "Partial",
-      "application": "Implemented in listed modes",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Search/traversal algorithms and complexity explanations missing."
+      "activity": "List Lab / Code Concepts / Algorithm Architect / Test Case Builder",
+      "modes": "One-based operations; list transformation; traversal; empty/single list tests",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Broader list algorithms and explaining chosen abstractions in a student project remain partial."
     },
     {
       "topic": "3.11",
-      "objectives": [
-        "AAP-2.P"
-      ],
-      "essentialKnowledge": [
-        "AAP-2.P.1",
-        "AAP-2.P.2",
-        "AAP-2.P.3"
-      ],
+      "objectives": ["AAP-2.P"],
+      "essentialKnowledge": ["AAP-2.P.1", "AAP-2.P.2", "AAP-2.P.3"],
       "pdfPage": 90,
       "title": "Binary Search",
       "coverage": "Practiced",
       "objectiveSummary": "Apply binary search to ordered data.",
       "knowledgeSummary": "Midpoints, sorted prerequisite, eliminated regions.",
-      "activity": "Binary Search Hunt",
-      "modes": "Hidden values; present/absent target; lower-midpoint convention",
-      "identification": "Partial",
-      "application": "Implemented in listed modes",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Need independent comparison/explanation practice."
+      "activity": "Binary Search Hunt / Algorithm Race",
+      "modes": "Hidden sorted cards; midpoint algorithm; absent target; search comparisons",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Justifying sorting requirements and comparing search choices in extended explanations remain partial."
     },
     {
       "topic": "3.12",
-      "objectives": [
-        "AAP-3.A"
-      ],
+      "objectives": ["AAP-3.A"],
       "essentialKnowledge": [
         "AAP-3.A.1",
         "AAP-3.A.2",
@@ -639,25 +567,22 @@
       ],
       "pdfPage": 91,
       "title": "Calling Procedures",
-      "coverage": "Introduced",
+      "coverage": "Practiced",
       "objectiveSummary": "Call procedures with supplied inputs and use results.",
       "knowledgeSummary": "Arguments, parameter positions, returns.",
-      "activity": "Code Concepts",
-      "modes": "Call/argument matching; literal return vs output",
-      "identification": "Implemented",
-      "application": "Partial / not targeted",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Nontracing procedure application and explanation missing."
+      "activity": "Code Concepts / Test Case Builder / Algorithm Architect",
+      "modes": "Forward/reverse calls/parameters/arguments/return vs output; construct and test procedures",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Variable arguments, composed/nested calls, and general procedure interface design remain partial."
     },
     {
       "topic": "3.13",
-      "objectives": [
-        "AAP-3.B",
-        "AAP-3.C"
-      ],
+      "objectives": ["AAP-3.B", "AAP-3.C"],
       "essentialKnowledge": [
         "AAP-3.B.1",
         "AAP-3.B.2",
@@ -671,24 +596,22 @@
       ],
       "pdfPage": 94,
       "title": "Developing Procedures",
-      "coverage": "Introduced",
+      "coverage": "Practiced",
       "objectiveSummary": "Develop parameterized abstractions and explain their purpose.",
       "knowledgeSummary": "Reuse, generalization, complexity management.",
-      "activity": "Code Concepts",
-      "modes": "Definition/name/parameter identification",
-      "identification": "Implemented",
-      "application": "Partial / not targeted",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Procedure construction and abstraction explanation missing."
+      "activity": "Code Concepts / Algorithm Architect / Response Builder",
+      "modes": "Named reusable action; parameterized constructions; list/procedure complexity explanations",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Structured response construction in relevant Response Builder / Impact Lab modes; unstructured reflection is unscored",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Developing original procedures, documentation, and Create response explanations require authentic work."
     },
     {
       "topic": "3.14",
-      "objectives": [
-        "AAP-3.D"
-      ],
+      "objectives": ["AAP-3.D"],
       "essentialKnowledge": [
         "AAP-3.D.1",
         "AAP-3.D.2",
@@ -698,48 +621,41 @@
       ],
       "pdfPage": 97,
       "title": "Libraries",
-      "coverage": "Not covered",
+      "coverage": "Introduced",
       "objectiveSummary": "Use documented reusable software.",
       "knowledgeSummary": "APIs, libraries, documentation, reuse.",
-      "activity": "Code Concepts expansion (planned)",
-      "modes": "Library/interface identification",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "API use and documentation interpretation missing."
+      "activity": "Code Concepts / Test Case Builder",
+      "modes": "Library recognition; documented CONCAT call and input/output test",
+      "identification": "Implemented for listed concepts",
+      "application": "Limited recognition/application in listed modes",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Using broader library interfaces, combining modules, and explaining library development benefits remain partial."
     },
     {
       "topic": "3.15",
-      "objectives": [
-        "AAP-3.E"
-      ],
-      "essentialKnowledge": [
-        "AAP-3.E.1",
-        "AAP-3.E.2"
-      ],
+      "objectives": ["AAP-3.E"],
+      "essentialKnowledge": ["AAP-3.E.1", "AAP-3.E.2"],
       "pdfPage": 98,
       "title": "Random Values",
-      "coverage": "Not covered",
+      "coverage": "Practiced",
       "objectiveSummary": "Use randomness to model and generate outcomes.",
       "knowledgeSummary": "Inclusive random ranges; distributions; trials.",
-      "activity": "Simulation Lab (planned)",
-      "modes": "Seeded trials; range/probability experiments",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "Random generators behind games do not count as student randomness practice."
+      "activity": "Simulation Lab",
+      "modes": "Uniform integer threshold model; probability; reproducible seeded trials; expected vs observed counts",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Other random ranges, random list selections, and algorithm design using randomness remain partial."
     },
     {
       "topic": "3.16",
-      "objectives": [
-        "AAP-3.F"
-      ],
+      "objectives": ["AAP-3.F"],
       "essentialKnowledge": [
         "AAP-3.F.1",
         "AAP-3.F.2",
@@ -752,24 +668,22 @@
       ],
       "pdfPage": 99,
       "title": "Simulations",
-      "coverage": "Not covered",
+      "coverage": "Practiced",
       "objectiveSummary": "Develop and evaluate models.",
       "knowledgeSummary": "Assumptions, simplification, model limitations.",
-      "activity": "Simulation Lab (planned)",
-      "modes": "Parameter changes; predictions; repeated trials",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "Existing race animations do not assess simulation design."
+      "activity": "Simulation Lab",
+      "modes": "Adjust probability/trial count/seed; run and inspect proportions; compare expectations; model assumptions",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "One independent-trial model is implemented; queues, feedback, dependent events, and validating models against authentic observations remain gaps."
     },
     {
       "topic": "3.17",
-      "objectives": [
-        "AAP-4.A"
-      ],
+      "objectives": ["AAP-4.A"],
       "essentialKnowledge": [
         "AAP-4.A.1",
         "AAP-4.A.2",
@@ -786,49 +700,38 @@
       "coverage": "Practiced",
       "objectiveSummary": "Compare resource requirements and feasibility.",
       "knowledgeSummary": "Step counts, growth, reasonable vs unreasonable time.",
-      "activity": "Algorithm Race",
-      "modes": "Search/pair checks/totals; defined step models",
-      "identification": "Partial",
-      "application": "Implemented in listed modes",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Broader growth/feasibility/heuristic explanation missing."
+      "activity": "Algorithm Race / Parallel Processing Race / Mixed AP Exam Practice",
+      "modes": "Explicit step models; simultaneous independent tasks; search/duplicate/total comparisons",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Polynomial/exponential growth and limits of reasonable time need broader practice."
     },
     {
       "topic": "3.18",
-      "objectives": [
-        "AAP-4.B"
-      ],
-      "essentialKnowledge": [
-        "AAP-4.B.1",
-        "AAP-4.B.2",
-        "AAP-4.B.3"
-      ],
+      "objectives": ["AAP-4.B"],
+      "essentialKnowledge": ["AAP-4.B.1", "AAP-4.B.2", "AAP-4.B.3"],
       "pdfPage": 103,
       "title": "Undecidable Problems",
-      "coverage": "Not covered",
+      "coverage": "Introduced",
       "objectiveSummary": "Explain limits of algorithmic decision-making.",
       "knowledgeSummary": "No algorithm solves every instance of some decision problems.",
-      "activity": "Code Concepts expansion (planned)",
-      "modes": "Unsolvable-in-general vs hard cases",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "No meaningful undecidability practice."
+      "activity": "Code Concepts / Mixed AP Exam Practice",
+      "modes": "Undecidable vs slow; general halting scenario",
+      "identification": "Implemented for listed concepts",
+      "application": "Limited recognition/application in listed modes",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Further examples, reasoning about solvability, and distinguishing heuristics remain partial."
     },
     {
       "topic": "4.1",
-      "objectives": [
-        "CSN-1.A",
-        "CSN-1.B",
-        "CSN-1.C",
-        "CSN-1.D"
-      ],
+      "objectives": ["CSN-1.A", "CSN-1.B", "CSN-1.C", "CSN-1.D"],
       "essentialKnowledge": [
         "CSN-1.A.1",
         "CSN-1.A.2",
@@ -858,21 +761,19 @@
       "coverage": "Practiced",
       "objectiveSummary": "Explain communication among computing devices.",
       "knowledgeSummary": "Addresses, protocols, packets, routing, scalability.",
-      "activity": "Packet Router / Network Breaker",
-      "modes": "Select routes; reroute failed links",
-      "identification": "Partial",
-      "application": "Implemented in listed modes",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Routing only: addressing, DNS, TCP/IP, HTTP, and packet reassembly missing."
+      "activity": "Packet Router / Code Concepts / Mixed AP Exam Practice",
+      "modes": "Routes and packets; protocol/IP address recognition; destination addressing concept",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "DNS, TCP/IP distinctions, bandwidth, protocol layering, and packet reassembly need fuller interactive practice."
     },
     {
       "topic": "4.2",
-      "objectives": [
-        "CSN-1.E"
-      ],
+      "objectives": ["CSN-1.E"],
       "essentialKnowledge": [
         "CSN-1.E.1",
         "CSN-1.E.2",
@@ -887,22 +788,19 @@
       "coverage": "Practiced",
       "objectiveSummary": "Analyze redundancy and continued operation during failure.",
       "knowledgeSummary": "Alternate paths and failure limits.",
-      "activity": "Network Breaker / Packet Router",
-      "modes": "Minimum edge cuts; rerouting",
-      "identification": "Partial",
-      "application": "Implemented in listed modes",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Need scenario distinctions between redundancy and demonstrated fault tolerance."
+      "activity": "Network Breaker / Packet Router / Code Concepts / Mixed AP Exam Practice",
+      "modes": "True minimum edge cut; broken-link rerouting; redundancy vs demonstrated fault tolerance",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "General analysis of resilience across different failure models remains partial."
     },
     {
       "topic": "4.3",
-      "objectives": [
-        "CSN-2.A",
-        "CSN-2.B"
-      ],
+      "objectives": ["CSN-2.A", "CSN-2.B"],
       "essentialKnowledge": [
         "CSN-2.A.1",
         "CSN-2.A.2",
@@ -922,22 +820,19 @@
       "coverage": "Practiced",
       "objectiveSummary": "Compare sequential, parallel, and distributed processing.",
       "knowledgeSummary": "Work division, speedup limits, dependencies.",
-      "activity": "Parallel Processing Race",
-      "modes": "Independent assignments; dependency-constrained schedules",
-      "identification": "Partial",
-      "application": "Implemented in listed modes",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Distributed systems, overhead, and explanation need expansion."
+      "activity": "Parallel Processing Race / Code Concepts / Mixed AP Exam Practice",
+      "modes": "Optimal independent schedules; optional task dependencies; sequential/parallel time and speedup",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Distributed computing communication/overhead and parallel limits beyond the stated models need broader practice."
     },
     {
       "topic": "5.1",
-      "objectives": [
-        "IOC-1.A",
-        "IOC-1.B"
-      ],
+      "objectives": ["IOC-1.A", "IOC-1.B"],
       "essentialKnowledge": [
         "IOC-1.A.1",
         "IOC-1.A.2",
@@ -953,24 +848,22 @@
       ],
       "pdfPage": 121,
       "title": "Beneficial and Harmful Effects",
-      "coverage": "Not covered",
+      "coverage": "Practiced",
       "objectiveSummary": "Analyze computing effects across groups.",
       "knowledgeSummary": "Intended/unintended impacts and trade-offs.",
-      "activity": "Computing Impact Lab (planned)",
-      "modes": "Evidence and consequences",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "No computing-innovation impact practice."
+      "activity": "Computing Impact Lab / Code Concepts",
+      "modes": "Benefit/harm; unintended traffic/access consequences; trade-offs; evidence-based structured explanation",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Structured response construction in relevant Response Builder / Impact Lab modes; unstructured reflection is unscored",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Scenarios are bounded templates; authentic innovation research and diverse stakeholder writing remain essential."
     },
     {
       "topic": "5.2",
-      "objectives": [
-        "IOC-1.C"
-      ],
+      "objectives": ["IOC-1.C"],
       "essentialKnowledge": [
         "IOC-1.C.1",
         "IOC-1.C.2",
@@ -980,49 +873,41 @@
       ],
       "pdfPage": 123,
       "title": "Digital Divide",
-      "coverage": "Not covered",
+      "coverage": "Practiced",
       "objectiveSummary": "Explain unequal computing access.",
       "knowledgeSummary": "Infrastructure, cost, geography, accessibility.",
-      "activity": "Computing Impact Lab (planned)",
-      "modes": "Access barriers; supported conclusions",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "No digital-divide practice."
+      "activity": "Computing Impact Lab / Code Concepts",
+      "modes": "Unequal access; offline alternatives; keyboard/label accessibility barriers",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Structured response construction in relevant Response Builder / Impact Lab modes; unstructured reflection is unscored",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Geographic/socioeconomic causes and evaluating real policy responses require further research/discussion."
     },
     {
       "topic": "5.3",
-      "objectives": [
-        "IOC-1.D"
-      ],
-      "essentialKnowledge": [
-        "IOC-1.D.1",
-        "IOC-1.D.2",
-        "IOC-1.D.3"
-      ],
+      "objectives": ["IOC-1.D"],
+      "essentialKnowledge": ["IOC-1.D.1", "IOC-1.D.2", "IOC-1.D.3"],
       "pdfPage": 124,
       "title": "Computing Bias",
-      "coverage": "Not covered",
+      "coverage": "Practiced",
       "objectiveSummary": "Explain and investigate computing bias.",
       "knowledgeSummary": "Data, design choices, unequal outcomes.",
-      "activity": "Computing Impact Lab (planned)",
-      "modes": "Bias evidence vs assumptions",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "No bias practice."
+      "activity": "Computing Impact Lab / Code Concepts / Mixed AP Exam Practice",
+      "modes": "Group disparities; representation in data; supported bias conclusions",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Structured response construction in relevant Response Builder / Impact Lab modes; unstructured reflection is unscored",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Audit methods, bias mitigation, nuanced causation, and broader real-world evidence remain partial."
     },
     {
       "topic": "5.4",
-      "objectives": [
-        "IOC-1.E"
-      ],
+      "objectives": ["IOC-1.E"],
       "essentialKnowledge": [
         "IOC-1.E.1",
         "IOC-1.E.2",
@@ -1033,24 +918,22 @@
       ],
       "pdfPage": 125,
       "title": "Crowdsourcing",
-      "coverage": "Not covered",
+      "coverage": "Practiced",
       "objectiveSummary": "Evaluate contributions from many participants.",
       "knowledgeSummary": "Distributed contributions; collective knowledge.",
-      "activity": "Computing Impact Lab (planned)",
-      "modes": "Participation/evidence scenarios",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "No crowdsourcing practice."
+      "activity": "Computing Impact Lab / Code Concepts",
+      "modes": "Volunteer labels; community map contributions; duplicates and validation",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Structured response construction in relevant Response Builder / Impact Lab modes; unstructured reflection is unscored",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Research workflows, scientific collaboration at scale, and benefits/limits across more contexts remain partial."
     },
     {
       "topic": "5.5",
-      "objectives": [
-        "IOC-1.F"
-      ],
+      "objectives": ["IOC-1.F"],
       "essentialKnowledge": [
         "IOC-1.F.1",
         "IOC-1.F.2",
@@ -1066,26 +949,22 @@
       ],
       "pdfPage": 126,
       "title": "Legal and Ethical Concerns",
-      "coverage": "Not covered",
+      "coverage": "Practiced",
       "objectiveSummary": "Evaluate responsible creation and use.",
       "knowledgeSummary": "Attribution, licenses, intellectual property, data rights.",
-      "activity": "Computing Impact Lab (planned)",
-      "modes": "Facts vs judgments; supported reasoning",
-      "identification": "Planned",
-      "application": "Planned",
-      "explanation": "Not yet independently verified",
-      "validation": "Planned deterministic structured checks; free reflection unscored",
-      "implementation": "Not implemented",
-      "testing": "Not implemented / not tested",
-      "gaps": "No legal/ethical practice; nuanced discussion and attribution required."
+      "activity": "Computing Impact Lab / Code Concepts / Mixed AP Exam Practice",
+      "modes": "Copyright/license/attribution; informed consent; privacy and trade-offs",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Structured response construction in relevant Response Builder / Impact Lab modes; unstructured reflection is unscored",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Legal exceptions, jurisdiction-specific rules, open-source distinctions, and authentic attribution practice remain partial. Subjective ethics are not automatically scored."
     },
     {
       "topic": "5.6",
-      "objectives": [
-        "IOC-2.A",
-        "IOC-2.B",
-        "IOC-2.C"
-      ],
+      "objectives": ["IOC-2.A", "IOC-2.B", "IOC-2.C"],
       "essentialKnowledge": [
         "IOC-2.A.1",
         "IOC-2.A.2",
@@ -1126,53 +1005,53 @@
       "coverage": "Practiced",
       "objectiveSummary": "Explain privacy/security risks and protections.",
       "knowledgeSummary": "Credentials, phishing, MFA, encryption, data collection.",
-      "activity": "Cybersecurity Defender",
-      "modes": "Fictional-email inspection; password policy/reuse/MFA",
-      "identification": "Partial",
-      "application": "Implemented in listed modes",
-      "explanation": "Not yet independently verified",
-      "validation": "Generated structure; evaluated operations or exact algorithm; deterministic checks",
-      "implementation": "Existing game audited",
-      "testing": "Logic and DOM regression tests; rendered-device QA not available",
-      "gaps": "Encryption, privacy, consent, malware, and collection risks missing."
+      "activity": "Cybersecurity Defender / Computing Impact Lab / Code Concepts",
+      "modes": "Fictional phishing; password policy/reuse/MFA; privacy/consent",
+      "identification": "Implemented for listed concepts",
+      "application": "Implemented for listed modes; broader objectives remain partial",
+      "explanation": "Post-success/reveal conceptual explanation; extended independent writing not assessed",
+      "validation": "Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading",
+      "implementation": "Playable; bounded templates and rules",
+      "testing": "Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable",
+      "gaps": "Encryption, public/private keys, certificate trust, malware, and varied collection/security threats remain gaps."
     }
   ],
   "practices": [
     {
       "number": "1",
       "title": "Computational Solution Design",
-      "current": "Partial: routing and schedules evaluate solutions.",
-      "gaps": "Design for a purpose, user needs, comparing approaches, collaborative project work."
+      "current": "Partial: routing/scheduling and Algorithm Architect construct solutions within stated constraints.",
+      "gaps": "Open-ended design, user research, full projects, and collaboration still require authentic assessment."
     },
     {
       "number": "2",
       "title": "Algorithms and Program Development",
-      "current": "Partial: list transformations and Boolean inputs.",
-      "gaps": "Constructing full algorithms and multiple valid implementations."
+      "current": "Practiced within templates: executable constructions, list transformations, equivalent configurations, edge-case tests.",
+      "gaps": "General program development, large algorithms, and broader alternative implementations remain partial."
     },
     {
       "number": "3",
       "title": "Abstraction in Program Development",
-      "current": "Introduced: Code Concepts names abstractions.",
-      "gaps": "Build and explain reusable procedures and data abstractions."
+      "current": "Practiced within templates: list/procedure identification, parameterized constructions, structured complexity explanations.",
+      "gaps": "Choose and implement abstractions for original projects; defend them in independent writing."
     },
     {
       "number": "4",
       "title": "Code Analysis",
-      "current": "Partial: expression evaluation, lists, search, counted algorithms.",
-      "gaps": "Purposeful testing, debugging, edge cases, and explanation."
+      "current": "Practiced within templates: boundary/branch/list/error cases, expected vs actual, Boolean and search analysis.",
+      "gaps": "Full debugging strategies, arbitrary code, and open-ended testing explanations remain partial."
     },
     {
       "number": "5",
       "title": "Computing Innovations",
-      "current": "Limited: security and network concepts.",
-      "gaps": "Innovation impacts, groups, privacy, ethics, evidence-based explanations."
+      "current": "Practiced in bounded evidence scenarios: impacts, privacy, bias, access, crowdsourcing, trade-offs.",
+      "gaps": "Authentic innovation research, diverse stakeholder effects, and extended argumentation remain essential."
     },
     {
       "number": "6",
       "title": "Responsible Computing",
-      "current": "Limited: password/reuse/MFA and phishing.",
-      "gaps": "Authentic collaboration, attribution, inclusive design, responsible data use."
+      "current": "Introduced/practiced in scenarios: consent, attribution/license rules, accessibility, password/reuse/MFA/phishing.",
+      "gaps": "Authentic collaboration, attribution of original projects, and responsible real-world data handling cannot be certified by browser selections."
     }
   ]
 }

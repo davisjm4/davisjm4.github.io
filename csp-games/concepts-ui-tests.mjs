@@ -1,3 +1,4 @@
+import { practiceGames } from "./practice-engine.js";
 import fs from "node:fs";
 import vm from "node:vm";
 import assert from "node:assert/strict";
@@ -69,9 +70,11 @@ function launch() {
       const m = sharedTracker.snapshot().games[game];
       return `First-try accuracy: ${S.accuracy(m) === null ? "N/A" : Math.round(S.accuracy(m)) + "%"} (${m.firstTry}/${m.attempted}) · Solved after retry: ${m.afterRetry} · Revealed: ${m.revealed} · Submissions: ${m.submissions}`;
     },
+    practiceGames,
     document,
     window,
     console,
+    practiceGames,
     E,
     ...C,
     ...F,
@@ -98,6 +101,7 @@ function launch() {
       el.onclick({ stopPropagation() {} });
     };
   return {
+    practiceGames,
     document,
     window,
     $,

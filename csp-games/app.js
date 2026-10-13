@@ -1,10 +1,11 @@
+import { practiceGames } from "./practice-engine.js?v=platform-expansion-v2";
 import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js";
-import * as E from "./engine.js";
-import { startCodeConcepts } from "./concepts-ui.js?v=platform-session-v1";
+} from "./session.js?v=platform-expansion-v2";
+import * as E from "./engine.js?v=platform-expansion-v2";
+import { startCodeConcepts } from "./concepts-ui.js?v=platform-expansion-v2";
 const $ = (id) => document.getElementById(id),
   esc = (s) =>
     String(s).replace(
@@ -19,13 +20,21 @@ const $ = (id) => document.getElementById(id),
         })[c],
     );
 export const catalog = [
+  ...Object.entries(practiceGames).map(([slug, g]) => [
+    slug,
+    g.title,
+    g.group,
+    g.topics,
+    g.icon,
+    g.description,
+  ]),
   [
     "code-concepts",
     "Code Concepts",
     "3 · Algorithms and Programming",
     "3.1–3.6 / 3.8 / 3.10 / 3.12–3.13",
     "{ }",
-    "Identify parameters, selection, iteration, variables, and list concepts in short snippets.",
+    "Identify code components and computing concepts through forward and reverse practice.",
   ],
   [
     "binary-builder",
@@ -198,7 +207,14 @@ function feedback(ok, message, score = inCheck) {
   }
   if (score && !ok) {
     const record = tracker.snapshot().records[currentInstance],
-      hints = gameHints[slug] || ["Review the concept and retry."];
+      hints = (slug === "binary-builder" &&
+      !roundTopic.startsWith("representation")
+        ? [
+            "Bit patterns determine capacity; distinguish a count of possible values from the greatest value.",
+            "Each additional bit doubles the possibilities. Keep zero in the representable range and distinguish raw pixel data from metadata.",
+            "For overflow, compare the mathematical sum with the unsigned range, then apply only the stated wrap rule. For an image, count pixels and bits per pixel.",
+          ]
+        : gameHints[slug]) || ["Review the concept and retry."];
     message = hints[Math.min(2, record.submissions - 1)];
     if ($("simulation")) $("simulation").innerHTML = "";
   }
@@ -212,6 +228,13 @@ if (typeof window !== "undefined")
   window.addEventListener("pagehide", () => {
     if (currentInstance) tracker.skip(currentInstance);
   });
+if (typeof document !== "undefined") {
+  for (const type of ["click", "change", "input"])
+    document.addEventListener(type, (event) => {
+      if (event.target.closest?.("#stage") && currentInstance)
+        tracker.interact?.(currentInstance);
+    });
+}
 function clearFeedback() {
   $("feedback").hidden = true;
 }
@@ -278,7 +301,7 @@ if (!game) {
             .join("")}</div></section>`,
       )
       .join("") +
-    `<section class="panel roadmap"><div class="eyebrow">Development roadmap</div><h2>Platform expansion roadmap</h2><p><a href="coverage.html">View the 35-topic curriculum coverage matrix</a> · <a href="session-summary/">Open your Session Summary</a></p><p>The shared Session Summary is available across all games. Planned next: expand Code Concepts, then Response Builder, Test Case Builder, Algorithm Architect, Computing Impact Lab, Simulation Lab, and Mixed AP Exam Practice.</p><p class="muted">Big Idea 1: Creative Development will be addressed by future concept-based activities. This collection does not yet cover the entire curriculum.</p></section>`;
+    `<section class="panel roadmap"><div class="eyebrow">Development roadmap</div><h2>Platform expansion roadmap</h2><p><a href="coverage.html">View the 35-topic curriculum coverage matrix</a> · <a href="session-summary/">Open your Session Summary</a></p><p>The shared Session Summary is available across all games. New activities include expanded Code Concepts, Response Builder, Test Case Builder, Algorithm Architect, Computing Impact Lab, Simulation Lab, and Mixed AP Exam Practice.</p><p class="muted">Browser activities supplement authentic projects, collaboration, and teacher-reviewed writing. Consult the coverage matrix for limitations and remaining gaps.</p></section>`;
 } else {
   document.title = game[1] + " | CSP Games";
   $("main").innerHTML =
@@ -299,21 +322,75 @@ if (!game) {
   loaders[slug]?.();
 }
 function binary() {
-  let n, target, bits;
+  let n, target, bits, mode, extension;
   setup(
     select(
-      "length",
-      "Bit length",
-      [4, 6, 8, 16].map((n) => [n, n + " bits"]),
-    ),
+      "mode",
+      "Mode",
+      modeOptions([
+        ["representation", "Decimal to binary"],
+        ["capacity", "Capacity & maximum"],
+        ["overflow", "Unsigned overflow"],
+        ["pixels", "Pixel representation"],
+      ]),
+    ) +
+      select(
+        "length",
+        "Bit length",
+        [4, 6, 8, 16].map((n) => [n, n + " bits"]),
+      ),
     () => {
       clearFeedback();
       n = +$("length").value;
-      roundTopic = "unsigned-" + n + "-bit";
-      target = E.int(0, 2 ** n - 1);
+      mode = chosenMode(["representation", "capacity", "overflow", "pixels"]);
+      roundTopic = mode + " / " + n + "-bit";
+      extension = E.binaryExtension(mode, n);
+      if (mode === "capacity") {
+        mount(
+          `<p>An unsigned identifier uses <strong>${n} bits</strong>. Configure its capacity and greatest representable value.</p>${numeric("capacity-answer", "Distinct values", "", 0, 65536)}${numeric("maximum-answer", "Greatest unsigned value", "", 0, 65535)}${button("check", "Check Answer")}`,
+        );
+        check("check", () => {
+          if (
+            !$("capacity-answer").value.trim() ||
+            !$("maximum-answer").value.trim()
+          )
+            throw Error("Enter both whole-number answers.");
+          feedback(
+            +$("capacity-answer").value === extension.capacity &&
+              +$("maximum-answer").value === extension.max,
+            `Correct. ${n} bits represent ${extension.capacity} distinct values, from 0 through ${extension.max}.`,
+          );
+        });
+        return;
+      }
+      if (mode === "overflow") {
+        mount(
+          `<p>A device stores unsigned ${n}-bit values. It adds <strong>${extension.a} + ${extension.b}</strong>.</p><p>For this model only, a result too large wraps modulo 2^${n}. Actual systems may handle overflow differently.</p>${select(
+            "overflow-answer",
+            "Does the mathematical sum exceed the representable range?",
+            [
+              ["", "Choose…"],
+              ["yes", "Yes"],
+              ["no", "No"],
+            ],
+          )}${numeric("wrapped-answer", "Value stored under the stated wrap rule", "", 0, 65535)}${button("check", "Check Answer")}`,
+        );
+        check("check", () => {
+          if (!$("overflow-answer").value || !$("wrapped-answer").value.trim())
+            throw Error("Complete both parts before checking.");
+          feedback(
+            $("overflow-answer").value ===
+              (extension.overflow ? "yes" : "no") &&
+              +$("wrapped-answer").value === extension.result,
+            `The mathematical sum is ${extension.a + extension.b}. The greatest ${n}-bit value is ${extension.max}. Under this stated wrap rule, the stored result is ${extension.result}.`,
+          );
+        });
+        return;
+      }
+      target = mode === "pixels" ? extension.target : E.int(0, 2 ** n - 1);
       bits = Array(n).fill(0);
       mount(
-        `<p>Toggle each bit. Place values double as you move left.</p><p>Target decimal: <span class="big-number">${target}</span></p><div class="bits">${bits.map((_, i) => `<div class="bit"><button id="bit${i}" aria-label="Bit with place value ${2 ** (n - i - 1)}" aria-pressed="false">0</button><small>${2 ** (n - i - 1)}</small></div>`).join("")}</div><p>Your decimal value: <strong id="value">0</strong></p>${button("check", "Check Answer")}`,
+        `${mode === "pixels" ? `<p>A 3 × 3 grayscale image stores one unsigned ${n}-bit intensity per pixel. 0 is black; ${extension.max} is white. Encode the outlined pixel and calculate storage for the raw pixel data (no metadata or compression).</p><div class="pixel-practice">${extension.pixels.map((v, i) => `<div class="pixel-cell ${i === extension.index ? "pixel-target" : ""}" style="background:rgb(${Math.round((255 * v) / extension.max)} ${Math.round((255 * v) / extension.max)} ${Math.round((255 * v) / extension.max)})"><span>${v}</span></div>`).join("")}</div>` : ""}<p>Toggle each bit. Place values double as you move left.</p><p>Target decimal: <span class="big-number">${target}</span></p><div class="bits">${bits.map((_, i) => `<div class="bit"><button id="bit${i}" aria-label="Bit with place value ${2 ** (n - i - 1)}" aria-pressed="false">0</button><small>${2 ** (n - i - 1)}</small></div>`).join("")}</div><p>Your decimal value: <strong id="value">0</strong></p>${mode === "pixels" ? numeric("pixel-size", "Raw image size (bits)", "", 0, 100000) : ""}${button("check", "Check Answer")}`,
       );
       bits.forEach((_, i) => {
         $("bit" + i).onclick = () => {
@@ -327,10 +404,13 @@ function binary() {
       });
       check("check", () => {
         let v = E.binaryValue(bits);
+        if (mode === "pixels" && !$("pixel-size").value.trim())
+          throw Error("Enter the raw image size before checking.");
         feedback(
-          v === target,
+          v === target &&
+            (mode !== "pixels" || +$("pixel-size").value === extension.size),
           v === target
-            ? `${target} = ${bits.join("")} in binary. Each 1 contributes its place value.`
+            ? `${target} = ${bits.join("")} in binary. Each 1 contributes its place value.${mode === "pixels" ? ` Nine pixels at ${n} bits per pixel require ${extension.size} bits of raw data.` : ""}`
             : `Your bits total ${v}; the target is ${target}. Add the place values under your 1 bits, then adjust and retry.`,
         );
       });
@@ -905,11 +985,25 @@ function detective() {
         ["table", "Table detective"],
         ["graph", "Graph detective"],
         ["visualize", "Data visualization"],
+        ["cleaning", "Data cleaning"],
+        ["metadata", "Metadata"],
+        ["limitations", "Data limitations"],
       ]),
     ),
     () => {
       clearFeedback();
-      mode = chosenMode(["table", "graph", "visualize"]);
+      mode = chosenMode([
+        "table",
+        "graph",
+        "visualize",
+        "cleaning",
+        "metadata",
+        "limitations",
+      ]);
+      if (["cleaning", "metadata", "limitations"].includes(mode)) {
+        dataExtension(mode);
+        return;
+      }
       data = E.dataChallenge();
       selected = new Set();
       sortKey = "id";
@@ -1372,3 +1466,97 @@ function parallel() {
 }
 
 addSessionNavigation(game ? "../" : "./");
+function dataExtension(mode) {
+  if (mode === "cleaning") {
+    const c = E.cleaningChallenge();
+    mount(
+      `<h2>Clean a measurement dataset</h2><p>Normalize categories to lowercase with no surrounding spaces. Convert meters to centimeters. Remove rows with missing measurements and duplicate IDs, keeping either copy of a duplicate. Keep every complete, distinct record; do not invent missing values.</p><div class="table-wrap"><table><thead><tr><th>Keep</th><th>ID</th><th>Source category</th><th>Source distance (m)</th><th>Clean category</th><th>Distance (cm)</th></tr></thead><tbody>${c.rows.map((r, i) => `<tr><td><input id="clean-keep-${i}" type="checkbox" checked aria-label="Keep row ${i + 1}"></td><td>${r.id}</td><td><code>${esc(JSON.stringify(r.category))}</code></td><td>${r.meters || "Missing"}</td><td><input id="clean-category-${i}" value="${esc(r.category)}" aria-label="Clean category for row ${i + 1}"></td><td><input id="clean-cm-${i}" type="number" step="1" aria-label="Distance in centimeters for row ${i + 1}"></td></tr>`).join("")}</tbody></table></div>${button("check", "Check Cleaned Data")}`,
+    );
+    check("check", () => {
+      const submitted = c.rows.map((r, i) => ({
+        id: r.id,
+        keep: $("clean-keep-" + i).checked,
+        category: $("clean-category-" + i).value,
+        cm: $("clean-cm-" + i).value,
+      }));
+      if (submitted.some((r) => r.keep && !r.cm.trim()))
+        throw Error(
+          "Supply a measurement for each row you keep, or remove incomplete rows.",
+        );
+      feedback(
+        E.validateCleaning(c, submitted),
+        "Correct. Each complete ID is represented once, categories have consistent formatting, and meters were converted to centimeters. Removing incomplete rows follows this challenge’s specified rule; other projects may need different missing-data policies.",
+      );
+    });
+    return;
+  }
+  if (mode === "metadata") {
+    const width = E.pick([8, 12, 16]),
+      height = E.pick([6, 10, 12]),
+      date = `2026-${String(E.int(1, 9)).padStart(2, "0")}-${String(E.int(1, 28)).padStart(2, "0")}`;
+    const labels = E.shuffle([
+      ["pixels", "Pixel content"],
+      ["dimensions", `${width} × ${height} dimensions`],
+      ["date", `Created ${date}`],
+    ]);
+    mount(
+      `<h2>Separate data from metadata</h2><p>An image record has pixel colors, dimensions, and a creation date. Assign each component to its role.</p>${labels
+        .map(([id, label]) =>
+          select("meta-" + id, label, [
+            ["", "Choose a role…"],
+            ["data", "Image data"],
+            ["metadata", "Metadata about the image"],
+          ]),
+        )
+        .join("")}${button("check", "Check Roles")}`,
+    );
+    check("check", () => {
+      if (labels.some(([id]) => !$("meta-" + id).value))
+        throw Error("Assign a role to every component.");
+      feedback(
+        $("meta-pixels").value === "data" &&
+          $("meta-dimensions").value === "metadata" &&
+          $("meta-date").value === "metadata",
+        "Pixel colors encode the visible image. Dimensions and creation date describe that image and are metadata. Metadata can help interpret, find, or organize data.",
+      );
+    });
+    return;
+  }
+  const study = E.int(12, 80),
+    sample = E.pick([
+      "volunteers from one club",
+      "students from one class",
+      "people who chose to respond online",
+    ]),
+    change = E.int(3, 15);
+  mount(
+    `<h2>Match conclusions to evidence</h2><p>A survey of ${study} ${sample} found that frequent users of a practice app scored ${change} points higher on average. The survey did not randomly assign app use.</p>${select(
+      "limit-generalize",
+      "Generalization",
+      [
+        ["", "Choose…"],
+        ["limited", "The sample may not represent all students."],
+        ["all", "The sample proves the effect for every student."],
+      ],
+    )}${select("limit-cause", "Causation", [
+      ["", "Choose…"],
+      [
+        "association",
+        "The observed association does not establish that the app caused higher scores.",
+      ],
+      [
+        "proved",
+        "The observed association proves the app caused higher scores.",
+      ],
+    ])}${button("check", "Check Analysis")}`,
+  );
+  check("check", () => {
+    if (!$("limit-generalize").value || !$("limit-cause").value)
+      throw Error("Complete both evidence judgments.");
+    feedback(
+      $("limit-generalize").value === "limited" &&
+        $("limit-cause").value === "association",
+      "A selected sample can limit generalization. An observational association can be affected by other differences between students and does not establish causation.",
+    );
+  });
+}

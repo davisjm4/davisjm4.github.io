@@ -1,4 +1,4 @@
-import { assess } from "./concepts-engine.js";
+import { assess } from "./concepts-engine.js?v=platform-expansion-v2";
 // Hints are fixed conceptual text, independent of generated names, values, and answers.
 const hints = {
   definition: [
@@ -200,6 +200,7 @@ const families = {
   },
 };
 export function conceptHint(q, wrongAttempts) {
+  if (q.hints) return q.hints[Math.min(2, Math.max(0, wrongAttempts - 1))];
   const family = families[q.category]?.[q.variant];
   if (!family) throw Error("Missing concept hint");
   return hints[family][Math.min(2, Math.max(0, wrongAttempts - 1))];
@@ -221,7 +222,7 @@ export function createConceptSession({ tracker } = {}) {
         "code-concepts",
         "Code Concepts",
         question.category + "/" + question.variant,
-        question.category + " — " + question.variant,
+        question.topicTitle || question.category + " — " + question.variant,
       ),
       status: "active",
       submissions: 0,
@@ -283,6 +284,7 @@ export function createConceptSession({ tracker } = {}) {
   return {
     totals,
     begin,
+    touch: () => tracker?.interact?.(round?.instance),
     submit,
     reveal,
     skip: () => tracker?.skip(round?.instance),

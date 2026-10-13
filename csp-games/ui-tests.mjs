@@ -1,3 +1,4 @@
+import { practiceGames } from "./practice-engine.js";
 import fs from "node:fs";
 import vm from "node:vm";
 import assert from "node:assert/strict";
@@ -44,6 +45,8 @@ function launch(slug) {
   let captures = {},
     E = { ...logic };
   for (let k of [
+    "binaryExtension",
+    "cleaningChallenge",
     "booleanChallenge",
     "listChallenge",
     "searchChallenge",
@@ -71,8 +74,10 @@ function launch(slug) {
     addSessionNavigation: () => {},
     roundSummary: () => "Shared session results",
     startCodeConcepts: () => {},
+    practiceGames,
     document,
     window,
+    practiceGames,
     E,
     console,
     Event: window.Event,
@@ -111,6 +116,7 @@ function launch(slug) {
 }
 for (let repetition = 0; repetition < 20; repetition++) {
   let t = launch("binary-builder");
+  t.change("mode", "representation");
   for (let n of [4, 6, 8, 16]) {
     t.change("length", n);
     let target = +t.document.querySelector(".big-number").textContent,
@@ -359,9 +365,83 @@ for (let repetition = 0; repetition < 20; repetition++) {
   t.bad();
   t.click("new");
 }
+// Expanded existing games: randomized valid problems, incorrect then independent retries.
+for (let repetition = 0; repetition < 25; repetition++) {
+  const b = launch("binary-builder");
+  assert.equal(b.$("mode").value, "mixed");
+  for (const mode of ["capacity", "overflow", "pixels"]) {
+    b.change("mode", mode);
+    const q = b.captures.binaryExtension;
+    if (mode === "capacity") {
+      b.$("capacity-answer").value = "0";
+      b.$("maximum-answer").value = "0";
+      b.click("check");
+      b.bad();
+      b.$("capacity-answer").value = q.capacity;
+      b.$("maximum-answer").value = q.max;
+    }
+    if (mode === "overflow") {
+      b.$("overflow-answer").value = q.overflow ? "no" : "yes";
+      b.$("wrapped-answer").value = q.result;
+      b.click("check");
+      b.bad();
+      b.$("overflow-answer").value = q.overflow ? "yes" : "no";
+    }
+    if (mode === "pixels") {
+      b.$("pixel-size").value = "0";
+      b.click("check");
+      b.bad();
+      const bits = q.target.toString(2).padStart(q.bits, "0");
+      for (let i = 0; i < q.bits; i++) if (bits[i] === "1") b.click("bit" + i);
+      b.$("pixel-size").value = q.size;
+    }
+    b.click("check");
+    b.good();
+    b.click("new");
+  }
+  const d = launch("data-detective");
+  d.change("mode", "cleaning");
+  const c = d.captures.cleaningChallenge;
+  for (const [i, row] of c.rows.entries()) {
+    d.$("clean-keep-" + i).checked = true;
+    d.$("clean-cm-" + i).value = 1;
+  }
+  d.click("check");
+  d.bad();
+  const kept = new Set();
+  for (const [i, row] of c.rows.entries()) {
+    const keep = row.meters !== "" && !kept.has(row.id);
+    d.$("clean-keep-" + i).checked = keep;
+    if (keep) {
+      kept.add(row.id);
+      d.$("clean-category-" + i).value = row.category.trim().toLowerCase();
+      d.$("clean-cm-" + i).value = Math.round(Number(row.meters) * 100);
+    }
+  }
+  d.click("check");
+  d.good();
+  d.change("mode", "metadata");
+  for (const id of ["pixels", "dimensions", "date"])
+    d.$("meta-" + id).value = "data";
+  d.click("check");
+  d.bad();
+  d.$("meta-dimensions").value = "metadata";
+  d.$("meta-date").value = "metadata";
+  d.click("check");
+  d.good();
+  d.change("mode", "limitations");
+  d.$("limit-generalize").value = "all";
+  d.$("limit-cause").value = "proved";
+  d.click("check");
+  d.bad();
+  d.$("limit-generalize").value = "limited";
+  d.$("limit-cause").value = "association";
+  d.click("check");
+  d.good();
+}
 let home = launch("");
-assert.equal(home.document.querySelectorAll(".card").length, 12);
-assert.equal(home.document.querySelectorAll("a.button").length, 12);
+assert.equal(home.document.querySelectorAll(".card").length, 18);
+assert.equal(home.document.querySelectorAll("a.button").length, 18);
 // All same-site links and assets have physical targets on Pages (no SPA fallback).
 for (let name of fs
   .readdirSync(new URL("./", import.meta.url), { withFileTypes: true })
@@ -393,6 +473,7 @@ for (let round = 0; round < 20; round++) {
           },
         }),
       addSessionNavigation: () => {},
+      practiceGames,
       document,
       window,
       console,

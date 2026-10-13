@@ -1,388 +1,1195 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101923">
-  <meta name="description" content="Practice network redundancy and minimum cuts in Network Breaker, an AP Computer Science Principles game.">
-  <title>Network Breaker | AP CSP Practice</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #101923;
-      --panel: #172431;
-      --panel-2: #1d2c3a;
-      --line: #314454;
-      --text: #f1f5f7;
-      --muted: #b6c3cc;
-      --teal: #63e2ce;
-      --blue: #8bc4ff;
-      --amber: #ffd166;
-      --red: #ff7a7a;
-      --green: #73e2a7;
-      --focus: #fff2a8;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; background: radial-gradient(ellipse at 50% -25%, #263b4a 0, var(--bg) 62%); color: var(--text); }
-    button { font: inherit; }
-    .shell { width: min(1440px, 100%); margin: 0 auto; padding: 22px clamp(14px, 3vw, 38px) 36px; }
-    header { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
-    .brand { display: flex; align-items: center; gap: 13px; min-width: 0; }
-    .brand-mark { width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid #47726f; border-radius: 14px; color: var(--teal); background: #173536; font-weight: 900; font-size: 21px; box-shadow: inset 0 0 24px #63e2ce12; }
-    h1 { margin: 0; font-size: clamp(21px, 3vw, 29px); line-height: 1.08; letter-spacing: -.035em; }
-    .eyebrow { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
-    .scorebar { display: flex; gap: 10px; flex-shrink: 0; }
-    .score { min-width: 112px; padding: 9px 13px; border: 1px solid var(--line); border-radius: 13px; background: #13202b; }
-    .score span { display: block; color: var(--muted); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; }
-    .score strong { display: block; margin-top: 2px; font-size: 20px; }
-    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 308px; gap: 18px; align-items: start; }
-    .game-panel, .side-card { border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(160deg, #192936, #14212c 72%); box-shadow: 0 14px 34px #0003; }
-    .game-panel { overflow: hidden; }
-    .round-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 17px 20px 13px; }
-    .round-title { min-width: 0; }
-    .round-title h2 { margin: 0; font-size: 19px; letter-spacing: -.02em; }
-    .round-title p { margin: 5px 0 0; color: var(--muted); font-size: 14px; }
-    .legend { display: flex; align-items: center; gap: 13px; color: var(--muted); font-size: 12px; white-space: nowrap; }
-    .legend-item { display: inline-flex; align-items: center; gap: 6px; }
-    .legend-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--blue); border: 1px solid #d7eeff; }
-    .legend-dot.target-a { background: var(--amber); border-radius: 3px; }
-    .legend-dot.target-b { background: #d4a8ff; border-radius: 3px; }
-    .graph-wrap { position: relative; padding: 0 12px; background: linear-gradient(180deg, #101a23aa, #111c2600); }
-    #graph { display: block; width: 100%; height: auto; min-height: 390px; max-height: min(67vh, 650px); aspect-ratio: 1.48; }
-    .edge-visible { stroke: #78a3c2; stroke-width: 3; stroke-linecap: round; opacity: .83; transition: stroke .15s, opacity .15s; }
-    .edge-hit { stroke: transparent; stroke-width: 21; stroke-linecap: round; cursor: pointer; }
-    .edge-group:focus { outline: none; }
-    .edge-group:focus .edge-hit { stroke: #fff2a833; }
-    .edge-group:hover .edge-visible { stroke: #d2eeff; opacity: 1; stroke-width: 4; }
-    .edge-group.removed .edge-visible { stroke: var(--red); stroke-width: 4; stroke-dasharray: 8 8; opacity: 1; }
-    .edge-group.optimal .edge-visible { stroke: var(--green); stroke-width: 5; stroke-dasharray: 3 5; opacity: 1; }
-    .edge-mark { fill: var(--red); stroke: #172431; stroke-width: 3; font-size: 18px; font-weight: 900; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
-    .node-halo { fill: #13202b; stroke: #89bce2; stroke-width: 2; }
-    .node-core { fill: #24445b; stroke: #d4edff; stroke-width: 1.5; }
-    .node-label { fill: #fff; font-weight: 800; font-size: 14px; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
-    .node-target-a .node-halo { fill: #4a3c1d; stroke: var(--amber); stroke-width: 3; }
-    .node-target-a .node-core { fill: #c88c1c; stroke: #ffe39a; }
-    .node-target-b .node-halo { fill: #38294c; stroke: #d4a8ff; stroke-width: 3; }
-    .node-target-b .node-core { fill: #8354b8; stroke: #ead5ff; }
-    .node-tag { fill: #101923; stroke: #536778; stroke-width: 1; }
-    .node-tag-text { fill: #f8fafc; font-size: 10px; font-weight: 800; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
-    .graph-foot { display: flex; justify-content: space-between; gap: 10px; padding: 0 20px 15px; color: var(--muted); font-size: 12px; }
-    .actionbar { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; padding: 14px 18px 16px; border-top: 1px solid #2d3d4a; background: #121f2a; }
-    .btn { min-height: 42px; padding: 9px 13px; border: 1px solid #536777; border-radius: 10px; color: var(--text); background: #243646; cursor: pointer; font-weight: 700; font-size: 13px; transition: transform .12s, background .12s, border-color .12s; }
-    .btn:hover:not(:disabled) { background: #30495d; border-color: #94b0c2; transform: translateY(-1px); }
-    .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-    .btn:disabled { opacity: .48; cursor: not-allowed; }
-    .btn.primary { background: #126c67; border-color: #42b9ae; color: #fff; }
-    .btn.primary:hover:not(:disabled) { background: #16847d; }
-    .btn.new { margin-left: auto; background: #263246; border-color: #697fa1; }
-    .btn.solution { background: #392d4b; border-color: #9072b2; }
-    .feedback { display: none; padding: 13px 18px 15px; border-top: 1px solid #2d3d4a; font-size: 14px; line-height: 1.5; }
-    .feedback.show { display: block; }
-    .feedback.success { color: #c8ffe0; background: #153329; }
-    .feedback.try-again { color: #ffe3ad; background: #382e1e; }
-    .feedback.info { color: #d5e9ff; background: #1a2e41; }
-    .side { display: grid; gap: 14px; }
-    .side-card { padding: 17px 17px 18px; }
-    .side-card h3 { margin: 0 0 10px; font-size: 15px; }
-    .side-card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
-    .target-summary { display: grid; gap: 8px; margin-top: 13px; }
-    .target-row { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 9px; background: #111d27; color: #eaf1f5; font-size: 13px; }
-    .target-chip { width: 20px; height: 20px; display: grid; place-items: center; border-radius: 6px; color: #17202a; background: var(--amber); font-size: 11px; font-weight: 900; }
-    .target-chip.b { color: #22182e; background: #d4a8ff; }
-    .statline { display: flex; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid #314352; color: var(--muted); font-size: 12px; }
-    .statline strong { color: var(--text); }
-    .howto { display: grid; gap: 10px; }
-    .step { display: grid; grid-template-columns: 23px 1fr; gap: 8px; color: var(--muted); font-size: 12px; line-height: 1.45; }
-    .step b { display: grid; place-items: center; width: 21px; height: 21px; border-radius: 7px; background: #293c4a; color: var(--teal); font-size: 11px; }
-    .example { margin-top: 13px !important; padding: 10px 11px; border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; background: #152d31; color: #d7f9f2 !important; }
-    .note { margin-top: 11px !important; font-size: 11px !important; color: #92a5b2 !important; }
-    footer { padding: 16px 4px 0; color: #8598a6; font-size: 11px; text-align: center; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-    @media (max-width: 900px) {
-      .layout { grid-template-columns: minmax(0, 1fr) 260px; gap: 12px; }
-      .legend { flex-wrap: wrap; justify-content: flex-end; gap: 7px 10px; }
-      #graph { min-height: 345px; }
-    }
-    @media (max-width: 720px) {
-      .shell { padding: 14px 11px 24px; }
-      header { align-items: flex-start; flex-direction: column; gap: 12px; margin-bottom: 12px; }
-      .scorebar { width: 100%; }
-      .score { flex: 1; }
-      .layout { grid-template-columns: 1fr; }
-      .round-head { align-items: flex-start; flex-direction: column; gap: 9px; padding: 14px 14px 10px; }
-      .legend { justify-content: flex-start; }
-      .graph-wrap { padding: 0 2px; }
-      #graph { min-height: 285px; max-height: 55vh; aspect-ratio: 1.08; }
-      .graph-foot { padding: 0 14px 12px; }
-      .actionbar { padding: 12px; gap: 8px; }
-      .btn { flex: 1 1 calc(50% - 8px); }
-      .btn.new { margin-left: 0; }
-      .side { grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); }
-    }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
-  </style>
-</head>
-<body>
-<nav style="padding:12px 20px"><a href="./csp-games/" style="color:#56ddcd;font-weight:700">← CSP Games</a></nav>
-  <main class="shell">
-    <header>
-      <div class="brand">
-        <div class="brand-mark" aria-hidden="true">NB</div>
-        <div><h1>Network Breaker</h1><p class="eyebrow">AP Computer Science Principles · Redundancy &amp; fault tolerance</p></div>
-      </div>
-      <div class="scorebar" aria-label="Session progress">
-        <div class="score"><span>Challenges solved</span><strong id="solved">0</strong></div>
-        <div class="score"><span>First-try correct</span><strong id="streak">0</strong></div>
-      </div>
-    </header>
-
-    <div class="layout">
-      <section class="game-panel" aria-labelledby="challenge-title">
-        <div class="round-head">
-          <div class="round-title"><h2 id="challenge-title">Challenge 1</h2><p>Remove the fewest links so there is no path between the two targets.</p></div>
-          <div class="legend" aria-label="Graph legend">
-            <span class="legend-item"><i class="legend-dot" aria-hidden="true"></i>Node</span>
-            <span class="legend-item"><i class="legend-dot target-a" aria-hidden="true"></i>Target A</span>
-            <span class="legend-item"><i class="legend-dot target-b" aria-hidden="true"></i>Target B</span>
-          </div>
-        </div>
-        <div class="graph-wrap">
-          <svg id="graph" viewBox="0 0 760 510" role="group" aria-label="Interactive network graph. Select a link to mark it removed."></svg>
-        </div>
-        <div class="graph-foot"><span id="network-stats">10 nodes · 15 active links</span><span id="selected-stats">0 links removed</span></div>
-        <div class="actionbar" aria-label="Challenge controls">
-          <button class="btn primary" id="check">Check Answer</button>
-          <button class="btn" id="undo">Undo Last</button>
-          <button class="btn" id="clear">Clear Selection</button>
-          <button class="btn" id="hint">Hint</button>
-          <button class="btn solution" id="solution">Show Optimal Solution</button>
-          <button class="btn new" id="new">New Challenge <span aria-hidden="true">↗</span></button>
-        </div>
-        <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
-        <div class="sr-only" id="announce" aria-live="polite"></div>
-      </section>
-
-      <aside class="side">
-        <section class="side-card">
-          <h3>Your targets</h3>
-          <p>Break every possible route between these two nodes.</p>
-          <div class="target-summary">
-            <div class="target-row"><span class="target-chip">A</span><span id="target-a-name">Node A</span></div>
-            <div class="target-row"><span class="target-chip b">B</span><span id="target-b-name">Node B</span></div>
-          </div>
-          <div class="statline"><span>Links you removed</span><strong id="removed-count">0</strong></div>
-        </section>
-        <section class="side-card">
-          <h3>How to play</h3>
-          <div class="howto">
-            <div class="step"><b>1</b><span>Click a link, or focus it and press Enter or Space, to remove it.</span></div>
-            <div class="step"><b>2</b><span>Use the fewest links possible to disconnect Target A from Target B.</span></div>
-            <div class="step"><b>3</b><span>Check your answer. Undo or clear links any time before checking.</span></div>
-          </div>
-          <p class="example"><strong>Example:</strong> If two routes connect A to B, breaking one link may leave the other route open. Your cut must block every route.</p>
-          <p class="note">The links you choose form a <strong>minimum cut</strong>. The network starts connected, with multiple routes that provide redundancy.</p>
-        </section>
-        <section class="side-card">
-          <h3>What you’re practicing</h3>
-          <p>Redundancy lets information travel along alternate routes. Fault tolerance is a network’s ability to keep working when a link fails. A minimum cut is the smallest set of links whose removal disconnects two targets.</p>
-        </section>
-      </aside>
-    </div>
-    <footer>Progress is saved only for this browser session. No account or personal information needed.</footer>
-  </main>
-  <script type="module">
-import {sessionTracker,addSessionNavigation} from "./csp-games/session.js";
-const tracker=sessionTracker();let currentInstance=null,helpCount=0;
-addSessionNavigation("./csp-games/");
-window.addEventListener("pagehide",()=>{if(currentInstance)tracker.skip(currentInstance);});
-    (() => {
-      "use strict";
-      const svg = document.getElementById("graph");
-      const NS = "http://www.w3.org/2000/svg";
-      const STORAGE = "networkBreakerSession_v1";
-      const state = { graph: null, removed: new Set(), history: [], solvedThisRound: false, showOptimal: false, round: 0, session: loadSession(), previousSignature: "" };
-      const $ = id => document.getElementById(id);
-      function loadSession() { return {solved:0,streak:0}; }
-      function saveSession() {}
-      function rngInt(max) { return Math.floor(Math.random() * max); }
-      function edgeKey(a, b) { return a < b ? `${a}-${b}` : `${b}-${a}`; }
-      function neighborsOf(n, edges) {
-        const out = [];
-        for (const [a,b] of edges) { if (a === n) out.push(b); else if (b === n) out.push(a); }
-        return out;
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101923" />
+    <meta
+      name="description"
+      content="Practice network redundancy and minimum cuts in Network Breaker, an AP Computer Science Principles game."
+    />
+    <title>Network Breaker | AP CSP Practice</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #101923;
+        --panel: #172431;
+        --panel-2: #1d2c3a;
+        --line: #314454;
+        --text: #f1f5f7;
+        --muted: #b6c3cc;
+        --teal: #63e2ce;
+        --blue: #8bc4ff;
+        --amber: #ffd166;
+        --red: #ff7a7a;
+        --green: #73e2a7;
+        --focus: #fff2a8;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
       }
-      function distances(start, n, edges, blocked = new Set()) {
-        const d = Array(n).fill(Infinity), q = [start]; d[start] = 0;
-        for (let i=0; i<q.length; i++) for (const v of neighborsOf(q[i], edges)) {
-          if (!blocked.has(edgeKey(q[i],v)) && d[v] === Infinity) { d[v] = d[q[i]] + 1; q.push(v); }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: radial-gradient(
+          ellipse at 50% -25%,
+          #263b4a 0,
+          var(--bg) 62%
+        );
+        color: var(--text);
+      }
+      button {
+        font: inherit;
+      }
+      .shell {
+        width: min(1440px, 100%);
+        margin: 0 auto;
+        padding: 22px clamp(14px, 3vw, 38px) 36px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        min-width: 0;
+      }
+      .brand-mark {
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        border: 1px solid #47726f;
+        border-radius: 14px;
+        color: var(--teal);
+        background: #173536;
+        font-weight: 900;
+        font-size: 21px;
+        box-shadow: inset 0 0 24px #63e2ce12;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(21px, 3vw, 29px);
+        line-height: 1.08;
+        letter-spacing: -0.035em;
+      }
+      .eyebrow {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .scorebar {
+        display: flex;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .score {
+        min-width: 112px;
+        padding: 9px 13px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        background: #13202b;
+      }
+      .score span {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+      .score strong {
+        display: block;
+        margin-top: 2px;
+        font-size: 20px;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 308px;
+        gap: 18px;
+        align-items: start;
+      }
+      .game-panel,
+      .side-card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: linear-gradient(160deg, #192936, #14212c 72%);
+        box-shadow: 0 14px 34px #0003;
+      }
+      .game-panel {
+        overflow: hidden;
+      }
+      .round-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 17px 20px 13px;
+      }
+      .round-title {
+        min-width: 0;
+      }
+      .round-title h2 {
+        margin: 0;
+        font-size: 19px;
+        letter-spacing: -0.02em;
+      }
+      .round-title p {
+        margin: 5px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .legend {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        color: var(--muted);
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .legend-dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--blue);
+        border: 1px solid #d7eeff;
+      }
+      .legend-dot.target-a {
+        background: var(--amber);
+        border-radius: 3px;
+      }
+      .legend-dot.target-b {
+        background: #d4a8ff;
+        border-radius: 3px;
+      }
+      .graph-wrap {
+        position: relative;
+        padding: 0 12px;
+        background: linear-gradient(180deg, #101a23aa, #111c2600);
+      }
+      #graph {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 390px;
+        max-height: min(67vh, 650px);
+        aspect-ratio: 1.48;
+      }
+      .edge-visible {
+        stroke: #78a3c2;
+        stroke-width: 3;
+        stroke-linecap: round;
+        opacity: 0.83;
+        transition:
+          stroke 0.15s,
+          opacity 0.15s;
+      }
+      .edge-hit {
+        stroke: transparent;
+        stroke-width: 21;
+        stroke-linecap: round;
+        cursor: pointer;
+      }
+      .edge-group:focus {
+        outline: none;
+      }
+      .edge-group:focus .edge-hit {
+        stroke: #fff2a833;
+      }
+      .edge-group:hover .edge-visible {
+        stroke: #d2eeff;
+        opacity: 1;
+        stroke-width: 4;
+      }
+      .edge-group.removed .edge-visible {
+        stroke: var(--red);
+        stroke-width: 4;
+        stroke-dasharray: 8 8;
+        opacity: 1;
+      }
+      .edge-group.optimal .edge-visible {
+        stroke: var(--green);
+        stroke-width: 5;
+        stroke-dasharray: 3 5;
+        opacity: 1;
+      }
+      .edge-mark {
+        fill: var(--red);
+        stroke: #172431;
+        stroke-width: 3;
+        font-size: 18px;
+        font-weight: 900;
+        text-anchor: middle;
+        dominant-baseline: central;
+        pointer-events: none;
+      }
+      .node-halo {
+        fill: #13202b;
+        stroke: #89bce2;
+        stroke-width: 2;
+      }
+      .node-core {
+        fill: #24445b;
+        stroke: #d4edff;
+        stroke-width: 1.5;
+      }
+      .node-label {
+        fill: #fff;
+        font-weight: 800;
+        font-size: 14px;
+        text-anchor: middle;
+        dominant-baseline: central;
+        pointer-events: none;
+      }
+      .node-target-a .node-halo {
+        fill: #4a3c1d;
+        stroke: var(--amber);
+        stroke-width: 3;
+      }
+      .node-target-a .node-core {
+        fill: #c88c1c;
+        stroke: #ffe39a;
+      }
+      .node-target-b .node-halo {
+        fill: #38294c;
+        stroke: #d4a8ff;
+        stroke-width: 3;
+      }
+      .node-target-b .node-core {
+        fill: #8354b8;
+        stroke: #ead5ff;
+      }
+      .node-tag {
+        fill: #101923;
+        stroke: #536778;
+        stroke-width: 1;
+      }
+      .node-tag-text {
+        fill: #f8fafc;
+        font-size: 10px;
+        font-weight: 800;
+        text-anchor: middle;
+        dominant-baseline: central;
+        pointer-events: none;
+      }
+      .graph-foot {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 0 20px 15px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .actionbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 9px;
+        padding: 14px 18px 16px;
+        border-top: 1px solid #2d3d4a;
+        background: #121f2a;
+      }
+      .btn {
+        min-height: 42px;
+        padding: 9px 13px;
+        border: 1px solid #536777;
+        border-radius: 10px;
+        color: var(--text);
+        background: #243646;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 13px;
+        transition:
+          transform 0.12s,
+          background 0.12s,
+          border-color 0.12s;
+      }
+      .btn:hover:not(:disabled) {
+        background: #30495d;
+        border-color: #94b0c2;
+        transform: translateY(-1px);
+      }
+      .btn:focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 2px;
+      }
+      .btn:disabled {
+        opacity: 0.48;
+        cursor: not-allowed;
+      }
+      .btn.primary {
+        background: #126c67;
+        border-color: #42b9ae;
+        color: #fff;
+      }
+      .btn.primary:hover:not(:disabled) {
+        background: #16847d;
+      }
+      .btn.new {
+        margin-left: auto;
+        background: #263246;
+        border-color: #697fa1;
+      }
+      .btn.solution {
+        background: #392d4b;
+        border-color: #9072b2;
+      }
+      .feedback {
+        display: none;
+        padding: 13px 18px 15px;
+        border-top: 1px solid #2d3d4a;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .feedback.show {
+        display: block;
+      }
+      .feedback.success {
+        color: #c8ffe0;
+        background: #153329;
+      }
+      .feedback.try-again {
+        color: #ffe3ad;
+        background: #382e1e;
+      }
+      .feedback.info {
+        color: #d5e9ff;
+        background: #1a2e41;
+      }
+      .side {
+        display: grid;
+        gap: 14px;
+      }
+      .side-card {
+        padding: 17px 17px 18px;
+      }
+      .side-card h3 {
+        margin: 0 0 10px;
+        font-size: 15px;
+      }
+      .side-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+      .target-summary {
+        display: grid;
+        gap: 8px;
+        margin-top: 13px;
+      }
+      .target-row {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 8px 10px;
+        border-radius: 9px;
+        background: #111d27;
+        color: #eaf1f5;
+        font-size: 13px;
+      }
+      .target-chip {
+        width: 20px;
+        height: 20px;
+        display: grid;
+        place-items: center;
+        border-radius: 6px;
+        color: #17202a;
+        background: var(--amber);
+        font-size: 11px;
+        font-weight: 900;
+      }
+      .target-chip.b {
+        color: #22182e;
+        background: #d4a8ff;
+      }
+      .statline {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid #314352;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .statline strong {
+        color: var(--text);
+      }
+      .howto {
+        display: grid;
+        gap: 10px;
+      }
+      .step {
+        display: grid;
+        grid-template-columns: 23px 1fr;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+      .step b {
+        display: grid;
+        place-items: center;
+        width: 21px;
+        height: 21px;
+        border-radius: 7px;
+        background: #293c4a;
+        color: var(--teal);
+        font-size: 11px;
+      }
+      .example {
+        margin-top: 13px !important;
+        padding: 10px 11px;
+        border-left: 3px solid var(--teal);
+        border-radius: 0 8px 8px 0;
+        background: #152d31;
+        color: #d7f9f2 !important;
+      }
+      .note {
+        margin-top: 11px !important;
+        font-size: 11px !important;
+        color: #92a5b2 !important;
+      }
+      footer {
+        padding: 16px 4px 0;
+        color: #8598a6;
+        font-size: 11px;
+        text-align: center;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      @media (max-width: 900px) {
+        .layout {
+          grid-template-columns: minmax(0, 1fr) 260px;
+          gap: 12px;
         }
-        return d;
-      }
-      // Edmonds-Karp on an undirected unit-capacity network. Each undirected link
-      // starts with one unit of residual capacity in either direction.
-      function minCut(n, edges, source, sink) {
-        const capacity = Array.from({length:n}, () => Array(n).fill(0));
-        for (const [a,b] of edges) { capacity[a][b] += 1; capacity[b][a] += 1; }
-        let flow = 0;
-        while (true) {
-          const parent = Array(n).fill(-1); parent[source] = source;
-          const q = [source];
-          for (let i=0; i<q.length && parent[sink] === -1; i++) {
-            const u = q[i];
-            for (let v=0; v<n; v++) if (parent[v] === -1 && capacity[u][v] > 0) { parent[v] = u; q.push(v); if (v === sink) break; }
-          }
-          if (parent[sink] === -1) break;
-          let v = sink;
-          while (v !== source) { const u = parent[v]; capacity[u][v] -= 1; capacity[v][u] += 1; v = u; }
-          flow++;
+        .legend {
+          flex-wrap: wrap;
+          justify-content: flex-end;
+          gap: 7px 10px;
         }
-        const reached = new Set([source]), q = [source];
-        for (let i=0; i<q.length; i++) for (let v=0; v<n; v++) if (!reached.has(v) && capacity[q[i]][v] > 0) { reached.add(v); q.push(v); }
-        const cut = edges.filter(([a,b]) => reached.has(a) !== reached.has(b));
-        return { value: flow, cut: new Set(cut.map(([a,b]) => edgeKey(a,b))) };
+        #graph {
+          min-height: 345px;
+        }
       }
-      function makeGraph() {
-        for (let attempt=0; attempt<1000; attempt++) {
-          const n = 8 + rngInt(5), edges = [], seen = new Set();
-          // Random spanning tree guarantees the full graph begins connected.
-          for (let v=1; v<n; v++) {
-            let u = rngInt(v), key = edgeKey(u,v); seen.add(key); edges.push([u,v]);
+      @media (max-width: 720px) {
+        .shell {
+          padding: 14px 11px 24px;
+        }
+        header {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 12px;
+          margin-bottom: 12px;
+        }
+        .scorebar {
+          width: 100%;
+        }
+        .score {
+          flex: 1;
+        }
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .round-head {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 9px;
+          padding: 14px 14px 10px;
+        }
+        .legend {
+          justify-content: flex-start;
+        }
+        .graph-wrap {
+          padding: 0 2px;
+        }
+        #graph {
+          min-height: 285px;
+          max-height: 55vh;
+          aspect-ratio: 1.08;
+        }
+        .graph-foot {
+          padding: 0 14px 12px;
+        }
+        .actionbar {
+          padding: 12px;
+          gap: 8px;
+        }
+        .btn {
+          flex: 1 1 calc(50% - 8px);
+        }
+        .btn.new {
+          margin-left: 0;
+        }
+        .side {
+          grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav style="padding: 12px 20px">
+      <a href="./csp-games/" style="color: #56ddcd; font-weight: 700"
+        >← CSP Games</a
+      >
+    </nav>
+    <main class="shell">
+      <header>
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">NB</div>
+          <div>
+            <h1>Network Breaker</h1>
+            <p class="eyebrow">
+              AP Computer Science Principles · Redundancy &amp; fault tolerance
+            </p>
+          </div>
+        </div>
+        <div class="scorebar" aria-label="Session progress">
+          <div class="score">
+            <span>Challenges solved</span><strong id="solved">0</strong>
+          </div>
+          <div class="score">
+            <span>First-try correct</span><strong id="streak">0</strong>
+          </div>
+        </div>
+      </header>
+
+      <div class="layout">
+        <section class="game-panel" aria-labelledby="challenge-title">
+          <div class="round-head">
+            <div class="round-title">
+              <h2 id="challenge-title">Challenge 1</h2>
+              <p>
+                Remove the fewest links so there is no path between the two
+                targets.
+              </p>
+            </div>
+            <div class="legend" aria-label="Graph legend">
+              <span class="legend-item"
+                ><i class="legend-dot" aria-hidden="true"></i>Node</span
+              >
+              <span class="legend-item"
+                ><i class="legend-dot target-a" aria-hidden="true"></i>Target
+                A</span
+              >
+              <span class="legend-item"
+                ><i class="legend-dot target-b" aria-hidden="true"></i>Target
+                B</span
+              >
+            </div>
+          </div>
+          <div class="graph-wrap">
+            <svg
+              id="graph"
+              viewBox="0 0 760 510"
+              role="group"
+              aria-label="Interactive network graph. Select a link to mark it removed."
+            ></svg>
+          </div>
+          <div class="graph-foot">
+            <span id="network-stats">10 nodes · 15 active links</span
+            ><span id="selected-stats">0 links removed</span>
+          </div>
+          <div class="actionbar" aria-label="Challenge controls">
+            <button class="btn primary" id="check">Check Answer</button>
+            <button class="btn" id="undo">Undo Last</button>
+            <button class="btn" id="clear">Clear Selection</button>
+            <button class="btn" id="hint">Hint</button>
+            <button class="btn solution" id="solution">
+              Show Optimal Solution
+            </button>
+            <button class="btn new" id="new">
+              New Challenge <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+          <div
+            id="feedback"
+            class="feedback"
+            role="status"
+            aria-live="polite"
+          ></div>
+          <div class="sr-only" id="announce" aria-live="polite"></div>
+        </section>
+
+        <aside class="side">
+          <section class="side-card">
+            <h3>Your targets</h3>
+            <p>Break every possible route between these two nodes.</p>
+            <div class="target-summary">
+              <div class="target-row">
+                <span class="target-chip">A</span
+                ><span id="target-a-name">Node A</span>
+              </div>
+              <div class="target-row">
+                <span class="target-chip b">B</span
+                ><span id="target-b-name">Node B</span>
+              </div>
+            </div>
+            <div class="statline">
+              <span>Links you removed</span
+              ><strong id="removed-count">0</strong>
+            </div>
+          </section>
+          <section class="side-card">
+            <h3>How to play</h3>
+            <div class="howto">
+              <div class="step">
+                <b>1</b
+                ><span
+                  >Click a link, or focus it and press Enter or Space, to remove
+                  it.</span
+                >
+              </div>
+              <div class="step">
+                <b>2</b
+                ><span
+                  >Use the fewest links possible to disconnect Target A from
+                  Target B.</span
+                >
+              </div>
+              <div class="step">
+                <b>3</b
+                ><span
+                  >Check your answer. Undo or clear links any time before
+                  checking.</span
+                >
+              </div>
+            </div>
+            <p class="example">
+              <strong>Example:</strong> If two routes connect A to B, breaking
+              one link may leave the other route open. Your cut must block every
+              route.
+            </p>
+            <p class="note">
+              The links you choose form a <strong>minimum cut</strong>. The
+              network starts connected, with multiple routes that provide
+              redundancy.
+            </p>
+          </section>
+          <section class="side-card">
+            <h3>What you’re practicing</h3>
+            <p>
+              Redundancy lets information travel along alternate routes. Fault
+              tolerance is a network’s ability to keep working when a link
+              fails. A minimum cut is the smallest set of links whose removal
+              disconnects two targets.
+            </p>
+          </section>
+        </aside>
+      </div>
+      <footer>
+        Progress is saved only for this browser session. No account or personal
+        information needed.
+      </footer>
+    </main>
+    <script type="module">
+      import {
+        sessionTracker,
+        addSessionNavigation,
+      } from "./csp-games/session.js?v=platform-expansion-v2";
+      const tracker = sessionTracker();
+      let currentInstance = null,
+        helpCount = 0;
+      addSessionNavigation("./csp-games/");
+      window.addEventListener("pagehide", () => {
+        if (currentInstance) tracker.skip(currentInstance);
+      });
+      (() => {
+        "use strict";
+        const svg = document.getElementById("graph");
+        const NS = "http://www.w3.org/2000/svg";
+        const STORAGE = "networkBreakerSession_v1";
+        const state = {
+          graph: null,
+          removed: new Set(),
+          history: [],
+          solvedThisRound: false,
+          showOptimal: false,
+          round: 0,
+          session: loadSession(),
+          previousSignature: "",
+        };
+        const $ = (id) => document.getElementById(id);
+        function loadSession() {
+          return { solved: 0, streak: 0 };
+        }
+        function saveSession() {}
+        function rngInt(max) {
+          return Math.floor(Math.random() * max);
+        }
+        function edgeKey(a, b) {
+          return a < b ? `${a}-${b}` : `${b}-${a}`;
+        }
+        function neighborsOf(n, edges) {
+          const out = [];
+          for (const [a, b] of edges) {
+            if (a === n) out.push(b);
+            else if (b === n) out.push(a);
           }
-          // Add links to produce alternate routes while keeping the diagram readable.
-          const desired = Math.min(n + 5 + rngInt(4), Math.floor(n * (n-1) / 2));
-          let guard = 0;
-          while (edges.length < desired && guard++ < n*n*3) {
-            const a = rngInt(n), b = rngInt(n); if (a === b) continue;
-            const key = edgeKey(a,b); if (seen.has(key)) continue;
-            seen.add(key); edges.push([Math.min(a,b), Math.max(a,b)]);
+          return out;
+        }
+        function distances(start, n, edges, blocked = new Set()) {
+          const d = Array(n).fill(Infinity),
+            q = [start];
+          d[start] = 0;
+          for (let i = 0; i < q.length; i++)
+            for (const v of neighborsOf(q[i], edges)) {
+              if (!blocked.has(edgeKey(q[i], v)) && d[v] === Infinity) {
+                d[v] = d[q[i]] + 1;
+                q.push(v);
+              }
+            }
+          return d;
+        }
+        // Edmonds-Karp on an undirected unit-capacity network. Each undirected link
+        // starts with one unit of residual capacity in either direction.
+        function minCut(n, edges, source, sink) {
+          const capacity = Array.from({ length: n }, () => Array(n).fill(0));
+          for (const [a, b] of edges) {
+            capacity[a][b] += 1;
+            capacity[b][a] += 1;
           }
-          const pairs = [];
-          for (let a=0; a<n; a++) {
-            const d = distances(a,n,edges);
-            for (let b=a+1; b<n; b++) if (d[b] >= 3) {
-              const cut = minCut(n,edges,a,b);
-              if (cut.value >= 2) pairs.push({a,b,distance:d[b],cut});
+          let flow = 0;
+          while (true) {
+            const parent = Array(n).fill(-1);
+            parent[source] = source;
+            const q = [source];
+            for (let i = 0; i < q.length && parent[sink] === -1; i++) {
+              const u = q[i];
+              for (let v = 0; v < n; v++)
+                if (parent[v] === -1 && capacity[u][v] > 0) {
+                  parent[v] = u;
+                  q.push(v);
+                  if (v === sink) break;
+                }
+            }
+            if (parent[sink] === -1) break;
+            let v = sink;
+            while (v !== source) {
+              const u = parent[v];
+              capacity[u][v] -= 1;
+              capacity[v][u] += 1;
+              v = u;
+            }
+            flow++;
+          }
+          const reached = new Set([source]),
+            q = [source];
+          for (let i = 0; i < q.length; i++)
+            for (let v = 0; v < n; v++)
+              if (!reached.has(v) && capacity[q[i]][v] > 0) {
+                reached.add(v);
+                q.push(v);
+              }
+          const cut = edges.filter(
+            ([a, b]) => reached.has(a) !== reached.has(b),
+          );
+          return {
+            value: flow,
+            cut: new Set(cut.map(([a, b]) => edgeKey(a, b))),
+          };
+        }
+        function makeGraph() {
+          for (let attempt = 0; attempt < 1000; attempt++) {
+            const n = 8 + rngInt(5),
+              edges = [],
+              seen = new Set();
+            // Random spanning tree guarantees the full graph begins connected.
+            for (let v = 1; v < n; v++) {
+              let u = rngInt(v),
+                key = edgeKey(u, v);
+              seen.add(key);
+              edges.push([u, v]);
+            }
+            // Add links to produce alternate routes while keeping the diagram readable.
+            const desired = Math.min(
+              n + 5 + rngInt(4),
+              Math.floor((n * (n - 1)) / 2),
+            );
+            let guard = 0;
+            while (edges.length < desired && guard++ < n * n * 3) {
+              const a = rngInt(n),
+                b = rngInt(n);
+              if (a === b) continue;
+              const key = edgeKey(a, b);
+              if (seen.has(key)) continue;
+              seen.add(key);
+              edges.push([Math.min(a, b), Math.max(a, b)]);
+            }
+            const pairs = [];
+            for (let a = 0; a < n; a++) {
+              const d = distances(a, n, edges);
+              for (let b = a + 1; b < n; b++)
+                if (d[b] >= 3) {
+                  const cut = minCut(n, edges, a, b);
+                  if (cut.value >= 2) pairs.push({ a, b, distance: d[b], cut });
+                }
+            }
+            if (!pairs.length) continue;
+            const pair = pairs[rngInt(pairs.length)];
+            // Place nodes around a loose ellipse with a small per-node radial offset.
+            const points = Array.from({ length: n }, (_, i) => {
+              const angle =
+                -Math.PI / 2 +
+                (2 * Math.PI * i) / n +
+                (Math.random() - 0.5) * 0.16;
+              const radius = 0.82 + Math.random() * 0.1;
+              return {
+                x: 380 + Math.cos(angle) * 320 * radius,
+                y: 255 + Math.sin(angle) * 208 * radius,
+              };
+            });
+            const signature = `${n}|${edges
+              .map((e) => edgeKey(...e))
+              .sort()
+              .join(",")}|${pair.a},${pair.b}`;
+            if (signature === state.previousSignature) continue;
+            state.previousSignature = signature;
+            return {
+              n,
+              edges,
+              points,
+              a: pair.a,
+              b: pair.b,
+              distance: pair.distance,
+              optimal: pair.cut.value,
+              cut: pair.cut.cut,
+            };
+          }
+          throw new Error(
+            "Could not generate a valid network. Please try again.",
+          );
+        }
+        function create(name, attrs = {}, parent = svg) {
+          const el = document.createElementNS(NS, name);
+          for (const [k, v] of Object.entries(attrs))
+            el.setAttribute(k, String(v));
+          parent.appendChild(el);
+          return el;
+        }
+        function render(focusKey = "") {
+          svg.replaceChildren();
+          const g = state.graph;
+          for (const [a, b] of g.edges) {
+            const key = edgeKey(a, b),
+              p = g.points[a],
+              q = g.points[b],
+              group = create("g", { class: "edge-group" });
+            if (state.removed.has(key)) group.classList.add("removed");
+            if (state.showOptimal && g.cut.has(key))
+              group.classList.add("optimal");
+            create(
+              "line",
+              { x1: p.x, y1: p.y, x2: q.x, y2: q.y, class: "edge-visible" },
+              group,
+            );
+            const hit = create(
+              "line",
+              {
+                x1: p.x,
+                y1: p.y,
+                x2: q.x,
+                y2: q.y,
+                class: "edge-hit",
+                tabindex: "0",
+                role: "button",
+                "data-edge-key": key,
+                "aria-pressed": state.removed.has(key),
+                "aria-label": `Link between Node ${a + 1} and Node ${b + 1}${state.removed.has(key) ? ", removed" : ""}${state.showOptimal && g.cut.has(key) ? ", part of an optimal solution" : ""}. Press Enter or Space to toggle.`,
+              },
+              group,
+            );
+            hit.addEventListener("click", () => toggle(key, true));
+            hit.addEventListener("keydown", (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                toggle(key, true);
+              }
+            });
+            if (state.removed.has(key)) {
+              const mx = (p.x + q.x) / 2,
+                my = (p.y + q.y) / 2;
+              create(
+                "circle",
+                {
+                  cx: mx,
+                  cy: my,
+                  r: 11,
+                  fill: "#172431",
+                  stroke: "#ff7a7a",
+                  "stroke-width": 1.5,
+                },
+                group,
+              );
+              const mark = create(
+                "text",
+                { x: mx, y: my, class: "edge-mark" },
+                group,
+              );
+              mark.textContent = "×";
             }
           }
-          if (!pairs.length) continue;
-          const pair = pairs[rngInt(pairs.length)];
-          // Place nodes around a loose ellipse with a small per-node radial offset.
-          const points = Array.from({length:n}, (_,i) => {
-            const angle = -Math.PI/2 + (2*Math.PI*i/n) + (Math.random()-.5)*.16;
-            const radius = .82 + Math.random()*.1;
-            return { x: 380 + Math.cos(angle)*320*radius, y: 255 + Math.sin(angle)*208*radius };
-          });
-          const signature = `${n}|${edges.map(e=>edgeKey(...e)).sort().join(",")}|${pair.a},${pair.b}`;
-          if (signature === state.previousSignature) continue;
-          state.previousSignature = signature;
-          return { n, edges, points, a:pair.a, b:pair.b, distance:pair.distance, optimal:pair.cut.value, cut:pair.cut.cut };
-        }
-        throw new Error("Could not generate a valid network. Please try again.");
-      }
-      function create(name, attrs = {}, parent = svg) {
-        const el = document.createElementNS(NS,name);
-        for (const [k,v] of Object.entries(attrs)) el.setAttribute(k,String(v));
-        parent.appendChild(el); return el;
-      }
-      function render(focusKey = "") {
-        svg.replaceChildren();
-        const g = state.graph;
-        for (const [a,b] of g.edges) {
-          const key=edgeKey(a,b), p=g.points[a], q=g.points[b], group=create("g",{class:"edge-group"});
-          if (state.removed.has(key)) group.classList.add("removed");
-          if (state.showOptimal && g.cut.has(key)) group.classList.add("optimal");
-          create("line",{x1:p.x,y1:p.y,x2:q.x,y2:q.y,class:"edge-visible"},group);
-          const hit=create("line",{x1:p.x,y1:p.y,x2:q.x,y2:q.y,class:"edge-hit",tabindex:"0",role:"button", "data-edge-key":key, "aria-pressed":state.removed.has(key), "aria-label":`Link between Node ${a+1} and Node ${b+1}${state.removed.has(key)?", removed":""}${state.showOptimal&&g.cut.has(key)?", part of an optimal solution":""}. Press Enter or Space to toggle.`},group);
-          hit.addEventListener("click",()=>toggle(key,true));
-          hit.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(key,true); } });
-          if (state.removed.has(key)) {
-            const mx=(p.x+q.x)/2, my=(p.y+q.y)/2;
-            create("circle",{cx:mx,cy:my,r:11,fill:"#172431",stroke:"#ff7a7a","stroke-width":1.5},group);
-            const mark=create("text",{x:mx,y:my,class:"edge-mark"},group); mark.textContent="×";
+          for (let i = 0; i < g.n; i++) {
+            const p = g.points[i],
+              group = create("g", {
+                class: `node ${i === g.a ? "node-target-a" : i === g.b ? "node-target-b" : ""}`,
+                "aria-hidden": "true",
+              });
+            create(
+              "circle",
+              { cx: p.x, cy: p.y, r: 23, class: "node-halo" },
+              group,
+            );
+            create(
+              "circle",
+              { cx: p.x, cy: p.y, r: 16, class: "node-core" },
+              group,
+            );
+            const label = create(
+              "text",
+              { x: p.x, y: p.y, class: "node-label" },
+              group,
+            );
+            label.textContent = String(i + 1);
+            if (i === g.a || i === g.b) {
+              const tag = create("g", {}, group);
+              create(
+                "rect",
+                {
+                  x: p.x + 16,
+                  y: p.y - 34,
+                  width: 21,
+                  height: 18,
+                  rx: 6,
+                  class: "node-tag",
+                },
+                tag,
+              );
+              const t = create(
+                "text",
+                { x: p.x + 26.5, y: p.y - 25, class: "node-tag-text" },
+                tag,
+              );
+              t.textContent = i === g.a ? "A" : "B";
+            }
+          }
+          $("challenge-title").textContent = `Challenge ${state.round}`;
+          $("target-a-name").textContent = `Node ${g.a + 1}`;
+          $("target-b-name").textContent = `Node ${g.b + 1}`;
+          $("network-stats").textContent =
+            `${g.n} nodes · ${g.edges.length} links`;
+          $("selected-stats").textContent =
+            `${state.removed.size} ${state.removed.size === 1 ? "link" : "links"} removed`;
+          $("removed-count").textContent = String(state.removed.size);
+          const counts = tracker.snapshot().games["network-breaker"];
+          $("solved").textContent = String(
+            (counts?.firstTry || 0) + (counts?.afterRetry || 0),
+          );
+          $("streak").textContent = String(counts?.firstTry || 0);
+          $("undo").disabled = state.history.length === 0;
+          $("clear").disabled = state.removed.size === 0;
+          if (focusKey) {
+            const focusable = [...svg.querySelectorAll("[data-edge-key]")].find(
+              (el) => el.getAttribute("data-edge-key") === focusKey,
+            );
+            if (focusable) focusable.focus();
           }
         }
-        for (let i=0;i<g.n;i++) {
-          const p=g.points[i], group=create("g",{class:`node ${i===g.a?"node-target-a":i===g.b?"node-target-b":""}`, "aria-hidden":"true"});
-          create("circle",{cx:p.x,cy:p.y,r:23,class:"node-halo"},group);
-          create("circle",{cx:p.x,cy:p.y,r:16,class:"node-core"},group);
-          const label=create("text",{x:p.x,y:p.y,class:"node-label"},group); label.textContent=String(i+1);
-          if (i===g.a||i===g.b) {
-            const tag=create("g",{},group); create("rect",{x:p.x+16,y:p.y-34,width:21,height:18,rx:6,class:"node-tag"},tag);
-            const t=create("text",{x:p.x+26.5,y:p.y-25,class:"node-tag-text"},tag); t.textContent=i===g.a?"A":"B";
+        function setFeedback(message, type = "info") {
+          const box = $("feedback");
+          box.textContent = message;
+          box.className = `feedback show ${type}`;
+          $("announce").textContent = message;
+        }
+        function toggle(key, returnFocus = false) {
+          if (state.solvedThisRound || state.showOptimal) return;
+          if (state.removed.has(key)) state.removed.delete(key);
+          else state.removed.add(key);
+          state.history.push(key);
+          setFeedback(
+            "Link selection updated. Keep checking for alternate routes.",
+            "info",
+          );
+          render(returnFocus ? key : "");
+        }
+        function checkAnswer() {
+          if (tracker.status(currentInstance) !== "active") {
+            setFeedback(
+              "This challenge is complete or belongs to a reset session. Start a new challenge.",
+              "info",
+            );
+            return;
           }
+          if (state.solvedThisRound) {
+            setFeedback(
+              "You already solved this challenge. Start a new challenge whenever you’re ready.",
+              "success",
+            );
+            return;
+          }
+          if (state.showOptimal) {
+            setFeedback(
+              "The optimal solution is displayed. Start a new challenge to try another network.",
+              "info",
+            );
+            return;
+          }
+          const blocked = state.removed,
+            reached = distances(
+              state.graph.a,
+              state.graph.n,
+              state.graph.edges,
+              blocked,
+            );
+          if (reached[state.graph.b] !== Infinity) {
+            state.session.streak = 0;
+            saveSession();
+            render();
+            tracker.submit(currentInstance, false);
+            setFeedback(networkHint(), "try-again");
+            return;
+          }
+          if (blocked.size > state.graph.optimal) {
+            state.session.streak = 0;
+            saveSession();
+            render();
+            tracker.submit(currentInstance, false);
+            setFeedback(networkHint(), "try-again");
+            return;
+          }
+          tracker.submit(currentInstance, true);
+          state.solvedThisRound = true;
+          state.session.solved++;
+          state.session.streak++;
+          saveSession();
+          render();
+          setFeedback(
+            `Correct! Those ${state.graph.optimal} links form a minimum cut. Every route between the targets crossed at least one of them; the network’s other routes provided redundancy until those links were removed.`,
+            "success",
+          );
         }
-        $("challenge-title").textContent=`Challenge ${state.round}`;
-        $("target-a-name").textContent=`Node ${g.a+1}`; $("target-b-name").textContent=`Node ${g.b+1}`;
-        $("network-stats").textContent=`${g.n} nodes · ${g.edges.length} links`;
-        $("selected-stats").textContent=`${state.removed.size} ${state.removed.size===1?"link":"links"} removed`;
-        $("removed-count").textContent=String(state.removed.size);
-        const counts=tracker.snapshot().games["network-breaker"];$("solved").textContent=String((counts?.firstTry||0)+(counts?.afterRetry||0)); $("streak").textContent=String(counts?.firstTry||0);
-        $("undo").disabled=state.history.length===0;
-        $("clear").disabled=state.removed.size===0;
-        if (focusKey) {
-          const focusable=[...svg.querySelectorAll("[data-edge-key]")].find(el=>el.getAttribute("data-edge-key")===focusKey);
-          if(focusable) focusable.focus();
+        function undo() {
+          if (
+            !state.history.length ||
+            state.solvedThisRound ||
+            state.showOptimal
+          )
+            return;
+          const key = state.history.pop();
+          if (state.removed.has(key)) state.removed.delete(key);
+          else state.removed.add(key);
+          setFeedback("Last link removal undone.", "info");
+          render();
         }
-      }
-      function setFeedback(message,type="info") {
-        const box=$("feedback"); box.textContent=message; box.className=`feedback show ${type}`; $("announce").textContent=message;
-      }
-      function toggle(key, returnFocus = false) {
-        if(state.solvedThisRound||state.showOptimal) return;
-        if(state.removed.has(key)) state.removed.delete(key); else state.removed.add(key);
-        state.history.push(key); setFeedback("Link selection updated. Keep checking for alternate routes.","info"); render(returnFocus?key:"");
-      }
-      function checkAnswer() {
-        if(tracker.status(currentInstance)!=="active"){setFeedback("This challenge is complete or belongs to a reset session. Start a new challenge.","info");return;}
-        if(state.solvedThisRound) { setFeedback("You already solved this challenge. Start a new challenge whenever you’re ready.","success"); return; }
-        if(state.showOptimal) { setFeedback("The optimal solution is displayed. Start a new challenge to try another network.","info"); return; }
-        const blocked=state.removed, reached=distances(state.graph.a,state.graph.n,state.graph.edges,blocked);
-        if(reached[state.graph.b]!==Infinity) {
-          state.session.streak=0; saveSession(); render();
-          tracker.submit(currentInstance,false);
-          setFeedback(networkHint(),"try-again"); return;
+        function clearSelection() {
+          if (state.solvedThisRound || state.showOptimal) return;
+          state.removed.clear();
+          state.history = [];
+          setFeedback(
+            "All removed links restored. Try a different cut.",
+            "info",
+          );
+          render();
         }
-        if(blocked.size>state.graph.optimal) {
-          state.session.streak=0; saveSession(); render();
-          tracker.submit(currentInstance,false);
-          setFeedback(networkHint(),"try-again"); return;
+        function networkHint() {
+          const count = Math.max(
+            helpCount,
+            tracker.snapshot().records[currentInstance]?.submissions || 0,
+          );
+          return [
+            "Links connect nodes; alternate paths can keep the targets connected.",
+            "Consider every route between the targets, not just their direct or shortest route.",
+            "Look for a small group of links crossed by every remaining route. Restore unnecessary removals before checking.",
+          ][Math.min(2, Math.max(0, count - 1))];
         }
-        tracker.submit(currentInstance,true); state.solvedThisRound=true; state.session.solved++; state.session.streak++; saveSession(); render();
-        setFeedback(`Correct! Those ${state.graph.optimal} links form a minimum cut. Every route between the targets crossed at least one of them; the network’s other routes provided redundancy until those links were removed.`,"success");
-      }
-      function undo() {
-        if(!state.history.length||state.solvedThisRound||state.showOptimal) return;
-        const key=state.history.pop(); if(state.removed.has(key))state.removed.delete(key);else state.removed.add(key); setFeedback("Last link removal undone.","info"); render();
-      }
-      function clearSelection() {
-        if(state.solvedThisRound||state.showOptimal) return;
-        state.removed.clear(); state.history=[]; setFeedback("All removed links restored. Try a different cut.","info"); render();
-      }
-      function networkHint() { const count=Math.max(helpCount,tracker.snapshot().records[currentInstance]?.submissions||0); return ["Links connect nodes; alternate paths can keep the targets connected.","Consider every route between the targets, not just their direct or shortest route.","Look for a small group of links crossed by every remaining route. Restore unnecessary removals before checking."][Math.min(2,Math.max(0,count-1))]; }
-      function hint() { if(tracker.status(currentInstance)!=="active")return;helpCount++;setFeedback(networkHint(),"info"); }
-      function showSolution() {
-        if(!tracker.reveal(currentInstance))return;
-        state.showOptimal=true; render();
-        setFeedback(`Optimal solution shown: remove the ${state.graph.optimal} highlighted links. This challenge is revealed and cannot earn independent credit.`,"info");
-      }
-      function newChallenge() {
-        if(currentInstance)tracker.skip(currentInstance);currentInstance=tracker.begin("network-breaker","Network Breaker","minimum-edge-cut","Minimum edge cut");helpCount=0;state.instance=currentInstance;
-        state.round++; state.graph=makeGraph(); state.removed=new Set(); state.history=[]; state.solvedThisRound=false; state.showOptimal=false;
-        $("feedback").className="feedback"; render();
-        setFeedback(`New connected network ready. Target distance: ${state.graph.distance} links. Remove the fewest links that separate the targets.`,"info");
-      }
-      $("check").addEventListener("click",checkAnswer);
-      $("undo").addEventListener("click",undo);
-      $("clear").addEventListener("click",clearSelection);
-      $("hint").addEventListener("click",hint);
-      $("solution").addEventListener("click",showSolution);
-      $("new").addEventListener("click",newChallenge);
-      newChallenge();
-      // Small test hook for offline verification; no data leaves this page.
-      window.NetworkBreakerTest = { minCut, distances, makeGraph, get state(){return state;} };
-    })();
-  </script>
-</body>
+        function hint() {
+          if (tracker.status(currentInstance) !== "active") return;
+          helpCount++;
+          setFeedback(networkHint(), "info");
+        }
+        function showSolution() {
+          if (!tracker.reveal(currentInstance)) return;
+          state.showOptimal = true;
+          render();
+          setFeedback(
+            `Optimal solution shown: remove the ${state.graph.optimal} highlighted links. This challenge is revealed and cannot earn independent credit.`,
+            "info",
+          );
+        }
+        function newChallenge() {
+          if (currentInstance) tracker.skip(currentInstance);
+          currentInstance = tracker.begin(
+            "network-breaker",
+            "Network Breaker",
+            "minimum-edge-cut",
+            "Minimum edge cut",
+          );
+          helpCount = 0;
+          state.instance = currentInstance;
+          state.round++;
+          state.graph = makeGraph();
+          state.removed = new Set();
+          state.history = [];
+          state.solvedThisRound = false;
+          state.showOptimal = false;
+          $("feedback").className = "feedback";
+          render();
+          setFeedback(
+            `New connected network ready. Target distance: ${state.graph.distance} links. Remove the fewest links that separate the targets.`,
+            "info",
+          );
+        }
+        $("check").addEventListener("click", checkAnswer);
+        $("undo").addEventListener("click", undo);
+        $("clear").addEventListener("click", clearSelection);
+        $("hint").addEventListener("click", hint);
+        $("solution").addEventListener("click", showSolution);
+        $("new").addEventListener("click", newChallenge);
+        newChallenge();
+        // Small test hook for offline verification; no data leaves this page.
+        window.NetworkBreakerTest = {
+          minCut,
+          distances,
+          makeGraph,
+          get state() {
+            return state;
+          },
+        };
+      })();
+    </script>
+  </body>
 </html>
-
