@@ -32,7 +32,7 @@ export function startPractice(slug = document.body.dataset.game) {
     order = [];
   document.title = game.title + " | CSP Games";
   $("main").innerHTML =
-    `<div class="eyebrow">Big Idea ${escape(game.group)} · ${escape(game.topics)}</div><h1>${game.title}</h1><p class="intro">${game.description}</p>${slug === "mixed-ap-practice" ? '<p class="muted">Original practice questions aligned with AP CSP concepts. These are not official College Board exam questions.</p>' : ""}<div class="toolbar"><label>Practice mode <select id="practice-mode"><option value="mixed" selected>Mixed Practice</option>${Object.entries(
+    `<div class="eyebrow">${game.group === "All five Big Ideas" ? "Across " : "Big Idea "}${escape(game.group)} · ${escape(game.topics)}</div><h1>${game.title}</h1><p class="intro">${game.description}</p>${slug === "mixed-ap-practice" ? '<p class="muted">Original practice questions aligned with AP CSP concepts. These are not official College Board exam questions.</p>' : ""}<div class="toolbar"><label>Practice mode <select id="practice-mode"><option value="mixed" selected>Mixed Practice</option>${Object.entries(
       game.modes,
     )
       .map(([value, label]) => `<option value="${value}">${label}</option>`)

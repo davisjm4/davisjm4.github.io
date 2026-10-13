@@ -1,0 +1,370 @@
+import * as J from "./engine.js?v=java-v1";
+import { diagnostics } from "./diagnostics.js?v=java-v1";
+import { mountCollectionEditor } from "../csp-games/collection-editor.js?v=java-v1";
+import {
+  sessionTracker,
+  addSessionNavigation,
+  roundSummary,
+} from "./session.js?v=java-v1";
+const esc = (s) =>
+  String(s).replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
+  );
+const $ = (id) => document.getElementById(id),
+  slug = document.body.dataset.game;
+if (!slug) {
+  $("main").innerHTML =
+    `<div class="eyebrow">DevCat Studios · Java practice</div><h1>Read it. Explore it.<br>Understand it.</h1><p class="intro">Quick, interactive practice for Java code understanding. No code editor, accounts, or required progression.</p><div class="grid">${Object.entries(
+      J.games,
+    )
+      .map(
+        ([id, g]) =>
+          `<article class="card"><div class="icon" aria-hidden="true">${g.icon}</div><h2>${g.name}</h2><small>${g.concepts}</small><p>${g.description}</p><a href="${id}/" class="button">Play ${g.name} →</a></article>`,
+      )
+      .join(
+        "",
+      )}</div><section class="panel"><h2>One report for your Java practice</h2><p><a href="session-summary/">Open Session Summary</a> · <a href="coverage.html">Java coverage and roadmap</a> · <a href="../csp-games/">CSP Games</a></p><p>Java and CSP results are separate and stay in this browser. These games complement SkillStruck coding practice and do not claim full AP CSA or district EOP coverage.</p></section>`;
+  addSessionNavigation("./");
+} else startGame();
+function startGame() {
+  const game = J.games[slug],
+    tracker = sessionTracker();
+  let q,
+    instance,
+    selected = null,
+    selectedFix = null,
+    marked = new Set(),
+    editor,
+    wrong = 0,
+    timer = null;
+  document.title = game.name + " | Java Games";
+  $("main").innerHTML =
+    `<div class="eyebrow">Java · ${game.concepts}</div><h1>${game.name}</h1><p class="intro">${game.description}</p><div class="toolbar"><label>Practice mode <select id="mode"><option value="mixed" selected>Mixed Practice</option>${Object.entries(
+      game.modes,
+    )
+      .map(([id, label]) => `<option value="${id}">${label}</option>`)
+      .join(
+        "",
+      )}</select></label><button id="new" class="secondary">New Challenge</button></div><section id="stage" class="panel"></section><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div><p id="stats" class="stats"></p>`;
+  addSessionNavigation("../");
+  const active = () => tracker.status(instance) === "active",
+    stats = () => {
+      $("stats").textContent = roundSummary(slug);
+    };
+  function renderNode(n) {
+    if (typeof n === "string") return esc(n);
+    if (n.id === "snippet") return n.children.map(renderNode).join("");
+    return `<span class="java-component" data-node="${n.id}" role="button" tabindex="0" aria-pressed="false">${n.text !== undefined ? esc(n.text) : n.children.map(renderNode).join("")}</span>`;
+  }
+  function next() {
+    if (timer) clearTimeout(timer);
+    if (instance) tracker.skip(instance);
+    q = J.generate(slug, $("mode").value);
+    instance = tracker.begin(
+      slug,
+      game.name,
+      q.topic,
+      q.topic.replaceAll("-", " "),
+    );
+    selected = null;
+    selectedFix = null;
+    marked.clear();
+    wrong = 0;
+    editor = null;
+    $("feedback").hidden = true;
+    const diag = diagnostics[q.variant];
+    $("stage").innerHTML =
+      `<div class="eyebrow">${game.modes[q.mode]}</div><h2>${esc(q.prompt)}</h2>${
+        q.kind === "debug"
+          ? `<p class="muted">${esc(q.symptom)}</p>${diag ? `<p class="compiler-diagnostic">Verified javac 17 template diagnostic: line ${diag.line}: ${esc(diag.message)}. The reported line may differ from the original fault.</p>` : ""}<div id="java-code" class="snippet">${q.code
+              .split("\n")
+              .map(
+                (text, i) =>
+                  `<button class="java-line" data-location="line${i}"><small>${i + 1} </small>${esc(text)}</button><button class="insertion-boundary secondary" data-location="after${i}" aria-label="Insert after line ${i + 1}">Insert after line ${i + 1}</button>`,
+              )
+              .join(
+                "",
+              )}</div><h3>Choose a correction</h3><div id="fix-bank" class="block-bank">${q.fixes.map((fix, i) => `<button class="secondary" data-fix="${i}"><code>${esc(fix)}</code></button>`).join("")}</div>`
+          : q.kind === "assemble"
+            ? `<div class="builder-fields">${q.fields.map((f) => `<label>${f.label}<select id="piece-${f.id}"><option value="" selected>Choose…</option>${f.choices.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join("")}</select></label>`).join("")}</div><pre id="assembly-preview">Choose declaration pieces.</pre>`
+            : `<pre id="java-code" class="snippet">${q.kind === "select" ? renderNode(q.root) : esc(q.code)}</pre>${q.kind === "select" ? '<p>Tap a component; Expand Selection includes its surrounding statement or loop.</p><div class="row"><button id="expand" class="secondary" disabled>Expand Selection</button><button id="clear" class="secondary">Clear Selection</button></div><pre id="selected-text">No component selected.</pre>' : ""}`
+      }${slug === "array-lab" && q.kind !== "collection" ? `<h3>Starting collection</h3><div class="collection-row collection-start">${q.initial.map((v, i) => `<div class="collection-item"><small>index ${i}</small><button>${v}</button></div>`).join("")}</div>` : ""}${q.kind === "collection" ? '<div id="collection-editor"></div>' : ""}${q.kind === "value" ? `<div id="value-bank" class="row">${q.choices.map((v, i) => `<button class="secondary" data-value="${i}">${esc(v)}</button>`).join("")}</div>` : ""}${q.kind === "multi" ? `<div id="grid" class="java-grid">${q.cells.map((c) => `<button class="secondary" data-cell="${esc(c.id)}" aria-pressed="false">${esc(c.label)}</button>`).join("")}</div>` : ""}<div class="actions"><button id="check">Check Answer</button><button id="show" class="secondary">Show Answer</button><button id="next" class="secondary">Next Challenge</button>${q.trace ? '<button id="watch" class="secondary" hidden>Watch Execution</button>' : ""}</div><section id="execution" hidden></section>`;
+    function set(value) {
+      if (!active()) return;
+      selected = value;
+      paint();
+      $("feedback").hidden = true;
+    }
+    if (q.kind === "select") {
+      for (const el of $("java-code").querySelectorAll("[data-node]")) {
+        el.onclick = (e) => {
+          e.stopPropagation();
+          set(el.dataset.node);
+        };
+        el.onkeydown = (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            set(el.dataset.node);
+          }
+        };
+      }
+      $("expand").onclick = () => {
+        const parent = J.nodes(q.root).find((n) => n.id === selected)?.parent;
+        if (parent && parent !== "snippet") set(parent);
+      };
+      $("clear").onclick = () => set(null);
+    }
+    if (q.kind === "debug") {
+      for (const el of $("java-code").querySelectorAll("[data-location]"))
+        el.onclick = () => {
+          if (!active()) return;
+          selected = el.dataset.location;
+          paint();
+          $("feedback").hidden = true;
+        };
+      for (const el of $("fix-bank").querySelectorAll("[data-fix]"))
+        el.onclick = () => {
+          if (!active()) return;
+          selectedFix = q.fixes[Number(el.dataset.fix)];
+          paint();
+          $("feedback").hidden = true;
+        };
+    }
+    if (q.kind === "value")
+      for (const el of $("value-bank").querySelectorAll("button"))
+        el.onclick = () => set(q.choices[Number(el.dataset.value)]);
+    if (q.kind === "multi")
+      for (const el of $("grid").querySelectorAll("button"))
+        el.onclick = () => {
+          if (!active()) return;
+          const id = el.dataset.cell;
+          marked.has(id) ? marked.delete(id) : marked.add(id);
+          paint();
+          $("feedback").hidden = true;
+        };
+    if (q.kind === "assemble")
+      for (const el of $("stage").querySelectorAll("select"))
+        el.onchange = () => {
+          $("assembly-preview").textContent =
+            `${$("piece-type").value || "⟦type⟧"} ${$("piece-name").value || "⟦name⟧"} ${$("piece-operator").value || "⟦operator⟧"} ${$("piece-value").value || "⟦value⟧"};`;
+          $("feedback").hidden = true;
+        };
+    if (q.kind === "collection") {
+      editor = mountCollectionEditor($("collection-editor"), {
+        initial: q.initial,
+        bank: q.bank,
+        indexBase: 0,
+        fixed: q.fixed,
+        columns: q.columns || 0,
+        active,
+        onChange: () => {
+          $("feedback").hidden = true;
+        },
+      });
+      $("collection-editor").javaEditor = editor;
+    }
+    $("check").onclick = check;
+    $("show").onclick = show;
+    $("next").onclick = next;
+    if ($("watch")) $("watch").onclick = watch;
+    stats();
+  }
+  function paint() {
+    for (const el of $("stage").querySelectorAll(
+      "[data-node],[data-location],[data-fix],[data-value],[data-cell]",
+    )) {
+      const chosen = el.hasAttribute("data-node")
+        ? selected === el.dataset.node
+        : el.hasAttribute("data-location")
+          ? selected === el.dataset.location
+          : el.hasAttribute("data-fix")
+            ? selectedFix === q.fixes[Number(el.dataset.fix)]
+            : el.hasAttribute("data-cell")
+              ? marked.has(el.dataset.cell)
+              : selected === q.choices[Number(el.dataset.value)];
+      el.classList.toggle("selected", chosen);
+      el.setAttribute("aria-pressed", chosen);
+    }
+    if (q.kind === "select") {
+      const n = J.nodes(q.root).find((n) => n.id === selected);
+      $("selected-text").textContent = n
+        ? "Your selection: " + n.text
+        : "No component selected.";
+      $("expand").disabled = !n?.parent || n.parent === "snippet";
+    }
+  }
+  function response() {
+    return q.kind === "debug"
+      ? { location: selected, fix: selectedFix }
+      : q.kind === "collection"
+        ? { values: editor.values }
+        : q.kind === "multi"
+          ? { ids: [...marked] }
+          : q.kind === "assemble"
+            ? Object.fromEntries(
+                q.fields.map((f) => [f.id, $("piece-" + f.id).value]),
+              )
+            : q.kind === "select"
+              ? { id: selected }
+              : { answer: selected };
+  }
+  function complete(r) {
+    return q.kind === "debug"
+      ? r.location && r.fix
+      : q.kind === "collection"
+        ? true
+        : q.kind === "multi"
+          ? r.ids.length
+          : q.kind === "assemble"
+            ? q.fields.every((f) => r[f.id])
+            : q.kind === "select"
+              ? r.id
+              : r.answer !== null;
+  }
+  function message(good, text, neutral = false) {
+    $("feedback").hidden = false;
+    $("feedback").className =
+      "feedback " + (neutral ? "" : good ? "good" : "bad");
+    $("feedback").textContent = text;
+    $("feedback").focus();
+    stats();
+  }
+  function check() {
+    if (!active()) {
+      message(
+        false,
+        "This challenge is already complete or belongs to a reset session. Choose New Challenge.",
+        true,
+      );
+      return;
+    }
+    const r = response();
+    if (!complete(r)) {
+      message(
+        false,
+        "Complete the selection before checking. No submission has been counted.",
+        true,
+      );
+      return;
+    }
+    const correct = J.assess(q, r),
+      result = tracker.submit(instance, correct);
+    if (!result.accepted) return;
+    if ($("watch")) $("watch").hidden = false;
+    if (!correct) {
+      wrong++;
+      message(
+        false,
+        `Not quite. Hint ${Math.min(3, wrong)}: ${J.hint(q, wrong)}\nRetry independently, skip, or choose Show Answer.`,
+      );
+      return;
+    }
+    finish(
+      false,
+      `${wrong ? "Correct independently after retry." : "Correct on the first try."}\n${q.explanation}`,
+    );
+  }
+  function show() {
+    if (!tracker.reveal(instance)) return;
+    const answer = J.solution(q);
+    if (q.kind === "collection") {
+      editor.model.load(answer.values);
+      editor.refresh();
+    } else if (q.kind === "assemble") {
+      for (const f of q.fields) $("piece-" + f.id).value = answer[f.id];
+      $("assembly-preview").textContent =
+        `${answer.type} ${answer.name} ${answer.operator} ${answer.value};`;
+    } else if (q.kind === "debug") {
+      selected = answer.location;
+      selectedFix = answer.fix;
+    } else if (q.kind === "select") selected = answer.id;
+    else if (q.kind === "multi") marked = new Set(answer.ids);
+    else selected = answer.answer;
+    paint();
+    finish(
+      true,
+      "Answer revealed — not independently solved.\n" +
+        q.explanation +
+        "\nThis challenge cannot earn independent credit.",
+    );
+  }
+  function finish(revealed, text) {
+    for (const el of $("stage").querySelectorAll("button,select,input"))
+      el.disabled = true;
+    $("next").disabled = false;
+    if ($("watch")) {
+      $("watch").hidden = false;
+      $("watch").disabled = false;
+    }
+    if (q.kind === "select")
+      for (const el of $("java-code").querySelectorAll("[data-node]")) {
+        el.setAttribute("aria-disabled", "true");
+        el.tabIndex = -1;
+        if (el.dataset.node === q.answerId) el.classList.add("answer");
+      }
+    message(!revealed, text, revealed);
+  }
+  function watch() {
+    if (active()) {
+      if (
+        !window.confirm(
+          "Watch Execution will reveal this challenge’s answer and disable independent scoring. Continue?",
+        )
+      )
+        return;
+      show();
+    }
+    if (timer) clearTimeout(timer);
+    $("java-code").innerHTML = renderNode(q.root);
+    for (const node of $("java-code").querySelectorAll("[data-node]")) {
+      node.tabIndex = -1;
+      node.setAttribute("aria-disabled", "true");
+    }
+    $("execution").hidden = false;
+    $("execution").innerHTML =
+      '<h3>Execution walkthrough</h3><p id="execution-state" role="status"></p><button id="execution-step" class="secondary">Next Step</button><button id="execution-play" class="secondary">Play Animation</button>';
+    let index = 0;
+    const step = () => {
+      const state = q.trace[index];
+      if (!state) {
+        $("execution-state").textContent += " · Finished.";
+        return false;
+      }
+      $("execution-state").textContent = `Step ${index + 1}: ${Object.entries(
+        state.variables,
+      )
+        .map(([k, v]) => `${k} = ${v}`)
+        .join(", ")} · ${state.output}`;
+      for (const el of $("java-code").querySelectorAll("[data-node]"))
+        el.classList.toggle("answer", el.dataset.node === state.line);
+      index++;
+      return index < q.trace.length;
+    };
+    $("execution-step").onclick = () => {
+      if (timer) clearTimeout(timer);
+      step();
+    };
+    $("execution-play").onclick = () => {
+      if (timer) clearTimeout(timer);
+      const run = () => {
+        if (step()) timer = setTimeout(run, 700);
+      };
+      run();
+    };
+    step();
+  }
+  $("new").onclick = next;
+  $("mode").onchange = next;
+  for (const type of ["click", "input", "change"])
+    $("stage").addEventListener(type, () => tracker.interact(instance));
+  window.addEventListener("pagehide", () => {
+    if (timer) clearTimeout(timer);
+    tracker.skip(instance);
+  });
+  next();
+}

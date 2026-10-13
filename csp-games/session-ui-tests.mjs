@@ -1,3 +1,4 @@
+import { mountCollectionEditor } from "./collection-editor.js";
 import { practiceGames } from "./practice-engine.js";
 import fs from "node:fs";
 import vm from "node:vm";
@@ -79,6 +80,7 @@ function launch(slug) {
       (captures[key] = E[key](...args))
     );
   const ctx = {
+    mountCollectionEditor,
     practiceGames,
     document,
     window,

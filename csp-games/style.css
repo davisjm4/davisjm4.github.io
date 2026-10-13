@@ -837,3 +837,101 @@ textarea {
   outline: 3px solid #edc467;
   outline-offset: 3px;
 }
+.collection-row,
+.collection-bank {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.8rem 0;
+}
+.collection-item {
+  display: grid;
+  justify-items: center;
+  gap: 0.25rem;
+}
+.collection-value {
+  min-width: 48px;
+  min-height: 48px;
+  touch-action: none;
+  cursor: grab;
+}
+.collection-value:active {
+  cursor: grabbing;
+}
+.collection-bank button {
+  min-width: 42px;
+}
+.collection-gap {
+  min-width: 44px;
+  padding: 0.5rem;
+  min-height: 48px;
+}
+.collection-trash {
+  display: block;
+  width: 100%;
+  min-height: 64px;
+  border: 2px dashed #d99781;
+  margin: 1rem 0;
+}
+.drop-active,
+.dragging [data-drop]:hover {
+  outline: 3px solid #edc467;
+  background: #2c4a4d;
+}
+.collection-start button {
+  cursor: default;
+  pointer-events: none;
+}
+.java-line {
+  display: block;
+  white-space: pre-wrap;
+  text-align: left;
+  width: 100%;
+  font-family: monospace;
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.3rem;
+  color: inherit;
+}
+.java-line.selected {
+  border-color: #edc467;
+  background: #263f4e;
+}
+.java-component {
+  cursor: pointer;
+  border-radius: 3px;
+}
+.java-component.selected {
+  background: #436376;
+  outline: 2px solid #edc467;
+}
+.java-component.answer {
+  background: #345c47;
+  outline: 2px solid #6edcbe;
+}
+.java-grid {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+  max-width: 600px;
+}
+.java-grid button {
+  min-height: 48px;
+}
+@media (max-width: 600px) {
+  .collection-bank {
+    gap: 0.4rem;
+  }
+  .collection-value {
+    font-size: 16px;
+  }
+  .collection-trash {
+    font-size: 14px;
+  }
+}
+
+.collection-editor {
+  display: block;
+  width: 100%;
+}

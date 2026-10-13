@@ -1,3 +1,4 @@
+import { mountCollectionEditor } from "./collection-editor.js?v=java-v1";
 import { practiceGames } from "./practice-engine.js?v=platform-expansion-v2";
 import {
   sessionTracker,
@@ -292,7 +293,7 @@ if (!game) {
     [...new Set(catalog.map((g) => g[2]))]
       .map(
         (group) =>
-          `<section><h2>Big Idea ${group}</h2><div class="grid">${catalog
+          `<section><h2>${group === "All five Big Ideas" ? "Mixed AP Practice" : "Big Idea " + group}</h2><div class="grid">${catalog
             .filter((g) => g[2] === group)
             .map(
               (g) =>
@@ -482,8 +483,23 @@ function listLab() {
   let c,
     mode,
     working,
+    editor,
     ops = [];
   function renderList() {
+    if (mode === "execute") {
+      editor = mountCollectionEditor($("list"), {
+        initial: c.start,
+        bank: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        indexBase: 1,
+        onChange: (values) => {
+          working = values;
+          clearFeedback();
+        },
+        active: () => tracker.status(currentInstance) === "active",
+      });
+      $("list").cspEditor = editor;
+      return;
+    }
     $("list").innerHTML =
       working
         .map(
@@ -544,47 +560,50 @@ function listLab() {
       working = [...c.start];
       ops = [];
       mount(
-        `<p>Indices start at 1. INSERT shifts items right; REMOVE shifts items left.</p><pre>numbers ← [${c.start.join(", ")}]${mode === "execute" ? "\n\n" + c.ops.map(E.operationText).join("\n") : ""}</pre>${mode === "build" ? `<p>Target list: <strong>[${c.target.join(", ")}]</strong></p><p>Add and arrange operations. Any valid program that produces the target is accepted.</p>` : "<p>Edit the list below to show the final state after all operations. Use arrows to rearrange items if needed.</p>"}<div id="list" class="tokens"></div><div class="row">${select(
-          "operation",
-          "Operation",
-          [
-            ["INSERT", "INSERT"],
-            ["APPEND", "APPEND"],
-            ["REMOVE", "REMOVE"],
-          ],
-        )}${numeric("index", "Index", 1, 1, 40)}${numeric("item", "Value", 1, 0, 99)}${button("add", mode === "build" ? "Add operation" : "Apply edit", true)}</div>${mode === "build" ? '<div id="ops"></div>' : ""}<div class="actions">${button("reset", "Reset work", true)}${button("check", "Check Answer")}</div>`,
+        `<p>Indices start at 1. INSERT shifts items right; REMOVE shifts items left.</p><pre>numbers ← [${c.start.join(", ")}]${mode === "execute" ? "\n\n" + c.ops.map(E.operationText).join("\n") : ""}</pre>${mode === "build" ? `<p>Target list: <strong>[${c.target.join(", ")}]</strong></p><p>Add and arrange operations. Any valid program that produces the target is accepted.</p>` : "<p>Manipulate the working list to show the final state. The list can grow and shrink; no final length is provided.</p>"}<div id="list" class="tokens"></div>${
+          mode === "build"
+            ? `<div class="row">${select("operation", "Operation", [
+                ["INSERT", "INSERT"],
+                ["APPEND", "APPEND"],
+                ["REMOVE", "REMOVE"],
+              ])}${numeric("index", "Index", 1, 1, 40)}${numeric("item", "Value", 1, 0, 99)}${button("add", mode === "build" ? "Add operation" : "Apply edit", true)}</div>`
+            : ""
+        }${mode === "build" ? '<div id="ops"></div>' : ""}<div class="actions">${mode === "build" ? button("reset", "Reset work", true) : ""}${button("check", "Check Answer")}</div>`,
       );
       renderList();
       if (mode === "build") renderOps();
-      $("add").onclick = () => {
-        let o = {
-          type: $("operation").value,
-          index: +$("index").value,
-          value: +$("item").value,
-        };
-        if (!Number.isInteger(o.value) || o.value < 0 || o.value > 99) {
-          feedback(false, "Use whole-number values 0–99.");
-          return;
-        }
-        clearFeedback();
-        if (mode === "build") {
-          ops.push(o);
-          renderOps();
-        } else
-          try {
-            working = E.applyOperation(working, o);
-            renderList();
-          } catch (e) {
-            feedback(false, e.message);
+      if ($("add"))
+        $("add").onclick = () => {
+          let o = {
+            type: $("operation").value,
+            index: +$("index").value,
+            value: +$("item").value,
+          };
+          if (!Number.isInteger(o.value) || o.value < 0 || o.value > 99) {
+            feedback(false, "Use whole-number values 0–99.");
+            return;
           }
-      };
-      $("reset").onclick = () => {
-        working = [...c.start];
-        ops = [];
-        clearFeedback();
-        renderList();
-        if (mode === "build") renderOps();
-      };
+          clearFeedback();
+          if (mode === "build") {
+            ops.push(o);
+            renderOps();
+          } else
+            try {
+              working = E.applyOperation(working, o);
+              renderList();
+            } catch (e) {
+              feedback(false, e.message);
+            }
+        };
+      if ($("reset"))
+        $("reset").onclick = () => {
+          if (tracker.status(currentInstance) !== "active") return;
+          working = [...c.start];
+          ops = [];
+          clearFeedback();
+          renderList();
+          if (mode === "build") renderOps();
+        };
       check("check", () => {
         let result = mode === "build" ? E.runOperations(c.start, ops) : working;
         feedback(

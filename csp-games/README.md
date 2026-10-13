@@ -10,7 +10,7 @@ Buildless HTML, CSS, and native JavaScript modules. Each game folder has an inde
 
 - Binary Builder: 4, 6, 8, or 16 unsigned bits; capacity/maximum, explicitly modeled overflow, and grayscale pixel encoding/storage.
 - Boolean Gatekeeper: nested Boolean expressions; evaluate or adjust integer inputs 0–12. Solvability is enumerated.
-- List Lab: one-based INSERT, REMOVE, APPEND; final-state editing or program building, accepting any valid transformation.
+- List Lab: visual starting list, dynamic drag/drop/touch/keyboard working copy, reusable duplicate bank values, insertion gaps, trash, reorder, undo/reset; one-based INSERT, REMOVE, APPEND; final-state editing or program building, accepting any valid transformation.
 - Binary Search Hunt: hidden sorted values, midpoint choices, revealed comparisons, eliminated regions, present and absent targets. Lower midpoint convention.
 - Packet Router: available routes, failed links, and additional failures; shortest routes are not required.
 - Compression Challenge: text RLE, image RLE, and lossless optimization. Rules are deliberately bounded: 1-byte counts, 1-byte symbols, optional 1-byte image scan header, row/column scans, raw/RLE options. Optimal size is exact within these rules, not among all possible compression formats.
@@ -62,3 +62,5 @@ Curriculum matrix: /csp-games/coverage.html, CURRICULUM_COVERAGE.md, and coverag
 `expanded-tests.mjs`, `practice-tests.mjs`, and `practice-ui-tests.mjs` cover expanded concept metadata, reverse-choice uniqueness, all new modes, valid alternatives, shared passages, models, incorrect submissions followed by retries, reveal locks, shared storage, and summary tables. `session-tests.mjs` also verifies that an interaction updates the activity timestamp without adding scoring events.
 
 The new activities use bounded templates. Simulation Lab currently models independent binary events, not a general queue or disease simulator. Structured explanations do not certify unrestricted written responses. Library/string practice is limited to a documented concatenation interface. The coverage matrix lists remaining objectives and authentic project requirements. Teacher Tools / Canvas QTI Export remains deferred. No ChatGPT Sites deployment is created.
+
+The same collection editor is shared with Java Array Lab using an explicit index base. CSP uses one-based positions; Java uses zero-based positions. Their session stores are separate. Java Games: https://davisjm4.github.io/java-games/.

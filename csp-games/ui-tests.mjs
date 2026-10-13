@@ -1,3 +1,4 @@
+import { mountCollectionEditor } from "./collection-editor.js";
 import { practiceGames } from "./practice-engine.js";
 import fs from "node:fs";
 import vm from "node:vm";
@@ -74,6 +75,7 @@ function launch(slug) {
     addSessionNavigation: () => {},
     roundSummary: () => "Shared session results",
     startCodeConcepts: () => {},
+    mountCollectionEditor,
     practiceGames,
     document,
     window,
@@ -159,13 +161,14 @@ for (let repetition = 0; repetition < 20; repetition++) {
     t.change("mode", mode);
     let c = t.captures.listChallenge;
     if (mode === "execute") {
-      while (t.$("list").querySelector("[data-remove]"))
-        t.$("list").querySelector("[data-remove]").onclick();
-      for (let v of c.target) {
-        t.$("operation").value = "APPEND";
-        t.$("item").value = v;
-        t.click("add");
-      }
+      const editor = t.$("list").cspEditor;
+      while (editor.values.length)
+        editor.drop({ kind: "item", index: 0 }, { kind: "trash" });
+      for (const value of c.target)
+        editor.drop(
+          { kind: "bank", value },
+          { kind: "gap", index: editor.values.length },
+        );
     } else
       for (let o of c.ops) {
         t.$("operation").value = o.type;
@@ -175,7 +178,7 @@ for (let repetition = 0; repetition < 20; repetition++) {
       }
     t.click("check");
     t.good();
-    t.click("reset");
+    if (t.$("reset")) t.click("reset");
     t.click("check");
     t.bad();
     t.click("new");
