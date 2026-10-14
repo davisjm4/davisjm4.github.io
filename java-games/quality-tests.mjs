@@ -12,6 +12,7 @@ for(let i=0;i<500;i++) {
   assert.ok(!q.prompt.includes(a.name));
   assert.ok(!/Use (int|double|boolean|char|String)|no typing|whole number|decimal value/.test(q.prompt));
   assert.ok(q.scenario.types.includes(a.type));
+  assert.equal(q.explanation.includes("int is the intended type"),a.type === "int");
   assert.equal(q.fields.find(f=>f.id==='value').label,'Value');
   for(const f of q.fields) {
     assert.equal(f.choices.length,new Set(f.choices).size);

@@ -1,5 +1,5 @@
-import * as J from "./engine.js?v=java-quality-v2";
-import { diagnostics } from "./diagnostics.js?v=java-quality-v2";
+import * as J from "./engine.js?v=java-quality-v3";
+import { diagnostics } from "./diagnostics.js?v=java-quality-v3";
 import { mountCollectionEditor } from "../csp-games/collection-editor.js?v=java-v1";
 import {
   sessionTracker,
@@ -40,6 +40,7 @@ function startGame() {
     marked = new Set(),
     editor,
     wrong = 0,
+    submitted = false,
     timer = null;
   document.title = game.name + " | Java Games";
   $("main").innerHTML =
@@ -74,6 +75,7 @@ function startGame() {
     selectedFix = null;
     marked.clear();
     wrong = 0;
+    submitted = false;
     editor = null;
     $("feedback").hidden = true;
     const diag = diagnostics[q.variant];
@@ -84,7 +86,7 @@ function startGame() {
           : q.kind === "assemble"
             ? `<details class="muted"><summary>Introductory type convention</summary><p>${esc(q.convention)}</p></details><div class="builder-fields">${q.fields.map((f) => `<label>${f.label}<select id="piece-${f.id}"><option value="" selected>Choose…</option>${f.choices.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join("")}</select></label>`).join("")}</div><pre id="assembly-preview">Choose declaration pieces.</pre>`
             : `<pre id="java-code" class="snippet">${q.kind === "select" ? renderNode(q.root) : esc(q.code)}</pre>${q.kind === "select" ? '<p>Tap a component; Expand Selection includes its surrounding statement or loop.</p><div class="row"><button id="expand" class="secondary" disabled>Expand Selection</button><button id="clear" class="secondary">Clear Selection</button></div><pre id="selected-text">No component selected.</pre>' : ""}`
-      }${slug === "array-lab" && q.kind !== "collection" ? `<h3>Starting collection</h3><div class="collection-row collection-start">${q.initial.map((v, i) => `<div class="collection-item"><small>index ${i}</small><button>${v}</button></div>`).join("")}</div>` : ""}${q.kind === "collection" ? '<div id="collection-editor"></div>' : ""}${q.kind === "value" ? `<div id="value-bank" class="row">${q.choices.map((v, i) => `<button class="secondary" data-value="${i}">${esc(v)}</button>`).join("")}</div>` : ""}${q.kind === "multi" ? `<div id="grid" class="java-grid">${q.cells.map((c) => `<button class="secondary" data-cell="${esc(c.id)}" aria-pressed="false">${esc(c.label)}</button>`).join("")}</div>` : ""}<div class="actions"><button id="check">Check Answer</button><button id="show" class="secondary">Show Answer</button><button id="next" class="secondary">Next Challenge</button>${q.trace ? '<button id="watch" class="secondary" hidden>Watch Execution</button>' : ""}</div><section id="execution" hidden></section>`;
+      }${slug === "array-lab" && q.kind !== "collection" ? `<h3>Starting collection</h3><div class="collection-row collection-start">${q.initial.map((v, i) => `<div class="collection-item"><small>index ${i}</small><button>${v}</button></div>`).join("")}</div>` : ""}${q.kind === "collection" ? '<div id="collection-editor"></div>' : ""}${q.kind === "value" ? `<div id="value-bank" class="row">${q.choices.map((v, i) => `<button class="secondary" data-value="${i}">${esc(v)}</button>`).join("")}</div>` : ""}${q.kind === "multi" ? `<div id="grid" class="java-grid">${q.cells.map((c) => `<button class="secondary" data-cell="${esc(c.id)}" aria-pressed="false">${esc(c.label)}</button>`).join("")}</div>` : ""}<div class="actions"><button id="check">Check Answer</button><button id="show" class="secondary">Show Answer</button><button id="next" class="secondary">Next Challenge</button>${q.trace ? '<button id="watch" class="secondary" hidden disabled>Watch Execution</button>' : ""}</div><section id="execution" hidden></section>`;
     function set(value) {
       if (!active()) return;
       selected = value;
@@ -247,7 +249,8 @@ function startGame() {
     const correct = J.assess(q, r),
       result = tracker.submit(instance, correct);
     if (!result.accepted) return;
-    if ($("watch")) $("watch").hidden = false;
+    submitted = true;
+    if ($("watch")) { $("watch").hidden = false; $("watch").disabled = false; }
     if (!correct) {
       wrong++;
       message(
@@ -302,6 +305,7 @@ function startGame() {
     message(!revealed, text, revealed);
   }
   function watch() {
+    if (active() && !submitted) return;
     if (active()) {
       if (
         !window.confirm(

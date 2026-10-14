@@ -254,6 +254,11 @@ for (const [variant,mode] of J.debugTemplates) {
 const loop = launch("loop-lab");
 loop.mode("execution");
 ok(loop.$("watch").hidden);
+ok(loop.$("watch").disabled);
+const beforeWatch=loop.tracker.snapshot().totals;
+loop.click("watch");
+eq(loop.tracker.snapshot().totals,beforeWatch);
+ok(loop.$("execution").hidden);
 loop.click("check");
 ok(loop.$("watch").hidden);
 const wrong = loop.q.choices.find((x) => x !== String(loop.q.answer));

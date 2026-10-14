@@ -202,7 +202,7 @@ function variable(mode, forced) {
     q.scenario = scenario;
     q.code = "Build the declaration.";
     q.compilerSource = `public class Practice { public static void main(String[] args) { ${chosenType} ${scenario.name} = ${stored}; } }`;
-    q.explanation = `${chosenType} ${scenario.name} = ${stored}; stores the requested value in a name matching its purpose. A whole number can legally widen to double; here int is the intended type under our introductory convention.`;
+    q.explanation = `${chosenType} ${scenario.name} = ${stored}; stores the requested value in a name matching its purpose. ` + {int:"A whole number can legally widen to double; int is the intended type under our introductory convention.", double:"The decimal value is represented with double.", boolean:"boolean stores the truth values true and false.", char:"A single character is represented with char and single quotes.", String:"Text is represented with String and double quotes."}[chosenType];
     delete q.root;
     q.topic = "assemble-" + chosenType;
     return q;

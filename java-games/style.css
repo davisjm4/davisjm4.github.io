@@ -17,3 +17,6 @@
 .java-token.selected { background: #254766; outline: 2px solid #78c9ed; color: #fff; }
 .token-gap { border-style: dashed; border-color: #7f91a4; }
 #fix-bank code { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* Author button layouts must not override intentionally hidden controls. */
+[hidden] { display: none !important; }
