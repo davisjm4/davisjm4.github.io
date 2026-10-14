@@ -1,11 +1,5 @@
 @import url("../csp-games/style.css?v=platform-java-v3");
 
-.insertion-boundary {
-  padding: 0.1rem 0.4rem;
-  font-size: 0.72rem;
-  opacity: 0.8;
-  min-height: 24px;
-}
 .compiler-diagnostic {
   font-family: monospace;
   overflow-wrap: anywhere;
@@ -16,3 +10,10 @@
   border-radius: 8px;
   margin: 1rem 0;
 }
+
+.debug-code { white-space: pre; overflow-x: auto; line-height: 2.8; }
+.java-token { display: inline-block; font: inherit; font-family: monospace; color: inherit; background: transparent; border: 1px solid transparent; border-radius: 4px; margin: 0; padding: 0 0.15rem; min-width: 2rem; min-height: 44px; vertical-align: baseline; }
+.java-token:hover, .java-token:focus-visible { border-color: currentColor; }
+.java-token.selected { background: #254766; outline: 2px solid #78c9ed; color: #fff; }
+.token-gap { border-style: dashed; border-color: #7f91a4; }
+#fix-bank code { white-space: pre-wrap; overflow-wrap: anywhere; }

@@ -232,9 +232,30 @@ for (const [slug, g] of Object.entries(J.games)) {
       eq(t.tracker.snapshot().totals.submissions, b3.submissions + 2);
     }
 }
+// Token selection alone never scores or reveals the correct location.
+for (const [variant,mode] of J.debugTemplates) {
+  const t=launch("debugger-lab"); t.force(variant); t.mode(mode);
+  const q=t.q, before=t.tracker.snapshot().totals;
+  eq(t.$("java-code").querySelectorAll(".java-line,.insertion-boundary").length,0);
+  const target=t.$("java-code").querySelector(`[data-location="${q.location}"]`);
+  eq(target.tagName,"BUTTON"); ok(target.getAttribute("aria-label"));
+  target.onclick(); eq(target.getAttribute("aria-pressed"),"true");
+  eq(t.tracker.snapshot().totals,before);
+  t.click("check"); eq(t.tracker.snapshot().totals,before);
+  for(let attempt=0;attempt<3;attempt++) {
+    t.fill({location:q.location,fix:q.fixes.find(f=>f!==q.fix)}); t.click("check");
+    ok(!t.$("feedback").textContent.includes(q.explanation));
+    eq(t.$("java-code").querySelectorAll(".answer").length,0);
+  }
+  t.click("show"); eq(t.tracker.snapshot().totals.revealed,before.revealed+1);
+  t.click("check"); eq(t.tracker.snapshot().totals.firstTry,before.firstTry);
+}
 // Watch Execution is an intentional reveal, with cancellation preserving scoring.
 const loop = launch("loop-lab");
 loop.mode("execution");
+ok(loop.$("watch").hidden);
+loop.click("check");
+ok(loop.$("watch").hidden);
 const wrong = loop.q.choices.find((x) => x !== String(loop.q.answer));
 loop.fill({ answer: wrong });
 loop.click("check");

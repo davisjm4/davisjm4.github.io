@@ -5,7 +5,7 @@ Static Java-reading practice at https://davisjm4.github.io/java-games/, in the e
 ## Initial games
 
 - Variable Lab: int/double/boolean/char/String; clickable annotated components; declaration/initialization/assignment; literal/value; widening and narrowing conversions; reassignment; guided declaration pieces. Mixed default.
-- Debugger Lab: select the actual defect location AND a correction, then check both together. Verified templates cover syntax, runtime, logic, and tricky earlier-source faults. Compiler diagnostics are captured from OpenJDK 17, not invented. The production site uses known templates, not a compiler.
+- Debugger Lab: select a faulty lexical token or the relevant missing-component gap AND a correction, then check both together. Verified templates cover syntax, runtime, logic, and tricky earlier-source faults. Compiler diagnostics are captured from OpenJDK 17, not invented. The production site uses known templates, not a compiler.
 - Loop Lab: for/while structural regions, start/update/last-used/count/after-update questions with scope enforced; increasing/decreasing steps; <, <=, >, >=, !=; nested rectangles and row-dependent grids. Optional stepped/animated execution shows initialization/conditions/body/updates. Watching after an incorrect attempt intentionally reveals the challenge and prevents independent credit; cancellation leaves it active.
 - Array Lab: visual starting collections; drag/touch/keyboard working copies, reusable bank values, duplicates, insertion gaps, removal zone, reordering, replacement, undo/reset. Dynamic ArrayLists have no fixed final slots. Arrays keep fixed length. Includes zero-based indices, length/size, visited elements, sums/counts/min/max/search, numeric and String ArrayLists, array/ArrayList traversals, and 2D row-update grids.
 
@@ -27,4 +27,4 @@ DOM simulation does not verify physical Chromebook/mobile touch behavior, render
 
 Deploy only through the existing main-branch GitHub Pages workflow. CSP Games, legacy Network Breaker, root portfolio, and other content remain in place. No ChatGPT Sites project is created, updated, or deleted.
 
-Verified release checks include 743 javac template/generated-source checks plus 64 additional compiled behavioral samples matched against actual JVM output. The intentionally nonterminating loop has no update; integer decrement/wrap behavior is not mislabeled as a guaranteed infinite loop.
+The current quality-update checks and instructional review are documented in `QUALITY_AUDIT.md`. Run `npm run test:quality` for randomized quality and JVM repair checks, and `npm run test:compiler` to regenerate verified compiler diagnostics. The intentionally nonterminating loop has no update; integer decrement/wrap behavior is not mislabeled as a guaranteed infinite loop.

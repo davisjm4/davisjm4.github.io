@@ -10,7 +10,7 @@ class VerifyJava {
     boolean ok=compiler.getTask(null,manager,diagnostics,List.of("-d",output.toString(),"-Xlint:none"),null,List.of(object)).call();
     String report=ok?"OK":diagnostics.getDiagnostics().stream().filter(d->d.getKind()==Diagnostic.Kind.ERROR).findFirst().map(d->d.getLineNumber()+"\t"+d.getMessage(Locale.ENGLISH).replace('\n',' ')).orElse("0\tUnknown");
     Files.writeString(Path.of(fields[0]+".diagnostic"),report);
-    if(ok!=Boolean.parseBoolean(fields[1]))throw new RuntimeException(fields[0]+" expected "+fields[1]+" but was "+ok+": "+report);
+    if(!fields[1].equals("any") && ok!=Boolean.parseBoolean(fields[1]))throw new RuntimeException(fields[0]+" expected "+fields[1]+" but was "+ok+": "+report);
     checked++;
    }
   }

@@ -1,5 +1,5 @@
-import * as J from "./engine.js?v=java-v1";
-import { diagnostics } from "./diagnostics.js?v=java-v1";
+import * as J from "./engine.js?v=java-quality-v2";
+import { diagnostics } from "./diagnostics.js?v=java-quality-v2";
 import { mountCollectionEditor } from "../csp-games/collection-editor.js?v=java-v1";
 import {
   sessionTracker,
@@ -80,17 +80,9 @@ function startGame() {
     $("stage").innerHTML =
       `<div class="eyebrow">${game.modes[q.mode]}</div><h2>${esc(q.prompt)}</h2>${
         q.kind === "debug"
-          ? `<p class="muted">${esc(q.symptom)}</p>${diag ? `<p class="compiler-diagnostic">Verified javac 17 template diagnostic: line ${diag.line}: ${esc(diag.message)}. The reported line may differ from the original fault.</p>` : ""}<div id="java-code" class="snippet">${q.code
-              .split("\n")
-              .map(
-                (text, i) =>
-                  `<button class="java-line" data-location="line${i}"><small>${i + 1} </small>${esc(text)}</button><button class="insertion-boundary secondary" data-location="after${i}" aria-label="Insert after line ${i + 1}">Insert after line ${i + 1}</button>`,
-              )
-              .join(
-                "",
-              )}</div><h3>Choose a correction</h3><div id="fix-bank" class="block-bank">${q.fixes.map((fix, i) => `<button class="secondary" data-fix="${i}"><code>${esc(fix)}</code></button>`).join("")}</div>`
+          ? `<p>${esc(q.context)}</p><p class="muted">${esc(q.symptom)}</p>${diag ? `<details class="compiler-diagnostic"><summary>Compiler message</summary><p>Verified javac 17 diagnostic, line ${diag.line}: ${esc(diag.message)}</p></details>` : ""}<pre id="java-code" class="snippet debug-code">${q.tokens.map(t => t.selectable || t.gap ? `<button type="button" class="java-token${t.gap ? " token-gap" : ""}" data-location="${t.id}" aria-pressed="false" aria-label="${esc(t.gap ? "Missing component gap" : t.text)}">${esc(t.gap ? "▯" : t.text)}</button>` : esc(t.text)).join("")}</pre><h3>Choose a correction</h3><div id="fix-bank" class="block-bank">${q.fixes.map((fix, i) => `<button class="secondary" data-fix="${i}"><code>${esc(fix)}</code></button>`).join("")}</div>`
           : q.kind === "assemble"
-            ? `<div class="builder-fields">${q.fields.map((f) => `<label>${f.label}<select id="piece-${f.id}"><option value="" selected>Choose…</option>${f.choices.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join("")}</select></label>`).join("")}</div><pre id="assembly-preview">Choose declaration pieces.</pre>`
+            ? `<details class="muted"><summary>Introductory type convention</summary><p>${esc(q.convention)}</p></details><div class="builder-fields">${q.fields.map((f) => `<label>${f.label}<select id="piece-${f.id}"><option value="" selected>Choose…</option>${f.choices.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join("")}</select></label>`).join("")}</div><pre id="assembly-preview">Choose declaration pieces.</pre>`
             : `<pre id="java-code" class="snippet">${q.kind === "select" ? renderNode(q.root) : esc(q.code)}</pre>${q.kind === "select" ? '<p>Tap a component; Expand Selection includes its surrounding statement or loop.</p><div class="row"><button id="expand" class="secondary" disabled>Expand Selection</button><button id="clear" class="secondary">Clear Selection</button></div><pre id="selected-text">No component selected.</pre>' : ""}`
       }${slug === "array-lab" && q.kind !== "collection" ? `<h3>Starting collection</h3><div class="collection-row collection-start">${q.initial.map((v, i) => `<div class="collection-item"><small>index ${i}</small><button>${v}</button></div>`).join("")}</div>` : ""}${q.kind === "collection" ? '<div id="collection-editor"></div>' : ""}${q.kind === "value" ? `<div id="value-bank" class="row">${q.choices.map((v, i) => `<button class="secondary" data-value="${i}">${esc(v)}</button>`).join("")}</div>` : ""}${q.kind === "multi" ? `<div id="grid" class="java-grid">${q.cells.map((c) => `<button class="secondary" data-cell="${esc(c.id)}" aria-pressed="false">${esc(c.label)}</button>`).join("")}</div>` : ""}<div class="actions"><button id="check">Check Answer</button><button id="show" class="secondary">Show Answer</button><button id="next" class="secondary">Next Challenge</button>${q.trace ? '<button id="watch" class="secondary" hidden>Watch Execution</button>' : ""}</div><section id="execution" hidden></section>`;
     function set(value) {

@@ -34,7 +34,7 @@ for (const game of Object.keys(J.games)) {
         assert.equal(J.assess(q, { location: "none", fix: q.fix }), false);
         assert.equal(J.assess(q, { location: q.location, fix: "none" }), false);
         assert.ok(
-          q.location.startsWith("line") || q.location.startsWith("after"),
+          q.location.startsWith("token-"),
         );
       }
       if (q.kind === "multi") {

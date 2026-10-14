@@ -72,14 +72,19 @@ export function nodes(root) {
 }
 const choices = (answer, wrong) =>
   shuffle([...new Set([answer, ...wrong].map(String))]);
-const variableNames = [
-  "score",
-  "itemPrice",
-  "livesRemaining",
-  "totalPoints",
-  "isReady",
-  "sectionCode",
-  "studentLabel",
+// Each purpose has one matching identifier; alternatives describe different data.
+export const declarationScenarios = [
+  {purpose: "a player's health", name: "playerHealth", types: ["int", "double"]},
+  {purpose: "the price of a movie ticket", name: "ticketPrice", types: ["double"]},
+  {purpose: "the number of lives remaining", name: "livesRemaining", types: ["int"]},
+  {purpose: "whether a player completed a level", name: "levelCompleted", types: ["boolean"]},
+  {purpose: "a player's username", name: "playerUsername", types: ["String"]},
+  {purpose: "a seat's row letter", name: "seatRow", types: ["char"]},
+  {purpose: "the number of books checked out", name: "booksBorrowed", types: ["int"]},
+  {purpose: "the temperature in degrees", name: "airTemperature", types: ["double"]},
+  {purpose: "whether a library book is available", name: "bookAvailable", types: ["boolean"]},
+  {purpose: "the title of a movie", name: "movieTitle", types: ["String"]},
+  {purpose: "a team captain's single initial", name: "captainInitial", types: ["char"]},
 ];
 export function generate(game, mode = "mixed", forced) {
   const selected =
@@ -119,7 +124,7 @@ export function hint(q, attempt) {
 export function assess(q, r) {
   if (q.kind === "debug")
     return (
-      (q.locations || [q.location]).includes(r.location) && r.fix === q.fix
+      (q.locations || [q.location]).includes(r.location) && (q.validFixes || [q.fix]).includes(r.fix)
     );
   if (q.kind === "collection")
     return JSON.stringify(r.values) === JSON.stringify(q.answer);
@@ -130,7 +135,7 @@ export function assess(q, r) {
     );
   if (q.kind === "assemble")
     return Object.entries(q.answer).every(([k, v]) => r[k] === v);
-  if (q.kind === "select") return r.id === q.answerId;
+  if (q.kind === "select") return (q.validIds || [q.answerId]).includes(r.id);
   return String(r.answer) === String(q.answer);
 }
 export function solution(q) {
@@ -143,7 +148,7 @@ export function solution(q) {
 }
 function variable(mode, forced) {
   const type = pick(["int", "double", "boolean", "char", "String"]),
-    name = pick(variableNames),
+    name = pick({int:["score","livesRemaining","totalPoints"],double:["itemPrice","temperature"],boolean:["isReady","levelCompleted"],char:["sectionCode","seatRow"],String:["studentLabel","playerUsername"]}[type]),
     n = int(2, 25),
     value =
       type === "int"
@@ -175,36 +180,31 @@ function variable(mode, forced) {
   };
   if (mode === "assemble") {
     q.kind = "assemble";
-    q.prompt = `Use ${type} to declare a variable named ${name}, initialized to ${value}. Choose pieces; no typing is required.`;
+    const scenario = pick(declarationScenarios), chosenType = pick(scenario.types);
+    const maximum = {livesRemaining:9,booksBorrowed:15,ticketPrice:20,airTemperature:40}[scenario.name] || 100;
+    const stored = chosenType === "int" ? String(int(1, maximum))
+      : chosenType === "double" ? (int(scenario.name === "ticketPrice" ? 6 : 1, maximum) + pick([0.25, 0.5, 0.75])).toFixed(2)
+      : chosenType === "boolean" ? pick(["true", "false"])
+      : chosenType === "char" ? `'${pick(["A", "B", "C", "D"])}'`
+      : `"${pick(scenario.name === "movieTitle" ? ["Skyward", "Ocean Quest", "Moonlight"] : ["Wildcat", "Bluebird", "Comet"])}"`;
+    q.prompt = `Store ${scenario.purpose}, initially ${stored}.`;
+    q.convention = "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.";
     q.fields = [
-      {
-        id: "type",
-        label: "Type",
-        choices: shuffle(["int", "double", "boolean", "char", "String"]),
-      },
-      {
-        id: "name",
-        label: "Variable name",
-        choices: choices(
-          name,
-          variableNames.filter((x) => x !== name).slice(0, 3),
-        ),
-      },
-      {
-        id: "operator",
-        label: "Operator",
-        choices: shuffle(["=", "==", "!="]),
-      },
-      {
-        id: "value",
-        label: "Literal",
-        choices: choices(value, [String(n + 2), `"${n}"`, `'Z'`]),
-      },
+      {id: "type", label: "Type", choices: shuffle(["int", "double", "boolean", "char", "String"])},
+      {id: "name", label: "Variable name", choices: choices(scenario.name, shuffle(declarationScenarios.filter(x => x.name !== scenario.name).map(x => x.name)).slice(0, 3))},
+      {id: "operator", label: "Operator", choices: shuffle(["=", "==", "!="])},
+      {id: "value", label: "Value", choices: choices(stored, chosenType === "int" ? [Number(stored)+1, Number(stored)-1, `"${stored}"`]
+        : chosenType === "double" ? [Math.trunc(Number(stored)), (Number(stored)+1).toFixed(2), `"${stored}"`]
+        : chosenType === "boolean" ? [stored === "true" ? "false" : "true", `"${stored}"`, "0"]
+        : chosenType === "char" ? [`"${stored.slice(1,-1)}"`, "'Z'", "0"] : [stored.replace(/"/g, "'"), '"Other"', "false"])},
     ];
-    q.answer = { type, name, operator: "=", value };
-    q.code = "Choose pieces to represent the requested declaration.";
+    q.answer = {type: chosenType, name: scenario.name, operator: "=", value: stored};
+    q.scenario = scenario;
+    q.code = "Build the declaration.";
+    q.compilerSource = `public class Practice { public static void main(String[] args) { ${chosenType} ${scenario.name} = ${stored}; } }`;
+    q.explanation = `${chosenType} ${scenario.name} = ${stored}; stores the requested value in a name matching its purpose. A whole number can legally widen to double; here int is the intended type under our introductory convention.`;
     delete q.root;
-    q.topic = "assemble-" + type;
+    q.topic = "assemble-" + chosenType;
     return q;
   }
   const variant =
@@ -232,15 +232,16 @@ function variable(mode, forced) {
       "initialization",
     ].includes(variant)
   ) {
+    const decoy = region("aux-declaration", leaf("aux-type","int")," ",leaf("aux-name","practiceCount")," ",leaf("aux-operator","=")," ",leaf("aux-value",n+100),";");
+    q.root = region("snippet", ...shuffle([declaration,decoy]).flatMap(d=>[d,"\n"]));
     q.answerId = variant === "initialization" ? "declaration" : variant;
     q.prompt = {
-      type: "Select the data type.",
-      name: "Select the variable name.",
-      operator: "Select the assignment operator.",
-      value: "Select the literal value.",
-      declaration: "Select the entire declaration, including its initializer.",
-      initialization:
-        "Select the entire declaration that initializes the variable.",
+      type: `Select the data type of the variable initialized to ${value}.`,
+      name: `Select the identifier of the variable initialized to ${value}.`,
+      operator: `Select the assignment operator initializing ${name}.`,
+      value: `Select the value assigned to ${name}.`,
+      declaration: `Select the entire declaration of ${name}, including its initializer.`,
+      initialization: `Select the declaration initializing ${name}.`,
     }[variant];
   }
   if (variant === "assignment") {
@@ -260,7 +261,7 @@ function variable(mode, forced) {
     );
     q.answerId = "assignment";
     q.prompt =
-      "Select the later assignment statement, rather than the declaration.";
+      "Select the assignment that gives an existing variable a value.";
   }
   if (variant === "stored") {
     const next = n + int(1, 5);
@@ -295,22 +296,17 @@ function variable(mode, forced) {
       "An explicit double-to-int cast truncates toward zero. It is a narrowing conversion and can discard information.";
   }
   if (variant === "compatibility") {
-    q.root = region(
-      "snippet",
-      region("widen", `int count = ${n};`),
-      "\n",
-      region("assignment", `double amount = count;`),
-    );
+    const conversion = pick(["widening", "narrowing", "same"]);
+    const code = conversion === "widening" ? `int count = ${n};\ndouble amount = count;`
+      : conversion === "narrowing" ? `double count = ${n}.75;\nint amount = (int) count;`
+      : `int count = ${n};\nint amount = count;`;
+    q.root = region("snippet", region("conversion-code",code));
     q.kind = "value";
-    q.answer = "Valid widening conversion";
-    q.choices = shuffle([
-      "Valid widening conversion",
-      "Compile-time type error",
-      "Runtime exception",
-    ]);
-    q.prompt = "Classify the assignment to amount.";
-    q.explanation =
-      "An int can be widened to double without an explicit cast. The reverse direction generally requires an explicit narrowing conversion.";
+    q.answer = {widening:"Widening conversion",narrowing:"Explicit narrowing conversion",same:"No type conversion"}[conversion];
+    q.choices = shuffle(["Widening conversion", "Explicit narrowing conversion", "No type conversion"]);
+    q.prompt = "What conversion occurs when assigning to amount?";
+    q.explanation = conversion === "widening" ? "An int can widen to double without a cast."
+      : conversion === "narrowing" ? "The explicit int cast narrows the double and truncates toward zero." : "Both source and destination are int, so no type conversion is needed.";
   }
   if (variant === "stored") q.resultVariable = name;
   if (variant === "conversion") q.resultVariable = "whole";
@@ -345,74 +341,51 @@ function loop(mode, forced) {
     op = pick(direction === 1 ? ["<", "<=", "!="] : [">", ">=", "!="]),
     bound = start + size * step;
   const trace = loopValues({ start, bound, step, op }),
-    external = pick([true, false]),
+    external = forced === "after" || pick([true, false]),
     useWhile = pick([true, false]),
     variable = pick(["i", "index", "counter"]);
   const init = `${external || useWhile ? "" : "int "}${variable} = ${start}`,
     condition = `${variable} ${op} ${bound}`,
     update = `${variable} ${step > 0 ? "+=" : "-="} ${Math.abs(step)}`;
-  const body = region("body", `System.out.println(${variable});`),
-    control = useWhile
-      ? region(
-          "loop",
-          "while (",
-          leaf("condition", condition),
-          ") {\n    ",
-          body,
-          "\n    ",
-          leaf("update", update),
-          ";\n}",
-        )
-      : region(
-          "loop",
-          "for (",
-          leaf("initialization", init),
-          "; ",
-          leaf("condition", condition),
-          "; ",
-          leaf("update", update),
-          ") {\n    ",
-          body,
-          "\n}",
-        );
-  let root = region(
-    "snippet",
-    ...(external || useWhile
-      ? [
-          region(
-            useWhile ? "initialization" : "counter-declaration",
-            `int ${variable} = ${start};`,
-          ),
-          "\n",
-        ]
-      : []),
-    control,
-  );
-  const frames = [
-    {
-      line: "initialization",
-      variables: { [variable]: start },
-      output: "Initialize counter",
-    },
-  ];
+  const scoreStart = int(20, 50), bonus = int(1, 4);
+  const body = region("body", "\n    ", region("score-update", leaf("score-variable", "score"), " += ", leaf("bonus-variable", "bonus"), ";"), "\n    ", region("output", "System.out.println(", leaf("output-variable", variable), ");"),
+    ...(useWhile ? ["\n    ", region("update", leaf("update-variable", variable), ` ${step > 0 ? "+=" : "-="} ${Math.abs(step)}`), ";"] : []), "\n");
+  const conditionNode = region("condition", leaf("control-variable", variable), ` ${op} ${bound}`);
+  const control = useWhile
+    ? region("loop", "while (", conditionNode, ") {", body, "}")
+    : region("loop", "for (", region("initialization", `${external || useWhile ? "" : "int "}`, leaf("initial-variable",variable), ` = ${start}`), "; ", conditionNode, "; ", region("update", leaf("update-variable", variable), ` ${step > 0 ? "+=" : "-="} ${Math.abs(step)}`), ") {", body, "}");
+  const declarations = [region("score-declaration", "int ", leaf("score-name", "score"), ` = ${scoreStart};`), region("bonus-declaration", "int ", leaf("bonus-name", "bonus"), ` = ${bonus};`),
+    ...(external || useWhile ? [region(useWhile ? "initialization" : "counter-declaration", "int ", leaf("counter-name", variable), ` = ${start};`)] : [])];
+  const root = region("snippet", ...shuffle(declarations).flatMap(d=>[d,"\n"]),control);
+  let score = scoreStart;
+  const state={};
+  const frames=[];
+  for(const d of root.children.filter(d=>typeof d!=="string" && d.id!=="loop")) {
+    if(d.id==="score-declaration") state.score=scoreStart;
+    else if(d.id==="bonus-declaration") state.bonus=bonus;
+    else state[variable]=start;
+    frames.push({line:d.id,variables:{...state},output:"Initialize variable"});
+  }
+  if(!useWhile) frames.push({line:"initialization",variables:{...state,[variable]:start},output:"Initialize counter"});
   for (const v of trace.values) {
     frames.push(
       {
         line: "condition",
-        variables: { [variable]: v },
+        variables: { [variable]: v, score, bonus },
         output: "Condition is true",
       },
-      { line: "body", variables: { [variable]: v }, output: "Print " + v },
+      { line: "score-update", variables: { [variable]: v, score: (score += bonus), bonus }, output: "Update score" },
+      { line: "output", variables: { [variable]: v, score, bonus }, output: "Print " + v },
       {
         line: "update",
-        variables: { [variable]: v + step },
+        variables: { [variable]: v + step, score, bonus },
         output: "Update counter",
       },
     );
   }
   frames.push({
     line: "condition",
-    variables: { [variable]: trace.after },
+    variables: { [variable]: trace.after, score, bonus },
     output: "Condition is false; loop stops",
   });
   const q = {
@@ -425,16 +398,16 @@ function loop(mode, forced) {
   };
   if (mode === "structure") {
     const part =
-      forced || pick(["initialization", "condition", "update", "body", "loop"]);
+      forced || pick(["initialization", "condition", "update", "control-variable", "body", "loop"]);
     q.answerId = part;
+    if(part === "control-variable") q.validIds=nodes(root).filter(n=>!n.children && n.text===variable).map(n=>n.id);
     q.topic = part;
     q.prompt = {
-      initialization: useWhile
-        ? "Select the initialization before the while loop."
-        : "Select the initialization in the for header.",
+      initialization: "Select the initialization of the loop control variable.",
       condition: "Select the loop condition.",
       update: "Select the update statement.",
-      body: "Select the statement repeated in the body.",
+      body: "Select the entire loop body.",
+      "control-variable": "Select the loop control variable.",
       loop: "Select the entire loop.",
     }[part];
   }
@@ -446,6 +419,7 @@ function loop(mode, forced) {
         "step",
         "last",
         "count",
+        "output",
         ...(external || useWhile ? ["after"] : []),
       ]);
     const answer = {
@@ -454,24 +428,27 @@ function loop(mode, forced) {
       last: trace.values.at(-1),
       count: trace.values.length,
       after: trace.after,
+      output: trace.values.join(", "),
     }[ask];
     q.kind = "value";
     q.answer = answer;
-    q.choices = choices(answer, [
-      start,
-      trace.after,
-      trace.values.length,
-      answer + 1,
-      answer - 1,
-    ]);
+    const distractors = {
+      start: [start+step,start-step,trace.values.at(-1),trace.after],
+      step: [Math.abs(step)+1,Math.max(0,Math.abs(step)-1),Math.abs(bound-start)],
+      last: [start,trace.after,trace.values.at(-1)-step,bound],
+      count: [trace.values.length-1,trace.values.length+1,size* Math.abs(step),start],
+      after: [start,trace.values.at(-1),trace.after+step,trace.after-step],
+      output: [trace.values.slice(0,-1).join(", "), trace.values.concat(trace.after).join(", "), trace.values.map(v=>v+step).join(", ")],
+    };
+    q.choices = choices(answer, distractors[ask]);
     q.topic = ask;
     q.prompt = {
       start: "Select the starting counter value.",
       step: "Select the amount the counter changes each time (magnitude).",
       last: "Select the last value printed by the loop.",
       count: "Select the number of body executions.",
-      after:
-        "Select the counter value after termination. This counter was declared outside the loop and remains in scope.",
+      after: `What is the value of ${variable} after the loop finishes?`,
+      output: "What values does the loop print, in order?",
     }[ask];
     if (ask === "after" && !external && !useWhile)
       throw Error("Counter out of scope");
@@ -560,6 +537,8 @@ function loop(mode, forced) {
       q.choices = choices(q.answer, [
         rows,
         columns,
+        rows-1,
+        rows+1,
         rows * columns,
         pairs.length + 1,
         pairs.length - 1,
@@ -625,7 +604,7 @@ function array(mode, forced) {
       q.code = `ArrayList<Integer> ${name} = new ArrayList<>(Arrays.asList(${start.join(", ")}));\n${ops.join("\n")}`;
     }
     q.prompt =
-      "Manipulate the working collection to show the final state. Do not assume its final length.";
+      "Show the collection after the code runs.";
   }
   if (mode === "traversal") {
     const kind =
@@ -652,7 +631,7 @@ function array(mode, forced) {
       q.fixed = !list;
       q.answer = start.map((v, i) => (i % step === 0 ? v + 2 : v));
       q.code = `${declaration}\nfor (int i = 0; i < ${length}; i += ${step}) {\n    ${list ? `${name}.set(i, ${access("i")} + 2);` : `${name}[i] += 2;`}\n}`;
-      q.prompt = "Manipulate the array to show its values after traversal.";
+      q.prompt = "Show the working collection after traversal.";
     }
     if (kind === "visited") {
       q.kind = "multi";
@@ -677,13 +656,9 @@ function array(mode, forced) {
             : start.indexOf(threshold);
       q.kind = "value";
       q.answer = answer;
-      q.choices = choices(answer, [
-        0,
-        start.length,
-        start.length + 1,
-        answer + 1,
-        answer - 1,
-      ]);
+      q.choices = kind === "search" ? choices(answer, shuffle([-1, ...start.map((_,i)=>i)]).filter(i=>i!==answer).slice(0,3))
+        : kind === "count" ? choices(answer, [answer-1,answer+1,start.length,0].filter(v=>v>=0&&v<=start.length))
+        : choices(answer, [answer-start[0], answer-start.at(-1), answer+start[0],start.length]);
       q.code = `${declaration}\n${kind === "search" ? `int found = -1;\nfor (int i = 0; i < ${length}; i++) {\n    if (${access("i")} == ${threshold} && found == -1) found = i;\n}` : `int result = 0;\nfor (int value : ${name}) {\n    ${kind === "count" ? `if (value >= ${threshold}) result++;` : "result += value;"}\n}`}`;
       q.prompt =
         kind === "search"
@@ -702,7 +677,7 @@ function array(mode, forced) {
         start.reduce((a, b) => a + b, 0),
       ]);
       q.code = `${declaration}\nint result = ${access("0")};\nfor (int value : ${name}) {\n    if (value ${kind === "minimum" ? "<" : ">"} result) result = value;\n}`;
-      q.prompt = `Select the ${kind} found by this traversal.`;
+      q.prompt = "What is the final value of result?";
     }
   }
   if (mode === "grid") {
@@ -745,16 +720,11 @@ function array(mode, forced) {
         ? start[pos]
         : ask === "size"
           ? start.length
-          : start.length;
+          : pick([-1, -2, start.length, start.length+1]);
     q.choices =
       ask === "invalid"
-        ? shuffle([String(start.length), "0", String(start.length - 1)])
-        : choices(q.answer, [
-            0,
-            start.length - 1,
-            start.length + 1,
-            q.answer + 1,
-          ]);
+        ? choices(q.answer, shuffle(start.map((_,i)=>i)).slice(0,3))
+        : choices(q.answer, ask === "element" ? [start[(pos+1)%start.length],start[(pos+start.length-1)%start.length],pos,start.length,q.answer+1] : [start.length-1,start.length+1,0]);
   }
   if (mode === "collections" && !forced && Math.random() < 0.3) {
     const names = shuffle(["Alex", "Blair", "Casey", "Drew", "Emery", "Finn"]),
@@ -780,17 +750,6 @@ function array(mode, forced) {
 // Defect templates carry their original fault location and corrected full source.
 // Diagnostics are added only from the real development compiler verification file.
 export const debugTemplates = [
-  [
-    "nested-if-else",
-    "logic",
-    (n) => [
-      "Print Minor for anyone below 18; for adults, print Enter only with a ticket.",
-      'if (age >= 18) if (hasTicket) System.out.println("Enter"); else System.out.println("Minor");',
-      'if (age >= 18) { if (hasTicket) System.out.println("Enter"); } else System.out.println("Minor");',
-      [],
-      "nested-if",
-    ],
-  ],
   [
     "arraylist-remove-overload",
     "logic",
@@ -1002,8 +961,8 @@ export const debugTemplates = [
     "syntax",
     (n) => [
       "Define a constructor with the class name.",
-      "public Student() { }",
-      "public Practice() { }",
+      `public Student() { score = ${n}; }`,
+      `public Practice() { score = ${n}; }`,
       [],
       "class-member",
     ],
@@ -1045,8 +1004,8 @@ export const debugTemplates = [
     "division-zero",
     "runtime",
     (n) => [
-      "Avoid division by zero; skip the calculation for invalid input.",
-      `System.out.println(${n} / divisor);`,
+      "Print the quotient only for a nonzero divisor.",
+      `if (divisor == 0) System.out.println(${n} / divisor);`,
       `if (divisor != 0) System.out.println(${n} / divisor);`,
       [],
       "zero",
@@ -1056,8 +1015,8 @@ export const debugTemplates = [
     "remainder-zero",
     "runtime",
     (n) => [
-      "Avoid remainder by zero; skip the calculation for invalid input.",
-      `System.out.println(${n} % divisor);`,
+      "Print the remainder only for a nonzero divisor.",
+      `if (divisor == 0) System.out.println(${n} % divisor);`,
       `if (divisor != 0) System.out.println(${n} % divisor);`,
       [],
       "zero",
@@ -1100,8 +1059,8 @@ export const debugTemplates = [
     "null-reference",
     "runtime",
     (n) => [
-      "Avoid calling methods on a null reference.",
-      "System.out.println(text.length());",
+      "Print the length only when text is present.",
+      "if (text == null) System.out.println(text.length());",
       "if (text != null) System.out.println(text.length());",
       [],
       "null",
@@ -1229,8 +1188,8 @@ export const debugTemplates = [
     "logic",
     (n) => [
       "Increase every stored array element by one.",
-      "for (int value : values) value++;",
-      "for (int i = 0; i < values.length; i++) values[i]++;",
+      "int index = 0; for (int value : values) { value++; index++; }",
+      "int index = 0; for (int value : values) { values[index]++; index++; }",
       ["System.out.println(Arrays.toString(values));"],
       "array",
     ],
@@ -1279,6 +1238,7 @@ export function debugQuestion(mode, forced, n = int(2, 9)) {
     fault = 4;
   } else if (["constructor", "method", "class-member"].includes(context)) {
     if (context === "constructor") prefix = ["    private String name;"];
+    if (variant === "constructor-name") prefix = ["    private int score;"];
     suffix =
       context === "constructor"
         ? ["    {", "        name = studentName;", "    }"]
@@ -1356,98 +1316,130 @@ export function debugQuestion(mode, forced, n = int(2, 9)) {
     if (context === "extra-close") corrected[4] = "    }";
     fixed = corrected.join("\n");
   }
-  const location = typeof fault === "number" ? "line" + fault : fault;
-  const plausible = {
-    "double-to-int": [`int price = (int) ${n}.75;`, `int price = ${n};`],
-    "string-to-int": [`int value = (int) "${n}";`, `String value = "${n}";`],
-    "char-literal": ['char letter = "A";', "String letter = 'A';"],
-    "constructor-semicolon": [
-      "public void Practice(String studentName)",
-      "public Practice();",
-    ],
-    "method-semicolon": [
-      "public static void greet();",
-      "public static greet()",
-    ],
-    "numeric-division": [
-      `double result = (double) (${2 * n + 1} / 2);`,
-      `int result = ${2 * n + 1} / 2;`,
-    ],
-    precedence: [
-      `double result = ${n} + ${n + 2} / 2.0;`,
-      `double result = (${n} + ${n + 2}) * 2.0;`,
-    ],
-    overflow: [
-      "long doubled = (long) (value * 2);",
-      "int doubled = value * 2;",
-    ],
-    "floating-point": [
-      "System.out.println(result == 0.3);",
-      "System.out.println(Math.abs(result - 0.3) > 0.000001);",
-    ],
-    "string-comparison": [
-      "System.out.println(first == second);",
-      "System.out.println(first.length() == second.length());",
-    ],
-    "array-index": [
-      "System.out.println(values[values.length]);",
-      "System.out.println(values[values.length + 1]);",
-    ],
-    "arraylist-index": [
-      "System.out.println(values.get(values.size()));",
-      "System.out.println(values.get(values.size() + 1));",
-    ],
-    "substring-range": [
-      "System.out.println(text.substring(0, text.length() + 1));",
-      "System.out.println(text.substring(1, text.length()));",
-    ],
-    "off-by-one": [
-      `for (int i = 0; i < ${n}; i++) System.out.println(i);`,
-      `for (int i = 0; i <= ${n + 1}; i++) System.out.println(i);`,
-    ],
-    "infinite-loop": [
-      `while (i < ${n}) { System.out.println(i); i--; }`,
-      `while (i < ${n}) { System.out.println(i); }`,
-    ],
+  const neutral = {
+    "missing-semicolon": "Print the value.", "missing-opening-brace": "Print the value.", "missing-closing-brace": "Print the value.",
+    "extra-opening-brace": "Print the value.", "extra-closing-brace": "Print the value.", "missing-parenthesis": "Print the value.",
+    "undeclared-variable": "Store the count.", "duplicate-declaration": "Update the existing value.", "scope": "Print the value assigned inside the block.",
+    "invalid-cast": "Store the number shown in value.", "char-literal": "Store the letter A.", "boolean-literal": "Set ready to true.",
+    "argument-count": "Print the sum of the displayed number and 2.", "argument-order": "Print Count followed by the displayed number.",
+    "argument-type": "Print the sum of the displayed number and 2.", "missing-return": "getValue should return value.",
+    "return-type": "getValue should return the displayed number.", "constructor-name": `Creating a Practice object should initialize its score to ${n}.`,
+    "instance-static": "Print the value of the counter.", "constructor-semicolon": "Initialize name from studentName.",
+    "method-semicolon": "greet should print the displayed number.", "string-comparison": "Print whether the strings contain the same text; the comparison must also handle different text.",
+    "arraylist-remove-overload": "Remove the matching Integer 2 regardless of its position.", "substring-range": "Print the entire text.",
+    "overflow": "Compute twice the large value exactly.", "lossy-conversion": "Preserve the measurement's fractional part.",
+    "loop-array-bound": "Visit every array element exactly once.",
   };
+  const spec = repairSpec(variant, n);
+  // Locate the authored component within the known faulty line, never infer correctness from the rendered DOM.
+  const lineIndex = typeof fault === "number" ? fault : lines.length - 1;
+  const lineStart = lines.slice(0,lineIndex).reduce((sum,line)=>sum+line.length+1,0);
+  let offset = spec.needle ? lines[lineIndex].indexOf(spec.needle) : lines[lineIndex].length;
+  if (spec.last) offset = lines[lineIndex].lastIndexOf(spec.needle);
+  if (offset < 0) throw Error(`Missing authored fault: ${variant}`);
+  const start = lineStart + offset + (spec.offset || 0), end = start + spec.text.length;
+  const repaired = code.slice(0,start) + spec.correct + code.slice(end);
+  // The exact fixed source comes from the token repair (including any intentionally scoped block insertion).
+  fixed = repaired;
+  const targets = {
+    "invalid-cast": "double", "argument-count": "", "argument-order": String(n),
+    "array-index": "length", "arraylist-index": "size", "substring-range": "+",
+    "precedence": "+", "floating-point": "==", "lossy-conversion": "int", "string-comparison": "==",
+  };
+  let targetStart = start, targetEnd = end;
+  if (Object.hasOwn(targets,variant)) {
+    const target=targets[variant];
+    targetStart = variant === "argument-count" ? start+`add(${n}`.length : start+spec.text.indexOf(target);
+    targetEnd = targetStart+target.length;
+  }
+  const tokens = debugTokens(code, {start:targetStart,end:targetEnd});
+  const location = tokens.find(t=>t.start===targetStart && t.end===targetEnd).id;
   return {
-    locations: [
-      location,
-      ...(["missing-opening-brace", "missing-semicolon"].includes(variant)
-        ? ["after" + fault]
-        : []),
-    ],
-    kind: "debug",
-    code,
-    brokenSource: code,
-    fixedSource: fixed,
-    location,
-    fix: good,
-    fixes: choices(
-      good,
-      plausible[variant] || [
-        category === "logic"
-          ? "Keep the code unchanged."
-          : "Suppress the error without changing the program.",
-        category === "syntax"
-          ? "Change the output text instead of the faulty statement."
-          : "Change an unrelated variable name.",
-      ],
-    ),
-    topic: variant,
-    variant,
-    category,
-    prompt:
-      requirement +
-      " Select the actual faulty line (or insertion boundary), then the repair. Submit both together.",
-    explanation: `This is a ${["tricky", "syntax"].includes(category) ? "compile-time" : category} defect. ${requirement} The repair must address the original mistake and preserve the intended behavior.`,
-    symptom:
-      category === "logic"
-        ? "Failing behavior under the stated requirement; this is valid Java, not a compiler error."
-        : category === "runtime"
-          ? "The shown input triggers a runtime exception."
-          : "This program does not compile. A compiler location may be a consequence of an earlier syntax defect.",
+    kind: "debug", code, tokens, brokenSource: code, fixedSource: fixed,
+    location, locations: tokens.filter(t=>spec.equivalentBrace && t.text===spec.text && (variant === "extra-closing-brace" ? t.start >= lineStart : Math.abs(t.start-start)===1)).map(t=>t.id).concat(location),
+    repair: {start,end},
+    fix: spec.correct || "Remove", fixes: choices(spec.correct || "Remove", spec.wrong),
+    topic: variant, variant, category,
+    prompt: "Find and fix the error.", context: neutral[variant] || requirement,
+    explanation: `This is a ${["tricky","syntax"].includes(category) ? "compile-time" : category} defect. ${spec.explanation} Corrected component: ${spec.correct || "removed"}.`,
+    symptom: category === "logic" ? "The program compiles, but does not meet the requirement."
+      : category === "runtime" ? "The shown input triggers a runtime exception." : "This program does not compile.",
   };
+
+}
+// One authored replacement and two misconception-based alternatives per defect.
+function repairSpec(v,n) {
+  const specs = {
+    "arraylist-remove-overload": ["2", "Integer.valueOf(2)", ["0", "3"], "remove(int) uses an index; remove(Integer) removes a matching value."],
+    "missing-semicolon": ["", ";", [",", ":"], "A declaration statement ends with a semicolon."],
+    "missing-opening-brace": ["", " {", [";", "}"], "A concrete method's statements belong in a brace-delimited body."],
+    "missing-closing-brace": ["", "\n}", [";", "\n{"], "Method and class bodies each need balanced braces."],
+    "extra-opening-brace": ["{", "", ["}", "("], "The extra block opener leaves the class unclosed."],
+    "extra-closing-brace": ["}", "", ["{", ")"], "A surplus closing brace ends the class before the final brace."],
+    "missing-parenthesis": [";", ")", ["(", "]"], "A method call must close its argument parentheses."],
+    "undeclared-variable": ["count", "int count", ["double", "count int"], "Introduce a local variable with its type and identifier."],
+    "duplicate-declaration": ["int", "", ["double", "final int"], "Assign to an existing local instead of redeclaring it in the same scope."],
+    "scope": ["value", String(n), ["count", "this.value"], "A block-local identifier is inaccessible after its block closes."],
+    "string-to-int": [`"${n}"`, String(n), [`(int) "${n}"`, `'${n}'`], "An int cannot store a String. The requested numeric value must be represented numerically."],
+    "double-to-int": ["int", "double", ["long", "float"], "Use a type compatible with the supplied fractional value without discarding it."],
+    "invalid-cast": [`(double) "${n}"`, `${n}.0`, [`(int) "${n}"`, `"${n}.0"`], "A String cannot be cast to a primitive numeric type."],
+    "char-literal": ['"A"', "'A'", ["A", '"A".toString()'], "A char value uses single quotes."],
+    "boolean-literal": ["1", "true", ['"true"', "0"], "Java Boolean values are true and false, not numbers or Strings."],
+    "argument-count": [`add(${n})`, `add(${n}, 2)`, [`add(${n}, 2, 0)`, `add(${n}, "2")`], "The call must supply the declared parameter count and compatible types."],
+    "argument-order": [`show(${n}, "Count")`, `show("Count", ${n})`, [`show("Count", "${n}")`, `show(${n})`], "Arguments match the method's parameter types in order."],
+    "argument-type": [`"${n}"`, String(n), [`(int) "${n}"`, `${n}.5`], "A String or a double is not an int argument."],
+    "missing-return": ["}", "return value; }", ["return; }", "System.out.println(value); }"], "A non-void method must return a compatible value on its execution path."],
+    "return-type": [`"${n}"`, String(n), [`${n}.5`, "true"], "The returned value must match the method's declared return type."],
+    "constructor-name": ["Student", "Practice", ["void Practice", "static Practice"], "A constructor uses the class name and has no return type."],
+    "instance-static": ["int", "static int", ["final int", "volatile int"], "A class method cannot use an instance field without an object; the required class field is static."],
+    "constructor-semicolon": [";", "", ["{}", "return"], "A constructor header must connect to its body, without an intervening semicolon."],
+    "method-semicolon": [";", "", ["{}", "return"], "A concrete method header must connect to its body."],
+    "division-zero": ["==", "!=", [">=", "<="], "The calculation must be skipped when its integer divisor is zero."],
+    "remainder-zero": ["==", "!=", [">=", "<="], "Integer remainder also requires a nonzero divisor."],
+    "array-index": ["values.length", "values.length - 1", ["values.length + 1", "values.length * 2"], "The last valid array index is one less than its length."],
+    "arraylist-index": ["values.size()", "values.size() - 1", ["values.size() + 1", "values.size() * 2"], "The last valid ArrayList index is one less than its size."],
+    "substring-range": ["+", "- 0 *", ["*", "-"], "substring's ending index is exclusive and cannot exceed the String length."],
+    "null-reference": ["==", "!=", ["=", ">"], "Do not invoke an instance method when its reference is null."],
+    "numeric-division": ["2", "2.0", ["(int) 2.0", "2L"], "Integer division truncates before the result is widened. A floating operand changes the division."],
+    "precedence": [`${n} + ${n+2}`, `(${n} + ${n+2})`, [`${n} - ${n+2}`, `${n} * ${n+2}`], "Group the numerator before division to compute an average."],
+    "overflow": ["value", "(long) value", ["(long) (value * 2)", "(int) (long) value"], "Widen an operand before multiplication; widening an already overflowed result cannot repair it."],
+    "floating-point": ["result == 0.3", "Math.abs(result - 0.3) < 0.000001", ["Math.abs(result - 0.3) > 0.000001", "result - 0.3 == 0"], "Approximate floating-point results should be compared with the stated tolerance."],
+    "lossy-conversion": ["(int)", "", ["(long)", "(short)"], "Casting the measurement to an integer discards its fraction before storage."],
+    "string-comparison": ["first == second", "first.equals(second)", ["first != second", "first.length() == second.length()"], "equals compares String contents; == compares references."],
+    "off-by-one": ["<", "<=", [">=", "=="], "An inclusive upper endpoint must pass the loop condition."],
+    "if-semicolon": [";", "", ["{}", ":"], "A semicolon can be an empty conditional body, leaving the following block unconditional."],
+    "loop-semicolon": [";", "", ["{}", ":"], "An empty loop body leaves the following block outside the iterations."],
+    "infinite-loop": ["}", "i++; }", ["i--; }", "i += 0; }"], "The control variable must progress toward the stopping boundary."],
+    "loop-array-bound": ["<=", "<", [">=", "=="], "An index must remain strictly below array length."],
+    "for-each-assignment": ["value", "values[index]", ["values[value]", "values[index + 1]"], "Changing a primitive loop copy does not change the array's stored element."],
+  };
+  const [text,correct,wrong,explanation] = specs[v];
+  const spec={text,correct,wrong,explanation,needle:text};
+  if(v === "missing-semicolon" || v === "missing-opening-brace" || v === "missing-closing-brace") spec.text="";
+  if(v === "missing-return" || v === "infinite-loop") {spec.needle="}"; spec.text=""; spec.correct=correct.slice(0,-1); spec.wrong=wrong.map(x=>x.slice(0,-1));}
+  if(v === "missing-parenthesis") spec.text="";
+  if(v === "arraylist-remove-overload") spec.needle="2";
+  if(v === "numeric-division") {spec.needle="/ 2";spec.offset=2;}
+  if(v === "overflow") {spec.needle="= value";spec.offset=2;}
+  if(v === "for-each-assignment") {spec.needle="value++";}
+  if(["extra-opening-brace","extra-closing-brace"].includes(v)) {spec.last=true;spec.equivalentBrace=true;}
+  if(["constructor-semicolon","method-semicolon","loop-semicolon","if-semicolon"].includes(v)) spec.last=true;
+  if(v === "substring-range") {spec.text="+ 1";spec.needle="+ 1";spec.correct="";spec.wrong=["- 1","+ 2"];}
+  return spec;
+}
+export function debugTokens(code, fault) {
+  const parts=[], boundaries=new Set([fault.start,fault.end]);
+  const pattern=/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[A-Za-z_$][\w$]*|\d+(?:\.\d+)?|===|==|!=|<=|>=|\+\+|--|&&|\|\||\+=|-=|\S/g;
+  for(const m of code.matchAll(pattern)) {boundaries.add(m.index);boundaries.add(m.index+m[0].length);}
+  // Split source into consistently selectable lexical tokens, including a gap only where a missing component belongs.
+  const points=[0,...boundaries,code.length].filter(x=>x<=fault.start || x>=fault.end).sort((a,b)=>a-b);
+  for(let i=0;i<points.length-1;i++) {
+    const start=points[i],end=points[i+1]; if(start===end) continue;
+    if(start===fault.start&&fault.start===fault.end) parts.push({id:`token-${start}-gap`,start,end:start,text:"",gap:true});
+    parts.push({id:`token-${start}`,start,end,text:code.slice(start,end), selectable:!/^[\s]+$/.test(code.slice(start,end))});
+  }
+  if(fault.start===fault.end && !parts.some(t=>t.gap)) parts.push({id:`token-${fault.start}-gap`,start:fault.start,end:fault.end,text:"",gap:true});
+  return parts;
 }
 function debuggerGame(mode, forced) {
   return debugQuestion(mode, forced);
