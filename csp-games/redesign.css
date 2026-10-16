@@ -26,3 +26,8 @@
     flex-wrap: wrap;
   }
 }
+
+.context-doc {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}

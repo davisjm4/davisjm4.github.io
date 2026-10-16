@@ -290,7 +290,7 @@ function branchProblem(forced) {
   labels.forEach((label, i) => {
     fields.push(
       field("input" + i, `Input for ${label} (actual program)`, "number"),
-      field("expected" + i, "Actual returned result"),
+      field("expected" + i, `Actual returned result for ${label}`),
     );
     const x = domain.find((n) => path(n) === i);
     example["input" + i] = String(x);
@@ -397,12 +397,21 @@ function listProblem(forced) {
     body = `result ← 0\nindex ← 2\nREPEAT UNTIL (index > LENGTH(values))\n{\n    result ← result + 1\n    index ← index + 1\n}\nRETURN(result)`;
     run = (a) => Math.max(0, a.length - 1);
   }
-  const requirement =
-    shape === "unsafe-min"
-      ? 'Requirement: return the smallest element, or "NONE" for an empty list. Empty lists are valid requirements inputs; inspect whether the code handles them.'
-      : shape === "first" || shape === "last"
-        ? "Precondition: at least one element."
-        : "Precondition: empty lists and all integer-valued lists are valid.";
+  const requirementText = {
+    count: `Count elements greater than ${limit}.`,
+    sum: "Return the sum of the list values.",
+    product:
+      "Return the product of all list values, starting from the multiplicative identity.",
+    minimum: 'Return the smallest value, or "NONE" for an empty list.',
+    maximum: 'Return the largest value, or "NONE" for an empty list.',
+    search: `Return TRUE if the list contains ${target}; otherwise return FALSE.`,
+    first: "Return the first element.",
+    last: "Return the last element.",
+    all: `Return TRUE if every element is greater than ${limit}; return FALSE if any element fails that condition.`,
+    "skip-first": "Count elements after the first position.",
+    "unsafe-min": 'Return the smallest value, or "NONE" for an empty list.',
+  }[shape];
+  const requirement = `Requirement: ${requirementText}\nPrecondition: ${shape === "first" || shape === "last" ? "at least one element" : "empty lists and all integer-valued lists are valid"}.`;
   const expected = (a) =>
       shape === "unsafe-min" ? (a.length ? Math.min(...a) : "NONE") : run(a),
     a = single ? [int(-5, 9)] : [];
@@ -449,8 +458,12 @@ function listProblem(forced) {
     },
   };
 }
-const doc =
-  'Documented library: JOIN(a,b) concatenates in argument order. SIZE(text) counts characters, including spaces. CHAR(text,i) returns character i (one-based); invalid i raises ERROR. PART(text,first,count) returns count characters starting at first; 1 ≤ first ≤ SIZE(text)+1, count ≥ 0, and first+count−1 ≤ SIZE(text), otherwise ERROR. A zero count returns "".';
+const documentation = {
+  JOIN: "JOIN(a,b) concatenates in argument order.",
+  SIZE: "SIZE(text) counts characters, including spaces.",
+  CHAR: "CHAR(text,i) returns character i (one-based); invalid i raises ERROR.",
+  PART: 'PART(text,first,count) returns count characters starting at first. Preconditions: 1 ≤ first ≤ SIZE(text)+1, count ≥ 0, first+count−1 ≤ SIZE(text); otherwise ERROR. A zero count returns "".',
+};
 function stringProblem(forced) {
   const shape =
       forced ||
@@ -545,7 +558,12 @@ function stringProblem(forced) {
   return {
     structure: shape,
     prompt: `Build a test using the library documentation. ${domain}`,
-    context: `${doc}\n\nRequirement: return the result of the shown library operations.\n\nPROCEDURE transform(text${needsOther ? ", other" : ""})\n{\n    ${body}\n}`,
+    context: `Documented library:\n${Object.entries(documentation)
+      .filter(([name]) => call.includes(name + "("))
+      .map(([, text]) => text)
+      .join(
+        "\n",
+      )}\n\nRequirement: return the result of the shown library operations.\n\nPROCEDURE transform(text${needsOther ? ", other" : ""})\n{\n    ${body}\n}`,
     fields,
     example: {
       input: sample,

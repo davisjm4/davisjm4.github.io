@@ -2,7 +2,7 @@ import {
   generateTestCase,
   evaluateTestCase,
   testModes,
-} from "./test-case-engine.js?v=instructional-tcb-v1";
+} from "./test-case-engine.js?v=instructional-tcb-v2";
 import {
   sessionTracker,
   addSessionNavigation,
@@ -65,6 +65,14 @@ export function startTestCase() {
       r.details
     );
   }
+  function contextHTML() {
+    const pos = q.context.indexOf("\n\nPROCEDURE");
+    const boundary = pos >= 0 ? pos : q.context.indexOf("\nvalues ←");
+    const prose = boundary >= 0 ? q.context.slice(0, boundary) : "";
+    const code =
+      boundary >= 0 ? q.context.slice(boundary).trimStart() : q.context;
+    return `<p class="context-doc">${esc(prose)}</p><pre class="snippet">${esc(code)}</pre>`;
+  }
   function next() {
     if (id) tracker.skip(id);
     q = generateTestCase($("mode").value);
@@ -72,7 +80,7 @@ export function startTestCase() {
     closed = false;
     $("feedback").hidden = true;
     $("stage").innerHTML =
-      `<div class="eyebrow">${esc(testModes[q.mode])}</div><h2>${esc(q.prompt)}</h2><pre class="snippet">${esc(q.context)}</pre><details><summary>How to enter results</summary><p>Use TRUE or FALSE, a number, quoted text ("" for empty text), or ERROR. Results are case-sensitive for text. For lists, enter integers separated by commas.</p></details><p class="muted">One scored submission. You will see a worked explanation after checking.</p><div class="builder-fields">${q.fields.map((f) => `<label>${esc(f.label)}<input id="field-${f.id}" type="${f.type === "number" ? "number" : "text"}" ${f.type === "number" ? 'step="1" inputmode="numeric"' : ""} autocomplete="off"></label>`).join("")}</div><div class="actions"><button id="check">Check Answer</button><button id="show" class="secondary">Show Answer</button><button id="next" class="secondary">Next Challenge</button></div>`;
+      `<div class="eyebrow">${esc(testModes[q.mode])}</div><h2>${esc(q.prompt)}</h2>${contextHTML()}<details><summary>How to enter results</summary><p>Use TRUE or FALSE, a number, quoted text ("" for empty text), or ERROR. Results are case-sensitive for text. For lists, enter integers separated by commas.</p></details><p class="muted">One scored submission. You will see a worked explanation after checking.</p><div class="builder-fields">${q.fields.map((f) => `<label>${esc(f.label)}<input id="field-${f.id}" type="${f.type === "number" ? "number" : "text"}" ${f.type === "number" ? 'step="1" inputmode="numeric"' : ""} autocomplete="off"></label>`).join("")}</div><div class="actions"><button id="check">Check Answer</button><button id="show" class="secondary">Show Answer</button><button id="next" class="secondary">Next Challenge</button></div>`;
     $("check").onclick = () => {
       if (closed || tracker.status(id) !== "active") return;
       const r = response();

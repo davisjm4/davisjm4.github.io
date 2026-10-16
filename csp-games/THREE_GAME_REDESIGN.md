@@ -18,7 +18,7 @@ Scoped audit findings addressed in this implementation: F17–F21, and question-
 
 Automated checks: `CSP_DOM_LIBRARY=/path/to/linkedom node csp-games/test-case-redesign-tests.mjs` — 2,700 randomized challenges, at least five authored structures per mode, independent execution of displayed Boolean expressions, valid alternatives across the integer domain, empty/single edge invariants, mutated wrong outputs, old memorized-response and threshold-copy strategies, session persistence and single-submission locks. The full existing CSP regression suite also passed. The old audit strategy `100, TRUE` fails all modes in the sampled set; threshold-copy is reduced but can still legitimately expose some Boolean defects. Shortcuts are measured, not treated as proof of instructional quality. This design does not claim that an arbitrary fixed Boolean guess has no chance of success.
 
-Browser verification is performed on the deployed GitHub Pages version before the second game's implementation begins. Device/viewport checks and unresolved limitations will be recorded after inspection.
+Public Chrome verification passed all nine modes: ten independently correct submissions, two realistic incorrect submissions, a reverse-ordered boundary pair, normal FALSE, a valid empty list, negative singleton, Unicode text, zero iterations and terminal scoring locks. Documentation is separated from code for wrapping. Desktop layout was inspected. The connected local-browser session failed; cloud Chrome has no supported viewport-resize control, and native zoom/device shortcuts had no effect. Mobile and Chromebook-sized viewport verification remain an explicit limitation, rather than being represented as passed.
 
 ## Algorithm Architect
 
