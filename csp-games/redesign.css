@@ -32,6 +32,43 @@
   overflow-wrap: anywhere;
 }
 
+.missing-snippet {
+  white-space: pre;
+  overflow-x: auto;
+  line-height: 1.65;
+}
+.choice-set {
+  border: 0;
+  padding: 0;
+  margin: 1rem 0;
+}
+.choice-set legend {
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+.choice {
+  min-height: 3.25rem;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.45;
+}
+.choice.selected {
+  outline: 2px solid var(--accent, #79ddc6);
+  outline-offset: 1px;
+  background: #234a51;
+}
+@media (max-width: 600px) {
+  .choice-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* Response Builder: sentence selection and direct code evidence. */
 .sentence-bank {
   display: grid;

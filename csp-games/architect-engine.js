@@ -884,8 +884,124 @@ export function generateArchitect(mode = "mixed", forced) {
     .join(
       "\n\n",
     )}${Object.keys(library).length ? "\n\n" : ""}Build the body of PROCEDURE solve(${params.join(", ")}).`;
+  const orderSensitive = (selected === "sequence" && [1, 2, 3, 4].includes(variant)) ||
+    (selected === "procedure" && [2, 4].includes(variant));
+  if (Math.random() < 0.22 && orderSensitive) {
+    q.format = "arrange";
+    q.structure = `${q.structure}-arrange`;
+  } else if (!prepareMissing(q, tokens)) {
+    if (!orderSensitive) return generateArchitect(mode);
+    q.format = "arrange";
+    q.structure = `${q.structure}-arrange`;
+  }
   return q;
 }
+
+const copyNode = (node) => JSON.parse(JSON.stringify(node));
+function missingCandidates(q, original) {
+  const candidates = [], add = (node) => {
+    if (!node || node.type !== original.type) return;
+    if (node.type === "if" || node.type === "until")
+      node = { ...node, body: original.body, otherwise: original.otherwise };
+    const text = nodeText(node);
+    if (text !== nodeText(original) && !candidates.some((x) => x.text === text)) candidates.push({ text, node: copyNode(node) });
+  };
+  for (const block of q.bank) {
+    if (block.node.type !== original.type) continue;
+    if (original.type === "assign" && block.node.name !== original.name) continue;
+    add(block.node);
+  }
+  if (original.type === "assign") {
+    const name = original.name, current = V(name), rhs = original.value;
+    for (const value of [0, 1, -1, plus(current, 1), minus(current, 1)]) add(A(name, value));
+    if (rhs?.op === "+" || rhs?.op === "−") {
+      add(A(name, rhs.op === "+" ? minus(...rhs.args) : plus(...rhs.args)));
+      if (rhs.args[0]?.v === name) add(A(name, rhs.args[1]));
+    }
+    if (rhs?.call) add(A(name, CALL(rhs.call, ...[...rhs.args].reverse())));
+  } else if (original.type === "return") {
+    for (const value of [0, -1, ...q.params.map(V)]) add(R(value));
+  } else if (original.type === "if" || original.type === "until") {
+    const c = original.condition, opposite = { "<": "≥", "≤": ">", ">": "≤", "≥": "<", "=": "≠", "≠": "=" };
+    if (c?.op && opposite[c.op]) add({ ...original, condition: X(opposite[c.op], ...c.args) });
+    if (c?.op && ["<", "≤", ">", "≥", "=", "≠"].includes(c.op)) add({ ...original, condition: X(c.op, ...[...c.args].reverse()) });
+    if (c?.op && c.args?.length === 2 && typeof c.args[1] === "number") add({ ...original, condition: X(c.op, c.args[0], c.args[1] + 1) });
+  }
+  return candidates;
+}
+
+function renderMissing(tokens, missingIndex) {
+  let depth = 0;
+  return tokens.map((node, i) => {
+    if (node.type === "end") depth = Math.max(0, depth - 1);
+    const indent = "    ".repeat(depth), line = i === missingIndex
+      ? node.type === "if" ? "IF (???)\n{" : node.type === "until" ? "REPEAT UNTIL (???)\n{" : "???"
+      : nodeText(node);
+    if (["if", "for", "repeat", "until", "else"].includes(node.type)) depth++;
+    return line.split("\n").map((part) => indent + part).join("\n");
+  }).join("\n");
+}
+
+function prepareMissing(q, tokens) {
+  const sample = new Set([0, q.tests.length - 1]);
+  for (let i = 1; i < 48; i++) sample.add(Math.floor((i * (q.tests.length - 1)) / 48));
+  const sampleTests = [...sample].sort((a, b) => a - b).map((i) => q.tests[i]);
+  const eligible = tokens.map((node, index) => ({ node, index })).filter(({ node }) =>
+    node.type === "return" || node.type === "if" || node.type === "until" ||
+    (node.type === "assign" && ["result", "index", "n", "a", "b"].includes(node.name)));
+  const preferred = eligible.filter(({ node }) => node.type === "assign" && node.name === "result"),
+    procedureCalls = eligible.filter(({ node }) => node.type === "assign" && node.value?.call),
+    pool = procedureCalls.length && Math.random() < 0.26 ? procedureCalls
+      : Math.random() < 0.62 && preferred.length ? preferred : eligible;
+  for (const { node, index } of shuffle(pool)) {
+    const display = (candidate) => candidate.type === "if" || candidate.type === "until" ? expr(candidate.condition) : nodeText(candidate),
+      options = missingCandidates(q, node), accepted = [{ text: display(node), key: nodeText(node), node: copyNode(node), correct: true }];
+    const outcomeSignature = (candidate) => {
+      const bank = [...q.bank, { id: "missing-candidate", text: candidate.text, node: candidate.node }],
+        order = q.solution.map((id, i) => i === index ? "missing-candidate" : id);
+      const outcomes = sampleTests.map((input) => {
+        const result = runConstruction({ ...q, bank }, order, input);
+        return result.error ? `error:${result.error}` : result.returned ? ["return", result.value] : ["no-return"];
+      });
+      return { signature: JSON.stringify(outcomes), executable: outcomes.some((outcome) => !String(outcome).startsWith("error:")) };
+    };
+    const signatures = new Set([outcomeSignature(accepted[0]).signature]);
+    for (const option of options) {
+      if (accepted.length === 4) break;
+      if (accepted.some((x) => x.key === nodeText(option.node))) continue;
+      const candidate = { ...option, key: nodeText(option.node), text: display(option.node) },
+        outcome = outcomeSignature(candidate);
+      if (!outcome.executable || signatures.has(outcome.signature)) continue;
+      signatures.add(outcome.signature);
+      accepted.push(candidate);
+    }
+    if (accepted.length < 4) continue;
+    q.format = "missing";
+    q.missingIndex = index;
+    q.missingText = renderMissing(tokens, index);
+    q.options = shuffle(accepted).map((option, i) => ({ ...option, id: `choice-${i}` }));
+    q.correctChoice = q.options.find((option) => option.correct).id;
+    q.tests = sampleTests;
+    q.component = node.type === "assign"
+      ? (node.value?.call ? "procedure call" : index === 0 || tokens.slice(0, index).every((s) => s.type !== "assign" || s.name !== node.name) ? "initialization" : "update")
+      : node.type === "if" ? "condition" : node.type === "until" ? "loop boundary" : "return";
+    q.structure = `${q.structure}-${q.component}`;
+    return q;
+  }
+  return null;
+}
+
+export function evaluateMissing(q, choiceId) {
+  const choice = q.options?.find((option) => option.id === choiceId);
+  if (!choice) return { correct: false, details: "Choose one of the four components." };
+  const bank = [...q.bank, { id: "missing-candidate", text: choice.text, node: choice.node }],
+    order = q.solution.map((id, i) => i === q.missingIndex ? "missing-candidate" : id),
+    result = evaluateArchitect({ ...q, bank }, order);
+  return result.correct
+    ? { ...result, details: `Correct. ${choice.text} completes the ${q.component} so the algorithm returns the required result.` }
+    : { ...result, details: `Not quite. The correct component is ${q.options.find((option) => option.correct).text}. ${result.details.split("\n").slice(0, 3).join("\n")}` };
+}
+
 export function evaluateArchitect(q, order) {
   if (!Array.isArray(order) || new Set(order).size !== order.length)
     return {

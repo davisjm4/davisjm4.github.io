@@ -2,7 +2,8 @@ import {
   architectModes,
   generateArchitect,
   evaluateArchitect,
-} from "./architect-engine.js?v=instructional-aa-v3";
+  evaluateMissing,
+} from "./architect-engine.js?v=focused-aa-v1";
 import {
   sessionTracker,
   addSessionNavigation,
@@ -26,10 +27,11 @@ export function startArchitect() {
   let q,
     id,
     order = [],
+    selectedChoice = null,
     closed = false,
     attempts = 0;
   $("main").innerHTML =
-    `<div class="eyebrow">Big Idea 3 · Construct algorithms</div><h1>Algorithm Architect</h1><p class="intro">Build a procedure from code components. Test it, inspect a failing case, and revise.</p><div class="toolbar"><label>Practice mode <select id="mode"><option value="mixed" selected>Mixed Practice</option>${Object.entries(
+    `<div class="eyebrow">Big Idea 3 · Construct algorithms</div><h1>Algorithm Architect</h1><p class="intro">Make one focused algorithm decision. Most challenges ask you to choose a missing component; arrange blocks when their order is the concept.</p><div class="toolbar"><label>Practice mode <select id="mode"><option value="mixed" selected>Mixed Practice</option>${Object.entries(
       architectModes,
     )
       .map(([v, l]) => `<option value="${v}">${l}</option>`)
@@ -99,12 +101,35 @@ export function startArchitect() {
     q = generateArchitect($("mode").value);
     id = tracker.begin(q.game, q.title, q.topic, q.topicTitle);
     order = [];
+    selectedChoice = null;
     closed = false;
     attempts = 0;
     $("feedback").hidden = true;
+    if (q.format === "missing") {
+      $("stage").innerHTML = `<p class="eyebrow">Choose the missing component · ${esc(q.topicTitle)}</p><h2>${esc(q.goal)}</h2><pre class="snippet missing-snippet">${esc(q.missingText)}</pre><fieldset class="choice-set"><legend>Choose one replacement</legend><div class="choice-grid">${q.options.map((option) => `<button type="button" class="secondary choice" data-choice="${option.id}" aria-pressed="false"><code>${esc(option.text)}</code></button>`).join("")}</div></fieldset><div class="actions"><button id="check" disabled>Check Answer</button><button id="next" class="secondary">Next Challenge</button></div>`;
+      for (const button of $("stage").querySelectorAll("[data-choice]")) button.onclick = () => {
+        if (!active()) return;
+        selectedChoice = button.dataset.choice;
+        for (const option of $("stage").querySelectorAll("[data-choice]")) {
+          option.setAttribute("aria-pressed", String(option === button));
+          option.classList.toggle("selected", option === button);
+        }
+        $("check").disabled = false;
+      };
+      $("check").onclick = () => {
+        if (!active() || !selectedChoice) return;
+        const result = evaluateMissing(q, selectedChoice), event = tracker.submit(id, result.correct);
+        if (!event.accepted) return;
+        finish();
+        message(result.correct, result.details);
+      };
+      $("next").onclick = next;
+      stats();
+      return;
+    }
     const marker = q.context.indexOf("\n\n");
     $("stage").innerHTML =
-      `<h2>${esc(q.goal)}</h2><p class="context-doc">${esc(q.context.slice(q.context.indexOf("\n") + 1, marker))}</p><pre class="snippet">${esc(q.context.slice(marker + 2))}</pre><p>Choose the needed blocks; some are unused. Use braces to place statements inside conditions or loops. Move or remove blocks as needed.</p><h3>Available components</h3><div id="bank" class="block-bank"></div><h3>Your procedure body</h3><ol id="construction" class="construction"></ol><div class="actions"><button id="check">Check Answer</button><button id="show" class="secondary">Show Answer</button><button id="next" class="secondary">Next Challenge</button></div>`;
+      `<p class="eyebrow">Arrange the algorithm · ${esc(q.topicTitle)}</p><h2>${esc(q.goal)}</h2><p class="context-doc">${esc(q.context.slice(q.context.indexOf("\n") + 1, marker))}</p><pre class="snippet">${esc(q.context.slice(marker + 2))}</pre><p>Arrange the short statements where their order or nesting changes the result. Add, move, or remove blocks, then test and revise.</p><h3>Available components</h3><div id="bank" class="block-bank"></div><h3>Your procedure body</h3><ol id="construction" class="construction"></ol><div class="actions"><button id="check">Check Answer</button><button id="show" class="secondary">Show Answer</button><button id="next" class="secondary">Next Challenge</button></div>`;
     paint();
     $("check").onclick = () => {
       if (!active()) return;
