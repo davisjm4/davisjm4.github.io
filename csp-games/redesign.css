@@ -1,0 +1,28 @@
+@import url("./style.css?v=platform-java-v3");
+[hidden] {
+  display: none !important;
+}
+.snippet {
+  white-space: pre;
+  overflow-x: auto;
+  overflow-wrap: normal;
+  max-width: 100%;
+  font-size: clamp(0.85rem, 2vw, 1.05rem);
+}
+.builder-fields input {
+  min-width: 0;
+  max-width: 100%;
+}
+.feedback {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .builder-fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .actions {
+    flex-wrap: wrap;
+  }
+}
