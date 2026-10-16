@@ -3,7 +3,7 @@ import {
   evaluateArchitect,
   runConstruction,
   closeEnough,
-} from "./architect-engine.js?v=instructional-aa-v2";
+} from "./architect-engine.js?v=instructional-aa-v3";
 import {
   generateTestCase,
   evaluateTestCase,

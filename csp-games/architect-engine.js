@@ -117,12 +117,12 @@ export function closeEnough(a, b) {
 export function executeProgram(program, input, library = {}) {
   const trace = [],
     budget = { left: 2500 };
-  function run(body, env, depth = 0) {
+  function run(body, env, depth = 0, scope = "solve") {
     if (depth > 12) throw Error("Procedure call limit reached.");
     let returned = false,
       value;
     const record = (text) => {
-      trace.push(text);
+      trace.push(scope + ": " + text);
       if (trace.length > 24) trace.shift();
     };
     const evaluate = (e) => {
@@ -138,7 +138,7 @@ export function executeProgram(program, input, library = {}) {
         const next = Object.fromEntries(
           def.params.map((p, i) => [p, evaluate(e.args[i])]),
         );
-        const call = run(def.body, next, depth + 1);
+        const call = run(def.body, next, depth + 1, e.call);
         if (!call.returned)
           throw Error(
             `${e.call} displays or finishes without returning a value.`,
@@ -920,7 +920,7 @@ export function evaluateArchitect(q, order) {
         input,
         expected,
         actual: actual.returned ? actual.value : undefined,
-        details: `Failing input: ${JSON.stringify(input)}\nExpected returned value: ${JSON.stringify(expected)}\nYour algorithm: ${actual.error || (!actual.returned ? "finished without RETURN" : JSON.stringify(actual.value))}\nExecution evidence:\n${actual.trace.join("\n")}\n${actual.trace.some((s) => s.startsWith("IF")) ? "Review the recorded condition results and the updates they permit." : "Review the order of assignments and the value supplied to RETURN."}`,
+        details: `Failing input: ${JSON.stringify(input)}\nExpected returned value: ${JSON.stringify(expected)}\nYour algorithm: ${actual.error || (!actual.returned ? "solve finished without returning a value" : JSON.stringify(actual.value))}\nExecution evidence:\n${actual.trace.join("\n")}\n${actual.trace.some((s) => s.includes(": IF ")) ? "Review the recorded condition results and the updates they permit." : "Review the order of assignments and the value supplied to RETURN."}`,
       };
   }
   return {

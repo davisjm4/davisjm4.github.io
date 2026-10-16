@@ -2,7 +2,7 @@ import {
   architectModes,
   generateArchitect,
   evaluateArchitect,
-} from "./architect-engine.js?v=instructional-aa-v2";
+} from "./architect-engine.js?v=instructional-aa-v3";
 import {
   sessionTracker,
   addSessionNavigation,
