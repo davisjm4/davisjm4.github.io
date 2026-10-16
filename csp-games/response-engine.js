@@ -427,11 +427,9 @@ export function generateResponse(mode = "mixed", support = "full", forced) {
       `${p.call(p.sample)} returns ${display(otherOut)} regardless of the supplied arguments.`,
       `${p.call(p.sample)} changes its definition to match the supplied arguments.`,
     ];
-    R = [
-      `${p.evidence} This supports this case without proving all inputs.`,
-      `${p.wrongReason[0]} This one result establishes all inputs.`,
-      `${p.wrongReason[1]} This one result establishes all inputs.`,
-    ];
+    R = [p.reason, ...p.wrongReason].map(
+      (text) => text + " This describes the behavior exercised by this test.",
+    );
   }
   if (selected === "abstraction") {
     const listFocus = isList && pick([true, false]);
