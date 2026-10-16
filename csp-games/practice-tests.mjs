@@ -81,24 +81,13 @@ for (const [slug, g] of Object.entries(P.practiceGames)) {
           );
       }
       if (q.kind === "test") {
-        assert.equal(
-          P.validatePractice(q, { ...answer, [q.fields[0].id]: "abc" }),
-          false,
-        );
-        const wrongOutput = {
-          ...answer,
-          [q.mode === "branches" ? "expected0" : "expected"]: "IMPOSSIBLE",
-        };
-        assert.equal(P.validatePractice(q, wrongOutput), false);
-        assert.equal(
-          P.validatePractice(q, {
-            input: 100,
-            expected: "true",
-            actual: "false",
-            other: 0,
-          }),
-          false,
-        );
+        assert.equal(q.fields.length, 0);
+        assert.equal(P.validatePractice(q, { choice: "invalid" }), false);
+        for (const o of q.options)
+          assert.equal(
+            P.validatePractice(q, { choice: o.id }),
+            o.id === q.correctId,
+          );
       }
     }
 }
@@ -112,8 +101,6 @@ for (let seed = 0; seed < 100; seed++) {
   assert.equal(P.runModel({ seed, probability: 10, trials: 100 }).success, 100);
 }
 assert.throws(() => P.runModel({ seed: -1, probability: 4, trials: 100 }));
-assert.equal(P.parseList("1,,3"), null);
-assert.deepEqual(P.parseList(""), []);
 console.log(
   `Practice engine: ${generated} seeded challenges passed; all modes, models, valid alternatives, edge cases, and incorrect responses verified.`,
 );

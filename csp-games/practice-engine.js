@@ -11,7 +11,8 @@ import {
 import {
   generateTestCase,
   evaluateTestCase,
-} from "./test-case-engine.js?v=instructional-tcb-v2";
+  testModes,
+} from "./test-case-engine.js?v=fast-tcb-v1";
 import { int, pick, shuffle } from "./engine.js?v=platform-expansion-v2";
 export const practiceGames = {
   "response-builder": {
@@ -35,17 +36,7 @@ export const practiceGames = {
     topics: "1.4 / 3.4 / 3.6–3.10",
     icon: "✓",
     description: "Construct test inputs, predict results, and expose errors.",
-    modes: {
-      normal: "Normal Cases",
-      boundary: "Boundary Values",
-      branches: "Branch Coverage",
-      lists: "Empty & Single-element Lists",
-      strings: "Strings & Library Documentation",
-      iteration: "Iteration",
-      errors: "Logic Errors",
-      invalid: "Error-producing Inputs",
-      nonexposing: "Tests That Do Not Expose Errors",
-    },
+    modes: testModes,
   },
   "algorithm-architect": {
     title: "Algorithm Architect",
@@ -235,17 +226,6 @@ function testCase(mode) {
   const q = generateTestCase(mode);
   q.explanation = evaluateTestCase(q, q.example).details;
   return q;
-}
-function whole(v) {
-  return /^-?\d+$/.test(String(v).trim()) && Number.isSafeInteger(Number(v));
-}
-export function parseList(v) {
-  if (String(v).trim() === "") return [];
-  const s = String(v)
-    .split(",")
-    .map((x) => x.trim());
-  if (!s.every(whole)) return null;
-  return s.map(Number);
 }
 function validateTest(q, r) {
   return evaluateTestCase(q, r).correct;

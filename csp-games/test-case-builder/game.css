@@ -1,0 +1,150 @@
+@import url("../style.css?v=platform-java-v3");
+[hidden] {
+  display: none !important;
+}
+header {
+  padding-block: 10px;
+}
+main {
+  max-width: 880px;
+  padding: 14px 18px 24px;
+}
+h1 {
+  font-size: 1.9rem;
+  margin: 0 0 10px;
+}
+.toolbar {
+  margin: 0 0 8px;
+}
+.toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.toolbar select {
+  max-width: 100%;
+}
+.panel {
+  padding: 14px 18px;
+  margin: 8px 0;
+}
+h2 {
+  font-size: 1.2rem;
+  margin: 6px 0 8px;
+}
+p {
+  margin: 7px 0;
+}
+.documentation {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.snippet {
+  white-space: pre;
+  overflow: auto;
+  overflow-wrap: normal;
+  max-width: 100%;
+  margin: 10px 0;
+  padding: 10px 12px;
+  line-height: 1.3;
+  font-size: 0.94rem;
+}
+#choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.choice {
+  min-height: 46px;
+  min-width: 0;
+  margin: 0;
+  font-family: ui-monospace, monospace;
+  font-size: 1rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.choice.selected {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  background: #24484e;
+}
+.choice.answer {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  opacity: 1;
+}
+.choice.wrong {
+  outline: 2px solid var(--red);
+  outline-offset: -2px;
+}
+.actions {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.reveal {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--muted);
+  margin-left: auto;
+}
+.feedback {
+  padding: 10px 12px;
+  margin: 10px 0 0;
+  line-height: 1.4;
+  white-space: normal;
+}
+#stats {
+  font-size: 0.85rem;
+  margin: 8px 0;
+}
+footer {
+  padding: 10px 18px;
+  font-size: 0.8rem;
+}
+button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+@media (max-width: 600px) {
+  header {
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-inline: 14px;
+  }
+  header small {
+    display: none;
+  }
+  main {
+    padding: 12px;
+  }
+  h1 {
+    font-size: 1.65rem;
+  }
+  .panel {
+    padding: 12px;
+  }
+  .toolbar label {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .toolbar select {
+    width: 100%;
+  }
+  .toolbar {
+    display: block;
+  }
+  #choices {
+    gap: 7px;
+  }
+  .snippet {
+    font-size: 0.86rem;
+  }
+  .actions button {
+    padding: 9px 12px;
+  }
+  .reveal {
+    margin-left: 0;
+  }
+}
