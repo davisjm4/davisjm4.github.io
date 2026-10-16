@@ -31,3 +31,51 @@
   white-space: pre-line;
   overflow-wrap: anywhere;
 }
+
+/* Response Builder: sentence selection and direct code evidence. */
+.sentence-bank {
+  display: grid;
+  gap: 0.7rem;
+}
+.sentence {
+  text-align: left;
+  white-space: normal;
+  line-height: 1.5;
+}
+.response-section {
+  display: block;
+  margin: 1rem 0;
+}
+.response-section select {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  margin-top: 0.4rem;
+}
+.code-lines {
+  overflow-x: auto;
+}
+.code-line {
+  display: flex;
+  min-width: 100%;
+  width: max-content;
+  border-radius: 0;
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  min-height: 44px;
+  gap: 1rem;
+}
+.code-line code {
+  white-space: pre;
+  font: inherit;
+}
+.line-number {
+  opacity: 0.65;
+  width: 2ch;
+  flex-shrink: 0;
+}
+.code-line.selected {
+  outline: 2px solid var(--accent, #79ddc6);
+  outline-offset: -2px;
+  background: #234a51;
+}

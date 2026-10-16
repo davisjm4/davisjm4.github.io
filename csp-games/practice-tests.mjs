@@ -38,12 +38,13 @@ for (const [slug, g] of Object.entries(P.practiceGames)) {
         r[q.fields[0].id] = "invalid choice";
         assert.equal(P.validatePractice(q, r), false);
       }
-      if (q.kind === "order") {
-        assert.ok(P.validatePractice(q, { order: [...q.solution].reverse() }));
-        assert.equal(
-          P.validatePractice(q, { order: ["answer", "cite", "bad1"] }),
-          false,
-        );
+      if (q.kind === "response") {
+        const wrong = {
+          ...answer,
+          claim: q.items.find((i) => i.role === "claim" && !i.correct).id,
+          order: ["invalid"],
+        };
+        assert.equal(P.validatePractice(q, wrong), false);
       }
       if (q.kind === "multi") {
         assert.equal(new Set(q.items.map((x) => x.text)).size, q.items.length);

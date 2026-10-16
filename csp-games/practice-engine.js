@@ -1,4 +1,8 @@
 import {
+  generateResponse,
+  evaluateResponse,
+} from "./response-engine.js?v=instructional-rb-v1";
+import {
   generateArchitect,
   evaluateArchitect,
   runConstruction,
@@ -147,7 +151,7 @@ export function generatePractice(game, mode = "mixed", support = "full") {
   const selected =
     mode === "mixed" ? pick(Object.keys(practiceGames[game].modes)) : mode;
   if (!practiceGames[game].modes[selected]) throw Error("Unknown mode");
-  const q = generators[game](selected);
+  const q = generators[game](selected, support);
   q.support = support;
   const perGameHints = {
     "response-builder": [
@@ -180,6 +184,7 @@ export function generatePractice(game, mode = "mixed", support = "full") {
   return q;
 }
 export function validatePractice(q, r) {
+  if (q.kind === "response") return evaluateResponse(q, r).correct;
   if (q.kind === "test") return validateTest(q, r);
   if (q.kind === "architect") return validateAlgorithm(q, r);
   if (q.kind === "simulation") return validateSimulation(q, r);
@@ -200,6 +205,10 @@ export function validatePractice(q, r) {
   return q.fields.every((f) => String(r[f.id]) === f.correct);
 }
 export function solutionPractice(q) {
+  if (q.kind === "response")
+    return q.support === "minimal"
+      ? { ...q.solution, order: [q.correct.claim, q.correct.reason] }
+      : q.solution;
   if (q.kind === "test") return q.example;
   if (q.kind === "architect") return { order: [...q.solution] };
   if (q.kind === "order") return { order: q.solution };
@@ -207,177 +216,20 @@ export function solutionPractice(q) {
   if (q.kind === "simulation") return q.solution;
   return Object.fromEntries(q.fields.map((f) => [f.id, f.correct]));
 }
-function response(mode) {
-  const name = pick(["ratings", "scores", "temperatures", "donations"]),
-    p = pick(["countQualified", "countReady", "countPassing"]),
-    n = int(30, 80),
-    values = shuffle([n - 1, n, n + 3, n + 7]);
-  const code = `PROCEDURE ${p}(values, limit)\n{\n    count ← 0\n    FOR EACH value IN values\n    {\n        IF (value ≥ limit)\n        {\n            count ← count + 1\n        }\n    }\n    RETURN(count)\n}\n${name} ← [${values.join(", ")}]\nDISPLAY(${p}(${name}, ${n}))`;
-  const pieces = [
-    {
-      id: "answer",
-      label: "Answer",
-      text: "The procedure counts list elements that meet or exceed the limit.",
-    },
-    {
-      id: "cite",
-      label: "Cite evidence",
-      text: "The comparison controls whether count is increased for each element.",
-    },
-    {
-      id: "explain",
-      label: "Explain",
-      text: "Each qualifying element contributes one, so the returned counter represents the number that qualify.",
-    },
-    {
-      id: "bad1",
-      label: "Possible sentence",
-      text: "The procedure returns the sum of every list value.",
-    },
-    {
-      id: "bad2",
-      label: "Possible sentence",
-      text: "An element below the limit always increases the counter.",
-    },
-  ];
-  if (mode === "explanation")
-    return base(
-      "response-builder",
-      mode,
-      "Build a concise explanation of how this procedure meets its counting goal.",
-      code,
-      {
-        kind: "order",
-        items: shuffle(pieces),
-        required: ["answer", "cite", "explain"],
-        before: [],
-        solution: ["answer", "cite", "explain"],
-        explanation:
-          "State the behavior, cite the controlling comparison and update, then explain how one update per qualifying item produces the count. A separate restatement or summary is unnecessary here.",
-      },
-    );
-  if (mode === "abstraction") {
-    const list = pick([true, false]);
-    return base(
-      "response-builder",
-      mode,
-      `Explain how ${list ? "a list" : "this procedure"} manages complexity.`,
-      code,
-      {
-        kind: "fields",
-        fields: [
-          chooseField(
-            "claim",
-            "Answer",
-            list
-              ? "The list groups many values under one name."
-              : "The procedure packages a reusable counting action.",
-            [
-              "The program no longer needs any testing.",
-              "The data must contain only one element.",
-            ],
-          ),
-          chooseField(
-            "evidence",
-            "Cite evidence",
-            list
-              ? "FOR EACH visits values from the collection."
-              : `Calls supply values and limit to ${p}.`,
-            [
-              "DISPLAY encrypts the output.",
-              "The counter replaces all list elements.",
-            ],
-          ),
-          chooseField(
-            "reason",
-            "Explain",
-            list
-              ? "One traversal works for different list lengths without separate variables and statements for every item."
-              : "Callers reuse the action with different inputs without duplicating its implementation.",
-            [
-              "Every algorithm becomes faster automatically.",
-              "No condition can ever be false.",
-            ],
-          ),
-        ],
-        explanation: list
-          ? "The collection and common traversal replace separate variables and repeated code for each item."
-          : "The named procedure hides the counting implementation behind an input/output interface that different callers can reuse.",
-      },
-    );
-  }
-  if (mode === "testing")
-    return base(
-      "response-builder",
-      mode,
-      "Explain why the threshold test is useful.",
-      code + `\n// Test: values ← [${n}], limit ← ${n}`,
-      {
-        kind: "fields",
-        fields: [
-          chooseField("case", "Answer", "This is a boundary test.", [
-            "This is an empty-list test.",
-            "This proves every input is correct.",
-          ]),
-          chooseField(
-            "cite",
-            "Cite evidence",
-            `The element equals the limit ${n}.`,
-            [`The list has ${n} elements.`, "The argument is below the limit."],
-          ),
-          chooseField(
-            "explain",
-            "Explain",
-            "It checks that equality is included by the requirement.",
-            [
-              "It demonstrates that all networks are fault tolerant.",
-              "It proves the loop executes zero times.",
-            ],
-          ),
-        ],
-        explanation:
-          "The single element equals the threshold. The ≥ comparison includes equality, so the counter should increase once. One test supports that boundary behavior; it does not prove every input correct.",
-      },
-    );
-  return base(
-    "response-builder",
-    mode,
-    mode === "reduced"
-      ? "Complete the essential parts of a concise explanation."
-      : "Complete an evidence-based explanation of this procedure.",
-    code,
-    {
-      kind: "fields",
-      fields: [
-        chooseField(
-          "answer",
-          "Answer: The procedure…",
-          "counts elements at or above the limit",
-          ["adds all element values", "removes all qualifying elements"],
-        ),
-        chooseField(
-          "cite",
-          "Evidence: The code…",
-          "tests each element and increments a counter for qualifying elements",
-          [
-            "updates count with every element’s value",
-            "returns the original list",
-          ],
-        ),
-        chooseField(
-          "explain",
-          "Reason: This works because…",
-          "one increment per qualifying item makes the counter equal to the number that qualify",
-          [
-            "a Boolean expression always evaluates to true",
-            "RETURN displays every value on the screen",
-          ],
-        ),
-      ],
-      explanation:
-        "The condition identifies qualifying elements. Each one causes exactly one counter increment. RETURN supplies the resulting count to the caller. The response answers, cites, and explains without unnecessary extra sentences.",
-    },
-  );
+function response(mode, support) {
+  const q = generateResponse(mode, support);
+  return {
+    ...q,
+    kind: "response",
+    context: q.code,
+    fields: [],
+    explanation: evaluateResponse(
+      q,
+      q.support === "minimal"
+        ? { ...q.solution, order: [q.correct.claim, q.correct.reason] }
+        : q.solution,
+    ).details,
+  };
 }
 function testCase(mode) {
   const q = generateTestCase(mode);

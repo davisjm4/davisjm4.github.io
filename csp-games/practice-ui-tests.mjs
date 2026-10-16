@@ -143,7 +143,12 @@ function launch(slug, concept = false) {
   };
 }
 for (const [slug, g] of Object.entries(P.practiceGames)) {
-  if (["test-case-builder", "algorithm-architect"].includes(slug)) continue; // Dedicated redesigned UI and one-attempt tests live in test-case-redesign-tests.mjs.
+  if (
+    ["test-case-builder", "algorithm-architect", "response-builder"].includes(
+      slug,
+    )
+  )
+    continue; // Dedicated redesigned UI and one-attempt tests live in test-case-redesign-tests.mjs.
   const t = launch(slug);
   eq(t.$("practice-mode").value, "mixed");
   if (slug === "response-builder") eq(t.$("support").value, "full");
@@ -293,6 +298,19 @@ const algorithmId = testingTracker.begin(
 );
 ok(P.validatePractice(algorithmSample, P.solutionPractice(algorithmSample)));
 testingTracker.submit(algorithmId, true);
+const responseSample = P.generatePractice(
+  "response-builder",
+  "guided",
+  "minimal",
+);
+const responseId = testingTracker.begin(
+  "response-builder",
+  "Response Builder",
+  responseSample.topic,
+  responseSample.topicTitle,
+);
+ok(P.validatePractice(responseSample, P.solutionPractice(responseSample)));
+testingTracker.submit(responseId, true);
 const refreshed = S.createSessionTracker({ storage }).snapshot();
 eq(refreshed.totals, t.tracker.snapshot().totals);
 for (const game of Object.keys(P.practiceGames)) ok(refreshed.games[game]);
@@ -347,6 +365,7 @@ for (let n = 0; n < 4; n++) {
   );
   const report = document.getElementById("report");
   ok(report.textContent.includes("Test Student"));
+  ok(report.textContent.includes("Minimal Support"));
   for (const g of Object.values(P.practiceGames))
     ok(report.textContent.includes(g.title));
   const gameRows = report
