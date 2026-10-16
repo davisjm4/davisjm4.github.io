@@ -497,6 +497,23 @@ export function generateResponse(mode = "mixed", support = "full", forced) {
     topic: selected + "." + support,
     topicTitle: responseModes[selected] + " · " + supportNames[support],
     structure: p.structure,
+    evidencePrompt: {
+      count: "Select the statement that updates the number of matches.",
+      sum: "Select the repeated update that adds an element to the accumulated total.",
+      product:
+        "Select the initialization or repeated update of the running product.",
+      "first-index":
+        "Select the condition that immediately returns a matching position.",
+      filter:
+        "Select the statement that adds a matching element to the result list.",
+      maximum:
+        "Select the empty-input guard or the comparison that controls the selected result.",
+      all: "Select a statement that returns the Boolean outcome of the positivity test.",
+      range: "Select the condition that decides range membership.",
+      scale: "Select an assignment that transforms the input data.",
+      reverse:
+        "Select a line that reads a list element or advances the index to the next position.",
+    }[p.structure],
     prompt,
     procedure: p,
     items: shuffle(items),

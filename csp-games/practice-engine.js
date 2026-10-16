@@ -1,7 +1,7 @@
 import {
   generateResponse,
   evaluateResponse,
-} from "./response-engine.js?v=instructional-rb-v2";
+} from "./response-engine.js?v=instructional-rb-v3";
 import {
   generateArchitect,
   evaluateArchitect,

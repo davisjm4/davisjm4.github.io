@@ -3,7 +3,7 @@ import {
   supportNames,
   generateResponse,
   evaluateResponse,
-} from "./response-engine.js?v=instructional-rb-v2";
+} from "./response-engine.js?v=instructional-rb-v3";
 import {
   sessionTracker,
   addSessionNavigation,
@@ -128,7 +128,7 @@ export function startResponse() {
     $("feedback").hidden = true;
     const minimal = q.support === "minimal";
     $("stage").innerHTML =
-      `<h2>${esc(q.prompt)}</h2>${minimal ? `<p>Select a code line showing the procedure’s key decision or update. Then build a two-sentence claim and connection.</p><div id="code" class="snippet code-lines">${q.procedure.lines.map((l, j) => `<button class="secondary code-line" data-line="${j + 1}" aria-label="Line ${j + 1}: ${esc(l)}" aria-pressed="false"><span class="line-number">${j + 1}</span><code>${esc(l || " ")}</code></button>`).join("")}</div>` : `<pre class="snippet">${esc(q.code)}</pre>`}${
+      `<h2>${esc(q.prompt)}</h2>${minimal ? `<p>${esc(q.evidencePrompt)} Then build a two-sentence claim and connection.</p><div id="code" class="snippet code-lines">${q.procedure.lines.map((l, j) => `<button class="secondary code-line" data-line="${j + 1}" aria-label="Line ${j + 1}: ${esc(l)}" aria-pressed="false"><span class="line-number">${j + 1}</span><code>${esc(l || " ")}</code></button>`).join("")}</div>` : `<pre class="snippet">${esc(q.code)}</pre>`}${
         q.layout === "sections"
           ? `<p>Answer the question, cite specific evidence, and connect that evidence to the answer.</p>${[
               ["claim", "Answer"],

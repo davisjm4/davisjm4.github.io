@@ -93,6 +93,7 @@ for (const mode of Object.keys(R.responseModes))
       eq(new Set(q.items.map((i) => i.text)).size, 9);
       ok(q.items.every((i) => !i.label && !/network|encrypt/i.test(i.text)));
       ok(p.validLines.length > 0);
+      ok(q.evidencePrompt.startsWith("Select"));
       for (const line of p.validLines) ok(p.lines[line - 1].trim().length > 0);
       ok(JSON.stringify(p.run(p.sample)) !== JSON.stringify(p.run(p.other)));
       for (const args of [p.sample, p.other])
