@@ -6,7 +6,7 @@ This release supersedes the earlier multi-field Test Case Builder. It changes on
 
 One short question, one visible answer selection, Check Answer, concise feedback, Next Challenge. There are no answer fields, output-entry rules, dropdown answer choices or test-suite construction steps. Check is disabled until a choice is selected. Selection provides no correctness information. Checking locks the round and identifies the correct answer. A wrong check records an incorrect/revealed round, never independent success. Intentional Show Answer records a reveal without adding an attempt. Next before completion records a skip. Existing session rows are preserved; new results use `quick.<mode>` topic identifiers.
 
-Mixed Practice is the default. Its shuffled category bag presents every category in each five-question cycle without repeating a category across the boundary. Each category has its own shuffled structure bag; cycles avoid adjacent questions from the same algorithm family, including related nested-path or empty-list templates. This is variety control, not required progression.
+Mixed Practice is the default. Its shuffled category bag presents every category in each five-question cycle without repeating a category across the boundary. Each category has its own shuffled structure bag; cycles avoid adjacent questions from the same algorithm family, including related nested-path or empty-list templates. Mixed cycles also separate identical cross-category algorithms such as repeated accumulation, indexed access and shared list traversals. This is variety control, not required progression.
 
 ## Reasoning structures
 
@@ -30,9 +30,9 @@ Mixed Practice is the default. Its shuffled category bag presents every category
 
 ## Automated verification
 
-The dedicated suite generates 1,500 questions (300 per mode), covers every structure, independently compiles and executes the displayed AP-style pseudocode with one-based access checks, and cross-checks bug requirements with separately written reference calculations. It checks exactly one valid displayed option, answer positions, unique choices, short prompts/code/feedback, absence of correct-role metadata in controls, all correct/incorrect choices, no second score, intentional reveal, skips, persistence, preservation of old session topics and balanced category/structure cycles.
+The dedicated suite generates 1,500 questions (300 per mode), covers every structure, independently compiles and executes the displayed AP-style pseudocode with one-based access checks, and cross-checks bug requirements with separately written reference calculations. It checks exactly one valid displayed option, answer positions, unique choices, short prompts/code/feedback, absence of correct-role metadata in controls, all correct/incorrect choices, no second score, intentional reveal, skips, persistence, preservation of old session topics and balanced category/structure cycles. An additional 600 fresh 30-question Mixed runs reject adjacent identical cross-category algorithm families.
 
-Latest dedicated run: 48,613 assertions and 60,457 independent displayed-code executions. Fixed-first-position success ranged from 20–25.7%; longest-choice success from 14–31%; copying the first number in the requirement succeeded in 0–14.3%. These measurements detect gross shortcuts; they do not prove that all distractors are equally strong. Some boundary/equality answers legitimately match a stated cutoff. No secure-assessment claim is made.
+Latest dedicated run: 67,133 assertions and 60,457 independent displayed-code executions. Fixed-first-position success ranged from 20–25.7%; longest-choice success from 14–31%; copying the first number in the requirement succeeded in 0–14.3%. These measurements detect gross shortcuts; they do not prove that all distractors are equally strong. Some boundary/equality answers legitimately match a stated cutoff. No secure-assessment claim is made.
 
 The full existing CSP suite is also run to regression-test unrelated games and shared reports. Browser completion counts, source-release/deployment evidence and final test results are appended after live verification.
 

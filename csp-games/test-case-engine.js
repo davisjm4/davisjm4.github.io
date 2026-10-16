@@ -1024,37 +1024,120 @@ export function reasonFamily(mode, shape) {
   const group = groups[mode]?.find((g) => g.includes(shape));
   return mode + ":" + (group ? group[0] : shape);
 }
+export function displayFamily(mode, shape) {
+  const key = mode + ":" + shape;
+  const groups = [
+    ["predict:repeat-sum", "boundary:zero-one", "edge:zero-loop"],
+    ["predict:sum", "edge:empty-sum"],
+    ["predict:product", "edge:empty-product"],
+    [
+      "predict:list-access",
+      "boundary:upper-index",
+      "boundary:first-index",
+      "edge:precondition",
+    ],
+    ["boundary:string-end", "edge:short-text"],
+    ["branches:middle", "branches:missing-test", "predict:nested"],
+    ["branches:nested-true", "branches:nested-false"],
+    ["bugs:search-value", "predict:first-match"],
+  ];
+  return groups.find((g) => g.includes(key))?.[0] || key;
+}
 export function createTestDeck() {
   const bags = new Map(),
     last = new Map();
-  function draw(key, all) {
-    const family = (item) => (key === "mixed" ? item : reasonFamily(key, item));
-    if (!bags.get(key)?.length) {
-      function arrange(rest, previous) {
-        if (!rest.length) return [];
-        for (const item of shuffle(rest)) {
-          if (family(item) === previous) continue;
-          const tail = arrange(
-            rest.filter((x) => x !== item),
-            family(item),
-          );
-          if (tail) return [item, ...tail];
-        }
-        return null;
-      }
-      const sequence = arrange(all, last.get(key));
-      if (!sequence) throw Error("Cannot arrange distinct practice families");
-      bags.set(key, sequence);
+  let lastDisplay = "",
+    lastCategory = "",
+    mixedLeft = [],
+    plan = [];
+  function pool(mode) {
+    if (!bags.get(mode)?.length) bags.set(mode, [...definitions[mode]]);
+    return bags.get(mode);
+  }
+  function arrange(mode, rest, previous) {
+    if (!rest.length) return [];
+    for (const item of shuffle(rest)) {
+      const family = reasonFamily(mode, item);
+      if (family === previous) continue;
+      const tail = arrange(
+        mode,
+        rest.filter((x) => x !== item),
+        family,
+      );
+      if (tail) return [item, ...tail];
     }
-    const item = bags.get(key).shift();
-    last.set(key, family(item));
-    return item;
+    return null;
+  }
+  function available(mode) {
+    const rest = pool(mode);
+    return rest.filter(
+      (item) =>
+        reasonFamily(mode, item) !== last.get(mode) &&
+        arrange(
+          mode,
+          rest.filter((x) => x !== item),
+          reasonFamily(mode, item),
+        ),
+    );
+  }
+  function mixedPlan() {
+    if (!mixedLeft.length) mixedLeft = Object.keys(testModes);
+    const candidates = Object.fromEntries(
+      mixedLeft.map((mode) => [mode, available(mode)]),
+    );
+    function search(modes, previous, first = true) {
+      if (!modes.length) return [];
+      for (const mode of shuffle(modes)) {
+        if (first && modes.length > 1 && mode === lastCategory) continue;
+        for (const shape of shuffle(candidates[mode])) {
+          const display = displayFamily(mode, shape);
+          if (display === previous) continue;
+          const tail = search(
+            modes.filter((x) => x !== mode),
+            display,
+            false,
+          );
+          if (tail) return [{ mode, shape }, ...tail];
+        }
+      }
+      return null;
+    }
+    return search(mixedLeft, lastDisplay) || null;
   }
   return {
     next(mode = "mixed") {
-      const selected =
-        mode === "mixed" ? draw("mixed", Object.keys(testModes)) : mode;
-      return generateTestCase(selected, draw(selected, definitions[selected]));
+      let selected, shape;
+      if (mode === "mixed") {
+        if (!plan.length) plan = mixedPlan() || [];
+        if (plan.length) {
+          ({ mode: selected, shape } = plan.shift());
+          mixedLeft = mixedLeft.filter((m) => m !== selected);
+        } else {
+          selected = pick(
+            mixedLeft.length ? mixedLeft : Object.keys(testModes),
+          );
+          shape = pick(available(selected));
+          mixedLeft = mixedLeft.filter((m) => m !== selected);
+        }
+      } else {
+        plan = [];
+        selected = mode;
+        const choices = available(mode);
+        shape = pick(
+          choices.filter((s) => displayFamily(mode, s) !== lastDisplay).length
+            ? choices.filter((s) => displayFamily(mode, s) !== lastDisplay)
+            : choices,
+        );
+      }
+      if (!shape) throw Error("No valid testing structure");
+      bags.set(
+        selected,
+        pool(selected).filter((x) => x !== shape),
+      );
+      last.set(selected, reasonFamily(selected, shape));
+      lastDisplay = displayFamily(selected, shape);
+      lastCategory = selected;
+      return generateTestCase(selected, shape);
     },
   };
 }

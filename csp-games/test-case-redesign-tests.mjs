@@ -288,6 +288,16 @@ for (const [mode, shapes] of Object.entries(E.structures)) {
 // Balanced bags: each five mixed challenges contain every category, each targeted
 // cycle contains every authored structure, and adjacent cycles never duplicate a shape.
 for (const mode of Object.keys(E.testModes)) {
+  // Every fresh 30-question Mixed run must avoid identical cross-mode algorithm families.
+  for (let trial = 0; trial < 100; trial++) {
+    const mixed = E.createTestDeck();
+    let previous = "";
+    for (let i = 0; i < 30; i++) {
+      const q = mixed.next();
+      ok(E.displayFamily(q.mode, q.structure) !== previous);
+      previous = E.displayFamily(q.mode, q.structure);
+    }
+  }
   const deck = E.createTestDeck();
   let prev = "";
   for (let cycle = 0; cycle < 10; cycle++) {
@@ -300,6 +310,16 @@ for (const mode of Object.keys(E.testModes)) {
       prev = q.structure;
     }
     eq(seen.size, E.structures[mode].length);
+  }
+}
+// Every fresh 30-question Mixed run must avoid identical cross-mode algorithm families.
+for (let trial = 0; trial < 100; trial++) {
+  const mixed = E.createTestDeck();
+  let previous = "";
+  for (let i = 0; i < 30; i++) {
+    const q = mixed.next();
+    ok(E.displayFamily(q.mode, q.structure) !== previous);
+    previous = E.displayFamily(q.mode, q.structure);
   }
 }
 const deck = E.createTestDeck();
