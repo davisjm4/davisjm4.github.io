@@ -64,11 +64,13 @@ p {
   overflow-wrap: anywhere;
 }
 .choice.selected {
+  color: var(--ink);
   outline: 2px solid var(--accent);
   outline-offset: -2px;
   background: #24484e;
 }
 .choice.answer {
+  color: var(--ink);
   outline: 2px solid var(--accent);
   outline-offset: -2px;
   opacity: 1;

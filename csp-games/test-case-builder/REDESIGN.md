@@ -34,8 +34,24 @@ The dedicated suite generates 1,500 questions (300 per mode), covers every struc
 
 Latest dedicated run: 67,133 assertions and 60,457 independent displayed-code executions. Fixed-first-position success ranged from 20–25.7%; longest-choice success from 14–31%; copying the first number in the requirement succeeded in 0–14.3%. These measurements detect gross shortcuts; they do not prove that all distractors are equally strong. Some boundary/equality answers legitimately match a stated cutoff. No secure-assessment claim is made.
 
-The full existing CSP suite is also run to regression-test unrelated games and shared reports. Browser completion counts, source-release/deployment evidence and final test results are appended after live verification.
+All 14 existing CSP test suites passed on the final question-engine release. A further 1,000 seeded data snapshots across all five unrelated shared generators matched their pre-change output exactly. The Git source-tree comparison permits only the eight authorized Test Case Builder, adapter/test and report files; every other file remains unchanged.
 
 ## Layout and timing limits
 
 Game-specific compact CSS preserves shared branding, uses large answer targets, short code with internal horizontal scrolling and two-column choices. No shared stylesheet is changed. The intended reasoning time is 5–15 seconds for prepared students; it is not presented as a measured student usability result. The available browser has no supported viewport-resize or device-emulation capability, so any unperformed Chromebook/mobile viewport checks must be disclosed explicitly. Desktop screenshots and actual rendered bounds are checked during live QA.
+
+
+## Public-browser verification — October 16, 2026
+
+- Completed 10 submitted questions in each of the five targeted modes, including two deliberate errors per mode.
+- The first Mixed pass exposed consecutive related loop snippets across categories. The rotation was revised and regression-tested, then the continuous Mixed test was restarted on the revised public version.
+- Completed the final continuous 30-question Mixed run with exactly six questions per category, plus earlier exploratory rounds. Inspected correct and incorrect feedback, boundaries, guards, missing paths, zero loop visits, list indices and documented string operations.
+- Completed an additional keyboard-only selection and submission. Across all live QA rounds, Session Summary accurately showed **90 attempted, 76 first-try correct (84.4%), 90 submissions, 14 incorrect, 15 revealed and zero after-retry credit**. Fourteen reveals followed incorrect submissions; one was an intentional reveal without submission and did not enter the attempted denominator.
+- Next Challenge, skips, return-home navigation, direct game navigation, Mixed default, reveal locking and refresh persistence passed. Reset opened the existing warning; Cancel preserved all results. Destructive reset confirmation is tested only with disposable automated-test storage.
+- Desktop screenshots were visually inspected. At the actual 1363-pixel content width, all sampled pre-submission controls ended at or above 640 pixels, compatible with the available height of a typical 768-pixel Chromebook display. This is a rendered-bounds check, not a claim of testing on physical Chromebook hardware. Selected-answer text contrast was improved after screenshot review.
+- No supported viewport-resize or phone-emulation capability is exposed in the available browser. Actual mobile viewport/touch testing remains unverified. The mobile CSS provides large answer targets, wrapping navigation and internal horizontal code scrolling, but these are not substituted for hands-on phone QA.
+- Prepared-student reasoning time of 5–15 seconds remains a design target, not a measured classroom outcome. Each round needs one choice plus Check; there are no multi-field forms or multi-step test suites.
+
+Verified public URL: https://davisjm4.github.io/csp-games/test-case-builder/
+
+Question-engine release: `4292bf479c8818420276699fcc425d9c35962a2a`, GitHub Pages workflow run 38911981915, build/deploy success. Earlier implementation commits: `d9413000a580aae537dfd8bc47b74db4ffa3ab85`, `78f021c50ebee44127f0ee6e8ba07afa43e5b4d0`, `808f3866e99015dfb4493098b8564785a510aa73`. A final stylesheet/report commit follows the live review. No other game, shared session implementation, hosting configuration or ChatGPT Sites project was changed.
