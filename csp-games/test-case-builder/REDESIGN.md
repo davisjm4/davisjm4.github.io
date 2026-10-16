@@ -1,57 +1,37 @@
-# Test Case Builder — fast practice redesign
+# Test Case Builder — generator specification implementation
 
-This release supersedes the earlier multi-field Test Case Builder. It changes only this game, its shared API registration/adapter, its tests and this report. Other game implementations, the shared session schema, navigation and URLs remain unchanged.
+This update replaces the earlier quick-practice generator implementation. It keeps the same five modes, Mixed Practice default, four visible answer buttons, one scored submission, immediate answer/explanation, Next Challenge, navigation, and shared session tracker.
 
-## Student interaction
+## Template inventory
 
-One short question, one visible answer selection, Check Answer, concise feedback, Next Challenge. There are no answer fields, output-entry rules, dropdown answer choices or test-suite construction steps. Check is disabled until a choice is selected. Selection provides no correctness information. Checking locks the round and identifies the correct answer. A wrong check records an incorrect/revealed round, never independent success. Intentional Show Answer records a reveal without adding an attempt. Next before completion records a skip. Existing session rows are preserved; new results use `quick.<mode>` topic identifiers.
+56 mode-specific template slots (some families are deliberately available in more than one mode):
 
-Mixed Practice is the default. Its shuffled category bag presents every category in each five-question cycle without repeating a category across the boundary. Each category has its own shuffled structure bag; cycles avoid adjacent questions from the same algorithm family, including related nested-path or empty-list templates. Mixed cycles also separate identical cross-category algorithms such as repeated accumulation, indexed access and shared list traversals. This is variety control, not required progression.
+- **Find the Bug-Exposing Input (17):** lower-inclusive and upper-exclusive comparisons; equality; inequality; shifted constants; exclusive ranges; AND/OR; missing NOT; grouping; compound inclusivity; even-count defect; loop endpoint; skipped first adjacent pair; extra iteration; counter update; zero-iteration return; incomplete list search.
+- **Predict the Result (12):** IF/ELSE arithmetic; selection chain; list sum; conditional count; repeated accumulation; REPEAT UNTIL; procedure arguments; first-match search; first/middle/last/invalid CHAR access.
+- **Boundary Testing (10):** inclusive/exclusive lower and upper boundaries; shifted lower/upper range limits; range-selection defect; loop endpoint; zero-iteration return; omitted last element in a maximum search.
+- **Branch Coverage (6):** IF/ELSE; second branch of a chain; nested selection; compound Boolean condition; prior-condition masking; missing branch in an existing pair of tests.
+- **Edge Cases (11):** empty/singleton counting; empty sum; present/absent search; guarded first access; last element; unguarded empty access; zero/one repetition; empty-string concatenation; short/empty CHAR access; nonempty-list precondition.
 
-## Reasoning structures
+These implement requested families A–G. Compound and loop input choices sometimes use equal-length two-element lists to avoid making the sole positive or extreme number the answer. The list is one clickable response, not a form.
 
-| Mode | Authored structures |
-| --- | --- |
-| Find the Bug-Exposing Input (12) | strict/inclusive equality; wrong comparison direction; shifted threshold; AND/OR substitution; misplaced NOT; upper endpoint; extra loop update after a cutoff; skipped counter values; conditional wrong initial sum; minimum initialized to zero; omitted last element; returned search value versus position |
-| Predict the Result (12) | two-way condition; multi-branch condition; sum; conditional count; product identity; repeated addition; input-dependent REPEAT UNTIL; first-match search; parameterized procedure call; documented concatenation; documented substring; one-based access including errors |
-| Boundary Testing (10) | first integer inside a strict region; first excluded upper value; just above a range; just below a range; compound-condition branch transition; just beyond last list position; just before first list position; first input needing two updates; zero/one repetition; first position beyond text |
-| Branch Coverage (8) | ELSE; FALSE then TRUE in a chain; nested TRUE/TRUE; nested TRUE/FALSE; compound ELSE; negated ELSE; missing path from an existing pair of tests; final fall-through after two early returns |
-| Edge Cases (10) | empty sum; empty product; guard before first-element access; nonempty list with no neighboring pair; missing target in nonempty data; first and last position coincide; zero updates; empty-text guard; too-short character access; documented index precondition |
+## Removed and replaced
 
-52 question templates, grouped into 34 mode-specific reasoning families (7 bug, 7 prediction, 6 boundary, 6 branch and 8 edge-case families). Some templates share an algorithm while asking about a different testing goal; these are not counted as additional algorithm families. Number/name changes are not counted as separate structures. All choices are computed from finite, valid input pools; non-prediction modes choose one qualifying option and three nonqualifying options. Some bugs have many error-exposing inputs; exactly one is displayed in a round. Prediction questions use three or four distinct visible results when misconceptions produce duplicate values. Numeric test choices favor nearby values rather than remote outliers.
+The previous above/below-range arithmetic questions, selecting the only empty/singleton list or shortest string, obvious index-extreme choices, and branch prompts expressed as TRUE/FALSE paths are gone. Edge cases now ask about actual program behavior. The empty-product template was removed because its distractors were weak. Obsolete template pools and their validators were removed rather than retained as hidden modes.
 
-## Examples
+## Validation
 
-- Bug input: requirement includes both range endpoints, but the code excludes the upper endpoint. Choose an input producing a mismatch.
-- Prediction: an empty product loop returns its initial 1; a parameterized call computes its own result; documented SUBSTRING uses a one-based start and count.
-- Boundary: choose the integer just above a valid inclusive range, or the first n that requires a second update of a REPEAT UNTIL loop.
-- Branch coverage: two tests cover low and high returns; choose one reaching the remaining path.
-- Edge: a single-element list is valid but has no neighboring pair; a guarded empty list avoids values[1]; a nonempty missing-target list reaches the absence result.
+Every accepted question has four distinct semantic choices and exactly one option satisfying its actual task. Bug questions compare a separately specified requirement with execution of the displayed implementation for every option. Branch questions execute actual control flow. Output questions execute the exact supplied input.
 
-## Automated verification
+Input-choice validators reject sole sign/extreme numeric keys, unequal list lengths, unique sign/extreme coordinates, and shortest-string shortcuts. Output distractors come from branch alternatives, off-by-one counts, initialization errors, values-versus-indices, library errors, and related operations. Authored empty-traversal questions intentionally assess a fixed identity/result; answer placement still varies. A template deck exhausts each category's pool, separates related structures, and includes every category in each five-question Mixed group.
 
-The dedicated suite generates 1,500 questions (300 per mode), covers every structure, independently compiles and executes the displayed AP-style pseudocode with one-based access checks, and cross-checks bug requirements with separately written reference calculations. It checks exactly one valid displayed option, answer positions, unique choices, short prompts/code/feedback, absence of correct-role metadata in controls, all correct/incorrect choices, no second score, intentional reveal, skips, persistence, preservation of old session topics and balanced category/structure cycles. An additional 600 fresh 30-question Mixed runs reject adjacent identical cross-category algorithm families.
+Code is indented vertically. Generated code lines are limited to 36 characters in the dedicated tests; the game-specific stylesheet also allows wrapping as a narrow-screen fallback. No shared stylesheet is changed.
 
-Latest dedicated run: 67,133 assertions and 60,457 independent displayed-code executions. Fixed-first-position success ranged from 20–25.7%; longest-choice success from 14–31%; copying the first number in the requirement succeeded in 0–14.3%. These measurements detect gross shortcuts; they do not prove that all distractors are equally strong. Some boundary/equality answers legitimately match a stated cutoff. No secure-assessment claim is made.
+## Automated checks
 
-All 14 existing CSP test suites passed on the final question-engine release. A further 1,000 seeded data snapshots across all five unrelated shared generators matched their pre-change output exactly. The Git source-tree comparison permits only the eight authorized Test Case Builder, adapter/test and report files; every other file remains unchanged.
+Run `npm test` in `csp-games` after installing its existing development dependency. The dedicated suite samples 100 questions per template (5,600 total), independently compiles the displayed pseudocode, evaluates all four choices, checks every answer position, checks copied-threshold variation, exercises invalid/duplicate/ambiguous choice rejection, checks category rotation, and tests correct/incorrect/reveal/skip/locked submissions with the real session tracker. Existing session records survive reloads and topic changes.
 
-## Layout and timing limits
+The complete 14-suite regression run also tests unrelated games and shared session/summary behavior. A separate seeded comparison confirms 1,000 unchanged outputs from the five unrelated generators sharing practice-engine.js. Its only production change is the Test Case Builder module version.
 
-Game-specific compact CSS preserves shared branding, uses large answer targets, short code with internal horizontal scrolling and two-column choices. No shared stylesheet is changed. The intended reasoning time is 5–15 seconds for prepared students; it is not presented as a measured student usability result. The available browser has no supported viewport-resize or device-emulation capability, so any unperformed Chromebook/mobile viewport checks must be disclosed explicitly. Desktop screenshots and actual rendered bounds are checked during live QA.
+## Verification limits
 
-
-## Public-browser verification — October 16, 2026
-
-- Completed 10 submitted questions in each of the five targeted modes, including two deliberate errors per mode.
-- The first Mixed pass exposed consecutive related loop snippets across categories. The rotation was revised and regression-tested, then the continuous Mixed test was restarted on the revised public version.
-- Completed the final continuous 30-question Mixed run with exactly six questions per category, plus earlier exploratory rounds. Inspected correct and incorrect feedback, boundaries, guards, missing paths, zero loop visits, list indices and documented string operations.
-- Completed an additional keyboard-only selection and submission. Across all live QA rounds, Session Summary accurately showed **90 attempted, 76 first-try correct (84.4%), 90 submissions, 14 incorrect, 15 revealed and zero after-retry credit**. Fourteen reveals followed incorrect submissions; one was an intentional reveal without submission and did not enter the attempted denominator.
-- Next Challenge, skips, return-home navigation, direct game navigation, Mixed default, reveal locking and refresh persistence passed. Reset opened the existing warning; Cancel preserved all results. Destructive reset confirmation is tested only with disposable automated-test storage.
-- Desktop screenshots were visually inspected. At the actual 1363-pixel content width, all sampled pre-submission controls ended at or above 640 pixels, compatible with the available height of a typical 768-pixel Chromebook display. This is a rendered-bounds check, not a claim of testing on physical Chromebook hardware. Selected-answer text contrast was improved after screenshot review.
-- No supported viewport-resize or phone-emulation capability is exposed in the available browser. Actual mobile viewport/touch testing remains unverified. The mobile CSS provides large answer targets, wrapping navigation and internal horizontal code scrolling, but these are not substituted for hands-on phone QA.
-- Prepared-student reasoning time of 5–15 seconds remains a design target, not a measured classroom outcome. Each round needs one choice plus Check; there are no multi-field forms or multi-step test suites.
-
-Verified public URL: https://davisjm4.github.io/csp-games/test-case-builder/
-
-Question-engine release: `4292bf479c8818420276699fcc425d9c35962a2a`, GitHub Pages workflow run 38911981915, build/deploy success. Earlier implementation commits: `d9413000a580aae537dfd8bc47b74db4ffa3ab85`, `78f021c50ebee44127f0ee6e8ba07afa43e5b4d0`, `808f3866e99015dfb4493098b8564785a510aa73`. A final stylesheet/report commit follows the live review. No other game, shared session implementation, hosting configuration or ChatGPT Sites project was changed.
+Browser checks and deployment confirmation are reported in the completion message. The available browser has no supported viewport-resize/device-emulation API; a true 390px device run cannot be claimed. Narrow-screen protection is implemented and checked through code-width constraints and responsive CSS. These are static, original practice questions, not official College Board exam items.

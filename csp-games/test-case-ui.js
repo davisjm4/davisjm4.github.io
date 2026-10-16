@@ -2,7 +2,7 @@ import {
   createTestDeck,
   testModes,
   evaluateTestCase,
-} from "./test-case-engine.js?v=fast-tcb-v4";
+} from "./test-case-engine.js?v=specified-tcb-v1";
 import {
   sessionTracker,
   addSessionNavigation,

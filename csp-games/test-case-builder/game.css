@@ -40,9 +40,9 @@ p {
   font-size: 0.9rem;
 }
 .snippet {
-  white-space: pre;
+  white-space: pre-wrap;
   overflow: auto;
-  overflow-wrap: normal;
+  overflow-wrap: anywhere;
   max-width: 100%;
   margin: 10px 0;
   padding: 10px 12px;

@@ -63,10 +63,7 @@ export function codeFor(program, depth = 0) {
       if ("return" in s) return `${pad}RETURN(${unparen(expr(s.return))})`;
       if ("display" in s) return `${pad}DISPLAY(${unparen(expr(s.display))})`;
       if (s.if) {
-        const block = (nodes) =>
-          nodes.length === 1 && "return" in nodes[0]
-            ? `{ RETURN(${unparen(expr(nodes[0].return))}) }`
-            : `{\n${codeFor(nodes, depth + 1)}\n${pad}}`;
+        const block = (nodes) => `{\n${codeFor(nodes, depth + 1)}\n${pad}}`;
         return `${pad}IF (${unparen(expr(s.if))}) ${block(s.then)}${s.else.length ? `\n${pad}ELSE ${s.else.length === 1 && s.else[0].if ? codeFor(s.else, depth).trimStart() : block(s.else)}` : ""}`;
       }
       const header = s.each
@@ -189,955 +186,946 @@ export function execute(program, input = {}, limit = 400) {
     };
   }
 }
+// Templates own independent requirement functions as well as executable code.
+// Choice acceptance always evaluates all four candidates; no positional keys.
 const length = X("LENGTH", L),
-  get = (index) => X("GET", L, index),
-  sumProgram = (update = item, initial = 0) => [
-    set("total", initial),
-    each([set("total", X("+", S, update))]),
-    ret(S),
-  ];
-const countProgram = (condition) => [
+  get = (i) => X("GET", L, i);
+const count = (cond) => [
   set("count", 0),
-  each([iff(condition, [set("count", X("+", C, 1))])]),
+  each([iff(cond, [set("count", X("+", C, 1))])]),
   ret(C),
 ];
-function predicateProgram(condition) {
-  return [ret(condition)];
-}
-const definitions = {
+const sum = (initial = 0) => [
+  set("total", initial),
+  each([set("total", X("+", S, item))]),
+  ret(S),
+];
+export const structures = {
   bugs: [
-    "inclusive",
-    "direction",
-    "threshold",
+    "lower-inclusive",
+    "upper-exclusive",
+    "equality",
+    "inequality",
+    "wrong-constant",
+    "range-exclusive",
     "and-or",
-    "negation",
-    "range-end",
-    "loop-count",
-    "loop-update",
-    "sum-initial",
-    "minimum-zero",
-    "omit-last",
-    "search-value",
+    "missing-not",
+    "grouping",
+    "compound-inclusive",
+    "even-count",
+    "loop-end",
+    "skip-first",
+    "extra-iteration",
+    "counter-update",
+    "zero-iteration",
+    "list-search",
   ],
   predict: [
-    "conditional",
+    "condition",
     "nested",
     "sum",
-    "conditional-count",
-    "product",
-    "repeat-sum",
+    "count",
+    "accumulator",
     "until",
-    "first-match",
     "procedure",
-    "concat",
-    "substring",
-    "list-access",
+    "list-search",
+    "char-first",
+    "char-middle",
+    "char-last",
+    "char-invalid",
   ],
   boundary: [
-    "above-exclusive",
-    "below-exclusive",
-    "upper-range",
-    "lower-range",
-    "compound-transition",
-    "upper-index",
-    "first-index",
-    "repeat-transition",
-    "zero-one",
-    "string-end",
+    "lower-inclusive",
+    "upper-inclusive",
+    "lower-exclusive",
+    "upper-exclusive",
+    "lower-shift",
+    "upper-shift",
+    "range-branch",
+    "loop-end",
+    "zero-iteration",
+    "list-end",
   ],
   branches: [
     "else",
-    "middle",
-    "nested-true",
-    "nested-false",
+    "second",
+    "nested",
     "compound",
-    "negated",
+    "prior-condition",
     "missing-test",
-    "fall-through",
   ],
   edge: [
+    "empty-count",
+    "singleton-count",
     "empty-sum",
-    "empty-product",
-    "guard-first",
-    "singleton",
-    "missing-search",
-    "last-access",
-    "zero-loop",
-    "empty-text",
-    "short-text",
+    "search-missing",
+    "first-guard",
+    "last-element",
+    "empty-access",
+    "zero-repeat",
+    "empty-string",
+    "short-string",
     "precondition",
   ],
 };
-export const structures = definitions;
-function build(mode, shape) {
-  const k = int(3, 12),
-    step = int(2, 4),
-    low = int(1, 5),
-    high = low + int(3, 7),
-    target = int(2, 4);
-  let q = {
-    mode,
-    structure: shape,
-    variable: "value",
-    domain: range(-5, 22),
-    env: {},
-    program: [],
-    prompt: "",
-    requirement: "",
-    docs: "",
-    why: "",
-  };
-  const P = (p) => (q.program = p),
-    cmp = (op, b = k) => X(op, A, b);
-  const bool = (op) => predicateProgram(cmp(op));
-  if (mode === "bugs") {
-    q.prompt = "Which input exposes the bug?";
-    if (shape === "inclusive") {
-      q.requirement = `Return TRUE when value is ${k} or greater.`;
-      q.intended = bool("≥");
-      P(bool(">"));
-      q.why = "The strict comparison leaves out equality.";
-    }
-    if (shape === "direction") {
-      q.requirement = `Return TRUE from ${low} through ${high}, inclusive.`;
-      q.intended = predicateProgram(X("AND", cmp("≥", low), cmp("≤", high)));
-      P(predicateProgram(X("AND", cmp("≥", low), cmp("≥", high))));
-      q.why = "The upper-limit comparison points in the wrong direction.";
-    }
-    if (shape === "threshold") {
-      q.requirement = `Return TRUE when value is at least ${k}.`;
-      q.intended = bool("≥");
-      P(predicateProgram(cmp("≥", k + step)));
-      q.why = "The code uses a higher cutoff than required.";
-    }
-    if (shape === "and-or") {
-      q.requirement = `Return TRUE when value is below ${low} or above ${high}.`;
-      q.intended = predicateProgram(X("OR", cmp("<", low), cmp(">", high)));
-      P(predicateProgram(X("AND", cmp("<", low), cmp(">", high))));
-      q.why =
-        "A value cannot be both below the lower limit and above the upper limit.";
-    }
-    if (shape === "negation") {
-      q.requirement = `Return TRUE when value is not between ${low} and ${high}, inclusive.`;
-      const c = X("AND", cmp("≥", low), cmp("≤", high));
-      q.intended = predicateProgram(X("NOT", c));
-      P(predicateProgram(X("AND", X("NOT", cmp("≥", low)), cmp("≤", high))));
-      q.why =
-        "NOT must negate the whole range test, not only its lower-limit check.";
-    }
-    if (shape === "range-end") {
-      q.requirement = `Return TRUE from ${low} through ${high}, including both endpoints.`;
-      q.intended = predicateProgram(X("AND", cmp("≥", low), cmp("≤", high)));
-      P(predicateProgram(X("AND", cmp("≥", low), cmp("<", high))));
-      q.why = "The upper endpoint is excluded by the code.";
-    }
-    if (shape === "loop-count") {
-      q.variable = "n";
-      q.domain = range(0, 8);
-      q.requirement = "Return n copies of 3 added together.";
-      q.intended = [
-        set("total", 0),
-        repeat(N, [set("total", X("+", S, 3))]),
-        ret(S),
-      ];
-      P([
-        ...q.intended.slice(0, -1),
-        iff(X(">", N, 2), [set("total", X("+", S, 3))]),
-        ret(S),
-      ]);
-      q.why = "For n above 2, the extra update adds one value too many.";
-    }
-    if (shape === "loop-update") {
-      q.variable = "n";
-      q.domain = range(-2, 8);
-      q.requirement = "For n ≤ 0 return 0; otherwise return 1 + 2 + … + n.";
-      const sequence = (step) => [
-        iff(X("≤", N, 0), [ret(0)]),
-        set("total", 0),
-        set("index", 1),
-        repeat(N, [set("total", X("+", S, I)), set("index", X("+", I, step))]),
-        ret(S),
-      ];
-      q.intended = sequence(1);
-      P(sequence(2));
-      q.why = "Advancing by 2 skips numbers that the sum must include.";
-    }
-    if (shape === "sum-initial") {
-      q.variable = "values";
-      q.domain = [[], [0], [1], [-1], [0, 0], [2, 3], [1, -1]];
-      q.requirement = "Return the sum; an empty list must return 0.";
-      q.intended = sumProgram();
-      P([
-        set("total", 0),
-        iff(X(">", length, 1), [set("total", 1)]),
-        each([set("total", X("+", S, item))]),
-        ret(S),
-      ]);
-      q.why =
-        "Lists longer than one element receive an extra 1 before traversal.";
-    }
-    if (shape === "minimum-zero") {
-      q.variable = "values";
-      q.domain = [
-        [1],
-        [2, 3],
-        [3, 1],
-        [4, 2, 5],
-        [-1],
-        [-3, 2],
-        [-2, 0],
-        [0, 3],
-        [-4, -2],
-      ];
-      q.requirement = "For a nonempty list, return its smallest value.";
-      q.intended = [
-        set("best", get(1)),
-        each([iff(X("<", item, V("best")), [set("best", item)])]),
-        ret(V("best")),
-      ];
-      P([
-        set("best", 0),
-        each([iff(X("<", item, V("best")), [set("best", item)])]),
-        ret(V("best")),
-      ]);
-      q.why = "Starting at 0 cannot find a positive minimum.";
-    }
-    if (shape === "omit-last") {
-      q.variable = "values";
-      q.domain = [[1], [2, 3], [3, 0], [4, 0], [0], [2, 1, 0], [0, 1], [2, 2]];
-      q.requirement = "For a nonempty list, return the sum of every element.";
-      q.intended = sumProgram();
-      P([
-        set("total", 0),
-        set("index", 1),
-        repeat(X("-", length, 1), [
-          set("total", X("+", S, get(I))),
-          set("index", X("+", I, 1)),
-        ]),
-        ret(S),
-      ]);
-      q.why = "The loop stops before adding the last element.";
-    }
-    if (shape === "search-value") {
-      q.variable = "values";
-      q.env = { target };
-      q.domain = [
-        [],
-        [1],
-        [target],
-        [target, 1],
-        [1, target],
-        [target + 1],
-        [target + 2, 1],
-        [0, 0, target],
-      ];
-      q.requirement = `Return the first position of ${target}, or -1 if absent.`;
-      const search = (result) => [
-        set("index", 1),
-        repeat(length, [
-          iff(X("=", get(I), V("target")), [ret(result)]),
-          set("index", X("+", I, 1)),
-        ]),
-        ret(-1),
-      ];
-      q.intended = search(I);
-      P(search(get(I)));
-      q.why = "A matching value is returned instead of its one-based position.";
-    }
-    q.qualify = (input) =>
-      !same(run(q, input).result, run(q, input, q.intended).result);
-    q.evidence = (input) =>
-      `For ${format(input)}, the requirement expects ${format(run(q, input, q.intended).result)}, but the code returns ${format(run(q, input).result)}. ${q.why}`;
-  }
-  if (mode === "predict") {
-    q.prompt = "What does this code return?";
-    if (shape === "conditional") P([iff(cmp("≥"), [ret(k + 2)], [ret(k - 2)])]);
-    if (shape === "nested")
-      P([
-        iff(cmp(">", high), [ret(3)], [iff(cmp("≥", low), [ret(2)], [ret(1)])]),
-      ]);
-    if (shape === "sum") {
-      q.variable = "values";
-      P(sumProgram());
-    }
-    if (shape === "conditional-count") {
-      q.variable = "values";
-      q.env = { limit: low };
-      P(countProgram(X(">", item, V("limit"))));
-    }
-    if (shape === "product") {
-      q.variable = "values";
-      P([set("total", 1), each([set("total", X("*", S, item))]), ret(S)]);
-    }
-    if (shape === "repeat-sum") {
-      q.variable = "n";
-      P([
-        set("total", low),
-        repeat(N, [set("total", X("+", S, step))]),
-        ret(S),
-      ]);
-    }
-    if (shape === "until") {
-      q.variable = "value";
-      P([
-        set("count", 0),
-        {
-          until: X("≥", A, k),
-          body: [set("value", X("+", A, step)), set("count", X("+", C, 1))],
-        },
-        ret(C),
-      ]);
-    }
-    if (shape === "first-match") {
-      q.variable = "values";
-      q.env = { target };
-      P([
-        set("index", 1),
-        repeat(length, [
-          iff(X("=", get(I), V("target")), [ret(I)]),
-          set("index", X("+", I, 1)),
-        ]),
-        ret(-1),
-      ]);
-    }
-    if (shape === "procedure") {
-      q.variable = "value";
-      P([
-        {
-          procedure: "adjust",
-          params: ["amount", "bonus"],
-          body: [ret(X("+", X("*", V("amount"), 2), V("bonus")))],
-        },
-        { display: X("CALL", "adjust", A, low) },
-      ]);
-      q.prompt = "What does the code display?";
-    }
-    if (shape === "concat") {
-      q.variable = "text";
-      q.docs = "CONCAT(a, b) joins the text a followed by b.";
-      P([ret(X("CONCAT", X("CONCAT", "[", T), "]"))]);
-    }
-    if (shape === "substring") {
-      q.variable = "text";
-      q.docs =
-        "SUBSTRING(text, start, count) returns count characters, starting at one-based start.";
-      P([ret(X("SUBSTRING", T, 2, 2))]);
-    }
-    if (shape === "list-access") {
-      q.variable = "index";
-      q.env = { values: [int(2, 5), int(6, 8), int(9, 12)] };
-      P([ret(get(I))]);
-    }
-    q.input =
-      q.variable === "values"
-        ? pick([[low, 0, low + 2], [target, 1, target], [2, 3], [0, 2], []])
-        : q.variable === "text"
-          ? pick(["CODE", "TEAM", "LOOP"])
-          : q.variable === "n"
-            ? int(0, 4)
-            : q.variable === "index"
-              ? pick([0, 1, 2, 3, 4])
-              : shape === "until"
-                ? int(k - 5, k + 2)
-                : int(low - 1, high + 2);
-    const result = run(q, q.input).result;
-    q.answer = result;
-    q.answers =
-      typeof result === "number"
-        ? [result, result + 1, result - 1, result + step]
-        : typeof result === "string"
-          ? result === "ERROR"
-            ? [
-                "ERROR",
-                q.env.values[0],
-                q.env.values.at(-1),
-                q.env.values.length,
-              ]
-            : shape === "concat"
-              ? [result, q.input, q.input + q.input, "]" + q.input + "["]
-              : [result, q.input, q.input.slice(0, 2), q.input.slice(2)]
-          : [true, false];
-    if (shape === "conditional") q.answers = [k + 2, k - 2, k, k + 1];
-    if (shape === "nested") q.answers = [1, 2, 3, 0];
-    if (shape === "product")
-      q.answers = unique([
-        result,
-        q.input.reduce((a, b) => a + b, 0),
-        q.input.length,
-        result + 1,
-      ]);
-    if (shape === "first-match")
-      q.answers = unique([result, target, 0, result + 1]);
-    q.answers = [
-      ...new Map(q.answers.map((v) => [JSON.stringify(v), v])).values(),
-    ];
-    const r = run(q, q.input);
-    q.evidence = () =>
-      r.result === "ERROR"
-        ? `Index ${q.input} is outside 1 through ${q.env.values.length}; this access produces ERROR.`
-        : shape === "procedure"
-          ? `The arguments supply amount = ${q.input} and bonus = ${low}, so ${q.input} * 2 + ${low} = ${result}.`
-          : shape === "concat" || shape === "substring"
-            ? `The documented operation on ${format(q.input)} returns ${format(result)}.`
-            : r.decisions.length
-              ? `${r.decisions.map((d) => `${d.condition} is ${format(d.yes)}`).join("; ")}; the result is ${format(result)}.`
-              : r.iterations
-                ? `The loop runs ${r.iterations} time${r.iterations === 1 ? "" : "s"}; its updates leave the returned value at ${format(result)}.`
-                : shape === "until"
-                  ? `The stopping condition is already TRUE, so count stays 0.`
-                  : q.variable === "values"
-                    ? `There are no loop visits, so the initial value ${format(result)} is returned.`
-                    : `The one-based access selects ${format(result)}.`;
-    if (shape === "conditional-count")
-      q.evidence = () =>
-        result === 0
-          ? `No element exceeds ${low}, so no increment occurs and count remains 0.`
-          : `${format(q.input.filter((v) => v > low))} exceed ${low}; one increment per match produces ${result}.`;
-    if (shape === "sum")
-      q.evidence = () =>
-        q.input.length
-          ? `Adding the elements of ${format(q.input)} gives ${result}.`
-          : "No elements are added, so total remains at its initial 0.";
-    if (shape === "product")
-      q.evidence = () =>
-        q.input.length
-          ? `Starting at 1, multiplying by each element of ${format(q.input)} gives ${result}.`
-          : "No multiplication runs, so total remains at its initial 1.";
-    if (shape === "first-match")
-      q.evidence = () =>
-        result === -1
-          ? `No element equals ${target}, so execution reaches RETURN(-1).`
-          : `The first ${target} appears at one-based position ${result}; RETURN ends the search there.`;
-    if (shape === "until")
-      q.evidence = () =>
-        `After ${result} updates of ${step}, value is ${r.env.value}; it satisfies value ≥ ${k}, so count ${result} is returned.`;
-    if (shape === "repeat-sum")
-      q.evidence = () =>
-        `The initial ${low} plus ${q.input} additions of ${step} gives ${result}.`;
-    if (shape === "substring")
-      q.evidence = () =>
-        `Starting at position 2 in ${format(q.input)}, the next two characters are ${format(result)}.`;
-    if (shape === "concat")
-      q.evidence = () =>
-        `The inner CONCAT puts "[" before ${format(q.input)}; the outer CONCAT adds "]", producing ${format(result)}.`;
-  }
-  if (mode === "boundary") {
-    if (shape === "above-exclusive") {
-      q.prompt = "Which integer is just inside the valid region?";
-      q.requirement = `Valid inputs are greater than ${k}.`;
-      P(bool(">"));
-      q.qualify = (x) => x === k + 1;
-      q.why = `The first valid integer above ${k} is ${k + 1}.`;
-    }
-    if (shape === "below-exclusive") {
-      q.prompt = "Which integer is just outside the valid region?";
-      q.requirement = `Valid inputs are less than ${k}.`;
-      P(bool("<"));
-      q.qualify = (x) => x === k;
-      q.why = `${k - 1} is valid, but ${k} is the first excluded integer.`;
-    }
-    if (shape === "upper-range") {
-      q.prompt = "Which integer is just above the valid range?";
-      q.requirement = `Valid inputs are from ${low} through ${high}, inclusive.`;
-      P(predicateProgram(X("AND", cmp("≥", low), cmp("≤", high))));
-      q.qualify = (x) => x === high + 1;
-      q.why = `${high} is included; ${high + 1} is the first integer beyond the upper limit.`;
-    }
-    if (shape === "lower-range") {
-      q.prompt = "Which integer is just below the valid range?";
-      q.requirement = `Valid inputs are from ${low} through ${high}, inclusive.`;
-      P(predicateProgram(X("AND", cmp("≥", low), cmp("≤", high))));
-      q.qualify = (x) => x === low - 1;
-      q.why = `${low} is included; ${low - 1} is the adjacent excluded integer.`;
-    }
-    if (shape === "compound-transition") {
-      q.prompt = "Which input is the first integer reaching ELSE?";
-      P([
-        iff(
-          X("OR", cmp("<", low), cmp(">", high)),
-          [ret("outside")],
-          [ret("inside")],
-        ),
-      ]);
-      q.qualify = (x) => x === low;
-      q.why = `At ${low}, both outside-range comparisons are FALSE, so ELSE starts the inside region.`;
-    }
-    if (shape === "upper-index" || shape === "first-index") {
-      q.variable = "index";
-      q.env = { values: [2, 4, 6, 8, 10].slice(0, int(3, 5)) };
-      q.domain = range(-2, 8);
-      q.prompt =
-        shape === "upper-index"
-          ? "Which index is just beyond the last valid position?"
-          : "Which index is just before the first valid position?";
-      P([ret(get(I))]);
-      const answer = shape === "upper-index" ? q.env.values.length + 1 : 0;
-      q.qualify = (x) => x === answer;
-      q.why = `A ${q.env.values.length}-element list uses indices 1 through ${q.env.values.length}; ${answer} is the adjacent invalid position.`;
-    }
-    if (shape === "repeat-transition") {
-      q.variable = "n";
-      q.domain = range(0, 8);
-      q.prompt = "Which n is the first to make the loop run twice?";
-      P([
-        set("count", 0),
-        { until: X("≥", C, N), body: [set("count", X("+", C, step))] },
-        ret(C),
-      ]);
-      q.qualify = (n) => n === step + 1;
-      q.why = `One update reaches ${step}; n = ${step + 1} requires a second update.`;
-    }
-    if (shape === "zero-one") {
-      q.variable = "n";
-      q.domain = range(0, 8);
-      q.prompt = "Which n makes the loop run exactly once?";
-      P([
-        set("total", low),
-        repeat(N, [set("total", X("+", S, step))]),
-        ret(S),
-      ]);
-      q.qualify = (n) => n === 1;
-      q.why = `REPEAT n TIMES executes its update once when n is 1, changing ${low} to ${low + step}.`;
-    }
-    if (shape === "string-end") {
-      q.variable = "index";
-      q.env = { text: pick(["CAT", "LOOP", "HELLO"]) };
-      q.domain = range(0, 9);
-      q.docs =
-        "CHAR(text, index) uses one-based positions; an out-of-range position produces ERROR.";
-      q.prompt = "Which index is just after the last character?";
-      P([ret(X("CHAR", T, I))]);
-      q.qualify = (x) => x === q.env.text.length + 1;
-      q.why = `The last position is ${q.env.text.length}, so ${q.env.text.length + 1} is the first position beyond the text.`;
-    }
-    q.evidence = () => q.why;
-  }
-  if (mode === "branches") {
-    q.prompt = "Which input executes ELSE?";
-    let condition = cmp("≥"),
-      wanted;
-    if (shape === "else") {
-      P([iff(condition, [ret("Pass")], [ret("Retry")])]);
-      wanted = (r) => r.result === "Retry";
-    }
-    if (shape === "middle" || shape === "missing-test") {
-      P([
-        iff(
-          cmp("<", low),
-          [ret("low")],
-          [iff(cmp("≤", high), [ret("middle")], [ret("high")])],
-        ),
-      ]);
-      q.prompt =
-        shape === "middle"
-          ? "Which input takes FALSE, then TRUE?"
-          : `Tests ${low - 1} and ${high + 1} cover two paths. Which input covers the missing path?`;
-      wanted = (r) => r.result === "middle";
-    }
-    if (shape === "nested-true" || shape === "nested-false") {
-      P([
-        iff(
-          cmp("≥", low),
-          [iff(X("=", X("MOD", A, 2), 0), [ret("even")], [ret("odd")])],
-          [ret("small")],
-        ),
-      ]);
-      q.prompt =
-        shape === "nested-true"
-          ? "Which input takes TRUE at both conditions?"
-          : "Which input takes TRUE, then FALSE?";
-      wanted = (r) => r.result === (shape === "nested-true" ? "even" : "odd");
-    }
-    if (shape === "compound") {
-      condition = X("AND", cmp("≥", low), cmp("≤", high));
-      P([iff(condition, [ret("inside")], [ret("outside")])]);
-      wanted = (r) => r.result === "outside";
-    }
-    if (shape === "negated") {
-      condition = X("NOT", cmp("=", k));
-      P([iff(condition, [ret("different")], [ret("same")])]);
-      wanted = (r) => r.result === "same";
-    }
-    if (shape === "fall-through") {
-      P([
-        iff(cmp("<", low), [ret("low")]),
-        iff(cmp(">", high), [ret("high")]),
-        ret("middle"),
-      ]);
-      q.prompt = "Which input reaches the final RETURN?";
-      wanted = (r) => r.result === "middle";
-    }
-    q.qualify = (x) => wanted(run(q, x));
-    q.evidence = (input) => {
-      const r = run(q, input);
-      return `For ${input}, ${r.decisions.map((d) => `${d.condition} is ${format(d.yes)}`).join(" and ")}; execution returns ${format(r.result)}.`;
-    };
-  }
-  if (mode === "edge") {
-    q.variable = "values";
-    q.domain = [
-      [],
-      [0],
-      [target],
-      [1, 2],
-      [target, 1],
-      [1, target],
-      [2, 3, 4],
-      [target, target],
-      [1, 1, 1],
-    ];
-    if (shape === "empty-sum") {
-      P(sumProgram());
-      q.prompt =
-        "Which test checks returning the initial total without adding an element?";
-      q.qualify = (v) => v.length === 0;
-      q.why =
-        "An empty list causes zero loop visits, so the initialized total 0 is returned.";
-    }
-    if (shape === "empty-product") {
-      P([set("total", 1), each([set("total", X("*", S, item))]), ret(S)]);
-      q.prompt =
-        "Which test checks the product when multiplication never runs?";
-      q.qualify = (v) => v.length === 0;
-      q.why =
-        "The empty list causes zero multiplications, leaving the product identity 1.";
-    }
-    if (shape === "guard-first") {
-      P([iff(X("=", length, 0), [ret("none")]), ret(get(1))]);
-      q.prompt = "Which test checks that the guard prevents an invalid access?";
-      q.qualify = (v) => v.length === 0;
-      q.why =
-        "The empty list triggers the early return before values[1] can be accessed.";
-    }
-    if (shape === "singleton") {
-      P([
-        set("total", 0),
-        set("index", 1),
-        repeat(X("-", length, 1), [
-          set("total", X("+", S, X("-", get(X("+", I, 1)), get(I)))),
-          set("index", X("+", I, 1)),
-        ]),
-        ret(S),
-      ]);
-      q.requirement = "Input list must be nonempty.";
-      q.domain = q.domain.filter((v) => v.length);
-      q.prompt = "Which valid test has an element but no neighboring pair?";
-      q.qualify = (v) => v.length === 1;
-      q.why =
-        "A single-element list is valid but has no adjacent pair, so the loop runs zero times.";
-    }
-    if (shape === "missing-search") {
-      q.env = { target };
-      P([
-        set("count", 0),
-        each([iff(X("=", item, V("target")), [ret(true)])]),
-        ret(false),
-      ]);
-      q.prompt = "Which nonempty test checks the no-match result?";
-      q.qualify = (v) => v.length > 0 && !v.includes(target);
-      q.domain = [
-        [],
-        [target],
-        [target, 1],
-        [1, target],
-        [1, 1],
-        [target, target],
-        [0],
-        [-1, 0],
-      ];
-      q.why = `A nonempty list without ${target} reaches the final FALSE instead of returning at a match.`;
-    }
-    if (shape === "last-access") {
-      P([ret(get(length))]);
-      q.prompt = "Which test makes the same element both first and last?";
-      q.qualify = (v) => v.length === 1;
-      q.domain = q.domain.filter((v) => v.length);
-      q.why =
-        "With one element, the last position LENGTH(values) is also position 1.";
-    }
-    if (shape === "zero-loop") {
-      q.variable = "n";
-      q.domain = range(0, 8);
-      P([set("total", 5), repeat(N, [set("total", X("+", S, step))]), ret(S)]);
-      q.prompt =
-        "Which test checks whether the starting value survives with no updates?";
-      q.qualify = (n) => n === 0;
-      q.why =
-        "With n = 0, the loop body does not execute and the initial 5 is returned.";
-    }
-    if (shape === "empty-text") {
-      q.variable = "text";
-      q.domain = ["", "A", "AB", "CAT", "LOOP"];
-      q.docs =
-        "LENGTH(text) counts characters; CONCAT(a, b) joins text in that order.";
-      P([
-        iff(X("=", X("LENGTH", T), 0), [ret("none")]),
-        ret(X("CONCAT", "Hi ", T)),
-      ]);
-      q.prompt =
-        "Which test checks the special case instead of adding a greeting?";
-      q.qualify = (t) => t.length === 0;
-      q.why =
-        'Empty text satisfies the guard and returns "none" before CONCAT runs.';
-    }
-    if (shape === "short-text") {
-      q.variable = "text";
-      q.domain = ["A", "B", "AB", "CAT", "LOOP", "TEAM"];
-      q.docs =
-        "CHAR(text, index) uses one-based positions; invalid positions produce ERROR.";
-      P([ret(X("CHAR", T, 2))]);
-      q.prompt = "Which nonempty test exposes an invalid character access?";
-      q.qualify = (t) => t.length === 1;
-      q.why =
-        "A one-character input has no second position, so CHAR(text, 2) produces ERROR.";
-    }
-    if (shape === "precondition") {
-      q.variable = "index";
-      q.env = { values: [3, 6, 9] };
-      q.domain = range(-1, 6);
-      P([ret(get(I))]);
-      q.requirement = "Valid tests require 1 ≤ index ≤ LENGTH(values).";
-      q.prompt = "Which test violates the stated precondition?";
-      q.qualify = (i) => i < 1 || i > q.env.values.length;
-      q.why =
-        "The stated precondition permits only one-based positions 1 through 3.";
-    }
-    q.evidence = () => q.why;
-  }
-  return q;
-}
+const compact = (code) =>
+  code
+    .split("\n")
+    .flatMap((line) => {
+      // Boolean continuations preserve parentheses and remain valid pseudocode.
+      if (line.length > 38 && / (AND|OR) /.test(line)) {
+        const indent = line.match(/^ */)[0] + "  ";
+        return line
+          .replace(/ (AND|OR) /g, (_, op) => `\n${indent}${op} `)
+          .split("\n");
+      }
+      return [line];
+    })
+    .join("\n");
 export function run(q, input, program = q.program) {
   return execute(program, { ...q.env, [q.variable]: input });
 }
-function unique(values) {
-  return [...new Map(values.map((v) => [JSON.stringify(v), v])).values()];
+function build(mode, shape) {
+  const k = int(3, 9),
+    lo = int(2, 5),
+    hi = lo + int(4, 7),
+    step = int(2, 4);
+  const q = {
+    mode,
+    structure: shape,
+    variable: "value",
+    env: {},
+    program: [],
+    domain: range(-3, 20),
+    requirement: "",
+    docs: "",
+    prompt: "Which input reveals the bug?",
+    params: { k, lo, hi, step },
+  };
+  const cmp = (op, n = k) => X(op, A, n);
+  const pred = (e) => [ret(e)];
+  const defect = (requirement, expected, program) => {
+    q.requirement = requirement;
+    q.expected = expected;
+    q.program = program;
+    q.task = "expose";
+  };
+  const output = (program, input, why) => {
+    q.program = program;
+    q.input = input;
+    q.task = "output";
+    q.prompt = "What does this code return?";
+    q.why = why;
+  };
+  const search = [
+    each([iff(X("=", item, V("target")), [ret(true)])]),
+    ret(false),
+  ];
+  const scan = [
+    set("index", 1),
+    each([
+      iff(X("=", item, V("target")), [ret(I)]),
+      set("index", X("+", I, 1)),
+    ]),
+    ret(-1),
+  ];
+  if (mode === "bugs" || mode === "boundary") {
+    switch (shape) {
+      case "lower-inclusive":
+        defect(
+          `Return TRUE for values at least ${k}.`,
+          (v) => v >= k,
+          pred(cmp(">", k + int(0, 2))),
+        );
+        break;
+      case "upper-inclusive":
+        defect(
+          `Return TRUE for values at most ${k}.`,
+          (v) => v <= k,
+          pred(cmp("<", k - int(0, 2))),
+        );
+        break;
+      case "lower-exclusive":
+        defect(
+          `Return TRUE for values greater than ${k}.`,
+          (v) => v > k,
+          pred(cmp("≥", k + int(0, 2))),
+        );
+        break;
+      case "upper-exclusive":
+        defect(
+          `Return TRUE for values below ${k}.`,
+          (v) => v < k,
+          pred(cmp("≤", k - int(0, 2))),
+        );
+        break;
+      case "equality":
+        defect(
+          `Return TRUE exactly when value equals ${k}.`,
+          (v) => v === k,
+          pred(cmp("=", k + step)),
+        );
+        break;
+      case "inequality":
+        defect(
+          `Return TRUE exactly when value differs from ${k}.`,
+          (v) => v !== k,
+          pred(cmp("≠", k - step)),
+        );
+        break;
+      case "wrong-constant":
+        defect(
+          `Return TRUE for values at least ${k}.`,
+          (v) => v >= k,
+          pred(cmp("≥", k + step)),
+        );
+        break;
+      case "range-exclusive":
+        defect(
+          `Return TRUE strictly between ${lo} and ${hi}.`,
+          (v) => v > lo && v < hi,
+          pred(X("AND", cmp("≥", lo + int(0, 2)), cmp("≤", hi - int(0, 2)))),
+        );
+        break;
+      case "lower-shift":
+        defect(
+          `Accept values from ${lo} through ${hi}, inclusive.`,
+          (v) => v >= lo && v <= hi,
+          pred(X("AND", cmp("≥", lo + step), cmp("≤", hi))),
+        );
+        break;
+      case "upper-shift":
+        defect(
+          `Accept values from ${lo} through ${hi}, inclusive.`,
+          (v) => v >= lo && v <= hi,
+          pred(X("AND", cmp("≥", lo), cmp("≤", hi - step))),
+        );
+        break;
+      case "range-branch":
+        defect(
+          `Return "OK" from ${lo} through ${hi}, inclusive; otherwise "No".`,
+          (v) => (v >= lo && v <= hi ? "OK" : "No"),
+          [
+            iff(cmp("<", lo), [ret("No")]),
+            iff(cmp("<", hi), [ret("OK")], [ret("No")]),
+          ],
+        );
+        break;
+      case "and-or":
+      case "missing-not":
+      case "grouping":
+      case "compound-inclusive": {
+        q.variable = "values";
+        q.domain = [];
+        for (let a = 0; a <= 12; a++)
+          for (let b = 0; b <= 12; b++) q.domain.push([a, b]);
+        q.docs = "Each input is a two-element list; indexing starts at 1.";
+        const a = X("GET", L, 1),
+          b = X("GET", L, 2),
+          left = X("<", a, lo),
+          right = X(">", b, hi);
+        if (shape === "and-or")
+          defect(
+            `Return TRUE if the first value is below ${lo} OR the second is above ${hi}.`,
+            (v) => v[0] < lo || v[1] > hi,
+            pred(X("AND", left, right)),
+          );
+        if (shape === "missing-not")
+          defect(
+            "Return TRUE if the first value is even AND the two values are NOT equal.",
+            (v) => v[0] % 2 === 0 && v[0] !== v[1],
+            pred(X("AND", X("=", X("MOD", a, 2), 0), X("=", a, b))),
+          );
+        if (shape === "grouping")
+          defect(
+            `Return TRUE if (the first value is below ${lo} OR the second is above ${hi}) AND the first value is even.`,
+            (v) => (v[0] < lo || v[1] > hi) && v[0] % 2 === 0,
+            pred(X("OR", left, X("AND", right, X("=", X("MOD", a, 2), 0)))),
+          );
+        if (shape === "compound-inclusive")
+          defect(
+            `Return TRUE if the first value is at least ${lo} AND the second is at most ${hi}.`,
+            (v) => v[0] >= lo && v[1] <= hi,
+            pred(X("AND", X(">", a, lo), X("≤", b, hi))),
+          );
+        break;
+      }
+      case "even-count": {
+        q.variable = "n";
+        q.domain = range(0, 12);
+        defect(
+          "For n ≥ 0, count even integers from 1 through n.",
+          (n) => Math.floor(n / 2),
+          [
+            set("count", 0),
+            set("i", 1),
+            repeat(N, [
+              iff(X("=", X("MOD", V("i"), 2), 1), [set("count", X("+", C, 1))]),
+              set("i", X("+", V("i"), 1)),
+            ]),
+            ret(C),
+          ],
+        );
+        break;
+      }
+      case "loop-end":
+      case "skip-first":
+      case "extra-iteration":
+      case "counter-update":
+      case "zero-iteration": {
+        if (shape === "zero-iteration") {
+          q.variable = "n";
+          q.domain = range(-3, 8);
+          defect(
+            "Return 1 + 2 + … + n for n > 0; otherwise return 0.",
+            (n) => (n > 0 ? (n * (n + 1)) / 2 : 0),
+            [
+              iff(X("=", N, 0), [ret(1)]),
+              iff(X("<", N, 0), [ret(0)]),
+              set("total", 0),
+              set("i", 1),
+              repeat(N, [
+                set("total", X("+", S, V("i"))),
+                set("i", X("+", V("i"), 1)),
+              ]),
+              ret(S),
+            ],
+          );
+        } else {
+          q.variable = "values";
+          q.domain = [];
+          if (shape === "skip-first") {
+            for (let a = 1; a <= 7; a++)
+              for (let b = 1; b <= 7; b++)
+                for (let c = 1; c <= 3; c++) q.domain.push([a, b, c]);
+            defect(
+              "Count adjacent pairs where the later element is larger.",
+              (v) => v.slice(1).filter((x, i) => x > v[i]).length,
+              [
+                set("count", 0),
+                set("i", 2),
+                repeat(X("-", length, 2), [
+                  iff(X(">", get(X("+", V("i"), 1)), get(V("i"))), [
+                    set("count", X("+", C, 1)),
+                  ]),
+                  set("i", X("+", V("i"), 1)),
+                ]),
+                ret(C),
+              ],
+            );
+          } else {
+            q.docs = "Each input is [n, divisor], with both values positive.";
+            for (let n = 1; n <= 12; n++)
+              for (let d = 2; d <= 5; d++) q.domain.push([n, d]);
+            const end =
+              shape === "loop-end"
+                ? X("-", get(1), 1)
+                : shape === "extra-iteration"
+                  ? X("+", get(1), 1)
+                  : get(1);
+            const delta = shape === "counter-update" ? 2 : 1;
+            defect(
+              "Count multiples of divisor from 1 through n, inclusive.",
+              (v) => Math.floor(v[0] / v[1]),
+              [
+                set("count", 0),
+                set("i", 1),
+                repeat(end, [
+                  iff(X("=", X("MOD", V("i"), get(2)), 0), [
+                    set("count", X("+", C, 1)),
+                  ]),
+                  set("i", X("+", V("i"), delta)),
+                ]),
+                ret(C),
+              ],
+            );
+          }
+        }
+        break;
+      }
+      case "list-search": {
+        q.variable = "values";
+        q.env = { target: k };
+        q.domain = Array.from({ length: 80 }, () =>
+          Array.from({ length: 3 }, () => int(k - 2, k + 2)),
+        );
+        defect(
+          "Return TRUE if target occurs anywhere in values.",
+          (v) => v.includes(k),
+          [ret(X("=", get(1), V("target")))],
+        );
+        break;
+      }
+      case "list-end": {
+        q.variable = "values";
+        q.domain = Array.from({ length: 120 }, () => [
+          int(1, 8),
+          int(1, 8),
+          int(1, 8),
+        ]);
+        defect(
+          "Return the largest element of a nonempty list.",
+          (v) => Math.max(...v),
+          [
+            set("best", get(1)),
+            set("index", 1),
+            repeat(X("-", length, 1), [
+              iff(X(">", get(I), V("best")), [set("best", get(I))]),
+              set("index", X("+", I, 1)),
+            ]),
+            ret(V("best")),
+          ],
+        );
+        break;
+      }
+    }
+  }
+  if (mode === "branches") {
+    q.task = "branch";
+    q.goal = "Target";
+    const target = [ret("Target")],
+      other = [ret("Other")];
+    if (shape === "else") {
+      q.program = [iff(cmp("≥"), other, target)];
+      q.prompt = "Which input executes the ELSE branch?";
+    }
+    if (shape === "second" || shape === "missing-test") {
+      q.program = [
+        iff(
+          cmp("<", lo),
+          [ret("Low")],
+          [iff(cmp("≤", hi), [ret("Middle")], [ret("High")])],
+        ),
+      ];
+      q.goal = "Middle";
+      q.prompt =
+        shape === "second"
+          ? "Which input executes the second branch?"
+          : "Which input tests the branch not yet covered?";
+      if (shape === "missing-test")
+        q.requirement = `Existing tests: ${lo - 1} and ${hi + 1}.`;
+    }
+    if (shape === "nested") {
+      q.program = [
+        iff(
+          cmp("≥", lo),
+          [iff(X("=", X("MOD", A, 2), 0), target, other)],
+          [ret("Small")],
+        ),
+      ];
+      q.prompt = 'Which input returns "Target"?';
+    }
+    if (shape === "compound") {
+      q.program = [iff(X("OR", cmp("<", lo), cmp(">", hi)), target, other)];
+      q.prompt = "Which input executes the IF body?";
+    }
+    if (shape === "prior-condition") {
+      q.program = [
+        iff(cmp("<", lo), [ret("First")], [iff(cmp("<", hi), target, other)]),
+      ];
+      q.prompt = 'Which input returns "Target"?';
+    }
+    // ELSE and outside-range branches have an extreme-only scalar solution.
+    // Add an independent second input used in the comparison, so size is no key.
+    if (["else", "compound"].includes(shape)) {
+      q.variable = "values";
+      q.docs = "Each input is [left, right].";
+      q.domain = [];
+      for (let a = 0; a <= 10; a++)
+        for (let b = 0; b <= 10; b++) q.domain.push([a, b]);
+      const a = get(1),
+        b = get(2);
+      q.program = [
+        iff(
+          shape === "else" ? X("≥", a, b) : X("OR", X("<", a, b), X("=", a, b)),
+          shape === "else" ? other : target,
+          shape === "else" ? target : other,
+        ),
+      ];
+    }
+  }
+  if (mode === "predict") {
+    if (shape === "condition") {
+      const v = int(k - 2, k + 2);
+      output(
+        [iff(cmp("≥"), [ret(X("+", A, step))], [ret(X("-", A, step))])],
+        v,
+        "Only the selected branch changes value.",
+      );
+      q.answers = [v + step, v - step, v, v * step];
+    }
+    if (shape === "nested") {
+      const v = int(1, hi + 3);
+      output(
+        [
+          iff(
+            cmp("<", lo),
+            [ret(X("+", A, 2))],
+            [iff(cmp("≤", hi), [ret(X("*", A, 2))], [ret(X("-", A, 2))])],
+          ),
+        ],
+        v,
+        "The earlier condition is tested before the later one.",
+      );
+      q.answers = [v + 2, v * 2, v - 2, v];
+    }
+    if (["sum", "count", "list-search"].includes(shape)) {
+      q.variable = "values";
+      const list = Array.from({ length: int(2, 4) }, () => int(1, 7));
+      if (shape === "sum") {
+        output(sum(), list, "Every element is added once.");
+        const t = list.reduce((a, b) => a + b, 0);
+        q.answers = [t, t - list[0], list[0], list.length, t + list[0]];
+      }
+      if (shape === "count") {
+        output(
+          count(X(">", item, k)),
+          list,
+          `Only elements greater than ${k} increase count.`,
+        );
+        q.answers = [
+          list.filter((x) => x > k).length,
+          list.length,
+          list.reduce((a, b) => a + b, 0),
+          list[0],
+          0,
+          1,
+          "ERROR",
+        ];
+      }
+      if (shape === "list-search") {
+        q.env = { target: pick([...list, k + 10]) };
+        output(
+          scan,
+          list,
+          "Search returns the first matching one-based position, or −1 when absent.",
+        );
+      }
+    }
+    if (shape === "accumulator") {
+      q.variable = "n";
+      const n = int(0, 4);
+      output(
+        [set("total", step), repeat(N, [set("total", X("+", S, k))]), ret(S)],
+        n,
+        `Start at ${step} and add ${k} once per repetition.`,
+      );
+      q.answers = [step + n * k, n * k, step + n, step + k, step + (n + 1) * k];
+    }
+    if (shape === "until") {
+      q.variable = "value";
+      const v = int(0, hi + 2);
+      output(
+        [
+          set("count", 0),
+          {
+            until: cmp("≥", hi),
+            body: [set("value", X("+", A, step)), set("count", X("+", C, 1))],
+          },
+          ret(C),
+        ],
+        v,
+        `Each repetition increases value by ${step}; stop once value ≥ ${hi}.`,
+      );
+      const visits = Math.max(0, Math.ceil((hi - v) / step));
+      q.answers = [
+        visits,
+        Math.max(0, visits - 1),
+        visits + 1,
+        Math.max(0, hi - v),
+        0,
+        1,
+        step,
+      ];
+    }
+    if (shape === "procedure") {
+      const v = int(2, 9);
+      output(
+        [
+          {
+            procedure: "adjust",
+            params: ["a", "b"],
+            body: [ret(X("-", X("*", V("a"), 2), V("b")))],
+          },
+          ret(X("CALL", "adjust", A, step)),
+        ],
+        v,
+        `The procedure doubles its first argument and subtracts ${step}.`,
+      );
+      q.answers = [
+        2 * v - step,
+        v - step,
+        2 * (v - step),
+        2 * v + step,
+        v * step,
+      ];
+    }
+    if (shape.startsWith("char-")) {
+      q.variable = "text";
+      const text = pick(["CAT", "DOG", "SUN", "MAP"]),
+        pos =
+          shape === "char-first"
+            ? 1
+            : shape === "char-middle"
+              ? 2
+              : shape === "char-last"
+                ? 3
+                : pick([0, 4]);
+      q.env = { index: pos };
+      q.docs =
+        "CHAR(text, index) returns the one-based character; invalid positions cause ERROR.";
+      output(
+        [ret(X("CHAR", T, I))],
+        text,
+        `Position ${pos} ${pos >= 1 && pos <= 3 ? `contains ${JSON.stringify(text[pos - 1])}` : "is outside the text"}.`,
+      );
+      q.answers = [...text.split(""), "ERROR"];
+    }
+  }
+  if (mode === "edge") {
+    q.variable = "values";
+    const x = int(3, 8),
+      single = [x];
+    if (shape === "empty-count" || shape === "singleton-count") {
+      output(
+        count(X(">", item, k)),
+        shape === "empty-count" ? [] : single,
+        shape === "empty-count"
+          ? "The list is empty, so the loop makes no updates to count."
+          : `Only values greater than ${k} increase count.`,
+      );
+      q.answers = [0, 1, shape === "empty-count" ? k : x, "ERROR"];
+    }
+    if (shape === "empty-sum") {
+      output(
+        sum(),
+        [],
+        "No elements are added, so the initial total is returned.",
+      );
+      q.answers = [0, 1, -1, "ERROR"];
+    }
+    if (shape === "search-missing") {
+      q.env = { target: pick([x, x + 1, x + 2]) };
+      output(
+        scan,
+        pick([[], single, [x, x + 2]]),
+        "A match returns its first one-based position; with no match, RETURN(−1) runs.",
+      );
+      q.answers = [-1, 0, 1, 2, "ERROR"];
+    }
+    if (shape === "first-guard") {
+      output(
+        [iff(X("=", length, 0), [ret(-1)]), ret(get(1))],
+        pick([[], single]),
+        "An empty list returns −1 before any access; otherwise position 1 is read.",
+      );
+      q.answers = [-1, 0, 1, x, "ERROR"];
+    }
+    if (shape === "last-element") {
+      output(
+        [ret(get(length))],
+        pick([single, [x, x + 1], []]),
+        "The last valid position equals LENGTH(values); an empty list has no valid position.",
+      );
+      q.answers = [x, x + 1, 0, "ERROR"];
+    }
+    if (shape === "empty-access") {
+      output(
+        [ret(get(1))],
+        pick([[], single]),
+        "List positions start at 1, but an empty list has no first element.",
+      );
+      q.answers = [x, 0, 1, "ERROR"];
+    }
+    if (shape === "zero-repeat") {
+      q.variable = "n";
+      output(
+        [set("total", k), repeat(N, [set("total", X("+", S, step))]), ret(S)],
+        pick([0, 1]),
+        `Start at ${k}; each repetition adds ${step}.`,
+      );
+      q.answers = [0, k, k + step, k - step];
+    }
+    if (shape === "empty-string") {
+      q.variable = "text";
+      q.docs = 'CONCAT(a, b) joins strings in order; "" is empty text.';
+      output(
+        [ret(X("CONCAT", T, "!"))],
+        pick(["", "A"]),
+        "Joining empty text adds no characters; the exclamation mark is still present.",
+      );
+      q.answers = ["!", "A!", "", "ERROR"];
+    }
+    if (shape === "short-string") {
+      q.variable = "text";
+      q.env = { index: pick([1, 2]) };
+      q.docs =
+        "CHAR(text, index) uses one-based positions; invalid positions cause ERROR.";
+      output(
+        [ret(X("CHAR", T, I))],
+        pick(["A", "AB", ""]),
+        "An access succeeds only when the position is between 1 and the text length.",
+      );
+      q.answers = ["A", "B", "", "ERROR"];
+    }
+    if (shape === "precondition") {
+      q.variable = "values";
+      q.docs =
+        "Reading values[1] requires a nonempty list; otherwise it causes ERROR.";
+      output(
+        [ret(get(1))],
+        pick([[], single]),
+        "Position 1 is read only for nonempty input; empty input violates the stated precondition.",
+      );
+      q.answers = [x, 0, 1, -1, "ERROR"];
+    }
+  }
+  if (!q.program.length) throw Error(`Missing template ${mode}/${shape}`);
+  return q;
+}
+// Reject shortcuts in input-choice sets. All lists have equal lengths and all
+// scalar keys have a non-exposing smaller AND larger option. The sign and length
+// of an answer can never uniquely identify the exposing/branch-reaching input.
+export function appearanceSafe(values, answer) {
+  if (values.every((v) => typeof v === "number")) {
+    if (answer === Math.min(...values) || answer === Math.max(...values))
+      return false;
+    if (values.filter((v) => v > 0).length === 1 && answer > 0) return false;
+    if (values.filter((v) => v < 0).length === 1 && answer < 0) return false;
+  }
+  if (values.every(Array.isArray)) {
+    if (new Set(values.map((v) => v.length)).size !== 1) return false;
+    // Even a coordinate must not be uniquely extreme or uniquely signed.
+    for (let i = 0; i < answer.length; i++) {
+      const column = values.map((v) => v[i]);
+      if (
+        (answer[i] === Math.min(...column) ||
+          answer[i] === Math.max(...column)) &&
+        column.filter((v) => v === answer[i]).length === 1
+      )
+        return false;
+      if (column.filter((v) => v > 0).length === 1 && answer[i] > 0)
+        return false;
+      if (column.filter((v) => v < 0).length === 1 && answer[i] < 0)
+        return false;
+    }
+  }
+  if (
+    values.every((v) => typeof v === "string") &&
+    new Set(values.map((v) => v.length)).size !== 1
+  )
+    return false;
+  return true;
+}
+const unique = (a) => [
+  ...new Map(a.map((v) => [JSON.stringify(v), v])).values(),
+];
+export function validateQuestion(q) {
+  if (
+    q.options.length !== 4 ||
+    unique(q.options.map((o) => o.value)).length !== 4
+  )
+    return false;
+  const yes = q.options.filter((o) => q.qualify(o.value));
+  return (
+    yes.length === 1 &&
+    yes[0].id === q.correctId &&
+    (q.task === "output" ||
+      appearanceSafe(
+        q.options.map((o) => o.value),
+        yes[0].value,
+      ))
+  );
 }
 export function generateTestCase(mode = "mixed", forced) {
   if (mode === "mixed") mode = pick(Object.keys(testModes));
-  if (!testModes[mode]) throw Error("Unknown testing mode");
-  const structure = forced || pick(definitions[mode]);
-  if (!definitions[mode].includes(structure)) throw Error("Unknown structure");
-  const q = build(mode, structure);
-  let values;
-  if (mode === "predict") {
-    values = q.answers;
-    q.qualify = (v) => same(v, q.answer);
-  } else {
-    const yes = q.domain.filter(q.qualify),
-      no = q.domain.filter((v) => !q.qualify(v));
-    if (!yes.length || unique(no).length < 3)
-      throw Error(
-        `Invalid choice pool ${mode}/${structure}: ${yes.length} correct, ${no.length} distractors`,
+  if (!testModes[mode]) throw Error("Unknown mode");
+  const shape = forced || pick(structures[mode]);
+  if (!structures[mode].includes(shape)) throw Error("Unknown structure");
+  for (let attempt = 0; attempt < 80; attempt++) {
+    const q = build(mode, shape);
+    let values;
+    if (q.task === "output") {
+      q.answer = run(q, q.input).result;
+      q.qualify = (v) => same(v, q.answer);
+      const candidates = unique(
+        q.answers ||
+          [
+            q.answer,
+            0,
+            1,
+            q.answer - 1,
+            q.answer + 1,
+            q.answer + 2,
+            q.input,
+            Array.isArray(q.input) ? q.input.length : 2,
+            Array.isArray(q.input) ? q.input[0] : 3,
+            "ERROR",
+          ].filter((v) => typeof v === "number" || v === "ERROR"),
       );
-    const anchors = [...q.requirement.matchAll(/-?\d+/g)].map((m) =>
-      Number(m[0]),
+      const wrong = candidates.filter((v) => !q.qualify(v));
+      if (wrong.length < 3) continue;
+      // Keep an ordinary numeric result from being the only positive option.
+      for (let n = 0; n < 40; n++) {
+        const trial = [q.answer, ...shuffle(wrong).slice(0, 3)];
+        if (
+          typeof q.answer === "number" &&
+          q.answer > 0 &&
+          trial.filter((v) => typeof v === "number" && v > 0).length === 1
+        )
+          continue;
+        values = trial;
+        break;
+      }
+      if (!values) continue;
+      q.evidence = () => `The code returns ${format(q.answer)}. ${q.why}`;
+    } else {
+      q.qualify =
+        q.task === "expose"
+          ? (v) => !same(q.expected(v), run(q, v).result)
+          : (v) => same(run(q, v).result, q.goal);
+      const yes = unique(q.domain.filter(q.qualify)),
+        no = unique(q.domain.filter((v) => !q.qualify(v)));
+      if (!yes.length || no.length < 3) continue;
+      for (let i = 0; i < 160; i++) {
+        const answer = pick(yes),
+          candidate = [answer, ...shuffle(no).slice(0, 3)];
+        if (appearanceSafe(candidate, answer)) {
+          values = candidate;
+          q.answer = answer;
+          break;
+        }
+      }
+      if (!values) continue;
+      q.evidence =
+        q.task === "expose"
+          ? (v) =>
+              `For ${format(v)}, the requirement expects ${format(q.expected(v))}, but the code returns ${format(run(q, v).result)}.`
+          : (v) =>
+              `For ${format(v)}, ${run(q, v)
+                .decisions.map(
+                  (d) => `${unparen(d.condition)} is ${format(d.yes)}`,
+                )
+                .join("; ")}. Execution returns ${format(run(q, v).result)}.`;
+    }
+    q.options = shuffle(values).map((value, i) => ({
+      id: `choice-${i}`,
+      value,
+      label: format(value),
+    }));
+    q.correctId = q.options.find((o) => q.qualify(o.value)).id;
+    q.game = "test-case-builder";
+    q.title = "Test Case Builder";
+    q.topic = "quick." + mode;
+    q.topicTitle = testModes[mode];
+    q.kind = "test";
+    q.fields = [];
+    q.example = { choice: q.correctId };
+    q.inputText =
+      q.task === "output" ? `${q.variable} ← ${format(q.input)}` : "";
+    q.code = compact(
+      Object.entries(q.env)
+        .map(([n, v]) => `${n} ← ${format(v)}`)
+        .concat(codeFor(q.program))
+        .join("\n"),
     );
-    // Boolean/list keys still use the whole valid domain; favor nearby numeric tests
-    // so distractors practice endpoints instead of relying on remote outliers.
-    if (typeof yes[0] === "number" && anchors.length) {
-      const nearby = yes.filter((v) =>
-        anchors.some((a) => Math.abs(v - a) <= 2),
-      );
-      q.answer = pick(nearby.length ? nearby : yes);
-    } else q.answer = pick(yes);
-    const wrong = unique(no);
-    if (typeof q.answer === "number")
-      wrong.sort((a, b) => Math.abs(a - q.answer) - Math.abs(b - q.answer));
-    const pool =
-      typeof q.answer === "number"
-        ? wrong.slice(0, Math.min(6, wrong.length))
-        : wrong;
-    values = [q.answer, ...shuffle(pool).slice(0, 3)];
+    q.context = [q.requirement, q.docs, q.inputText, q.code]
+      .filter(Boolean)
+      .join("\n");
+    q.explanation = q.evidence(q.answer);
+    if (validateQuestion(q)) return q;
   }
-  const ids = shuffle(["choice-a", "choice-b", "choice-c", "choice-d"]);
-  q.options = shuffle(unique(values)).map((value, i) => ({
-    id: ids[i],
-    value,
-    label: format(value),
-  }));
-  q.correctId = q.options.find((o) => same(o.value, q.answer)).id;
-  q.game = "test-case-builder";
-  q.title = "Test Case Builder";
-  q.topic = "quick." + mode;
-  q.topicTitle = testModes[mode];
-  q.kind = "test";
-  q.fields = [];
-  q.example = { choice: q.correctId };
-  q.inputText = mode === "predict" ? `${q.variable} ← ${format(q.input)}` : "";
-  q.code = Object.entries(q.env)
-    .map(([name, value]) => `${name} ← ${format(value)}`)
-    .concat(codeFor(q.program))
-    .join("\n");
-  q.context = [q.requirement, q.docs, q.inputText, q.code]
-    .filter(Boolean)
-    .join("\n");
-  q.explanation = q.evidence(q.answer);
-  return q;
+  throw Error(`No defensible four-choice set: ${mode}/${shape}`);
 }
 export function evaluateTestCase(q, response) {
-  const choice = q.options.find((o) => o.id === response?.choice),
-    correct = choice?.id === q.correctId;
-  let detail = q.evidence(q.answer);
-  if (choice && !correct) {
-    if (q.mode === "bugs") {
-      const expected = run(q, choice.value, q.intended).result,
-        actual = run(q, choice.value).result;
-      detail =
-        `Your input ${choice.label} returns ${format(actual)} as required; ` +
-        q.evidence(q.answer).replace(/^For/, "for");
-    } else if (q.mode === "predict")
-      detail =
-        `You chose ${choice.label}; the code produces ${format(q.answer)}. ` +
-        q.evidence(q.answer);
-    else
-      detail =
-        `${choice.label} does not meet the requested test goal. ` + detail;
-  }
-  return { correct, details: detail };
+  const chosen = q.options.find((o) => o.id === response?.choice),
+    correct = !!chosen && q.qualify(chosen.value);
+  let details = q.explanation;
+  if (chosen && !correct && q.task === "expose")
+    details =
+      `For your input ${chosen.label}, both return ${format(run(q, chosen.value).result)}. ` +
+      q.explanation;
+  return { correct, details };
 }
 export function reasonFamily(mode, shape) {
-  const groups = {
-    bugs: [
-      ["inclusive", "direction", "threshold"],
-      ["and-or", "negation"],
-      ["loop-count", "loop-update"],
-      ["sum-initial", "omit-last"],
+  const groups = [
+    [
+      "lower-inclusive",
+      "upper-inclusive",
+      "lower-exclusive",
+      "upper-exclusive",
     ],
-    predict: [
-      ["conditional", "nested"],
-      ["sum", "conditional-count", "product"],
-      ["repeat-sum", "until"],
-      ["concat", "substring"],
-    ],
-    boundary: [
-      ["above-exclusive", "below-exclusive"],
-      ["upper-range", "lower-range"],
-      ["upper-index", "first-index"],
-      ["repeat-transition", "zero-one"],
-    ],
-    branches: [
-      ["middle", "missing-test"],
-      ["nested-true", "nested-false"],
-    ],
-    edge: [["empty-sum", "empty-product", "guard-first"]],
-  };
-  const group = groups[mode]?.find((g) => g.includes(shape));
-  return mode + ":" + (group ? group[0] : shape);
+    ["equality", "inequality", "wrong-constant", "lower-shift", "upper-shift"],
+    ["and-or", "missing-not", "grouping", "compound-inclusive"],
+    ["even-count", "loop-end", "extra-iteration", "counter-update"],
+    ["char-first", "char-middle", "char-last", "char-invalid"],
+    ["empty-count", "empty-sum"],
+    ["first-guard", "last-element", "empty-access", "precondition"],
+  ];
+  return mode + ":" + (groups.find((g) => g.includes(shape))?.[0] || shape);
 }
 export function displayFamily(mode, shape) {
-  const key = mode + ":" + shape;
-  const groups = [
-    ["predict:repeat-sum", "boundary:zero-one", "edge:zero-loop"],
-    ["predict:sum", "edge:empty-sum"],
-    ["predict:product", "edge:empty-product"],
-    [
-      "predict:list-access",
-      "boundary:upper-index",
-      "boundary:first-index",
-      "edge:precondition",
-    ],
-    ["boundary:string-end", "edge:short-text"],
-    ["branches:middle", "branches:missing-test", "predict:nested"],
-    ["branches:nested-true", "branches:nested-false"],
-    ["bugs:search-value", "predict:first-match"],
-  ];
-  return groups.find((g) => g.includes(key))?.[0] || key;
+  if (shape.startsWith("char-") || shape === "short-string")
+    return "character-access";
+  if (["empty-sum", "sum"].includes(shape)) return "sum";
+  if (
+    ["first-guard", "empty-access", "precondition", "last-element"].includes(
+      shape,
+    )
+  )
+    return "list-access";
+  return reasonFamily(mode, shape);
 }
 export function createTestDeck() {
   const bags = new Map(),
     last = new Map();
-  let lastDisplay = "",
-    lastCategory = "",
-    mixedLeft = [],
-    plan = [];
-  function pool(mode) {
-    if (!bags.get(mode)?.length) bags.set(mode, [...definitions[mode]]);
-    return bags.get(mode);
-  }
-  function arrange(mode, rest, previous) {
+  let modes = [],
+    previous = "",
+    previousMode = "";
+  function arrange(mode, rest, prev) {
     if (!rest.length) return [];
-    for (const item of shuffle(rest)) {
-      const family = reasonFamily(mode, item);
-      if (family === previous) continue;
+    for (const shape of shuffle(rest)) {
+      const family = reasonFamily(mode, shape);
+      if (family === prev) continue;
       const tail = arrange(
         mode,
-        rest.filter((x) => x !== item),
+        rest.filter((s) => s !== shape),
         family,
       );
-      if (tail) return [item, ...tail];
+      if (tail) return [shape, ...tail];
     }
     return null;
   }
-  function available(mode) {
-    const rest = pool(mode);
-    return rest.filter(
-      (item) =>
-        reasonFamily(mode, item) !== last.get(mode) &&
-        arrange(
-          mode,
-          rest.filter((x) => x !== item),
-          reasonFamily(mode, item),
-        ),
-    );
-  }
-  function mixedPlan() {
-    if (!mixedLeft.length) mixedLeft = Object.keys(testModes);
-    const candidates = Object.fromEntries(
-      mixedLeft.map((mode) => [mode, available(mode)]),
-    );
-    function search(modes, previous, first = true) {
-      if (!modes.length) return [];
-      for (const mode of shuffle(modes)) {
-        if (first && modes.length > 1 && mode === lastCategory) continue;
-        for (const shape of shuffle(candidates[mode])) {
-          const display = displayFamily(mode, shape);
-          if (display === previous) continue;
-          const tail = search(
-            modes.filter((x) => x !== mode),
-            display,
-            false,
-          );
-          if (tail) return [{ mode, shape }, ...tail];
-        }
-      }
-      return null;
-    }
-    return search(mixedLeft, lastDisplay) || null;
-  }
   return {
     next(mode = "mixed") {
-      let selected, shape;
       if (mode === "mixed") {
-        if (!plan.length) plan = mixedPlan() || [];
-        if (plan.length) {
-          ({ mode: selected, shape } = plan.shift());
-          mixedLeft = mixedLeft.filter((m) => m !== selected);
-        } else {
-          selected = pick(
-            mixedLeft.length ? mixedLeft : Object.keys(testModes),
-          );
-          shape = pick(available(selected));
-          mixedLeft = mixedLeft.filter((m) => m !== selected);
-        }
-      } else {
-        plan = [];
-        selected = mode;
-        const choices = available(mode);
-        shape = pick(
-          choices.filter((s) => displayFamily(mode, s) !== lastDisplay).length
-            ? choices.filter((s) => displayFamily(mode, s) !== lastDisplay)
-            : choices,
-        );
+        if (!modes.length) modes = shuffle(Object.keys(testModes));
+        if (modes.length > 1 && modes[0] === previousMode)
+          [modes[0], modes[1]] = [modes[1], modes[0]];
+        mode = modes.shift();
       }
-      if (!shape) throw Error("No valid testing structure");
-      bags.set(
-        selected,
-        pool(selected).filter((x) => x !== shape),
+      if (!bags.get(mode)?.length) bags.set(mode, [...structures[mode]]);
+      const rest = bags.get(mode);
+      const choices = shuffle(rest).filter(
+        (shape) =>
+          reasonFamily(mode, shape) !== last.get(mode) &&
+          arrange(
+            mode,
+            rest.filter((s) => s !== shape),
+            reasonFamily(mode, shape),
+          ),
       );
-      last.set(selected, reasonFamily(selected, shape));
-      lastDisplay = displayFamily(selected, shape);
-      lastCategory = selected;
-      return generateTestCase(selected, shape);
+      const shape =
+        choices.find((s) => displayFamily(mode, s) !== previous) || choices[0];
+      if (!shape) throw Error("No varied template order");
+      bags.set(
+        mode,
+        rest.filter((s) => s !== shape),
+      );
+      last.set(mode, reasonFamily(mode, shape));
+      previous = displayFamily(mode, shape);
+      previousMode = mode;
+      return generateTestCase(mode, shape);
     },
   };
 }

@@ -97,242 +97,242 @@ function independent(code, env) {
 function actual(q, input) {
   return independent(q.code, { ...q.env, [q.variable]: input });
 }
-function intended(q, x) {
-  const nums = (q.requirement.match(/-?\d+/g) || []).map(Number),
-    [a, b] = nums;
+
+function required(q, v) {
+  const { k, lo, hi } = q.params;
   switch (q.structure) {
-    case "inclusive":
-    case "threshold":
-      return x >= a;
-    case "direction":
-    case "range-end":
-      return x >= a && x <= b;
+    case "lower-inclusive":
+    case "wrong-constant":
+      return v >= k;
+    case "upper-inclusive":
+      return v <= k;
+    case "lower-exclusive":
+      return v > k;
+    case "upper-exclusive":
+      return v < k;
+    case "equality":
+      return v === k;
+    case "inequality":
+      return v !== k;
+    case "range-exclusive":
+      return v > lo && v < hi;
+    case "lower-shift":
+    case "upper-shift":
+      return v >= lo && v <= hi;
+    case "range-branch":
+      return v >= lo && v <= hi ? "OK" : "No";
     case "and-or":
-      return x < a || x > b;
-    case "negation":
-      return !(x >= a && x <= b);
-    case "loop-count":
-      return x * 3;
-    case "loop-update":
-      return x <= 0 ? 0 : (x * (x + 1)) / 2;
-    case "sum-initial":
-    case "omit-last":
-      return x.reduce((a, b) => a + b, 0);
-    case "minimum-zero":
-      return Math.min(...x);
-    case "search-value":
-      return x.indexOf(q.env.target) < 0 ? -1 : x.indexOf(q.env.target) + 1;
+      return v[0] < lo || v[1] > hi;
+    case "missing-not":
+      return v[0] % 2 === 0 && v[0] !== v[1];
+    case "grouping":
+      return (v[0] < lo || v[1] > hi) && v[0] % 2 === 0;
+    case "compound-inclusive":
+      return v[0] >= lo && v[1] <= hi;
+    case "even-count":
+      return Array.from({ length: v }, (_, i) => i + 1).filter(
+        (i) => i % 2 === 0,
+      ).length;
+    case "loop-end":
+    case "extra-iteration":
+    case "counter-update":
+      return Array.from({ length: v[0] }, (_, i) => i + 1).filter(
+        (i) => i % v[1] === 0,
+      ).length;
+    case "skip-first":
+      return v.reduce((n, x, i) => n + (i > 0 && x > v[i - 1] ? 1 : 0), 0);
+    case "zero-iteration":
+      return v <= 0
+        ? 0
+        : Array.from({ length: v }, (_, i) => i + 1).reduce((a, b) => a + b, 0);
+    case "list-search":
+      return v.some((x) => x === q.env.target);
+    case "list-end":
+      return v.reduce((a, b) => (a > b ? a : b));
     default:
-      throw Error(q.structure);
+      throw Error("Missing independent requirement " + q.structure);
   }
 }
-function goal(q, x) {
-  if (q.mode === "bugs")
-    return JSON.stringify(actual(q, x)) !== JSON.stringify(intended(q, x));
-  if (q.mode === "predict")
-    return JSON.stringify(x) === JSON.stringify(actual(q, q.input));
-  if (q.mode === "branches") {
-    const result = actual(q, x);
-    return (
-      result ===
-      {
-        else: "Retry",
-        middle: "middle",
-        "nested-true": "even",
-        "nested-false": "odd",
-        compound: "outside",
-        negated: "same",
-        "missing-test": "middle",
-        "fall-through": "middle",
-      }[q.structure]
-    );
-  }
-  if (q.mode === "edge") {
-    switch (q.structure) {
-      case "empty-sum":
-      case "empty-product":
-      case "guard-first":
-        return x.length === 0;
-      case "singleton":
-      case "last-access":
-        return x.length === 1;
-      case "missing-search":
-        return !!x.length && !x.includes(q.env.target);
-      case "zero-loop":
-        return x === 0;
-      case "empty-text":
-        return x === "";
-      case "short-text":
-        return x.length === 1 && actual(q, x) === "ERROR";
-      case "precondition":
-        return x < 1 || x > q.env.values.length;
-    }
-  }
-  const accepted = q.domain.filter((v) => actual(q, v) === true);
-  let answer;
-  switch (q.structure) {
-    case "above-exclusive":
-      answer = Math.min(...accepted);
-      break;
-    case "below-exclusive":
-      answer = Math.max(...accepted) + 1;
-      break;
-    case "upper-range":
-      answer = Math.max(...accepted) + 1;
-      break;
-    case "lower-range":
-      answer = Math.min(...accepted) - 1;
-      break;
-    case "compound-transition":
-      answer = Math.min(...q.domain.filter((v) => actual(q, v) === "inside"));
-      break;
-    case "upper-index":
-      answer = q.env.values.length + 1;
-      break;
-    case "first-index":
-      answer = 0;
-      break;
-    case "repeat-transition": {
-      const step = actual(q, 1);
-      answer = Math.min(...q.domain.filter((v) => actual(q, v) === step * 2));
-      break;
-    }
-    case "zero-one":
-      answer = 1;
-      break;
-    case "string-end":
-      answer = q.env.text.length + 1;
-      break;
-    default:
-      throw Error(q.structure);
-  }
-  return x === answer;
+function goal(q, v) {
+  if (q.task === "expose")
+    return JSON.stringify(actual(q, v)) !== JSON.stringify(required(q, v));
+  if (q.task === "output")
+    return JSON.stringify(v) === JSON.stringify(actual(q, q.input));
+  return actual(q, v) === q.goal;
 }
-const benchmarks = {},
-  samples = [];
+const samples = [],
+  benchmarks = {};
+// A minimum of 100 per STRUCTURAL template, not merely 100 per category.
 for (const [mode, shapes] of Object.entries(E.structures)) {
-  let first = 0,
-    longest = 0,
-    copy = 0;
-  const positions = new Set(),
-    seen = new Set();
-  for (let i = 0; i < 300; i++) {
-    const q = E.generateTestCase(mode, shapes[i % shapes.length]);
-    generated++;
-    seen.add(q.structure);
-    eq(q.mode, mode);
-    eq(q.fields.length, 0);
-    ok(q.options.length >= 3 && q.options.length <= 4);
-    eq(new Set(q.options.map((o) => o.label)).size, q.options.length);
-    eq(q.options.filter((o) => goal(q, o.value)).length, 1);
-    eq(q.options.find((o) => goal(q, o.value)).id, q.correctId);
-    ok(E.evaluateTestCase(q, q.example).correct);
-    ok(q.code.split("\n").length <= 13);
-    ok(q.prompt.length < 140);
-    ok(q.explanation.length < 330);
-    ok(q.options.every((o) => !("correct" in o) && !("role" in o)));
-    positions.add(q.options.findIndex((o) => o.id === q.correctId));
-    if (q.mode === "bugs")
-      for (const input of q.domain) {
-        eq(E.run(q, input).result, actual(q, input));
-        eq(E.run(q, input, q.intended).result, intended(q, input));
+  let total = 0;
+  const positions = [0, 0, 0, 0],
+    signs = {};
+  for (const shape of shapes) {
+    const outcomes = new Set(),
+      templatePositions = new Set();
+    let copied = 0;
+    for (let n = 0; n < 100; n++) {
+      const q = E.generateTestCase(mode, shape);
+      generated++;
+      total++;
+      eq(q.options.length, 4);
+      eq(new Set(q.options.map((o) => JSON.stringify(o.value))).size, 4);
+      eq(q.options.filter((o) => goal(q, o.value)).length, 1);
+      ok(E.validateQuestion(q));
+      eq(q.mode, mode);
+      eq(q.structure, shape);
+      ok(q.prompt.length < 90);
+      ok(
+        !/takes FALSE|then TRUE|above the range|below the range/i.test(
+          q.prompt,
+        ),
+      );
+      ok(q.code.split("\n").every((l) => l.length <= 36));
+      ok(q.code.includes("\n") || q.code.startsWith("RETURN("));
+      ok(q.explanation.length < 500);
+      if (q.code.includes("CHAR(")) ok(/one-based/.test(q.docs));
+      if (q.task === "expose") {
+        ok(q.explanation.includes(E.format(q.expected(q.answer))));
+        ok(q.explanation.includes(E.format(actual(q, q.answer))));
       }
-    else if (q.mode === "predict")
-      eq(E.run(q, q.input).result, actual(q, q.input));
-    else
-      for (const o of q.options)
-        eq(E.run(q, o.value).result, actual(q, o.value));
-    for (const o of q.options) {
-      const r = E.evaluateTestCase(q, { choice: o.id });
-      eq(r.correct, o.id === q.correctId);
-      ok(r.details.toLowerCase().includes(q.explanation.toLowerCase()));
-      if (!r.correct) ok(r.details.includes(o.label));
+      if (q.task === "output")
+        ok(q.explanation.includes(E.format(actual(q, q.input))));
+      ok(!/undefined|NaN/.test(q.context + q.explanation));
+      for (const o of q.options) {
+        eq(E.evaluateTestCase(q, { choice: o.id }).correct, goal(q, o.value));
+        if (q.task !== "output")
+          eq(E.run(q, o.value).result, actual(q, o.value));
+        if (q.task === "expose") eq(q.expected(o.value), required(q, o.value));
+      }
+      if (q.task === "output") eq(E.run(q, q.input).result, actual(q, q.input));
+      const key = q.options.find((o) => o.id === q.correctId),
+        index = q.options.indexOf(key);
+      positions[index]++;
+      templatePositions.add(index);
+      outcomes.add(JSON.stringify(key.value));
+      if (q.task !== "output") {
+        ok(
+          E.appearanceSafe(
+            q.options.map((o) => o.value),
+            key.value,
+          ),
+        );
+        const vals = q.options.map((o) => o.value);
+        if (vals.every((v) => typeof v === "number")) {
+          ok(key.value > Math.min(...vals) && key.value < Math.max(...vals));
+          ok(!(vals.filter((v) => v > 0).length === 1 && key.value > 0));
+          ok(!(vals.filter((v) => v < 0).length === 1 && key.value < 0));
+          // Even within a comparison template, copying the stated threshold
+          // must not identify every key. Boundary shifts create different keys.
+          if (
+            [
+              "lower-inclusive",
+              "upper-exclusive",
+              "lower-exclusive",
+              "upper-inclusive",
+              "wrong-constant",
+            ].includes(shape)
+          ) {
+            const copiedNumber = q.params.k;
+            copied += key.value === copiedNumber ? 1 : 0;
+          }
+        }
+        if (vals.every(Array.isArray))
+          eq(new Set(vals.map((v) => v.length)).size, 1);
+      }
+      if (n === 0)
+        samples.push({
+          mode,
+          shape,
+          prompt: q.prompt,
+          requirement: q.requirement,
+          input: q.inputText,
+          code: q.code,
+          choices: q.options.map((o) => o.label),
+          answer: key.label,
+          explanation: q.explanation,
+        });
     }
-    first += Number(q.options[0].id === q.correctId);
-    longest += Number(
-      [...q.options].sort((a, b) => b.label.length - a.label.length)[0].id ===
-        q.correctId,
-    );
-    const number = q.requirement.match(/-?\d+/)?.[0];
-    copy += Number(
-      number !== undefined &&
-        q.options.find((o) => o.label === number)?.id === q.correctId,
-    );
-    if (i < shapes.length)
-      samples.push({
-        mode,
-        structure: q.structure,
-        prompt: q.prompt,
-        requirement: q.requirement,
-        docs: q.docs,
-        input: q.inputText,
-        code: q.code,
-        options: q.options.map((o) => o.label),
-        answer: q.options.find((o) => o.id === q.correctId).label,
-        explanation: q.explanation,
-      });
+    eq(templatePositions.size, 4);
+    if (
+      [
+        "lower-inclusive",
+        "upper-exclusive",
+        "lower-exclusive",
+        "upper-inclusive",
+        "wrong-constant",
+      ].includes(shape)
+    )
+      ok(copied < 85);
+    // Fixed-result empty-input identities are intentional; all other templates
+    // must vary their answer, including valid/invalid character accesses.
+    if (
+      ![
+        "empty-count",
+        "empty-sum",
+        "empty-product",
+        "search-missing",
+        "char-invalid",
+        "zero-iteration",
+      ].includes(shape)
+    ) {
+      if (outcomes.size <= 1) throw Error(`Fixed key ${mode}/${shape}`);
+      ok(outcomes.size > 1);
+    }
   }
-  eq(seen.size, shapes.length);
-  eq(positions.size, 4);
-  ok(first < 115);
-  ok(longest < 190);
-  ok(copy < 180);
+  ok(positions.every((n) => n > total * 0.15 && n < total * 0.35));
   benchmarks[mode] = {
-    questions: 300,
-    structures: seen.size,
-    first,
-    longest,
-    copyFirstRequirementNumber: copy,
+    questions: total,
+    templates: shapes.length,
+    answerPositions: positions,
   };
 }
-// Balanced bags: each five mixed challenges contain every category, each targeted
-// cycle contains every authored structure, and adjacent cycles never duplicate a shape.
+// Deliberately corrupt valid questions: the validator must reject every defect.
+{
+  const q = E.generateTestCase("bugs", "equality");
+  const duplicate = {
+    ...q,
+    options: [q.options[0], q.options[0], ...q.options.slice(2)],
+  };
+  ok(!E.validateQuestion(duplicate));
+  const allWrong = { ...q, qualify: () => false };
+  ok(!E.validateQuestion(allWrong));
+  const allRight = { ...q, qualify: () => true };
+  ok(!E.validateQuestion(allRight));
+  ok(!E.appearanceSafe([1, 4, 5, 6], 1));
+  ok(!E.appearanceSafe([-1, 2, 3, 4], -1));
+  ok(!E.appearanceSafe([[1], [1, 2], [2, 3], [3, 4]], [1]));
+  ok(!E.appearanceSafe(["A", "AB", "CD", "EF"], "A"));
+}
 for (const mode of Object.keys(E.testModes)) {
-  // Every fresh 30-question Mixed run must avoid identical cross-mode algorithm families.
-  for (let trial = 0; trial < 100; trial++) {
-    const mixed = E.createTestDeck();
-    let previous = "";
-    for (let i = 0; i < 30; i++) {
-      const q = mixed.next();
-      ok(E.displayFamily(q.mode, q.structure) !== previous);
-      previous = E.displayFamily(q.mode, q.structure);
-    }
-  }
   const deck = E.createTestDeck();
   let prev = "";
-  for (let cycle = 0; cycle < 10; cycle++) {
+  for (let cycle = 0; cycle < 8; cycle++) {
     const seen = new Set();
     for (let i = 0; i < E.structures[mode].length; i++) {
       const q = deck.next(mode);
+      eq(q.mode, mode);
       ok(q.structure !== prev);
       ok(E.reasonFamily(mode, q.structure) !== E.reasonFamily(mode, prev));
-      seen.add(q.structure);
       prev = q.structure;
+      seen.add(q.structure);
     }
     eq(seen.size, E.structures[mode].length);
   }
 }
-// Every fresh 30-question Mixed run must avoid identical cross-mode algorithm families.
-for (let trial = 0; trial < 100; trial++) {
-  const mixed = E.createTestDeck();
-  let previous = "";
-  for (let i = 0; i < 30; i++) {
-    const q = mixed.next();
-    ok(E.displayFamily(q.mode, q.structure) !== previous);
-    previous = E.displayFamily(q.mode, q.structure);
+for (let trial = 0; trial < 30; trial++) {
+  const deck = E.createTestDeck();
+  let prev = "";
+  for (let i = 0; i < 30; i += 5) {
+    const modes = [];
+    for (let j = 0; j < 5; j++) {
+      const q = deck.next();
+      modes.push(q.mode);
+      ok(q.mode !== prev);
+      prev = q.mode;
+    }
+    eq(new Set(modes).size, 5);
   }
-}
-const deck = E.createTestDeck();
-let prev = "";
-for (let cycle = 0; cycle < 20; cycle++) {
-  const modes = [];
-  for (let i = 0; i < 5; i++) {
-    const q = deck.next();
-    ok(q.mode !== prev);
-    prev = q.mode;
-    modes.push(q.mode);
-  }
-  eq(new Set(modes).size, 5);
 }
 const { parseHTML } = createRequire(import.meta.url)(
     process.env.CSP_DOM_LIBRARY || "linkedom",
@@ -443,14 +443,11 @@ const before = tracker.snapshot();
 const again = S.createSessionTracker({ storage });
 eq(again.snapshot().games["test-case-builder"].topics.lists.firstTry, 1);
 eq(again.snapshot().totals, before.totals);
+
 fs.writeFileSync(
-  "/tmp/tcb-fast-samples.json",
+  "/tmp/tcb-spec-samples.json",
   JSON.stringify(samples, null, 2),
 );
-fs.writeFileSync(
-  "/tmp/tcb-fast-shortcuts.json",
-  JSON.stringify(benchmarks, null, 2),
-);
 console.log(
-  `Test Case Builder fast practice: ${generated} generated challenges; ${assertions} assertions; ${executions} independent displayed-code executions. ${JSON.stringify(benchmarks)}`,
+  `Test Case Builder specification: ${generated} generated questions; ${assertions} assertions; ${executions} independent displayed-code executions. ${JSON.stringify(benchmarks)}`,
 );
