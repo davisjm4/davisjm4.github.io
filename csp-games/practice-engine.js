@@ -1,3 +1,4 @@
+import {generateTestCase,evaluateTestCase} from "./test-case-engine.js?v=instructional-tcb-v2";
 import { int, pick, shuffle } from "./engine.js?v=platform-expansion-v2";
 export const practiceGames = {
   "response-builder": {
@@ -371,135 +372,8 @@ function response(mode) {
   );
 }
 function testCase(mode) {
-  const limit = int(10, 60),
-    strict = pick([true, false]),
-    name = pick(["qualifies", "accepted", "eligible"]);
-  let q = base(
-    "test-case-builder",
-    mode,
-    "Construct a useful test and its expected result.",
-    `PROCEDURE ${name}(value)\n{\n    RETURN(value ${strict ? ">" : "≥"} ${limit})\n}`,
-    {
-      kind: "test",
-      limit,
-      strict,
-      fields: [
-        numField("input", "Input value (whole number)"),
-        chooseField("expected", "Expected output", "true", ["false"]),
-      ],
-      explanation:
-        "Compare the specified input with the requirement and evaluate the actual operator separately. A useful test targets the behavior requested in the challenge.",
-    },
-  );
-  // Expected output is an input choice, not a preassigned answer: evaluator accepts either.
-  q.fields[1].options = [option("true", "TRUE"), option("false", "FALSE")];
-  delete q.fields[1].correct;
-  if (
-    ["normal", "boundary", "branches", "errors", "nonexposing"].includes(mode)
-  ) {
-    q.context =
-      `Requirement: return TRUE for a value at least ${limit}. Valid inputs are whole numbers from 0 to 100.\n\n` +
-      q.context;
-    if (mode === "normal") {
-      q.prompt =
-        "Enter a normal accepted value strictly above the boundary, and its expected output.";
-      q.example = { input: limit + 5, expected: "true" };
-    }
-    if (mode === "boundary") {
-      q.prompt =
-        "Test the value exactly at the acceptance boundary and give the required output.";
-      q.example = { input: limit, expected: "true" };
-    }
-    if (mode === "branches") {
-      q.context += `\n// Supply one accepted input and one rejected input.`;
-      q.fields = [
-        numField("input", "Accepted input"),
-        numField("other", "Rejected input"),
-      ];
-      q.example = { input: limit, other: limit - 1 };
-      q.prompt =
-        "Choose two inputs that cover both Boolean outcomes under the requirement.";
-    }
-    if (mode === "errors") {
-      q.strict = true;
-      q.context = q.context.replace(
-        `${strict ? ">" : "≥"} ${limit}`,
-        `> ${limit}`,
-      );
-      q.fields.push(
-        chooseField("actual", "Actual output from the code", "false", ["true"]),
-      );
-      delete q.fields.at(-1).correct;
-      q.fields.at(-1).options = [
-        option("true", "TRUE"),
-        option("false", "FALSE"),
-      ];
-      q.prompt =
-        "Find an input that exposes the logic error. Supply the required expected output and the code’s actual output.";
-      q.example = { input: limit, expected: "true", actual: "false" };
-    }
-    if (mode === "nonexposing") {
-      q.strict = true;
-      q.context = q.context.replace(
-        `${strict ? ">" : "≥"} ${limit}`,
-        `> ${limit}`,
-      );
-      q.prompt =
-        "Choose an input that does NOT expose this equality bug, and give its expected output.";
-      q.example = { input: limit + 1, expected: "true" };
-    }
-  } else if (mode === "lists") {
-    q.fields = [
-      textField(
-        "input",
-        "Test list (comma-separated whole numbers; leave empty for [])",
-      ),
-      numField("expected", "Expected returned length"),
-    ];
-    q.empty = pick([true, false]);
-    q.prompt = `Construct ${q.empty ? "an empty-list" : "a single-element-list"} test and give the expected returned length.`;
-    q.context =
-      "PROCEDURE countItems(values)\n{\n    RETURN(LENGTH(values))\n}";
-    q.example = {
-      input: q.empty ? "" : String(limit),
-      expected: q.empty ? 0 : 1,
-    };
-  } else if (mode === "strings") {
-    q.prefix = pick(["Hi ", "Room ", "Team "]);
-    q.empty = pick([true, false]);
-    q.fields = [
-      textField("input", "String argument (without quotation marks)"),
-      textField("expected", "Expected returned string (preserve spaces)"),
-    ];
-    q.prompt = `Test this library call with ${q.empty ? "an empty string" : "any nonempty string of up to 30 characters"}. Enter its exact expected result.`;
-    q.context = `Library documentation: CONCAT(first, second) returns the characters of first followed by those of second. An empty string adds no characters.\n\nPROCEDURE label(text)\n{\n    RETURN(CONCAT("${q.prefix}", text))\n}`;
-    q.example = {
-      input: q.empty ? "" : "Blue",
-      expected: q.prefix + (q.empty ? "" : "Blue"),
-    };
-  } else if (mode === "iteration") {
-    q.fields = [
-      numField("input", "Repetition count (whole number, 1–20)"),
-      numField("expected", "Expected total"),
-    ];
-    q.step = int(2, 8);
-    q.prompt =
-      "Test this accumulator using any valid repetition count, and predict the returned total.";
-    q.context = `PROCEDURE accumulate(repetitions)\n{\n    total ← 0\n    REPEAT repetitions TIMES\n    {\n        total ← total + ${q.step}\n    }\n    RETURN(total)\n}`;
-    q.example = { input: 3, expected: 3 * q.step };
-  } else {
-    q.values = [limit, limit + 1, limit + 2];
-    q.fields = [
-      numField("input", "Index to test"),
-      chooseField("expected", "Expected result", "Index error", [
-        "A valid element is returned",
-      ]),
-    ];
-    q.prompt =
-      "Find a whole-number index that produces an error. AP CSP list indices start at 1.";
-    q.context = `values ← [${q.values.join(", ")}]\nDISPLAY(values[index])`;
-    q.example = { input: 0, expected: "Index error" };
-  }
+  const q=generateTestCase(mode);
+  q.explanation=evaluateTestCase(q,q.example).details;
   return q;
 }
 function whole(v) {
@@ -513,54 +387,7 @@ export function parseList(v) {
   if (!s.every(whole)) return null;
   return s.map(Number);
 }
-function validateTest(q, r) {
-  if (q.mode === "strings")
-    return (
-      typeof r.input === "string" &&
-      r.input.length <= 30 &&
-      (q.empty ? r.input === "" : r.input.length > 0) &&
-      r.expected === q.prefix + r.input
-    );
-  if (q.mode === "lists") {
-    const a = parseList(r.input);
-    return (
-      a !== null &&
-      a.length === (q.empty ? 0 : 1) &&
-      whole(r.expected) &&
-      Number(r.expected) === a.length
-    );
-  }
-  if (!whole(r.input)) return false;
-  const n = Number(r.input);
-  if (q.mode === "iteration")
-    return (
-      n >= 1 &&
-      n <= 20 &&
-      whole(r.expected) &&
-      Number(r.expected) === n * q.step
-    );
-  if (q.mode === "invalid")
-    return (n < 1 || n > q.values.length) && r.expected === "Index error";
-  if (n < 0 || n > 100) return false;
-  const expected = n >= q.limit,
-    actual = q.strict ? n > q.limit : n >= q.limit;
-  if (q.mode === "branches")
-    return (
-      n >= q.limit &&
-      whole(r.other) &&
-      Number(r.other) >= 0 &&
-      Number(r.other) < q.limit
-    );
-  const typed = r.expected === "true";
-  if (!["true", "false"].includes(r.expected) || typed !== expected)
-    return false;
-  if (q.mode === "normal") return n > q.limit;
-  if (q.mode === "boundary") return n === q.limit;
-  if (q.mode === "errors")
-    return expected !== actual && r.actual === String(actual);
-  if (q.mode === "nonexposing") return expected === actual;
-  return false;
-}
+function validateTest(q,r) { return evaluateTestCase(q,r).correct; }
 const block = (id, text) => ({ id, text });
 function architect(mode) {
   const factor = int(2, 6),

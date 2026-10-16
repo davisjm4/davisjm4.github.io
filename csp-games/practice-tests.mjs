@@ -95,53 +95,11 @@ for (const [slug, g] of Object.entries(P.practiceGames)) {
           );
       }
       if (q.kind === "test") {
-        assert.equal(P.validatePractice(q, { ...answer, input: "abc" }), false);
-        if (q.mode === "lists") {
-          assert.equal(
-            P.validatePractice(q, {
-              input: q.empty ? "2" : "2,3",
-              expected: q.empty ? 1 : 2,
-            }),
-            false,
-          );
-          if (!q.empty)
-            assert.ok(P.validatePractice(q, { input: "-8", expected: 1 }));
-        }
-        if (q.mode === "normal")
-          assert.ok(
-            P.validatePractice(q, { input: q.limit + 1, expected: "true" }),
-          );
-        if (q.mode === "branches")
-          assert.ok(P.validatePractice(q, { input: 100, other: 0 }));
-        if (q.mode === "errors") {
-          assert.equal(
-            P.validatePractice(q, {
-              input: q.limit + 1,
-              expected: "true",
-              actual: "true",
-            }),
-            false,
-          );
-          assert.equal(
-            P.validatePractice(q, {
-              input: q.limit,
-              expected: "false",
-              actual: "false",
-            }),
-            false,
-          );
-        }
-        if (q.mode === "nonexposing")
-          assert.ok(P.validatePractice(q, { input: 0, expected: "false" }));
-        if (q.mode === "invalid")
-          assert.ok(
-            P.validatePractice(q, {
-              input: q.values.length + 1,
-              expected: "Index error",
-            }),
-          );
-        if (q.mode === "iteration")
-          assert.ok(P.validatePractice(q, { input: 1, expected: q.step }));
+        assert.equal(P.validatePractice(q, { ...answer, [q.fields[0].id]: "abc" }), false);
+        const wrongOutput={...answer,[q.mode === "branches" ? "expected0" : "expected"]:"IMPOSSIBLE"};
+        assert.equal(P.validatePractice(q,wrongOutput),false);
+        assert.equal(P.validatePractice(q,{input:100,expected:"true",actual:"false",other:0}),false);
+
       }
     }
 }

@@ -4,7 +4,7 @@ Primary references: CSP_Java_Games_Audit_Report.docx and CSP_Java_Games_Audit_Ma
 
 ## Test Case Builder
 
-Dedicated `test-case-engine.js` and `test-case-ui.js` replace this game's use of the shared practice engine/UI. Unrelated games continue to load their original modules. The existing URL, all nine practice modes, Mixed default, navigation and shared browser-local session tracker are preserved.
+Dedicated `test-case-engine.js` and `test-case-ui.js` replace this game's use of the shared practice engine/UI. The shared practice API delegates Test Case Builder requests to the new generator, and obsolete tests that locked in memorized answers are replaced. Unrelated game behavior is preserved. The existing URL, all nine practice modes, Mixed default, navigation and shared browser-local session tracker are preserved.
 
 - Boolean requirements cover strict/inclusive comparisons, equality/inequality, inclusive ranges and their complements, compound AND/OR, NOT and exception handling. Defects include comparison direction, missing equality, wrong constant, range endpoint, AND/OR substitution, missing/misplaced NOT and branch order. Boundary tests accept either direction of any adjacent pair switching the required result. Normal tests accept TRUE or FALSE examples away from comparison constants.
 - Real branch-coverage programs: IF with a default result, IF/ELSE, a three-way conditional chain, a compound-condition branch and nested conditionals. Any input reaching the named actual-program path is accepted. Output predictions are checked against actual code, not an unstated requirement interpretation.

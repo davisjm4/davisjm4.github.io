@@ -143,6 +143,7 @@ function launch(slug, concept = false) {
   };
 }
 for (const [slug, g] of Object.entries(P.practiceGames)) {
+  if(slug === "test-case-builder") continue; // Dedicated redesigned UI and one-attempt tests live in test-case-redesign-tests.mjs.
   const t = launch(slug);
   eq(t.$("practice-mode").value, "mixed");
   if (slug === "response-builder") eq(t.$("support").value, "full");
@@ -271,6 +272,13 @@ for (const [category, variant] of X.scenarios)
     eq(t.tracker.snapshot().totals.attempted, b2.attempted);
     eq(t.tracker.snapshot().totals.revealed, b2.revealed + 1);
   }
+// Test Case Builder has a dedicated one-submission UI suite. Include its validated
+// API outcome here to keep the shared printable-report aggregation test cross-game.
+const testingSample=P.generatePractice("test-case-builder","branches");
+const testingTracker=S.createSessionTracker({storage});
+const testingId=testingTracker.begin("test-case-builder",P.practiceGames["test-case-builder"].title,testingSample.topic,"Branch Coverage");
+ok(P.validatePractice(testingSample,P.solutionPractice(testingSample)));
+testingTracker.submit(testingId,true);
 const refreshed = S.createSessionTracker({ storage }).snapshot();
 eq(refreshed.totals, t.tracker.snapshot().totals);
 for (const game of Object.keys(P.practiceGames)) ok(refreshed.games[game]);
