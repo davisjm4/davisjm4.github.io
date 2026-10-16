@@ -870,7 +870,7 @@ function build(mode, shape) {
       q.why =
         "The stated precondition permits only one-based positions 1 through 3.";
     }
-    q.evidence = (input) => `Test ${format(input)} checks this case. ${q.why}`;
+    q.evidence = () => q.why;
   }
   return q;
 }
@@ -951,8 +951,8 @@ export function evaluateTestCase(q, response) {
       const expected = run(q, choice.value, q.intended).result,
         actual = run(q, choice.value).result;
       detail =
-        `Your input ${choice.label} returns ${format(actual)}, matching the required ${format(expected)}; it does not expose the bug. ` +
-        q.evidence(q.answer);
+        `Your input ${choice.label} returns ${format(actual)} as required; ` +
+        q.evidence(q.answer).replace(/^For/, "for");
     } else if (q.mode === "predict")
       detail =
         `You chose ${choice.label}; the code produces ${format(q.answer)}. ` +

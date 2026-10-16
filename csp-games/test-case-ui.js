@@ -2,7 +2,7 @@ import {
   createTestDeck,
   testModes,
   evaluateTestCase,
-} from "./test-case-engine.js?v=fast-tcb-v1";
+} from "./test-case-engine.js?v=fast-tcb-v2";
 import {
   sessionTracker,
   addSessionNavigation,
@@ -52,8 +52,8 @@ export function startTestCase() {
     $("feedback").hidden = false;
     $("feedback").className = "feedback " + (correct ? "good" : "bad");
     $("feedback").textContent =
-      (revealed ? "Answer revealed. " : correct ? "Correct. " : "Incorrect. ") +
-      `Correct answer: ${q.options.find((o) => o.id === q.correctId).label}. ` +
+      (revealed ? "Answer revealed" : correct ? "Correct" : "Incorrect") +
+      ` — correct answer: ${q.options.find((o) => o.id === q.correctId).label}\n` +
       details;
     $("feedback").focus();
     stats();

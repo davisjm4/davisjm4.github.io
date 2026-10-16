@@ -245,7 +245,7 @@ for (const [mode, shapes] of Object.entries(E.structures)) {
     for (const o of q.options) {
       const r = E.evaluateTestCase(q, { choice: o.id });
       eq(r.correct, o.id === q.correctId);
-      ok(r.details.includes(q.explanation));
+      ok(r.details.toLowerCase().includes(q.explanation.toLowerCase()));
       if (!r.correct) ok(r.details.includes(o.label));
     }
     first += Number(q.options[0].id === q.correctId);

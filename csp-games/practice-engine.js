@@ -12,7 +12,7 @@ import {
   generateTestCase,
   evaluateTestCase,
   testModes,
-} from "./test-case-engine.js?v=fast-tcb-v1";
+} from "./test-case-engine.js?v=fast-tcb-v2";
 import { int, pick, shuffle } from "./engine.js?v=platform-expansion-v2";
 export const practiceGames = {
   "response-builder": {
