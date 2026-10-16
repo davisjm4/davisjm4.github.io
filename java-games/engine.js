@@ -3,6 +3,7 @@ import {
   pick,
   shuffle,
 } from "../csp-games/engine.js?v=platform-expansion-v2";
+import { TYPES, scenarioFamilies } from "./variable-scenarios.js?v=variable-lab-v4";
 export const games = {
   "variable-lab": {
     name: "Variable Lab",
@@ -72,20 +73,9 @@ export function nodes(root) {
 }
 const choices = (answer, wrong) =>
   shuffle([...new Set([answer, ...wrong].map(String))]);
-// Each purpose has one matching identifier; alternatives describe different data.
-export const declarationScenarios = [
-  {purpose: "a player's health", name: "playerHealth", types: ["int", "double"]},
-  {purpose: "the price of a movie ticket", name: "ticketPrice", types: ["double"]},
-  {purpose: "the number of lives remaining", name: "livesRemaining", types: ["int"]},
-  {purpose: "whether a player completed a level", name: "levelCompleted", types: ["boolean"]},
-  {purpose: "a player's username", name: "playerUsername", types: ["String"]},
-  {purpose: "a seat's row letter", name: "seatRow", types: ["char"]},
-  {purpose: "the number of books checked out", name: "booksBorrowed", types: ["int"]},
-  {purpose: "the temperature in degrees", name: "airTemperature", types: ["double"]},
-  {purpose: "whether a library book is available", name: "bookAvailable", types: ["boolean"]},
-  {purpose: "the title of a movie", name: "movieTitle", types: ["String"]},
-  {purpose: "a team captain's single initial", name: "captainInitial", types: ["char"]},
-];
+// Assemble scenarios: every family offers one variable of each type, so the
+// type is chosen first from a balanced queue and never skewed by the pool.
+export const declarationScenarios = scenarioFamilies.flatMap(f => f.items.map(item => ({...item, family: f.id, context: f.context})));
 export function generate(game, mode = "mixed", forced) {
   const selected =
     mode === "mixed" ? pick(Object.keys(games[game].modes)) : mode;
@@ -98,9 +88,9 @@ export function generate(game, mode = "mixed", forced) {
 }
 const hints = {
   "variable-lab": [
-    "Separate the type, identifier, operator, and stored data.",
+    "Separate the data type, variable name, assignment operator, and value.",
     "A declaration introduces a variable; initialization supplies its first value. Later assignment changes that value.",
-    "Check literal syntax and type compatibility. A widening conversion can preserve an int in a double; casting a double to int discards its fractional part.",
+    "Check how each value is written and whether it fits the data type. An int can widen to a double automatically; casting a double to int drops the fractional part.",
   ],
   "debugger-lab": [
     "Compare the intended behavior with the code. A diagnostic can point to a consequence rather than the original mistake.",
@@ -146,172 +136,202 @@ export function solution(q) {
   if (q.kind === "select") return { id: q.answerId };
   return { answer: String(q.answer) };
 }
-function variable(mode, forced) {
-  const type = pick(["int", "double", "boolean", "char", "String"]),
-    name = pick({int:["score","livesRemaining","totalPoints"],double:["itemPrice","temperature"],boolean:["isReady","levelCompleted"],char:["sectionCode","seatRow"],String:["studentLabel","playerUsername"]}[type]),
-    n = int(2, 25),
-    value =
-      type === "int"
-        ? String(n)
-        : type === "double"
-          ? (n + 0.25).toFixed(2)
-          : type === "boolean"
-            ? pick(["true", "false"])
-            : type === "char"
-              ? `'${pick(["A", "B", "C", "D"])}'`
-              : `"${pick(["Alex", "Blair", "Blue", "Ready"])}"`;
-  const declaration = region(
-    "declaration",
-    leaf("type", type),
-    " ",
-    leaf("name", name),
-    " ",
-    leaf("operator", "="),
-    " ",
-    leaf("value", value),
-    ";",
-  );
-  const q = {
-    kind: "select",
-    root: region("snippet", declaration),
-    topic: "declaration",
-    explanation:
-      "The type specifies what kind of data a variable can store. The identifier names it, = assigns a value, and the literal represents the supplied data.",
+/* ---------- Variable Lab ---------- */
+// Balanced type queue: each block of 25 holds exactly five of each type. Order
+// is random (weighted by what remains), with no type three times in a row and
+// no type absent for more than MAX_TYPE_GAP consecutive draws.
+const MAX_TYPE_GAP = 9;
+export function createTypeQueue(types = TYPES, perBlock = 5) {
+  let remaining = {}, history = [], since = Object.fromEntries(types.map(t => [t, 0]));
+  const refill = () => { remaining = Object.fromEntries(types.map(t => [t, perBlock])); };
+  refill();
+  return {
+    next() {
+      if (types.every(t => !remaining[t])) refill();
+      const available = types.filter(t => remaining[t] > 0);
+      const overdue = available.filter(t => since[t] >= MAX_TYPE_GAP).sort((x, y) => since[y] - since[x]);
+      let pool = overdue.length ? [overdue[0]]
+        : available.filter(t => !(history.at(-1) === t && history.at(-2) === t));
+      if (!pool.length) pool = available;
+      let r = Math.random() * pool.reduce((sum, t) => sum + remaining[t], 0), chosen = pool.at(-1);
+      for (const t of pool) { r -= remaining[t]; if (r < 0) { chosen = t; break; } }
+      remaining[chosen]--;
+      history = [...history.slice(-1), chosen];
+      for (const t of types) since[t] = t === chosen ? 0 : since[t] + 1;
+      return chosen;
+    },
   };
-  if (mode === "assemble") {
-    q.kind = "assemble";
-    const scenario = pick(declarationScenarios), chosenType = pick(scenario.types);
-    const maximum = {livesRemaining:9,booksBorrowed:15,ticketPrice:20,airTemperature:40}[scenario.name] || 100;
-    const stored = chosenType === "int" ? String(int(1, maximum))
-      : chosenType === "double" ? (int(scenario.name === "ticketPrice" ? 6 : 1, maximum) + pick([0.25, 0.5, 0.75])).toFixed(2)
-      : chosenType === "boolean" ? pick(["true", "false"])
-      : chosenType === "char" ? `'${pick(["A", "B", "C", "D"])}'`
-      : `"${pick(scenario.name === "movieTitle" ? ["Skyward", "Ocean Quest", "Moonlight"] : ["Wildcat", "Bluebird", "Comet"])}"`;
-    q.prompt = `Store ${scenario.purpose}, initially ${stored}.`;
-    q.convention = "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.";
-    q.fields = [
-      {id: "type", label: "Type", choices: shuffle(["int", "double", "boolean", "char", "String"])},
-      {id: "name", label: "Variable name", choices: choices(scenario.name, shuffle(declarationScenarios.filter(x => x.name !== scenario.name).map(x => x.name)).slice(0, 3))},
+}
+const assembleTypes = createTypeQueue(), identifyTypes = createTypeQueue();
+let recentFamilies = [], recentItems = [], lastIdentifyVariant = null;
+export function resetVariableLabState() {
+  Object.assign(assembleTypes, createTypeQueue());
+  Object.assign(identifyTypes, createTypeQueue());
+  recentFamilies = []; recentItems = []; lastIdentifyVariant = null;
+}
+// Pick a scenario for a type chosen first. Recently used families and items are
+// avoided so contexts rotate across all families.
+function scenarioFor(type) {
+  const candidates = scenarioFamilies.flatMap(f => f.items.filter(i => i.type === type).map(item => ({family: f, item})));
+  let pool = candidates.filter(c => !recentFamilies.includes(c.family.id) && !recentItems.includes(c.item.name));
+  if (!pool.length) pool = candidates.filter(c => !recentFamilies.includes(c.family.id));
+  if (!pool.length) pool = candidates;
+  const chosen = pick(pool);
+  recentFamilies = [...recentFamilies, chosen.family.id].slice(-6);
+  recentItems = [...recentItems, chosen.item.name].slice(-30);
+  return chosen;
+}
+const withCommas = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+const words = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+// Returns the Java literal, the plain-English form used in prompts, and plausible
+// wrong literals that reflect common beginner mistakes.
+export function scenarioValue(item) {
+  if (item.type === "int") {
+    const n = int(item.range[0], item.range[1]), spoken = n >= 1000 ? withCommas(n) : String(n);
+    const sentence = item.say(spoken);
+    return {literal: String(n), spoken, sentence, wrong: [`"${n}"`, `${n}.0`,
+      sentence.includes(spoken + "%") ? `${n}%` : n >= 1000 ? withCommas(n) : n >= 10 ? `'${n}'` : words[n]]};
+  }
+  if (item.type === "double") {
+    const [min, max, step] = item.range, places = item.money ? 2 : (String(step).split(".")[1] || "").length;
+    let literal;
+    do literal = (min + int(0, Math.round((max - min) / step)) * step).toFixed(places);
+    while (Number(literal) % 1 === 0);
+    return {literal, spoken: literal, sentence: item.say(literal), wrong: [`"${literal}"`, literal.replace(".", ","),
+      item.money ? `$${literal}` : String(Math.trunc(Number(literal)))]};
+  }
+  if (item.type === "boolean") {
+    const v = pick([true, false]), literal = String(v);
+    return {literal, spoken: literal, sentence: item.say(v), wrong: [`"${literal}"`, v ? "True" : "False", String(!v)]};
+  }
+  if (item.type === "String") {
+    const text = pick(item.texts);
+    return {literal: `"${text}"`, spoken: text, sentence: item.say(text), wrong: [`'${text}'`, text,
+      /[A-Z]/.test(text) ? `"${text.toLowerCase()}"` : `"${text}`]};
+  }
+  const [c, spoken] = pick(item.chars), word = spoken.match(/\((?:for )?([A-Za-z]+)\)/)?.[1];
+  return {literal: `'${c}'`, spoken, sentence: item.say(spoken), wrong: [`"${c}"`, c,
+    word ? `'${word}'` : /[A-Z]/.test(c) ? `'${c.toLowerCase()}'` : `'${spoken.replace(/^the | sign$/g, "")}'`]};
+}
+const typeReason = {
+  int: "int stores whole numbers.", double: "double stores numbers with a decimal part.",
+  boolean: "boolean stores true or false, written in lowercase without quotes.",
+  char: "char stores exactly one character, written in single quotes.",
+  String: "String stores text, written in double quotes.",
+};
+function assembleChallenge() {
+  const type = assembleTypes.next(), {family, item} = scenarioFor(type), value = scenarioValue(item);
+  const siblings = shuffle(family.items.filter(i => i.name !== item.name).map(i => i.name)).slice(0, 2);
+  const malformed = pick([item.name.replace(/([A-Z])/g, " $1").toLowerCase(), item.name.replace(/([A-Z])/g, "-$1").toLowerCase()]);
+  const q = {
+    kind: "assemble",
+    prompt: `${value.sentence} ${item.ask}`,
+    convention: "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.",
+    fields: [
+      {id: "type", label: "Type", choices: shuffle([...TYPES])},
+      {id: "name", label: "Variable name", choices: choices(item.name, [...siblings, malformed])},
       {id: "operator", label: "Operator", choices: shuffle(["=", "==", "!="])},
-      {id: "value", label: "Value", choices: choices(stored, chosenType === "int" ? [Number(stored)+1, Number(stored)-1, `"${stored}"`]
-        : chosenType === "double" ? [Math.trunc(Number(stored)), (Number(stored)+1).toFixed(2), `"${stored}"`]
-        : chosenType === "boolean" ? [stored === "true" ? "false" : "true", `"${stored}"`, "0"]
-        : chosenType === "char" ? [`"${stored.slice(1,-1)}"`, "'Z'", "0"] : [stored.replace(/"/g, "'"), '"Other"', "false"])},
-    ];
-    q.answer = {type: chosenType, name: scenario.name, operator: "=", value: stored};
-    q.scenario = scenario;
-    q.code = "Build the declaration.";
-    q.compilerSource = `public class Practice { public static void main(String[] args) { ${chosenType} ${scenario.name} = ${stored}; } }`;
-    q.explanation = `${chosenType} ${scenario.name} = ${stored}; stores the requested value in a name matching its purpose. ` + {int:"A whole number can legally widen to double; int is the intended type under our introductory convention.", double:"The decimal value is represented with double.", boolean:"boolean stores the truth values true and false.", char:"A single character is represented with char and single quotes.", String:"Text is represented with String and double quotes."}[chosenType];
-    delete q.root;
-    q.topic = "assemble-" + chosenType;
-    return q;
-  }
-  const variant =
-    forced ||
-    pick([
-      "type",
-      "name",
-      "operator",
-      "value",
-      "declaration",
-      "initialization",
-      "assignment",
-      "stored",
-      "conversion",
-      "compatibility",
-    ]);
-  q.topic = variant;
-  if (
-    [
-      "type",
-      "name",
-      "operator",
-      "value",
-      "declaration",
-      "initialization",
-    ].includes(variant)
-  ) {
-    const decoy = region("aux-declaration", leaf("aux-type","int")," ",leaf("aux-name","practiceCount")," ",leaf("aux-operator","=")," ",leaf("aux-value",n+100),";");
-    q.root = region("snippet", ...shuffle([declaration,decoy]).flatMap(d=>[d,"\n"]));
-    q.answerId = variant === "initialization" ? "declaration" : variant;
-    q.prompt = {
-      type: `Select the data type of the variable initialized to ${value}.`,
-      name: `Select the identifier of the variable initialized to ${value}.`,
-      operator: `Select the assignment operator initializing ${name}.`,
-      value: `Select the value assigned to ${name}.`,
-      declaration: `Select the entire declaration of ${name}, including its initializer.`,
-      initialization: `Select the declaration initializing ${name}.`,
-    }[variant];
-  }
-  if (variant === "assignment") {
-    q.root = region(
-      "snippet",
-      region("declaration", type + " " + name + ";"),
-      "\n",
-      region(
-        "assignment",
-        leaf("assigned-name", name),
-        " ",
-        leaf("assignment-operator", "="),
-        " ",
-        leaf("assigned-value", value),
-        ";",
-      ),
-    );
-    q.answerId = "assignment";
-    q.prompt =
-      "Select the assignment that gives an existing variable a value.";
-  }
-  if (variant === "stored") {
-    const next = n + int(1, 5);
-    q.root = region(
-      "snippet",
-      region("declaration", `int ${name} = ${n};`),
-      "\n",
-      region("reassignment", `${name} = ${next};`),
-    );
-    q.kind = "value";
-    q.answer = next;
-    q.choices = choices(next, [n, next - 1, next + 1]);
-    q.prompt = "Select the value stored after the reassignment.";
-    q.explanation =
-      "Reassignment replaces the previous value; it does not create another variable.";
-  }
-  if (variant === "conversion") {
-    const v = pick([-1, 1]) * (n + 0.75),
-      answer = Math.trunc(v);
-    q.root = region(
-      "snippet",
-      region("double-declaration", `double precise = ${v};`),
-      "\n",
-      region("cast", `int whole = (int) precise;`),
-    );
-    q.kind = "value";
-    q.answer = answer;
-    q.choices = choices(answer, [v, Math.floor(v), answer + 1, answer - 1]);
-    q.prompt =
-      "Select the value stored in whole after the explicit conversion.";
-    q.explanation =
-      "An explicit double-to-int cast truncates toward zero. It is a narrowing conversion and can discard information.";
-  }
-  if (variant === "compatibility") {
-    const conversion = pick(["widening", "narrowing", "same"]);
-    const code = conversion === "widening" ? `int count = ${n};\ndouble amount = count;`
-      : conversion === "narrowing" ? `double count = ${n}.75;\nint amount = (int) count;`
-      : `int count = ${n};\nint amount = count;`;
-    q.root = region("snippet", region("conversion-code",code));
-    q.kind = "value";
-    q.answer = {widening:"Widening conversion",narrowing:"Explicit narrowing conversion",same:"No type conversion"}[conversion];
-    q.choices = shuffle(["Widening conversion", "Explicit narrowing conversion", "No type conversion"]);
-    q.prompt = "What conversion occurs when assigning to amount?";
-    q.explanation = conversion === "widening" ? "An int can widen to double without a cast."
-      : conversion === "narrowing" ? "The explicit int cast narrows the double and truncates toward zero." : "Both source and destination are int, so no type conversion is needed.";
-  }
-  if (variant === "stored") q.resultVariable = name;
-  if (variant === "conversion") q.resultVariable = "whole";
-  q.compilerSource = `public class Practice { public static void main(String[] args) { ${q.kind === "select" ? source(q.root) : q.code || source(q.root)} } }`;
+      {id: "value", label: "Value", choices: choices(value.literal, value.wrong)},
+    ],
+    answer: {type, name: item.name, operator: "=", value: value.literal},
+    scenario: {family: family.id, context: family.context, name: item.name, type, spoken: value.spoken},
+    code: "Build the declaration.",
+    compilerSource: `public class Practice { public static void main(String[] args) { ${type} ${item.name} = ${value.literal}; } }`,
+    explanation: `${type} ${item.name} = ${value.literal}; ${item.why}`,
+    topic: "assemble-" + type,
+  };
   return q;
+}
+// Identification uses a declaration from the scenario library and, as a decoy,
+// a different-type variable from the same context.
+function libraryDeclaration(type) {
+  const {family, item} = scenarioFor(type), value = scenarioValue(item);
+  const decoyItem = pick(family.items.filter(i => i.type !== type)), decoy = scenarioValue(decoyItem);
+  return {type, name: item.name, literal: value.literal, decoy: {type: decoyItem.type, name: decoyItem.name, literal: decoy.literal}};
+}
+const declarationNode = (prefix, d) => region(prefix ? prefix + "declaration" : "declaration",
+  leaf(prefix + "type", d.type), " ", leaf(prefix + "name", d.name), " ", leaf(prefix + "operator", "="), " ", leaf(prefix + "value", d.literal), ";");
+export const identifyVariants = ["type", "name", "operator", "value", "declaration", "initialization", "assignment-operator", "assignment", "declaration-only", "stored", "conversion", "compatibility"];
+function identifyChallenge(forced) {
+  let variant = forced;
+  if (!variant) {
+    // declaration and initialization share one slot: same target, two phrasings.
+    do variant = pick(["type", "name", "operator", "value", pick(["declaration", "initialization"]), "assignment-operator", "assignment", "declaration-only", "stored", "conversion", "compatibility"]);
+    while (variant === lastIdentifyVariant);
+  }
+  lastIdentifyVariant = variant;
+  const q = {kind: "select", topic: variant};
+  if (["type", "name", "operator", "value", "declaration", "initialization"].includes(variant)) {
+    const d = libraryDeclaration(identifyTypes.next()), {type, name, literal} = d;
+    q.root = region("snippet", ...shuffle([declarationNode("", d), declarationNode("aux-", d.decoy)]).flatMap(n => [n, "\n"]));
+    q.answerId = variant === "initialization" ? "declaration" : variant;
+    const statement = `${type} ${name} = ${literal};`;
+    Object.assign(q, {
+      type: {prompt: `Select the data type of the variable initialized to ${literal}.`, explanation: `${type} is the data type. It tells Java what kind of value ${name} can store: ${typeReason[type]}`},
+      name: {prompt: `Select the name of the variable initialized to ${literal}.`, explanation: `${name} is the variable name. It comes right after the data type.`},
+      operator: {prompt: `Select the assignment operator in the declaration of ${name}.`, explanation: `= is the assignment operator. It stores the value on its right in the variable on its left.`},
+      value: {prompt: `Select the value that ${name} is initialized to.`, explanation: `${literal} is the value ${name} is initialized to. It appears after the assignment operator. ${typeReason[type]}`},
+      declaration: {prompt: `Select the declaration of ${name}, including the value it has been initialized to.`, explanation: `${statement} declares ${name} and initializes it in one statement, from the data type through the semicolon.`},
+      initialization: {prompt: `Select the declaration and initialization of ${name}.`, explanation: `${statement} declares ${name} and initializes it in one statement, from the data type through the semicolon.`},
+    }[variant]);
+  } else if (variant === "declaration-only") {
+    // Three statements: a declaration without a value, a declaration and
+    // initialization, and a later assignment. The prompt names no variable, so
+    // students must tell the three statement kinds apart.
+    const d = libraryDeclaration(identifyTypes.next()), {type, name, literal, decoy} = d;
+    const bare = region("declaration", leaf("type", type), " ", leaf("name", name), ";");
+    const assignment = region("assignment", leaf("assigned-name", name), " ", leaf("assignment-operator", "="), " ", leaf("assigned-value", literal), ";");
+    const order = pick([[declarationNode("aux-", decoy), bare, assignment], [bare, declarationNode("aux-", decoy), assignment], [bare, assignment, declarationNode("aux-", decoy)]]);
+    q.root = region("snippet", ...order.flatMap((n, i) => i ? ["\n", n] : [n]));
+    q.answerId = "declaration";
+    q.prompt = "Select the declaration that does not initialize its variable.";
+    q.explanation = `${type} ${name}; declares ${name} without giving it a value. The later statement ${name} = ${literal}; assigns its value, and ${decoy.type} ${decoy.name} = ${decoy.literal}; declares and initializes in one statement.`;
+  } else if (["assignment-operator", "assignment"].includes(variant)) {
+    const {type, name, literal} = libraryDeclaration(identifyTypes.next());
+    q.root = region("snippet",
+      region("declaration", leaf("type", type), " ", leaf("name", name), ";"), "\n",
+      region("assignment", leaf("assigned-name", name), " ", leaf("assignment-operator", "="), " ", leaf("assigned-value", literal), ";"));
+    q.answerId = variant;
+    Object.assign(q, {
+      "assignment-operator": {prompt: "Select the assignment operator.", explanation: `= is the assignment operator. In ${name} = ${literal}; it stores ${literal} in ${name}.`},
+      assignment: {prompt: "Select the statement that assigns a value to the existing variable.", explanation: `${name} = ${literal}; assigns a value to ${name}, which was already declared on the line above. It does not repeat the data type.`},
+    }[variant]);
+  } else if (variant === "stored") {
+    const item = pick(declarationScenarios.filter(i => i.type === "int" && i.range[1] < 1000));
+    const first = int(item.range[0], item.range[1]);
+    let next; do next = int(item.range[0], item.range[1]); while (next === first);
+    q.root = region("snippet", region("declaration", `int ${item.name} = ${first};`), "\n", region("reassignment", `${item.name} = ${next};`));
+    Object.assign(q, {kind: "value", answer: next, choices: choices(next, [first, first + next]),
+      prompt: `Select the value stored in ${item.name} after the reassignment.`,
+      explanation: `The reassignment replaces ${first} with ${next}. It does not add to the old value or create another variable.`,
+      resultVariable: item.name});
+  } else if (variant === "conversion") {
+    const [from, to] = pick([["precise", "whole"], ["temperature", "wholeDegrees"], ["balance", "wholeDollars"], ["reading", "wholePart"]]);
+    const v = pick([-1, 1]) * Number((int(2, 25) + pick([0.1, 0.25, 0.5, 0.6, 0.75, 0.9])).toFixed(2)), answer = Math.trunc(v);
+    q.root = region("snippet", region("double-declaration", `double ${from} = ${v};`), "\n", region("cast", `int ${to} = (int) ${from};`));
+    const wrong = [...new Set([v, Math.floor(v), Math.round(v), answer + 1, answer - 1].map(String))].filter(x => x !== String(answer));
+    Object.assign(q, {kind: "value", answer, choices: choices(answer, wrong.slice(0, 3)),
+      prompt: "Select the resulting value after the explicit conversion.",
+      explanation: `Casting with (int) drops the fractional part, so ${v} becomes ${answer}. Java truncates toward zero; it does not round${v < 0 ? ", and for a negative number that means moving up toward zero" : ""}.`,
+      resultVariable: to});
+  } else {
+    const conversion = pick(["widening", "narrowing", "same"]), n = int(2, 25);
+    const code = conversion === "widening" ? `int points = ${n};\ndouble amount = points;`
+      : conversion === "narrowing" ? `double price = ${n}.75;\nint amount = (int) price;`
+      : `int points = ${n};\nint amount = points;`;
+    q.root = region("snippet", region("conversion-code", code));
+    const labels = {widening: "Widening conversion (automatic)", narrowing: "Explicit conversion (casting)", same: "No conversion"};
+    Object.assign(q, {kind: "value", answer: labels[conversion], choices: shuffle(Object.values(labels)),
+      prompt: "What kind of conversion happens when a value is assigned to amount?",
+      explanation: conversion === "widening" ? "An int value can be stored in a double automatically. This widening conversion needs no cast."
+        : conversion === "narrowing" ? "Storing a double in an int requires an explicit conversion, the (int) cast, which drops the fractional part."
+        : "Both variables are int, so no conversion is needed."});
+  }
+  q.compilerSource = `public class Practice { public static void main(String[] args) { ${source(q.root)} } }`;
+  return q;
+}
+function variable(mode, forced) {
+  return mode === "assemble" ? assembleChallenge() : identifyChallenge(forced);
 }
 export function loopValues({ start, bound, step, op }) {
   const condition = (x) =>

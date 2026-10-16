@@ -1,4 +1,4 @@
-import * as J from "./engine.js?v=java-quality-v3";
+import * as J from "./engine.js?v=variable-lab-v4";
 import { diagnostics } from "./diagnostics.js?v=java-quality-v3";
 import { mountCollectionEditor } from "../csp-games/collection-editor.js?v=java-v1";
 import {
