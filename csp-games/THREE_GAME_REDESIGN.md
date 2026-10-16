@@ -22,7 +22,7 @@ Public Chrome verification passed all nine modes: ten independently correct subm
 
 ## Algorithm Architect
 
-Dedicated `architect-engine.js` and `architect-ui.js` implement a bounded pseudocode interpreter. Every existing mode and Mixed default remain. Students arrange individual assignments, headers, conditions, updates, returns and closing braces; optional competing components remain in the bank. They control block placement and nesting. The validator checks behavior across each challenge's declared finite input domain, not a required block order or exact block count. Execution has a development-independent client-side instruction budget to handle nontermination safely.
+Dedicated `architect-engine.js` and `architect-ui.js` implement a bounded pseudocode interpreter. Every existing mode and Mixed default remain. Students arrange individual assignments, headers, conditions, updates, returns and closing braces; optional competing initializations, comparisons, arithmetic updates and returns remain in the bank. They control block placement and nesting. The validator checks behavior across each challenge's declared finite input domain, not a required block order or exact block count. Execution has a development-independent client-side instruction budget to handle nontermination safely.
 
 | Mode | Authored structures |
 | --- | --- |
@@ -40,7 +40,7 @@ Numeric comparison uses a relative/absolute tolerance for numeric results and st
 
 Wrong constructions show a specific failing input, expected return, actual return or execution error, and a short condition/update trace. Syntax failures also show the input that cannot execute. Students can revise independently; the original submission remains in first-try statistics. Reveal closes scoring.
 
-Automated validation: 900 randomized constructions across all 45 structures; 653,496 allowed-domain input executions; 8,726 integrity/interaction assertions; 60 equivalent rational add-then-multiply alternatives accepted. Independent initialization orders accepted. Fixed initialization/loop/return strategies fail the new integrity checks. Public-mode verification pending in this phase.
+Automated validation: 900 randomized constructions across all 45 structures; 695,814 allowed-domain input executions; 9,261 integrity/interaction assertions; 60 equivalent rational add-then-multiply alternatives accepted. Independent initialization orders accepted. Fixed initialization/loop/return strategies fail the new integrity checks. Public-mode verification pending in this phase.
 
 Scoped findings F22–F24 are addressed in the implementation; shared F03/F05 are addressed only for the authorized games.
 

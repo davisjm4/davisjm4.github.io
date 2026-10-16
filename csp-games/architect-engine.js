@@ -817,6 +817,33 @@ export function generateArchitect(mode = "mixed", forced) {
             : 0,
     );
   const distractors = [wrongInit, wrongReturn, ...alternatives];
+  const header = tokens.find(
+    (s) => s.condition?.op && ["if", "until"].includes(s.type),
+  );
+  if (header) {
+    const condition = JSON.parse(JSON.stringify(header.condition));
+    condition.op =
+      {
+        "≥": ">",
+        ">": "≥",
+        "≤": "<",
+        "<": "≤",
+        "=": "≠",
+        "≠": "=",
+        AND: "OR",
+        OR: "AND",
+        NOT: "NOT",
+      }[condition.op] || condition.op;
+    distractors.push({ ...header, condition });
+  }
+  const update = tokens.find(
+    (s) => s.type === "assign" && s.name === "result" && s.value?.op,
+  );
+  if (update) {
+    const value = JSON.parse(JSON.stringify(update.value));
+    value.op = value.op === "+" ? "×" : "+";
+    distractors.push({ ...update, value });
+  }
   const existing = new Set(canonical.map((x) => x.text));
   const extra = distractors
     .filter((s) => {
