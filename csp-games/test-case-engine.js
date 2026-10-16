@@ -588,6 +588,38 @@ function build(mode, shape) {
                   : q.variable === "values"
                     ? `There are no loop visits, so the initial value ${format(result)} is returned.`
                     : `The one-based access selects ${format(result)}.`;
+    if (shape === "conditional-count")
+      q.evidence = () =>
+        result === 0
+          ? `No element exceeds ${low}, so no increment occurs and count remains 0.`
+          : `${format(q.input.filter((v) => v > low))} exceed ${low}; one increment per match produces ${result}.`;
+    if (shape === "sum")
+      q.evidence = () =>
+        q.input.length
+          ? `Adding the elements of ${format(q.input)} gives ${result}.`
+          : "No elements are added, so total remains at its initial 0.";
+    if (shape === "product")
+      q.evidence = () =>
+        q.input.length
+          ? `Starting at 1, multiplying by each element of ${format(q.input)} gives ${result}.`
+          : "No multiplication runs, so total remains at its initial 1.";
+    if (shape === "first-match")
+      q.evidence = () =>
+        result === -1
+          ? `No element equals ${target}, so execution reaches RETURN(-1).`
+          : `The first ${target} appears at one-based position ${result}; RETURN ends the search there.`;
+    if (shape === "until")
+      q.evidence = () =>
+        `After ${result} updates of ${step}, value is ${r.env.value}; it satisfies value ≥ ${k}, so count ${result} is returned.`;
+    if (shape === "repeat-sum")
+      q.evidence = () =>
+        `The initial ${low} plus ${q.input} additions of ${step} gives ${result}.`;
+    if (shape === "substring")
+      q.evidence = () =>
+        `Starting at position 2 in ${format(q.input)}, the next two characters are ${format(result)}.`;
+    if (shape === "concat")
+      q.evidence = () =>
+        `The inner CONCAT puts "[" before ${format(q.input)}; the outer CONCAT adds "]", producing ${format(result)}.`;
   }
   if (mode === "boundary") {
     if (shape === "above-exclusive") {
@@ -963,30 +995,66 @@ export function evaluateTestCase(q, response) {
   }
   return { correct, details: detail };
 }
-export function createTestDeck() {
-  const bags = new Map();
-  let lastMode = "",
-    lastStructure = "";
-  const draw = (key, all) => {
-    if (!bags.get(key)?.length) {
-      let list = shuffle(all);
-      if (
-        list.at(-1) === (key === "mixed" ? lastMode : lastStructure) &&
-        list.length > 1
-      )
-        [list[0], list[list.length - 1]] = [list.at(-1), list[0]];
-      bags.set(key, list);
-    }
-    return bags.get(key).pop();
+export function reasonFamily(mode, shape) {
+  const groups = {
+    bugs: [
+      ["inclusive", "direction", "threshold"],
+      ["and-or", "negation"],
+      ["loop-count", "loop-update"],
+      ["sum-initial", "omit-last"],
+    ],
+    predict: [
+      ["conditional", "nested"],
+      ["sum", "conditional-count", "product"],
+      ["repeat-sum", "until"],
+      ["concat", "substring"],
+    ],
+    boundary: [
+      ["above-exclusive", "below-exclusive"],
+      ["upper-range", "lower-range"],
+      ["upper-index", "first-index"],
+      ["repeat-transition", "zero-one"],
+    ],
+    branches: [
+      ["middle", "missing-test"],
+      ["nested-true", "nested-false"],
+    ],
+    edge: [["empty-sum", "empty-product", "guard-first"]],
   };
+  const group = groups[mode]?.find((g) => g.includes(shape));
+  return mode + ":" + (group ? group[0] : shape);
+}
+export function createTestDeck() {
+  const bags = new Map(),
+    last = new Map();
+  function draw(key, all) {
+    const family = (item) => (key === "mixed" ? item : reasonFamily(key, item));
+    if (!bags.get(key)?.length) {
+      function arrange(rest, previous) {
+        if (!rest.length) return [];
+        for (const item of shuffle(rest)) {
+          if (family(item) === previous) continue;
+          const tail = arrange(
+            rest.filter((x) => x !== item),
+            family(item),
+          );
+          if (tail) return [item, ...tail];
+        }
+        return null;
+      }
+      const sequence = arrange(all, last.get(key));
+      if (!sequence) throw Error("Cannot arrange distinct practice families");
+      bags.set(key, sequence);
+    }
+    const item = bags.get(key).shift();
+    last.set(key, family(item));
+    return item;
+  }
   return {
     next(mode = "mixed") {
       const selected =
         mode === "mixed" ? draw("mixed", Object.keys(testModes)) : mode;
-      const shape = draw(selected, definitions[selected]);
-      lastMode = selected;
-      lastStructure = shape;
-      return generateTestCase(selected, shape);
+      return generateTestCase(selected, draw(selected, definitions[selected]));
     },
   };
 }

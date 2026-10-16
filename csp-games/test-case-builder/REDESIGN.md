@@ -6,7 +6,7 @@ This release supersedes the earlier multi-field Test Case Builder. It changes on
 
 One short question, one visible answer selection, Check Answer, concise feedback, Next Challenge. There are no answer fields, output-entry rules, dropdown answer choices or test-suite construction steps. Check is disabled until a choice is selected. Selection provides no correctness information. Checking locks the round and identifies the correct answer. A wrong check records an incorrect/revealed round, never independent success. Intentional Show Answer records a reveal without adding an attempt. Next before completion records a skip. Existing session rows are preserved; new results use `quick.<mode>` topic identifiers.
 
-Mixed Practice is the default. Its shuffled category bag presents every category in each five-question cycle without repeating a category across the boundary. Each category has its own shuffled structure bag; a new cycle avoids immediately repeating the last structure. This is variety control, not required progression.
+Mixed Practice is the default. Its shuffled category bag presents every category in each five-question cycle without repeating a category across the boundary. Each category has its own shuffled structure bag; cycles avoid adjacent questions from the same algorithm family, including related nested-path or empty-list templates. This is variety control, not required progression.
 
 ## Reasoning structures
 
@@ -18,7 +18,7 @@ Mixed Practice is the default. Its shuffled category bag presents every category
 | Branch Coverage (8) | ELSE; FALSE then TRUE in a chain; nested TRUE/TRUE; nested TRUE/FALSE; compound ELSE; negated ELSE; missing path from an existing pair of tests; final fall-through after two early returns |
 | Edge Cases (10) | empty sum; empty product; guard before first-element access; nonempty list with no neighboring pair; missing target in nonempty data; first and last position coincide; zero updates; empty-text guard; too-short character access; documented index precondition |
 
-52 structures in total. Number/name changes are not counted as separate structures. All choices are computed from finite, valid input pools; non-prediction modes choose one qualifying option and three nonqualifying options. Some bugs have many error-exposing inputs; exactly one is displayed in a round. Prediction questions use three or four distinct visible results when misconceptions produce duplicate values. Numeric test choices favor nearby values rather than remote outliers.
+52 question templates, grouped into 34 mode-specific reasoning families (7 bug, 7 prediction, 6 boundary, 6 branch and 8 edge-case families). Some templates share an algorithm while asking about a different testing goal; these are not counted as additional algorithm families. Number/name changes are not counted as separate structures. All choices are computed from finite, valid input pools; non-prediction modes choose one qualifying option and three nonqualifying options. Some bugs have many error-exposing inputs; exactly one is displayed in a round. Prediction questions use three or four distinct visible results when misconceptions produce duplicate values. Numeric test choices favor nearby values rather than remote outliers.
 
 ## Examples
 

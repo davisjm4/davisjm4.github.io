@@ -295,6 +295,7 @@ for (const mode of Object.keys(E.testModes)) {
     for (let i = 0; i < E.structures[mode].length; i++) {
       const q = deck.next(mode);
       ok(q.structure !== prev);
+      ok(E.reasonFamily(mode, q.structure) !== E.reasonFamily(mode, prev));
       seen.add(q.structure);
       prev = q.structure;
     }
