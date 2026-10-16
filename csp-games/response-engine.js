@@ -464,6 +464,61 @@ export function generateResponse(mode = "mixed", support = "full", forced) {
           `${p.wrongReason[1]} Return values change the procedure definition for each caller.`,
         ];
   }
+  const emptyFocused = isEmpty && ["reduced", "testing"].includes(selected);
+  if (emptyFocused) {
+    const guarded = p.structure === "maximum",
+      reverse = p.structure === "reverse";
+    const emptyEvidence = guarded
+      ? "The empty-input guard returns before the first element is accessed."
+      : reverse
+        ? "The initial index is zero, so REPEAT UNTIL executes its body zero times."
+        : "The empty input provides no elements, so FOR EACH executes its body zero times.";
+    const emptyReason = {
+      count:
+        "With zero iterations, count remains at its initial zero and is returned unchanged.",
+      sum: "With zero iterations, total remains at its initial zero and is returned unchanged.",
+      product:
+        "With zero iterations, product remains at its initial one and is returned unchanged.",
+      "first-index":
+        "No matching return is reached; the final RETURN(-1) supplies the absence result.",
+      filter:
+        "No element is appended, so the initialized empty result list is returned.",
+      reverse:
+        "No element is appended, so the initialized empty result list is returned.",
+      maximum:
+        "The early guard prevents values[1] from being evaluated on an empty list.",
+      all: "No nonpositive element causes an early FALSE, so execution reaches RETURN(TRUE).",
+    }[p.structure];
+    const wrongEmpty = guarded
+      ? [
+          "The empty-input guard still accesses values[1] before returning its result.",
+          "The empty-input guard is skipped when LENGTH(values) equals zero.",
+        ]
+      : [
+          "The loop visits a default zero element and updates its state once.",
+          "The procedure cannot return until at least one element has been visited.",
+        ];
+    if (selected === "reduced") E = [emptyEvidence, ...wrongEmpty];
+    R = [emptyReason, ...wrongEmpty];
+    const needles = {
+      count: ["count ← 0", "FOR EACH", "RETURN(count)"],
+      sum: ["total ← 0", "FOR EACH", "RETURN(total)"],
+      product: ["product ← 1", "FOR EACH", "RETURN(product)"],
+      "first-index": ["FOR EACH", "RETURN(-1)"],
+      filter: ["kept ← []", "FOR EACH", "RETURN(kept)"],
+      reverse: [
+        "reversed ← []",
+        "index ← LENGTH",
+        "REPEAT UNTIL",
+        "RETURN(reversed)",
+      ],
+      maximum: ["IF (LENGTH(values) = 0)"],
+      all: ["FOR EACH", "RETURN(TRUE)"],
+    }[p.structure];
+    p.validLines = p.lines
+      .map((line, i) => (needles.some((n) => line.includes(n)) ? i + 1 : null))
+      .filter(Boolean);
+  }
   R = R.map((text) => "This evidence supports the conclusion: " + text);
   const roles = { claim: C, evidence: E, reason: R },
     ids = shuffle(Array.from({ length: 9 }, (_, i) => "sentence-" + i)),
@@ -497,23 +552,25 @@ export function generateResponse(mode = "mixed", support = "full", forced) {
     topic: selected + "." + support,
     topicTitle: responseModes[selected] + " · " + supportNames[support],
     structure: p.structure,
-    evidencePrompt: {
-      count: "Select the statement that updates the number of matches.",
-      sum: "Select the repeated update that adds an element to the accumulated total.",
-      product:
-        "Select the initialization or repeated update of the running product.",
-      "first-index":
-        "Select the condition that immediately returns a matching position.",
-      filter:
-        "Select the statement that adds a matching element to the result list.",
-      maximum:
-        "Select the empty-input guard or the comparison that controls the selected result.",
-      all: "Select a statement that returns the Boolean outcome of the positivity test.",
-      range: "Select the condition that decides range membership.",
-      scale: "Select an assignment that transforms the input data.",
-      reverse:
-        "Select a line that reads a list element or advances the index to the next position.",
-    }[p.structure],
+    evidencePrompt: emptyFocused
+      ? "Select a line that explains the empty-input result: a guard, zero-iteration loop, initialization or final return."
+      : {
+          count: "Select the statement that updates the number of matches.",
+          sum: "Select the repeated update that adds an element to the accumulated total.",
+          product:
+            "Select the initialization or repeated update of the running product.",
+          "first-index":
+            "Select the condition that immediately returns a matching position.",
+          filter:
+            "Select the statement that adds a matching element to the result list.",
+          maximum:
+            "Select the empty-input guard or the comparison that controls the selected result.",
+          all: "Select a statement that returns the Boolean outcome of the positivity test.",
+          range: "Select the condition that decides range membership.",
+          scale: "Select an assignment that transforms the input data.",
+          reverse:
+            "Select a line that reads a list element or advances the index to the next position.",
+        }[p.structure],
     prompt,
     procedure: p,
     items: shuffle(items),

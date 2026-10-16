@@ -3,7 +3,7 @@ import {
   supportNames,
   generateResponse,
   evaluateResponse,
-} from "./response-engine.js?v=instructional-rb-v3";
+} from "./response-engine.js?v=instructional-rb-v4";
 import {
   sessionTracker,
   addSessionNavigation,

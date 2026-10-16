@@ -94,6 +94,15 @@ for (const mode of Object.keys(R.responseModes))
       ok(q.items.every((i) => !i.label && !/network|encrypt/i.test(i.text)));
       ok(p.validLines.length > 0);
       ok(q.evidencePrompt.startsWith("Select"));
+      if (
+        ["testing", "reduced"].includes(mode) &&
+        Array.isArray(p.sample[0]) &&
+        !p.sample[0].length
+      ) {
+        ok(q.evidencePrompt.includes("empty-input"));
+        const reason = q.items.find((i) => i.id === q.correct.reason).text;
+        ok(/zero|No |guard|early/.test(reason));
+      }
       for (const line of p.validLines) ok(p.lines[line - 1].trim().length > 0);
       ok(JSON.stringify(p.run(p.sample)) !== JSON.stringify(p.run(p.other)));
       for (const args of [p.sample, p.other])
