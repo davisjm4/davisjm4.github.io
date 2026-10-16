@@ -1,4 +1,5 @@
 import * as J from "./engine.js?v=variable-lab-v4";
+import { mathGame } from "./math-lab/engine.js?v=math-v1";
 import { diagnostics } from "./diagnostics.js?v=java-quality-v3";
 import { mountCollectionEditor } from "../csp-games/collection-editor.js?v=java-v1";
 import {
@@ -19,7 +20,7 @@ const $ = (id) => document.getElementById(id),
 if (!slug) {
   $("main").innerHTML =
     `<div class="eyebrow">DevCat Studios · Java practice</div><h1>Read it. Explore it.<br>Understand it.</h1><p class="intro">Quick, interactive practice for Java code understanding. No code editor, accounts, or required progression.</p><div class="grid">${Object.entries(
-      J.games,
+      { ...J.games, "math-lab": mathGame },
     )
       .map(
         ([id, g]) =>
