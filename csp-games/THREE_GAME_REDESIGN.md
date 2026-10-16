@@ -79,3 +79,18 @@ No Java Games files, unrelated game implementations, session schema, branding or
 
 Mobile and Chromebook-sized rendered viewport checks remain pending because this session's browser exposes no supported resize or device-emulation control. Mouse/keyboard behavior is covered by public desktop Chrome and DOM interaction tests; 44-pixel code-evidence controls, preserved indentation, internal horizontal code scrolling, wrapping prose and responsive existing layout are implemented. These checks do not substitute for real touch-device QA. The report's print action and reset confirmation/cancel/confirm are regression-tested in a DOM environment; rendered PDF/physical print inspection was not performed.
 
+
+## Final release verification — October 16, 2026
+
+Source release `62e6eb15deb75f095114b1c882ef169f89c5b863` passed GitHub Pages build and deployment (run 38863425690). Final Response Builder entry and modules returned HTTP 200 and matched local committed bytes exactly. The public page loaded `instructional-rb-v4`. All 14 npm test suites passed on the final source; the three redesigned-game suites total 6,600 randomized challenges and 150,461 assertions, in addition to the 695,814 Algorithm Architect domain-input executions. The final empty-product challenge accepted keyboard selection of the initialization and explained zero iterations and the unchanged product identity.
+
+Final public-browser report checkpoint (the earlier counts above describe earlier QA checkpoints):
+
+| Game | Attempted | First-try | After revision | Submissions | Incorrect | Revealed |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Test Case Builder | 12 | 10 | 0 | 12 | 2 | 2 |
+| Algorithm Architect | 11 | 8 | 3 | 14 | 3 | 1 |
+| Response Builder | 20 | 17 | 0 | 20 | 3 | 4 |
+| Binary Builder (unchanged smoke test) | 1 | 1 | 0 | 1 | 0 | 0 |
+
+The report correctly separated independent revisions from first-try accuracy and intentional reveals from attempts. Response Builder's three incorrect short submissions remained incorrect/revealed; none gained independent retry credit. Desktop report width stayed within the browser viewport. Optional name/period fields, reset confirmation/cancel/confirm and print action passed disposable-storage DOM regressions; the live browser reset was canceled and preserved results. No further publishing action is required from the teacher. Mobile/Chromebook rendered layouts and rendered PDF/physical print remain the explicit outstanding manual QA items.
