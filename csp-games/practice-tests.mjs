@@ -71,35 +71,33 @@ for (const [slug, g] of Object.entries(P.practiceGames)) {
           }),
           false,
         );
-        if (answer.comparison)
-          assert.ok(
-            P.validatePractice(q, { ...answer, comparison: "NOT <" }),
-            "Equivalent comparison accepted",
-          );
-        if (
-          ["sequence", "procedure"].includes(q.mode) &&
-          q.threshold % q.factor === 0
-        )
-          assert.ok(
-            P.validatePractice(q, {
-              ...answer,
-              offset: String(q.threshold / q.factor),
-              order: ["init", "add", "multiply", "return"],
-            }),
-            "Equivalent order/offset accepted",
-          );
         for (const input of P.algorithmTests(q))
-          assert.equal(
-            P.executeAlgorithm(q, answer, input).value,
-            P.expectedAlgorithm(q, input),
+          assert.ok(
+            P.algorithmEquivalent(
+              P.executeAlgorithm(q, answer, input).value,
+              P.expectedAlgorithm(q, input),
+            ),
           );
       }
       if (q.kind === "test") {
-        assert.equal(P.validatePractice(q, { ...answer, [q.fields[0].id]: "abc" }), false);
-        const wrongOutput={...answer,[q.mode === "branches" ? "expected0" : "expected"]:"IMPOSSIBLE"};
-        assert.equal(P.validatePractice(q,wrongOutput),false);
-        assert.equal(P.validatePractice(q,{input:100,expected:"true",actual:"false",other:0}),false);
-
+        assert.equal(
+          P.validatePractice(q, { ...answer, [q.fields[0].id]: "abc" }),
+          false,
+        );
+        const wrongOutput = {
+          ...answer,
+          [q.mode === "branches" ? "expected0" : "expected"]: "IMPOSSIBLE",
+        };
+        assert.equal(P.validatePractice(q, wrongOutput), false);
+        assert.equal(
+          P.validatePractice(q, {
+            input: 100,
+            expected: "true",
+            actual: "false",
+            other: 0,
+          }),
+          false,
+        );
       }
     }
 }

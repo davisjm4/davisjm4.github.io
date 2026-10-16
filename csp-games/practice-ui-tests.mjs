@@ -143,7 +143,7 @@ function launch(slug, concept = false) {
   };
 }
 for (const [slug, g] of Object.entries(P.practiceGames)) {
-  if(slug === "test-case-builder") continue; // Dedicated redesigned UI and one-attempt tests live in test-case-redesign-tests.mjs.
+  if (["test-case-builder", "algorithm-architect"].includes(slug)) continue; // Dedicated redesigned UI and one-attempt tests live in test-case-redesign-tests.mjs.
   const t = launch(slug);
   eq(t.$("practice-mode").value, "mixed");
   if (slug === "response-builder") eq(t.$("support").value, "full");
@@ -274,16 +274,30 @@ for (const [category, variant] of X.scenarios)
   }
 // Test Case Builder has a dedicated one-submission UI suite. Include its validated
 // API outcome here to keep the shared printable-report aggregation test cross-game.
-const testingSample=P.generatePractice("test-case-builder","branches");
-const testingTracker=S.createSessionTracker({storage});
-const testingId=testingTracker.begin("test-case-builder",P.practiceGames["test-case-builder"].title,testingSample.topic,"Branch Coverage");
-ok(P.validatePractice(testingSample,P.solutionPractice(testingSample)));
-testingTracker.submit(testingId,true);
+const testingSample = P.generatePractice("test-case-builder", "branches");
+const testingTracker = S.createSessionTracker({ storage });
+const testingId = testingTracker.begin(
+  "test-case-builder",
+  P.practiceGames["test-case-builder"].title,
+  testingSample.topic,
+  "Branch Coverage",
+);
+ok(P.validatePractice(testingSample, P.solutionPractice(testingSample)));
+testingTracker.submit(testingId, true);
+const algorithmSample = P.generatePractice("algorithm-architect", "search");
+const algorithmId = testingTracker.begin(
+  "algorithm-architect",
+  P.practiceGames["algorithm-architect"].title,
+  algorithmSample.topic,
+  "Searching",
+);
+ok(P.validatePractice(algorithmSample, P.solutionPractice(algorithmSample)));
+testingTracker.submit(algorithmId, true);
 const refreshed = S.createSessionTracker({ storage }).snapshot();
 eq(refreshed.totals, t.tracker.snapshot().totals);
 for (const game of Object.keys(P.practiceGames)) ok(refreshed.games[game]);
 console.log(
-  `Expansion DOM: ${checks} checks passed across six new games, expanded concepts, mode defaults, support, retries, reveals, simulations, and shared persistence.`,
+  `Expansion DOM: ${checks} checks passed across the remaining shared-interface games, expanded concepts, mode defaults, support, retries, reveals, simulations, and shared persistence.`,
 );
 // Shared code/data passages generate separate tracked questions with unchanged source.
 const ap = launch("mixed-ap-practice");

@@ -1,4 +1,13 @@
-import {generateTestCase,evaluateTestCase} from "./test-case-engine.js?v=instructional-tcb-v2";
+import {
+  generateArchitect,
+  evaluateArchitect,
+  runConstruction,
+  closeEnough,
+} from "./architect-engine.js?v=instructional-aa-v1";
+import {
+  generateTestCase,
+  evaluateTestCase,
+} from "./test-case-engine.js?v=instructional-tcb-v2";
 import { int, pick, shuffle } from "./engine.js?v=platform-expansion-v2";
 export const practiceGames = {
   "response-builder": {
@@ -192,8 +201,7 @@ export function validatePractice(q, r) {
 }
 export function solutionPractice(q) {
   if (q.kind === "test") return q.example;
-  if (q.kind === "architect")
-    return { ...q.solution, order: q.blocks.map((b) => b.id) };
+  if (q.kind === "architect") return { order: [...q.solution] };
   if (q.kind === "order") return { order: q.solution };
   if (q.kind === "multi") return { selected: q.correct };
   if (q.kind === "simulation") return q.solution;
@@ -372,8 +380,8 @@ function response(mode) {
   );
 }
 function testCase(mode) {
-  const q=generateTestCase(mode);
-  q.explanation=evaluateTestCase(q,q.example).details;
+  const q = generateTestCase(mode);
+  q.explanation = evaluateTestCase(q, q.example).details;
   return q;
 }
 function whole(v) {
@@ -387,225 +395,32 @@ export function parseList(v) {
   if (!s.every(whole)) return null;
   return s.map(Number);
 }
-function validateTest(q,r) { return evaluateTestCase(q,r).correct; }
-const block = (id, text) => ({ id, text });
-function architect(mode) {
-  const factor = int(2, 6),
-    threshold = int(3, 9),
-    p = pick(["processValues", "analyzeList", "calculateResult"]);
-  const q = base(
-    "algorithm-architect",
-    mode,
-    "Configure and arrange the procedure to meet the stated goal.",
-    "",
-    {
-      kind: "architect",
-      factor,
-      threshold,
-      fields: [],
-      explanation:
-        "Initialization must happen before repeated updates, and RETURN after processing. The test runner compares behavior with the requirement over exhaustive small inputs and additional edge cases. Any configuration that passes is accepted.",
-    },
-  );
-  const filter = [
-      "selection",
-      "counter",
-      "nested",
-      "nested-selection",
-      "search",
-    ].includes(mode),
-    count = ["counter", "search"].includes(mode),
-    repeat = ["iteration", "accumulator"].includes(mode);
-  if (mode === "sequence" || mode === "procedure") {
-    q.context = `Goal: PROCEDURE ${p}(value) returns (${factor} × value) + ${threshold}.\nInputs may be negative, zero, or positive whole numbers.`;
-    q.blocks = [
-      block("init", `result ← value`),
-      block("multiply", `result ← result × factor`),
-      block("add", `result ← result + offset`),
-      block("return", "RETURN(result)"),
-    ];
-    q.fields = [
-      chooseField("factor", "factor", String(factor), [
-        String(factor + 1),
-        "0",
-      ]),
-      chooseField("offset", "offset", String(threshold), [
-        String(threshold - 1),
-        String(threshold / factor),
-      ]),
-    ];
-    q.solution = { factor: String(factor), offset: String(threshold) };
-  } else {
-    const goal =
-      mode === "search"
-        ? `return TRUE if any list element is at least ${threshold}, otherwise FALSE`
-        : mode === "counter"
-          ? `count elements at least ${threshold}`
-          : mode === "selection"
-            ? `sum only elements at least ${threshold}`
-            : mode === "nested-selection"
-              ? `count elements in the inclusive range ${threshold} through ${threshold + 4}`
-              : mode === "nested"
-                ? `count pairs of list elements (including an item paired with itself) whose sum is at least ${threshold}`
-                : mode === "iteration"
-                  ? `return ${factor} times the number of list elements`
-                  : "return the sum of all list elements";
-    q.context = `Goal: PROCEDURE ${p}(values) must ${goal}.\nLists may be empty and may contain negative, zero, or positive whole numbers.\nEach block stays intact; configure its comparison/update and arrange the blocks.`;
-    const initial = mode === "search" ? "false" : "0";
-    const loop =
-      mode === "nested-selection"
-        ? `FOR EACH item IN values\n{\n    IF (comparison(item, ${threshold}))\n    {\n        IF (upperComparison(item, ${threshold + 4}))\n        {\n            result ← result + 1\n        }\n    }\n}`
-        : mode === "nested"
-          ? `FOR EACH left IN values\n{\n    FOR EACH right IN values\n    {\n        IF (comparison(left + right, ${threshold}))\n        {\n            result ← result + 1\n        }\n    }\n}`
-          : filter
-            ? `FOR EACH item IN values\n{\n    IF (comparison(item, ${threshold}))\n    {\n        result ← ${mode === "search" ? "true" : count ? "result + 1" : "result + item"}\n    }\n}`
-            : `FOR EACH item IN values\n{\n    result ← result + update\n}`;
-    q.blocks = [
-      block("init", `result ← ${initial}`),
-      block("process", loop),
-      block("return", "RETURN(result)"),
-    ];
-    q.fields = filter
-      ? [chooseField("comparison", "comparison", "≥", [">", "≤", "=", "NOT <"])]
-      : [
-          chooseField(
-            "update",
-            "update",
-            mode === "iteration" ? String(factor) : "item",
-            ["1", "0", mode === "iteration" ? "item" : String(factor)],
-          ),
-        ];
-    if (mode === "nested-selection")
-      q.fields.push(
-        chooseField("upperComparison", "upperComparison", "≤", [
-          "<",
-          "≥",
-          "NOT >",
-        ]),
-      );
-    q.solution = Object.fromEntries(q.fields.map((f) => [f.id, f.correct]));
-  }
-  q.bank = shuffle(q.blocks);
-  return q;
+function validateTest(q, r) {
+  return evaluateTestCase(q, r).correct;
 }
-function compare(a, op, b) {
-  return op === "NOT >"
-    ? !(a > b)
-    : op === "NOT <"
-      ? !(a < b)
-      : op === "≥"
-        ? a >= b
-        : op === ">"
-          ? a > b
-          : op === "≤"
-            ? a <= b
-            : op === "="
-              ? a === b
-              : false;
+function architect(mode) {
+  const q = generateArchitect(mode);
+  return {
+    ...q,
+    kind: "architect",
+    prompt: "Construct a procedure that meets the goal.",
+    fields: [],
+    blocks: q.solution.map((id) => q.bank.find((b) => b.id === id)),
+    explanation: evaluateArchitect(q, q.solution).details,
+  };
 }
 export function executeAlgorithm(q, r, input) {
-  let result,
-    returned = false;
-  for (const id of r.order || []) {
-    if (returned) break;
-    if (id === "init")
-      result =
-        q.mode === "search"
-          ? false
-          : ["sequence", "procedure"].includes(q.mode)
-            ? input
-            : 0;
-    else if (id === "multiply") result *= Number(r.factor);
-    else if (id === "add") result += Number(r.offset);
-    else if (id === "process") {
-      if (!Array.isArray(input) || result === undefined) return { error: true };
-      for (const item of input) {
-        if (q.mode === "nested-selection") {
-          if (
-            compare(item, r.comparison, q.threshold) &&
-            compare(item, r.upperComparison, q.threshold + 4)
-          )
-            result++;
-        } else if (q.mode === "nested") {
-          for (const right of input)
-            if (compare(item + right, r.comparison, q.threshold)) result++;
-        } else if (["selection", "counter", "search"].includes(q.mode)) {
-          if (compare(item, r.comparison, q.threshold)) {
-            if (q.mode === "search") result = true;
-            else result += q.mode === "counter" ? 1 : item;
-          }
-        } else result += r.update === "item" ? item : Number(r.update);
-      }
-    } else if (id === "return") {
-      returned = true;
-      return { value: result };
-    }
-  }
-  return { error: true };
+  return runConstruction(q, r.order, input);
 }
 export function algorithmTests(q) {
-  if (["sequence", "procedure"].includes(q.mode))
-    return Array.from({ length: 31 }, (_, i) => i - 15);
-  const vals = [
-      -2,
-      0,
-      q.threshold - 1,
-      q.threshold,
-      q.threshold + 1,
-      q.threshold + 4,
-      q.threshold + 5,
-    ],
-    out = [[], [100], [-100]];
-  for (const a of vals) {
-    out.push([a]);
-    for (const b of vals) {
-      out.push([a, b]);
-      for (const c of vals) out.push([a, b, c]);
-    }
-  }
-  return out;
+  return q.tests;
 }
 export function expectedAlgorithm(q, input) {
-  switch (q.mode) {
-    case "sequence":
-    case "procedure":
-      return q.factor * input + q.threshold;
-    case "search":
-      return input.some((x) => x >= q.threshold);
-    case "counter":
-      return input.filter((x) => x >= q.threshold).length;
-    case "selection":
-      return input.filter((x) => x >= q.threshold).reduce((s, x) => s + x, 0);
-    case "nested-selection":
-      return input.filter((x) => x >= q.threshold && x <= q.threshold + 4)
-        .length;
-    case "nested":
-      return input.reduce(
-        (s, a) => s + input.filter((b) => a + b >= q.threshold).length,
-        0,
-      );
-    case "iteration":
-      return input.length * q.factor;
-    default:
-      return input.reduce((s, x) => s + x, 0);
-  }
+  return q.expected(input);
 }
+export const algorithmEquivalent = closeEnough;
 function validateAlgorithm(q, r) {
-  if (
-    !r.order ||
-    r.order.length !== q.blocks.length ||
-    new Set(r.order).size !== q.blocks.length ||
-    !q.blocks.every((b) => r.order.includes(b.id))
-  )
-    return false;
-  if (
-    !q.fields.every((f) => f.options.some((o) => o.value === String(r[f.id])))
-  )
-    return false;
-  return algorithmTests(q).every((input) => {
-    const actual = executeAlgorithm(q, r, input);
-    return !actual.error && actual.value === expectedAlgorithm(q, input);
-  });
+  return evaluateArchitect(q, r.order).correct;
 }
 export const impactScenarios = {
   innovation: [

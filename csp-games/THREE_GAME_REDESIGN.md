@@ -22,7 +22,27 @@ Public Chrome verification passed all nine modes: ten independently correct subm
 
 ## Algorithm Architect
 
-Pending. No generator/interface changes in this phase.
+Dedicated `architect-engine.js` and `architect-ui.js` implement a bounded pseudocode interpreter. Every existing mode and Mixed default remain. Students arrange individual assignments, headers, conditions, updates, returns and closing braces; optional competing components remain in the bank. They control block placement and nesting. The validator checks behavior across each challenge's declared finite input domain, not a required block order or exact block count. Execution has a development-independent client-side instruction budget to handle nontermination safely.
+
+| Mode | Authored structures |
+| --- | --- |
+| Sequencing | affine transformation with rational alternatives; exchange using a temporary; dependent variable updates; two intermediate values; add then divide |
+| Selection | absolute value; maximum of two; clamping; sign classification; strict range membership |
+| Iteration | sum through n; decrementing factorial; repeated product/power; input-dependent stepping; conditional even sum |
+| Nested loops | sum over ordered pairs; compare ordered pairs; rectangular repetition; triangular repetition; ragged-row traversal |
+| Nested conditionals | inclusive-range count; positive-even sum; sign text; flag-dependent branches; weighted sign categories |
+| Counters | count all; count matches; adjacent transitions; run count with empty case; count before sentinel |
+| Accumulators | sum; product identity; guarded maximum; guarded mean; position-weighted sum |
+| Searching | first target index; last target index; target existence; first positive position; adjacent equal pair |
+| Procedures and parameters | argument ordering for difference; weighted parameters; composed calls; Boolean helper result; square of a difference |
+
+Numeric comparison uses a relative/absolute tolerance for numeric results and structural/type checks for other values. Rational expressions are rendered as division expressions, never long decimal artifacts. First/last search positions are one-based; absent results and empty inputs are included. Different algorithms and harmless additional components are accepted when they satisfy the goal over the entire allowed domain. The finite domain is stated so test coverage is not presented as a proof over arbitrary inputs.
+
+Wrong constructions show a specific failing input, expected return, actual return or execution error, and a short condition/update trace. Syntax failures also show the input that cannot execute. Students can revise independently; the original submission remains in first-try statistics. Reveal closes scoring.
+
+Automated validation: 900 randomized constructions across all 45 structures; 653,496 allowed-domain input executions; 8,726 integrity/interaction assertions; 60 equivalent rational add-then-multiply alternatives accepted. Independent initialization orders accepted. Fixed initialization/loop/return strategies fail the new integrity checks. Public-mode verification pending in this phase.
+
+Scoped findings F22–F24 are addressed in the implementation; shared F03/F05 are addressed only for the authorized games.
 
 ## Response Builder
 
