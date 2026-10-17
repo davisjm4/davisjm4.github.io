@@ -1,15 +1,31 @@
-import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v8";
+import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v9";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
 const method = (e) => `<span class="api-method api-${esc(e.method.toLowerCase())}">${esc(e.method)}</span>`;
 const runtimeParam = (p) => p.in === "path" || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(p.name) && !p.allowedValues;
+const HTTP_REFERENCE = `<details class="api-http-reference"><summary>HTTP Methods — Quick Reference</summary><dl><dt>GET — Retrieve information</dt><dd>Requests an existing resource or collection.</dd><dt>POST — Submit information</dt><dd>Sends criteria for processing. Some APIs use POST for searches without creating anything.</dd><dt>PUT — Create or replace</dt><dd>Creates or replaces the target resource according to the documentation.</dd><dt>PATCH — Partially update</dt><dd>Applies changes to part of an existing resource.</dd><dt>DELETE — Remove</dt><dd>Requests deletion of a resource.</dd></dl><p><strong>Why might a search use POST?</strong> Some APIs accept search criteria in a JSON request body. The method comes from the API documentation; students do not choose it arbitrarily.</p></details>`;
 function providerNotes(provider) { const notes = Array.isArray(provider.notes) ? provider.notes : [provider.notes]; return notes.filter(Boolean).map((n) => `<li>${esc(n)}</li>`).join(""); }
 function studentConstraint(value) {
   if (/\bhandle\s*:\s*@/i.test(value)) return value.replace(/[^.]*\bhandle\s*:\s*@[^.]*/i, "A channel handle is known and can be resolved by the application at run time");
   if (/\bvideo IDs? are already known/i.test(value)) return "The selected videos are known to the application; their identifiers are supplied at run time.";
   if (/\bID is already (known|stored)/i.test(value)) return "A resource has already been selected or saved; the application supplies its identifier at run time.";
   return value;
+}
+function studentGoal(scenario) {
+  if (scenario.title === "Lunch Spot Finder") return "Your class is organizing a field trip. Build an app that helps students find nearby restaurants using their phone's location. Students should be able to identify each restaurant, see where it is on a map, compare overall customer ratings, and avoid places that are currently closed. Show no more than ten restaurants, prioritize the closest options, and keep results within 1,500 meters.";
+  return scenario.goal;
+}
+function studentRequirement(scenario, requirement) {
+  if (scenario.title !== "Lunch Spot Finder") return requirement.description;
+  return ({
+    r1: "Find places that the app can treat as restaurants.",
+    r2: "Keep the search inside the stated distance from the device.",
+    r3: "Put the closest options first and show no more than ten.",
+    r4: "Identify each result and place it on the map.",
+    r5: "Show an overall customer rating when one is available.",
+    r6: "Let students tell whether a place is open now.",
+  })[requirement.id] || requirement.description;
 }
 function responseFields(e) { return `<ul class="api-fields">${e.responseFields.map((f) => `<li><code>${esc(f.path)}</code> <span>${esc(f.type)}</span>${f.optional ? " · optional" : ""}${f.nullable ? " · nullable" : ""}${f.deprecated ? " · deprecated" : ""} — ${esc(f.description)}${f.note ? ` <em>${esc(f.note)}</em>` : ""}</li>`).join("")}</ul>`; }
 function parameterDocs(p) { const range = p.allowedValues?.length ? `Allowed values: ${p.allowedValues.join(", ")}` : p.minimum != null || p.maximum != null ? `Range: ${p.minimum ?? "no minimum"}–${p.maximum ?? "no maximum"}` : p.format ? `Format: ${p.format}` : ""; return `<div class="api-doc-param"><strong>${esc(p.name)}</strong><span>${p.required ? "Required" : "Optional"} · ${esc(p.in)} parameter · ${esc(p.type)}</span><p>${esc(p.description)}</p>${range ? `<small>${esc(range)}</small>` : ""}</div>`; }
@@ -28,6 +44,32 @@ function parameterVariants(scenario, request, parameter) {
   const result = new Map();
   for (const plan of scenario.acceptedPlans) for (const step of plan.steps) if (step.endpointId === request.endpointId && object(step.parameters[parameter.name]) && !find(step.parameters[parameter.name]).length) { const value = step.parameters[parameter.name], shape = scalarPaths(value).map(([path]) => path).join("|"); if (!result.has(shape)) result.set(shape, value); }
   return [...result].map(([shape, value]) => ({ shape, value, label: shape.includes("latitude") && shape.includes("longitude") ? "Use project coordinates" : shape.includes("address") ? "Use project address" : `Project context: ${shape.replaceAll("|", ", ")}` }));
+}
+function fieldMaskChoices(endpoint) {
+  const seen = new Set(), choices = [];
+  for (const f of endpoint.responseFields || []) {
+    const match = f.path.match(/^(places\[\])\.([^.\[]+)/);
+    if (!match || seen.has(match[2])) continue;
+    seen.add(match[2]);
+    choices.push({ path: `places.${match[2]}`, description: f.description });
+  }
+  return choices;
+}
+function fieldMaskControl(endpoint, request, parameter) {
+  const selected = new Set(String(request.parameters[parameter.name] || "").split(",").map((v) => v.trim()).filter(Boolean));
+  const choices = fieldMaskChoices(endpoint);
+  if (!choices.length) return `<label class="api-param"><span>${esc(parameter.name)} <b>required</b></span><em>${esc(parameter.description)}</em></label>`;
+  return `<fieldset class="api-field-selector"><legend>Information to include in the response <b>required</b></legend><p class="api-symbolic">Choose documented fields the application can use. The technical field-mask header is generated for you.</p><div class="api-field-options">${choices.map((f) => `<label><input type="checkbox" data-field-mask="${esc(parameter.name)}" value="${esc(f.path)}"${selected.has(f.path) ? " checked" : ""}><code>${esc(f.path)}</code><span>${esc(f.description)}</span></label>`).join("")}</div><em>${esc(parameter.description)}</em></fieldset>`;
+}
+function locationControl(scenario, request, parameter, variants) {
+  const current = request.parameters[parameter.name];
+  const dep = request.dependencies?.[parameter.name];
+  const sourceValue = dep?.source === "context" ? "context" : dep?.source === "request" ? "request" : "";
+  const variant = variants[0];
+  const radius = object(current) ? current?.circle?.radius : "";
+  const radiusOptions = [500, 1000, 1500, 2000, 5000].filter((v) => v >= (parameter.minimum || 0) && v <= (parameter.maximum || 50000));
+  const contextLabel = /coordinates|GPS/i.test(scenario.constraints.join(" ")) ? "Device GPS" : (variant?.label || "Project supplied location");
+  return `<fieldset class="api-location-control"><legend>Search center and distance <b>required</b></legend><p class="api-symbolic">The application supplies the location source. Choose how the request gets it, then set the meaningful search distance.</p><label>Location source<select data-location-source="${esc(parameter.name)}"><option value="">Choose a source…</option><option value="context"${sourceValue === "context" ? " selected" : ""}>${esc(contextLabel)}</option><option value="request"${sourceValue === "request" ? " selected" : ""}>Earlier API request</option></select></label>${sourceValue === "context" ? `<label>Maximum search distance<select data-location-radius="${esc(parameter.name)}"><option value="">Choose a distance…</option>${radiusOptions.map((v) => `<option value="${v}"${String(radius) === String(v) ? " selected" : ""}>${v.toLocaleString()} meters</option>`).join("")}</select></label>` : sourceValue === "request" ? `<p class="api-symbolic">Choose the earlier request and response field in the dependency controls below.</p>` : ""}<em>${esc(parameter.description)}</em></fieldset>`;
 }
 function blankShape(value) { if (object(value) && "$fromStep" in value) return undefined; if (Array.isArray(value)) return ""; if (object(value)) return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, blankShape(v)]).filter(([, v]) => v !== undefined)); return ""; }
 function scalarPaths(value, prefix = "", out = []) { if (object(value)) for (const [k, v] of Object.entries(value)) scalarPaths(v, prefix ? `${prefix}.${k}` : k, out); else if (Array.isArray(value)) out.push([prefix, value]); else out.push([prefix, value]); return out; }
@@ -59,6 +101,8 @@ function controlsFor(p, request, index, requests, scenario, map) {
   }
   if (runtimeParam(p) && p.in === "path") return `<div class="api-param"><strong>${esc(p.name)} <b>runtime path value</b></strong><span class="api-symbolic">The application supplies this identifier when a user selects the resource. No value needs to be entered.</span><em>${esc(p.description)}</em></div>`;
   if (runtimeParam(p)) return `<label class="api-param"><span>${esc(p.name)} <b>runtime value</b> <small>${esc(p.in)}</small></span><span class="api-symbolic">The application supplies this selected resource or user input at run time.</span><label class="api-runtime-choice"><input type="checkbox" data-runtime="${esc(p.name)}"${val(request.parameters[p.name]) ? " checked" : ""}> Include this runtime parameter</label><em>${esc(p.description)}</em></label>`;
+  if (p.name === "X-Goog-FieldMask") return fieldMaskControl(map.get(request.endpointId), request, p);
+  if (p.name === "locationRestriction" && p.type === "object") return locationControl(scenario, request, p, variants);
   if (p.type === "object") {
     const shape = variants[0]?.value || exampleParameter(scenario, request, p.name);
     const currentShape = object(request.parameters[p.name]) ? request.parameters[p.name] : blankShape(shape || {});
@@ -67,9 +111,15 @@ function controlsFor(p, request, index, requests, scenario, map) {
   }
   const current = request.parameters[p.name];
   let control;
-  if (p.format === "comma-separated") control = `<input data-param="${esc(p.name)}" type="text" value="${esc(current)}" placeholder="${p.required ? "Required; separate values with commas" : "Optional; separate values with commas"}"><small class="api-allowed-values">Documented values: ${esc((p.allowedValues || []).join(", "))}</small>`;
+  if (p.format === "comma-separated") control = `<input data-param="${esc(p.name)}" type="text" value="${esc(current)}" placeholder="${p.required ? "Required; separate values with commas" : "Optional; separate values with commas"}><small class="api-allowed-values">Documented values: ${esc((p.allowedValues || []).join(", "))}</small>`;
   else if (p.allowedValues?.length) control = `<select data-param="${esc(p.name)}"><option value="">Choose…</option>${p.allowedValues.map((v) => `<option value="${esc(v)}"${String(current) === String(v) ? " selected" : ""}>${esc(v)}</option>`).join("")}</select>`;
   else if (p.type === "boolean") control = `<select data-param="${esc(p.name)}"><option value="">Choose…</option><option value="true"${current === true ? " selected" : ""}>true</option><option value="false"${current === false ? " selected" : ""}>false</option></select>`;
+  else if (p.type === "integer" && p.name === "maxResultCount") control = `<select data-param="${esc(p.name)}"><option value="">Choose…</option>${Array.from({ length: (p.maximum || 20) - (p.minimum || 1) + 1 }, (_, i) => i + (p.minimum || 1)).map((v) => `<option value="${v}"${String(current) === String(v) ? " selected" : ""}>${v} result${v === 1 ? "" : "s"}</option>`).join("")}</select>`;
+  else if (p.type === "array<string>" && /type|price/i.test(p.name + p.description)) {
+    const values = p.name.includes("price") ? ["PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE", "PRICE_LEVEL_MODERATE", "PRICE_LEVEL_EXPENSIVE", "PRICE_LEVEL_VERY_EXPENSIVE"] : ["restaurant", "cafe", "museum", "park", "hotel", "library"];
+    const selectedArray = Array.isArray(current) ? current : [];
+    control = `<select data-param-array="${esc(p.name)}"><option value="">Choose…</option>${values.map((v) => `<option value="${esc(v)}"${selectedArray.includes(v) ? " selected" : ""}>${esc(v)}</option>`).join("")}</select>`;
+  }
   else control = `<input data-param="${esc(p.name)}" type="${["integer","number"].includes(p.type) ? "number" : "text"}"${["integer","number"].includes(p.type) ? ` step="${p.type === "integer" ? "1" : "any"}"` : ""}${p.minimum != null ? ` min="${p.minimum}"` : ""}${p.maximum != null ? ` max="${p.maximum}"` : ""} value="${esc(Array.isArray(current) ? current.join(", ") : current)}" placeholder="${p.type === "array<string>" ? "Separate values with commas" : p.required ? "Required choice" : "Optional"}">`;
   return `<label class="api-param"><span>${esc(p.name)} ${p.required ? "<b>required</b>" : "<i>optional</i>"} <small>${esc(p.in)} · ${esc(p.type)}</small></span>${control}<em>${esc(p.description)}</em></label>`;
 }
@@ -79,7 +129,7 @@ function requestHtml(requests, map, scenario) {
 }
 function readablePlan(plan, map) {
   const find = (value, out = []) => { if (object(value) && "$fromStep" in value) out.push(value); else if (object(value)) Object.values(value).forEach((v) => find(v, out)); else if (Array.isArray(value)) value.forEach((v) => find(v, out)); return out; };
-  return `<ol>${plan.steps.map((s) => { const e = map.get(s.endpointId), values = Object.entries(s.parameters).map(([name, v]) => { const p = e.parameters.find((x) => x.name === name), refs = find(v); if (refs.length) { const sources = refs.map((ref) => map.get(plan.steps.find((x) => x.step === ref.$fromStep)?.endpointId)?.title || "earlier request"); return `${esc(name)} ← ${[...new Set(sources)].map(esc).join(" / ")} response (${refs.map((ref) => esc(ref.path)).join(", ")})`; } if (p && runtimeParam(p)) return `${esc(name)} ← supplied at run time`; return `${esc(name)} = ${esc(typeof v === "object" ? JSON.stringify(v) : v)}`; }).join("; "); return `<li><strong>${esc(e.title)}</strong> <code>${esc(e.method)} ${esc(e.path)}</code>${values ? ` — ${values}` : ""}</li>`; }).join("")}</ol>${plan.conditionalSteps?.length ? `<p><strong>Conditional:</strong> ${plan.conditionalSteps.map((s) => { const e = map.get(s.endpointId); return `${esc(e.title)} only if ${esc(s.condition)}`; }).join("; ")}</p>` : ""}`;
+  return `<div class="api-readable-plan">${plan.steps.map((s, i) => { const e = map.get(s.endpointId), runtime = [], settings = [], fields = [], deps = []; for (const [name, v] of Object.entries(s.parameters)) { const p = e.parameters.find((x) => x.name === name), refs = find(v); if (refs.length) deps.push(`${name} comes from ${refs.map((ref) => ref.path).join(", ")} in an earlier response`); else if (p?.name === "X-Goog-FieldMask" || p?.name === "fields") fields.push(...String(v).split(",").map((x) => x.trim())); else if (p && runtimeParam(p)) runtime.push(name); else settings.push(`${name}: ${typeof v === "object" ? JSON.stringify(v) : v}`); } return `<article class="api-readable-request"><h4>Request ${i + 1} — ${esc(e.title)}</h4><p><strong>Method:</strong> ${esc(e.method)} <code>${esc(e.path)}</code></p>${s.purpose ? `<p><strong>Purpose:</strong> ${esc(s.purpose)}</p>` : ""}${runtime.length ? `<p><strong>Runtime inputs:</strong> ${runtime.map(esc).join(", ")} supplied by the application.</p>` : ""}${settings.length ? `<p><strong>Application settings:</strong> ${settings.map(esc).join(" · ")}</p>` : ""}${fields.length ? `<p><strong>Information requested:</strong> ${fields.map((x) => `<code>${esc(x)}</code>`).join(", ")}</p>` : ""}${deps.length ? `<p><strong>Dependencies:</strong> ${deps.map(esc).join("; ")}.</p>` : ""}<p><strong>Why this request is needed:</strong> It provides documented response data used by the application.</p><details class="api-technical-preview"><summary>View Actual API Request</summary><pre>${esc(JSON.stringify({ method: e.method, path: e.path, parameters: s.parameters }, null, 2))}</pre></details></article>`; }).join("")}</div>`;
 }
 function feedbackHtml(result, scenario, diagnostics, attempts) {
   if (result.correct) return `<strong>✓ Project Complete</strong><p>Solved in ${attempts} ${attempts === 1 ? "check" : "checks"}. ${esc(result.efficient ? "Your plan meets the project requirements." : "Your plan works; a simpler plan may also meet the requirements.")}</p><p class="api-explanation"><strong>Why it works:</strong> ${esc(scenario.explanation.summary)} ${scenario.explanation.keyIdeas.map(esc).join(" ")}</p><p class="muted">Your completed request plan remains above for review.</p>`;
@@ -97,7 +147,7 @@ export function mount({ root, controls, tracker }) {
   const renderBrief = () => {
     const s = state.scenario, p = providerFor(state.data, s);
     const constraints = s.constraints.map(studentConstraint).filter(Boolean);
-    set("blocks", `<section class="api-project-goal"><h2>${esc(s.title)}</h2><h3>Goal</h3><p>${esc(s.goal)}</p><h3>Required information</h3><ul>${s.requirements.map((r) => `<li>${esc(r.description)}</li>`).join("")}</ul><h3>Constraints</h3><ul>${constraints.map((c) => `<li>${esc(c)}</li>`).join("")}</ul><p class="api-provider"><strong>Provider:</strong> ${esc(p.name)} · <a href="${esc(p.documentationUrl)}" target="_blank" rel="noreferrer">Official API documentation ↗</a></p></section>`);
+    set("blocks", `<section class="api-project-goal"><h2>${esc(s.title)}</h2><h3>Goal</h3><p>${esc(studentGoal(s))}</p><h3>Required information</h3><ul>${s.requirements.map((r) => `<li>${esc(studentRequirement(s, r))}</li>`).join("")}</ul><h3>Constraints</h3><ul>${constraints.map((c) => `<li>${esc(c)}</li>`).join("")}</ul><p class="api-provider"><strong>Provider:</strong> ${esc(p.name)} · <a href="${esc(p.documentationUrl)}" target="_blank" rel="noreferrer">Official API documentation ↗</a></p>${HTTP_REFERENCE}</section>`);
   };
   const renderPlan = () => {
     const map = endpointMap(state.data);
@@ -105,6 +155,10 @@ export function mount({ root, controls, tracker }) {
     root.querySelectorAll("[data-request]").forEach((card) => {
       const i = Number(card.dataset.request);
       card.querySelectorAll("[data-param]").forEach((input) => { input.oninput = input.onchange = () => { const raw = input.value, parameter = map.get(state.plan[i].endpointId).parameters.find((p) => p.name === input.dataset.param); state.plan[i].parameters[input.dataset.param] = input.type === "number" ? (raw === "" ? "" : Number(raw)) : input.tagName === "SELECT" && ["true","false"].includes(raw) ? raw === "true" : parameter.type === "array<string>" ? raw.split(",").map((x) => x.trim()).filter(Boolean) : raw; touch(); }; });
+      card.querySelectorAll("[data-param-array]").forEach((select) => { select.onchange = () => { state.plan[i].parameters[select.dataset.paramArray] = select.value ? [select.value] : []; touch(); }; });
+      card.querySelectorAll("[data-field-mask]").forEach((checkbox) => { checkbox.onchange = () => { const name = checkbox.dataset.fieldMask; state.plan[i].parameters[name] = [...card.querySelectorAll(`[data-field-mask=\"${CSS.escape(name)}\"]:checked`)].map((x) => x.value).join(","); touch(); }; });
+      card.querySelectorAll("[data-location-source]").forEach((select) => { select.onchange = () => { const name = select.dataset.locationSource, parameter = map.get(state.plan[i].endpointId).parameters.find((x) => x.name === name), variants = parameterVariants(state.scenario, state.plan[i], parameter), variant = variants[0]; if (select.value === "context" && variant) { const value = JSON.parse(JSON.stringify(variant.value)); if (value.circle) value.circle.radius = ""; state.plan[i].dependencies[name] = { source: "context", shape: variant.shape || "" }; state.plan[i].parameters[name] = value; } else if (select.value === "request") { state.plan[i].dependencies[name] = { source: "request", fromRequest: null, paths: [] }; delete state.plan[i].parameters[name]; } else { delete state.plan[i].dependencies[name]; delete state.plan[i].parameters[name]; } touch(); renderPlan(); }; });
+      card.querySelectorAll("[data-location-radius]").forEach((select) => { select.onchange = () => { const name = select.dataset.locationRadius; state.plan[i].parameters[name] = putPath(state.plan[i].parameters[name], "circle.radius", select.value === "" ? "" : Number(select.value)); touch(); }; });
       card.querySelectorAll("[data-structured]").forEach((input) => { input.oninput = () => { const name = input.dataset.structured, value = input.type === "number" ? (input.value === "" ? "" : Number(input.value)) : input.value; state.plan[i].parameters[name] = putPath(state.plan[i].parameters[name], input.dataset.structuredPath, value); touch(); }; });
       card.querySelectorAll("[data-runtime]").forEach((toggle) => { toggle.onchange = () => { if (toggle.checked) state.plan[i].parameters[toggle.dataset.runtime] = { $runtime: true }; else delete state.plan[i].parameters[toggle.dataset.runtime]; touch(); }; });
       card.querySelectorAll("[data-dependency-mode]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependencyMode, parameter = map.get(state.plan[i].endpointId).parameters.find((x) => x.name === p), variants = parameterVariants(state.scenario, state.plan[i], parameter); if (!select.value) { delete state.plan[i].dependencies[p]; delete state.plan[i].parameters[p]; } else if (select.value === "context") { const variant = variants[0]; state.plan[i].dependencies[p] = { source: "context", shape: variant?.shape || "" }; state.plan[i].parameters[p] = blankShape(variant?.value || {}); } else { state.plan[i].dependencies[p] = { source: "request", fromRequest: null, paths: [] }; delete state.plan[i].parameters[p]; } touch(); renderPlan(); }; });
