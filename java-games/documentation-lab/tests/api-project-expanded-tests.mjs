@@ -2,7 +2,11 @@ import fs from "node:fs";
 import assert from "node:assert/strict";
 import { validateApiData, validatePlan, createScenarioPicker, endpointMap, isRuntimeParameter } from "../api-project-builder-engine.js";
 
-const data = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1-expanded.json", import.meta.url)));
+// Exercise the same provider shards used by the deployed loader. The merged
+// convenience export can exceed repository-content API response limits.
+const index = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1-runtime-index.json", import.meta.url)));
+const parts = index.runtimeParts.map((path) => JSON.parse(fs.readFileSync(new URL(`../${path.replace(/^\.\//, "")}`, import.meta.url))));
+const data = { schemaVersion: parts[0].schemaVersion, providers: parts.flatMap((part) => part.providers), scenarios: parts.flatMap((part) => part.scenarios) };
 const errors = validateApiData(data);
 assert.deepEqual(errors, [], errors.join("\n"));
 
