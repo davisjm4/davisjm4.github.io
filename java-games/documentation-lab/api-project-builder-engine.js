@@ -101,12 +101,14 @@ export function validatePlan(data, scenario, plan) {
   const incorrectParameters = [];
   for (const r of requests) { const matches = expected.flat().filter((e) => e.endpointId === r.endpointId); if (matches.length && !matches.some((e) => JSON.stringify(e.parameters) === JSON.stringify(r.parameters))) incorrectParameters.push(r.endpointId); }
   const best = scenario.acceptedPlans.map((p) => ({ p, score: p.requests.filter((w) => requests.some((r) => signature(r) === signature(w))).length })).sort((a, b) => b.score - a.score)[0];
-  const missing = best ? best.p.requests.filter((w) => !requests.some((r) => signature(r) === signature(w))) : [];
-  const unnecessary = requests.filter((r) => !best || !best.p.requests.some((w) => signature(w) === signature(r)));
+  const incorrectSet = new Set(incorrectParameters);
+  const missing = best ? best.p.requests.filter((w) => !incorrectSet.has(w.endpointId) && !requests.some((r) => signature(r) === signature(w))) : [];
+  const unnecessary = requests.filter((r) => !incorrectSet.has(r.endpointId) && (!best || !best.p.requests.some((w) => signature(w) === signature(r))));
   if (errors.length) {
     const incomplete = [...new Set(incompleteRequests)], invalid = [...new Set(invalidParameterRequests)];
     return { correct: false, valid: false, efficient: false, status: incomplete.length && !invalid.length ? "incomplete-requests" : "invalid-parameters", errors, missing, unnecessary: [], incorrectEndpoints, incorrectParameters: invalid, incompleteRequests: incomplete, invalidParameterRequests: invalid, message: incomplete.length && !invalid.length ? "Complete the required parameter values for the selected request." : "Check the parameter values against the API documentation." };
   }
+  if (incorrectParameters.length) return { correct: false, valid: false, efficient: false, status: "incorrect-parameters", errors, missing, unnecessary, incorrectEndpoints, incorrectParameters, incompleteRequests: [], invalidParameterRequests: [], message: "An appropriate endpoint was selected, but its parameter value does not match the project or the documented solution." };
   return { correct: false, valid: false, efficient: false, status: "incomplete-or-incorrect", errors, missing, unnecessary, incorrectEndpoints, incorrectParameters, incompleteRequests: [], invalidParameterRequests: [], message: missing.length ? "The plan is missing a request needed to supply one or more requirements." : "The selected requests do not provide the required information." };
 }
 export function requestFor(endpointId, parameters = {}) { return { endpointId, parameters: { ...parameters } }; }
