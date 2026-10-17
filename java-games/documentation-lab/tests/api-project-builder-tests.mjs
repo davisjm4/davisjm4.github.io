@@ -79,6 +79,14 @@ const conditional = album.acceptedPlans[0].conditionalSteps[0];
 albumPlan.requests.push({ endpointId: conditional.endpointId, parameters: { offset: conditional.parameters.offset, limit: conditional.parameters.limit }, dependencies: {} });
 assert.equal(validatePlan(data, album, albumPlan).correct, true, "conditional pagination may be included without being required");
 
+const museum = data.scenarios.find((s) => s.id === "maps-museum-walk-planner");
+const museumPlan = studentPlan(museum, museum.acceptedPlans[0]);
+museumPlan.requests[0].parameters.locationRestriction = {};
+const blankOptionalObject = validatePlan(data, museum, museumPlan);
+assert.equal(blankOptionalObject.correct, false);
+assert.ok(blankOptionalObject.incorrectlyConfiguredRequests.some((r) => r.endpointId === "maps.places-text-search"));
+assert.equal(blankOptionalObject.rejectedReason, "", "unrelated rejected-plan explanations must not be shown");
+
 const unnecessaryMix = validatePlan(data, youtube, { requests: [...studentPlan(youtube, youtube.acceptedPlans[0]).requests, { endpointId: "youtube.channels-list", parameters: {}, dependencies: {} }] });
 assert.ok(unnecessaryMix.unnecessary.length > 0 || unnecessaryMix.incompleteRequests.length > 0);
 assert.equal(unnecessaryMix.incorrectEndpoints.length, 0, "documented distractors are not misclassified as unavailable endpoints");
