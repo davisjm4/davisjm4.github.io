@@ -6,12 +6,13 @@ export const MODES = {
   trace: "Traversal Tracker",
   collections: "Java Collections & Decisions",
 };
-export const GAME = {
+export const linkedListGame = {
   name: "LinkedList Lab",
   icon: "🔗",
   concepts: "Nodes · references · LinkedList API",
   description: "Connect, trace, and modify linked structures, then reason about Java LinkedList operations and data-structure choices.",
 };
+export const GAME = linkedListGame;
 export function makeRng(seed = Date.now()) {
   let s = (Number(seed) >>> 0) || 1;
   return () => {
