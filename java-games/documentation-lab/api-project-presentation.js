@@ -20,7 +20,7 @@ const COMMON_FIELDS = {
 };
 export const PROJECT_PRESENTATION = {
   "spotify-album-spotlight": {
-    "spotify.get-album": { assessed: ["market"], automatic: { id: runtime }, fields: ["name", "images[].url", "release_date", "artists[].name", "tracks.items[].name", "tracks.items[].track_number", "tracks.items[].duration_ms", "tracks.total"] },
+    "spotify.get-album": { assessed: ["market"], automatic: { id: runtime }, marketOptions: ["US", "GB", "CA"], fields: ["name", "images[].url", "release_date", "artists[].name", "tracks.items[].name", "tracks.items[].track_number", "tracks.items[].duration_ms", "tracks.total"] },
   },
   "spotify-my-playlists-browser": {
     "spotify.get-current-user-playlists": { automatic: { limit: fixed(20, "Initial playlist page size chosen by the application") }, fields: ["items[].id", "items[].name", "items[].images[].url", "items[].items.total", "items[].collaborative", "items[].owner.id"] },
