@@ -93,7 +93,7 @@ export function mount({ root, controls, tracker }) {
   const stat = () => { const el = document.getElementById("stats"); if (el && controls.roundSummary) el.textContent = controls.roundSummary(); };
   const touch = () => { if (state.instance && tracker.status(state.instance) === "active") tracker.interact(state.instance); };
   const next = () => controls.next();
-  const showActionButtons = () => { controls.submit.hidden = false; controls.show.hidden = false; controls.skip.hidden = false; controls.nextButton.hidden = true; controls.submit.disabled = false; controls.show.disabled = false; controls.skip.disabled = false; };
+  const showActionButtons = () => { controls.submit.hidden = false; controls.show.hidden = true; controls.skip.hidden = false; controls.nextButton.hidden = true; controls.submit.disabled = false; controls.show.disabled = true; controls.skip.disabled = false; };
   const renderBrief = () => {
     const s = state.scenario, p = providerFor(state.data, s);
     const constraints = s.constraints.map(studentConstraint).filter(Boolean);
