@@ -3,6 +3,13 @@ import fs from "node:fs";
 import { validateApiData, assertValid, validatePlan, formativeDiagnostics, endpointsFor, createScenarioPicker, isRuntimeParameter, isProductionContent, endpointMap } from "../api-project-builder-engine.js";
 
 const data = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1.json", import.meta.url), "utf8"));
+const uiSource = fs.readFileSync(new URL("../api-project-builder-ui.js", import.meta.url), "utf8");
+assert.match(uiSource, /data-field-mask/, "the UI provides documented field selection");
+assert.match(uiSource, /data-location-source/, "the UI represents runtime location sources");
+assert.match(uiSource, /HTTP Methods — Quick Reference/, "the UI includes the HTTP methods reference");
+assert.match(uiSource, /api-readable-request/, "solutions use readable request cards");
+assert.doesNotMatch(uiSource, /data-structured-path=\"latitude\"/, "the UI does not request manual latitude entry");
+assert.doesNotMatch(uiSource, /data-structured-path=\"longitude\"/, "the UI does not request manual longitude entry");
 assert.equal(validateApiData(data).length, 0, validateApiData(data).join("\n"));
 assert.doesNotThrow(() => assertValid(data));
 assert.equal(data.providers.length, 3);
