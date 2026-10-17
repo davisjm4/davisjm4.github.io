@@ -13,4 +13,10 @@ const wrongParam = validatePlan(data, album, { requests: [...correct.requests.sl
 const extra = validatePlan(data, data.scenarios.find((s) => s.id === "album-card"), { requests: [{ endpointId: "album-get", parameters: { albumId: "ALB-42" } }, { endpointId: "album-tracks", parameters: { albumId: "ALB-42" } }] }); assert.equal(extra.correct, true); assert.equal(extra.status, "valid-less-efficient");
 const invalid = JSON.parse(JSON.stringify(data)); invalid.scenarios[0].acceptedPlans[0].requests[0].endpointId = "missing"; assert.ok(validateApiData(invalid).some((e) => e.includes("unknown endpoint")));
 const picker = createScenarioPicker(data, () => 0.1); assert.equal(picker().id, "album-viewer"); assert.equal(picker().id, "album-card"); assert.equal(picker().id, "artist-shelf");
+const incomplete = validatePlan(data, album, { requests: [{ endpointId: "album-get", parameters: {} }] });
+assert.equal(incomplete.status, "incomplete-requests"); assert.ok(incomplete.incompleteRequests.includes("album-get")); assert.equal(incomplete.unnecessary.length, 0); assert.equal(incomplete.incorrectParameters.length, 0);
+const invalidValue = validatePlan(data, data.scenarios.find((s) => s.id === "artist-shelf"), { requests: [{ endpointId: "artist-albums", parameters: { artistId: "ART-7", genre: "rock", limit: 10 } }] });
+assert.equal(invalidValue.status, "invalid-parameters"); assert.ok(invalidValue.invalidParameterRequests.includes("artist-albums"));
+assert.equal(data.scenarios.find((s) => s.id === "album-viewer").providedParameters["album-get"].albumId, "ALB-42");
+
 console.log("API Project Builder engine: content validation, references, parameters, alternatives, efficiency, and picker passed.");
