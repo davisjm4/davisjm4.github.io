@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import * as J from "./engine.js";
 import { mathGame } from "./math-lab/engine.js";
+import { robotGame } from "./robot-algorithms/engine.js";
 import { diagnostics } from "./diagnostics.js";
 import * as S from "./session.js";
 import { mountCollectionEditor } from "../csp-games/collection-editor.js";
@@ -65,6 +66,7 @@ function launch(slug) {
     setTimeout,
     diagnostics,
     mathGame,
+    robotGame,
     J: { ...J, generate: (game, mode) => (q = J.generate(game, mode, forced)) },
     sessionTracker: () => tracker,
     roundSummary: () => JSON.stringify(tracker.snapshot().totals),
@@ -149,7 +151,8 @@ function launch(slug) {
   };
 }
 const home = launch("");
-eq(home.document.querySelectorAll(".card").length, 5);
+eq(home.document.querySelectorAll(".card").length, 6);
+ok(home.document.querySelector('a[href="robot-algorithms/"]'));
 ok(home.document.querySelector('a[href="math-lab/"]'));
 for (const [slug, g] of Object.entries(J.games)) {
   const t = launch(slug);

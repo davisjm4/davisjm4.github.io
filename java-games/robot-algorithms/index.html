@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive Java and AP Computer Science A practice from DevCat Studios. No sign-in required."
+    />
+    <meta name="theme-color" content="#0c1722" />
+    <title>Robot Algorithms | Java Games</title>
+    <link rel="stylesheet" href="../style.css?v=java-quality-v3" />
+    <link rel="stylesheet" href="./style.css?v=robot-v3" />
+    <script type="module" src="./script.js?v=robot-v3"></script>
+  </head>
+  <body data-game="robot-algorithms">
+    <header>
+      <a href="../">← Java Games</a
+      ><small>DevCat Studios · Build your understanding</small>
+    </header>
+    <main id="main" class="ra">
+      <div class="eyebrow">Java · Sequencing · Loops · Conditionals · Methods</div>
+      <h1>Robot Algorithms</h1>
+      <p class="intro ra-intro">
+        Predict, build, and debug short Java programs that steer a robot across
+        a grid.
+      </p>
+      <div class="toolbar ra-toolbar">
+        <label
+          >Practice mode
+          <select id="mode">
+            <option value="mixed" selected>Mixed Practice</option>
+            <option value="predict">Predict the Robot</option>
+            <option value="loops">Loop Navigator</option>
+            <option value="build">Build the Route</option>
+            <option value="conditionals">Conditional Robot</option>
+            <option value="debug">Debug the Robot</option>
+            <option value="methods">Methods and Reuse</option>
+          </select></label
+        ><button id="new" class="secondary" type="button">New Challenge</button>
+        <details class="ra-rules">
+          <summary>Robot rules</summary>
+          <ul>
+            <li>
+              <code>(Row 0, Col 0)</code> is the top-left cell. Rows increase
+              downward; columns increase to the right.
+            </li>
+            <li>
+              <code>robot.move()</code> advances one cell in the facing
+              direction. Moving into an obstacle or off the grid stops the
+              program with a <strong>movement error</strong>.
+            </li>
+            <li>
+              The robot faces <strong>Up</strong>, <strong>Right</strong>,
+              <strong>Down</strong>, or <strong>Left</strong> on the screen; the
+              yellow point shows which way. <code>robot.turnLeft()</code> turns
+              it a quarter-turn counterclockwise and
+              <code>robot.turnRight()</code> a quarter-turn clockwise, from the
+              way it is facing now.
+            </li>
+            <li>
+              For "where does it finish" questions, click a cell to move the
+              robot there, and click the top, right, bottom, or left side of
+              the robot's cell to make it face that way, then submit.
+            </li>
+            <li>
+              <code>robot.canMove()</code> is <code>true</code> when the next
+              cell is open (not an obstacle, not off the grid).
+              <code>robot.atGoal()</code> is <code>true</code> when the robot is
+              on the goal.
+            </li>
+            <li>
+              Code runs inside the robot's program, not as a standalone Java
+              application. Programs stop after 2,000 steps to prevent infinite
+              loops.
+            </li>
+          </ul>
+        </details>
+      </div>
+      <p id="session-note" class="muted ra-small" hidden></p>
+      <section id="stage" class="panel ra-stage" aria-live="off">
+        <div class="ra-head">
+          <span class="eyebrow" id="mode-label"></span
+          ><span id="concept" class="ra-chip"></span>
+        </div>
+        <div class="ra-layout">
+          <div class="ra-left">
+            <div id="grids" class="ra-grids"></div>
+            <ul class="ra-legend" aria-label="Grid legend">
+              <li><span class="ra-key ra-key-robot" aria-hidden="true">▲</span> Robot (the yellow point shows which way it faces)</li>
+              <li><span class="ra-key ra-key-goal" aria-hidden="true">★</span> Goal</li>
+              <li><span class="ra-key ra-key-wall" aria-hidden="true"></span> Obstacle</li>
+            </ul>
+          </div>
+          <div class="ra-right">
+            <p id="prompt" class="ra-prompt"></p>
+            <p id="note" class="muted ra-small" hidden></p>
+            <ol id="code" class="ra-code" aria-label="Java code"></ol>
+            <div id="builder" class="ra-builder" hidden></div>
+            <h2 id="question" class="ra-question"></h2>
+            <div id="choices" class="ra-choices" role="radiogroup" aria-labelledby="question"></div>
+            <div class="actions ra-actions">
+              <button id="submit" type="button" disabled>Submit Answer</button
+              ><button id="run" type="button" hidden disabled>Run Program</button
+              ><button id="solution" type="button" class="secondary" hidden>Show a Solution</button
+              ><button id="skip" type="button" class="secondary">Skip</button
+              ><button id="next" type="button" hidden>Next Challenge →</button>
+            </div>
+          </div>
+        </div>
+        <div id="feedback" class="feedback ra-feedback" role="status" tabindex="-1" hidden></div>
+        <div id="playback" class="ra-playback" hidden>
+          <span class="ra-small muted">Execution:</span>
+          <button id="pause" type="button" class="secondary">Pause</button
+          ><button id="step-back" type="button" class="secondary" aria-label="Step back">◀ Step</button
+          ><button id="step-fwd" type="button" class="secondary" aria-label="Step forward">Step ▶</button
+          ><button id="skip-anim" type="button" class="secondary">Skip to End</button
+          ><button id="replay" type="button" class="secondary">Replay</button>
+          <span id="exec-status" class="ra-exec"></span>
+        </div>
+        <div id="inspect" class="ra-inspect" hidden></div>
+      </section>
+      <p id="stats" class="stats"></p>
+    </main>
+    <noscript
+      ><p>Enable JavaScript to play these interactive games.</p></noscript
+    >
+    <footer>
+      Practice freely. No accounts or data uploads. Results are stored locally
+      in this browser. Independent practice tools; not affiliated with College
+      Board.
+    </footer>
+  </body>
+</html>
