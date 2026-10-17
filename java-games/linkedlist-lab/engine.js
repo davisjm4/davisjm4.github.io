@@ -95,13 +95,23 @@ function mutateChallenge(rng) {
   const removed = t.op === "remove-middle" ? start[Math.floor(start.length / 2)] : null;
   const added = t.op.startsWith("insert") || t.op === "append" ? pick(V.filter(x => !start.includes(x)), rng) : null;
   const goal = t.make(start, added);
-  const distractors = [
-    t.op.startsWith("insert") ? [...start, added] : [start[0], ...start.slice(2)],
-    t.op === "insert-head" ? [...start.slice(0,-1), added, start.at(-1)] : start.slice().reverse(),
-    t.op.startsWith("remove") ? [...start, removed ?? start[0]] : start.map((x,i)=>i===0?added:x),
-  ].filter(x => x.length && JSON.stringify(x)!==JSON.stringify(goal));
-  const opts = shuffle([goal, ...distractors].map(v => ({values:v, correct:JSON.stringify(v)===JSON.stringify(goal)})), rng);
-  return {kind:"structure",mode:"mutate",family:t.op,nodes:start.map((value,i)=>({id:"n"+i,value})), operation:t.text(added ?? removed), choices:opts, answer:opts.findIndex(x=>x.correct), prompt:"Apply the operation by changing the linked references.", explanation:"A linked-list operation changes references: " + goal.join(" → ") + " → null is the resulting chain."};
+  const allValues = [...new Set([...start, ...(added === null ? [] : [added])])];
+  const nodes = allValues.map((value, i) => ({ id: "n" + i, value }));
+  const idOf = (value) => nodes.find(n => n.value === value).id;
+  const initialNext = {};
+  start.forEach((value, i) => { initialNext[idOf(value)] = i + 1 < start.length ? idOf(start[i + 1]) : null; });
+  nodes.forEach(n => { if (!(n.id in initialNext)) initialNext[n.id] = null; });
+  const answerNext = {};
+  goal.forEach((value, i) => { answerNext[idOf(value)] = i + 1 < goal.length ? idOf(goal[i + 1]) : null; });
+  nodes.forEach(n => { if (!(n.id in answerNext)) answerNext[n.id] = null; });
+  return {
+    kind: "mutate-links", mode: "mutate", family: t.op, nodes, initial: start,
+    head: idOf(start[0]), next: initialNext,
+    answer: { head: idOf(goal[0]), next: answerNext },
+    operation: t.text(added ?? removed),
+    prompt: "Update the references to perform the operation. The resulting chain must be exact.",
+    explanation: "Only next references change. The resulting chain is " + goal.join(" → ") + " → null."
+  };
 }
 function traceChallenge(rng) {
   const a = values(rng, 4, 6);
