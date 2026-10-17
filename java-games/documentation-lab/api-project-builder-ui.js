@@ -1,4 +1,4 @@
-import { loadApiContent, isProductionContent, validatePlan, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan, MODE_TITLE } from "./api-project-builder-engine.js?v=api-builder-v4";
+import { loadApiContent, isProductionContent, validatePlan, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan, MODE_TITLE } from "./api-project-builder-engine.js?v=api-builder-v5";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
@@ -36,6 +36,7 @@ function controlsFor(p, request, index, requests, scenario, map) {
     const fields = source?.responseFields || [];
     return `<div class="api-param"><span>${esc(p.name)} <b>runtime value</b></span><span class="api-symbolic">${esc(p.in === "path" ? "Path resource" : "Related response data")} · supplied by the application at run time</span><label>Earlier request<select data-dependency="${esc(p.name)}"><option value="">Choose a request…</option>${options.map((x) => `<option value="${x.i}"${selected === x.i ? " selected" : ""}>${esc(x.e.title)}</option>`).join("")}</select></label>${source ? `<fieldset class="api-dependency-fields"><legend>Response field(s) to use</legend>${fields.map((f) => `<label><input type="checkbox" data-dependency-path="${esc(p.name)}" value="${esc(f.path)}"${request.dependencies[p.name]?.paths?.includes(f.path) ? " checked" : ""}> <code>${esc(f.path)}</code></label>`).join("")}</fieldset>` : ""}<em>${esc(p.description)} Use the response documentation above to choose the field(s).</em></div>`;
   }
+  if (runtimeParam(p) && p.in === "path") return `<div class="api-param"><strong>${esc(p.name)} <b>runtime path value</b></strong><span class="api-symbolic">The application supplies this identifier when a user selects the resource. No value needs to be entered.</span><em>${esc(p.description)}</em></div>`;
   if (runtimeParam(p)) return `<label class="api-param"><span>${esc(p.name)} <b>runtime value</b> <small>${esc(p.in)}</small></span><span class="api-symbolic">The application supplies this selected resource or user input at run time.</span><label class="api-runtime-choice"><input type="checkbox" data-runtime="${esc(p.name)}"${val(request.parameters[p.name]) ? " checked" : ""}> Include this runtime parameter</label><em>${esc(p.description)}</em></label>`;
   if (p.type === "object") {
     const shape = exampleParameter(scenario, request, p.name);
