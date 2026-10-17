@@ -63,6 +63,35 @@
   outline-offset: 1px;
   background: #234a51;
 }
+.choice-letter {
+  display: inline-grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin-right: 0.55rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 800;
+}
+.choice.correct-choice {
+  outline: 2px solid #64d89b;
+  background: #174936;
+}
+.choice.incorrect-choice {
+  outline: 2px solid #ff8585;
+  background: #552f38;
+}
+.challenge-meta {
+  color: var(--muted, #b7c8d4);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.support-reminder {
+  border-left: 3px solid var(--accent, #79ddc6);
+  padding: 0.6rem 0.8rem;
+  background: rgba(121, 221, 198, 0.08);
+}
 @media (max-width: 600px) {
   .choice-grid {
     grid-template-columns: minmax(0, 1fr);
