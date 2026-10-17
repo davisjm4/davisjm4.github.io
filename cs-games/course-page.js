@@ -47,7 +47,7 @@ const title = isCsp ? "AP Computer Science Principles" : "Advanced Computer Scie
 document.title = title+" | CS Games";
 document.querySelector("[data-course-title]").textContent = title;
 document.querySelector("[data-course-intro]").textContent = isCsp ? "Practice AP CSP concepts through short activities aligned to the five Big Ideas. Use the topic names to find a useful next challenge." : "Practice Java programming, algorithms, data structures, and object-oriented programming while preparing for Nevada's Advanced Computer Science course and End-of-Program assessment.";
-document.querySelector("[data-summary-link]").href = isCsp ? "../csp-games/session-summary/" : "../java-games/session-summary/";
+document.querySelector("[data-summary-link]").href = isCsp ? "/csp-games/session-summary/" : "/java-games/session-summary/";
 document.querySelector("[data-summary-link]").textContent = isCsp ? "AP CSP Session Summary" : "Advanced CS Session Summary";
 const filter = document.getElementById("topic-filter");
 [...new Set(items.flatMap(g=>g.topics))].sort().forEach(t => filter.insertAdjacentHTML("beforeend",'<option value="'+esc(t)+'">'+esc(t)+'</option>'));
