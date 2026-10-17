@@ -8,6 +8,7 @@ import { robotGame } from "./robot-algorithms/engine.js";
 import { classObjectGame } from "./class-object-lab/class-engine.js";
 import { methodLabGame } from "./method-constructor-lab/engine.js";
 import { booleanGame } from "./boolean-conditional-lab/engine.js";
+import { recursionGame } from "./recursion-lab/engine.js";
 import { diagnostics } from "./diagnostics.js";
 import * as S from "./session.js";
 import { mountCollectionEditor } from "../csp-games/collection-editor.js";
@@ -73,6 +74,7 @@ function launch(slug) {
     classObjectGame,
     methodLabGame,
     booleanGame,
+    recursionGame,
     J: { ...J, generate: (game, mode) => (q = J.generate(game, mode, forced)) },
     sessionTracker: () => tracker,
     roundSummary: () => JSON.stringify(tracker.snapshot().totals),
@@ -157,7 +159,7 @@ function launch(slug) {
   };
 }
 const home = launch("");
-eq(home.document.querySelectorAll(".card").length, 9);
+eq(home.document.querySelectorAll(".card").length, 10);
 ok(home.document.querySelector('a[href="method-constructor-lab/"]'));
 ok(home.document.querySelector('a[href="boolean-conditional-lab/"]'));
 ok(home.document.querySelector('a[href="robot-algorithms/"]'));
