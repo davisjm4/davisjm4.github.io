@@ -50,7 +50,7 @@ const album = data.scenarios.find((s) => s.id === "spotify-album-spotlight");
 const albumEndpoint = map.get("spotify.get-album");
 const missingChoice = validatePlan(data, album, { requests: [{ endpointId: albumEndpoint.id, parameters: {}, dependencies: {} }] });
 assert.equal(missingChoice.correct, false);
-assert.ok(["missing-requests", "incorrect-plan", "incomplete-requests"].includes(missingChoice.status));
+assert.ok(["incorrect-parameters", "incomplete-requests"].includes(missingChoice.status));
 assert.equal(missingChoice.unnecessary.length, 0);
 
 const recap = data.scenarios.find((s) => s.id === "spotify-monthly-recap");
@@ -72,6 +72,16 @@ singleBatch.requests[0].parameters.part = "snippet";
 const wrongPlan = validatePlan(data, youtube, singleBatch);
 assert.equal(wrongPlan.correct, false);
 assert.ok(wrongPlan.rejectedReason.includes("Missing parts"));
+assert.equal(wrongPlan.incorrectlyConfiguredRequests[0].endpointId, "youtube.videos-list");
+
+const albumPlan = studentPlan(album, album.acceptedPlans[0]);
+const conditional = album.acceptedPlans[0].conditionalSteps[0];
+albumPlan.requests.push({ endpointId: conditional.endpointId, parameters: { offset: conditional.parameters.offset, limit: conditional.parameters.limit }, dependencies: {} });
+assert.equal(validatePlan(data, album, albumPlan).correct, true, "conditional pagination may be included without being required");
+
+const unnecessaryMix = validatePlan(data, youtube, { requests: [...studentPlan(youtube, youtube.acceptedPlans[0]).requests, { endpointId: "youtube.channels-list", parameters: {}, dependencies: {} }] });
+assert.ok(unnecessaryMix.unnecessary.length > 0 || unnecessaryMix.incompleteRequests.length > 0);
+assert.equal(unnecessaryMix.incorrectEndpoints.length, 0, "documented distractors are not misclassified as unavailable endpoints");
 
 const invalid = structuredClone(data);
 invalid.scenarios[0].availableEndpointIds[0] = "missing.endpoint";

@@ -81,7 +81,7 @@ function validateRules(endpoint, parameters) {
 }
 function acceptedMatch(scenario, requests, map) {
   for (const plan of scenario.acceptedPlans) {
-    if (requests.length !== plan.steps.length) continue;
+    if (requests.length < plan.steps.length) continue;
     const unmatched = requests.map((r, i) => ({ r, i })); let ok = true;
     for (let si = 0; si < plan.steps.length; si++) {
       const step = plan.steps[si], e = map.get(step.endpointId), ix = unmatched.findIndex(({ r }) => r.endpointId === step.endpointId && Object.keys(r.parameters || {}).every((name) => Object.hasOwn(step.parameters, name)) && Object.entries(step.parameters).every(([name, expected]) => { const p = e.parameters.find((q) => q.name === name); if (findRefs(expected).length) return true; return equivalentValue(r.parameters?.[name], expected, p && isRuntimeParameter(p, expected)); }));
@@ -94,7 +94,16 @@ function acceptedMatch(scenario, requests, map) {
       }
       unmatched.splice(ix, 1);
     }
-    if (ok) return plan;
+      if (ok) {
+        const conditional = plan.conditionalSteps || [];
+        const extrasValid = unmatched.every(({ r }) => conditional.some((step) => {
+          if (step.endpointId !== r.endpointId) return false;
+          const e = map.get(step.endpointId);
+          if (!Object.keys(r.parameters || {}).every((name) => Object.hasOwn(step.parameters, name))) return false;
+          return Object.entries(step.parameters).every(([name, expected]) => { if (findRefs(expected).length) return true; const p = e.parameters.find((q) => q.name === name); return equivalentValue(r.parameters?.[name], expected, p && isRuntimeParameter(p, expected)); });
+        }));
+        if (extrasValid) return plan;
+      }
   }
   return null;
 }
@@ -104,17 +113,32 @@ export function validatePlan(data, scenario, submission) {
   for (const r of requests) { byId.set(r.endpointId, (byId.get(r.endpointId) || 0) + 1); const e = map.get(r.endpointId); if (!e || !scenario.availableEndpointIds.includes(r.endpointId)) { errors.push({ endpointId: r.endpointId, reason: "This request is not in the documentation for this project." }); continue; } const problems = validateRules(e, r.parameters); if (problems.length) { errors.push(...problems.map((reason) => ({ endpointId: r.endpointId, reason }))); invalidParameterRequests.push(r.endpointId); } const missing = e.parameters.some((p) => p.required && !(isRuntimeParameter(p) && p.in === "path") && !hasVal(r.parameters[p.name])); if (missing) incompleteRequests.push(r.endpointId); requestValidity.set(r.endpointId, problems.length === 0 && !missing); }
   const matched = !errors.length && !incompleteRequests.length ? acceptedMatch(scenario, requests, map) : null;
   const human = (id) => map.get(id)?.title || id;
-  if (matched) return { correct: true, valid: true, efficient: matched.preferred !== false, status: matched.preferred === false ? "valid-less-efficient" : "correct", matchedPlanId: matched.id, errors: [], missing: [], unnecessary: [], incorrectEndpoints: [], incorrectParameters: [], incompleteRequests: [], invalidParameterRequests: [], message: matched.preferred === false ? "This plan can meet the goal, though another valid plan uses fewer or less costly requests." : "This plan meets the project requirements." };
+  if (matched) return { correct: true, valid: true, efficient: matched.preferred !== false, status: matched.preferred === false ? "valid-less-efficient" : "correct", matchedPlanId: matched.id, errors: [], missing: [], unnecessary: [], incorrectEndpoints: [], incorrectParameters: [], incompleteRequests: [], invalidParameterRequests: [], incorrectlyConfiguredRequests: [], message: matched.preferred === false ? "This plan can meet the goal, though another valid plan uses fewer or less costly requests." : "This plan meets the project requirements." };
   const plans = scenario.acceptedPlans;
   const scored = plans.map((p) => { const missing = p.steps.filter((s) => !requests.some((r) => r.endpointId === s.endpointId)); const extras = requests.filter((r) => !p.steps.some((s) => s.endpointId === r.endpointId)); const same = requests.filter((r) => p.steps.some((s) => s.endpointId === r.endpointId)).length; return { p, missing, extras, same }; }).sort((a, b) => b.same - a.same || a.missing.length - b.missing.length || a.extras.length - b.extras.length);
   const best = scored[0], present = new Set(requests.map((r) => r.endpointId));
   const missing = best.p.steps.filter((s) => !present.has(s.endpointId)).map((s) => ({ endpointId: s.endpointId }));
-  const unnecessary = requests.filter((r) => !best.p.steps.some((s) => s.endpointId === r.endpointId) && !incompleteRequests.includes(r.endpointId) && !invalidParameterRequests.includes(r.endpointId)).map((r) => ({ endpointId: r.endpointId }));
-  const invalidSet = new Set([...invalidParameterRequests]);
-  const incorrectEndpoints = requests.filter((r) => !scenario.availableEndpointIds.includes(r.endpointId) || !plans.some((p) => p.steps.some((s) => s.endpointId === r.endpointId))).filter((r) => !incompleteRequests.includes(r.endpointId) && !invalidSet.has(r.endpointId)).map((r) => ({ endpointId: r.endpointId }));
-  const status = incompleteRequests.length ? "incomplete-requests" : invalidParameterRequests.length ? "invalid-parameters" : missing.length ? "missing-requests" : unnecessary.length ? "unnecessary-requests" : "incorrect-plan";
+  const invalidIds = new Set([...incompleteRequests, ...invalidParameterRequests]);
+  const incorrectEndpoints = requests.filter((r) => !map.has(r.endpointId) || !scenario.availableEndpointIds.includes(r.endpointId)).map((r) => ({ endpointId: r.endpointId }));
+  const incorrectIds = new Set(incorrectEndpoints.map((r) => r.endpointId));
+  const unnecessary = requests.filter((r) => !best.p.steps.some((s) => s.endpointId === r.endpointId) && !invalidIds.has(r.endpointId) && !incorrectIds.has(r.endpointId)).map((r) => ({ endpointId: r.endpointId }));
+  const incorrectlyConfiguredRequests = requests.filter((r) => !invalidIds.has(r.endpointId) && !incorrectIds.has(r.endpointId) && !plans.some((plan) => plan.steps.some((step) => {
+    if (step.endpointId !== r.endpointId) return false;
+    const e = map.get(step.endpointId), requestIndex = requests.indexOf(r);
+    if (!Object.keys(r.parameters || {}).every((name) => Object.hasOwn(step.parameters, name))) return false;
+    return Object.entries(step.parameters).every(([name, expected]) => {
+      const refs = findRefs(expected);
+      if (refs.length) {
+        const dep = r.dependencies?.[name], paths = refs.map((ref) => ref.path), sourceIndices = refs.map((ref) => { const sourceStep = plan.steps.find((x) => x.step === ref.$fromStep); return requests.findIndex((x) => x.endpointId === sourceStep?.endpointId); });
+        return !!dep && sourceIndices.every((source) => source === dep.fromRequest && source < requestIndex) && JSON.stringify([...(dep.paths || [])].sort()) === JSON.stringify([...paths].sort());
+      }
+      const param = e.parameters.find((x) => x.name === name);
+      return equivalentValue(r.parameters?.[name], expected, param && isRuntimeParameter(param, expected));
+    });
+  }))).map((r) => ({ endpointId: r.endpointId }));
+  const status = incompleteRequests.length ? "incomplete-requests" : invalidParameterRequests.length ? "invalid-parameters" : missing.length ? "missing-requests" : unnecessary.length ? "unnecessary-requests" : incorrectlyConfiguredRequests.length ? "incorrect-parameters" : incorrectEndpoints.length ? "incorrect-endpoints" : "incorrect-plan";
   const rejected = (scenario.rejectedPlans || []).find((p) => JSON.stringify([...p.endpointIds].sort()) === JSON.stringify(requests.map((r) => r.endpointId).sort()));
-  return { correct: false, valid: false, efficient: false, status, errors, missing, unnecessary, incorrectEndpoints, incorrectParameters: invalidParameterRequests, incompleteRequests: [...new Set(incompleteRequests)], invalidParameterRequests: [...new Set(invalidParameterRequests)], rejectedReason: rejected?.reason || "", message: status === "incomplete-requests" ? "Complete the meaningful parameter choices for these requests. Required resource IDs are supplied by the application at run time." : status === "invalid-parameters" ? "One or more parameter values do not match the documented API rules." : status === "missing-requests" ? "Add the request or requests that provide the remaining project information." : status === "unnecessary-requests" ? "Some requests are not needed for this project's requirements." : "Review the request choices and how their response data supports the project." };
+  return { correct: false, valid: false, efficient: false, status, errors, missing, unnecessary, incorrectEndpoints, incorrectParameters: invalidParameterRequests, incompleteRequests: [...new Set(incompleteRequests)], invalidParameterRequests: [...new Set(invalidParameterRequests)], incorrectlyConfiguredRequests, rejectedReason: rejected?.reason || "", message: status === "incomplete-requests" ? "Complete the meaningful parameter choices for these requests. Required resource IDs are supplied by the application at run time." : status === "invalid-parameters" ? "One or more parameter values do not match the documented API rules." : status === "missing-requests" ? "Add the request or requests that provide the remaining project information." : status === "unnecessary-requests" ? "Some requests are not needed for this project's requirements." : status === "incorrect-parameters" ? "One or more requests use the wrong meaningful parameter choices." : "Review the request choices and how their response data supports the project." };
 }
 export function preferredPlan(scenario) { return scenario.acceptedPlans.find((p) => p.preferred) || scenario.acceptedPlans[0]; }
 export function planFromAccepted(scenario, plan = preferredPlan(scenario)) { return { requests: plan.steps.map((step) => ({ endpointId: step.endpointId, parameters: Object.fromEntries(Object.entries(step.parameters).filter(([name, value]) => { const e = scenario.availableEndpointIds; return !obj(value) || !("$fromStep" in value); })), dependencies: {} })) }; }
