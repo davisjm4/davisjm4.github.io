@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Practice judging Java comments, writing accurate Javadoc, and reading Java API documentation. No sign-in required."
+    />
+    <meta name="theme-color" content="#0c1722" />
+    <title>Documentation Lab | Java Games</title>
+    <link rel="stylesheet" href="../style.css?v=java-quality-v3" />
+    <link rel="stylesheet" href="./style.css?v=doclab-v1" />
+    <script type="module" src="./script.js?v=doclab-v1"></script>
+  </head>
+  <body data-game="documentation-lab">
+    <header>
+      <a href="../">← Java Games</a
+      ><small>DevCat Studios · Build your understanding</small>
+    </header>
+    <main id="main" class="dl">
+      <div class="eyebrow">Java · Comments · Javadoc · API documentation</div>
+      <h1>Documentation Lab</h1>
+      <p class="intro dl-intro">
+        Judge comments, repair them, build Javadoc, and read real Java API
+        documentation — one decision at a time.
+      </p>
+      <div class="toolbar dl-toolbar">
+        <label
+          >Practice mode
+          <select id="mode">
+            <option value="mixed" selected>Mixed Practice</option>
+            <option value="inspector">Comment Quality Inspector</option>
+            <option value="editor">Comment Editor</option>
+            <option value="builder">Javadoc Builder</option>
+            <option value="docs">Read the Docs</option>
+            <option value="detective">API Detective</option>
+          </select></label
+        ><button id="new" class="secondary" type="button">New Challenge</button>
+        <details class="dl-terms">
+          <summary>Key terms</summary>
+          <dl>
+            <dt><code>// …</code> single-line comment</dt>
+            <dd>Runs to the end of the line. Good for short notes inside a method.</dd>
+            <dt><code>/* … */</code> block comment</dt>
+            <dd>Can span several lines. Ignored by the javadoc tool.</dd>
+            <dt><code>/** … */</code> Javadoc comment</dt>
+            <dd>Placed right before a class, method, or field. Tools turn it into API documentation pages.</dd>
+            <dt><code>@param name</code></dt>
+            <dd>Describes one parameter in the method's signature (not a field).</dd>
+            <dt><code>@return</code></dt>
+            <dd>Describes the value returned. Not used for <code>void</code> methods.</dd>
+            <dt><code>@throws Type</code></dt>
+            <dd>Names an exception the method can throw and the condition that causes it.</dd>
+            <dt>Precondition</dt>
+            <dd>Something that must be true before a method is called for it to work correctly.</dd>
+          </dl>
+        </details>
+      </div>
+      <section id="stage" class="panel dl-stage" aria-live="off">
+        <div class="dl-head">
+          <span class="eyebrow" id="mode-label"></span
+          ><span id="family" class="dl-chip"></span>
+        </div>
+        <p id="instructions" class="muted dl-instructions"></p>
+        <p id="prompt" class="dl-prompt" hidden></p>
+        <h2 id="question" class="dl-question"></h2>
+        <div id="workspace" class="dl-workspace">
+          <div id="blocks" class="dl-blocks"></div>
+          <div id="docs" class="dl-docs"></div>
+        </div>
+        <div id="interaction" class="dl-interaction"></div>
+        <div class="actions dl-actions">
+          <button id="submit" type="button" disabled>Check Answer</button
+          ><button id="show" type="button" class="secondary">Show Answer</button
+          ><button id="skip" type="button" class="secondary">Skip</button
+          ><button id="next" type="button" hidden>Next Challenge →</button>
+        </div>
+        <div id="feedback" class="feedback dl-feedback" role="status" tabindex="-1" hidden></div>
+      </section>
+      <p id="stats" class="stats"></p>
+      <p class="muted dl-source">
+        API panels are adapted from the official Java SE 17 documentation.
+        Lab notes are marked separately.
+      </p>
+    </main>
+    <noscript><p>Enable JavaScript to play Documentation Lab.</p></noscript>
+    <footer>
+      Practice freely. No accounts or data uploads. Results are stored locally
+      in this browser. Independent practice tools; not affiliated with College
+      Board.
+    </footer>
+  </body>
+</html>
