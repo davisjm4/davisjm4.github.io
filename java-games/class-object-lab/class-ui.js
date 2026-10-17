@@ -1,4 +1,4 @@
-import {modeNames,createClassObjectGenerator,assessClassObject} from "./class-engine.js?v=class-object-v6";
+import {modeNames,createClassObjectGenerator,assessClassObject} from "./class-engine.js?v=class-object-v7";
 import {sessionTracker,addSessionNavigation,roundSummary} from "../session.js?v=java-v1";
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 export function startClassObjectLab(){const $=id=>document.getElementById(id),tracker=sessionTracker(),generator=createClassObjectGenerator(Date.now());let question,instance,selected=null,closed=false;
