@@ -1,0 +1,97 @@
+@import url("../style.css?v=java-quality-v3");
+
+[hidden] { display: none !important; }
+.challenge-meta {
+  color: var(--muted, #b7c8d4);
+  font-size: 0.9rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+}
+.array-code {
+  white-space: pre;
+  overflow-x: auto;
+  max-width: 100%;
+}
+.array-visual {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0.45rem 0 0.7rem;
+}
+.array-strip {
+  display: inline-flex;
+  align-items: end;
+  min-width: max-content;
+}
+.array-cell-wrap {
+  display: grid;
+  justify-items: center;
+  align-content: end;
+}
+.index-label {
+  min-height: 1.25rem;
+  color: var(--muted, #b7c8d4);
+  font-size: 0.75rem;
+}
+.array-cell {
+  min-width: 3.25rem;
+  min-height: 3.25rem;
+  margin: 0;
+  border-radius: 0;
+  border-right-width: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+.array-cell-wrap:last-child .array-cell { border-right-width: 1px; }
+.array-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(3.25rem, 4.5rem));
+  width: max-content;
+}
+.array-grid .array-cell { width: 100%; border-right-width: 1px; }
+.array-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 1rem 0;
+}
+.array-choice {
+  min-height: 3.5rem;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+.choice-letter {
+  display: inline-grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin-right: 0.55rem;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  font-weight: 800;
+}
+.array-cell.selected,
+.array-choice.selected {
+  outline: 3px solid var(--accent, #79ddc6);
+  outline-offset: -3px;
+  background: #234a51;
+}
+.correct-answer {
+  outline: 3px solid #64d89b !important;
+  outline-offset: -3px;
+  background: #174936 !important;
+}
+.incorrect-answer {
+  outline: 3px solid #ff8585 !important;
+  outline-offset: -3px;
+  background: #552f38 !important;
+}
+.compact { margin-top: 0.35rem; }
+
+@media (max-width: 600px) {
+  .array-choice-grid { grid-template-columns: minmax(0, 1fr); }
+  .array-cell { min-width: 3rem; min-height: 3rem; }
+  .array-grid { grid-template-columns: repeat(var(--columns), 3.25rem); }
+  .actions { flex-wrap: wrap; }
+}
