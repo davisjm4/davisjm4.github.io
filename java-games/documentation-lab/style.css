@@ -723,7 +723,7 @@ button.api-line.is-wrong {
 .api-mode>#workspace{display:contents}
 .api-mode>#blocks{grid-column:1/-1}
 .api-mode>#docs{grid-column:1;min-width:0}
-.api-mode>#interaction{grid-column:2;grid-row:3;min-width:0;margin-top:0}
+.api-mode>#interaction{grid-column:2;grid-row:auto;min-width:0;margin-top:0}
 .api-entry>.api-add{margin-top:4px}
 .api-doc-detail{color:#1c2833}
 .api-doc-param{background:#e7eef4;border-radius:6px;padding:8px 10px;margin:5px 0}
