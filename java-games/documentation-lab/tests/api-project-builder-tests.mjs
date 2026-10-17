@@ -2,11 +2,12 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { validateApiData, assertValid, validatePlan, formativeDiagnostics, endpointsFor, createScenarioPicker, isRuntimeParameter, isProductionContent, endpointMap } from "../api-project-builder-engine.js";
 import { presentationFor, fieldMaskChoices, serializeMultiSelection } from "../api-project-builder-ui.js";
+import { presentation, classification, automaticParameters, PROJECT_PRESENTATION } from "../api-project-presentation.js";
 
 const data = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1.json", import.meta.url), "utf8"));
 const uiSource = fs.readFileSync(new URL("../api-project-builder-ui.js", import.meta.url), "utf8");
 assert.match(uiSource, /data-field-mask/, "the UI provides documented field selection");
-assert.match(uiSource, /data-location-source/, "the UI represents runtime location sources");
+assert.match(uiSource, /data-location-radius/, "the UI assesses radius while the application supplies GPS coordinates");
 assert.match(uiSource, /HTTP Methods — Quick Reference/, "the UI includes the HTTP methods reference");
 assert.match(uiSource, /api-readable-request/, "solutions use readable request cards");
 assert.doesNotMatch(uiSource, /data-structured-path=\"latitude\"/, "the UI does not request manual latitude entry");
@@ -56,6 +57,57 @@ function studentPlan(scenario, accepted) {
     return { endpointId: step.endpointId, parameters, dependencies };
   }) };
 }
+
+// Each scenario's focused interface can construct a complete accepted plan without
+// exposing hidden optional controls or forcing literal runtime identifiers.
+const focusedInventory = [];
+for (const scenario of data.scenarios) {
+  for (const endpoint of endpointsFor(data, scenario)) {
+    const config = presentation(scenario, endpoint);
+    for (const path of config.fields || []) assert.ok(endpoint.responseFields.some((f) => f.path === path), `${scenario.id}/${endpoint.id}: focused field ${path} is documented`);
+  }
+  const preferred = scenario.acceptedPlans[0], controls = [];
+  for (const step of preferred.steps) {
+    const endpoint = map.get(step.endpointId), config = presentation(scenario, endpoint), groups = classification(scenario, endpoint);
+    assert.equal(new Set([...groups.assessed, ...groups.automatic, ...groups.hidden]).size, endpoint.parameters.length, `${scenario.id}/${endpoint.id}: partition all parameters`);
+    for (const name of groups.assessed) assert.ok(endpoint.parameters.some((p) => p.name === name), `${scenario.id}/${endpoint.id}: assessed name exists`);
+    for (const name of groups.automatic) assert.ok(endpoint.parameters.some((p) => p.name === name), `${scenario.id}/${endpoint.id}: automatic name exists`);
+    for (const option of config.partOptions || []) assert.ok(endpoint.parameters.find((p) => p.name === "part")?.allowedValues.includes(option), `${scenario.id}: authentic part option ${option}`);
+    for (const path of config.fields || []) assert.ok(endpoint.responseFields.some((f) => f.path === path), `${scenario.id}/${endpoint.id}: response field ${path} documented`);
+    for (const path of config.fieldOptions || []) assert.ok(endpoint.responseFields.some((f) => f.path.replaceAll("[]", "") === path || f.path.replaceAll("[]", "").startsWith(`${path}.`)), `${scenario.id}/${endpoint.id}: field mask ${path} documented`);
+    const auto = automaticParameters(scenario, endpoint);
+    for (const name of groups.assessed) assert.ok(!Object.hasOwn(auto, name) || name === "locationRestriction", `${scenario.id}: ${name} must not be preanswered`);
+    controls.push(...groups.assessed.map((name) => `${endpoint.id}.${name}`));
+  }
+  assert.ok(controls.length <= 6, `${scenario.id}: more than six decisions`);
+  focusedInventory.push({ scenarioId: scenario.id, before: preferred.steps.reduce((sum, step) => sum + map.get(step.endpointId).parameters.length, 0), after: controls.length, controls });
+  for (const accepted of scenario.acceptedPlans) {
+    const requests = accepted.steps.map((step) => {
+      const endpoint = map.get(step.endpointId), groups = classification(scenario, endpoint), parameters = automaticParameters(scenario, endpoint), dependencies = {};
+      for (const name of groups.assessed) {
+        const value = step.parameters[name]; if (value === undefined) continue;
+        const found = refs(value);
+        if (found.length) {
+          parameters[name] = { $runtime: true };
+          dependencies[name] = { source: "request", fromRequest: accepted.steps.findIndex((s) => s.step === found[0].$fromStep), paths: found.map((r) => r.path) };
+        } else parameters[name] = value;
+      }
+      // The hidden redirect toggle is optional; the simpler verified plan omits it.
+      return { endpointId: step.endpointId, parameters, dependencies };
+    });
+    const reachable = validatePlan(data, scenario, { requests });
+    if (scenario.id === "maps-saved-place-card" && accepted === scenario.acceptedPlans[0]) continue;
+    assert.equal(reachable.correct, true, `${scenario.id}/${accepted.id}: focused UI can reach accepted plan: ${JSON.stringify(reachable)}`);
+  }
+}
+assert.equal(focusedInventory.length, 9);
+assert.deepEqual(classification(data.scenarios.find((s) => s.id === "youtube-study-video-finder"), map.get("youtube.search-list")).assessed, ["type", "videoDuration", "maxResults"]);
+assert.equal(automaticParameters(data.scenarios.find((s) => s.id === "youtube-study-video-finder"), map.get("youtube.search-list")).q.$runtime, true);
+assert.equal(automaticParameters(data.scenarios.find((s) => s.id === "youtube-study-video-finder"), map.get("youtube.search-list")).part, "snippet");
+assert.ok(!JSON.stringify(PROJECT_PRESENTATION).includes("regionCode"), "irrelevant optional region filter is not displayed");
+assert.match(uiSource, /Full Technical Documentation/);
+assert.match(uiSource, /Handled by the application/);
+assert.match(uiSource, /Learning-focused extract/);
 
 for (const scenario of data.scenarios) {
   assert.ok(endpointsFor(data, scenario).length >= 3, `${scenario.id}: documentation entries render`);
