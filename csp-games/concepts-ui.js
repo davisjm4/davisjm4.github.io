@@ -1,7 +1,7 @@
 import {
   sessionTracker,
   roundSummary,
-} from "./session.js?v=platform-expansion-v2";
+} from "./session.js?v=active-time-v1";
 import { createConceptSession } from "./concepts-feedback.js?v=platform-expansion-v2";
 import {
   generateConcept,
