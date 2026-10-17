@@ -37,6 +37,7 @@ export function createSessionTracker({
       id: id(),
       startedAt: time,
       lastActivityAt: time,
+      activeSeconds: 0,
       student,
       totals: empty(),
       games: {},
@@ -137,7 +138,13 @@ export function createSessionTracker({
         "Saved session data was corrupted or used an unsupported older version. A new session has been started.",
       );
       save();
-    } else data = parsed;
+    } else {
+      data = parsed;
+      if (!Number.isSafeInteger(data.activeSeconds) || data.activeSeconds < 0) {
+        data.activeSeconds = 0;
+        save();
+      }
+    }
   }
   function save() {
     if (volatile) return;
@@ -220,6 +227,15 @@ export function createSessionTracker({
     activity();
     return true;
   }
+  function addActiveSeconds(seconds) {
+    read();
+    const amount = Math.max(0, Math.min(60, Math.floor(Number(seconds) || 0)));
+    if (amount) {
+      data.activeSeconds = (data.activeSeconds || 0) + amount;
+      save();
+    }
+    return data.activeSeconds || 0;
+  }
   function snapshot() {
     read();
     return JSON.parse(JSON.stringify(data));
@@ -260,6 +276,7 @@ export function createSessionTracker({
     student,
     reset,
     status,
+    addActiveSeconds,
     get warning() {
       return warning;
     },
@@ -282,6 +299,68 @@ export function sessionTracker() {
   }
   return singleton;
 }
+const ACTIVE_IDLE_MS = 2 * 60 * 1000,
+  ACTIVE_TICK_MS = 10 * 1000,
+  ACTIVE_LEASE_MS = 25 * 1000;
+let activeController;
+export function startActivePractice() {
+  if (typeof document === "undefined" || typeof window === "undefined" || activeController) return;
+  const tracker = sessionTracker(),
+    tabId = uid(),
+    leaseKey = SESSION_KEY + ".activeLease";
+  let lastInteraction = Date.now(),
+    lastTick = lastInteraction,
+    timer;
+  const readLease = () => {
+    try { return JSON.parse(globalThis.localStorage?.getItem(leaseKey) || "null"); }
+    catch { return null; }
+  };
+  const release = () => {
+    try { if (readLease()?.owner === tabId) globalThis.localStorage.removeItem(leaseKey); } catch {}
+  };
+  const claim = () => {
+    try {
+      const now = Date.now(), current = readLease();
+      if (current && current.owner !== tabId && current.until > now) return false;
+      globalThis.localStorage.setItem(leaseKey, JSON.stringify({ owner: tabId, until: now + ACTIVE_LEASE_MS }));
+      return true;
+    } catch { return true; }
+  };
+  const tick = () => {
+    const now = Date.now();
+    if (document.visibilityState === "hidden" || now - lastInteraction > ACTIVE_IDLE_MS) {
+      lastTick = now;
+      release();
+      return;
+    }
+    const elapsed = Math.min(15 * 1000, Math.max(0, now - lastTick));
+    if (elapsed >= 1000 && claim()) tracker.addActiveSeconds(Math.floor(elapsed / 1000));
+    lastTick = now;
+  };
+  const signal = () => { if (document.visibilityState !== "hidden") lastInteraction = Date.now(); };
+  const visible = () => { lastInteraction = Date.now(); lastTick = lastInteraction; };
+  const tickVisibility = () => { if (document.visibilityState === "hidden") tick(); else visible(); };
+  const stop = () => {
+    tick();
+    release();
+    clearInterval(timer);
+    for (const event of ["pointerdown", "keydown", "input", "touchstart", "scroll"]) document.removeEventListener(event, signal);
+    document.removeEventListener("visibilitychange", tickVisibility);
+    window.removeEventListener("pageshow", visible);
+    window.removeEventListener("pagehide", stop);
+    window.removeEventListener("beforeunload", stop);
+    activeController = null;
+  };
+  for (const event of ["pointerdown", "keydown", "input", "touchstart", "scroll"]) document.addEventListener(event, signal, { passive: true });
+  document.addEventListener("visibilitychange", tickVisibility);
+  window.addEventListener("pageshow", visible);
+  window.addEventListener("pagehide", stop);
+  window.addEventListener("beforeunload", stop);
+  timer = setInterval(tick, ACTIVE_TICK_MS);
+  activeController = { stop };
+  tick();
+}
+
 export function showStorageWarning(message) {
   if (typeof document === "undefined") return;
   let box = document.getElementById("session-storage-warning");
@@ -307,6 +386,7 @@ export function addSessionNavigation(home = "../") {
   }
   const t = sessionTracker();
   if (t.warning) showStorageWarning(t.warning);
+  startActivePractice();
 }
 export function roundSummary(game) {
   const m = sessionTracker().snapshot().games[game];
