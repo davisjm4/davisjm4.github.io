@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive Java ArrayList practice from DevCat Studios: insert, remove, search, and traverse ArrayLists. No sign-in required."
+    />
+    <meta name="theme-color" content="#0c1722" />
+    <title>ArrayList Lab | Java Games</title>
+    <link rel="stylesheet" href="../style.css?v=java-quality-v3" />
+    <link rel="stylesheet" href="./style.css?v=arraylist-v1" />
+    <script type="module" src="./script.js?v=arraylist-v1"></script>
+  </head>
+  <body data-game="arraylist-lab">
+    <header>
+      <a href="../">← Java Games</a
+      ><small>DevCat Studios · Build your understanding</small>
+    </header>
+    <main id="main" class="al">
+      <div class="eyebrow">Java · ArrayList · add · get · set · remove · size</div>
+      <h1>ArrayList Lab</h1>
+      <p class="intro al-intro">
+        See how each ArrayList operation changes the list’s contents, size,
+        and indices — one decision at a time.
+      </p>
+      <div class="toolbar al-toolbar">
+        <label
+          >Practice mode
+          <select id="mode">
+            <option value="mixed" selected>Mixed Practice</option>
+            <option value="access">Access &amp; Update</option>
+            <option value="insert-remove">Insert &amp; Remove</option>
+            <option value="search-size">Search &amp; Size</option>
+            <option value="traverse">Traverse &amp; Trace</option>
+            <option value="compare">Arrays vs. ArrayLists</option>
+          </select></label
+        ><button id="new" class="secondary" type="button">New Challenge</button>
+        <details class="al-terms">
+          <summary>Quick reference</summary>
+          <dl>
+            <dt><code>add(e)</code></dt>
+            <dd>Appends e at the end. Size grows by 1.</dd>
+            <dt><code>add(i, e)</code></dt>
+            <dd>Inserts e at index i (0 to size()). Elements from i on shift right.</dd>
+            <dt><code>get(i)</code> · <code>set(i, e)</code></dt>
+            <dd>Read / replace the element at index i (0 to size() − 1). set returns the old element; size does not change.</dd>
+            <dt><code>remove(int i)</code></dt>
+            <dd>Removes by position, returns the removed element. Later elements shift left.</dd>
+            <dt><code>remove(Object o)</code></dt>
+            <dd>Removes the first element equal to o, returns true/false. For an ArrayList&lt;Integer&gt; use <code>Integer.valueOf(5)</code>.</dd>
+            <dt><code>size()</code> · <code>isEmpty()</code></dt>
+            <dd>Number of elements · whether size() is 0. Arrays use <code>length</code> instead.</dd>
+            <dt><code>indexOf(o)</code> · <code>contains(o)</code></dt>
+            <dd>Index of the first match (−1 if none) · true/false. Both compare with equals().</dd>
+          </dl>
+        </details>
+      </div>
+      <section id="stage" class="panel al-stage" aria-live="off">
+        <div class="al-head">
+          <span class="eyebrow" id="mode-label"></span
+          ><span id="concept" class="al-chip"></span>
+        </div>
+        <h2 id="question" class="al-question"></h2>
+        <div id="start" class="al-start"></div>
+        <div id="code-wrap" class="al-code-wrap" hidden>
+          <p class="al-assume">Assume <code>import java.util.ArrayList;</code> is at the top of the file.</p>
+          <pre id="code" class="al-code"></pre>
+        </div>
+        <div id="goal" class="al-goal" hidden></div>
+        <div id="interaction"></div>
+        <div class="actions al-actions">
+          <button id="submit" type="button" disabled>Check Answer</button
+          ><button id="skip" type="button" class="secondary">Skip</button
+          ><button id="show" type="button" class="secondary">Show Answer</button
+          ><button id="next" type="button" hidden>Next Challenge →</button>
+        </div>
+        <div id="feedback" class="feedback al-feedback" role="status" tabindex="-1" hidden></div>
+        <div id="reveal" class="al-reveal" hidden></div>
+      </section>
+      <p id="stats" class="stats"></p>
+    </main>
+    <noscript
+      ><p>Enable JavaScript to play these interactive games.</p></noscript
+    >
+    <footer>
+      Practice freely. No accounts or data uploads. Results are stored locally
+      in this browser. Independent practice tools; not affiliated with College
+      Board.
+    </footer>
+  </body>
+</html>
