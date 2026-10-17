@@ -96,11 +96,13 @@ for (const [format, variants] of Object.entries(A.formatFamilies)) {
 }
 
 const seenFormats = new Set(), seenVariants = new Set(), positions = new Set();
+const mixedFormatCounts = Object.fromEntries(Object.keys(A.formatNames).map((format) => [format, 0]));
 let longestCorrect = 0, choiceQuestions = 0;
 for (let index = 0; index < 1200; index++) {
   const question = A.generateArray();
   generated++;
   seenFormats.add(question.format);
+  mixedFormatCounts[question.format]++;
   seenVariants.add(question.topic);
   if (question.kind === "choice") {
     choiceQuestions++;
@@ -117,6 +119,7 @@ for (let index = 0; index < 1200; index++) {
 eq([...seenFormats].sort(), Object.keys(A.formatNames).sort());
 eq(seenVariants.size, Object.values(A.formatFamilies).flat().length);
 eq(positions.size, 4);
+ok(Object.values(mixedFormatCounts).every((count) => count >= 100 && count <= 170), "no format dominates Mixed Practice");
 ok(longestCorrect / choiceQuestions < 0.35, "answer length must not identify the correct choice");
 
 const {parseHTML} = createRequire(import.meta.url)(
@@ -251,6 +254,7 @@ fs.writeFileSync("/tmp/java-quality/array-redesign-samples.json", JSON.stringify
 console.log(
   `Array Lab redesign: ${generated} generated challenges across ${seenFormats.size} formats and ` +
   `${seenVariants.size} structural variants; ${checks} generator, interaction, session, answer-position, and responsive assertions passed. ` +
+  `Mixed distribution: ${JSON.stringify(mixedFormatCounts)}. ` +
   `Longest-choice shortcut: ${longestCorrect}/${choiceQuestions}. ` +
   `${compilerSamples.length} representative Java snippets compiled with javac.`,
 );
