@@ -739,3 +739,5 @@ button.api-line.is-wrong {
   .api-mode{display:block}
   .api-mode>#docs,.api-mode>#interaction{margin-top:12px}
 }
+
+.api-solution{margin-top:10px;border-top:1px solid #33495c;padding-top:8px}.api-solution summary{cursor:pointer;color:var(--accent);font-weight:700}.api-solution ol{padding-left:1.4em}.api-solution li{margin:5px 0}.api-solution code{font-family:var(--mono)}
