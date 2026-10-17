@@ -12,6 +12,7 @@ import { recursionGame } from "./recursion-lab/engine.js";
 import { arrayListGame } from "./arraylist-lab/engine.js";
 import { docLabGame } from "./documentation-lab/engine.js";
 import { linkedListGame } from "./linkedlist-lab/engine.js";
+import { ipLabGame } from "./inheritance-polymorphism-lab/engine.js";
 import { diagnostics } from "./diagnostics.js";
 import * as S from "./session.js";
 import { mountCollectionEditor } from "../csp-games/collection-editor.js";
@@ -81,6 +82,7 @@ function launch(slug) {
     arrayListGame,
     docLabGame,
     linkedListGame,
+    ipLabGame,
     J: { ...J, generate: (game, mode) => (q = J.generate(game, mode, forced)) },
     sessionTracker: () => tracker,
     roundSummary: () => JSON.stringify(tracker.snapshot().totals),
@@ -165,12 +167,13 @@ function launch(slug) {
   };
 }
 const home = launch("");
-eq(home.document.querySelectorAll(".card").length, 13);
+eq(home.document.querySelectorAll(".card").length, 14);
 ok(home.document.querySelector('a[href="method-constructor-lab/"]'));
 ok(home.document.querySelector('a[href="boolean-conditional-lab/"]'));
 ok(home.document.querySelector('a[href="robot-algorithms/"]'));
 ok(home.document.querySelector('a[href="class-object-lab/"]'));
 ok(home.document.querySelector('a[href="math-lab/"]'));
+ok(home.document.querySelector('a[href="inheritance-polymorphism-lab/"]'));
 for (const [slug, g] of Object.entries(J.games)) {
   const t = launch(slug);
   eq(t.$("mode").value, "mixed");
