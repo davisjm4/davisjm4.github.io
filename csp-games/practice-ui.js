@@ -11,7 +11,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=platform-expansion-v2";
+} from "./session.js?v=active-time-v1";
 const escape = (s) =>
   String(s).replace(
     /[&<>"']/g,
