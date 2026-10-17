@@ -16,6 +16,7 @@ const enabled = data.scenarios.filter((s) => s.stage1Compatible === true && !(s.
 assert.equal(enabled.length, 36);
 assert.equal(data.scenarios.length, 53);
 assert.equal(data.providers.length, 6);
+assert.deepEqual(Object.fromEntries(data.providers.map((provider) => [provider.id, enabled.filter((scenario) => scenario.providerId === provider.id).length])), { spotify: 6, youtube: 6, "google-maps": 7, discord: 6, tiktok: 4, openai: 7 });
 
 const map = endpointMap(data);
 function findReferences(value, found = []) {
@@ -28,6 +29,13 @@ function hasRuntimeOrReference(value) {
   if (!value || typeof value !== "object") return false;
   if ("$runtime" in value || "$fromStep" in value) return true;
   return Array.isArray(value) ? value.some(hasRuntimeOrReference) : Object.values(value).some(hasRuntimeOrReference);
+}
+function documentedField(endpoint, field) {
+  const normalizedField = field.replaceAll("[]", "").replace(/^\./, "");
+  return endpoint.responseFields.some((item) => {
+    const path = item.path.replaceAll("[]", "").replace(/^\./, "");
+    return path === normalizedField || path.startsWith(`${normalizedField}.`) || normalizedField.startsWith(`${path}.`) || path.endsWith(`.${normalizedField}`);
+  });
 }
 function studentPlan(scenario, plan) {
   const requests = [];
@@ -60,6 +68,8 @@ for (const scenario of enabled) {
   assert.ok(scenario.acceptedPlans.length > 0, `${scenario.id}: accepted plan`);
   for (const endpointId of scenario.availableEndpointIds) {
     const endpoint = map.get(endpointId), config = presentation(scenario, endpoint);
+    for (const field of config.fields || []) assert.ok(documentedField(endpoint, field), `${scenario.id}/${endpointId}: displayed response field ${field} is documented`);
+    for (const field of config.fieldOptions || []) assert.ok(documentedField(endpoint, field), `${scenario.id}/${endpointId}: field selector option ${field} is documented`);
     for (const name of classification(scenario, endpoint).assessed) {
       const parameter = endpoint.parameters.find((item) => item.name === name);
       if (presentationFor(endpoint, parameter) === "text") {
@@ -92,6 +102,29 @@ for (const scenario of enabled) {
     const focusedResult = validatePlan(data, scenario, focused);
     assert.equal(focusedResult.correct, true, `${scenario.id}/${plan.id}: focused controls can construct the accepted plan: ${JSON.stringify(focusedResult)}`);
   }
+  const nearMiss = studentPlan(scenario, scenario.acceptedPlans[0]);
+  let corrupted = false;
+  for (let requestIndex = 0; requestIndex < scenario.acceptedPlans[0].steps.length && !corrupted; requestIndex++) {
+    const step = scenario.acceptedPlans[0].steps[requestIndex], endpoint = map.get(step.endpointId), request = nearMiss.requests[requestIndex];
+    for (const name of classification(scenario, endpoint).assessed) {
+      const value = step.parameters[name], assessment = step.assessment?.[name], references = findReferences(value);
+      if (references.length) {
+        request.dependencies[name] = { fromRequest: -1, paths: ["not.a.documented.response.field"] };
+        corrupted = true;
+        break;
+      }
+      if (assessment?.mode === "notAssessed" || assessment?.mode === "structural" || isRuntimeParameter(endpoint.parameters.find((parameter) => parameter.name === name), value)) continue;
+      if (assessment?.mode === "includesAll") request.parameters[name] = "not.a.documented.field";
+      else if (assessment?.mode === "oneOf") request.parameters[name] = "not-an-accepted-choice";
+      else if (typeof value === "string") request.parameters[name] = "not-the-required-choice";
+      else if (typeof value === "number") request.parameters[name] = value + 1;
+      else if (typeof value === "boolean") request.parameters[name] = !value;
+      else request.parameters[name] = "not-the-required-choice";
+      corrupted = true;
+      break;
+    }
+  }
+  if (corrupted) assert.equal(validatePlan(data, scenario, nearMiss).correct, false, `${scenario.id}: a near-miss plan remains incorrect`);
   const incorrect = { requests: [] };
   assert.equal(validatePlan(data, scenario, incorrect).correct, false, `${scenario.id}: incorrect plan rejected`);
 }
