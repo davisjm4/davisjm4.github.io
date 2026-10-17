@@ -76,6 +76,7 @@ function launch(slug) {
     methodLabGame,
     booleanGame,
     recursionGame,
+    arrayListGame,
     J: { ...J, generate: (game, mode) => (q = J.generate(game, mode, forced)) },
     sessionTracker: () => tracker,
     roundSummary: () => JSON.stringify(tracker.snapshot().totals),
