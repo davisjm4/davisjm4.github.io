@@ -1,5 +1,5 @@
 import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v18";
-import { presentation, classification, automaticParametersForOccurrence } from "./api-project-presentation.js?v=curated-v5";
+import { presentation, classification, automaticParametersForOccurrence } from "./api-project-presentation.js?v=curated-v6";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
@@ -86,7 +86,7 @@ function responseFields(fields) { return `<ul class="api-fields">${fields.map((f
 function parameterDocs(p, options) { const range = p.allowedValues?.length ? `${options ? "Relevant documented values" : "Allowed values"}: ${(options || p.allowedValues).join(", ")}` : p.minimum != null || p.maximum != null ? `Range: ${p.minimum ?? "no minimum"}–${p.maximum ?? "no maximum"}` : p.format ? `Format: ${p.format}` : ""; return `<div class="api-doc-param"><strong>${esc(p.name)}</strong><span>${p.required ? "Required" : "Optional"} · ${esc(p.in)} parameter · ${esc(p.type)}</span><p>${esc(p.description)}</p>${range ? `<small>${esc(range)}</small>` : ""}</div>`; }
 function focusedFields(e, scenario) {
   const paths = presentation(scenario, e).fields;
-  return paths ? paths.map((path) => e.responseFields.find((f) => f.path === path)).filter(Boolean) : e.responseFields.filter((f) => !f.path.includes(".") && !f.path.endsWith("[]")).slice(0, 8);
+  return paths ? paths.map((path) => e.responseFields.find((f) => f.path === path) || e.responseFields.find((f) => f.path.endsWith(`.${path}`))).filter(Boolean) : e.responseFields.filter((f) => !f.path.includes(".") && !f.path.endsWith("[]")).slice(0, 8);
 }
 function docsHtml(e, provider, scenario) {
   const config = presentation(scenario, e), groups = classification(scenario, e);
