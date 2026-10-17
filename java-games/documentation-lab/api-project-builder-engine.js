@@ -151,5 +151,111 @@ export function validatePlan(data, scenario, submission) {
   });
   return { correct: false, valid: false, efficient: false, status, errors, missing, unnecessary, incorrectEndpoints, incorrectParameters: invalidParameterRequests, incompleteRequests: [...new Set(incompleteRequests)], invalidParameterRequests: [...new Set(invalidParameterRequests)], incorrectlyConfiguredRequests, rejectedReason: rejected?.reason || "", message: status === "incomplete-requests" ? "Complete the meaningful parameter choices for these requests. Required resource IDs are supplied by the application at run time." : status === "invalid-parameters" ? "One or more parameter values do not match the documented API rules." : status === "missing-requests" ? "Add the request or requests that provide the remaining project information." : status === "unnecessary-requests" ? "Some requests are not needed for this project's requirements." : status === "incorrect-parameters" ? "One or more requests use the wrong meaningful parameter choices." : "Review the request choices and how their response data supports the project." };
 }
+const FORMATIVE_MESSAGES = {
+  missing: "Your plan does not yet retrieve all the information the application needs. Compare the project requirements with response fields available from your selected requests.",
+  incomplete: "A selected request still needs a required documented value. Review its parameter list and descriptions.",
+  parameters: "One or more parameter choices do not match the information or constraints in the project goal. Review the documented meanings and allowed values.",
+  fieldMask: "The application needs information that is not currently requested in the response fields. Review how this API selects returned fields.",
+  dependency: "One request needs an identifier that another request may provide. Review where that identifier comes from.",
+  unnecessary: "Your plan may retrieve some information more than once. Compare the response fields of your selected requests.",
+  access: "One selected operation has an access restriction that may prevent this application from using it. Review its authorization and availability notes.",
+  operation: "A selected operation may not provide information this project needs. Compare its documented response fields with the project brief."
+};
+const HINTS = {
+  missing: [
+    "Recheck every item under Required information in the project brief and compare it with the responses your plan can return.",
+    "Review the Response fields section for each selected operation and match the documented data to the project requirements.",
+    "A collection request and a request for one item can return different information. Related resources may also require connected requests."
+  ],
+  incomplete: [
+    "Check which documented choices or values the project goal makes necessary.",
+    "Review required parameters, their locations, and any allowed values or ranges.",
+    "Some request values change which resource is returned; others filter, rank, or limit the results."
+  ],
+  parameters: [
+    "Revisit the filters, time period, ordering, and limits described in the project goal.",
+    "Compare each configured value with the parameter description and documented allowed values.",
+    "A parameter can change the kind of result or its time window even when the endpoint itself is appropriate."
+  ],
+  fieldMask: [
+    "Check that the planned responses include each kind of information listed in the project brief.",
+    "Review the documentation section explaining how this API selects returned fields.",
+    "A field mask controls which documented fields the service returns; it needs to cover the information the application displays."
+  ],
+  dependency: [
+    "Check whether the needed identifier is already in the project brief or must come from an earlier response.",
+    "Review the earlier operation's response fields for an identifier that can connect the requests.",
+    "When one response supplies an identifier for another request, the data relationship and request order matter."
+  ],
+  unnecessary: [
+    "Compare the response information from each selected operation with the project requirements.",
+    "Look for response fields that overlap across your selected requests.",
+    "A collection response may already contain information that would otherwise require repeated item requests."
+  ],
+  access: [
+    "Recheck the project's stated login, token, API key, or project availability limits.",
+    "Review the selected operation's authorization requirements and availability notes.",
+    "An operation can be documented yet unavailable to an application using a different authorization method or project setup."
+  ],
+  operation: [
+    "Compare the information still needed by the project with what the selected operation returns.",
+    "Review that operation's response fields and the distinction between a collection and one item.",
+    "An endpoint can be valid API documentation and still return a different resource or level of detail than the application needs."
+  ]
+};
+function hasAccessConflict(scenario, endpoint, request = {}) {
+  const constraints = Array.isArray(scenario.constraints) ? scenario.constraints.join(" ") : String(scenario.constraints || "");
+  const text = constraints.toLowerCase(), auth = endpoint.authentication || {};
+  if ((endpoint.availability === "legacy" || endpoint.availability?.status === "legacy") && /new\b[^.]{0,80}\bproject/.test(text)) return true;
+  if (auth.type === "api_key_or_oauth2" && /public data only|no viewer login|no user login/.test(text) && ["mine", "myRating", "forMine"].some((name) => hasVal(request.parameters?.[name]) && request.parameters[name] !== false)) return true;
+  if (auth.type === "oauth2" && /no (?:user )?login|app-only|public data only/.test(text) && !(auth.tokenTypes || []).includes("client_credentials")) return true;
+  const requiredScopes = auth.scopes || [];
+  const scenarioScopes = [...text.matchAll(/\b[a-z]+(?:-[a-z]+){1,5}\b/g)].map((m) => m[0]);
+  return requiredScopes.length > 0 && scenarioScopes.some((scope) => /(?:read|write|private|public|top|follow|email)/.test(scope)) && requiredScopes.some((scope) => !scenarioScopes.includes(scope));
+}
+function fieldMaskMismatch(scenario, endpoint, request) {
+  const maskParam = endpoint.parameters.find((p) => p.name.toLowerCase() === "x-goog-fieldmask");
+  if (!maskParam) return false;
+  const expected = scenario.acceptedPlans.flatMap((plan) => plan.steps.filter((step) => step.endpointId === endpoint.id).map((step) => step.parameters[maskParam.name]).filter((v) => typeof v === "string"));
+  return expected.length > 0 && !expected.includes(request.parameters?.[maskParam.name]);
+}
+function dependencyMismatch(scenario, requests, requestIndex, request) {
+  const plans = scenario.acceptedPlans.filter((plan) => plan.steps.some((step) => step.endpointId === request.endpointId && Object.values(step.parameters).some((v) => findRefs(v).length)));
+  if (!plans.length) return false;
+  return plans.every((plan) => {
+    const step = plan.steps.find((s) => s.endpointId === request.endpointId && Object.values(s.parameters).some((v) => findRefs(v).length));
+    if (!step) return true;
+    return Object.entries(step.parameters).filter(([, value]) => findRefs(value).length).some(([name, value]) => {
+      const refs = findRefs(value), dep = request.dependencies?.[name];
+      return refs.some((ref) => {
+        const sourceStep = plan.steps.find((s) => s.step === ref.$fromStep), sourceIndex = requests.findIndex((r) => r.endpointId === sourceStep?.endpointId);
+        return !dep || dep.fromRequest !== sourceIndex || sourceIndex < 0 || sourceIndex >= requestIndex || !(dep.paths || []).includes(ref.path);
+      });
+    });
+  });
+}
+export function formativeDiagnostics(data, scenario, result, submittedRequests = []) {
+  const map = endpointMap(data), requests = submittedRequests || [], issues = new Set(), maskIds = new Set();
+  for (let i = 0; i < requests.length; i++) {
+    const request = requests[i], endpoint = map.get(request.endpointId);
+    if (!endpoint) { issues.add("operation"); continue; }
+    if (hasAccessConflict(scenario, endpoint, request)) issues.add("access");
+    if (fieldMaskMismatch(scenario, endpoint, request)) { issues.add("fieldMask"); maskIds.add(endpoint.id); }
+    if (dependencyMismatch(scenario, requests, i, request)) issues.add("dependency");
+  }
+  if (result.incompleteRequests.some((id) => !maskIds.has(id))) issues.add("incomplete");
+  if (result.invalidParameterRequests.some((id) => !maskIds.has(id))) issues.add("parameters");
+  if (result.incorrectlyConfiguredRequests.some(({ endpointId }) => {
+    if (maskIds.has(endpointId)) return false;
+    const i = requests.findIndex((r) => r.endpointId === endpointId), endpoint = map.get(endpointId);
+    return !endpoint || !dependencyMismatch(scenario, requests, i, requests[i]) && !hasAccessConflict(scenario, endpoint, requests[i]);
+  })) issues.add("parameters");
+  if (result.missing.length) issues.add("missing");
+  if (result.unnecessary.length) issues.add("unnecessary");
+  if (result.incorrectEndpoints.length) issues.add("operation");
+  if (!issues.size) issues.add("missing");
+  const order = ["access", "dependency", "fieldMask", "incomplete", "parameters", "missing", "unnecessary", "operation"];
+  return order.filter((key) => issues.has(key)).map((key) => ({ key, message: FORMATIVE_MESSAGES[key], hints: HINTS[key] }));
+}
 export function preferredPlan(scenario) { return scenario.acceptedPlans.find((p) => p.preferred) || scenario.acceptedPlans[0]; }
 export function planFromAccepted(scenario, plan = preferredPlan(scenario)) { return { requests: plan.steps.map((step) => ({ endpointId: step.endpointId, parameters: Object.fromEntries(Object.entries(step.parameters).filter(([name, value]) => { const e = scenario.availableEndpointIds; return !obj(value) || !("$fromStep" in value); })), dependencies: {} })) }; }
