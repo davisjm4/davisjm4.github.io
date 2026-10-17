@@ -5,6 +5,7 @@ import { classObjectGame } from "./class-object-lab/class-engine.js?v=class-obje
 import { methodLabGame } from "./method-constructor-lab/engine.js?v=mcl-v1";
 import { booleanGame } from "./boolean-conditional-lab/engine.js?v=bool-v1";
 import { recursionGame } from "./recursion-lab/engine.js?v=recursion-v1";
+import { arrayListGame } from "./arraylist-lab/engine.js?v=arraylist-v1";
 import { diagnostics } from "./diagnostics.js?v=java-quality-v3";
 import { mountCollectionEditor } from "../csp-games/collection-editor.js?v=java-v1";
 import {
@@ -25,7 +26,7 @@ const $ = (id) => document.getElementById(id),
 if (!slug) {
   $("main").innerHTML =
     `<div class="eyebrow">DevCat Studios · Java practice</div><h1>Read it. Explore it.<br>Understand it.</h1><p class="intro">Quick, interactive practice for Java code understanding. No code editor, accounts, or required progression.</p><div class="grid">${Object.entries(
-      { ...J.games, "math-lab": mathGame, "robot-algorithms": robotGame, "class-object-lab": classObjectGame, "method-constructor-lab": methodLabGame, "boolean-conditional-lab": booleanGame, "recursion-lab": recursionGame },
+      { ...J.games, "math-lab": mathGame, "robot-algorithms": robotGame, "class-object-lab": classObjectGame, "method-constructor-lab": methodLabGame, "boolean-conditional-lab": booleanGame, "recursion-lab": recursionGame, "arraylist-lab": arrayListGame },
     )
       .map(
         ([id, g]) =>
