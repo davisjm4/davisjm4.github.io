@@ -177,7 +177,7 @@ export function generate(mode="mixed", rng=Math.random) {
   throw new Error("Unknown mode "+mode);
 }
 export function assess(ch, response) {
-  if(ch.kind==="links") {
+  if(ch.kind==="links" || ch.kind==="mutate-links") {
     const actual=chain(ch.nodes,response.head,response.next);
     const goal=chain(ch.nodes,ch.answer.head,ch.answer.next);
     return actual.valid && JSON.stringify(actual.values)===JSON.stringify(goal.values);
@@ -186,6 +186,6 @@ export function assess(ch, response) {
   return Number(response)===ch.answer;
 }
 export function solution(ch) {
-  if(ch.kind==="links") return ch.answer;
+  if(ch.kind==="links" || ch.kind==="mutate-links") return ch.answer;
   return ch.answer;
 }
