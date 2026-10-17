@@ -9,6 +9,8 @@ import { presentationFor, fieldMaskChoices } from "../api-project-builder-ui.js"
 const index = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1-runtime-index.json", import.meta.url)));
 const parts = index.runtimeParts.map((path) => JSON.parse(fs.readFileSync(new URL(`../${path.replace(/^\.\//, "")}`, import.meta.url))));
 const data = { schemaVersion: parts[0].schemaVersion, providers: parts.flatMap((part) => part.providers), scenarios: parts.flatMap((part) => part.scenarios) };
+const uiSource = fs.readFileSync(new URL("../api-project-builder-ui.js", import.meta.url), "utf8");
+assert.match(uiSource, /runtimeDescriptionsFor/, "runtime input metadata drives symbolic student-facing descriptions");
 const errors = validateApiData(data);
 assert.deepEqual(errors, [], errors.join("\n"));
 
