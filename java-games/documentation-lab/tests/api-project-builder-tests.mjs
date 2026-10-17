@@ -1,0 +1,16 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import { validateApiData, assertValid, validatePlan, endpointsFor, createScenarioPicker } from "../api-project-builder-engine.js";
+const data = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1.json", import.meta.url), "utf8"));
+assert.equal(validateApiData(data).length, 0);
+assert.doesNotThrow(() => assertValid(data));
+assert.equal(endpointsFor(data, data.scenarios[0]).length, 4);
+const album = data.scenarios.find((s) => s.id === "album-viewer");
+const correct = { requests: [{ endpointId: "album-get", parameters: { albumId: "ALB-42" } }, { endpointId: "album-tracks", parameters: { albumId: "ALB-42" } }, { endpointId: "artist-get", parameters: { artistId: "ART-7" } }] };
+assert.equal(validatePlan(data, album, correct).status, "correct");
+const missing = validatePlan(data, album, { requests: correct.requests.slice(0, 2) }); assert.equal(missing.correct, false); assert.ok(missing.missing.some((r) => r.endpointId === "artist-get"));
+const wrongParam = validatePlan(data, album, { requests: [...correct.requests.slice(0, 2), { endpointId: "artist-get", parameters: { artistId: "ART-99" } }] }); assert.equal(wrongParam.status, "incomplete-or-incorrect"); assert.ok(wrongParam.incorrectParameters.includes("artist-get"));
+const extra = validatePlan(data, data.scenarios.find((s) => s.id === "album-card"), { requests: [{ endpointId: "album-get", parameters: { albumId: "ALB-42" } }, { endpointId: "album-tracks", parameters: { albumId: "ALB-42" } }] }); assert.equal(extra.correct, true); assert.equal(extra.status, "valid-less-efficient");
+const invalid = JSON.parse(JSON.stringify(data)); invalid.scenarios[0].acceptedPlans[0].requests[0].endpointId = "missing"; assert.ok(validateApiData(invalid).some((e) => e.includes("unknown endpoint")));
+const picker = createScenarioPicker(data, () => 0.1); assert.equal(picker().id, "album-card"); assert.equal(picker().id, "artist-shelf"); assert.equal(picker().id, "album-viewer");
+console.log("API Project Builder engine: content validation, references, parameters, alternatives, efficiency, and picker passed.");
