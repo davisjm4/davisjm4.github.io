@@ -715,3 +715,27 @@ button.api-line.is-wrong {
 .api-explanation{border-top:1px solid #33495c;padding-top:8px}
 .api-unavailable{background:#3d3216;border:1px solid #b68300;color:#ffe7a8;border-radius:9px;padding:12px}
 @media (min-width:900px){.dl-workspace.api-layout{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr)}}
+
+
+/* API Project Builder correction: documentation is reference-only; the plan is the only editor. */
+.api-mode{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,.9fr);gap:12px;align-items:start}
+.api-mode>.dl-head,.api-mode>.dl-instructions,.api-mode>#prompt,.api-mode>.dl-question,.api-mode>.dl-actions,.api-mode>#feedback,.api-mode>#stats{grid-column:1/-1}
+.api-mode>#workspace{display:contents}
+.api-mode>#blocks{grid-column:1/-1}
+.api-mode>#docs{grid-column:1;min-width:0}
+.api-mode>#interaction{grid-column:2;grid-row:3;min-width:0;margin-top:0}
+.api-entry>.api-add{margin-top:4px}
+.api-doc-detail{color:#1c2833}
+.api-doc-param{background:#e7eef4;border-radius:6px;padding:8px 10px;margin:5px 0}
+.api-doc-param strong{display:block;font:700 .95rem var(--mono);color:#1c2833}
+.api-doc-param>span{display:block;color:#536a7b;font-weight:700;font-size:.82rem}
+.api-doc-param p{margin:3px 0!important;color:#1c2833}
+.api-doc-param small{color:#536a7b}
+.api-identifiers{margin:0;padding-left:1.3em}
+.api-identifiers li{margin:4px 0}
+.api-identifiers code{font-family:var(--mono);color:#b9efe0}
+.api-param mark{background:#ffe7a8;color:#5b4300;border-radius:4px;padding:1px 4px;font:700 .68rem system-ui}
+@media(max-width:899px){
+  .api-mode{display:block}
+  .api-mode>#docs,.api-mode>#interaction{margin-top:12px}
+}
