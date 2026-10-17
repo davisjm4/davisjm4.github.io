@@ -1,5 +1,5 @@
 import { mathGame, createDeck, assess } from "./engine.js?v=math-v1";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=java-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
 
 export function startMathLab() {
   const $ = id => document.getElementById(id);
