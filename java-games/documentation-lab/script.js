@@ -460,6 +460,7 @@ function stats() {
 
 function newChallenge() {
   if (apiSession) { apiSession.stop(); apiSession = null; }
+  if (instance && tracker.status(instance) === "active") tracker.skip(instance);
   $("submit").onclick = submit;
   $("show").onclick = showAnswer;
   $("skip").onclick = newChallenge;
@@ -482,7 +483,6 @@ function newChallenge() {
     });
     return;
   }
-  if (instance && tracker.status(instance) === "active") tracker.skip(instance);
   ch = E.generate(selectedMode, picker, rng);
   instance = tracker.begin(E.GAME_ID, E.docLabGame.name, ch.mode, E.MODES[ch.mode]);
   closed = false;
