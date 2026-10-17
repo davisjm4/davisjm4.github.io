@@ -202,6 +202,58 @@ const lunchPlan = studentPlan(lunch, lunch.acceptedPlans[0]);
 lunchPlan.requests[0].parameters["X-Goog-FieldMask"] = "places.displayName,places.formattedAddress,places.location,places.rating,places.currentOpeningHours";
 assert.equal(validatePlan(data, lunch, lunchPlan).correct, true, "place ID remains optional when the displayed fields are selected");
 
+// Audit replay: feedback follows the currently unresolved Lunch Spot Finder issue.
+const lunchAudit = studentPlan(lunch, lunch.acceptedPlans[0]);
+lunchAudit.requests[0].parameters["X-Goog-FieldMask"] = lunchAudit.requests[0].parameters["X-Goog-FieldMask"].split(",").filter((field) => field !== "places.formattedAddress").join(",");
+let auditResult = validatePlan(data, lunch, lunchAudit);
+let auditFeedback = formativeDiagnostics(data, lunch, auditResult, lunchAudit.requests);
+assert.match(auditFeedback[0].message, /address|locate/i, "first Lunch audit hint diagnoses readable location information");
+lunchAudit.requests[0].parameters["X-Goog-FieldMask"] += ",places.formattedAddress";
+lunchAudit.requests[0].parameters.rankPreference = "POPULARITY";
+auditResult = validatePlan(data, lunch, lunchAudit); auditFeedback = formativeDiagnostics(data, lunch, auditResult, lunchAudit.requests);
+assert.match(auditFeedback[0].message, /closest|ranking|orders/i, "feedback advances to the current ranking issue");
+assert.doesNotMatch(auditFeedback[0].message, /formatted address|locate each result/i);
+lunchAudit.requests[0].parameters.rankPreference = "DISTANCE"; lunchAudit.requests[0].parameters.maxResultCount = 20;
+auditResult = validatePlan(data, lunch, lunchAudit); auditFeedback = formativeDiagnostics(data, lunch, auditResult, lunchAudit.requests);
+assert.match(auditFeedback[0].message, /result|number|limit/i, "feedback advances to the result limit");
+lunchAudit.requests[0].parameters.maxResultCount = 10;
+assert.equal(validatePlan(data, lunch, lunchAudit).correct, true, "complete Lunch audit revision passes");
+
+// Audit replay: distinguish video discovery, detail retrieval, and ID dependency.
+const study = data.scenarios.find((s) => s.id === "youtube-study-video-finder");
+const studyPlan = studentPlan(study, study.acceptedPlans[0]), detailsRequest = studyPlan.requests.pop();
+auditResult = validatePlan(data, study, studyPlan); auditFeedback = formativeDiagnostics(data, study, auditResult, studyPlan.requests);
+assert.match(auditFeedback[0].message, /search|details/i);
+studyPlan.requests.push(detailsRequest); studyPlan.requests[1].dependencies.id.paths = ["items[].id.channelId"];
+auditResult = validatePlan(data, study, studyPlan); auditFeedback = formativeDiagnostics(data, study, auditResult, studyPlan.requests);
+assert.match(auditFeedback[0].message, /identifiers|video/i);
+assert.equal(validatePlan(data, study, studentPlan(study, study.acceptedPlans[0])).correct, true);
+
+const playlists = data.scenarios.find((s) => s.id === "spotify-my-playlists-browser");
+const playlistPlan = studentPlan(playlists, playlists.acceptedPlans[0]);
+playlistPlan.requests[1].dependencies.playlist_id.paths = ["items[].name"];
+auditResult = validatePlan(data, playlists, playlistPlan); auditFeedback = formativeDiagnostics(data, playlists, auditResult, playlistPlan.requests);
+assert.match(auditFeedback[0].message, /identifier|selected/i, "playlist dependency feedback explains the selected-resource relationship");
+assert.equal(validatePlan(data, playlists, studentPlan(playlists, playlists.acceptedPlans[0])).correct, true);
+
+// Museum and Creator audit rejections were substantive, not false negatives.
+const museumAuditPlan = studentPlan(museum, museum.acceptedPlans[0]);
+museumAuditPlan.requests[1].parameters["X-Goog-FieldMask"] = "routes.localizedValues,routes.warnings";
+assert.equal(validatePlan(data, museum, museumAuditPlan).correct, false, "localized route values alone do not replace raw measurements when both are required");
+auditFeedback = formativeDiagnostics(data, museum, validatePlan(data, museum, museumAuditPlan), museumAuditPlan.requests);
+assert.match(auditFeedback[0].message, /distance|duration|route/i);
+const creator = data.scenarios.find((s) => s.id === "youtube-channel-hub"), creatorPlan = studentPlan(creator, creator.acceptedPlans[0]);
+creatorPlan.requests[1].parameters.part = "snippet";
+assert.equal(validatePlan(data, creator, creatorPlan).correct, false, "playlist-entry date is not video publication date");
+auditFeedback = formativeDiagnostics(data, creator, validatePlan(data, creator, creatorPlan), creatorPlan.requests);
+assert.ok(auditFeedback.some((item) => /date|publish/i.test(item.message)));
+assert.equal(validatePlan(data, creator, studentPlan(creator, creator.acceptedPlans[0])).correct, true);
+
+assert.match(uiSource, /What needs attention/);
+assert.match(uiSource, /What to review/);
+assert.match(uiSource, /hintsUsed\[diagnostic\.id\]/, "hint progression is tracked by issue, not submission count");
+assert.match(uiSource, /You're designing a request plan, not building a working app/);
+
 const invalid = structuredClone(data);
 invalid.scenarios[0].availableEndpointIds[0] = "missing.endpoint";
 assert.ok(validateApiData(invalid).some((error) => error.includes("unknown endpoint")));
