@@ -126,6 +126,10 @@ museumMaskPlan.requests[0].parameters["X-Goog-FieldMask"] = "places.id";
 const maskFeedback = formativeDiagnostics(data, museum, validatePlan(data, museum, museumMaskPlan), museumMaskPlan.requests);
 assert.ok(maskFeedback.some((d) => d.key === "fieldMask"));
 assert.ok(!JSON.stringify(maskFeedback).includes("places.displayName"), "field-mask feedback avoids exact fields to add");
+const lunch = data.scenarios.find((s) => s.id === "maps-lunch-spot-finder");
+const lunchPlan = studentPlan(lunch, lunch.acceptedPlans[0]);
+lunchPlan.requests[0].parameters["X-Goog-FieldMask"] = "places.displayName,places.formattedAddress,places.location,places.rating,places.currentOpeningHours";
+assert.equal(validatePlan(data, lunch, lunchPlan).correct, true, "place ID remains optional when the displayed fields are selected");
 
 const invalid = structuredClone(data);
 invalid.scenarios[0].availableEndpointIds[0] = "missing.endpoint";
