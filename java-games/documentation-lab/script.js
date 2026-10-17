@@ -2,6 +2,7 @@
    (localStorage key javaGames.session.v1) used by Session Summary:
    one topic per practice mode, one scored submission per challenge. */
 import * as E from "./engine.js?v=doclab-v1";
+import * as API from "./api-project-builder-ui.js?v=api-builder-v1";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
 
 const $ = (id) => document.getElementById(id);
@@ -16,6 +17,7 @@ let instance = null;
 let closed = false;
 let outcome = null; // "correct" | "wrong" | "revealed"
 let resp = null; // current response (shape depends on ch.kind)
+let apiSession = null;
 
 /* ==================================================================== */
 /* Java syntax highlighting (line by line, block-comment aware)          */
@@ -457,8 +459,31 @@ function stats() {
 }
 
 function newChallenge() {
+  if (apiSession) { apiSession.stop(); apiSession = null; }
+  $("submit").onclick = submit;
+  $("show").onclick = showAnswer;
+  $("skip").onclick = newChallenge;
+  $("next").onclick = newChallenge;
+  const selectedMode = $("mode").value;
+  if (selectedMode === "api-builder") {
+    $("blocks").innerHTML = "";
+    $("docs").innerHTML = "";
+    $("interaction").innerHTML = "";
+    $("feedback").hidden = true;
+    apiSession = API.mount({
+      root: $("stage"),
+      tracker,
+      dev: new URLSearchParams(globalThis.location?.search || "").get("apiDev") === "1",
+      controls: {
+        submit: $("submit"), show: $("show"), skip: $("skip"), next: $("next"),
+        roundSummary: () => roundSummary(E.GAME_ID),
+        next: newChallenge,
+      },
+    });
+    return;
+  }
   if (instance && tracker.status(instance) === "active") tracker.skip(instance);
-  ch = E.generate($("mode").value, picker, rng);
+  ch = E.generate(selectedMode, picker, rng);
   instance = tracker.begin(E.GAME_ID, E.docLabGame.name, ch.mode, E.MODES[ch.mode]);
   closed = false;
   outcome = null;
@@ -648,7 +673,12 @@ function finish(kind, result) {
 function init() {
   const params = new URLSearchParams(globalThis.location?.search || "");
   const m = params.get("mode");
-  if (m && (m === "mixed" || E.MODES[m])) $("mode").value = m;
+  const apiOption = $("mode").querySelector('option[value="api-builder"]');
+  if (params.get("apiDev") === "1" && apiOption) {
+    apiOption.disabled = false;
+    apiOption.textContent = "API Project Builder (development fixture)";
+  }
+  if (m && (m === "mixed" || E.MODES[m] || (m === "api-builder" && params.get("apiDev") === "1"))) $("mode").value = m;
   if (params.get("seed")) rng = E.makeRng(Number(params.get("seed")) || 1);
   picker = E.createPicker(rng);
   addSessionNavigation("../");
@@ -659,6 +689,7 @@ function init() {
   $("submit").onclick = submit;
   $("show").onclick = showAnswer;
   globalThis.addEventListener?.("pagehide", () => {
+    if (apiSession) apiSession.stop();
     if (instance && tracker.status(instance) === "active") tracker.skip(instance);
   });
   globalThis.addEventListener?.("pageshow", (e) => {
