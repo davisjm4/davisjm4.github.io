@@ -8,7 +8,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=platform-expansion-v2";
+} from "./session.js?v=active-time-v1";
 export function startArchitect() {
   const $ = (id) => document.getElementById(id),
     esc = (v) =>
