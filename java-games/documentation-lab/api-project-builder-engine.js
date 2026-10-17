@@ -248,8 +248,20 @@ function hasAccessConflict(scenario, endpoint, request = {}) {
 function fieldMaskMismatch(scenario, endpoint, request) {
   const maskParam = endpoint.parameters.find((p) => p.name.toLowerCase() === "x-goog-fieldmask");
   if (!maskParam) return false;
-  const expected = scenario.acceptedPlans.flatMap((plan) => plan.steps.filter((step) => step.endpointId === endpoint.id).map((step) => step.parameters[maskParam.name]).filter((v) => typeof v === "string"));
-  return expected.length > 0 && !expected.includes(request.parameters?.[maskParam.name]);
+  const actual = String(request.parameters?.[maskParam.name] || "").split(",").map((value) => value.trim()).filter(Boolean);
+  const actualSet = new Set(actual);
+  const candidates = scenario.acceptedPlans.flatMap((plan) => plan.steps.filter((step) => step.endpointId === endpoint.id).map((step) => ({ value: step.parameters[maskParam.name], assessment: step.assessment?.[maskParam.name] }))).filter((item) => typeof item.value === "string");
+  return candidates.length > 0 && !candidates.some(({ value, assessment }) => {
+    const expected = value.split(",").map((item) => item.trim()).filter(Boolean), expectedSet = new Set(expected);
+    if (assessment?.mode === "includesAll") return (assessment.values || []).flatMap((item) => arr(item) ? item : [item]).every((item) => actualSet.has(item));
+    if (actualSet.size === expectedSet.size && [...expectedSet].every((item) => actualSet.has(item))) return true;
+    if (endpoint.id.startsWith("maps.") && expectedSet.has("places.id")) {
+      const withoutId = (set) => new Set([...set].filter((item) => item !== "places.id"));
+      const a = withoutId(actualSet), e = withoutId(expectedSet);
+      return a.size === e.size && [...e].every((item) => a.has(item));
+    }
+    return false;
+  });
 }
 function dependencyMismatch(scenario, requests, requestIndex, request) {
   const plans = scenario.acceptedPlans.filter((plan) => plan.steps.some((step) => step.endpointId === request.endpointId && Object.values(step.parameters).some((v) => findRefs(v).length)));
@@ -266,28 +278,103 @@ function dependencyMismatch(scenario, requests, requestIndex, request) {
     });
   });
 }
+const SCENARIO_DIAGNOSTICS = {
+  "maps-lunch-spot-finder": {
+    fieldMask: (endpoint, request) => {
+      const selected = new Set(String(request.parameters?.["X-Goog-FieldMask"] || "").split(",").map((v) => v.trim()));
+      if (!selected.has("places.formattedAddress")) return { id: "field:address", message: "Your plan can find restaurants, but it doesn't yet request everything students need to locate each result. Compare the response data for a map pin with the information someone can read as an address.", review: "Review the documented place fields that describe a location.", hints: ["Students need both a map location and a readable way to identify where to go.", "Compare the field that gives coordinates with the field that gives a human-readable address.", "A map pin's coordinates and a formatted street address are different response values; the app needs the readable address too."] };
+      if (!selected.has("places.currentOpeningHours")) return { id: "field:open-now", message: "Your plan can describe the restaurants, but it doesn't yet tell the app which ones are open at this moment. A weekly schedule and a current status are not the same kind of information.", review: "Compare the documented fields for a live open-now status and recurring hours.", hints: ["The app must help students avoid places that are closed right now.", "Look for the difference between an upcoming schedule and a status for the present moment.", "A recurring-hours field describes a schedule; current-opening information can report whether the place is open now."] };
+      if (!selected.has("places.location")) return { id: "field:coordinates", message: "The app still needs the location data used to place each restaurant on the map. Check whether the selected fields include a place's coordinates.", review: "Review which documented response field supplies map coordinates.", hints: ["Students should be able to see each restaurant as a map pin.", "Compare the response fields for human-readable addresses and geographic coordinates.", "An address is readable text; a map pin needs coordinate data."] };
+      return { id: "field:place-info", message: "Your response selection does not yet cover all the place information required by the app. Compare the display requirements with the documented place fields.", review: "Review which selected fields support each part of the restaurant card.", hints: ["Check every piece of information shown on a restaurant card.", "Match each display need to the response fields documented for Places.", "The response must include the distinct values the app displays, not just a restaurant's identity."] };
+    },
+    parameters: (name) => name === "rankPreference" ? { id: "setting:ranking", message: "The app should make the closest options easiest to choose. Revisit how the search orders its results.", review: "Compare the documented ranking choices with the app's distance-based goal.", hints: ["The goal asks students to see nearby places first.", "Compare ranking by popularity with ranking by proximity.", "The distance-based ranking option orders results by how close they are to the search location."] } : name === "maxResultCount" ? { id: "setting:count", message: "The result list should stay within the number of restaurants specified in the brief. Check the result-count setting.", review: "Review the documented limit for the number of places returned.", hints: ["The app has a stated maximum number of results.", "Find the setting that controls how many places can be returned.", "Set the cap to the maximum stated in the project goal."] } : name === "locationRestriction" ? { id: "setting:radius", message: "The search area does not yet match the distance limit in the project brief. Revisit the radius around the phone's current location.", review: "Compare the brief's distance with the documented circular search restriction.", hints: ["The goal limits how far away a restaurant can be.", "Review how the circular restriction uses a center and radius.", "The radius should match the distance stated in the project goal."] } : null
+  },
+  "youtube-channel-hub": {
+    operation: () => ({ id: "operation:uploads", message: "The channel request can describe the creator, but the page also needs a way to reach that creator's recent uploads. Compare the channel and playlist operations in the documentation.", review: "Review the channel response's related-resource information and the operation that lists playlist entries.", hints: ["The page needs both channel information and a list of recent videos.", "A channel's uploads are exposed through a related playlist; compare what each operation returns.", "One response can provide the uploads-playlist identifier used by the playlist-items operation."] }),
+    dependency: () => ({ id: "dependency:uploads", message: "The recent-video request needs to use the uploads collection identified by the channel response. Check the connection between those two results.", review: "Review the channel response fields that identify its uploads playlist.", hints: ["The second request must know which playlist belongs to the channel.", "Compare the source of the channel's uploads identifier with the playlist ID input.", "Use the uploads playlist ID returned by the channel request as the source for the playlist request."] }),
+    parameters: (name, endpoint) => name === "part" && endpoint.id === "youtube.channels-list" ? { id: "setting:channel-parts", message: "The channel response is missing a related-resource section needed to reach its uploads. Compare the requested channel sections with the page's needs.", review: "Review which channel response section contains related playlists.", hints: ["The video list comes from a playlist associated with the channel.", "Look for the channel response section describing related resources.", "The channel request must include the section that returns its uploads-playlist reference."] } : name === "part" && endpoint.id === "youtube.playlistitems-list" ? { id: "setting:video-parts", message: "The video list can identify each upload, but it still needs the publication date requested by the page. Compare the requested playlist-item sections.", review: "Review the difference between when an item entered a playlist and when a video was published.", hints: ["The page asks for the date the video was published, not simply when it appeared in the playlist.", "Compare the playlist item's snippet data with its content-details data.", "Playlist-item content details include the video's publication date; snippet.publishedAt is the playlist-entry date."] } : null
+  },
+  "youtube-study-video-finder": {
+    operation: () => ({ id: "operation:video-details", message: "Search can find matching videos, but ordinary search results do not include every value shown on these cards. Compare search results with the operation that returns video details.", review: "Review which requested card information is available from search and which comes from video details.", hints: ["The cards show more than a title and thumbnail.", "Compare the response fields available from a video search with those available from a video-details request.", "Some APIs separate discovering resources from retrieving their full details; IDs from search can connect the requests."] }),
+    dependency: () => ({ id: "dependency:video-ids", message: "The details request needs the video identifiers returned by the search. Check that the connection uses video results rather than a different kind of result.", review: "Review the search response field that identifies each matching video.", hints: ["The second request should enrich the videos found by the first.", "Look at which search-result field identifies a video resource.", "Pass the video IDs from the search results into the video-details request."] })
+  },
+  "spotify-my-playlists-browser": {
+    operation: () => ({ id: "operation:playlist-items", message: "The first request can list playlists, but it does not return the songs for the playlist the listener taps. Add the operation that reads a selected playlist's items.", review: "Compare the playlist-list response with the documented playlist-items operation.", hints: ["The second screen shows songs inside one selected playlist.", "The list response includes playlist summaries; check which operation returns their song entries.", "A separate playlist-items request retrieves the selected playlist's songs."] }),
+    dependency: () => ({ id: "dependency:selected-playlist", message: "The second screen needs the identifier for the playlist the listener selected. A playlist name or a song's identifier does not identify that playlist.", review: "Review the playlist-list response for the identifier associated with each playlist card.", hints: ["The tapped playlist determines what the second screen displays.", "Compare the playlist's own identifier with fields describing a song or a playlist name.", "Connect the selected playlist's ID from the first response to the second request's playlist input."] })
+  },
+  "maps-museum-walk-planner": {
+    operation: () => ({ id: "operation:route", message: "The place search can find and describe a museum, but it cannot calculate the walking distance and time from the hotel. The planner needs a separate route capability.", review: "Compare the Places operations with the Routes operation and their response fields.", hints: ["The plan must both identify a museum and calculate a route to it.", "Check which service returns place information and which computes route information.", "A Places search identifies the destination; a Routes request calculates the trip between locations."] }),
+    dependency: () => ({ id: "dependency:museum", message: "The route destination must refer to the museum selected by the search. Check which museum information can identify the same place in the route request.", review: "Review the place-search response fields that can serve as a route destination.", hints: ["The route should end at the museum found by the search.", "Compare the route's accepted destination types with the place fields returned by search.", "Use a selected museum's place identifier or address as the route destination source."] }),
+    fieldMask: (endpoint, request) => endpoint.id === "maps.routes-compute-routes" ? (() => {
+      const mask = new Set(String(request.parameters?.["X-Goog-FieldMask"] || "").split(",").map((v) => v.trim()));
+      if (!mask.has("routes.localizedValues")) return { id: "field:localized-route", message: "The route request can return measurements, but the planner needs ready-to-display miles and minutes. Review which response data is localized for display.", review: "Compare raw route measurements with the API's localized display values.", hints: ["The screen shows miles and minutes rather than technical measurement values.", "Review which route response contains display-ready text in the requested units.", "Localized route values provide distance and time text in the requested display units."] };
+      if (!mask.has("routes.warnings")) return { id: "field:walking-warning", message: "The walking route response must include any safety warning the app needs to show. Check the documentation's walking-route note and the fields available for warnings.", review: "Review the Routes restriction for walking and the related response field.", hints: ["The walking mode has a special notice requirement in the documentation.", "Check which response field carries route warnings.", "The app must request and display the route's warnings for walking directions."] };
+      return { id: "field:route-info", message: "The route response does not yet include every detail required by the planner. Compare its display needs with the documented route fields.", review: "Review the route fields for displayed distance and duration.", hints: ["The planner displays both a distance and a travel time.", "Compare the raw measurements and localized display values in the route response.", "Make sure the selected response data supports both displayed measurements and any required warning."] };
+    })() : { id: "field:museum-card", message: "The museum search response does not yet include everything shown on the destination card. Compare the card's name, address, and rating with the documented place fields.", review: "Review the relevant response fields for a place search.", hints: ["The planner displays multiple details about the selected museum.", "Match each card detail to a documented place response field.", "The selected place needs a name, readable address, rating, and an identifier to connect the route."] }
+  }
+};
+
+function parameterMismatches(scenario, requests, map) {
+  const mismatches = [];
+  for (const request of requests) {
+    const endpoint = map.get(request.endpointId);
+    if (!endpoint) continue;
+    const expectedSteps = scenario.acceptedPlans.flatMap((plan) => plan.steps.filter((step) => step.endpointId === request.endpointId));
+    const names = new Set(expectedSteps.flatMap((step) => Object.keys(step.parameters)));
+    for (const name of names) {
+      if (name.toLowerCase() === "x-goog-fieldmask" || name.toLowerCase() === "fields") continue;
+      const candidates = expectedSteps.filter((step) => Object.hasOwn(step.parameters, name));
+      const parameter = endpoint.parameters.find((item) => item.name === name);
+      const matchesSomeAcceptedVersion = candidates.some((step) => {
+        const expected = step.parameters[name];
+        return !findRefs(expected).length && (assessmentMatches(request.parameters?.[name], expected, step.assessment?.[name], parameter) || request.parameters?.[name] === undefined && parameter && isRuntimeParameter(parameter, expected));
+      });
+      if (!matchesSomeAcceptedVersion) mismatches.push({ name, endpoint });
+    }
+  }
+  return mismatches.filter((mismatch, index, all) => all.findIndex((item) => item.name === mismatch.name && item.endpoint.id === mismatch.endpoint.id) === index);
+}
+function scenarioDiagnostic(scenario, key, context = {}) {
+  const custom = SCENARIO_DIAGNOSTICS[scenario.id]?.[key];
+  if (custom) {
+    const diagnostic = key === "fieldMask" ? custom(context.endpoint, context.request) : key === "parameters" ? custom(context.parameter?.name || context.parameter?.parameter?.name || context.parameter, context.endpoint || context.parameter?.endpoint) : custom();
+    if (diagnostic) return { key, ...diagnostic };
+  }
+  return { key, id: key, message: FORMATIVE_MESSAGES[key], review: key === "missing" ? "Compare the project's required information with the documented response fields." : "Review the relevant operation, parameter, or response-field documentation.", hints: HINTS[key] };
+}
+
 export function formativeDiagnostics(data, scenario, result, submittedRequests = []) {
-  const map = endpointMap(data), requests = submittedRequests || [], issues = new Set(), maskIds = new Set();
+  const map = endpointMap(data), requests = submittedRequests || [], issues = new Map(), maskIds = new Set();
+  const add = (diagnostic) => { if (!issues.has(diagnostic.key)) issues.set(diagnostic.key, diagnostic); };
   for (let i = 0; i < requests.length; i++) {
     const request = requests[i], endpoint = map.get(request.endpointId);
-    if (!endpoint) { issues.add("operation"); continue; }
-    if (hasAccessConflict(scenario, endpoint, request)) issues.add("access");
-    if (fieldMaskMismatch(scenario, endpoint, request)) { issues.add("fieldMask"); maskIds.add(endpoint.id); }
-    if (dependencyMismatch(scenario, requests, i, request)) issues.add("dependency");
+    if (!endpoint) { add(scenarioDiagnostic(scenario, "operation")); continue; }
+    if (fieldMaskMismatch(scenario, endpoint, request)) { add(scenarioDiagnostic(scenario, "fieldMask", { endpoint, request })); maskIds.add(endpoint.id); }
+    if (dependencyMismatch(scenario, requests, i, request)) add(scenarioDiagnostic(scenario, "dependency"));
   }
-  if (result.incompleteRequests.some((id) => !maskIds.has(id))) issues.add("incomplete");
-  if (result.invalidParameterRequests.some((id) => !maskIds.has(id))) issues.add("parameters");
+  if (result.incorrectEndpoints.length || result.missing.length && requests.length) add(scenarioDiagnostic(scenario, "operation"));
+  if (result.incompleteRequests.some((id) => !maskIds.has(id))) add(scenarioDiagnostic(scenario, "incomplete"));
+  const mismatches = parameterMismatches(scenario, requests, map);
+  if (scenario.id === "youtube-channel-hub") {
+    for (const request of requests) {
+      const parts = String(request.parameters?.part || "").split(",").map((value) => value.trim());
+      const endpoint = map.get(request.endpointId);
+      if (request.endpointId === "youtube.playlistitems-list" && !parts.includes("contentDetails")) add(scenarioDiagnostic(scenario, "parameters", { parameter: { name: "part" }, endpoint }));
+      if (request.endpointId === "youtube.channels-list" && !parts.includes("contentDetails")) add(scenarioDiagnostic(scenario, "parameters", { parameter: { name: "part" }, endpoint }));
+    }
+  }
+  if (result.invalidParameterRequests.some((id) => !maskIds.has(id))) add(scenarioDiagnostic(scenario, "parameters", mismatches.length ? { parameter: mismatches[0], endpoint: mismatches[0].endpoint } : {}));
+  if (mismatches.length && !issues.has("parameters")) add(scenarioDiagnostic(scenario, "parameters", { parameter: mismatches[0], endpoint: mismatches[0].endpoint }));
   if (result.incorrectlyConfiguredRequests.some(({ endpointId }) => {
     if (maskIds.has(endpointId)) return false;
     const i = requests.findIndex((r) => r.endpointId === endpointId), endpoint = map.get(endpointId);
     return !endpoint || !dependencyMismatch(scenario, requests, i, requests[i]) && !hasAccessConflict(scenario, endpoint, requests[i]);
-  })) issues.add("parameters");
-  if (result.missing.length) issues.add("missing");
-  if (result.unnecessary.length) issues.add("unnecessary");
-  if (result.incorrectEndpoints.length) issues.add("operation");
-  if (!issues.size) issues.add("missing");
-  const order = ["access", "dependency", "fieldMask", "incomplete", "parameters", "missing", "unnecessary", "operation"];
-  return order.filter((key) => issues.has(key)).map((key) => ({ key, message: FORMATIVE_MESSAGES[key], hints: HINTS[key] }));
+  })) add(scenarioDiagnostic(scenario, "parameters", mismatches.length ? { parameter: mismatches[0], endpoint: mismatches[0].endpoint } : {}));
+  if (requests.some((request) => hasAccessConflict(scenario, map.get(request.endpointId), request))) add(scenarioDiagnostic(scenario, "access"));
+  if (result.unnecessary.length) add(scenarioDiagnostic(scenario, "unnecessary"));
+  if (!issues.size || !requests.length && result.missing.length) add(scenarioDiagnostic(scenario, "missing"));
+  const order = ["operation", "dependency", "fieldMask", "incomplete", "parameters", "access", "unnecessary", "missing"];
+  return order.filter((key) => issues.has(key)).slice(0, 2).map((key) => issues.get(key));
 }
 export function preferredPlan(scenario) { return scenario.acceptedPlans.find((p) => p.preferred) || scenario.acceptedPlans[0]; }
 export function planFromAccepted(scenario, plan = preferredPlan(scenario)) { return { requests: plan.steps.map((step) => ({ endpointId: step.endpointId, parameters: Object.fromEntries(Object.entries(step.parameters).filter(([name, value]) => { const e = scenario.availableEndpointIds; return !obj(value) || !("$fromStep" in value); })), dependencies: {} })) }; }
