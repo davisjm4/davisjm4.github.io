@@ -25,7 +25,7 @@ function feedbackHtml(result, scenario, map) {
   const section = (title, values) => values && values.length ? '<li><strong>' + title + ':</strong> ' + values.map(label).join(", ") + '</li>' : "";
   const best = scenario.acceptedPlans.find((p) => p.efficiency === "smallest-sufficient") || scenario.acceptedPlans[0];
   const solution = '<details class="api-solution"><summary>Review a valid complete plan</summary><ol>' + best.requests.map((r) => { const e = map.get(r.endpointId); const params = Object.entries(r.parameters || {}).map(([k, v]) => esc(k) + " = " + esc(v)).join(", "); return '<li><strong>' + esc(e.title) + '</strong> <code>(' + esc(e.method + " " + e.path) + ')</code>' + (params ? ' — ' + params : '') + '</li>'; }).join("") + '</ol></details>';
-  return '<strong>' + (result.status === "correct" ? "✓ Correct plan." : result.status === "valid-less-efficient" ? "✓ Valid, but less efficient." : "✗ Plan needs revision.") + '</strong><p>' + esc(result.message) + '</p><ul class="api-review">' + section("Missing request", result.missing) + section("Unnecessary endpoint", result.unnecessary) + section("Incorrect endpoint", result.incorrectEndpoints) + section("Incomplete request", result.incompleteRequests) + section("Invalid parameter values", result.invalidParameterRequests) + (result.errors.length ? '<li><strong>Documentation checks:</strong> ' + result.errors.map((e) => esc(e)).join(" ") + '</li>' : "") + '</ul>' + '<p class="api-explanation"><strong>Why:</strong> ' + esc(scenario.explanation) + '</p>' + solution;
+  return '<strong>' + (result.status === "correct" ? "✓ Correct plan." : result.status === "valid-less-efficient" ? "✓ Valid, but less efficient." : "✗ Plan needs revision.") + '</strong><p>' + esc(result.message) + '</p><ul class="api-review">' + section("Missing request", result.missing) + section("Unnecessary endpoint", result.unnecessary) + section("Incorrect endpoint", result.incorrectEndpoints) + section("Incomplete request", result.incompleteRequests) + section("Incorrect parameter choice", result.incorrectParameters) + section("Invalid parameter value", result.invalidParameterRequests) + (result.errors.length ? '<li><strong>Documentation checks:</strong> ' + result.errors.map((e) => esc(e)).join(" ") + '</li>' : "") + '</ul>' + '<p class="api-explanation"><strong>Why:</strong> ' + esc(scenario.explanation) + '</p>' + solution;
 }
 export function mount({ root, controls, tracker, dev = false }) {
   const state = { stopped:false, data:null, scenario:null, plan:[], picker:null, instance:null, closed:false };
@@ -55,6 +55,10 @@ export function mount({ root, controls, tracker, dev = false }) {
   };
   const submit = () => {
     if(state.closed || !state.instance) return;
+    for (const card of root.querySelectorAll("[data-request]")) {
+      const i = Number(card.dataset.request);
+      for (const input of card.querySelectorAll("[data-param]")) state.plan[i].parameters[input.dataset.param] = input.value;
+    }
     const result=validatePlan(state.data,state.scenario,{requests:state.plan});
     const rec=tracker.submit(state.instance,result.correct); if(!rec.accepted)return;
     if(!result.correct) tracker.reveal(state.instance);
