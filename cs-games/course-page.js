@@ -12,7 +12,7 @@ const groups = isCsp ? [
 ] : [
   ["2.1","2.1 — Apply Algorithms",["2.1 Algorithm Development","2.1 Classic Algorithms","2.1 Algorithm Interpretation","2.1 Searching","2.1 Algorithm Efficiency"]],
   ["2.2","2.2 — Implement Controls",["2.2 Boolean Logic","2.2 Conditionals","2.2 Loops","2.2 Nested Loops","2.2 Recursion"]],
-  ["2.3","2.3 — Utilize Variables and Data Structures",["2.3 Variables and Data Types","2.3 Scope","2.3 Arrays","2.3 ArrayLists","2.3 Collection Operations","2.3 Dynamic Collections","2.3 Traversal","2.3 Data Structures","2.3 Two-Dimensional Arrays"]],
+  ["2.3","2.3 — Utilize Variables and Data Structures",["2.3 Variables and Data Types","2.3 Scope","2.3 Arrays","2.3 ArrayLists","2.3 LinkedLists","2.3 Collection Operations","2.3 Dynamic Collections","2.3 Traversal","2.3 Data Structures","2.3 Two-Dimensional Arrays"]],
   ["2.4","2.4 — Construct Solutions Using Modularity",["2.4 Methods and Parameters","2.4 Methods, APIs, and Libraries","2.4 Constructors","2.4 Classes and Objects","2.4 Encapsulation","2.4 Modularity","2.4 Object-Oriented Programming"]],
   ["2.5","2.5 — Programming and Development",["2.5 Debugging","2.5 Testing","2.5 Documentation"]],
   ["3","3.0 — Computing Systems",["3.0 Computing Systems"]],
