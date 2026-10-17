@@ -2,7 +2,7 @@
 export const GAME_ID = "documentation-lab";
 export const MODE_ID = "api-builder";
 export const MODE_TITLE = "API Project Builder";
-export const DATA_FILE = "./api-project-data-v1.json?v=verified-library-v1";
+export const DATA_FILE = "./api-project-data-v1.json?v=verified-library-v2";
 const arr = Array.isArray;
 const obj = (v) => !!v && typeof v === "object" && !arr(v);
 const str = (v) => typeof v === "string" && !!v.trim();
