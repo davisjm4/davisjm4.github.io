@@ -2,7 +2,7 @@
    (localStorage key javaGames.session.v1) so results appear in the
    existing Session Summary. */
 import * as E from "./engine.js?v=robot-v3";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=java-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
 
 const GAME = "robot-algorithms";
 const TITLE = "Robot Algorithms";
