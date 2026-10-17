@@ -1,5 +1,5 @@
-import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v16";
-import { presentation, classification, automaticParametersForOccurrence } from "./api-project-presentation.js?v=curated-v3";
+import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v17";
+import { presentation, classification, automaticParametersForOccurrence } from "./api-project-presentation.js?v=curated-v4";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
@@ -103,7 +103,7 @@ function fieldMaskControl(endpoint, request, parameter, config) {
   const selected = new Set(String(request.parameters[parameter.name] || "").split(",").map((v) => v.trim()).filter(Boolean));
   const all = fieldMaskChoices(endpoint), choices = config.fieldOptions ? config.fieldOptions.map((path) => all.find((f) => f.path === path) || (endpoint.responseFields.some((f) => f.path.replaceAll("[]", "").startsWith(`${path}.`)) ? { path, description: `Include ${path} and its documented fields.` } : null)).filter(Boolean) : all;
   if (!choices.length) return `<label class="api-param"><span>${esc(parameter.name)} <b>required</b></span><em>${esc(parameter.description)}</em></label>`;
-  return `<fieldset class="api-field-selector"><legend>Information to include in the response <b>required</b></legend><p class="api-symbolic">Choose documented fields the application can use. The technical field-mask header is generated for you.</p><div class="api-field-options">${choices.map((f) => `<label><input type="checkbox" data-field-mask="${esc(parameter.name)}" value="${esc(f.path)}"${selected.has(f.path) ? " checked" : ""}><code>${esc(f.path)}</code><span>${esc(f.description)}</span></label>`).join("")}</div><em>${esc(parameter.description)}</em></fieldset>`;
+  return `<fieldset class="api-field-selector"><legend>Information to include <b>required</b></legend><p class="api-symbolic">Choose the documented response information the application needs. The simulation handles request formatting.</p><div class="api-field-options">${choices.map((f) => `<label><input type="checkbox" data-field-mask="${esc(parameter.name)}" value="${esc(f.path)}"${selected.has(f.path) ? " checked" : ""}><code>${esc(f.path)}</code><span>${esc(f.description)}</span></label>`).join("")}</div></fieldset>`;
 }
 function multiChoiceControl(parameter, request, config) {
   const current = Array.isArray(request.parameters[parameter.name]) ? request.parameters[parameter.name] : String(request.parameters[parameter.name] || "").split(",").map((v) => v.trim()).filter(Boolean);
@@ -211,16 +211,24 @@ function readablePlan(plan, map) {
 }
 function feedbackHtml(result, scenario, diagnostics, attempts) {
   if (result.correct) return `<strong>✓ Project Complete</strong><p>Solved in ${attempts} ${attempts === 1 ? "check" : "checks"}. ${esc(result.efficient ? "Your plan meets the project requirements." : "Your plan works; a simpler plan may also meet the requirements.")}</p><p class="api-explanation"><strong>Why it works:</strong> ${esc(scenario.explanation.summary)} ${scenario.explanation.keyIdeas.map(esc).join(" ")}</p><p class="muted">Your completed request plan remains above for review.</p>`;
-  return `<strong>Needs Revision · Attempt ${attempts}</strong><ul class="api-review">${diagnostics.map((d) => `<li>${esc(d.message)}</li>`).join("")}</ul>`;
+  const [primary, secondary] = diagnostics;
+  return `<strong>Needs Revision — Attempt ${attempts}</strong>${primary ? `<h3>What needs attention</h3><p>${esc(primary.message)}</p><h3>What to review</h3><p>${esc(primary.review)}</p>` : ""}${secondary ? `<details class="api-secondary-diagnostic"><summary>Also check</summary><p>${esc(secondary.message)}</p></details>` : ""}<p class="api-next-step"><strong>Next step:</strong> Revise your plan and check again.</p>`;
 }
 export function mount({ root, controls, tracker }) {
-  const state = { stopped: false, data: null, scenario: null, plan: [], picker: null, instance: null, closed: false, providerId: "all", attempts: 0, hintsShown: 0, lastResult: null };
+  const state = { stopped: false, data: null, scenario: null, plan: [], picker: null, instance: null, closed: false, providerId: "all", attempts: 0, hintsUsed: {}, lastResult: null };
   const set = (id, html) => { const el = root.querySelector(`#${id}`); if (el) el.innerHTML = html; };
   const stat = () => { const el = document.getElementById("stats"); if (el && controls.roundSummary) el.textContent = controls.roundSummary(); };
   const clearStaleFeedback = () => { if (state.lastResult) { state.lastResult = null; const feedback = document.getElementById("feedback"); feedback.hidden = true; feedback.innerHTML = ""; } const hint = root.querySelector("#api-hint-text"); if (hint) hint.textContent = ""; };
-  const touch = () => { clearStaleFeedback(); if (state.instance && tracker.status(state.instance) === "active") tracker.interact(state.instance); };
+  const touch = () => { clearStaleFeedback(); if (state.instance && tracker.status(state.instance) === "active") tracker.interact(state.instance); updateHintButton(); };
   const next = () => controls.next();
-  const updateHintButton = () => { const button = root.querySelector("#api-get-hint"); if (button) button.hidden = state.attempts < 2 || state.hintsShown >= 3 || state.closed; };
+  const currentDiagnostics = () => {
+    const result = validatePlan(state.data, state.scenario, { requests: state.plan });
+    return result.correct ? [] : formativeDiagnostics(state.data, state.scenario, result, state.plan);
+  };
+  const updateHintButton = () => {
+    const button = root.querySelector("#api-get-hint"), diagnostic = currentDiagnostics()[0];
+    if (button) { button.hidden = state.closed; button.disabled = !diagnostic || (state.hintsUsed[diagnostic.id] || 0) >= 3; }
+  };
   const showActionButtons = () => { controls.submit.textContent = "Check My Plan"; controls.show.textContent = "Show Answer"; controls.show.hidden = false; controls.show.disabled = false; controls.skip.textContent = "Skip"; controls.skip.hidden = false; controls.nextButton.textContent = "Next Project →"; controls.nextButton.hidden = true; controls.submit.hidden = false; controls.submit.disabled = false; controls.skip.disabled = false; };
   const renderBrief = () => {
     const s = state.scenario, p = providerFor(state.data, s);
@@ -229,7 +237,7 @@ export function mount({ root, controls, tracker }) {
   };
   const renderPlan = () => {
     const map = endpointMap(state.data);
-    set("interaction", `<section class="api-plan"><div class="api-plan-head"><h2>My Request Plan</h2><p class="muted">Add requests above, then choose the meaningful parameters here. Resource identifiers are symbolic runtime values, not student entry fields.</p><p id="api-request-status" class="api-request-status" role="status">${state.lastAddedEndpoint ? `${esc(map.get(state.lastAddedEndpoint)?.title)} added to your plan.` : ""}</p><p id="api-attempt-status" class="api-request-status">${state.attempts ? `Checks so far: ${state.attempts}.` : ""}</p></div><div id="api-plan-list">${requestHtml(state.plan, map, state.scenario)}</div><p class="api-plan-note">Some projects need one request; others connect data from earlier responses. The order you add independent requests does not affect the result.</p><div class="api-hint-tools"><button id="api-get-hint" type="button" class="secondary" hidden>Get Hint</button><p id="api-hint-text" role="status" aria-live="polite" aria-atomic="true"></p></div></section>`);
+    set("interaction", `<section class="api-plan"><div class="api-plan-head"><h2>My Request Plan</h2><p class="muted">Design the requests and information the application would need. The game simulates the plan; technical request formatting is optional.</p><p id="api-request-status" class="api-request-status" role="status">${state.lastAddedEndpoint ? `${esc(map.get(state.lastAddedEndpoint)?.title)} added to your plan.` : ""}</p><p id="api-attempt-status" class="api-request-status">${state.attempts ? `Checks so far: ${state.attempts}.` : ""}</p></div><div id="api-plan-list">${requestHtml(state.plan, map, state.scenario)}</div><p class="api-plan-note">Some projects need one request; others connect data from earlier responses. The order you add independent requests does not affect the result.</p><div class="api-hint-tools"><button id="api-get-hint" type="button" class="secondary">Get Hint</button><p id="api-hint-text" role="status" aria-live="polite" aria-atomic="true"></p></div></section>`);
     root.querySelectorAll("[data-request]").forEach((card) => {
       const i = Number(card.dataset.request);
       card.querySelectorAll("[data-param]").forEach((input) => { input.oninput = input.onchange = () => { const raw = input.value, parameter = map.get(state.plan[i].endpointId).parameters.find((p) => p.name === input.dataset.param); state.plan[i].parameters[input.dataset.param] = ["integer", "number"].includes(parameter.type) ? (raw === "" ? "" : Number(raw)) : input.tagName === "SELECT" && ["true","false"].includes(raw) ? raw === "true" : parameter.type === "array<string>" ? raw.split(",").map((x) => x.trim()).filter(Boolean) : raw; touch(); }; });
@@ -256,12 +264,12 @@ export function mount({ root, controls, tracker }) {
     });
     const hintButton = root.querySelector("#api-get-hint");
     hintButton.onclick = () => {
-      const current = validatePlan(state.data, state.scenario, { requests: state.plan });
-      if (current.correct) { root.querySelector("#api-hint-text").textContent = "Your current plan appears to meet the requirements. Check it to record your result."; return; }
-      const diagnostic = formativeDiagnostics(state.data, state.scenario, current, state.plan)[0];
-      if (!diagnostic || state.hintsShown >= 3) return;
-      root.querySelector("#api-hint-text").textContent = `Hint ${state.hintsShown + 1}: ${diagnostic.hints[state.hintsShown]}`;
-      state.hintsShown++; updateHintButton(); if (state.instance) tracker.interact(state.instance);
+      const diagnostic = currentDiagnostics()[0];
+      if (!diagnostic) { root.querySelector("#api-hint-text").textContent = "Your current plan appears to meet the requirements. Check it to record your result."; return; }
+      const level = state.hintsUsed[diagnostic.id] || 0;
+      if (level >= 3) return;
+      root.querySelector("#api-hint-text").textContent = `Hint ${level + 1}: ${diagnostic.hints[level]}`;
+      state.hintsUsed[diagnostic.id] = level + 1; updateHintButton(); if (state.instance) tracker.interact(state.instance);
     };
     updateHintButton();
   };
@@ -302,9 +310,9 @@ export function mount({ root, controls, tracker }) {
     if (state.stopped) return;
     if (state.instance && tracker.status(state.instance) === "active") tracker.skip(state.instance);
     state.scenario = state.picker(state.providerId); if (!state.scenario) return;
-    state.plan = []; state.lastAddedEndpoint = null; state.closed = false; state.attempts = 0; state.hintsShown = 0; state.lastResult = null; state.instance = tracker.begin("documentation-lab", "Documentation Lab", `api-project/${state.scenario.id}`, state.scenario.title);
+    state.plan = []; state.lastAddedEndpoint = null; state.closed = false; state.attempts = 0; state.hintsUsed = {}; state.lastResult = null; state.instance = tracker.begin("documentation-lab", "Documentation Lab", `api-project/${state.scenario.id}`, state.scenario.title);
     document.getElementById("mode-label").textContent = ""; document.getElementById("family").textContent = "";
-    document.getElementById("instructions").textContent = "Read the API documentation and select the requests your application needs.";
+    document.getElementById("instructions").innerHTML = "<strong>You're designing a request plan, not building a working app.</strong> Use the documentation to decide which API requests an application would need. The game simulates the requests; you don't need an account, API key, or programming code.";
     document.getElementById("question").textContent = ""; document.getElementById("prompt").hidden = true;
     document.getElementById("stage").dataset.mode = "api-builder";
     const feedback = document.getElementById("feedback"); feedback.hidden = true; feedback.innerHTML = "";
