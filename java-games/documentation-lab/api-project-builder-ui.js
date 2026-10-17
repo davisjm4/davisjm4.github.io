@@ -85,7 +85,7 @@ function fieldMaskChoices(endpoint) {
   const seen = new Set(), choices = [];
   for (const f of endpoint.responseFields || []) {
     const path = String(f.path).replaceAll("[]", "");
-    if (!path || seen.has(path)) continue;
+    if (!path || path === "places" || path === "routes" || seen.has(path) || choices.some((choice) => path.startsWith(`${choice.path}.`))) continue;
     seen.add(path);
     choices.push({ path, description: f.description });
   }
