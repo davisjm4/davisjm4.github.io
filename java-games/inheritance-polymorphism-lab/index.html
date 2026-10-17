@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive Java practice with inheritance, overriding, super, polymorphism, and abstract classes. No sign-in required."
+    />
+    <meta name="theme-color" content="#0c1722" />
+    <title>Inheritance &amp; Polymorphism Lab | Java Games</title>
+    <link rel="stylesheet" href="../style.css?v=java-quality-v3" />
+    <link rel="stylesheet" href="./style.css?v=iplab-v1" />
+    <script type="module" src="./script.js?v=iplab-v1"></script>
+  </head>
+  <body data-game="inheritance-polymorphism-lab">
+    <header>
+      <a href="../">← Java Games</a
+      ><small>DevCat Studios · Build your understanding</small>
+    </header>
+    <main id="main" class="ip">
+      <div class="eyebrow">Java · extends · @Override · super · polymorphism · abstract</div>
+      <h1>Inheritance &amp; Polymorphism Lab</h1>
+      <p class="intro ip-intro">
+        Build hierarchies, trace which method really runs, and fix inheritance
+        bugs — the reference type decides what compiles; the object decides
+        what runs.
+      </p>
+      <div class="toolbar ip-toolbar">
+        <label
+          >Practice mode
+          <select id="mode">
+            <option value="mixed" selected>Mixed Practice</option>
+            <option value="hierarchy">Class Hierarchy Builder</option>
+            <option value="override">Method Override Inspector</option>
+            <option value="tracer">Polymorphism Tracer</option>
+            <option value="abstract">Abstract Class Workshop</option>
+            <option value="debug">Inheritance Debugger</option>
+          </select></label
+        ><button id="new" class="secondary" type="button">New Challenge</button>
+        <details class="ip-terms">
+          <summary>Key terms</summary>
+          <dl>
+            <dt>Superclass / subclass</dt>
+            <dd><code>class Truck extends Vehicle</code>: Truck is the subclass. A class extends exactly one class (Object if none is written).</dd>
+            <dt>Inherit</dt>
+            <dd>A subclass gets its superclasses' non-private methods without rewriting them. Constructors are not inherited.</dd>
+            <dt>Override</dt>
+            <dd>Same name and parameter types as an inherited instance method. <code>@Override</code> asks the compiler to confirm it.</dd>
+            <dt>Overload</dt>
+            <dd>Same name, different parameter types — a separate method.</dd>
+            <dt>Reference type vs. object type</dt>
+            <dd>In <code>Vehicle v = new Truck();</code> the compiler checks Vehicle; at run time Truck's version of an overridden method runs.</dd>
+            <dt>abstract</dt>
+            <dd>An abstract class can't be created with <code>new</code>. An abstract method has no body; concrete subclasses must implement it.</dd>
+          </dl>
+        </details>
+      </div>
+      <section id="stage" class="panel ip-stage">
+        <div class="ip-head">
+          <span class="eyebrow" id="mode-label"></span
+          ><span id="family" class="ip-chip"></span>
+        </div>
+        <p id="instructions" class="muted ip-instructions"></p>
+        <p id="prompt" class="ip-prompt" hidden></p>
+        <h2 id="question" class="ip-question"></h2>
+        <div id="workspace" class="ip-workspace">
+          <div id="blocks" class="ip-blocks"></div>
+          <div id="visual" class="ip-visual"></div>
+        </div>
+        <div id="interaction" class="ip-interaction"></div>
+        <div class="actions ip-actions">
+          <button id="submit" type="button" disabled>Check Answer</button
+          ><button id="show" type="button" class="secondary">Show Answer</button
+          ><button id="skip" type="button" class="secondary">Skip</button
+          ><button id="next" type="button" hidden>Next Challenge →</button>
+        </div>
+        <div id="feedback" class="feedback ip-feedback" role="status" tabindex="-1" hidden></div>
+      </section>
+      <p id="stats" class="stats"></p>
+    </main>
+    <noscript><p>Enable JavaScript to play Inheritance &amp; Polymorphism Lab.</p></noscript>
+    <footer>
+      Practice freely. No accounts or data uploads. Results are stored locally
+      in this browser. Independent practice tools; not affiliated with College
+      Board.
+    </footer>
+  </body>
+</html>
