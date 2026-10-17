@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Teacher Tools for generating Canvas-compatible practice assessments from CS Games.">
+  <title>Teacher Tools | CS Games</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="./teacher.css">
+  <script type="module" src="./teacher.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="../">CS Games</a>
+      <a href="../csp/">AP CSP</a>
+      <a href="../advanced/">Advanced CS</a>
+      <a class="active" aria-current="page" href="./">Teacher Tools</a>
+    </nav>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">CS Games · Teacher Tools</div>
+      <h1>Build a practice quiz</h1>
+      <p class="lede">Generate a small Canvas-compatible multiple-choice assessment from an existing game. Questions are created locally in this browser.</p>
+    </section>
+    <section class="panel">
+      <h2>Quiz settings</h2>
+      <div class="teacher-form">
+        <label>Quiz title<input id="quiz-title" value="Boolean &amp; Conditional Practice" maxlength="120"></label>
+        <label>Question source<select id="source"><option value="boolean">Boolean &amp; Conditional Lab</option></select></label>
+        <label>Practice mode<select id="mode"><option value="all">All supported modes</option><option value="branch">Follow the Branch</option><option value="conditions">Build Conditions</option><option value="equivalent">Equivalent Expressions</option><option value="short">Short-Circuit &amp; Strings</option><option value="construct">Construct a Condition</option></select></label>
+        <label>Questions<input id="question-count" type="number" min="1" max="20" value="5"></label>
+        <label>Points per question<input id="points" type="number" min="1" max="100" value="1"></label>
+        <label>Random seed (optional)<input id="seed" inputmode="numeric" placeholder="New seed each time"></label>
+      </div>
+      <p class="muted">This first adapter supports conventional four-choice questions from Boolean &amp; Conditional Lab. It excludes visual-only activities and keeps each answer and explanation with its source question.</p>
+      <div class="actions">
+        <button id="generate">Generate Quiz</button>
+        <button id="regenerate-quiz" class="secondary" disabled>Regenerate Quiz</button>
+        <button id="download" class="secondary" disabled>Download Canvas QTI ZIP</button>
+      </div>
+      <p id="status" class="status-line" role="status"></p>
+    </section>
+    <section id="quiz-summary" class="panel" hidden></section>
+    <section id="preview" aria-live="polite"></section>
+  </main>
+  <footer class="footer"><div class="wrap">CS Games · Teacher Tools. Questions and files remain in this browser until downloaded.</div></footer>
+</body>
+</html>
