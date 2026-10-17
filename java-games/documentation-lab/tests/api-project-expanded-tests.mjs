@@ -11,6 +11,7 @@ const parts = index.runtimeParts.map((path) => JSON.parse(fs.readFileSync(new UR
 const data = { schemaVersion: parts[0].schemaVersion, providers: parts.flatMap((part) => part.providers), scenarios: parts.flatMap((part) => part.scenarios) };
 const uiSource = fs.readFileSync(new URL("../api-project-builder-ui.js", import.meta.url), "utf8");
 assert.match(uiSource, /runtimeDescriptionsFor/, "runtime input metadata drives symbolic student-facing descriptions");
+assert.match(uiSource, /p\.type === "object" && \(p\.name === "locationRestriction" \|\| p\.name === "locationBias"\)/, "a supplied location center does not hide the assessed search radius control");
 const errors = validateApiData(data);
 assert.deepEqual(errors, [], errors.join("\n"));
 
@@ -21,6 +22,10 @@ assert.equal(data.providers.length, 6);
 assert.deepEqual(Object.fromEntries(data.providers.map((provider) => [provider.id, enabled.filter((scenario) => scenario.providerId === provider.id).length])), { spotify: 6, youtube: 6, "google-maps": 7, discord: 6, tiktok: 4, openai: 7 });
 
 const map = endpointMap(data);
+const lunch = data.scenarios.find((scenario) => scenario.id === "maps-lunch-spot-finder");
+const lunchNearby = map.get("maps.places-nearby-search");
+assert.equal(presentationFor(lunchNearby, lunchNearby.parameters.find((parameter) => parameter.name === "locationRestriction")), "location");
+assert.ok(classification(lunch, lunchNearby).assessed.includes("locationRestriction"), "the search radius remains a meaningful assessed decision while GPS is app-supplied");
 function findReferences(value, found = []) {
   if (value && typeof value === "object" && value.$fromStep) found.push(value);
   else if (value && typeof value === "object") Object.values(value).forEach((child) => findReferences(child, found));
