@@ -1,0 +1,523 @@
+{
+  "schemaVersion": 1,
+  "developmentOnly": true,
+  "published": false,
+  "providers": [
+    {
+      "id": "dev-tunebox",
+      "name": "TuneBox API (fictional development fixture)",
+      "documentationUrl": "https://example.invalid/tunebox-api",
+      "verifiedDate": "2026-10-17",
+      "notes": "Development-only fictional content. Do not present as a real service.",
+      "endpoints": [
+        {
+          "id": "album-get",
+          "method": "GET",
+          "path": "/v1/albums/{albumId}",
+          "title": "Get one album",
+          "description": "Returns the identifying information for one album, including its artist reference, cover image, and track references.",
+          "parameters": [
+            {
+              "name": "albumId",
+              "location": "path",
+              "type": "string",
+              "required": true,
+              "description": "The album identifier."
+            },
+            {
+              "name": "market",
+              "location": "query",
+              "type": "string",
+              "required": false,
+              "allowedValues": [
+                "US",
+                "CA"
+              ],
+              "description": "Optional market code used to choose regional availability information."
+            }
+          ],
+          "authentication": {
+            "required": false,
+            "description": "No authentication is required in this classroom fixture."
+          },
+          "responseFields": [
+            {
+              "path": "id",
+              "type": "string",
+              "description": "The album identifier."
+            },
+            {
+              "path": "title",
+              "type": "string",
+              "description": "The album title."
+            },
+            {
+              "path": "artistId",
+              "type": "string",
+              "description": "Identifier of the album's artist."
+            },
+            {
+              "path": "coverImage",
+              "type": "string",
+              "description": "URL of the album cover image."
+            },
+            {
+              "path": "trackIds",
+              "type": "array<string>",
+              "description": "Identifiers for the album's tracks."
+            }
+          ],
+          "sourceUrl": "https://example.invalid/tunebox-api/albums#get-one"
+        },
+        {
+          "id": "album-tracks",
+          "method": "GET",
+          "path": "/v1/albums/{albumId}/tracks",
+          "title": "List an album's tracks",
+          "description": "Returns the tracks belonging to one album as a collection.",
+          "parameters": [
+            {
+              "name": "albumId",
+              "location": "path",
+              "type": "string",
+              "required": true,
+              "description": "The album identifier."
+            },
+            {
+              "name": "limit",
+              "location": "query",
+              "type": "integer",
+              "required": false,
+              "description": "Maximum number of tracks to return.",
+              "min": 1,
+              "max": 50
+            }
+          ],
+          "authentication": {
+            "required": false,
+            "description": "No authentication is required in this classroom fixture."
+          },
+          "responseFields": [
+            {
+              "path": "items",
+              "type": "array<object>",
+              "description": "The returned track objects."
+            },
+            {
+              "path": "items[].id",
+              "type": "string",
+              "description": "A track identifier."
+            },
+            {
+              "path": "items[].title",
+              "type": "string",
+              "description": "A track title."
+            },
+            {
+              "path": "items[].durationSeconds",
+              "type": "integer",
+              "description": "Track duration in seconds."
+            }
+          ],
+          "sourceUrl": "https://example.invalid/tunebox-api/albums#list-tracks"
+        },
+        {
+          "id": "artist-get",
+          "method": "GET",
+          "path": "/v1/artists/{artistId}",
+          "title": "Get one artist",
+          "description": "Returns the name and image for one artist.",
+          "parameters": [
+            {
+              "name": "artistId",
+              "location": "path",
+              "type": "string",
+              "required": true,
+              "description": "The artist identifier."
+            }
+          ],
+          "authentication": {
+            "required": false,
+            "description": "No authentication is required in this classroom fixture."
+          },
+          "responseFields": [
+            {
+              "path": "id",
+              "type": "string",
+              "description": "The artist identifier."
+            },
+            {
+              "path": "name",
+              "type": "string",
+              "description": "The artist's display name."
+            },
+            {
+              "path": "image",
+              "type": "string",
+              "description": "URL of the artist image."
+            }
+          ],
+          "sourceUrl": "https://example.invalid/tunebox-api/artists#get-one"
+        },
+        {
+          "id": "artist-albums",
+          "method": "GET",
+          "path": "/v1/artists/{artistId}/albums",
+          "title": "List an artist's albums",
+          "description": "Returns an artist's albums as a collection, optionally filtered by genre.",
+          "parameters": [
+            {
+              "name": "artistId",
+              "location": "path",
+              "type": "string",
+              "required": true,
+              "description": "The artist identifier."
+            },
+            {
+              "name": "genre",
+              "location": "query",
+              "type": "string",
+              "required": false,
+              "allowedValues": [
+                "indie",
+                "jazz",
+                "electronic"
+              ],
+              "description": "Optional genre filter."
+            },
+            {
+              "name": "limit",
+              "location": "query",
+              "type": "integer",
+              "required": false,
+              "description": "Maximum number of albums to return.",
+              "min": 1,
+              "max": 50
+            }
+          ],
+          "authentication": {
+            "required": false,
+            "description": "No authentication is required in this classroom fixture."
+          },
+          "responseFields": [
+            {
+              "path": "items",
+              "type": "array<object>",
+              "description": "The returned album objects."
+            },
+            {
+              "path": "items[].id",
+              "type": "string",
+              "description": "An album identifier."
+            },
+            {
+              "path": "items[].title",
+              "type": "string",
+              "description": "An album title."
+            },
+            {
+              "path": "items[].coverImage",
+              "type": "string",
+              "description": "URL of an album cover."
+            }
+          ],
+          "sourceUrl": "https://example.invalid/tunebox-api/artists#list-albums"
+        }
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "album-viewer",
+      "providerId": "dev-tunebox",
+      "title": "Album Viewer",
+      "goal": "Build the request plan for an album viewer. The application needs the album title, artist name, cover image, and complete song list.",
+      "requirements": [
+        {
+          "id": "album-title",
+          "label": "Album title",
+          "description": "The title displayed at the top of the page."
+        },
+        {
+          "id": "artist-name",
+          "label": "Artist name",
+          "description": "The artist's display name, not only its identifier."
+        },
+        {
+          "id": "cover-image",
+          "label": "Cover image",
+          "description": "The URL for the album cover image."
+        },
+        {
+          "id": "song-list",
+          "label": "Song list",
+          "description": "Every track title in the album."
+        }
+      ],
+      "constraints": {
+        "text": "Use the smallest sufficient set of requests. The album identifier is ALB-42.",
+        "optimize": "smallest-sufficient"
+      },
+      "availableEndpointIds": [
+        "album-get",
+        "album-tracks",
+        "artist-get",
+        "artist-albums"
+      ],
+      "acceptedPlans": [
+        {
+          "id": "album-viewer-smallest",
+          "efficiency": "smallest-sufficient",
+          "requests": [
+            {
+              "endpointId": "album-get",
+              "parameters": {
+                "albumId": "ALB-42"
+              }
+            },
+            {
+              "endpointId": "album-tracks",
+              "parameters": {
+                "albumId": "ALB-42"
+              }
+            },
+            {
+              "endpointId": "artist-get",
+              "parameters": {
+                "artistId": "ART-7"
+              }
+            }
+          ]
+        }
+      ],
+      "explanation": "Get one album supplies the title, cover image, artist identifier, and track references. The artist request turns ART-7 into the display name. The tracks collection supplies every track title. The artist-albums collection cannot replace the album request because it does not provide the selected album's complete details.",
+      "responseSamples": [
+        {
+          "endpointId": "album-get",
+          "body": {
+            "id": "ALB-42",
+            "title": "Midnight Signals",
+            "artistId": "ART-7",
+            "coverImage": "/covers/midnight-signals.jpg",
+            "trackIds": [
+              "TR-1",
+              "TR-2"
+            ]
+          }
+        },
+        {
+          "endpointId": "artist-get",
+          "body": {
+            "id": "ART-7",
+            "name": "The Night Shift",
+            "image": "/artists/night-shift.jpg"
+          }
+        },
+        {
+          "endpointId": "album-tracks",
+          "body": {
+            "items": [
+              {
+                "id": "TR-1",
+                "title": "Afterglow",
+                "durationSeconds": 214
+              },
+              {
+                "id": "TR-2",
+                "title": "Static Hearts",
+                "durationSeconds": 198
+              }
+            ]
+          }
+        }
+      ],
+      "modelTargets": [
+        {
+          "id": "album",
+          "concept": "Album",
+          "fields": [
+            "title",
+            "coverImage"
+          ],
+          "relationships": [
+            "artist",
+            "tracks"
+          ]
+        },
+        {
+          "id": "artist",
+          "concept": "Artist",
+          "fields": [
+            "name"
+          ],
+          "relationships": []
+        },
+        {
+          "id": "track",
+          "concept": "Track",
+          "fields": [
+            "title",
+            "durationSeconds"
+          ],
+          "relationships": []
+        }
+      ]
+    },
+    {
+      "id": "artist-shelf",
+      "providerId": "dev-tunebox",
+      "title": "Artist Album Shelf",
+      "goal": "Build the request plan for a shelf showing an artist's indie albums and their cover images.",
+      "requirements": [
+        {
+          "id": "album-collection",
+          "label": "Filtered album collection",
+          "description": "The artist's albums filtered to the indie genre."
+        },
+        {
+          "id": "album-covers",
+          "label": "Album covers",
+          "description": "A cover image for each album in the collection."
+        }
+      ],
+      "constraints": {
+        "text": "Use the smallest sufficient set of requests. The artist identifier is ART-7. Apply the indie filter and return at most 10 albums.",
+        "optimize": "smallest-sufficient"
+      },
+      "availableEndpointIds": [
+        "artist-albums",
+        "album-get",
+        "artist-get"
+      ],
+      "acceptedPlans": [
+        {
+          "id": "artist-shelf-smallest",
+          "efficiency": "smallest-sufficient",
+          "requests": [
+            {
+              "endpointId": "artist-albums",
+              "parameters": {
+                "artistId": "ART-7",
+                "genre": "indie",
+                "limit": 10
+              }
+            }
+          ]
+        }
+      ],
+      "explanation": "The artist-albums collection already returns the filtered album objects and each coverImage. A separate album request for every item would be unnecessary.",
+      "responseSamples": [
+        {
+          "endpointId": "artist-albums",
+          "body": {
+            "items": [
+              {
+                "id": "ALB-42",
+                "title": "Midnight Signals",
+                "coverImage": "/covers/midnight-signals.jpg"
+              }
+            ]
+          }
+        }
+      ],
+      "modelTargets": [
+        {
+          "id": "album",
+          "concept": "Album",
+          "fields": [
+            "title",
+            "coverImage"
+          ],
+          "relationships": []
+        }
+      ]
+    },
+    {
+      "id": "album-card",
+      "providerId": "dev-tunebox",
+      "title": "Album Card",
+      "goal": "Build the request plan for a compact album card that needs only the album title and cover image.",
+      "requirements": [
+        {
+          "id": "title",
+          "label": "Album title",
+          "description": "The selected album's title."
+        },
+        {
+          "id": "cover",
+          "label": "Cover image",
+          "description": "The selected album's cover image."
+        }
+      ],
+      "constraints": {
+        "text": "Use the smallest sufficient set of requests. The album identifier is ALB-42.",
+        "optimize": "smallest-sufficient"
+      },
+      "availableEndpointIds": [
+        "album-get",
+        "album-tracks",
+        "artist-get",
+        "artist-albums"
+      ],
+      "acceptedPlans": [
+        {
+          "id": "album-card-smallest",
+          "efficiency": "smallest-sufficient",
+          "requests": [
+            {
+              "endpointId": "album-get",
+              "parameters": {
+                "albumId": "ALB-42"
+              }
+            }
+          ]
+        },
+        {
+          "id": "album-card-valid-extra",
+          "efficiency": "valid-less-efficient",
+          "requests": [
+            {
+              "endpointId": "album-get",
+              "parameters": {
+                "albumId": "ALB-42"
+              }
+            },
+            {
+              "endpointId": "album-tracks",
+              "parameters": {
+                "albumId": "ALB-42"
+              }
+            }
+          ]
+        }
+      ],
+      "explanation": "The album item response contains both title and coverImage, so one request is sufficient. The plan with an additional track request still contains the needed information, but it is less efficient because those tracks are not required.",
+      "responseSamples": [
+        {
+          "endpointId": "album-get",
+          "body": {
+            "id": "ALB-42",
+            "title": "Midnight Signals",
+            "artistId": "ART-7",
+            "coverImage": "/covers/midnight-signals.jpg",
+            "trackIds": [
+              "TR-1",
+              "TR-2"
+            ]
+          }
+        }
+      ],
+      "modelTargets": [
+        {
+          "id": "album",
+          "concept": "Album",
+          "fields": [
+            "title",
+            "coverImage"
+          ],
+          "relationships": []
+        }
+      ]
+    }
+  ]
+}
