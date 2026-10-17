@@ -3,7 +3,7 @@ import { presentation } from "./api-project-presentation.js";
 export const GAME_ID = "documentation-lab";
 export const MODE_ID = "api-builder";
 export const MODE_TITLE = "API Project Builder";
-export const DATA_FILE = "./api-project-data-v1-expanded.json?v=verified-library-v1";
+export const DATA_FILE = "./api-project-data-v1-runtime-index.json?v=verified-library-v2";
 const arr = Array.isArray;
 const obj = (v) => !!v && typeof v === "object" && !arr(v);
 const str = (v) => typeof v === "string" && !!v.trim();
@@ -56,7 +56,7 @@ export function validateApiData(data) {
   return errors;
 }
 export function assertValid(data) { const errors = validateApiData(data); if (errors.length) throw new Error("Invalid API Project Builder content:\n- " + errors.join("\n- ")); return data; }
-export async function loadApiContent(url = DATA_FILE, fetcher = globalThis.fetch) { if (typeof fetcher !== "function") throw new Error("A fetch function is required"); const response = await fetcher(url); if (!response.ok) throw new Error(`Could not load ${url} (${response.status})`); return assertValid(await response.json()); }
+export async function loadApiContent(url = DATA_FILE, fetcher = globalThis.fetch) { if (typeof fetcher !== "function") throw new Error("A fetch function is required"); const response = await fetcher(url); if (!response.ok) throw new Error(`Could not load ${url} (${response.status})`); const parsed = await response.json(); if (!Array.isArray(parsed.runtimeParts)) return assertValid(parsed); const base = new URL(url, globalThis.location?.href || "https://davisjm4.github.io/java-games/documentation-lab/"); const parts = await Promise.all(parsed.runtimeParts.map(async (part) => { const partResponse = await fetcher(new URL(part, base).href); if (!partResponse.ok) throw new Error(`Could not load ${part} (${partResponse.status})`); return partResponse.json(); })); return assertValid({ schemaVersion: parsed.schemaVersion, providers: parts.flatMap((part) => part.providers), scenarios: parts.flatMap((part) => part.scenarios) }); }
 export function isProductionContent(data) { return !data?.developmentOnly && data?.schemaVersion === 1 && data.providers?.length >= 3 && data.scenarios?.length >= 1 && data.providers.every((p) => p.verifiedDate && p.documentationUrl); }
 export function endpointMap(data) { return new Map(data.providers.flatMap((p) => p.endpoints.map((e) => [e.id, e]))); }
 export function endpointsFor(data, scenario) { const map = endpointMap(data); return scenario.availableEndpointIds.map((id) => map.get(id)).filter(Boolean); }
