@@ -29,6 +29,10 @@ function runtimeDescriptionsFor(scenario, request, parameter) {
   return [...new Set(descriptions)];
 }
 const runtimeParam = (p, scenario, request, endpoint) => {
+  // A search circle has both an application-supplied center and a meaningful
+  // student choice for its radius. Treating the nested runtime center as if it
+  // made the whole object runtime-only hides the shared radius selector.
+  if (p.type === "object" && (p.name === "locationRestriction" || p.name === "locationBias")) return false;
   const auto = scenario ? Object.entries(presentation(scenario, endpoint).automatic || {}).find(([path]) => path === p.name || path.startsWith(`${p.name}.`))?.[1] : null;
   return auto?.kind === "runtime" || !!(scenario && request && runtimeBinding(scenario, request, p)) || (p.in === "path" && !p.allowedValues?.length) || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(p.name) && !p.allowedValues?.length;
 };
