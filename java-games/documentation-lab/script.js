@@ -476,7 +476,7 @@ function newChallenge() {
       tracker,
       dev: new URLSearchParams(globalThis.location?.search || "").get("apiDev") === "1",
       controls: {
-        submit: $("submit"), show: $("show"), skip: $("skip"), next: $("next"),
+        submit: $("submit"), show: $("show"), skip: $("skip"), nextButton: $("next"),
         roundSummary: () => roundSummary(E.GAME_ID),
         next: newChallenge,
       },
