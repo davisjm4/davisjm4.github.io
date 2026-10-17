@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import assert from "node:assert/strict";
 import { validateApiData, validatePlan, createScenarioPicker, endpointMap, isRuntimeParameter } from "../api-project-builder-engine.js";
+import { presentation, classification, automaticParametersForOccurrence } from "../api-project-presentation.js";
+import { presentationFor } from "../api-project-builder-ui.js";
 
 // Exercise the same provider shards used by the deployed loader. The merged
 // convenience export can exceed repository-content API response limits.
@@ -21,6 +23,11 @@ function findReferences(value, found = []) {
   else if (value && typeof value === "object") Object.values(value).forEach((child) => findReferences(child, found));
   else if (Array.isArray(value)) value.forEach((child) => findReferences(child, found));
   return found;
+}
+function hasRuntimeOrReference(value) {
+  if (!value || typeof value !== "object") return false;
+  if ("$runtime" in value || "$fromStep" in value) return true;
+  return Array.isArray(value) ? value.some(hasRuntimeOrReference) : Object.values(value).some(hasRuntimeOrReference);
 }
 function studentPlan(scenario, plan) {
   const requests = [];
@@ -51,9 +58,39 @@ function studentPlan(scenario, plan) {
 for (const scenario of enabled) {
   assert.ok(scenario.availableEndpointIds.every((id) => map.has(id)), `${scenario.id}: endpoint reference`);
   assert.ok(scenario.acceptedPlans.length > 0, `${scenario.id}: accepted plan`);
+  for (const endpointId of scenario.availableEndpointIds) {
+    const endpoint = map.get(endpointId), config = presentation(scenario, endpoint);
+    for (const name of classification(scenario, endpoint).assessed) {
+      const parameter = endpoint.parameters.find((item) => item.name === name);
+      if (presentationFor(endpoint, parameter) === "text") {
+        const values = scenario.acceptedPlans.flatMap((plan) => plan.steps.filter((step) => step.endpointId === endpointId).map((step) => step.parameters[name]));
+        const specialized = !!config.choiceOptions?.[name] || name === "market" && !!config.marketOptions || values.some(hasRuntimeOrReference);
+        assert.ok(specialized, `${scenario.id}/${endpointId}.${name}: arbitrary text is not a supported student control`);
+      }
+    }
+  }
   for (const plan of scenario.acceptedPlans) {
     const result = validatePlan(data, scenario, studentPlan(scenario, plan));
     assert.equal(result.correct, true, `${scenario.id}/${plan.id}: ${result.message}`);
+    const occurrences = new Map();
+    const focused = { requests: plan.steps.map((step) => {
+      const endpoint = map.get(step.endpointId), groups = classification(scenario, endpoint), occurrence = occurrences.get(step.endpointId) || 0;
+      occurrences.set(step.endpointId, occurrence + 1);
+      const parameters = automaticParametersForOccurrence(scenario, endpoint, occurrence), dependencies = {};
+      for (const name of groups.assessed) {
+        const value = step.parameters[name];
+        if (value === undefined) continue;
+        const references = findReferences(value);
+        if (references.length) {
+          parameters[name] = { $runtime: true };
+          dependencies[name] = { fromRequest: plan.steps.findIndex((candidate) => candidate.step === references[0].$fromStep), paths: references.map((reference) => reference.path) };
+        } else if (isRuntimeParameter(endpoint.parameters.find((parameter) => parameter.name === name), value)) parameters[name] = { $runtime: true };
+        else parameters[name] = value;
+      }
+      return { endpointId: step.endpointId, parameters, dependencies };
+    }) };
+    const focusedResult = validatePlan(data, scenario, focused);
+    assert.equal(focusedResult.correct, true, `${scenario.id}/${plan.id}: focused controls can construct the accepted plan: ${JSON.stringify(focusedResult)}`);
   }
   const incorrect = { requests: [] };
   assert.equal(validatePlan(data, scenario, incorrect).correct, false, `${scenario.id}: incorrect plan rejected`);
