@@ -45,6 +45,10 @@ export const PROJECT_PRESENTATION = {
   "maps-lunch-spot-finder": {
     "maps.places-nearby-search": { assessed: ["X-Goog-FieldMask", "maxResultCount", "rankPreference", "locationRestriction"], automatic: { includedTypes: fixed(["restaurant"], "Restaurant category specified by the project"), "locationRestriction.circle.center": fixed({ latitude: 36.1699, longitude: -115.1398 }, "Device GPS supplied by the application") }, fieldOptions: ["places.id", "places.displayName", "places.formattedAddress", "places.location", "places.rating", "places.currentOpeningHours", "places.regularOpeningHours", "places.priceLevel", "places.photos"], fields: ["places[].id", "places[].displayName", "places[].formattedAddress", "places[].location", "places[].rating", "places[].currentOpeningHours.openNow", "places[].regularOpeningHours.openNow", "places[].priceLevel"] },
   },
+  "maps-trip-destination-picker": {
+    "maps.places-autocomplete": { assessed: ["includedRegionCodes"], choiceOptions: { includedRegionCodes: [["us"], ["ca"], ["gb"]] }, automatic: { input: runtime, sessionToken: runtime, locationBias: runtime }, fields: ["suggestions[].placePrediction.placeId", "suggestions[].placePrediction.text.text", "suggestions[].placePrediction.structuredFormat.mainText.text"] },
+    "maps.places-details": { assessed: ["placeId", "X-Goog-FieldMask"], automatic: { sessionToken: runtime }, fieldOptions: ["displayName", "formattedAddress", "location", "websiteUri", "rating", "nationalPhoneNumber"], fields: ["displayName", "formattedAddress", "location.latitude", "location.longitude", "websiteUri"] },
+  },
   "maps-saved-place-card": {
     "maps.places-details": { assessed: ["X-Goog-FieldMask"], automatic: { placeId: runtime }, fieldOptions: ["displayName", "formattedAddress", "nationalPhoneNumber", "websiteUri", "regularOpeningHours", "currentOpeningHours", "photos", "rating", "googleMapsUri"], fields: ["displayName", "formattedAddress", "nationalPhoneNumber", "websiteUri", "regularOpeningHours.weekdayDescriptions", "currentOpeningHours.openNow", "photos[].name", "photos[].authorAttributions[].displayName", "rating"] },
     "maps.places-photo": { assessed: ["name"], automatic: { maxWidthPx: fixed(800, "Card image size chosen by the application") }, fields: ["name", "photoUri"] },
@@ -54,6 +58,11 @@ export const PROJECT_PRESENTATION = {
     "maps.routes-compute-routes": { assessed: ["X-Goog-FieldMask", "origin", "destination", "travelMode"], automatic: { units: fixed("IMPERIAL", "The app displays distance in miles") }, fieldOptions: ["routes.distanceMeters", "routes.duration", "routes.localizedValues", "routes.warnings", "routes.polyline", "routes.legs"], fields: ["routes[].distanceMeters", "routes[].duration", "routes[].localizedValues.distance.text", "routes[].localizedValues.duration.text", "routes[].warnings"] },
     "maps.geocoding-geocode": { automatic: { address: fixed("4210 Example Blvd, Las Vegas, NV 89109", "Hotel address supplied in the project") }, fields: ["results[].geometry.location.lat", "results[].geometry.location.lng", "results[].formatted_address"] },
     "maps.directions-legacy": { fields: ["routes[].legs[].distance.text", "routes[].legs[].duration.text", "status"] },
+  },
+  "openai-lecture-recap": {
+    "openai.create-transcription": { assessed: ["model"], choiceOptions: { model: ["gpt-transcribe", "gpt-4o-transcribe", "gpt-4o-mini-transcribe", "gpt-4o-transcribe-diarize", "whisper-1"] }, automatic: { file: runtime, response_format: fixed("json", "The application stores the complete transcript") }, fields: ["text", "language", "duration"] },
+    "openai.create-response": { assessed: ["input"], automatic: { model: fixed("gpt-6-astra", "Model selection is not the learning objective"), instructions: fixed("Summarize this lecture transcript in exactly 5 bullet points for a student who missed class.", "Application behavior specified in the project goal") }, fields: ["output[].type", "output[].content[].text"] },
+    "openai.create-chat-completion": { assessed: ["messages"], automatic: { model: fixed("gpt-6-astra", "Model selection is not the learning objective") }, fields: ["choices[].message.content"] },
   },
 };
 
