@@ -1,4 +1,4 @@
-import { loadApiContent, isProductionContent, validatePlan, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan, MODE_TITLE } from "./api-project-builder-engine.js";
+import { loadApiContent, isProductionContent, validatePlan, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan, MODE_TITLE } from "./api-project-builder-engine.js?v=api-builder-v3";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
