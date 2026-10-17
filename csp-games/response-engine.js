@@ -1,622 +1,562 @@
-import { int, pick, shuffle } from "./engine.js?v=platform-expansion-v2";
+import { pick, shuffle } from "./engine.js?v=platform-expansion-v2";
+
 export const responseModes = {
-  guided: "Guided Sentence Builder",
-  explanation: "Explanation Builder",
-  reduced: "Reduced Scaffold",
-  testing: "Test Explanation",
-  abstraction: "Abstraction Explanation",
+  behavior: "Explain Program Behavior",
+  evidence: "Select Supporting Evidence",
+  test: "Explain a Test Result",
+  abstraction: "Explain Abstraction",
+  reasoning: "Complete the Reasoning",
 };
+
 export const supportNames = {
-  full: "Full Support",
-  partial: "Partial Support",
-  minimal: "Minimal Support",
+  full: "Guided Support",
+  minimal: "Independent",
 };
-const display = (v) =>
-  typeof v === "boolean"
-    ? v
-      ? "TRUE"
-      : "FALSE"
-    : typeof v === "string"
-      ? JSON.stringify(v)
-      : JSON.stringify(v);
-const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
-export function procedureModel(forced) {
-  const structure =
-      forced ||
-      pick([
-        "count",
-        "sum",
-        "product",
-        "first-index",
-        "filter",
-        "maximum",
-        "all",
-        "range",
-        "scale",
-        "reverse",
-      ]),
-    t = int(0, 3),
-    factor = int(2, 4),
-    numeric = ["range", "scale"].includes(structure),
-    name = {
-      count: "countMatches",
-      sum: "totalValues",
-      product: "multiplyValues",
-      "first-index": "findFirst",
-      filter: "keepMatches",
-      maximum: "largest",
-      all: "allPositive",
-      range: "classify",
-      scale: "adjust",
-      reverse: "reverseValues",
-    }[structure];
-  let params = numeric
-      ? structure === "range"
-        ? ["value", "low", "high"]
-        : ["value", "factor", "offset"]
-      : [
-          "values",
-          ...(["count", "first-index", "filter"].includes(structure)
-            ? ["target"]
-            : []),
-        ],
-    body,
-    run,
-    purpose,
-    wrongPurpose,
-    evidence,
-    wrongEvidence,
-    reason,
-    wrongReason,
-    needles;
-  if (structure === "count") {
-    body =
-      "count ← 0\nFOR EACH value IN values\n{\n    IF (value ≥ target) { count ← count + 1 }\n}\nRETURN(count)";
-    run = (args) => args[0].filter((v) => v >= args[1]).length;
-    purpose = "The procedure counts values that meet or exceed its target.";
-    wrongPurpose = [
-      "The procedure totals the values that meet or exceed its target.",
-      "The procedure counts values that are strictly below its target.",
-    ];
-    evidence = "The conditional count + 1 adds one for each qualifying value.";
-    wrongEvidence = [
-      "The initialization count ← 0 prevents later changes to the counter.",
-      "The final RETURN(count) displays each element inside the procedure.",
-    ];
-    reason =
-      "One increment per qualifying element measures a count rather than a sum.";
-    wrongReason = [
-      "Adding one per match accumulates each matching value rather than its count.",
-      "Every traversal step increases count, even when the comparison is false.",
-    ];
-    needles = ["count ← count + 1"];
-  } else if (structure === "sum") {
-    body =
-      "total ← 0\nFOR EACH value IN values\n{\n    total ← total + value\n}\nRETURN(total)";
-    run = (args) => args[0].reduce((s, v) => s + v, 0);
-    purpose =
-      "The procedure returns the total of all values in its input list.";
-    wrongPurpose = [
-      "The procedure returns the number of values in its input list.",
-      "The procedure returns the product of all values in its input list.",
-    ];
-    evidence =
-      "The assignment total + value contributes each element to the total.";
-    wrongEvidence = [
-      "The initialization total ← 0 makes every completed call return zero.",
-      "The final RETURN(total) repeats the addition once more before returning.",
-    ];
-    reason =
-      "Starting at zero and adding each value accumulates the complete sum.";
-    wrongReason = [
-      "Adding each value once makes total equal the number of visited elements.",
-      "Starting at zero causes negative values to be ignored throughout traversal.",
-    ];
-    needles = ["total ← total + value"];
-  } else if (structure === "product") {
-    body =
-      "product ← 1\nFOR EACH value IN values\n{\n    product ← product × value\n}\nRETURN(product)";
-    run = (args) => args[0].reduce((p, v) => p * v, 1);
-    purpose =
-      "The procedure multiplies all input values to obtain their product.";
-    wrongPurpose = [
-      "The procedure adds all input values to obtain their combined total.",
-      "The procedure counts input values using the product variable as a counter.",
-    ];
-    evidence =
-      "The repeated product × value combines each element by multiplication.";
-    wrongEvidence = [
-      "The initialization product ← 1 adds one to the answer on every visit.",
-      "The final RETURN(product) multiplies the product by the list length.",
-    ];
-    reason =
-      "The initial value one preserves each factor and also handles zero repetitions.";
-    wrongReason = [
-      "The initial value one makes an empty traversal return zero automatically.",
-      "Multiplying a factor by zero has no effect on the accumulated product.",
-    ];
-    needles = ["product ← product × value", "product ← 1"];
-  } else if (structure === "first-index") {
-    body =
-      "index ← 1\nFOR EACH value IN values\n{\n    IF (value = target) { RETURN(index) }\n    index ← index + 1\n}\nRETURN(-1)";
-    run = (args) =>
-      args[0].includes(args[1]) ? args[0].indexOf(args[1]) + 1 : -1;
-    purpose =
-      "The procedure returns the first matching position, or -1 when absent.";
-    wrongPurpose = [
-      "The procedure returns the last matching position, or zero when absent.",
-      "The procedure returns the matching value itself, or the list length.",
-    ];
-    evidence =
-      "The matching branch returns index immediately instead of continuing traversal.";
-    wrongEvidence = [
-      "The initial index ← 1 means the first element is never examined.",
-      "The final RETURN(-1) overwrites any matching position already returned.",
-    ];
-    reason =
-      "An early RETURN stops the procedure, so later matches cannot replace the first.";
-    wrongReason = [
-      "After an early RETURN, the loop continues and replaces the index at every match.",
-      "The index update occurs only when the compared value equals the requested target.",
-    ];
-    needles = ["IF (value = target) { RETURN(index) }"];
-  } else if (structure === "filter") {
-    body =
-      "kept ← []\nFOR EACH value IN values\n{\n    IF (value > target) { APPEND(kept, value) }\n}\nRETURN(kept)";
-    run = (args) => args[0].filter((v) => v > args[1]);
-    purpose =
-      "The procedure returns a new list containing values strictly above target.";
-    wrongPurpose = [
-      "The procedure returns a count of all values strictly above target.",
-      "The procedure returns a new list including values equal to target.",
-    ];
-    evidence =
-      "The guarded APPEND(kept, value) copies matching values into the new list.";
-    wrongEvidence = [
-      "The initialization kept ← [] makes the original input list empty as well.",
-      "The final RETURN(kept) removes matching elements from the original input list.",
-    ];
-    reason =
-      "Only matching values are appended, preserving their original order and duplicates.";
-    wrongReason = [
-      "Appending a value sorts the result and removes any duplicate automatically.",
-      "Values failing the condition are appended before values that satisfy the condition.",
-    ];
-    needles = ["APPEND(kept, value)"];
-  } else if (structure === "maximum") {
-    body =
-      'IF (LENGTH(values) = 0) { RETURN("NONE") }\nbest ← values[1]\nFOR EACH value IN values\n{\n    IF (value > best) { best ← value }\n}\nRETURN(best)';
-    run = (args) => (args[0].length ? Math.max(...args[0]) : "NONE");
-    purpose =
-      'The procedure returns the largest value, or "NONE" for an empty list.';
-    wrongPurpose = [
-      "The procedure returns the smallest value, or zero for an empty list.",
-      "The procedure returns the last value, or raises an error for every empty list.",
-    ];
-    evidence =
-      "The comparison replaces best only when the current value is larger.";
-    wrongEvidence = [
-      "The initialization best ← values[1] skips every later value in the list.",
-      'The empty-list guard returns "NONE" even when the input contains values.',
-    ];
-    reason =
-      "Keeping the largest value seen so far leaves the overall maximum after traversal.";
-    wrongReason = [
-      "Replacing best with a larger value eventually preserves only the smallest value.",
-      "Initializing from the first element always makes the first value the final answer.",
-    ];
-    needles = ["IF (value > best) { best ← value }", "IF (LENGTH(values) = 0)"];
-  } else if (structure === "all") {
-    body =
-      "FOR EACH value IN values\n{\n    IF (value ≤ 0) { RETURN(FALSE) }\n}\nRETURN(TRUE)";
-    run = (args) => args[0].every((v) => v > 0);
-    purpose =
-      "The procedure returns TRUE when every element is positive, including the empty case.";
-    wrongPurpose = [
-      "The procedure returns TRUE whenever at least one element is positive.",
-      "The procedure returns FALSE whenever at least one element is positive.",
-    ];
-    evidence =
-      "A nonpositive value immediately returns FALSE; finishing traversal returns TRUE.";
-    wrongEvidence = [
-      "The final RETURN(TRUE) replaces every FALSE already returned by the procedure.",
-      "The FOR EACH statement visits a made-up zero when its input list is empty.",
-    ];
-    reason =
-      "One failing element disproves the all-positive claim; without a failure it remains true.";
-    wrongReason = [
-      "A single positive element proves that every other list element must be positive.",
-      "An early FALSE returns only from the IF statement, allowing a later TRUE to replace it.",
-    ];
-    needles = ["IF (value ≤ 0)", "RETURN(TRUE)"];
-  } else if (structure === "range") {
-    body =
-      'IF ((value ≥ low) AND (value ≤ high))\n{\n    RETURN("inside")\n}\nRETURN("outside")';
-    run = (args) =>
-      args[0] >= args[1] && args[0] <= args[2] ? "inside" : "outside";
-    purpose =
-      "The procedure classifies membership in a range that includes both endpoints.";
-    wrongPurpose = [
-      "The procedure classifies membership in a range that excludes both endpoints.",
-      "The procedure returns inside when either boundary comparison is true by itself.",
-    ];
-    evidence =
-      "Both inclusive comparisons must be TRUE for the inside branch to return.";
-    wrongEvidence = [
-      'The final RETURN("outside") replaces the earlier inside result on every call.',
-      "The AND operator requires exactly one of the two comparisons to be TRUE.",
-    ];
-    reason =
-      "The lower and upper checks jointly restrict the value to the inclusive interval.";
-    wrongReason = [
-      "Passing the lower check alone proves the upper limit must also be satisfied.",
-      "Equality at either endpoint makes its inclusive comparison evaluate to FALSE.",
-    ];
-    needles = ["IF ((value ≥ low) AND (value ≤ high))"];
-  } else if (structure === "scale") {
-    body = "result ← value × factor\nresult ← result + offset\nRETURN(result)";
-    run = (args) => args[0] * args[1] + args[2];
-    purpose =
-      "The procedure multiplies value by factor, then adds offset to the result.";
-    wrongPurpose = [
-      "The procedure adds offset to value, then multiplies their sum by factor.",
-      "The procedure multiplies factor by offset, then adds value to the result.",
-    ];
-    evidence =
-      "The second assignment adds offset to the result of the first multiplication.";
-    wrongEvidence = [
-      "The first assignment changes the argument factor before calculating the result.",
-      "The RETURN(result) statement displays data without returning anything to the caller.",
-    ];
-    reason =
-      "Parameters receive the arguments in order, so one definition can transform different inputs.";
-    wrongReason = [
-      "Parameters are fixed constants, so changing the call arguments cannot change the result.",
-      "Arguments change the procedure definition itself instead of supplying its input values.",
-    ];
-    needles = ["result ← result + offset", "result ← value × factor"];
-  } else {
-    body =
-      "reversed ← []\nindex ← LENGTH(values)\nREPEAT UNTIL (index = 0)\n{\n    APPEND(reversed, values[index])\n    index ← index − 1\n}\nRETURN(reversed)";
-    run = (args) => [...args[0]].reverse();
-    purpose =
-      "The procedure returns the input values in reverse positional order.";
-    wrongPurpose = [
-      "The procedure returns the input values sorted from smallest to largest.",
-      "The procedure returns the input values unchanged after deleting duplicates.",
-    ];
-    evidence =
-      "The index starts at the list length and decreases after each append.";
-    wrongEvidence = [
-      "The initialization index ← LENGTH(values) starts at the first list position.",
-      "The index update makes APPEND sort the numeric values before storing them.",
-    ];
-    reason =
-      "Visiting positions from last to first reverses order without changing stored values.";
-    wrongReason = [
-      "Visiting positions from last to first compares neighboring values to sort the list.",
-      "Appending each indexed value once removes repetitions because the result began empty.",
-    ];
-    needles = ["index ← index − 1", "APPEND(reversed, values[index])"];
-  }
-  const candidates =
-    structure === "all"
-      ? [[[]], [[1]], [[0]], [[2, -1, 3]], [[1, 2, 3]]]
-      : numeric
-        ? structure === "range"
-          ? [
-              [t, t, t + 2],
-              [t - 1, t, t + 2],
-              [t + 2, t, t + 2],
-              [t + 3, t, t + 2],
-            ]
-          : [
-              [0, factor, t],
-              [2, factor, t],
-              [-1, factor, t],
-              [3, factor, t + 1],
-            ]
-        : params.length === 2
-          ? [
-              [[], t],
-              [[t], t],
-              [[t - 1, t, t + 2], t],
-              [[t + 2, t, t + 2], t],
-            ]
-          : [[[]], [[t]], [[t - 1, t, t + 2]], [[t + 2, t - 1, t + 2]]];
-  const sample = pick(candidates),
-    other = pick(candidates.filter((a) => !same(run(a), run(sample))));
-  if (!other) throw Error("Procedure needs contrasting calls");
-  const publicName = pick([
-    "analyze",
-    "process",
-    "summarize",
-    "evaluate",
-    "transform",
-  ]);
-  const call = (args) => `${publicName}(${args.map(display).join(", ")})`;
-  const code = `PROCEDURE ${publicName}(${params.join(", ")})\n{\n${body
-    .split("\n")
-    .map((l) => "    " + l)
-    .join("\n")}\n}\nDISPLAY(${call(sample)})\nDISPLAY(${call(other)})`;
-  const lines = code.split("\n"),
-    validLines = lines
-      .map((line, i) => (needles.some((n) => line.includes(n)) ? i + 1 : null))
-      .filter(Boolean);
-  return {
-    structure,
-    name: publicName,
-    params,
-    body,
-    run,
-    sample,
-    other,
-    call,
-    code,
-    lines,
-    validLines,
-    purpose,
-    wrongPurpose,
-    evidence,
-    wrongEvidence,
-    reason,
-    wrongReason,
-    t,
-  };
+
+const q = (structure, code, prompt, answer, wrong, feedback, misconception, reminder) => ({
+  structure, code, prompt, answer, wrong, feedback, misconception, reminder,
+});
+
+const behavior = [
+  q("conditional-count",
+    `count ← 0
+FOR EACH score IN scores
+{
+    IF (score ≥ 70)
+    {
+        count ← count + 1
+    }
 }
-export function generateResponse(mode = "mixed", support = "full", forced) {
-  const selected = mode === "mixed" ? pick(Object.keys(responseModes)) : mode;
-  if (!responseModes[selected] || !supportNames[support])
-    throw Error("Unknown response practice setting");
-  const p = procedureModel(forced),
-    out = p.run(p.sample),
-    otherOut = p.run(p.other),
-    isList = Array.isArray(p.sample[0]),
-    isEmpty = isList && p.sample[0].length === 0,
-    single = isList && p.sample[0].length === 1;
-  let C = [p.purpose, ...p.wrongPurpose],
-    E = [p.evidence, ...p.wrongEvidence],
-    R = [p.reason, ...p.wrongReason],
-    prompt = `Explain what ${p.name} computes, using its code as evidence.`;
-  if (selected === "reduced") {
-    const noReturn = Symbol("no return");
-    const alternatives = Array.isArray(out)
-      ? [out.concat(p.t), out.length ? out.slice(1) : [p.t, p.t]]
-      : typeof out === "number"
-        ? [out + 1, out - 1]
-        : typeof out === "boolean"
-          ? [!out, noReturn]
-          : out === "NONE"
-            ? [0, noReturn]
-            : [out === "inside" ? "outside" : "inside", noReturn];
-    const statement = (value) =>
-      value === noReturn
-        ? "The first displayed call displays its result without returning a value to its caller."
-        : `The first displayed call returns ${display(value)} to its caller.`;
-    C = [statement(out), ...alternatives.map(statement)];
-    prompt =
-      "Explain the first displayed call’s returned value. Connect code evidence to your conclusion.";
-  }
-  if (selected === "testing") {
-    prompt = `Explain what testing ${p.call(p.sample)} checks and what it cannot establish.`;
-    C = isEmpty
-      ? [
-          "This test examines the procedure’s handling of an empty input list.",
-          "This test demonstrates how the procedure behaves with one list element.",
-          "This test checks a typical nonempty traversal with several list values.",
-        ]
-      : single
-        ? [
-            "This test exercises behavior with exactly one supplied list element.",
-            "This test exercises a traversal where no list element is supplied.",
-            "This test proves behavior for every possible list length and value.",
-          ]
-        : isList
-          ? [
-              "This test checks one specific multi-element input, not every possible input.",
-              "This test proves every possible list input produces the required result.",
-              "This test examines only the empty-input behavior of the procedure.",
-            ]
-          : [
-              "This test checks the particular arguments in the first displayed call.",
-              "This test proves correctness for every possible combination of arguments.",
-              "This test supplies no arguments, so no procedure statements can run.",
-            ];
-    E = [
-      `${p.call(p.sample)} returns ${display(out)} when evaluated with the supplied arguments.`,
-      `${p.call(p.sample)} returns ${display(otherOut)} regardless of the supplied arguments.`,
-      `${p.call(p.sample)} changes its definition to match the supplied arguments.`,
-    ];
-    R = [p.reason, ...p.wrongReason].map(
-      (text) => text + " This describes the behavior exercised by this test.",
-    );
-  }
-  if (selected === "abstraction") {
-    const listFocus = isList && pick([true, false]);
-    prompt = listFocus
-      ? "Explain how this procedure’s list use manages complexity."
-      : "Explain how this procedure and its parameters manage complexity.";
-    C = listFocus
-      ? [
-          "A list lets one traversal handle varying collections without a separate variable for each item.",
-          "A list requires a different named variable and new procedure body for every additional item.",
-          "A list removes the need to understand how the procedure processes its individual elements.",
-        ]
-      : [
-          "Parameters allow the same procedure definition to operate on different supplied arguments.",
-          "Parameters force every procedure call to use the same hardcoded values as its first call.",
-          "Parameters cause each call to rewrite the procedure body before carrying out its statements.",
-        ];
-    E = [
-      `The two calls use one definition and return ${display(out)} and ${display(otherOut)} for different arguments.`,
-      `The two calls use one definition and return ${display(otherOut)} and ${display(out)} for different arguments.`,
-      `The two calls create different definitions by changing the same procedure’s parameter names.`,
-    ];
-    R = listFocus
-      ? [
-          `The loop applies ${p.structure === "reverse" ? "indexed list access" : "the same processing"} to the supplied list, so separate per-item statements are unnecessary.`,
-          `The loop fixes the list at its original size, so larger inputs require another procedure definition.`,
-          `The loop removes all boundaries and preconditions, so every possible list access must be valid.`,
-        ]
-      : [
-          `${p.reason} Callers can reuse this behavior with different arguments.`,
-          `${p.wrongReason[0]} Callers cannot reuse the same definition with different arguments.`,
-          `${p.wrongReason[1]} Return values change the procedure definition for each caller.`,
-        ];
-  }
-  const emptyFocused = isEmpty && ["reduced", "testing"].includes(selected);
-  if (emptyFocused) {
-    const guarded = p.structure === "maximum",
-      reverse = p.structure === "reverse";
-    const emptyEvidence = guarded
-      ? "The empty-input guard returns before the first element is accessed."
-      : reverse
-        ? "The initial index is zero, so REPEAT UNTIL executes its body zero times."
-        : "The empty input provides no elements, so FOR EACH executes its body zero times.";
-    const emptyReason = {
-      count:
-        "With zero iterations, count remains at its initial zero and is returned unchanged.",
-      sum: "With zero iterations, total remains at its initial zero and is returned unchanged.",
-      product:
-        "With zero iterations, product remains at its initial one and is returned unchanged.",
-      "first-index":
-        "No matching return is reached; the final RETURN(-1) supplies the absence result.",
-      filter:
-        "No element is appended, so the initialized empty result list is returned.",
-      reverse:
-        "No element is appended, so the initialized empty result list is returned.",
-      maximum:
-        "The early guard prevents values[1] from being evaluated on an empty list.",
-      all: "No nonpositive element causes an early FALSE, so execution reaches RETURN(TRUE).",
-    }[p.structure];
-    const wrongEmpty = guarded
-      ? [
-          "The empty-input guard still accesses values[1] before returning its result.",
-          "The empty-input guard is skipped when LENGTH(values) equals zero.",
-        ]
-      : [
-          "The loop visits a default zero element and updates its state once.",
-          "The procedure cannot return until at least one element has been visited.",
-        ];
-    if (selected === "reduced") E = [emptyEvidence, ...wrongEmpty];
-    R = [emptyReason, ...wrongEmpty];
-    const needles = {
-      count: ["count ← 0", "FOR EACH", "RETURN(count)"],
-      sum: ["total ← 0", "FOR EACH", "RETURN(total)"],
-      product: ["product ← 1", "FOR EACH", "RETURN(product)"],
-      "first-index": ["FOR EACH", "RETURN(-1)"],
-      filter: ["kept ← []", "FOR EACH", "RETURN(kept)"],
-      reverse: [
-        "reversed ← []",
-        "index ← LENGTH",
-        "REPEAT UNTIL",
-        "RETURN(reversed)",
-      ],
-      maximum: ["IF (LENGTH(values) = 0)"],
-      all: ["FOR EACH", "RETURN(TRUE)"],
-    }[p.structure];
-    p.validLines = p.lines
-      .map((line, i) => (needles.some((n) => line.includes(n)) ? i + 1 : null))
-      .filter(Boolean);
-  }
-  R = R.map((text) => "This evidence supports the conclusion: " + text);
-  const roles = { claim: C, evidence: E, reason: R },
-    ids = shuffle(Array.from({ length: 9 }, (_, i) => "sentence-" + i)),
-    items = [],
-    correct = {};
-  let index = 0;
-  for (const [role, texts] of Object.entries(roles))
-    texts.forEach((text, j) => {
-      const item = {
-        id: ids[index++],
-        role,
-        text,
-        correct: j === 0,
-        misconception:
-          j === 0
-            ? "Supported by the generated procedure."
-            : role === "claim"
-              ? "The supported conclusion is: " + C[0]
-              : role === "evidence"
-                ? "The actual evidence is: " + E[0]
-                : "The relevant relationship is: " + R[0],
-      };
-      items.push(item);
-      if (j === 0) correct[role] = item.id;
-    });
+RETURN(count)`,
+    "Which statement best explains what the procedure returns?",
+    "The number of scores that are at least 70.",
+    ["The sum of the scores that are at least 70.", "The first score that is at least 70.", "The number of scores that are below 70."],
+    "The counter increases once for each score satisfying score ≥ 70, so it returns the number of qualifying scores.",
+    "The selected statement confuses counting with summing, searching, or reversing the condition.",
+    "Track what changes inside the loop and when it changes."),
+  q("accumulator",
+    `total ← 0
+FOR EACH value IN values
+{
+    IF (value < 0)
+    {
+        total ← total + value
+    }
+}
+RETURN(total)`,
+    "Which statement best explains what the procedure returns?",
+    "The sum of all negative values in the list.",
+    ["The number of negative values in the list.", "The sum of all nonnegative values in the list.", "The first negative value found in the list."],
+    "Each negative value, not the number 1, is added to total. The returned value is their sum.",
+    "The selected statement misreads either the condition or the value added to total.",
+    "Distinguish a counter (+ 1) from an accumulator (+ value)."),
+  q("early-search",
+    `position ← 1
+FOR EACH item IN items
+{
+    IF (item = 5)
+    {
+        RETURN(position)
+    }
+    position ← position + 1
+}
+RETURN(-1)`,
+    "Which statement best explains what the procedure returns?",
+    "The first position containing 5, or -1 if 5 is absent.",
+    ["The last position containing 5, or -1 if 5 is absent.", "The number of times 5 occurs, or -1 if 5 is absent.", "The value 5 when found, or the list length if absent."],
+    "RETURN(position) ends the procedure at the first match. If no item equals 5, execution reaches RETURN(-1).",
+    "The selected statement overlooks the immediate return or confuses a position with a count or value.",
+    "An early RETURN stops both the loop and the procedure."),
+  q("list-filter",
+    `selected ← []
+FOR EACH value IN values
+{
+    IF (value > 6)
+    {
+        APPEND(selected, value)
+    }
+}
+RETURN(selected)`,
+    "Which statement best explains what the procedure returns?",
+    "A new list of values greater than 6, in their original order.",
+    ["A count of values greater than 6, in their original order.", "A new list of values at least 6, sorted in order.", "The input list after values below 6 have been removed."],
+    "Only values satisfying value > 6 are appended. APPEND preserves visit order and does not modify the input list.",
+    "The selected statement adds counting, sorting, equality, or input mutation that the code never performs.",
+    "Check the comparison and the exact operation performed on a match."),
+  q("running-maximum",
+    `best ← values[1]
+FOR EACH value IN values
+{
+    IF (value > best)
+    {
+        best ← value
+    }
+}
+RETURN(best)`,
+    "Which statement best explains what the procedure returns?",
+    "The greatest value in a nonempty list.",
+    ["The smallest value in a nonempty list.", "The final value in a nonempty list.", "The position of the greatest list value."],
+    "best is replaced only by a larger value, so it holds the greatest value seen when the traversal ends.",
+    "The selected statement confuses a running maximum with a minimum, final item, or index search.",
+    "Ask what must be true about best after each iteration."),
+  q("all-test",
+    `FOR EACH value IN values
+{
+    IF (value ≤ 0)
+    {
+        RETURN(FALSE)
+    }
+}
+RETURN(TRUE)`,
+    "Which statement best explains what the procedure returns?",
+    "TRUE exactly when every value in the list is positive.",
+    ["TRUE when at least one list value is positive.", "FALSE exactly when every list value is positive.", "TRUE exactly when every list value is nonnegative."],
+    "Any value less than or equal to zero immediately returns FALSE. TRUE is reached only if none exists.",
+    "The selected statement changes every to at least one, reverses the result, or treats zero as positive.",
+    "Look for a condition that can cause an early return."),
+  q("inclusive-branch",
+    `IF ((value ≥ 3) AND (value ≤ 8))
+{
+    RETURN("inside")
+}
+RETURN("outside")`,
+    "Which statement best explains what the procedure returns?",
+    '"inside" for values from 3 through 8, including both endpoints.',
+    ['"inside" for values below 3 or above 8, including both outside regions.', '"inside" for values strictly between 3 and 8, excluding both endpoints.', '"inside" whenever either boundary comparison is true by itself.'],
+    'AND requires both inclusive comparisons, so 3 and 8 are both classified as "inside".',
+    "The selected statement misreads AND or the inclusive comparison operators.",
+    "Translate each comparison, then combine them using AND."),
+  q("fixed-repeat",
+    `value ← 1
+REPEAT 4 TIMES
+{
+    value ← value × 2
+}
+RETURN(value)`,
+    "Which statement best explains what the procedure returns?",
+    "The value obtained by doubling 1 exactly four times.",
+    ["The value obtained by adding 2 to 1 exactly four times.", "The number of loop repetitions, which is four.", "The value obtained by doubling 4 exactly one time."],
+    "The loop performs value ← value × 2 on each of four repetitions, beginning with 1.",
+    "The selected statement changes the repeated operation, returned variable, or starting value.",
+    "Separate the repeat count from the value changed by the loop."),
+];
+
+const evidence = [
+  q("guarded-counter",
+    `count ← 0
+FOR EACH score IN scores
+{
+    IF (score < 60)
+    {
+        count ← count + 1
+    }
+}
+RETURN(count)`,
+    "Claim: The procedure counts scores below 60. Which statement best supports the claim?",
+    "count ← count + 1 runs only when score < 60.",
+    ["count ← 0 makes every score less than 60.", "FOR EACH score returns each score below 60.", "RETURN(count) compares every score with 60."],
+    "The guarded increment connects score < 60 to one added count for each match.",
+    "The selected line mentions relevant code but does not show why only matching scores are counted.",
+    "Strong evidence identifies both the condition and its resulting operation."),
+  q("sum-elements",
+    `total ← 0
+FOR EACH price IN prices
+{
+    total ← total + price
+}
+RETURN(total)`,
+    "Claim: Every price contributes to the returned total. Which statement best supports the claim?",
+    "Inside the traversal, total is updated by adding the current price.",
+    ["Before the traversal, total is initialized to zero so no prices are included yet.", "After the traversal, the procedure returns total without showing how prices entered it.", "The loop names the current element price but does not by itself add that value."],
+    "The repeated assignment total ← total + price directly shows each visited price being accumulated.",
+    "The selected statement is related to the procedure but does not establish that every price contributes.",
+    "Choose evidence that directly causes the claimed behavior."),
+  q("first-match",
+    `FOR EACH word IN words
+{
+    IF (LENGTH(word) > 8)
+    {
+        RETURN(word)
+    }
+}
+RETURN("none")`,
+    "Claim: A matching word is returned without checking later words. Which statement best supports the claim?",
+    "RETURN(word) occurs inside the loop as soon as the condition is true.",
+    ["FOR EACH visits every word that appears in the supplied list in sequence.", "LENGTH(word) counts the characters in the current word before comparison.", 'RETURN("none") occurs after the loop has finished without finding a match.'],
+    "A return inside the matching branch ends the procedure immediately, so no later word is examined.",
+    "The selected statement describes nearby code but not why checking stops early.",
+    "Evidence should justify the exact part of the claim being made."),
+  q("append-filter",
+    `short ← []
+FOR EACH name IN names
+{
+    IF (LENGTH(name) ≤ 4)
+    {
+        APPEND(short, name)
+    }
+}
+RETURN(short)`,
+    "Claim: The procedure builds a separate list of short names. Which statement best supports the claim?",
+    "A qualifying name is appended to short, which began as an empty list.",
+    ["name refers to one element while the loop runs but does not create another list.", "The comparison identifies names with four or fewer characters but stores nothing.", "The procedure returns short after all names are considered without showing how it was built."],
+    "Initializing short as a list and appending qualifying names constructs the separate result list.",
+    "The selected statement supports the test or traversal, not the claim that another list is built.",
+    "Look for the operation that creates or changes the claimed result."),
+  q("minimum-update",
+    `smallest ← values[1]
+FOR EACH value IN values
+{
+    IF (value < smallest)
+    {
+        smallest ← value
+    }
+}
+RETURN(smallest)`,
+    "Claim: smallest stores the least value encountered so far. Which statement best supports the claim?",
+    "smallest is replaced only when the current value is less than it.",
+    ["smallest begins with the first list value, which establishes only its initial state.", "value refers to the current list element but does not control when smallest changes.", "smallest is returned after the traversal, which does not prove what it stores."],
+    "The conditional replacement preserves smallest unless a lesser value is encountered.",
+    "The selected statement initializes, traverses, or returns the result but does not prove the running claim.",
+    "For a claim about change over time, find the statement controlling that change."),
+  q("procedure-call",
+    `PROCEDURE discount(price, rate)
+{
+    RETURN(price - (price × rate))
+}
+final ← discount(80, 0.25)`,
+    "Claim: final stores the price after a 25% reduction. Which statement best supports the claim?",
+    "The call supplies 80 and 0.25 to a formula subtracting price × rate.",
+    ["The parameter names describe values expected by the procedure.", "The result is stored in a variable named final.", "The procedure returns instead of displaying its result."],
+    "The arguments and subtraction formula together establish the specific 25% reduction.",
+    "The selected statement is true but does not connect the actual arguments to the calculation.",
+    "Relevant evidence must support the whole claim, not just share its words."),
+];
+
+const test = [
+  q("boundary-comparison",
+    `count ← 0
+FOR EACH value IN [2, 5, 7, 4]
+{
+    IF (value > 5)
+    {
+        count ← count + 1
+    }
+}
+RETURN(count)`,
+    "The test returns 1. Which explanation correctly accounts for that result?",
+    "Only 7 is greater than 5; the value 5 does not pass a strict > comparison.",
+    ["Both 5 and 7 pass because the > comparison includes a value equal to 5.", "Only 2 passes because the > comparison selects values lower than the boundary.", "The loop stops immediately after finding 7, so the final value 4 is never examined."],
+    "The condition is value > 5, not value ≥ 5. Exactly one element satisfies it.",
+    "The selected explanation misreads the boundary, reverses the operator, or invents an early exit.",
+    "Test equality at the boundary separately from values above and below it."),
+  q("branch-execution",
+    `temperature ← 92
+IF (temperature ≥ 90)
+{
+    label ← "hot"
+}
+ELSE IF (temperature ≥ 70)
+{
+    label ← "warm"
+}
+ELSE
+{
+    label ← "cool"
+}
+RETURN(label)`,
+    'The test returns "hot". Which explanation correctly accounts for that result?',
+    "The first condition is true, so its branch runs and the remaining branches are skipped.",
+    ["Both true conditions run, and the first branch later overwrites the warm result.", "The final ELSE always runs after the conditions and changes the label back to cool.", "The conditions are checked from bottom to top, so the last true branch runs first."],
+    "An IF / ELSE IF / ELSE chain executes only the first branch whose condition is true.",
+    "The selected explanation treats exclusive branches as independent or reverses their order.",
+    "In a branch chain, identify the first true condition."),
+  q("loop-count",
+    `total ← 0
+REPEAT 4 TIMES
+{
+    total ← total + 3
+}
+RETURN(total)`,
+    "The test returns 12. Which explanation correctly accounts for that result?",
+    "The loop adds 3 on each of four repetitions, starting from 0.",
+    ["The loop adds 4 on each of three repetitions.", "The loop adds 3 once, then returns the repeat count.", "The loop runs five times because total starts at 0."],
+    "Four executions produce 0 + 3 + 3 + 3 + 3 = 12.",
+    "The selected explanation swaps the count and increment, stops early, or adds a repetition.",
+    "Trace the changed variable once per repetition."),
+  q("list-insert",
+    `items ← ["A", "B", "C"]
+INSERT(items, 2, "X")
+RETURN(items)`,
+    'The test returns ["A", "X", "B", "C"]. Which explanation correctly accounts for that result?',
+    "AP CSP positions begin at 1, and inserting at position 2 shifts later items right.",
+    ["AP CSP positions begin at 0, so position 2 identifies the third item in the list.", "Inserting at position 2 replaces B with X without shifting any existing items.", "INSERT ignores the supplied position and always places a new value at the list end."],
+    "Position 2 is the second slot. INSERT adds a slot rather than replacing B.",
+    "The selected explanation uses zero-based indexing or confuses insertion with replacement or append.",
+    "Use AP CSP one-based positions and the exact list operation."),
+  q("return-value",
+    `PROCEDURE change(value)
+{
+    value ← value + 2
+    RETURN(value × 3)
+}
+result ← change(4)`,
+    "The test stores 18 in result. Which explanation correctly accounts for that result?",
+    "The argument 4 becomes 6, and the procedure returns 6 × 3.",
+    ["The procedure multiplies 4 by 3 before adding 2.", "The procedure returns 4 because parameter changes are ignored.", "A procedure call always returns its original input."],
+    "Statements execute in order: value becomes 6 before RETURN(value × 3) is evaluated.",
+    "The selected explanation changes statement order or ignores the returned expression.",
+    "Trace parameter values in execution order."),
+  q("remove-operation",
+    `values ← [3, 6, 9, 12]
+REMOVE(values, 2)
+RETURN(LENGTH(values))`,
+    "The test returns 3. Which explanation correctly accounts for that result?",
+    "REMOVE deletes the item at position 2, leaving three items.",
+    ["REMOVE deletes every list value equal to 2, so this particular list stays unchanged.", "REMOVE replaces the item in position 2 with zero, preserving all four list positions.", "LENGTH reports the position that was removed rather than the number of remaining items."],
+    "The second argument is a position. Deleting one of four items leaves length three.",
+    "The selected explanation treats the position as a value, replacement, or LENGTH result.",
+    "Distinguish a list position from its stored value."),
+];
+
+const abstraction = [
+  q("list-many-items",
+    `PROCEDURE average(readings)
+{
+    total ← 0
+    FOR EACH value IN readings
+    {
+        total ← total + value
+    }
+    RETURN(total / LENGTH(readings))
+}`,
+    "How does the list abstraction manage complexity in this program?",
+    "One loop can process any number of readings without separate variables for each reading.",
+    ["The list guarantees that every reading is accurate before it contributes to the average.", "The list automatically sorts all readings before the loop calculates their average.", "The list computes its own mean, making the traversal and procedure unnecessary."],
+    "The list groups a varying collection under one name so one traversal can process it.",
+    "The selected benefit claims validation, sorting, or automatic computation not provided by a list.",
+    "A valid abstraction benefit must be visible in this program."),
+  q("procedure-reuse",
+    `PROCEDURE shipping(weight, rate)
+{
+    RETURN(weight × rate)
+}
+a ← shipping(4, 2.5)
+b ← shipping(9, 2.5)`,
+    "How does the procedure abstraction manage complexity in this program?",
+    "It names the calculation once and reuses it with different weights.",
+    ["It forces both calls to use the same weight because they share one procedure definition.", "It hides both returned shipping costs so no other part of the program can store them.", "It proves that every supplied weight and rate is a valid real-world measurement."],
+    "Parameters let both calls reuse one calculation while supplying different values.",
+    "The selected claim misunderstands parameters or promises privacy or correctness not shown.",
+    "Focus on what repeated code the abstraction replaces."),
+  q("list-update",
+    `PROCEDURE markComplete(tasks, position)
+{
+    tasks[position] ← "done"
+}
+markComplete(todayTasks, 3)`,
+    "How does the list abstraction manage complexity in this program?",
+    "A position identifies one task without separate variables and statements for every task.",
+    ["The list guarantees that position 3 always refers to the most important task in the collection.", "The list prevents any task from being changed anywhere outside this procedure call.", "Updating the item at one supplied position automatically converts every task to done."],
+    "Indexed access lets one statement update whichever task position is supplied.",
+    "The selected claim invents ordering, access control, or whole-list behavior.",
+    "Explain how the collection reduces repeated variables or statements."),
+  q("procedure-details",
+    `PROCEDURE eligible(age, hasPermit)
+{
+    RETURN((age ≥ 16) AND hasPermit)
+}
+IF (eligible(studentAge, permitOnFile))
+{
+    DISPLAY("approved")
+}`,
+    "How does the procedure abstraction manage complexity in this program?",
+    "The name eligible lets the caller use the decision without repeating its condition details.",
+    ["The procedure guarantees approval for every student whose information is supplied.", "The procedure removes the need to supply either age or permit information to the program.", "The name eligible causes both comparisons in the procedure to evaluate as true."],
+    "The procedure packages the combined condition behind a meaningful name.",
+    "The selected statement confuses hiding implementation details with guaranteeing inputs or outcomes.",
+    "Procedure abstraction reduces repeated detail; it does not guarantee correctness."),
+  q("list-growth",
+    `scores ← [88, 74, 93, 81]
+FOR EACH score IN scores
+{
+    DISPLAY(score)
+}`,
+    "How does the list abstraction manage complexity in this program?",
+    "More scores can use the same loop instead of new variables and display statements.",
+    ["Additional scores automatically become passing scores when they are appended to the list.", "The list prevents any score from being displayed more than once during traversal.", "DISPLAY processes every item in the list by itself, making the loop unnecessary."],
+    "The loop works on a collection, so its structure does not change when the list grows.",
+    "The selected statement assigns validation, uniqueness, or traversal to the list without code.",
+    "Connect the abstraction to a concrete reduction in repeated code."),
+  q("procedure-change-once",
+    `PROCEDURE formatName(first, last)
+{
+    RETURN(last + ", " + first)
+}
+a ← formatName("Ari", "Lee")
+b ← formatName("Mia", "Chen")`,
+    "How does the procedure abstraction manage complexity in this program?",
+    "The formatting rule can change once instead of changing every label creation.",
+    ["The procedure permanently stores every first and last name supplied by all of its calls.", "The procedure guarantees that two people can never produce the same formatted label.", "The named formatting rule lets callers omit both required name arguments."],
+    "Both labels depend on one body, so revising it updates the shared formatting logic.",
+    "The selected statement claims storage, uniqueness, or optional arguments not provided.",
+    "Look for duplicated logic centralized by the abstraction."),
+];
+
+const reasoning = [
+  q("counter-connection",
+    `count ← 0
+FOR EACH item IN items
+{
+    IF (item = "blue")
+    {
+        count ← count + 1
+    }
+}
+RETURN(count)`,
+    "Complete the reasoning: The condition identifies blue items. Therefore, ...",
+    "incrementing count only in that branch makes it equal the number of blue items.",
+    ["incrementing count in that branch makes it equal the final blue item encountered.", "initializing count to zero causes every item to pass the later color comparison.", "returning count changes each nonblue item into a blue item after traversal."],
+    "A successful color comparison causes exactly one increment, supporting the stated count.",
+    "The selected connection changes what count represents or invents effects for initialization or RETURN.",
+    "Connect the cited code to the conclusion without adding a new claim."),
+  q("sum-connection",
+    `total ← 0
+FOR EACH value IN values
+{
+    total ← total + value
+}
+RETURN(total)`,
+    "Complete the reasoning: Each iteration adds the current value to total. Therefore, ...",
+    "after every element is visited, total contains the sum of the list values.",
+    ["after every element is visited, total contains the number of values in the list.", "the loop returns immediately after adding the first value and ignores later values.", "the assignment automatically removes repeated values before adding the list."],
+    "Adding each visited value builds the cumulative sum returned after the traversal.",
+    "The selected connection substitutes counting, early return, or duplicate removal.",
+    "Follow the accumulator across all iterations."),
+  q("early-return-connection",
+    `FOR EACH value IN values
+{
+    IF (value < 0)
+    {
+        RETURN(TRUE)
+    }
+}
+RETURN(FALSE)`,
+    "Complete the reasoning: A negative value causes an immediate TRUE return. Therefore, ...",
+    "FALSE is returned only if the whole list is checked without finding a negative.",
+    ["FALSE is returned as soon as the first positive value is examined in the list.", "every list value is still checked after the procedure has already returned TRUE.", "TRUE is returned only when every value in the entire list is negative."],
+    "Execution reaches RETURN(FALSE) only if no iteration returned TRUE.",
+    "The selected connection stops too early, continues after RETURN, or changes any into all.",
+    "Reason about what must happen to reach the final return."),
+  q("append-connection",
+    `result ← []
+FOR EACH word IN words
+{
+    IF (LENGTH(word) > 5)
+    {
+        APPEND(result, word)
+    }
+}
+RETURN(result)`,
+    "Complete the reasoning: Words are appended only when their length exceeds 5. Therefore, ...",
+    "result contains exactly the qualifying words, in visit order.",
+    ["result contains every word sorted by length.", "result contains only the number of qualifying words.", "long words are replaced by lengths in the input list."],
+    "Guarded APPEND copies qualifying words to the result end, preserving order.",
+    "The selected connection adds sorting, counting, or replacement not shown.",
+    "Connect the condition to the exact operation inside its branch."),
+  q("maximum-connection",
+    `best ← values[1]
+FOR EACH value IN values
+{
+    IF (value > best)
+    {
+        best ← value
+    }
+}
+RETURN(best)`,
+    "Complete the reasoning: best changes only when a larger value is found. Therefore, ...",
+    "best holds the greatest value seen so far after each iteration.",
+    ["best holds the smallest value seen so far after each completed loop iteration.", "best changes to the current value on every iteration regardless of the comparison.", "best stores the position of the greatest value rather than the value itself."],
+    "The conditional update maintains a running maximum.",
+    "The selected connection reverses the comparison, ignores the condition, or changes value to position.",
+    "State the invariant maintained by the update."),
+  q("parameter-connection",
+    `PROCEDURE convert(minutes)
+{
+    RETURN(minutes × 60)
+}
+a ← convert(2)
+b ← convert(5)`,
+    "Complete the reasoning: Each call supplies a different argument to minutes. Therefore, ...",
+    "one procedure body returns different second totals without being rewritten.",
+    ["the first call permanently changes the parameter value used by every later call.", "both calls must return the same result because they share one procedure body.", "the procedure definition must be copied and edited before the second call can run."],
+    "On each call, minutes receives that call's argument, so one abstraction handles both.",
+    "The selected connection treats a parameter as permanent or requires duplicated definitions.",
+    "Connect parameter substitution to procedure reuse."),
+];
+
+const pools = { behavior, evidence, test, abstraction, reasoning };
+export const responsePools = pools;
+
+// The shared practice catalog still references the former mode keys. Mapping
+// them here keeps that catalog functional while the dedicated game uses the
+// focused modes above.
+const legacyModes = {
+  guided: "behavior",
+  explanation: "evidence",
+  reduced: "reasoning",
+  testing: "test",
+  abstraction: "abstraction",
+};
+
+export function generateResponse(mode = "mixed", support = "full", forcedStructure) {
+  const requestedMode = mode === "mixed" ? pick(Object.keys(responseModes)) : mode;
+  const selectedMode = legacyModes[requestedMode] || requestedMode;
+  if (!pools[selectedMode]) throw Error("Unknown response practice mode");
+  if (!supportNames[support] && support !== "partial") throw Error("Unknown response support level");
+  const pool = pools[selectedMode];
+  const source = forcedStructure ? pool.find((item) => item.structure === forcedStructure) : pick(pool);
+  if (!source) throw Error("Unknown response structure");
+  const choices = shuffle([
+    { text: source.answer, correct: true },
+    ...source.wrong.map((text) => ({ text, correct: false })),
+  ]).map((choice, index) => ({ ...choice, id: `choice-${index}` }));
+  const correct = choices.find((choice) => choice.correct);
   return {
     game: "response-builder",
     title: "Response Builder",
-    mode: selected,
+    topic: `${requestedMode}.${support}`,
+    topicTitle: `${responseModes[selectedMode]} · ${
+      legacyModes[requestedMode] && support === "minimal"
+        ? "Minimal Support"
+        : supportNames[support] || "Independent"
+    }`,
+    mode: requestedMode,
+    modeName: responseModes[selectedMode],
     support,
-    topic: selected + "." + support,
-    topicTitle: responseModes[selected] + " · " + supportNames[support],
-    structure: p.structure,
-    evidencePrompt: emptyFocused
-      ? "Select a line that explains the empty-input result: a guard, zero-iteration loop, initialization or final return."
-      : {
-          count: "Select the statement that updates the number of matches.",
-          sum: "Select the repeated update that adds an element to the accumulated total.",
-          product:
-            "Select the initialization or repeated update of the running product.",
-          "first-index":
-            "Select the condition that immediately returns a matching position.",
-          filter:
-            "Select the statement that adds a matching element to the result list.",
-          maximum:
-            "Select the empty-input guard or the comparison that controls the selected result.",
-          all: "Select a statement that returns the Boolean outcome of the positivity test.",
-          range: "Select the condition that decides range membership.",
-          scale: "Select an assignment that transforms the input data.",
-          reverse:
-            "Select a line that reads a list element or advances the index to the next position.",
-        }[p.structure],
-    prompt,
-    procedure: p,
-    items: shuffle(items),
-    correct,
-    code: p.code,
-    policy: "single",
-    layout:
-      support === "minimal"
-        ? "code"
-        : support === "full"
-          ? "sections"
-          : "order",
-    solution: {
-      claim: correct.claim,
-      evidence: correct.evidence,
-      reason: correct.reason,
-      order: [correct.claim, correct.evidence, correct.reason],
-      line: p.validLines[0],
-    },
+    supportName: supportNames[support] || "Independent",
+    structure: source.structure,
+    code: source.code,
+    prompt: source.prompt,
+    reminder: support === "full" ? source.reminder : "",
+    choices,
+    correctId: correct.id,
+    answer: source.answer,
+    feedback: source.feedback,
+    misconception: source.misconception,
+    items: choices.map((choice) => ({ ...choice, role: "claim" })),
+    correct: { claim: correct.id, evidence: correct.id, reason: correct.id },
+    solution: { selectedId: correct.id },
   };
 }
-export function evaluateResponse(q, r) {
-  const minimal = q.support === "minimal",
-    selected =
-      q.layout === "sections" ? [r.claim, r.evidence, r.reason] : r.order || [],
-    required = minimal
-      ? [q.correct.claim, q.correct.reason]
-      : Object.values(q.correct),
-    chosen = [...new Set(selected)],
-    all =
-      selected.length === required.length &&
-      required.length === chosen.length &&
-      required.every((id) => chosen.includes(id));
-  let coherent = q.layout === "sections" || chosen.at(-1) === q.correct.reason;
-  const line = Number(r.line),
-    evidenceOK = !minimal || q.procedure.validLines.includes(line);
-  const correct = all && coherent && evidenceOK,
-    p = q.procedure,
-    chosenItems = selected
-      .map((id) => q.items.find((i) => i.id === id))
-      .filter(Boolean);
-  const problems = chosenItems
-    .filter((i) => !i.correct)
-    .map((i) => `“${i.text}” — ${i.misconception}`);
-  return {
-    correct,
-    details: `${p.call(p.sample)} returns ${display(p.run(p.sample))}; ${p.call(p.other)} returns ${display(p.run(p.other))}.\nClaim: ${q.items.find((i) => i.id === q.correct.claim).text}\nRelevant code: ${p.validLines.map((i) => p.lines[i - 1].trim()).join(" / ")}\nEvidence: ${q.items.find((i) => i.id === q.correct.evidence).text}\nConnection: ${q.items.find((i) => i.id === q.correct.reason).text}${minimal ? `\nYour code selection: ${p.lines[line - 1]?.trim() || "no line selected"}. ${evidenceOK ? "This is relevant to the requested computation." : "This does not directly demonstrate the computation being explained."}` : ""}${!coherent ? "\nThe connecting explanation refers to the preceding claim and evidence, so it must follow them. Either claim/evidence or evidence/claim is accepted before the connection." : ""}${!all ? "\nInclude the required supported claim, evidence and connection (code evidence replaces the evidence sentence at Minimal Support)." : ""}${problems.length ? "\nMisconceptions in your response:\n" + problems.join("\n") : ""}`,
-  };
+
+export function evaluateResponse(question, selectedId) {
+  if (selectedId && typeof selectedId === "object") {
+    selectedId = selectedId.claim || selectedId.selectedId || selectedId.order?.[0];
+  }
+  const selected = question.choices.find((choice) => choice.id === selectedId);
+  if (!selected) return { complete: false, correct: false, details: "Choose an answer before submitting." };
+  const details = selected.correct
+    ? `Correct answer: ${question.answer}\n${question.feedback}`
+    : `Correct answer: ${question.answer}\n${question.feedback}\nWhy your choice is inaccurate: ${question.misconception}`;
+  return { complete: true, correct: selected.correct, details };
 }
