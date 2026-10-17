@@ -58,22 +58,101 @@ export const PROJECT_PRESENTATION = {
 };
 
 export function presentation(scenario, endpoint) {
-  const config = PROJECT_PRESENTATION[scenario.id]?.[endpoint.id] || { assessed: [], automatic: {} };
-  return config.fields || !COMMON_FIELDS[endpoint.id] ? config : { ...config, fields: COMMON_FIELDS[endpoint.id] };
+  const existing = PROJECT_PRESENTATION[scenario.id]?.[endpoint.id];
+  if (existing) return existing.fields || !COMMON_FIELDS[endpoint.id] ? existing : { ...existing, fields: COMMON_FIELDS[endpoint.id] };
+  return derivedPresentation(scenario, endpoint);
 }
 export function classification(scenario, endpoint) {
   const config = presentation(scenario, endpoint), assessed = config.assessed || [], automatic = Object.keys(config.automatic || {}).map((name) => name.split(".")[0]);
   return { assessed, automatic: [...new Set(automatic)], hidden: endpoint.parameters.map((p) => p.name).filter((name) => !assessed.includes(name) && !automatic.includes(name)) };
 }
 export function automaticParameters(scenario, endpoint) {
+  return automaticParametersForOccurrence(scenario, endpoint, 0);
+}
+export function automaticParametersForOccurrence(scenario, endpoint, occurrence = 0) {
   const result = {};
-  for (const [path, spec] of Object.entries(presentation(scenario, endpoint).automatic || {})) {
+  const config = presentation(scenario, endpoint);
+  const matchingSteps = scenario.acceptedPlans.flatMap((plan) => plan.steps.filter((step) => step.endpointId === endpoint.id));
+  const templateStep = matchingSteps[occurrence] || matchingSteps[0];
+  const assessed = new Set(config.assessed || []);
+  for (const [path, spec] of Object.entries(config.automatic || {})) {
     const value = spec.kind === "runtime" ? { $runtime: true } : structuredClone(spec.value);
     const keys = path.split("."); let node = result;
     for (const key of keys.slice(0, -1)) node = node[key] ||= {};
     node[keys.at(-1)] = value;
   }
+  for (const [name, value] of Object.entries(templateStep?.parameters || {})) {
+    const assessment = templateStep.assessment?.[name];
+    if (assessed.has(name) && assessment?.mode !== "notAssessed") continue;
+    if (containsRuntime(value)) result[name] = replaceRuntimeMarkers(value);
+    else if (containsStepReference(value)) continue;
+    else if (!Object.hasOwn(result, name)) result[name] = structuredClone(value);
+  }
   // Every required single-valued documented setting is technical, not a student decision.
-  for (const p of endpoint.parameters) if (p.required && p.allowedValues?.length === 1 && !Object.hasOwn(result, p.name) && !(presentation(scenario, endpoint).assessed || []).includes(p.name)) result[p.name] = p.allowedValues[0];
+  for (const p of endpoint.parameters) if (p.required && p.allowedValues?.length === 1 && !Object.hasOwn(result, p.name) && !assessed.has(p.name)) result[p.name] = p.allowedValues[0];
   return result;
+}
+
+const containsRuntime = (value) => {
+  if (value && typeof value === "object") return Object.hasOwn(value, "$runtime") || Object.values(value).some(containsRuntime);
+  return Array.isArray(value) ? value.some(containsRuntime) : false;
+};
+const containsStepReference = (value) => {
+  if (value && typeof value === "object") return Object.hasOwn(value, "$fromStep") || Object.values(value).some(containsStepReference);
+  return Array.isArray(value) ? value.some(containsStepReference) : false;
+};
+const replaceRuntimeMarkers = (value) => {
+  if (Array.isArray(value)) return value.map(replaceRuntimeMarkers);
+  if (value && typeof value === "object") {
+    if (Object.hasOwn(value, "$runtime")) return { $runtime: true };
+    return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, replaceRuntimeMarkers(child)]));
+  }
+  return value;
+};
+
+/* New scenarios carry their assessment decisions in the verified plan itself.
+   Deriving presentation metadata here keeps the researched library unchanged and
+   gives the shared renderer a focused, reusable student-facing view. */
+function derivedPresentation(scenario, endpoint) {
+  const steps = scenario.acceptedPlans.flatMap((plan) => plan.steps.filter((step) => step.endpointId === endpoint.id));
+  const assessed = new Set(), automatic = {}, fieldOptions = new Set(), choiceOptions = {}, multiOptions = {};
+  const valuesByName = new Map();
+  for (const step of steps) {
+    for (const [name, value] of Object.entries(step.parameters || {})) {
+      const assessment = step.assessment?.[name];
+      const values = valuesByName.get(name) || [];
+      values.push({ value, assessment });
+      valuesByName.set(name, values);
+      if (assessment && assessment.mode !== "notAssessed") assessed.add(name);
+      else if (containsStepReference(value)) assessed.add(name);
+    }
+  }
+  for (const parameter of endpoint.parameters) {
+    const values = valuesByName.get(parameter.name) || [];
+    const assessment = values.map((entry) => entry.assessment).find(Boolean);
+    const distinct = new Set(values.filter((entry) => !containsRuntime(entry.value) && !containsStepReference(entry.value)).map((entry) => JSON.stringify(entry.value)));
+    if (assessment?.mode === "includesAll") {
+      const requested = (assessment.values || []).flatMap((value) => Array.isArray(value) ? value : [value]);
+      multiOptions[parameter.name] = [...new Set([...(parameter.allowedValues || []), ...requested])];
+    } else if (assessment?.mode === "oneOf") {
+      choiceOptions[parameter.name] = assessment.values || [];
+    }
+    if (assessment?.mode === "notAssessed" && values.length === steps.length) {
+      const sample = values.find((entry) => entry.value !== undefined)?.value;
+      if (sample !== undefined && !containsStepReference(sample)) automatic[parameter.name] = containsRuntime(sample) ? { kind: "runtime" } : { kind: "fixed", value: replaceRuntimeMarkers(sample), reason: assessment.note || "Handled by the application" };
+    } else if (assessed.has(parameter.name)) {
+      if (parameter.name === "X-Goog-FieldMask" || parameter.name.toLowerCase() === "fields") {
+        for (const entry of values) for (const field of String(entry.value || "").split(",").map((item) => item.trim()).filter(Boolean)) fieldOptions.add(field);
+      }
+    } else if (values.length > 0 && values.length === steps.length && distinct.size <= 1) {
+      const sample = values[0].value;
+      if (containsRuntime(sample)) automatic[parameter.name] = { kind: "runtime" };
+      else if (!containsStepReference(sample)) automatic[parameter.name] = { kind: "fixed", value: structuredClone(sample), reason: "Required documented setting supplied by the application" };
+    } else if (values.length === steps.length && values.every((entry) => containsRuntime(entry.value))) {
+      automatic[parameter.name] = { kind: "runtime" };
+    }
+  }
+  const fields = new Set();
+  for (const step of steps) for (const [name, value] of Object.entries(step.parameters || {})) if (name === "X-Goog-FieldMask" || name.toLowerCase() === "fields") String(value || "").split(",").map((item) => item.trim()).filter(Boolean).forEach((field) => fields.add(field));
+  return { assessed: [...assessed], automatic, fields: fields.size ? [...fields] : undefined, fieldOptions: fieldOptions.size ? [...fieldOptions] : undefined, choiceOptions: Object.keys(choiceOptions).length ? choiceOptions : undefined, multiOptions: Object.keys(multiOptions).length ? multiOptions : undefined };
 }
