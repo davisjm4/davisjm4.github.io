@@ -1,5 +1,5 @@
-import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v14";
-import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v2";
+import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v15";
+import { presentation, classification, automaticParametersForOccurrence } from "./api-project-presentation.js?v=curated-v3";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
@@ -43,6 +43,7 @@ const presentationFor = (endpoint, parameter) => {
 };
 const HTTP_REFERENCE = `<details class="api-http-reference"><summary>HTTP Methods — Quick Reference</summary><dl><dt>GET — Retrieve information</dt><dd>Requests an existing resource or collection.</dd><dt>POST — Submit information</dt><dd>Sends criteria for processing. Some APIs use POST for searches without creating anything.</dd><dt>PUT — Create or replace</dt><dd>Creates or replaces the target resource according to the documentation.</dd><dt>PATCH — Partially update</dt><dd>Applies changes to part of an existing resource.</dd><dt>DELETE — Remove</dt><dd>Requests deletion of a resource.</dd></dl><p><strong>Why might a search use POST?</strong> Some APIs accept search criteria in a JSON request body. The method comes from the API documentation; students do not choose it arbitrarily.</p></details>`;
 function providerNotes(provider) { const notes = Array.isArray(provider.notes) ? provider.notes : [provider.notes]; return notes.filter(Boolean).map((n) => `<li>${esc(n)}</li>`).join(""); }
+const PROVIDER_LABELS = { spotify: "Spotify", youtube: "YouTube", "google-maps": "Google Maps", discord: "Discord", tiktok: "TikTok", openai: "OpenAI" };
 function studentConstraint(value) {
   if (/\bhandle\s*:\s*@/i.test(value)) return value.replace(/[^.]*\bhandle\s*:\s*@[^.]*/i, "A channel handle is known and can be resolved by the application at run time");
   if (/\bvideo IDs? are already known/i.test(value)) return "The selected videos are known to the application; their identifiers are supplied at run time.";
@@ -107,9 +108,10 @@ function fieldMaskControl(endpoint, request, parameter, config) {
 function multiChoiceControl(parameter, request, config) {
   const current = Array.isArray(request.parameters[parameter.name]) ? request.parameters[parameter.name] : String(request.parameters[parameter.name] || "").split(",").map((v) => v.trim()).filter(Boolean);
   const descriptions = VALUE_DESCRIPTIONS[parameter.name] || {};
-  return `<fieldset class="api-multi-selector"><legend>${esc(parameter.name)} ${parameter.required ? "<b>required</b>" : "<i>optional</i>"}</legend><p class="api-symbolic">Select one or more documented values. The API list syntax is generated for you.</p><div class="api-multi-options">${(config.partOptions || parameter.allowedValues).map((value) => `<label><input type="checkbox" data-param-multi="${esc(parameter.name)}" value="${esc(value)}"${current.includes(value) ? " checked" : ""}><code>${esc(value)}</code><span>${esc(descriptions[value] || `Documented ${parameter.name} option.`)}</span></label>`).join("")}</div><em>${esc(parameter.description)}</em></fieldset>`;
+  const values = config.partOptions || config.multiOptions?.[parameter.name] || parameter.allowedValues || [];
+  return `<fieldset class="api-multi-selector"><legend>${esc(parameter.name)} ${parameter.required ? "<b>required</b>" : "<i>optional</i>"}</legend><p class="api-symbolic">Select one or more documented values. The API list syntax is generated for you.</p><div class="api-multi-options">${values.map((value) => `<label><input type="checkbox" data-param-multi="${esc(parameter.name)}" value="${esc(value)}"${current.includes(value) ? " checked" : ""}><code>${esc(value)}</code><span>${esc(descriptions[value] || `Documented ${parameter.name} option.`)}</span></label>`).join("")}</div><em>${esc(parameter.description)}</em></fieldset>`;
 }
-function serializeMultiSelection(parameter, values) { const selected = new Set(values); const ordered = (parameter.allowedValues || []).filter((value) => selected.has(value)); return parameter.type === "array<string>" ? ordered : ordered.join(","); }
+function serializeMultiSelection(parameter, values) { const selected = new Set(values); const source = parameter.allowedValues?.length ? parameter.allowedValues : values; const ordered = source.filter((value) => selected.has(value)); return parameter.type === "array<string>" ? ordered : ordered.join(","); }
 function locationControl(scenario, request, parameter, variants) {
   const scenarioValue = scenario.acceptedPlans.flatMap((plan) => plan.steps).map((step) => step.parameters?.[parameter.name]).find((value) => object(value) && !Object.hasOwn(value, "$fromStep"));
   if (!variants.length && scenarioValue) variants = [{ value: scenarioValue, shape: "project-location", label: "Project supplied location" }];
@@ -163,7 +165,7 @@ function controlsFor(p, request, index, requests, scenario, map) {
   }
   if (runtimeParam(p) && p.in === "path") return `<div class="api-param"><strong>${esc(p.name)} <b>runtime path value</b></strong><span class="api-symbolic">The application supplies this identifier when a user selects the resource. No value needs to be entered.</span><em>${esc(p.description)}</em></div>`;
   if (runtimeParam(p)) return `<label class="api-param"><span>${esc(p.name)} <b>runtime value</b> <small>${esc(p.in)}</small></span><span class="api-symbolic">The application supplies this selected resource or user input at run time.</span><label class="api-runtime-choice"><input type="checkbox" data-runtime="${esc(p.name)}"${val(request.parameters[p.name]) ? " checked" : ""}> Use the application-supplied value</label><em>${esc(p.description)}</em></label>`;
-  if (p.name === "X-Goog-FieldMask") return fieldMaskControl(map.get(request.endpointId), request, p, config);
+  if (p.name === "X-Goog-FieldMask" || p.name.toLowerCase() === "fields") return fieldMaskControl(map.get(request.endpointId), request, p, config);
   if (presentationFor(map.get(request.endpointId), p) === "location") return locationControl(scenario, request, p, variants);
   if (p.type === "object") {
     const shape = variants[0]?.value || exampleParameter(scenario, request, p.name);
@@ -177,6 +179,12 @@ function controlsFor(p, request, index, requests, scenario, map) {
     return `<div class="api-param"><strong>${esc(p.name)} <b>structured ${p.required ? "required" : "optional"} input</b></strong><span class="api-symbolic">${esc(p.in)} · set the documented data fields; this is not a resource ID.</span><div class="api-structured-fields">${inputs}</div><em>${esc(p.description)}</em></div>`;
   }
   const current = request.parameters[p.name];
+  const choiceOptions = config.choiceOptions?.[p.name];
+  if (choiceOptions?.length) {
+    const serialized = (value) => Array.isArray(value) ? JSON.stringify(value) : String(value);
+    const currentValue = serialized(current);
+    return `<label class="api-param"><span>${esc(p.name)} ${p.required ? "<b>required</b>" : "<i>optional</i>"} <small>${esc(p.in)} · ${esc(p.type)}</small></span><select data-param-choice="${esc(p.name)}"><option value="">Choose…</option>${choiceOptions.map((value) => `<option value="${esc(serialized(value))}"${currentValue === serialized(value) ? " selected" : ""}>${esc(Array.isArray(value) ? value.join(", ") : value)}</option>`).join("")}</select><em>${esc(p.description)}</em></label>`;
+  }
   let control;
   if (presentationFor(map.get(request.endpointId), p) === "multi") return multiChoiceControl(p, request, config);
   else if (p.name === "market" && config.marketOptions) control = `<select data-param="${esc(p.name)}"><option value="">Choose a market…</option>${config.marketOptions.map((v) => `<option value="${esc(v)}"${current === v ? " selected" : ""}>${esc(v)}</option>`).join("")}</select>`;
@@ -225,6 +233,7 @@ export function mount({ root, controls, tracker }) {
     root.querySelectorAll("[data-request]").forEach((card) => {
       const i = Number(card.dataset.request);
       card.querySelectorAll("[data-param]").forEach((input) => { input.oninput = input.onchange = () => { const raw = input.value, parameter = map.get(state.plan[i].endpointId).parameters.find((p) => p.name === input.dataset.param); state.plan[i].parameters[input.dataset.param] = ["integer", "number"].includes(parameter.type) ? (raw === "" ? "" : Number(raw)) : input.tagName === "SELECT" && ["true","false"].includes(raw) ? raw === "true" : parameter.type === "array<string>" ? raw.split(",").map((x) => x.trim()).filter(Boolean) : raw; touch(); }; });
+      card.querySelectorAll("[data-param-choice]").forEach((select) => { select.onchange = () => { const raw = select.value, parameter = map.get(state.plan[i].endpointId).parameters.find((p) => p.name === select.dataset.paramChoice); if (!raw) delete state.plan[i].parameters[select.dataset.paramChoice]; else { try { state.plan[i].parameters[select.dataset.paramChoice] = parameter.type === "array<string>" ? JSON.parse(raw) : raw === "true" ? true : raw === "false" ? false : !Number.isNaN(Number(raw)) && raw.trim() !== "" ? Number(raw) : raw; } catch { state.plan[i].parameters[select.dataset.paramChoice] = raw; } } touch(); }; });
       card.querySelectorAll("[data-param-array]").forEach((select) => { select.onchange = () => { state.plan[i].parameters[select.dataset.paramArray] = select.value ? [select.value] : []; touch(); }; });
       card.querySelectorAll("[data-param-multi]").forEach((checkbox) => { checkbox.onchange = () => { const name = checkbox.dataset.paramMulti, parameter = map.get(state.plan[i].endpointId).parameters.find((p) => p.name === name), values = [...card.querySelectorAll(`[data-param-multi=\"${CSS.escape(name)}\"]:checked`)].map((x) => x.value); state.plan[i].parameters[name] = serializeMultiSelection(parameter, values); touch(); }; });
       card.querySelectorAll("[data-field-mask]").forEach((checkbox) => { checkbox.onchange = () => { const name = checkbox.dataset.fieldMask; state.plan[i].parameters[name] = [...card.querySelectorAll(`[data-field-mask=\"${CSS.escape(name)}\"]:checked`)].map((x) => x.value).join(","); touch(); }; });
@@ -258,11 +267,11 @@ export function mount({ root, controls, tracker }) {
   };
   const renderDocs = (query = "") => {
     const s = state.scenario, p = providerFor(state.data, s), endpoints = endpointsFor(state.data, s).filter((e) => `${e.title} ${e.path} ${e.description} ${e.method}`.toLowerCase().includes(query.toLowerCase()));
-    const filters = `<label class="api-provider-filter">Projects <select id="api-provider-filter"><option value="all">All Projects</option>${state.data.providers.map((v) => `<option value="${esc(v.id)}"${v.id === state.providerId ? " selected" : ""}>${esc(v.name)}</option>`).join("")}</select></label>`;
+    const filters = `<label class="api-provider-filter">Projects <select id="api-provider-filter"><option value="all">All Projects</option>${state.data.providers.map((v) => `<option value="${esc(v.id)}"${v.id === state.providerId ? " selected" : ""}>${esc(PROVIDER_LABELS[v.id] || v.name)}</option>`).join("")}</select></label>`;
     set("docs", `<section class="api-docs-browser"><div class="api-docs-head"><div><h2>Browse API Documentation</h2><p class="muted">Read the learning-focused reference and select the operations your application needs.</p></div><div class="api-browse-controls">${filters}<label class="api-search">Search endpoints <input id="api-search" type="search" placeholder="Search title, path, or description" value="${esc(query)}"></label></div></div><div class="api-entry-list">${endpoints.map((e) => docsHtml(e, p, s)).join("") || `<p class="muted">No matching endpoints. Try another search.</p>`}</div></section>`);
     const search = root.querySelector("#api-search"); search.oninput = () => { const query = search.value; renderDocs(query); const restored = root.querySelector("#api-search"); restored.focus(); restored.setSelectionRange(query.length, query.length); };
     root.querySelector("#api-provider-filter").onchange = (event) => { state.providerId = event.target.value; nextChallenge(); };
-    for (const b of root.querySelectorAll("[data-add]")) b.onclick = () => { const endpointId = b.dataset.add; state.plan.push({ endpointId, parameters: automaticParameters(s, endpointMap(state.data).get(endpointId)), dependencies: {} }); state.lastAddedEndpoint = endpointId; touch(); renderPlan(); root.querySelector("#interaction")?.scrollIntoView({ block: "start", behavior: "smooth" }); };
+    for (const b of root.querySelectorAll("[data-add]")) b.onclick = () => { const endpointId = b.dataset.add, endpoint = endpointMap(state.data).get(endpointId), occurrence = state.plan.filter((request) => request.endpointId === endpointId).length; state.plan.push({ endpointId, parameters: automaticParametersForOccurrence(s, endpoint, occurrence), dependencies: {} }); state.lastAddedEndpoint = endpointId; touch(); renderPlan(); root.querySelector("#interaction")?.scrollIntoView({ block: "start", behavior: "smooth" }); };
   };
   const finish = (result, revealed = false) => {
     state.closed = true;
