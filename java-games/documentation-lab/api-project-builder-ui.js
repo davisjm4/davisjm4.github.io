@@ -1,9 +1,9 @@
-import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v12";
+import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v13";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
 const method = (e) => `<span class="api-method api-${esc(e.method.toLowerCase())}">${esc(e.method)}</span>`;
-const runtimeParam = (p) => p.in === "path" || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(p.name) && !p.allowedValues;
+const runtimeParam = (p) => (p.in === "path" && !p.allowedValues?.length) || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(p.name) && !p.allowedValues?.length;
 const VALUE_DESCRIPTIONS = {
   part: {
     snippet: "Basic profile or resource details.",
