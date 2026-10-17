@@ -1,4 +1,4 @@
-import * as E from "./engine.js?v=linkedlist-v3";
+import * as E from "./engine.js?v=linkedlist-v4";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -28,7 +28,7 @@ function render(){
   s.insertAdjacentHTML("beforeend",'<pre class="ll-code">'+esc(ch.code)+'</pre><p><strong>'+esc(ch.question)+'</strong></p><div id="choices" class="ll-choice-grid"></div>');
   $("choices").innerHTML=ch.choices.map((x,i)=>'<button type="button" class="ll-choice" data-choice="'+i+'" aria-pressed="false">'+esc(x)+'</button>').join('');
  }
- if(ch.kind!=="links")$("choices").querySelectorAll("[data-choice]").forEach(b=>b.onclick=()=>{if(!closed){selected=Number(b.dataset.choice);paint();}});
+ if(ch.kind!=="links" && ch.kind!=="mutate-links")$("choices").querySelectorAll("[data-choice]").forEach(b=>b.onclick=()=>{if(!closed){selected=Number(b.dataset.choice);paint();}});
  s.insertAdjacentHTML("beforeend",'<div class="actions"><button id="check">Check Answer</button><button id="show" class="secondary">Show Answer</button><button id="next" class="secondary" hidden>Next Challenge →</button></div>');
  $("check").onclick=submit;$("show").onclick=show;$("next").onclick=next;paint();
 }
