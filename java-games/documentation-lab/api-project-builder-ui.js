@@ -54,7 +54,7 @@ export function mount({ root, controls, tracker, dev = false }) {
     state.closed=true;
     root.querySelectorAll("input,select,button").forEach((b)=>b.disabled=true);
     const fb=document.getElementById("feedback"); fb.hidden=false; fb.className="feedback dl-feedback "+(result.correct?"good":"bad"); fb.innerHTML=feedbackHtml(result,state.scenario,endpointIndex(state.data));
-    controls.submit.hidden=true; controls.show.hidden=true; controls.skip.hidden=true; controls.next.hidden=false; controls.next.disabled=false; controls.next.focus({preventScroll:true}); stat();
+    controls.submit.hidden=true; controls.show.hidden=true; controls.skip.hidden=true; controls.nextButton.hidden=false; controls.nextButton.disabled=false; controls.nextButton.focus({preventScroll:true}); stat();
   };
   const show = () => {
     if(state.closed || !state.instance) return;
@@ -62,7 +62,7 @@ export function mount({ root, controls, tracker, dev = false }) {
     state.plan=clone(plan.requests); tracker.reveal(state.instance); state.closed=true;
     renderPlan(); root.querySelectorAll("input,select,button").forEach((b)=>b.disabled=true);
     const fb=document.getElementById("feedback"); fb.hidden=false; fb.className="feedback dl-feedback shown"; fb.innerHTML='<strong>Answer shown.</strong><p>' + esc(state.scenario.explanation) + '</p><p class="muted dl-small">Recorded as revealed (no credit).</p>';
-    controls.submit.hidden=true;controls.show.hidden=true;controls.skip.hidden=true;controls.next.hidden=false;controls.next.disabled=false;controls.next.focus({preventScroll:true});stat();
+    controls.submit.hidden=true;controls.show.hidden=true;controls.skip.hidden=true;controls.nextButton.hidden=false;controls.nextButton.disabled=false;controls.nextButton.focus({preventScroll:true});stat();
   };
   const start = async () => {
     try {
@@ -82,12 +82,12 @@ export function mount({ root, controls, tracker, dev = false }) {
       const provider=state.data.providers.find((p)=>p.id===state.scenario.providerId);
       set("blocks",'<div class="api-project-goal"><div class="api-fixture-banner">Development fixture — fictional API; not a production activity.</div><h3>'+esc(state.scenario.title)+'</h3><p>'+esc(state.scenario.goal)+'</p><h4>Application requirements</h4><ul>'+state.scenario.requirements.map((r)=>'<li><strong>'+esc(r.label)+':</strong> '+esc(r.description)+'</li>').join("")+'</ul><p class="api-constraint"><strong>Constraints:</strong> '+esc(state.scenario.constraints.text)+'</p><p class="muted"><strong>Provider:</strong> '+esc(provider.name)+' · <a href="'+esc(provider.documentationUrl)+'" target="_blank" rel="noreferrer">official documentation ↗</a></p></div>');
       renderDocs(); renderPlan();
-      controls.submit.hidden=false;controls.show.hidden=false;controls.skip.hidden=false;controls.next.hidden=true;controls.submit.disabled=false;controls.show.disabled=false;controls.skip.disabled=false;stat();
+      controls.submit.hidden=false;controls.show.hidden=false;controls.skip.hidden=false;controls.nextButton.hidden=true;controls.submit.disabled=false;controls.show.disabled=false;controls.skip.disabled=false;stat();
     } catch(error) {
       set("interaction",'<div class="api-unavailable"><strong>Content could not be loaded.</strong><p>'+esc(error.message)+'</p></div>');
     }
   };
-  controls.submit.onclick=submit; controls.show.onclick=show; controls.skip.onclick=next; controls.next.onclick=next;
+  controls.submit.onclick=submit; controls.show.onclick=show; controls.skip.onclick=next; controls.nextButton.onclick=next;
   start();
   return { stop };
 }
