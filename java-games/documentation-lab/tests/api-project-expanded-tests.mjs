@@ -2,7 +2,7 @@ import fs from "node:fs";
 import assert from "node:assert/strict";
 import { validateApiData, validatePlan, createScenarioPicker, endpointMap, isRuntimeParameter } from "../api-project-builder-engine.js";
 import { presentation, classification, automaticParametersForOccurrence } from "../api-project-presentation.js";
-import { presentationFor } from "../api-project-builder-ui.js";
+import { presentationFor, fieldMaskChoices } from "../api-project-builder-ui.js";
 
 // Exercise the same provider shards used by the deployed loader. The merged
 // convenience export can exceed repository-content API response limits.
@@ -80,6 +80,13 @@ for (const scenario of enabled) {
     }
   }
   for (const plan of scenario.acceptedPlans) {
+    for (const step of plan.steps) {
+      const endpoint = map.get(step.endpointId);
+      for (const [name, value] of Object.entries(step.parameters)) if (name === "X-Goog-FieldMask" || name.toLowerCase() === "fields") {
+        const controls = (presentation(scenario, endpoint).fieldOptions || fieldMaskChoices(endpoint).map((choice) => choice.path));
+        for (const field of String(value).split(",").map((item) => item.trim()).filter(Boolean)) assert.ok(controls.includes(field), `${scenario.id}/${endpoint.id}: field selector can represent ${field}`);
+      }
+    }
     const result = validatePlan(data, scenario, studentPlan(scenario, plan));
     assert.equal(result.correct, true, `${scenario.id}/${plan.id}: ${result.message}`);
     const occurrences = new Map();
