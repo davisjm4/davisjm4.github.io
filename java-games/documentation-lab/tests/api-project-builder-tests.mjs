@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { validateApiData, assertValid, validatePlan, endpointsFor, createScenarioPicker, isRuntimeParameter, isProductionContent, endpointMap } from "../api-project-builder-engine.js";
+import { validateApiData, assertValid, validatePlan, formativeDiagnostics, endpointsFor, createScenarioPicker, isRuntimeParameter, isProductionContent, endpointMap } from "../api-project-builder-engine.js";
 
 const data = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1.json", import.meta.url), "utf8"));
 assert.equal(validateApiData(data).length, 0, validateApiData(data).join("\n"));
@@ -57,14 +57,23 @@ const recap = data.scenarios.find((s) => s.id === "spotify-monthly-recap");
 const top = recap.acceptedPlans[0].steps[0];
 const wrongRange = studentPlan(recap, recap.acceptedPlans[0]);
 wrongRange.requests[0].parameters.time_range = "long_term";
-assert.equal(validatePlan(data, recap, wrongRange).correct, false, "behavioral parameter cannot be ignored");
+const wrongRangeResult = validatePlan(data, recap, wrongRange);
+assert.equal(wrongRangeResult.correct, false, "behavioral parameter cannot be ignored");
+const wrongRangeFeedback = formativeDiagnostics(data, recap, wrongRangeResult, wrongRange.requests);
+assert.ok(wrongRangeFeedback.some((d) => d.key === "parameters"));
+assert.ok(!JSON.stringify(wrongRangeFeedback).includes("short_term"), "feedback does not give the correct parameter value");
+assert.equal(wrongRangeFeedback[0].hints.length, 3, "progressive hints are available");
 
 const channel = data.scenarios.find((s) => s.id === "youtube-channel-hub");
 const channelPlan = studentPlan(channel, channel.acceptedPlans[0]);
 assert.equal(channelPlan.requests[1].dependencies.playlistId.fromRequest, 0);
 const brokenDependency = structuredClone(channelPlan);
 brokenDependency.requests[1].dependencies.playlistId.fromRequest = 1;
-assert.equal(validatePlan(data, channel, brokenDependency).correct, false, "response dependency is graded");
+const brokenDependencyResult = validatePlan(data, channel, brokenDependency);
+assert.equal(brokenDependencyResult.correct, false, "response dependency is graded");
+const dependencyFeedback = formativeDiagnostics(data, channel, brokenDependencyResult, brokenDependency.requests);
+assert.ok(dependencyFeedback.some((d) => d.key === "dependency"));
+assert.ok(!JSON.stringify(dependencyFeedback).includes("playlistId"), "dependency feedback avoids exact parameter names");
 
 const youtube = data.scenarios.find((s) => s.id === "youtube-video-compare");
 const singleBatch = studentPlan(youtube, youtube.acceptedPlans[0]);
@@ -87,9 +96,29 @@ assert.equal(blankOptionalObject.correct, false);
 assert.ok(blankOptionalObject.incorrectlyConfiguredRequests.some((r) => r.endpointId === "maps.places-text-search"));
 assert.equal(blankOptionalObject.rejectedReason, "", "unrelated rejected-plan explanations must not be shown");
 
-const unnecessaryMix = validatePlan(data, youtube, { requests: [...studentPlan(youtube, youtube.acceptedPlans[0]).requests, { endpointId: "youtube.channels-list", parameters: {}, dependencies: {} }] });
+const unnecessaryRequests = [...studentPlan(youtube, youtube.acceptedPlans[0]).requests, { endpointId: "youtube.channels-list", parameters: { part: ["snippet"], forHandle: "@Campus" }, dependencies: {} }];
+const unnecessaryMix = validatePlan(data, youtube, { requests: unnecessaryRequests });
 assert.ok(unnecessaryMix.unnecessary.length > 0 || unnecessaryMix.incompleteRequests.length > 0);
 assert.equal(unnecessaryMix.incorrectEndpoints.length, 0, "documented distractors are not misclassified as unavailable endpoints");
+const unnecessaryFeedback = formativeDiagnostics(data, youtube, unnecessaryMix, unnecessaryRequests);
+assert.ok(unnecessaryFeedback.some((d) => d.key === "unnecessary"));
+assert.ok(!JSON.stringify(unnecessaryFeedback).includes("youtube.channels-list"));
+
+const emptyFeedback = formativeDiagnostics(data, album, validatePlan(data, album, { requests: [] }), []);
+assert.ok(emptyFeedback.some((d) => d.key === "missing"));
+assert.ok(!JSON.stringify(emptyFeedback).includes("spotify.get-album"), "missing information feedback does not name an endpoint");
+
+const authScenario = data.scenarios.find((s) => s.id === "spotify-album-spotlight");
+const authPlan = { requests: [{ endpointId: "spotify.get-current-user-playlists", parameters: {}, dependencies: {} }] };
+assert.ok(formativeDiagnostics(data, authScenario, validatePlan(data, authScenario, authPlan), authPlan.requests).some((d) => d.key === "access"));
+const legacyPlan = { requests: [{ endpointId: "maps.directions-legacy", parameters: { origin: "hotel", destination: "museum" }, dependencies: {} }] };
+assert.ok(formativeDiagnostics(data, museum, validatePlan(data, museum, legacyPlan), legacyPlan.requests).some((d) => d.key === "access"));
+
+const museumMaskPlan = studentPlan(museum, museum.acceptedPlans[0]);
+museumMaskPlan.requests[0].parameters["X-Goog-FieldMask"] = "places.id";
+const maskFeedback = formativeDiagnostics(data, museum, validatePlan(data, museum, museumMaskPlan), museumMaskPlan.requests);
+assert.ok(maskFeedback.some((d) => d.key === "fieldMask"));
+assert.ok(!JSON.stringify(maskFeedback).includes("places.displayName"), "field-mask feedback avoids exact fields to add");
 
 const invalid = structuredClone(data);
 invalid.scenarios[0].availableEndpointIds[0] = "missing.endpoint";
