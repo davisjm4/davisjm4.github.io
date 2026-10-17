@@ -3,13 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests.mjs && node ui-tests.mjs && node math-lab/tests.mjs && node array-lab/array-redesign-tests.mjs && node debugger-lab/debugger-redesign-tests.mjs && node ../tests/robot-algorithms.test.js && node loop-lab/loop-redesign-tests.mjs",
+    "test": "node tests.mjs && node ui-tests.mjs && node math-lab/tests.mjs && node array-lab/array-redesign-tests.mjs && node debugger-lab/debugger-redesign-tests.mjs && node ../tests/robot-algorithms.test.js && node loop-lab/loop-redesign-tests.mjs && node class-object-lab/class-object-tests.mjs",
     "test:math": "node math-lab/tests.mjs",
     "test:quality": "node quality-tests.mjs && node debugger-quality-tests.mjs && node debugger-behavior-tests.mjs && node loop-quality-tests.mjs && node loop-jvm-tests.mjs && node array-quality-tests.mjs && node array-lab/array-redesign-tests.mjs && node debugger-lab/debugger-redesign-tests.mjs",
     "test:compiler": "node compiler-tests.mjs",
     "test:robot": "node ../tests/robot-algorithms.test.js",
     "test:robot-jvm": "node ../tests/robot-algorithms-jvm.test.js",
-    "test:loop": "node loop-lab/loop-redesign-tests.mjs"
+    "test:loop": "node loop-lab/loop-redesign-tests.mjs",
+    "test:class-object": "node class-object-lab/class-object-tests.mjs"
   },
   "devDependencies": {
     "linkedom": "^0.18.12"
