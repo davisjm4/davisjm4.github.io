@@ -2,7 +2,7 @@
 export const GAME_ID = "documentation-lab";
 export const MODE_ID = "api-builder";
 export const MODE_TITLE = "API Project Builder";
-export const DATA_FILE = "./api-project-data-v1.json?v=verified-library-v2";
+export const DATA_FILE = "./api-project-data-v1.json?v=verified-library-v3";
 const arr = Array.isArray;
 const obj = (v) => !!v && typeof v === "object" && !arr(v);
 const str = (v) => typeof v === "string" && !!v.trim();
@@ -65,7 +65,19 @@ export function createScenarioPicker(data, rng = Math.random) { assertValid(data
 export function isRuntimeParameter(parameter, value) { return parameter.in === "path" || (obj(value) && "$fromStep" in value) || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(parameter.name) && parameter.allowedValues == null; }
 const valueAt = (o, path) => path.split(".").reduce((v, k) => v?.[k], o);
 const hasVal = (v) => { if (v === undefined || v === null || v === "") return false; if (obj(v)) { if (v.$runtime === true) return true; const values = Object.values(v); return values.length > 0 && values.every(hasVal); } if (arr(v)) return v.length > 0 && v.every(hasVal); return true; };
-function equivalentValue(actual, expected, runtime) { if (runtime && obj(expected) && "$fromStep" in expected) return obj(actual) && Number.isInteger(actual.fromRequest) && actual.fromRequest >= 0; if (runtime) return true; return JSON.stringify(actual) === JSON.stringify(expected); }
+function equivalentValue(actual, expected, runtime) {
+  if (runtime && obj(expected) && "$fromStep" in expected) return obj(actual) && Number.isInteger(actual.fromRequest) && actual.fromRequest >= 0;
+  if (runtime) return true;
+  if (typeof actual === "string" && typeof expected === "string" && actual.includes("places.") && expected.includes("places.")) {
+    const fields = (value) => new Set(value.split(",").map((part) => part.trim()).filter(Boolean));
+    const a = fields(actual), e = fields(expected);
+    if (a.size === e.size && [...a].every((field) => e.has(field))) return true;
+    const withoutOptionalId = (set) => new Set([...set].filter((field) => field !== "places.id"));
+    const aWithoutId = withoutOptionalId(a), eWithoutId = withoutOptionalId(e);
+    if (aWithoutId.size === eWithoutId.size && [...aWithoutId].every((field) => eWithoutId.has(field))) return true;
+  }
+  return JSON.stringify(actual) === JSON.stringify(expected);
+}
 function findRefs(value, out = []) { if (obj(value) && "$fromStep" in value) out.push(value); else if (obj(value)) Object.values(value).forEach((v) => findRefs(v, out)); else if (arr(value)) value.forEach((v) => findRefs(v, out)); return out; }
 function validateRules(endpoint, parameters) {
   const errors = [];
