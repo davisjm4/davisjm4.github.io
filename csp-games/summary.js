@@ -21,15 +21,12 @@ function table(items) {
 function render() {
   const d = tracker.snapshot(),
     m = d.totals,
-    elapsed = Math.max(
-      0,
-      Math.round((Date.now() - Date.parse(d.startedAt)) / 60000),
-    );
+    activeMinutes = Math.floor((d.activeSeconds || 0) / 60);
   $("student-name").value = d.student.name;
   $("student-period").value = d.student.period;
   $("storage-warning").textContent = tracker.warning;
   $("report").innerHTML =
-    `<section class="panel report-identity"><h2>${esc(d.student.name || "Student name not provided")}</h2><p><strong>Class period:</strong> ${esc(d.student.period || "Not provided")}</p><p><strong>Session started:</strong> ${time(d.startedAt)}<br><strong>Most recent activity:</strong> ${time(d.lastActivityAt)}<br><strong>Elapsed time:</strong> ${elapsed} minutes (includes time away; not active practice time)</p><p class="muted">Session ID: ${esc(d.id)}</p></section><section class="panel"><h2>Overall performance</h2><div class="summary-metrics">${[
+    `<section class="panel report-identity"><h2>${esc(d.student.name || "Student name not provided")}</h2><p><strong>Class period:</strong> ${esc(d.student.period || "Not provided")}</p><p><strong>Session started:</strong> ${time(d.startedAt)}<br><strong>Most recent activity:</strong> ${time(d.lastActivityAt)}<br><strong>Active practice time:</strong> ${activeMinutes} minute${activeMinutes === 1 ? "" : "s"}<br><span class="muted">Inactive and away time are excluded.</span></p><p class="muted">Session ID: ${esc(d.id)}</p></section><section class="panel"><h2>Overall performance</h2><div class="summary-metrics">${[
       ["First-try accuracy", fmt(m)],
       ["Challenges attempted", m.attempted],
       ["First-try correct", m.firstTry],
@@ -54,7 +51,7 @@ function render() {
             `<section class="topic-report"><h3>${esc(g.title)}</h3>${table(Object.values(g.topics))}</section>`,
         )
         .join("") || "<p>Topic results appear as you practice.</p>"
-    }</section><p class="print-note">Locally stored formative practice evidence. This report is not tamper-proof. Elapsed time is not active practice time.</p>`;
+    }</section><p class="print-note">Locally stored formative practice evidence. This report is not tamper-proof. Inactive and away time are excluded from active practice time.</p>`;
 }
 for (let field of ["student-name", "student-period"])
   $(field).addEventListener("change", () => {
