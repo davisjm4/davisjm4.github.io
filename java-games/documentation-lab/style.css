@@ -1,0 +1,675 @@
+/* Documentation Lab: game styles layered on the shared Java Games stylesheet
+   (../style.css, which imports ../csp-games/style.css and defines the theme
+   tokens --bg #0c1722, --panel #152536, --line #33495c, --ink #eff6fb,
+   --muted #b4c5d3, --accent #66e4c4, --gold #ffd37d, --red #ff9aa8). */
+.dl {
+  padding-top: 18px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --code-bg: #0c1c2b;
+}
+.dl > .eyebrow {
+  font-size: 0.7rem;
+}
+.dl h1 {
+  font-size: clamp(1.6rem, 3.6vw, 2.1rem);
+  margin: 2px 0;
+}
+.dl-intro {
+  margin: 0 0 8px;
+  font-size: 0.98rem;
+}
+.dl-toolbar {
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+}
+.dl-terms {
+  position: relative;
+  color: var(--muted);
+}
+.dl-terms summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 700;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+.dl-terms[open] dl {
+  position: absolute;
+  z-index: 5;
+  top: 100%;
+  right: 0;
+  width: min(560px, calc(100vw - 40px));
+  margin: 0;
+  background: #10202f;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 30px #0008;
+}
+.dl-terms dt {
+  color: var(--ink);
+  font-weight: 800;
+}
+.dl-terms dd {
+  margin: 0 0 8px;
+}
+.dl-stage {
+  padding: 14px 16px;
+  margin-top: 4px;
+}
+.dl-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+}
+.dl-chip {
+  font-size: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 10px;
+  color: var(--muted);
+}
+.dl-instructions {
+  margin: 4px 0 6px;
+  font-size: 0.86rem;
+}
+.dl-prompt {
+  margin: 0 0 6px;
+}
+.dl-question {
+  font-size: 1.08rem;
+  margin: 6px 0 10px;
+}
+
+/* ---------- workspace: code blocks + documentation panels ---------- */
+.dl-workspace {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 900px) {
+  .dl-workspace.has-docs:not(.docs-only) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    align-items: start;
+  }
+}
+.dl-blocks:empty,
+.dl-docs:empty {
+  display: none;
+}
+.dl-block {
+  margin: 0;
+  min-width: 0;
+}
+.dl-block figcaption,
+.dl-docs-head,
+.dl-preview-head {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+.dl-code {
+  background: var(--code-bg);
+  border: 1px solid #22384b;
+  border-radius: 10px;
+  padding: 10px 0;
+  font: 0.95rem/1.55 var(--mono);
+  tab-size: 4;
+  min-width: 0;
+}
+/* Each line is its own element. Indentation is padding (--ind spaces), so a
+   long line wraps with a hanging indent instead of forcing sideways scroll. */
+.dl-code .ln {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  /* wrapped continuation lines get 4 extra columns (hanging indent) */
+  padding: 0 12px 0 calc(12px + (var(--ind, 0) + 4) * 1ch);
+  text-indent: -4ch;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  min-height: 1.55em;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+.dl-code .ln-btn {
+  cursor: pointer;
+  min-height: 34px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-left: 3px solid #4e6b85;
+  background: #12283a;
+  font-weight: 400;
+}
+.dl-code .ln-btn + .ln-btn {
+  border-top: 1px solid #0c1c2b;
+}
+.dl-code .ln-btn:hover {
+  background: #1b3a52;
+}
+.dl-code .ln-btn:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: -3px;
+}
+.dl-code .ln-btn.selected {
+  background: #31597c;
+  border-left-color: var(--gold);
+}
+.dl-code .ln-btn:disabled {
+  cursor: default;
+  opacity: 1;
+}
+.dl-code .ln.is-answer {
+  background: #164c40;
+  border-left-color: var(--accent);
+}
+.dl-code .ln.is-wrong {
+  background: #4d2430;
+  border-left-color: var(--red);
+}
+.dl-code .ln-slot .slot {
+  display: inline-block;
+  border: 2px dashed var(--gold);
+  border-radius: 6px;
+  padding: 0 10px;
+  color: var(--gold);
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.dl-code .ln-preview {
+  background: #1d2c1f;
+  box-shadow: inset 3px 0 0 var(--gold);
+}
+.dl-code .ln-edited {
+  background: #2a3b1d;
+  box-shadow: inset 3px 0 0 var(--gold);
+}
+.dl-block.is-selectable figcaption::after {
+  content: " · comment lines are clickable";
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+/* Syntax colors (same family as the other Java Games) */
+.tk-kw {
+  color: #ff9ecf;
+  font-weight: 700;
+}
+.tk-type {
+  color: #8fd8ff;
+  font-weight: 700;
+}
+.tk-id {
+  color: #eff6fb;
+}
+.tk-str,
+.tk-num {
+  color: var(--gold);
+}
+.tk-com {
+  color: #a5bccf;
+  font-style: italic;
+}
+.tk-tag {
+  color: #7fe7cd;
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* ---------- API documentation panels ---------- */
+.dl-docs {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.api-doc {
+  background: #f4f7fa;
+  color: #1c2833;
+  border-radius: 10px;
+  border-top: 4px solid #4a7aa8;
+  padding: 10px 14px 8px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  min-width: 0;
+}
+.api-class {
+  font: 0.75rem var(--mono);
+  color: #4d6273;
+}
+.api-sig {
+  display: block;
+  width: 100%;
+  font: 700 0.95rem/1.4 var(--mono);
+  background: #e3ebf2;
+  color: #1c2833;
+  border: 0;
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin: 4px 0 6px;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+/* Light panel needs darker syntax colors for contrast. */
+.api-doc .tk-kw {
+  color: #a0236a;
+}
+.api-doc .tk-type {
+  color: #12558a;
+}
+.api-doc .tk-id {
+  color: #1c2833;
+}
+.api-doc .tk-str,
+.api-doc .tk-num {
+  color: #7a4b00;
+}
+.api-sec h4 {
+  margin: 6px 0 2px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #3c5568;
+}
+.api-sec p.api-line {
+  margin: 0 0 4px 12px;
+  max-width: none;
+}
+.api-sec code {
+  font-family: var(--mono);
+  font-weight: 700;
+  background: #e3ebf2;
+  border-radius: 4px;
+  padding: 0 4px;
+}
+.api-note {
+  background: #fff4d6;
+  border-radius: 6px;
+  padding: 2px 8px 4px;
+  margin-top: 6px;
+}
+.api-note h4 {
+  color: #7a5200;
+}
+.api-note h4::after {
+  content: " (not from the JDK)";
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+button.api-line {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #1c2833;
+  background: #ffffff;
+  border: 1px solid #c9d6e2;
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin: 0 0 5px;
+  min-height: 40px;
+}
+button.api-sig {
+  border: 1px solid #c9d6e2;
+}
+button.api-line:hover {
+  background: #e7f1fb;
+}
+button.api-line.selected {
+  background: #ffe7a8;
+  border-color: #b68300;
+  color: #1c2833;
+}
+button.api-line:disabled {
+  opacity: 1;
+  cursor: default;
+}
+button.api-line.is-answer {
+  background: #c9f2e5;
+  border-color: #1b7a62;
+}
+button.api-line.is-wrong {
+  background: #ffd9df;
+  border-color: #b3374d;
+}
+
+/* ---------- interactions ---------- */
+.dl-interaction {
+  margin-top: 12px;
+}
+.dl-choices {
+  display: grid;
+  gap: 8px;
+}
+.dl-choice {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  text-align: left;
+  font-weight: 500;
+  width: 100%;
+  padding: 10px 12px;
+  line-height: 1.4;
+}
+.dl-letter {
+  flex: 0 0 auto;
+  font-weight: 800;
+  color: var(--accent);
+  min-width: 1.2em;
+}
+.dl-choice-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.dl-mark {
+  flex: 0 0 auto;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.dl-inline {
+  font-family: var(--mono);
+  font-size: 0.93rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.dl-choice.selected,
+.dl-choice.is-correct,
+.dl-choice.is-wrong,
+.dl-toggle button.selected,
+.dl-methods button.selected {
+  color: var(--ink);
+}
+.dl-choice.selected,
+.dl-toggle button.selected,
+.dl-methods button.selected {
+  background: #2c4a63;
+  border-color: var(--gold);
+  box-shadow: inset 4px 0 0 var(--gold);
+}
+.dl-choice.is-correct,
+.dl-toggle button.is-correct {
+  background: #164c40;
+  border-color: var(--accent);
+  opacity: 1;
+}
+.dl-choice.is-wrong,
+.dl-toggle button.is-wrong {
+  background: #4d2430;
+  border-color: var(--red);
+  opacity: 1;
+}
+.dl-choice:disabled:not(.is-correct):not(.is-wrong),
+.dl-toggle button:disabled:not(.is-correct):not(.is-wrong) {
+  opacity: 0.55;
+}
+.dl-tip {
+  font-size: 0.88rem;
+  margin: 6px 0 0;
+}
+.dl-step {
+  margin: 10px 0 6px;
+  font-weight: 700;
+}
+.dl-step-n {
+  display: inline-grid;
+  place-items: center;
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #09201c;
+  font-size: 0.85rem;
+  margin-right: 4px;
+}
+.dl-preview {
+  margin-top: 10px;
+}
+.dl-preview:empty {
+  display: none;
+}
+
+/* builder rows */
+.dl-slot {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px 10px;
+  margin: 0 0 10px;
+  min-width: 0;
+}
+.dl-slot legend {
+  padding: 0 6px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.dl-slot-tag {
+  font: 700 0.95rem var(--mono);
+  color: #7fe7cd;
+}
+.dl-slot .dl-choice {
+  font-size: 0.93rem;
+  min-height: 40px;
+  padding: 8px 10px;
+}
+.dl-slot.slot-ok {
+  border-color: var(--accent);
+}
+.dl-slot.slot-bad {
+  border-color: var(--red);
+}
+.dl-slot-mark {
+  font-weight: 800;
+}
+.slot-ok .dl-slot-mark {
+  color: var(--accent);
+}
+.slot-bad .dl-slot-mark {
+  color: var(--red);
+}
+.dl-slot-why,
+.dl-st-why {
+  margin: 8px 0 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+/* classify */
+.dl-classify {
+  margin: 0;
+  padding-left: 1.4em;
+  display: grid;
+  gap: 10px;
+}
+.dl-classify li {
+  border-bottom: 1px solid #22384b;
+  padding-bottom: 10px;
+}
+.dl-st-text {
+  margin: 0 0 6px;
+}
+.dl-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.dl-toggle button {
+  padding: 8px 14px;
+  font-weight: 650;
+}
+.st-ok .dl-st-why {
+  color: #b9efe0;
+}
+.st-bad .dl-st-why {
+  color: #ffc9d2;
+}
+
+/* assemble */
+.dl-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.dl-methods code {
+  font-family: var(--mono);
+}
+.dl-call {
+  background: var(--code-bg);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font: 1.02rem/2.1 var(--mono);
+  margin: 10px 0;
+  overflow-wrap: anywhere;
+}
+.dl-call code {
+  font-family: var(--mono);
+}
+.dl-slot-gap {
+  display: inline-block;
+  border: 2px dashed #7f91a4;
+  border-radius: 6px;
+  color: #7f91a4;
+  padding: 0 4px;
+  line-height: 1.5;
+}
+.dl-placed {
+  font: inherit;
+  padding: 2px 8px;
+  min-height: 36px;
+  background: #2c4a63;
+  color: var(--ink);
+  border: 1px solid var(--gold);
+}
+.dl-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.dl-token {
+  font-family: var(--mono);
+  font-weight: 600;
+}
+.dl-small {
+  padding: 6px 12px;
+  min-height: 40px;
+}
+.dl-call-result {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #1c2f40;
+  border-left: 4px solid var(--gold);
+}
+.dl-call-result.good {
+  border-color: var(--accent);
+}
+.dl-call-result.bad {
+  border-color: var(--red);
+}
+
+/* ---------- feedback ---------- */
+.dl-feedback {
+  white-space: normal;
+  margin: 14px 0 0;
+}
+.dl-feedback p {
+  margin: 8px 0 0;
+}
+.dl-feedback.shown {
+  border-color: var(--gold);
+}
+.dl-correct {
+  display: block;
+  margin-top: 6px;
+}
+.dl-answer-code {
+  margin-top: 6px;
+}
+.dl-why {
+  color: #ffd9df;
+}
+.dl-review {
+  margin-top: 10px;
+}
+.dl-review summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 700;
+  min-height: 32px;
+}
+.dl-review ul {
+  padding-left: 1.1em;
+  margin: 6px 0 0;
+}
+.dl-review li {
+  margin-bottom: 6px;
+}
+.dl-review .ok {
+  color: var(--accent);
+  font-weight: 800;
+}
+.dl-review .no {
+  color: var(--red);
+  font-weight: 800;
+}
+.dl-small {
+  font-size: 0.82rem;
+}
+.dl-source {
+  font-size: 0.78rem;
+}
+.dl-actions {
+  margin-top: 14px;
+}
+
+@media (max-width: 640px) {
+  .dl-stage {
+    padding: 12px 10px;
+  }
+  .dl-code {
+    font-size: 0.84rem;
+  }
+  .dl-code .ln {
+    padding-left: calc(8px + (var(--ind, 0) + 4) * 0.75ch);
+    text-indent: -3ch;
+    padding-right: 8px;
+  }
+  .api-doc {
+    padding: 8px 10px;
+  }
+  .dl-terms[open] dl {
+    right: auto;
+    left: 0;
+  }
+  .dl-actions button {
+    flex: 1 1 auto;
+  }
+  .dl-toolbar label {
+    flex-wrap: wrap;
+  }
+  .dl-toolbar select {
+    width: 100%;
+    min-width: 0;
+  }
+}
+@media print {
+  .dl-actions,
+  .dl-toolbar {
+    display: none;
+  }
+}
