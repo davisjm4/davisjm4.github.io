@@ -1,7 +1,7 @@
 /* Method & Constructor Lab UI. Results go to the shared Java Games session
    tracker (localStorage key javaGames.session.v1) used by Session Summary. */
 import * as E from "./engine.js?v=mcl-v1";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=java-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) =>
