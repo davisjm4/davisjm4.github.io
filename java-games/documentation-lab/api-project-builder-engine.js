@@ -3,7 +3,7 @@ import { presentation } from "./api-project-presentation.js";
 export const GAME_ID = "documentation-lab";
 export const MODE_ID = "api-builder";
 export const MODE_TITLE = "API Project Builder";
-export const DATA_FILE = "./api-project-data-v1.json?v=verified-library-v3";
+export const DATA_FILE = "./api-project-data-v1-expanded.json?v=verified-library-v1";
 const arr = Array.isArray;
 const obj = (v) => !!v && typeof v === "object" && !arr(v);
 const str = (v) => typeof v === "string" && !!v.trim();
@@ -25,7 +25,7 @@ export function validateApiData(data) {
       if (endpoints.has(e.id)) errors.push(`endpoints: duplicate global id ${e.id}`);
       endpoints.set(e.id, { endpoint: e, providerId: p.id });
       const names = new Set();
-      for (const q of e.parameters) { if (!obj(q) || !str(q.name) || !["path", "query", "header", "body"].includes(q.in) || !str(q.type) || typeof q.required !== "boolean" || !str(q.description)) errors.push(`endpoint ${e.id}: invalid parameter`); if (q?.name && names.has(q.name)) errors.push(`endpoint ${e.id}: duplicate parameter ${q.name}`); if (q?.name) names.add(q.name); if (q?.allowedValues !== undefined && !arr(q.allowedValues)) errors.push(`endpoint ${e.id}: ${q.name} allowedValues must be an array`); }
+      for (const q of e.parameters) { if (!obj(q) || !str(q.name) || !["path", "query", "header", "body", "form"].includes(q.in) || !str(q.type) || typeof q.required !== "boolean" || !str(q.description)) errors.push(`endpoint ${e.id}: invalid parameter`); if (q?.name && names.has(q.name)) errors.push(`endpoint ${e.id}: duplicate parameter ${q.name}`); if (q?.name) names.add(q.name); if (q?.allowedValues !== undefined && !arr(q.allowedValues)) errors.push(`endpoint ${e.id}: ${q.name} allowedValues must be an array`); }
       for (const f of e.responseFields) if (!obj(f) || !str(f.path) || !str(f.type) || !str(f.description)) errors.push(`endpoint ${e.id}: invalid response field`);
       for (const r of e.parameterRules || []) if (!obj(r) || !["exactlyOne", "atLeastOne", "atMostOne", "requiresValue"].includes(r.rule) || !arr(r.parameters)) errors.push(`endpoint ${e.id}: invalid parameter rule`);
     }
@@ -36,7 +36,7 @@ export function validateApiData(data) {
     if (!providers.has(s.providerId)) errors.push(`scenario ${s.id}: unknown providerId ${s.providerId}`);
     for (const r of s.requirements) if (!obj(r) || !str(r.id) || !str(r.description)) errors.push(`scenario ${s.id}: invalid requirement`);
     for (const id of s.availableEndpointIds) { const ref = endpoints.get(id); if (!ref) errors.push(`scenario ${s.id}: unknown endpoint ${id}`); else if (ref.providerId !== s.providerId) errors.push(`scenario ${s.id}: endpoint ${id} belongs to another provider`); }
-    if (!s.acceptedPlans.length) errors.push(`scenario ${s.id}: requires an accepted plan`);
+    if (!s.acceptedPlans.length && s.expectedOutcome !== "no-valid-plan") errors.push(`scenario ${s.id}: requires an accepted plan`);
     for (const plan of s.acceptedPlans) {
       if (!obj(plan) || !str(plan.id) || !arr(plan.steps) || !plan.steps.length) { errors.push(`scenario ${s.id}: invalid accepted plan`); continue; }
       const stepRefs = new Map();
@@ -50,7 +50,7 @@ export function validateApiData(data) {
       }
       for (const step of plan.conditionalSteps || []) if (!endpoints.has(step.endpointId) || !str(step.condition) || !obj(step.parameters)) errors.push(`scenario ${s.id}/${plan.id}: invalid conditional step`);
     }
-    for (const sample of s.responseSamples) if (!obj(sample) || !endpoints.has(sample.endpointId) || !obj(sample.body)) errors.push(`scenario ${s.id}: invalid response sample`);
+    for (const sample of s.responseSamples) if (!obj(sample) || !endpoints.has(sample.endpointId) || (sample.body !== null && !obj(sample.body) && !arr(sample.body))) errors.push(`scenario ${s.id}: invalid response sample`);
     for (const rejected of s.rejectedPlans || []) if (!arr(rejected.endpointIds) || !str(rejected.reason) || rejected.endpointIds.some((id) => !endpoints.has(id))) errors.push(`scenario ${s.id}: invalid rejected plan`);
   }
   return errors;
@@ -61,12 +61,24 @@ export function isProductionContent(data) { return !data?.developmentOnly && dat
 export function endpointMap(data) { return new Map(data.providers.flatMap((p) => p.endpoints.map((e) => [e.id, e]))); }
 export function endpointsFor(data, scenario) { const map = endpointMap(data); return scenario.availableEndpointIds.map((id) => map.get(id)).filter(Boolean); }
 export function providerFor(data, scenario) { return data.providers.find((p) => p.id === scenario.providerId); }
-export function createScenarioPicker(data, rng = Math.random) { assertValid(data); const seen = new Map(); return (providerId = "all") => { let bag = seen.get(providerId) || []; const pool = data.scenarios.filter((s) => providerId === "all" || s.providerId === providerId); if (!pool.length) return null; if (!bag.length) { bag = pool.slice(); for (let i = bag.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [bag[i], bag[j]] = [bag[j], bag[i]]; } const last = seen.get(`${providerId}:last`); if (bag.length > 1 && bag.at(-1)?.id === last) [bag[0], bag[bag.length - 1]] = [bag.at(-1), bag[0]]; } const result = bag.pop(); seen.set(providerId, bag); seen.set(`${providerId}:last`, result.id); return copy(result); }; }
+export function createScenarioPicker(data, rng = Math.random) { assertValid(data); const seen = new Map(); return (providerId = "all") => { let bag = seen.get(providerId) || []; const pool = data.scenarios.filter((s) => (s.stage1Compatible === undefined || (s.stage1Compatible === true && !(s.engineSupportRequired || []).length)) && (providerId === "all" || s.providerId === providerId)); if (!pool.length) return null; const last = seen.get(`${providerId}:last`), lastScenario = pool.find((s) => s.id === last); if (!bag.length) { bag = pool.slice(); for (let i = bag.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [bag[i], bag[j]] = [bag[j], bag[i]]; } if (bag.length > 1 && lastScenario) { const equivalent = (s) => s.scenarioTemplateId && s.scenarioTemplateId === lastScenario.scenarioTemplateId || s.reasoningFamily && s.reasoningFamily === lastScenario.reasoningFamily; const ix = bag.findIndex(equivalent); if (ix >= 0 && ix === bag.length - 1) [bag[0], bag[ix]] = [bag[ix], bag[0]]; } } let ix = bag.length - 1; if (bag.length > 1 && lastScenario) { const equivalent = (s) => s.scenarioTemplateId && s.scenarioTemplateId === lastScenario.scenarioTemplateId || s.reasoningFamily && s.reasoningFamily === lastScenario.reasoningFamily; const safe = bag.findIndex((s) => !equivalent(s)); if (safe >= 0) ix = safe; } const result = bag.splice(ix, 1)[0]; seen.set(providerId, bag); seen.set(`${providerId}:last`, result.id); return copy(result); }; }
 
-export function isRuntimeParameter(parameter, value) { return (parameter.in === "path" && !parameter.allowedValues?.length) || (obj(value) && "$fromStep" in value) || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(parameter.name) && parameter.allowedValues == null; }
+export function isRuntimeParameter(parameter, value) { return (obj(value) && "$runtime" in value) || (parameter.in === "path" && !parameter.allowedValues?.length) || (obj(value) && "$fromStep" in value) || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(parameter.name) && parameter.allowedValues == null; }
 const valueAt = (o, path) => path.split(".").reduce((v, k) => v?.[k], o);
 const hasVal = (v) => { if (v === undefined || v === null || v === "") return false; if (obj(v)) { if (v.$runtime === true) return true; const values = Object.values(v); return values.length > 0 && values.every(hasVal); } if (arr(v)) return v.length > 0 && v.every(hasVal); return true; };
+const containsRuntime = (value) => obj(value) && Object.hasOwn(value, "$runtime") || (obj(value) && Object.values(value).some(containsRuntime)) || (arr(value) && value.some(containsRuntime));
+const containsReference = (value) => obj(value) && Object.hasOwn(value, "$fromStep") || (obj(value) && Object.values(value).some(containsReference)) || (arr(value) && value.some(containsReference));
+const deepEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+function assessmentMatches(actual, expected, assessment, parameter) {
+  if (!assessment || assessment.mode === "exact") return equivalentValue(actual, expected, false, parameter);
+  if (assessment.mode === "notAssessed") return hasVal(actual);
+  if (assessment.mode === "structural") return containsRuntime(actual) || containsReference(actual);
+  if (assessment.mode === "oneOf") return (assessment.values || []).some((value) => deepEqual(actual, value));
+  if (assessment.mode === "includesAll") { const actualValues = arr(actual) ? actual : typeof actual === "string" ? actual.split(",").map((v) => v.trim()).filter(Boolean) : []; return (assessment.values || []).flatMap((value) => arr(value) ? value : [value]).every((value) => actualValues.some((actualValue) => deepEqual(actualValue, value))); }
+  return equivalentValue(actual, expected, false, parameter);
+}
 function equivalentValue(actual, expected, runtime, parameter) {
+  if (containsRuntime(expected)) return containsRuntime(actual);
   if (runtime && obj(expected) && "$fromStep" in expected) return obj(actual) && Number.isInteger(actual.fromRequest) && actual.fromRequest >= 0;
   if (runtime) return true;
   if (typeof actual === "string" && typeof expected === "string" && actual.includes("places.") && expected.includes("places.")) {
@@ -104,7 +116,7 @@ function acceptedMatch(scenario, requests, map) {
     if (requests.length < plan.steps.length) continue;
     const unmatched = requests.map((r, i) => ({ r, i })); let ok = true;
     for (let si = 0; si < plan.steps.length; si++) {
-      const step = plan.steps[si], e = map.get(step.endpointId), ix = unmatched.findIndex(({ r }) => r.endpointId === step.endpointId && Object.keys(r.parameters || {}).every((name) => Object.hasOwn(step.parameters, name)) && Object.entries(step.parameters).every(([name, expected]) => { const p = e.parameters.find((q) => q.name === name); if (findRefs(expected).length) return true; const input = presentation(scenario, e).automatic?.[name]?.kind === "runtime" && r.parameters?.[name]?.$runtime === true; return equivalentValue(r.parameters?.[name], expected, input || p && isRuntimeParameter(p, expected), p); }));
+      const step = plan.steps[si], e = map.get(step.endpointId), ix = unmatched.findIndex(({ r }) => r.endpointId === step.endpointId && Object.keys(r.parameters || {}).every((name) => Object.hasOwn(step.parameters, name)) && Object.entries(step.parameters).every(([name, expected]) => { const p = e.parameters.find((q) => q.name === name), assessment = step.assessment?.[name], actual = r.parameters?.[name]; if (findRefs(expected).length) return true; const input = presentation(scenario, e).automatic?.[name]?.kind === "runtime" && (actual === undefined || containsRuntime(actual)); return assessmentMatches(actual, expected, assessment, p) || input || (actual === undefined && p && isRuntimeParameter(p, expected)); }));
       if (ix < 0) { ok = false; break; }
       const selected = unmatched[ix];
       for (const [name, expected] of Object.entries(step.parameters)) { const refs = findRefs(expected); if (!refs.length) continue;
@@ -120,7 +132,7 @@ function acceptedMatch(scenario, requests, map) {
           if (step.endpointId !== r.endpointId) return false;
           const e = map.get(step.endpointId);
           if (!Object.keys(r.parameters || {}).every((name) => Object.hasOwn(step.parameters, name))) return false;
-          return Object.entries(step.parameters).every(([name, expected]) => { if (findRefs(expected).length) return true; const p = e.parameters.find((q) => q.name === name); const input = presentation(scenario, e).automatic?.[name]?.kind === "runtime" && r.parameters?.[name]?.$runtime === true; return equivalentValue(r.parameters?.[name], expected, input || p && isRuntimeParameter(p, expected), p); });
+          return Object.entries(step.parameters).every(([name, expected]) => { if (findRefs(expected).length) return true; const p = e.parameters.find((q) => q.name === name), assessment = step.assessment?.[name], actual = r.parameters?.[name]; const input = presentation(scenario, e).automatic?.[name]?.kind === "runtime" && (actual === undefined || containsRuntime(actual)); return assessmentMatches(actual, expected, assessment, p) || input || (actual === undefined && p && isRuntimeParameter(p, expected)); });
         }));
         if (extrasValid) return plan;
       }
