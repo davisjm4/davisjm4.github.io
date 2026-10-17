@@ -5,7 +5,7 @@
    per challenge: a wrong first answer is shown immediately and recorded as
    revealed (same convention as Method & Constructor Lab). */
 import * as E from "./engine.js?v=arraylist-v1";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=java-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) =>
