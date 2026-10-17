@@ -35,3 +35,25 @@ From `java-games/documentation-lab/`:
 - `node tests/doclab-tests.mjs` — content quality and generator tests (no dependencies).
 - `node tests/doclab-jvm-tests.mjs` — needs a JDK 17+. Compiles every snippet with `--release 17`, runs doclint on every correct Javadoc, checks that decoy tags fail doclint, runs every API fact on the JVM, checks every API Detective option, and compares the in-browser call evaluator against the JVM for every possible assembled call.
 - `node tests/doclab-browser-tests.mjs` — optional; needs Playwright + Chromium and a local server at the repo root (`python3 -m http.server 8765`).
+
+
+## API Project Builder (Stage 1 foundation)
+
+The sixth mode is integrated behind a production gate. The development route is:
+
+`/java-games/documentation-lab/?mode=api-builder&apiDev=1`
+
+It uses the fictional, clearly labeled `api-project-data-v1.json` fixture. The normal selector keeps this mode disabled until verified research content replaces the fixture and sets `published` to `true`.
+
+Files:
+
+- `api-project-builder-engine.js` — schema validator, loader, scenario picker, request-plan validator, alternative-plan and efficiency feedback.
+- `api-project-builder-ui.js` — accessible documentation browser, parameter editor, request-plan workspace, submission, explanation, and shared-session tracking.
+- `api-project-data-v1.json` — development-only fictional fixture; never present it as Spotify or another real service.
+- `tests/api-project-builder-tests.mjs` — validator, references, parameter, multi-request, alternative-plan, efficiency, and picker checks.
+
+### Integration instructions for researched content
+
+Claude's production file should preserve `schemaVersion: 1` and all required field names from the assignment contract. Replace the fixture at the same path, retain `developmentOnly: false` or omit it, and set `published: true` only after the official URLs, verification dates, endpoint parameters, response fields, accepted plans, response samples, and model targets have been reviewed. The engine accepts multiple `acceptedPlans`; use `efficiency: "smallest-sufficient"` for the intended minimum and `efficiency: "valid-less-efficient"` for a valid but unnecessary-request alternative. No UI or engine rewrite should be necessary.
+
+Stage 2 response exploration and Stage 3 visual Java modeling are intentionally not implemented or exposed.
