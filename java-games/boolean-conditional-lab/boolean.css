@@ -1,0 +1,32 @@
+main { max-width: 900px; padding-top: 18px; padding-bottom: 28px; }
+h1 { font-size: 2.1rem; margin: 8px 0 14px; }
+h2 { font-size: 1.25rem; margin: 10px 0; }
+.toolbar { padding-bottom: 14px; margin-bottom: 14px; }
+.panel { padding: 18px; margin: 12px 0; }
+.snippet { white-space: pre-wrap; overflow-wrap: anywhere; margin: 12px 0; padding: 14px; font-size: 1rem; }
+.bool-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 14px 0; }
+.bool-choice { min-height: 48px; padding: 12px 10px; min-width: 0; overflow-wrap: anywhere; }
+.bool-choice.selected { background: var(--gold); color: #241800; }
+.bool-choice.answer { outline: 2px solid var(--accent); background: #213e46; color: var(--ink); }
+.bool-choice.wrong { border-color: var(--red); }
+.bool-choice:disabled { opacity: 1; }
+.bool-token { display: inline-block; border: 1px solid var(--line); border-radius: 6px; padding: 2px 4px; margin: 1px; background: transparent; color: inherit; font: inherit; cursor: pointer; }
+.bool-token:hover, .bool-token.selected { background: var(--gold); color: #241800; }
+.bool-token.answer { outline: 2px solid var(--accent); }
+.bool-token.wrong { text-decoration: line-through; border-color: var(--red); }
+.bool-code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.feedback { white-space: pre-line; margin: 14px 0 0; padding: 12px; }
+.stats { color: var(--muted); font-size: .85rem; }
+@media (max-width: 540px) {
+  header { flex-wrap: wrap; gap: 6px 14px; padding: 12px 16px; }
+  header small { order: 3; flex-basis: 100%; }
+  main { padding: 14px 14px 24px; }
+  .panel { padding: 14px; }
+  .toolbar label { display: block; }
+  #mode { width: 100%; }
+  .bool-choices { gap: 8px; }
+  .bool-choice { padding: 10px 6px; }
+  .snippet { font-size: .9rem; }
+  footer { padding: 14px; }
+}
