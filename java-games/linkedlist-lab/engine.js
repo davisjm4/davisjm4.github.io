@@ -48,7 +48,21 @@ function chain(nodes, head, next) {
   return { values: out, valid: !id, reason: id ? "The references form a cycle." : "" };
 }
 function choices(correct, distractors, rng) {
-  return shuffle(uniq([correct, ...distractors]).slice(0, 4), rng);
+  const out = uniq([correct, ...distractors]);
+  const n = Number(correct);
+  if (out.length < 4 && Number.isFinite(n)) {
+    for (let d = 1; out.length < 4; d++) {
+      for (const candidate of [String(n + d), String(n - d)]) {
+        if (!out.includes(candidate)) out.push(candidate);
+        if (out.length === 4) break;
+      }
+    }
+  }
+  if (out.length < 4) for (const candidate of ["true", "false", "null", "unknown"]) {
+    if (!out.includes(candidate)) out.push(candidate);
+    if (out.length === 4) break;
+  }
+  return shuffle(out.slice(0, 4), rng);
 }
 function linkChallenge(rng) {
   const target = values(rng, 3, 5);
