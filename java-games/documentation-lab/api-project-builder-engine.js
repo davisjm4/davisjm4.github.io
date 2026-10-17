@@ -137,7 +137,18 @@ export function validatePlan(data, scenario, submission) {
     });
   }))).map((r) => ({ endpointId: r.endpointId }));
   const status = incompleteRequests.length ? "incomplete-requests" : invalidParameterRequests.length ? "invalid-parameters" : missing.length ? "missing-requests" : unnecessary.length ? "unnecessary-requests" : incorrectlyConfiguredRequests.length ? "incorrect-parameters" : incorrectEndpoints.length ? "incorrect-endpoints" : "incorrect-plan";
-  const rejected = (scenario.rejectedPlans || []).find((p) => JSON.stringify([...p.endpointIds].sort()) === JSON.stringify(requests.map((r) => r.endpointId).sort()));
+  const rejected = (scenario.rejectedPlans || []).find((p) => {
+    if (JSON.stringify([...p.endpointIds].sort()) !== JSON.stringify(requests.map((r) => r.endpointId).sort())) return false;
+    if (!p.parameters || !Object.keys(p.parameters).length) return true;
+    const actual = new Map();
+    const collect = (value) => { if (obj(value)) for (const [key, child] of Object.entries(value)) { actual.set(key, child); collect(child); } };
+    requests.forEach((r) => collect(r.parameters));
+    return Object.entries(p.parameters).every(([key, value]) => {
+      const param = requests.map((r) => endpointMap(data).get(r.endpointId)?.parameters.find((x) => x.name === key)).find(Boolean);
+      if (param && isRuntimeParameter(param, value)) return true;
+      return actual.has(key) && JSON.stringify(actual.get(key)) === JSON.stringify(value);
+    });
+  });
   return { correct: false, valid: false, efficient: false, status, errors, missing, unnecessary, incorrectEndpoints, incorrectParameters: invalidParameterRequests, incompleteRequests: [...new Set(incompleteRequests)], invalidParameterRequests: [...new Set(invalidParameterRequests)], incorrectlyConfiguredRequests, rejectedReason: rejected?.reason || "", message: status === "incomplete-requests" ? "Complete the meaningful parameter choices for these requests. Required resource IDs are supplied by the application at run time." : status === "invalid-parameters" ? "One or more parameter values do not match the documented API rules." : status === "missing-requests" ? "Add the request or requests that provide the remaining project information." : status === "unnecessary-requests" ? "Some requests are not needed for this project's requirements." : status === "incorrect-parameters" ? "One or more requests use the wrong meaningful parameter choices." : "Review the request choices and how their response data supports the project." };
 }
 export function preferredPlan(scenario) { return scenario.acceptedPlans.find((p) => p.preferred) || scenario.acceptedPlans[0]; }
