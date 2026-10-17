@@ -1,0 +1,104 @@
+@import url("../style.css?v=java-quality-v3");
+
+[hidden] { display: none !important; }
+.challenge-meta {
+  color: var(--muted, #b7c8d4);
+  font-size: 0.9rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+}
+.requirement {
+  padding: 0.75rem 0.9rem;
+  border-left: 4px solid var(--accent, #79ddc6);
+  background: rgba(121, 221, 198, 0.08);
+}
+.debug-snippet {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+  line-height: 1.55;
+}
+.debug-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 1rem 0;
+}
+.debug-choice {
+  min-height: 3.5rem;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+.choice-letter {
+  display: inline-grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin-right: 0.55rem;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  font-weight: 800;
+}
+.line-choices {
+  max-width: 100%;
+  margin: 1rem 0;
+  overflow-x: auto;
+  border: 1px solid #456;
+  border-radius: 8px;
+  background: #0b151e;
+}
+.code-line {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(max-content, 1fr);
+  width: 100%;
+  min-width: max-content;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+.code-line:last-child { border-bottom: 0; }
+.code-line:hover, .code-line:focus-visible { background: #172c3c; }
+.line-number {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  color: var(--muted, #b7c8d4);
+  background: rgba(255,255,255,0.045);
+  font: 0.8rem/1 monospace;
+}
+.code-line code {
+  display: block;
+  padding: 0.72rem 0.9rem;
+  white-space: pre;
+}
+.debug-choice.selected,
+.code-line.selected {
+  outline: 3px solid var(--accent, #79ddc6);
+  outline-offset: -3px;
+  background: #234a51;
+}
+.correct-answer {
+  outline: 3px solid #64d89b !important;
+  outline-offset: -3px;
+  background: #174936 !important;
+}
+.incorrect-answer {
+  outline: 3px solid #ff8585 !important;
+  outline-offset: -3px;
+  background: #552f38 !important;
+}
+
+@media (max-width: 600px) {
+  .debug-choice-grid { grid-template-columns: minmax(0, 1fr); }
+  .debug-choice { min-height: 3rem; }
+  .actions { flex-wrap: wrap; }
+  .requirement { padding: 0.65rem 0.75rem; }
+}
