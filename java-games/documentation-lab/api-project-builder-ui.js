@@ -109,7 +109,7 @@ function parameterVariants(scenario, request, parameter) {
 function fieldMaskChoices(endpoint) {
   const seen = new Set(), choices = [];
   for (const f of endpoint.responseFields || []) {
-    const path = String(f.path).replaceAll("[]", "");
+    const path = String(f.path).replaceAll("[]", "").replace(/^\./, "");
     if (!path || path === "places" || path === "routes" || seen.has(path) || choices.some((choice) => path.startsWith(`${choice.path}.`))) continue;
     seen.add(path);
     choices.push({ path, description: f.description });
@@ -118,7 +118,7 @@ function fieldMaskChoices(endpoint) {
 }
 function fieldMaskControl(endpoint, request, parameter, config) {
   const selected = new Set(String(request.parameters[parameter.name] || "").split(",").map((v) => v.trim()).filter(Boolean));
-  const all = fieldMaskChoices(endpoint), choices = config.fieldOptions ? config.fieldOptions.map((path) => all.find((f) => f.path === path) || (endpoint.responseFields.some((f) => f.path.replaceAll("[]", "").startsWith(`${path}.`)) ? { path, description: `Include ${path} and its documented fields.` } : null)).filter(Boolean) : all;
+  const all = fieldMaskChoices(endpoint), choices = config.fieldOptions ? config.fieldOptions.map((path) => all.find((f) => f.path === path) || (endpoint.responseFields.some((f) => { const documented = f.path.replaceAll("[]", "").replace(/^\./, ""); return documented.startsWith(`${path}.`) || path.startsWith(`${documented}.`); }) ? { path, description: `Include ${path} and its documented fields.` } : null)).filter(Boolean) : all;
   if (!choices.length) return `<label class="api-param"><span>${esc(parameter.name)} <b>required</b></span><em>${esc(parameter.description)}</em></label>`;
   return `<fieldset class="api-field-selector"><legend>Information to include <b>required</b></legend><p class="api-symbolic">Choose the documented response information the application needs. The simulation handles request formatting.</p><div class="api-field-options">${choices.map((f) => `<label><input type="checkbox" data-field-mask="${esc(parameter.name)}" value="${esc(f.path)}"${selected.has(f.path) ? " checked" : ""}><code>${esc(f.path)}</code><span>${esc(f.description)}</span></label>`).join("")}</div></fieldset>`;
 }
