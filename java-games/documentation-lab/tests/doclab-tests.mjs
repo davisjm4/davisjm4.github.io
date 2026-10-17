@@ -264,4 +264,22 @@ section("session tracker integration (javaGames.session.v1)", () => {
   ok(t2.snapshot().games[g].generated === 4, "session persists and validates");
 });
 
+section("API Project Builder retry accounting", () => {
+  const store = new Map(), storage = { getItem: (k) => store.get(k) ?? null, setItem: (k, v) => store.set(k, String(v)) };
+  const t = createSessionTracker({ storage }), id = t.begin(E.GAME_ID, E.docLabGame.name, "api-builder", "API Project Builder");
+  for (let i = 0; i < 4; i++) {
+    const attempt = t.submit(id, false);
+    ok(attempt.accepted && attempt.status === "active" && t.status(id) === "active", `incorrect check ${i + 1} keeps the same project open`);
+  }
+  const solved = t.submit(id, true), snapshot = t.snapshot(), totals = snapshot.games[E.GAME_ID];
+  ok(solved.accepted && solved.status === "solved" && solved.submissions === 5, "fifth check can solve one project record");
+  ok(totals.generated === 1 && totals.attempted === 1 && totals.incorrect === 4 && totals.afterRetry === 1 && totals.submissions === 5, "retry outcomes remain separated in session totals");
+  ok(snapshot.records[id].submissions === 5 && snapshot.records[id].status === "solved", "per-project check count is retained");
+  const reveal = t.begin(E.GAME_ID, E.docLabGame.name, "api-builder", "API Project Builder"); t.reveal(reveal);
+  const skip = t.begin(E.GAME_ID, E.docLabGame.name, "api-builder", "API Project Builder"); t.skip(skip);
+  const finalTotals = t.snapshot().games[E.GAME_ID];
+  ok(finalTotals.revealed === 1 && finalTotals.skipped === 1 && finalTotals.afterRetry === 1, "reveal and skip do not count as independent solves");
+  ok(createSessionTracker({ storage }).snapshot().games[E.GAME_ID].submissions === 5, "existing session schema remains readable after API retries");
+});
+
 console.log(`\n${checks} checks passed.`);
