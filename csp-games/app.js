@@ -4,7 +4,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=platform-expansion-v2";
+} from "./session.js?v=active-time-v1";
 import * as E from "./engine.js?v=platform-expansion-v2";
 import { startCodeConcepts } from "./concepts-ui.js?v=platform-expansion-v2";
 const $ = (id) => document.getElementById(id),
