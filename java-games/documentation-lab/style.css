@@ -700,7 +700,7 @@ button.api-line.is-wrong {
 .api-doc-detail{display:grid;gap:7px}
 .api-doc-detail p{margin:0}
 .api-param-list{display:grid;gap:7px}
-.api-param{display:grid;gap:3px;background:#1b3043;color:var(--ink);border:1px solid #7892a5;border-radius:6px;padding:7px}
+.api-param{display:grid;align-content:start;gap:3px;background:#1b3043;color:var(--ink);border:1px solid #7892a5;border-radius:6px;padding:7px}
 .api-param span{font-family:var(--mono);font-weight:700}
 .api-param b{color:var(--gold);font-family:system-ui;font-size:.72rem}.api-param i{color:var(--muted);font-family:system-ui;font-style:normal;font-weight:400;font-size:.72rem}.api-param small{font-family:system-ui;color:var(--muted);font-weight:400}
 .api-param em{font:italic .8rem/1.45 system-ui;color:var(--muted)}
