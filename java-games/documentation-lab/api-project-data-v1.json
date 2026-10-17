@@ -361,7 +361,33 @@
           ],
           "relationships": []
         }
-      ]
+      ],
+      "providedIdentifiers": [
+        {
+          "name": "albumId",
+          "value": "ALB-42",
+          "description": "Selected album identifier."
+        },
+        {
+          "name": "artistId",
+          "value": "ART-7",
+          "description": "Artist identifier returned by the album request."
+        }
+      ],
+      "providedParameters": {
+        "album-get": {
+          "albumId": "ALB-42"
+        },
+        "album-tracks": {
+          "albumId": "ALB-42"
+        },
+        "artist-get": {
+          "artistId": "ART-7"
+        },
+        "artist-albums": {
+          "artistId": "ART-7"
+        }
+      }
     },
     {
       "id": "artist-shelf",
@@ -430,7 +456,22 @@
           ],
           "relationships": []
         }
-      ]
+      ],
+      "providedIdentifiers": [
+        {
+          "name": "artistId",
+          "value": "ART-7",
+          "description": "Selected artist identifier."
+        }
+      ],
+      "providedParameters": {
+        "artist-albums": {
+          "artistId": "ART-7"
+        },
+        "artist-get": {
+          "artistId": "ART-7"
+        }
+      }
     },
     {
       "id": "album-card",
@@ -517,7 +558,22 @@
           ],
           "relationships": []
         }
-      ]
+      ],
+      "providedIdentifiers": [
+        {
+          "name": "albumId",
+          "value": "ALB-42",
+          "description": "Selected album identifier."
+        }
+      ],
+      "providedParameters": {
+        "album-get": {
+          "albumId": "ALB-42"
+        },
+        "album-tracks": {
+          "albumId": "ALB-42"
+        }
+      }
     }
   ]
 }
