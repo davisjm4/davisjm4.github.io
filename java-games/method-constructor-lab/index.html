@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive Java and AP Computer Science A practice from DevCat Studios. No sign-in required."
+    />
+    <meta name="theme-color" content="#0c1722" />
+    <title>Method &amp; Constructor Lab | Java Games</title>
+    <link rel="stylesheet" href="../style.css?v=java-quality-v3" />
+    <link rel="stylesheet" href="./style.css?v=mcl-v1" />
+    <script type="module" src="./script.js?v=mcl-v1"></script>
+  </head>
+  <body data-game="method-constructor-lab">
+    <header>
+      <a href="../">← Java Games</a
+      ><small>DevCat Studios · Build your understanding</small>
+    </header>
+    <main id="main" class="mcl">
+      <div class="eyebrow">Java · Methods · Constructors · Parameters · Returns</div>
+      <h1>Method &amp; Constructor Lab</h1>
+      <p class="intro mcl-intro">
+        Recognize, call, and debug Java methods and constructors — one decision
+        at a time.
+      </p>
+      <div class="toolbar mcl-toolbar">
+        <label
+          >Practice mode
+          <select id="mode">
+            <option value="mixed" selected>Mixed Practice</option>
+            <option value="identify-method">Identify Method Parts</option>
+            <option value="identify-constructor">Identify Constructor Parts</option>
+            <option value="match-call">Match Calls to Signatures</option>
+            <option value="order-args">Organize Arguments</option>
+            <option value="return">Return Types &amp; Return Statements</option>
+            <option value="constructors">Constructors &amp; Object Creation</option>
+            <option value="returned-values">Method Calls &amp; Returned Values</option>
+            <option value="fix">Fix the Method or Constructor</option>
+            <option value="access">Access Modifiers</option>
+          </select></label
+        ><button id="new" class="secondary" type="button">New Challenge</button>
+        <details class="mcl-terms">
+          <summary>Key terms</summary>
+          <dl>
+            <dt>Parameter</dt>
+            <dd>A variable declared in a method or constructor signature, such as <code>int price</code>.</dd>
+            <dt>Argument</dt>
+            <dd>A value or expression supplied in a call, such as <code>12</code> in <code>addBonus(12)</code>.</dd>
+            <dt>Return type</dt>
+            <dd>The type declared before an ordinary method's name. <code>void</code> means no value is returned.</dd>
+            <dt>Constructor</dt>
+            <dd>A class member used with <code>new</code> to create an object. Its name matches the class and it has no return type, not even <code>void</code>.</dd>
+            <dt>public / private</dt>
+            <dd><code>public</code> members can be used from other classes; <code>private</code> members can be used only by code inside their own class.</dd>
+          </dl>
+        </details>
+      </div>
+      <section id="stage" class="panel mcl-stage">
+        <div class="mcl-head">
+          <span class="eyebrow" id="mode-label"></span
+          ><span id="concept" class="mcl-chip"></span>
+        </div>
+        <p id="prompt" class="mcl-prompt" hidden></p>
+        <div id="blocks" class="mcl-blocks"></div>
+        <h2 id="question" class="mcl-question"></h2>
+        <div id="interaction"></div>
+        <div class="actions mcl-actions">
+          <button id="submit" type="button" disabled>Check Answer</button
+          ><button id="skip" type="button" class="secondary">Skip</button
+          ><button id="next" type="button" hidden>Next Challenge →</button>
+        </div>
+        <div id="feedback" class="feedback mcl-feedback" role="status" tabindex="-1" hidden></div>
+      </section>
+      <p id="stats" class="stats"></p>
+    </main>
+    <noscript
+      ><p>Enable JavaScript to play these interactive games.</p></noscript
+    >
+    <footer>
+      Practice freely. No accounts or data uploads. Results are stored locally
+      in this browser. Independent practice tools; not affiliated with College
+      Board.
+    </footer>
+  </body>
+</html>
