@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { validateApiData, assertValid, validatePlan, formativeDiagnostics, endpointsFor, createScenarioPicker, isRuntimeParameter, isProductionContent, endpointMap } from "../api-project-builder-engine.js";
+import { presentationFor, fieldMaskChoices, serializeMultiSelection } from "../api-project-builder-ui.js";
 
 const data = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1.json", import.meta.url), "utf8"));
 const uiSource = fs.readFileSync(new URL("../api-project-builder-ui.js", import.meta.url), "utf8");
@@ -10,6 +11,8 @@ assert.match(uiSource, /HTTP Methods — Quick Reference/, "the UI includes the 
 assert.match(uiSource, /api-readable-request/, "solutions use readable request cards");
 assert.doesNotMatch(uiSource, /data-structured-path=\"latitude\"/, "the UI does not request manual latitude entry");
 assert.doesNotMatch(uiSource, /data-structured-path=\"longitude\"/, "the UI does not request manual longitude entry");
+assert.doesNotMatch(uiSource, /Required; separate values with commas/, "the UI does not ask students to type comma-separated values");
+assert.doesNotMatch(uiSource, /placeholder=\"<small class=/, "HTML-like placeholder text cannot leak into controls");
 assert.equal(validateApiData(data).length, 0, validateApiData(data).join("\n"));
 assert.doesNotThrow(() => assertValid(data));
 assert.equal(data.providers.length, 3);
@@ -20,6 +23,22 @@ assert.equal(data.scenarios.reduce((n, s) => n + s.responseSamples.length, 0), 1
 assert.ok(isProductionContent(data));
 
 const map = endpointMap(data);
+const parameterInventory = [];
+for (const provider of data.providers) for (const endpoint of provider.endpoints) for (const parameter of endpoint.parameters) {
+  const kind = presentationFor(endpoint, parameter);
+  parameterInventory.push({ provider: provider.id, endpoint: endpoint.id, parameter: parameter.name, kind, required: !!parameter.required });
+  if (parameter.allowedValues?.length && (parameter.format === "comma-separated" || parameter.type === "array<string>")) assert.equal(kind, "multi", `${endpoint.id}.${parameter.name} uses a multiselect`);
+  if (parameter.name === "X-Goog-FieldMask" || parameter.name.toLowerCase() === "fields") assert.equal(kind, "field-mask", `${endpoint.id}.${parameter.name} uses documented field selection`);
+  if (parameter.in === "path" && isRuntimeParameter(parameter)) assert.equal(kind, "runtime", `${endpoint.id}.${parameter.name} is symbolic`);
+  if (["integer", "number"].includes(parameter.type) && (parameter.minimum != null || parameter.maximum != null)) assert.equal(kind, "numeric", `${endpoint.id}.${parameter.name} is bounded`);
+}
+assert.ok(parameterInventory.some((p) => p.endpoint === "youtube.channels-list" && p.parameter === "part" && p.kind === "multi"));
+assert.ok(parameterInventory.some((p) => p.endpoint === "maps.places-nearby-search" && p.parameter === "locationRestriction" && p.kind === "location"));
+assert.equal(serializeMultiSelection({ type: "string", allowedValues: ["snippet", "statistics", "contentDetails"] }, ["statistics", "snippet", "snippet"]), "snippet,statistics");
+assert.deepEqual(serializeMultiSelection({ type: "array<string>", allowedValues: ["restaurant", "cafe"] }, ["cafe", "restaurant", "cafe"]), ["restaurant", "cafe"]);
+const routesMask = fieldMaskChoices(map.get("maps.routes-compute-routes"));
+assert.ok(routesMask.some((f) => f.path === "routes.distanceMeters"), "route field masks use documented response fields");
+assert.ok(!JSON.stringify(parameterInventory).includes("latitude"), "coordinates are not classified as student-entered parameters");
 function refs(value, found = []) { if (value && typeof value === "object" && "$fromStep" in value) found.push(value); else if (value && typeof value === "object") Object.values(value).forEach((v) => refs(v, found)); else if (Array.isArray(value)) value.forEach((v) => refs(v, found)); return found; }
 function studentPlan(scenario, accepted) {
   return { requests: accepted.steps.map((step, index) => {
