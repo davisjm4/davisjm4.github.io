@@ -4,11 +4,11 @@ const course = document.body.dataset.course;
 const isCsp = course === "csp";
 const items = catalog.filter(g => g.course === course);
 const groups = isCsp ? [
-  ["1","Big Idea 1 — Creative Development",["1.1","1.2","1.3","1.4"]],
-  ["2","Big Idea 2 — Data",["2.1","2.2","2.3","2.4"]],
-  ["3","Big Idea 3 — Algorithms and Programming",["3.1","3.2","3.3","3.4","3.5","3.6","3.7","3.8","3.9","3.10","3.11","3.12"]],
-  ["4","Big Idea 4 — Computer Systems and Networks",["4.1","4.2","4.3","4.4","4.5"]],
-  ["5","Big Idea 5 — Impact of Computing",["5.1","5.2","5.3","5.4","5.5"]]
+  ["1","Big Idea 1 — Creative Development",["1.1 Collaboration","1.2 Program Purpose","1.3 Program Design","1.4 Testing"]],
+  ["2","Big Idea 2 — Data",["2.1 Binary Representation","2.2 Data Compression","2.3 Data Analysis","2.4 Data Transformations"]],
+  ["3","Big Idea 3 — Algorithms and Programming",["3.1 Program Components","3.2 Variables and Expressions","3.3 Selection and Iteration","3.4 Boolean Logic","3.5 Lists","3.6 Procedures","3.7 Algorithm Design","3.8 Iteration","3.9 Algorithm Efficiency","3.10 Procedures","3.11 Searching","3.12 Simulations"]],
+  ["4","Big Idea 4 — Computer Systems and Networks",["4.1 Network Communication","4.2 Routing","4.3 Fault Tolerance","4.4 Parallel and Distributed Computing","4.5 Cybersecurity"]],
+  ["5","Big Idea 5 — Impact of Computing",["5.1 Computing Innovations","5.2 Privacy and Security","5.3 Bias and Equity","5.4 Ethical Implications","5.5 Responsible Computing"]]
 ] : [
   ["2.1","2.1 — Apply Algorithms",["2.1 Algorithm Development","2.1 Classic Algorithms","2.1 Algorithm Interpretation","2.1 Searching","2.1 Algorithm Efficiency"]],
   ["2.2","2.2 — Implement Controls",["2.2 Boolean Logic","2.2 Conditionals","2.2 Loops","2.2 Nested Loops","2.2 Recursion"]],
