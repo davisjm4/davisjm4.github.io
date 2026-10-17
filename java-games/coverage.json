@@ -709,9 +709,9 @@
         "4.7.A.5"
       ],
       "pdfPage": 115,
-      "status": "Introduced",
-      "activity": "Debugger Lab / Loop Lab / Array Lab",
-      "modes": "Integer wrapper selection for ArrayList remove overload",
+      "status": "Practiced",
+      "activity": "ArrayList Lab / Debugger Lab / Loop Lab / Array Lab",
+      "modes": "ArrayList Lab: wrapper type arguments, autoboxing/unboxing compile checks, Integer vs. int in remove overloads",
       "validation": "Annotated structure, exact Java semantics model, and real javac/JVM development checks",
       "testing": "Seeded generators, DOM controls, session/drag tests, and compiler/JVM verification",
       "gaps": "Autoboxing/unboxing, wrapper APIs, and null-unboxing errors."
@@ -730,8 +730,8 @@
       ],
       "pdfPage": 117,
       "status": "Practiced",
-      "activity": "Array Lab / Debugger Lab",
-      "modes": "Get/set/add/insert/remove/size; dynamic length; remove overload",
+      "activity": "ArrayList Lab / Array Lab / Debugger Lab",
+      "modes": "ArrayList Lab: declaration/import, add, add(index), get, set, remove overloads, size, isEmpty, contains, indexOf, valid indices, and shifting",
       "validation": "Annotated structure, exact Java semantics model, and real javac/JVM development checks",
       "testing": "Seeded generators, DOM controls, session/drag tests, and compiler/JVM verification",
       "gaps": "Additional overloads, reference/value behavior, and more element types."
@@ -743,8 +743,8 @@
       "essentialKnowledge": ["4.9.A.1", "4.9.A.2", "4.9.A.3", "4.9.A.4"],
       "pdfPage": 119,
       "status": "Practiced",
-      "activity": "Array Lab",
-      "modes": "Index and enhanced-for traversals of ArrayLists; updates and scalar results",
+      "activity": "ArrayList Lab / Array Lab",
+      "modes": "ArrayList Lab: indexed and enhanced-for traversals, set during traversal, and removal during traversal with skipped-element analysis",
       "validation": "Annotated structure, exact Java semantics model, and real javac/JVM development checks",
       "testing": "Seeded generators, DOM controls, session/drag tests, and compiler/JVM verification",
       "gaps": "Removal during traversal and skipped-element analysis."
@@ -756,8 +756,8 @@
       "essentialKnowledge": ["4.10.A.1", "4.10.A.2"],
       "pdfPage": 120,
       "status": "Practiced",
-      "activity": "Array Lab / Debugger Lab",
-      "modes": "ArrayList count/sum/min/max/search; remove-value overload",
+      "activity": "ArrayList Lab / Array Lab / Debugger Lab",
+      "modes": "ArrayList Lab: count, sum, search, filtered and reversed lists, and remove-value overload",
       "validation": "Annotated structure, exact Java semantics model, and real javac/JVM development checks",
       "testing": "Seeded generators, DOM controls, session/drag tests, and compiler/JVM verification",
       "gaps": "Collection filtering, insertion algorithms, and broader transformations."
