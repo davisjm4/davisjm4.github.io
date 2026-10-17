@@ -1,4 +1,5 @@
 /* API Project Builder: schema-v1 content adapter, normalizer, and scorer. */
+import { presentation } from "./api-project-presentation.js";
 export const GAME_ID = "documentation-lab";
 export const MODE_ID = "api-builder";
 export const MODE_TITLE = "API Project Builder";
@@ -65,7 +66,7 @@ export function createScenarioPicker(data, rng = Math.random) { assertValid(data
 export function isRuntimeParameter(parameter, value) { return (parameter.in === "path" && !parameter.allowedValues?.length) || (obj(value) && "$fromStep" in value) || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(parameter.name) && parameter.allowedValues == null; }
 const valueAt = (o, path) => path.split(".").reduce((v, k) => v?.[k], o);
 const hasVal = (v) => { if (v === undefined || v === null || v === "") return false; if (obj(v)) { if (v.$runtime === true) return true; const values = Object.values(v); return values.length > 0 && values.every(hasVal); } if (arr(v)) return v.length > 0 && v.every(hasVal); return true; };
-function equivalentValue(actual, expected, runtime) {
+function equivalentValue(actual, expected, runtime, parameter) {
   if (runtime && obj(expected) && "$fromStep" in expected) return obj(actual) && Number.isInteger(actual.fromRequest) && actual.fromRequest >= 0;
   if (runtime) return true;
   if (typeof actual === "string" && typeof expected === "string" && actual.includes("places.") && expected.includes("places.")) {
@@ -75,6 +76,13 @@ function equivalentValue(actual, expected, runtime) {
     const withoutOptionalId = (set) => new Set([...set].filter((field) => field !== "places.id"));
     const aWithoutId = withoutOptionalId(a), eWithoutId = withoutOptionalId(e);
     if (aWithoutId.size === eWithoutId.size && [...aWithoutId].every((field) => eWithoutId.has(field))) return true;
+  }
+  // Comma-separated API lists are sets. The UI orders selections by the documented
+  // values; the verified accepted plan may list the same parts in a different order.
+  if (parameter?.format === "comma-separated" && typeof actual === "string" && typeof expected === "string") {
+    const a = new Set(actual.split(",").map((x) => x.trim()).filter(Boolean));
+    const e = new Set(expected.split(",").map((x) => x.trim()).filter(Boolean));
+    return a.size === e.size && [...a].every((x) => e.has(x));
   }
   return JSON.stringify(actual) === JSON.stringify(expected);
 }
@@ -96,7 +104,7 @@ function acceptedMatch(scenario, requests, map) {
     if (requests.length < plan.steps.length) continue;
     const unmatched = requests.map((r, i) => ({ r, i })); let ok = true;
     for (let si = 0; si < plan.steps.length; si++) {
-      const step = plan.steps[si], e = map.get(step.endpointId), ix = unmatched.findIndex(({ r }) => r.endpointId === step.endpointId && Object.keys(r.parameters || {}).every((name) => Object.hasOwn(step.parameters, name)) && Object.entries(step.parameters).every(([name, expected]) => { const p = e.parameters.find((q) => q.name === name); if (findRefs(expected).length) return true; return equivalentValue(r.parameters?.[name], expected, p && isRuntimeParameter(p, expected)); }));
+      const step = plan.steps[si], e = map.get(step.endpointId), ix = unmatched.findIndex(({ r }) => r.endpointId === step.endpointId && Object.keys(r.parameters || {}).every((name) => Object.hasOwn(step.parameters, name)) && Object.entries(step.parameters).every(([name, expected]) => { const p = e.parameters.find((q) => q.name === name); if (findRefs(expected).length) return true; const input = presentation(scenario, e).automatic?.[name]?.kind === "runtime" && r.parameters?.[name]?.$runtime === true; return equivalentValue(r.parameters?.[name], expected, input || p && isRuntimeParameter(p, expected), p); }));
       if (ix < 0) { ok = false; break; }
       const selected = unmatched[ix];
       for (const [name, expected] of Object.entries(step.parameters)) { const refs = findRefs(expected); if (!refs.length) continue;
@@ -112,7 +120,7 @@ function acceptedMatch(scenario, requests, map) {
           if (step.endpointId !== r.endpointId) return false;
           const e = map.get(step.endpointId);
           if (!Object.keys(r.parameters || {}).every((name) => Object.hasOwn(step.parameters, name))) return false;
-          return Object.entries(step.parameters).every(([name, expected]) => { if (findRefs(expected).length) return true; const p = e.parameters.find((q) => q.name === name); return equivalentValue(r.parameters?.[name], expected, p && isRuntimeParameter(p, expected)); });
+          return Object.entries(step.parameters).every(([name, expected]) => { if (findRefs(expected).length) return true; const p = e.parameters.find((q) => q.name === name); const input = presentation(scenario, e).automatic?.[name]?.kind === "runtime" && r.parameters?.[name]?.$runtime === true; return equivalentValue(r.parameters?.[name], expected, input || p && isRuntimeParameter(p, expected), p); });
         }));
         if (extrasValid) return plan;
       }
