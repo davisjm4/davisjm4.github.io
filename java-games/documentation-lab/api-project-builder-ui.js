@@ -1,4 +1,4 @@
-import { loadApiContent, isProductionContent, validatePlan, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan, MODE_TITLE } from "./api-project-builder-engine.js?v=api-builder-v5";
+import { loadApiContent, isProductionContent, validatePlan, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan, MODE_TITLE } from "./api-project-builder-engine.js?v=api-builder-v6";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
@@ -61,8 +61,8 @@ function controlsFor(p, request, index, requests, scenario, map) {
   if (runtimeParam(p)) return `<label class="api-param"><span>${esc(p.name)} <b>runtime value</b> <small>${esc(p.in)}</small></span><span class="api-symbolic">The application supplies this selected resource or user input at run time.</span><label class="api-runtime-choice"><input type="checkbox" data-runtime="${esc(p.name)}"${val(request.parameters[p.name]) ? " checked" : ""}> Include this runtime parameter</label><em>${esc(p.description)}</em></label>`;
   if (p.type === "object") {
     const shape = variants[0]?.value || exampleParameter(scenario, request, p.name);
-    if (!object(request.parameters[p.name])) request.parameters[p.name] = blankShape(shape || {});
-    const inputs = scalarPaths(shape || {}).map(([path, sample]) => { const current = getPath(request.parameters[p.name], path); return `<label class="api-structured-field"><span>${esc(path)}</span><input data-structured="${esc(p.name)}" data-structured-path="${esc(path)}" type="${typeof sample === "number" ? "number" : "text"}"${typeof sample === "number" ? ' step="any"' : ""} value="${esc(current)}" placeholder="Project value"></label>`; }).join("");
+    const currentShape = object(request.parameters[p.name]) ? request.parameters[p.name] : blankShape(shape || {});
+    const inputs = scalarPaths(shape || {}).map(([path, sample]) => { const current = getPath(currentShape, path); return `<label class="api-structured-field"><span>${esc(path)}</span><input data-structured="${esc(p.name)}" data-structured-path="${esc(path)}" type="${typeof sample === "number" ? "number" : "text"}"${typeof sample === "number" ? ' step="any"' : ""} value="${esc(current)}" placeholder="Project value"></label>`; }).join("");
     return `<div class="api-param"><strong>${esc(p.name)} <b>structured ${p.required ? "required" : "optional"} input</b></strong><span class="api-symbolic">${esc(p.in)} · set the documented data fields; this is not a resource ID.</span><div class="api-structured-fields">${inputs}</div><em>${esc(p.description)}</em></div>`;
   }
   const current = request.parameters[p.name];
