@@ -18,6 +18,16 @@ function runtimeInputIds(value, found = []) {
   else if (Array.isArray(value)) value.forEach((child) => runtimeInputIds(child, found));
   return [...new Set(found)];
 }
+function runtimeDescriptionsFor(scenario, request, parameter) {
+  const descriptions = [];
+  const binding = runtimeBinding(scenario, request, parameter);
+  if (binding?.description) descriptions.push(binding.description);
+  for (const id of runtimeInputIds(exampleParameter(scenario, request, parameter.name))) {
+    const description = (scenario.runtimeInputs || []).find((input) => input.id === id)?.description;
+    if (description) descriptions.push(description);
+  }
+  return [...new Set(descriptions)];
+}
 const runtimeParam = (p, scenario, request, endpoint) => {
   const auto = scenario ? Object.entries(presentation(scenario, endpoint).automatic || {}).find(([path]) => path === p.name || path.startsWith(`${p.name}.`))?.[1] : null;
   return auto?.kind === "runtime" || !!(scenario && request && runtimeBinding(scenario, request, p)) || (p.in === "path" && !p.allowedValues?.length) || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(p.name) && !p.allowedValues?.length;
@@ -174,14 +184,15 @@ function controlsFor(p, request, index, requests, scenario, map) {
       const options = requests.map((r, i) => ({ r, i, e: map.get(r.endpointId) })).filter((x) => x.i < index && x.e);
       const selected = request.dependencies?.[p.name]?.fromRequest;
       const source = requests[selected] && map.get(requests[selected].endpointId), fields = source ? focusedFields(source, scenario) : [];
-      const runtimeInputs = runtimeInputIds(exampleParameter(scenario, request, p.name)).map((id) => (scenario.runtimeInputs || []).find((input) => input.id === id)?.description).filter(Boolean);
+      const runtimeInputs = runtimeDescriptionsFor(scenario, request, p);
       return `<div class="api-param"><span>${esc(p.name)} <b>request source</b></span><span class="api-symbolic">Choose a provided project value or data returned by an earlier request.</span>${runtimeInputs.length ? `<p class="api-symbolic">The application also supplies: ${runtimeInputs.map(esc).join("; ")}</p>` : ""}<label>Value source<select data-dependency-mode="${esc(p.name)}"><option value="">Choose a source…</option><option value="context"${currentMode === "context" ? " selected" : ""}>Project context</option><option value="request"${currentMode === "request" ? " selected" : ""}>Earlier API request</option></select></label>${currentMode === "context" ? contextFields : ""}${currentMode === "request" ? `<label>Earlier request<select data-dependency="${esc(p.name)}"><option value="">Choose a request…</option>${options.map((x) => `<option value="${x.i}"${selected === x.i ? " selected" : ""}>${esc(x.e.title)}</option>`).join("")}</select></label>${source ? `<fieldset class="api-dependency-fields"><legend>Response field(s) to use</legend>${fields.map((f) => `<label><input type="checkbox" data-dependency-path="${esc(p.name)}" value="${esc(f.path)}"${request.dependencies[p.name]?.paths?.includes(f.path) ? " checked" : ""}> <code>${esc(f.path)}</code></label>`).join("")}</fieldset>` : ""}` : ""}<em>${esc(p.description)} Use the documentation above to choose the data source and response field(s).</em></div>`;
     }
     const options = requests.map((r, i) => ({ r, i, e: map.get(r.endpointId) })).filter((x) => x.i < index && x.e);
     const selected = request.dependencies?.[p.name]?.fromRequest;
     const source = requests[selected] && map.get(requests[selected].endpointId);
     const fields = source ? focusedFields(source, scenario) : [];
-    return `<div class="api-param"><span>${esc(p.name)} <b>runtime value</b></span><span class="api-symbolic">${esc(p.in === "path" ? "Path resource" : "Related response data")} · supplied by the application at run time</span><label>Earlier request<select data-dependency="${esc(p.name)}"><option value="">Choose a request…</option>${options.map((x) => `<option value="${x.i}"${selected === x.i ? " selected" : ""}>${esc(x.e.title)}</option>`).join("")}</select></label>${source ? `<fieldset class="api-dependency-fields"><legend>Response field(s) to use</legend>${fields.map((f) => `<label><input type="checkbox" data-dependency-path="${esc(p.name)}" value="${esc(f.path)}"${request.dependencies[p.name]?.paths?.includes(f.path) ? " checked" : ""}> <code>${esc(f.path)}</code></label>`).join("")}</fieldset>` : ""}<em>${esc(p.description)} Use the response documentation above to choose the field(s).</em></div>`;
+    const runtimeInputs = runtimeDescriptionsFor(scenario, request, p);
+    return `<div class="api-param"><span>${esc(p.name)} <b>runtime value</b></span><span class="api-symbolic">${esc(p.in === "path" ? "Path resource" : "Related response data")} · supplied by the application at run time</span>${runtimeInputs.length ? `<p class="api-symbolic">The application also supplies: ${runtimeInputs.map(esc).join("; ")}</p>` : ""}<label>Earlier request<select data-dependency="${esc(p.name)}"><option value="">Choose a request…</option>${options.map((x) => `<option value="${x.i}"${selected === x.i ? " selected" : ""}>${esc(x.e.title)}</option>`).join("")}</select></label>${source ? `<fieldset class="api-dependency-fields"><legend>Response field(s) to use</legend>${fields.map((f) => `<label><input type="checkbox" data-dependency-path="${esc(p.name)}" value="${esc(f.path)}"${request.dependencies[p.name]?.paths?.includes(f.path) ? " checked" : ""}> <code>${esc(f.path)}</code></label>`).join("")}</fieldset>` : ""}<em>${esc(p.description)} Use the response documentation above to choose the field(s).</em></div>`;
   }
   if (runtimeParam(p, scenario, request, map.get(request.endpointId)) && p.in === "path") return `<div class="api-param"><strong>${esc(p.name)} <b>runtime path value</b></strong><span class="api-symbolic">${esc(runtimeLabel)} No value needs to be entered.</span><em>${esc(p.description)}</em></div>`;
   if (runtimeParam(p, scenario, request, map.get(request.endpointId))) return `<label class="api-param"><span>${esc(p.name)} <b>runtime value</b> <small>${esc(p.in)}</small></span><span class="api-symbolic">${esc(runtimeLabel)}</span><label class="api-runtime-choice"><input type="checkbox" data-runtime="${esc(p.name)}"${val(request.parameters[p.name]) ? " checked" : ""}> Use the application-supplied value</label><em>${esc(p.description)}</em></label>`;
@@ -222,7 +233,7 @@ function controlsFor(p, request, index, requests, scenario, map) {
 function requestHtml(requests, map, scenario) {
   if (!requests.length) return `<p class="muted">No requests yet. Add an operation from the documentation above.</p>`;
   return requests.map((r, i) => { const e = map.get(r.endpointId), groups = classification(scenario, e), config = presentation(scenario, e);
-    const auto = groups.automatic.map((name) => { const spec = Object.entries(config.automatic || {}).find(([path]) => path === name || path.startsWith(`${name}.`))?.[1]; return `<li><code>${esc(name)}</code> — ${esc(spec?.reason || (spec?.kind === "runtime" ? "Supplied at run time by the application" : "Required documented setting"))}</li>`; }).join("");
+    const auto = groups.automatic.map((name) => { const spec = Object.entries(config.automatic || {}).find(([path]) => path === name || path.startsWith(`${name}.`))?.[1], parameter = e.parameters.find((item) => item.name === name), runtime = parameter && runtimeDescriptionsFor(scenario, r, parameter); return `<li><code>${esc(name)}</code> — ${esc(runtime?.join("; ") || spec?.reason || (spec?.kind === "runtime" ? "Supplied at run time by the application" : "Required documented setting"))}</li>`; }).join("");
     return `<article class="api-request" data-request="${i}"><div class="api-request-head"><span class="api-step">${i + 1}</span><div><strong>${method(e)} ${esc(e.path)}</strong><small>${esc(e.title)}</small></div><button type="button" class="secondary api-remove" data-remove="${i}">Remove Request</button></div><div class="api-request-params">${e.parameters.filter((p) => groups.assessed.includes(p.name)).map((p) => controlsFor(p, r, i, requests, scenario, map)).join("") || `<p class="muted">No settings to choose for this request.</p>`}</div>${auto ? `<details class="api-handled"><summary>Handled by the application</summary><ul>${auto}</ul></details>` : ""}</article>`; }).join("");
 }
 function readablePlan(plan, map, scenario) {
