@@ -1,114 +1,120 @@
-/* API Project Builder Stage 1 engine. No DOM access. */
+/* API Project Builder: schema-v1 content adapter, normalizer, and scorer. */
 export const GAME_ID = "documentation-lab";
 export const MODE_ID = "api-builder";
 export const MODE_TITLE = "API Project Builder";
 export const DATA_FILE = "./api-project-data-v1.json";
-const clone = (x) => JSON.parse(JSON.stringify(x));
-const arr = (v) => Array.isArray(v);
-const text = (v) => typeof v === "string" && v.trim().length > 0;
-const unique = (values, path, errors) => { const seen = new Set(); for (const value of values) { if (seen.has(value)) errors.push(path + ": duplicate id " + value); seen.add(value); } };
+const arr = Array.isArray;
+const obj = (v) => !!v && typeof v === "object" && !arr(v);
+const str = (v) => typeof v === "string" && !!v.trim();
+const uniq = (xs, where, errors) => { const seen = new Set(); for (const x of xs) { if (seen.has(x)) errors.push(`${where}: duplicate id ${x}`); seen.add(x); } };
+const copy = (v) => JSON.parse(JSON.stringify(v));
+
 export function validateApiData(data) {
   const errors = [];
-  if (!data || typeof data !== "object") return ["top level must be an object"];
+  if (!obj(data)) return ["top level must be an object"];
   if (data.schemaVersion !== 1) errors.push("schemaVersion must be 1");
   if (!arr(data.providers) || !arr(data.scenarios)) return errors.concat("providers and scenarios must be arrays");
-  const providers = data.providers, pids = providers.map((p) => p && p.id);
-  unique(pids, "providers", errors);
-  const endpoints = new Map();
-  for (const p of providers) {
-    if (!p || !text(p.id) || !text(p.name) || !text(p.documentationUrl) || !text(p.verifiedDate) || !text(p.notes) || !arr(p.endpoints)) { errors.push("provider " + ((p && p.id) || "?") + ": missing required field"); continue; }
-    unique(p.endpoints.map((e) => e && e.id), "provider " + p.id + " endpoints", errors);
+  uniq(data.providers.map((p) => p?.id), "providers", errors);
+  const providers = new Map(), endpoints = new Map();
+  for (const p of data.providers) {
+    if (!obj(p) || !str(p.id) || !str(p.name) || !str(p.documentationUrl) || !str(p.verifiedDate) || !(str(p.notes) || arr(p.notes)) || !arr(p.endpoints)) { errors.push(`provider ${p?.id || "?"}: invalid required fields`); continue; }
+    providers.set(p.id, p); uniq(p.endpoints.map((e) => e?.id), `provider ${p.id} endpoints`, errors);
     for (const e of p.endpoints) {
-      if (!e || !text(e.id) || !text(e.method) || !text(e.path) || !text(e.title) || !text(e.description) || !arr(e.parameters) || !arr(e.responseFields) || !e.authentication || !text(e.sourceUrl)) { errors.push("endpoint " + ((e && e.id) || "?") + ": missing required field"); continue; }
-      if (endpoints.has(e.id)) errors.push("endpoints: duplicate global id " + e.id);
-      endpoints.set(e.id, { ...e, providerId: p.id });
-      for (const q of e.parameters) { if (!q || !text(q.name) || !text(q.location) || !text(q.type) || typeof q.required !== "boolean" || !text(q.description)) errors.push("endpoint " + e.id + ": invalid parameter"); if (q && q.allowedValues && !arr(q.allowedValues)) errors.push("endpoint " + e.id + ": allowedValues must be an array"); }
-      for (const f of e.responseFields) if (!f || !text(f.path) || !text(f.type) || !text(f.description)) errors.push("endpoint " + e.id + ": invalid responseField");
+      if (!obj(e) || !str(e.id) || !str(e.method) || !str(e.path) || !str(e.title) || !str(e.description) || !arr(e.parameters) || !obj(e.authentication) || !arr(e.responseFields) || !str(e.sourceUrl)) { errors.push(`endpoint ${e?.id || "?"}: invalid required fields`); continue; }
+      if (endpoints.has(e.id)) errors.push(`endpoints: duplicate global id ${e.id}`);
+      endpoints.set(e.id, { endpoint: e, providerId: p.id });
+      const names = new Set();
+      for (const q of e.parameters) { if (!obj(q) || !str(q.name) || !["path", "query", "header", "body"].includes(q.in) || !str(q.type) || typeof q.required !== "boolean" || !str(q.description)) errors.push(`endpoint ${e.id}: invalid parameter`); if (q?.name && names.has(q.name)) errors.push(`endpoint ${e.id}: duplicate parameter ${q.name}`); if (q?.name) names.add(q.name); if (q?.allowedValues !== undefined && !arr(q.allowedValues)) errors.push(`endpoint ${e.id}: ${q.name} allowedValues must be an array`); }
+      for (const f of e.responseFields) if (!obj(f) || !str(f.path) || !str(f.type) || !str(f.description)) errors.push(`endpoint ${e.id}: invalid response field`);
+      for (const r of e.parameterRules || []) if (!obj(r) || !["exactlyOne", "atLeastOne", "atMostOne", "requiresValue"].includes(r.rule) || !arr(r.parameters)) errors.push(`endpoint ${e.id}: invalid parameter rule`);
     }
   }
-  const sids = data.scenarios.map((s) => s && s.id); unique(sids, "scenarios", errors);
+  uniq(data.scenarios.map((s) => s?.id), "scenarios", errors);
   for (const s of data.scenarios) {
-    if (!s || !text(s.id) || !text(s.providerId) || !text(s.title) || !text(s.goal) || !arr(s.requirements) || !s.constraints || !arr(s.availableEndpointIds) || !arr(s.acceptedPlans) || !text(s.explanation) || !arr(s.responseSamples) || !arr(s.modelTargets)) { errors.push("scenario " + ((s && s.id) || "?") + ": missing required field"); continue; }
-    if (!providers.some((p) => p.id === s.providerId)) errors.push("scenario " + s.id + ": unknown providerId " + s.providerId);
-    for (const eid of s.availableEndpointIds) { const e = endpoints.get(eid); if (!e) errors.push("scenario " + s.id + ": unknown endpoint " + eid); else if (e.providerId !== s.providerId) errors.push("scenario " + s.id + ": endpoint " + eid + " belongs to another provider"); }
-    if (!s.requirements.every((r) => r && text(r.id) && text(r.label) && text(r.description))) errors.push("scenario " + s.id + ": invalid requirement");
-    if (s.providedIdentifiers !== undefined) {
-      if (!arr(s.providedIdentifiers) || !s.providedIdentifiers.every((v) => v && text(v.name) && v.value !== undefined && text(v.description))) errors.push("scenario " + s.id + ": invalid providedIdentifier");
-    }
-    if (s.providedParameters !== undefined) {
-      if (!s.providedParameters || typeof s.providedParameters !== "object" || arr(s.providedParameters)) errors.push("scenario " + s.id + ": providedParameters must be an object");
-      else for (const [eid, values] of Object.entries(s.providedParameters)) {
-        const e = endpoints.get(eid);
-        if (!e) errors.push("scenario " + s.id + ": providedParameters references unknown endpoint " + eid);
-        else {
-          const names = new Set(e.parameters.map((q) => q.name));
-          for (const name of Object.keys(values || {})) if (!names.has(name)) errors.push("scenario " + s.id + ": provided parameter " + name + " is not documented for " + eid);
-        }
-      }
-    }
+    if (!obj(s) || !str(s.id) || !str(s.providerId) || !str(s.title) || !str(s.goal) || !arr(s.requirements) || !arr(s.constraints) || !arr(s.availableEndpointIds) || !arr(s.acceptedPlans) || !obj(s.explanation) || !arr(s.responseSamples) || !obj(s.modelTargets)) { errors.push(`scenario ${s?.id || "?"}: invalid required fields`); continue; }
+    if (!providers.has(s.providerId)) errors.push(`scenario ${s.id}: unknown providerId ${s.providerId}`);
+    for (const r of s.requirements) if (!obj(r) || !str(r.id) || !str(r.description)) errors.push(`scenario ${s.id}: invalid requirement`);
+    for (const id of s.availableEndpointIds) { const ref = endpoints.get(id); if (!ref) errors.push(`scenario ${s.id}: unknown endpoint ${id}`); else if (ref.providerId !== s.providerId) errors.push(`scenario ${s.id}: endpoint ${id} belongs to another provider`); }
+    if (!s.acceptedPlans.length) errors.push(`scenario ${s.id}: requires an accepted plan`);
     for (const plan of s.acceptedPlans) {
-      if (!plan || !text(plan.id) || !text(plan.efficiency) || !arr(plan.requests)) { errors.push("scenario " + s.id + ": invalid acceptedPlan"); continue; }
-      for (const req of plan.requests) {
-        if (!req || !text(req.endpointId) || !req.parameters || typeof req.parameters !== "object" || arr(req.parameters)) { errors.push("scenario " + s.id + ": invalid request"); continue; }
-        const e = endpoints.get(req.endpointId); if (!e) { errors.push("scenario " + s.id + ": plan references unknown endpoint " + req.endpointId); continue; }
-        if (!s.availableEndpointIds.includes(req.endpointId)) errors.push("scenario " + s.id + ": plan endpoint " + req.endpointId + " is not available");
-        const names = new Set(e.parameters.map((q) => q.name));
-        for (const name of Object.keys(req.parameters)) if (!names.has(name)) errors.push("scenario " + s.id + ": " + req.endpointId + " unknown parameter " + name);
-        for (const q of e.parameters) if (q.required && !Object.hasOwn(req.parameters, q.name)) errors.push("scenario " + s.id + ": " + req.endpointId + " missing required parameter " + q.name);
+      if (!obj(plan) || !str(plan.id) || !arr(plan.steps) || !plan.steps.length) { errors.push(`scenario ${s.id}: invalid accepted plan`); continue; }
+      const stepRefs = new Map();
+      for (const step of plan.steps) {
+        const ref = endpoints.get(step?.endpointId);
+        if (!obj(step) || !Number.isInteger(step.step) || !ref || !s.availableEndpointIds.includes(step.endpointId) || !obj(step.parameters)) { errors.push(`scenario ${s.id}/${plan.id}: invalid plan step`); continue; }
+        stepRefs.set(step.step, ref.endpoint);
+        const params = new Map(ref.endpoint.parameters.map((p) => [p.name, p]));
+        for (const [name, value] of Object.entries(step.parameters)) { if (!params.has(name)) errors.push(`scenario ${s.id}/${plan.id}: ${step.endpointId} unknown parameter ${name}`); if (obj(value) && "$fromStep" in value) { const src = stepRefs.get(value.$fromStep); if (!src || value.$fromStep >= step.step) errors.push(`scenario ${s.id}/${plan.id}: invalid dependency at step ${step.step}`); else if (!src.responseFields.some((f) => f.path === value.path || f.path.replace(/\[\]/g, "") === String(value.path).replace(/\[\]/g, ""))) errors.push(`scenario ${s.id}/${plan.id}: dependency field ${value.path} is undocumented`); } }
+        for (const p of ref.endpoint.parameters) if (p.required && !Object.hasOwn(step.parameters, p.name)) errors.push(`scenario ${s.id}/${plan.id}: ${step.endpointId} missing required ${p.name}`);
       }
+      for (const step of plan.conditionalSteps || []) if (!endpoints.has(step.endpointId) || !str(step.condition) || !obj(step.parameters)) errors.push(`scenario ${s.id}/${plan.id}: invalid conditional step`);
     }
-    for (const sample of s.responseSamples) if (!sample || !text(sample.endpointId) || !endpoints.has(sample.endpointId) || !sample.body || typeof sample.body !== "object") errors.push("scenario " + s.id + ": invalid responseSample");
-    for (const target of s.modelTargets) if (!target || !text(target.id) || !text(target.concept) || !arr(target.fields) || !arr(target.relationships || [])) errors.push("scenario " + s.id + ": invalid modelTarget");
+    for (const sample of s.responseSamples) if (!obj(sample) || !endpoints.has(sample.endpointId) || !obj(sample.body)) errors.push(`scenario ${s.id}: invalid response sample`);
+    for (const rejected of s.rejectedPlans || []) if (!arr(rejected.endpointIds) || !str(rejected.reason) || rejected.endpointIds.some((id) => !endpoints.has(id))) errors.push(`scenario ${s.id}: invalid rejected plan`);
   }
   return errors;
 }
 export function assertValid(data) { const errors = validateApiData(data); if (errors.length) throw new Error("Invalid API Project Builder content:\n- " + errors.join("\n- ")); return data; }
-export async function loadApiContent(url = DATA_FILE, fetcher = globalThis.fetch) { if (typeof fetcher !== "function") throw new Error("A fetch function is required"); const response = await fetcher(url); if (!response.ok) throw new Error("Could not load " + url + " (" + response.status + ")"); return assertValid(await response.json()); }
-export function createScenarioPicker(data, rng = Math.random) { assertValid(data); let bag = []; return () => { if (!bag.length) { bag = data.scenarios.slice(); for (let i = bag.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [bag[i], bag[j]] = [bag[j], bag[i]]; } } return clone(bag.pop()); }; }
-function endpointMap(data) { return new Map(data.providers.flatMap((p) => p.endpoints.map((e) => [e.id, e]))); }
+export async function loadApiContent(url = DATA_FILE, fetcher = globalThis.fetch) { if (typeof fetcher !== "function") throw new Error("A fetch function is required"); const response = await fetcher(url); if (!response.ok) throw new Error(`Could not load ${url} (${response.status})`); return assertValid(await response.json()); }
+export function isProductionContent(data) { return !data?.developmentOnly && data?.schemaVersion === 1 && data.providers?.length >= 3 && data.scenarios?.length >= 1 && data.providers.every((p) => p.verifiedDate && p.documentationUrl); }
+export function endpointMap(data) { return new Map(data.providers.flatMap((p) => p.endpoints.map((e) => [e.id, e]))); }
 export function endpointsFor(data, scenario) { const map = endpointMap(data); return scenario.availableEndpointIds.map((id) => map.get(id)).filter(Boolean); }
-function signature(r) { return r.endpointId + "|" + Object.keys(r.parameters || {}).sort().map((k) => k + "=" + JSON.stringify(r.parameters[k])).join("&"); }
-function comparePlans(a, b) { const x = (a.requests || []).map(signature).sort(), y = (b.requests || []).map(signature).sort(); return x.length === y.length && x.every((v, i) => v === y[i]); }
-function requestValidation(scenario, request, map) {
-  const e = map.get(request.endpointId), errors = [], missing = [], invalid = [];
-  if (!e) return { errors: ["This endpoint is not in the documentation for this project."], missing, invalid, unknownEndpoint: true };
-  if (!scenario.availableEndpointIds.includes(e.id)) errors.push("This endpoint is not available for this project.");
-  const allowed = new Map(e.parameters.map((p) => [p.name, p]));
-  for (const name of Object.keys(request.parameters || {})) if (!allowed.has(name)) { errors.push("Parameter " + name + " is not documented for this endpoint."); invalid.push(name); }
-  for (const p of e.parameters) {
-    const value = request.parameters && request.parameters[p.name];
-    if (p.required && (value === undefined || value === "")) { errors.push("Required parameter " + p.name + " is missing."); missing.push(p.name); }
-    if (value !== undefined && value !== "" && p.allowedValues && !p.allowedValues.includes(value)) { errors.push(p.name + " must use a documented value."); invalid.push(p.name); }
-    if (value !== undefined && value !== "" && p.type === "integer" && (!Number.isInteger(Number(value)) || (p.min != null && Number(value) < p.min) || (p.max != null && Number(value) > p.max))) { errors.push(p.name + " must be a documented integer range."); invalid.push(p.name); }
+export function providerFor(data, scenario) { return data.providers.find((p) => p.id === scenario.providerId); }
+export function createScenarioPicker(data, rng = Math.random) { assertValid(data); const seen = new Map(); return (providerId = "all") => { let bag = seen.get(providerId) || []; const pool = data.scenarios.filter((s) => providerId === "all" || s.providerId === providerId); if (!pool.length) return null; if (!bag.length) { bag = pool.slice(); for (let i = bag.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [bag[i], bag[j]] = [bag[j], bag[i]]; } const last = seen.get(`${providerId}:last`); if (bag.length > 1 && bag.at(-1)?.id === last) [bag[0], bag[bag.length - 1]] = [bag.at(-1), bag[0]]; } const result = bag.pop(); seen.set(providerId, bag); seen.set(`${providerId}:last`, result.id); return copy(result); }; }
+
+export function isRuntimeParameter(parameter, value) { return parameter.in === "path" || (obj(value) && "$fromStep" in value) || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(parameter.name) && parameter.allowedValues == null; }
+const valueAt = (o, path) => path.split(".").reduce((v, k) => v?.[k], o);
+const hasVal = (v) => { if (v === undefined || v === null || v === "") return false; if (obj(v)) { if (v.$runtime === true) return true; const values = Object.values(v); return values.length > 0 && values.every(hasVal); } if (arr(v)) return v.length > 0 && v.every(hasVal); return true; };
+function equivalentValue(actual, expected, runtime) { if (runtime && obj(expected) && "$fromStep" in expected) return obj(actual) && Number.isInteger(actual.fromRequest) && actual.fromRequest >= 0; if (runtime) return true; return JSON.stringify(actual) === JSON.stringify(expected); }
+function findRefs(value, out = []) { if (obj(value) && "$fromStep" in value) out.push(value); else if (obj(value)) Object.values(value).forEach((v) => findRefs(v, out)); else if (arr(value)) value.forEach((v) => findRefs(v, out)); return out; }
+function validateRules(endpoint, parameters) {
+  const errors = [];
+  for (const rule of endpoint.parameterRules || []) {
+    const set = rule.parameters.filter((name) => hasVal(parameters[name]));
+    if (rule.rule === "exactlyOne" && set.length !== 1) errors.push(`Choose exactly one of ${rule.parameters.join(", ")}.`);
+    if (rule.rule === "atLeastOne" && set.length < 1) errors.push(`Choose at least one of ${rule.parameters.join(", ")}.`);
+    if (rule.rule === "atMostOne" && set.length > 1) errors.push(`Choose no more than one of ${rule.parameters.join(", ")}.`);
+    if (rule.rule === "requiresValue") for (const name of set) { const wanted = rule.requires?.[name]; if (wanted !== undefined && !(arr(wanted) ? wanted : [wanted]).includes(parameters[name])) errors.push(`${name} requires ${rule.description || "a related parameter value"}.`); }
   }
-  return { errors, missing, invalid, unknownEndpoint: false };
+  for (const p of endpoint.parameters) { const v = parameters[p.name], implicitlySupplied = isRuntimeParameter(p) && p.in === "path"; if (p.required && !hasVal(v) && !implicitlySupplied) errors.push(`Required ${p.name} is missing.`); if (hasVal(v) && p.allowedValues && !(p.format === "comma-separated" ? String(v).split(",").map((x) => x.trim()).every((x) => p.allowedValues.includes(x)) : p.allowedValues.includes(v))) errors.push(`${p.name} must use documented value(s).`); if (hasVal(v) && typeof v === "number" && ((p.minimum != null && v < p.minimum) || (p.maximum != null && v > p.maximum))) errors.push(`${p.name} is outside the documented range.`); }
+  return errors;
 }
-export function validatePlan(data, scenario, plan) {
-  const map = endpointMap(data), requests = (plan && plan.requests || []).map((r) => ({ endpointId: r.endpointId, parameters: { ...(r.parameters || {}) } })), errors = [], incompleteRequests = [], invalidParameterRequests = [];
-  for (const r of requests) {
-    const check = requestValidation(scenario, r, map);
-    errors.push(...check.errors);
-    if (check.missing.length) incompleteRequests.push(r.endpointId);
-    if (check.invalid.length) invalidParameterRequests.push(r.endpointId);
+function acceptedMatch(scenario, requests, map) {
+  for (const plan of scenario.acceptedPlans) {
+    if (requests.length !== plan.steps.length) continue;
+    const unmatched = requests.map((r, i) => ({ r, i })); let ok = true;
+    for (let si = 0; si < plan.steps.length; si++) {
+      const step = plan.steps[si], e = map.get(step.endpointId), ix = unmatched.findIndex(({ r }) => r.endpointId === step.endpointId && Object.keys(r.parameters || {}).every((name) => Object.hasOwn(step.parameters, name)) && Object.entries(step.parameters).every(([name, expected]) => { const p = e.parameters.find((q) => q.name === name); if (findRefs(expected).length) return true; return equivalentValue(r.parameters?.[name], expected, p && isRuntimeParameter(p, expected)); }));
+      if (ix < 0) { ok = false; break; }
+      const selected = unmatched[ix];
+      for (const [name, expected] of Object.entries(step.parameters)) { const refs = findRefs(expected); if (!refs.length) continue;
+        const dep = selected.r.dependencies?.[name], expectedPaths = refs.map((ref) => ref.path), sourceSteps = refs.map((ref) => plan.steps.findIndex((v) => v.step === ref.$fromStep)), sources = sourceSteps.map((si) => requests.findIndex((r) => r.endpointId === plan.steps[si]?.endpointId));
+        const actualPaths = arr(dep?.paths) ? dep.paths : dep?.path ? [dep.path] : [];
+        if (!obj(dep) || sources.some((source) => source !== dep.fromRequest || source >= selected.i) || JSON.stringify([...actualPaths].sort()) !== JSON.stringify([...expectedPaths].sort())) ok = false;
+      }
+      unmatched.splice(ix, 1);
+    }
+    if (ok) return plan;
   }
-  const exact = scenario.acceptedPlans.filter((p) => comparePlans({ requests }, p));
-  if (exact.length) {
-    const best = exact.find((p) => p.efficiency === "smallest-sufficient") || exact[0];
-    return { correct: true, valid: true, efficient: best.efficiency === "smallest-sufficient", status: best.efficiency === "smallest-sufficient" ? "correct" : "valid-less-efficient", matchedPlanId: best.id, errors, missing: [], unnecessary: [], incorrectEndpoints: [], incorrectParameters: [], incompleteRequests: [], invalidParameterRequests: [], message: best.efficiency === "smallest-sufficient" ? "This is the smallest sufficient request plan." : "This plan can work, but it includes an unnecessary request for this goal." };
-  }
-  const expected = scenario.acceptedPlans.map((p) => p.requests), allExpectedIds = new Set(expected.flat().map((r) => r.endpointId));
-  const incorrectEndpoints = requests.filter((r) => !allExpectedIds.has(r.endpointId)).map((r) => r.endpointId);
-  const incorrectParameters = [];
-  for (const r of requests) { const matches = expected.flat().filter((e) => e.endpointId === r.endpointId); if (matches.length && !matches.some((e) => JSON.stringify(e.parameters) === JSON.stringify(r.parameters))) incorrectParameters.push(r.endpointId); }
-  const best = scenario.acceptedPlans.map((p) => ({ p, score: p.requests.filter((w) => requests.some((r) => signature(r) === signature(w))).length })).sort((a, b) => b.score - a.score)[0];
-  const incorrectSet = new Set(incorrectParameters);
-  const missing = best ? best.p.requests.filter((w) => !incorrectSet.has(w.endpointId) && !requests.some((r) => signature(r) === signature(w))) : [];
-  const unnecessary = requests.filter((r) => !incorrectSet.has(r.endpointId) && (!best || !best.p.requests.some((w) => signature(w) === signature(r))));
-  if (errors.length) {
-    const incomplete = [...new Set(incompleteRequests)], invalid = [...new Set(invalidParameterRequests)];
-    return { correct: false, valid: false, efficient: false, status: incomplete.length && !invalid.length ? "incomplete-requests" : "invalid-parameters", errors, missing, unnecessary: [], incorrectEndpoints, incorrectParameters: invalid, incompleteRequests: incomplete, invalidParameterRequests: invalid, message: incomplete.length && !invalid.length ? "Complete the required parameter values for the selected request." : "Check the parameter values against the API documentation." };
-  }
-  if (incorrectParameters.length) return { correct: false, valid: false, efficient: false, status: "incorrect-parameters", errors, missing, unnecessary, incorrectEndpoints, incorrectParameters, incompleteRequests: [], invalidParameterRequests: [], message: "An appropriate endpoint was selected, but its parameter value does not match the project or the documented solution." };
-  return { correct: false, valid: false, efficient: false, status: "incomplete-or-incorrect", errors, missing, unnecessary, incorrectEndpoints, incorrectParameters, incompleteRequests: [], invalidParameterRequests: [], message: missing.length ? "The plan is missing a request needed to supply one or more requirements." : "The selected requests do not provide the required information." };
+  return null;
 }
-export function requestFor(endpointId, parameters = {}) { return { endpointId, parameters: { ...parameters } }; }
+export function validatePlan(data, scenario, submission) {
+  const map = endpointMap(data), requests = (submission?.requests || []).map((r) => ({ endpointId: r.endpointId, parameters: { ...(r.parameters || {}) }, dependencies: { ...(r.dependencies || {}) } }));
+  const byId = new Map(), incompleteRequests = [], invalidParameterRequests = [], errors = [], requestValidity = new Map();
+  for (const r of requests) { byId.set(r.endpointId, (byId.get(r.endpointId) || 0) + 1); const e = map.get(r.endpointId); if (!e || !scenario.availableEndpointIds.includes(r.endpointId)) { errors.push({ endpointId: r.endpointId, reason: "This request is not in the documentation for this project." }); continue; } const problems = validateRules(e, r.parameters); if (problems.length) { errors.push(...problems.map((reason) => ({ endpointId: r.endpointId, reason }))); invalidParameterRequests.push(r.endpointId); } const missing = e.parameters.some((p) => p.required && !(isRuntimeParameter(p) && p.in === "path") && !hasVal(r.parameters[p.name])); if (missing) incompleteRequests.push(r.endpointId); requestValidity.set(r.endpointId, problems.length === 0 && !missing); }
+  const matched = !errors.length && !incompleteRequests.length ? acceptedMatch(scenario, requests, map) : null;
+  const human = (id) => map.get(id)?.title || id;
+  if (matched) return { correct: true, valid: true, efficient: matched.preferred !== false, status: matched.preferred === false ? "valid-less-efficient" : "correct", matchedPlanId: matched.id, errors: [], missing: [], unnecessary: [], incorrectEndpoints: [], incorrectParameters: [], incompleteRequests: [], invalidParameterRequests: [], message: matched.preferred === false ? "This plan can meet the goal, though another valid plan uses fewer or less costly requests." : "This plan meets the project requirements." };
+  const plans = scenario.acceptedPlans;
+  const scored = plans.map((p) => { const missing = p.steps.filter((s) => !requests.some((r) => r.endpointId === s.endpointId)); const extras = requests.filter((r) => !p.steps.some((s) => s.endpointId === r.endpointId)); const same = requests.filter((r) => p.steps.some((s) => s.endpointId === r.endpointId)).length; return { p, missing, extras, same }; }).sort((a, b) => b.same - a.same || a.missing.length - b.missing.length || a.extras.length - b.extras.length);
+  const best = scored[0], present = new Set(requests.map((r) => r.endpointId));
+  const missing = best.p.steps.filter((s) => !present.has(s.endpointId)).map((s) => ({ endpointId: s.endpointId }));
+  const unnecessary = requests.filter((r) => !best.p.steps.some((s) => s.endpointId === r.endpointId) && !incompleteRequests.includes(r.endpointId) && !invalidParameterRequests.includes(r.endpointId)).map((r) => ({ endpointId: r.endpointId }));
+  const invalidSet = new Set([...invalidParameterRequests]);
+  const incorrectEndpoints = requests.filter((r) => !scenario.availableEndpointIds.includes(r.endpointId) || !plans.some((p) => p.steps.some((s) => s.endpointId === r.endpointId))).filter((r) => !incompleteRequests.includes(r.endpointId) && !invalidSet.has(r.endpointId)).map((r) => ({ endpointId: r.endpointId }));
+  const status = incompleteRequests.length ? "incomplete-requests" : invalidParameterRequests.length ? "invalid-parameters" : missing.length ? "missing-requests" : unnecessary.length ? "unnecessary-requests" : "incorrect-plan";
+  const rejected = (scenario.rejectedPlans || []).find((p) => JSON.stringify([...p.endpointIds].sort()) === JSON.stringify(requests.map((r) => r.endpointId).sort()));
+  return { correct: false, valid: false, efficient: false, status, errors, missing, unnecessary, incorrectEndpoints, incorrectParameters: invalidParameterRequests, incompleteRequests: [...new Set(incompleteRequests)], invalidParameterRequests: [...new Set(invalidParameterRequests)], rejectedReason: rejected?.reason || "", message: status === "incomplete-requests" ? "Complete the meaningful parameter choices for these requests. Required resource IDs are supplied by the application at run time." : status === "invalid-parameters" ? "One or more parameter values do not match the documented API rules." : status === "missing-requests" ? "Add the request or requests that provide the remaining project information." : status === "unnecessary-requests" ? "Some requests are not needed for this project's requirements." : "Review the request choices and how their response data supports the project." };
+}
+export function preferredPlan(scenario) { return scenario.acceptedPlans.find((p) => p.preferred) || scenario.acceptedPlans[0]; }
+export function planFromAccepted(scenario, plan = preferredPlan(scenario)) { return { requests: plan.steps.map((step) => ({ endpointId: step.endpointId, parameters: Object.fromEntries(Object.entries(step.parameters).filter(([name, value]) => { const e = scenario.availableEndpointIds; return !obj(value) || !("$fromStep" in value); })), dependencies: {} })) }; }
