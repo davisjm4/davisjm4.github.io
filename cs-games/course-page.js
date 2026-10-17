@@ -24,7 +24,8 @@ const groups = isCsp ? [
 ];
 const topicText = g => g.topics.join(" · ");
 function card(g){
-  return '<article class="game-card" data-search="'+esc((g.title+" "+g.description+" "+g.skill+" "+topicText(g)).toLowerCase())+'"><div class="card-top"><span class="course-pill">'+(g.source==="csp"?"AP CSP":"Advanced CS")+'</span><span class="verified">Published</span></div><h3>'+esc(g.title)+'</h3><p>'+esc(g.description)+'</p><p class="skill"><strong>Skill:</strong> '+esc(g.skill)+'</p><p class="topics">'+esc(topicText(g))+'</p><a class="launch" href="'+g.url+'">Launch '+esc(g.title)+' <span aria-hidden="true">→</span></a></article>';
+  const source = g.source === "csp" ? '<span class="course-pill">AP CSP activity</span>' : "";
+  return '<article class="game-card" data-search="'+esc((g.title+" "+g.description+" "+g.skill+" "+topicText(g)).toLowerCase())+'"><div class="card-top">'+source+'</div><h3>'+esc(g.title)+'</h3><p>'+esc(g.description)+'</p><p class="skill"><strong>Practice:</strong> '+esc(g.skill)+'</p><p class="topics">'+esc(topicText(g))+'</p><a class="launch" href="'+g.url+'">Launch '+esc(g.title)+' <span aria-hidden="true">→</span></a></article>';
 }
 function matches(g, query, topic){return (!query || (g.title+" "+g.description+" "+g.skill+" "+topicText(g)).toLowerCase().includes(query)) && (!topic || g.topics.includes(topic));}
 function render(){
