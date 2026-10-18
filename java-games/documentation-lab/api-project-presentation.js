@@ -158,7 +158,19 @@ export function presentation(scenario, endpoint) {
   return complete.fields || !COMMON_FIELDS[endpoint.id] ? complete : { ...complete, fields: COMMON_FIELDS[endpoint.id] };
 }
 export function classification(scenario, endpoint) {
-  const config = presentation(scenario, endpoint), assessed = config.assessed || [], automatic = Object.keys(config.automatic || {}).map((name) => name.split(".")[0]);
+  const config = presentation(scenario, endpoint), assessed = [...(config.assessed || [])], automatic = Object.keys(config.automatic || {}).map((name) => name.split(".")[0]);
+  const containsSource = (value) => {
+    if (value && typeof value === "object") {
+      if (Object.hasOwn(value, "$fromStep")) return true;
+      return Object.values(value).some(containsSource);
+    }
+    if (Array.isArray(value)) return value.some(containsSource);
+    return false;
+  };
+  for (const plan of scenario.acceptedPlans || []) for (const step of plan.steps || []) {
+    if (step.endpointId !== endpoint.id) continue;
+    for (const [name, value] of Object.entries(step.parameters || {})) if (containsSource(value) && !assessed.includes(name)) assessed.push(name);
+  }
   return { assessed, automatic: [...new Set(automatic)], hidden: endpoint.parameters.map((p) => p.name).filter((name) => !assessed.includes(name) && !automatic.includes(name)) };
 }
 export function automaticParameters(scenario, endpoint) {
