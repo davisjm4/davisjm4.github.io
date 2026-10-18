@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { validateApiData, assertValid, validatePlan, formativeDiagnostics, endpointsFor, createScenarioPicker, isRuntimeParameter, isProductionContent, endpointMap } from "../api-project-builder-engine.js";
-import { presentationFor, fieldMaskChoices, serializeMultiSelection, responseSourceChoices, responseSourceControl, focusedFields } from "../api-project-builder-ui.js";
+import { presentationFor, fieldMaskChoices, serializeMultiSelection, responseSourceChoices, responseSourceControl, focusedFields, dependencySourceCandidates, dependencyConnectionControl, originControl, resolveRequestDependencies } from "../api-project-builder-ui.js";
 import { presentation, classification, automaticParameters, PROJECT_PRESENTATION, RESPONSE_SOURCE_CHOICES } from "../api-project-presentation.js";
 
 const data = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1.json", import.meta.url), "utf8"));
@@ -133,6 +133,110 @@ for (const [scenarioId, , ,] of targetCases) {
 }
 console.log(`Response-source coverage: ${publishedScenarios.length} enabled scenarios, ${checkedAcceptedPlans} accepted-plan variants checked by the evaluator, ${checkedSourceDecisions} required source selections exposed by the controls; ${checkedIncorrectAlternatives} plausible incorrect fields rejected. This verifies response-source choices, not full-plan control coverage. The ${targetCases.filter(([id]) => !publishedScenarios.some((scenario) => scenario.id === id)).length} deferred audit scenarios remain disabled.`);
 
+// Step 3: dependency sources are resolved only from verified accepted-plan relationships.
+let resolvedAcceptedPlanChecks = 0;
+for (const scenario of publishedScenarios) for (const accepted of scenario.acceptedPlans || []) {
+  const requests = studentPlan(scenario, accepted, expandedData, expandedMap);
+  resolveRequestDependencies(scenario, requests.requests, expandedMap);
+  const result = validatePlan(expandedData, scenario, requests);
+  assert.equal(result.correct, true, `${scenario.id}/${accepted.id}: resolver preserves accepted-plan grading: ${JSON.stringify(result)}`);
+  resolvedAcceptedPlanChecks++;
+}
+const dependencyControls = new Map();
+for (const scenario of publishedScenarios) for (const plan of scenario.acceptedPlans || []) for (const step of plan.steps || []) {
+  for (const [parameter, value] of Object.entries(step.parameters || {})) if (refs(value).length) dependencyControls.set(`${scenario.id}|${step.endpointId}|${parameter}`, { scenario, endpointId: step.endpointId, parameter });
+}
+let autoDependencyCount = 0, meaningfulChoiceCount = 0, multipleRequestSourceCount = 0;
+for (const { scenario, endpointId, parameter } of dependencyControls.values()) {
+  const endpoint = expandedMap.get(endpointId), parameterDef = endpoint.parameters.find((item) => item.name === parameter);
+  const accepted = scenario.acceptedPlans.find((plan) => plan.steps.some((step) => step.endpointId === endpointId && refs(step.parameters?.[parameter]).length));
+  const requests = studentPlan(scenario, accepted, expandedData, expandedMap).requests;
+  const destinationIndex = accepted.steps.findIndex((step) => step.endpointId === endpointId && refs(step.parameters?.[parameter]).length);
+  const hasContextAlternative = scenario.acceptedPlans.some((plan) => plan.steps.some((step) => step.endpointId === endpointId && Object.hasOwn(step.parameters || {}, parameter) && !refs(step.parameters[parameter]).length));
+  if (hasContextAlternative) {
+    meaningfulChoiceCount++;
+    requests[destinationIndex].dependencies[parameter].source = "request";
+  }
+  resolveRequestDependencies(scenario, requests, expandedMap);
+  const dependency = requests[destinationIndex].dependencies[parameter];
+  const candidateSources = dependencySourceCandidates(scenario, endpointId, parameter, requests, destinationIndex, expandedMap);
+  assert.ok(candidateSources.length > 0, `${scenario.id}/${parameter}: accepted source exists before dependent request`);
+  if (hasContextAlternative) assert.equal(dependency.fromRequest, candidateSources[0].index, `${scenario.id}/${parameter}: choosing request data automatically identifies its sole API source`);
+  if (candidateSources.length === 1) {
+    if (!hasContextAlternative) autoDependencyCount++;
+    assert.equal(dependency.fromRequest, candidateSources[0].index, `${scenario.id}/${parameter}: the sole compatible source is connected`);
+    assert.equal(dependency.automatic, true, `${scenario.id}/${parameter}: automatic connection is marked for recomputation`);
+    const control = dependencyConnectionControl(scenario, requests[destinationIndex], parameterDef, destinationIndex, requests, expandedMap);
+    assert.match(control, /Uses information from Request/, `${scenario.id}/${parameter}: readable automatic connection is shown`);
+    assert.doesNotMatch(control, /<select/, `${scenario.id}/${parameter}: a single-option request selector is omitted`);
+    const source = expandedMap.get(requests[candidateSources[0].index].endpointId);
+    const fields = responseSourceChoices(scenario, source, parameter);
+    const requiredPaths = accepted.steps.flatMap((step) => step.endpointId === endpointId ? refs(step.parameters?.[parameter]).map((ref) => ref.path) : []);
+    assert.ok(requiredPaths.every((path) => fields.some((field) => field.canonicalPath === path)), `${scenario.id}/${parameter}: automatic source resolution leaves required response-field choices available`);
+  } else if (!hasContextAlternative) {
+    multipleRequestSourceCount++;
+    assert.ok(candidateSources.length > 1, `${scenario.id}/${parameter}: unresolved dependency still offers meaningful candidates`);
+    const control = dependencyConnectionControl(scenario, requests[destinationIndex], parameterDef, destinationIndex, requests, expandedMap);
+    assert.match(control, /<select data-dependency=/, `${scenario.id}/${parameter}: multiple compatible sources remain selectable`);
+  }
+}
+assert.ok(autoDependencyCount > 0, "published dependencies include unambiguous sources to connect automatically");
+// No enabled accepted plan currently supports multiple API source operations for one parameter.
+assert.equal(multipleRequestSourceCount, 0, "no enabled response dependency has multiple accepted API source operations");
+assert.equal(meaningfulChoiceCount, 1, "Museum Walk Planner keeps the meaningful project-context versus request-source decision");
+
+const playlistScenario = expandedData.scenarios.find((scenario) => scenario.id === "spotify-my-playlists-browser");
+const playlistAccepted = playlistScenario.acceptedPlans[0], playlistPlan = studentPlan(playlistScenario, playlistAccepted, expandedData, expandedMap);
+const playlistList = playlistPlan.requests[0], playlistItems = playlistPlan.requests[1];
+resolveRequestDependencies(playlistScenario, playlistPlan.requests, expandedMap);
+assert.equal(playlistItems.dependencies.playlist_id.fromRequest, 0, "adding the sole playlist source automatically connects the item request");
+assert.equal(playlistItems.dependencies.playlist_id.paths.length, 1, "automatic source selection preserves the response-field choice separately");
+const playlistParam = expandedMap.get(playlistItems.endpointId).parameters.find((parameter) => parameter.name === "playlist_id");
+assert.match(dependencyConnectionControl(playlistScenario, playlistItems, playlistParam, 1, playlistPlan.requests, expandedMap), /Uses information from Request 1: Get Current User/);
+playlistPlan.requests.splice(0, 1);
+resolveRequestDependencies(playlistScenario, playlistPlan.requests, expandedMap);
+assert.equal(playlistItems.dependencies.playlist_id.fromRequest, null, "removing the source clears the stale binding");
+assert.equal(playlistItems.dependencies.playlist_id.invalid, true, "removing the source marks the dependency unresolved");
+assert.equal(Object.hasOwn(playlistItems.parameters, "playlist_id"), false, "removing the source clears its runtime binding");
+assert.match(dependencyConnectionControl(playlistScenario, playlistItems, playlistParam, 0, playlistPlan.requests, expandedMap), /Add an earlier request/);
+playlistPlan.requests.unshift(playlistList);
+resolveRequestDependencies(playlistScenario, playlistPlan.requests, expandedMap);
+assert.equal(playlistItems.dependencies.playlist_id.fromRequest, 0, "adding the source back reconnects the dependency");
+playlistPlan.requests.reverse();
+resolveRequestDependencies(playlistScenario, playlistPlan.requests, expandedMap);
+assert.equal(playlistItems.dependencies.playlist_id.fromRequest, null, "reordering the dependent request before its source clears the invalid ordering");
+playlistPlan.requests.reverse();
+resolveRequestDependencies(playlistScenario, playlistPlan.requests, expandedMap);
+assert.equal(playlistItems.dependencies.playlist_id.fromRequest, 0, "restoring the valid order reconnects the source");
+
+const rewind = expandedData.scenarios.find((scenario) => scenario.id === "spotify-session-rewind-saver"), rewindAccepted = rewind.acceptedPlans[0];
+const rewindPlan = studentPlan(rewind, rewindAccepted, expandedData, expandedMap);
+resolveRequestDependencies(rewind, rewindPlan.requests, expandedMap);
+assert.equal(rewindPlan.requests[2].dependencies.playlist_id.fromRequest, 1, "Study Session Rewind Saver connects the created playlist");
+assert.equal(rewindPlan.requests[2].dependencies.uris.fromRequest, 0, "Study Session Rewind Saver connects recently played tracks separately");
+assert.deepEqual(rewindPlan.requests[2].dependencies.uris.paths, ["items[].track.uri"], "nested track response path remains independently selected");
+assert.equal(validatePlan(expandedData, rewind, rewindPlan).correct, true, "automatic source request indexes and canonical paths retain evaluator semantics");
+
+const museumDependencyScenario = expandedData.scenarios.find((scenario) => scenario.id === "maps-museum-walk-planner");
+assert.ok(museumDependencyScenario.acceptedPlans.some((plan) => plan.steps.some((step) => step.endpointId === "maps.routes-compute-routes" && step.parameters.origin && !refs(step.parameters.origin).length)), "Museum Walk Planner retains its project-context origin alternative");
+assert.ok(museumDependencyScenario.acceptedPlans.some((plan) => plan.steps.some((step) => step.endpointId === "maps.routes-compute-routes" && refs(step.parameters.origin).length)), "Museum Walk Planner retains its earlier-request origin alternative");
+const museumRoutes = [{ endpointId: "maps.routes-compute-routes", parameters: {}, dependencies: {} }];
+assert.match(originControl(museumDependencyScenario, museumRoutes, 0, museumRoutes[0], expandedMap), /Hotel address from project/);
+assert.match(originControl(museumDependencyScenario, museumRoutes, 0, museumRoutes[0], expandedMap), /Earlier geocoding response/);
+
+const deferredMix = expandedData.scenarios.find((scenario) => scenario.id === "youtube-study-mix-copier"), deferredAccepted = deferredMix.acceptedPlans[0];
+const deferredPlan = studentPlan(deferredMix, deferredAccepted, expandedData, expandedMap);
+resolveRequestDependencies(deferredMix, deferredPlan.requests, expandedMap);
+const deferredDestination = deferredPlan.requests.find((request) => request.endpointId === "youtube.playlistitems-insert");
+assert.ok(deferredDestination, "deferred Study Mix Copier still has its authored destination request");
+deferredDestination.dependencies.snippet.fromRequest = null;
+deferredDestination.dependencies.snippet.paths = [];
+const mixCandidates = dependencySourceCandidates(deferredMix, deferredDestination.endpointId, "snippet", deferredPlan.requests, 2, expandedMap);
+assert.equal(mixCandidates.length, 2, "deferred Study Mix Copier identifies both distinct earlier response sources");
+assert.equal(deferredDestination.dependencies.snippet.fromRequest, null, "the two-source dependency is never guessed as one automatic source");
+assert.equal(deferredMix.stage1Compatible, false, "the two-source repeated-request format remains disabled");
+console.log(`Dependency handling: ${dependencyControls.size} enabled controls inspected, ${autoDependencyCount} API sources connected automatically, ${meaningfulChoiceCount} meaningful source choice retained, ${multipleRequestSourceCount} multiple-request choices available; ${resolvedAcceptedPlanChecks} accepted-plan variants remained correct after resolution; add/remove/reorder and disabled Study Mix dependency checks passed.`);
+
 // The focused-control checks below cover the original nine scenarios only.
 const focusedInventory = [];
 for (const scenario of data.scenarios) {
@@ -170,7 +274,6 @@ for (const scenario of data.scenarios) {
       return { endpointId: step.endpointId, parameters, dependencies };
     });
     const reachable = validatePlan(data, scenario, { requests });
-    if (scenario.id === "maps-saved-place-card" && accepted === scenario.acceptedPlans[0]) continue;
     assert.equal(reachable.correct, true, `${scenario.id}/${accepted.id}: focused UI can reach accepted plan: ${JSON.stringify(reachable)}`);
   }
 }
