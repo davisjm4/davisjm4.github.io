@@ -198,6 +198,7 @@ resolveRequestDependencies(playlistScenario, playlistPlan.requests, expandedMap)
 assert.equal(playlistItems.dependencies.playlist_id.fromRequest, null, "removing the source clears the stale binding");
 assert.equal(playlistItems.dependencies.playlist_id.invalid, true, "removing the source marks the dependency unresolved");
 assert.equal(Object.hasOwn(playlistItems.parameters, "playlist_id"), false, "removing the source clears its runtime binding");
+assert.deepEqual(playlistItems.dependencies.playlist_id.paths, [], "removing the source clears stale selected response paths");
 assert.match(dependencyConnectionControl(playlistScenario, playlistItems, playlistParam, 0, playlistPlan.requests, expandedMap), /Add an earlier request/);
 playlistPlan.requests.unshift(playlistList);
 resolveRequestDependencies(playlistScenario, playlistPlan.requests, expandedMap);
@@ -208,6 +209,10 @@ assert.equal(playlistItems.dependencies.playlist_id.fromRequest, null, "reorderi
 playlistPlan.requests.reverse();
 resolveRequestDependencies(playlistScenario, playlistPlan.requests, expandedMap);
 assert.equal(playlistItems.dependencies.playlist_id.fromRequest, 0, "restoring the valid order reconnects the source");
+playlistPlan.requests[0].endpointId = "spotify.get-recently-played";
+resolveRequestDependencies(playlistScenario, playlistPlan.requests, expandedMap);
+assert.equal(playlistItems.dependencies.playlist_id.fromRequest, null, "replacing the source endpoint clears an incompatible binding");
+assert.match(dependencyConnectionControl(playlistScenario, playlistItems, playlistParam, 1, playlistPlan.requests, expandedMap), /Add an earlier request/);
 
 const rewind = expandedData.scenarios.find((scenario) => scenario.id === "spotify-session-rewind-saver"), rewindAccepted = rewind.acceptedPlans[0];
 const rewindPlan = studentPlan(rewind, rewindAccepted, expandedData, expandedMap);
@@ -234,6 +239,10 @@ deferredDestination.dependencies.snippet.paths = [];
 const mixCandidates = dependencySourceCandidates(deferredMix, deferredDestination.endpointId, "snippet", deferredPlan.requests, 2, expandedMap);
 assert.equal(mixCandidates.length, 2, "deferred Study Mix Copier identifies both distinct earlier response sources");
 assert.equal(deferredDestination.dependencies.snippet.fromRequest, null, "the two-source dependency is never guessed as one automatic source");
+assert.match(dependencyConnectionControl(deferredMix, deferredDestination, expandedMap.get(deferredDestination.endpointId).parameters.find((parameter) => parameter.name === "snippet"), 2, deferredPlan.requests, expandedMap), /more than one earlier response/);
+deferredPlan.requests.splice(0, 1);
+resolveRequestDependencies(deferredMix, deferredPlan.requests, expandedMap);
+assert.equal(deferredPlan.requests[1].dependencies.snippet.fromRequest, null, "Study Mix never auto-connects only one part of a two-source dependency");
 assert.equal(deferredMix.stage1Compatible, false, "the two-source repeated-request format remains disabled");
 console.log(`Dependency handling: ${dependencyControls.size} enabled controls inspected, ${autoDependencyCount} API sources connected automatically, ${meaningfulChoiceCount} meaningful source choice retained, ${multipleRequestSourceCount} multiple-request choices available; ${resolvedAcceptedPlanChecks} accepted-plan variants remained correct after resolution; add/remove/reorder and disabled Study Mix dependency checks passed.`);
 
