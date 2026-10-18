@@ -100,18 +100,18 @@ function responseFields(fields) { return `<ul class="api-fields">${fields.map((f
 function parameterDocs(p, options) { const range = p.allowedValues?.length ? `${options ? "Relevant documented values" : "Allowed values"}: ${(options || p.allowedValues).join(", ")}` : p.minimum != null || p.maximum != null ? `Range: ${p.minimum ?? "no minimum"}–${p.maximum ?? "no maximum"}` : p.format ? `Format: ${p.format}` : ""; return `<div class="api-doc-param"><strong>${esc(p.name)}</strong><span>${p.required ? "Required" : "Optional"} · ${esc(p.in)} parameter · ${esc(p.type)}</span><p>${esc(p.description)}</p>${range ? `<small>${esc(range)}</small>` : ""}</div>`; }
 function referenceBindings(scenario, endpointId, parameterName) {
   const found = new Map();
-  const visit = (value, target = []) => {
-    if (object(value) && "$fromStep" in value) { const key = target.join("."); if (!found.has(key)) found.set(key, []); found.get(key).push({ path: value.path, note: value.note || "", fromStep: value.$fromStep }); }
-    else if (object(value)) Object.entries(value).forEach(([key, child]) => visit(child, [...target, key]));
-    else if (Array.isArray(value)) value.forEach((child, index) => visit(child, [...target, String(index)]));
+  const visit = (value, plan, target = []) => {
+    if (object(value) && "$fromStep" in value) { const key = target.join("."); if (!found.has(key)) found.set(key, []); found.get(key).push({ path: value.path, note: value.note || "", fromStep: value.$fromStep, sourceEndpointId: plan.steps.find((step) => step.step === value.$fromStep)?.endpointId }); }
+    else if (object(value)) Object.entries(value).forEach(([key, child]) => visit(child, plan, [...target, key]));
+    else if (Array.isArray(value)) value.forEach((child, index) => visit(child, plan, [...target, String(index)]));
   };
-  for (const plan of scenario.acceptedPlans || []) for (const step of plan.steps) if (step.endpointId === endpointId) visit(step.parameters?.[parameterName]);
+  for (const plan of scenario.acceptedPlans || []) for (const step of plan.steps) if (step.endpointId === endpointId) visit(step.parameters?.[parameterName], plan);
   return [...found].map(([targetPath, refs]) => ({ targetPath, refs }));
 }
 function dependencySlotOptions(scenario, endpointId, parameterName) {
   return referenceBindings(scenario, endpointId, parameterName).map((slot) => ({
     ...slot,
-    sourceEndpointIds: [...new Set(slot.refs.flatMap((ref) => scenario.acceptedPlans.flatMap((plan) => plan.steps.filter((step) => step.step === ref.fromStep).map((step) => step.endpointId))))],
+    sourceEndpointIds: [...new Set(slot.refs.map((ref) => ref.sourceEndpointId).filter(Boolean))],
     responsePaths: [...new Set(slot.refs.map((ref) => ref.path))],
     label: ({ "playlistId": "Destination playlist", "resourceId.videoId": "Video to add" })[slot.targetPath] || slot.targetPath || "Related value",
   }));
@@ -216,9 +216,9 @@ function controlsFor(p, request, index, requests, scenario, map) {
   const runtimeBindingInfo = runtimeBinding(scenario, request, p);
   const runtimeLabel = runtimeBindingInfo?.description || "The application supplies this value at run time.";
   if (hasDependency) {
-    const sourceSteps = referenceBindings(scenario, request.endpointId, p.name).flatMap((slot) => slot.refs.map((ref) => ref.fromStep));
-    const sourceEndpointIds = [...new Set(scenario.acceptedPlans.flatMap((plan) => plan.steps.filter((step) => sourceSteps.includes(step.step)).map((step) => step.endpointId)))];
-    if (sourceEndpointIds.length > 1 && !variants.length) return multiSourceDependencyControl(p, request, index, requests, scenario, map);
+    const slots = dependencySlotOptions(scenario, request.endpointId, p.name), slotSources = slots.map((slot) => new Set(slot.sourceEndpointIds));
+    const hasSeparateSources = slots.length > 1 && slotSources.every((sources) => sources.size === 1) && new Set(slotSources.map((sources) => [...sources][0])).size > 1;
+    if (hasSeparateSources && !variants.length) return multiSourceDependencyControl(p, request, index, requests, scenario, map);
     if (variants.length) {
       const currentMode = request.dependencies?.[p.name]?.source || (Number.isInteger(request.dependencies?.[p.name]?.fromRequest) ? "request" : "");
       const selectedVariant = request.dependencies?.[p.name]?.shape || variants[0].shape;
