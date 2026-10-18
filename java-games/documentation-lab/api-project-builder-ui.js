@@ -1,41 +1,10 @@
-import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v19";
-import { presentation, classification, automaticParametersForOccurrence } from "./api-project-presentation.js?v=curated-v6";
+import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v14";
+import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v3";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
 const method = (e) => `<span class="api-method api-${esc(e.method.toLowerCase())}">${esc(e.method)}</span>`;
-const runtimeBinding = (scenario, request, parameter) => {
-  for (const binding of scenario.runtimeBindings || []) {
-    if (binding.parameter !== parameter.name) continue;
-    const plan = scenario.acceptedPlans.find((candidate) => candidate.id === binding.planId);
-    if (plan?.steps.some((step) => step.step === binding.step && step.endpointId === request.endpointId)) return (scenario.runtimeInputs || []).find((input) => input.id === binding.runtimeInputId);
-  }
-  return null;
-};
-function runtimeInputIds(value, found = []) {
-  if (object(value) && "$runtime" in value && typeof value.$runtime === "string") found.push(value.$runtime);
-  else if (object(value)) Object.values(value).forEach((child) => runtimeInputIds(child, found));
-  else if (Array.isArray(value)) value.forEach((child) => runtimeInputIds(child, found));
-  return [...new Set(found)];
-}
-function runtimeDescriptionsFor(scenario, request, parameter) {
-  const descriptions = [];
-  const binding = runtimeBinding(scenario, request, parameter);
-  if (binding?.description) descriptions.push(binding.description);
-  for (const id of runtimeInputIds(exampleParameter(scenario, request, parameter.name))) {
-    const description = (scenario.runtimeInputs || []).find((input) => input.id === id)?.description;
-    if (description) descriptions.push(description);
-  }
-  return [...new Set(descriptions)];
-}
-const runtimeParam = (p, scenario, request, endpoint) => {
-  // A search circle has both an application-supplied center and a meaningful
-  // student choice for its radius. Treating the nested runtime center as if it
-  // made the whole object runtime-only hides the shared radius selector.
-  if (p.type === "object" && (p.name === "locationRestriction" || p.name === "locationBias")) return false;
-  const auto = scenario ? Object.entries(presentation(scenario, endpoint).automatic || {}).find(([path]) => path === p.name || path.startsWith(`${p.name}.`))?.[1] : null;
-  return auto?.kind === "runtime" || !!(scenario && request && runtimeBinding(scenario, request, p)) || (p.in === "path" && !p.allowedValues?.length) || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(p.name) && !p.allowedValues?.length;
-};
+const runtimeParam = (p) => (p.in === "path" && !p.allowedValues?.length) || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(p.name) && !p.allowedValues?.length;
 const VALUE_DESCRIPTIONS = {
   part: {
     snippet: "Basic profile or resource details.",
@@ -74,7 +43,6 @@ const presentationFor = (endpoint, parameter) => {
 };
 const HTTP_REFERENCE = `<details class="api-http-reference"><summary>HTTP Methods — Quick Reference</summary><dl><dt>GET — Retrieve information</dt><dd>Requests an existing resource or collection.</dd><dt>POST — Submit information</dt><dd>Sends criteria for processing. Some APIs use POST for searches without creating anything.</dd><dt>PUT — Create or replace</dt><dd>Creates or replaces the target resource according to the documentation.</dd><dt>PATCH — Partially update</dt><dd>Applies changes to part of an existing resource.</dd><dt>DELETE — Remove</dt><dd>Requests deletion of a resource.</dd></dl><p><strong>Why might a search use POST?</strong> Some APIs accept search criteria in a JSON request body. The method comes from the API documentation; students do not choose it arbitrarily.</p></details>`;
 function providerNotes(provider) { const notes = Array.isArray(provider.notes) ? provider.notes : [provider.notes]; return notes.filter(Boolean).map((n) => `<li>${esc(n)}</li>`).join(""); }
-const PROVIDER_LABELS = { spotify: "Spotify", youtube: "YouTube", "google-maps": "Google Maps", discord: "Discord", tiktok: "TikTok", openai: "OpenAI" };
 function studentConstraint(value) {
   if (/\bhandle\s*:\s*@/i.test(value)) return value.replace(/[^.]*\bhandle\s*:\s*@[^.]*/i, "A channel handle is known and can be resolved by the application at run time");
   if (/\bvideo IDs? are already known/i.test(value)) return "The selected videos are known to the application; their identifiers are supplied at run time.";
@@ -98,49 +66,86 @@ function studentRequirement(scenario, requirement) {
 }
 function responseFields(fields) { return `<ul class="api-fields">${fields.map((f) => `<li><code>${esc(f.path)}</code> <span>${esc(f.type)}</span>${f.optional ? " · optional" : ""}${f.nullable ? " · nullable" : ""}${f.deprecated ? " · deprecated" : ""} — ${esc(f.description)}${f.note ? ` <em>${esc(f.note)}</em>` : ""}</li>`).join("")}</ul>`; }
 function parameterDocs(p, options) { const range = p.allowedValues?.length ? `${options ? "Relevant documented values" : "Allowed values"}: ${(options || p.allowedValues).join(", ")}` : p.minimum != null || p.maximum != null ? `Range: ${p.minimum ?? "no minimum"}–${p.maximum ?? "no maximum"}` : p.format ? `Format: ${p.format}` : ""; return `<div class="api-doc-param"><strong>${esc(p.name)}</strong><span>${p.required ? "Required" : "Optional"} · ${esc(p.in)} parameter · ${esc(p.type)}</span><p>${esc(p.description)}</p>${range ? `<small>${esc(range)}</small>` : ""}</div>`; }
-function referenceBindings(scenario, endpointId, parameterName) {
-  const found = new Map();
-  const visit = (value, plan, target = []) => {
-    if (object(value) && "$fromStep" in value) { const key = target.join("."); if (!found.has(key)) found.set(key, []); found.get(key).push({ path: value.path, note: value.note || "", fromStep: value.$fromStep, sourceEndpointId: plan.steps.find((step) => step.step === value.$fromStep)?.endpointId }); }
-    else if (object(value)) Object.entries(value).forEach(([key, child]) => visit(child, plan, [...target, key]));
-    else if (Array.isArray(value)) value.forEach((child, index) => visit(child, plan, [...target, String(index)]));
-  };
-  for (const plan of scenario.acceptedPlans || []) for (const step of plan.steps) if (step.endpointId === endpointId) visit(step.parameters?.[parameterName], plan);
-  return [...found].map(([targetPath, refs]) => ({ targetPath, refs }));
+function findReferences(value, out = []) {
+  if (object(value) && Object.hasOwn(value, "$fromStep")) out.push(value);
+  else if (object(value)) Object.values(value).forEach((child) => findReferences(child, out));
+  else if (Array.isArray(value)) value.forEach((child) => findReferences(child, out));
+  return out;
 }
-function dependencySlotOptions(scenario, endpointId, parameterName) {
-  return referenceBindings(scenario, endpointId, parameterName).map((slot) => ({
-    ...slot,
-    sourceEndpointIds: [...new Set(slot.refs.map((ref) => ref.sourceEndpointId).filter(Boolean))],
-    responsePaths: [...new Set(slot.refs.map((ref) => ref.path))],
-    label: ({ "playlistId": "Destination playlist", "resourceId.videoId": "Video to add" })[slot.targetPath] || slot.targetPath || "Related value",
-  }));
-}
-function focusedFields(e, scenario) {
-  const config = presentation(scenario, e), required = [];
-  for (const plan of scenario.acceptedPlans || []) for (const step of plan.steps) for (const name of Object.keys(step.parameters || {})) for (const slot of referenceBindings({ acceptedPlans: [plan] }, step.endpointId, name)) for (const ref of slot.refs) if (plan.steps.find((sourceStep) => sourceStep.step === ref.fromStep)?.endpointId === e.id) required.push(ref.path);
-  const curated = (config.fields || []).map((path) => e.responseFields.find((field) => field.path === path)).filter(Boolean);
-  const alternatives = [];
-  for (const path of required) {
-    const collection = path.includes("[]") ? path.slice(0, path.indexOf("[]") + 2) : path.includes(".") ? path.slice(0, path.lastIndexOf(".")) : "";
-    const candidates = e.responseFields.filter((item) => item.path !== path && (!collection || item.path.startsWith(collection)) && !item.path.startsWith(`${path}.`) && !path.startsWith(`${item.path}.`));
-    for (const field of candidates) {
-      if (!alternatives.some((item) => item.path === field.path)) alternatives.push(field);
-      if (alternatives.length >= 3) break;
+function sourceRequirements(scenario, sourceEndpoint, destinationParameter = null) {
+  const requirements = [];
+  for (const plan of scenario.acceptedPlans || []) for (const step of plan.steps || []) {
+    if (destinationParameter && !Object.hasOwn(step.parameters || {}, destinationParameter)) continue;
+    for (const [name, value] of Object.entries(step.parameters || {})) {
+      if (destinationParameter && name !== destinationParameter) continue;
+      for (const ref of findReferences(value)) {
+        const sourceStep = plan.steps.find((candidate) => candidate.step === ref.$fromStep);
+        if (sourceStep?.endpointId === sourceEndpoint.id) requirements.push({ destinationEndpointId: step.endpointId, parameter: name, path: ref.path });
+      }
     }
   }
-  const requiredFields = [...new Set(required)].map((path) => e.responseFields.find((field) => field.path === path)).filter(Boolean);
-  const combined = [...requiredFields, ...curated, ...alternatives];
-  return combined.filter((field, index) => combined.findIndex((candidate) => candidate.path === field.path) === index && (index < requiredFields.length || index < requiredFields.length + 5));
+  return requirements;
 }
-function multiSourceDependencyControl(p, request, index, requests, scenario, map) {
-  const slots = dependencySlotOptions(scenario, request.endpointId, p.name), bindings = request.dependencies?.[p.name]?.bindings || [];
-  return `<div class="api-param"><span>${esc(p.name)} <b>connected response values</b></span><p class="api-symbolic">Each part comes from an earlier request. Choose the source and documented response field for each part; the application carries the values between requests.</p>${slots.map((slot) => {
-    const current = bindings.find((binding) => binding.targetPath === slot.targetPath) || {};
-    const choices = requests.map((item, requestIndex) => ({ item, requestIndex, endpoint: map.get(item.endpointId) })).filter((item) => item.requestIndex < index && item.endpoint && slot.sourceEndpointIds.includes(item.item.endpointId));
-    const selected = choices.find((choice) => choice.requestIndex === current.fromRequest), fields = selected ? focusedFields(selected.endpoint, scenario) : [];
-    return `<fieldset class="api-dependency-slot"><legend>${esc(slot.label)}</legend><label>Earlier request<select data-dependency-slot-source="${esc(p.name)}" data-target-path="${esc(slot.targetPath)}"><option value="">Choose a request…</option>${choices.map((choice) => `<option value="${choice.requestIndex}"${choice.requestIndex === current.fromRequest ? " selected" : ""}>${esc(choice.endpoint.title)}</option>`).join("")}</select></label>${selected ? `<label>Response field<select data-dependency-slot-field="${esc(p.name)}" data-target-path="${esc(slot.targetPath)}"><option value="">Choose a field…</option>${fields.map((field) => `<option value="${esc(field.path)}"${field.path === current.path ? " selected" : ""}>${esc(field.path)} · ${esc(field.description)}</option>`).join("")}</select></label>` : ""}</fieldset>`;
-  }).join("")}<em>${esc(p.description)}</em></div>`;
+function structuralPath(path) { return String(path).replace(/\[\]/g, "[]").replace(/\[(\d+)\]/g, "[]"); }
+function pathLabel(path) { return String(path).replace(/\[\]/g, " → each item").replace(/\./g, " → ").replace(/^\s*→\s*/, "").replace(/\s*→\s*$/, ""); }
+function inferredCandidates(endpoint, requiredPaths) {
+  const fields = endpoint.responseFields || [], required = [...new Set(requiredPaths)];
+  if (required.some((path) => !fields.some((field) => structuralPath(field.path) === structuralPath(path)))) return [];
+  const segments = (path) => structuralPath(path).split(".");
+  const ranked = fields.filter((field) => !required.includes(field.path)).map((field) => {
+    const candidate = segments(field.path);
+    const score = Math.max(0, ...required.map((path) => {
+      const target = segments(path); let common = 0;
+      while (common < candidate.length && common < target.length && candidate[common] === target[common]) common++;
+      return common * 10 - Math.abs(candidate.length - target.length) * 2 - (candidate.length === target.length ? 0 : 1);
+    }));
+    return { field, score };
+  }).sort((a, b) => b.score - a.score || a.field.path.localeCompare(b.field.path));
+  return [...required.map((path) => fields.find((field) => structuralPath(field.path) === structuralPath(path))), ...ranked.slice(0, Math.max(0, 4 - required.length)).map(({ field }) => field)].filter(Boolean);
+}
+export function responseSourceChoices(scenario, endpoint, destinationParameter = null) {
+  const requirements = sourceRequirements(scenario, endpoint, destinationParameter), requiredPaths = [...new Set(requirements.map((item) => item.path))];
+  if (!requiredPaths.length) return [];
+  const fields = endpoint.responseFields || [], explicit = presentation(scenario, endpoint).sourceChoices || {};
+  const specified = destinationParameter ? explicit[destinationParameter] : null;
+  const byPath = new Map(fields.map((field) => [field.path, field]));
+  let choices;
+  if (specified) {
+    const options = specified.filter((choice) => byPath.has(choice.path));
+    const missing = requiredPaths.filter((path) => !options.some((choice) => structuralPath(choice.path) === structuralPath(path)));
+    choices = [...missing.map((path) => ({ path, label: byPath.get(path)?.description || path })), ...options].slice(0, 4);
+  } else {
+    choices = inferredCandidates(endpoint, requiredPaths).map((field) => ({ path: field.path, label: field.description.replace(/[.]$/, "") }));
+  }
+  return choices.map((choice) => ({ ...choice, field: byPath.get(choice.path) || fields.find((field) => structuralPath(field.path) === structuralPath(choice.path)), canonicalPath: choice.path }));
+}
+function focusedFields(e, scenario) {
+  const config = presentation(scenario, e), requirements = sourceRequirements(scenario, e);
+  if (config.fields) {
+    const paths = [...new Set([...config.fields, ...requirements.map((item) => item.path)])];
+    return paths.map((path) => e.responseFields.find((field) => structuralPath(field.path) === structuralPath(path))).filter(Boolean);
+  }
+  const parameterNames = [...new Set(requirements.map((item) => item.parameter))];
+  const choices = parameterNames.flatMap((name) => responseSourceChoices(scenario, e, name));
+  return [...new Map(choices.map((choice) => [choice.field?.path, choice.field])).values()].filter(Boolean);
+}
+function responseSourceControl(scenario, source, parameterName, dependency, requestIndex) {
+  const choices = responseSourceChoices(scenario, source, parameterName);
+  if (!choices.length) return `<p class="api-source-unavailable" role="status">No curated response-field choices are available for this source yet.</p>`;
+  const requiredCount = Math.max(1, ...((scenario.acceptedPlans || []).map((plan) => {
+    const counts = new Map();
+    for (const step of plan.steps || []) for (const [name, value] of Object.entries(step.parameters || {})) if (name === parameterName) {
+      for (const ref of findReferences(value)) {
+        const sourceStep = plan.steps.find((candidate) => candidate.step === ref.$fromStep);
+        if (sourceStep?.endpointId === source.id) counts.set(structuralPath(ref.path), ref.path);
+      }
+    }
+    return counts.size;
+  })));
+  const multiple = requiredCount > 1;
+  const inputType = multiple ? "checkbox" : "radio";
+  const selected = new Set(dependency?.paths || []);
+  return `<fieldset class="api-dependency-fields api-response-source-choices"><legend>${multiple ? "Select all fields this request needs" : "Which response field should this request use?"}</legend>${choices.map((choice) => `<label class="api-response-source-choice"><input type="${inputType}"${multiple ? "" : ` name="api-source-${requestIndex}-${esc(parameterName)}-${esc(source.id)}"`} data-dependency-path="${esc(parameterName)}" value="${esc(choice.canonicalPath)}"${selected.has(choice.canonicalPath) ? " checked" : ""}><span class="api-response-source-copy"><strong>${esc(choice.label)}</strong><code>${esc(pathLabel(choice.canonicalPath))}</code>${choice.explanation ? `<small>${esc(choice.explanation)}</small>` : ""}</span></label>`).join("")}</fieldset>`;
 }
 function docsHtml(e, provider, scenario) {
   const config = presentation(scenario, e), groups = classification(scenario, e);
@@ -163,7 +168,7 @@ function parameterVariants(scenario, request, parameter) {
 function fieldMaskChoices(endpoint) {
   const seen = new Set(), choices = [];
   for (const f of endpoint.responseFields || []) {
-    const path = String(f.path).replaceAll("[]", "").replace(/^\./, "");
+    const path = String(f.path).replaceAll("[]", "");
     if (!path || path === "places" || path === "routes" || seen.has(path) || choices.some((choice) => path.startsWith(`${choice.path}.`))) continue;
     seen.add(path);
     choices.push({ path, description: f.description });
@@ -172,17 +177,16 @@ function fieldMaskChoices(endpoint) {
 }
 function fieldMaskControl(endpoint, request, parameter, config) {
   const selected = new Set(String(request.parameters[parameter.name] || "").split(",").map((v) => v.trim()).filter(Boolean));
-  const all = fieldMaskChoices(endpoint), choices = config.fieldOptions ? config.fieldOptions.map((path) => all.find((f) => f.path === path) || (endpoint.responseFields.some((f) => { const documented = f.path.replaceAll("[]", "").replace(/^\./, ""); return documented.startsWith(`${path}.`) || path.startsWith(`${documented}.`); }) ? { path, description: `Include ${path} and its documented fields.` } : null)).filter(Boolean) : all;
+  const all = fieldMaskChoices(endpoint), choices = config.fieldOptions ? config.fieldOptions.map((path) => all.find((f) => f.path === path) || (endpoint.responseFields.some((f) => f.path.replaceAll("[]", "").startsWith(`${path}.`)) ? { path, description: `Include ${path} and its documented fields.` } : null)).filter(Boolean) : all;
   if (!choices.length) return `<label class="api-param"><span>${esc(parameter.name)} <b>required</b></span><em>${esc(parameter.description)}</em></label>`;
-  return `<fieldset class="api-field-selector"><legend>Information to include <b>required</b></legend><p class="api-symbolic">Choose the documented response information the application needs. The simulation handles request formatting.</p><div class="api-field-options">${choices.map((f) => `<label><input type="checkbox" data-field-mask="${esc(parameter.name)}" value="${esc(f.path)}"${selected.has(f.path) ? " checked" : ""}><code>${esc(f.path)}</code><span>${esc(f.description)}</span></label>`).join("")}</div></fieldset>`;
+  return `<fieldset class="api-field-selector"><legend>Information to include in the response <b>required</b></legend><p class="api-symbolic">Choose documented fields the application can use. The technical field-mask header is generated for you.</p><div class="api-field-options">${choices.map((f) => `<label><input type="checkbox" data-field-mask="${esc(parameter.name)}" value="${esc(f.path)}"${selected.has(f.path) ? " checked" : ""}><code>${esc(f.path)}</code><span>${esc(f.description)}</span></label>`).join("")}</div><em>${esc(parameter.description)}</em></fieldset>`;
 }
 function multiChoiceControl(parameter, request, config) {
   const current = Array.isArray(request.parameters[parameter.name]) ? request.parameters[parameter.name] : String(request.parameters[parameter.name] || "").split(",").map((v) => v.trim()).filter(Boolean);
   const descriptions = VALUE_DESCRIPTIONS[parameter.name] || {};
-  const values = config.partOptions || config.multiOptions?.[parameter.name] || parameter.allowedValues || [];
-  return `<fieldset class="api-multi-selector"><legend>${esc(parameter.name)} ${parameter.required ? "<b>required</b>" : "<i>optional</i>"}</legend><p class="api-symbolic">Select one or more documented values. The API list syntax is generated for you.</p><div class="api-multi-options">${values.map((value) => `<label><input type="checkbox" data-param-multi="${esc(parameter.name)}" value="${esc(value)}"${current.includes(value) ? " checked" : ""}><code>${esc(value)}</code><span>${esc(descriptions[value] || `Documented ${parameter.name} option.`)}</span></label>`).join("")}</div><em>${esc(parameter.description)}</em></fieldset>`;
+  return `<fieldset class="api-multi-selector"><legend>${esc(parameter.name)} ${parameter.required ? "<b>required</b>" : "<i>optional</i>"}</legend><p class="api-symbolic">Select one or more documented values. The API list syntax is generated for you.</p><div class="api-multi-options">${(config.partOptions || parameter.allowedValues).map((value) => `<label><input type="checkbox" data-param-multi="${esc(parameter.name)}" value="${esc(value)}"${current.includes(value) ? " checked" : ""}><code>${esc(value)}</code><span>${esc(descriptions[value] || `Documented ${parameter.name} option.`)}</span></label>`).join("")}</div><em>${esc(parameter.description)}</em></fieldset>`;
 }
-function serializeMultiSelection(parameter, values) { const selected = new Set(values); const source = parameter.allowedValues?.length ? parameter.allowedValues : values; const ordered = source.filter((value) => selected.has(value)); return parameter.type === "array<string>" ? ordered : ordered.join(","); }
+function serializeMultiSelection(parameter, values) { const selected = new Set(values); const ordered = (parameter.allowedValues || []).filter((value) => selected.has(value)); return parameter.type === "array<string>" ? ordered : ordered.join(","); }
 function locationControl(scenario, request, parameter, variants) {
   const scenarioValue = scenario.acceptedPlans.flatMap((plan) => plan.steps).map((step) => step.parameters?.[parameter.name]).find((value) => object(value) && !Object.hasOwn(value, "$fromStep"));
   if (!variants.length && scenarioValue) variants = [{ value: scenarioValue, shape: "project-location", label: "Project supplied location" }];
@@ -213,12 +217,7 @@ function controlsFor(p, request, index, requests, scenario, map) {
   if (scenario.id === "maps-museum-walk-planner" && request.endpointId === "maps.routes-compute-routes" && p.name === "origin") return originControl(requests, index, request, map);
   const hasDependency = runtimeSourceFor(scenario, request, p);
   const variants = parameterVariants(scenario, request, p);
-  const runtimeBindingInfo = runtimeBinding(scenario, request, p);
-  const runtimeLabel = runtimeBindingInfo?.description || "The application supplies this value at run time.";
   if (hasDependency) {
-    const slots = dependencySlotOptions(scenario, request.endpointId, p.name), slotSources = slots.map((slot) => new Set(slot.sourceEndpointIds));
-    const hasSeparateSources = slots.length > 1 && slotSources.every((sources) => sources.size === 1) && new Set(slotSources.map((sources) => [...sources][0])).size > 1;
-    if (hasSeparateSources && !variants.length) return multiSourceDependencyControl(p, request, index, requests, scenario, map);
     if (variants.length) {
       const currentMode = request.dependencies?.[p.name]?.source || (Number.isInteger(request.dependencies?.[p.name]?.fromRequest) ? "request" : "");
       const selectedVariant = request.dependencies?.[p.name]?.shape || variants[0].shape;
@@ -231,19 +230,17 @@ function controlsFor(p, request, index, requests, scenario, map) {
       const options = requests.map((r, i) => ({ r, i, e: map.get(r.endpointId) })).filter((x) => x.i < index && x.e);
       const selected = request.dependencies?.[p.name]?.fromRequest;
       const source = requests[selected] && map.get(requests[selected].endpointId), fields = source ? focusedFields(source, scenario) : [];
-      const runtimeInputs = runtimeDescriptionsFor(scenario, request, p);
-      return `<div class="api-param"><span>${esc(p.name)} <b>request source</b></span><span class="api-symbolic">Choose a provided project value or data returned by an earlier request.</span>${runtimeInputs.length ? `<p class="api-symbolic">The application also supplies: ${runtimeInputs.map(esc).join("; ")}</p>` : ""}<label>Value source<select data-dependency-mode="${esc(p.name)}"><option value="">Choose a source…</option><option value="context"${currentMode === "context" ? " selected" : ""}>Project context</option><option value="request"${currentMode === "request" ? " selected" : ""}>Earlier API request</option></select></label>${currentMode === "context" ? contextFields : ""}${currentMode === "request" ? `<label>Earlier request<select data-dependency="${esc(p.name)}"><option value="">Choose a request…</option>${options.map((x) => `<option value="${x.i}"${selected === x.i ? " selected" : ""}>${esc(x.e.title)}</option>`).join("")}</select></label>${source ? `<fieldset class="api-dependency-fields"><legend>Response field(s) to use</legend>${fields.map((f) => `<label><input type="checkbox" data-dependency-path="${esc(p.name)}" value="${esc(f.path)}"${request.dependencies[p.name]?.paths?.includes(f.path) ? " checked" : ""}> <code>${esc(f.path)}</code></label>`).join("")}</fieldset>` : ""}` : ""}<em>${esc(p.description)} Use the documentation above to choose the data source and response field(s).</em></div>`;
+      return `<div class="api-param"><span>${esc(p.name)} <b>request source</b></span><span class="api-symbolic">Choose a provided project value or data returned by an earlier request.</span><label>Value source<select data-dependency-mode="${esc(p.name)}"><option value="">Choose a source…</option><option value="context"${currentMode === "context" ? " selected" : ""}>Project context</option><option value="request"${currentMode === "request" ? " selected" : ""}>Earlier API request</option></select></label>${currentMode === "context" ? contextFields : ""}${currentMode === "request" ? `<label>Earlier request<select data-dependency="${esc(p.name)}"><option value="">Choose a request…</option>${options.map((x) => `<option value="${x.i}"${selected === x.i ? " selected" : ""}>${esc(x.e.title)}</option>`).join("")}</select></label>${source ? responseSourceControl(scenario, source, p.name, request.dependencies[p.name], index) : ""}` : ""}<em>${esc(p.description)} Use the documentation above to choose the data source and response field(s).</em></div>`;
     }
     const options = requests.map((r, i) => ({ r, i, e: map.get(r.endpointId) })).filter((x) => x.i < index && x.e);
     const selected = request.dependencies?.[p.name]?.fromRequest;
     const source = requests[selected] && map.get(requests[selected].endpointId);
     const fields = source ? focusedFields(source, scenario) : [];
-    const runtimeInputs = runtimeDescriptionsFor(scenario, request, p);
-    return `<div class="api-param"><span>${esc(p.name)} <b>runtime value</b></span><span class="api-symbolic">${esc(p.in === "path" ? "Path resource" : "Related response data")} · supplied by the application at run time</span>${runtimeInputs.length ? `<p class="api-symbolic">The application also supplies: ${runtimeInputs.map(esc).join("; ")}</p>` : ""}<label>Earlier request<select data-dependency="${esc(p.name)}"><option value="">Choose a request…</option>${options.map((x) => `<option value="${x.i}"${selected === x.i ? " selected" : ""}>${esc(x.e.title)}</option>`).join("")}</select></label>${source ? `<fieldset class="api-dependency-fields"><legend>Response field(s) to use</legend>${fields.map((f) => `<label><input type="checkbox" data-dependency-path="${esc(p.name)}" value="${esc(f.path)}"${request.dependencies[p.name]?.paths?.includes(f.path) ? " checked" : ""}> <code>${esc(f.path)}</code></label>`).join("")}</fieldset>` : ""}<em>${esc(p.description)} Use the response documentation above to choose the field(s).</em></div>`;
+    return `<div class="api-param"><span>${esc(p.name)} <b>runtime value</b></span><span class="api-symbolic">${esc(p.in === "path" ? "Path resource" : "Related response data")} · supplied by the application at run time</span><label>Earlier request<select data-dependency="${esc(p.name)}"><option value="">Choose a request…</option>${options.map((x) => `<option value="${x.i}"${selected === x.i ? " selected" : ""}>${esc(x.e.title)}</option>`).join("")}</select></label>${source ? responseSourceControl(scenario, source, p.name, request.dependencies[p.name], index) : ""}<em>${esc(p.description)} Use the response documentation above to choose the field(s).</em></div>`;
   }
-  if (runtimeParam(p, scenario, request, map.get(request.endpointId)) && p.in === "path") return `<div class="api-param"><strong>${esc(p.name)} <b>runtime path value</b></strong><span class="api-symbolic">${esc(runtimeLabel)} No value needs to be entered.</span><em>${esc(p.description)}</em></div>`;
-  if (runtimeParam(p, scenario, request, map.get(request.endpointId))) return `<label class="api-param"><span>${esc(p.name)} <b>runtime value</b> <small>${esc(p.in)}</small></span><span class="api-symbolic">${esc(runtimeLabel)}</span><label class="api-runtime-choice"><input type="checkbox" data-runtime="${esc(p.name)}"${val(request.parameters[p.name]) ? " checked" : ""}> Use the application-supplied value</label><em>${esc(p.description)}</em></label>`;
-  if (p.name === "X-Goog-FieldMask" || p.name.toLowerCase() === "fields") return fieldMaskControl(map.get(request.endpointId), request, p, config);
+  if (runtimeParam(p) && p.in === "path") return `<div class="api-param"><strong>${esc(p.name)} <b>runtime path value</b></strong><span class="api-symbolic">The application supplies this identifier when a user selects the resource. No value needs to be entered.</span><em>${esc(p.description)}</em></div>`;
+  if (runtimeParam(p)) return `<label class="api-param"><span>${esc(p.name)} <b>runtime value</b> <small>${esc(p.in)}</small></span><span class="api-symbolic">The application supplies this selected resource or user input at run time.</span><label class="api-runtime-choice"><input type="checkbox" data-runtime="${esc(p.name)}"${val(request.parameters[p.name]) ? " checked" : ""}> Use the application-supplied value</label><em>${esc(p.description)}</em></label>`;
+  if (p.name === "X-Goog-FieldMask") return fieldMaskControl(map.get(request.endpointId), request, p, config);
   if (presentationFor(map.get(request.endpointId), p) === "location") return locationControl(scenario, request, p, variants);
   if (p.type === "object") {
     const shape = variants[0]?.value || exampleParameter(scenario, request, p.name);
@@ -257,12 +254,6 @@ function controlsFor(p, request, index, requests, scenario, map) {
     return `<div class="api-param"><strong>${esc(p.name)} <b>structured ${p.required ? "required" : "optional"} input</b></strong><span class="api-symbolic">${esc(p.in)} · set the documented data fields; this is not a resource ID.</span><div class="api-structured-fields">${inputs}</div><em>${esc(p.description)}</em></div>`;
   }
   const current = request.parameters[p.name];
-  const choiceOptions = config.choiceOptions?.[p.name];
-  if (choiceOptions?.length) {
-    const serialized = (value) => Array.isArray(value) ? JSON.stringify(value) : String(value);
-    const currentValue = serialized(current);
-    return `<label class="api-param"><span>${esc(p.name)} ${p.required ? "<b>required</b>" : "<i>optional</i>"} <small>${esc(p.in)} · ${esc(p.type)}</small></span><select data-param-choice="${esc(p.name)}"><option value="">Choose…</option>${choiceOptions.map((value) => `<option value="${esc(serialized(value))}"${currentValue === serialized(value) ? " selected" : ""}>${esc(Array.isArray(value) ? value.join(", ") : value)}</option>`).join("")}</select><em>${esc(p.description)}</em></label>`;
-  }
   let control;
   if (presentationFor(map.get(request.endpointId), p) === "multi") return multiChoiceControl(p, request, config);
   else if (p.name === "market" && config.marketOptions) control = `<select data-param="${esc(p.name)}"><option value="">Choose a market…</option>${config.marketOptions.map((v) => `<option value="${esc(v)}"${current === v ? " selected" : ""}>${esc(v)}</option>`).join("")}</select>`;
@@ -280,33 +271,25 @@ function controlsFor(p, request, index, requests, scenario, map) {
 function requestHtml(requests, map, scenario) {
   if (!requests.length) return `<p class="muted">No requests yet. Add an operation from the documentation above.</p>`;
   return requests.map((r, i) => { const e = map.get(r.endpointId), groups = classification(scenario, e), config = presentation(scenario, e);
-    const auto = groups.automatic.map((name) => { const spec = Object.entries(config.automatic || {}).find(([path]) => path === name || path.startsWith(`${name}.`))?.[1], parameter = e.parameters.find((item) => item.name === name), runtime = parameter && runtimeDescriptionsFor(scenario, r, parameter); return `<li><code>${esc(name)}</code> — ${esc(runtime?.join("; ") || spec?.reason || (spec?.kind === "runtime" ? "Supplied at run time by the application" : "Required documented setting"))}</li>`; }).join("");
+    const auto = groups.automatic.map((name) => { const spec = Object.entries(config.automatic || {}).find(([path]) => path === name || path.startsWith(`${name}.`))?.[1]; return `<li><code>${esc(name)}</code> — ${esc(spec?.reason || (spec?.kind === "runtime" ? "Supplied at run time by the application" : "Required documented setting"))}</li>`; }).join("");
     return `<article class="api-request" data-request="${i}"><div class="api-request-head"><span class="api-step">${i + 1}</span><div><strong>${method(e)} ${esc(e.path)}</strong><small>${esc(e.title)}</small></div><button type="button" class="secondary api-remove" data-remove="${i}">Remove Request</button></div><div class="api-request-params">${e.parameters.filter((p) => groups.assessed.includes(p.name)).map((p) => controlsFor(p, r, i, requests, scenario, map)).join("") || `<p class="muted">No settings to choose for this request.</p>`}</div>${auto ? `<details class="api-handled"><summary>Handled by the application</summary><ul>${auto}</ul></details>` : ""}</article>`; }).join("");
 }
-function readablePlan(plan, map, scenario) {
+function readablePlan(plan, map) {
   const find = (value, out = []) => { if (object(value) && "$fromStep" in value) out.push(value); else if (object(value)) Object.values(value).forEach((v) => find(v, out)); else if (Array.isArray(value)) value.forEach((v) => find(v, out)); return out; };
-  return `<div class="api-readable-plan">${plan.steps.map((s, i) => { const e = map.get(s.endpointId), runtime = [], settings = [], fields = [], deps = []; for (const [name, v] of Object.entries(s.parameters)) { const p = e.parameters.find((x) => x.name === name), refs = find(v); if (refs.length) deps.push(`${name} comes from ${refs.map((ref) => ref.path).join(", ")} in an earlier response`); else if (p?.name === "X-Goog-FieldMask" || p?.name === "fields") fields.push(...String(v).split(",").map((x) => x.trim())); else if (p && runtimeParam(p, scenario, { endpointId: s.endpointId }, e)) runtime.push(name); else settings.push(`${name}: ${typeof v === "object" ? JSON.stringify(v) : v}`); } return `<article class="api-readable-request"><h4>Request ${i + 1} — ${esc(e.title)}</h4><p><strong>Method:</strong> ${esc(e.method)} <code>${esc(e.path)}</code></p>${s.purpose ? `<p><strong>Purpose:</strong> ${esc(s.purpose)}</p>` : ""}${runtime.length ? `<p><strong>Runtime inputs:</strong> ${runtime.map(esc).join(", ")} supplied by the application.</p>` : ""}${settings.length ? `<p><strong>Application settings:</strong> ${settings.map(esc).join(" · ")}</p>` : ""}${fields.length ? `<p><strong>Information requested:</strong> ${fields.map((x) => `<code>${esc(x)}</code>`).join(", ")}</p>` : ""}${deps.length ? `<p><strong>Dependencies:</strong> ${deps.map(esc).join("; ")}.</p>` : ""}<p><strong>Why this request is needed:</strong> It provides documented response data used by the application.</p><details class="api-technical-preview"><summary>View Actual API Request</summary><pre>${esc(JSON.stringify({ method: e.method, path: e.path, parameters: s.parameters }, null, 2))}</pre></details></article>`; }).join("")}</div>`;
+  return `<div class="api-readable-plan">${plan.steps.map((s, i) => { const e = map.get(s.endpointId), runtime = [], settings = [], fields = [], deps = []; for (const [name, v] of Object.entries(s.parameters)) { const p = e.parameters.find((x) => x.name === name), refs = find(v); if (refs.length) deps.push(`${name} comes from ${refs.map((ref) => ref.path).join(", ")} in an earlier response`); else if (p?.name === "X-Goog-FieldMask" || p?.name === "fields") fields.push(...String(v).split(",").map((x) => x.trim())); else if (p && runtimeParam(p)) runtime.push(name); else settings.push(`${name}: ${typeof v === "object" ? JSON.stringify(v) : v}`); } return `<article class="api-readable-request"><h4>Request ${i + 1} — ${esc(e.title)}</h4><p><strong>Method:</strong> ${esc(e.method)} <code>${esc(e.path)}</code></p>${s.purpose ? `<p><strong>Purpose:</strong> ${esc(s.purpose)}</p>` : ""}${runtime.length ? `<p><strong>Runtime inputs:</strong> ${runtime.map(esc).join(", ")} supplied by the application.</p>` : ""}${settings.length ? `<p><strong>Application settings:</strong> ${settings.map(esc).join(" · ")}</p>` : ""}${fields.length ? `<p><strong>Information requested:</strong> ${fields.map((x) => `<code>${esc(x)}</code>`).join(", ")}</p>` : ""}${deps.length ? `<p><strong>Dependencies:</strong> ${deps.map(esc).join("; ")}.</p>` : ""}<p><strong>Why this request is needed:</strong> It provides documented response data used by the application.</p><details class="api-technical-preview"><summary>View Actual API Request</summary><pre>${esc(JSON.stringify({ method: e.method, path: e.path, parameters: s.parameters }, null, 2))}</pre></details></article>`; }).join("")}</div>`;
 }
 function feedbackHtml(result, scenario, diagnostics, attempts) {
   if (result.correct) return `<strong>✓ Project Complete</strong><p>Solved in ${attempts} ${attempts === 1 ? "check" : "checks"}. ${esc(result.efficient ? "Your plan meets the project requirements." : "Your plan works; a simpler plan may also meet the requirements.")}</p><p class="api-explanation"><strong>Why it works:</strong> ${esc(scenario.explanation.summary)} ${scenario.explanation.keyIdeas.map(esc).join(" ")}</p><p class="muted">Your completed request plan remains above for review.</p>`;
-  const [primary, secondary] = diagnostics;
-  return `<strong>Needs Revision — Attempt ${attempts}</strong>${primary ? `<h3>What needs attention</h3><p>${esc(primary.message)}</p><h3>What to review</h3><p>${esc(primary.review)}</p>` : ""}${secondary ? `<details class="api-secondary-diagnostic"><summary>Also check</summary><p>${esc(secondary.message)}</p></details>` : ""}<p class="api-next-step"><strong>Next step:</strong> Revise your plan and check again.</p>`;
+  return `<strong>Needs Revision · Attempt ${attempts}</strong><ul class="api-review">${diagnostics.map((d) => `<li>${esc(d.message)}</li>`).join("")}</ul>`;
 }
 export function mount({ root, controls, tracker }) {
-  const state = { stopped: false, data: null, scenario: null, plan: [], picker: null, instance: null, closed: false, providerId: "all", attempts: 0, hintsUsed: {}, lastResult: null };
+  const state = { stopped: false, data: null, scenario: null, plan: [], picker: null, instance: null, closed: false, providerId: "all", attempts: 0, hintsShown: 0, lastResult: null };
   const set = (id, html) => { const el = root.querySelector(`#${id}`); if (el) el.innerHTML = html; };
   const stat = () => { const el = document.getElementById("stats"); if (el && controls.roundSummary) el.textContent = controls.roundSummary(); };
   const clearStaleFeedback = () => { if (state.lastResult) { state.lastResult = null; const feedback = document.getElementById("feedback"); feedback.hidden = true; feedback.innerHTML = ""; } const hint = root.querySelector("#api-hint-text"); if (hint) hint.textContent = ""; };
-  const touch = () => { clearStaleFeedback(); if (state.instance && tracker.status(state.instance) === "active") tracker.interact(state.instance); updateHintButton(); };
+  const touch = () => { clearStaleFeedback(); if (state.instance && tracker.status(state.instance) === "active") tracker.interact(state.instance); };
   const next = () => controls.next();
-  const currentDiagnostics = () => {
-    const result = validatePlan(state.data, state.scenario, { requests: state.plan });
-    return result.correct ? [] : formativeDiagnostics(state.data, state.scenario, result, state.plan);
-  };
-  const updateHintButton = () => {
-    const button = root.querySelector("#api-get-hint"), diagnostic = currentDiagnostics()[0];
-    if (button) { button.hidden = state.closed; button.disabled = !diagnostic || (state.hintsUsed[diagnostic.id] || 0) >= 3; }
-  };
+  const updateHintButton = () => { const button = root.querySelector("#api-get-hint"); if (button) button.hidden = state.attempts < 2 || state.hintsShown >= 3 || state.closed; };
   const showActionButtons = () => { controls.submit.textContent = "Check My Plan"; controls.show.textContent = "Show Answer"; controls.show.hidden = false; controls.show.disabled = false; controls.skip.textContent = "Skip"; controls.skip.hidden = false; controls.nextButton.textContent = "Next Project →"; controls.nextButton.hidden = true; controls.submit.hidden = false; controls.submit.disabled = false; controls.skip.disabled = false; };
   const renderBrief = () => {
     const s = state.scenario, p = providerFor(state.data, s);
@@ -315,11 +298,10 @@ export function mount({ root, controls, tracker }) {
   };
   const renderPlan = () => {
     const map = endpointMap(state.data);
-    set("interaction", `<section class="api-plan"><div class="api-plan-head"><h2>My Request Plan</h2><p class="muted">Design the requests and information the application would need. The game simulates the plan; technical request formatting is optional.</p><p id="api-request-status" class="api-request-status" role="status">${state.lastAddedEndpoint ? `${esc(map.get(state.lastAddedEndpoint)?.title)} added to your plan.` : ""}</p><p id="api-attempt-status" class="api-request-status">${state.attempts ? `Checks so far: ${state.attempts}.` : ""}</p></div><div id="api-plan-list">${requestHtml(state.plan, map, state.scenario)}</div><p class="api-plan-note">Some projects need one request; others connect data from earlier responses. The order you add independent requests does not affect the result.</p><div class="api-hint-tools"><button id="api-get-hint" type="button" class="secondary">Get Hint</button><p id="api-hint-text" role="status" aria-live="polite" aria-atomic="true"></p></div></section>`);
+    set("interaction", `<section class="api-plan"><div class="api-plan-head"><h2>My Request Plan</h2><p class="muted">Add requests above, then choose the meaningful parameters here. Resource identifiers are symbolic runtime values, not student entry fields.</p><p id="api-request-status" class="api-request-status" role="status">${state.lastAddedEndpoint ? `${esc(map.get(state.lastAddedEndpoint)?.title)} added to your plan.` : ""}</p><p id="api-attempt-status" class="api-request-status">${state.attempts ? `Checks so far: ${state.attempts}.` : ""}</p></div><div id="api-plan-list">${requestHtml(state.plan, map, state.scenario)}</div><p class="api-plan-note">Some projects need one request; others connect data from earlier responses. The order you add independent requests does not affect the result.</p><div class="api-hint-tools"><button id="api-get-hint" type="button" class="secondary" hidden>Get Hint</button><p id="api-hint-text" role="status" aria-live="polite" aria-atomic="true"></p></div></section>`);
     root.querySelectorAll("[data-request]").forEach((card) => {
       const i = Number(card.dataset.request);
       card.querySelectorAll("[data-param]").forEach((input) => { input.oninput = input.onchange = () => { const raw = input.value, parameter = map.get(state.plan[i].endpointId).parameters.find((p) => p.name === input.dataset.param); state.plan[i].parameters[input.dataset.param] = ["integer", "number"].includes(parameter.type) ? (raw === "" ? "" : Number(raw)) : input.tagName === "SELECT" && ["true","false"].includes(raw) ? raw === "true" : parameter.type === "array<string>" ? raw.split(",").map((x) => x.trim()).filter(Boolean) : raw; touch(); }; });
-      card.querySelectorAll("[data-param-choice]").forEach((select) => { select.onchange = () => { const raw = select.value, parameter = map.get(state.plan[i].endpointId).parameters.find((p) => p.name === select.dataset.paramChoice); if (!raw) delete state.plan[i].parameters[select.dataset.paramChoice]; else { try { state.plan[i].parameters[select.dataset.paramChoice] = parameter.type === "array<string>" ? JSON.parse(raw) : raw === "true" ? true : raw === "false" ? false : !Number.isNaN(Number(raw)) && raw.trim() !== "" ? Number(raw) : raw; } catch { state.plan[i].parameters[select.dataset.paramChoice] = raw; } } touch(); }; });
       card.querySelectorAll("[data-param-array]").forEach((select) => { select.onchange = () => { state.plan[i].parameters[select.dataset.paramArray] = select.value ? [select.value] : []; touch(); }; });
       card.querySelectorAll("[data-param-multi]").forEach((checkbox) => { checkbox.onchange = () => { const name = checkbox.dataset.paramMulti, parameter = map.get(state.plan[i].endpointId).parameters.find((p) => p.name === name), values = [...card.querySelectorAll(`[data-param-multi=\"${CSS.escape(name)}\"]:checked`)].map((x) => x.value); state.plan[i].parameters[name] = serializeMultiSelection(parameter, values); touch(); }; });
       card.querySelectorAll("[data-field-mask]").forEach((checkbox) => { checkbox.onchange = () => { const name = checkbox.dataset.fieldMask; state.plan[i].parameters[name] = [...card.querySelectorAll(`[data-field-mask=\"${CSS.escape(name)}\"]:checked`)].map((x) => x.value).join(","); touch(); }; });
@@ -338,35 +320,33 @@ export function mount({ root, controls, tracker }) {
       card.querySelectorAll("[data-dependency-shape]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependencyShape, parameter = map.get(state.plan[i].endpointId).parameters.find((x) => x.name === p), variant = parameterVariants(state.scenario, state.plan[i], parameter).find((x) => x.shape === select.value); state.plan[i].dependencies[p].shape = select.value; state.plan[i].parameters[p] = blankShape(variant?.value || {}); touch(); renderPlan(); }; });
       card.querySelectorAll("[data-dependency]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependency; if (!select.value) { if (state.plan[i].dependencies[p]) state.plan[i].dependencies[p] = { source: "request", fromRequest: null, paths: [] }; delete state.plan[i].parameters[p]; } else { state.plan[i].dependencies[p] = { source: "request", fromRequest: Number(select.value), paths: [] }; state.plan[i].parameters[p] = { $runtime: true }; } touch(); renderPlan(); }; });
       card.querySelectorAll("[data-dependency-path]").forEach((checkbox) => { checkbox.onchange = () => { const p = checkbox.dataset.dependencyPath, dep = state.plan[i].dependencies[p]; if (!dep) return; dep.paths = [...card.querySelectorAll(`[data-dependency-path="${CSS.escape(p)}"]:checked`)].map((x) => x.value); touch(); }; });
-      card.querySelectorAll("[data-dependency-slot-source]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependencySlotSource, targetPath = select.dataset.targetPath, dep = state.plan[i].dependencies[p] || { source: "request", bindings: [] }; dep.source = "request"; dep.bindings = (dep.bindings || []).filter((binding) => binding.targetPath !== targetPath); if (select.value) dep.bindings.push({ targetPath, fromRequest: Number(select.value), path: "" }); state.plan[i].dependencies[p] = dep; state.plan[i].parameters[p] = { $runtime: true }; touch(); renderPlan(); }; });
-      card.querySelectorAll("[data-dependency-slot-field]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependencySlotField, targetPath = select.dataset.targetPath, dep = state.plan[i].dependencies[p]; if (!dep) return; const binding = dep.bindings.find((item) => item.targetPath === targetPath); if (binding) binding.path = select.value; touch(); }; });
       const remove = card.querySelector("[data-remove]"); remove.onclick = () => { state.plan.splice(i, 1); state.plan.forEach((r) => { for (const d of Object.values(r.dependencies || {})) if (d.fromRequest > i) d.fromRequest--; else if (d.fromRequest === i) d.invalid = true; }); touch(); renderPlan(); renderDocs(); };
     });
     const hintButton = root.querySelector("#api-get-hint");
     hintButton.onclick = () => {
-      const diagnostic = currentDiagnostics()[0];
-      if (!diagnostic) { root.querySelector("#api-hint-text").textContent = "Your current plan appears to meet the requirements. Check it to record your result."; return; }
-      const level = state.hintsUsed[diagnostic.id] || 0;
-      if (level >= 3) return;
-      root.querySelector("#api-hint-text").textContent = `Hint ${level + 1}: ${diagnostic.hints[level]}`;
-      state.hintsUsed[diagnostic.id] = level + 1; updateHintButton(); if (state.instance) tracker.interact(state.instance);
+      const current = validatePlan(state.data, state.scenario, { requests: state.plan });
+      if (current.correct) { root.querySelector("#api-hint-text").textContent = "Your current plan appears to meet the requirements. Check it to record your result."; return; }
+      const diagnostic = formativeDiagnostics(state.data, state.scenario, current, state.plan)[0];
+      if (!diagnostic || state.hintsShown >= 3) return;
+      root.querySelector("#api-hint-text").textContent = `Hint ${state.hintsShown + 1}: ${diagnostic.hints[state.hintsShown]}`;
+      state.hintsShown++; updateHintButton(); if (state.instance) tracker.interact(state.instance);
     };
     updateHintButton();
   };
   const renderDocs = (query = "") => {
     const s = state.scenario, p = providerFor(state.data, s), endpoints = endpointsFor(state.data, s).filter((e) => `${e.title} ${e.path} ${e.description} ${e.method}`.toLowerCase().includes(query.toLowerCase()));
-    const filters = `<label class="api-provider-filter">Projects <select id="api-provider-filter"><option value="all">All Projects</option>${state.data.providers.map((v) => `<option value="${esc(v.id)}"${v.id === state.providerId ? " selected" : ""}>${esc(PROVIDER_LABELS[v.id] || v.name)}</option>`).join("")}</select></label>`;
+    const filters = `<label class="api-provider-filter">Projects <select id="api-provider-filter"><option value="all">All Projects</option>${state.data.providers.map((v) => `<option value="${esc(v.id)}"${v.id === state.providerId ? " selected" : ""}>${esc(v.name)}</option>`).join("")}</select></label>`;
     set("docs", `<section class="api-docs-browser"><div class="api-docs-head"><div><h2>Browse API Documentation</h2><p class="muted">Read the learning-focused reference and select the operations your application needs.</p></div><div class="api-browse-controls">${filters}<label class="api-search">Search endpoints <input id="api-search" type="search" placeholder="Search title, path, or description" value="${esc(query)}"></label></div></div><div class="api-entry-list">${endpoints.map((e) => docsHtml(e, p, s)).join("") || `<p class="muted">No matching endpoints. Try another search.</p>`}</div></section>`);
     const search = root.querySelector("#api-search"); search.oninput = () => { const query = search.value; renderDocs(query); const restored = root.querySelector("#api-search"); restored.focus(); restored.setSelectionRange(query.length, query.length); };
     root.querySelector("#api-provider-filter").onchange = (event) => { state.providerId = event.target.value; nextChallenge(); };
-    for (const b of root.querySelectorAll("[data-add]")) b.onclick = () => { const endpointId = b.dataset.add, endpoint = endpointMap(state.data).get(endpointId), occurrence = state.plan.filter((request) => request.endpointId === endpointId).length; state.plan.push({ endpointId, parameters: automaticParametersForOccurrence(s, endpoint, occurrence), dependencies: {} }); state.lastAddedEndpoint = endpointId; touch(); renderPlan(); root.querySelector("#interaction")?.scrollIntoView({ block: "start", behavior: "smooth" }); };
+    for (const b of root.querySelectorAll("[data-add]")) b.onclick = () => { const endpointId = b.dataset.add; state.plan.push({ endpointId, parameters: automaticParameters(s, endpointMap(state.data).get(endpointId)), dependencies: {} }); state.lastAddedEndpoint = endpointId; touch(); renderPlan(); root.querySelector("#interaction")?.scrollIntoView({ block: "start", behavior: "smooth" }); };
   };
   const finish = (result, revealed = false) => {
     state.closed = true;
     root.querySelectorAll("input,select,button").forEach((b) => { b.disabled = true; });
     const feedback = document.getElementById("feedback"); feedback.hidden = false; feedback.setAttribute("aria-live", "polite"); feedback.setAttribute("aria-atomic", "true");
     feedback.className = `feedback dl-feedback ${result.correct ? "good" : "shown"}`;
-    feedback.innerHTML = revealed ? `<strong>Project revealed · ${state.attempts} ${state.attempts === 1 ? "check" : "checks"}</strong><p>${esc(state.scenario.explanation.summary)} ${state.scenario.explanation.keyIdeas.map(esc).join(" ")}</p><details class="api-solution" open><summary>A valid request plan</summary>${readablePlan(preferredPlan(state.scenario), endpointMap(state.data), state.scenario)}</details><p class="muted dl-small">Recorded as revealed, not independently completed.</p>` : feedbackHtml(result, state.scenario, formativeDiagnostics(state.data, state.scenario, result, state.plan), state.attempts);
+    feedback.innerHTML = revealed ? `<strong>Project revealed · ${state.attempts} ${state.attempts === 1 ? "check" : "checks"}</strong><p>${esc(state.scenario.explanation.summary)} ${state.scenario.explanation.keyIdeas.map(esc).join(" ")}</p><details class="api-solution" open><summary>A valid request plan</summary>${readablePlan(preferredPlan(state.scenario), endpointMap(state.data))}</details><p class="muted dl-small">Recorded as revealed, not independently completed.</p>` : feedbackHtml(result, state.scenario, formativeDiagnostics(state.data, state.scenario, result, state.plan), state.attempts);
     controls.submit.hidden = true; controls.show.hidden = true; controls.skip.hidden = true; controls.nextButton.textContent = "Next Project →"; controls.nextButton.hidden = false; controls.nextButton.disabled = false; controls.nextButton.focus({ preventScroll: true }); stat();
   };
   const submit = () => {
@@ -390,9 +370,9 @@ export function mount({ root, controls, tracker }) {
     if (state.stopped) return;
     if (state.instance && tracker.status(state.instance) === "active") tracker.skip(state.instance);
     state.scenario = state.picker(state.providerId); if (!state.scenario) return;
-    state.plan = []; state.lastAddedEndpoint = null; state.closed = false; state.attempts = 0; state.hintsUsed = {}; state.lastResult = null; state.instance = tracker.begin("documentation-lab", "Documentation Lab", `api-project/${state.scenario.id}`, state.scenario.title);
+    state.plan = []; state.lastAddedEndpoint = null; state.closed = false; state.attempts = 0; state.hintsShown = 0; state.lastResult = null; state.instance = tracker.begin("documentation-lab", "Documentation Lab", `api-project/${state.scenario.id}`, state.scenario.title);
     document.getElementById("mode-label").textContent = ""; document.getElementById("family").textContent = "";
-    document.getElementById("instructions").innerHTML = "<strong>You're designing a request plan, not building a working app.</strong> Use the documentation to decide which API requests an application would need. The game simulates the requests; you don't need an account, API key, or programming code.";
+    document.getElementById("instructions").textContent = "Read the API documentation and select the requests your application needs.";
     document.getElementById("question").textContent = ""; document.getElementById("prompt").hidden = true;
     document.getElementById("stage").dataset.mode = "api-builder";
     const feedback = document.getElementById("feedback"); feedback.hidden = true; feedback.innerHTML = "";
@@ -412,4 +392,4 @@ export function mount({ root, controls, tracker }) {
   return { stop() { state.stopped = true; if (state.instance && tracker.status(state.instance) === "active") tracker.skip(state.instance); } };
 }
 
-export { presentationFor, fieldMaskChoices, serializeMultiSelection, focusedFields, referenceBindings, dependencySlotOptions, multiSourceDependencyControl };
+export { presentationFor, fieldMaskChoices, serializeMultiSelection, focusedFields, responseSourceControl };
