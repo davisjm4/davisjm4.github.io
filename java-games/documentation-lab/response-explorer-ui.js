@@ -7,7 +7,7 @@ import {
   acceptedConcretePaths,
   structuralPathLabel,
   typeLabel,
-} from "./response-explorer-engine.js?v=rx-fd-v2";
+} from "./response-explorer-engine.js?v=rx-fd-v3";
 
 const esc = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const templates = (data) => data.feedbackTemplates || {};
