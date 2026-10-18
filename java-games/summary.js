@@ -24,6 +24,12 @@ function apiProjectAttempts(records) {
   const outcome = (r) => r.status === "solved" ? (r.submissions === 1 ? "Completed on first check" : "Solved after revision") : r.status === "revealed" ? "Revealed" : r.status === "skipped" ? "Skipped" : r.submissions ? "In progress" : "Not checked";
   return `<section class="panel"><h2>API project attempts</h2><div class="table-wrap"><table class="report-table"><thead><tr><th scope="col">Project</th><th scope="col">Outcome</th><th scope="col">Checks</th></tr></thead><tbody>${projects.slice(-50).reverse().map((r) => `<tr><th scope="row">${esc(r.topicTitle)}</th><td>${outcome(r)}</td><td>${r.submissions}</td></tr>`).join("")}</tbody></table></div></section>`;
 }
+function responseExplorerAttempts(records) {
+  const challenges = Object.values(records).filter((r) => r.game === "documentation-lab" && r.topic?.startsWith("response-explorer/"));
+  if (!challenges.length) return "";
+  const outcome = (r) => r.status === "solved" ? (r.submissions === 1 ? "Completed on first check" : "Solved after revision") : r.status === "revealed" ? "Answer revealed" : r.status === "skipped" ? "Skipped" : r.submissions ? "In progress" : "Not checked";
+  return `<section class="panel"><h2>API Response Explorer attempts</h2><div class="table-wrap"><table class="report-table"><thead><tr><th scope="col">Challenge</th><th scope="col">Outcome</th><th scope="col">Checks</th><th scope="col">Hints</th></tr></thead><tbody>${challenges.slice(-50).reverse().map((r) => `<tr><th scope="row">${esc(r.topicTitle)}</th><td>${outcome(r)}</td><td>${r.submissions}</td><td>${r.details?.responseExplorer?.hintsShown || 0}</td></tr>`).join("")}</tbody></table></div></section>`;
+}
 function render() {
   const d = tracker.snapshot(),
     m = d.totals,
@@ -50,7 +56,7 @@ function render() {
       )
       .join(
         "",
-      )}</div><p class="muted">First-try accuracy = first-submission correct ÷ challenges with at least one answer submission. Revealing before submitting does not enter that denominator. Retrying keeps the same challenge ID; shown answers never count as independently solved. Skipped means an unfinished challenge was replaced or left.</p></section>${apiProjectAttempts(d.records)}<section><h2>By game</h2>${Object.keys(d.games).length ? table(Object.values(d.games)) : "<p>No challenges generated in this session yet.</p>"}</section><section><h2>By topic / concept</h2>${
+      )}</div><p class="muted">First-try accuracy = first-submission correct ÷ challenges with at least one answer submission. Revealing before submitting does not enter that denominator. Retrying keeps the same challenge ID; shown answers never count as independently solved. Skipped means an unfinished challenge was replaced or left.</p></section>${apiProjectAttempts(d.records)}${responseExplorerAttempts(d.records)}<section><h2>By game</h2>${Object.keys(d.games).length ? table(Object.values(d.games)) : "<p>No challenges generated in this session yet.</p>"}</section><section><h2>By topic / concept</h2>${
       Object.values(d.games)
         .map(
           (g) =>
