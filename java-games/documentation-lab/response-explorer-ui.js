@@ -2,7 +2,6 @@ import {
   buildView,
   gradeFindData,
   renderExplanation,
-  sourceSamples,
   providerName,
   findDataChallenges,
   acceptedConcretePaths,
@@ -81,7 +80,7 @@ export function mount({ root, tracker }) {
   const data = await (await fetch("./response-explorer-data-v1.json")).json();
   if (stopped) return;
   if (!data || data.schemaVersion !== 1) throw new Error("This challenge set needs a newer version of the explorer.");
-  const library = await (await fetch("./api-project-data-v1-expanded.json")).json();
+  const library = { providers: [] };
   const samples = new Map(Object.entries(await (await fetch("./response-explorer-samples-v1.json")).json()));
   const challenges = findDataChallenges(data);
   const providers = [...new Set(challenges.map((challenge) => challenge.providerId))];
@@ -105,12 +104,12 @@ export function mount({ root, tracker }) {
   const render = () => {
     const challenge = state.challenge;
     if (!challenge) { root.innerHTML = `<div class="rx-error"><strong>No Response Explorer challenges are available.</strong></div>`; return; }
-    const provider = providerName(library, challenge.providerId);
+    const provider = ({ spotify: "Spotify", youtube: "YouTube", "google-maps": "Google Maps", discord: "Discord", tiktok: "TikTok", openai: "OpenAI" })[challenge.providerId] || challenge.providerId;
     const tabs = [...state.samples.keys()];
     const activeSample = state.activeSample && state.samples.has(state.activeSample) ? state.activeSample : challenge.sampleId;
     state.activeSample = activeSample;
     root.innerHTML = `<div class="rx-shell" data-rx-mode="find-data">
-      <div class="rx-head"><div><span class="eyebrow">API Response Explorer · Find the Data</span><h2>${esc(challenge.title)}</h2><p class="muted">Explore an illustrative response and identify the information an application could use. This is a simulation; no account, key, or live request is needed.</p></div><label class="rx-provider">Provider<select id="rx-provider"><option value="all">All Providers</option>${providers.map((id) => `<option value="${esc(id)}"${state.provider === id ? " selected" : ""}>${esc(providerName(library, id))}</option>`).join("")}</select></label></div>
+      <div class="rx-head"><div><span class="eyebrow">API Response Explorer · Find the Data</span><h2>${esc(challenge.title)}</h2><p class="muted">Explore an illustrative response and identify the information an application could use. This is a simulation; no account, key, or live request is needed.</p></div><label class="rx-provider">Provider<select id="rx-provider"><option value="all">All Providers</option>${providers.map((id) => `<option value="${esc(id)}"${state.provider === id ? " selected" : ""}>${esc(({ spotify: "Spotify", youtube: "YouTube", "google-maps": "Google Maps", discord: "Discord", tiktok: "TikTok", openai: "OpenAI" })[id] || id)}</option>`).join("")}</select></label></div>
       <section class="rx-section rx-goal"><h3>Application Goal</h3><p>${esc(challenge.context.applicationGoal)}</p><div class="rx-badges"><span>${esc(provider)}</span><span>${esc(challenge.difficulty)}</span></div></section>
       <section class="rx-section rx-response"><h3>API Response</h3><p class="muted">Illustrative sample from <code>${esc(activeSample)}</code>. Values vary in real responses, and arrays may be shortened.</p>${tabs.length > 1 ? `<div class="rx-tabs" role="tablist">${tabs.map((id) => `<button type="button" role="tab" aria-selected="${id === activeSample}" class="${id === activeSample ? "active" : ""}" data-rx-tab="${esc(id)}">${esc(id === challenge.sampleId ? "Primary response" : (challenge.relatedSamples.find((item) => item.sampleId === id)?.caption || id))}</button>`).join("")}</div>` : ""}<div class="rx-tree-wrap" id="rx-tree" tabindex="0"></div><div class="rx-path" aria-live="polite">${state.selection.get(activeSample) ? `Selected: <strong>${esc(structuralPathLabel(state.selection.get(activeSample)))}</strong>` : "Nothing selected yet"}</div></section>
       <section class="rx-section rx-challenge"><h3>Challenge</h3><p>${esc(challenge.instruction)}</p><p class="muted">Select a node in the response. Use the chevron to expand a branch; selecting a row is a separate action.</p><div class="rx-action-row"><button type="button" id="rx-check" ${state.selection.get(activeSample) ? "" : "disabled"}>Check Answer</button><button type="button" class="secondary" id="rx-hint" ${state.hints.length >= 3 ? "disabled" : ""}>${state.hints.length ? `Hint ${state.hints.length + 1} of 3` : "Get Hint"}</button><button type="button" class="secondary" id="rx-reveal" ${state.attempts < 1 || state.result?.correct || state.revealed ? "disabled" : ""}>Show Me the Answer</button><button type="button" class="secondary" id="rx-reset">Reset View</button></div></section>
