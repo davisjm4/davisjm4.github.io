@@ -156,7 +156,7 @@ export function mount({ root, tracker }) {
     render();
   };
   if (originalActions) originalActions.hidden = true;
-  root.dataset.mode = RESPONSE_EXPLORER_MODE;
+  root.dataset.mode = "response-explorer";
   nextChallenge();
   };
   start().catch((error) => {
