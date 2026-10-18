@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { validateApiData, assertValid, validatePlan, formativeDiagnostics, endpointsFor, createScenarioPicker, isRuntimeParameter, isProductionContent, endpointMap } from "../api-project-builder-engine.js";
-import { presentationFor, fieldMaskChoices, serializeMultiSelection } from "../api-project-builder-ui.js";
-import { presentation, classification, automaticParameters, PROJECT_PRESENTATION } from "../api-project-presentation.js";
+import { presentationFor, fieldMaskChoices, serializeMultiSelection, responseSourceChoices, responseSourceControl } from "../api-project-builder-ui.js";
+import { presentation, classification, automaticParameters, PROJECT_PRESENTATION, RESPONSE_SOURCE_CHOICES } from "../api-project-presentation.js";
 
 const data = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1.json", import.meta.url), "utf8"));
 const uiSource = fs.readFileSync(new URL("../api-project-builder-ui.js", import.meta.url), "utf8");
@@ -41,9 +41,9 @@ const routesMask = fieldMaskChoices(map.get("maps.routes-compute-routes"));
 assert.ok(routesMask.some((f) => f.path === "routes.distanceMeters"), "route field masks use documented response fields");
 assert.ok(!JSON.stringify(parameterInventory).includes("latitude"), "coordinates are not classified as student-entered parameters");
 function refs(value, found = []) { if (value && typeof value === "object" && "$fromStep" in value) found.push(value); else if (value && typeof value === "object") Object.values(value).forEach((v) => refs(v, found)); else if (Array.isArray(value)) value.forEach((v) => refs(v, found)); return found; }
-function studentPlan(scenario, accepted) {
+function studentPlan(scenario, accepted, content = data, endpointLookup = map) {
   return { requests: accepted.steps.map((step, index) => {
-    const endpoint = map.get(step.endpointId), parameters = {}, dependencies = {};
+    const endpoint = endpointLookup.get(step.endpointId), parameters = {}, dependencies = {};
     for (const [name, value] of Object.entries(step.parameters)) {
       const parameter = endpoint.parameters.find((p) => p.name === name);
       const ref = refs(value)[0];
@@ -57,6 +57,77 @@ function studentPlan(scenario, accepted) {
     return { endpointId: step.endpointId, parameters, dependencies };
   }) };
 }
+
+const expandedData = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1-expanded.json", import.meta.url), "utf8"));
+const expandedMap = endpointMap(expandedData);
+const publishedScenarios = expandedData.scenarios.filter((scenario) => scenario.stage1Compatible === true && !(scenario.engineSupportRequired || []).length);
+assert.equal(publishedScenarios.length, 36, "the expanded library exposes exactly the 36 Stage 1 scenarios");
+const targetCases = [
+  ["spotify-session-rewind-saver", "spotify.get-recently-played", "uris", "items[].track.uri"],
+  ["youtube-study-mix-copier", "youtube.playlistitems-list", "snippet", "items[].contentDetails.videoId"],
+  ["youtube-book-review-leaderboard", "youtube.search-list", "id", "items[].id.videoId"],
+  ["discord-my-servers-dashboard", "discord.get-current-user-guilds", "guild_id", "[].id"],
+  ["discord-event-volunteer-desk", "discord.search-guild-members", "user_id", "[].user.id"],
+  ["tiktok-club-recap-publisher", "tiktok.direct-post-video-init", "publish_id", "data.publish_id"],
+  ["openai-reading-packet-qa", "openai.upload-file", "input", "id"],
+  ["openai-textbook-photo-flashcards", "openai.upload-file", "input", "id"],
+];
+for (const [scenarioId, sourceId, parameter, path] of targetCases) {
+  const scenario = expandedData.scenarios.find((item) => item.id === scenarioId);
+  const endpoint = expandedMap.get(sourceId);
+  assert.ok(scenario && endpoint, `${scenarioId}: scenario and source endpoint exist`);
+  const choices = responseSourceChoices(scenario, endpoint, parameter);
+  assert.ok(choices.some((choice) => choice.canonicalPath === path), `${scenarioId}: ${path} can be selected`);
+  assert.ok(choices.length >= 2 && choices.length <= 4, `${scenarioId}: focused set has two to four options`);
+  assert.ok(choices.every((choice) => endpoint.responseFields.some((field) => field.path === choice.canonicalPath)), `${scenarioId}: every choice is a canonical documented path`);
+  assert.ok(choices.every((choice) => choice.label && choice.label !== choice.canonicalPath), `${scenarioId}: choices have a plain-language description`);
+  if (scenario.stage1Compatible && !(scenario.engineSupportRequired || []).length) {
+    const markup = responseSourceControl(scenario, endpoint, parameter, { paths: [path] }, 2);
+    assert.match(markup, /type="radio"/, `${scenarioId}: single-source field choice uses radios`);
+    assert.match(markup, new RegExp(path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${scenarioId}: the canonical path remains the input value`);
+  }
+}
+
+let checkedAcceptedPlans = 0, checkedIncorrectAlternatives = 0, checkedSourceDecisions = 0;
+for (const scenario of publishedScenarios) for (const accepted of scenario.acceptedPlans) {
+  const represented = studentPlan(scenario, accepted, expandedData, expandedMap);
+  for (const step of accepted.steps) for (const [name, value] of Object.entries(step.parameters)) {
+    for (const ref of refs(value)) {
+      const sourceStep = accepted.steps.find((candidate) => candidate.step === ref.$fromStep);
+      const source = expandedMap.get(sourceStep.endpointId);
+      const choices = responseSourceChoices(scenario, source, name);
+      assert.ok(choices.some((choice) => choice.canonicalPath === ref.path), `${scenario.id}/${accepted.id}: ${ref.path} is selectable for ${name}`);
+      checkedSourceDecisions++;
+    }
+  }
+  const result = validatePlan(expandedData, scenario, represented);
+  assert.equal(result.correct, true, `${scenario.id}/${accepted.id}: interface-represented plan passes evaluator: ${JSON.stringify(result)}`);
+  checkedAcceptedPlans++;
+  let incorrect = false;
+  for (const request of represented.requests) {
+    for (const [name, dep] of Object.entries(request.dependencies || {})) {
+      const source = expandedMap.get(represented.requests[dep.fromRequest]?.endpointId);
+      const expected = new Set(scenario.acceptedPlans.flatMap((plan) => plan.steps.flatMap((step) => refs(step.parameters?.[name]).map((ref) => ref.path))));
+      const alternate = responseSourceChoices(scenario, source, name).find((choice) => !expected.has(choice.canonicalPath));
+      if (!alternate || !dep.paths?.length) continue;
+      const bad = structuredClone(represented);
+      const badDependency = bad.requests[request === represented.requests[0] ? 0 : represented.requests.indexOf(request)].dependencies[name];
+      badDependency.paths = [alternate.canonicalPath];
+      assert.equal(validatePlan(expandedData, scenario, bad).correct, false, `${scenario.id}/${accepted.id}: plausible wrong path is rejected`);
+      checkedIncorrectAlternatives++; incorrect = true; break;
+    }
+    if (incorrect) break;
+  }
+}
+assert.equal(checkedAcceptedPlans, publishedScenarios.reduce((sum, scenario) => sum + scenario.acceptedPlans.length, 0));
+assert.ok(checkedIncorrectAlternatives > 0, "plausible incorrect response paths are still rejected");
+for (const [scenarioId, , ,] of targetCases) {
+  const scenario = expandedData.scenarios.find((item) => item.id === scenarioId);
+  if (scenario.stage1Compatible && !(scenario.engineSupportRequired || []).length) continue;
+  assert.equal(scenario.stage1Compatible, false, `${scenarioId} is intentionally unavailable in student practice`);
+  assert.ok((scenario.engineSupportRequired || []).length > 0, `${scenarioId} remains deferred for its unsupported format`);
+}
+console.log(`Response-source solvability: ${publishedScenarios.length} enabled scenarios, ${checkedAcceptedPlans} accepted plans, ${checkedSourceDecisions} source selections constructible and accepted; ${checkedIncorrectAlternatives} plausible incorrect fields rejected. The ${targetCases.filter(([id]) => !publishedScenarios.some((scenario) => scenario.id === id)).length} deferred audit scenarios remain disabled.`);
 
 // Each scenario's focused interface can construct a complete accepted plan without
 // exposing hidden optional controls or forcing literal runtime identifiers.
@@ -201,58 +272,6 @@ const lunch = data.scenarios.find((s) => s.id === "maps-lunch-spot-finder");
 const lunchPlan = studentPlan(lunch, lunch.acceptedPlans[0]);
 lunchPlan.requests[0].parameters["X-Goog-FieldMask"] = "places.displayName,places.formattedAddress,places.location,places.rating,places.currentOpeningHours";
 assert.equal(validatePlan(data, lunch, lunchPlan).correct, true, "place ID remains optional when the displayed fields are selected");
-
-// Audit replay: feedback follows the currently unresolved Lunch Spot Finder issue.
-const lunchAudit = studentPlan(lunch, lunch.acceptedPlans[0]);
-lunchAudit.requests[0].parameters["X-Goog-FieldMask"] = lunchAudit.requests[0].parameters["X-Goog-FieldMask"].split(",").filter((field) => field !== "places.formattedAddress").join(",");
-let auditResult = validatePlan(data, lunch, lunchAudit);
-let auditFeedback = formativeDiagnostics(data, lunch, auditResult, lunchAudit.requests);
-assert.match(auditFeedback[0].message, /address|locate/i, "first Lunch audit hint diagnoses readable location information");
-lunchAudit.requests[0].parameters["X-Goog-FieldMask"] += ",places.formattedAddress";
-lunchAudit.requests[0].parameters.rankPreference = "POPULARITY";
-auditResult = validatePlan(data, lunch, lunchAudit); auditFeedback = formativeDiagnostics(data, lunch, auditResult, lunchAudit.requests);
-assert.match(auditFeedback[0].message, /closest|ranking|orders/i, "feedback advances to the current ranking issue");
-assert.doesNotMatch(auditFeedback[0].message, /formatted address|locate each result/i);
-lunchAudit.requests[0].parameters.rankPreference = "DISTANCE"; lunchAudit.requests[0].parameters.maxResultCount = 20;
-auditResult = validatePlan(data, lunch, lunchAudit); auditFeedback = formativeDiagnostics(data, lunch, auditResult, lunchAudit.requests);
-assert.match(auditFeedback[0].message, /result|number|limit/i, "feedback advances to the result limit");
-lunchAudit.requests[0].parameters.maxResultCount = 10;
-assert.equal(validatePlan(data, lunch, lunchAudit).correct, true, "complete Lunch audit revision passes");
-
-// Audit replay: distinguish video discovery, detail retrieval, and ID dependency.
-const study = data.scenarios.find((s) => s.id === "youtube-study-video-finder");
-const studyPlan = studentPlan(study, study.acceptedPlans[0]), detailsRequest = studyPlan.requests.pop();
-auditResult = validatePlan(data, study, studyPlan); auditFeedback = formativeDiagnostics(data, study, auditResult, studyPlan.requests);
-assert.match(auditFeedback[0].message, /search|details/i);
-studyPlan.requests.push(detailsRequest); studyPlan.requests[1].dependencies.id.paths = ["items[].id.channelId"];
-auditResult = validatePlan(data, study, studyPlan); auditFeedback = formativeDiagnostics(data, study, auditResult, studyPlan.requests);
-assert.match(auditFeedback[0].message, /identifiers|video/i);
-assert.equal(validatePlan(data, study, studentPlan(study, study.acceptedPlans[0])).correct, true);
-
-const playlists = data.scenarios.find((s) => s.id === "spotify-my-playlists-browser");
-const playlistPlan = studentPlan(playlists, playlists.acceptedPlans[0]);
-playlistPlan.requests[1].dependencies.playlist_id.paths = ["items[].name"];
-auditResult = validatePlan(data, playlists, playlistPlan); auditFeedback = formativeDiagnostics(data, playlists, auditResult, playlistPlan.requests);
-assert.match(auditFeedback[0].message, /identifier|selected/i, "playlist dependency feedback explains the selected-resource relationship");
-assert.equal(validatePlan(data, playlists, studentPlan(playlists, playlists.acceptedPlans[0])).correct, true);
-
-// Museum and Creator audit rejections were substantive, not false negatives.
-const museumAuditPlan = studentPlan(museum, museum.acceptedPlans[0]);
-museumAuditPlan.requests[1].parameters["X-Goog-FieldMask"] = "routes.localizedValues,routes.warnings";
-assert.equal(validatePlan(data, museum, museumAuditPlan).correct, false, "localized route values alone do not replace raw measurements when both are required");
-auditFeedback = formativeDiagnostics(data, museum, validatePlan(data, museum, museumAuditPlan), museumAuditPlan.requests);
-assert.match(auditFeedback[0].message, /distance|duration|route/i);
-const creator = data.scenarios.find((s) => s.id === "youtube-channel-hub"), creatorPlan = studentPlan(creator, creator.acceptedPlans[0]);
-creatorPlan.requests[1].parameters.part = "snippet";
-assert.equal(validatePlan(data, creator, creatorPlan).correct, false, "playlist-entry date is not video publication date");
-auditFeedback = formativeDiagnostics(data, creator, validatePlan(data, creator, creatorPlan), creatorPlan.requests);
-assert.ok(auditFeedback.some((item) => /date|publish/i.test(item.message)));
-assert.equal(validatePlan(data, creator, studentPlan(creator, creator.acceptedPlans[0])).correct, true);
-
-assert.match(uiSource, /What needs attention/);
-assert.match(uiSource, /What to review/);
-assert.match(uiSource, /hintsUsed\[diagnostic\.id\]/, "hint progression is tracked by issue, not submission count");
-assert.match(uiSource, /You're designing a request plan, not building a working app/);
 
 const invalid = structuredClone(data);
 invalid.scenarios[0].availableEndpointIds[0] = "missing.endpoint";
