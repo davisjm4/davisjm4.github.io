@@ -105,7 +105,7 @@ for (const scenario of publishedScenarios) for (const accepted of scenario.accep
     }
   }
   const result = validatePlan(expandedData, scenario, represented);
-  assert.equal(result.correct, true, `${scenario.id}/${accepted.id}: interface-represented plan passes evaluator: ${JSON.stringify(result)}`);
+    assert.equal(result.correct, true, `${scenario.id}/${accepted.id}: accepted-plan source references pass through the evaluator: ${JSON.stringify(result)}`);
   checkedAcceptedPlans++;
   let incorrect = false;
   for (const request of represented.requests) {
@@ -131,10 +131,9 @@ for (const [scenarioId, , ,] of targetCases) {
   assert.equal(scenario.stage1Compatible, false, `${scenarioId} is intentionally unavailable in student practice`);
   assert.ok((scenario.engineSupportRequired || []).length > 0, `${scenarioId} remains deferred for its unsupported format`);
 }
-console.log(`Response-source solvability: ${publishedScenarios.length} enabled scenarios, ${checkedAcceptedPlans} accepted plans, ${checkedSourceDecisions} source selections constructible and accepted; ${checkedIncorrectAlternatives} plausible incorrect fields rejected. The ${targetCases.filter(([id]) => !publishedScenarios.some((scenario) => scenario.id === id)).length} deferred audit scenarios remain disabled.`);
+console.log(`Response-source coverage: ${publishedScenarios.length} enabled scenarios, ${checkedAcceptedPlans} accepted-plan variants checked by the evaluator, ${checkedSourceDecisions} required source selections exposed by the controls; ${checkedIncorrectAlternatives} plausible incorrect fields rejected. This verifies response-source choices, not full-plan control coverage. The ${targetCases.filter(([id]) => !publishedScenarios.some((scenario) => scenario.id === id)).length} deferred audit scenarios remain disabled.`);
 
-// Each scenario's focused interface can construct a complete accepted plan without
-// exposing hidden optional controls or forcing literal runtime identifiers.
+// The focused-control checks below cover the original nine scenarios only.
 const focusedInventory = [];
 for (const scenario of data.scenarios) {
   for (const endpoint of endpointsFor(data, scenario)) {
