@@ -240,6 +240,14 @@ export function createSessionTracker({
     read();
     return JSON.parse(JSON.stringify(data));
   }
+  function annotate(instance, details) {
+    read();
+    const record = data.records[instance];
+    if (!record || !details || typeof details !== "object") return false;
+    record.details = { ...(record.details || {}), ...details };
+    activity();
+    return true;
+  }
   function student(name, period) {
     read();
     data.student = {
@@ -276,6 +284,7 @@ export function createSessionTracker({
     student,
     reset,
     status,
+    annotate,
     addActiveSeconds,
     get warning() {
       return warning;
