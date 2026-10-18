@@ -1,0 +1,3650 @@
+{
+  "schemaVersion": 1,
+  "dataVersion": "1.0.0-pilot",
+  "description": "Response Explorer pilot library: 24 authored challenges over the six-provider API Project library.",
+  "sourceLibrary": {
+    "file": "api-project-data-v1-expanded.json",
+    "schemaVersion": 1,
+    "sha256": "a8061b5f55266774b7760f39a5b9f7304a389894fe7e0d161990c8370f6526c4",
+    "providers": 6,
+    "scenarios": 53
+  },
+  "pathNotation": {
+    "root": "$",
+    "key": ".key",
+    "arrayElement": "[]",
+    "examples": [
+      "$.items[].name",
+      "$[].id",
+      "$.data.user.follower_count"
+    ],
+    "rules": "Structural paths use [] for any array element. Concrete selections ($.items[2].name) are normalised by replacing every [n] with []. Keys may not contain '.', '[' or ']'."
+  },
+  "formats": {
+    "find-data": {
+      "label": "Find the Data",
+      "modes": [
+        "single"
+      ],
+      "skill": "Locate one property by reading names, values, types and structure."
+    },
+    "understand-structure": {
+      "label": "Understand the Structure",
+      "modes": [
+        "single",
+        "slots",
+        "classify"
+      ],
+      "skill": "Recognise containers, relationships and roles of nodes."
+    },
+    "select-needs": {
+      "label": "Select What the App Needs",
+      "modes": [
+        "set"
+      ],
+      "skill": "Decide which fields an application goal requires."
+    }
+  },
+  "difficulties": {
+    "beginner": "Small response or documented subtree, one or two nesting levels, simple property selection, at most four needs.",
+    "intermediate": "Arrays of objects, nested properties, several plausible fields, selecting several useful properties.",
+    "advanced": "Related samples, nested collections, nullable or optional data, identifiers versus full objects, displayed data versus technical metadata."
+  },
+  "reasoningFamilies": {
+    "locate-by-meaning": {
+      "label": "Locate by meaning",
+      "formats": [
+        "find-data"
+      ],
+      "description": "Match a described need to the one property that holds it by reading names, values and data types."
+    },
+    "disambiguate-same-name": {
+      "label": "Same name, different level",
+      "formats": [
+        "find-data"
+      ],
+      "description": "The same key appears at more than one level; the parent decides what it means."
+    },
+    "polymorphic-branch": {
+      "label": "Mixed entries and branches",
+      "formats": [
+        "find-data",
+        "understand-structure",
+        "select-needs"
+      ],
+      "description": "Entries in one list, or one object's branches, are different kinds; find the branch that carries the needed data."
+    },
+    "similar-metric-choice": {
+      "label": "Look-alike measurements",
+      "formats": [
+        "find-data"
+      ],
+      "description": "Several sibling counters or measurements have similar names; choose by what each one actually tallies."
+    },
+    "equivalent-paths": {
+      "label": "More than one valid path",
+      "formats": [
+        "find-data",
+        "select-needs"
+      ],
+      "description": "Two or more properties carry the same information; recognise each as valid."
+    },
+    "display-vs-raw": {
+      "label": "Display-ready vs raw",
+      "formats": [
+        "find-data"
+      ],
+      "description": "Choose between a raw machine value and a value already formatted for people."
+    },
+    "optional-null-handling": {
+      "label": "Optional and null values",
+      "formats": [
+        "find-data",
+        "select-needs"
+      ],
+      "description": "A property may be null or missing; interpret that as 'optional', and plan a fallback."
+    },
+    "container-vs-element": {
+      "label": "Collection vs one item",
+      "formats": [
+        "understand-structure"
+      ],
+      "description": "Tell the node that holds many items from one item and from response-level information."
+    },
+    "scope-classification": {
+      "label": "What does this describe?",
+      "formats": [
+        "understand-structure"
+      ],
+      "description": "Sort nodes by what they describe: an item, the whole page, or the request itself."
+    },
+    "nesting-chain": {
+      "label": "Parent-to-child chains",
+      "formats": [
+        "understand-structure"
+      ],
+      "description": "Trace a branch from a container to the list or value inside it."
+    },
+    "alternatives-group": {
+      "label": "Group of named options",
+      "formats": [
+        "understand-structure"
+      ],
+      "description": "Recognise an object whose children are alternatives labeled by name, unlike an array of numbered entries."
+    },
+    "ownership": {
+      "label": "Who owns this list?",
+      "formats": [
+        "understand-structure"
+      ],
+      "description": "Identical-looking lists at different levels belong to different parents; the position in the structure decides."
+    },
+    "pagination-controls": {
+      "label": "Page-level controls",
+      "formats": [
+        "understand-structure"
+      ],
+      "description": "Find the siblings of a collection that control paging, and tell them from per-item data."
+    },
+    "cross-reference": {
+      "label": "Identifier references",
+      "formats": [
+        "understand-structure"
+      ],
+      "description": "Understand a property that stores another entry's identity value instead of containing it."
+    },
+    "app-need-selection": {
+      "label": "What the app needs",
+      "formats": [
+        "select-needs"
+      ],
+      "description": "Map each part of an application goal to the properties it requires, separating necessary, optional and unneeded data."
+    },
+    "invisible-need": {
+      "label": "Needed but never shown",
+      "formats": [
+        "select-needs"
+      ],
+      "description": "Some data is never displayed but is required for a later step, such as an identifier used for a follow-up request."
+    },
+    "wrapper-vs-content": {
+      "label": "Wrapper and content",
+      "formats": [
+        "select-needs"
+      ],
+      "description": "Needs are spread across an entry that wraps an item and the item inside it; same-named properties have different owners."
+    },
+    "conditional-need": {
+      "label": "A need that depends on a flag",
+      "formats": [
+        "select-needs"
+      ],
+      "description": "One value is only meaningful together with a companion flag, so both are needed."
+    },
+    "flag-vs-score": {
+      "label": "Yes/no flag or numeric score",
+      "formats": [
+        "select-needs"
+      ],
+      "description": "The same concepts appear as flags, scores and metadata; choose the representation the application's decision uses, and nothing more."
+    }
+  },
+  "misconceptions": {
+    "auto-too-broad": "Selected a container that holds the answer instead of the specific node.",
+    "auto-too-specific": "Selected a detail inside the right container instead of the container the goal needs.",
+    "auto-sibling": "Selected a neighbouring property that describes something different.",
+    "auto-unrelated": "Selected a node from a branch unrelated to the goal.",
+    "auto-unneeded": "Selected a property the stated goal does not need.",
+    "similar-metric": "Chose a measurement with a similar name that counts something different.",
+    "wrong-kind-of-value": "Chose a value of the wrong kind (for example text where a number was needed).",
+    "status-vs-payload": "Confused information about the request (status, error group) with the data the app asked for.",
+    "technical-metadata": "Chose technical or housekeeping data that the application never displays.",
+    "list-size-vs-item-metric": "Chose a number that counts the items in a response instead of a number describing one item.",
+    "echo-vs-output": "Chose data the response repeats from the request instead of data the service produced.",
+    "bookkeeping-vs-content": "Chose a record of how the answer was produced instead of the answer.",
+    "legacy-field": "Chose a field that is present but unused or always zero.",
+    "kind-of-other-thing": "Chose a label that describes a different object than the one the goal is about.",
+    "raw-vs-display": "Chose a raw value meant for calculation when a ready-to-display value was needed (or the reverse).",
+    "identifier-vs-label": "Confused an identifier meant for programs with a label meant for people (or the reverse).",
+    "fallback-vs-primary": "Chose the always-present backup property instead of the primary property that may be empty.",
+    "one-vs-many": "Chose one element when the whole collection was needed.",
+    "page-vs-item": "Chose information about the page or response when information about the items was needed.",
+    "one-vs-group": "Chose one option when the group that holds all options was needed.",
+    "too-specific-fact": "Chose one fact inside a group when the group itself was needed.",
+    "same-name-other-owner": "Chose a property with the same or a similar name that belongs to a different parent.",
+    "group-vs-value": "Chose the group that holds the value instead of the value itself.",
+    "scope-confusion": "Misjudged what a node describes (the item versus the request).",
+    "ordering-vs-pointer": "Chose a property that orders entries instead of one that points to another entry.",
+    "timestamp-lookalike": "Chose a number that looks like a time but plays a different role.",
+    "plausible-detail": "Chose a real, plausible property that the stated goal does not need.",
+    "score-vs-flag": "Chose a numeric score where a yes/no flag was needed.",
+    "polymorphic-entry": "Misjudged which entry of a mixed list carries the reply."
+  },
+  "feedbackTemplates": {
+    "tooBroad": "That node contains the answer, but it also contains a lot more. Open it and look for the one thing the goal asks for.",
+    "tooSpecific": "That is a detail inside the right area. The goal asks for something bigger than this single value; step back up.",
+    "sibling": "You are in the right neighbourhood, but this property sits next to the answer and describes something different. Compare what each neighbour holds.",
+    "unrelated": "That part of the response describes something else. Re-read the application goal and look for the branch that matches it.",
+    "slotEmpty": "Select a node in the tree, then press this slot's button.",
+    "slotDuplicate": "You used this same node for another slot. Each slot needs its own node.",
+    "classifyEmpty": "Choose a category for this node.",
+    "classifyWrong": "Not quite. Compare what this node describes with what each category means.",
+    "setMissingCount": "Your selection covers part of what the app needs, but {{n}} need(s) are not covered yet.",
+    "setMinimalExtras": "This challenge asks for only what the app needs. At least one selected property is not needed.",
+    "setContainer": "You selected a whole group. The app needs specific values from inside it, so choose the individual properties.",
+    "setUnneeded": "The app does not need this property for the stated goal.",
+    "correct": "Correct.",
+    "correctAlternative": "Correct. This path works too: {{note}}",
+    "correctWithOptional": "Correct. You also chose an optional property: {{note}}",
+    "revealConfirm": "Show the answer? This attempt will be recorded as 'answer revealed'.",
+    "retryPrompt": "Your tree is exactly as you left it. Adjust your selection and check again."
+  },
+  "config": {
+    "maxHints": 3,
+    "hintLabels": [
+      "Hint 1 of 3: strategy",
+      "Hint 2 of 3: narrowing",
+      "Hint 3 of 3: closer"
+    ],
+    "reveal": {
+      "requireFailedAttempts": 1,
+      "requireConfirmation": true,
+      "recordedAs": "answer-revealed"
+    },
+    "setFeedback": {
+      "showMissingLabelsFromAttempt": 2
+    },
+    "difficultyBudgets": {
+      "beginner": {
+        "maxInitialRows": 30,
+        "maxPathKeys": 3,
+        "maxArrayLevels": 1,
+        "maxNeeds": 4,
+        "minRejected": 2
+      },
+      "intermediate": {
+        "maxInitialRows": 45,
+        "minRejected": 3
+      },
+      "advanced": {
+        "maxInitialRows": 60,
+        "minRejected": 3
+      }
+    },
+    "diversity": {
+      "minPerProvider": 3,
+      "minPerFormat": 6,
+      "minPerDifficulty": 6,
+      "maxPerReasoningFamily": 4
+    },
+    "display": {
+      "arrayShowDefault": 3,
+      "expandElements": "first",
+      "defaultExpandDepth": 1
+    }
+  },
+  "leakAllowlist": [
+    {
+      "challenge": "rx-oa-sn-01",
+      "term": "harassment",
+      "reason": "Domain term: the safety categories are named in the application goal itself and equal the JSON key names. The reasoning target is which representation (yes/no flag, score, or input-type list) to select, not the category word."
+    },
+    {
+      "challenge": "rx-oa-sn-01",
+      "term": "hate",
+      "reason": "Domain term: the safety categories are named in the application goal itself and equal the JSON key names. The reasoning target is which representation (yes/no flag, score, or input-type list) to select, not the category word."
+    },
+    {
+      "challenge": "rx-oa-sn-01",
+      "term": "self-harm",
+      "reason": "Domain term: the safety categories are named in the application goal itself and equal the JSON key names. The reasoning target is which representation (yes/no flag, score, or input-type list) to select, not the category word."
+    },
+    {
+      "challenge": "rx-oa-sn-01",
+      "term": "self harm",
+      "reason": "Domain term: the safety categories are named in the application goal itself and equal the JSON key names. The reasoning target is which representation (yes/no flag, score, or input-type list) to select, not the category word."
+    },
+    {
+      "challenge": "rx-oa-sn-01",
+      "term": "self_harm",
+      "reason": "Domain term: the safety categories are named in the application goal itself and equal the JSON key names. The reasoning target is which representation (yes/no flag, score, or input-type list) to select, not the category word."
+    },
+    {
+      "challenge": "rx-oa-sn-01",
+      "term": "violence",
+      "reason": "Domain term: the safety categories are named in the application goal itself and equal the JSON key names. The reasoning target is which representation (yes/no flag, score, or input-type list) to select, not the category word."
+    }
+  ],
+  "challenges": [
+    {
+      "id": "rx-tt-fd-01",
+      "providerId": "tiktok",
+      "scenarioId": "tiktok-creator-portfolio-header",
+      "sampleId": "t1-user",
+      "relatedSamples": [],
+      "format": "find-data",
+      "difficulty": "beginner",
+      "reasoningFamily": "locate-by-meaning",
+      "secondaryTags": [
+        "response-envelope",
+        "similar-metrics"
+      ],
+      "title": "How many people follow this creator?",
+      "context": {
+        "applicationGoal": "A student portfolio website shows a creator's TikTok numbers across the top of the page. One of those numbers is the size of the creator's audience."
+      },
+      "instruction": "Select the property that holds the number of accounts following this creator.",
+      "display": {
+        "expand": [
+          "$.data.user"
+        ]
+      },
+      "hints": [
+        "Start by scanning for values that are numbers. Then decide what each number is counting.",
+        "More than one number describes the creator's popularity. Ask whether each one counts people or counts something people did.",
+        "Rule out the number that counts reactions to videos. The one you want counts accounts."
+      ],
+      "explanation": {
+        "text": "The audience size is stored in `follower_count`, inside `user`, inside `data`. In this sample it is {{value:$.data.user.follower_count}}. The nearby `likes_count` ({{value:$.data.user.likes_count}}) is a different measurement: likes received across the creator's videos. The separate `error` group describes the request, not the creator; its `code` is {{value:$.error.code}} in this sample."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.error.log_id",
+          "note": "An identifier TikTok can use to look up this exact request if something goes wrong."
+        }
+      ],
+      "javaRelation": {
+        "summary": "In a Java model this becomes a numeric field (for example a `long`) on a class that represents the creator header. The JSON path says where the value comes from; the Java field name is your own choice.",
+        "modelLinks": [
+          {
+            "path": "$.data.user.follower_count",
+            "relation": "exact",
+            "conceptId": "followerCount",
+            "conceptSourcePath": "data.user.follower_count",
+            "conceptNeed": "required",
+            "conceptEndpointId": "tiktok.get-user-info",
+            "javaType": "long",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Beginner anchor. Same container holds a sibling count with a similar name; envelope visible but collapsed to a single group.",
+      "answer": {
+        "mode": "single"
+      },
+      "grading": {
+        "targetConcept": "audience size (follower total)",
+        "parentAcceptable": false,
+        "accepted": [
+          {
+            "path": "$.data.user.follower_count",
+            "nodeType": "number",
+            "kind": "primary",
+            "label": "follower total"
+          }
+        ],
+        "rejected": [
+          {
+            "path": "$.data.user.likes_count",
+            "misconceptionId": "similar-metric",
+            "feedback": "That number counts the likes the creator's videos received. It measures reactions to videos, not how many accounts follow the creator."
+          },
+          {
+            "path": "$.data.user.display_name",
+            "misconceptionId": "wrong-kind-of-value",
+            "feedback": "That is text that names the creator. The goal asks for a number that counts accounts."
+          },
+          {
+            "path": "$.error.code",
+            "misconceptionId": "status-vs-payload",
+            "feedback": "The error group reports how the request itself went. It holds no facts about the creator."
+          }
+        ]
+      },
+      "endpointId": "tiktok.get-user-info",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-gm-fd-01",
+      "providerId": "google-maps",
+      "scenarioId": "maps-saved-place-card",
+      "sampleId": "g2-details",
+      "relatedSamples": [],
+      "format": "find-data",
+      "difficulty": "beginner",
+      "reasoningFamily": "locate-by-meaning",
+      "secondaryTags": [
+        "flat-object",
+        "contact-info"
+      ],
+      "title": "Which value could someone call?",
+      "context": {
+        "applicationGoal": "A travel-journal app shows a card for each bookmarked place. The card has a button that lets the student call the place."
+      },
+      "instruction": "Select the property that holds the number someone would dial to call this place.",
+      "display": {},
+      "hints": [
+        "Think about what a dialable number looks like, then scan the values at the top level of the response.",
+        "Several properties are contact-style information: somewhere to go, a page to visit, a number to dial. Choose by how a person would use each one.",
+        "It is a top-level property, and its value is a string containing digits grouped like a local phone number."
+      ],
+      "explanation": {
+        "text": "The number to dial is `nationalPhoneNumber` ({{value:$.nationalPhoneNumber}}). It is a string, not a number, because phone numbers contain punctuation and are never used in arithmetic. `websiteUri` and `formattedAddress` are other ways to find the place, but they cannot be dialed."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.photos[].flagContentUri",
+          "note": "A link used to report a photo to Google; not shown on the card."
+        }
+      ],
+      "javaRelation": {
+        "summary": "A phone number becomes a `String` field in Java, never an `int`: leading zeros and punctuation would be lost, and you never do math on it.",
+        "modelLinks": [
+          {
+            "path": "$.nationalPhoneNumber",
+            "relation": "exact",
+            "conceptId": "phone",
+            "conceptSourcePath": "nationalPhoneNumber",
+            "conceptNeed": "required",
+            "conceptEndpointId": "maps.places-details",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Beginner anchor with a flat top-level target; photos group stays collapsed so it acts as a plausible-but-distant distractor.",
+      "answer": {
+        "mode": "single"
+      },
+      "grading": {
+        "targetConcept": "telephone contact value",
+        "parentAcceptable": false,
+        "accepted": [
+          {
+            "path": "$.nationalPhoneNumber",
+            "nodeType": "string",
+            "kind": "primary",
+            "label": "dialable number"
+          }
+        ],
+        "rejected": [
+          {
+            "path": "$.websiteUri",
+            "misconceptionId": "wrong-kind-of-value",
+            "feedback": "That is a web address. It is also a way to contact a place, but nobody dials it."
+          },
+          {
+            "path": "$.formattedAddress",
+            "misconceptionId": "wrong-kind-of-value",
+            "feedback": "That tells where the place is, not how to reach it by phone."
+          },
+          {
+            "path": "$.photos[].authorAttributions[].uri",
+            "misconceptionId": "wrong-kind-of-value",
+            "feedback": "That is a link to the photographer's page, not contact information for the place."
+          }
+        ]
+      },
+      "endpointId": "maps.places-details",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-sp-fd-01",
+      "providerId": "spotify",
+      "scenarioId": "spotify-my-playlists-browser",
+      "sampleId": "s2-my-playlists",
+      "relatedSamples": [],
+      "format": "find-data",
+      "difficulty": "intermediate",
+      "reasoningFamily": "disambiguate-same-name",
+      "secondaryTags": [
+        "same-key-two-levels",
+        "nested-object",
+        "list-size-vs-item-metric"
+      ],
+      "title": "Songs in one playlist",
+      "context": {
+        "applicationGoal": "A playlist browser lists each of the listener's playlists with its cover picture and how many songs it holds."
+      },
+      "instruction": "Select the property that tells how many songs one playlist holds.",
+      "display": {
+        "expand": [
+          "$.items[]"
+        ]
+      },
+      "hints": [
+        "The goal wants a count of songs, and it belongs to one playlist rather than to the whole list of playlists.",
+        "Two different numbers in this response are both tallies, but they tally different things. Check which level each one lives at.",
+        "Look inside each playlist for a small group that describes its songs, and read the number stored there."
+      ],
+      "explanation": {
+        "text": "A playlist's song count lives inside that playlist, in the small group named `items`, as `total`. The `total` at the very top of the response ({{value:$.total}}) counts the playlists on this page, so it answers a different question. Same name, different level, different meaning: always read a property together with the object that contains it."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.items[].snapshot_id",
+          "note": "A version identifier for the playlist."
+        }
+      ],
+      "javaRelation": {
+        "summary": "In Java, each playlist becomes an object with its own `int`/`long` song count. The list-level count belongs to the response wrapper, not to a playlist object.",
+        "modelLinks": [
+          {
+            "path": "$.items[].items.total",
+            "relation": "exact",
+            "conceptId": "songCount",
+            "conceptSourcePath": "items[].items.total",
+            "conceptNeed": "required",
+            "conceptEndpointId": "spotify.get-current-user-playlists",
+            "javaType": "int",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Intermediate: identical key (total) at two levels and a nested object also called items; target is not visible until the nested object is expanded.",
+      "answer": {
+        "mode": "single"
+      },
+      "grading": {
+        "targetConcept": "song count of a single playlist",
+        "parentAcceptable": false,
+        "accepted": [
+          {
+            "path": "$.items[].items.total",
+            "nodeType": "number",
+            "kind": "primary",
+            "label": "songs in one playlist"
+          }
+        ],
+        "rejected": [
+          {
+            "path": "$.total",
+            "misconceptionId": "list-size-vs-item-metric",
+            "feedback": "That counts the playlists in this response, not the songs inside one playlist. Check which level of the response each number belongs to."
+          },
+          {
+            "path": "$.limit",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That is the largest number of playlists this request asked for. It is a paging setting, not a fact about a playlist."
+          },
+          {
+            "path": "$.offset",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That says where in the full list this page starts. It is a paging setting, not a fact about a playlist."
+          },
+          {
+            "path": "$.items[].items",
+            "misconceptionId": "group-vs-value",
+            "feedback": "That is the small group that holds the information about a playlist's songs. Open it and select the value itself, not the group."
+          }
+        ]
+      },
+      "endpointId": "spotify.get-current-user-playlists",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-oa-fd-01",
+      "providerId": "openai",
+      "scenarioId": "openai-reading-quiz-builder",
+      "sampleId": "o1-response",
+      "relatedSamples": [],
+      "format": "find-data",
+      "difficulty": "intermediate",
+      "reasoningFamily": "polymorphic-branch",
+      "secondaryTags": [
+        "array-of-mixed-items",
+        "echo-vs-output",
+        "nested-arrays"
+      ],
+      "title": "Where is the AI's reply?",
+      "context": {
+        "applicationGoal": "A reading-practice app sends a passage to an AI model and wants to display the model's reply on screen."
+      },
+      "instruction": "Select the property that holds the words the AI wrote back.",
+      "display": {
+        "expand": [
+          "$.output[]"
+        ],
+        "arrayShow": {
+          "$.output": 2
+        }
+      },
+      "hints": [
+        "You are looking for the words the AI produced, not information about the request or about the AI itself.",
+        "The reply sits inside a list whose entries are not all the same kind. Open more than one entry and compare what each contains.",
+        "Only one list entry carries content a student would read. Inside it, look for a list of parts, then for the part that holds the words."
+      ],
+      "explanation": {
+        "text": "The reply words are in `text`, inside `content`, inside the second entry of `output`. The first entry has `type` {{value:$.output[0].type}} and no `content` at all, so code that blindly read position 0 would fail. `instructions` is the prompt the app sent. In this sample the string in `text` is itself JSON written as text; the app must parse it in a second step."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.usage.input_tokens_details.cached_tokens",
+          "note": "How many of the input tokens were served from a cache; a billing and speed detail."
+        }
+      ],
+      "javaRelation": {
+        "summary": "The Java class for the reply holds a `String` for these words. Because the entries in `output` differ in kind, a robust Java model reads the entry whose `type` says it is a message rather than assuming a position.",
+        "modelLinks": [
+          {
+            "path": "$.output[].content[].text",
+            "relation": "exact",
+            "conceptId": "quizJson",
+            "conceptSourcePath": "output[].content[].text",
+            "conceptNeed": "required",
+            "conceptEndpointId": "openai.create-response",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Intermediate: two array levels, first array entry is a different kind of item and has no content; echoed request field is a plausible trap.",
+      "answer": {
+        "mode": "single"
+      },
+      "grading": {
+        "targetConcept": "generated reply words",
+        "parentAcceptable": false,
+        "accepted": [
+          {
+            "path": "$.output[].content[].text",
+            "nodeType": "string",
+            "kind": "primary",
+            "label": "reply words"
+          }
+        ],
+        "rejected": [
+          {
+            "path": "$.instructions",
+            "misconceptionId": "echo-vs-output",
+            "feedback": "That is the instruction the app sent. The response repeats it for reference; it is not what the AI wrote back."
+          },
+          {
+            "path": "$.output[].summary",
+            "misconceptionId": "bookkeeping-vs-content",
+            "feedback": "That belongs to the model's behind-the-scenes reasoning record. It is not the reply a student reads."
+          },
+          {
+            "path": "$.status",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That reports whether the request finished. It says nothing about what was written."
+          },
+          {
+            "path": "$.usage.output_tokens",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That counts how large the reply was. It measures the reply but does not contain it."
+          }
+        ]
+      },
+      "endpointId": "openai.create-response",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-yt-fd-01",
+      "providerId": "youtube",
+      "scenarioId": "youtube-study-video-finder",
+      "sampleId": "y3-videos",
+      "relatedSamples": [],
+      "format": "find-data",
+      "difficulty": "intermediate",
+      "reasoningFamily": "similar-metric-choice",
+      "secondaryTags": [
+        "numbers-as-strings",
+        "several-counters"
+      ],
+      "title": "How many times was it watched?",
+      "context": {
+        "applicationGoal": "A study-video gallery shows each video as a card. The card shows how popular the video is by listing how many times it has been played."
+      },
+      "instruction": "Select the property that tells how many times a video has been watched.",
+      "display": {
+        "expand": [
+          "$.items[]"
+        ]
+      },
+      "hints": [
+        "Several properties here are counts of audience activity. List them and note what each one tallies.",
+        "One of them tallies passive watching; the others tally something a viewer actively did. Also check the data-type badges: not every count is stored the same way.",
+        "Open the group of audience measurements inside one video and choose the tally that matches the number of plays."
+      ],
+      "explanation": {
+        "text": "The number of plays is `viewCount`, inside `statistics`. Its value {{value:$.items[0].statistics.viewCount}} is a string even though it looks like a number: this API sends big counts as text. `likeCount`, `commentCount` and `favoriteCount` all sit beside it, but each tallies a different action. `favoriteCount` is {{value:$.items[0].statistics.favoriteCount}} here."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.items[].etag",
+          "note": "A version tag the API uses for caching; not part of the video's content."
+        }
+      ],
+      "javaRelation": {
+        "summary": "Because this API sends the count as a JSON string, a Java model must decide how to hold it: keep it as a `String`, or convert it to a `long` after reading.",
+        "modelLinks": [
+          {
+            "path": "$.items[].statistics.viewCount",
+            "relation": "exact",
+            "conceptId": "views",
+            "conceptSourcePath": "items[].statistics.viewCount",
+            "conceptNeed": "required",
+            "conceptEndpointId": "youtube.videos-list",
+            "javaType": "long",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Intermediate: four sibling counters, target stored as a string, nested one object deep inside an array element.",
+      "answer": {
+        "mode": "single"
+      },
+      "grading": {
+        "targetConcept": "play total of a video",
+        "parentAcceptable": false,
+        "accepted": [
+          {
+            "path": "$.items[].statistics.viewCount",
+            "nodeType": "string",
+            "kind": "primary",
+            "label": "play total"
+          }
+        ],
+        "rejected": [
+          {
+            "path": "$.items[].statistics.likeCount",
+            "misconceptionId": "similar-metric",
+            "feedback": "That counts viewers who pressed like. Likes are a reaction, and far fewer than plays."
+          },
+          {
+            "path": "$.items[].statistics.commentCount",
+            "misconceptionId": "similar-metric",
+            "feedback": "That counts written comments, which is a different kind of audience action than watching."
+          },
+          {
+            "path": "$.items[].statistics.favoriteCount",
+            "misconceptionId": "legacy-field",
+            "feedback": "This counter is retired and always reads zero, so it cannot tell you how often videos were played."
+          },
+          {
+            "path": "$.pageInfo.totalResults",
+            "misconceptionId": "list-size-vs-item-metric",
+            "feedback": "That counts how many videos came back in this response, not how many times one video was watched."
+          }
+        ]
+      },
+      "endpointId": "youtube.videos-list",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-sp-fd-02",
+      "providerId": "spotify",
+      "scenarioId": "spotify-club-now-playing",
+      "sampleId": "s8-currently-playing",
+      "relatedSamples": [
+        {
+          "sampleId": "s8-playback-episode",
+          "caption": "The same request while a podcast episode is playing, for comparison."
+        }
+      ],
+      "format": "find-data",
+      "difficulty": "advanced",
+      "reasoningFamily": "equivalent-paths",
+      "secondaryTags": [
+        "same-key-many-levels",
+        "polymorphic-item",
+        "multiple-valid-answers"
+      ],
+      "title": "Song or podcast?",
+      "context": {
+        "applicationGoal": "A school radio club screen shows what the DJ is playing. The DJ sometimes plays a song and sometimes a podcast episode, and the screen must choose its layout accordingly."
+      },
+      "instruction": "Select a property the screen can check to tell whether a song or a podcast episode is playing right now. Compare with the second sample before you decide.",
+      "display": {
+        "collapse": [
+          "$.device",
+          "$.actions"
+        ],
+        "expand": [
+          "$.item",
+          "$.context"
+        ]
+      },
+      "hints": [
+        "Look for a property whose value is a short label naming a category, a word rather than a number or an identifier.",
+        "Several properties carry such a label, and each describes a different thing: a device, a collection, a release, the playing item. Decide which thing the screen needs to know about.",
+        "The label you need describes what is playing itself. It may appear in more than one place; either place that describes the playing thing works."
+      ],
+      "explanation": {
+        "text": "Two properties answer this question. `currently_playing_type` ({{value:$.currently_playing_type}}) names the kind of thing playing, and `item.type` ({{value:$.item.type}}) carries the same label on the playing item itself. In the podcast sample both read {{value:$.currently_playing_type@s8-playback-episode}}. The other properties named `type` describe other things: the collection (`context`), the hardware (`device`), the release (`album`). A property's name alone never tells you what it describes; its parent does."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.timestamp",
+          "note": "When the player state was captured, as milliseconds since 1970 (Unix time)."
+        }
+      ],
+      "javaRelation": {
+        "summary": "A Java model for 'now playing' usually stores this label once, as a `String` or an `enum`, and uses it to decide which fields to read next: song fields for one value, podcast fields for the other.",
+        "modelLinks": [
+          {
+            "path": "$.currently_playing_type",
+            "relation": "exact",
+            "conceptId": "kind",
+            "conceptSourcePath": "currently_playing_type",
+            "conceptNeed": "required",
+            "conceptEndpointId": "spotify.get-currently-playing",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Advanced: ten root keys, four plausible 'type' fields, two valid answers, and a related sample that proves the alternative. Tests equivalent-path acceptance.",
+      "answer": {
+        "mode": "single"
+      },
+      "grading": {
+        "targetConcept": "kind of the thing currently playing",
+        "parentAcceptable": false,
+        "accepted": [
+          {
+            "path": "$.currently_playing_type",
+            "nodeType": "string",
+            "kind": "primary",
+            "label": "kind of playing thing"
+          },
+          {
+            "path": "$.item.type",
+            "nodeType": "string",
+            "kind": "alternative",
+            "sameValue": true,
+            "label": "kind of playing item",
+            "note": "Also valid: the playing item carries the same label. Both are verified to match in the related podcast sample."
+          }
+        ],
+        "rejected": [
+          {
+            "path": "$.context.type",
+            "misconceptionId": "kind-of-other-thing",
+            "feedback": "That describes the collection playback started from (an album or a show), not the thing playing right now."
+          },
+          {
+            "path": "$.device.type",
+            "misconceptionId": "kind-of-other-thing",
+            "feedback": "That describes the hardware making the sound, not what is being played."
+          },
+          {
+            "path": "$.item.album.type",
+            "misconceptionId": "kind-of-other-thing",
+            "feedback": "That describes the kind of release the song belongs to. A podcast episode would not even have this branch."
+          },
+          {
+            "path": "$.is_playing",
+            "misconceptionId": "wrong-kind-of-value",
+            "feedback": "That is a yes/no value about playing versus paused. It does not say what is playing."
+          }
+        ]
+      },
+      "endpointId": "spotify.get-currently-playing",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-gm-fd-02",
+      "providerId": "google-maps",
+      "scenarioId": "maps-venue-distance-board",
+      "sampleId": "m6-matrix",
+      "relatedSamples": [],
+      "format": "find-data",
+      "difficulty": "advanced",
+      "reasoningFamily": "display-vs-raw",
+      "secondaryTags": [
+        "root-array",
+        "numeric-vs-formatted",
+        "technical-vs-displayed"
+      ],
+      "title": "Distance a person can read",
+      "context": {
+        "applicationGoal": "A science-club board lists three possible venues. Each row shows how far the venue is from school, written the way a person would say it, unit included."
+      },
+      "instruction": "Select the property that already holds a venue's distance in a ready-to-display form.",
+      "display": {
+        "expand": [
+          "$[].localizedValues"
+        ]
+      },
+      "hints": [
+        "The goal wants the value a person would read on a sign, not a value a program would compute with.",
+        "Several properties describe distance or time. Some are raw numbers meant for calculation; some are pre-formatted for people.",
+        "The pre-formatted values sit in a group made for people-friendly display, and distance and time each have their own sub-group there."
+      ],
+      "explanation": {
+        "text": "`localizedValues` holds values the API has already formatted for people. Its `distance` entry's `text` reads {{value:$[0].localizedValues.distance.text}}. The raw `distanceMeters` ({{value:$[0].distanceMeters}}) is better for sorting or math, but the row would have to convert it and attach a unit itself. The matching `duration` pair gives time instead of distance. Note that this response is a list at the top level, so every path starts with a bare `[]`."
+      },
+      "fieldNotes": [
+        {
+          "path": "$[].condition",
+          "note": "Whether a route between the two places could be found."
+        }
+      ],
+      "javaRelation": {
+        "summary": "In Java, the display-ready distance is a `String`; the raw distance would be a number (`int` or `double`). Choose by what the screen does with the value: show it, or compute with it.",
+        "modelLinks": [
+          {
+            "path": "$[].localizedValues.distance.text",
+            "relation": "exact",
+            "conceptId": "distanceText",
+            "conceptSourcePath": "[].localizedValues.distance.text",
+            "conceptNeed": "required",
+            "conceptEndpointId": "maps.routes-compute-route-matrix",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Advanced: root-array response, three look-alike 'text' leaves under different parents, raw numeric versus display-ready distinction.",
+      "answer": {
+        "mode": "single"
+      },
+      "grading": {
+        "targetConcept": "display-ready distance",
+        "parentAcceptable": false,
+        "accepted": [
+          {
+            "path": "$[].localizedValues.distance.text",
+            "nodeType": "string",
+            "kind": "primary",
+            "label": "readable distance"
+          }
+        ],
+        "rejected": [
+          {
+            "path": "$[].distanceMeters",
+            "misconceptionId": "raw-vs-display",
+            "feedback": "That is exact and useful for sorting, but it is a bare number in a fixed unit. The row needs a ready-to-show form that includes its unit."
+          },
+          {
+            "path": "$[].duration",
+            "misconceptionId": "raw-vs-display",
+            "feedback": "That is a time, stored as a raw string in seconds. It is neither a distance nor ready to show."
+          },
+          {
+            "path": "$[].localizedValues.duration.text",
+            "misconceptionId": "similar-metric",
+            "feedback": "That is formatted for people, but it describes travel time, not distance."
+          },
+          {
+            "path": "$[].destinationIndex",
+            "misconceptionId": "identifier-vs-label",
+            "feedback": "That says which destination the row refers to, not how far away it is."
+          },
+          {
+            "path": "$[].condition",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That reports whether a route could be found at all. It is not a distance."
+          }
+        ]
+      },
+      "endpointId": "maps.routes-compute-route-matrix",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-dc-fd-01",
+      "providerId": "discord",
+      "scenarioId": "discord-study-hall-catch-up",
+      "sampleId": "d2-messages",
+      "relatedSamples": [],
+      "format": "find-data",
+      "difficulty": "advanced",
+      "reasoningFamily": "optional-null-handling",
+      "secondaryTags": [
+        "nullable",
+        "root-array",
+        "identifier-vs-label"
+      ],
+      "title": "The friendly name",
+      "context": {
+        "applicationGoal": "A class app's 'What did I miss?' view shows who wrote each message. People can choose a friendly display name for themselves, but some never do."
+      },
+      "instruction": "Select the property that holds the friendly display name people choose for themselves. Remember that it can be empty for some people.",
+      "display": {},
+      "hints": [
+        "Names of people can live in more than one property. Think about which one is meant for showing and which is meant for identifying.",
+        "One name-like property can be empty for some people. An empty value on one message tells you about that person, not about whether you are looking in the wrong place.",
+        "Open the group that describes the sender and compare the name-like properties across more than one message."
+      ],
+      "explanation": {
+        "text": "`global_name` is the friendly name. In this sample it is {{value:$[0].author.global_name}} for the first author (they never chose one) and {{value:$[2].author.global_name}} for the third. An empty (`null`) value means 'not set'; the property still exists and still is the right one. `username` is always present, which is why apps use it when the friendly name is empty."
+      },
+      "fieldNotes": [
+        {
+          "path": "$[].flags",
+          "note": "Bit-flag number describing special message properties; not used here."
+        }
+      ],
+      "javaRelation": {
+        "summary": "In Java, a value that can be missing is usually modeled so that your code checks for it (for example a `String` that may be `null`) before using it. A fallback to the handle belongs in your code's logic.",
+        "modelLinks": [
+          {
+            "path": "$[].author.global_name",
+            "relation": "exact",
+            "conceptId": "authorDisplay",
+            "conceptSourcePath": "[].author.global_name",
+            "conceptNeed": "required",
+            "conceptEndpointId": "discord.get-channel-messages",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Advanced: first element shows null for the target, so students must interpret null as 'optional', not 'wrong field'. Root-array response.",
+      "answer": {
+        "mode": "single"
+      },
+      "grading": {
+        "targetConcept": "self-chosen display name (nullable)",
+        "parentAcceptable": false,
+        "accepted": [
+          {
+            "path": "$[].author.global_name",
+            "nodeType": "string|null",
+            "kind": "primary",
+            "label": "chosen display name"
+          }
+        ],
+        "rejected": [
+          {
+            "path": "$[].author.username",
+            "misconceptionId": "fallback-vs-primary",
+            "feedback": "That is the account handle. Every account has one, so apps use it as a backup, but it is not the friendly name people choose."
+          },
+          {
+            "path": "$[].author.id",
+            "misconceptionId": "identifier-vs-label",
+            "feedback": "That is a long identifier meant for programs. It is not meant to be read by students."
+          },
+          {
+            "path": "$[].content",
+            "misconceptionId": "wrong-kind-of-value",
+            "feedback": "That is what the message says, not who said it."
+          },
+          {
+            "path": "$[].author.avatar",
+            "misconceptionId": "wrong-kind-of-value",
+            "feedback": "That is a code for the sender's picture. It is not a name."
+          },
+          {
+            "path": "$[].author.discriminator",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That is a legacy tag attached to the account handle. It is not a name."
+          }
+        ]
+      },
+      "endpointId": "discord.get-channel-messages",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-yt-st-02",
+      "providerId": "youtube",
+      "scenarioId": "youtube-study-video-finder",
+      "sampleId": "y3-search",
+      "relatedSamples": [],
+      "format": "understand-structure",
+      "difficulty": "beginner",
+      "reasoningFamily": "container-vs-element",
+      "secondaryTags": [
+        "array",
+        "response-level-vs-item-level"
+      ],
+      "title": "The collection of results",
+      "context": {
+        "applicationGoal": "A study-video gallery builds one card for every matching video by looping over a collection."
+      },
+      "instruction": "Select the node that holds all of the matching videos together, so the loop knows what to repeat over.",
+      "display": {
+        "expand": [
+          "$.items[]"
+        ],
+        "collapse": [
+          "$.pageInfo"
+        ]
+      },
+      "hints": [
+        "Look at the badges in the tree: arrays are the nodes that hold several entries that look alike.",
+        "Of the arrays and objects here, one holds entries that each look like a video. Another describes the response itself.",
+        "Select the container itself, the node with numbered children, not one of the numbered children."
+      ],
+      "explanation": {
+        "text": "The loop runs over `items`: an array whose numbered children are the individual videos. Selecting one numbered child (`items[0]`) picks a single video, and `pageInfo` describes the response as a whole. In a Java model this array becomes a list of video objects, one object per numbered child."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.etag",
+          "note": "A version tag used for caching; not part of any video."
+        }
+      ],
+      "javaRelation": {
+        "summary": "An array of objects in JSON usually becomes a `List` of objects in Java. The array node is the list; each numbered child is one element.",
+        "modelLinks": [
+          {
+            "path": "$.items",
+            "relation": "exact",
+            "conceptId": "videos",
+            "conceptSourcePath": "items",
+            "conceptNeed": "required",
+            "conceptEndpointId": "youtube.search-list",
+            "javaType": "List<VideoCard>",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Beginner structure anchor: array vs element vs response-level metadata. Numbered children make the array obvious.",
+      "answer": {
+        "mode": "single"
+      },
+      "grading": {
+        "targetConcept": "the repeating collection of results",
+        "parentAcceptable": false,
+        "accepted": [
+          {
+            "path": "$.items",
+            "nodeType": "array",
+            "kind": "primary",
+            "label": "collection of results"
+          }
+        ],
+        "rejected": [
+          {
+            "path": "$.items[]",
+            "misconceptionId": "one-vs-many",
+            "feedback": "That is one single video. A loop needs the whole collection that holds every video, not any one of them."
+          },
+          {
+            "path": "$.pageInfo",
+            "misconceptionId": "page-vs-item",
+            "feedback": "That group describes the response as a whole (how many results there are). It does not hold the videos."
+          },
+          {
+            "path": "$.nextPageToken",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That is a bookmark for asking for the next page. It is not a collection of videos."
+          }
+        ]
+      },
+      "endpointId": "youtube.search-list",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-tt-st-01",
+      "providerId": "tiktok",
+      "scenarioId": "tiktok-club-recap-publisher",
+      "sampleId": "t4-status",
+      "relatedSamples": [],
+      "format": "understand-structure",
+      "difficulty": "beginner",
+      "reasoningFamily": "scope-classification",
+      "secondaryTags": [
+        "response-envelope",
+        "error-group-present-on-success"
+      ],
+      "title": "About the post, or about the call?",
+      "context": {
+        "applicationGoal": "A club app publishes a recap video to TikTok and then reports how the post is going."
+      },
+      "instruction": "Each lettered node in the response describes either the video post or the API request itself. Choose which for every letter.",
+      "display": {
+        "expand": [
+          "$.data",
+          "$.error"
+        ]
+      },
+      "hints": [
+        "For each node ask: if the call to the API failed, would this value change? If the video post failed, would it change?",
+        "Notice how the response splits into two top-level groups. Each group has its own purpose.",
+        "One group is named for problems with the call, and it describes the call even when everything went fine."
+      ],
+      "explanation": {
+        "text": "`data` describes the post: its `status` is {{value:$.data.status}} and `downloaded_bytes` is {{value:$.data.downloaded_bytes}}. The `error` group describes the API call itself and is present even on success; here its `code` is {{value:$.error.code}} and its `message` is empty. Seeing a group named `error` does not mean something failed."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.data.downloaded_bytes",
+          "note": "How many bytes of the uploaded video file TikTok has received so far."
+        }
+      ],
+      "javaRelation": {
+        "summary": "A Java model for this response has two parts: a small class for the post details and, separately, a place to hold the call's status and message for error handling.",
+        "modelLinks": [
+          {
+            "path": "$.data.status",
+            "relation": "exact",
+            "conceptId": "status",
+            "conceptSourcePath": "data.status",
+            "conceptNeed": "required",
+            "conceptEndpointId": "tiktok.get-post-status",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Beginner classification: two-way sort of five nodes with a useful trap (error group present on success). No arrays.",
+      "answer": {
+        "mode": "classify",
+        "categories": [
+          {
+            "id": "post",
+            "label": "About the video post",
+            "description": "Describes how the video post is progressing."
+          },
+          {
+            "id": "request",
+            "label": "About the API request",
+            "description": "Describes whether the call to the API itself worked."
+          }
+        ],
+        "items": [
+          {
+            "id": "a",
+            "path": "$.data.status"
+          },
+          {
+            "id": "b",
+            "path": "$.error.code"
+          },
+          {
+            "id": "c",
+            "path": "$.data.downloaded_bytes"
+          },
+          {
+            "id": "d",
+            "path": "$.error.message"
+          },
+          {
+            "id": "e",
+            "path": "$.error.log_id"
+          }
+        ]
+      },
+      "grading": {
+        "targetConcept": "scope of each node: video post versus API request",
+        "assignments": [
+          {
+            "item": "a",
+            "correct": "post",
+            "misconceptionId": "scope-confusion",
+            "wrong": {
+              "request": "This value reports how the video post is progressing, so it belongs with the post, not with the call."
+            }
+          },
+          {
+            "item": "b",
+            "correct": "request",
+            "misconceptionId": "status-vs-payload",
+            "wrong": {
+              "post": "This sits in a group about the call itself. The group exists even when the call worked, so its presence alone does not mean something went wrong."
+            }
+          },
+          {
+            "item": "c",
+            "correct": "post",
+            "misconceptionId": "scope-confusion",
+            "wrong": {
+              "request": "This measures progress of the post's video file, so it describes the post."
+            }
+          },
+          {
+            "item": "d",
+            "correct": "request",
+            "misconceptionId": "status-vs-payload",
+            "wrong": {
+              "post": "This is a message about the call. It is empty here because the call worked."
+            }
+          },
+          {
+            "item": "e",
+            "correct": "request",
+            "misconceptionId": "technical-metadata",
+            "wrong": {
+              "post": "This is an identifier for the call, useful when asking support to look something up. It says nothing about the post."
+            }
+          }
+        ]
+      },
+      "endpointId": "tiktok.get-post-status",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-gm-st-01",
+      "providerId": "google-maps",
+      "scenarioId": "maps-saved-place-card",
+      "sampleId": "g2-details",
+      "relatedSamples": [],
+      "format": "understand-structure",
+      "difficulty": "beginner",
+      "reasoningFamily": "nesting-chain",
+      "secondaryTags": [
+        "object-in-object",
+        "array-of-strings-vs-array-of-objects"
+      ],
+      "title": "Opening hours, two ways",
+      "context": {
+        "applicationGoal": "A travel-journal card shows a place's weekly opening hours as readable lines, one for each weekday."
+      },
+      "instruction": "Fill both slots by selecting a node in the tree and then pressing its slot button.",
+      "display": {
+        "collapse": [
+          "$.photos"
+        ]
+      },
+      "hints": [
+        "Slot 1 is a container for several related facts. Slot 2 is a list stored inside that container.",
+        "Two lists live inside the hours group: one made of small groups of numbers and one made of text a person can read. The card prints text.",
+        "Check the data-type badges on the children of the hours group. You want the array whose entries are strings."
+      ],
+      "explanation": {
+        "text": "`regularOpeningHours` groups everything about opening times. Inside it, `weekdayDescriptions` is an array of strings, ready to print, for example {{value:$.regularOpeningHours.weekdayDescriptions[0]}}. `periods` is an array of objects, each holding numbers like `day`, `hour` and `minute`: good for calculating whether the place is open, not for printing."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.photos[].flagContentUri",
+          "note": "A link for reporting a photo; not shown on the card."
+        }
+      ],
+      "javaRelation": {
+        "summary": "The hours group becomes a small Java class (or a nested part of one). An array of strings becomes a `List<String>`; an array of objects would need its own class for the entries.",
+        "modelLinks": [
+          {
+            "path": "$.regularOpeningHours.weekdayDescriptions",
+            "relation": "exact",
+            "conceptId": "hours",
+            "conceptSourcePath": "regularOpeningHours.weekdayDescriptions",
+            "conceptNeed": "required",
+            "conceptEndpointId": "maps.places-details",
+            "javaType": "List<String>",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Beginner slot task: two related nodes in one branch, contrasting an array of strings with an array of objects.",
+      "answer": {
+        "mode": "slots",
+        "slots": [
+          {
+            "id": "group",
+            "label": "The group that holds all information about when the place is open"
+          },
+          {
+            "id": "lines",
+            "label": "The list of ready-to-read lines, one per weekday, that the card can print"
+          }
+        ]
+      },
+      "grading": {
+        "targetConcept": "hours group and its readable list",
+        "slots": [
+          {
+            "id": "group",
+            "label": "The group that holds all information about when the place is open",
+            "accepted": [
+              {
+                "path": "$.regularOpeningHours",
+                "nodeType": "object",
+                "kind": "primary",
+                "label": "hours group"
+              }
+            ],
+            "rejected": [
+              {
+                "path": "$.regularOpeningHours.openNow",
+                "misconceptionId": "too-specific-fact",
+                "feedback": "That is one fact inside the hours group. You need the group that holds all of them."
+              }
+            ],
+            "parentAcceptable": false
+          },
+          {
+            "id": "lines",
+            "label": "The list of ready-to-read lines, one per weekday, that the card can print",
+            "accepted": [
+              {
+                "path": "$.regularOpeningHours.weekdayDescriptions",
+                "nodeType": "array",
+                "kind": "primary",
+                "label": "readable weekday lines"
+              }
+            ],
+            "rejected": [
+              {
+                "path": "$.regularOpeningHours.periods",
+                "misconceptionId": "raw-vs-display",
+                "feedback": "That is also a list, but its entries are groups of numbers (day, hour, minute) built for calculations. The card needs lines of readable text."
+              }
+            ],
+            "parentAcceptable": false
+          }
+        ]
+      },
+      "endpointId": "maps.places-details",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-yt-st-01",
+      "providerId": "youtube",
+      "scenarioId": "youtube-video-compare",
+      "sampleId": "y2-videos",
+      "relatedSamples": [],
+      "format": "understand-structure",
+      "difficulty": "intermediate",
+      "reasoningFamily": "alternatives-group",
+      "secondaryTags": [
+        "object-of-named-options",
+        "deep-nesting"
+      ],
+      "title": "One picture, several sizes",
+      "context": {
+        "applicationGoal": "A video-comparison page shows a small picture for each video. The API offers each picture in several sizes, and the page picks one."
+      },
+      "instruction": "Select the node that groups all of the size options together, not a single size and not the whole description of the video.",
+      "display": {
+        "expand": [
+          "$.items[]",
+          "$.items[].snippet"
+        ]
+      },
+      "hints": [
+        "Sizes are alternatives to one another. Look for a node whose children are the same kind of thing under different labels.",
+        "It is inside the video's descriptive details, and its children are labeled with size words rather than numbered.",
+        "Do not pick one of the labeled size entries. Pick the node that contains them all."
+      ],
+      "explanation": {
+        "text": "`thumbnails` is an object, not an array, because its children are named options (`default`, `medium`, `high` and `standard`) instead of numbered entries. Each option has a `url`, a `width` and a `height`. Choosing a size means choosing a name, for example `medium`. The group itself is what lets code choose."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.items[].snippet.categoryId",
+          "note": "An ID for the category the video was filed under."
+        }
+      ],
+      "javaRelation": {
+        "summary": "A group of named options can become its own Java class with one field per option, or code can read only the one option it needs, such as the `medium` size.",
+        "modelLinks": [
+          {
+            "path": "$.items[].snippet.thumbnails",
+            "relation": "container-of",
+            "conceptId": "thumb",
+            "conceptSourcePath": "items[].snippet.thumbnails.default.url",
+            "conceptNeed": "optional",
+            "conceptEndpointId": "youtube.videos-list",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Intermediate: contrasts an object of named options with arrays, 4 levels deep inside an array element.",
+      "answer": {
+        "mode": "single"
+      },
+      "grading": {
+        "targetConcept": "the group of picture size options",
+        "parentAcceptable": false,
+        "accepted": [
+          {
+            "path": "$.items[].snippet.thumbnails",
+            "nodeType": "object",
+            "kind": "primary",
+            "label": "picture size options"
+          }
+        ],
+        "rejected": [
+          {
+            "path": "$.items[].snippet.thumbnails.default",
+            "misconceptionId": "one-vs-group",
+            "feedback": "That is one of the size options. The page needs to choose among the options, so it needs the node that holds them all."
+          },
+          {
+            "path": "$.items[].snippet.tags",
+            "misconceptionId": "kind-of-other-thing",
+            "feedback": "That is a list of keywords for the video. It is a list, but of words, not pictures."
+          },
+          {
+            "path": "$.items[].snippet.localized",
+            "misconceptionId": "kind-of-other-thing",
+            "feedback": "That holds translated text for the video, not pictures."
+          }
+        ]
+      },
+      "endpointId": "youtube.videos-list",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-sp-st-01",
+      "providerId": "spotify",
+      "scenarioId": "spotify-monthly-recap",
+      "sampleId": "s3-top-tracks",
+      "relatedSamples": [],
+      "format": "understand-structure",
+      "difficulty": "intermediate",
+      "reasoningFamily": "ownership",
+      "secondaryTags": [
+        "same-key-two-owners",
+        "nested-arrays"
+      ],
+      "title": "Whose performers are these?",
+      "context": {
+        "applicationGoal": "A monthly-recap dashboard shows each top track with its performers. A song and the release it came from can each list their own performers."
+      },
+      "instruction": "Fill all three slots by selecting a node in the tree and pressing its slot button. Open a track to find the lists.",
+      "display": {
+        "expand": [
+          "$.items[]"
+        ],
+        "collapse": [
+          "$.items[].external_ids"
+        ]
+      },
+      "hints": [
+        "Two lists of performers exist in each track entry. They look like the same kind of list but have different owners.",
+        "A list belongs to the nearest object that contains it: the song entry itself or the release group inside it.",
+        "One performer list sits directly inside the song entry. The other sits inside the release group within that entry."
+      ],
+      "explanation": {
+        "text": "Each track holds a performer list in two places: `artists` directly in the track, and `artists` again inside `album`. They often hold the same names, as they do for the first track in this sample ({{value:$.items[0].artists[0].name}} in both), so the values alone cannot tell you which is which. Only the position in the structure does."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.items[].is_local",
+          "note": "Whether the track comes from a local file."
+        }
+      ],
+      "javaRelation": {
+        "summary": "In Java, the track class has a list of performers, and the release class, nested inside the track class, has its own list. Same type, different owners.",
+        "modelLinks": [
+          {
+            "path": "$.items[].artists",
+            "relation": "container-of",
+            "conceptId": "artistNames",
+            "conceptSourcePath": "items[].artists[].name",
+            "conceptNeed": "required",
+            "conceptEndpointId": "spotify.get-user-top-items",
+            "javaType": "List<String>",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Intermediate: identical key and shape at two levels; values coincide in the sample so only structure distinguishes them.",
+      "answer": {
+        "mode": "slots",
+        "slots": [
+          {
+            "id": "release",
+            "label": "The group of details about the release (a full record or a single) the song came out on"
+          },
+          {
+            "id": "songPerformers",
+            "label": "The performers credited on the song itself"
+          },
+          {
+            "id": "releasePerformers",
+            "label": "The performers credited on the release itself"
+          }
+        ]
+      },
+      "grading": {
+        "targetConcept": "which performer list belongs to which parent",
+        "slots": [
+          {
+            "id": "release",
+            "label": "The group of details about the release (a full record or a single) the song came out on",
+            "accepted": [
+              {
+                "path": "$.items[].album",
+                "nodeType": "object",
+                "kind": "primary",
+                "label": "release details"
+              }
+            ],
+            "rejected": [],
+            "parentAcceptable": false
+          },
+          {
+            "id": "songPerformers",
+            "label": "The performers credited on the song itself",
+            "accepted": [
+              {
+                "path": "$.items[].artists",
+                "nodeType": "array",
+                "kind": "primary",
+                "label": "song's performers"
+              }
+            ],
+            "rejected": [
+              {
+                "path": "$.items[].album.artists",
+                "misconceptionId": "same-name-other-owner",
+                "feedback": "That list sits inside the release group, so it is credited to the release. A song and its release can credit different people."
+              }
+            ],
+            "parentAcceptable": false
+          },
+          {
+            "id": "releasePerformers",
+            "label": "The performers credited on the release itself",
+            "accepted": [
+              {
+                "path": "$.items[].album.artists",
+                "nodeType": "array",
+                "kind": "primary",
+                "label": "release's performers"
+              }
+            ],
+            "rejected": [
+              {
+                "path": "$.items[].artists",
+                "misconceptionId": "same-name-other-owner",
+                "feedback": "That list belongs directly to the song, one level above the release group."
+              }
+            ],
+            "parentAcceptable": false
+          }
+        ]
+      },
+      "endpointId": "spotify.get-user-top-items",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-tt-st-02",
+      "providerId": "tiktok",
+      "scenarioId": "tiktok-complete-video-grid",
+      "sampleId": "t2-page1",
+      "relatedSamples": [],
+      "format": "understand-structure",
+      "difficulty": "intermediate",
+      "reasoningFamily": "pagination-controls",
+      "secondaryTags": [
+        "page-level-vs-item-level",
+        "timestamp-lookalike"
+      ],
+      "title": "Loading the next page",
+      "context": {
+        "applicationGoal": "A portfolio grid shows a creator's uploads a page at a time. A 'Load more' button must appear only when another page exists, and pressing it must ask for the right next page."
+      },
+      "instruction": "Fill all three slots by selecting a node in the tree and pressing its slot button.",
+      "display": {
+        "expand": [
+          "$.data",
+          "$.data.videos",
+          "$.data.videos[]"
+        ],
+        "arrayShow": {
+          "$.data.videos": 3
+        }
+      },
+      "hints": [
+        "Page-level information sits beside the collection, not inside each entry of it.",
+        "The grid needs three different things from the response: the entries, a yes/no answer, and a value to hand back. They are siblings inside the same group.",
+        "Look next to the collection for a boolean and for a number. The number looks like a timestamp, but it is meant to be handed back, not read."
+      ],
+      "explanation": {
+        "text": "`videos` is the collection. Beside it in `data`, `has_more` ({{value:$.data.has_more}}) answers whether to show the button and `cursor` ({{value:$.data.cursor}}) is the value to send back. The cursor looks like a timestamp but is a marker the API understands; the app should pass it back unchanged. Each video's own `create_time` is a different number about one video."
+      },
+      "fieldNotes": [],
+      "javaRelation": {
+        "summary": "The response wrapper class holds the list of videos, the boolean flag and the numeric marker together. The video class describes only one video.",
+        "modelLinks": [
+          {
+            "path": "$.data.videos",
+            "relation": "exact",
+            "conceptId": "videos",
+            "conceptSourcePath": "data.videos",
+            "conceptNeed": "required",
+            "conceptEndpointId": "tiktok.list-videos",
+            "javaType": "List<VideoTile>",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Intermediate: three nodes that are page-level siblings of the collection, with a timestamp-lookalike trap.",
+      "answer": {
+        "mode": "slots",
+        "slots": [
+          {
+            "id": "list",
+            "label": "The collection the grid tiles are built from"
+          },
+          {
+            "id": "more",
+            "label": "The yes/no value that says whether another page exists"
+          },
+          {
+            "id": "marker",
+            "label": "The value the app would send back to ask for the next page"
+          }
+        ]
+      },
+      "grading": {
+        "targetConcept": "list, more-pages flag, and next-page marker",
+        "slots": [
+          {
+            "id": "list",
+            "label": "The collection the grid tiles are built from",
+            "accepted": [
+              {
+                "path": "$.data.videos",
+                "nodeType": "array",
+                "kind": "primary",
+                "label": "grid collection"
+              }
+            ],
+            "rejected": [
+              {
+                "path": "$.data.videos[]",
+                "misconceptionId": "one-vs-many",
+                "feedback": "That is one single video. The grid is built from the whole collection."
+              }
+            ],
+            "parentAcceptable": false
+          },
+          {
+            "id": "more",
+            "label": "The yes/no value that says whether another page exists",
+            "accepted": [
+              {
+                "path": "$.data.has_more",
+                "nodeType": "boolean",
+                "kind": "primary",
+                "label": "more-pages flag"
+              }
+            ],
+            "rejected": [
+              {
+                "path": "$.error.code",
+                "misconceptionId": "status-vs-payload",
+                "feedback": "That reports how the request itself went. It does not say whether more uploads are available."
+              }
+            ],
+            "parentAcceptable": false
+          },
+          {
+            "id": "marker",
+            "label": "The value the app would send back to ask for the next page",
+            "accepted": [
+              {
+                "path": "$.data.cursor",
+                "nodeType": "number",
+                "kind": "primary",
+                "label": "next-page marker"
+              }
+            ],
+            "rejected": [
+              {
+                "path": "$.data.videos[].create_time",
+                "misconceptionId": "timestamp-lookalike",
+                "feedback": "That is when one video was posted. The marker for the next page describes the page of results, not a single video."
+              },
+              {
+                "path": "$.data.videos[].id",
+                "misconceptionId": "identifier-vs-label",
+                "feedback": "That identifies one video. A page marker identifies a position in the whole set of uploads."
+              }
+            ],
+            "parentAcceptable": false
+          }
+        ]
+      },
+      "endpointId": "tiktok.list-videos",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-dc-st-01",
+      "providerId": "discord",
+      "scenarioId": "discord-club-channel-directory",
+      "sampleId": "dcd-channels",
+      "relatedSamples": [],
+      "format": "understand-structure",
+      "difficulty": "advanced",
+      "reasoningFamily": "cross-reference",
+      "secondaryTags": [
+        "root-array",
+        "identifier-vs-full-object",
+        "nullable"
+      ],
+      "title": "How a channel finds its category",
+      "context": {
+        "applicationGoal": "A robotics-club page lists channels grouped under category headings. The server sends everything as one flat list."
+      },
+      "instruction": "Fill both slots by selecting a node in the tree and pressing its slot button. Compare several entries before you decide.",
+      "display": {
+        "arrayShow": {
+          "$": 6
+        }
+      },
+      "hints": [
+        "Categories and channels are different kinds of entries sitting side by side in the list. Compare their values.",
+        "A grouping link works like a reference: one entry stores another entry's identity value instead of copying the whole entry.",
+        "Find the property that is empty for categories but filled in for channels. Its value must equal one property of one category."
+      ],
+      "explanation": {
+        "text": "A channel does not contain its category. It stores the category's identity value in `parent_id`, and that equals the category's own `id`. For the first entry (a category) `parent_id` is {{value:$[0].parent_id}}; for the second it is {{value:$[1].parent_id}}, which equals the first entry's `id` ({{value:$[0].id}}). To group channels, code looks up the entry whose `id` matches."
+      },
+      "fieldNotes": [
+        {
+          "path": "$[].permission_overwrites",
+          "note": "Per-role and per-person exceptions to the channel's default permissions."
+        }
+      ],
+      "javaRelation": {
+        "summary": "In Java, this becomes a channel object holding a category identifier (`String`, possibly `null`), and code that matches it against category identifiers, rather than a channel object that contains a category object.",
+        "modelLinks": [
+          {
+            "path": "$[].parent_id",
+            "relation": "exact",
+            "conceptId": "parentId",
+            "conceptSourcePath": "[].parent_id",
+            "conceptNeed": "required",
+            "conceptEndpointId": "discord.get-guild-channels",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Advanced: flat list encoding a hierarchy through identifier references; null on categories; names are a plausible-but-wrong match key.",
+      "answer": {
+        "mode": "slots",
+        "slots": [
+          {
+            "id": "pointer",
+            "label": "The property a channel carries to say which category it belongs under"
+          },
+          {
+            "id": "target",
+            "label": "The property of a category that the pointer is matched against"
+          }
+        ]
+      },
+      "grading": {
+        "targetConcept": "reference property and the property it points to",
+        "slots": [
+          {
+            "id": "pointer",
+            "label": "The property a channel carries to say which category it belongs under",
+            "accepted": [
+              {
+                "path": "$[].parent_id",
+                "nodeType": "string|null",
+                "kind": "primary",
+                "label": "category reference"
+              }
+            ],
+            "rejected": [
+              {
+                "path": "$[].position",
+                "misconceptionId": "ordering-vs-pointer",
+                "feedback": "That orders entries within the server. It says nothing about which category a channel is in."
+              },
+              {
+                "path": "$[].type",
+                "misconceptionId": "kind-of-other-thing",
+                "feedback": "That is a number saying what kind of entry this is (such as category or text channel). It does not point to a specific category."
+              },
+              {
+                "path": "$[].name",
+                "misconceptionId": "identifier-vs-label",
+                "feedback": "Names are written for people and are not what one entry uses to point at another."
+              }
+            ],
+            "parentAcceptable": false
+          },
+          {
+            "id": "target",
+            "label": "The property of a category that the pointer is matched against",
+            "accepted": [
+              {
+                "path": "$[].id",
+                "nodeType": "string",
+                "kind": "primary",
+                "label": "category identity value"
+              }
+            ],
+            "rejected": [
+              {
+                "path": "$[].name",
+                "misconceptionId": "identifier-vs-label",
+                "feedback": "A name is for humans and can repeat. The pointer holds an identity value, so it must be matched against an identity value."
+              },
+              {
+                "path": "$[].parent_id",
+                "misconceptionId": "same-name-other-owner",
+                "feedback": "That is the pointer side again. Choose the property the pointer is compared with."
+              },
+              {
+                "path": "$[].topic",
+                "misconceptionId": "identifier-vs-label",
+                "feedback": "That is a sentence describing what a channel is for. It is not an identity value."
+              }
+            ],
+            "parentAcceptable": false
+          }
+        ]
+      },
+      "endpointId": "discord.get-guild-channels",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-oa-st-01",
+      "providerId": "openai",
+      "scenarioId": "openai-lab-photo-explainer",
+      "sampleId": "o8-response",
+      "relatedSamples": [],
+      "format": "understand-structure",
+      "difficulty": "advanced",
+      "reasoningFamily": "polymorphic-branch",
+      "secondaryTags": [
+        "mixed-array-entries",
+        "echo-vs-output",
+        "technical-vs-displayed"
+      ],
+      "title": "Reply, echo, or bookkeeping?",
+      "context": {
+        "applicationGoal": "A chemistry app shows an AI model's answer under a student's lab photo. The response also contains much more than the answer."
+      },
+      "instruction": "Each lettered node is either the reply itself, a repeat of what the app sent, or information about how the reply was produced. Choose one for every letter.",
+      "display": {
+        "expand": [
+          "$.output[]",
+          "$.output[].content"
+        ],
+        "expandElements": "all",
+        "collapse": [
+          "$.usage"
+        ]
+      },
+      "hints": [
+        "Ask of each node: does a student read this, did the app write this, or was it created by the service while working?",
+        "The output list has more than one entry, and the entries are different kinds. Open both before deciding.",
+        "Only the entry that contains written content, and that content itself, belong to the reply. Copies of the request and resource counts belong elsewhere."
+      ],
+      "explanation": {
+        "text": "The reply is the second entry of `output` and the content part inside it. The first entry (`type` {{value:$.output[0].type}}) records reasoning and has no content to display. `instructions` is the prompt the app sent, repeated back. `usage` and `model` describe the service's work. Real responses often hold far more bookkeeping than answer."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.output[].id",
+          "note": "An identifier for this output entry; used by the service to refer back to it."
+        }
+      ],
+      "javaRelation": {
+        "summary": "A Java class for 'the answer' only needs the written content. Echoed instructions, usage and model information may be left out of the class, or kept in a separate class used for logging and billing.",
+        "modelLinks": [
+          {
+            "path": "$.output[].content[].text",
+            "relation": "exact",
+            "conceptId": "answer",
+            "conceptSourcePath": "output[].content[].text",
+            "conceptNeed": "required",
+            "conceptEndpointId": "openai.create-response",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Advanced classification with three categories, six nodes, mixed-kind array entries and echoed request text.",
+      "answer": {
+        "mode": "classify",
+        "categories": [
+          {
+            "id": "reply",
+            "label": "The reply",
+            "description": "Holds what a student would read."
+          },
+          {
+            "id": "echo",
+            "label": "An echo",
+            "description": "Repeats something the app already sent."
+          },
+          {
+            "id": "process",
+            "label": "How it was produced",
+            "description": "Describes the work done or the resources used to produce the reply."
+          }
+        ],
+        "items": [
+          {
+            "id": "a",
+            "path": "$.output[0]"
+          },
+          {
+            "id": "b",
+            "path": "$.output[1]"
+          },
+          {
+            "id": "c",
+            "path": "$.output[1].content[0]"
+          },
+          {
+            "id": "d",
+            "path": "$.instructions"
+          },
+          {
+            "id": "e",
+            "path": "$.usage"
+          },
+          {
+            "id": "f",
+            "path": "$.model"
+          }
+        ]
+      },
+      "grading": {
+        "targetConcept": "role of each node: reply, echo, or process information",
+        "assignments": [
+          {
+            "item": "a",
+            "correct": "process",
+            "misconceptionId": "bookkeeping-vs-content",
+            "wrong": {
+              "reply": "This entry has no written content in it. It records the model's reasoning step, not the answer.",
+              "echo": "The app never sent this; it is generated by the model."
+            }
+          },
+          {
+            "item": "b",
+            "correct": "reply",
+            "misconceptionId": "polymorphic-entry",
+            "wrong": {
+              "process": "This entry is a message from the assistant and it contains the written reply.",
+              "echo": "The app did not send this; it is the model's message."
+            }
+          },
+          {
+            "item": "c",
+            "correct": "reply",
+            "misconceptionId": "polymorphic-entry",
+            "wrong": {
+              "process": "This part holds the written answer itself.",
+              "echo": "The app did not send this; it is the model's written content."
+            }
+          },
+          {
+            "item": "d",
+            "correct": "echo",
+            "misconceptionId": "echo-vs-output",
+            "wrong": {
+              "reply": "This is the instruction the app sent. The response repeats it for reference.",
+              "process": "This is not about how the answer was produced; it is a copy of what the app sent."
+            }
+          },
+          {
+            "item": "e",
+            "correct": "process",
+            "misconceptionId": "technical-metadata",
+            "wrong": {
+              "reply": "This counts the resources used. It does not hold any written words.",
+              "echo": "The app never sent these numbers; the service reports them."
+            }
+          },
+          {
+            "item": "f",
+            "correct": "process",
+            "misconceptionId": "technical-metadata",
+            "wrong": {
+              "reply": "This names the model that did the work. It is not the work's result.",
+              "echo": "The app did not send this; it describes the model that answered."
+            }
+          }
+        ]
+      },
+      "endpointId": "openai.create-response",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-tt-sn-01",
+      "providerId": "tiktok",
+      "scenarioId": "tiktok-featured-reel-showcase",
+      "sampleId": "t3-query",
+      "relatedSamples": [],
+      "format": "select-needs",
+      "difficulty": "beginner",
+      "reasoningFamily": "app-need-selection",
+      "secondaryTags": [
+        "response-envelope",
+        "optional-identifier"
+      ],
+      "title": "A featured-video card",
+      "context": {
+        "applicationGoal": "A creator's portfolio page has a showcase of featured videos. Each card shows a still picture of the video, the name the creator gave it, and how many people liked it. Tapping the card opens the video player inside the page."
+      },
+      "instruction": "Select every property one video card needs, so that it can show the picture, show the name, show the number of likes, and open the playable video.",
+      "display": {
+        "expand": [
+          "$.data.videos",
+          "$.data.videos[]"
+        ]
+      },
+      "hints": [
+        "List the four needs. For each one, find a property of a single video that satisfies it.",
+        "All four needs are met by properties inside each video entry. Properties of the whole response, outside the videos, do not belong on a video card.",
+        "Two needs are text, one is a number, and one is a link. Match each need to a property by its badge and its value."
+      ],
+      "explanation": {
+        "text": "Each need maps to one property of a video: `cover_image_url` for the picture, `title` for the name, `like_count` for the likes and `embed_link` for the playable video. `id` is optional: useful for remembering a video, not for showing it. The `error` group describes the request, so nothing in it is needed for a card."
+      },
+      "fieldNotes": [],
+      "javaRelation": {
+        "summary": "Each selected property becomes one field of a `FeaturedVideo` class: three `String` fields and one `long`. Properties the app never uses can be left out of the class entirely.",
+        "modelLinks": [
+          {
+            "path": "$.data.videos[].cover_image_url",
+            "relation": "exact",
+            "conceptId": "coverUrl",
+            "conceptSourcePath": "data.videos[].cover_image_url",
+            "conceptNeed": "required",
+            "conceptEndpointId": "tiktok.query-videos",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          },
+          {
+            "path": "$.data.videos[].like_count",
+            "relation": "exact",
+            "conceptId": "likeCount",
+            "conceptSourcePath": "data.videos[].like_count",
+            "conceptNeed": "required",
+            "conceptEndpointId": "tiktok.query-videos",
+            "javaType": "int",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Beginner selection: four needs, four obvious-but-paraphrased properties, one optional identifier, envelope distractors.",
+      "answer": {
+        "mode": "set",
+        "extrasPolicy": "allow",
+        "minimal": null
+      },
+      "grading": {
+        "targetConcept": "fields for a featured-video card",
+        "requirements": [
+          {
+            "id": "cover",
+            "label": "A still picture for the video",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.data.videos[].cover_image_url",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "name",
+            "label": "The name the creator gave the video",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.data.videos[].title",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "likes",
+            "label": "How many people liked it",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.data.videos[].like_count",
+                "nodeType": "number",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "player",
+            "label": "A link that opens the playable video in the page",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.data.videos[].embed_link",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          }
+        ],
+        "optionalAllowed": [
+          {
+            "path": "$.data.videos[].id",
+            "nodeType": "string",
+            "feedback": "Optional: the video's identifier is handy for remembering which video a card refers to, but the card does not show it."
+          }
+        ],
+        "distractors": [
+          {
+            "path": "$.error.code",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That belongs to the request, not to a video. The card never shows it."
+          },
+          {
+            "path": "$.error.log_id",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That helps support staff trace a request. It is not content for a card."
+          },
+          {
+            "path": "$.error.message",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That describes how the request went. It might look like something to show, but it never belongs on a video card."
+          }
+        ]
+      },
+      "endpointId": "tiktok.query-videos",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-gm-sn-01",
+      "providerId": "google-maps",
+      "scenarioId": "maps-lunch-spot-finder",
+      "sampleId": "g1-nearby",
+      "relatedSamples": [],
+      "format": "select-needs",
+      "difficulty": "beginner",
+      "reasoningFamily": "app-need-selection",
+      "secondaryTags": [
+        "optional-field-missing",
+        "nested-object",
+        "relevant-vs-metadata"
+      ],
+      "title": "A lunch-spot row",
+      "context": {
+        "applicationGoal": "A field-trip app lists nearby restaurants. Each row shows what the restaurant is called, where it is, how many stars reviewers gave it, and whether it is open at this moment. Map pins are built on a separate screen."
+      },
+      "instruction": "Select every property one row of the list needs.",
+      "display": {
+        "expand": [
+          "$.places[]"
+        ]
+      },
+      "hints": [
+        "List the four needs, then find where each one lives inside a single restaurant entry.",
+        "Two needs are met by values nested one level down, inside small groups. Expand those groups before you choose.",
+        "Look carefully at the data-type badges: one need is a yes/no value and one is a number. Also compare more than one restaurant: not every property appears in every entry."
+      ],
+      "explanation": {
+        "text": "The row needs `text` inside `displayName`, `formattedAddress`, `rating`, and `openNow` inside `currentOpeningHours`. `displayName` itself is a group that also holds `languageCode`, so selecting the group is not the same as selecting the name. Notice that the third restaurant in this sample has no `rating` at all: the app must be ready for a missing value."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.places[].currentOpeningHours.periods",
+          "note": "Structured opening and closing times, one entry per open period during the week."
+        }
+      ],
+      "javaRelation": {
+        "summary": "A `Restaurant` class holds a `String` name, a `String` address, a number for stars and a `boolean` for open-now. Because rating may be missing, a robust class lets it be absent.",
+        "modelLinks": [
+          {
+            "path": "$.places[].displayName.text",
+            "relation": "exact",
+            "conceptId": "name",
+            "conceptSourcePath": "places[].displayName.text",
+            "conceptNeed": "required",
+            "conceptEndpointId": "maps.places-nearby-search",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          },
+          {
+            "path": "$.places[].rating",
+            "relation": "exact",
+            "conceptId": "rating",
+            "conceptSourcePath": "places[].rating",
+            "conceptNeed": "required",
+            "conceptEndpointId": "maps.places-nearby-search",
+            "javaType": "Double",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Beginner selection: nested-leaf choice with a group-versus-leaf trap, a field absent from one entry, optional map data explicitly scoped out.",
+      "answer": {
+        "mode": "set",
+        "extrasPolicy": "allow",
+        "minimal": null
+      },
+      "grading": {
+        "targetConcept": "fields for a restaurant list row",
+        "requirements": [
+          {
+            "id": "label",
+            "label": "What the restaurant is called",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.places[].displayName.text",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "where",
+            "label": "Where the restaurant is",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.places[].formattedAddress",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "stars",
+            "label": "How many stars reviewers gave it",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.places[].rating",
+                "nodeType": "number",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "openNow",
+            "label": "Whether it is open at this moment",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.places[].currentOpeningHours.openNow",
+                "nodeType": "boolean",
+                "kind": "primary"
+              }
+            ]
+          }
+        ],
+        "optionalAllowed": [
+          {
+            "path": "$.places[].id",
+            "nodeType": "string",
+            "feedback": "Optional: an identifier is useful if a row ever needs to ask for more details later."
+          },
+          {
+            "path": "$.places[].location.latitude",
+            "nodeType": "number",
+            "feedback": "Optional: coordinates are needed for the map pins, which are built on a separate screen."
+          },
+          {
+            "path": "$.places[].location.longitude",
+            "nodeType": "number",
+            "feedback": "Optional: coordinates are needed for the map pins, which are built on a separate screen."
+          }
+        ],
+        "distractors": [
+          {
+            "path": "$.places[].displayName.languageCode",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That only says which language the name is written in. The row shows the name, not its language."
+          },
+          {
+            "path": "$.places[].currentOpeningHours.periods",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "raw-vs-display",
+            "feedback": "That is detailed weekly opening data for calculations. The row only needs to know about right now."
+          },
+          {
+            "path": "$.places[].currentOpeningHours.weekdayDescriptions",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "plausible-detail",
+            "feedback": "That lists the whole week's hours. The row only needs to know whether the place is open right now."
+          }
+        ]
+      },
+      "endpointId": "maps.places-nearby-search",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-dc-sn-02",
+      "providerId": "discord",
+      "scenarioId": "discord-my-servers-dashboard",
+      "sampleId": "d1-guilds",
+      "relatedSamples": [],
+      "format": "select-needs",
+      "difficulty": "beginner",
+      "reasoningFamily": "invisible-need",
+      "secondaryTags": [
+        "root-array",
+        "identifier-needed-for-follow-up",
+        "technical-metadata"
+      ],
+      "title": "A server list row",
+      "context": {
+        "applicationGoal": "A study-planner website lists every Discord server the student is in. Each row shows the server's label, its small picture, and whether the student created it. Tapping a row must let the site ask Discord a follow-up question about that exact server."
+      },
+      "instruction": "Select every property one row needs, including whatever the site needs for the follow-up question.",
+      "display": {
+        "expand": [
+          "$[]"
+        ]
+      },
+      "hints": [
+        "Three needs are shown on screen. One need is invisible: it exists only so the site can ask a follow-up question.",
+        "The invisible need must tell Discord which server you mean. Think about what a program uses to refer to one specific thing.",
+        "The follow-up question needs a value that identifies one server uniquely, not a value people read."
+      ],
+      "explanation": {
+        "text": "The row shows `name`, `icon` and `owner`. It also needs `id`, which nobody sees on screen, but without it the site cannot ask Discord about this exact server. `permissions`, `features` and `banner` are real data the row does not use. In this sample `icon` is a short code ({{value:$[0].icon}}), not a complete web address, so building the picture needs one more step."
+      },
+      "fieldNotes": [
+        {
+          "path": "$[].permissions",
+          "note": "A string of digits that packs the student's permissions in that server into one number."
+        }
+      ],
+      "javaRelation": {
+        "summary": "A `Server` class holds a `String` label, a `String` icon code, a `boolean` for ownership and a `String` identifier. The identifier is a field even though no screen shows it.",
+        "modelLinks": [
+          {
+            "path": "$[].name",
+            "relation": "exact",
+            "conceptId": "serverName",
+            "conceptSourcePath": "[].name",
+            "conceptNeed": "required",
+            "conceptEndpointId": "discord.get-current-user-guilds",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          },
+          {
+            "path": "$[].id",
+            "relation": "exact",
+            "conceptId": "serverId",
+            "conceptSourcePath": "[].id",
+            "conceptNeed": "required",
+            "conceptEndpointId": "discord.get-current-user-guilds",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Beginner selection on a flat root-array: an invisible-but-necessary identifier is the key idea; three technical distractors.",
+      "answer": {
+        "mode": "set",
+        "extrasPolicy": "allow",
+        "minimal": null
+      },
+      "grading": {
+        "targetConcept": "fields for a server list row",
+        "requirements": [
+          {
+            "id": "label",
+            "label": "The server's label",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$[].name",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "picture",
+            "label": "The server's small picture",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$[].icon",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "mine",
+            "label": "Whether the student created the server",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$[].owner",
+                "nodeType": "boolean",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "lookup",
+            "label": "Something that identifies this exact server for a follow-up question",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$[].id",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          }
+        ],
+        "optionalAllowed": [],
+        "distractors": [
+          {
+            "path": "$[].permissions",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That is a packed number describing what the student may do in the server. The row does not show it."
+          },
+          {
+            "path": "$[].features",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That lists special server features. The row does not show it."
+          },
+          {
+            "path": "$[].banner",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "plausible-detail",
+            "feedback": "That points to a banner picture, which this list does not display. In this sample it is empty anyway."
+          }
+        ]
+      },
+      "endpointId": "discord.get-current-user-guilds",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-sp-sn-01",
+      "providerId": "spotify",
+      "scenarioId": "spotify-my-playlists-browser",
+      "sampleId": "s2-playlist-items",
+      "relatedSamples": [],
+      "format": "select-needs",
+      "difficulty": "intermediate",
+      "reasoningFamily": "wrapper-vs-content",
+      "secondaryTags": [
+        "wrapper-vs-content",
+        "same-name-other-owner",
+        "nested-arrays"
+      ],
+      "title": "A playlist song row",
+      "context": {
+        "applicationGoal": "Screen 2 of a playlist app lists a playlist's songs. Each row shows the song's title, who performs it, a small picture of the record it came from, how long it lasts, and the date it was put in the playlist."
+      },
+      "instruction": "Select every property one song row needs. A repeated property counts for every song, so select it in any one entry.",
+      "display": {
+        "expand": [
+          "$.items[]",
+          "$.items[].item"
+        ],
+        "collapse": [
+          "$.items[].item.external_ids"
+        ]
+      },
+      "hints": [
+        "Match each of the five needs to one property. Two properties may look right for one need; compare their parents.",
+        "One need is not stored in the song's own details: it describes the playlist entry that wraps the song.",
+        "For the picture and the performers, check which parent the property sits under: the song itself, or the record the song came from."
+      ],
+      "explanation": {
+        "text": "The song's own details live inside `item`: `name`, `artists[].name`, `duration_ms`, and a picture `url` inside `album.images`. The added date, `added_at`, sits one level up, in the playlist entry that wraps the song. `album.artists` and `artists` are two different lists with different owners. The `total` at the top describes the whole page, not any row."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.items[].item.is_playable",
+          "note": "Whether the song can be played in the listener's market."
+        }
+      ],
+      "javaRelation": {
+        "summary": "Java needs a `PlaylistEntry` class holding the added date and a `Track` object with the song details. The wrapper-and-content shape in JSON becomes one class nested inside another.",
+        "modelLinks": [
+          {
+            "path": "$.items[].item.name",
+            "relation": "exact",
+            "conceptId": "songTitle",
+            "conceptSourcePath": "items[].item.name",
+            "conceptNeed": "required",
+            "conceptEndpointId": "spotify.get-playlist-items",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          },
+          {
+            "path": "$.items[].item.duration_ms",
+            "relation": "exact",
+            "conceptId": "songDuration",
+            "conceptSourcePath": "items[].item.duration_ms",
+            "conceptNeed": "required",
+            "conceptEndpointId": "spotify.get-playlist-items",
+            "javaType": "int",
+            "endpointMatchesSample": true
+          },
+          {
+            "path": "$.items[].added_at",
+            "relation": "exact",
+            "conceptId": "addedAt",
+            "conceptSourcePath": "items[].added_at",
+            "conceptNeed": "required",
+            "conceptEndpointId": "spotify.get-playlist-items",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Intermediate: five needs across two nesting levels, wrapper object holding one need, a same-name different-owner distractor.",
+      "answer": {
+        "mode": "set",
+        "extrasPolicy": "allow",
+        "minimal": null
+      },
+      "grading": {
+        "targetConcept": "fields for a playlist song row",
+        "requirements": [
+          {
+            "id": "title",
+            "label": "The song's title",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.items[].item.name",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "performers",
+            "label": "Who performs the song",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.items[].item.artists[].name",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "picture",
+            "label": "A small picture of the record the song came from",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.items[].item.album.images[].url",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "length",
+            "label": "How long the song lasts",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.items[].item.duration_ms",
+                "nodeType": "number",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "added",
+            "label": "The date the song was put in the playlist",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.items[].added_at",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          }
+        ],
+        "optionalAllowed": [
+          {
+            "path": "$.items[].item.album.name",
+            "nodeType": "string",
+            "feedback": "Optional: the record's title is not asked for, but would not hurt."
+          },
+          {
+            "path": "$.items[].item.id",
+            "nodeType": "string",
+            "feedback": "Optional: an identifier is useful if rows ever need more details later."
+          }
+        ],
+        "distractors": [
+          {
+            "path": "$.items[].item.album.artists[].name",
+            "class": "wrong-entity",
+            "misconceptionId": "same-name-other-owner",
+            "feedback": "Those performers are credited on the record, not on the song. A song and its record can credit different people."
+          },
+          {
+            "path": "$.items[].added_by.id",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "identifier-vs-label",
+            "feedback": "That says who added the song, not when it was added."
+          },
+          {
+            "path": "$.items[].item.explicit",
+            "class": "technical",
+            "misconceptionId": "plausible-detail",
+            "feedback": "A yes/no flag the row was not asked to show."
+          },
+          {
+            "path": "$.items[].item.preview_url",
+            "class": "technical",
+            "misconceptionId": "plausible-detail",
+            "feedback": "A link to a short audio preview, which the row does not use. It is empty in this sample."
+          },
+          {
+            "path": "$.items[].item.track_number",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "plausible-detail",
+            "feedback": "That is the song's position on its original record, not in this playlist."
+          },
+          {
+            "path": "$.total",
+            "class": "technical",
+            "misconceptionId": "list-size-vs-item-metric",
+            "feedback": "That describes the whole list. A single row never shows it."
+          }
+        ]
+      },
+      "endpointId": "spotify.get-playlist-items",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-yt-sn-01",
+      "providerId": "youtube",
+      "scenarioId": "youtube-channel-hub",
+      "sampleId": "y1-channel",
+      "relatedSamples": [],
+      "format": "select-needs",
+      "difficulty": "intermediate",
+      "reasoningFamily": "conditional-need",
+      "secondaryTags": [
+        "conditional-need",
+        "equivalent-paths",
+        "deep-nesting"
+      ],
+      "title": "The channel header",
+      "context": {
+        "applicationGoal": "The top of a creator-hub page shows the channel's display label, its profile picture, and how many people subscribe. Creators may hide that number; when they do, the hub must show the word 'hidden' instead of a number."
+      },
+      "instruction": "Select every property the header needs. If more than one property carries the same information, any one of them is enough.",
+      "display": {
+        "expand": [
+          "$.items[]",
+          "$.items[].snippet",
+          "$.items[].statistics"
+        ]
+      },
+      "hints": [
+        "There are three things to show plus one condition. Decide first what extra information the condition requires.",
+        "The condition depends on a yes/no value that lives in the same group as the subscriber tally.",
+        "Several properties could supply the label or the picture. Choose any one, but make sure each need has one."
+      ],
+      "explanation": {
+        "text": "The header needs `title` (the label), a picture `url` inside `thumbnails`, `subscriberCount`, and `hiddenSubscriberCount`. The last is the subtle one: when it is true, the number in `subscriberCount` must not be shown. `localized.title` repeats the label, and each thumbnail size offers a picture, so more than one property can meet those needs. Note `subscriberCount` is a string here ({{value:$.items[0].statistics.subscriberCount}})."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.items[].snippet.localized",
+          "note": "Localized copies of the channel's label and description."
+        }
+      ],
+      "javaRelation": {
+        "summary": "A `ChannelHeader` class holds a label, a picture address, a subscriber count and a `boolean` hidden flag. Your code must check the flag before showing the count.",
+        "modelLinks": [
+          {
+            "path": "$.items[].snippet.title",
+            "relation": "exact",
+            "conceptId": "channelName",
+            "conceptSourcePath": "items[].snippet.title",
+            "conceptNeed": "required",
+            "conceptEndpointId": "youtube.channels-list",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          },
+          {
+            "path": "$.items[].statistics.subscriberCount",
+            "relation": "exact",
+            "conceptId": "subscriberCount",
+            "conceptSourcePath": "items[].statistics.subscriberCount",
+            "conceptNeed": "required",
+            "conceptEndpointId": "youtube.channels-list",
+            "javaType": "Long",
+            "endpointMatchesSample": true
+          },
+          {
+            "path": "$.items[].statistics.hiddenSubscriberCount",
+            "relation": "exact",
+            "conceptId": "subscribersHidden",
+            "conceptSourcePath": "items[].statistics.hiddenSubscriberCount",
+            "conceptNeed": "required",
+            "conceptEndpointId": "youtube.channels-list",
+            "javaType": "boolean",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Intermediate: four needs including a conditional one, equivalent paths accepted, plausible numeric look-alikes.",
+      "answer": {
+        "mode": "set",
+        "extrasPolicy": "allow",
+        "minimal": null
+      },
+      "grading": {
+        "targetConcept": "fields for a channel header",
+        "requirements": [
+          {
+            "id": "label",
+            "label": "The channel's display label",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.items[].snippet.title",
+                "nodeType": "string",
+                "kind": "primary"
+              },
+              {
+                "path": "$.items[].snippet.localized.title",
+                "nodeType": "string",
+                "kind": "alternative",
+                "sameValue": true,
+                "note": "Also valid here: the localized copy of the label. In this sample it is identical to the main one."
+              }
+            ]
+          },
+          {
+            "id": "picture",
+            "label": "The profile picture",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.items[].snippet.thumbnails.medium.url",
+                "nodeType": "string",
+                "kind": "primary"
+              },
+              {
+                "path": "$.items[].snippet.thumbnails.default.url",
+                "nodeType": "string",
+                "kind": "alternative",
+                "note": "Any picture size works; sizes differ in width and height."
+              },
+              {
+                "path": "$.items[].snippet.thumbnails.high.url",
+                "nodeType": "string",
+                "kind": "alternative",
+                "note": "Any picture size works; sizes differ in width and height."
+              }
+            ]
+          },
+          {
+            "id": "subs",
+            "label": "How many people subscribe",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.items[].statistics.subscriberCount",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "hidden",
+            "label": "Whether the creator chose to hide that number",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.items[].statistics.hiddenSubscriberCount",
+                "nodeType": "boolean",
+                "kind": "primary"
+              }
+            ]
+          }
+        ],
+        "optionalAllowed": [
+          {
+            "path": "$.items[].id",
+            "nodeType": "string",
+            "feedback": "Optional: an identifier is useful for later requests about this channel."
+          },
+          {
+            "path": "$.items[].contentDetails.relatedPlaylists.uploads",
+            "nodeType": "string",
+            "feedback": "Optional here: this is not displayed in the header, but a later request for the channel's uploads needs it."
+          }
+        ],
+        "distractors": [
+          {
+            "path": "$.items[].statistics.viewCount",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "similar-metric",
+            "feedback": "That counts views of all the channel's videos, not subscribers."
+          },
+          {
+            "path": "$.items[].statistics.videoCount",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "similar-metric",
+            "feedback": "That counts how many videos the channel has, not who follows it."
+          },
+          {
+            "path": "$.items[].snippet.customUrl",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "identifier-vs-label",
+            "feedback": "That is the channel's handle, which the header does not show."
+          },
+          {
+            "path": "$.items[].snippet.publishedAt",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "plausible-detail",
+            "feedback": "That is when the channel was created; the header does not show it."
+          },
+          {
+            "path": "$.items[].snippet.description",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "plausible-detail",
+            "feedback": "A longer text about the channel that the header was not asked to show."
+          },
+          {
+            "path": "$.pageInfo.totalResults",
+            "class": "technical",
+            "misconceptionId": "list-size-vs-item-metric",
+            "feedback": "That counts how many channels the response holds, not subscribers."
+          }
+        ]
+      },
+      "endpointId": "youtube.channels-list",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-dc-sn-01",
+      "providerId": "discord",
+      "scenarioId": "discord-study-hall-catch-up",
+      "sampleId": "d2-messages",
+      "relatedSamples": [],
+      "format": "select-needs",
+      "difficulty": "advanced",
+      "reasoningFamily": "optional-null-handling",
+      "secondaryTags": [
+        "nullable",
+        "identifier-needed-for-state",
+        "technical-vs-displayed",
+        "root-array"
+      ],
+      "title": "The catch-up view",
+      "context": {
+        "applicationGoal": "A class app's 'What did I miss?' view shows each new message. Each message shows who wrote it, what they wrote, when it was sent, and the names of any attached files. Some people never chose a friendly display name, but every message must still show someone. The view only shows messages newer than the last one the student read, so it also needs a value to remember where the student stopped."
+      },
+      "instruction": "Select every property the view needs, including what it needs when a person has no friendly display name and what it needs to remember where the student stopped.",
+      "display": {
+        "expand": [
+          "$[]"
+        ],
+        "arrayShow": {
+          "$": 3
+        }
+      },
+      "hints": [
+        "Count the needs: five are shown on screen and one is invisible. Two of the shown needs come from the same sender group.",
+        "A value can be empty for some people. The view must still show a name for them, so it needs a second property to fall back on.",
+        "The invisible need must identify one specific message, so that a later request can ask only for newer ones."
+      ],
+      "explanation": {
+        "text": "The view needs `global_name` and `username` (so someone always appears: the first author's `global_name` is {{value:$[0].author.global_name}}), `content`, `timestamp`, `filename` inside `attachments`, and `id` to remember where the student stopped. `edited_timestamp` is {{value:$[0].edited_timestamp}} here and means something different from `timestamp`. The rest is real data this view does not use."
+      },
+      "fieldNotes": [
+        {
+          "path": "$[].mention_roles",
+          "note": "Identifiers of roles that were mentioned in the message."
+        }
+      ],
+      "javaRelation": {
+        "summary": "A `CatchUpMessage` class holds the friendly name (which may be `null`), the handle, text, timestamp, and a list of file names. Another piece of code stores the last message `id` between visits.",
+        "modelLinks": [
+          {
+            "path": "$[].author.global_name",
+            "relation": "exact",
+            "conceptId": "authorDisplay",
+            "conceptSourcePath": "[].author.global_name",
+            "conceptNeed": "required",
+            "conceptEndpointId": "discord.get-channel-messages",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          },
+          {
+            "path": "$[].author.username",
+            "relation": "exact",
+            "conceptId": "authorUsername",
+            "conceptSourcePath": "[].author.username",
+            "conceptNeed": "required",
+            "conceptEndpointId": "discord.get-channel-messages",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          },
+          {
+            "path": "$[].id",
+            "relation": "exact",
+            "conceptId": "messageId",
+            "conceptSourcePath": "[].id",
+            "conceptNeed": "required",
+            "conceptEndpointId": "discord.get-channel-messages",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Advanced: six needs, two from a nullable/fallback pair, one invisible state need, eight distractors including a timestamp lookalike.",
+      "answer": {
+        "mode": "set",
+        "extrasPolicy": "allow",
+        "minimal": null
+      },
+      "grading": {
+        "targetConcept": "fields for a catch-up message row",
+        "requirements": [
+          {
+            "id": "chosen",
+            "label": "The friendly display name, when a person chose one",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$[].author.global_name",
+                "nodeType": "string|null",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "backup",
+            "label": "A name every account always has, for people with no friendly name",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$[].author.username",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "words",
+            "label": "What the message says",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$[].content",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "when",
+            "label": "When it was sent",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$[].timestamp",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "files",
+            "label": "The names of attached files",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$[].attachments[].filename",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "bookmark",
+            "label": "A value that identifies this message, to remember where the student stopped",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$[].id",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          }
+        ],
+        "optionalAllowed": [],
+        "distractors": [
+          {
+            "path": "$[].author.id",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "identifier-vs-label",
+            "feedback": "That identifies the sender to programs. The view shows a name, not an identifier."
+          },
+          {
+            "path": "$[].author.avatar",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "plausible-detail",
+            "feedback": "A picture code for the sender. The view was not asked to show pictures."
+          },
+          {
+            "path": "$[].edited_timestamp",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "timestamp-lookalike",
+            "feedback": "That says when a message was edited, and it is empty for these messages. The view shows when each was sent."
+          },
+          {
+            "path": "$[].channel_id",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "Every message in this response is from the same channel, so this value never changes."
+          },
+          {
+            "path": "$[].pinned",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "plausible-detail",
+            "feedback": "Whether the message is pinned. The view was not asked to show that."
+          },
+          {
+            "path": "$[].type",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "A number describing the kind of message. The view shows all messages the same way."
+          },
+          {
+            "path": "$[].mentions",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "plausible-detail",
+            "feedback": "Who was mentioned. The view was not asked to show that."
+          },
+          {
+            "path": "$[].embeds",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "plausible-detail",
+            "feedback": "Rich previews attached to the message. The view only shows file names."
+          }
+        ]
+      },
+      "endpointId": "discord.get-channel-messages",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-oa-sn-01",
+      "providerId": "openai",
+      "scenarioId": "openai-discussion-board-safety",
+      "sampleId": "o5-moderation",
+      "relatedSamples": [],
+      "format": "select-needs",
+      "difficulty": "advanced",
+      "reasoningFamily": "flag-vs-score",
+      "secondaryTags": [
+        "minimal-selection",
+        "flag-vs-score",
+        "technical-vs-displayed",
+        "repeated-shape"
+      ],
+      "title": "Routing a post",
+      "context": {
+        "applicationGoal": "Before a student's post appears on the class discussion board, the board checks it with a safety service. Posts marked as a problem for self-harm go to the school counselor. Posts marked for harassment, hate or violence go to the teacher."
+      },
+      "instruction": "Select exactly the properties the board needs to make these decisions. This is a minimal-selection challenge: any property the board does not need will prevent a pass.",
+      "display": {
+        "expand": [
+          "$.results[]"
+        ],
+        "collapse": [
+          "$.results[].category_scores",
+          "$.results[].category_applied_input_types"
+        ]
+      },
+      "hints": [
+        "Write down the decisions the board makes: first whether to intervene at all, then who to send the post to. Each decision needs a yes/no value.",
+        "The same category names appear in three different groups of the result. Only one group holds yes/no values.",
+        "Open the group of categories and choose only the four the board's rules name. Do not select the group itself."
+      ],
+      "explanation": {
+        "text": "The board needs `flagged` plus four yes/no values inside `categories`: `self-harm`, `harassment`, `hate` and `violence`. `category_scores` repeats the same category names with numbers such as {{value:$.results[0].category_scores.harassment}}, and `category_applied_input_types` lists the kinds of input checked. Because this challenge asked for a minimal selection, extra properties, even sensible ones, do not pass."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.results[].category_applied_input_types",
+          "note": "For each category, which input kinds (such as text or image) the service checked."
+        }
+      ],
+      "javaRelation": {
+        "summary": "A `SafetyResult` class holds one overall `boolean` plus one `boolean` per category the board routes on. Categories the board ignores are not fields in this class.",
+        "modelLinks": [
+          {
+            "path": "$.results[].flagged",
+            "relation": "exact",
+            "conceptId": "flagged",
+            "conceptSourcePath": "results[].flagged",
+            "conceptNeed": "required",
+            "conceptEndpointId": "openai.create-moderation",
+            "javaType": "boolean",
+            "endpointMatchesSample": true
+          },
+          {
+            "path": "$.results[].categories.harassment",
+            "relation": "exact",
+            "conceptId": "harassment",
+            "conceptSourcePath": "results[].categories.harassment",
+            "conceptNeed": "required",
+            "conceptEndpointId": "openai.create-moderation",
+            "javaType": "boolean",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Advanced minimal-selection: three parallel 13-key groups, only one correct representation; exercises extrasPolicy=minimal.",
+      "answer": {
+        "mode": "set",
+        "extrasPolicy": "minimal",
+        "minimal": {
+          "maxExtras": 0
+        }
+      },
+      "grading": {
+        "targetConcept": "minimal fields for post routing",
+        "requirements": [
+          {
+            "id": "overall",
+            "label": "Whether the post was marked as a problem at all",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.results[].flagged",
+                "nodeType": "boolean",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "selfharm",
+            "label": "Whether it was marked for self-harm",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.results[].categories.self-harm",
+                "nodeType": "boolean",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "harass",
+            "label": "Whether it was marked for harassment",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.results[].categories.harassment",
+                "nodeType": "boolean",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "hate",
+            "label": "Whether it was marked for hate",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.results[].categories.hate",
+                "nodeType": "boolean",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "violence",
+            "label": "Whether it was marked for violence",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.results[].categories.violence",
+                "nodeType": "boolean",
+                "kind": "primary"
+              }
+            ]
+          }
+        ],
+        "optionalAllowed": [
+          {
+            "path": "$.results[].categories.self-harm/intent",
+            "nodeType": "boolean",
+            "feedback": "Optional: a closely related self-harm flag that a school might also route to the counselor."
+          }
+        ],
+        "distractors": [
+          {
+            "path": "$.results[].category_scores.self-harm",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "score-vs-flag",
+            "feedback": "That is a number showing how strongly the service rated the post. The board routes on yes/no flags."
+          },
+          {
+            "path": "$.results[].category_scores.harassment",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "score-vs-flag",
+            "feedback": "That is a score, not a yes/no decision. The board routes on yes/no flags."
+          },
+          {
+            "path": "$.results[].category_applied_input_types.violence",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That lists which kinds of input (text or image) the service checked. The board does not route on it."
+          },
+          {
+            "path": "$.results[].categories.sexual",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "plausible-detail",
+            "feedback": "The board's rules do not route on this category, so it is not needed here."
+          },
+          {
+            "path": "$.results[].categories.harassment/threatening",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "plausible-detail",
+            "feedback": "A narrower flag than the one the board's rules use, so it is not needed here."
+          },
+          {
+            "path": "$.model",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That names the service's model. The board does not route on it."
+          },
+          {
+            "path": "$.id",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That identifies the check itself. The board does not route on it."
+          }
+        ]
+      },
+      "endpointId": "openai.create-moderation",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    },
+    {
+      "id": "rx-oa-sn-02",
+      "providerId": "openai",
+      "scenarioId": "openai-lab-photo-explainer",
+      "sampleId": "o8-incomplete",
+      "relatedSamples": [
+        {
+          "sampleId": "o8-response",
+          "caption": "The same request when the answer finished normally, for comparison."
+        }
+      ],
+      "format": "select-needs",
+      "difficulty": "advanced",
+      "reasoningFamily": "polymorphic-branch",
+      "secondaryTags": [
+        "polymorphic-entries",
+        "related-samples",
+        "equivalent-paths",
+        "optional-null-handling"
+      ],
+      "title": "Answer or 'try again'",
+      "context": {
+        "applicationGoal": "A chemistry app shows the model's answer under a student's lab photo, or a 'try again' message if the answer was cut off. The model's output list holds more than one kind of entry."
+      },
+      "instruction": "Select every property the app needs to (1) show the answer words, (2) know whether the answer finished, (3) pick the right entry from the output list, and (4) confirm the answer part is ordinary written content. Compare with the second sample.",
+      "display": {
+        "expand": [
+          "$.output[]",
+          "$.output[].content"
+        ],
+        "expandElements": "all"
+      },
+      "hints": [
+        "Four needs, each with at least one property. Start with the easiest: where do the answer words live?",
+        "Compare the two samples. Something near the top of the response changes when an answer is cut off. Decide which property it is.",
+        "The output list holds different kinds of entries, so the app needs a way to tell them apart, both for the entries and for the parts inside the answer entry."
+      ],
+      "explanation": {
+        "text": "The words are `text` inside `content`. The finish state is the top-level `status`, which reads {{value:$.status}} here but {{value:$.status@o8-response}} in the finished sample; `output[].status` also carries it. The app must check the `type` of each entry in `output` (the first is {{value:$.output[0].type}}) and of the part inside `content`. `incomplete_details.reason` ({{value:$.incomplete_details.reason}}) can explain why the answer was cut off. `max_output_tokens` is a limit the app set; it explains the cut-off but does not report it."
+      },
+      "fieldNotes": [
+        {
+          "path": "$.incomplete_details",
+          "note": "Present only when the response did not finish; says why."
+        }
+      ],
+      "javaRelation": {
+        "summary": "The Java model holds the answer `String`, a status value, and logic that reads entries by their `type`. A try-again screen is chosen by checking the status field, not by guessing from the text.",
+        "modelLinks": [
+          {
+            "path": "$.output[].content[].text",
+            "relation": "exact",
+            "conceptId": "answer",
+            "conceptSourcePath": "output[].content[].text",
+            "conceptNeed": "required",
+            "conceptEndpointId": "openai.create-response",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          },
+          {
+            "path": "$.status",
+            "relation": "exact",
+            "conceptId": "status",
+            "conceptSourcePath": "status",
+            "conceptNeed": "required",
+            "conceptEndpointId": "openai.create-response",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          },
+          {
+            "path": "$.output[].type",
+            "relation": "exact",
+            "conceptId": "itemType",
+            "conceptSourcePath": "output[].type",
+            "conceptNeed": "required",
+            "conceptEndpointId": "openai.create-response",
+            "javaType": "String",
+            "endpointMatchesSample": true
+          }
+        ]
+      },
+      "designNotes": "Advanced: four needs, equivalent paths for completion state, polymorphic list entries, related finished sample, optional null-able group.",
+      "answer": {
+        "mode": "set",
+        "extrasPolicy": "allow",
+        "minimal": null
+      },
+      "grading": {
+        "targetConcept": "fields to show an answer or a try-again message",
+        "requirements": [
+          {
+            "id": "words",
+            "label": "The answer words",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.output[].content[].text",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "finished",
+            "label": "Whether the answer finished or was cut off",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.status",
+                "nodeType": "string",
+                "kind": "primary"
+              },
+              {
+                "path": "$.output[].status",
+                "nodeType": "string",
+                "kind": "alternative",
+                "sameValue": true,
+                "note": "Also valid: the message entry reports the same state in this sample. The top-level one describes the whole response."
+              }
+            ]
+          },
+          {
+            "id": "entryKind",
+            "label": "The kind of each entry in the output list",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.output[].type",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          },
+          {
+            "id": "partKind",
+            "label": "The kind of the answer part",
+            "necessity": "necessary",
+            "accepted": [
+              {
+                "path": "$.output[].content[].type",
+                "nodeType": "string",
+                "kind": "primary"
+              }
+            ]
+          }
+        ],
+        "optionalAllowed": [
+          {
+            "path": "$.incomplete_details",
+            "nodeType": "object",
+            "feedback": "Optional: it explains why an answer was cut off. Selecting the group is fine here because it is a small group."
+          },
+          {
+            "path": "$.incomplete_details.reason",
+            "nodeType": "string",
+            "feedback": "Optional: it explains why an answer was cut off, which could improve the 'try again' message."
+          }
+        ],
+        "distractors": [
+          {
+            "path": "$.max_output_tokens",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That is a limit the app itself set. It does not say what happened."
+          },
+          {
+            "path": "$.instructions",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "echo-vs-output",
+            "feedback": "That is a copy of what the app sent."
+          },
+          {
+            "path": "$.model",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That names the model. The app does not need it to show an answer."
+          },
+          {
+            "path": "$.temperature",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That is a setting the app chose, not part of the result."
+          },
+          {
+            "path": "$.output[].id",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That identifies an entry for the service's own use."
+          },
+          {
+            "path": "$.output[].summary",
+            "class": "technical",
+            "misconceptionId": "bookkeeping-vs-content",
+            "feedback": "That belongs to the model's reasoning record, not to the answer."
+          },
+          {
+            "path": "$.output[].content[].annotations",
+            "class": "plausible-unnecessary",
+            "misconceptionId": "plausible-detail",
+            "feedback": "Extra markings attached to the answer words, which the app does not show."
+          },
+          {
+            "path": "$.id",
+            "class": "technical",
+            "misconceptionId": "technical-metadata",
+            "feedback": "That identifies the response for the service's own use."
+          }
+        ]
+      },
+      "endpointId": "openai.create-response",
+      "authoring": {
+        "status": "validated",
+        "instructionalAudit": "see INSTRUCTIONAL_AUDIT.md"
+      }
+    }
+  ]
+}
