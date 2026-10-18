@@ -99,6 +99,7 @@ function equivalentValue(actual, expected, runtime, parameter) {
   return JSON.stringify(actual) === JSON.stringify(expected);
 }
 function findRefs(value, out = []) { if (obj(value) && "$fromStep" in value) out.push(value); else if (obj(value)) Object.values(value).forEach((v) => findRefs(v, out)); else if (arr(value)) value.forEach((v) => findRefs(v, out)); return out; }
+function findRefBindings(value, path = [], out = []) { if (obj(value) && "$fromStep" in value) out.push({ targetPath: path.join("."), fromStep: value.$fromStep, path: value.path }); else if (obj(value)) Object.entries(value).forEach(([key, child]) => findRefBindings(child, [...path, key], out)); else if (arr(value)) value.forEach((child, index) => findRefBindings(child, [...path, String(index)], out)); return out; }
 function validateRules(endpoint, parameters) {
   const errors = [];
   for (const rule of endpoint.parameterRules || []) {
@@ -119,10 +120,18 @@ function acceptedMatch(scenario, requests, map) {
       const step = plan.steps[si], e = map.get(step.endpointId), ix = unmatched.findIndex(({ r }) => r.endpointId === step.endpointId && Object.keys(r.parameters || {}).every((name) => Object.hasOwn(step.parameters, name)) && Object.entries(step.parameters).every(([name, expected]) => { const p = e.parameters.find((q) => q.name === name), assessment = step.assessment?.[name], actual = r.parameters?.[name]; if (findRefs(expected).length) return true; const input = presentation(scenario, e).automatic?.[name]?.kind === "runtime" && (actual === undefined || containsRuntime(actual)); return assessmentMatches(actual, expected, assessment, p) || input || (actual === undefined && p && isRuntimeParameter(p, expected)); }));
       if (ix < 0) { ok = false; break; }
       const selected = unmatched[ix];
-      for (const [name, expected] of Object.entries(step.parameters)) { const refs = findRefs(expected); if (!refs.length) continue;
-        const dep = selected.r.dependencies?.[name], expectedPaths = refs.map((ref) => ref.path), sourceSteps = refs.map((ref) => plan.steps.findIndex((v) => v.step === ref.$fromStep)), sources = sourceSteps.map((si) => requests.findIndex((r) => r.endpointId === plan.steps[si]?.endpointId));
-        const actualPaths = arr(dep?.paths) ? dep.paths : dep?.path ? [dep.path] : [];
-        if (!obj(dep) || sources.some((source) => source !== dep.fromRequest || source >= selected.i) || JSON.stringify([...actualPaths].sort()) !== JSON.stringify([...expectedPaths].sort())) ok = false;
+      for (const [name, expected] of Object.entries(step.parameters)) { const refs = findRefBindings(expected); if (!refs.length) continue;
+        const dep = selected.r.dependencies?.[name], expectedBindings = refs.map((ref) => ({ targetPath: ref.targetPath, path: ref.path, fromRequest: requests.findIndex((r) => r.endpointId === plan.steps[plan.steps.findIndex((v) => v.step === ref.fromStep)]?.endpointId) }));
+        const actualBindings = arr(dep?.bindings) ? dep.bindings.map((binding) => ({ targetPath: binding.targetPath, path: binding.path, fromRequest: binding.fromRequest })) : null;
+        const multiSource = new Set(expectedBindings.map((binding) => binding.fromRequest)).size > 1;
+        if (multiSource) {
+          const normalize = (bindings) => JSON.stringify([...(bindings || [])].map((binding) => `${binding.targetPath}|${binding.fromRequest}|${binding.path}`).sort());
+          if (!obj(dep) || normalize(actualBindings) !== normalize(expectedBindings) || expectedBindings.some((binding) => binding.fromRequest < 0 || binding.fromRequest >= selected.i)) ok = false;
+        } else {
+          const expectedPaths = refs.map((ref) => ref.path), source = expectedBindings[0]?.fromRequest;
+          const actualPaths = arr(dep?.paths) ? dep.paths : dep?.path ? [dep.path] : [];
+          if (!obj(dep) || source !== dep.fromRequest || source < 0 || source >= selected.i || JSON.stringify([...actualPaths].sort()) !== JSON.stringify([...expectedPaths].sort())) ok = false;
+        }
       }
       unmatched.splice(ix, 1);
     }
@@ -161,8 +170,10 @@ export function validatePlan(data, scenario, submission) {
     return Object.entries(step.parameters).every(([name, expected]) => {
       const refs = findRefs(expected);
       if (refs.length) {
-        const dep = r.dependencies?.[name], paths = refs.map((ref) => ref.path), sourceIndices = refs.map((ref) => { const sourceStep = plan.steps.find((x) => x.step === ref.$fromStep); return requests.findIndex((x) => x.endpointId === sourceStep?.endpointId); });
-        return !!dep && sourceIndices.every((source) => source === dep.fromRequest && source < requestIndex) && JSON.stringify([...(dep.paths || [])].sort()) === JSON.stringify([...paths].sort());
+        const dep = r.dependencies?.[name], bindings = findRefBindings(expected).map((ref) => ({ targetPath: ref.targetPath, path: ref.path, fromRequest: requests.findIndex((x) => x.endpointId === plan.steps.find((step) => step.step === ref.fromStep)?.endpointId) }));
+        if (new Set(bindings.map((binding) => binding.fromRequest)).size > 1) return !dep || JSON.stringify([...(dep.bindings || [])].map((binding) => `${binding.targetPath}|${binding.fromRequest}|${binding.path}`).sort()) !== JSON.stringify(bindings.map((binding) => `${binding.targetPath}|${binding.fromRequest}|${binding.path}`).sort()) || bindings.some((binding) => binding.fromRequest >= requestIndex);
+        const paths = refs.map((ref) => ref.path), source = bindings[0]?.fromRequest;
+        return !!dep && (source !== dep.fromRequest || source >= requestIndex || JSON.stringify([...(dep.paths || [])].sort()) !== JSON.stringify([...paths].sort()));
       }
       const param = e.parameters.find((x) => x.name === name);
       return equivalentValue(r.parameters?.[name], expected, param && isRuntimeParameter(param, expected));
@@ -270,11 +281,13 @@ function dependencyMismatch(scenario, requests, requestIndex, request) {
     const step = plan.steps.find((s) => s.endpointId === request.endpointId && Object.values(s.parameters).some((v) => findRefs(v).length));
     if (!step) return true;
     return Object.entries(step.parameters).filter(([, value]) => findRefs(value).length).some(([name, value]) => {
-      const refs = findRefs(value), dep = request.dependencies?.[name];
-      return refs.some((ref) => {
-        const sourceStep = plan.steps.find((s) => s.step === ref.$fromStep), sourceIndex = requests.findIndex((r) => r.endpointId === sourceStep?.endpointId);
-        return !dep || dep.fromRequest !== sourceIndex || sourceIndex < 0 || sourceIndex >= requestIndex || !(dep.paths || []).includes(ref.path);
-      });
+      const refs = findRefBindings(value), dep = request.dependencies?.[name];
+      const bindings = refs.map((ref) => ({ targetPath: ref.targetPath, path: ref.path, fromRequest: requests.findIndex((r) => r.endpointId === plan.steps.find((step) => step.step === ref.fromStep)?.endpointId) }));
+      if (new Set(bindings.map((binding) => binding.fromRequest)).size > 1) {
+        const actual = dep?.bindings || [];
+        return bindings.some((binding) => binding.fromRequest < 0 || binding.fromRequest >= requestIndex || !actual.some((candidate) => candidate.targetPath === binding.targetPath && candidate.path === binding.path && candidate.fromRequest === binding.fromRequest));
+      }
+      return bindings.some((binding) => !dep || dep.fromRequest !== binding.fromRequest || binding.fromRequest < 0 || binding.fromRequest >= requestIndex || !(dep.paths || []).includes(binding.path));
     });
   });
 }
