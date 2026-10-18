@@ -105,6 +105,13 @@ export function dependencySourceCandidates(scenario, destinationEndpointId, para
     return { index, request, endpoint, paths };
   }).filter(Boolean);
 }
+function dependencyNeedsMultipleSources(scenario, destinationEndpointId, parameterName) {
+  return (scenario.acceptedPlans || []).some((plan) => (plan.steps || []).some((step) => {
+    if (step.endpointId !== destinationEndpointId || !Object.hasOwn(step.parameters || {}, parameterName)) return false;
+    const sourceIds = new Set(findReferences(step.parameters[parameterName]).map((ref) => plan.steps.find((candidate) => candidate.step === ref.$fromStep)?.endpointId).filter(Boolean));
+    return sourceIds.size > 1;
+  }));
+}
 export function resolveRequestDependencies(scenario, requests, map) {
   requests.forEach((request, index) => {
     const endpoint = map.get(request.endpointId);
@@ -114,6 +121,11 @@ export function resolveRequestDependencies(scenario, requests, map) {
       if (!runtimeSourceFor(scenario, request, parameter)) continue;
       const variants = parameterVariants(scenario, request, parameter), current = request.dependencies[parameter.name];
       if (variants.length && current?.source !== "request") continue;
+      if (dependencyNeedsMultipleSources(scenario, endpoint.id, parameter.name)) {
+        request.dependencies[parameter.name] = { ...(current || {}), source: "request", fromRequest: null, paths: [], automatic: false, invalid: true, requiresMultipleSources: true };
+        delete request.parameters[parameter.name];
+        continue;
+      }
       const candidates = dependencySourceCandidates(scenario, endpoint.id, parameter.name, requests, index, map);
       if (candidates.length === 1) {
         request.dependencies[parameter.name] = { ...(current || {}), source: "request", fromRequest: candidates[0].index, paths: current?.fromRequest === candidates[0].index ? (current.paths || []) : [], automatic: true, invalid: false };
@@ -193,6 +205,7 @@ function responseSourceControl(scenario, source, parameterName, dependency, requ
   return `<fieldset class="api-dependency-fields api-response-source-choices"><legend>${multiple ? "Select all fields this request needs" : "Which response field should this request use?"}</legend>${choices.map((choice) => `<label class="api-response-source-choice"><input type="${inputType}"${multiple ? "" : ` name="api-source-${requestIndex}-${esc(parameterName)}-${esc(source.id)}"`} data-dependency-path="${esc(parameterName)}" value="${esc(choice.canonicalPath)}"${selected.has(choice.canonicalPath) ? " checked" : ""}><span class="api-response-source-copy"><strong>${esc(choice.label)}</strong><code>${esc(pathLabel(choice.canonicalPath))}</code>${choice.explanation ? `<small>${esc(choice.explanation)}</small>` : ""}</span></label>`).join("")}</fieldset>`;
 }
 export function dependencyConnectionControl(scenario, request, parameter, index, requests, map) {
+  if (dependencyNeedsMultipleSources(scenario, request.endpointId, parameter.name)) return `<p class="api-source-unavailable" role="status">This request needs information from more than one earlier response.</p>`;
   const dep = request.dependencies?.[parameter.name];
   const candidates = dependencySourceCandidates(scenario, request.endpointId, parameter.name, requests, index, map);
   if (candidates.length === 1) return `<p class="api-dependency-note" role="status">Uses information from Request ${candidates[0].index + 1}: ${esc(candidates[0].endpoint.title)}. Choose the needed response field below.</p>`;
