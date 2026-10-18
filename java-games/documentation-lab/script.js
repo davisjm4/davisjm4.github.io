@@ -2,7 +2,8 @@
    (localStorage key javaGames.session.v1) used by Session Summary:
    one topic per practice mode, one scored submission per challenge. */
 import * as E from "./engine.js?v=doclab-v1";
-import * as API from "./api-project-builder-ui.js?v=api-builder-v29";
+import * as API from "./api-project-builder-ui.js?v=api-builder-v19";
+import * as RX from "./response-explorer-ui.js?v=rx-fd-v1";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
 
 const $ = (id) => document.getElementById(id);
@@ -18,6 +19,7 @@ let closed = false;
 let outcome = null; // "correct" | "wrong" | "revealed"
 let resp = null; // current response (shape depends on ch.kind)
 let apiSession = null;
+let responseExplorerSession = null;
 
 /* ==================================================================== */
 /* Java syntax highlighting (line by line, block-comment aware)          */
@@ -460,6 +462,7 @@ function stats() {
 
 function newChallenge() {
   if (apiSession) { apiSession.stop(); apiSession = null; }
+  if (responseExplorerSession) { responseExplorerSession.stop(); responseExplorerSession = null; }
   if (instance && tracker.status(instance) === "active") tracker.skip(instance);
   $("submit").onclick = submit;
   $("show").onclick = showAnswer;
@@ -481,6 +484,10 @@ function newChallenge() {
         next: newChallenge,
       },
     });
+    return;
+  }
+  if (selectedMode === "response-explorer") {
+    responseExplorerSession = RX.mount({ root: $("stage"), tracker });
     return;
   }
   ch = E.generate(selectedMode, picker, rng);
@@ -673,7 +680,7 @@ function finish(kind, result) {
 function init() {
   const params = new URLSearchParams(globalThis.location?.search || "");
   const m = params.get("mode");
-  if (m && (m === "mixed" || E.MODES[m] || m === "api-builder")) $("mode").value = m;
+  if (m && (m === "mixed" || E.MODES[m] || m === "api-builder" || m === "response-explorer")) $("mode").value = m;
   if (params.get("seed")) rng = E.makeRng(Number(params.get("seed")) || 1);
   picker = E.createPicker(rng);
   addSessionNavigation("../");
@@ -685,6 +692,7 @@ function init() {
   $("show").onclick = showAnswer;
   globalThis.addEventListener?.("pagehide", () => {
     if (apiSession) apiSession.stop();
+    if (responseExplorerSession) responseExplorerSession.stop();
     if (instance && tracker.status(instance) === "active") tracker.skip(instance);
   });
   globalThis.addEventListener?.("pageshow", (e) => {
