@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { validateApiData, assertValid, validatePlan, formativeDiagnostics, endpointsFor, createScenarioPicker, isRuntimeParameter, isProductionContent, endpointMap } from "../api-project-builder-engine.js";
-import { presentationFor, fieldMaskChoices, serializeMultiSelection, responseSourceChoices, responseSourceControl } from "../api-project-builder-ui.js";
+import { presentationFor, fieldMaskChoices, serializeMultiSelection, responseSourceChoices, responseSourceControl, focusedFields } from "../api-project-builder-ui.js";
 import { presentation, classification, automaticParameters, PROJECT_PRESENTATION, RESPONSE_SOURCE_CHOICES } from "../api-project-presentation.js";
 
 const data = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1.json", import.meta.url), "utf8"));
@@ -97,6 +97,10 @@ for (const scenario of publishedScenarios) for (const accepted of scenario.accep
       const source = expandedMap.get(sourceStep.endpointId);
       const choices = responseSourceChoices(scenario, source, name);
       assert.ok(choices.some((choice) => choice.canonicalPath === ref.path), `${scenario.id}/${accepted.id}: ${ref.path} is selectable for ${name}`);
+      assert.ok(classification(scenario, expandedMap.get(step.endpointId)).assessed.includes(name), `${scenario.id}/${accepted.id}: ${name} renders as a response-source control`);
+      assert.ok(focusedFields(source, scenario).some((field) => field.path === ref.path), `${scenario.id}/${accepted.id}: the authentic path appears in focused documentation`);
+      const sourceMarkup = responseSourceControl(scenario, source, name, { paths: [ref.path] }, accepted.steps.findIndex((candidate) => candidate.endpointId === step.endpointId));
+      assert.match(sourceMarkup, /type="(?:radio|checkbox)"/, `${scenario.id}/${accepted.id}: a selectable field control is generated`);
       checkedSourceDecisions++;
     }
   }
