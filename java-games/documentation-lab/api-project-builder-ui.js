@@ -1,5 +1,5 @@
 import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v14";
-import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v3";
+import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v4";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
