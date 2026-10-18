@@ -61,6 +61,8 @@ export function resolve(structuralPath, body) {
     for (const item of current) {
       if (token === ARRAY && Array.isArray(item.value)) {
         item.value.forEach((value, index) => next.push({ tokens: [...item.tokens, index], value }));
+      } else if (typeof token === "number" && Array.isArray(item.value) && token < item.value.length) {
+        next.push({ tokens: [...item.tokens, token], value: item.value[token] });
       } else if (item.value && typeof item.value === "object" && !Array.isArray(item.value) && token in item.value) {
         next.push({ tokens: [...item.tokens, token], value: item.value[token] });
       }
