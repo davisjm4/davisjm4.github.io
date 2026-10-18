@@ -82,7 +82,7 @@ export function mount({ root, tracker }) {
   if (stopped) return;
   if (!data || data.schemaVersion !== 1) throw new Error("This challenge set needs a newer version of the explorer.");
   const library = await (await fetch("./api-project-data-v1-expanded.json")).json();
-  const samples = sourceSamples(library);
+  const samples = new Map(Object.entries(await (await fetch("./response-explorer-samples-v1.json")).json()));
   const challenges = findDataChallenges(data);
   const providers = [...new Set(challenges.map((challenge) => challenge.providerId))];
   const state = { data, library, samples, challenges, provider: "all", challenge: null, samples: new Map(), selection: new Map(), expanded: new Map(), hints: [], attempts: 0, result: null, revealed: false, acceptedPaths: [], instance: null, stopped: false };
