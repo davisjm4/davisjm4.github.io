@@ -170,6 +170,9 @@ const repairCases = [
   "spotify-session-rewind-saver", "youtube-study-mix-copier", "youtube-book-review-leaderboard",
   "discord-my-servers-dashboard", "discord-event-volunteer-desk", "tiktok-club-recap-publisher",
 ];
+const rewind = data.scenarios.find((scenario) => scenario.id === "spotify-session-rewind-saver");
+assert.equal(dependencySlotOptions(rewind, "spotify.add-items-to-playlist", "playlist_id").length, 1, "alternative plan order does not look like a multi-source parameter");
+assert.equal(dependencySlotOptions(rewind, "spotify.add-items-to-playlist", "uris").length, 1, "one-source response arrays keep the shared dependency control");
 for (const scenarioId of repairCases) {
   const scenario = data.scenarios.find((item) => item.id === scenarioId);
   assert.ok(scenario, `${scenarioId}: repair target exists in verified content`);
