@@ -1,4 +1,4 @@
-import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v18";
+import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v19";
 import { presentation, classification, automaticParametersForOccurrence } from "./api-project-presentation.js?v=curated-v6";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
@@ -98,9 +98,49 @@ function studentRequirement(scenario, requirement) {
 }
 function responseFields(fields) { return `<ul class="api-fields">${fields.map((f) => `<li><code>${esc(f.path)}</code> <span>${esc(f.type)}</span>${f.optional ? " · optional" : ""}${f.nullable ? " · nullable" : ""}${f.deprecated ? " · deprecated" : ""} — ${esc(f.description)}${f.note ? ` <em>${esc(f.note)}</em>` : ""}</li>`).join("")}</ul>`; }
 function parameterDocs(p, options) { const range = p.allowedValues?.length ? `${options ? "Relevant documented values" : "Allowed values"}: ${(options || p.allowedValues).join(", ")}` : p.minimum != null || p.maximum != null ? `Range: ${p.minimum ?? "no minimum"}–${p.maximum ?? "no maximum"}` : p.format ? `Format: ${p.format}` : ""; return `<div class="api-doc-param"><strong>${esc(p.name)}</strong><span>${p.required ? "Required" : "Optional"} · ${esc(p.in)} parameter · ${esc(p.type)}</span><p>${esc(p.description)}</p>${range ? `<small>${esc(range)}</small>` : ""}</div>`; }
+function referenceBindings(scenario, endpointId, parameterName) {
+  const found = new Map();
+  const visit = (value, target = []) => {
+    if (object(value) && "$fromStep" in value) { const key = target.join("."); if (!found.has(key)) found.set(key, []); found.get(key).push({ path: value.path, note: value.note || "", fromStep: value.$fromStep }); }
+    else if (object(value)) Object.entries(value).forEach(([key, child]) => visit(child, [...target, key]));
+    else if (Array.isArray(value)) value.forEach((child, index) => visit(child, [...target, String(index)]));
+  };
+  for (const plan of scenario.acceptedPlans || []) for (const step of plan.steps) if (step.endpointId === endpointId) visit(step.parameters?.[parameterName]);
+  return [...found].map(([targetPath, refs]) => ({ targetPath, refs }));
+}
+function dependencySlotOptions(scenario, endpointId, parameterName) {
+  return referenceBindings(scenario, endpointId, parameterName).map((slot) => ({
+    ...slot,
+    sourceEndpointIds: [...new Set(slot.refs.flatMap((ref) => scenario.acceptedPlans.flatMap((plan) => plan.steps.filter((step) => step.step === ref.fromStep).map((step) => step.endpointId))))],
+    responsePaths: [...new Set(slot.refs.map((ref) => ref.path))],
+    label: ({ "playlistId": "Destination playlist", "resourceId.videoId": "Video to add" })[slot.targetPath] || slot.targetPath || "Related value",
+  }));
+}
 function focusedFields(e, scenario) {
-  const paths = presentation(scenario, e).fields;
-  return paths ? paths.map((path) => e.responseFields.find((f) => f.path === path) || e.responseFields.find((f) => f.path.endsWith(`.${path}`))).filter(Boolean) : e.responseFields.filter((f) => !f.path.includes(".") && !f.path.endsWith("[]")).slice(0, 8);
+  const config = presentation(scenario, e), required = [];
+  for (const plan of scenario.acceptedPlans || []) for (const step of plan.steps) for (const name of Object.keys(step.parameters || {})) for (const slot of referenceBindings({ acceptedPlans: [plan] }, step.endpointId, name)) for (const ref of slot.refs) if (plan.steps.find((sourceStep) => sourceStep.step === ref.fromStep)?.endpointId === e.id) required.push(ref.path);
+  const curated = (config.fields || []).map((path) => e.responseFields.find((field) => field.path === path)).filter(Boolean);
+  const alternatives = [];
+  for (const path of required) {
+    const collection = path.includes("[]") ? path.slice(0, path.indexOf("[]") + 2) : path.includes(".") ? path.slice(0, path.lastIndexOf(".")) : "";
+    const candidates = e.responseFields.filter((item) => item.path !== path && (!collection || item.path.startsWith(collection)) && !item.path.startsWith(`${path}.`) && !path.startsWith(`${item.path}.`));
+    for (const field of candidates) {
+      if (!alternatives.some((item) => item.path === field.path)) alternatives.push(field);
+      if (alternatives.length >= 3) break;
+    }
+  }
+  const requiredFields = [...new Set(required)].map((path) => e.responseFields.find((field) => field.path === path)).filter(Boolean);
+  const combined = [...requiredFields, ...curated, ...alternatives];
+  return combined.filter((field, index) => combined.findIndex((candidate) => candidate.path === field.path) === index && (index < requiredFields.length || index < requiredFields.length + 5));
+}
+function multiSourceDependencyControl(p, request, index, requests, scenario, map) {
+  const slots = dependencySlotOptions(scenario, request.endpointId, p.name), bindings = request.dependencies?.[p.name]?.bindings || [];
+  return `<div class="api-param"><span>${esc(p.name)} <b>connected response values</b></span><p class="api-symbolic">Each part comes from an earlier request. Choose the source and documented response field for each part; the application carries the values between requests.</p>${slots.map((slot) => {
+    const current = bindings.find((binding) => binding.targetPath === slot.targetPath) || {};
+    const choices = requests.map((item, requestIndex) => ({ item, requestIndex, endpoint: map.get(item.endpointId) })).filter((item) => item.requestIndex < index && item.endpoint && slot.sourceEndpointIds.includes(item.item.endpointId));
+    const selected = choices.find((choice) => choice.requestIndex === current.fromRequest), fields = selected ? focusedFields(selected.endpoint, scenario) : [];
+    return `<fieldset class="api-dependency-slot"><legend>${esc(slot.label)}</legend><label>Earlier request<select data-dependency-slot-source="${esc(p.name)}" data-target-path="${esc(slot.targetPath)}"><option value="">Choose a request…</option>${choices.map((choice) => `<option value="${choice.requestIndex}"${choice.requestIndex === current.fromRequest ? " selected" : ""}>${esc(choice.endpoint.title)}</option>`).join("")}</select></label>${selected ? `<label>Response field<select data-dependency-slot-field="${esc(p.name)}" data-target-path="${esc(slot.targetPath)}"><option value="">Choose a field…</option>${fields.map((field) => `<option value="${esc(field.path)}"${field.path === current.path ? " selected" : ""}>${esc(field.path)} · ${esc(field.description)}</option>`).join("")}</select></label>` : ""}</fieldset>`;
+  }).join("")}<em>${esc(p.description)}</em></div>`;
 }
 function docsHtml(e, provider, scenario) {
   const config = presentation(scenario, e), groups = classification(scenario, e);
@@ -176,6 +216,9 @@ function controlsFor(p, request, index, requests, scenario, map) {
   const runtimeBindingInfo = runtimeBinding(scenario, request, p);
   const runtimeLabel = runtimeBindingInfo?.description || "The application supplies this value at run time.";
   if (hasDependency) {
+    const sourceSteps = referenceBindings(scenario, request.endpointId, p.name).flatMap((slot) => slot.refs.map((ref) => ref.fromStep));
+    const sourceEndpointIds = [...new Set(scenario.acceptedPlans.flatMap((plan) => plan.steps.filter((step) => sourceSteps.includes(step.step)).map((step) => step.endpointId)))];
+    if (sourceEndpointIds.length > 1 && !variants.length) return multiSourceDependencyControl(p, request, index, requests, scenario, map);
     if (variants.length) {
       const currentMode = request.dependencies?.[p.name]?.source || (Number.isInteger(request.dependencies?.[p.name]?.fromRequest) ? "request" : "");
       const selectedVariant = request.dependencies?.[p.name]?.shape || variants[0].shape;
@@ -295,6 +338,8 @@ export function mount({ root, controls, tracker }) {
       card.querySelectorAll("[data-dependency-shape]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependencyShape, parameter = map.get(state.plan[i].endpointId).parameters.find((x) => x.name === p), variant = parameterVariants(state.scenario, state.plan[i], parameter).find((x) => x.shape === select.value); state.plan[i].dependencies[p].shape = select.value; state.plan[i].parameters[p] = blankShape(variant?.value || {}); touch(); renderPlan(); }; });
       card.querySelectorAll("[data-dependency]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependency; if (!select.value) { if (state.plan[i].dependencies[p]) state.plan[i].dependencies[p] = { source: "request", fromRequest: null, paths: [] }; delete state.plan[i].parameters[p]; } else { state.plan[i].dependencies[p] = { source: "request", fromRequest: Number(select.value), paths: [] }; state.plan[i].parameters[p] = { $runtime: true }; } touch(); renderPlan(); }; });
       card.querySelectorAll("[data-dependency-path]").forEach((checkbox) => { checkbox.onchange = () => { const p = checkbox.dataset.dependencyPath, dep = state.plan[i].dependencies[p]; if (!dep) return; dep.paths = [...card.querySelectorAll(`[data-dependency-path="${CSS.escape(p)}"]:checked`)].map((x) => x.value); touch(); }; });
+      card.querySelectorAll("[data-dependency-slot-source]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependencySlotSource, targetPath = select.dataset.targetPath, dep = state.plan[i].dependencies[p] || { source: "request", bindings: [] }; dep.source = "request"; dep.bindings = (dep.bindings || []).filter((binding) => binding.targetPath !== targetPath); if (select.value) dep.bindings.push({ targetPath, fromRequest: Number(select.value), path: "" }); state.plan[i].dependencies[p] = dep; state.plan[i].parameters[p] = { $runtime: true }; touch(); renderPlan(); }; });
+      card.querySelectorAll("[data-dependency-slot-field]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependencySlotField, targetPath = select.dataset.targetPath, dep = state.plan[i].dependencies[p]; if (!dep) return; const binding = dep.bindings.find((item) => item.targetPath === targetPath); if (binding) binding.path = select.value; touch(); }; });
       const remove = card.querySelector("[data-remove]"); remove.onclick = () => { state.plan.splice(i, 1); state.plan.forEach((r) => { for (const d of Object.values(r.dependencies || {})) if (d.fromRequest > i) d.fromRequest--; else if (d.fromRequest === i) d.invalid = true; }); touch(); renderPlan(); renderDocs(); };
     });
     const hintButton = root.querySelector("#api-get-hint");
@@ -367,4 +412,4 @@ export function mount({ root, controls, tracker }) {
   return { stop() { state.stopped = true; if (state.instance && tracker.status(state.instance) === "active") tracker.skip(state.instance); } };
 }
 
-export { presentationFor, fieldMaskChoices, serializeMultiSelection };
+export { presentationFor, fieldMaskChoices, serializeMultiSelection, focusedFields, referenceBindings, dependencySlotOptions, multiSourceDependencyControl };
