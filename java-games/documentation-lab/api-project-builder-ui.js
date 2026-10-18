@@ -1,4 +1,4 @@
-import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v14";
+import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v15";
 import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v4";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
@@ -86,6 +86,51 @@ function sourceRequirements(scenario, sourceEndpoint, destinationParameter = nul
   }
   return requirements;
 }
+export function dependencySourceCandidates(scenario, destinationEndpointId, parameterName, requests, requestIndex, map) {
+  const relationships = new Map();
+  for (const plan of scenario.acceptedPlans || []) for (const step of plan.steps || []) {
+    if (step.endpointId !== destinationEndpointId || !Object.hasOwn(step.parameters || {}, parameterName)) continue;
+    for (const ref of findReferences(step.parameters[parameterName])) {
+      const sourceStep = plan.steps.find((candidate) => candidate.step === ref.$fromStep);
+      if (!sourceStep) continue;
+      const paths = relationships.get(sourceStep.endpointId) || new Set();
+      paths.add(ref.path);
+      relationships.set(sourceStep.endpointId, paths);
+    }
+  }
+  return requests.map((request, index) => {
+    if (index >= requestIndex || !relationships.has(request.endpointId)) return null;
+    const endpoint = map.get(request.endpointId), paths = [...relationships.get(request.endpointId)];
+    if (!endpoint || paths.some((path) => !(endpoint.responseFields || []).some((field) => structuralPath(field.path) === structuralPath(path)))) return null;
+    return { index, request, endpoint, paths };
+  }).filter(Boolean);
+}
+export function resolveRequestDependencies(scenario, requests, map) {
+  requests.forEach((request, index) => {
+    const endpoint = map.get(request.endpointId);
+    if (!endpoint) return;
+    request.dependencies ||= {};
+    for (const parameter of endpoint.parameters || []) {
+      if (!runtimeSourceFor(scenario, request, parameter)) continue;
+      const variants = parameterVariants(scenario, request, parameter), current = request.dependencies[parameter.name];
+      if (variants.length && current?.source !== "request") continue;
+      const candidates = dependencySourceCandidates(scenario, endpoint.id, parameter.name, requests, index, map);
+      if (candidates.length === 1) {
+        request.dependencies[parameter.name] = { ...(current || {}), source: "request", fromRequest: candidates[0].index, paths: current?.fromRequest === candidates[0].index ? (current.paths || []) : [], automatic: true, invalid: false };
+        request.parameters[parameter.name] = { $runtime: true };
+      } else if (candidates.length > 1) {
+        const selected = !current?.automatic && candidates.some((candidate) => candidate.index === current?.fromRequest) ? current.fromRequest : null;
+        request.dependencies[parameter.name] = { ...(current || {}), source: "request", fromRequest: selected, paths: selected === current?.fromRequest ? (current.paths || []) : [], automatic: false, invalid: false };
+        if (selected == null) delete request.parameters[parameter.name];
+        else request.parameters[parameter.name] = { $runtime: true };
+      } else {
+        request.dependencies[parameter.name] = { ...(current || {}), source: "request", fromRequest: null, paths: [], automatic: false, invalid: true };
+        delete request.parameters[parameter.name];
+      }
+    }
+  });
+  return requests;
+}
 function structuralPath(path) { return String(path).replace(/\[\]/g, "[]").replace(/\[(\d+)\]/g, "[]"); }
 function pathLabel(path) { return String(path).replace(/\[\]/g, " → each item").replace(/\./g, " → ").replace(/^\s*→\s*/, "").replace(/\s*→\s*$/, ""); }
 function inferredCandidates(endpoint, requiredPaths) {
@@ -147,6 +192,13 @@ function responseSourceControl(scenario, source, parameterName, dependency, requ
   const selected = new Set(dependency?.paths || []);
   return `<fieldset class="api-dependency-fields api-response-source-choices"><legend>${multiple ? "Select all fields this request needs" : "Which response field should this request use?"}</legend>${choices.map((choice) => `<label class="api-response-source-choice"><input type="${inputType}"${multiple ? "" : ` name="api-source-${requestIndex}-${esc(parameterName)}-${esc(source.id)}"`} data-dependency-path="${esc(parameterName)}" value="${esc(choice.canonicalPath)}"${selected.has(choice.canonicalPath) ? " checked" : ""}><span class="api-response-source-copy"><strong>${esc(choice.label)}</strong><code>${esc(pathLabel(choice.canonicalPath))}</code>${choice.explanation ? `<small>${esc(choice.explanation)}</small>` : ""}</span></label>`).join("")}</fieldset>`;
 }
+export function dependencyConnectionControl(scenario, request, parameter, index, requests, map) {
+  const dep = request.dependencies?.[parameter.name];
+  const candidates = dependencySourceCandidates(scenario, request.endpointId, parameter.name, requests, index, map);
+  if (candidates.length === 1) return `<p class="api-dependency-note" role="status">Uses information from Request ${candidates[0].index + 1}: ${esc(candidates[0].endpoint.title)}. Choose the needed response field below.</p>`;
+  if (candidates.length > 1) return `<label>Earlier request<select data-dependency="${esc(parameter.name)}"><option value="">Choose a request…</option>${candidates.map((candidate) => `<option value="${candidate.index}"${candidate.index === dep?.fromRequest ? " selected" : ""}>${esc(candidate.endpoint.title)} — Request ${candidate.index + 1}</option>`).join("")}</select></label>`;
+  return `<p class="api-source-unavailable" role="status">Add an earlier request that returns the information this request needs.</p>`;
+}
 function docsHtml(e, provider, scenario) {
   const config = presentation(scenario, e), groups = classification(scenario, e);
   const shown = e.parameters.filter((p) => groups.assessed.includes(p.name) || groups.automatic.includes(p.name) || p.required);
@@ -199,13 +251,18 @@ function locationControl(scenario, request, parameter, variants) {
   const contextLabel = /coordinates|GPS/i.test(scenario.constraints.join(" ")) ? "Device GPS" : (variant?.label || "Project supplied location");
   return `<label class="api-location-control api-param">Search radius <b>required</b><span class="api-symbolic">Center: ${esc(contextLabel)} (handled by the application).</span><select data-location-radius="${esc(parameter.name)}"><option value="">Choose a distance…</option>${radiusOptions.map((v) => `<option value="${v}"${String(radius) === String(v) ? " selected" : ""}>${v.toLocaleString()} meters</option>`).join("")}</select><em>${esc(parameter.description)}</em></label>`;
 }
-function originControl(requests, index, request, map) {
+export function originControl(scenario, requests, index, request, map) {
   const origin = request.parameters.origin, dep = request.dependencies?.origin;
   const mode = dep?.source === "request" ? "request" : origin?.address ? "address" : origin?.location ? "coordinates" : "";
-  const options = requests.map((r, i) => ({ i, e: map.get(r.endpointId) })).filter((x) => x.i < index && x.e);
-  const selected = dep?.fromRequest, source = requests[selected] && map.get(requests[selected].endpointId);
-  const fields = source?.responseFields.filter((f) => presentation({ id: "maps-museum-walk-planner" }, source).fields?.includes(f.path)) || [];
-  return `<div class="api-param"><strong>origin <b>required</b></strong><label>Hotel location source<select data-origin-source><option value="">Choose a source…</option><option value="address"${mode === "address" ? " selected" : ""}>Hotel address from project</option><option value="coordinates"${mode === "coordinates" ? " selected" : ""}>Hotel coordinates from project</option><option value="request"${mode === "request" ? " selected" : ""}>Earlier geocoding response</option></select></label>${mode === "request" ? `<label>Earlier request<select data-dependency="origin"><option value="">Choose a request…</option>${options.map((x) => `<option value="${x.i}"${selected === x.i ? " selected" : ""}>${esc(x.e.title)}</option>`).join("")}</select></label>${source ? `<fieldset class="api-dependency-fields"><legend>Response field(s) to use</legend>${fields.map((f) => `<label><input type="checkbox" data-dependency-path="origin" value="${esc(f.path)}"${dep?.paths?.includes(f.path) ? " checked" : ""}> <code>${esc(f.path)}</code></label>`).join("")}</fieldset>` : ""}` : ""}<em>The origin can use the provided address or coordinates, or data returned by an earlier request.</em></div>`;
+  const options = dependencySourceCandidates(scenario, request.endpointId, "origin", requests, index, map);
+  const selected = dep?.fromRequest;
+  const single = options.length === 1 ? options[0] : null;
+  if (mode === "request" && single) { request.dependencies.origin = { ...dep, source: "request", fromRequest: single.index, paths: dep?.fromRequest === single.index ? (dep.paths || []) : [], automatic: true, invalid: false }; }
+  else if (mode === "request" && !options.some((option) => option.index === selected)) { request.dependencies.origin = { ...dep, source: "request", fromRequest: null, paths: [], automatic: false, invalid: true }; }
+  const liveDep = request.dependencies?.origin, liveSelected = liveDep?.fromRequest, liveSource = requests[liveSelected] && map.get(requests[liveSelected].endpointId);
+  const connection = mode === "request" ? single ? `<p class="api-dependency-note" role="status">Uses information from Request ${single.index + 1}: ${esc(single.endpoint.title)}. Choose the needed response field below.</p>` : options.length ? `<label>Earlier request<select data-dependency="origin"><option value="">Choose a request…</option>${options.map((x) => `<option value="${x.index}"${x.index === liveSelected ? " selected" : ""}>${esc(x.endpoint.title)}</option>`).join("")}</select></label>` : `<p class="api-source-unavailable" role="status">Add an earlier request that returns the location information this route needs.</p>` : "";
+  const liveFields = liveSource?.responseFields.filter((f) => presentation({ id: "maps-museum-walk-planner" }, liveSource).fields?.includes(f.path)) || [];
+  return `<div class="api-param"><strong>origin <b>required</b></strong><label>Hotel location source<select data-origin-source><option value="">Choose a source…</option><option value="address"${mode === "address" ? " selected" : ""}>Hotel address from project</option><option value="coordinates"${mode === "coordinates" ? " selected" : ""}>Hotel coordinates from project</option><option value="request"${mode === "request" ? " selected" : ""}>Earlier geocoding response</option></select></label>${mode === "request" ? `${connection}${liveSource ? `<fieldset class="api-dependency-fields"><legend>Response field(s) to use</legend>${liveFields.map((f) => `<label><input type="checkbox" data-dependency-path="origin" value="${esc(f.path)}"${liveDep?.paths?.includes(f.path) ? " checked" : ""}> <code>${esc(f.path)}</code></label>`).join("")}</fieldset>` : ""}` : ""}<em>The origin can use the provided address or coordinates, or data returned by an earlier request.</em></div>`;
 }
 function blankShape(value) { if (object(value) && "$fromStep" in value) return undefined; if (Array.isArray(value)) return ""; if (object(value)) return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, blankShape(v)]).filter(([, v]) => v !== undefined)); return ""; }
 function containsReference(value) { if (object(value) && "$fromStep" in value) return true; if (object(value)) return Object.values(value).some(containsReference); if (Array.isArray(value)) return value.some(containsReference); return false; }
@@ -214,7 +271,7 @@ function getPath(value, path) { return path.split(".").reduce((v, k) => v?.[k], 
 function putPath(value, path, next) { const root = object(value) ? value : {}; const keys = path.split("."); let node = root; for (const key of keys.slice(0, -1)) node = node[key] = object(node[key]) ? node[key] : {}; node[keys.at(-1)] = next; return root; }
 function controlsFor(p, request, index, requests, scenario, map) {
   const config = presentation(scenario, map.get(request.endpointId));
-  if (scenario.id === "maps-museum-walk-planner" && request.endpointId === "maps.routes-compute-routes" && p.name === "origin") return originControl(requests, index, request, map);
+  if (scenario.id === "maps-museum-walk-planner" && request.endpointId === "maps.routes-compute-routes" && p.name === "origin") return originControl(scenario, requests, index, request, map);
   const hasDependency = runtimeSourceFor(scenario, request, p);
   const variants = parameterVariants(scenario, request, p);
   if (hasDependency) {
@@ -227,16 +284,16 @@ function controlsFor(p, request, index, requests, scenario, map) {
         if (!object(request.parameters[p.name])) request.parameters[p.name] = blankShape(variant.value);
         contextFields = `<label>Project input format<select data-dependency-shape="${esc(p.name)}">${variants.map((v) => `<option value="${esc(v.shape)}"${v.shape === selectedVariant ? " selected" : ""}>${esc(v.label)}</option>`).join("")}</select></label><div class="api-structured-fields">${scalarPaths(variant.value).map(([path, sample]) => `<label class="api-structured-field"><span>${esc(path)}</span><input data-structured="${esc(p.name)}" data-structured-path="${esc(path)}" type="${typeof sample === "number" ? "number" : "text"}"${typeof sample === "number" ? ' step="any"' : ""} value="${esc(getPath(request.parameters[p.name], path))}" placeholder="Project value"></label>`).join("")}</div>`;
       }
-      const options = requests.map((r, i) => ({ r, i, e: map.get(r.endpointId) })).filter((x) => x.i < index && x.e);
       const selected = request.dependencies?.[p.name]?.fromRequest;
       const source = requests[selected] && map.get(requests[selected].endpointId), fields = source ? focusedFields(source, scenario) : [];
-      return `<div class="api-param"><span>${esc(p.name)} <b>request source</b></span><span class="api-symbolic">Choose a provided project value or data returned by an earlier request.</span><label>Value source<select data-dependency-mode="${esc(p.name)}"><option value="">Choose a source…</option><option value="context"${currentMode === "context" ? " selected" : ""}>Project context</option><option value="request"${currentMode === "request" ? " selected" : ""}>Earlier API request</option></select></label>${currentMode === "context" ? contextFields : ""}${currentMode === "request" ? `<label>Earlier request<select data-dependency="${esc(p.name)}"><option value="">Choose a request…</option>${options.map((x) => `<option value="${x.i}"${selected === x.i ? " selected" : ""}>${esc(x.e.title)}</option>`).join("")}</select></label>${source ? responseSourceControl(scenario, source, p.name, request.dependencies[p.name], index) : ""}` : ""}<em>${esc(p.description)} Use the documentation above to choose the data source and response field(s).</em></div>`;
+      const connection = currentMode === "request" ? dependencyConnectionControl(scenario, request, p, index, requests, map) : "";
+      return `<div class="api-param"><span>${esc(p.name)} <b>request source</b></span><span class="api-symbolic">Choose a provided project value or data returned by an earlier request.</span><label>Value source<select data-dependency-mode="${esc(p.name)}"><option value="">Choose a source…</option><option value="context"${currentMode === "context" ? " selected" : ""}>Project context</option><option value="request"${currentMode === "request" ? " selected" : ""}>Earlier API request</option></select></label>${currentMode === "context" ? contextFields : ""}${currentMode === "request" ? `${connection}${source ? responseSourceControl(scenario, source, p.name, request.dependencies[p.name], index) : ""}` : ""}<em>${esc(p.description)} Use the documentation above to choose the data source and response field(s).</em></div>`;
     }
-    const options = requests.map((r, i) => ({ r, i, e: map.get(r.endpointId) })).filter((x) => x.i < index && x.e);
     const selected = request.dependencies?.[p.name]?.fromRequest;
     const source = requests[selected] && map.get(requests[selected].endpointId);
     const fields = source ? focusedFields(source, scenario) : [];
-    return `<div class="api-param"><span>${esc(p.name)} <b>runtime value</b></span><span class="api-symbolic">${esc(p.in === "path" ? "Path resource" : "Related response data")} · supplied by the application at run time</span><label>Earlier request<select data-dependency="${esc(p.name)}"><option value="">Choose a request…</option>${options.map((x) => `<option value="${x.i}"${selected === x.i ? " selected" : ""}>${esc(x.e.title)}</option>`).join("")}</select></label>${source ? responseSourceControl(scenario, source, p.name, request.dependencies[p.name], index) : ""}<em>${esc(p.description)} Use the response documentation above to choose the field(s).</em></div>`;
+    const connection = dependencyConnectionControl(scenario, request, p, index, requests, map);
+    return `<div class="api-param"><span>${esc(p.name)} <b>runtime value</b></span><span class="api-symbolic">${esc(p.in === "path" ? "Path resource" : "Related response data")} · supplied by the application at run time</span>${connection}${source ? responseSourceControl(scenario, source, p.name, request.dependencies[p.name], index) : ""}<em>${esc(p.description)} Use the response documentation above to choose the field(s).</em></div>`;
   }
   if (runtimeParam(p) && p.in === "path") return `<div class="api-param"><strong>${esc(p.name)} <b>runtime path value</b></strong><span class="api-symbolic">The application supplies this identifier when a user selects the resource. No value needs to be entered.</span><em>${esc(p.description)}</em></div>`;
   if (runtimeParam(p)) return `<label class="api-param"><span>${esc(p.name)} <b>runtime value</b> <small>${esc(p.in)}</small></span><span class="api-symbolic">The application supplies this selected resource or user input at run time.</span><label class="api-runtime-choice"><input type="checkbox" data-runtime="${esc(p.name)}"${val(request.parameters[p.name]) ? " checked" : ""}> Use the application-supplied value</label><em>${esc(p.description)}</em></label>`;
@@ -298,6 +355,7 @@ export function mount({ root, controls, tracker }) {
   };
   const renderPlan = () => {
     const map = endpointMap(state.data);
+    resolveRequestDependencies(state.scenario, state.plan, map);
     set("interaction", `<section class="api-plan"><div class="api-plan-head"><h2>My Request Plan</h2><p class="muted">Add requests above, then choose the meaningful parameters here. Resource identifiers are symbolic runtime values, not student entry fields.</p><p id="api-request-status" class="api-request-status" role="status">${state.lastAddedEndpoint ? `${esc(map.get(state.lastAddedEndpoint)?.title)} added to your plan.` : ""}</p><p id="api-attempt-status" class="api-request-status">${state.attempts ? `Checks so far: ${state.attempts}.` : ""}</p></div><div id="api-plan-list">${requestHtml(state.plan, map, state.scenario)}</div><p class="api-plan-note">Some projects need one request; others connect data from earlier responses. The order you add independent requests does not affect the result.</p><div class="api-hint-tools"><button id="api-get-hint" type="button" class="secondary" hidden>Get Hint</button><p id="api-hint-text" role="status" aria-live="polite" aria-atomic="true"></p></div></section>`);
     root.querySelectorAll("[data-request]").forEach((card) => {
       const i = Number(card.dataset.request);
@@ -319,7 +377,7 @@ export function mount({ root, controls, tracker }) {
       card.querySelectorAll("[data-dependency-mode]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependencyMode, parameter = map.get(state.plan[i].endpointId).parameters.find((x) => x.name === p), variants = parameterVariants(state.scenario, state.plan[i], parameter); if (!select.value) { delete state.plan[i].dependencies[p]; delete state.plan[i].parameters[p]; } else if (select.value === "context") { const variant = variants[0]; state.plan[i].dependencies[p] = { source: "context", shape: variant?.shape || "" }; state.plan[i].parameters[p] = blankShape(variant?.value || {}); } else { state.plan[i].dependencies[p] = { source: "request", fromRequest: null, paths: [] }; delete state.plan[i].parameters[p]; } touch(); renderPlan(); }; });
       card.querySelectorAll("[data-dependency-shape]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependencyShape, parameter = map.get(state.plan[i].endpointId).parameters.find((x) => x.name === p), variant = parameterVariants(state.scenario, state.plan[i], parameter).find((x) => x.shape === select.value); state.plan[i].dependencies[p].shape = select.value; state.plan[i].parameters[p] = blankShape(variant?.value || {}); touch(); renderPlan(); }; });
       card.querySelectorAll("[data-dependency]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependency; if (!select.value) { if (state.plan[i].dependencies[p]) state.plan[i].dependencies[p] = { source: "request", fromRequest: null, paths: [] }; delete state.plan[i].parameters[p]; } else { state.plan[i].dependencies[p] = { source: "request", fromRequest: Number(select.value), paths: [] }; state.plan[i].parameters[p] = { $runtime: true }; } touch(); renderPlan(); }; });
-      card.querySelectorAll("[data-dependency-path]").forEach((checkbox) => { checkbox.onchange = () => { const p = checkbox.dataset.dependencyPath, dep = state.plan[i].dependencies[p]; if (!dep) return; dep.paths = [...card.querySelectorAll(`[data-dependency-path="${CSS.escape(p)}"]:checked`)].map((x) => x.value); touch(); }; });
+      card.querySelectorAll("[data-dependency-path]").forEach((checkbox) => { checkbox.onchange = () => { const p = checkbox.dataset.dependencyPath, dep = state.plan[i].dependencies[p]; if (!dep) return; dep.paths = [...card.querySelectorAll(`[data-dependency-path="${CSS.escape(p)}"]:checked`)].map((x) => x.value); touch(); renderPlan(); }; });
       const remove = card.querySelector("[data-remove]"); remove.onclick = () => { state.plan.splice(i, 1); state.plan.forEach((r) => { for (const d of Object.values(r.dependencies || {})) if (d.fromRequest > i) d.fromRequest--; else if (d.fromRequest === i) d.invalid = true; }); touch(); renderPlan(); renderDocs(); };
     });
     const hintButton = root.querySelector("#api-get-hint");
