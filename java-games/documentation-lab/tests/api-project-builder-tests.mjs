@@ -349,6 +349,10 @@ for (const [id, endpointId, expectedPart, assessed] of [
     assert.ok(config.partOptions?.length >= 3 && config.partOptions.length <= 5, `${id}: the curated part control stays focused`);
     assert.ok(config.partOptions.every((value) => allowed.includes(value)), `${id}: each offered part is documented for this endpoint`);
     const seed = automaticParameters(scenario, endpoint);
+    const requiredAutomatic = id === "youtube-gaming-trend-wall"
+      ? { chart: "mostPopular", regionCode: "US", videoCategoryId: { $runtime: true } }
+      : { channelId: { $runtime: true }, maxResults: 25 };
+    for (const [name, value] of Object.entries(requiredAutomatic)) assert.deepEqual(seed[name], value, `${id}: ${name} is supplied by the application as specified`);
     const request = { endpointId, parameters: { ...seed, part: "" }, dependencies: {} };
     const control = controlsFor(endpoint.parameters.find((item) => item.name === "part"), request, 0, [request], scenario, expandedMap);
     assert.match(control, /data-param-multi="part"/, `${id}: part values are selectable in the rendered multiselect`);
@@ -359,7 +363,15 @@ for (const [id, endpointId, expectedPart, assessed] of [
     assert.equal(validatePlan(expandedData, scenario, bad).correct, false, `${id}: incomplete plausible part choice is rejected`);
   } else {
     assert.ok(!groups.assessed.includes("part") && groups.automatic.includes("part"), `${id}: the app handles the non-target part setting`);
-    assert.equal(automaticParameters(scenario, endpoint).part, expectedPart, `${id}: exact documented part is serialized automatically`);
+    const automatic = automaticParameters(scenario, endpoint);
+    assert.equal(automatic.part, expectedPart, `${id}: exact documented part is serialized automatically`);
+    assert.deepEqual({ order: automatic.order, maxResults: automatic.maxResults }, { order: "alphabetical", maxResults: 50 }, `${id}: sorting and shelf size are application-handled`);
+    assert.ok(groups.assessed.includes("mine") && groups.assessed.includes("channelId"), `${id}: the two different subscription filters remain meaningful decisions`);
+    for (const name of ["mine", "channelId"]) {
+      const request = { endpointId, parameters: { ...automatic, ...(name === "mine" ? { mine: true } : { channelId: { $runtime: true } }) }, dependencies: {} };
+      const control = controlsFor(endpoint.parameters.find((item) => item.name === name), request, 0, [request], scenario, expandedMap);
+      assert.ok(control && !control.includes("No settings to choose"), `${id}: ${name} has a visible student control`);
+    }
     const accepted = scenario.acceptedPlans[0], represented = studentPlan(scenario, accepted, expandedData, expandedMap);
     assert.ok(represented.requests.every((request) => request.parameters.part === expectedPart), `${id}: app-handled value reaches both requests`);
     assert.equal(validatePlan(expandedData, scenario, represented).correct, true, `${id}: app-handled plan passes the evaluator`);
