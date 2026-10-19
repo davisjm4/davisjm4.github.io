@@ -24,6 +24,16 @@ jobs:
       - name: Trace 15k audit and JVM verification
         working-directory: java-games
         run: node variable-lab/trace-tests.mjs
+      - name: Advanced sample report
+        working-directory: java-games
+        run: |
+          node --input-type=module - <<'NODE'
+          import {generateTrace} from "./variable-lab/trace-engine.js";
+          for (const [family, seed] of [["advancedCopyModify",9101],["advancedDivRem",9102],["advancedPrecedence",9103]]) {
+            const q=generateTrace({difficulty:"advanced",family,seed,format:"print"});
+            console.log(JSON.stringify({family,seed,code:q.rawCode,answer:q.answer,distractors:q.distractors,complexity:q.complexity}));
+          }
+          NODE
       - name: Shared engine regression
         working-directory: java-games
         run: node tests.mjs
