@@ -24,6 +24,11 @@ for (let i = 0; i < 10000; i++) {
   assert.equal(q.resultType === "boolean" ? 2 : 4, q.choices.length);
   assert.ok(!/\/ 0|% 0/.test(q.rawCode));
   assert.ok(q.traceRows.every((step) => step.statement && step.explanation));
+  for (const step of q.traceRows)
+    for (const value of Object.values(step.variables))
+      if (typeof value === "number") assert.ok(Number.isFinite(value) && Math.abs(value) <= 500);
+  for (const line of q.rawCode.split("\n"))
+    assert.match(line, /^(?:(?:int|double|boolean|char|String) [A-Za-z_$][\w$]* = .+;|[A-Za-z_$][\w$]* (?:=|\+=|-=|\*=|\/=|%=) .+;|[A-Za-z_$][\w$]*(?:\+\+|--);|System\.out\.println\(.+\);)$/);
   if (q.format === "checkpoint") {
     assert.match(q.prompt, /immediately after line \d+/);
     assert.ok(q.checkpointLine >= 2 && q.checkpointLine <= q.traceRows.length - 1);
@@ -48,6 +53,9 @@ for (const family of Object.keys(TRACE_FAMILIES))
 const samples = [];
 for (let i = 0; i < 1000; i++)
   samples.push(generateTrace({ difficulty: levels[i % levels.length], seed: 50000 + i }));
+assert.deepEqual([...new Set(samples.map((q) => q.traceFamily))].sort(), Object.keys(TRACE_FAMILIES).sort());
+assert.deepEqual([...new Set(samples.flatMap((q) => Object.values(q.types)))].sort(), ["String", "boolean", "char", "double", "int"]);
+assert.deepEqual([...new Set(samples.map((q) => q.format))].sort(), ["checkpoint", "final", "print"]);
 
 const methods = samples.map((q, i) => {
   const lines = q.rawCode.split("\n");
