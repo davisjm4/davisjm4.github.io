@@ -35,7 +35,7 @@
     if (!tracker) queue.push(evt); else process(evt);
   }};
 
-  import('../../session.js').then(function (shared) {
+  import('../session.js').then(function (shared) {
     tracker = shared.sessionTracker();
     shared.addSessionNavigation('../');
     queue.splice(0).forEach(process);
