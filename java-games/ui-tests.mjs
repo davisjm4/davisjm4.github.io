@@ -247,15 +247,25 @@ for (const [slug, g] of Object.entries(J.games)) {
       t.fill(wrong);
       t.click("check");
       eq(t.tracker.snapshot().totals.incorrect, b3.incorrect + 1);
-      ok(!t.$("check").disabled);
-      ok(!t.$("feedback").textContent.includes(current.explanation));
-      if (current.kind === "multi")
-        for (const el of t.$("grid").querySelectorAll('[aria-pressed="true"]'))
-          el.onclick();
-      t.fill(answer);
-      t.click("check");
-      eq(t.tracker.snapshot().totals.afterRetry, b3.afterRetry + 1);
-      eq(t.tracker.snapshot().totals.submissions, b3.submissions + 2);
+      if (current.mode === "trace") {
+        ok(t.$("check").disabled);
+        eq(t.tracker.snapshot().totals.submissions, b3.submissions + 1);
+        eq(t.tracker.snapshot().totals.afterRetry, b3.afterRetry);
+        ok(t.$("feedback").textContent.includes(String(current.answer)));
+        ok(!t.$("execution").hidden);
+        ok(t.$("execution").textContent.includes("Execution trace"));
+        ok(t.$("execution").textContent.includes("Line 1"));
+      } else {
+        ok(!t.$("check").disabled);
+        ok(!t.$("feedback").textContent.includes(current.explanation));
+        if (current.kind === "multi")
+          for (const el of t.$("grid").querySelectorAll('[aria-pressed="true"]'))
+            el.onclick();
+        t.fill(answer);
+        t.click("check");
+        eq(t.tracker.snapshot().totals.afterRetry, b3.afterRetry + 1);
+        eq(t.tracker.snapshot().totals.submissions, b3.submissions + 2);
+      }
     }
 }
 // Token selection alone never scores or reveals the correct location.
