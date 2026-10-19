@@ -476,6 +476,64 @@ assert.equal(tiktokRepairStats.acceptedPlans, 4, "all four TikTok accepted-plan 
 assert.equal(tiktokRepairStats.incorrect, 3, "plausible incorrect TikTok field choices are rejected");
 console.log(`TikTok configuration repairs: ${tiktokRepairIds.length} projects; ${tiktokRepairStats.acceptedPlans} accepted-plan variants represented; ${tiktokRepairStats.assessedControls} assessed controls generated; ${tiktokRepairStats.appHandled} app-handled settings serialized; ${tiktokRepairStats.incorrect} plausible incorrect choices rejected.`);
 
+// OpenAI operation payloads are application inputs. Build them using the same
+// presentation metadata as the UI, then submit through the production evaluator.
+const openAiRepairIds = [
+  "openai-reading-quiz-builder", "openai-reading-packet-qa", "openai-lecture-recap",
+  "openai-private-essay-feedback", "openai-discussion-board-safety",
+  "openai-lab-photo-explainer", "openai-flashcard-similarity-index",
+];
+const openAiRepairStats = { plans: 0, automaticValues: 0, dependencyPlans: 0 };
+const symbolicPaths = (value, path = "", found = []) => {
+  if (value && typeof value === "object") {
+    if (Object.hasOwn(value, "$runtime")) found.push(path);
+    else if (Array.isArray(value)) value.forEach((child, index) => symbolicPaths(child, `${path}[${index}]`, found));
+    else for (const [key, child] of Object.entries(value)) symbolicPaths(child, path ? `${path}.${key}` : key, found);
+  }
+  return found;
+};
+for (const id of openAiRepairIds) {
+  const scenario = expandedData.scenarios.find((item) => item.id === id);
+  assert.ok(scenario, `${id}: enabled OpenAI scenario exists`);
+  for (const acceptedPlan of scenario.acceptedPlans) {
+    const requests = acceptedPlan.steps.map((step) => {
+      const endpoint = expandedMap.get(step.endpointId);
+      const parameters = automaticParameters(scenario, endpoint);
+      const groups = classification(scenario, endpoint);
+      assert.ok(groups.automatic.length > 0, `${id}/${endpoint.id}: application-handled fields have explanatory metadata`);
+      const markup = requestHtml([{ endpointId: endpoint.id, parameters, dependencies: {} }], expandedMap, scenario);
+      assert.match(markup, /Handled by the application/, `${id}/${endpoint.id}: handled values are disclosed in the student UI`);
+      for (const name of groups.automatic) {
+        assert.ok(Object.hasOwn(parameters, name), `${id}/${endpoint.id}.${name}: automatic value is serialized`);
+        assert.doesNotMatch(markup, new RegExp(`data-param="${name}"|data-structured="${name}"`), `${id}/${endpoint.id}.${name}: technical payload is not an editable student field`);
+        openAiRepairStats.automaticValues++;
+      }
+      return { endpointId: step.endpointId, parameters, dependencies: {} };
+    });
+    resolveRequestDependencies(scenario, requests, expandedMap);
+    const dependencies = requests.flatMap((request) => Object.values(request.dependencies || {})).filter((dep) => dep?.source === "request");
+    if (dependencies.length) openAiRepairStats.dependencyPlans++;
+    const result = validatePlan(expandedData, scenario, { requests });
+    assert.equal(result.correct, true, `${id}/${acceptedPlan.id}: generated controls/app values and dependencies pass evaluator (${JSON.stringify(result)})`);
+    for (const request of requests) for (const value of Object.values(request.parameters || {})) symbolicPaths(value);
+    openAiRepairStats.plans++;
+  }
+}
+assert.equal(openAiRepairStats.plans, openAiRepairIds.reduce((sum, id) => sum + expandedData.scenarios.find((item) => item.id === id).acceptedPlans.length, 0), "every OpenAI accepted-plan variant is represented by the actual application-value generator");
+const packet = expandedData.scenarios.find((item) => item.id === "openai-reading-packet-qa");
+const packetUpload = automaticParameters(packet, expandedMap.get("openai.upload-file"));
+assert.deepEqual(packetUpload.file, { $runtime: true }, "the uploaded packet is a symbolic file, not a real upload or literal ID");
+assert.equal(packetUpload.purpose, "user_data", "the reusable packet has the accepted canonical file purpose");
+const lecture = expandedData.scenarios.find((item) => item.id === "openai-lecture-recap");
+const lectureCompletion = automaticParameters(lecture, expandedMap.get("openai.create-response"));
+assert.equal(lectureCompletion.input.$fromStep, 1, "the recap input retains its transcript dependency before request resolution");
+const essay = expandedData.scenarios.find((item) => item.id === "openai-private-essay-feedback");
+assert.equal(automaticParameters(essay, expandedMap.get("openai.create-response")).store, false, "essay retention policy is serialized by the application");
+const embeds = expandedData.scenarios.find((item) => item.id === "openai-flashcard-similarity-index");
+assert.deepEqual(automaticParameters(embeds, expandedMap.get("openai.create-embeddings")).input, { $runtime: true }, "the saved card texts are supplied as symbolic batch input");
+assert.equal(openAiRepairStats.dependencyPlans, 3, "file ID and transcription response dependencies are preserved across OpenAI plans");
+console.log(`OpenAI configuration repairs: ${openAiRepairIds.length} scenarios; ${openAiRepairStats.plans} accepted-plan variants generated; ${openAiRepairStats.automaticValues} application-handled parameter values serialized; ${openAiRepairStats.dependencyPlans} dependent plans preserved.`);
+
 const enabledCoverage = publishedScenarios.map((scenario) => {
   const blockers = new Set();
   for (const accepted of scenario.acceptedPlans) for (const step of accepted.steps) {
@@ -490,6 +548,8 @@ const enabledCoverage = publishedScenarios.map((scenario) => {
 });
 const fullyConstructible = enabledCoverage.filter((item) => !item.blockers.length);
 assert.ok(configRepairIds.every((id) => enabledCoverage.find((item) => item.id === id)?.blockers.length === 0), "the three targeted projects have no required settings without controls or application handling");
+assert.ok(openAiRepairIds.every((id) => enabledCoverage.find((item) => item.id === id)?.blockers.length === 0), "all seven repaired OpenAI projects have complete required-setting coverage");
+assert.equal(fullyConstructible.length, 36, "every published project has complete required-setting coverage");
 console.log(`Enabled-scenario required-control audit: ${enabledCoverage.length} checked; ${fullyConstructible.length} have all required settings represented by a student control, application value, runtime path, or dependency. Additional blockers: ${enabledCoverage.filter((item) => item.blockers.length).map((item) => `${item.id} (${item.blockers.join(", ")})`).join("; ") || "none"}.`);
 
 // YouTube part settings: assess meaningful information selection, and handle the
