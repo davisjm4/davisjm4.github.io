@@ -1,4 +1,4 @@
-import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v19-feedback";
+import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v20-step6";
 import { presentation, classification, automaticParameters, scenarioDifficulty } from "./api-project-presentation.js?v=curated-v15-step6";
 import { buildRequestFlowModel, requestFlowContentHtml } from "./api-project-request-flow.js?v=api-request-flow-v1";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));

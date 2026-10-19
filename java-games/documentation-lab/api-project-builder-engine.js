@@ -1,5 +1,5 @@
 /* API Project Builder: schema-v1 content adapter, normalizer, and scorer. */
-import { presentation, classification, scenarioDifficulty } from "./api-project-presentation.js";
+import { presentation, classification, scenarioDifficulty } from "./api-project-presentation.js?v=curated-v15-step6";
 export const GAME_ID = "documentation-lab";
 export const MODE_ID = "api-builder";
 export const MODE_TITLE = "API Project Builder";
