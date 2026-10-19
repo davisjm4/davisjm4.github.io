@@ -1,4 +1,4 @@
-import * as J from "./engine.js?v=variable-lab-v5";
+import * as J from "./engine.js?v=variable-lab-v6";
 import { mathGame } from "./math-lab/engine.js?v=math-v1";
 import { robotGame } from "./robot-algorithms/engine.js?v=robot-v3";
 import { classObjectGame } from "./class-object-lab/class-engine.js?v=class-object-v1";
@@ -284,12 +284,21 @@ function startGame() {
       `<h3>Execution trace</h3><div class="trace-table-wrap"><table class="trace-table"><thead><tr><th scope="col">Step</th><th scope="col">Statement</th>${header}<th scope="col">Printed output</th></tr></thead><tbody>${rows}</tbody></table></div><div class="trace-explanation">${q.traceRows.map((step) => `<p><strong>Line ${step.line}:</strong> ${esc(step.explanation)}</p>`).join("")}</div>`;
   }
   function lockTraceIncorrect() {
+    const chosen = selected === null ? "" : String(selected),
+      misconception = q.choiceDetails?.find(
+        (choice) => String(choice.value) === chosen && choice.misconceptionId,
+      );
+    if (misconception)
+      tracker.annotate(instance, { misconceptionId: misconception.misconceptionId });
     tracker.closeIncorrect(instance);
     selected = String(q.answer);
     paint();
     for (const el of $("stage").querySelectorAll("button,select,input")) el.disabled = true;
     $("next").disabled = false;
-    message(false, `Incorrect. Correct answer: ${q.answer}. Review the execution trace below, then choose Next Challenge.`);
+    message(
+      false,
+      `Incorrect. Correct answer: ${q.answer}.${misconception ? " " + misconception.explanation : ""} Review the execution trace below, then choose Next Challenge.`,
+    );
     showTraceFeedback();
   }
   function check() {
