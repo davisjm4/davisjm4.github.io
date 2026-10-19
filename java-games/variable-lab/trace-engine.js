@@ -14,6 +14,7 @@ export const TRACE_FAMILIES = Object.freeze({
   char:"String and Character Tracing",
   outputExpression:"Output Expressions",
 });
+const topicKey = (label) => "trace-" + label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const NAMES = {
   int:["score","points","count","total","level","value","steps","coins"],
   double:["price","distance","rating","temperature","balance","average"],
@@ -124,6 +125,7 @@ function choicesFor(p,a,r){if(a.resultType==="boolean")return shuffle(r,["true",
 export function generateTrace({difficulty="beginner",seed,family,format}={}){
   if(!DIFFICULTIES.includes(difficulty))throw Error("Unknown trace difficulty");const actualSeed=seed===undefined?Math.floor(Math.random()*0x100000000)>>>0:seed>>>0,r=mulberry32(actualSeed);const chosenFamily=family||pick(r,familyPool(difficulty));const p=buildFamily(chosenFamily,r,difficulty);
   const formats=p.outputs.length?["print","final","checkpoint"]:["final","checkpoint"], chosenFormat=format||pick(r,formats), a=answerAt(p,chosenFormat,r), code=p.lines.map((line,i)=>chosenFormat==="checkpoint"?`${i+1}. ${line}`:line).join("\n");
-  const q={kind:"value",topic:TRACE_FAMILIES[chosenFamily],traceFamily:chosenFamily,difficulty,seed:actualSeed,format:a.format,prompt:a.prompt,answer:String(a.answer),choices:choicesFor(p,a,r),code,rawCode:p.lines.join("\n"),traceRows:p.trace,types:p.types,resultType:a.resultType,resultVariable:a.resultVariable||null,checkpointLine:a.checkpointLine,explanation:p.trace.map(t=>`Line ${t.line}: ${t.explanation}`).join("\n"),compilerSource:`public class Practice { public static void main(String[] args) {\n${p.lines.map(x=>'    '+x).join('\n')}\n} }`};
+  const category=TRACE_FAMILIES[chosenFamily];
+  const q={kind:"value",topic:topicKey(category),topicTitle:category,traceFamily:chosenFamily,difficulty,seed:actualSeed,format:a.format,prompt:a.prompt,answer:String(a.answer),choices:choicesFor(p,a,r),code,rawCode:p.lines.join("\n"),traceRows:p.trace,types:p.types,resultType:a.resultType,resultVariable:a.resultVariable||null,checkpointLine:a.checkpointLine,explanation:p.trace.map(t=>`Line ${t.line}: ${t.explanation}`).join("\n"),compilerSource:`public class Practice { public static void main(String[] args) {\n${p.lines.map(x=>'    '+x).join('\n')}\n} }`};
   if(q.choices.filter(x=>x===q.answer).length!==1)throw Error("answer choice mismatch");if(new Set(q.choices).size!==q.choices.length)throw Error("duplicate choices");return q;
 }
