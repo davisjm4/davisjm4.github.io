@@ -4,7 +4,7 @@ import {
   shuffle,
 } from "../csp-games/engine.js?v=platform-expansion-v2";
 import { TYPES, scenarioFamilies } from "./variable-scenarios.js?v=variable-lab-v4";
-import { generateTrace } from "./variable-lab/trace-engine.js?v=trace-v2";
+import { generateTrace } from "./variable-lab/trace-adapter.js?v=trace-generator-v1";
 export const games = {
   "variable-lab": {
     name: "Variable Lab",
@@ -164,11 +164,11 @@ export function createTypeQueue(types = TYPES, perBlock = 5) {
   };
 }
 const assembleTypes = createTypeQueue(), identifyTypes = createTypeQueue();
-let recentFamilies = [], recentItems = [], lastIdentifyVariant = null, lastTraceFamily = null;
+let recentFamilies = [], recentItems = [], lastIdentifyVariant = null;
 export function resetVariableLabState() {
   Object.assign(assembleTypes, createTypeQueue());
   Object.assign(identifyTypes, createTypeQueue());
-  recentFamilies = []; recentItems = []; lastIdentifyVariant = null; lastTraceFamily = null;
+  recentFamilies = []; recentItems = []; lastIdentifyVariant = null;
 }
 // Pick a scenario for a type chosen first. Recently used families and items are
 // avoided so contexts rotate across all families.
@@ -333,13 +333,7 @@ function identifyChallenge(forced) {
 }
 function variable(mode, forced, options = {}) {
   if (mode === "trace") {
-    let q = generateTrace(options);
-    if (options.seed === undefined) {
-      for (let tries = 0; tries < 5 && q.traceFamily === lastTraceFamily; tries++)
-        q = generateTrace(options);
-      lastTraceFamily = q.traceFamily;
-    }
-    return q;
+    return generateTrace(options);
   }
   return mode === "assemble" ? assembleChallenge() : identifyChallenge(forced);
 }

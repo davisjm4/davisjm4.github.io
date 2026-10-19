@@ -1,4 +1,4 @@
-import * as J from "./engine.js?v=variable-lab-v6";
+import * as J from "./engine.js?v=variable-trace-generator-v1";
 import { mathGame } from "./math-lab/engine.js?v=math-v1";
 import { robotGame } from "./robot-algorithms/engine.js?v=robot-v3";
 import { classObjectGame } from "./class-object-lab/class-engine.js?v=class-object-v1";
@@ -281,7 +281,7 @@ function startGame() {
       .join("");
     $("execution").hidden = false;
     $("execution").innerHTML =
-      `<h3>Execution trace</h3><div class="trace-table-wrap"><table class="trace-table"><thead><tr><th scope="col">Step</th><th scope="col">Statement</th>${header}<th scope="col">Printed output</th></tr></thead><tbody>${rows}</tbody></table></div><div class="trace-explanation">${q.traceRows.map((step) => `<p><strong>Line ${step.line}:</strong> ${esc(step.explanation)}</p>`).join("")}</div>`;
+      `<h3>Execution trace</h3><div class="trace-table-wrap"><table class="trace-table"><thead><tr><th scope="col">Step</th><th scope="col">Statement</th>${header}<th scope="col">Printed output</th></tr></thead><tbody>${rows}</tbody></table></div><div class="trace-explanation">${q.traceRows.map((step) => `<p><strong>Line ${step.line}:</strong> ${esc(step.explanation)}${[...(step.steps || []), ...(step.notes || [])].map(detail => ` ${esc(detail)}`).join("")}</p>`).join("")}</div>`;
   }
   function lockTraceIncorrect() {
     const chosen = selected === null ? "" : String(selected),
