@@ -2,7 +2,7 @@
    (localStorage key javaGames.session.v1) used by Session Summary:
    one topic per practice mode, one scored submission per challenge. */
 import * as E from "./engine.js?v=doclab-v1";
-import * as API from "./api-project-builder-ui.js?v=api-builder-v35-step4-feedback";
+import * as API from "./api-project-builder-ui.js?v=api-builder-v36-step5-flow";
 import * as RX from "./response-explorer-ui.js?v=rx-fd-v3";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
 
