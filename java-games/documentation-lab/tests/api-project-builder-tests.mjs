@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { validateApiData, assertValid, validatePlan, formativeDiagnostics, endpointsFor, createScenarioPicker, isRuntimeParameter, isProductionContent, endpointMap } from "../api-project-builder-engine.js";
-import { presentationFor, fieldMaskChoices, serializeMultiSelection, responseSourceChoices, responseSourceControl, focusedFields, dependencySourceCandidates, dependencyConnectionControl, originControl, resolveRequestDependencies } from "../api-project-builder-ui.js";
+import { presentationFor, fieldMaskChoices, serializeMultiSelection, responseSourceChoices, responseSourceControl, focusedFields, dependencySourceCandidates, dependencyConnectionControl, originControl, resolveRequestDependencies, controlsFor, requestHtml, putPath } from "../api-project-builder-ui.js";
 import { presentation, classification, automaticParameters, PROJECT_PRESENTATION, RESPONSE_SOURCE_CHOICES } from "../api-project-presentation.js";
 
 const data = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1.json", import.meta.url), "utf8"));
@@ -245,6 +245,94 @@ resolveRequestDependencies(deferredMix, deferredPlan.requests, expandedMap);
 assert.equal(deferredPlan.requests[1].dependencies.snippet.fromRequest, null, "Study Mix never auto-connects only one part of a two-source dependency");
 assert.equal(deferredMix.stage1Compatible, false, "the two-source repeated-request format remains disabled");
 console.log(`Dependency handling: ${dependencyControls.size} enabled controls inspected, ${autoDependencyCount} API sources connected automatically, ${meaningfulChoiceCount} meaningful source choice retained, ${multipleRequestSourceCount} multiple-request choices available; ${resolvedAcceptedPlanChecks} accepted-plan variants remained correct after resolution; add/remove/reorder and disabled Study Mix dependency checks passed.`);
+
+// Targeted full-control coverage: construct these plans from the same parameter
+// groups and renderers used by the student page, then grade those serialized values.
+const configRepairIds = ["spotify-session-rewind-saver", "tiktok-club-recap-publisher", "discord-event-volunteer-desk"];
+const configRepairStats = { controls: 0, accepted: 0, incorrect: 0 };
+for (const id of configRepairIds) {
+  const scenario = expandedData.scenarios.find((item) => item.id === id);
+  for (const accepted of scenario.acceptedPlans) {
+    const requests = accepted.steps.map((step) => {
+      const endpoint = expandedMap.get(step.endpointId), groups = classification(scenario, endpoint), parameters = automaticParameters(scenario, endpoint), dependencies = {};
+      for (const name of groups.assessed) {
+        const value = step.parameters[name];
+        if (value === undefined || refs(value).length) continue;
+        const nested = presentation(scenario, endpoint).nestedChoices?.[name];
+        if (nested) for (const [path, options] of Object.entries(nested)) {
+          const answer = path.split(".").reduce((node, key) => node?.[key], value);
+          assert.ok(options.includes(answer), `${id}/${endpoint.id}.${name}.${path}: accepted setting is selectable`);
+          parameters[name] = putPath(parameters[name] || {}, path, answer);
+        }
+        else parameters[name] = structuredClone(value);
+      }
+      return { endpointId: step.endpointId, parameters, dependencies };
+    });
+    const submitted = { requests };
+    resolveRequestDependencies(scenario, requests, expandedMap);
+    for (let i = 0; i < accepted.steps.length; i++) for (const [name, value] of Object.entries(accepted.steps[i].parameters)) {
+      const refsForParam = refs(value);
+      if (!refsForParam.length) continue;
+      const expectedSource = accepted.steps.findIndex((candidate) => candidate.step === refsForParam[0].$fromStep);
+      requests[i].dependencies[name] = { ...requests[i].dependencies[name], source: "request", fromRequest: expectedSource, paths: refsForParam.map((ref) => ref.path) };
+    }
+    const markup = requestHtml(requests, expandedMap, scenario);
+    for (let i = 0; i < accepted.steps.length; i++) {
+      const endpoint = expandedMap.get(accepted.steps[i].endpointId), groups = classification(scenario, endpoint);
+      for (const name of groups.assessed) {
+        const parameter = endpoint.parameters.find((item) => item.name === name);
+        const control = controlsFor(parameter, requests[i], i, requests, scenario, expandedMap);
+        assert.ok(control && !control.includes("No settings to choose"), `${id}/${endpoint.id}.${name}: the visible student control is generated`);
+        if (refs(accepted.steps[i].parameters[name]).length) {
+          assert.match(control, /data-dependency-path=/, `${id}.${name}: response-source selector is rendered`);
+          for (const ref of refs(accepted.steps[i].parameters[name])) assert.ok(control.includes(`value="${ref.path}"`), `${id}.${name}: required canonical response path remains selectable`);
+        }
+        else if (presentation(scenario, endpoint).nestedChoices?.[name]) assert.match(control, /type="radio"[^>]*data-nested-choice=/, `${id}.${name}: nested single-choice control is rendered as radio buttons`);
+        else if (presentation(scenario, endpoint).numericOptions?.[name]) assert.match(control, /<select data-param=/, `${id}.${name}: meaningful numeric choices use a selector`);
+        else assert.match(control, new RegExp(`data-param="${name}"`), `${id}.${name}: value is serialized by the shared parameter control`);
+        configRepairStats.controls++;
+      }
+    }
+    const result = validatePlan(expandedData, scenario, submitted);
+    assert.equal(result.correct, true, `${id}/${accepted.id}: represented student controls produce accepted plan: ${JSON.stringify(result)}`);
+    configRepairStats.accepted++;
+    const bad = structuredClone(submitted);
+    if (id === "spotify-session-rewind-saver") {
+      const limit = bad.requests.find((request) => request.endpointId === "spotify.get-recently-played");
+      limit.parameters.limit = 10;
+      assert.ok([10, 20, 30, 50].includes(limit.parameters.limit), "Spotify incorrect limit is available in the student options");
+    } else if (id === "tiktok-club-recap-publisher") {
+      const post = bad.requests.find((request) => request.endpointId === "tiktok.direct-post-video-init");
+      post.parameters.post_info = putPath(post.parameters.post_info, "privacy_level", "PUBLIC_TO_EVERYONE");
+      assert.ok(presentation(scenario, expandedMap.get(post.endpointId)).nestedChoices.post_info.privacy_level.includes("PUBLIC_TO_EVERYONE"), "TikTok plausible incorrect privacy choice is offered");
+    } else {
+      const limit = bad.requests.find((request) => request.endpointId === "discord.search-guild-members");
+      limit.parameters.limit = 5;
+      assert.ok([5, 10, 20].includes(limit.parameters.limit), "Discord incorrect result limit is available in the student options");
+    }
+    assert.equal(validatePlan(expandedData, scenario, bad).correct, false, `${id}: plausible incorrect assessed setting is rejected`);
+    configRepairStats.incorrect++;
+    assert.ok(markup.includes("data-dependency-path"), `${id}: accepted response-path choice remains in the rendered request plan`);
+  }
+}
+assert.equal(configRepairStats.accepted, 4, "all accepted alternatives for the three repaired projects are constructible");
+console.log(`Configuration-control repairs: ${configRepairIds.length} projects; ${configRepairStats.controls} assessed controls generated, ${configRepairStats.accepted} accepted-plan variants constructible, ${configRepairStats.incorrect} plausible incorrect settings rejected.`);
+
+const enabledCoverage = publishedScenarios.map((scenario) => {
+  const blockers = new Set();
+  for (const accepted of scenario.acceptedPlans) for (const step of accepted.steps) {
+    const endpoint = expandedMap.get(step.endpointId), groups = classification(scenario, endpoint), handled = automaticParameters(scenario, endpoint);
+    for (const parameter of endpoint.parameters) {
+      if (!parameter.required || !Object.hasOwn(step.parameters, parameter.name)) continue;
+      if (groups.assessed.includes(parameter.name) || groups.automatic.includes(parameter.name) || Object.hasOwn(handled, parameter.name) || parameter.in === "path") continue;
+      blockers.add(`${endpoint.id}.${parameter.name}`);
+    }
+  }
+  return { id: scenario.id, blockers: [...blockers] };
+});
+const fullyConstructible = enabledCoverage.filter((item) => !item.blockers.length);
+assert.ok(configRepairIds.every((id) => enabledCoverage.find((item) => item.id === id)?.blockers.length === 0), "the three targeted projects have no required settings without controls or application handling");
+console.log(`Enabled-scenario required-control audit: ${enabledCoverage.length} checked; ${fullyConstructible.length} have all required settings represented by a student control, application value, runtime path, or dependency. Additional blockers: ${enabledCoverage.filter((item) => item.blockers.length).map((item) => `${item.id} (${item.blockers.join(", ")})`).join("; ") || "none"}.`);
 
 // The focused-control checks below cover the original nine scenarios only.
 const focusedInventory = [];
