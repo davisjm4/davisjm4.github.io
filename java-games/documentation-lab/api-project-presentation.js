@@ -156,6 +156,15 @@ export const PROJECT_PRESENTATION = {
     "youtube.search-list": { assessed: ["type", "videoDuration", "maxResults"], automatic: { part: fixed("snippet", "Only documented Search: list part"), q: runtime }, fields: ["items[].id.videoId", "items[].id.channelId", "items[].snippet.title", "items[].snippet.thumbnails.default.url", "items[].snippet.channelTitle", "nextPageToken"] },
     "youtube.videos-list": { assessed: ["part", "id"], partOptions: ["snippet", "contentDetails", "statistics", "status"], fields: ["items[].id", "items[].snippet.title", "items[].contentDetails.duration", "items[].statistics.viewCount"] },
   },
+  "youtube-gaming-trend-wall": {
+    "youtube.videos-list": { assessed: ["part"], partOptions: ["snippet", "statistics", "contentDetails", "status"], fields: ["items[].snippet.title", "items[].snippet.channelTitle", "items[].snippet.thumbnails.default.url", "items[].statistics.viewCount"] },
+  },
+  "youtube-subscription-swap": {
+    "youtube.subscriptions-list": { automatic: { part: fixed("snippet", "The shelves display each subscribed channel's name and picture") } },
+  },
+  "youtube-media-club-playlist-shelf": {
+    "youtube.playlists-list": { assessed: ["part"], partOptions: ["snippet", "contentDetails", "status", "player"], fields: ["items[].snippet.title", "items[].snippet.thumbnails.default.url", "items[].contentDetails.itemCount", "items[].id"] },
+  },
   "maps-lunch-spot-finder": {
     "maps.places-nearby-search": { assessed: ["X-Goog-FieldMask", "maxResultCount", "rankPreference", "locationRestriction"], automatic: { includedTypes: fixed(["restaurant"], "Restaurant category specified by the project"), "locationRestriction.circle.center": fixed({ latitude: 36.1699, longitude: -115.1398 }, "Device GPS supplied by the application") }, fieldOptions: ["places.id", "places.displayName", "places.formattedAddress", "places.location", "places.rating", "places.currentOpeningHours", "places.regularOpeningHours", "places.priceLevel", "places.photos"], fields: ["places[].id", "places[].displayName", "places[].formattedAddress", "places[].location", "places[].rating", "places[].currentOpeningHours.openNow", "places[].regularOpeningHours.openNow", "places[].priceLevel"] },
   },
