@@ -1,5 +1,5 @@
 import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v18";
-import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v9";
+import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v10";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
@@ -254,8 +254,8 @@ function multiChoiceControl(parameter, request, config) {
 export function serializeArrayChoice(config, parameterName, index) { return structuredClone(config.arrayOptions[parameterName][Number(index)].value); }
 export function serializeObjectChoice(config, parameterName, index) { return structuredClone(config.valueChoices[parameterName][Number(index)].value); }
 function arrayChoiceControl(parameter, request, config) {
-  const selected = JSON.stringify(request.parameters[parameter.name] ?? []);
-  return `<fieldset class="api-multi-selector"><legend>${esc(parameter.name)} ${parameter.required ? "<b>required</b>" : "<i>optional</i>"}</legend><p class="api-symbolic">Choose the region rule that fits the project. The application formats the documented API value.</p><div class="api-multi-options">${config.arrayOptions[parameter.name].map((option, index) => `<label><input type="radio" name="api-array-choice-${esc(parameter.name)}-${request.endpointId}" data-param-array-choice="${esc(parameter.name)}" value="${index}"${selected === JSON.stringify(option.value) ? " checked" : ""}><span><strong>${esc(option.label)}</strong><small>${esc(option.description)}</small></span></label>`).join("")}</div><em>${esc(parameter.description)}</em></fieldset>`;
+  const selected = request.parameters[parameter.name] === undefined ? null : JSON.stringify(request.parameters[parameter.name]);
+  return `<fieldset class="api-multi-selector"><legend>${esc(parameter.name)} ${parameter.required ? "<b>required</b>" : "<i>optional</i>"}</legend><p class="api-symbolic">Choose the region rule that fits the project. The application formats the documented API value.</p><div class="api-multi-options">${config.arrayOptions[parameter.name].map((option, index) => `<label><input type="radio" name="api-array-choice-${esc(parameter.name)}-${request.endpointId}" data-param-array-choice="${esc(parameter.name)}" value="${index}"${selected !== null && selected === JSON.stringify(option.value) ? " checked" : ""}><span><strong>${esc(option.label)}</strong><small>${esc(option.description)}</small></span></label>`).join("")}</div><em>${esc(parameter.description)}</em></fieldset>`;
 }
 function objectChoiceControl(parameter, request, config) {
   const options = config.valueChoices[parameter.name], selected = JSON.stringify(request.parameters[parameter.name] ?? null);
