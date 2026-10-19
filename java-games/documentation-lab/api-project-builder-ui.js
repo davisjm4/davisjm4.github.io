@@ -1,5 +1,5 @@
 import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v18";
-import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v10";
+import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v11";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
@@ -249,6 +249,8 @@ function fieldMaskControl(endpoint, request, parameter, config) {
 function multiChoiceControl(parameter, request, config) {
   const current = Array.isArray(request.parameters[parameter.name]) ? request.parameters[parameter.name] : String(request.parameters[parameter.name] || "").split(",").map((v) => v.trim()).filter(Boolean);
   const descriptions = VALUE_DESCRIPTIONS[parameter.name] || {};
+  const curated = config.multiOptions?.[parameter.name];
+  if (curated) return `<fieldset class="api-multi-selector api-curated-multiselect"><legend>${esc(config.multiPrompt?.[parameter.name] || `Which ${parameter.name} values should the app request?`)}</legend><p class="api-symbolic">Select all that apply. The app formats the documented API values for you.</p><div class="api-multi-options">${curated.map((option) => `<label><input type="checkbox" data-param-multi="${esc(parameter.name)}" value="${esc(option.value)}"${current.includes(option.value) ? " checked" : ""}><span><strong>${esc(option.label)}</strong><code>${esc(option.value)}</code><small>${esc(option.description)}</small></span></label>`).join("")}</div></fieldset>`;
   return `<fieldset class="api-multi-selector"><legend>${esc(parameter.name)} ${parameter.required ? "<b>required</b>" : "<i>optional</i>"}</legend><p class="api-symbolic">Select one or more documented values. The API list syntax is generated for you.</p><div class="api-multi-options">${(config.partOptions || parameter.allowedValues).map((value) => `<label><input type="checkbox" data-param-multi="${esc(parameter.name)}" value="${esc(value)}"${current.includes(value) ? " checked" : ""}><code>${esc(value)}</code><span>${esc(descriptions[value] || `Documented ${parameter.name} option.`)}</span></label>`).join("")}</div><em>${esc(parameter.description)}</em></fieldset>`;
 }
 export function serializeArrayChoice(config, parameterName, index) { return structuredClone(config.arrayOptions[parameterName][Number(index)].value); }
@@ -294,6 +296,7 @@ function getPath(value, path) { return path.split(".").reduce((v, k) => v?.[k], 
 function putPath(value, path, next) { const root = object(value) ? value : {}; const keys = path.split("."); let node = root; for (const key of keys.slice(0, -1)) node = node[key] = object(node[key]) ? node[key] : {}; node[keys.at(-1)] = next; return root; }
 function controlsFor(p, request, index, requests, scenario, map) {
   const config = presentation(scenario, map.get(request.endpointId));
+  if (config.multiOptions?.[p.name]) return multiChoiceControl(p, request, config);
   if (scenario.id === "maps-museum-walk-planner" && request.endpointId === "maps.routes-compute-routes" && p.name === "origin") return originControl(scenario, requests, index, request, map);
   const hasDependency = runtimeSourceFor(scenario, request, p);
   const variants = parameterVariants(scenario, request, p);

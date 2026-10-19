@@ -58,7 +58,9 @@ function studentPlan(scenario, accepted, content = data, endpointLookup = map) {
   }) };
 }
 
-const expandedData = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1-expanded.json", import.meta.url), "utf8"));
+const runtimeIndex = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1-runtime-index.json", import.meta.url), "utf8"));
+const runtimeParts = runtimeIndex.runtimeParts.map((path) => JSON.parse(fs.readFileSync(new URL(`../${path.replace(/^\.\//, "")}`, import.meta.url), "utf8")));
+const expandedData = { schemaVersion: runtimeParts[0].schemaVersion, providers: runtimeParts.flatMap((part) => part.providers), scenarios: runtimeParts.flatMap((part) => part.scenarios) };
 const expandedMap = endpointMap(expandedData);
 const publishedScenarios = expandedData.scenarios.filter((scenario) => scenario.stage1Compatible === true && !(scenario.engineSupportRequired || []).length);
 assert.equal(publishedScenarios.length, 36, "the expanded library exposes exactly the 36 Stage 1 scenarios");
@@ -307,7 +309,7 @@ for (const id of configRepairIds) {
       assert.ok(presentation(scenario, expandedMap.get(post.endpointId)).nestedChoices.post_info.privacy_level.includes("PUBLIC_TO_EVERYONE"), "TikTok plausible incorrect privacy choice is offered");
     } else {
       const limit = bad.requests.find((request) => request.endpointId === "discord.search-guild-members");
-      limit.parameters.limit = 5;
+      limit.parameters.limit = 20;
       assert.ok([5, 10, 20].includes(limit.parameters.limit), "Discord incorrect result limit is available in the student options");
     }
     assert.equal(validatePlan(expandedData, scenario, bad).correct, false, `${id}: plausible incorrect assessed setting is rejected`);
@@ -400,6 +402,79 @@ function stepMask(accepted, endpointId) { return accepted.steps.find((step) => s
 assert.equal(mapsRepairStats.acceptedPlans, 5, "all Maps accepted plan variants, including the alternative with three separate Routes calls, are representable");
 assert.equal(mapsRepairStats.incorrect, 3, "incorrect Maps field, region, and bus-mode choices are rejected");
 console.log(`Google Maps configuration repairs: ${mapsRepairIds.length} projects; ${mapsRepairStats.acceptedPlans} accepted-plan variants represented; ${mapsRepairStats.assessedControls} assessed controls generated; ${mapsRepairStats.appHandled} app-handled settings serialized; ${mapsRepairStats.incorrect} plausible incorrect choices rejected.`);
+
+// TikTok fields are student choices; saved IDs and share links are supplied by the app.
+const tiktokRepairIds = ["tiktok-creator-portfolio-header", "tiktok-featured-reel-showcase", "tiktok-spotlight-embed-choice"];
+const tiktokRepairStats = { acceptedPlans: 0, assessedControls: 0, appHandled: 0, incorrect: 0 };
+function representedTikTokPlan(scenario, accepted) {
+  return { requests: accepted.steps.map((step, index) => {
+    const endpoint = expandedMap.get(step.endpointId), config = presentation(scenario, endpoint), groups = classification(scenario, endpoint);
+    const parameters = automaticParameters(scenario, endpoint), dependencies = {};
+    for (const [name, expected] of Object.entries(step.parameters)) {
+      if (groups.automatic.includes(name)) {
+        assert.ok(Object.hasOwn(parameters, name), `${scenario.id}/${endpoint.id}.${name}: application supplies accepted configuration`);
+        assert.deepEqual(parameters[name], expected, `${scenario.id}/${endpoint.id}.${name}: canonical app/runtime value is preserved`);
+        tiktokRepairStats.appHandled++;
+        continue;
+      }
+      assert.ok(groups.assessed.includes(name), `${scenario.id}/${endpoint.id}.${name}: setting is classified`);
+      const parameter = endpoint.parameters.find((item) => item.name === name);
+      const control = controlsFor(parameter, { endpointId: endpoint.id, parameters, dependencies }, index, [], scenario, expandedMap);
+      assert.match(control, /type="checkbox"[^>]*data-param-multi=/, `${scenario.id}/${name}: fields use a visual multiselect`);
+      assert.match(control, /Select all that apply/, `${scenario.id}/${name}: multiselect instruction is clear`);
+      const options = config.multiOptions?.[name] || [];
+      assert.ok(options.length >= 2 && options.length <= 8, `${scenario.id}/${name}: choices stay focused`);
+      assert.ok(options.every((option) => parameter.allowedValues.includes(option.value)), `${scenario.id}/${name}: choices are documented API fields`);
+      const needed = new Set(step.assessment?.[name]?.mode === "includesAll" ? step.assessment[name].values : String(expected).split(","));
+      for (const value of String(expected).split(",")) if (options.some((option) => option.value === value)) needed.add(value);
+      for (const value of needed) assert.ok(options.some((option) => option.value === value), `${scenario.id}/${name}: required ${value} is selectable`);
+      for (const option of options) {
+        assert.ok(control.includes(`value="${option.value}"`), `${scenario.id}/${name}: ${option.value} renders as a control`);
+        const htmlText = (value) => String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+        assert.ok(control.includes(htmlText(option.label)) && control.includes(htmlText(option.description)), `${scenario.id}/${name}: choice has a readable label and explanation`);
+      }
+      assert.doesNotMatch(control, /checked/, `${scenario.id}/${name}: assessed fields are not preselected`);
+      parameters[name] = serializeMultiSelection(parameter, [...needed]);
+      tiktokRepairStats.assessedControls++;
+    }
+    if (groups.automatic.length) assert.match(requestHtml([{ endpointId: step.endpointId, parameters, dependencies }], expandedMap, scenario), /Handled by the application/, `${scenario.id}/${step.endpointId}: automatic settings are explained`);
+    return { endpointId: step.endpointId, parameters, dependencies };
+  }) };
+}
+for (const id of tiktokRepairIds) {
+  const scenario = expandedData.scenarios.find((item) => item.id === id);
+  for (const accepted of scenario.acceptedPlans) {
+    const represented = representedTikTokPlan(scenario, accepted);
+    assert.equal(validatePlan(expandedData, scenario, represented).correct, true, `${id}/${accepted.id}: control-generated plan passes the evaluator`);
+    tiktokRepairStats.acceptedPlans++;
+    if (id === "tiktok-creator-portfolio-header") {
+      const wrong = structuredClone(represented);
+      wrong.requests[0].parameters.fields = serializeMultiSelection(expandedMap.get("tiktok.get-user-info").parameters.find((item) => item.name === "fields"), ["display_name", "avatar_url", "following_count", "likes_count"]);
+      assert.equal(validatePlan(expandedData, scenario, wrong).correct, false, `${id}: wrong creator statistic is rejected`);
+      tiktokRepairStats.incorrect++;
+    } else if (id === "tiktok-featured-reel-showcase") {
+      const wrong = structuredClone(represented);
+      wrong.requests[0].parameters.fields = serializeMultiSelection(expandedMap.get("tiktok.query-videos").parameters.find((item) => item.name === "fields"), ["id", "cover_image_url", "title", "view_count", "embed_link"]);
+      assert.equal(validatePlan(expandedData, scenario, wrong).correct, false, `${id}: views cannot replace likes`);
+      assert.deepEqual(wrong.requests[0].parameters.filters, { video_ids: { $runtime: "featuredVideoIds" } }, `${id}: saved IDs stay symbolic runtime input`);
+      tiktokRepairStats.incorrect++;
+    } else if (accepted.id === "p2") {
+      const wrong = structuredClone(represented);
+      wrong.requests[0].parameters.fields = serializeMultiSelection(expandedMap.get("tiktok.query-videos").parameters.find((item) => item.name === "fields"), ["id", "title", "cover_image_url", "share_url"]);
+      assert.equal(validatePlan(expandedData, scenario, wrong).correct, false, `${id}: a share link cannot replace embed markup`);
+      assert.deepEqual(wrong.requests[0].parameters.filters, { video_ids: [{ $runtime: "spotlightVideoId" }] }, `${id}: spotlight ID stays a saved runtime input`);
+      tiktokRepairStats.incorrect++;
+    }
+    if (id === "tiktok-spotlight-embed-choice" && accepted.id === "p1") {
+      assert.deepEqual(represented.requests[0].parameters.url, { $runtime: "spotlightShareUrl" }, `${id}: oEmbed uses the saved share URL`);
+      const markup = requestHtml(represented.requests, expandedMap, scenario);
+      assert.doesNotMatch(markup, /data-param="url"|placeholder="Required choice"/, `${id}: URL is not a student text field`);
+    }
+  }
+}
+assert.equal(tiktokRepairStats.acceptedPlans, 4, "all four TikTok accepted-plan variants are constructible");
+assert.equal(tiktokRepairStats.incorrect, 3, "plausible incorrect TikTok field choices are rejected");
+console.log(`TikTok configuration repairs: ${tiktokRepairIds.length} projects; ${tiktokRepairStats.acceptedPlans} accepted-plan variants represented; ${tiktokRepairStats.assessedControls} assessed controls generated; ${tiktokRepairStats.appHandled} app-handled settings serialized; ${tiktokRepairStats.incorrect} plausible incorrect choices rejected.`);
 
 const enabledCoverage = publishedScenarios.map((scenario) => {
   const blockers = new Set();

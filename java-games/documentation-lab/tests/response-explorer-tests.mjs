@@ -4,7 +4,9 @@ import { buildView, gradeFindData, renderExplanation, sourceSamples } from "../r
 
 const read = (name) => JSON.parse(fs.readFileSync(new URL(`../${name}`, import.meta.url), "utf8"));
 const data = read("response-explorer-data-v1.json");
-const library = read("api-project-data-v1-expanded.json");
+const runtimeIndex = read("api-project-data-v1-runtime-index.json");
+const runtimeParts = runtimeIndex.runtimeParts.map((path) => read(path.replace(/^\.\//, "")));
+const library = { schemaVersion: runtimeParts[0].schemaVersion, providers: runtimeParts.flatMap((part) => part.providers), scenarios: runtimeParts.flatMap((part) => part.scenarios) };
 const vectors = read("response-explorer-test-vectors.json").vectors;
 const samples = sourceSamples(library);
 const templates = data.feedbackTemplates;

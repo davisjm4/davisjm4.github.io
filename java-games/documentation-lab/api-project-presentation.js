@@ -134,6 +134,57 @@ export const PROJECT_PRESENTATION = {
       },
     },
   },
+  "tiktok-creator-portfolio-header": {
+    "tiktok.get-user-info": {
+      assessed: ["fields"],
+      multiPrompt: { fields: "Which creator information should the app request?" },
+      multiOptions: { fields: [
+        { value: "open_id", label: "TikTok account ID", description: "Identifies the signed-in account within this app." },
+        { value: "union_id", label: "Developer-wide account ID", description: "Identifies the account across apps from the same developer." },
+        { value: "display_name", label: "Creator's profile name", description: "The name displayed at the top of the portfolio." },
+        { value: "avatar_url", label: "Profile image URL", description: "The standard-size image address for the creator's profile picture." },
+        { value: "follower_count", label: "Followers", description: "The number of accounts following this creator." },
+        { value: "following_count", label: "Following", description: "The number of accounts this creator follows." },
+        { value: "likes_count", label: "Likes received", description: "The total likes received across the creator's videos." },
+        { value: "video_count", label: "Public video count", description: "The number of videos the creator has publicly posted." },
+      ] },
+    },
+  },
+  "tiktok-featured-reel-showcase": {
+    "tiktok.query-videos": {
+      assessed: ["fields"],
+      multiPrompt: { fields: "Which video information should the showcase request?" },
+      multiOptions: { fields: [
+        { value: "id", label: "Video identifier", description: "Helps the app match returned records to its saved selections." },
+        { value: "cover_image_url", label: "Cover image address", description: "The current CDN address for the video's cover image; these links expire." },
+        { value: "title", label: "Video title", description: "The title attached to the video." },
+        { value: "like_count", label: "Likes", description: "The current number of likes on the video." },
+        { value: "embed_link", label: "Embedded-player link", description: "A link that can open the video in an embedded view." },
+        { value: "view_count", label: "Views", description: "The number of times the video has been viewed." },
+        { value: "share_count", label: "Shares", description: "The number of times the video has been shared." },
+      ] },
+      automatic: { filters: fixed({ video_ids: { $runtime: "featuredVideoIds" } }, "The app looks up the video IDs the creator previously selected (up to six).") },
+    },
+  },
+  "tiktok-spotlight-embed-choice": {
+    "tiktok.oembed": {
+      automatic: { url: fixed({ $runtime: "spotlightShareUrl" }, "The app uses the share link saved when the creator chose the spotlight video.") },
+    },
+    "tiktok.query-videos": {
+      assessed: ["fields"],
+      multiPrompt: { fields: "If using Query Videos, which information should the page request?" },
+      multiOptions: { fields: [
+        { value: "id", label: "Video identifier", description: "The ID of the video returned by the lookup." },
+        { value: "embed_html", label: "Player markup", description: "HTML that can place the video player on the page." },
+        { value: "title", label: "Video title", description: "The title associated with the selected video." },
+        { value: "cover_image_url", label: "Cover image address", description: "The video's cover image URL; this link expires after six hours." },
+        { value: "share_url", label: "Share link", description: "The link someone can use to share the video." },
+        { value: "duration", label: "Video length", description: "The video's duration in seconds." },
+        { value: "view_count", label: "Views", description: "The number of times the video has been viewed." },
+      ] },
+      automatic: { filters: fixed({ video_ids: [{ $runtime: "spotlightVideoId" }] }, "The app uses the video ID saved when the creator selected the spotlight.") },
+    },
+  },
   "spotify-album-spotlight": {
     "spotify.get-album": { assessed: ["market"], automatic: { id: runtime }, marketOptions: ["US", "GB", "CA"], fields: ["name", "images[].url", "release_date", "artists[].name", "tracks.items[].name", "tracks.items[].track_number", "tracks.items[].duration_ms", "tracks.total"] },
   },
