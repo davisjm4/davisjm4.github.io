@@ -1,0 +1,399 @@
+{
+  "templates": [
+    {
+      "id": "PRO-N-001",
+      "skill": "professionalism",
+      "family": "professionalism.punctuality",
+      "pattern": "notify-lead-promptly",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "professionalism:punctuality-attendance"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "lead": "lead",
+        "coworker": "person"
+      },
+      "facts": [
+        "shift-starts-in-ten-minutes",
+        "stuck-in-traffic",
+        "ten-minutes-late",
+        "safe-to-call-hands-free"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. Your shift starts in ten minutes, and you are stuck in traffic that will make you about ten minutes late. You can safely make a hands-free call, and {coworker} is already at work.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Call your {lead} hands-free right away, say you will be about ten minutes late, and give your expected arrival.",
+          "why": "Telling your {lead} early lets them plan coverage. A specific arrival time shows respect for the team.",
+          "requires": [
+            "ten-minutes-late",
+            "safe-to-call-hands-free"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Drive faster to make up the time, and explain when you arrive that traffic was bad.",
+          "why": "Speeding is unsafe, and explaining after the fact leaves no time to plan coverage.",
+          "misconception": "Showing up quickly matters more than telling anyone."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Text {coworker} to clock you in so that it looks like you arrived on time.",
+          "why": "Asking someone to record time you were not there is dishonest, and it hides the delay from the person responsible for scheduling.",
+          "misconception": "A coworker can cover for me."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Call in sick, since you will be late anyway and it is simpler than explaining the traffic.",
+          "why": "Claiming illness to avoid explaining is dishonest, and a short delay can be handled openly.",
+          "misconception": "A made-up reason is easier than the truth."
+        }
+      ],
+      "principle": "If you will be late, tell the right person as early as is safely possible and give a realistic arrival time.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy content.",
+        "policyNotNeeded": true
+      },
+      "timing": "The shift starts soon, so notification comes before arrival or any other step."
+    },
+    {
+      "id": "PRO-D-001",
+      "skill": "professionalism",
+      "family": "professionalism.dress-expectations",
+      "pattern": "tell-lead-and-ask-for-temporary-badge",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "professionalism:appearance"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead",
+        "role": "role"
+      },
+      "facts": [
+        "policy-name-badge-required",
+        "badge-left-at-home",
+        "lead-on-site"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}, where employees must wear a name badge while on duty. You realize you left yours at home, and your {lead} is on site.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Tell your {lead} you forgot your badge, and ask how to get a temporary one for the day.",
+          "why": "Meeting the badge expectation matters, and telling your {lead} lets the problem be solved properly with a temporary badge.",
+          "requires": [
+            "policy-name-badge-required"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Work without the badge and say nothing, since you are known to everyone on the team.",
+          "why": "The expectation applies to everyone. Being known by the team does not help visitors or people who do not recognize you.",
+          "misconception": "Rules only matter for people who are not known."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Borrow a coworker's badge for the day, since they are not using it at the moment.",
+          "why": "A badge identifies a particular person, so borrowing one is misleading and can cause problems.",
+          "misconception": "One badge is as good as another."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Write your name on a piece of tape and stick it on your shirt, and then continue working.",
+          "why": "A homemade label is not the issued badge, and you still have not told anyone who could give you the right one.",
+          "misconception": "Anything that shows my name is good enough."
+        }
+      ],
+      "principle": "Meet the workplace's appearance expectations; if you cannot, tell your supervisor and ask for a proper solution.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Dress and badge rule stated."
+      }
+    },
+    {
+      "id": "PRO-D-002",
+      "skill": "professionalism",
+      "family": "professionalism.online-etiquette",
+      "pattern": "wait-then-respond-respectfully",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "professionalism:etiquette"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person"
+      },
+      "facts": [
+        "work-group-chat",
+        "irritating-message",
+        "employee-is-irritated"
+      ],
+      "scenario": "In the work group chat for {workplace|the}, {coworker} posts a message that annoys you. You are irritated, and you can see that many coworkers will read whatever you post next.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Wait until you are calm, then reply respectfully in the chat or talk with {coworker} privately.",
+          "why": "Messages in a work chat are seen by many people and stay visible. Waiting and keeping it respectful keeps the focus on the work.",
+          "requires": [
+            "work-group-chat"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Post a sarcastic reply right away so that everyone can see how you feel about it.",
+          "why": "A sarcastic reply in front of the group can hurt a working relationship and reflect on you, even if you were right to be annoyed.",
+          "misconception": "Showing my feelings in public is honest and healthy."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Complain about the message in a separate chat with a few coworkers, instead of in the main group.",
+          "why": "Side chats still leave a written record and can reach people you did not intend. It also does not address the issue with {coworker}.",
+          "misconception": "A private group chat is a safe place to complain."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ignore the message entirely and avoid replying to anything {coworker} posts after this.",
+          "why": "Ignoring a person can create tension, and an unresolved work question may be left unanswered.",
+          "misconception": "Ignoring someone is the same as being professional."
+        }
+      ],
+      "principle": "Online messages at work are visible and lasting: pause, keep your tone respectful, and use a private conversation when needed.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy content.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "PRO-D-003",
+      "skill": "professionalism",
+      "family": "professionalism.introductions",
+      "pattern": "greet-introduce-offer-help",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "professionalism:self-representation",
+        "professionalism:etiquette"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead",
+        "client": "client"
+      },
+      "facts": [
+        "visitor-arrives-early",
+        "lead-on-a-call",
+        "employee-new-and-nervous"
+      ],
+      "scenario": "You are new at {workplace|the} and a little nervous. {Client|a} arrives and looks around uncertainly while your {lead} is on a call and cannot greet them yet.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Greet them with eye contact, say your name and role, and ask how you can help while letting your {lead} know.",
+          "why": "A friendly greeting and offer to help makes a visitor feel welcome right away, and letting your {lead} know keeps them informed.",
+          "requires": [
+            "visitor-arrives-early",
+            "lead-on-a-call"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Smile, tell them your {lead} will be free shortly, and wait for your {lead} to take over.",
+          "why": "This is polite and keeps things moving, but it does not offer help or introduce yourself, so the visitor is left waiting.",
+          "misconception": "Waiting for my supervisor is always safest."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Keep busy at your desk until your {lead} is free, so that you do not say the wrong thing.",
+          "why": "Ignoring a visitor can feel unwelcoming, and a short friendly greeting is rarely a mistake.",
+          "misconception": "If I am nervous, it is better to stay out of it."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Tell them your {lead} is busy and suggest they come back at a better time.",
+          "why": "Sending a visitor away without checking could lose them and sounds dismissive. They may be happy to wait if welcomed.",
+          "misconception": "Visitors should schedule around us."
+        }
+      ],
+      "principle": "Represent your workplace by greeting people, introducing yourself, and offering help, even when you are new or nervous.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Acceptable option is courteous but passive.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "PRO-F-001",
+      "skill": "professionalism",
+      "family": "professionalism.written-requests",
+      "pattern": "demanding-time-off-request",
+      "mode": "find",
+      "difficulty": "intermediate",
+      "concepts": [
+        "professionalism:etiquette",
+        "professionalism:punctuality-attendance"
+      ],
+      "contexts": "any",
+      "slots": {
+        "lead": "lead"
+      },
+      "facts": [
+        "request-contains-demand"
+      ],
+      "scenario": "An employee writes this request to their {lead}.",
+      "prompt": "Tap the line that is a problem.",
+      "docType": "email",
+      "docTitle": "Request for time off",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Hello,",
+          "whyFine": "A greeting is a normal way to begin."
+        },
+        {
+          "id": "b",
+          "text": "I would like to request next Friday off for a family event.",
+          "whyFine": "A clear, specific request stating the day and reason."
+        },
+        {
+          "id": "c",
+          "text": "Give me an answer today, or I will just not come in.",
+          "problem": true,
+          "why": "This is a demand with a threat, which is not an appropriate way to ask for time off."
+        },
+        {
+          "id": "d",
+          "text": "Thank you for considering this.",
+          "whyFine": "A polite closing."
+        }
+      ],
+      "principle": "Make requests politely and professionally; demands and threats damage trust.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Single demanding line.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "PRO-O-001",
+      "skill": "professionalism",
+      "family": "professionalism.interview-preparation",
+      "pattern": "research-practice-arrive-thank",
+      "mode": "order",
+      "difficulty": "intermediate",
+      "concepts": [
+        "professionalism:self-representation",
+        "professionalism:punctuality-attendance"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "interview-next-week"
+      ],
+      "scenario": "You have a job interview next week at {workplace|a}.",
+      "prompt": "Put these preparation steps in a sensible order.",
+      "steps": [
+        {
+          "id": "research",
+          "text": "Research the workplace and the role"
+        },
+        {
+          "id": "plan",
+          "text": "Plan what to wear and how to get there"
+        },
+        {
+          "id": "practice",
+          "text": "Practice answering likely questions"
+        },
+        {
+          "id": "arrive",
+          "text": "Arrive a few minutes early and introduce yourself politely"
+        },
+        {
+          "id": "thanks",
+          "text": "Send a short thank-you message afterward"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "research",
+          "after": "practice",
+          "why": "Your practice answers are better when you understand the role."
+        },
+        {
+          "before": "practice",
+          "after": "arrive",
+          "why": "You prepare answers before the interview day arrives."
+        },
+        {
+          "before": "plan",
+          "after": "arrive",
+          "why": "Your outfit and route need to be planned before you go."
+        },
+        {
+          "before": "arrive",
+          "after": "thanks",
+          "why": "You send thanks after the interview has taken place."
+        }
+      ],
+      "principle": "Prepare for an interview by researching, planning, practicing, arriving early, and following up with thanks.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Research and planning can happen in either order; alternates are professionally sound.",
+        "policyNotNeeded": true
+      },
+      "alternatesReviewed": true
+    }
+  ]
+}

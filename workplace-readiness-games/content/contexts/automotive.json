@@ -1,0 +1,59 @@
+{
+  "label": "Automotive Technology",
+  "cluster": "Transportation, Distribution & Logistics",
+  "bundles": [
+    {
+      "id": "repair-shop",
+      "workplace": "auto repair shop",
+      "role": "lube technician",
+      "lead": "shop foreman",
+      "client": {
+        "text": "customer",
+        "plural": "customers"
+      },
+      "record": [
+        "vehicle inspection form",
+        "parts inventory sheet"
+      ],
+      "equipment": [
+        "vehicle lift",
+        "tire changer"
+      ],
+      "system": "shop management software",
+      "document": "repair order",
+      "deliverable": "vehicle service",
+      "task": "daily equipment check",
+      "hazard": [
+        "a puddle of oil spreading across the shop floor",
+        "a pair of jack stands left in the middle of the walkway"
+      ]
+    },
+    {
+      "id": "dealership-service",
+      "workplace": "dealership service department",
+      "role": "service advisor",
+      "lead": "service manager",
+      "client": {
+        "text": "customer",
+        "plural": "customers"
+      },
+      "record": [
+        "warranty claim form",
+        "loaner vehicle log"
+      ],
+      "equipment": [
+        "diagnostic scan tool",
+        "parts washer"
+      ],
+      "system": "appointment scheduling software",
+      "document": "work order",
+      "deliverable": "finished repair",
+      "task": "vehicle check-in checklist",
+      "hazard": [
+        "a trail of coolant leading from a vehicle in the service lane",
+        "a loose air hose lying across the work aisle"
+      ]
+    }
+  ],
+  "id": "automotive"
+}

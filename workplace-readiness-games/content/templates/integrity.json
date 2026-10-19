@@ -1,0 +1,417 @@
+{
+  "templates": [
+    {
+      "id": "INT-D-001",
+      "skill": "integrity",
+      "family": "integrity.accurate-reporting",
+      "pattern": "correct-own-entry-transparently",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "integrity:honesty-and-fairness",
+        "integrity:policies-and-procedures"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "record": "record",
+        "lead": "lead"
+      },
+      "facts": [
+        "own-error",
+        "policy-marked-corrections",
+        "error-unnoticed"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. While updating {record|the}, you realize an entry you made earlier today is wrong. No one has noticed. Your workplace requires corrections to be dated and initialed rather than erased.[[twist]]",
+      "twists": [
+        {
+          "id": "shift-change",
+          "text": "The next shift starts in ten minutes.",
+          "facts": []
+        },
+        {
+          "id": "lead-away",
+          "text": "Your {lead} is in a meeting down the hall.",
+          "facts": []
+        }
+      ],
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Mark the correction with the date and your initials, then tell your {lead} what changed.",
+          "why": "A marked correction keeps the record's history visible, and telling your {lead} lets others keep trusting the information in it.",
+          "requires": [
+            "policy-marked-corrections"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Leave it alone, since no one has noticed and the difference is small.",
+          "why": "Even small errors carry forward into decisions and reports. Accurate records depend on each person fixing mistakes they find, whether or not anyone has noticed.",
+          "misconception": "Small mistakes that nobody notices do not matter."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Erase the wrong entry and write in the right one so {record|the} looks clean and tidy.",
+          "why": "Erasing hides that a change happened, which makes the record harder to trust or check. The workplace rule asks for a visible, dated correction.",
+          "misconception": "A clean-looking record is the same as an honest one."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Wait for your {lead} to review {record|the} and correct it only if it gets flagged.",
+          "why": "Waiting leaves a known error in place and pushes your responsibility onto a reviewer who may not catch it. You found the mistake, so correct it promptly.",
+          "misconception": "Fixing a mistake is the reviewer's job, not mine."
+        }
+      ],
+      "principle": "Accurate records are a shared responsibility: correct your own errors openly and promptly, using the method your workplace sets.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Policy on marked corrections is stated in the scenario. No legal claims. Distractors reflect common beliefs (small errors do not matter; neat equals honest; reviewers will catch it)."
+      }
+    },
+    {
+      "id": "INT-N-001",
+      "skill": "integrity",
+      "family": "integrity.accepting-responsibility",
+      "pattern": "report-damage-before-next-use",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "integrity:honesty-and-fairness",
+        "integrity:respect-for-property"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "equipment": "equipment",
+        "coworker": "person",
+        "lead": "lead"
+      },
+      "facts": [
+        "own-damage",
+        "equipment-seems-working",
+        "coworker-using-soon",
+        "lead-reachable"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. You knock into the {equipment} hard and hear a loud crack. It still seems to work. {coworker} is scheduled to use it in about ten minutes, and your {lead} is across the building but can be reached by phone.",
+      "prompt": "What should you do first?",
+      "timing": "Another person will use possibly damaged equipment within minutes, so the first action must disclose the damage and prevent that use.",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Tell your {lead} what happened right away, and warn {coworker} not to use the {equipment} until it is checked.",
+          "why": "Telling the person in charge immediately lets the damage be assessed before anyone relies on the {equipment}. Owning the mistake quickly also protects your coworker.",
+          "requires": [
+            "coworker-using-soon"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Test the {equipment} yourself first to see whether it is really damaged, then decide whether to report it.",
+          "why": "Testing possibly damaged equipment can make the damage worse or put someone at risk, and it delays telling the person who decides what happens next.",
+          "misconception": "I should only report a problem once I am sure it is serious."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Say nothing for now and see whether {coworker} has any trouble when {coworker} uses it.",
+          "why": "Using someone else as the test puts them at risk and hides your part in the problem. A crack you heard is a reason to speak up even if nothing looks wrong.",
+          "misconception": "If nothing visibly goes wrong, no one needs to know."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Jot a note about the knock for the end of your shift so that it is documented.",
+          "why": "Documenting it later does not stop the equipment from being used in the meantime. Written notes matter, but a possible hazard needs a spoken report right now.",
+          "misconception": "Writing it down later counts the same as reporting it."
+        }
+      ],
+      "principle": "Own a mistake as soon as you notice it, especially when others may rely on what you damaged. Report first, document after.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "policyNotNeeded": true,
+        "notes": "No operation of equipment is suggested; best action is report and keep others from using it. Generic equipment, no specialized knowledge needed. Timing is explicit (ten minutes)."
+      }
+    },
+    {
+      "id": "INT-D-002",
+      "skill": "integrity",
+      "family": "integrity.avoiding-misrepresentation",
+      "pattern": "honest-delivery-estimate",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "integrity:honesty-and-fairness"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "client": "client",
+        "deliverable": "deliverable",
+        "lead": "lead"
+      },
+      "facts": [
+        "client-asks-directly",
+        "will-likely-miss",
+        "lead-confirmed-delay"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. {Client|a} asks you directly whether {deliverable|the} will be ready tomorrow. Your {lead} told you this morning that it needs about two more days. You would like to avoid disappointing {client|a}.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Say honestly that it will not be ready tomorrow, explain that it needs more time, and offer to keep them updated.",
+          "why": "Giving accurate information lets the person plan around the real date. Being honest about a delay protects trust more than a hopeful answer that turns out wrong.",
+          "requires": [
+            "lead-confirmed-delay"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Say it will be ready tomorrow, since there is a chance it might still get finished early and nobody would be upset.",
+          "why": "Promising a date you do not expect to meet misleads the person, and they may make plans based on it.",
+          "misconception": "A hopeful answer is kinder than an honest delay."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Give a vague answer that sounds positive without mentioning a date.",
+          "why": "A deliberately vague answer still leaves a false impression. The person asked a direct question and deserves a direct answer.",
+          "misconception": "Not lying outright means I am being honest."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask the person to check back later and let someone else share the delay.",
+          "why": "Passing the news to someone else avoids an uncomfortable moment but leaves the person without the information you already have.",
+          "misconception": "Bad news is better coming from someone else."
+        }
+      ],
+      "principle": "Give accurate information, even when it disappoints; honest answers let others plan and keep their trust.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Delay confirmed by the lead in the scenario; no legal claims.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "INT-F-001",
+      "skill": "integrity",
+      "family": "integrity.honest-time-records",
+      "pattern": "clock-out-for-me",
+      "mode": "find",
+      "difficulty": "intermediate",
+      "concepts": [
+        "integrity:honesty-and-fairness",
+        "integrity:policies-and-procedures"
+      ],
+      "contexts": "any",
+      "slots": {
+        "coworker": "person"
+      },
+      "facts": [
+        "message-asks-for-false-time-record"
+      ],
+      "scenario": "You receive this chat message from a coworker.",
+      "prompt": "Tap the line that is a problem.",
+      "docType": "chat",
+      "docTitle": "Chat message from {coworker}",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Hey, quick favor for tomorrow.",
+          "whyFine": "A greeting and a heads-up carry no problem."
+        },
+        {
+          "id": "b",
+          "text": "I forgot about an appointment, so I need to leave at 2:00.",
+          "whyFine": "Needing to leave early is an ordinary situation that can be handled openly."
+        },
+        {
+          "id": "c",
+          "text": "Can you clock me out at 4:00 so it looks like I worked the whole shift?",
+          "problem": true,
+          "why": "Asking someone to record hours that were not worked is dishonest and puts both people at risk. An honest request would be to arrange an early departure with the supervisor."
+        },
+        {
+          "id": "d",
+          "text": "I will cover your closing task next week to say thanks.",
+          "whyFine": "Offering to return a favor is friendly on its own; the problem is what the favor is."
+        }
+      ],
+      "principle": "Time records must show the hours actually worked. If you need time away, arrange it openly rather than asking someone to cover it up.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Falsifying a time record is dishonest regardless of workplace; no unstated policy needed.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "INT-O-001",
+      "skill": "integrity",
+      "family": "integrity.found-property",
+      "pattern": "secure-report-record-return",
+      "mode": "order",
+      "difficulty": "intermediate",
+      "concepts": [
+        "integrity:respect-for-property",
+        "integrity:policies-and-procedures"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "found-wallet-style-item",
+        "workplace-has-found-property-procedure"
+      ],
+      "scenario": "While working at {workplace|the}, you find a wallet on a chair. Your workplace's procedure says found property must be written down, and returned only as your {lead} directs.",
+      "prompt": "Put these steps in the order you would follow the procedure.",
+      "steps": [
+        {
+          "id": "secure",
+          "text": "Keep the wallet somewhere safe so it is not lost"
+        },
+        {
+          "id": "tell",
+          "text": "Tell your {lead} what you found and where"
+        },
+        {
+          "id": "record",
+          "text": "Write down what was found, when and where"
+        },
+        {
+          "id": "return",
+          "text": "Follow your {lead}'s instructions for returning it"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "secure",
+          "after": "tell",
+          "why": "Keeping it safe comes first, so it is still there when you report it."
+        },
+        {
+          "before": "tell",
+          "after": "return",
+          "why": "Returning is done as your lead instructs, which comes after telling them."
+        },
+        {
+          "before": "record",
+          "after": "return",
+          "why": "The record should exist before the item leaves your care."
+        },
+        {
+          "before": "secure",
+          "after": "record",
+          "why": "You should secure the item before spending time on paperwork."
+        }
+      ],
+      "principle": "Handle found property by securing it, reporting it, recording it, and returning it as instructed.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Procedure stated in scenario; no legal claims."
+      },
+      "alternatesReviewed": true
+    },
+    {
+      "id": "INT-D-003",
+      "skill": "integrity",
+      "family": "integrity.reporting-pressure",
+      "pattern": "report-the-actual-count",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "integrity:laws-and-regulations",
+        "integrity:importance-of-integrity",
+        "integrity:honesty-and-fairness"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "lead": "lead",
+        "record": "record"
+      },
+      "facts": [
+        "lead-asks-for-expected-figure",
+        "actual-figure-differs",
+        "agreement-requires-accurate-records"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. Your {lead} asks you to write the expected figure on {record|the} rather than what you actually found, which is a little different, saying a correction would only mean extra paperwork. A written agreement your workplace signed requires accurate records.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Record what you actually found, explain the difference to your {lead}, and ask how to handle the extra paperwork.",
+          "why": "The agreement requires accurate records, so writing a figure you know is wrong would break it. Raising it with your {lead} openly keeps the record honest and the paperwork manageable.",
+          "requires": [
+            "agreement-requires-accurate-records"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Write the expected figure and add a note saying what you actually found.",
+          "why": "The note is honest, but the entry is still wrong, and the agreement asks for accurate records. The record itself should show the true figure.",
+          "misconception": "A note makes a wrong number acceptable."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Write the expected figure as asked, since your {lead} is responsible for what goes on the record.",
+          "why": "Following an instruction does not remove your responsibility for what you write, especially when an agreement requires accurate records.",
+          "misconception": "I am not responsible if my supervisor told me to."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Leave the entry blank and say nothing, so that no figure ends up on the record at all.",
+          "why": "A blank entry avoids the question but leaves the record incomplete, and your {lead} still does not know what you found.",
+          "misconception": "Not entering anything keeps me out of trouble."
+        }
+      ],
+      "principle": "Report accurate information when a rule requires it, and raise concerns openly instead of entering a number you know is wrong.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Requirement stated as a written agreement in the scenario; no jurisdiction-specific legal claims."
+      }
+    }
+  ]
+}

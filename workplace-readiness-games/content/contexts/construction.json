@@ -1,0 +1,59 @@
+{
+  "id": "construction",
+  "label": "Construction",
+  "cluster": "Architecture & Construction",
+  "bundles": [
+    {
+      "id": "framing-crew",
+      "workplace": "residential construction site",
+      "role": "laborer",
+      "lead": "site foreman",
+      "client": {
+        "text": "homeowner",
+        "plural": "homeowners"
+      },
+      "record": [
+        "daily site log",
+        "materials delivery sheet"
+      ],
+      "equipment": [
+        "scaffold",
+        "cement mixer"
+      ],
+      "system": "project scheduling app",
+      "document": "work order",
+      "deliverable": "finished wall frame",
+      "task": "end-of-day cleanup checklist",
+      "hazard": [
+        "a pile of scrap lumber with exposed nails in the walkway",
+        "an extension cord lying in a puddle near the work area"
+      ]
+    },
+    {
+      "id": "remodel-company",
+      "workplace": "home remodeling company",
+      "role": "carpenter's helper",
+      "lead": "project manager",
+      "client": {
+        "text": "customer",
+        "plural": "customers"
+      },
+      "record": [
+        "job cost sheet",
+        "tool checkout log"
+      ],
+      "equipment": [
+        "ladder",
+        "miter saw"
+      ],
+      "system": "estimating software",
+      "document": "change order",
+      "deliverable": "installed cabinet",
+      "task": "job-site walkthrough",
+      "hazard": [
+        "loose floorboards by the open stairwell",
+        "a ladder set up on uneven ground beside the entrance"
+      ]
+    }
+  ]
+}

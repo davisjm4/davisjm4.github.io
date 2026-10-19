@@ -1,0 +1,59 @@
+{
+  "id": "agriculture",
+  "label": "Agriculture",
+  "cluster": "Agriculture, Food & Natural Resources",
+  "bundles": [
+    {
+      "id": "greenhouse-nursery",
+      "workplace": "greenhouse nursery",
+      "role": "nursery worker",
+      "lead": "grower",
+      "client": {
+        "text": "customer",
+        "plural": "customers"
+      },
+      "record": [
+        "watering log",
+        "plant inventory sheet"
+      ],
+      "equipment": [
+        "irrigation controller",
+        "potting bench"
+      ],
+      "system": "inventory app",
+      "document": "order sheet",
+      "deliverable": "prepared plant order",
+      "task": "daily greenhouse check",
+      "hazard": [
+        "a slick algae-covered patch on the greenhouse floor",
+        "a hose stretched across the main aisle"
+      ]
+    },
+    {
+      "id": "dairy-farm",
+      "workplace": "dairy farm",
+      "role": "farm hand",
+      "lead": "herd manager",
+      "client": {
+        "text": "buyer",
+        "plural": "buyers"
+      },
+      "record": [
+        "feed log",
+        "milk storage record"
+      ],
+      "equipment": [
+        "feed scale",
+        "milk tank"
+      ],
+      "system": "herd records software",
+      "document": "delivery ticket",
+      "deliverable": "loaded feed order",
+      "task": "morning barn check",
+      "hazard": [
+        "a wet, muddy patch at the barn entrance",
+        "a loose gate swinging in the walkway"
+      ]
+    }
+  ]
+}

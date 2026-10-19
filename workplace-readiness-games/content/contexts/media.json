@@ -1,0 +1,59 @@
+{
+  "id": "media",
+  "label": "Digital Media and Design",
+  "cluster": "Arts, A/V Technology & Communications",
+  "bundles": [
+    {
+      "id": "design-studio",
+      "workplace": "design studio",
+      "role": "production assistant",
+      "lead": "art director",
+      "client": {
+        "text": "client",
+        "plural": "clients"
+      },
+      "record": [
+        "project tracking sheet",
+        "asset license log"
+      ],
+      "equipment": [
+        "graphics tablet",
+        "color printer"
+      ],
+      "system": "file-sharing platform",
+      "document": "creative brief",
+      "deliverable": "finished layout",
+      "task": "project hand-off checklist",
+      "hazard": [
+        "a camera cable running across the studio floor",
+        "a tall light stand set up near the doorway"
+      ]
+    },
+    {
+      "id": "video-production",
+      "workplace": "video production company",
+      "role": "video assistant",
+      "lead": "producer",
+      "client": {
+        "text": "client",
+        "plural": "clients"
+      },
+      "record": [
+        "footage log",
+        "equipment checkout sheet"
+      ],
+      "equipment": [
+        "camera rig",
+        "audio mixer"
+      ],
+      "system": "video editing software",
+      "document": "shot list",
+      "deliverable": "edited clip",
+      "task": "shoot wrap checklist",
+      "hazard": [
+        "a sandbag-weighted light stand beside the walkway",
+        "a coiled extension cord left in the hallway"
+      ]
+    }
+  ]
+}

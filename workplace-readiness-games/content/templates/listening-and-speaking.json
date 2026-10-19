@@ -1,0 +1,387 @@
+{
+  "templates": [
+    {
+      "id": "LIS-D-001",
+      "skill": "listening-and-speaking",
+      "family": "listening-and-speaking.active-listening",
+      "pattern": "repeat-back-and-ask",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "listening-and-speaking:active-listening"
+      ],
+      "contexts": "any",
+      "slots": {
+        "lead": "lead",
+        "workplace": "workplace"
+      },
+      "facts": [
+        "three-part-instructions",
+        "unsure-second-part",
+        "lead-still-there"
+      ],
+      "scenario": "At {workplace|the}, your {lead} quickly gives you instructions with three parts. You understood the first and third parts, but you are unsure about the second. Your {lead} is still standing next to you.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Repeat the instructions back in your own words and ask about the part you are unsure of.",
+          "why": "Paraphrasing shows what you understood and exposes any gaps, and asking right away while your {lead} is there prevents a mistake later.",
+          "requires": [
+            "lead-still-there"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Nod and start working, then figure out the second part as you go along.",
+          "why": "Guessing at an unclear part risks doing the work wrong. A quick question costs less than redoing it.",
+          "misconception": "Asking a question makes me look unprepared."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Wait until later and ask a coworker instead, so you do not take up more of your {lead}'s time.",
+          "why": "A coworker may not know exactly what your {lead} meant, and asking now takes seconds while your {lead} is right there.",
+          "misconception": "Asking a coworker is always less bothersome than asking the supervisor."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Say you understood everything and plan to ask for the instructions in writing if needed later.",
+          "why": "Saying you understood when you did not leaves your {lead} unaware of the gap, and it may only come to light after a mistake.",
+          "misconception": "Saying I understand is polite even when I do not."
+        }
+      ],
+      "principle": "Confirm what you heard by repeating it in your own words and ask about anything unclear while the speaker is still available.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy content.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "LIS-D-002",
+      "skill": "listening-and-speaking",
+      "family": "listening-and-speaking.audience-and-setting",
+      "pattern": "plain-language-for-the-listener",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "listening-and-speaking:audience-and-setting"
+      ],
+      "contexts": "any",
+      "slots": {
+        "client": "client",
+        "deliverable": "deliverable",
+        "role": "role",
+        "workplace": "workplace"
+      },
+      "facts": [
+        "listener-not-technical",
+        "delay-needs-explaining"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. {Client|a} who knows little about the technical side of the work asks why {deliverable|the} is delayed. The cause involves several technical steps that took longer than expected.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Explain the delay in plain language, give the new timing, and ask whether they have questions.",
+          "why": "Matching your words to what the listener knows makes the message usable. Giving the new timing and inviting questions confirms they understood.",
+          "requires": [
+            "listener-not-technical"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Use the exact technical terms for each step so that the explanation is as precise as possible.",
+          "why": "Precise terms only help a listener who knows them. If the listener cannot follow the words, the message has not been communicated.",
+          "misconception": "More technical detail makes an explanation better."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Send a long written explanation covering every step in detail so that nothing is left out.",
+          "why": "Too much detail buries the main point. A listener who wants to know about the delay needs the reason and the new timing, not every step.",
+          "misconception": "The more complete the explanation, the better."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Tell them it is delayed and that you cannot go into details, then move on to the next task.",
+          "why": "A very short answer leaves the person without a reason or a new date, and it can sound dismissive even if the details are complicated.",
+          "misconception": "A short answer saves everyone time."
+        }
+      ],
+      "principle": "Fit your message to the listener: use plain words, give the key point and what happens next, and check for questions.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Listener's background stated in scenario.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "LIS-N-001",
+      "skill": "listening-and-speaking",
+      "family": "listening-and-speaking.nonverbal-cues",
+      "pattern": "check-in-privately-on-mixed-signals",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "listening-and-speaking:nonverbal-cues",
+        "listening-and-speaking:active-listening"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person",
+        "task": "task"
+      },
+      "facts": [
+        "words-say-fine",
+        "body-language-says-concern",
+        "chance-to-talk-privately"
+      ],
+      "scenario": "At {workplace|the}, you assign {coworker} a new part of {task|the}. {coworker} says, \"Sure, that is fine,\" but looks away, crosses {coworker}'s arms, and gives short answers when you ask questions. A few minutes later, you have a chance to talk with {coworker} alone.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Check in privately, say what you noticed, and ask whether anything about the new assignment is a concern.",
+          "why": "Words and body language do not match, so asking openly and privately gives the person room to share a concern that they did not voice in the moment.",
+          "requires": [
+            "chance-to-talk-privately"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Take \"that is fine\" at face value and continue, since that is what was said out loud.",
+          "why": "Words are only part of a message. When body language suggests otherwise, a quick check can prevent a problem from growing.",
+          "misconception": "What someone says is the only part that counts."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Tell {coworker} in front of the group that {coworker} looks upset and ask what the problem is.",
+          "why": "Calling out someone's reaction in front of others can embarrass them and make them less likely to open up. A private check is more respectful.",
+          "misconception": "Raising it publicly shows I am paying attention."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask other coworkers whether they know why {coworker} seems unhappy with the new assignment.",
+          "why": "Asking others puts the person's feelings into circulation without their consent and does not give them a chance to speak for themselves.",
+          "misconception": "Other people will know the reason better than the person."
+        }
+      ],
+      "principle": "When words and body language do not match, check in privately and ask rather than assuming or discussing the person with others.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Private opportunity stated.",
+        "policyNotNeeded": true
+      },
+      "timing": "A private moment exists now; the first action is to use it to check in."
+    },
+    {
+      "id": "LIS-F-001",
+      "skill": "listening-and-speaking",
+      "family": "listening-and-speaking.professional-speaking",
+      "pattern": "phone-greeting-dismissive-line",
+      "mode": "find",
+      "difficulty": "beginner",
+      "concepts": [
+        "listening-and-speaking:audience-and-setting"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person"
+      },
+      "facts": [
+        "greeting-has-dismissive-line"
+      ],
+      "scenario": "A coworker practices this phone greeting before answering calls for {workplace|the}.",
+      "prompt": "Tap the line that would not work with a caller.",
+      "docType": "note",
+      "docTitle": "Phone greeting practice",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Thank you for calling {workplace|the}.",
+          "whyFine": "A courteous opening that identifies the workplace."
+        },
+        {
+          "id": "b",
+          "text": "This is {coworker}.",
+          "whyFine": "Giving your name helps the caller know who is helping."
+        },
+        {
+          "id": "c",
+          "text": "Hold on, I am busy right now, so what do you want?",
+          "problem": true,
+          "why": "This sounds impatient and dismissive. Callers expect a welcoming tone and an offer to help."
+        },
+        {
+          "id": "d",
+          "text": "How can I help you today?",
+          "whyFine": "An open, friendly offer to help is what a caller wants to hear."
+        }
+      ],
+      "principle": "Speak to your audience's needs: a welcoming tone and clear offer to help matter as much as the words themselves.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Single line with a dismissive tone.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "LIS-O-001",
+      "skill": "listening-and-speaking",
+      "family": "listening-and-speaking.preparing-a-presentation",
+      "pattern": "message-structure-practice-deliver",
+      "mode": "order",
+      "difficulty": "intermediate",
+      "concepts": [
+        "listening-and-speaking:presenting",
+        "listening-and-speaking:audience-and-setting"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "short-presentation-to-team"
+      ],
+      "scenario": "Your {lead} asks you to give a short update to the team at {workplace|the}.",
+      "prompt": "Put these preparation steps in a sensible order.",
+      "steps": [
+        {
+          "id": "message",
+          "text": "Decide the main message your audience needs"
+        },
+        {
+          "id": "outline",
+          "text": "Organize your points in a clear order"
+        },
+        {
+          "id": "practice",
+          "text": "Practice saying it aloud"
+        },
+        {
+          "id": "deliver",
+          "text": "Give the update and invite questions"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "message",
+          "after": "outline",
+          "why": "You cannot organize points until you know the main message."
+        },
+        {
+          "before": "outline",
+          "after": "practice",
+          "why": "Practice works best on a clear structure."
+        },
+        {
+          "before": "practice",
+          "after": "deliver",
+          "why": "Practicing before the update helps you present smoothly."
+        }
+      ],
+      "principle": "Prepare a presentation by choosing your message, organizing it, practicing, and then delivering it with time for questions.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Natural chain.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "LIS-D-003",
+      "skill": "listening-and-speaking",
+      "family": "listening-and-speaking.adjusting-mid-talk",
+      "pattern": "pause-and-adjust",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "listening-and-speaking:presenting",
+        "listening-and-speaking:nonverbal-cues"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "presenting-to-team",
+        "listeners-look-confused",
+        "time-remaining"
+      ],
+      "scenario": "You are giving a short update to a team at {workplace|the}. Halfway through, several listeners look confused, one is frowning at the handout, and another whispers to a neighbor. You have ten minutes left of your time.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Pause, ask what part is unclear, and explain it again with a simpler example before continuing.",
+          "why": "Listeners' expressions are telling you the message is not landing. Pausing to check and simplifying fixes it while there is still time.",
+          "requires": [
+            "listeners-look-confused",
+            "time-remaining"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Keep going so that you finish on time, and invite questions at the very end.",
+          "why": "Inviting questions at the end is good, but by then confused listeners may have lost the rest of the message.",
+          "misconception": "The plan I prepared is the plan I should follow."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Speak faster and more loudly so that people stop whispering and pay attention.",
+          "why": "Speaking faster usually makes things harder to follow, and the whispering may be about the confusion, not rudeness.",
+          "misconception": "Confusion means people are not listening."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Skip ahead to your conclusion so that the talk ends sooner and nobody is bored.",
+          "why": "Skipping the middle leaves listeners without the information they need, and the confusion remains unaddressed.",
+          "misconception": "Shorter is always better when people look lost."
+        }
+      ],
+      "principle": "Watch your audience while speaking; when they look lost, pause and adjust instead of pressing on.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Acceptable option is orderly but late.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

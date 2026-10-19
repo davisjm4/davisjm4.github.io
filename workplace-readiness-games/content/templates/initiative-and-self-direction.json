@@ -1,0 +1,335 @@
+{
+  "templates": [
+    {
+      "id": "INI-D-001",
+      "skill": "initiative-and-self-direction",
+      "family": "initiative-and-self-direction.identifying-needs",
+      "pattern": "use-spare-time-for-tomorrows-setup",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "initiative-and-self-direction:identify-needs",
+        "initiative-and-self-direction:proactive-decisions"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "task": "task",
+        "role": "role"
+      },
+      "facts": [
+        "assigned-work-done",
+        "time-left",
+        "setup-needed-in-own-area"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. You finish all your assigned work with thirty minutes left in your shift. You notice that tomorrow's set-up for {task|the}, which is part of your usual duties, has not been started, and no one has asked you to do it.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Use the time to get tomorrow's set-up done, since it is part of your own area.",
+          "why": "Noticing a need in your own area and meeting it without being asked is initiative, and it makes the next shift smoother.",
+          "requires": [
+            "setup-needed-in-own-area"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Stay at your station and wait for someone to tell you what you should do next.",
+          "why": "Waiting for instructions leaves a known need unmet. When the work is within your role and nobody objects, you can act.",
+          "misconception": "I should only do what I am directly told."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Spend the remaining time on your phone, since all assigned work is finished.",
+          "why": "Finishing assigned work is not the end of being useful. Leftover time can meet needs that would otherwise be left for someone else.",
+          "misconception": "When my assigned work is done, my time is my own."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Start on tasks belonging to a different team to show how much you can do.",
+          "why": "Stepping into another team's work without being asked can cause confusion. Initiative starts with needs in your own area.",
+          "misconception": "The more tasks I take on, the better initiative looks."
+        }
+      ],
+      "principle": "Initiative means noticing needs in your own area and meeting them without waiting to be told.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "The set-up is explicitly part of the employee's duties.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "INI-N-001",
+      "skill": "initiative-and-self-direction",
+      "family": "initiative-and-self-direction.working-independently",
+      "pattern": "use-resources-before-stopping",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "initiative-and-self-direction:minimal-supervision",
+        "initiative-and-self-direction:apply-solutions"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "task": "task",
+        "lead": "lead",
+        "coworker": "person"
+      },
+      "facts": [
+        "lead-away-an-hour",
+        "unclear-step",
+        "written-instructions-exist",
+        "experienced-coworker-nearby"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. Your {lead} leaves for an hour-long meeting and asks you to keep working through {task|the}. You reach a step that is unclear. Written instructions for {task|the} are posted nearby, and {coworker}, who has done it many times, is working close by.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Read the posted instructions, ask {coworker} about the unclear step, and keep going on the parts that are clear.",
+          "why": "Using the resources at hand keeps the work moving without guessing, which is how people work well with little supervision.",
+          "requires": [
+            "written-instructions-exist",
+            "experienced-coworker-nearby"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Guess at the unclear step and keep going so you do not fall behind on the rest of the list.",
+          "why": "Guessing risks an error that someone has to fix later. Instructions and an experienced coworker were right there to confirm the step.",
+          "misconception": "Keeping moving is more important than getting it right."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Stop all work and wait until your {lead} returns from the hour-long meeting to ask.",
+          "why": "Stopping wastes an hour when answers were close by. Self-direction means using available resources before pausing.",
+          "misconception": "I need my supervisor's approval for every question."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Skip the unclear step and say nothing about it, so {task|the} looks finished to everyone.",
+          "why": "A skipped step hidden in a finished-looking task creates a problem for whoever relies on it. Gaps should be solved or reported, not covered up.",
+          "misconception": "A task that looks finished is as good as one that is finished."
+        }
+      ],
+      "principle": "When a supervisor is away, use the instructions and people available to you before stopping, guessing or hiding a gap.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Resources (instructions and coworker) are stated in the scenario.",
+        "policyNotNeeded": true
+      },
+      "timing": "Independent work means exhausting available resources before pausing; first action is to use them."
+    },
+    {
+      "id": "INI-D-002",
+      "skill": "initiative-and-self-direction",
+      "family": "initiative-and-self-direction.staying-in-role",
+      "pattern": "send-fix-to-system-owner",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "initiative-and-self-direction:apply-solutions",
+        "initiative-and-self-direction:identify-needs"
+      ],
+      "contexts": [
+        "healthcare",
+        "automotive",
+        "education",
+        "it"
+      ],
+      "slots": {
+        "system": "system",
+        "client": "client"
+      },
+      "facts": [
+        "reminders-sent-late",
+        "fix-would-help",
+        "setting-owned-by-another-team",
+        "workplace-routes-changes"
+      ],
+      "scenario": "You have noticed that {system|the} sends reminders late, so {client.plural} are missing follow-ups. You can see a setting that you think would fix it, and your login lets you change it. That setting is managed by another team, and your workplace sends requests to change it through that team.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Write up the problem and your proposed fix, and send it to the team that manages the setting.",
+          "why": "You found a real need and have a solution. Sending it to the team that owns the setting puts the fix in front of the people who can safely approve and apply it.",
+          "requires": [
+            "setting-owned-by-another-team",
+            "workplace-routes-changes"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Change the setting yourself since you have access, and tell the other team afterward.",
+          "why": "Your fix may well be right, but access is not authority. The owning team may know of effects you cannot see, and your workplace asks for changes to go through them.",
+          "misconception": "If I can do it and it helps, I should just do it."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Leave it alone, since the setting is not yours and someone else on that team will probably notice it.",
+          "why": "Assuming someone else will act leaves the problem in place. Reporting what you noticed is within your role and helps the team that owns it.",
+          "misconception": "If a problem is not mine, I should ignore it."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask several coworkers to complain about it with you until the other team changes it.",
+          "why": "Group complaints create pressure but not information. A clear description of the problem and fix is more useful to the owning team.",
+          "misconception": "The loudest complaint gets the fastest fix."
+        }
+      ],
+      "principle": "Act on needs you notice, but send fixes for systems owned by others to the people who own them.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Workplace routing rule stated; acceptable option shows access-versus-authority nuance."
+      }
+    },
+    {
+      "id": "INI-O-001",
+      "skill": "initiative-and-self-direction",
+      "family": "initiative-and-self-direction.raising-an-issue",
+      "pattern": "notice-check-propose-follow-up",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "initiative-and-self-direction:identify-needs",
+        "initiative-and-self-direction:apply-solutions"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "employee-notices-recurring-need"
+      ],
+      "scenario": "At {workplace|the}, you notice that a small supply keeps running out before the end of the day.",
+      "prompt": "Put these steps in a sensible order.",
+      "steps": [
+        {
+          "id": "notice",
+          "text": "Notice the pattern and note when it happens"
+        },
+        {
+          "id": "check",
+          "text": "Check whether handling it is part of your role"
+        },
+        {
+          "id": "propose",
+          "text": "Suggest a fix to your {lead}, or carry it out if it is within your role"
+        },
+        {
+          "id": "follow",
+          "text": "Follow up to see whether the fix worked"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "notice",
+          "after": "check",
+          "why": "You need to know what the problem is before you can decide who should handle it."
+        },
+        {
+          "before": "check",
+          "after": "propose",
+          "why": "Knowing your role tells you whether to act or to ask."
+        },
+        {
+          "before": "propose",
+          "after": "follow",
+          "why": "You can only see whether a fix worked after it has been put in place."
+        }
+      ],
+      "principle": "Initiative follows a path: notice a need, check your role, act or propose, then follow up.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Natural chain.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "INI-F-001",
+      "skill": "initiative-and-self-direction",
+      "family": "initiative-and-self-direction.overreaching",
+      "pattern": "taking-restricted-supplies-without-asking",
+      "mode": "find",
+      "difficulty": "intermediate",
+      "concepts": [
+        "initiative-and-self-direction:proactive-decisions",
+        "initiative-and-self-direction:apply-solutions"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "plan-takes-restricted-supplies"
+      ],
+      "scenario": "A new coworker at {workplace|the} writes this plan after noticing a shortage.",
+      "prompt": "Tap the line that goes too far.",
+      "docType": "note",
+      "docTitle": "Note about running out of supplies",
+      "segments": [
+        {
+          "id": "a",
+          "text": "The sign-in sheets keep running out by noon.",
+          "whyFine": "Noticing a recurring need is good initiative."
+        },
+        {
+          "id": "b",
+          "text": "I checked where the spare sheets are kept.",
+          "whyFine": "Looking for a solution within the workplace is reasonable."
+        },
+        {
+          "id": "c",
+          "text": "I will take them from the locked supply cabinet without asking anyone, since it would save time.",
+          "problem": true,
+          "why": "Taking items from a locked cabinet without permission goes beyond your role, however helpful the goal."
+        },
+        {
+          "id": "d",
+          "text": "I will tell my {lead} what I found so we can fix it.",
+          "whyFine": "Reporting the problem is a good next step."
+        }
+      ],
+      "principle": "Take initiative within your role; for restricted resources, ask first.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Single line crosses a clear boundary (locked cabinet).",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

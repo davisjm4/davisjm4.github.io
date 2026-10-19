@@ -1,0 +1,387 @@
+{
+  "templates": [
+    {
+      "id": "EFF-O-001",
+      "skill": "efficiency-and-productivity",
+      "family": "efficiency-and-productivity.planning-work",
+      "pattern": "list-assess-rank-start",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "efficiency-and-productivity:work-plan",
+        "efficiency-and-productivity:prioritize-tasks"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "more-tasks-than-time"
+      ],
+      "scenario": "At the start of a busy shift at {workplace|a}, you have more tasks than time to finish them.",
+      "prompt": "Arrange these planning steps in the order you would do them.",
+      "steps": [
+        {
+          "id": "list",
+          "text": "Write down every task that needs to be done today"
+        },
+        {
+          "id": "assess",
+          "text": "Mark which tasks have deadlines or people waiting on them"
+        },
+        {
+          "id": "rank",
+          "text": "Rank the tasks from most urgent and important to least"
+        },
+        {
+          "id": "start",
+          "text": "Begin working on the top-ranked task"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "list",
+          "after": "assess",
+          "why": "You cannot judge deadlines for tasks you have not listed yet."
+        },
+        {
+          "before": "assess",
+          "after": "rank",
+          "why": "A fair ranking depends on knowing which tasks have deadlines or people waiting."
+        },
+        {
+          "before": "rank",
+          "after": "start",
+          "why": "Starting before ranking risks spending your time on a task that could have waited."
+        }
+      ],
+      "principle": "Plan before you start: list the work, identify deadlines and dependencies, rank by urgency and importance, then begin with the top priority.",
+      "review": {
+        "status": "approved",
+        "checks": [],
+        "notes": "A natural dependency chain; no policy or jurisdiction content."
+      }
+    },
+    {
+      "id": "EFF-D-001",
+      "skill": "efficiency-and-productivity",
+      "family": "efficiency-and-productivity.conflicting-priorities",
+      "pattern": "surface-priority-conflict-to-lead",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "efficiency-and-productivity:prioritize-tasks",
+        "efficiency-and-productivity:adapt-goals",
+        "efficiency-and-productivity:human-resources"
+      ],
+      "contexts": "any",
+      "slots": {
+        "lead": "lead",
+        "task": "task",
+        "coworker": "person",
+        "client": "client"
+      },
+      "facts": [
+        "lead-assigned-deadline",
+        "coworker-urgent-request",
+        "cannot-do-both",
+        "lead-nearby"
+      ],
+      "scenario": "Your {lead} asked you to finish {task|the} before your shift ends in an hour. Halfway through, {coworker} asks you to help with an urgent {client} request that would take about thirty minutes. You cannot do both in the time left, and your {lead} is nearby on the floor.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Quickly tell your {lead} about both demands and ask which one should come first.",
+          "why": "Your {lead} owns the priorities and can see the whole picture. A quick check keeps both people informed and lets the most important work get done first.",
+          "requires": [
+            "lead-nearby"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Help {coworker} right away because {client|a} is waiting, then finish your own work as soon as you can.",
+          "why": "Helping is understandable, but you would be choosing priorities on your own while your {lead} expects {task|the} finished. A quick conversation would have kept everyone informed.",
+          "misconception": "An urgent request automatically outranks an assigned task."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Finish {task|the} first as assigned and tell {coworker} to find someone else.",
+          "why": "Sticking to the assignment without checking ignores a possibly urgent need and leaves your {lead} unaware that {client|a} is waiting.",
+          "misconception": "An assigned task always outranks a coworker's request."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Try to do both by switching back and forth, and hope neither one suffers much.",
+          "why": "Splitting your attention usually slows both jobs and raises the chance of mistakes. It also hides the real problem, which is that the time is not enough.",
+          "misconception": "Doing everything at once is the most productive approach."
+        }
+      ],
+      "principle": "When priorities collide, do not decide silently: tell the person who sets priorities what the competing demands are and let them direct the order.",
+      "review": {
+        "status": "approved",
+        "checks": [],
+        "notes": "Lead is stated to be nearby, so asking is realistic. Acceptable option is a defensible helping instinct that bypasses the person who owns priorities."
+      }
+    },
+    {
+      "id": "EFF-D-002",
+      "skill": "efficiency-and-productivity",
+      "family": "efficiency-and-productivity.capital-resources",
+      "pattern": "do-or-reschedule-scheduled-upkeep",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "efficiency-and-productivity:capital-resources",
+        "efficiency-and-productivity:prioritize-tasks"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "equipment": "equipment",
+        "lead": "lead"
+      },
+      "facts": [
+        "upkeep-scheduled-today",
+        "you-are-trained",
+        "busy-day",
+        "skipping-saves-time"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. The posted maintenance schedule calls for routine upkeep of {equipment|the} today, which you are trained to do. It is a busy day, and skipping the upkeep would save thirty minutes.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Do the scheduled upkeep, or tell your {lead} you cannot fit it in so it can be rescheduled.",
+          "why": "Regular upkeep keeps equipment working and lasting longer. If time truly does not allow it, rescheduling openly keeps it from being forgotten.",
+          "requires": [
+            "upkeep-scheduled-today",
+            "you-are-trained"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Skip it this once, since the equipment has been working fine and the day is unusually busy.",
+          "why": "Equipment that seems fine today can fail sooner without upkeep. Skipping adds up, and a breakdown costs more time than thirty minutes.",
+          "misconception": "If it works now, it does not need upkeep."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Do only part of the upkeep so that it takes less time, and mark the whole schedule item as done.",
+          "why": "A partial job recorded as complete leaves the equipment under-maintained and the record inaccurate.",
+          "misconception": "Partly done counts as done."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Put it off without telling anyone and plan to catch up on it whenever things settle down.",
+          "why": "Unannounced delays are easy to forget, and others who rely on the schedule will assume it was done.",
+          "misconception": "I can quietly reschedule things myself."
+        }
+      ],
+      "principle": "Look after equipment: do scheduled upkeep, or tell the person in charge so it can be rescheduled instead of skipped.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Training and schedule stated.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "EFF-N-001",
+      "skill": "efficiency-and-productivity",
+      "family": "efficiency-and-productivity.adapting-goals",
+      "pattern": "review-list-and-tell-lead-what-may-move",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "efficiency-and-productivity:adapt-goals",
+        "efficiency-and-productivity:prioritize-tasks"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person",
+        "lead": "lead"
+      },
+      "facts": [
+        "coworker-called-out",
+        "extra-duties",
+        "list-too-long-for-remaining-time"
+      ],
+      "scenario": "Halfway through a shift at {workplace|the}, {coworker} calls out, and your {lead} asks you to cover {coworker}'s duties as well as your own. You now have more on your list than the time left allows.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Review your list for what is due today, and tell your {lead} which tasks may have to move.",
+          "why": "Knowing what is urgent lets you protect the important work, and telling your {lead} early lets them adjust expectations.",
+          "requires": [
+            "list-too-long-for-remaining-time"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Rush through every task at top speed and hope that the quality holds up on all of them.",
+          "why": "Rushing everything raises the chance of errors and does not change the fact that there is not enough time. A plan comes first.",
+          "misconception": "Working faster fixes any shortage of time."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Quietly drop the tasks you like least, and do not mention it unless someone asks.",
+          "why": "Choosing by preference rather than by priority can leave important things undone, and others will be unaware of the gap.",
+          "misconception": "I can choose which tasks to skip on my own."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Wait until the end of the shift to mention that some tasks were not finished, since you did your best.",
+          "why": "Waiting leaves your {lead} no time to adjust, and people relying on those tasks will be surprised.",
+          "misconception": "Reporting at the end is soon enough."
+        }
+      ],
+      "principle": "When the workload changes, prioritize by what is due, and tell your lead early which tasks may have to move.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Timing stated.",
+        "policyNotNeeded": true
+      },
+      "timing": "The workload exceeds time; prioritizing and informing comes before any work."
+    },
+    {
+      "id": "EFF-F-001",
+      "skill": "efficiency-and-productivity",
+      "family": "efficiency-and-productivity.prioritizing-by-deadline",
+      "pattern": "low-priority-task-first",
+      "mode": "find",
+      "difficulty": "intermediate",
+      "concepts": [
+        "efficiency-and-productivity:prioritize-tasks",
+        "efficiency-and-productivity:work-plan"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "plan-puts-no-deadline-task-first"
+      ],
+      "scenario": "A coworker at {workplace|the} writes this plan for the morning.",
+      "prompt": "Tap the line that is a problem.",
+      "docType": "schedule",
+      "docTitle": "Plan for this morning",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Plan for the morning, in the order I will work:",
+          "whyFine": "A heading that introduces the plan."
+        },
+        {
+          "id": "b",
+          "text": "1. Reorganize the old supply shelf, which nobody is waiting on.",
+          "problem": true,
+          "why": "Doing a task with no deadline first can crowd out tasks that are due, which makes the order a problem."
+        },
+        {
+          "id": "c",
+          "text": "2. Send the reminder that goes out at 9:00.",
+          "whyFine": "A task with a set time is a priority."
+        },
+        {
+          "id": "d",
+          "text": "3. Finish the report due at noon.",
+          "whyFine": "A task with a deadline is a priority."
+        }
+      ],
+      "principle": "Put tasks with deadlines or people waiting ahead of tasks that can wait.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "One line puts a no-deadline task ahead of timed ones.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "EFF-D-003",
+      "skill": "efficiency-and-productivity",
+      "family": "efficiency-and-productivity.sorting-waste",
+      "pattern": "sort-using-the-posted-guide",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "efficiency-and-productivity:natural-resources"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "task": "task"
+      },
+      "facts": [
+        "posted-sorting-guide",
+        "sorting-takes-two-minutes"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a} and are finishing {task|the}, which includes clearing leftover items. Posted instructions show which items go in the recycling bin and which go in the trash. Sorting takes about two extra minutes.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Sort each item into the correct bin using the posted instructions.",
+          "why": "Sorting waste the way the instructions show reduces what is thrown away and uses resources responsibly. Two minutes is a small cost for that.",
+          "requires": [
+            "posted-sorting-guide"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Put everything in the trash to save time, since sorting makes little difference.",
+          "why": "Small habits add up across a workplace. Following the guide keeps recyclable material out of the trash.",
+          "misconception": "One person's sorting does not matter."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Leave the leftovers on the counter for the next shift, so that they can decide what to do.",
+          "why": "Leaving the job unfinished creates extra work and mess for someone else, and does not follow the posted instructions.",
+          "misconception": "Someone else can handle it later."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Take the recyclable items home to recycle them yourself, since you know how to do it better.",
+          "why": "The workplace has a system for these items. Taking them home skips it and treats workplace property as your own.",
+          "misconception": "Doing it my own way is more responsible."
+        }
+      ],
+      "principle": "Use resources responsibly by following posted guidance for sorting and disposing of waste.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Posted guidance stated in scenario; no environmental regulation claims.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

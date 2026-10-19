@@ -1,0 +1,388 @@
+{
+  "templates": [
+    {
+      "id": "DIV-D-001",
+      "skill": "respect-for-diversity",
+      "family": "respect-for-diversity.own-bias",
+      "pattern": "do-not-act-on-a-teammates-assumption",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "respect-for-diversity:own-bias",
+        "respect-for-diversity:valuing-differences"
+      ],
+      "contexts": "any",
+      "slots": {
+        "system": "system",
+        "coworker": "person",
+        "workplace": "workplace"
+      },
+      "facts": [
+        "new-coworker-older",
+        "teammate-whispers-assumption",
+        "same-training-for-all"
+      ],
+      "scenario": "A new coworker, {coworker}, who is older than most of the team at {workplace|the}, joins training on {system|the}. A teammate whispers that {coworker} will probably struggle with the technology.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Give {coworker} the same training as everyone else and offer help the same way you would for anyone.",
+          "why": "A guess about a group does not tell you what one person can do. Treating people the same and offering help to everyone lets each person show what they need.",
+          "requires": [
+            "same-training-for-all"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Quietly slow the training down for {coworker}, since your teammate is probably right.",
+          "why": "Acting on an assumption can hold back someone who does not need it and can come across as disrespectful. You do not yet know what help, if any, is needed.",
+          "misconception": "A teammate's comment about a group is reliable."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Hand {coworker} an easier version of the work without asking, so that no one is embarrassed later.",
+          "why": "Deciding for someone what they can handle takes away their chance to show what they can do, and it may feel insulting.",
+          "misconception": "Lowering expectations is a kind way to protect someone."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask {coworker} in front of everyone whether using technology is going to be a problem.",
+          "why": "Singling out one person based on a guess puts them on the spot. Offering the same help to everyone avoids this.",
+          "misconception": "Asking directly in public is the most honest approach."
+        }
+      ],
+      "principle": "Do not act on assumptions about a person's group. Treat people the same, offer help to everyone, and let individuals show what they need.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Scenario depicts a teammate's assumption, not a fact; no stereotype is endorsed.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "DIV-D-002",
+      "skill": "respect-for-diversity",
+      "family": "respect-for-diversity.valuing-differences",
+      "pattern": "recognize-written-contributions",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "respect-for-diversity:valuing-differences",
+        "respect-for-diversity:individual-differences"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person"
+      },
+      "facts": [
+        "quiet-in-meetings",
+        "useful-written-input",
+        "teammate-says-no-contribution"
+      ],
+      "scenario": "In meetings at {workplace|the}, {coworker} rarely speaks, but sends detailed, thoughtful emails afterward that often help the team. A teammate says {coworker} \"does not really contribute.\"",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Point out the useful ideas in {coworker}'s emails and suggest asking for written input before meetings.",
+          "why": "People contribute in different ways. Recognizing the value of written input and building it into the process makes the team stronger.",
+          "requires": [
+            "useful-written-input"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Agree, since contributions count most when they are spoken out loud in meetings.",
+          "why": "Speaking in meetings is one way to contribute, not the only way. The emails clearly add value to the team.",
+          "misconception": "Speaking up in meetings is the main way to contribute."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Ask {coworker} to speak up more in meetings so that everyone contributes the same way.",
+          "why": "Expecting everyone to work in one style can overlook strengths. A better approach is to make room for more than one way to contribute.",
+          "misconception": "Everyone should contribute in the same way."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Say nothing, since people are free to take part in whatever way they choose and it is not your concern.",
+          "why": "Staying silent lets a dismissive comment stand and leaves a real contribution unrecognized.",
+          "misconception": "Speaking up for a coworker is not my place."
+        }
+      ],
+      "principle": "Value different ways of contributing; look for the input people give and make room for it.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No stereotype about any group; contribution style is individual.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "DIV-D-003",
+      "skill": "respect-for-diversity",
+      "family": "respect-for-diversity.collaborating",
+      "pattern": "hear-each-viewpoint-before-deciding",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "respect-for-diversity:collaborating",
+        "respect-for-diversity:valuing-differences"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person",
+        "coworker2": "person"
+      },
+      "facts": [
+        "leading-small-project",
+        "two-different-views",
+        "one-dominates-discussion"
+      ],
+      "scenario": "You are leading a small project at {workplace|the}. {coworker} and {coworker2} have very different ideas about how to approach it. {coworker} speaks quickly and confidently, while {coworker2} speaks less and takes time to explain. The discussion keeps being dominated by one voice.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Invite each person to explain their approach in turn, then compare the ideas against the project's goals.",
+          "why": "Giving each person equal time ensures that both viewpoints are heard, and comparing them against the goals lets the team choose on merit.",
+          "requires": [
+            "one-dominates-discussion"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Choose the approach of the more confident speaker to save time, and move on.",
+          "why": "Confidence is not the same as quality. Deciding quickly may save time, but it ignores the other viewpoint, which might be stronger.",
+          "misconception": "The most confident idea is probably the strongest."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Split the project in two so that each person can follow their own approach without disagreeing.",
+          "why": "Splitting avoids the conversation but loses the chance to combine the best parts of both approaches and may duplicate work.",
+          "misconception": "Avoiding disagreement is the best way to keep people working together."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Let the discussion continue until the group settles on a view without you stepping in.",
+          "why": "As the leader, letting one voice dominate shapes the outcome without a fair hearing. Structure helps all viewpoints be considered.",
+          "misconception": "A good discussion will sort itself out."
+        }
+      ],
+      "principle": "Make space for each viewpoint before deciding, and judge ideas on how well they meet the goals, not on who sounds most confident.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Acceptable option is efficient but unfair; no group stereotypes.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "DIV-F-001",
+      "skill": "respect-for-diversity",
+      "family": "respect-for-diversity.inclusive-planning",
+      "pattern": "skipping-individual-needs",
+      "mode": "find",
+      "difficulty": "beginner",
+      "concepts": [
+        "respect-for-diversity:individual-differences",
+        "respect-for-diversity:valuing-differences"
+      ],
+      "contexts": "any",
+      "slots": {
+        "coworker": "person"
+      },
+      "facts": [
+        "message-skips-individual-needs"
+      ],
+      "scenario": "{coworker} sends this message while planning a team lunch.",
+      "prompt": "Tap the line that overlooks people's differences.",
+      "docType": "email",
+      "docTitle": "Team lunch planning",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Let's pick a place for the team lunch on Friday.",
+          "whyFine": "A friendly start that names the plan."
+        },
+        {
+          "id": "b",
+          "text": "I will send around the options by tomorrow.",
+          "whyFine": "Setting a clear next step is helpful."
+        },
+        {
+          "id": "c",
+          "text": "I do not think we need to ask about food needs, since most people eat anything anyway.",
+          "problem": true,
+          "why": "Assuming most people have the same needs ignores individuals who may have dietary, health or personal restrictions. Asking is simple and inclusive."
+        },
+        {
+          "id": "d",
+          "text": "Please reply with your top two choices.",
+          "whyFine": "Asking for input from everyone is inclusive."
+        }
+      ],
+      "principle": "Planning for a group means asking about individual needs instead of assuming everyone is the same.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No stereotype; the problem is dismissing individual needs.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "DIV-N-001",
+      "skill": "respect-for-diversity",
+      "family": "respect-for-diversity.communication-support",
+      "pattern": "repeat-clearly-and-check",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "respect-for-diversity:collaborating",
+        "respect-for-diversity:valuing-differences"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person",
+        "task": "task"
+      },
+      "facts": [
+        "coworker-still-learning-the-language",
+        "asks-for-repeat",
+        "teammate-sighs"
+      ],
+      "scenario": "A coworker at {workplace|the}, {coworker}, is still learning the language used at work. {coworker} asks you to repeat the instructions for {task|the}, and another teammate nearby sighs.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Repeat the instructions clearly and a little slower, and check that {coworker} has understood them.",
+          "why": "Making sure the instructions are understood helps the work get done and treats {coworker} as a respected part of the team.",
+          "requires": [
+            "asks-for-repeat"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Give the instructions again at a louder volume, so that nothing is missed.",
+          "why": "Volume is not the problem. Clear, slower wording and a check for understanding are more useful.",
+          "misconception": "Speaking louder helps people understand."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Tell {coworker} to ask someone else, since you are busy and the teammate is already impatient.",
+          "why": "Sending the person away leaves the question unanswered and sends a message that the question is a burden.",
+          "misconception": "Impatience from others means I should step back."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Laugh along with the teammate's sigh to keep the mood light before you explain again.",
+          "why": "Joining in with a sigh can make someone feel unwelcome, even if you did not mean it that way.",
+          "misconception": "Going along with the group keeps things smooth."
+        }
+      ],
+      "principle": "Support coworkers who are still learning the language: repeat clearly, check understanding, and do not join in impatience.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No stereotype; the scenario concerns language learning, not any group.",
+        "policyNotNeeded": true
+      },
+      "timing": "The coworker is waiting right now, so clarity comes before anything else."
+    },
+    {
+      "id": "DIV-O-001",
+      "skill": "respect-for-diversity",
+      "family": "respect-for-diversity.inclusive-meetings",
+      "pattern": "ask-choose-invite-gather",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "respect-for-diversity:collaborating",
+        "respect-for-diversity:individual-differences"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "team-with-different-schedules-and-needs"
+      ],
+      "scenario": "You are organizing a team meeting at {workplace|the}, and teammates have different schedules and preferences for how they share ideas.",
+      "prompt": "Put these steps in a sensible order.",
+      "steps": [
+        {
+          "id": "ask",
+          "text": "Ask teammates about their availability and needs"
+        },
+        {
+          "id": "choose",
+          "text": "Choose a time that works for as many people as possible"
+        },
+        {
+          "id": "invite",
+          "text": "Send the invitation with an agenda ahead of time"
+        },
+        {
+          "id": "gather",
+          "text": "Invite input before and during the meeting, in more than one way"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "ask",
+          "after": "choose",
+          "why": "You need to know people's availability before you can choose a time."
+        },
+        {
+          "before": "choose",
+          "after": "invite",
+          "why": "The invitation needs a time to announce."
+        },
+        {
+          "before": "invite",
+          "after": "gather",
+          "why": "An agenda sent ahead lets people prepare to share input."
+        }
+      ],
+      "principle": "Plan inclusively: ask about needs, choose a workable time, share an agenda early, and welcome input in more than one way.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Natural chain; no stereotype.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,402 @@
+{
+  "templates": [
+    {
+      "id": "CUS-D-001",
+      "skill": "customer-service-orientation",
+      "family": "customer-service-orientation.handling-complaints",
+      "pattern": "listen-apologize-offer-fix",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "customer-service-orientation:courteous-knowledgeable"
+      ],
+      "contexts": "any",
+      "slots": {
+        "client": "client",
+        "document": "document",
+        "role": "role",
+        "workplace": "workplace"
+      },
+      "facts": [
+        "error-on-document",
+        "client-upset",
+        "others-waiting"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. {Client|a} comes to the counter upset, saying there is an error on {document|a}. They are speaking loudly, and other {client.plural} are waiting nearby.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Listen calmly without interrupting, apologize for the problem, and explain what you can do to fix it.",
+          "why": "Letting the person finish shows respect, an apology acknowledges the problem, and a clear next step turns the conversation toward a solution.",
+          "requires": [
+            "error-on-document"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Explain that the error was caused by another department, so they know it was not your fault.",
+          "why": "Assigning blame does not solve the problem and can sound defensive. The person wants to know what happens next.",
+          "misconception": "Explaining whose fault it was calms the person."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Ask the person to lower their voice before you agree to help with the problem at all.",
+          "why": "Focusing on tone first can escalate frustration. Listening and offering a solution usually calms a situation faster.",
+          "misconception": "Calm behavior has to come before good service."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Tell them the policy for errors and that there is nothing more you can do about it today.",
+          "why": "Reciting a policy without offering anything makes the person feel unheard, and it ends the conversation without a solution.",
+          "misconception": "Policy answers close the matter."
+        }
+      ],
+      "principle": "Handle a complaint by listening, acknowledging the problem, and offering a clear next step instead of defending or deflecting.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy dependence.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CUS-N-001",
+      "skill": "customer-service-orientation",
+      "family": "customer-service-orientation.internal-customers",
+      "pattern": "set-a-time-for-coworker-request",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "customer-service-orientation:internal-and-external",
+        "customer-service-orientation:prioritize-service"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "coworker": "person",
+        "client": "client",
+        "document": "document"
+      },
+      "facts": [
+        "serving-client-now",
+        "coworker-requests-document",
+        "coworker-needs-by-end-of-day"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. You are in the middle of helping {client|a} when {coworker} from another team asks you for {document|a} that you are responsible for. {coworker} needs it by the end of the day, and you can finish with the {client} in about fifteen minutes.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Tell {coworker} you will have it done right after you finish with the {client}, and give a specific time.",
+          "why": "Coworkers are internal customers. A clear time lets {coworker} plan, and finishing with the person in front of you keeps your service to them complete.",
+          "requires": [
+            "coworker-needs-by-end-of-day"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Stop helping the {client} and start on the {document} at once, since your coworker asked for it.",
+          "why": "Walking away from someone midway through service is disruptive. The request is not due for hours, so it can wait a few minutes.",
+          "misconception": "The newest request is the most urgent."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Keep helping the {client} and say nothing to {coworker}, since you will get to it eventually.",
+          "why": "Not responding leaves {coworker} unsure whether the request was heard. A short answer with a time costs a few seconds and prevents follow-up.",
+          "misconception": "A request that is not due yet does not need an answer."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Tell {coworker} to ask someone else, since you are busy serving the {client} right now.",
+          "why": "Passing the request off ignores that {document|the} is your responsibility, and it forces your coworker to start over with someone else.",
+          "misconception": "Customers outside the team always come first, so inside requests can be redirected."
+        }
+      ],
+      "principle": "Treat coworkers as customers too: acknowledge requests promptly and give a specific time when you cannot do them right away.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Deadline and timing stated.",
+        "policyNotNeeded": true
+      },
+      "timing": "The coworker's request is not due immediately, so acknowledging with a time comes first."
+    },
+    {
+      "id": "CUS-D-002",
+      "skill": "customer-service-orientation",
+      "family": "customer-service-orientation.anticipating-needs",
+      "pattern": "tell-waiting-customer-how-long",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "customer-service-orientation:anticipate-needs",
+        "customer-service-orientation:courteous-knowledgeable"
+      ],
+      "contexts": "any",
+      "slots": {
+        "client": "client",
+        "document": "document",
+        "role": "role",
+        "workplace": "workplace"
+      },
+      "facts": [
+        "client-waiting",
+        "client-checking-clock",
+        "about-twenty-minutes-left"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. {Client|a} has been waiting for {document|a} and keeps glancing at the clock. You know the process needs about twenty more minutes to be done properly.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Let them know about how long it will take, and offer a place to wait or a way to be updated.",
+          "why": "Telling a waiting person what to expect, without being asked, eases the frustration of not knowing and shows you noticed their need.",
+          "requires": [
+            "about-twenty-minutes-left"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Keep working quietly, since stopping to talk would only slow down the process.",
+          "why": "A short update takes seconds and helps the person plan their time. Silence leaves them guessing.",
+          "misconception": "Working silently is the fastest service."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Tell them it will be done when it is done, since you cannot control how long it takes.",
+          "why": "You do have an estimate, and sharing it respects their time. A blunt answer can sound dismissive.",
+          "misconception": "If I cannot control it, I do not need to explain it."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Offer to speed things up by skipping a step in the usual process so they can leave sooner.",
+          "why": "Skipping steps to save time risks errors, and the process takes twenty minutes to be done properly. Accuracy matters more than speed here.",
+          "misconception": "Doing it faster is always better service."
+        }
+      ],
+      "principle": "Anticipate needs: tell waiting people what to expect and give them options, instead of leaving them guessing.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Process duration stated.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CUS-F-001",
+      "skill": "customer-service-orientation",
+      "family": "customer-service-orientation.courteous-replies",
+      "pattern": "reply-refuses-to-help",
+      "mode": "find",
+      "difficulty": "beginner",
+      "concepts": [
+        "customer-service-orientation:courteous-knowledgeable"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "client": "client"
+      },
+      "facts": [
+        "reply-contains-refusal-to-help"
+      ],
+      "scenario": "A {client} wrote asking how to change an appointment at {workplace|the}. This is the reply from an employee.",
+      "prompt": "Tap the line that is a problem.",
+      "docType": "email",
+      "docTitle": "Reply to a customer question",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Thank you for contacting us.",
+          "whyFine": "A courteous opening."
+        },
+        {
+          "id": "b",
+          "text": "That is not my job, so you will have to figure it out yourself.",
+          "problem": true,
+          "why": "Refusing to help or point the person to the right place leaves them stuck and reflects poorly on the whole workplace."
+        },
+        {
+          "id": "c",
+          "text": "I have attached the form for changing appointments.",
+          "whyFine": "Giving a useful resource answers the question directly."
+        },
+        {
+          "id": "d",
+          "text": "Please call us if you need anything else.",
+          "whyFine": "Offering further help is courteous."
+        }
+      ],
+      "principle": "Good service means helping or pointing the person to who can; \"not my job\" leaves them stuck.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Only one line refuses to help.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CUS-O-001",
+      "skill": "customer-service-orientation",
+      "family": "customer-service-orientation.complaint-sequence",
+      "pattern": "listen-acknowledge-resolve-follow-up",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "customer-service-orientation:courteous-knowledgeable"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "client": "client"
+      },
+      "facts": [
+        "client-brings-complaint"
+      ],
+      "scenario": "{Client|a} comes to {workplace|the} with a complaint about a problem they had.",
+      "prompt": "Put these steps in a sensible order.",
+      "steps": [
+        {
+          "id": "listen",
+          "text": "Listen to the whole complaint without interrupting"
+        },
+        {
+          "id": "ack",
+          "text": "Acknowledge the problem and apologize for the trouble"
+        },
+        {
+          "id": "resolve",
+          "text": "Offer a solution, or find out who can provide one"
+        },
+        {
+          "id": "follow",
+          "text": "Follow up to make sure the problem was resolved"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "listen",
+          "after": "ack",
+          "why": "You cannot acknowledge the problem until you have heard what it is."
+        },
+        {
+          "before": "ack",
+          "after": "resolve",
+          "why": "People are more open to a solution after feeling heard."
+        },
+        {
+          "before": "resolve",
+          "after": "follow",
+          "why": "You can only confirm resolution once a solution has been tried."
+        }
+      ],
+      "principle": "Handle complaints in order: listen, acknowledge, resolve, and follow up.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Natural chain.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CUS-D-003",
+      "skill": "customer-service-orientation",
+      "family": "customer-service-orientation.explaining-policy",
+      "pattern": "explain-offer-alternatives-and-escalation",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "customer-service-orientation:courteous-knowledgeable",
+        "customer-service-orientation:prioritize-service"
+      ],
+      "contexts": [
+        "retail",
+        "hospitality",
+        "culinary",
+        "automotive",
+        "business"
+      ],
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "client": "client",
+        "lead": "lead"
+      },
+      "facts": [
+        "policy-refunds-need-receipt",
+        "client-has-no-receipt",
+        "exchange-allowed-without-receipt",
+        "lead-can-review-exceptions"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. {Client|a} asks for a refund but has no receipt. Your workplace's policy requires a receipt for refunds, allows exchanges without one, and lets your {lead} review special cases. The person is polite but disappointed.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Explain the policy kindly, offer an exchange, and offer to ask your {lead} to review their situation.",
+          "why": "Following the policy while giving the person real options, including a review by your {lead}, treats them with respect and keeps your service within the rules.",
+          "requires": [
+            "policy-refunds-need-receipt",
+            "exchange-allowed-without-receipt",
+            "lead-can-review-exceptions"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Explain the policy kindly and tell them that the decision is final.",
+          "why": "The explanation is courteous and accurate, but it leaves out the exchange and review options that the policy actually allows.",
+          "misconception": "Explaining the rule is enough."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Give the refund anyway to avoid an awkward conversation, and hope that nobody notices.",
+          "why": "Setting aside the policy on your own is unfair to others and can cause problems for you. A kind explanation with options is better.",
+          "misconception": "A happy customer is worth bending any rule."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Tell them that policies are policies and that there is nothing more you can do about it.",
+          "why": "Treating the policy as the end of the conversation ignores the options available and sounds dismissive.",
+          "misconception": "Quoting the policy ends the conversation."
+        }
+      ],
+      "principle": "Explain limits kindly, offer every option the policy allows, and know who can review special cases.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Policy stated in scenario; acceptable option omits allowed alternatives."
+      }
+    }
+  ]
+}

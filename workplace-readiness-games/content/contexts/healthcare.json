@@ -1,0 +1,65 @@
+{
+  "label": "Healthcare",
+  "cluster": "Health Science",
+  "bundles": [
+    {
+      "id": "outpatient-clinic",
+      "workplace": "outpatient clinic",
+      "role": "medical assistant",
+      "lead": "clinic supervisor",
+      "client": {
+        "text": "patient",
+        "plural": "patients"
+      },
+      "record": [
+        "patient intake form",
+        "supply count sheet"
+      ],
+      "equipment": [
+        "patient lift",
+        "exam table"
+      ],
+      "system": "electronic health record system",
+      "document": [
+        "referral form",
+        "shift handoff note"
+      ],
+      "deliverable": "patient education packet",
+      "task": [
+        "room turnover checklist",
+        "opening checklist"
+      ],
+      "hazard": [
+        "a spill of liquid on the floor in a busy hallway",
+        "a loose cord stretched across a walkway"
+      ]
+    },
+    {
+      "id": "dental-office",
+      "workplace": "dental office",
+      "role": "dental assistant",
+      "lead": "lead hygienist",
+      "client": {
+        "text": "patient",
+        "plural": "patients"
+      },
+      "record": [
+        "sterilization log",
+        "appointment confirmation list"
+      ],
+      "equipment": [
+        "dental chair",
+        "x-ray unit"
+      ],
+      "system": "patient records system",
+      "document": "treatment note",
+      "deliverable": "treatment summary",
+      "task": "end-of-day closing checklist",
+      "hazard": [
+        "a pool of liquid under the sink outside a treatment room",
+        "a stack of boxes blocking the hallway to the back exit"
+      ]
+    }
+  ],
+  "id": "healthcare"
+}

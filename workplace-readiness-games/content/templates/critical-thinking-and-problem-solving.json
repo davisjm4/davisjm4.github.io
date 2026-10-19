@@ -1,0 +1,335 @@
+{
+  "templates": [
+    {
+      "id": "CTP-D-001",
+      "skill": "critical-thinking-and-problem-solving",
+      "family": "critical-thinking-and-problem-solving.analyzing-root-cause",
+      "pattern": "find-why-the-blank-keeps-happening",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "critical-thinking-and-problem-solving:analyze-problems",
+        "critical-thinking-and-problem-solving:logical-decisions"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "document": "document"
+      },
+      "facts": [
+        "repeated-returns",
+        "blank-second-page-section"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. For the third time this week, {document|a} was sent back because the same section was left blank. Coworkers suggest reminding everyone to be more careful. You notice that section sits at the bottom of the second page, where it is easy to miss.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Find out why that section keeps being missed, and suggest a layout change that makes it hard to skip.",
+          "why": "The same blank section keeps recurring, which points to a cause in the form rather than in people's effort. Fixing the cause prevents the problem instead of repeating a reminder.",
+          "requires": [
+            "blank-second-page-section"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Remind everyone again to be more careful, and watch to see whether the same section is missed next week.",
+          "why": "A reminder does not change the thing that makes the section easy to miss. A repeated problem usually has a cause beyond carelessness.",
+          "misconception": "Repeated problems are just carelessness."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Fill in the blank section yourself each time so the documents stop coming back.",
+          "why": "Fixing every case keeps the symptom hidden and adds work for you. The cause stays in place, so the problem returns.",
+          "misconception": "Fixing each case is the same as solving the problem."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask your supervisor to have someone double-check every document before it goes out.",
+          "why": "Extra checking may catch errors but adds work every time and leaves the cause untouched. Finding why the section is missed is a better first move.",
+          "misconception": "More checking is the only way to prevent mistakes."
+        }
+      ],
+      "principle": "When a problem repeats, look for what keeps causing it instead of reminding people or fixing each instance.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Evidence pointing to the cause is in the scenario.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CTP-D-002",
+      "skill": "critical-thinking-and-problem-solving",
+      "family": "critical-thinking-and-problem-solving.evaluating-solutions",
+      "pattern": "compare-proposals-against-delay-data",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "critical-thinking-and-problem-solving:evaluate-solutions",
+        "critical-thinking-and-problem-solving:logical-decisions"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person",
+        "coworker2": "person"
+      },
+      "facts": [
+        "two-untested-proposals",
+        "data-available"
+      ],
+      "scenario": "Your team at {workplace|the} must decide how to reduce a recurring backlog. {coworker} proposes adding a second check, and {coworker2} proposes dropping a step. Neither idea has been tested. You have last month's records showing where in the process most delays happen.",
+      "prompt": "What is the best contribution you can make?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Compare both proposals against last month's records of where delays happen, and recommend the one that targets them.",
+          "why": "Using the records you already have ties the decision to evidence about the actual problem rather than to opinion.",
+          "requires": [
+            "data-available"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Suggest trying both ideas at the same time for a full week to see which one seems to work better.",
+          "why": "Testing is reasonable, but changing two things at once makes it hard to tell which one helped, and the existing records could have narrowed the choice first.",
+          "misconception": "Trying everything at once is the fastest way to learn."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Support the proposal from the more experienced coworker, since experience usually wins out.",
+          "why": "Experience is valuable, but it is not evidence about this backlog. The records show where delays actually happen.",
+          "misconception": "The most experienced person's idea is the most likely to work."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Pick the cheaper proposal, since cost is the easiest thing to compare.",
+          "why": "Cost matters, but a cheaper fix that misses the cause will not reduce the backlog. Compare the proposals on what they would change.",
+          "misconception": "The cheapest option is the best option."
+        }
+      ],
+      "principle": "Judge possible solutions against evidence about the problem, not against seniority, cost alone or guesses.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Records are explicitly available; acceptable option is reasonable but less efficient.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CTP-O-001",
+      "skill": "critical-thinking-and-problem-solving",
+      "family": "critical-thinking-and-problem-solving.problem-solving-process",
+      "pattern": "describe-investigate-choose-act-check",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "critical-thinking-and-problem-solving:implement-action",
+        "critical-thinking-and-problem-solving:analyze-problems"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "problem-needs-solving"
+      ],
+      "scenario": "A problem keeps interrupting work at {workplace|a}, and you have been asked to solve it.",
+      "prompt": "Put these problem-solving steps in a sensible order.",
+      "steps": [
+        {
+          "id": "describe",
+          "text": "Describe the problem clearly"
+        },
+        {
+          "id": "gather",
+          "text": "Gather information about what is causing it"
+        },
+        {
+          "id": "choose",
+          "text": "Compare possible solutions and pick the best fit"
+        },
+        {
+          "id": "act",
+          "text": "Carry out the chosen solution"
+        },
+        {
+          "id": "check",
+          "text": "Check whether the problem is actually solved"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "describe",
+          "after": "gather",
+          "why": "You need a clear description before you know what to investigate."
+        },
+        {
+          "before": "gather",
+          "after": "choose",
+          "why": "Good solutions come from understanding the cause first."
+        },
+        {
+          "before": "choose",
+          "after": "act",
+          "why": "You pick a solution before carrying it out."
+        },
+        {
+          "before": "act",
+          "after": "check",
+          "why": "You can only check results after the solution is in place."
+        }
+      ],
+      "principle": "Solve problems in order: describe, investigate, choose, act, and then check that the problem is really solved.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Total order; each step depends on the previous.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CTP-N-001",
+      "skill": "critical-thinking-and-problem-solving",
+      "family": "critical-thinking-and-problem-solving.first-step-in-a-recurring-error",
+      "pattern": "investigate-before-fixing",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "critical-thinking-and-problem-solving:analyze-problems",
+        "critical-thinking-and-problem-solving:implement-action"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "document": "document",
+        "lead": "lead"
+      },
+      "facts": [
+        "same-error-twice",
+        "records-available",
+        "fix-proposed-before-checking"
+      ],
+      "scenario": "At {workplace|the}, the same error has shown up on {document|a} twice this week. A coworker suggests adding a new approval step right away. The records for both cases are available, and no one has compared them yet.",
+      "prompt": "What is the best first step?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Compare the records for the two cases to see what they have in common before choosing a fix.",
+          "why": "Understanding what the two cases share points toward the cause, so the fix matches the problem.",
+          "requires": [
+            "records-available"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Add the new approval step today, since a quick fix is better than waiting for more information.",
+          "why": "A fix chosen before the cause is known may add work without stopping the error. The records were available to check first.",
+          "misconception": "Acting immediately always beats investigating."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Wait to see whether the error happens a third time, since two times might just be bad luck.",
+          "why": "Two repeats in one week is already a pattern worth checking. Waiting means more errors and the records are ready now.",
+          "misconception": "A problem is only real once it happens many times."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask each person involved to explain why it happened, and then use the most common excuse as the cause.",
+          "why": "Explanations from memory vary and can miss the real cause. Records show what actually happened in each case.",
+          "misconception": "What people remember is more reliable than records."
+        }
+      ],
+      "principle": "Before fixing a recurring problem, look at the evidence for what the cases have in common.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Records stated as available.",
+        "policyNotNeeded": true
+      },
+      "timing": "Investigation comes before choosing a fix."
+    },
+    {
+      "id": "CTP-F-001",
+      "skill": "critical-thinking-and-problem-solving",
+      "family": "critical-thinking-and-problem-solving.avoiding-hasty-conclusions",
+      "pattern": "small-sample-sweeping-claim",
+      "mode": "find",
+      "difficulty": "intermediate",
+      "concepts": [
+        "critical-thinking-and-problem-solving:logical-decisions",
+        "critical-thinking-and-problem-solving:analyze-problems"
+      ],
+      "contexts": [
+        "retail",
+        "manufacturing",
+        "agriculture",
+        "culinary"
+      ],
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "note-jumps-to-sweeping-conclusion"
+      ],
+      "scenario": "A coworker at {workplace|the} writes this note after a few returned orders.",
+      "prompt": "Tap the line with the reasoning problem.",
+      "docType": "note",
+      "docTitle": "Note about returned orders",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Three orders came back this week.",
+          "whyFine": "A simple factual statement."
+        },
+        {
+          "id": "b",
+          "text": "Two of them were packed during the evening shift.",
+          "whyFine": "Another factual detail that may or may not matter."
+        },
+        {
+          "id": "c",
+          "text": "So everyone on the evening shift is careless and needs to be retrained.",
+          "problem": true,
+          "why": "Two cases do not show that a whole shift is careless. This jumps from a small sample to a sweeping conclusion about people."
+        },
+        {
+          "id": "d",
+          "text": "Let us compare all three orders to see what they have in common.",
+          "whyFine": "Comparing the cases is a sound way to find the cause."
+        }
+      ],
+      "principle": "Do not jump from a small number of cases to a broad conclusion about people; look at the evidence first.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Only one line draws an unsupported conclusion.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

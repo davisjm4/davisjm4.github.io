@@ -1,0 +1,331 @@
+{
+  "templates": [
+    {
+      "id": "ILI-F-001",
+      "skill": "information-literacy",
+      "family": "information-literacy.source-reliability",
+      "pattern": "anonymous-old-source-over-current-manual",
+      "mode": "find",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-literacy:evaluate-credibility",
+        "information-literacy:use-information"
+      ],
+      "contexts": "any",
+      "slots": {
+        "equipment": "equipment",
+        "lead": "lead"
+      },
+      "facts": [
+        "current-manufacturer-manual-exists",
+        "anonymous-old-post-conflicts"
+      ],
+      "scenario": "A new coworker shares this note before setting up some new equipment.",
+      "prompt": "Tap the line that shows a problem with how information is being chosen.",
+      "docType": "note",
+      "docTitle": "Research note about the new {equipment}",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Goal: find the correct setup steps for {equipment|the} we just received.",
+          "whyFine": "Stating the goal is useful and makes no questionable claim about sources."
+        },
+        {
+          "id": "b",
+          "text": "The manufacturer's current manual, dated this year, lists the steps on pages 4 to 6.",
+          "whyFine": "A current manual from the manufacturer is an authoritative, up-to-date source."
+        },
+        {
+          "id": "p",
+          "text": "An anonymous forum post from 2014 gives different steps, and I plan to follow those instead.",
+          "problem": true,
+          "why": "An anonymous, years-old post is a weak source, especially when a current manufacturer manual says something different. Favor sources that are current and authoritative."
+        },
+        {
+          "id": "c",
+          "text": "Before we start, I will confirm the steps with {lead|the}.",
+          "whyFine": "Checking with the person in charge before starting is a sensible safeguard."
+        }
+      ],
+      "principle": "When sources disagree, favor the one that is current, written by an authority on the subject, and meant for your exact situation.",
+      "review": {
+        "status": "approved",
+        "checks": [],
+        "notes": "Only one line shows a source-selection flaw. The other lines are explicitly sound. Generic equipment; no specialized knowledge needed."
+      }
+    },
+    {
+      "id": "ILI-D-001",
+      "skill": "information-literacy",
+      "family": "information-literacy.currency-of-information",
+      "pattern": "use-the-current-price-list",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-literacy:evaluate-credibility",
+        "information-literacy:use-information"
+      ],
+      "contexts": [
+        "retail",
+        "hospitality",
+        "automotive",
+        "business",
+        "construction",
+        "culinary",
+        "agriculture"
+      ],
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "client": "client",
+        "system": "system",
+        "lead": "lead"
+      },
+      "facts": [
+        "two-sources-differ",
+        "brochure-three-years-old",
+        "system-list-updated-this-month"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. {Client|a} asks for a price. A printed brochure at your desk lists one price, but it is three years old. {System|the} shows a different price on a list that was updated this month.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Use the price from {system|the}, and check with your {lead} if you are unsure about it.",
+          "why": "A list updated this month is more likely to be accurate than a three-year-old brochure. Checking with your {lead} covers any doubt.",
+          "requires": [
+            "system-list-updated-this-month"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Use the brochure price, since a printed brochure looks official and is easy to point to.",
+          "why": "A printed look does not make information current. Prices change, and an old brochure may no longer be right.",
+          "misconception": "Printed material is more reliable than screens."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Quote the price from memory, since you have seen that number many times before.",
+          "why": "Memory can be out of date too. When a current source is available, use it rather than relying on what you recall.",
+          "misconception": "What I remember is accurate enough."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask the person what price they remember seeing, and go with that to avoid any dispute.",
+          "why": "A customer's memory is not an authoritative source, and agreeing to it could cause the workplace to lose money or mislead them.",
+          "misconception": "Using the customer's number avoids conflict."
+        }
+      ],
+      "principle": "Check how current a source is, and prefer the most up-to-date authoritative one for decisions.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Source dates stated.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "ILI-O-001",
+      "skill": "information-literacy",
+      "family": "information-literacy.research-process",
+      "pattern": "question-sources-credibility-use",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-literacy:locate-sources",
+        "information-literacy:use-information"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "asked-to-research-a-question"
+      ],
+      "scenario": "Your supervisor at {workplace|the} asks you to find the answer to a work question.",
+      "prompt": "Put these research steps in a sensible order.",
+      "steps": [
+        {
+          "id": "ask",
+          "text": "Be clear about exactly what you need to find out"
+        },
+        {
+          "id": "find",
+          "text": "Look for sources that might have the answer"
+        },
+        {
+          "id": "check",
+          "text": "Check who wrote each source and how current it is"
+        },
+        {
+          "id": "use",
+          "text": "Use the best source, and note where it came from"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "ask",
+          "after": "find",
+          "why": "Knowing the exact question guides where to look."
+        },
+        {
+          "before": "find",
+          "after": "check",
+          "why": "You can only check sources you have found."
+        },
+        {
+          "before": "check",
+          "after": "use",
+          "why": "Choosing the best source depends on having checked them."
+        }
+      ],
+      "principle": "Research well: define the question, find sources, check credibility and currency, then use and note your source.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Natural chain.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "ILI-D-002",
+      "skill": "information-literacy",
+      "family": "information-literacy.conflicting-sources",
+      "pattern": "check-recency-and-fit-then-confirm",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "information-literacy:evaluate-credibility",
+        "information-literacy:judge-relevance"
+      ],
+      "contexts": "any",
+      "slots": {
+        "equipment": "equipment",
+        "lead": "lead",
+        "coworker": "person"
+      },
+      "facts": [
+        "two-credible-sources-disagree",
+        "one-covers-older-version",
+        "need-answer-today"
+      ],
+      "scenario": "You are setting up {equipment|the} and need a specification. A supplier's guide and a training handout from your workplace give different numbers. The supplier's guide covers an older version of the product, and the handout names the exact version you have. You need to finish today, and {coworker} suggests averaging the two numbers.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Use the source that matches your exact version, and confirm the number with your {lead} before going ahead.",
+          "why": "Both sources are credible, but only one fits your product. Matching the source to your situation and confirming gives a reliable answer.",
+          "requires": [
+            "one-covers-older-version"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Go with the supplier's guide, since suppliers know their own products best.",
+          "why": "The supplier is a credible source, but this guide covers an older version. Credibility does not replace fit to your exact product.",
+          "misconception": "The maker of the product is always right."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Use the average of the two numbers, since that is probably close enough to both.",
+          "why": "Averaging different sources produces a number that neither source supports and may be wrong for your product.",
+          "misconception": "A number in the middle is a safe choice."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Use whichever number matches what you were already planning to do, so that you can finish on time.",
+          "why": "Choosing a source because it agrees with your plan is a way of ignoring evidence, and the mismatch will not go away.",
+          "misconception": "The source that agrees with me is the correct one."
+        }
+      ],
+      "principle": "When credible sources disagree, check which one fits your exact situation and confirm before acting.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Source scope stated; acceptable option is credible but mismatched.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "ILI-N-001",
+      "skill": "information-literacy",
+      "family": "information-literacy.tracing-a-statistic",
+      "pattern": "trace-the-number-before-using",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-literacy:evaluate-credibility",
+        "information-literacy:use-information"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "surprising-statistic",
+        "no-source-stated",
+        "report-due-this-afternoon"
+      ],
+      "scenario": "While preparing a short report for your {lead} at {workplace|the}, you find a surprising statistic on a website that supports your point. The page does not say where the number came from. The report is due this afternoon.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Try to trace the number back to its original source and check how recent it is before using it.",
+          "why": "A number with no stated source could be wrong or out of date. Finding the origin lets you judge whether it is reliable before it goes into your report.",
+          "requires": [
+            "no-source-stated"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Use the statistic as it is, since it supports your point and the report is due soon.",
+          "why": "Fitting your argument does not make a number accurate. An unchecked number can undermine the whole report if it turns out to be wrong.",
+          "misconception": "If it supports my point, it must be right."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Ask a coworker whether they have heard the number before, and go with whatever they say.",
+          "why": "Familiarity is not the same as accuracy. Numbers can be repeated widely without being correct.",
+          "misconception": "If it sounds familiar, it must be accurate."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Use it, but describe the source only as online research so that it sounds more official.",
+          "why": "Vague sourcing hides the weakness instead of fixing it, and your reader cannot check the claim.",
+          "misconception": "A general label makes a weak source stronger."
+        }
+      ],
+      "principle": "Before using a surprising number, find where it came from and check how current and credible that source is.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy content.",
+        "policyNotNeeded": true
+      },
+      "timing": "Verification must come before the number is used."
+    }
+  ]
+}

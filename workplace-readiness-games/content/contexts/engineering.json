@@ -1,0 +1,59 @@
+{
+  "id": "engineering",
+  "label": "Engineering",
+  "cluster": "Science, Technology, Engineering & Mathematics",
+  "bundles": [
+    {
+      "id": "engineering-lab",
+      "workplace": "engineering lab",
+      "role": "technician",
+      "lead": "lab supervisor",
+      "client": {
+        "text": "client",
+        "plural": "clients"
+      },
+      "record": [
+        "test log",
+        "equipment calibration record"
+      ],
+      "equipment": [
+        "3D printer",
+        "bench power supply"
+      ],
+      "system": "test data system",
+      "document": "test request",
+      "deliverable": "finished prototype",
+      "task": "lab close-down checklist",
+      "hazard": [
+        "a tangle of power cords across the lab floor",
+        "a bin of sharp metal scraps left on the walkway"
+      ]
+    },
+    {
+      "id": "design-firm",
+      "workplace": "civil engineering firm",
+      "role": "drafting assistant",
+      "lead": "project engineer",
+      "client": {
+        "text": "client",
+        "plural": "clients"
+      },
+      "record": [
+        "drawing revision log",
+        "site visit notes"
+      ],
+      "equipment": [
+        "large-format plotter",
+        "survey tripod"
+      ],
+      "system": "drawing management system",
+      "document": "drawing set",
+      "deliverable": "completed plan sheet",
+      "task": "project file check",
+      "hazard": [
+        "rolled drawings stacked in the hallway",
+        "a tripod left standing in a busy doorway"
+      ]
+    }
+  ]
+}

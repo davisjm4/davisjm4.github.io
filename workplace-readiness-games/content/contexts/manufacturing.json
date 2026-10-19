@@ -1,0 +1,59 @@
+{
+  "id": "manufacturing",
+  "label": "Manufacturing",
+  "cluster": "Manufacturing",
+  "bundles": [
+    {
+      "id": "assembly-plant",
+      "workplace": "assembly plant",
+      "role": "production associate",
+      "lead": "line supervisor",
+      "client": {
+        "text": "customer",
+        "plural": "customers"
+      },
+      "record": [
+        "quality check log",
+        "production count sheet"
+      ],
+      "equipment": [
+        "conveyor",
+        "torque tool"
+      ],
+      "system": "production tracking system",
+      "document": "work instruction",
+      "deliverable": "assembled unit",
+      "task": "start-of-shift equipment check",
+      "hazard": [
+        "a patch of oil on the floor near the conveyor",
+        "a pallet left in the marked walkway"
+      ]
+    },
+    {
+      "id": "packaging-facility",
+      "workplace": "packaging facility",
+      "role": "machine operator trainee",
+      "lead": "shift supervisor",
+      "client": {
+        "text": "customer",
+        "plural": "customers"
+      },
+      "record": [
+        "batch record",
+        "downtime log"
+      ],
+      "equipment": [
+        "shrink-wrap machine",
+        "label applicator"
+      ],
+      "system": "inventory tracking system",
+      "document": "shipping order",
+      "deliverable": "packed pallet",
+      "task": "line clearance checklist",
+      "hazard": [
+        "loose plastic wrap on the floor beside the machine",
+        "a forklift parked partly across an aisle"
+      ]
+    }
+  ]
+}

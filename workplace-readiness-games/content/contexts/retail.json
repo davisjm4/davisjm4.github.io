@@ -1,0 +1,59 @@
+{
+  "label": "Retail",
+  "cluster": "Marketing",
+  "bundles": [
+    {
+      "id": "grocery-store",
+      "workplace": "grocery store",
+      "role": "stock associate",
+      "lead": "department manager",
+      "client": {
+        "text": "customer",
+        "plural": "customers"
+      },
+      "record": [
+        "inventory count sheet",
+        "markdown log"
+      ],
+      "equipment": [
+        "pallet jack",
+        "produce scale"
+      ],
+      "system": "inventory scanner system",
+      "document": "delivery receipt",
+      "deliverable": "special order",
+      "task": "freshness check",
+      "hazard": [
+        "spilled liquid in the cereal aisle",
+        "boxes stacked high and leaning over the aisle"
+      ]
+    },
+    {
+      "id": "electronics-store",
+      "workplace": "electronics store",
+      "role": "sales associate",
+      "lead": "floor supervisor",
+      "client": {
+        "text": "customer",
+        "plural": "customers"
+      },
+      "record": [
+        "return log",
+        "display inventory sheet"
+      ],
+      "equipment": [
+        "label printer",
+        "security tag remover"
+      ],
+      "system": "point-of-sale system",
+      "document": "special order form",
+      "deliverable": "custom order",
+      "task": "opening checklist",
+      "hazard": [
+        "a power strip with a frayed cord beside a display",
+        "a display shelf leaning to one side"
+      ]
+    }
+  ],
+  "id": "retail"
+}

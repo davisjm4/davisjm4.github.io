@@ -1,0 +1,564 @@
+{
+  "templates": [
+    {
+      "id": "SAF-O-001",
+      "skill": "workplace-safety",
+      "family": "workplace-safety.reporting-hazards",
+      "pattern": "protect-report-resume-sequence",
+      "mode": "order",
+      "difficulty": "intermediate",
+      "concepts": [
+        "workplace-safety:identify-hazards",
+        "workplace-safety:safety-guidelines"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "hazard": "hazard",
+        "lead": "lead"
+      },
+      "facts": [
+        "ordinary-hazard-not-emergency"
+      ],
+      "scenario": "While working as {role|a} at {workplace|a}, you notice {hazard}. It is not a fire or other emergency that calls for evacuation.",
+      "prompt": "Arrange these actions in the order you would take them.",
+      "steps": [
+        {
+          "id": "stop",
+          "text": "Stop work in that area and stay clear of the hazard yourself"
+        },
+        {
+          "id": "warn",
+          "text": "Warn nearby coworkers so no one walks into it"
+        },
+        {
+          "id": "report",
+          "text": "Tell your {lead} about the hazard right away"
+        },
+        {
+          "id": "follow",
+          "text": "Follow your {lead}'s instructions for dealing with it"
+        },
+        {
+          "id": "resume",
+          "text": "Go back to your task once the area has been made safe"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "stop",
+          "after": "warn",
+          "why": "Continuing to work near a hazard puts you at risk, so stop before you do anything else."
+        },
+        {
+          "before": "stop",
+          "after": "report",
+          "why": "Stopping first keeps you from being hurt while you find and tell the right person."
+        },
+        {
+          "before": "report",
+          "after": "follow",
+          "why": "You cannot follow instructions that have not been given yet."
+        },
+        {
+          "before": "follow",
+          "after": "resume",
+          "why": "Work should resume only after the hazard has been dealt with the way your lead directs."
+        },
+        {
+          "before": "warn",
+          "after": "resume",
+          "why": "Coworkers need to know about the hazard before everyone goes back to work around it."
+        }
+      ],
+      "alternatesReviewed": true,
+      "principle": "Make yourself and others safe first, report the hazard to the person responsible, and return to work only once it has been handled.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "policyNotNeeded": true,
+        "notes": "Explicitly excludes fire/evacuation emergencies. Warning coworkers and reporting may happen in either order; both alternates are professionally sound. No step asks the student to fix the hazard themselves."
+      }
+    },
+    {
+      "id": "SAF-D-001",
+      "skill": "workplace-safety",
+      "family": "workplace-safety.following-procedures",
+      "pattern": "refuse-to-sign-unperformed-check",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "workplace-safety:safety-guidelines",
+        "workplace-safety:identify-hazards"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "coworker": "person",
+        "task": "task",
+        "equipment": "equipment",
+        "lead": "lead"
+      },
+      "facts": [
+        "check-not-done",
+        "policy-check-before-signoff",
+        "lead-on-site"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. {coworker} asks you to initial {task|the} to show the {equipment} was inspected today. The inspection has not been done. {coworker} says, \"We're behind, and it was fine yesterday.\" Your workplace requires each check to be completed before it is signed off, and your {lead} is on site.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Decline to initial it, and tell your {lead} the check has not been done so it can be scheduled.",
+          "why": "Signing for a check that was not done creates a false record and could hide a real problem. Telling your {lead} gets the inspection scheduled by the person who can fit it in.",
+          "requires": [
+            "policy-check-before-signoff",
+            "lead-on-site"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Initial it, since {coworker} has more experience and says the {equipment} was fine yesterday.",
+          "why": "Yesterday's condition does not show today's. Equipment can change between uses, which is why the check exists.",
+          "misconception": "A coworker's experience or past results can replace the actual check."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Initial it now and do the check later in the day, so that the record is accurate by closing time.",
+          "why": "Signing before the work is done makes the record untrue in the meantime, and anyone relying on it during the day is relying on a check that has not happened.",
+          "misconception": "Signing early is fine as long as the work eventually gets done."
+        },
+        {
+          "id": "d3",
+          "role": "acceptable",
+          "text": "Decline to initial it and ask {coworker} to make sure the check is done before the shift ends.",
+          "why": "Declining is right, but a missed check is a safety gap that your {lead} should know about. Leaving it between coworkers risks the check being skipped again.",
+          "misconception": "Handling it between coworkers is enough."
+        }
+      ],
+      "principle": "Sign off only on checks that have actually been done, and take schedule problems to the person who can solve them instead of recording work that did not happen.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Workplace rule stated in scenario. Best action does not ask the student to perform the inspection, only to decline and escalate. Acceptable option declines correctly but skips escalation."
+      }
+    },
+    {
+      "id": "SAF-D-002",
+      "skill": "workplace-safety",
+      "family": "workplace-safety.ppe",
+      "pattern": "wear-ppe-and-report-fit-problem",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "workplace-safety:ppe",
+        "workplace-safety:safety-guidelines"
+      ],
+      "contexts": [
+        "construction",
+        "manufacturing",
+        "automotive",
+        "agriculture",
+        "engineering",
+        "healthcare",
+        "culinary"
+      ],
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "lead": "lead",
+        "task": "task"
+      },
+      "facts": [
+        "posted-sign-requires-glasses",
+        "glasses-fog-up",
+        "task-is-short"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. A posted sign says safety glasses must be worn for part of {task|the}. Yours keep fogging up, and the part of the task that needs them takes only a couple of minutes.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Wear the glasses for that part, and tell your {lead} about the fogging so you can get a better fit.",
+          "why": "The sign calls for protection during that part of the task. Reporting the fogging gets you a pair that works.",
+          "requires": [
+            "posted-sign-requires-glasses"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Skip the glasses since it is only a couple of minutes, and be extra careful instead.",
+          "why": "An eye injury can happen in seconds. Being careful does not replace protection that the sign requires.",
+          "misconception": "A short task does not need protection."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Wear the glasses pushed up on your forehead, so you have them on you if you need them.",
+          "why": "Glasses on your forehead do not protect your eyes, even if they look like you are following the sign.",
+          "misconception": "Having the equipment nearby counts as using it."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask a coworker to keep watch for trouble while you do that part without the glasses on.",
+          "why": "A lookout cannot stop something from reaching your eyes. The protection has to be on you during the task.",
+          "misconception": "Another person watching is the same as protection."
+        }
+      ],
+      "principle": "Wear required protective equipment for the whole task, and report problems with fit so you can get something that works.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Posted sign stated in scenario; no claims about regulations."
+      }
+    },
+    {
+      "id": "SAF-N-001",
+      "skill": "workplace-safety",
+      "family": "workplace-safety.emergency-protocols",
+      "pattern": "leave-by-nearest-marked-exit",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "workplace-safety:emergency-protocols"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "client": "client",
+        "document": "document"
+      },
+      "facts": [
+        "alarm-sounds",
+        "posted-instructions-nearest-exit",
+        "in-middle-of-task"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. The fire alarm sounds while you are in the middle of helping {client|a} with {document|a}. Posted instructions tell employees to use the closest marked exit when the alarm sounds.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Stop what you are doing and head out by the exit route nearest you, helping others who need directions.",
+          "why": "The posted instructions point employees to the closest marked exit. Stopping right away is more important than finishing any task.",
+          "requires": [
+            "posted-instructions-nearest-exit"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Finish what you are doing so that nothing is left in a mess, and leave after that.",
+          "why": "No task is worth the delay in an alarm. Work can be picked up later, but time spent finishing cannot be recovered.",
+          "misconception": "Finishing the task first is more responsible."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Go to your locker to get your belongings before heading to the exit.",
+          "why": "Collecting belongings costs time and may take you away from the exit route. Personal items can be replaced.",
+          "misconception": "I should not leave my things behind."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Walk around to find where the alarm is coming from, so you can tell others what is happening.",
+          "why": "Searching for the source puts you at risk and delays leaving. Trained responders will handle that.",
+          "misconception": "Finding the cause helps everyone."
+        }
+      ],
+      "principle": "When an alarm sounds, stop and leave by the posted route right away; belongings and unfinished work can wait.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Posted instruction stated in scenario; no specific procedures claimed."
+      },
+      "timing": "An alarm is sounding, so leaving comes before any task or errand."
+    },
+    {
+      "id": "SAF-O-002",
+      "skill": "workplace-safety",
+      "family": "workplace-safety.evacuation-sequence",
+      "pattern": "stop-exit-assemble-report",
+      "mode": "order",
+      "difficulty": "intermediate",
+      "concepts": [
+        "workplace-safety:emergency-protocols"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "evacuation-instructions-posted"
+      ],
+      "scenario": "An evacuation is called at {workplace|the}. Your workplace has posted evacuation instructions.",
+      "prompt": "Put these actions in the order you would take them.",
+      "steps": [
+        {
+          "id": "stop",
+          "text": "Stop work and leave equipment the way you were trained to"
+        },
+        {
+          "id": "exit",
+          "text": "Leave by the nearest marked exit"
+        },
+        {
+          "id": "meet",
+          "text": "Go to the meeting point"
+        },
+        {
+          "id": "report",
+          "text": "Check in with the person taking attendance"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "stop",
+          "after": "exit",
+          "why": "Leaving equipment safely first prevents it from becoming a hazard while people evacuate."
+        },
+        {
+          "before": "exit",
+          "after": "meet",
+          "why": "You cannot reach the meeting point without first leaving the building."
+        },
+        {
+          "before": "meet",
+          "after": "report",
+          "why": "Attendance is taken at the meeting point."
+        }
+      ],
+      "principle": "In an evacuation, secure your work as trained, leave by the marked route, assemble, and check in.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Posted instructions stated; no specific legal requirements."
+      }
+    },
+    {
+      "id": "SAF-D-003",
+      "skill": "workplace-safety",
+      "family": "workplace-safety.safety-data-sheets",
+      "pattern": "do-not-use-unlabeled-container",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "workplace-safety:safety-data-sheets",
+        "workplace-safety:safety-guidelines"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "coworker": "person",
+        "lead": "lead"
+      },
+      "facts": [
+        "unlabeled-spray-bottle",
+        "coworker-says-just-cleaner",
+        "workplace-keeps-safety-data-sheets"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. You find an unlabeled spray bottle in the supply area. {coworker} says, \"It is just cleaner, go ahead and use it.\" Your workplace keeps safety data sheets for every approved product.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Do not use it, and tell your {lead} so it can be identified using labels and the safety data sheets.",
+          "why": "A product with no label cannot be matched to a safety data sheet, so no one knows what protection it needs. Reporting it lets it be identified or removed.",
+          "requires": [
+            "workplace-keeps-safety-data-sheets"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Smell the liquid to figure out what it is, and use it if it smells like cleaner.",
+          "why": "Smelling an unknown liquid can itself be harmful, and many hazardous products smell like harmless ones.",
+          "misconception": "I can identify a product by smell."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Try it on a small hidden spot first, and use it more widely if nothing seems to happen.",
+          "why": "A small test does not tell you what the product is or what it does with other materials or over time.",
+          "misconception": "If nothing happens right away, it is safe."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Pour it into a properly labeled bottle so that nobody else is confused about what it is.",
+          "why": "Labeling a liquid when you do not know what it is makes it look known and safe, which is more dangerous.",
+          "misconception": "A label makes a product safe to use."
+        }
+      ],
+      "principle": "Do not use an unlabeled product; report it so it can be identified with its label and safety data sheet.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Workplace SDS availability stated in scenario; no regulatory claims."
+      }
+    },
+    {
+      "id": "SAF-F-001",
+      "skill": "workplace-safety",
+      "family": "workplace-safety.spill-procedure",
+      "pattern": "remove-the-warning-sign-too-early",
+      "mode": "find",
+      "difficulty": "intermediate",
+      "concepts": [
+        "workplace-safety:identify-hazards",
+        "workplace-safety:safety-guidelines"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "procedure-removes-sign-before-cleanup"
+      ],
+      "scenario": "This spill clean-up procedure is posted at {workplace|the}.",
+      "prompt": "Tap the step that is a problem.",
+      "docType": "procedure",
+      "docTitle": "Spill clean-up steps",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Put on the gloves provided.",
+          "whyFine": "Wearing protective gloves is a sensible first step."
+        },
+        {
+          "id": "b",
+          "text": "Take away the wet floor sign before you start cleaning so it is not in your way.",
+          "problem": true,
+          "why": "Removing the warning sign before the spill is cleaned leaves others unaware of the hazard."
+        },
+        {
+          "id": "c",
+          "text": "Clean up the spill using the supplies provided.",
+          "whyFine": "Cleaning the spill is the goal of the procedure."
+        },
+        {
+          "id": "d",
+          "text": "Place the wet floor sign back until the floor is completely dry.",
+          "whyFine": "Keeping the warning in place until the floor is dry protects others."
+        }
+      ],
+      "principle": "Keep warnings in place until a hazard is gone; never remove them early to make work easier.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Single step removes the warning too early.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "SAF-D-004",
+      "skill": "workplace-safety",
+      "family": "workplace-safety.universal-precautions",
+      "pattern": "use-trained-precautions-for-blood",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "workplace-safety:universal-precautions",
+        "workplace-safety:ppe"
+      ],
+      "contexts": [
+        "healthcare",
+        "construction",
+        "hospitality",
+        "culinary",
+        "retail",
+        "education",
+        "automotive",
+        "manufacturing",
+        "agriculture"
+      ],
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person",
+        "lead": "lead"
+      },
+      "facts": [
+        "small-cut-blood-on-counter",
+        "employees-trained-to-treat-blood-as-infectious",
+        "gloves-and-disinfectant-provided",
+        "lead-nearby"
+      ],
+      "scenario": "At {workplace|the}, {coworker} has a small cut and has put on a bandage, but a little blood is on a counter. Employees at your workplace are trained to treat all blood as potentially infectious. Gloves and disinfectant are provided, and your {lead} is nearby.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Put on gloves, clean the counter with the provided disinfectant as trained, and dispose of the materials properly.",
+          "why": "Treating all blood as potentially infectious, and using the protection and steps you were trained on, protects you and others.",
+          "requires": [
+            "employees-trained-to-treat-blood-as-infectious",
+            "gloves-and-disinfectant-provided"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Keep people away from the counter and ask your {lead} to arrange for it to be cleaned.",
+          "why": "This keeps others safe, but you were trained and equipped to handle it, so waiting leaves the hazard in place longer.",
+          "misconception": "Specialized situations are always for someone else."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Wipe it up quickly with a paper towel and throw it in the regular trash, since it is such a small amount.",
+          "why": "A small amount can still be infectious, and bare hands and ordinary disposal skip the precautions you were trained to use.",
+          "misconception": "A small amount is not a risk."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask {coworker} to wipe up the counter without gloves, since it was {coworker}'s own blood.",
+          "why": "Contact with blood is a risk even from your own cut, and asking an injured person to clean it adds risk and ignores the precautions.",
+          "misconception": "Your own blood is not a risk to you."
+        }
+      ],
+      "principle": "Treat all blood as potentially infectious: use protective equipment and the procedures you were trained on.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Training and supplies are stated; no medical or legal claims beyond the scenario."
+      }
+    }
+  ]
+}

@@ -1,0 +1,324 @@
+{
+  "templates": [
+    {
+      "id": "WET-D-001",
+      "skill": "work-ethic",
+      "family": "work-ethic.dependability",
+      "pattern": "tell-lead-early-about-ride",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "work-ethic:dependability"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "opening-shift-tomorrow",
+        "ride-unavailable",
+        "swap-unconfirmed"
+      ],
+      "scenario": "You are scheduled to open {workplace|the} tomorrow at 7:00. Tonight you find out your usual ride is not available. A coworker said they might be able to swap shifts with you, but nothing is confirmed.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Tell your {lead} tonight, share what you are doing to find a ride, and confirm any swap before the shift.",
+          "why": "Early notice gives your {lead} time to plan, and showing you are working on a solution demonstrates that people can count on you.",
+          "requires": [
+            "swap-unconfirmed"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Wait to see how the morning goes, then let your {lead} know as soon as you find out that you cannot get there.",
+          "why": "Telling someone at the last minute leaves no time to arrange coverage for a shift that must be opened on time.",
+          "misconception": "I only need to speak up if the problem actually happens."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Text the coworker to cover and assume the swap will work out without telling anyone else.",
+          "why": "An unconfirmed swap is not coverage, and the person responsible for the schedule does not know. If it falls through, no one is prepared.",
+          "misconception": "A casual maybe from a coworker counts as arranged."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Plan to arrive late if you must, since a few minutes will not matter for opening.",
+          "why": "Opening has a set time because others depend on it. Planning to be late without warning shifts the problem onto coworkers.",
+          "misconception": "A short delay is harmless."
+        }
+      ],
+      "principle": "Being dependable means giving early notice when a plan falls through and working to solve the problem, not leaving others to discover it.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy or legal content.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "WET-N-001",
+      "skill": "work-ethic",
+      "family": "work-ethic.accountability",
+      "pattern": "hand-off-unfinished-task",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "work-ethic:accountability",
+        "work-ethic:dependability"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "task": "task",
+        "coworker": "person",
+        "lead": "lead"
+      },
+      "facts": [
+        "forgot-task",
+        "five-minutes-left",
+        "next-person-arriving"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. Five minutes before you clock out, you realize you forgot to finish {task|the} that {coworker} is expecting to find done when the next shift starts. {coworker} is walking in now, and your {lead} has already left.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Tell {coworker} right now what is left on {task|the}, and finish what you can in the time you have.",
+          "why": "Letting the next person know immediately means they can plan around the gap, and using your remaining minutes shows you are taking responsibility for it.",
+          "requires": [
+            "next-person-arriving"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Clock out on time and let the next shift find out what was not finished.",
+          "why": "Leaving without a word makes the next person discover the gap on their own and may delay work that depends on it.",
+          "misconception": "My responsibility ends when my shift does."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Mark {task|the} as complete so it looks done, and plan to finish it tomorrow morning when you are back.",
+          "why": "Marking unfinished work as complete makes the record untrue and leaves the next person depending on something that is not done.",
+          "misconception": "Marking it done is fine if I finish it later."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Write a note blaming how busy the day was, and leave it by {task|the}.",
+          "why": "A note full of excuses explains but does not help. The next person needs to know what is left, not why.",
+          "misconception": "Explaining why is the same as taking responsibility."
+        }
+      ],
+      "principle": "Be accountable for your commitments: tell the next person what remains right away and use the time you have left to reduce the gap.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Timing is explicit (five minutes, coworker arriving).",
+        "policyNotNeeded": true
+      },
+      "timing": "The coworker is arriving now, so informing them comes before anything else."
+    },
+    {
+      "id": "WET-D-002",
+      "skill": "work-ethic",
+      "family": "work-ethic.owning-mistakes",
+      "pattern": "explain-and-own-your-part",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "work-ethic:accountability",
+        "work-ethic:accepting-consequences"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead",
+        "coworker": "person",
+        "document": "document"
+      },
+      "facts": [
+        "own-error-cost-time",
+        "coworker-contributed",
+        "lead-asks-what-happened"
+      ],
+      "scenario": "At {workplace|the}, a mistake with {document|a} cost your team an hour of rework. You made the main error, though {coworker} also missed a chance to catch it. Your {lead} asks what happened.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Explain what you did, own your part in the error, and say how you will avoid it next time.",
+          "why": "Owning your part plainly and offering a way to prevent it shows accountability and helps your lead fix the process.",
+          "requires": [
+            "lead-asks-what-happened"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Explain what happened, but also point out that {coworker} missed a chance to catch the error too, since it was a shared task.",
+          "why": "It is fair to describe the whole picture, but leading with someone else's miss shifts attention from your own responsibility.",
+          "misconception": "Sharing the blame reduces my share of it."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Say you are not sure what happened, to avoid guessing wrongly.",
+          "why": "You know what you did. Claiming not to know avoids responsibility and gives your lead nothing to work with.",
+          "misconception": "Saying less keeps me out of trouble."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Describe how busy the day was and how many things you were handling at once.",
+          "why": "Context can be useful, but offered as the main answer it sounds like an excuse and does not address what to change.",
+          "misconception": "A good explanation of the pressure should be enough."
+        }
+      ],
+      "principle": "Own your decisions and their consequences: describe what you did, take responsibility for your part, and propose a way to prevent a repeat.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Acceptable option is honest but deflects; no legal claims.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "WET-O-001",
+      "skill": "work-ethic",
+      "family": "work-ethic.steady-effort",
+      "pattern": "break-down-complete-check-report",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "work-ethic:diligence"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "long-job-assigned"
+      ],
+      "scenario": "At {workplace|the}, your {lead} gives you a long job that will take most of the day.",
+      "prompt": "Arrange these steps in the order that best gets the job done well.",
+      "steps": [
+        {
+          "id": "split",
+          "text": "Break the job into smaller parts"
+        },
+        {
+          "id": "work",
+          "text": "Work through each part until it is finished"
+        },
+        {
+          "id": "check",
+          "text": "Check the finished work against the instructions"
+        },
+        {
+          "id": "report",
+          "text": "Let your {lead} know the job is complete"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "split",
+          "after": "work",
+          "why": "Smaller parts make a long job manageable and keep you moving."
+        },
+        {
+          "before": "work",
+          "after": "check",
+          "why": "You can only check work that has been completed."
+        },
+        {
+          "before": "check",
+          "after": "report",
+          "why": "Reporting before checking risks telling your lead it is done when it is not."
+        }
+      ],
+      "principle": "Persistence means breaking large work into parts, finishing it, checking it, and then reporting it as done.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Clear dependency chain.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "WET-F-001",
+      "skill": "work-ethic",
+      "family": "work-ethic.honest-handoffs",
+      "pattern": "marking-unfinished-as-complete",
+      "mode": "find",
+      "difficulty": "beginner",
+      "concepts": [
+        "work-ethic:accountability",
+        "work-ethic:dependability"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "handoff-note-marks-unfinished-task-complete"
+      ],
+      "scenario": "A coworker at {workplace|the} leaves this note for the evening shift.",
+      "prompt": "Tap the line that is a problem.",
+      "docType": "note",
+      "docTitle": "Handoff note for the evening shift",
+      "segments": [
+        {
+          "id": "a",
+          "text": "The morning tasks are all finished.",
+          "whyFine": "A clear status update."
+        },
+        {
+          "id": "b",
+          "text": "I did not get to the supply count, but I marked it complete so nobody worries.",
+          "problem": true,
+          "why": "Marking an unfinished task complete misleads the next shift, who will rely on it being done."
+        },
+        {
+          "id": "c",
+          "text": "The next delivery arrives at 2:00.",
+          "whyFine": "A useful piece of information for the next shift."
+        },
+        {
+          "id": "d",
+          "text": "Call me if anything here is unclear.",
+          "whyFine": "Offering to clarify is helpful."
+        }
+      ],
+      "principle": "Hand off work honestly: say what is not finished so the next person can plan around it.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Single line misreports task status.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

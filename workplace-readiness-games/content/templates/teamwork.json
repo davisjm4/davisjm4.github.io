@@ -1,0 +1,320 @@
+{
+  "templates": [
+    {
+      "id": "TEA-D-001",
+      "skill": "teamwork",
+      "family": "teamwork.sharing-responsibility",
+      "pattern": "offer-help-after-finishing-early",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "teamwork:share-responsibility",
+        "teamwork:respect-contributions"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "shared-project",
+        "own-part-done",
+        "others-still-working"
+      ],
+      "scenario": "Your team of four at {workplace|the} is finishing a shared project. You complete your part early, while the rest of the team is still working on theirs. The project is due later today.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Ask the team whether anyone wants help, and offer to take on part of what remains.",
+          "why": "The goal is a finished project, not just your own part. Offering help and letting teammates say what they need shares the load without taking over.",
+          "requires": [
+            "others-still-working"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Hand in your part and wait, since the rest of the team is responsible for their own parts.",
+          "why": "A shared project succeeds only if all of it is finished. Finishing early is a chance to help the team.",
+          "misconception": "My responsibility ends when my own part is done."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Redo parts of teammates' work in your own way without asking, since you can do it faster.",
+          "why": "Taking over without asking disrespects teammates' work and can create conflicting changes.",
+          "misconception": "Doing it myself is the fastest way to help."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Start on something unrelated for yourself, since the team did not ask for your help.",
+          "why": "Waiting to be asked ignores a clear need. Offering is simple and shows you care about the team's result as well as your own.",
+          "misconception": "Help only counts if someone asks for it."
+        }
+      ],
+      "principle": "Share responsibility for the team's result: offer help when you finish early, and let teammates tell you what would help.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy content.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "TEA-N-001",
+      "skill": "teamwork",
+      "family": "teamwork.team-communication",
+      "pattern": "tell-teammate-about-delay-now",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "teamwork:team-communication",
+        "teamwork:share-responsibility"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person",
+        "task": "task"
+      },
+      "facts": [
+        "own-part-late-thirty-minutes",
+        "teammate-depends-on-it",
+        "teammate-starts-in-fifteen"
+      ],
+      "scenario": "At {workplace|the}, you are working on your part of {task|the}. You are running thirty minutes late, and {coworker} cannot start the next part until you finish. {coworker} planned to start in about fifteen minutes.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Message {coworker} now with the new timing, and say what {coworker} could work on in the meantime.",
+          "why": "Teammates can only adjust if they know. Early notice and a suggestion for the gap keeps the work moving.",
+          "requires": [
+            "teammate-starts-in-fifteen"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Work as fast as you can to catch up, and let {coworker} know when you finish.",
+          "why": "Rushing may cause mistakes, and {coworker} will have lost time waiting without knowing why. Telling them first lets them plan.",
+          "misconception": "Catching up quietly is better than admitting a delay."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Wait to see whether {coworker} asks about it, since you may still finish sooner than expected.",
+          "why": "Waiting leaves a person who depends on you unprepared. If you do finish faster, a quick update costs nothing.",
+          "misconception": "I only need to tell people if it turns out to matter."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Mention the delay to your supervisor at the end of the day, when you can explain the whole situation.",
+          "why": "Reporting at the end of the day does nothing for the person waiting now. The person who depends on you needs to hear it first.",
+          "misconception": "Explaining everything at once later is neater."
+        }
+      ],
+      "principle": "When your work holds up a teammate, tell them right away and help them plan around it.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Timing is stated.",
+        "policyNotNeeded": true
+      },
+      "timing": "The teammate starts in fifteen minutes, so notification comes before anything else."
+    },
+    {
+      "id": "TEA-O-001",
+      "skill": "teamwork",
+      "family": "teamwork.roles-and-goals",
+      "pattern": "goal-roles-schedule-work",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "teamwork:expectations-roles-goals"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "group-starting-project"
+      ],
+      "scenario": "A group at {workplace|the} is starting a project together.",
+      "prompt": "Put these steps in an order that would help the group work well.",
+      "steps": [
+        {
+          "id": "goal",
+          "text": "Agree on what the group is trying to achieve"
+        },
+        {
+          "id": "roles",
+          "text": "Decide who is responsible for each part"
+        },
+        {
+          "id": "schedule",
+          "text": "Set deadlines and times to check in"
+        },
+        {
+          "id": "work",
+          "text": "Begin the work and check in as planned"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "goal",
+          "after": "roles",
+          "why": "People cannot divide the work well until they agree what the work is for."
+        },
+        {
+          "before": "roles",
+          "after": "schedule",
+          "why": "Deadlines make sense only once it is clear who owns each part."
+        },
+        {
+          "before": "schedule",
+          "after": "work",
+          "why": "Starting work before agreeing on timing makes it hard to coordinate."
+        }
+      ],
+      "principle": "Strong groups agree on the goal, assign roles, set a schedule, and then begin.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Natural chain.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "TEA-D-002",
+      "skill": "teamwork",
+      "family": "teamwork.respecting-contributions",
+      "pattern": "draw-out-a-dismissed-idea",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "teamwork:respect-contributions",
+        "teamwork:share-responsibility"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person"
+      },
+      "facts": [
+        "quiet-teammate-idea",
+        "group-dismissed-it-quickly",
+        "idea-conflicts-with-plan"
+      ],
+      "scenario": "In a meeting at {workplace|the}, {coworker}, a quiet teammate, suggests an idea that conflicts with the plan most of the group favors. Several people dismiss it quickly. You are not sure whether the idea is better, but you did not hear it fully explained.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Ask {coworker} to explain the idea further, then compare it with the current plan against the team's goals.",
+          "why": "Hearing the full idea before judging it is fair, and comparing against shared goals keeps the decision about results rather than preference.",
+          "requires": [
+            "group-dismissed-it-quickly"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Thank {coworker} for the idea and suggest the team return to it after finishing the current plan.",
+          "why": "Acknowledging the idea is respectful, but postponing it could mean losing the chance to use it when it matters most.",
+          "misconception": "Politely postponing counts as taking an idea seriously."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Support the group's plan so the meeting stays on schedule, since most people agree with it.",
+          "why": "A majority view is not evidence that a quickly dismissed idea is weaker. Quiet contributors may be overlooked if no one asks them to elaborate.",
+          "misconception": "If most people disagree, the idea must be weaker."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Suggest combining the two ideas right away, without asking for the details, so everyone feels included.",
+          "why": "Merging ideas before understanding one of them can produce a plan that does not work well and still leaves the contributor unheard.",
+          "misconception": "Compromise first, understanding later."
+        }
+      ],
+      "principle": "Respect teammates' contributions by hearing an idea fully and judging it against the team's goals before deciding.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Acceptable option shows respectful but delayed handling.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "TEA-F-001",
+      "skill": "teamwork",
+      "family": "teamwork.dividing-work",
+      "pattern": "assigning-without-asking",
+      "mode": "find",
+      "difficulty": "beginner",
+      "concepts": [
+        "teamwork:expectations-roles-goals",
+        "teamwork:respect-contributions"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "plan-skips-asking-teammates"
+      ],
+      "scenario": "A teammate at {workplace|the} posts this plan for dividing a group project.",
+      "prompt": "Tap the line that is a problem.",
+      "docType": "chat",
+      "docTitle": "Group chat plan",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Let us split the project so everyone has a clear part.",
+          "whyFine": "Dividing the work so each person has a clear part is a good idea."
+        },
+        {
+          "id": "b",
+          "text": "I will assign every section myself and will not ask anyone about their schedules or strengths.",
+          "problem": true,
+          "why": "Assigning work without asking ignores teammates' availability and strengths, and it does not respect their input."
+        },
+        {
+          "id": "c",
+          "text": "We should set deadlines for each part.",
+          "whyFine": "Deadlines help the group stay on track."
+        },
+        {
+          "id": "d",
+          "text": "Let us check in on Thursday to see how it is going.",
+          "whyFine": "Planned check-ins keep everyone informed."
+        }
+      ],
+      "principle": "Divide group work together: ask about strengths and availability instead of deciding alone.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Single line skips teammates' input.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

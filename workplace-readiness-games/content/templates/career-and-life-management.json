@@ -1,0 +1,315 @@
+{
+  "templates": [
+    {
+      "id": "CAR-D-001",
+      "skill": "career-and-life-management",
+      "family": "career-and-life-management.smart-goals",
+      "pattern": "pick-the-specific-measurable-time-bound-goal",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "career-and-life-management:smart-goals"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace"
+      },
+      "facts": [
+        "mentor-asks-for-goal",
+        "six-month-timeframe"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a} and want to move up. A mentor asks you to write one goal for the next six months, and you drafted four versions.",
+      "prompt": "Which goal is the most useful for guiding your progress?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Finish the first level of a job-related certification course by the end of next semester by studying three hours each week.",
+          "why": "This goal is specific, measurable, realistic and has a deadline and a plan, so you will know whether you reached it.",
+          "requires": [
+            "six-month-timeframe"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Learn everything there is to know about this field as quickly as I possibly can over the next several months.",
+          "why": "This goal is too broad and has no way to measure success. It is not realistic to learn everything, so it is hard to know when you have made progress.",
+          "misconception": "A bigger goal is always a better goal."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Earn a job-related certification someday soon by working hard and staying focused on my studies.",
+          "why": "'Someday soon' is not a deadline and 'working hard' is not a measure. A goal needs a date and a way to check progress.",
+          "misconception": "Effort alone makes a goal useful."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Become the best employee in the entire company and get promoted before anyone else at my level.",
+          "why": "'Best' depends on other people's opinions and cannot be measured by you. A goal should focus on something you control.",
+          "misconception": "Competing with others is the best way to set a goal."
+        }
+      ],
+      "principle": "Useful goals are specific, measurable, realistic and tied to a date, with a plan for reaching them.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy needed; goals are hypothetical.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CAR-D-002",
+      "skill": "career-and-life-management",
+      "family": "career-and-life-management.benefits-and-resources",
+      "pattern": "use-the-support-program",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "career-and-life-management:benefits-and-resources",
+        "career-and-life-management:wellness-and-finances"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "benefit-packet-lists-assistance-program",
+        "weeks-of-stress",
+        "stress-affecting-sleep"
+      ],
+      "scenario": "The benefits packet at {workplace|the} says employees can use a free, confidential counseling program. For several weeks you have felt constantly stressed about balancing work and school, and it is affecting your sleep.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Read the benefits packet details and contact the program, along with the supports you already trust.",
+          "why": "Using a resource your workplace provides is a healthy way to manage stress, and combining it with people you trust gives you more than one support.",
+          "requires": [
+            "benefit-packet-lists-assistance-program"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Keep pushing through until the school term ends, then think about how you are feeling.",
+          "why": "Ongoing stress that affects sleep is worth addressing now. Waiting for a convenient time can let it grow.",
+          "misconception": "Stress will go away on its own once things get quieter."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Ask coworkers to cover your shifts for a while without telling anyone why you need the time.",
+          "why": "Asking others to cover without explanation can strain your team and does not address what is causing the stress.",
+          "misconception": "Time off without explanation solves stress."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Wait until the stress begins affecting your work performance before using any kind of support.",
+          "why": "Support is meant to be used before problems become serious. Waiting for performance to suffer makes everything harder.",
+          "misconception": "Support is only for serious situations."
+        }
+      ],
+      "principle": "Know the support your workplace provides and use it early to manage stress and well-being.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Program existence stated from the benefits packet in the scenario; no medical advice given."
+      }
+    },
+    {
+      "id": "CAR-N-001",
+      "skill": "career-and-life-management",
+      "family": "career-and-life-management.reading-a-paycheck",
+      "pattern": "understand-the-pay-stub-first",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "career-and-life-management:wellness-and-finances"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "first-paycheck",
+        "smaller-than-expected",
+        "pay-stub-lists-deductions"
+      ],
+      "scenario": "You just received your first paycheck from {workplace|the}. It is smaller than you expected, and the pay stub lists several deductions that you do not recognize.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Read the pay stub line by line, and ask payroll or your {lead} about any deduction that is unclear.",
+          "why": "Understanding what each deduction is comes before any decision about money. Asking about the ones you do not know avoids acting on a wrong assumption.",
+          "requires": [
+            "pay-stub-lists-deductions"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Spend the money right away on things you have been wanting, since you earned it.",
+          "why": "Spending before understanding what you received makes it hard to plan. A smaller check may mean you have less available than you expected.",
+          "misconception": "The amount I earned is the amount I can spend."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Assume the paycheck is a mistake and demand a corrected check from your {lead} the same day.",
+          "why": "Deductions are common, and demanding a correction before reading the stub can lead to an awkward mix-up. Check first, then ask.",
+          "misconception": "A smaller check always means an error."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Make a budget based on the full amount shown at the top of the stub, ignoring what you actually received.",
+          "why": "Budgets should be built on money you actually have. Gross pay is not what arrives in your account.",
+          "misconception": "Gross pay is what I actually earn."
+        }
+      ],
+      "principle": "Read your pay stub before making money decisions, and ask about anything you do not understand.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No claims about specific deductions or laws; generic budgeting principle.",
+        "policyNotNeeded": true
+      },
+      "timing": "Understanding the deductions has to come before budgeting or complaining."
+    },
+    {
+      "id": "CAR-O-001",
+      "skill": "career-and-life-management",
+      "family": "career-and-life-management.planning-a-career-move",
+      "pattern": "research-compare-plan-apply",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "career-and-life-management:qualifications-and-advancement"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "interested-in-new-role"
+      ],
+      "scenario": "You are interested in a new role at {workplace|the} and want to plan how to get there.",
+      "prompt": "Put these planning steps in a sensible order.",
+      "steps": [
+        {
+          "id": "research",
+          "text": "Find out what the new role requires"
+        },
+        {
+          "id": "compare",
+          "text": "Compare those requirements with your current skills"
+        },
+        {
+          "id": "plan",
+          "text": "Make a plan to build any skills you are missing"
+        },
+        {
+          "id": "apply",
+          "text": "Apply once you are ready"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "research",
+          "after": "compare",
+          "why": "You cannot compare yourself with the role until you know what it asks."
+        },
+        {
+          "before": "compare",
+          "after": "plan",
+          "why": "Knowing the gaps tells you what to work on."
+        },
+        {
+          "before": "plan",
+          "after": "apply",
+          "why": "Applying after you have a plan to build your skills gives you a stronger case."
+        }
+      ],
+      "principle": "Plan a career move by learning the requirements, finding your gaps, building skills, and then applying.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "A natural chain; no legal content.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CAR-F-001",
+      "skill": "career-and-life-management",
+      "family": "career-and-life-management.sustainable-plans",
+      "pattern": "trading-sleep-for-a-goal",
+      "mode": "find",
+      "difficulty": "intermediate",
+      "concepts": [
+        "career-and-life-management:wellness-and-finances",
+        "career-and-life-management:smart-goals"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "plan-trades-health-for-goal"
+      ],
+      "scenario": "A student worker at {workplace|the} writes this plan.",
+      "prompt": "Tap the line that is a problem.",
+      "docType": "note",
+      "docTitle": "My plan for finishing the certification",
+      "segments": [
+        {
+          "id": "a",
+          "text": "My goal is to finish my certification by June.",
+          "whyFine": "A clear goal with a date."
+        },
+        {
+          "id": "b",
+          "text": "I will study two evenings each week.",
+          "whyFine": "A realistic, specific part of the plan."
+        },
+        {
+          "id": "c",
+          "text": "I will also work every weekend and stay up late most nights, since I can catch up on sleep after June.",
+          "problem": true,
+          "why": "Giving up sleep for months is not sustainable and can hurt health and performance. A good plan protects well-being."
+        },
+        {
+          "id": "d",
+          "text": "I will check my progress at the end of each month.",
+          "whyFine": "Regular check-ins keep a goal on track."
+        }
+      ],
+      "principle": "A good plan includes rest and well-being; goals that rely on constant exhaustion are unlikely to last.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Single line trades health for a goal; no medical claims beyond sustainability.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workplace Readiness Games</title>
+  <meta name="description" content="Free practice for the 22 Workplace Readiness Skills: short, realistic workplace situations with instant feedback. No accounts needed.">
+  <meta name="theme-color" content="#0c1722">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <a class="brand" href="#/" id="brand-link">Workplace Readiness Games</a>
+    <nav class="top-nav" aria-label="Primary">
+      <a href="#/practice" id="nav-practice">Practice</a>
+      <a href="#/summary" id="nav-summary">Session summary</a>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <noscript><p class="notice">This practice site needs JavaScript. Please turn it on in your browser settings.</p></noscript>
+
+    <section id="view-home" aria-labelledby="home-title" hidden>
+      <h1 id="home-title" tabindex="-1">Workplace readiness practice</h1>
+      <p class="lede">Short, realistic workplace situations with feedback after every answer.</p>
+      <form id="options-form" class="options" aria-label="Practice options" novalidate>
+        <div class="field"><label for="opt-skill">Skill focus</label><select id="opt-skill"></select></div>
+        <div class="field"><label for="opt-mode">Practice mode</label><select id="opt-mode"></select></div>
+        <div class="field"><label for="opt-difficulty">Difficulty</label><select id="opt-difficulty"></select></div>
+        <div class="field"><label for="opt-context">Career setting</label><select id="opt-context"></select></div>
+      </form>
+      <p id="options-note" class="note" role="status"></p>
+      <div class="actions">
+        <button type="button" class="btn primary" id="btn-start">Start practice</button>
+        <button type="button" class="btn" id="btn-continue" hidden>Continue practice</button>
+        <button type="button" class="btn quiet" id="btn-home-summary" hidden>View session summary</button>
+      </div>
+      <p class="privacy">Your results stay on this device. There are no accounts, and no names or personal details are saved.</p>
+    </section>
+
+    <section id="view-practice" aria-label="Practice" hidden>
+      <h1 class="sr-only">Practice</h1>
+      <div class="statbar" id="statbar" role="group" aria-label="Session progress"></div>
+      <div id="ticket-slot"></div>
+      <p id="sr-status" class="sr-only" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="view-summary" aria-labelledby="summary-title" hidden>
+      <h1 id="summary-title" tabindex="-1">Session summary</h1>
+      <div id="summary-body"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Workplace Readiness Games is an independent practice resource, aligned to the publicly published Workplace Readiness Skills framework of the Career and Technical Consortium of States (CTECS). It is not an official CTECS product, it does not use official or retired test questions, and it does not guarantee results on any assessment. For official practice materials, visit <a href="https://wrs.ctecs.org/practice/" rel="noopener">wrs.ctecs.org/practice</a>.</p>
+  </footer>
+
+  <script src="js/data/schema.js"></script>
+  <script src="js/core/rng.js"></script>
+  <script src="js/core/expr.js"></script>
+  <script src="js/core/text.js"></script>
+  <script src="js/core/order.js"></script>
+  <script src="js/core/library.js"></script>
+  <script src="js/core/feedback.js"></script>
+  <script src="js/core/grader.js"></script>
+  <script src="js/core/validator.js"></script>
+  <script src="js/core/generator.js"></script>
+  <script src="js/data/content-bundle.js"></script>
+  <script src="js/app/storage.js"></script>
+  <script src="js/app/session.js"></script>
+  <script src="js/app/ui.js"></script>
+  <script src="js/app/app.js"></script>
+</body>
+</html>

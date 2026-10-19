@@ -1,0 +1,579 @@
+{
+  "templates": [
+    {
+      "id": "MAT-D-001",
+      "skill": "mathematics",
+      "family": "mathematics.paycheck-deductions",
+      "pattern": "net-pay-percent-and-flat-deduction",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "mathematics:personal-finance",
+        "mathematics:basic-calculations"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace"
+      },
+      "vars": {
+        "rate": {
+          "type": "int",
+          "min": 14,
+          "max": 22
+        },
+        "hours": {
+          "type": "int",
+          "min": 18,
+          "max": 34
+        },
+        "pct": {
+          "type": "choice",
+          "values": [
+            8,
+            10,
+            12
+          ]
+        },
+        "flat": {
+          "type": "choice",
+          "values": [
+            10,
+            15,
+            20,
+            25
+          ]
+        }
+      },
+      "derive": {
+        "gross": "rate*hours",
+        "tax": "round2(gross*pct/100)",
+        "net": "round2(gross-tax-flat)",
+        "wrongNoFlat": "round2(gross-tax)",
+        "wrongNoTax": "round2(gross-flat)",
+        "wrongPctAsDollars": "round2(gross-pct-flat)"
+      },
+      "constraints": [
+        "net>0",
+        "net!=wrongNoFlat",
+        "net!=wrongNoTax",
+        "net!=wrongPctAsDollars",
+        "wrongNoFlat!=wrongNoTax",
+        "wrongNoFlat!=wrongPctAsDollars",
+        "wrongNoTax!=wrongPctAsDollars"
+      ],
+      "facts": [
+        "gross-from-rate-and-hours",
+        "percent-and-flat-deduction"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a} and earn {rate|money0} per hour. This week you worked {hours|int} hours. Your pay stub shows two deductions: {pct|pct} of your gross pay for taxes, and a flat {flat|money0} for health insurance. These amounts are only an example.",
+      "prompt": "What is your take-home pay for the week?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Your take-home pay is {net|money} for the week.",
+          "why": "Gross pay is {rate|money0} times {hours|int} hours, or {gross|money}. Taxes take {pct|pct} of that, or {tax|money}, and the flat {flat|money0} comes out as well, leaving {net|money}.",
+          "requires": [
+            "percent-and-flat-deduction"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Your take-home pay is {wrongNoFlat|money} for the week.",
+          "why": "This figure subtracts only the percentage for taxes. The flat {flat|money0} insurance charge also comes out of gross pay.",
+          "misconception": "I only need to subtract the percentage deduction."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Your take-home pay is {wrongNoTax|money} for the week.",
+          "why": "This figure subtracts only the flat insurance charge. The {pct|pct} tax deduction, which is {tax|money} of {gross|money}, also comes out.",
+          "misconception": "A flat charge is the only real deduction."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Your take-home pay is {wrongPctAsDollars|money} for the week.",
+          "why": "This treats {pct|pct} as if it were {pct|int} dollars. A percentage deduction is a share of gross pay, which here is {tax|money}.",
+          "misconception": "A percentage deduction can be subtracted like a dollar amount."
+        }
+      ],
+      "principle": "To find take-home pay, start with gross pay, take a percentage deduction as a share of gross pay, and subtract flat deductions as dollar amounts.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "policyNotNeeded": true,
+        "notes": "Hypothetical deductions, explicitly labeled as an example; no claim about real tax rates or rules. Distractors correspond to three common calculation errors."
+      }
+    },
+    {
+      "id": "MAT-D-002",
+      "skill": "mathematics",
+      "family": "mathematics.estimating-supplies",
+      "pattern": "total-need-then-round-up-to-packs",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "mathematics:job-task-math",
+        "mathematics:basic-calculations"
+      ],
+      "contexts": [
+        "retail",
+        "manufacturing",
+        "agriculture",
+        "culinary",
+        "media"
+      ],
+      "slots": {
+        "role": "role",
+        "workplace": "workplace"
+      },
+      "facts": [
+        "packages-need-labels",
+        "labels-sold-in-packs"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. You are preparing {k|int} packages, and each package needs {n|int} labels. Labels are sold only in packs of {p|int}, and you are ordering the smallest number of packs that covers the need.",
+      "prompt": "How many packs should you order?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "You need to order {packsCeil|int} packs of labels.",
+          "why": "The total need is {k|int} times {n|int}, or {total|int} labels. Packs hold {p|int} each, and a partly needed pack must still be bought, so round up to {packsCeil|int}.",
+          "requires": [
+            "labels-sold-in-packs"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "You need to order {packsFloor|int} packs of labels.",
+          "why": "Rounding down leaves you short. {total|int} labels are needed, and {packsFloor|int} packs only hold {floorLabels|int}.",
+          "misconception": "I can round down when the remainder is small."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "You need to order {packsNoMultiply|int} packs of labels.",
+          "why": "This only counts one label per package. Each package needs {n|int} labels, so multiply before dividing into packs.",
+          "misconception": "I only need to count the packages."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "You need to order {packsExtra|int} packs of labels.",
+          "why": "This buys more than needed. You were asked for the smallest number of packs, and {packsCeil|int} already covers the need.",
+          "misconception": "Ordering extra is always safer."
+        }
+      ],
+      "principle": "To estimate supplies, find the total need first, divide by the pack size, and round up to whole packs.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Hypothetical quantities.",
+        "policyNotNeeded": true
+      },
+      "vars": {
+        "k": {
+          "type": "int",
+          "min": 12,
+          "max": 48,
+          "step": 2
+        },
+        "n": {
+          "type": "int",
+          "min": 2,
+          "max": 6
+        },
+        "p": {
+          "type": "choice",
+          "values": [
+            20,
+            25,
+            30,
+            40,
+            50
+          ]
+        }
+      },
+      "derive": {
+        "total": "k*n",
+        "packsCeil": "ceil(total/p)",
+        "packsFloor": "floor(total/p)",
+        "floorLabels": "packsFloor*p",
+        "packsNoMultiply": "ceil(k/p)",
+        "packsExtra": "packsCeil+1"
+      },
+      "constraints": [
+        "total%p!=0",
+        "packsFloor>=1",
+        "packsNoMultiply!=packsCeil",
+        "packsNoMultiply!=packsFloor",
+        "packsNoMultiply!=packsExtra",
+        "packsFloor!=packsNoMultiply"
+      ]
+    },
+    {
+      "id": "MAT-D-003",
+      "skill": "mathematics",
+      "family": "mathematics.percent-discount",
+      "pattern": "price-after-percent-discount",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "mathematics:basic-calculations",
+        "mathematics:personal-finance"
+      ],
+      "contexts": [
+        "retail",
+        "hospitality",
+        "culinary",
+        "automotive",
+        "business",
+        "construction",
+        "agriculture",
+        "media",
+        "manufacturing",
+        "engineering",
+        "it"
+      ],
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "client": "client"
+      },
+      "facts": [
+        "order-total-given",
+        "percent-discount-applies"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. {Client|a}'s order comes to {price|money0} before any discount. A {pct|pct} discount applies to the whole order. This discount is only an example.",
+      "prompt": "What is the amount due after the discount?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "The amount due is {due|money}.",
+          "why": "A {pct|pct} discount on {price|money0} is {off|money}. Subtracting that from {price|money0} leaves {due|money}.",
+          "requires": [
+            "percent-discount-applies"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "The amount due is {wrongDollars|money}.",
+          "why": "This subtracts {pct|int} dollars instead of {pct|pct} of the price. A percent discount is a share of the total.",
+          "misconception": "A percent discount works like a dollar amount."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "The amount due is {off|money}.",
+          "why": "This is the size of the discount, not the amount left to pay. The discount still has to be subtracted from {price|money0}.",
+          "misconception": "The discount amount is the amount due."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "The amount due is {wrongUp|money}.",
+          "why": "This adds the percentage instead of subtracting it. A discount lowers the price.",
+          "misconception": "A percentage is always added."
+        }
+      ],
+      "principle": "To apply a percent discount, find that percent of the price and subtract it from the price.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Discount is explicitly an example; no claim about real policies.",
+        "policyNotNeeded": true
+      },
+      "vars": {
+        "price": {
+          "type": "choice",
+          "values": [
+            40,
+            60,
+            80,
+            120,
+            150,
+            200
+          ]
+        },
+        "pct": {
+          "type": "choice",
+          "values": [
+            10,
+            15,
+            20,
+            25
+          ]
+        }
+      },
+      "derive": {
+        "off": "round2(price*pct/100)",
+        "due": "round2(price-off)",
+        "wrongDollars": "round2(price-pct)",
+        "wrongUp": "round2(price+off)"
+      },
+      "constraints": [
+        "due!=wrongDollars",
+        "due!=off",
+        "wrongDollars!=off",
+        "off!=wrongUp",
+        "wrongDollars!=wrongUp"
+      ]
+    },
+    {
+      "id": "MAT-F-001",
+      "skill": "mathematics",
+      "family": "mathematics.checking-totals",
+      "pattern": "total-does-not-match-items",
+      "mode": "find",
+      "difficulty": "intermediate",
+      "concepts": [
+        "mathematics:job-task-math",
+        "mathematics:basic-calculations"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "total-line-does-not-match-items"
+      ],
+      "scenario": "You are checking this expense report at {workplace|the} before it goes to your supervisor.",
+      "prompt": "Tap the line with the problem.",
+      "docType": "note",
+      "docTitle": "Expense report",
+      "segments": [
+        {
+          "id": "m",
+          "text": "Mileage: {miles|int} miles at {rate|money} per mile = {mileCost|money}",
+          "whyFine": "The mileage cost matches miles times the rate."
+        },
+        {
+          "id": "p",
+          "text": "Parking: {park|money}",
+          "whyFine": "This line is a single amount with nothing to check."
+        },
+        {
+          "id": "l",
+          "text": "Lunch: {lunch|money}",
+          "whyFine": "This line is a single amount with nothing to check."
+        },
+        {
+          "id": "t",
+          "text": "Total: {wrongTotal|money}",
+          "problem": true,
+          "why": "The items add up to {total|money}, not {wrongTotal|money}, so the total is wrong."
+        }
+      ],
+      "principle": "Check that a total equals the sum of its parts before submitting a report.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Arithmetic is verifiable from the document; no policy needed.",
+        "policyNotNeeded": true
+      },
+      "vars": {
+        "miles": {
+          "type": "int",
+          "min": 20,
+          "max": 80,
+          "step": 10
+        },
+        "rate": {
+          "type": "choice",
+          "values": [
+            0.5,
+            0.6
+          ]
+        },
+        "park": {
+          "type": "int",
+          "min": 8,
+          "max": 18
+        },
+        "lunch": {
+          "type": "int",
+          "min": 10,
+          "max": 20
+        },
+        "off": {
+          "type": "choice",
+          "values": [
+            5,
+            6,
+            8,
+            10
+          ]
+        }
+      },
+      "derive": {
+        "mileCost": "round2(miles*rate)",
+        "total": "round2(mileCost+park+lunch)",
+        "wrongTotal": "round2(total+off)"
+      }
+    },
+    {
+      "id": "MAT-N-001",
+      "skill": "mathematics",
+      "family": "mathematics.pay-stub-mismatch",
+      "pattern": "compare-record-then-take-both-to-payroll",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "mathematics:personal-finance",
+        "mathematics:basic-calculations"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "record-shows-more-hours-than-stub"
+      ],
+      "scenario": "You keep your own record of hours worked at {workplace|the}. For the pay period, your record shows {logged|int} hours, but your pay stub shows {stub|int} hours.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Compare your record with the stub, note the {diff|int}-hour difference, and take both to payroll.",
+          "why": "Checking your own record against the stub shows exactly where the difference is, and bringing both to payroll lets them find and fix the cause.",
+          "requires": [
+            "record-shows-more-hours-than-stub"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Wait for the next paycheck and see whether the missing {diff|int} hours are added automatically.",
+          "why": "A missing entry will not necessarily fix itself. Raising it now makes a correction more likely.",
+          "misconception": "Pay errors usually correct themselves."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Add {diff|int} extra hours to your next timesheet so that the totals even out over time.",
+          "why": "Recording hours you did not work is inaccurate and can cause bigger problems. The original difference needs to be corrected properly.",
+          "misconception": "I can balance the difference myself later."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Tell payroll you were underpaid and ask for the full amount right away, without showing your record.",
+          "why": "Without your record, payroll has nothing to check. Bringing evidence makes your case clear and quicker to settle.",
+          "misconception": "Making a firm demand is more effective than showing proof."
+        }
+      ],
+      "principle": "When numbers do not match, compare your own record to the document, find the difference, and bring both to the person who can fix it.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Hypothetical hours; no claims about payroll law.",
+        "policyNotNeeded": true
+      },
+      "timing": "Verification comes before asking for a correction.",
+      "vars": {
+        "logged": {
+          "type": "choice",
+          "values": [
+            32,
+            34,
+            36,
+            38,
+            40
+          ]
+        },
+        "diff": {
+          "type": "choice",
+          "values": [
+            2,
+            3,
+            4
+          ]
+        }
+      },
+      "derive": {
+        "stub": "logged-diff"
+      }
+    },
+    {
+      "id": "MAT-O-001",
+      "skill": "mathematics",
+      "family": "mathematics.cost-estimate-sequence",
+      "pattern": "unit-price-multiply-add-compare",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "mathematics:job-task-math"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "estimating-cost-of-supplies"
+      ],
+      "scenario": "You are estimating the cost of supplies for a project at {workplace|the}.",
+      "prompt": "Put these steps in a sensible order.",
+      "steps": [
+        {
+          "id": "price",
+          "text": "Find the price of one item"
+        },
+        {
+          "id": "multiply",
+          "text": "Multiply it by the number of items needed"
+        },
+        {
+          "id": "add",
+          "text": "Add the totals for all the different items"
+        },
+        {
+          "id": "compare",
+          "text": "Compare the final total with the budget"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "price",
+          "after": "multiply",
+          "why": "You need the unit price before you can multiply."
+        },
+        {
+          "before": "multiply",
+          "after": "add",
+          "why": "Each item's total must be known before you add them together."
+        },
+        {
+          "before": "add",
+          "after": "compare",
+          "why": "You compare the budget with the final total, not with a partial one."
+        }
+      ],
+      "principle": "Estimate costs by finding unit prices, multiplying by quantities, adding totals, and then comparing with the budget.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Natural chain.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

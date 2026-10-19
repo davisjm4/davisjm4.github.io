@@ -1,0 +1,407 @@
+{
+  "templates": [
+    {
+      "id": "JST-D-001",
+      "skill": "job-specific-tools-and-technologies",
+      "family": "job-specific-tools-and-technologies.select-right-tool",
+      "pattern": "wait-or-ask-for-the-right-tool",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "job-specific-tools-and-technologies:select-right-tool"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "equipment": "equipment",
+        "lead": "lead"
+      },
+      "facts": [
+        "job-needs-specific-tool",
+        "tool-in-use",
+        "similar-tool-not-designed-for-job"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. Your job needs {equipment|the}, which a coworker is using for another twenty minutes. A similar-looking tool is free, but it is not designed for this job.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Wait for the right tool, or ask your {lead} whether another approved option is available.",
+          "why": "Tools are designed for specific jobs, and the wrong one can damage the work or cause an injury. A short wait or a quick question is a small cost.",
+          "requires": [
+            "similar-tool-not-designed-for-job"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Use the similar tool, since it is available now and looks close enough to do the same thing.",
+          "why": "Looking similar is not the same as being designed for the job, and a close-enough tool can produce poor work or unsafe results.",
+          "misconception": "A similar tool is the same as the right tool."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Ask your coworker to stop in the middle of the job and hand over {equipment|the} right now.",
+          "why": "Interrupting someone mid-task may damage their work or cause a safety problem, and the delay is only twenty minutes.",
+          "misconception": "My job is more important than my coworker's."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Adjust the similar tool so that it fits the job better, and then use it for the work.",
+          "why": "Modifying a tool without approval can make it unsafe or damage it, and it changes equipment that others rely on in its original form.",
+          "misconception": "I can customize a tool to fit my needs."
+        }
+      ],
+      "principle": "Use the tool designed for the job; wait or ask about approved options instead of settling for a look-alike.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy content.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "JST-N-001",
+      "skill": "job-specific-tools-and-technologies",
+      "family": "job-specific-tools-and-technologies.operate-only-if-trained",
+      "pattern": "say-you-are-untrained-before-using",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "job-specific-tools-and-technologies:safe-use"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "equipment": "equipment",
+        "coworker": "person",
+        "lead": "lead"
+      },
+      "facts": [
+        "asked-to-use-untrained-equipment",
+        "policy-only-trained-employees-operate",
+        "coworker-offers-quick-demo",
+        "lead-available"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. You are asked to use {equipment|the}, but you have not been trained on it. {coworker} says it is easy and offers to show you quickly. Your workplace allows only trained employees to operate {equipment|the}, and your {lead} is nearby.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Say you lack that training, and ask your {lead} for training or a different assignment before using it.",
+          "why": "The workplace allows only trained people to operate it, so the first step is to say so and get properly trained or reassigned.",
+          "requires": [
+            "policy-only-trained-employees-operate",
+            "lead-available"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Let {coworker} show you quickly and then start using it, since it sounds simple enough.",
+          "why": "A quick demo is not the same as the workplace's training. Equipment that looks easy can still injure an untrained user.",
+          "misconception": "If someone shows me, I am trained."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Look over the controls yourself and try it on some scrap first to see how it works.",
+          "why": "Learning by trying on your own is risky with equipment you are not trained on, even on scrap material.",
+          "misconception": "Practicing on scrap is a safe way to learn."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Say yes without mentioning your lack of training, so that you do not seem unwilling to help.",
+          "why": "Saying yes to something you are not trained for puts you and others at risk. Being honest about your limits is part of doing the job safely.",
+          "misconception": "Agreeing quickly shows I am a team player."
+        }
+      ],
+      "principle": "Operate equipment only after the training your workplace requires; say plainly when you have not had it.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Workplace rule stated; no operation suggested."
+      },
+      "timing": "Operating comes only after training, so stating the gap must happen first."
+    },
+    {
+      "id": "JST-D-002",
+      "skill": "job-specific-tools-and-technologies",
+      "family": "job-specific-tools-and-technologies.manufacturer-guidance",
+      "pattern": "follow-manufacturer-method-raise-time-concern",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "job-specific-tools-and-technologies:safe-use",
+        "job-specific-tools-and-technologies:select-right-tool"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "equipment": "equipment",
+        "coworker": "person",
+        "lead": "lead"
+      },
+      "facts": [
+        "manufacturer-method-slower",
+        "coworker-method-quicker",
+        "coworker-method-not-in-guide"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. The manufacturer's guide for {equipment|the} lists a cleaning method that takes fifteen minutes. {coworker} uses a quicker method that is not in the guide and says it works fine.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Follow the manufacturer's method, and tell your {lead} if the time it takes is a concern.",
+          "why": "The manufacturer's guide is based on how the equipment is meant to be treated. If the time is a problem, your {lead} can look at it openly.",
+          "requires": [
+            "coworker-method-not-in-guide"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Use {coworker}'s quicker method, since it saves time and has worked fine so far.",
+          "why": "A method that has not caused a problem yet is not the same as one that is approved. It may wear out or damage the equipment over time.",
+          "misconception": "If it has worked so far, it is fine."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Use the quicker method only when your {lead} is not around, so nobody has a reason to object.",
+          "why": "Hiding a shortcut means you know it might not be accepted. If it is a better method, it should be raised openly.",
+          "misconception": "What the supervisor does not see is not a problem."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Do half of the manufacturer's steps to save time and half of the quicker method to be balanced.",
+          "why": "Mixing the two methods follows neither one and may skip important steps in each.",
+          "misconception": "A mix of methods is a safe middle ground."
+        }
+      ],
+      "principle": "Follow the manufacturer's guidance for tools and equipment, and raise concerns about time openly rather than using unapproved shortcuts.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No claims about specific legal requirements.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "JST-F-001",
+      "skill": "job-specific-tools-and-technologies",
+      "family": "job-specific-tools-and-technologies.safe-use-checklists",
+      "pattern": "skip-the-guard",
+      "mode": "find",
+      "difficulty": "beginner",
+      "concepts": [
+        "job-specific-tools-and-technologies:safe-use"
+      ],
+      "contexts": "any",
+      "slots": {
+        "equipment": "equipment"
+      },
+      "facts": [
+        "plan-skips-safety-guard"
+      ],
+      "scenario": "A coworker writes this plan before using {equipment|the}.",
+      "prompt": "Tap the line that is a problem.",
+      "docType": "note",
+      "docTitle": "Plan for using the equipment",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Before I start, I will read the manufacturer's quick guide.",
+          "whyFine": "Reading the guide is a good preparation step."
+        },
+        {
+          "id": "b",
+          "text": "I will take off the safety guard because it slows me down.",
+          "problem": true,
+          "why": "A safety guard is there to protect the user, and removing it for speed is an unsafe shortcut."
+        },
+        {
+          "id": "c",
+          "text": "I will make sure the work area is clear.",
+          "whyFine": "Keeping the area clear is a sensible precaution."
+        },
+        {
+          "id": "d",
+          "text": "I will ask my lead if I have any questions.",
+          "whyFine": "Asking questions is appropriate."
+        }
+      ],
+      "principle": "Never remove or bypass a safety guard to save time.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Single clear unsafe line.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "JST-O-001",
+      "skill": "job-specific-tools-and-technologies",
+      "family": "job-specific-tools-and-technologies.pre-use-sequence",
+      "pattern": "read-inspect-ppe-use-store",
+      "mode": "order",
+      "difficulty": "intermediate",
+      "concepts": [
+        "job-specific-tools-and-technologies:safe-use"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "equipment": "equipment"
+      },
+      "facts": [
+        "trained-on-tool",
+        "about-to-use-it"
+      ],
+      "scenario": "You are about to use {equipment|the} for a job at {workplace|the}, and you have been trained on it.",
+      "prompt": "Put these steps in a sensible order.",
+      "steps": [
+        {
+          "id": "read",
+          "text": "Read the manufacturer's guidance for the tool"
+        },
+        {
+          "id": "inspect",
+          "text": "Inspect the tool for damage"
+        },
+        {
+          "id": "ppe",
+          "text": "Put on the required protective equipment"
+        },
+        {
+          "id": "use",
+          "text": "Use the tool as directed"
+        },
+        {
+          "id": "store",
+          "text": "Clean and store it as directed"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "read",
+          "after": "use",
+          "why": "You should know the manufacturer's directions before using the tool."
+        },
+        {
+          "before": "inspect",
+          "after": "use",
+          "why": "A damaged tool should be found before it is used."
+        },
+        {
+          "before": "ppe",
+          "after": "use",
+          "why": "Protective equipment must be on before the tool is in use."
+        },
+        {
+          "before": "use",
+          "after": "store",
+          "why": "You clean and store the tool after the work is done."
+        }
+      ],
+      "principle": "Prepare to use a tool by reading guidance, inspecting it and putting on protection; then use it, and clean and store it as directed.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Preparation steps may happen in any order before use; each alternate is professionally sound.",
+        "policyNotNeeded": true
+      },
+      "alternatesReviewed": true
+    },
+    {
+      "id": "JST-D-003",
+      "skill": "job-specific-tools-and-technologies",
+      "family": "job-specific-tools-and-technologies.new-model-orientation",
+      "pattern": "tell-lead-read-guide-get-oriented",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "job-specific-tools-and-technologies:safe-use",
+        "job-specific-tools-and-technologies:select-right-tool"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "equipment": "equipment",
+        "lead": "lead"
+      },
+      "facts": [
+        "model-replaced",
+        "different-safety-lock",
+        "training-covered-older-model",
+        "workplace-allows-only-trained-employees",
+        "lead-wants-job-started"
+      ],
+      "scenario": "{Equipment|the} at {workplace|the} was replaced with a newer model that has a different safety lock. Your training covered the older model. Your workplace allows only trained employees to use equipment, and your {lead} wants the job started now.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Tell your {lead} the model changed, read the manufacturer's guide for the new one, and get a short orientation before using it.",
+          "why": "The new safety lock is different from what you learned. Telling your {lead}, reading the guide and getting oriented fits the rule that only trained people use equipment.",
+          "requires": [
+            "training-covered-older-model",
+            "workplace-allows-only-trained-employees"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Read the manufacturer's guide for the new model and begin, without mentioning the change.",
+          "why": "Reading the guide is good, but the workplace allows only trained people to use equipment, and your {lead} does not know your training covered a different model.",
+          "misconception": "If I have read the manual, I am trained."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Use it the same way as the old one, since the controls look similar and the job needs to start.",
+          "why": "Similar controls do not mean the same safety features. The different lock is exactly where a mistake could injure someone.",
+          "misconception": "Equipment that looks similar works the same way."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Wait for the next scheduled training session in a few months before using it at all.",
+          "why": "Waiting that long is unnecessary when a short orientation could be arranged now. It also leaves the job without a trained person.",
+          "misconception": "Training only counts if it is the full official session."
+        }
+      ],
+      "principle": "When equipment changes, say so, read the guidance for the new model, and get oriented before using it.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Workplace rule stated; acceptable option reads the guide but skips communication."
+      }
+    }
+  ]
+}

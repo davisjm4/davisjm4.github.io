@@ -1,0 +1,390 @@
+{
+  "templates": [
+    {
+      "id": "ITE-O-001",
+      "skill": "information-technology",
+      "family": "information-technology.troubleshooting",
+      "pattern": "simple-checks-restart-error-message-support",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-technology:troubleshooting",
+        "information-technology:hardware-and-devices"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "device-wont-connect"
+      ],
+      "scenario": "A computer at {workplace|the} will not connect to the network.",
+      "prompt": "Put these troubleshooting steps in a sensible order.",
+      "steps": [
+        {
+          "id": "simple",
+          "text": "Check the simple things first, such as power and cable connections"
+        },
+        {
+          "id": "restart",
+          "text": "Restart the device and try again"
+        },
+        {
+          "id": "error",
+          "text": "Write down any error message and look up the steps in the help guide"
+        },
+        {
+          "id": "support",
+          "text": "Contact IT support and describe what you already tried"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "simple",
+          "after": "restart",
+          "why": "Simple causes are quick to check and rule out before anything else."
+        },
+        {
+          "before": "restart",
+          "after": "error",
+          "why": "A restart clears many problems, so try it before digging into error messages."
+        },
+        {
+          "before": "error",
+          "after": "support",
+          "why": "IT support can help faster when you can tell them the error and what you tried."
+        }
+      ],
+      "principle": "Troubleshoot from simplest to most involved, and give IT support clear details when you ask for help.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Natural escalation chain.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "ITE-N-001",
+      "skill": "information-technology",
+      "family": "information-technology.troubleshooting",
+      "pattern": "quick-checks-before-reporting",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-technology:troubleshooting",
+        "information-technology:software-and-applications"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "system": "system",
+        "client": "client"
+      },
+      "facts": [
+        "system-wont-load",
+        "client-waiting",
+        "simple-checks-available"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. {System|the} will not load on your computer while {client|a} is waiting. The connection icon looks normal, and you have not restarted the program.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Close and reopen the program, check your connection, and report the problem to IT if it still will not load.",
+          "why": "Quick checks solve many problems in a minute, and reporting afterward gives IT useful detail. It also keeps the wait short for the person.",
+          "requires": [
+            "simple-checks-available"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Uninstall and reinstall the whole program right away to make sure the problem is gone for good.",
+          "why": "Reinstalling is a big step that may remove settings or need permissions you do not have. Simple checks come first.",
+          "misconception": "The biggest fix is always the most reliable."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Tell {client|a} the system is down for the day without trying anything else.",
+          "why": "Announcing an outage before checking can mislead the person and may be wrong if a restart would fix it.",
+          "misconception": "If it does not load, it is broken."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask a coworker to do your task on their computer without mentioning the problem to anyone.",
+          "why": "Passing the task along may help for now, but the problem stays hidden, and you could be asking someone to stop what they are doing.",
+          "misconception": "Working around a problem is the same as solving it."
+        }
+      ],
+      "principle": "Start troubleshooting with quick, low-risk checks, then report to IT with what you tried.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy content.",
+        "policyNotNeeded": true
+      },
+      "timing": "Quick checks come first and reporting second."
+    },
+    {
+      "id": "ITE-D-001",
+      "skill": "information-technology",
+      "family": "information-technology.file-sharing",
+      "pattern": "use-the-approved-shared-drive",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-technology:cloud-and-file-sharing"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person",
+        "document": "document"
+      },
+      "facts": [
+        "large-file",
+        "workplace-approved-shared-drive",
+        "coworker-needs-it-today"
+      ],
+      "scenario": "{Workplace|the} uses an approved shared drive for work files. You need to send a large {document|a} to {coworker} for review today. You have used a personal email account and a free public file-sharing site for other things.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Save the file to the approved shared drive, and share a link with {coworker} through it.",
+          "why": "The approved drive is set up for work files, with access controls and backups. Using it keeps the file where the workplace can manage it.",
+          "requires": [
+            "workplace-approved-shared-drive"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Send it from your personal email account, since it gets to {coworker} the fastest.",
+          "why": "Personal accounts are outside what the workplace manages, so the file could be hard to protect or recover later.",
+          "misconception": "The fastest method is the best method."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Upload it to the free public site you already know, then send {coworker} the link.",
+          "why": "A public site may not protect the file and is not set up by your workplace. Convenience does not make it approved.",
+          "misconception": "A tool I already use is fine for work."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Copy it onto a personal USB drive and give it to {coworker} in person.",
+          "why": "A loose drive can be lost or carry problems, and the file ends up outside the approved place for work files.",
+          "misconception": "Hand-delivery is always safer than online."
+        }
+      ],
+      "principle": "Use the file-sharing tools your workplace has approved for work files, rather than personal accounts or public sites.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Approved drive stated in scenario."
+      }
+    },
+    {
+      "id": "ITE-D-002",
+      "skill": "information-technology",
+      "family": "information-technology.choosing-software",
+      "pattern": "spreadsheet-for-changing-totals",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-technology:software-and-applications"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "track-hours-for-twenty-people",
+        "numbers-change-weekly",
+        "totals-needed"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. Your {lead} asks you to keep track of weekly hours for twenty people and show each person's total. The numbers change every week, and totals need to update when a number is changed.",
+      "prompt": "What is the most appropriate tool?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Use a spreadsheet with formulas, so totals update automatically when a number changes.",
+          "why": "A spreadsheet is built for numbers that change and for totals that must stay correct, so each update takes one edit.",
+          "requires": [
+            "numbers-change-weekly"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Type the hours into a word-processing document, and add them up with a calculator each week.",
+          "why": "A word-processing document stores text well but does not calculate, so every change means re-adding by hand, which invites mistakes.",
+          "misconception": "Any program that holds numbers will do."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Make one presentation slide per person, and update each slide by hand when hours change.",
+          "why": "Slides are meant for presenting, not for tracking. Twenty slides would be slow to update and hard to total.",
+          "misconception": "A visual format is always clearer."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Keep the hours in a text message thread, and total them up at the end of each week.",
+          "why": "Message threads are hard to search and to correct, and totals would have to be worked out by hand every time.",
+          "misconception": "The simplest tool is always the best tool."
+        }
+      ],
+      "principle": "Choose software that fits the task: spreadsheets for changing numbers and totals, documents for text, slides for presenting.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy content.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "ITE-D-003",
+      "skill": "information-technology",
+      "family": "information-technology.emerging-tools",
+      "pattern": "use-approved-tool-without-client-details",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "information-technology:emerging-technology",
+        "information-technology:software-and-applications"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "client": "client",
+        "lead": "lead"
+      },
+      "facts": [
+        "tool-approved-for-general-drafting",
+        "policy-no-client-details-in-tool",
+        "policy-review-before-sending",
+        "reply-needed"
+      ],
+      "scenario": "{Workplace|the} has approved a writing assistant tool for drafting general messages. Its policy says employees must not enter {client|a}'s personal details into it, and must review every draft before sending. You need to write a reply to {client|a} about an account problem.",
+      "prompt": "What is the best approach?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Ask the tool for general wording without any personal details, then review it and add the specifics yourself.",
+          "why": "This uses the approved tool within its limits and keeps your own review as the final step, which the policy requires.",
+          "requires": [
+            "policy-no-client-details-in-tool",
+            "policy-review-before-sending"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Skip the tool and write the whole reply yourself, since the policy limits what you can enter.",
+          "why": "This is safe and follows the policy, but it does not use the approved tool for the part it is allowed to help with.",
+          "misconception": "If a tool has limits, it is easiest not to use it."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Paste the message and the account details into the tool for a faster draft, then check it before sending.",
+          "why": "Reviewing the draft is required, but entering personal details breaks the policy, and checking afterward does not undo the disclosure.",
+          "misconception": "A careful review afterward makes up for sharing details."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Let the tool write the whole reply from a general description and send it as written to save time.",
+          "why": "The policy requires a review of every draft. Unreviewed text can contain mistakes or the wrong tone.",
+          "misconception": "If a tool is approved, its output is ready to send."
+        }
+      ],
+      "principle": "Use approved tools within their stated limits, keep protected details out of them, and review what they produce before it goes out.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Policy stated in scenario."
+      }
+    },
+    {
+      "id": "ITE-F-001",
+      "skill": "information-technology",
+      "family": "information-technology.updates",
+      "pattern": "postponing-updates-for-a-month",
+      "mode": "find",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-technology:troubleshooting",
+        "information-technology:software-and-applications"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "plan-postpones-update-indefinitely"
+      ],
+      "scenario": "A coworker at {workplace|the} writes this note about a computer update.",
+      "prompt": "Tap the line that is a problem.",
+      "docType": "note",
+      "docTitle": "Note about a computer update",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Plan for this week's computer maintenance:",
+          "whyFine": "A heading introducing the plan."
+        },
+        {
+          "id": "b",
+          "text": "I will save my open files before the update starts.",
+          "whyFine": "Saving work before an update is a sensible precaution."
+        },
+        {
+          "id": "c",
+          "text": "I will keep postponing the restart for a month, because updates are annoying and probably unnecessary.",
+          "problem": true,
+          "why": "Updates often include fixes for problems and security risks, so putting them off for a month leaves the device exposed."
+        },
+        {
+          "id": "d",
+          "text": "I will tell IT if the update takes longer than expected.",
+          "whyFine": "Reporting a problem to IT is appropriate."
+        }
+      ],
+      "principle": "Install updates promptly; postponing them leaves known problems unfixed.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Single line postpones updates indefinitely.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

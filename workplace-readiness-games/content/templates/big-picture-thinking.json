@@ -1,0 +1,388 @@
+{
+  "templates": [
+    {
+      "id": "BIG-D-001",
+      "skill": "big-picture-thinking",
+      "family": "big-picture-thinking.role-in-mission",
+      "pattern": "small-check-supports-the-promise",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "big-picture-thinking:role-in-mission"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "client": "client",
+        "task": "task"
+      },
+      "facts": [
+        "mission-stated",
+        "busy-day",
+        "check-not-strictly-required"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}, whose stated mission is to give {client.plural} service they can rely on. At the end of a busy day you could skip the last step of {task|the}. Nobody checks it, and skipping it would let you leave ten minutes early.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Do the last step, because your small part helps the workplace keep its promise to {client.plural}.",
+          "why": "Routine steps are part of how a workplace delivers on its mission. Your work connects to what {client.plural} experience, even when no one is watching.",
+          "requires": [
+            "mission-stated"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Skip it, since a step that nobody checks cannot affect what {client.plural} will receive in the end.",
+          "why": "A step that is not checked still exists for a reason. Skipping it removes a safeguard that {client.plural} may be depending on.",
+          "misconception": "If nobody checks it, it does not matter."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Skip it today and make up for it by doing the step twice as carefully tomorrow instead.",
+          "why": "Tomorrow's extra care cannot cover today's gap. The work done today is what {client.plural} experience today.",
+          "misconception": "I can make up for a skipped step later."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Do the step only if someone in charge happens to walk by, since that is when it counts.",
+          "why": "Doing the work only when watched treats it as a show instead of a responsibility. The mission is served when the work is done every time.",
+          "misconception": "Work only matters when someone sees it."
+        }
+      ],
+      "principle": "Connect routine tasks to the workplace's mission: small steps help deliver what the organization promises, whether or not anyone checks.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Mission is stated in the scenario; no policy dependence.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "BIG-N-001",
+      "skill": "big-picture-thinking",
+      "family": "big-picture-thinking.organization-structure",
+      "pattern": "report-through-your-own-lead",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "big-picture-thinking:organization-structure"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "document": "document",
+        "lead": "lead"
+      },
+      "facts": [
+        "error-in-other-departments-document",
+        "policy-report-through-own-lead"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. You notice an error in {document|a} prepared by another department. Your workplace asks employees to report concerns about other departments to their own {lead}, who then contacts that department.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Tell your own {lead} about the error, so the concern reaches the other department through the usual route.",
+          "why": "Following the reporting structure makes sure the right people hear about the problem in an organized way, and your {lead} may know context you do not.",
+          "requires": [
+            "policy-report-through-own-lead"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Fix the error yourself in {document|a} and send it back, so the other department does not have to be bothered.",
+          "why": "Changing another department's work without telling them can create confusion and hides the problem that caused it.",
+          "misconception": "Fixing it myself is faster than reporting it."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Email the other department's manager directly, since that person has the most authority over the error.",
+          "why": "Going around your own {lead} skips the route your workplace set up and may surprise people who need to know first.",
+          "misconception": "The highest-ranking person is always the best one to contact."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Mention it to a coworker and hope that someone who knows what to do will take care of it.",
+          "why": "A casual comment does not guarantee the information reaches anyone who can act on it. Reports work best when they go through a defined route.",
+          "misconception": "Telling anyone counts as reporting."
+        }
+      ],
+      "principle": "Know how your organization is structured and use its channels: report concerns about other departments through your own lead.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Reporting structure is stated in the scenario."
+      },
+      "timing": "The reporting structure sets the first step; the sequence matters."
+    },
+    {
+      "id": "BIG-D-002",
+      "skill": "big-picture-thinking",
+      "family": "big-picture-thinking.impacts-of-actions",
+      "pattern": "propose-lower-cost-lower-waste-option",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "big-picture-thinking:impacts-of-actions"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "document": "document",
+        "lead": "lead"
+      },
+      "facts": [
+        "full-color-copies-used-once",
+        "costly-and-wasteful"
+      ],
+      "scenario": "At {workplace|the}, your team routinely prints full-color paper copies of {document|a} that are read once and thrown away. You notice that this costs money and creates a lot of waste, and a digital copy would work just as well.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Suggest to your {lead} a digital option, and explain the savings and the waste it would avoid.",
+          "why": "A clear proposal that covers both cost and environmental effect gives the decision-maker what they need, and it improves the workplace beyond your own tasks.",
+          "requires": [
+            "costly-and-wasteful"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Keep printing the copies the same way, since the cost of supplies is the company's concern, not yours.",
+          "why": "Everyone's habits add up to the workplace's costs and waste. A good idea is worth sharing with the person who can approve it.",
+          "misconception": "Costs are only the owner's concern."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Stop printing the copies on your own and send only digital versions, without telling anyone why.",
+          "why": "Changing a team practice alone can leave people without something they expect. A proposal lets the team decide together.",
+          "misconception": "I should act on a good idea without asking."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask coworkers to print less on their own, and hope that the habit spreads across the team over time.",
+          "why": "Informal requests rarely change a team's routine, and they leave out the person who can actually change it.",
+          "misconception": "Quiet encouragement is enough to change a process."
+        }
+      ],
+      "principle": "Consider cost and environmental effects of routine habits, and bring better options to the person who can approve a change.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy or legal content.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "BIG-F-001",
+      "skill": "big-picture-thinking",
+      "family": "big-picture-thinking.mission-alignment",
+      "pattern": "cost-cutting-contradicts-mission",
+      "mode": "find",
+      "difficulty": "intermediate",
+      "concepts": [
+        "big-picture-thinking:role-in-mission",
+        "big-picture-thinking:community-and-industry"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person"
+      },
+      "facts": [
+        "plan-contradicts-mission"
+      ],
+      "scenario": "{coworker} shares this plan for {workplace|the}.",
+      "prompt": "Tap the line that conflicts with the workplace's mission.",
+      "docType": "email",
+      "docTitle": "Plan for the month",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Our mission is to provide safe, dependable service to our community.",
+          "whyFine": "A statement of the mission, stated plainly."
+        },
+        {
+          "id": "b",
+          "text": "To save time this month, we will skip the final quality and safety check.",
+          "problem": true,
+          "why": "Skipping the final check contradicts the stated mission of safe, dependable service."
+        },
+        {
+          "id": "c",
+          "text": "We will keep our prices where they are for now.",
+          "whyFine": "Keeping prices steady does not conflict with the mission."
+        },
+        {
+          "id": "d",
+          "text": "I would like your feedback before Friday.",
+          "whyFine": "Asking for feedback is a normal part of a plan."
+        }
+      ],
+      "principle": "Check plans against the organization's mission: shortcuts that undercut what the workplace promises are a problem.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Only one line contradicts the stated mission.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "BIG-O-001",
+      "skill": "big-picture-thinking",
+      "family": "big-picture-thinking.weighing-effects",
+      "pattern": "understand-affected-weigh-propose",
+      "mode": "order",
+      "difficulty": "intermediate",
+      "concepts": [
+        "big-picture-thinking:role-in-mission",
+        "big-picture-thinking:impacts-of-actions"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "employee-wants-to-suggest-a-change"
+      ],
+      "scenario": "You want to suggest a change to how a routine task is done at {workplace|the}.",
+      "prompt": "Put these steps in a sensible order.",
+      "steps": [
+        {
+          "id": "goal",
+          "text": "Learn how the task supports the workplace's goals"
+        },
+        {
+          "id": "who",
+          "text": "Identify who would be affected by a change"
+        },
+        {
+          "id": "weigh",
+          "text": "Weigh the costs and effects, including on the environment"
+        },
+        {
+          "id": "propose",
+          "text": "Present your suggestion to your {lead}"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "goal",
+          "after": "who",
+          "why": "You need to know what the task is for before you can tell who it touches."
+        },
+        {
+          "before": "who",
+          "after": "weigh",
+          "why": "Knowing who is affected helps you weigh the effects fully."
+        },
+        {
+          "before": "weigh",
+          "after": "propose",
+          "why": "A suggestion is stronger when you have already weighed its effects."
+        }
+      ],
+      "principle": "Propose changes responsibly: understand the goal, see who is affected, weigh the effects, then present your idea.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Natural chain.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "BIG-D-003",
+      "skill": "big-picture-thinking",
+      "family": "big-picture-thinking.supplier-tradeoffs",
+      "pattern": "present-the-whole-picture",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "big-picture-thinking:impacts-of-actions",
+        "big-picture-thinking:community-and-industry"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "two-suppliers",
+        "a-cheaper-far-heavy-packaging",
+        "b-pricier-local-reusable",
+        "lead-asks-for-input"
+      ],
+      "scenario": "Your {lead} at {workplace|the} asks for your input on choosing between two suppliers. Supplier A is cheaper but ships from far away in heavy single-use packaging. Supplier B costs slightly more, is local, and uses reusable packaging. Your {lead} has mentioned that cost matters.",
+      "prompt": "What is the best contribution?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Lay out cost, delivery and packaging effects for both, and recommend one with your reasoning.",
+          "why": "Cost matters, but so do the effects on the environment and community. Presenting the full picture helps your {lead} decide with all the facts.",
+          "requires": [
+            "lead-asks-for-input"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Recommend Supplier A, since your {lead} said cost matters and it is clearly the cheaper one.",
+          "why": "Cost is a real factor, but recommending on price alone leaves out the packaging and shipping effects that your {lead} would also want to weigh.",
+          "misconception": "The factor mentioned first is the only one that counts."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Recommend Supplier B, since local and reusable options are always better no matter what they cost.",
+          "why": "Environmental benefits are important, but ignoring a cost difference leaves out something the workplace has to consider.",
+          "misconception": "Environmental benefits outweigh every other factor."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Tell your {lead} you have no opinion, since choosing a supplier is not something you decide.",
+          "why": "You were asked for input. Sharing what you can see helps even when someone else makes the decision.",
+          "misconception": "If I do not make the decision, I should stay out of it."
+        }
+      ],
+      "principle": "Weigh cost together with effects on the community and environment, and present the full picture when asked for input.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Acceptable option reasonable but narrow.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

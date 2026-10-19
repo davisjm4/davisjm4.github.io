@@ -1,0 +1,323 @@
+{
+  "templates": [
+    {
+      "id": "CON-D-001",
+      "skill": "conflict-resolution",
+      "family": "conflict-resolution.direct-conversation",
+      "pattern": "private-conversation-after-public-criticism",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "conflict-resolution:diplomatic-negotiation",
+        "conflict-resolution:work-style-differences",
+        "conflict-resolution:when-to-escalate"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person",
+        "lead": "lead"
+      },
+      "facts": [
+        "public-criticism",
+        "disputed-claim",
+        "calm-now"
+      ],
+      "scenario": "During a busy stretch at {workplace|a}, {coworker} says in front of others, \"You always leave your area a mess.\" You think your area was fine, and you feel your face getting hot. Later, things are calm and {coworker} is nearby.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Ask {coworker} privately what {coworker} noticed, share your side calmly, and agree on how to handle it next time.",
+          "why": "A calm private conversation lets both of you explain what you saw and settle on a fix, and it avoids turning one comment into a bigger problem.",
+          "requires": [
+            "calm-now"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Go straight to your {lead} and ask for a ruling on whose version of the story is right this time.",
+          "why": "Skipping the direct conversation makes a small disagreement bigger and leaves you and {coworker} no closer to working well together. A supervisor is for problems you cannot settle yourselves.",
+          "misconception": "Going to the supervisor first is the strongest way to win."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Apologize and take the blame so the tension ends, even though you think your area was fine.",
+          "why": "Giving in ends the moment but not the cause. The disagreement stays unresolved, and you may be asked to fix a problem you do not understand.",
+          "misconception": "Giving in is the fastest way to end a conflict."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Avoid {coworker} and stay out of any shared tasks so there is no chance of another argument.",
+          "why": "Avoiding the person lets the misunderstanding grow and makes teamwork harder. Working together means sorting out disagreements directly.",
+          "misconception": "Avoiding the person solves the problem."
+        }
+      ],
+      "principle": "Handle disagreements directly and respectfully first: ask for the other person's view, share yours calmly, and agree on a fix. Bring in a supervisor when talking does not work or the issue is serious.",
+      "review": {
+        "status": "approved",
+        "checks": [],
+        "notes": "Public, non-serious criticism; no harassment or safety element that would require escalation. Calm timing stated."
+      }
+    },
+    {
+      "id": "CON-D-002",
+      "skill": "conflict-resolution",
+      "family": "conflict-resolution.work-style-differences",
+      "pattern": "blend-planning-and-independent-work",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "conflict-resolution:work-style-differences",
+        "conflict-resolution:diplomatic-negotiation"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person"
+      },
+      "facts": [
+        "styles-differ",
+        "same-deadline",
+        "tension-growing"
+      ],
+      "scenario": "On a shared project at {workplace|the}, {coworker} likes to talk through every step as a group before starting. You prefer to begin working on your own and check in later. You both want the project finished on time, and tension is starting to build.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Suggest a plan that uses both styles, such as a short planning huddle followed by independent work.",
+          "why": "Both of you want the same result, so a plan that respects each person's working style resolves the tension without anyone having to lose.",
+          "requires": [
+            "same-deadline"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Work in your own way and let the finished results show whose approach was better.",
+          "why": "Turning a difference in style into a contest damages the working relationship, and a good result will not prove that the other approach was wrong.",
+          "misconception": "The best way to settle a disagreement is to prove I am right."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Agree to do everything the way {coworker} prefers so the two of you stop disagreeing.",
+          "why": "Giving in ends the argument but may leave you frustrated and less effective. A compromise lets both people do their best work.",
+          "misconception": "Giving in completely is the fastest way to end tension."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask your supervisor to divide the project into separate parts so the two of you never need to coordinate.",
+          "why": "Splitting the work to avoid each other removes the chance to work well together, and many projects need coordination. A blended approach is simpler.",
+          "misconception": "Avoiding the other person is the best way to prevent conflict."
+        }
+      ],
+      "principle": "When styles differ but goals match, look for a plan that uses the strengths of both instead of winning, giving in or avoiding each other.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Shared goal is stated; no policy content.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CON-N-001",
+      "skill": "conflict-resolution",
+      "family": "conflict-resolution.when-to-escalate",
+      "pattern": "bring-specifics-after-private-talk-fails",
+      "mode": "nextstep",
+      "difficulty": "advanced",
+      "concepts": [
+        "conflict-resolution:performance-concerns",
+        "conflict-resolution:when-to-escalate"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person",
+        "task": "task",
+        "lead": "lead"
+      },
+      "facts": [
+        "private-talk-already-happened",
+        "repeated-pattern",
+        "lead-unaware"
+      ],
+      "scenario": "At {workplace|the}, {coworker} has left {coworker.poss} assigned part of {task|the} undone three times, and you have covered it twice. You spoke privately with {coworker} after the second time, and it happened again today. Your {lead} does not know about any of this.",
+      "prompt": "What is the best next step?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Calmly describe the pattern to your {lead}, with dates and examples, and ask for help setting clear duties.",
+          "why": "A private conversation has already been tried and the problem continued, so it is now a pattern that your {lead} needs to know about. Specific examples make it easier to resolve fairly.",
+          "requires": [
+            "private-talk-already-happened",
+            "repeated-pattern"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Talk privately with {coworker} one more time before involving anyone else.",
+          "why": "Speaking directly is a good habit, but you have already done it once and the pattern continued. Waiting longer means more cover-ups and leaves your {lead} unaware.",
+          "misconception": "One more conversation will fix it."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Keep covering the missing work quietly so the team does not fall behind and nobody gets upset.",
+          "why": "Covering silently hides the problem from the person who can fix it, and it will keep happening while you carry the extra work.",
+          "misconception": "Keeping the peace means staying quiet about a problem."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Do only your own part from now on and let the rest go undone, so {coworker} learns a lesson.",
+          "why": "Letting work fail to teach a lesson hurts the team and the people relying on it, and it turns a work problem into a personal one.",
+          "misconception": "Letting someone fail is a fair way to teach them."
+        }
+      ],
+      "principle": "When a direct conversation has not stopped a repeated problem, bring specific examples to the person who can help set expectations.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Pattern and prior attempt stated; no harassment or safety content.",
+        "policyNotNeeded": true
+      },
+      "timing": "One private attempt has failed, so the first move now is escalation with specifics."
+    },
+    {
+      "id": "CON-F-001",
+      "skill": "conflict-resolution",
+      "family": "conflict-resolution.constructive-messages",
+      "pattern": "accusatory-generalization-in-follow-up",
+      "mode": "find",
+      "difficulty": "beginner",
+      "concepts": [
+        "conflict-resolution:diplomatic-negotiation",
+        "conflict-resolution:personality-and-culture"
+      ],
+      "contexts": "any",
+      "slots": {
+        "coworker": "person"
+      },
+      "facts": [
+        "message-has-accusatory-generalization"
+      ],
+      "scenario": "After a disagreement about the schedule, a coworker writes this message to {coworker}. The writer wants to settle things.",
+      "prompt": "Tap the line that makes the conflict worse.",
+      "docType": "email",
+      "docTitle": "Message after a disagreement",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Hi {coworker},",
+          "whyFine": "A greeting is a normal way to start."
+        },
+        {
+          "id": "b",
+          "text": "I wanted to follow up on yesterday's disagreement about the schedule.",
+          "whyFine": "Naming the topic calmly and directly is a good way to begin."
+        },
+        {
+          "id": "c",
+          "text": "You always do this, and you obviously never think about anyone else.",
+          "problem": true,
+          "why": "Words like \"always\" and \"never\" attack the person instead of describing the problem, which makes the other person defensive."
+        },
+        {
+          "id": "d",
+          "text": "Could we talk for ten minutes tomorrow and work out a plan?",
+          "whyFine": "Asking for a short conversation to find a plan is constructive."
+        }
+      ],
+      "principle": "Describe the specific problem and invite a solution; sweeping accusations like 'always' and 'never' make people defensive.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Only one line attacks the person.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CON-O-001",
+      "skill": "conflict-resolution",
+      "family": "conflict-resolution.resolution-sequence",
+      "pattern": "cool-down-talk-agree-follow-up",
+      "mode": "order",
+      "difficulty": "intermediate",
+      "concepts": [
+        "conflict-resolution:diplomatic-negotiation",
+        "conflict-resolution:personality-and-culture"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person"
+      },
+      "facts": [
+        "disagreement-with-coworker"
+      ],
+      "scenario": "You had a tense disagreement with {coworker} at {workplace|the}, and you want to resolve it.",
+      "prompt": "Put these steps in a sensible order.",
+      "steps": [
+        {
+          "id": "calm",
+          "text": "Take a moment to calm down and choose a private time to talk"
+        },
+        {
+          "id": "talk",
+          "text": "Explain the specific issue calmly and listen to {coworker}'s view"
+        },
+        {
+          "id": "agree",
+          "text": "Agree together on what each of you will do next"
+        },
+        {
+          "id": "follow",
+          "text": "Check in later to see whether the plan is working"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "calm",
+          "after": "talk",
+          "why": "A calm, private conversation goes better than one held while upset."
+        },
+        {
+          "before": "talk",
+          "after": "agree",
+          "why": "You can only agree on a plan after both views have been heard."
+        },
+        {
+          "before": "agree",
+          "after": "follow",
+          "why": "You can only check a plan after it has been made."
+        }
+      ],
+      "principle": "Resolve conflicts in order: cool down, talk privately, agree on a plan, and follow up.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Natural chain.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

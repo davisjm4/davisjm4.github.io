@@ -1,0 +1,276 @@
+{
+  "_about": "Skill metadata for the 22 CTECS Workplace Readiness Skills. Summaries and concept labels are original paraphrases of the public module pages at https://wrs.ctecs.org/practice/ (reviewed 2026-10-18). Concepts are the assessable ideas each module lists; definitional bullets are recorded in notAssessedDirectly because the platform teaches application, not vocabulary recall.",
+  "source": "https://wrs.ctecs.org/practice/",
+  "skills": [
+    {
+      "id": "creativity-and-innovation", "number": 1, "code": "CRE", "category": "personal", "name": "Creativity and Innovation",
+      "summary": "Brings original, resourceful ideas to work and improves how things are done.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/creativity-and-innovation/",
+      "concepts": [
+        { "id": "creativity-and-innovation:contribute-ideas", "label": "Brainstorming and contributing ideas, strategies and solutions" },
+        { "id": "creativity-and-innovation:improve-processes", "label": "Developing or improving products, services or processes" },
+        { "id": "creativity-and-innovation:allocate-resources", "label": "Identifying and allocating available resources creatively" },
+        { "id": "creativity-and-innovation:value-of-creativity", "label": "Recognizing why originality matters in a workplace setting" }
+      ],
+      "notAssessedDirectly": []
+    },
+    {
+      "id": "critical-thinking-and-problem-solving", "number": 2, "code": "CTP", "category": "personal", "name": "Critical Thinking and Problem Solving",
+      "summary": "Uses sound reasoning to analyze a problem, weigh solutions and act on the best one.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/critical-thinking-and-problem-solving/",
+      "concepts": [
+        { "id": "critical-thinking-and-problem-solving:analyze-problems", "label": "Recognizing and analyzing the real problem (including root cause)" },
+        { "id": "critical-thinking-and-problem-solving:evaluate-solutions", "label": "Evaluating potential solutions and the resources they need" },
+        { "id": "critical-thinking-and-problem-solving:logical-decisions", "label": "Using a logical approach to decide" },
+        { "id": "critical-thinking-and-problem-solving:implement-action", "label": "Carrying out and checking an effective course of action" }
+      ],
+      "notAssessedDirectly": []
+    },
+    {
+      "id": "initiative-and-self-direction", "number": 3, "code": "INI", "category": "personal", "name": "Initiative and Self-Direction",
+      "summary": "Spots needs and gets work done independently, without waiting to be told.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/initiative-and-self-direction/",
+      "concepts": [
+        { "id": "initiative-and-self-direction:proactive-decisions", "label": "Making proactive, independent decisions within one's role" },
+        { "id": "initiative-and-self-direction:identify-needs", "label": "Identifying workplace needs before they become problems" },
+        { "id": "initiative-and-self-direction:minimal-supervision", "label": "Completing tasks with minimal direct supervision" },
+        { "id": "initiative-and-self-direction:apply-solutions", "label": "Applying a solution once a need is identified" }
+      ],
+      "notAssessedDirectly": []
+    },
+    {
+      "id": "integrity", "number": 4, "code": "INT", "category": "personal", "name": "Integrity",
+      "summary": "Follows laws, procedures and policies and is honest, fair and respectful toward people and property.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/integrity/",
+      "concepts": [
+        { "id": "integrity:laws-and-regulations", "label": "Complying with local, state and federal requirements (taught only when the scenario states the rule)" },
+        { "id": "integrity:policies-and-procedures", "label": "Adhering to workplace policies and procedures" },
+        { "id": "integrity:honesty-and-fairness", "label": "Being honest and fair toward others, including accurate reporting" },
+        { "id": "integrity:respect-for-property", "label": "Treating the property and resources of others with respect" },
+        { "id": "integrity:importance-of-integrity", "label": "Seeing the workplace consequences of acting with or without integrity" }
+      ],
+      "notAssessedDirectly": ["defining integrity"]
+    },
+    {
+      "id": "work-ethic", "number": 5, "code": "WET", "category": "personal", "name": "Work Ethic",
+      "summary": "Works diligently, can be counted on, and owns the results of decisions and actions.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/work-ethic/",
+      "concepts": [
+        { "id": "work-ethic:diligence", "label": "Persisting to finish a task well" },
+        { "id": "work-ethic:dependability", "label": "Being reliable about commitments and coverage" },
+        { "id": "work-ethic:accountability", "label": "Accounting for one's own decisions and actions" },
+        { "id": "work-ethic:accepting-consequences", "label": "Accepting the consequences of one's decisions and actions" }
+      ],
+      "notAssessedDirectly": ["defining work ethic"]
+    },
+    {
+      "id": "conflict-resolution", "number": 6, "code": "CON", "category": "interpersonal", "name": "Conflict Resolution",
+      "summary": "Works out workable solutions to disagreements caused by personality, culture, work style or performance.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/conflict-resolution/",
+      "concepts": [
+        { "id": "conflict-resolution:diplomatic-negotiation", "label": "Negotiating diplomatic solutions and compromises" },
+        { "id": "conflict-resolution:work-style-differences", "label": "Handling conflicts rooted in different work styles" },
+        { "id": "conflict-resolution:performance-concerns", "label": "Raising and responding to performance concerns constructively" },
+        { "id": "conflict-resolution:personality-and-culture", "label": "Handling conflicts rooted in personality or cultural differences" },
+        { "id": "conflict-resolution:when-to-escalate", "label": "Deciding when a supervisor needs to be involved" }
+      ],
+      "notAssessedDirectly": []
+    },
+    {
+      "id": "listening-and-speaking", "number": 7, "code": "LIS", "category": "interpersonal", "name": "Listening and Speaking",
+      "summary": "Listens closely, asks clarifying questions, and speaks in a way that suits the audience and setting.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/listening-and-speaking/",
+      "concepts": [
+        { "id": "listening-and-speaking:nonverbal-cues", "label": "Reading and using nonverbal cues" },
+        { "id": "listening-and-speaking:active-listening", "label": "Active listening: clarifying questions and paraphrasing" },
+        { "id": "listening-and-speaking:presenting", "label": "Public speaking and giving presentations" },
+        { "id": "listening-and-speaking:audience-and-setting", "label": "Fitting message, method and detail to the audience and setting" }
+      ],
+      "notAssessedDirectly": ["defining nonverbal cues"]
+    },
+    {
+      "id": "respect-for-diversity", "number": 8, "code": "DIV", "category": "interpersonal", "name": "Respect for Diversity",
+      "summary": "Values individual differences and works well with people of different backgrounds, views and experiences.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/respect-for-diversity/",
+      "concepts": [
+        { "id": "respect-for-diversity:individual-differences", "label": "Recognizing differences such as age, culture, ability, viewpoint and background" },
+        { "id": "respect-for-diversity:valuing-differences", "label": "Showing respect for and valuing those differences at work" },
+        { "id": "respect-for-diversity:own-bias", "label": "Noticing and checking one's own assumptions and bias" },
+        { "id": "respect-for-diversity:collaborating", "label": "Collaborating with people whose backgrounds and views differ" }
+      ],
+      "notAssessedDirectly": ["defining diversity"]
+    },
+    {
+      "id": "customer-service-orientation", "number": 9, "code": "CUS", "category": "interpersonal", "name": "Customer Service Orientation",
+      "summary": "Anticipates and meets the needs of customers and coworkers with courteous, knowledgeable service.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/customer-service-orientation/",
+      "concepts": [
+        { "id": "customer-service-orientation:internal-and-external", "label": "Serving both internal customers (coworkers) and external customers" },
+        { "id": "customer-service-orientation:prioritize-service", "label": "Prioritizing service among competing demands" },
+        { "id": "customer-service-orientation:anticipate-needs", "label": "Anticipating the needs of customers and coworkers" },
+        { "id": "customer-service-orientation:courteous-knowledgeable", "label": "Giving courteous, accurate, helpful service and handling complaints" }
+      ],
+      "notAssessedDirectly": ["defining customer service", "listing benefits of good service"]
+    },
+    {
+      "id": "teamwork", "number": 10, "code": "TEA", "category": "interpersonal", "name": "Teamwork",
+      "summary": "Shares responsibility for group work and respects teammates' ideas and contributions.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/teamwork/",
+      "concepts": [
+        { "id": "teamwork:expectations-roles-goals", "label": "Establishing expectations, roles and goals" },
+        { "id": "teamwork:share-responsibility", "label": "Contributing to team success by sharing responsibility" },
+        { "id": "teamwork:respect-contributions", "label": "Respecting the thoughts and contributions of teammates" },
+        { "id": "teamwork:team-communication", "label": "Keeping teammates informed so the work stays coordinated" }
+      ],
+      "notAssessedDirectly": ["defining collaboration and teamwork", "listing benefits of teamwork"]
+    },
+    {
+      "id": "big-picture-thinking", "number": 11, "code": "BIG", "category": "professional", "name": "Big-Picture Thinking",
+      "summary": "Understands one's role in the workplace mission and considers social, economic and environmental effects.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/big-picture-thinking/",
+      "concepts": [
+        { "id": "big-picture-thinking:role-in-mission", "label": "Connecting one's own work to the organization's mission" },
+        { "id": "big-picture-thinking:impacts-of-actions", "label": "Weighing social, economic and environmental effects of actions" },
+        { "id": "big-picture-thinking:organization-structure", "label": "Understanding organizational structure, culture, policies and procedures" },
+        { "id": "big-picture-thinking:community-and-industry", "label": "Seeing the organization's place in its community, industry and economy" }
+      ],
+      "notAssessedDirectly": ["defining big-picture thinking"]
+    },
+    {
+      "id": "career-and-life-management", "number": 12, "code": "CAR", "category": "professional", "name": "Career and Life Management",
+      "summary": "Plans and manages personal and professional goals involving education, career, money and health.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/career-and-life-management/",
+      "concepts": [
+        { "id": "career-and-life-management:qualifications-and-advancement", "label": "Education, qualifications and advancement planning" },
+        { "id": "career-and-life-management:benefits-and-resources", "label": "Using benefits and professional resources (unions, associations, assistance programs, insurance, retirement)" },
+        { "id": "career-and-life-management:wellness-and-finances", "label": "Managing stress, self-care and personal finances" },
+        { "id": "career-and-life-management:smart-goals", "label": "Setting specific, measurable, attainable, realistic, time-bound goals" }
+      ],
+      "notAssessedDirectly": []
+    },
+    {
+      "id": "continuous-learning-and-adaptability", "number": 13, "code": "CLA", "category": "professional", "name": "Continuous Learning and Adaptability",
+      "summary": "Accepts feedback, stays open to new methods, and keeps building skills as job demands change.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/continuous-learning-and-adaptability/",
+      "concepts": [
+        { "id": "continuous-learning-and-adaptability:learning-resources", "label": "Choosing learning resources (publications, workshops, networks, trade organizations)" },
+        { "id": "continuous-learning-and-adaptability:acting-on-feedback", "label": "Changing performance based on feedback (being coachable)" },
+        { "id": "continuous-learning-and-adaptability:credentials", "label": "Pursuing industry credentials and certifications" },
+        { "id": "continuous-learning-and-adaptability:changing-requirements", "label": "Adapting to changing job requirements" }
+      ],
+      "notAssessedDirectly": ["describing the importance of continuous learning"]
+    },
+    {
+      "id": "efficiency-and-productivity", "number": 14, "code": "EFF", "category": "professional", "name": "Efficiency and Productivity",
+      "summary": "Plans, prioritizes and adapts work goals to use time and resources well.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/efficiency-and-productivity/",
+      "concepts": [
+        { "id": "efficiency-and-productivity:work-plan", "label": "Developing a plan of work" },
+        { "id": "efficiency-and-productivity:prioritize-tasks", "label": "Telling high-priority from low-priority tasks" },
+        { "id": "efficiency-and-productivity:adapt-goals", "label": "Adapting work goals to the time and resources available" },
+        { "id": "efficiency-and-productivity:human-resources", "label": "Using people's strengths and respecting their goals" },
+        { "id": "efficiency-and-productivity:capital-resources", "label": "Maintaining equipment so it lasts and works efficiently" },
+        { "id": "efficiency-and-productivity:natural-resources", "label": "Using responsible, sustainable practices" }
+      ],
+      "notAssessedDirectly": ["defining efficiency and productivity"]
+    },
+    {
+      "id": "information-literacy", "number": 15, "code": "ILI", "category": "professional", "name": "Information Literacy",
+      "summary": "Finds information efficiently, judges how credible and relevant it is, and uses it well.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/information-literacy/",
+      "concepts": [
+        { "id": "information-literacy:locate-sources", "label": "Locating information efficiently" },
+        { "id": "information-literacy:evaluate-credibility", "label": "Judging credibility, authority and whether information is current" },
+        { "id": "information-literacy:judge-relevance", "label": "Judging whether information fits the task at hand" },
+        { "id": "information-literacy:use-information", "label": "Using information effectively to complete work tasks" }
+      ],
+      "notAssessedDirectly": ["defining information literacy"]
+    },
+    {
+      "id": "information-security", "number": 16, "code": "ISE", "category": "professional", "name": "Information Security",
+      "summary": "Practices basic internet and email safety and follows workplace protocols that protect information, devices, networks and facilities.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/information-security/",
+      "concepts": [
+        { "id": "information-security:information-formats", "label": "Protecting information in every format (paper and electronic)" },
+        { "id": "information-security:cyber-threats", "label": "Recognizing cybersecurity risks, threats and vulnerabilities" },
+        { "id": "information-security:ethical-technology-use", "label": "Using technology and social networks ethically; managing personal information" },
+        { "id": "information-security:acceptable-use", "label": "Following workplace acceptable-use policies" },
+        { "id": "information-security:confidentiality", "label": "Protecting confidentiality (logins, customer information)" },
+        { "id": "information-security:security-procedures", "label": "Following workplace security procedures, including reporting incidents" }
+      ],
+      "notAssessedDirectly": []
+    },
+    {
+      "id": "information-technology", "number": 17, "code": "ITE", "category": "professional", "name": "Information Technology",
+      "summary": "Keeps a working knowledge of devices, software, cloud services, file sharing and basic troubleshooting.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/information-technology/",
+      "concepts": [
+        { "id": "information-technology:hardware-and-devices", "label": "Hardware and devices, including peripherals" },
+        { "id": "information-technology:software-and-applications", "label": "Choosing and using software and applications" },
+        { "id": "information-technology:cloud-and-file-sharing", "label": "Cloud-based services and file-sharing practices" },
+        { "id": "information-technology:emerging-technology", "label": "Responding sensibly to emerging technologies" },
+        { "id": "information-technology:troubleshooting", "label": "Troubleshooting protocols and techniques" }
+      ],
+      "notAssessedDirectly": []
+    },
+    {
+      "id": "job-specific-tools-and-technologies", "number": 18, "code": "JST", "category": "professional", "name": "Job-Specific Tools and Technologies",
+      "summary": "Selects and safely uses the technology, tools and machines a job calls for.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/job-specific-tools-and-technologies/",
+      "concepts": [
+        { "id": "job-specific-tools-and-technologies:select-right-tool", "label": "Selecting the right tool, machine or technology for a task" },
+        { "id": "job-specific-tools-and-technologies:safe-use", "label": "Using tools within training, authorization and manufacturer guidance" }
+      ],
+      "notAssessedDirectly": []
+    },
+    {
+      "id": "mathematics", "number": 19, "code": "MAT", "category": "professional", "name": "Mathematics",
+      "summary": "Applies practical math to complete work tasks and manage personal finances.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/mathematics/",
+      "concepts": [
+        { "id": "mathematics:basic-calculations", "label": "Percentages, fractions, averages, measurement, conversions and money transactions" },
+        { "id": "mathematics:job-task-math", "label": "Estimating supplies and completing expense or order calculations" },
+        { "id": "mathematics:personal-finance", "label": "Understanding wages, paycheck deductions, taxes and receipts" }
+      ],
+      "notAssessedDirectly": []
+    },
+    {
+      "id": "professionalism", "number": 20, "code": "PRO", "category": "professional", "name": "Professionalism",
+      "summary": "Meets workplace expectations for schedule, behavior, appearance and communication.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/professionalism/",
+      "concepts": [
+        { "id": "professionalism:punctuality-attendance", "label": "Punctuality, attendance and meeting schedule expectations" },
+        { "id": "professionalism:etiquette", "label": "Workplace and online etiquette, language and manners" },
+        { "id": "professionalism:self-representation", "label": "Introducing oneself and representing oneself professionally" },
+        { "id": "professionalism:appearance", "label": "Meeting grooming and dress expectations" }
+      ],
+      "notAssessedDirectly": ["defining professionalism"]
+    },
+    {
+      "id": "reading-and-writing", "number": 21, "code": "RAW", "category": "professional", "name": "Reading and Writing",
+      "summary": "Reads and interprets workplace documents and writes clearly, with suitable tone and conventions.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/reading-and-writing/",
+      "concepts": [
+        { "id": "reading-and-writing:interpret-documents", "label": "Reading and interpreting workplace documents" },
+        { "id": "reading-and-writing:clarity", "label": "Writing messages that convey meaning clearly" },
+        { "id": "reading-and-writing:tone-and-audience", "label": "Using a professional tone suited to the audience" },
+        { "id": "reading-and-writing:conventions", "label": "Grammar, formatting and workplace conventions (such as email signatures)" }
+      ],
+      "notAssessedDirectly": []
+    },
+    {
+      "id": "workplace-safety", "number": 22, "code": "SAF", "category": "professional", "name": "Workplace Safety",
+      "summary": "Keeps the work environment safe by following safety guidelines and spotting risks to self and others.",
+      "ctecsUrl": "https://wrs.ctecs.org/practice/workplace-safety/",
+      "concepts": [
+        { "id": "workplace-safety:safety-guidelines", "label": "Following safety standards and instructor, employer and manufacturer guidelines" },
+        { "id": "workplace-safety:safety-data-sheets", "label": "Using safety data sheets (SDS) when provided" },
+        { "id": "workplace-safety:ppe", "label": "Identifying and using personal protective equipment" },
+        { "id": "workplace-safety:universal-precautions", "label": "Using universal precautions against bloodborne pathogens" },
+        { "id": "workplace-safety:identify-hazards", "label": "Identifying and reporting risks and hazards" },
+        { "id": "workplace-safety:emergency-protocols", "label": "Following emergency protocols such as evacuation routes" }
+      ],
+      "notAssessedDirectly": []
+    }
+  ]
+}

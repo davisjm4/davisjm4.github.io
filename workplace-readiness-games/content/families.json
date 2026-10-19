@@ -1,0 +1,737 @@
+{
+  "_about": "Stable reasoning-family registry. A family is a distinct underlying decision pattern within a skill. Template wording, settings and surface details can change; the family identifies the reasoning problem. IDs are permanent once published.",
+  "families": [
+    {
+      "id": "big-picture-thinking.impacts-of-actions",
+      "skill": "big-picture-thinking",
+      "label": "Weighing cost and waste",
+      "description": "Student proposes a lower-cost, lower-waste alternative through the proper person."
+    },
+    {
+      "id": "big-picture-thinking.mission-alignment",
+      "skill": "big-picture-thinking",
+      "label": "Spotting a plan that contradicts the mission",
+      "description": "Student finds the line that conflicts with the organization's stated mission."
+    },
+    {
+      "id": "big-picture-thinking.organization-structure",
+      "skill": "big-picture-thinking",
+      "label": "Using the proper channel across departments",
+      "description": "Student routes a concern through their own lead according to stated structure."
+    },
+    {
+      "id": "big-picture-thinking.role-in-mission",
+      "skill": "big-picture-thinking",
+      "label": "Connecting a small task to the mission",
+      "description": "Student completes a routine check because it supports the organization's promise."
+    },
+    {
+      "id": "big-picture-thinking.supplier-tradeoffs",
+      "skill": "big-picture-thinking",
+      "label": "Cost versus community and environment",
+      "description": "Student presents the whole picture instead of cost alone or one factor alone."
+    },
+    {
+      "id": "big-picture-thinking.weighing-effects",
+      "skill": "big-picture-thinking",
+      "label": "Sequence for proposing a change responsibly",
+      "description": "Student orders learning goals, affected people, effects and the proposal."
+    },
+    {
+      "id": "career-and-life-management.benefits-and-resources",
+      "skill": "career-and-life-management",
+      "label": "Using an employee support resource",
+      "description": "Student uses a stated support program rather than ignoring or hiding stress."
+    },
+    {
+      "id": "career-and-life-management.planning-a-career-move",
+      "skill": "career-and-life-management",
+      "label": "Planning toward a new role",
+      "description": "Student sequences research, comparison, plan and application."
+    },
+    {
+      "id": "career-and-life-management.reading-a-paycheck",
+      "skill": "career-and-life-management",
+      "label": "First paycheck is smaller than expected",
+      "description": "Student reviews the pay stub before reacting or budgeting."
+    },
+    {
+      "id": "career-and-life-management.smart-goals",
+      "skill": "career-and-life-management",
+      "label": "Choosing a useful goal statement",
+      "description": "Student identifies the specific, measurable, time-bound goal."
+    },
+    {
+      "id": "career-and-life-management.sustainable-plans",
+      "skill": "career-and-life-management",
+      "label": "Spotting an unsustainable plan",
+      "description": "Student finds the line that trades health for a goal."
+    },
+    {
+      "id": "conflict-resolution.constructive-messages",
+      "skill": "conflict-resolution",
+      "label": "Writing a constructive follow-up",
+      "description": "Student spots an accusatory generalization in a message meant to resolve a disagreement."
+    },
+    {
+      "id": "conflict-resolution.direct-conversation",
+      "skill": "conflict-resolution",
+      "label": "Responding to a public criticism you disagree with",
+      "description": "Student seeks a calm private conversation, checks the other person's view, and agrees on a fix."
+    },
+    {
+      "id": "conflict-resolution.resolution-sequence",
+      "skill": "conflict-resolution",
+      "label": "Sequence for resolving a disagreement",
+      "description": "Student orders cool-down, private talk, agreement and follow-up."
+    },
+    {
+      "id": "conflict-resolution.when-to-escalate",
+      "skill": "conflict-resolution",
+      "label": "Escalating a repeated performance problem",
+      "description": "Student brings specifics to a supervisor after a private conversation has not solved a repeated issue."
+    },
+    {
+      "id": "conflict-resolution.work-style-differences",
+      "skill": "conflict-resolution",
+      "label": "Different working styles on one project",
+      "description": "Student proposes a blended approach instead of winning, giving in or avoiding."
+    },
+    {
+      "id": "continuous-learning-and-adaptability.acting-on-feedback",
+      "skill": "continuous-learning-and-adaptability",
+      "label": "Receiving corrective feedback",
+      "description": "Student thanks, clarifies and adjusts."
+    },
+    {
+      "id": "continuous-learning-and-adaptability.changing-requirements",
+      "skill": "continuous-learning-and-adaptability",
+      "label": "A new procedure replaces an old one",
+      "description": "Student gives the new method a fair try, then offers specific feedback."
+    },
+    {
+      "id": "continuous-learning-and-adaptability.credentials",
+      "skill": "continuous-learning-and-adaptability",
+      "label": "Credentials listed on a job posting",
+      "description": "Student spots the plan to ignore a stated requirement."
+    },
+    {
+      "id": "continuous-learning-and-adaptability.learning-a-new-skill",
+      "skill": "continuous-learning-and-adaptability",
+      "label": "Sequence for learning a new skill",
+      "description": "Student orders identify, find resource, practice with feedback, apply."
+    },
+    {
+      "id": "continuous-learning-and-adaptability.learning-resources",
+      "skill": "continuous-learning-and-adaptability",
+      "label": "Learning a software change quickly",
+      "description": "Student uses available guides and coworkers before the scheduled training."
+    },
+    {
+      "id": "creativity-and-innovation.contributing-ideas",
+      "skill": "creativity-and-innovation",
+      "label": "Offering an idea to the team",
+      "description": "Student shares a rough idea with an explanation and invites feedback instead of withholding it."
+    },
+    {
+      "id": "creativity-and-innovation.improving-processes",
+      "skill": "creativity-and-innovation",
+      "label": "Improving a routine process",
+      "description": "Student proposes or structures an improvement rather than ignoring, complaining or changing it unilaterally."
+    },
+    {
+      "id": "creativity-and-innovation.openness-to-new-ideas",
+      "skill": "creativity-and-innovation",
+      "label": "Dismissing ideas because they are new",
+      "description": "Student spots the line that rejects ideas only for being untried."
+    },
+    {
+      "id": "creativity-and-innovation.using-resources",
+      "skill": "creativity-and-innovation",
+      "label": "Creative use of limited resources",
+      "description": "Student looks for low-cost options using available materials and respects ownership of shared resources."
+    },
+    {
+      "id": "critical-thinking-and-problem-solving.analyzing-root-cause",
+      "skill": "critical-thinking-and-problem-solving",
+      "label": "Finding the cause of a repeated problem",
+      "description": "Student looks for why a problem keeps happening instead of patching each occurrence."
+    },
+    {
+      "id": "critical-thinking-and-problem-solving.avoiding-hasty-conclusions",
+      "skill": "critical-thinking-and-problem-solving",
+      "label": "Spotting a hasty generalization",
+      "description": "Student finds the line that jumps from a small sample to a sweeping conclusion."
+    },
+    {
+      "id": "critical-thinking-and-problem-solving.evaluating-solutions",
+      "skill": "critical-thinking-and-problem-solving",
+      "label": "Comparing proposed solutions with evidence",
+      "description": "Student compares options against available data rather than seniority, cost alone or guessing."
+    },
+    {
+      "id": "critical-thinking-and-problem-solving.first-step-in-a-recurring-error",
+      "skill": "critical-thinking-and-problem-solving",
+      "label": "First step on a recurring error",
+      "description": "Student investigates before applying a fix."
+    },
+    {
+      "id": "critical-thinking-and-problem-solving.problem-solving-process",
+      "skill": "critical-thinking-and-problem-solving",
+      "label": "Sequence of a problem-solving process",
+      "description": "Student orders describe, investigate, choose, act and check."
+    },
+    {
+      "id": "customer-service-orientation.anticipating-needs",
+      "skill": "customer-service-orientation",
+      "label": "Easing a wait",
+      "description": "Student anticipates a waiting customer's need for information."
+    },
+    {
+      "id": "customer-service-orientation.complaint-sequence",
+      "skill": "customer-service-orientation",
+      "label": "Sequence for handling a complaint",
+      "description": "Student orders listen, acknowledge, resolve and follow up."
+    },
+    {
+      "id": "customer-service-orientation.courteous-replies",
+      "skill": "customer-service-orientation",
+      "label": "Writing a helpful reply",
+      "description": "Student spots the line in a reply that refuses to help."
+    },
+    {
+      "id": "customer-service-orientation.explaining-policy",
+      "skill": "customer-service-orientation",
+      "label": "Explaining a policy limit kindly",
+      "description": "Student explains policy, offers alternatives and an escalation path."
+    },
+    {
+      "id": "customer-service-orientation.handling-complaints",
+      "skill": "customer-service-orientation",
+      "label": "Responding to an upset customer",
+      "description": "Student listens, apologizes and offers a fix instead of deflecting."
+    },
+    {
+      "id": "customer-service-orientation.internal-customers",
+      "skill": "customer-service-orientation",
+      "label": "Serving a coworker while serving a customer",
+      "description": "Student sets a clear time for a coworker's request without dropping the customer."
+    },
+    {
+      "id": "efficiency-and-productivity.adapting-goals",
+      "skill": "efficiency-and-productivity",
+      "label": "Covering for a coworker mid-shift",
+      "description": "Student reprioritizes and tells the lead which tasks may move."
+    },
+    {
+      "id": "efficiency-and-productivity.capital-resources",
+      "skill": "efficiency-and-productivity",
+      "label": "Scheduled equipment upkeep on a busy day",
+      "description": "Student does or reschedules upkeep openly instead of skipping it."
+    },
+    {
+      "id": "efficiency-and-productivity.conflicting-priorities",
+      "skill": "efficiency-and-productivity",
+      "label": "Two urgent demands, one person",
+      "description": "Student surfaces a priority conflict to the person who owns priorities instead of deciding silently."
+    },
+    {
+      "id": "efficiency-and-productivity.planning-work",
+      "skill": "efficiency-and-productivity",
+      "label": "Building a prioritized work plan",
+      "description": "Student orders the steps of listing, assessing and ranking tasks before starting."
+    },
+    {
+      "id": "efficiency-and-productivity.prioritizing-by-deadline",
+      "skill": "efficiency-and-productivity",
+      "label": "Ordering a to-do list",
+      "description": "Student spots a low-priority task placed ahead of deadlines."
+    },
+    {
+      "id": "efficiency-and-productivity.sorting-waste",
+      "skill": "efficiency-and-productivity",
+      "label": "Sorting waste using posted instructions",
+      "description": "Student sorts items using the posted guide."
+    },
+    {
+      "id": "information-literacy.conflicting-sources",
+      "skill": "information-literacy",
+      "label": "Two credible sources disagree",
+      "description": "Student checks recency and fit to the exact product before acting."
+    },
+    {
+      "id": "information-literacy.currency-of-information",
+      "skill": "information-literacy",
+      "label": "Choosing a current source",
+      "description": "Student uses the current price list over an outdated brochure."
+    },
+    {
+      "id": "information-literacy.research-process",
+      "skill": "information-literacy",
+      "label": "Sequence for researching a question",
+      "description": "Student sequences question, sources, credibility check and use."
+    },
+    {
+      "id": "information-literacy.source-reliability",
+      "skill": "information-literacy",
+      "label": "Choosing a current authoritative source",
+      "description": "Student spots reliance on an anonymous, outdated source when a current authoritative one exists."
+    },
+    {
+      "id": "information-literacy.tracing-a-statistic",
+      "skill": "information-literacy",
+      "label": "A statistic with no stated source",
+      "description": "Student traces it to the original source before using it."
+    },
+    {
+      "id": "information-security.acceptable-use",
+      "skill": "information-security",
+      "label": "Using work devices as policy allows",
+      "description": "Student declines a personal-use request that the policy prohibits."
+    },
+    {
+      "id": "information-security.misdirected-information",
+      "skill": "information-security",
+      "label": "Reporting information sent to the wrong person",
+      "description": "Student reports an accidental disclosure promptly through the proper channel."
+    },
+    {
+      "id": "information-security.physical-security",
+      "skill": "information-security",
+      "label": "An unbadged person follows you in",
+      "description": "Student stops the entry politely and directs the person to the front desk."
+    },
+    {
+      "id": "information-security.sharing-information",
+      "skill": "information-security",
+      "label": "Client information visible in a photo",
+      "description": "Student asks for removal and informs the lead under a stated policy."
+    },
+    {
+      "id": "information-security.suspected-phishing-response",
+      "skill": "information-security",
+      "label": "Responding after clicking a suspicious link",
+      "description": "Student orders stop, record, report and follow IT's instructions."
+    },
+    {
+      "id": "information-security.suspicious-requests",
+      "skill": "information-security",
+      "label": "Spotting a request for credentials",
+      "description": "Student identifies the line in a message that asks for a password or other credential."
+    },
+    {
+      "id": "information-technology.choosing-software",
+      "skill": "information-technology",
+      "label": "Matching software to the task",
+      "description": "Student picks software that fits the task."
+    },
+    {
+      "id": "information-technology.emerging-tools",
+      "skill": "information-technology",
+      "label": "Using an approved new tool within its limits",
+      "description": "Student uses a new tool within the stated limits and verifies the result."
+    },
+    {
+      "id": "information-technology.file-sharing",
+      "skill": "information-technology",
+      "label": "Sharing a work file",
+      "description": "Student uses the approved shared drive instead of personal channels."
+    },
+    {
+      "id": "information-technology.troubleshooting",
+      "skill": "information-technology",
+      "label": "Troubleshooting in a sensible order",
+      "description": "Student starts with simple checks, documents errors and escalates with details."
+    },
+    {
+      "id": "information-technology.updates",
+      "skill": "information-technology",
+      "label": "Putting off a computer update",
+      "description": "Student spots a plan that postpones updates indefinitely."
+    },
+    {
+      "id": "initiative-and-self-direction.identifying-needs",
+      "skill": "initiative-and-self-direction",
+      "label": "Using spare time to meet a need",
+      "description": "Student finds a need in their own area and acts on it."
+    },
+    {
+      "id": "initiative-and-self-direction.overreaching",
+      "skill": "initiative-and-self-direction",
+      "label": "Taking initiative without overstepping",
+      "description": "Student spots a plan that takes restricted supplies without asking."
+    },
+    {
+      "id": "initiative-and-self-direction.raising-an-issue",
+      "skill": "initiative-and-self-direction",
+      "label": "Sequence for acting on a noticed issue",
+      "description": "Student notices, checks authority, proposes and follows up."
+    },
+    {
+      "id": "initiative-and-self-direction.staying-in-role",
+      "skill": "initiative-and-self-direction",
+      "label": "Acting on a fix outside your authority",
+      "description": "Student routes a good idea to the owner of a system instead of changing it unilaterally."
+    },
+    {
+      "id": "initiative-and-self-direction.working-independently",
+      "skill": "initiative-and-self-direction",
+      "label": "Keeping work moving when a supervisor is away",
+      "description": "Student uses available resources before stopping, guessing or hiding a gap."
+    },
+    {
+      "id": "integrity.accepting-responsibility",
+      "skill": "integrity",
+      "label": "Reporting damage you caused",
+      "description": "Student discloses a mistake that may put others at risk before the problem spreads."
+    },
+    {
+      "id": "integrity.accurate-reporting",
+      "skill": "integrity",
+      "label": "Correcting an inaccurate record the right way",
+      "description": "Student owns a mistake in a record and corrects it transparently instead of hiding it or ignoring it."
+    },
+    {
+      "id": "integrity.avoiding-misrepresentation",
+      "skill": "integrity",
+      "label": "Giving a customer an honest answer",
+      "description": "Student gives accurate information even when it disappoints."
+    },
+    {
+      "id": "integrity.found-property",
+      "skill": "integrity",
+      "label": "Handling found property",
+      "description": "Student sequences securing, reporting, recording and returning."
+    },
+    {
+      "id": "integrity.honest-time-records",
+      "skill": "integrity",
+      "label": "Recording hours truthfully",
+      "description": "Student recognizes a request to record time that was not worked."
+    },
+    {
+      "id": "integrity.reporting-pressure",
+      "skill": "integrity",
+      "label": "Reporting an accurate count under pressure",
+      "description": "Student reports actual counts where a stated agreement requires it."
+    },
+    {
+      "id": "job-specific-tools-and-technologies.manufacturer-guidance",
+      "skill": "job-specific-tools-and-technologies",
+      "label": "A quicker method versus the manufacturer's method",
+      "description": "Student follows the manufacturer method and raises time concerns openly."
+    },
+    {
+      "id": "job-specific-tools-and-technologies.new-model-orientation",
+      "skill": "job-specific-tools-and-technologies",
+      "label": "Equipment replaced with a new model",
+      "description": "Student tells the lead, reads the guide and gets oriented before use."
+    },
+    {
+      "id": "job-specific-tools-and-technologies.operate-only-if-trained",
+      "skill": "job-specific-tools-and-technologies",
+      "label": "Being asked to use untrained equipment",
+      "description": "Student says they are untrained and asks for training first."
+    },
+    {
+      "id": "job-specific-tools-and-technologies.pre-use-sequence",
+      "skill": "job-specific-tools-and-technologies",
+      "label": "Preparing to use a tool safely",
+      "description": "Student orders reading, inspecting, protective equipment, use and storage."
+    },
+    {
+      "id": "job-specific-tools-and-technologies.safe-use-checklists",
+      "skill": "job-specific-tools-and-technologies",
+      "label": "Spotting an unsafe pre-use plan",
+      "description": "Student finds the line that skips a safety guard."
+    },
+    {
+      "id": "job-specific-tools-and-technologies.select-right-tool",
+      "skill": "job-specific-tools-and-technologies",
+      "label": "Choosing the right tool for the job",
+      "description": "Student refuses a close-enough substitute and asks for the right tool."
+    },
+    {
+      "id": "listening-and-speaking.active-listening",
+      "skill": "listening-and-speaking",
+      "label": "Confirming instructions",
+      "description": "Student paraphrases instructions and asks about the unclear part."
+    },
+    {
+      "id": "listening-and-speaking.adjusting-mid-talk",
+      "skill": "listening-and-speaking",
+      "label": "Listeners look lost mid-presentation",
+      "description": "Student adjusts to the audience instead of pressing on."
+    },
+    {
+      "id": "listening-and-speaking.audience-and-setting",
+      "skill": "listening-and-speaking",
+      "label": "Explaining a delay in plain language",
+      "description": "Student adapts the explanation to a listener unfamiliar with technical terms."
+    },
+    {
+      "id": "listening-and-speaking.nonverbal-cues",
+      "skill": "listening-and-speaking",
+      "label": "Noticing a mismatch between words and body language",
+      "description": "Student checks in privately when nonverbal cues suggest a concern."
+    },
+    {
+      "id": "listening-and-speaking.preparing-a-presentation",
+      "skill": "listening-and-speaking",
+      "label": "Preparing a short presentation",
+      "description": "Student orders message, structure, practice and delivery."
+    },
+    {
+      "id": "listening-and-speaking.professional-speaking",
+      "skill": "listening-and-speaking",
+      "label": "A professional phone greeting",
+      "description": "Student finds the line in a greeting script that fails the listener."
+    },
+    {
+      "id": "mathematics.checking-totals",
+      "skill": "mathematics",
+      "label": "Checking an expense report total",
+      "description": "Student finds a total that does not match its items."
+    },
+    {
+      "id": "mathematics.cost-estimate-sequence",
+      "skill": "mathematics",
+      "label": "Sequence for estimating a cost",
+      "description": "Student orders unit price, multiplication, totals and comparison."
+    },
+    {
+      "id": "mathematics.estimating-supplies",
+      "skill": "mathematics",
+      "label": "Estimating how many packs to order",
+      "description": "Student computes total need then rounds up to whole packs."
+    },
+    {
+      "id": "mathematics.pay-stub-mismatch",
+      "skill": "mathematics",
+      "label": "Hours on the stub differ from your record",
+      "description": "Student compares records and brings specifics to payroll."
+    },
+    {
+      "id": "mathematics.paycheck-deductions",
+      "skill": "mathematics",
+      "label": "Computing take-home pay",
+      "description": "Student calculates net pay from hours, wage, a percentage deduction and a flat deduction."
+    },
+    {
+      "id": "mathematics.percent-discount",
+      "skill": "mathematics",
+      "label": "Applying a percentage discount",
+      "description": "Student computes the amount due after a percentage discount."
+    },
+    {
+      "id": "professionalism.dress-expectations",
+      "skill": "professionalism",
+      "label": "Forgetting a required badge",
+      "description": "Student tells the lead and asks for a temporary badge."
+    },
+    {
+      "id": "professionalism.interview-preparation",
+      "skill": "professionalism",
+      "label": "Preparing for a job interview",
+      "description": "Student sequences research, practice, arrival and follow-up."
+    },
+    {
+      "id": "professionalism.introductions",
+      "skill": "professionalism",
+      "label": "Greeting a visitor while nervous",
+      "description": "Student greets, introduces self and offers help."
+    },
+    {
+      "id": "professionalism.online-etiquette",
+      "skill": "professionalism",
+      "label": "Responding to an irritating message",
+      "description": "Student waits, then responds respectfully or privately."
+    },
+    {
+      "id": "professionalism.punctuality",
+      "skill": "professionalism",
+      "label": "Running late",
+      "description": "Student notifies the lead promptly and safely."
+    },
+    {
+      "id": "professionalism.written-requests",
+      "skill": "professionalism",
+      "label": "Requesting time off politely",
+      "description": "Student finds the demanding line in a request."
+    },
+    {
+      "id": "reading-and-writing.clarity",
+      "skill": "reading-and-writing",
+      "label": "Spotting a vague instruction",
+      "description": "Student finds the line that does not name place or time."
+    },
+    {
+      "id": "reading-and-writing.interpreting-documents",
+      "skill": "reading-and-writing",
+      "label": "Following a work order and its limits",
+      "description": "Student follows the written approval requirement."
+    },
+    {
+      "id": "reading-and-writing.reading-before-replying",
+      "skill": "reading-and-writing",
+      "label": "Replying to a long upset email",
+      "description": "Student reads closely and lists the asks before replying."
+    },
+    {
+      "id": "reading-and-writing.tone-and-audience",
+      "skill": "reading-and-writing",
+      "label": "Pointing out errors to a coworker",
+      "description": "Student chooses specific, respectful wording."
+    },
+    {
+      "id": "reading-and-writing.writing-process",
+      "skill": "reading-and-writing",
+      "label": "Sequence for writing a work email",
+      "description": "Student orders decide, write, proofread, send."
+    },
+    {
+      "id": "respect-for-diversity.collaborating",
+      "skill": "respect-for-diversity",
+      "label": "Balancing strong viewpoints",
+      "description": "Student gives each viewpoint a fair hearing before deciding."
+    },
+    {
+      "id": "respect-for-diversity.communication-support",
+      "skill": "respect-for-diversity",
+      "label": "Helping a coworker still learning the language",
+      "description": "Student repeats clearly and checks understanding."
+    },
+    {
+      "id": "respect-for-diversity.inclusive-meetings",
+      "skill": "respect-for-diversity",
+      "label": "Planning a meeting everyone can attend",
+      "description": "Student orders asking needs, choosing a time, inviting and gathering input."
+    },
+    {
+      "id": "respect-for-diversity.inclusive-planning",
+      "skill": "respect-for-diversity",
+      "label": "Planning for varied needs",
+      "description": "Student spots the line that dismisses individual differences when planning."
+    },
+    {
+      "id": "respect-for-diversity.own-bias",
+      "skill": "respect-for-diversity",
+      "label": "Not acting on a teammate's assumption",
+      "description": "Student treats a new coworker the same as everyone else rather than adjusting to an assumption."
+    },
+    {
+      "id": "respect-for-diversity.valuing-differences",
+      "skill": "respect-for-diversity",
+      "label": "Different ways of contributing",
+      "description": "Student recognizes quiet written contributions as real contributions."
+    },
+    {
+      "id": "teamwork.dividing-work",
+      "skill": "teamwork",
+      "label": "Dividing group work fairly",
+      "description": "Student spots a plan that skips asking teammates."
+    },
+    {
+      "id": "teamwork.respecting-contributions",
+      "skill": "teamwork",
+      "label": "Hearing a quiet teammate's idea",
+      "description": "Student draws out and fairly weighs a teammate's dismissed idea."
+    },
+    {
+      "id": "teamwork.roles-and-goals",
+      "skill": "teamwork",
+      "label": "Starting a group project",
+      "description": "Student orders goal-setting, roles, schedule and work."
+    },
+    {
+      "id": "teamwork.sharing-responsibility",
+      "skill": "teamwork",
+      "label": "Finishing early on a shared project",
+      "description": "Student offers to help finish shared work."
+    },
+    {
+      "id": "teamwork.team-communication",
+      "skill": "teamwork",
+      "label": "Telling a teammate about a delay",
+      "description": "Student communicates a delay immediately to the person who depends on it."
+    },
+    {
+      "id": "work-ethic.accountability",
+      "skill": "work-ethic",
+      "label": "Handing off unfinished work",
+      "description": "Student tells the next person what remains before leaving."
+    },
+    {
+      "id": "work-ethic.dependability",
+      "skill": "work-ethic",
+      "label": "Being reliable when a plan falls through",
+      "description": "Student tells the supervisor early and arranges coverage."
+    },
+    {
+      "id": "work-ethic.honest-handoffs",
+      "skill": "work-ethic",
+      "label": "Writing an honest handoff note",
+      "description": "Student spots a note that marks unfinished work as complete."
+    },
+    {
+      "id": "work-ethic.owning-mistakes",
+      "skill": "work-ethic",
+      "label": "Owning a mistake when asked",
+      "description": "Student explains and owns their part and offers prevention."
+    },
+    {
+      "id": "work-ethic.steady-effort",
+      "skill": "work-ethic",
+      "label": "Sequence for completing a long task diligently",
+      "description": "Student breaks work down, completes it, checks it and reports."
+    },
+    {
+      "id": "workplace-safety.emergency-protocols",
+      "skill": "workplace-safety",
+      "label": "Responding to an alarm",
+      "description": "Student follows posted evacuation instructions first."
+    },
+    {
+      "id": "workplace-safety.evacuation-sequence",
+      "skill": "workplace-safety",
+      "label": "Evacuation order",
+      "description": "Student sequences stop, exit, assemble and report."
+    },
+    {
+      "id": "workplace-safety.following-procedures",
+      "skill": "workplace-safety",
+      "label": "Refusing to sign off unperformed safety checks",
+      "description": "Student declines to falsify a safety check under peer pressure and routes the schedule problem to the lead."
+    },
+    {
+      "id": "workplace-safety.ppe",
+      "skill": "workplace-safety",
+      "label": "Wearing required protective equipment",
+      "description": "Student wears required PPE and reports fit problems."
+    },
+    {
+      "id": "workplace-safety.reporting-hazards",
+      "skill": "workplace-safety",
+      "label": "Sequence for handling a hazard",
+      "description": "Student sequences protect-then-report-then-resume when a hazard appears."
+    },
+    {
+      "id": "workplace-safety.safety-data-sheets",
+      "skill": "workplace-safety",
+      "label": "An unlabeled container",
+      "description": "Student does not use it and reports it so it can be identified."
+    },
+    {
+      "id": "workplace-safety.spill-procedure",
+      "skill": "workplace-safety",
+      "label": "Reading a spill clean-up procedure",
+      "description": "Student spots the step that removes a warning too early."
+    },
+    {
+      "id": "workplace-safety.universal-precautions",
+      "skill": "workplace-safety",
+      "label": "Cleaning after a minor injury",
+      "description": "Student uses trained precautions for blood."
+    }
+  ]
+}

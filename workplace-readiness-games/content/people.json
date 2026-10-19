@@ -1,0 +1,201 @@
+{
+  "_about": "First names with pronoun sets. Assigned to roles at random by the generator so names never correlate with occupation. Pronoun use is grammatical only.",
+  "people": [
+    {
+      "name": "Marcus",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    },
+    {
+      "name": "Priya",
+      "subj": "she",
+      "obj": "her",
+      "poss": "her",
+      "refl": "herself"
+    },
+    {
+      "name": "Deshawn",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    },
+    {
+      "name": "Elena",
+      "subj": "she",
+      "obj": "her",
+      "poss": "her",
+      "refl": "herself"
+    },
+    {
+      "name": "Jordan",
+      "subj": "they",
+      "obj": "them",
+      "poss": "their",
+      "refl": "themself"
+    },
+    {
+      "name": "Mei",
+      "subj": "she",
+      "obj": "her",
+      "poss": "her",
+      "refl": "herself"
+    },
+    {
+      "name": "Tomas",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    },
+    {
+      "name": "Aaliyah",
+      "subj": "she",
+      "obj": "her",
+      "poss": "her",
+      "refl": "herself"
+    },
+    {
+      "name": "Kwame",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    },
+    {
+      "name": "Sofia",
+      "subj": "she",
+      "obj": "her",
+      "poss": "her",
+      "refl": "herself"
+    },
+    {
+      "name": "Noah",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    },
+    {
+      "name": "Amara",
+      "subj": "she",
+      "obj": "her",
+      "poss": "her",
+      "refl": "herself"
+    },
+    {
+      "name": "Luis",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    },
+    {
+      "name": "Hana",
+      "subj": "she",
+      "obj": "her",
+      "poss": "her",
+      "refl": "herself"
+    },
+    {
+      "name": "Riley",
+      "subj": "they",
+      "obj": "them",
+      "poss": "their",
+      "refl": "themself"
+    },
+    {
+      "name": "Andre",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    },
+    {
+      "name": "Fatima",
+      "subj": "she",
+      "obj": "her",
+      "poss": "her",
+      "refl": "herself"
+    },
+    {
+      "name": "Colin",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    },
+    {
+      "name": "Ngozi",
+      "subj": "she",
+      "obj": "her",
+      "poss": "her",
+      "refl": "herself"
+    },
+    {
+      "name": "Mateo",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    },
+    {
+      "name": "Brianna",
+      "subj": "she",
+      "obj": "her",
+      "poss": "her",
+      "refl": "herself"
+    },
+    {
+      "name": "Samir",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    },
+    {
+      "name": "Kiara",
+      "subj": "she",
+      "obj": "her",
+      "poss": "her",
+      "refl": "herself"
+    },
+    {
+      "name": "Owen",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    },
+    {
+      "name": "Yuki",
+      "subj": "they",
+      "obj": "them",
+      "poss": "their",
+      "refl": "themself"
+    },
+    {
+      "name": "Dmitri",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    },
+    {
+      "name": "Imani",
+      "subj": "she",
+      "obj": "her",
+      "poss": "her",
+      "refl": "herself"
+    },
+    {
+      "name": "Caleb",
+      "subj": "he",
+      "obj": "him",
+      "poss": "his",
+      "refl": "himself"
+    }
+  ]
+}

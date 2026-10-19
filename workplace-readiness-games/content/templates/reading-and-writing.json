@@ -1,0 +1,338 @@
+{
+  "templates": [
+    {
+      "id": "RAW-D-001",
+      "skill": "reading-and-writing",
+      "family": "reading-and-writing.interpreting-documents",
+      "pattern": "get-supervisor-approval-before-replacing-part",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "reading-and-writing:interpret-documents"
+      ],
+      "contexts": [
+        "automotive",
+        "construction",
+        "manufacturing",
+        "engineering",
+        "it"
+      ],
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "document": "document",
+        "lead": "lead"
+      },
+      "facts": [
+        "document-requires-supervisor-approval",
+        "part-is-cracked",
+        "deadline-same-day"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a} and are completing {document|a}. It says: \"Finish by 4 p.m. Friday. Contact the customer by email. Do not replace any parts without supervisor approval.\" While working, you find a part that is cracked.",
+      "prompt": "What is the most appropriate action?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Ask your {lead} to approve replacing the part, and note the crack on {document|the}.",
+          "why": "The document requires supervisor approval before any part is replaced, so getting it first and noting the problem follows it exactly.",
+          "requires": [
+            "document-requires-supervisor-approval"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Replace the part right away so the job is finished by 4 p.m. as the document asks.",
+          "why": "The deadline matters, but the document also says not to replace parts without supervisor approval. Both instructions have to be followed.",
+          "misconception": "Meeting the deadline matters more than the other instructions."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Finish the job with the cracked part and leave it off {document|the}, so nothing delays the deadline.",
+          "why": "Leaving a known problem unreported hides something the supervisor and customer would want to know about.",
+          "misconception": "If the part still works, it is not worth mentioning."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Call the customer to ask whether you can replace the part, since it is their property.",
+          "why": "The document names the supervisor as the person who approves, and says the customer should be contacted by email.",
+          "misconception": "Anyone connected to the job can give approval."
+        }
+      ],
+      "principle": "Read the whole document and follow every instruction in it, including who must approve what.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Document text quoted in scenario.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "RAW-D-002",
+      "skill": "reading-and-writing",
+      "family": "reading-and-writing.tone-and-audience",
+      "pattern": "specific-respectful-message",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "reading-and-writing:tone-and-audience",
+        "reading-and-writing:clarity"
+      ],
+      "contexts": [
+        "construction",
+        "business",
+        "automotive",
+        "retail",
+        "manufacturing",
+        "engineering",
+        "culinary",
+        "agriculture",
+        "hospitality"
+      ],
+      "slots": {
+        "coworker": "person",
+        "document": "document"
+      },
+      "facts": [
+        "errors-in-shared-document",
+        "coworker-owns-it",
+        "goes-out-soon"
+      ],
+      "scenario": "You spot several mismatched figures in {document|a} that {coworker} wrote. It goes out later today. You decide to send a short message to {coworker}.",
+      "prompt": "Which message is the most appropriate?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Hi {coworker}, I noticed three places where the numbers do not match. Could we check them together before it goes out?",
+          "why": "This message is specific about the problem, polite in tone, and suggests working together before the deadline.",
+          "requires": [
+            "errors-in-shared-document"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "This document is full of mistakes and has to be completely redone before anyone sees it, so please fix it right now.",
+          "why": "This is harsh and exaggerated, and it does not say where the problems are, which makes them harder to fix.",
+          "misconception": "Blunt criticism is the clearest way to communicate."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Hey, there might be some issues here or there, so maybe look it over at some point if you get a chance.",
+          "why": "This is so vague that it does not say what the problem is or that the document goes out today.",
+          "misconception": "A gentle hint is more polite than a specific message."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Yo, this is kinda messed up lol, numbers are off in a few spots, fix it when you can.",
+          "why": "Slang and joking can sound careless in a work message, and it does not mention the deadline.",
+          "misconception": "Casual wording keeps the conversation friendly."
+        }
+      ],
+      "principle": "Write to your audience: be specific about the problem, keep a respectful tone, and mention what matters, such as deadlines.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Message options are all realistic workplace phrasings.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "RAW-F-001",
+      "skill": "reading-and-writing",
+      "family": "reading-and-writing.clarity",
+      "pattern": "vague-place-and-time",
+      "mode": "find",
+      "difficulty": "beginner",
+      "concepts": [
+        "reading-and-writing:clarity"
+      ],
+      "contexts": "any",
+      "slots": {
+        "coworker": "person"
+      },
+      "facts": [
+        "instruction-line-is-vague"
+      ],
+      "scenario": "{coworker} sends this message to the team.",
+      "prompt": "Tap the line that is not clear enough.",
+      "docType": "email",
+      "docTitle": "Message about a delivery",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Hello team,",
+          "whyFine": "A greeting is fine."
+        },
+        {
+          "id": "b",
+          "text": "The delivery arrives tomorrow at 9:00 a.m.",
+          "whyFine": "This line gives a specific day and time."
+        },
+        {
+          "id": "c",
+          "text": "Please put the boxes away in the right spot soon.",
+          "problem": true,
+          "why": "\"Right spot\" and \"soon\" do not say where or by when, so readers have to guess."
+        },
+        {
+          "id": "d",
+          "text": "Thank you for your help.",
+          "whyFine": "A polite closing."
+        }
+      ],
+      "principle": "Clear instructions name the place, the action and the time instead of words like 'soon' or 'right spot'.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Single vague line.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "RAW-O-001",
+      "skill": "reading-and-writing",
+      "family": "reading-and-writing.writing-process",
+      "pattern": "decide-write-proofread-send",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "reading-and-writing:conventions",
+        "reading-and-writing:clarity"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead"
+      },
+      "facts": [
+        "email-to-write"
+      ],
+      "scenario": "You need to send your {lead} an email about a schedule change at {workplace|the}.",
+      "prompt": "Put these writing steps in a sensible order.",
+      "steps": [
+        {
+          "id": "decide",
+          "text": "Decide the main point you need to communicate"
+        },
+        {
+          "id": "write",
+          "text": "Write the email with a clear subject line and short sentences"
+        },
+        {
+          "id": "proof",
+          "text": "Proofread it for mistakes"
+        },
+        {
+          "id": "send",
+          "text": "Send it"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "decide",
+          "after": "write",
+          "why": "Knowing the main point keeps the message focused."
+        },
+        {
+          "before": "write",
+          "after": "proof",
+          "why": "You can only proofread a message that has been written."
+        },
+        {
+          "before": "proof",
+          "after": "send",
+          "why": "Sending before proofreading means mistakes reach the reader."
+        }
+      ],
+      "principle": "Write with purpose: decide your point, write clearly, proofread, then send.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Natural chain.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "RAW-N-001",
+      "skill": "reading-and-writing",
+      "family": "reading-and-writing.reading-before-replying",
+      "pattern": "reread-and-list-the-asks",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "reading-and-writing:interpret-documents",
+        "reading-and-writing:clarity"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "client": "client",
+        "lead": "lead"
+      },
+      "facts": [
+        "email-mixes-three-asks",
+        "asked-to-reply",
+        "not-yet-read-fully"
+      ],
+      "scenario": "{Client|a} sends an upset email to {workplace|the} that mixes a complaint, a question about a deadline, and a request for a refund. You have been asked to reply, and you have only skimmed the first paragraph.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Read the whole email again and list exactly what the person is asking before you start your reply.",
+          "why": "A message that mixes several points can only be answered fully if you know every question in it. Listing them first keeps your reply complete and clear.",
+          "requires": [
+            "not-yet-read-fully"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Start writing a reply as soon as you finish the first paragraph so that it goes out quickly.",
+          "why": "Replying to part of a message can miss the deadline question or the refund request, which creates follow-up emails and more frustration.",
+          "misconception": "A fast reply is better than a complete one."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Forward the email to your {lead} without reading it carefully, so someone else can deal with it.",
+          "why": "You were asked to reply. Passing it along unread adds delay and gives your {lead} no summary.",
+          "misconception": "Passing it on is the safest response."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Reply to the loudest complaint and assume the other questions will be answered along the way.",
+          "why": "Questions about deadlines and refunds will not be answered unless you address them. Readers expect each point to be covered.",
+          "misconception": "Answering the most emotional part covers everything."
+        }
+      ],
+      "principle": "Read a document fully and list what it asks for before you write your response.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy content.",
+        "policyNotNeeded": true
+      },
+      "timing": "Reading and listing the asks comes before drafting."
+    }
+  ]
+}

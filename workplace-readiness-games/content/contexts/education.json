@@ -1,0 +1,59 @@
+{
+  "id": "education",
+  "label": "Education",
+  "cluster": "Education & Training",
+  "bundles": [
+    {
+      "id": "elementary-school",
+      "workplace": "elementary school",
+      "role": "classroom aide",
+      "lead": "lead teacher",
+      "client": {
+        "text": "student",
+        "plural": "students"
+      },
+      "record": [
+        "attendance sheet",
+        "supply checkout log"
+      ],
+      "equipment": [
+        "classroom projector",
+        "art supply cart"
+      ],
+      "system": "gradebook system",
+      "document": "permission form",
+      "deliverable": "prepared lesson activity",
+      "task": "classroom reset checklist",
+      "hazard": [
+        "a spill of water by the classroom door",
+        "a backpack and chair blocking the aisle near the exit"
+      ]
+    },
+    {
+      "id": "training-center",
+      "workplace": "adult training center",
+      "role": "learning assistant",
+      "lead": "program coordinator",
+      "client": {
+        "text": "learner",
+        "plural": "learners"
+      },
+      "record": [
+        "sign-in sheet",
+        "equipment loan log"
+      ],
+      "equipment": [
+        "laptop cart",
+        "presentation screen"
+      ],
+      "system": "learning management system",
+      "document": "class roster",
+      "deliverable": "course materials packet",
+      "task": "room set-up checklist",
+      "hazard": [
+        "a laptop charging cord stretched across the aisle",
+        "a stack of folding chairs leaning near the doorway"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "it",
+  "label": "Information Technology",
+  "cluster": "Information Technology",
+  "bundles": [
+    {
+      "id": "help-desk",
+      "workplace": "company help desk",
+      "role": "help desk technician",
+      "lead": "support lead",
+      "client": {
+        "text": "user",
+        "plural": "users"
+      },
+      "record": [
+        "ticket log",
+        "asset inventory sheet"
+      ],
+      "equipment": [
+        "laptop",
+        "network switch"
+      ],
+      "system": "ticketing system",
+      "document": "support ticket",
+      "deliverable": "laptop set-up",
+      "task": "ticket queue review",
+      "hazard": [
+        "a box of cables left in the walkway",
+        "a rolling chair with a broken wheel in the work area"
+      ]
+    },
+    {
+      "id": "school-district-it",
+      "workplace": "school district technology office",
+      "role": "technology intern",
+      "lead": "network administrator",
+      "client": {
+        "text": "staff member",
+        "plural": "staff members"
+      },
+      "record": [
+        "device checkout log",
+        "software license sheet"
+      ],
+      "equipment": [
+        "classroom tablet cart",
+        "wireless access point"
+      ],
+      "system": "device management system",
+      "document": "service request",
+      "deliverable": "configured device",
+      "task": "device update checklist",
+      "hazard": [
+        "a ladder left open in the hallway",
+        "a pile of old computers stacked unevenly near the door"
+      ]
+    }
+  ]
+}

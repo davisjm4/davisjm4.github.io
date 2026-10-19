@@ -1,0 +1,327 @@
+{
+  "templates": [
+    {
+      "id": "CRE-D-001",
+      "skill": "creativity-and-innovation",
+      "family": "creativity-and-innovation.contributing-ideas",
+      "pattern": "share-rough-idea-with-feedback",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "creativity-and-innovation:contribute-ideas",
+        "creativity-and-innovation:value-of-creativity"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead",
+        "client": "client"
+      },
+      "facts": [
+        "team-asked-for-ideas",
+        "new-employee",
+        "idea-imperfect"
+      ],
+      "scenario": "At a team meeting at {workplace|the}, your {lead} asks for ideas to shorten how long {client.plural} wait for service. You are new, and a few coworkers have already shared ideas. You have a thought, but you are not sure it would work perfectly.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Share your idea, explain how it would work, and ask the team what problems they see in it.",
+          "why": "Offering an idea with a clear explanation gives the team something to build on, and inviting feedback improves it. Ideas do not have to be perfect to be useful.",
+          "requires": [
+            "idea-imperfect"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Keep it to yourself until you are certain it would work perfectly in every situation.",
+          "why": "Few ideas are flawless at first. Teams improve ideas together, so holding one back means the group never gets the chance to refine it.",
+          "misconception": "An idea is only worth sharing if it is flawless."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Wait to see which idea your {lead} likes best and then agree with that one.",
+          "why": "Agreeing with the leading idea adds nothing new. Your fresh view as a newer employee may notice things others stopped seeing.",
+          "misconception": "Backing the popular idea is safer than offering my own."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Tell the group you are too new to have useful ideas about how things are done around here yet.",
+          "why": "Newer employees often spot problems experienced staff no longer notice. Being new is a reason to share what you see, not to stay quiet.",
+          "misconception": "New employees have nothing to add."
+        }
+      ],
+      "principle": "Contribute ideas openly, explain them clearly, and welcome feedback; a rough idea can become a good one once a team works on it.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Beginner; a supportive meeting is implied by the lead asking for ideas. No policy or legal content.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CRE-N-001",
+      "skill": "creativity-and-innovation",
+      "family": "creativity-and-innovation.improving-processes",
+      "pattern": "propose-improvement-to-owner",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "creativity-and-innovation:improve-processes",
+        "creativity-and-innovation:contribute-ideas"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "task": "task",
+        "lead": "lead"
+      },
+      "facts": [
+        "repeated-extra-step",
+        "own-idea",
+        "lead-owns-procedure"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. While doing {task|the}, you notice a step that your team repeats every day and that adds about ten minutes without improving the result. You have an idea for a simpler way. Changing {task|the} is up to your {lead}.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Describe the extra step and your simpler idea to your {lead}, with an example of the time it costs.",
+          "why": "A specific proposal with evidence gives the person who owns the procedure what they need to decide. It improves the process without surprising your teammates.",
+          "requires": [
+            "lead-owns-procedure"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Start using your simpler method tomorrow without telling anyone, and see whether results improve.",
+          "why": "Changing a shared procedure on your own can create confusion or errors for teammates who expect the usual steps. The owner should decide.",
+          "misconception": "It is easier to ask forgiveness than permission."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Tell coworkers how pointless the step is, and hope the comment eventually reaches someone who is able to change it.",
+          "why": "Venting spreads frustration but does not put a proposal in front of the decision-maker. An idea only improves the process if it is presented.",
+          "misconception": "Complaining informally is the same as proposing a change."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Wait for the next scheduled improvement project, since fixing processes is not your job.",
+          "why": "Useful ideas can come from anyone doing the work. Waiting keeps a known time-waster in place when a simple idea is ready now.",
+          "misconception": "Improvement ideas should only come from assigned projects."
+        }
+      ],
+      "principle": "Bring improvement ideas to the person who owns the process, with a specific example, instead of changing things quietly or only complaining.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Lead ownership of the procedure is stated.",
+        "policyNotNeeded": true
+      },
+      "timing": "The proposal is the first step; changing or complaining skips the decision-maker."
+    },
+    {
+      "id": "CRE-O-001",
+      "skill": "creativity-and-innovation",
+      "family": "creativity-and-innovation.improving-processes",
+      "pattern": "identify-brainstorm-pilot-review",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "creativity-and-innovation:improve-processes"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "team-improving-routine-job"
+      ],
+      "scenario": "Your team at {workplace|a} wants to improve how a routine job gets done.",
+      "prompt": "Arrange these improvement steps in a sensible order.",
+      "steps": [
+        {
+          "id": "identify",
+          "text": "Identify what is slowing the job down"
+        },
+        {
+          "id": "brainstorm",
+          "text": "Brainstorm several possible changes"
+        },
+        {
+          "id": "pilot",
+          "text": "Try the most promising change on a small scale"
+        },
+        {
+          "id": "review",
+          "text": "Review the results and adjust before adopting the change"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "identify",
+          "after": "brainstorm",
+          "why": "Ideas aim better when you know exactly what the problem is."
+        },
+        {
+          "before": "brainstorm",
+          "after": "pilot",
+          "why": "You need options before you can pick the most promising one to test."
+        },
+        {
+          "before": "pilot",
+          "after": "review",
+          "why": "You can only judge a change after you have seen how it works in practice."
+        }
+      ],
+      "principle": "Improve a process step by step: define the problem, generate options, test small, then review before adopting.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "A natural chain; every step depends on the previous one.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CRE-D-002",
+      "skill": "creativity-and-innovation",
+      "family": "creativity-and-innovation.using-resources",
+      "pattern": "reuse-stored-materials-with-permission",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "creativity-and-innovation:allocate-resources"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead",
+        "deliverable": "deliverable"
+      },
+      "facts": [
+        "no-budget",
+        "unused-materials-found",
+        "availability-unknown"
+      ],
+      "scenario": "Your {lead} asks you to improve the quality of {deliverable|the} for an important day at {workplace|the}, with no extra budget. In a storage room you find unused materials that might help. No one has said whether they are available for use.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Look at what is available, sketch a low-cost plan using those materials, and check with your {lead} before using them.",
+          "why": "Starting from what you already have meets the no-budget limit creatively, and checking first respects that someone else may own those materials.",
+          "requires": [
+            "no-budget"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Ask your {lead} for a small budget so you can buy new materials that are designed for this exact job.",
+          "why": "Asking is reasonable, but it skips the creative challenge of using what is already on hand, which is what the limit was meant to encourage.",
+          "misconception": "Good results require new spending."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Use the stored materials right away since no one is using them, and explain later if asked.",
+          "why": "Unused does not mean free to take. Materials may be reserved for something else, so permission comes before use.",
+          "misconception": "Anything sitting unused is available to anyone."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Tell your {lead} that nothing can be improved without more money, and carry on as usual.",
+          "why": "Limited resources are a reason to be inventive, not a reason to stop. A plan using materials on hand was available.",
+          "misconception": "A limited budget makes improvement impossible."
+        }
+      ],
+      "principle": "With limited resources, start with what you already have, plan a low-cost option, and confirm you may use shared materials before using them.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Acceptable option is reasonable but skips the resourceful approach; no legal claims.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CRE-F-001",
+      "skill": "creativity-and-innovation",
+      "family": "creativity-and-innovation.openness-to-new-ideas",
+      "pattern": "rejecting-ideas-because-they-are-new",
+      "mode": "find",
+      "difficulty": "intermediate",
+      "concepts": [
+        "creativity-and-innovation:contribute-ideas",
+        "creativity-and-innovation:value-of-creativity"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "note-rejects-ideas-for-being-untried"
+      ],
+      "scenario": "A team at {workplace|the} shares these notes after a brainstorming session.",
+      "prompt": "Tap the line that shuts down creativity.",
+      "docType": "note",
+      "docTitle": "Notes from a brainstorming session",
+      "segments": [
+        {
+          "id": "a",
+          "text": "We brainstormed ways to shorten customer wait times.",
+          "whyFine": "A clear statement of the session's purpose."
+        },
+        {
+          "id": "b",
+          "text": "One idea was sending text-message reminders.",
+          "whyFine": "Recording an idea fairly."
+        },
+        {
+          "id": "c",
+          "text": "Another idea was rearranging the waiting area.",
+          "whyFine": "Recording another idea fairly."
+        },
+        {
+          "id": "d",
+          "text": "I said none of these would work because we have never tried anything like them.",
+          "problem": true,
+          "why": "Rejecting ideas only because they are new shuts down creativity and skips the chance to test whether they work."
+        },
+        {
+          "id": "e",
+          "text": "We will pick one idea to test next week.",
+          "whyFine": "Planning a test is a constructive way to move forward."
+        }
+      ],
+      "principle": "Judge ideas on their merits and test them; being new is not a reason to dismiss an idea.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Single line dismisses ideas for being untried.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

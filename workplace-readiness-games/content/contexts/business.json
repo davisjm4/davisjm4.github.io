@@ -1,0 +1,59 @@
+{
+  "id": "business",
+  "label": "Business and Finance",
+  "cluster": "Finance",
+  "bundles": [
+    {
+      "id": "community-bank",
+      "workplace": "community bank branch",
+      "role": "teller",
+      "lead": "branch supervisor",
+      "client": {
+        "text": "customer",
+        "plural": "customers"
+      },
+      "record": [
+        "cash drawer balance sheet",
+        "transaction log"
+      ],
+      "equipment": [
+        "currency counter",
+        "check scanner"
+      ],
+      "system": "banking software",
+      "document": "deposit slip",
+      "deliverable": "account paperwork",
+      "task": "drawer balancing checklist",
+      "hazard": [
+        "a loose cable stretched across the teller area",
+        "a wet entrance mat that is bunched up near the door"
+      ]
+    },
+    {
+      "id": "accounting-office",
+      "workplace": "accounting office",
+      "role": "administrative assistant",
+      "lead": "office manager",
+      "client": {
+        "text": "client",
+        "plural": "clients"
+      },
+      "record": [
+        "expense report",
+        "invoice tracking sheet"
+      ],
+      "equipment": [
+        "document scanner",
+        "shredder"
+      ],
+      "system": "accounting software",
+      "document": "invoice",
+      "deliverable": "client report",
+      "task": "month-end filing checklist",
+      "hazard": [
+        "a stack of file boxes blocking the hallway",
+        "a desk drawer left open at walking height"
+      ]
+    }
+  ]
+}

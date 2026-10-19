@@ -1,0 +1,323 @@
+{
+  "templates": [
+    {
+      "id": "CLA-D-001",
+      "skill": "continuous-learning-and-adaptability",
+      "family": "continuous-learning-and-adaptability.acting-on-feedback",
+      "pattern": "thank-clarify-adjust",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "continuous-learning-and-adaptability:acting-on-feedback"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead",
+        "task": "task"
+      },
+      "facts": [
+        "lead-points-out-skipped-step",
+        "employee-feels-defensive"
+      ],
+      "scenario": "At {workplace|the}, your {lead} points out that you have been skipping a step in {task|the}. You feel a little defensive because you thought you were doing it well.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Thank your {lead}, ask for an example of the missed step, and adjust how you do the task.",
+          "why": "Accepting feedback and asking for specifics shows you are open to improving, and it makes the change easier to carry out.",
+          "requires": [
+            "lead-points-out-skipped-step"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Explain why you skip the step so that your {lead} understands you were not being careless.",
+          "why": "Context can help, but leading with an explanation sounds defensive and misses the chance to learn what your {lead} saw.",
+          "misconception": "Explaining my reasons is the best way to respond to feedback."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Say you will do better, but keep doing the task exactly as before since it seems to work.",
+          "why": "Agreeing without changing anything means the feedback was ignored, and the same issue will come up again.",
+          "misconception": "Agreeing politely is the same as acting on feedback."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask several coworkers whether they think the step really matters, before deciding what to do about it.",
+          "why": "Seeking support for your view turns feedback into a vote. The person who asked for the change is the best source for why it matters.",
+          "misconception": "Feedback is optional if others disagree with it."
+        }
+      ],
+      "principle": "Accept feedback by thanking the person, asking for specifics, and making a real change.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "No policy content.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CLA-N-001",
+      "skill": "continuous-learning-and-adaptability",
+      "family": "continuous-learning-and-adaptability.learning-resources",
+      "pattern": "use-guides-and-coworkers-before-training",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "continuous-learning-and-adaptability:learning-resources",
+        "continuous-learning-and-adaptability:changing-requirements"
+      ],
+      "contexts": "any",
+      "slots": {
+        "system": "system",
+        "workplace": "workplace",
+        "coworker": "person"
+      },
+      "facts": [
+        "update-changes-daily-tasks",
+        "training-next-week",
+        "must-use-tomorrow",
+        "quick-start-guide-available"
+      ],
+      "scenario": "An update to {system|the} at {workplace|the} changes how you do your daily tasks. Training is scheduled for next week, but you have to use the updated version tomorrow. A quick-start guide is posted, and {coworker} has already used the new version.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Read the quick-start guide and ask {coworker} about the key changes, and still attend next week's training.",
+          "why": "Using the guide and an experienced coworker gets you working now, and the scheduled training fills in the rest.",
+          "requires": [
+            "quick-start-guide-available",
+            "must-use-tomorrow"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Wait for next week's training before using any of the new features, and ask someone else to handle tasks until then.",
+          "why": "Waiting leaves your work to others and delays your learning. Resources were available to start right away.",
+          "misconception": "Training is the only real way to learn something new."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Click around in the updated version to see what happens, since learning by trial is quickest.",
+          "why": "Trying things at random may cause mistakes in real work. A guide and an experienced coworker are faster and safer.",
+          "misconception": "Experimenting alone is the most efficient way to learn."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Keep using your old way of working for as long as possible, until someone makes you switch.",
+          "why": "Resisting change builds a gap that gets harder to close, and the update is going to be used tomorrow regardless.",
+          "misconception": "If I ignore a change, it may go away."
+        }
+      ],
+      "principle": "When a change arrives before formal training, use guides and experienced coworkers right away, then add training.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Resources stated in scenario.",
+        "policyNotNeeded": true
+      },
+      "timing": "Use is required tomorrow, so informal resources come before the scheduled training."
+    },
+    {
+      "id": "CLA-D-002",
+      "skill": "continuous-learning-and-adaptability",
+      "family": "continuous-learning-and-adaptability.changing-requirements",
+      "pattern": "fair-trial-then-specific-feedback",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "continuous-learning-and-adaptability:changing-requirements",
+        "continuous-learning-and-adaptability:acting-on-feedback"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "lead": "lead",
+        "task": "task"
+      },
+      "facts": [
+        "new-procedure-announced",
+        "employee-thinks-old-way-faster",
+        "procedure-required"
+      ],
+      "scenario": "{Workplace|the} announces a new procedure for {task|the} that replaces the method you have used for years. It is required for everyone starting next week. You believe the old method was faster.",
+      "prompt": "What is the best response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Learn the new procedure, use it as required, and share specific observations with your {lead} after a fair trial.",
+          "why": "A fair trial gives real evidence. Specific, constructive observations are more useful than a first reaction.",
+          "requires": [
+            "procedure-required"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "acceptable",
+          "text": "Use the new procedure and tell your {lead} right away that you think it will be slower.",
+          "why": "Following the procedure is right, but voicing a conclusion before trying it is less persuasive than feedback based on experience.",
+          "misconception": "My first impression is the most useful input."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Keep using the old method quietly when no one is checking, since it gets the same results faster.",
+          "why": "The procedure is required for everyone. Using a different method on your own can cause inconsistency and may hide a concern that could help the team.",
+          "misconception": "Results matter more than following the new process."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Tell coworkers the change is a mistake and encourage them to share their doubts about it as well.",
+          "why": "Venting spreads resistance without giving decision-makers any useful information. Constructive feedback does more to improve the procedure.",
+          "misconception": "If many people complain, the change will be reversed."
+        }
+      ],
+      "principle": "Adapt to required changes by learning them well, giving them a fair trial, and then offering specific feedback.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Requirement stated; acceptable option is cooperative but premature.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CLA-F-001",
+      "skill": "continuous-learning-and-adaptability",
+      "family": "continuous-learning-and-adaptability.credentials",
+      "pattern": "skip-required-certification",
+      "mode": "find",
+      "difficulty": "beginner",
+      "concepts": [
+        "continuous-learning-and-adaptability:credentials"
+      ],
+      "contexts": "any",
+      "slots": {
+        "coworker": "person",
+        "workplace": "workplace"
+      },
+      "facts": [
+        "plan-ignores-posted-requirement"
+      ],
+      "scenario": "{coworker} writes this note while planning a move into a new role at {workplace|the}.",
+      "prompt": "Tap the line that is a problem.",
+      "docType": "note",
+      "docTitle": "Career plan note",
+      "segments": [
+        {
+          "id": "a",
+          "text": "I want to move into the new technician role next year.",
+          "whyFine": "Stating a goal clearly is a good start."
+        },
+        {
+          "id": "b",
+          "text": "The job posting lists a safety certification as required.",
+          "whyFine": "This simply records a fact from the posting."
+        },
+        {
+          "id": "c",
+          "text": "I will skip the certification and apply anyway, since it probably does not matter.",
+          "problem": true,
+          "why": "A listed requirement matters. Skipping it without checking can mean not being considered, and earning it would strengthen the application."
+        },
+        {
+          "id": "d",
+          "text": "I will ask my supervisor how to prepare for the next steps.",
+          "whyFine": "Asking for guidance on preparation is a sensible step."
+        }
+      ],
+      "principle": "When a role lists a credential as required, plan to earn it instead of assuming it does not matter.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Only one line disregards a stated requirement.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CLA-O-001",
+      "skill": "continuous-learning-and-adaptability",
+      "family": "continuous-learning-and-adaptability.learning-a-new-skill",
+      "pattern": "identify-resource-practice-apply",
+      "mode": "order",
+      "difficulty": "beginner",
+      "concepts": [
+        "continuous-learning-and-adaptability:learning-resources",
+        "continuous-learning-and-adaptability:credentials"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "new-skill-needed-on-the-job"
+      ],
+      "scenario": "A new skill is becoming important in jobs at {workplace|the}, and you want to learn it.",
+      "prompt": "Put these steps in a sensible order.",
+      "steps": [
+        {
+          "id": "need",
+          "text": "Identify the skill you need to build"
+        },
+        {
+          "id": "resource",
+          "text": "Find a reliable resource or someone who can teach it"
+        },
+        {
+          "id": "practice",
+          "text": "Practice and ask for feedback"
+        },
+        {
+          "id": "apply",
+          "text": "Use the skill on the job and keep improving"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "need",
+          "after": "resource",
+          "why": "You need to know the skill before you can find a way to learn it."
+        },
+        {
+          "before": "resource",
+          "after": "practice",
+          "why": "You need something reliable to practice from."
+        },
+        {
+          "before": "practice",
+          "after": "apply",
+          "why": "Practice with feedback prepares you to use the skill on real work."
+        }
+      ],
+      "principle": "Learn a new skill by naming it, finding a good resource, practicing with feedback, and then applying it.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Natural chain.",
+        "policyNotNeeded": true
+      }
+    }
+  ]
+}

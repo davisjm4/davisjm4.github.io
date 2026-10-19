@@ -1,0 +1,23 @@
+{
+  "name": "workplace-readiness-games",
+  "version": "1.0.0",
+  "description": "Standalone, static practice platform for the 22 Workplace Readiness Skills. No backend, no accounts.",
+  "private": true,
+  "scripts": {
+    "build": "node tools/build-bundle.js",
+    "validate": "node tools/validate.js",
+    "docs": "node tools/gen-docs.js && node tools/run-report.js",
+    "sweep": "node tools/sweep.js",
+    "coverage": "node tools/coverage.js",
+    "test:unit": "node --test tests/core.test.js tests/validator.test.js tests/generator.test.js tests/grader.test.js tests/app-logic.test.js tests/audit.test.js",
+    "test:browser": "node --test tests/browser/app.test.js",
+    "test": "npm run build && npm run validate && npm run test:unit && npm run test:browser"
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "puppeteer-core": "^23.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

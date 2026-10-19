@@ -1,0 +1,471 @@
+{
+  "templates": [
+    {
+      "id": "ISE-F-001",
+      "skill": "information-security",
+      "family": "information-security.suspicious-requests",
+      "pattern": "email-asks-for-password",
+      "mode": "find",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-security:cyber-threats",
+        "information-security:confidentiality"
+      ],
+      "contexts": "any",
+      "slots": {
+        "system": "system"
+      },
+      "facts": [
+        "email-requests-password"
+      ],
+      "scenario": "You get this email in your work inbox. It is signed \"IT Help Desk.\"",
+      "prompt": "Tap the line that should concern you.",
+      "docType": "email",
+      "docTitle": "Email in your work inbox",
+      "segments": [
+        {
+          "id": "g",
+          "text": "Hello team,",
+          "whyFine": "A greeting is ordinary and asks nothing of you."
+        },
+        {
+          "id": "a",
+          "text": "We are moving everyone's {system} accounts to new servers this weekend.",
+          "whyFine": "Announcing a planned system change is normal and asks nothing of you."
+        },
+        {
+          "id": "b",
+          "text": "You do not need to do anything for the move itself.",
+          "whyFine": "This line says no action is needed, so it asks for nothing."
+        },
+        {
+          "id": "p",
+          "text": "To keep your account active, reply to this email with your current password.",
+          "problem": true,
+          "why": "Asking you to send a password by email is a common phishing tactic. Real IT staff can move an account without asking you to send your password."
+        },
+        {
+          "id": "t",
+          "text": "Thank you for helping us finish on schedule.",
+          "whyFine": "A closing thank-you is ordinary and asks nothing of you."
+        }
+      ],
+      "principle": "Never send passwords or other login details by email or message, even when the request seems to come from your own workplace.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "policyNotNeeded": true,
+        "notes": "Password-by-email is widely recognized as unsafe regardless of workplace; no unstated policy needed. Only one line makes a request."
+      }
+    },
+    {
+      "id": "ISE-N-001",
+      "skill": "information-security",
+      "family": "information-security.misdirected-information",
+      "pattern": "report-misdirected-email-promptly",
+      "mode": "nextstep",
+      "difficulty": "advanced",
+      "concepts": [
+        "information-security:confidentiality",
+        "information-security:security-procedures"
+      ],
+      "contexts": "any",
+      "slots": {
+        "role": "role",
+        "workplace": "workplace",
+        "client": "client",
+        "lead": "lead"
+      },
+      "facts": [
+        "sent-to-wrong-internal-coworker",
+        "policy-report-to-lead",
+        "file-has-client-details"
+      ],
+      "scenario": "You work as {role|a} at {workplace|a}. You just emailed a file with {client.plural}' contact details to a coworker who has no reason to see it. The coworker is inside your organization. Your workplace policy says any information sent to the wrong person must be reported to your {lead} as soon as it is noticed.[[twist]]",
+      "twists": [
+        {
+          "id": "end-of-week",
+          "text": "It is late on a Friday afternoon.",
+          "facts": []
+        },
+        {
+          "id": "lead-busy",
+          "text": "Your {lead} looks busy with another task.",
+          "facts": []
+        }
+      ],
+      "prompt": "What is the best next step?",
+      "timing": "Prompt reporting lets the right person contain the exposure; other containment steps are secondary and cannot replace the report.",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Report the mistake to your {lead} right away, naming the file and who received it.",
+          "why": "Prompt reporting lets the person responsible contain the problem and decide what else is needed. It is also what the workplace policy asks.",
+          "requires": [
+            "policy-report-to-lead"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Resend the file to the right person so the work is not delayed, and carry on with your day.",
+          "why": "Sending it correctly fixes the delivery but not the exposure. The wrong recipient still has the information, and the person responsible does not know.",
+          "misconception": "Fixing the delivery fixes the problem."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Wait to see whether the coworker says anything before deciding whether it matters.",
+          "why": "Waiting leaves client details exposed with no one managing the situation. The policy asks for a report when a mix-up is noticed, not when someone complains.",
+          "misconception": "If no one complains, there was no harm."
+        },
+        {
+          "id": "d3",
+          "role": "acceptable",
+          "text": "Ask the coworker to delete the email without opening it, and mention it to your {lead} at the end of the day.",
+          "why": "Asking for deletion is a reasonable step, but delaying the report means the person responsible cannot act while the problem is fresh, and the policy asks for a report as soon as it is noticed.",
+          "misconception": "Quietly cleaning it up myself is enough, and the report can wait."
+        }
+      ],
+      "principle": "When information reaches the wrong person, report it right away through the proper channel; trying to fix it quietly or later takes the decision away from the people responsible.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Internal misdirected email only; no legal notification duties asserted. Policy stated in scenario. Acceptable option is reasonable containment that delays the required report."
+      }
+    },
+    {
+      "id": "ISE-D-001",
+      "skill": "information-security",
+      "family": "information-security.acceptable-use",
+      "pattern": "decline-personal-streaming-on-work-device",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-security:acceptable-use",
+        "information-security:ethical-technology-use"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person"
+      },
+      "facts": [
+        "policy-work-only",
+        "slow-period",
+        "coworker-suggests-streaming"
+      ],
+      "scenario": "The acceptable use policy at {workplace|the} says work computers are for work-related use only. During a slow period, {coworker} suggests streaming a movie on a work computer until things pick up.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Decline politely, and use your own device during your break if you want to watch something.",
+          "why": "The policy limits work computers to work use. Using your own device during a break respects the policy and gives you what you wanted.",
+          "requires": [
+            "policy-work-only"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Stream it quietly with the volume low, since no customers are around and it is a slow period.",
+          "why": "A slow period does not change the policy. Personal streaming on work equipment is still outside what the policy allows.",
+          "misconception": "If it is quiet, the rules relax."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Watch it only when your supervisor is out of sight, so that nobody has a reason to object.",
+          "why": "Hiding the activity shows you know it is not allowed. The policy applies whether or not someone is watching.",
+          "misconception": "The rule only applies when I am observed."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Log into your personal accounts on the work computer so the movie is on your own account.",
+          "why": "Using personal logins on a work computer does not make the use work-related, and it can expose your accounts on a shared device.",
+          "misconception": "My own account makes it my own use."
+        }
+      ],
+      "principle": "Use work devices only as your workplace's acceptable use policy allows, whether or not anyone is watching.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Policy stated in scenario; no legal claims."
+      }
+    },
+    {
+      "id": "ISE-N-002",
+      "skill": "information-security",
+      "family": "information-security.physical-security",
+      "pattern": "stop-the-unbadged-follower",
+      "mode": "nextstep",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-security:security-procedures",
+        "information-security:information-formats"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "badge-required-for-each-person",
+        "stranger-follows-without-badging",
+        "stranger-says-forgot-badge"
+      ],
+      "scenario": "You use your badge to open the staff entrance of {workplace|the}. A person you do not recognize follows right behind you without using a badge and says they forgot theirs. Your workplace rule is that everyone must badge in individually.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Politely stop them at the door and direct them to the front desk for a visitor or replacement badge.",
+          "why": "The rule is that everyone badges in on their own. Pointing the person to the front desk follows it while staying courteous.",
+          "requires": [
+            "badge-required-for-each-person"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Hold the door and let them in, since they said they work here and it would be rude to refuse.",
+          "why": "Politeness does not replace the rule. Someone who is not authorized could enter the building and reach people and information.",
+          "misconception": "Being courteous means opening the door."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Ask for their name and then let them in if the name sounds familiar to you.",
+          "why": "A name is easy to claim and does not verify identity. The front desk has the means to confirm who someone is.",
+          "misconception": "Knowing a name is enough proof."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Say nothing and keep walking, assuming that someone further inside will deal with it.",
+          "why": "Assuming someone else will handle it leaves an unverified person inside. You are at the door, so you are the first to act.",
+          "misconception": "Security is someone else's responsibility."
+        }
+      ],
+      "principle": "Follow badge and entry rules for everyone, politely; a person at the door is the first line of facility security.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Workplace rule stated in the scenario."
+      },
+      "timing": "The person is at the door right now, so action at the door comes first."
+    },
+    {
+      "id": "ISE-D-002",
+      "skill": "information-security",
+      "family": "information-security.sharing-information",
+      "pattern": "ask-for-removal-and-tell-the-lead",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-security:ethical-technology-use",
+        "information-security:confidentiality"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace",
+        "coworker": "person",
+        "client": "client",
+        "lead": "lead",
+        "system": "system"
+      },
+      "facts": [
+        "policy-client-info-stays-inside",
+        "photo-shows-client-details",
+        "photo-posted-publicly"
+      ],
+      "scenario": "Your workplace policy says {client|a}'s information must never be shared outside {workplace|the}. {coworker} posts a photo of the workspace on social media. Behind {coworker}, a screen showing {system|the} clearly displays {client|a}'s name and details.",
+      "prompt": "What is the most appropriate response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Tell {coworker} privately to take the photo down, and let your {lead} know what was visible.",
+          "why": "Client information is visible to the public, which the policy forbids. Asking for removal limits exposure, and telling your {lead} lets them follow the proper steps.",
+          "requires": [
+            "policy-client-info-stays-inside",
+            "photo-shows-client-details"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Leave a public comment under the photo saying that it should be removed.",
+          "why": "A public comment draws more attention to the photo and the exposed details. A private message is quicker and less visible.",
+          "misconception": "Public correction is the fastest way to fix it."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Say nothing, since the details are small in the background and probably no one will read them.",
+          "why": "The policy does not allow client information to be shared, even by accident. Small and unlikely to be noticed is not a safe standard.",
+          "misconception": "If it is hard to see, it is not a problem."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Ask {coworker} to delete the photo, but do not mention it to anyone else to avoid getting {coworker} in trouble.",
+          "why": "Removing the photo is a good step, but your {lead} needs to know client information was exposed so the right steps can be taken.",
+          "misconception": "Protecting a coworker matters more than reporting."
+        }
+      ],
+      "principle": "Keep client information inside the workplace: ask for exposed details to be removed and tell the person responsible.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Policy stated in scenario; no legal claims."
+      }
+    },
+    {
+      "id": "ISE-F-002",
+      "skill": "information-security",
+      "family": "information-security.suspicious-requests",
+      "pattern": "urgent-link-asks-for-login",
+      "mode": "find",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-security:cyber-threats",
+        "information-security:confidentiality"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "message-urges-login-through-link"
+      ],
+      "scenario": "You get this text message on your work phone.",
+      "prompt": "Tap the line that should concern you.",
+      "docType": "chat",
+      "docTitle": "Text message to your work phone",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Hi, this is Payroll at {workplace|the}.",
+          "whyFine": "Messages often start by naming who they are from. This line asks for nothing."
+        },
+        {
+          "id": "b",
+          "text": "We found a problem with your direct deposit.",
+          "whyFine": "Stating a reason for contact is normal and requests nothing yet."
+        },
+        {
+          "id": "c",
+          "text": "Click this link right now and enter your login to fix it today.",
+          "problem": true,
+          "why": "Urgent pressure to click a link and enter your login is a common sign of a scam. Real requests do not need you to log in through a link in a message."
+        },
+        {
+          "id": "d",
+          "text": "Please call the number on your pay stub if you have questions.",
+          "whyFine": "Directing you to a number you already trust is a safe instruction."
+        }
+      ],
+      "principle": "Be wary of urgent messages that ask you to click a link and enter login details; verify through a channel you already trust.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Single line applies pressure and requests credentials.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "ISE-O-001",
+      "skill": "information-security",
+      "family": "information-security.suspected-phishing-response",
+      "pattern": "stop-note-report-follow",
+      "mode": "order",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-security:cyber-threats",
+        "information-security:security-procedures"
+      ],
+      "contexts": "any",
+      "slots": {
+        "workplace": "workplace"
+      },
+      "facts": [
+        "clicked-link-sign-in-page",
+        "procedure-stop-report-follow"
+      ],
+      "scenario": "At {workplace|the}, you click a link in an email and a page asks you to sign in. You realize it may be a scam. Your workplace's security procedure says IT must hear about suspected scams immediately.",
+      "prompt": "Put these actions in a sensible order.",
+      "steps": [
+        {
+          "id": "stop",
+          "text": "Stop and do not enter any information on the page"
+        },
+        {
+          "id": "note",
+          "text": "Write down what you clicked and when"
+        },
+        {
+          "id": "report",
+          "text": "Report it to IT right away"
+        },
+        {
+          "id": "follow",
+          "text": "Follow IT's instructions, such as changing your password"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "stop",
+          "after": "report",
+          "why": "Stopping first keeps the situation from getting worse before you report."
+        },
+        {
+          "before": "stop",
+          "after": "note",
+          "why": "You stop interacting with the page before taking notes."
+        },
+        {
+          "before": "report",
+          "after": "follow",
+          "why": "IT cannot give instructions until you have reported it."
+        },
+        {
+          "before": "note",
+          "after": "follow",
+          "why": "Details noted help you give IT the facts before you act on instructions."
+        }
+      ],
+      "principle": "If you suspect a scam, stop, report to IT right away, and follow their instructions.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Procedure stated in scenario; no specific technical or legal claims."
+      },
+      "alternatesReviewed": true
+    }
+  ]
+}

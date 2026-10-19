@@ -1,0 +1,59 @@
+{
+  "label": "Hospitality",
+  "cluster": "Hospitality & Tourism",
+  "bundles": [
+    {
+      "id": "hotel",
+      "workplace": "hotel",
+      "role": "front desk associate",
+      "lead": "front office supervisor",
+      "client": {
+        "text": "guest",
+        "plural": "guests"
+      },
+      "record": [
+        "room status log",
+        "key card issue log"
+      ],
+      "equipment": [
+        "luggage cart",
+        "key card encoder"
+      ],
+      "system": "reservation system",
+      "document": "guest request ticket",
+      "deliverable": "banquet room set-up",
+      "task": "shift handoff checklist",
+      "hazard": [
+        "a wet floor in the lobby near the main entrance",
+        "a luggage cart with a broken wheel that tips to one side"
+      ]
+    },
+    {
+      "id": "restaurant",
+      "workplace": "restaurant",
+      "role": "server",
+      "lead": "shift manager",
+      "client": {
+        "text": "guest",
+        "plural": "guests"
+      },
+      "record": [
+        "table reservation book",
+        "allergy request log"
+      ],
+      "equipment": [
+        "dish machine",
+        "ticket printer"
+      ],
+      "system": "point-of-sale system",
+      "document": "order ticket",
+      "deliverable": "catering order",
+      "task": "closing checklist",
+      "hazard": [
+        "a puddle of grease on the floor by the fryer station",
+        "a stack of full trays blocking the back exit"
+      ]
+    }
+  ],
+  "id": "hospitality"
+}

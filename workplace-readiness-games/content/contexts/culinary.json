@@ -1,0 +1,59 @@
+{
+  "id": "culinary",
+  "label": "Culinary Arts",
+  "cluster": "Hospitality & Tourism",
+  "bundles": [
+    {
+      "id": "restaurant-kitchen",
+      "workplace": "restaurant kitchen",
+      "role": "line cook",
+      "lead": "sous chef",
+      "client": {
+        "text": "guest",
+        "plural": "guests"
+      },
+      "record": [
+        "cooler temperature log",
+        "prep list"
+      ],
+      "equipment": [
+        "walk-in cooler",
+        "slicer"
+      ],
+      "system": "kitchen ordering system",
+      "document": "prep order",
+      "deliverable": "catering tray order",
+      "task": "station closing checklist",
+      "hazard": [
+        "a puddle of water on the tile floor near the dish pit",
+        "a stack of crates blocking the walk-in cooler door"
+      ]
+    },
+    {
+      "id": "catering-company",
+      "workplace": "catering company",
+      "role": "kitchen assistant",
+      "lead": "head chef",
+      "client": {
+        "text": "client",
+        "plural": "clients"
+      },
+      "record": [
+        "food safety checklist",
+        "event inventory sheet"
+      ],
+      "equipment": [
+        "warming cabinet",
+        "food processor"
+      ],
+      "system": "event planning software",
+      "document": "event order",
+      "deliverable": "tray order",
+      "task": "loading checklist",
+      "hazard": [
+        "a spill of oil beside the prep table",
+        "a damaged cart wheel on the loading ramp"
+      ]
+    }
+  ]
+}
