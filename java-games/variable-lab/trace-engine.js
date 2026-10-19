@@ -34,7 +34,12 @@ function addLine(p,text,mutate,why,output=null){if(mutate)mutate(p.state);const 
 function initProgram(){return{lines:[],trace:[],state:{},types:{},outputs:[]};}
 function declare(p,type,name,value){p.types[name]=type;addLine(p,`${type} ${name} = ${literal(value,type)};`,s=>s[name]=value,`${name} starts at ${display(value,type)}.`);}
 function assign(p,name,text,value,why){addLine(p,`${name} = ${text};`,s=>s[name]=value,why);}
-function output(p,expr,value,why){const shown=p.types[expr]?display(value,p.types[expr]):String(value);addLine(p,`System.out.println(${expr});`,null,why,shown);}
+function output(p,expr,value,why){
+  const type=p.types[expr] || (typeof value==="boolean"?"boolean":typeof value==="number"?(Number.isInteger(value)?"int":"double"):"String");
+  const shown=display(value,type);
+  addLine(p,`System.out.println(${expr});`,null,why,shown);
+  p.outputs.at(-1).type=type;
+}
 function familyPool(difficulty){
   if(difficulty==="beginner")return ["reassignment","reassignment","selfReference","selfReference","doubleArithmetic","boolean","string","char","outputExpression"];
   if(difficulty==="intermediate")return ["selfReference","compound","compound","increment","multiple","multiple","intDivision","doubleArithmetic","boolean","string","char","outputExpression"];
@@ -106,7 +111,7 @@ function buildFamily(family,r,difficulty){
 }
 function answerAt(p,format,r){
   const vars=Object.keys(p.types), outputLine=p.outputs.at(-1);
-  if(format==="print"&&outputLine)return{format:"print",prompt:"What does this code print?",answer:outputLine.value,resultType:"output",checkpointLine:outputLine.line};
+  if(format==="print"&&outputLine)return{format:"print",prompt:"What does this code print?",answer:outputLine.value,resultType:outputLine.type,checkpointLine:outputLine.line};
   if(format==="checkpoint"){
     const eligible=p.trace.filter((t,i)=>i>0&&i<p.trace.length-1&&Object.keys(t.variables).length);if(eligible.length){const step=pick(r,eligible),names=Object.keys(step.variables),name=pick(r,names);return{format:"checkpoint",prompt:`What is the value of ${name} immediately after line ${step.line}?`,answer:display(step.variables[name],p.types[name]),resultType:p.types[name],checkpointLine:step.line,resultVariable:name};}
   }
@@ -118,10 +123,15 @@ function misconceptionValues(p,a){
   if(a.resultType==="int"||(/^[-]?\d+$/.test(correct)&&a.resultType!=="String"&&a.resultType!=="char")){const n=Number(correct);out.push(String(n+1),String(n-1),String(n+2));}
   if(a.resultType==="double"){const n=Number(correct);out.push(String(n+1),String(n-1),n.toFixed(2));}
   if(a.resultType==="boolean")out.push(correct==="true"?"false":"true");
-  if(a.resultType==="String"||a.resultType==="char"||a.resultType==="output"){for(const t of p.trace){for(const v of Object.values(t.variables))out.push(String(v));}if(correct.startsWith("Result: ")){const digits=correct.match(/-?\d+/g)||[];if(digits.length)out.push("Result: "+digits.join(""));}}
+  if(a.resultType==="String"){
+    for(const t of p.trace) for(const [name,v] of Object.entries(t.variables)) if(p.types[name]==="String") out.push(String(v));
+    out.push(correct+"!", correct+"?", correct+" ");
+    if(correct.startsWith("Result: ")){const digits=correct.match(/-?\d+/g)||[];if(digits.length)out.push("Result: "+digits.join(""));}
+  }
+  if(a.resultType==="char") out.push("A","B","C","D","K","R","Z");
   return [...new Set(out.map(String))].filter(v=>v!==correct);
 }
-function choicesFor(p,a,r){if(a.resultType==="boolean")return shuffle(r,["true","false"]);let wrong=misconceptionValues(p,a);let guard=0;while(wrong.length<3&&guard++<20){if(/^[-]?\d+(\.\d+)?$/.test(a.answer)){const n=Number(a.answer),v=String(n+int(r,-4,4));if(v!==a.answer&&!wrong.includes(v))wrong.push(v);}else{const v=pick(r,["unchanged","0","1","false","true","Result: 5","Hello"]);if(v!==a.answer&&!wrong.includes(v))wrong.push(v);}}return shuffle(r,[String(a.answer),...wrong.slice(0,3)]);}
+function choicesFor(p,a,r){if(a.resultType==="boolean")return shuffle(r,["true","false"]);let wrong=misconceptionValues(p,a);let guard=0;while(wrong.length<3&&guard++<20){if(/^[-]?\d+(\.\d+)?$/.test(a.answer)){const n=Number(a.answer),v=String(n+int(r,-4,4));if(v!==a.answer&&!wrong.includes(v))wrong.push(v);}else{const fallback=a.resultType==="char"?["A","B","C","D","K","R","Z"]:["Hello","Ready","Done","Result: 5","Go"];const v=pick(r,fallback);if(v!==a.answer&&!wrong.includes(v))wrong.push(v);}}return shuffle(r,[String(a.answer),...wrong.slice(0,3)]);}
 export function generateTrace({difficulty="beginner",seed,family,format}={}){
   if(!DIFFICULTIES.includes(difficulty))throw Error("Unknown trace difficulty");const actualSeed=seed===undefined?Math.floor(Math.random()*0x100000000)>>>0:seed>>>0,r=mulberry32(actualSeed);const chosenFamily=family||pick(r,familyPool(difficulty));const p=buildFamily(chosenFamily,r,difficulty);
   const formats=p.outputs.length?["print","final","checkpoint"]:["final","checkpoint"], chosenFormat=format||pick(r,formats), a=answerAt(p,chosenFormat,r), code=p.lines.map((line,i)=>chosenFormat==="checkpoint"?`${i+1}. ${line}`:line).join("\n");
