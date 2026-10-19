@@ -50,9 +50,18 @@ for (const family of Object.keys(TRACE_FAMILIES))
 
 // Independently verify 1,000 generated answers with javac/java rather than
 // trusting the JavaScript execution model alone.
-const samples = [];
-for (let i = 0; i < 1000; i++)
+const samples = [
+  generateTrace({ difficulty: "intermediate", seed: 49001, family: "compound", format: "print" }),
+  generateTrace({ difficulty: "intermediate", seed: 49002, family: "multiple", format: "final" }),
+  generateTrace({ difficulty: "advanced", seed: 49003, family: "precedence", format: "checkpoint" }),
+];
+let forcedSeed = 49100;
+for (const family of Object.keys(TRACE_FAMILIES))
+  samples.push(generateTrace({ difficulty: levels[forcedSeed % levels.length], seed: forcedSeed++, family }));
+while (samples.length < 1000) {
+  const i = samples.length;
   samples.push(generateTrace({ difficulty: levels[i % levels.length], seed: 50000 + i }));
+}
 assert.deepEqual([...new Set(samples.map((q) => q.traceFamily))].sort(), Object.keys(TRACE_FAMILIES).sort());
 assert.deepEqual([...new Set(samples.flatMap((q) => Object.values(q.types)))].sort(), ["String", "boolean", "char", "double", "int"]);
 assert.deepEqual([...new Set(samples.map((q) => q.format))].sort(), ["checkpoint", "final", "print"]);
