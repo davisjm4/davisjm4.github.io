@@ -30,6 +30,15 @@ function responseExplorerAttempts(records) {
   const outcome = (r) => r.status === "solved" ? (r.submissions === 1 ? "Completed on first check" : "Solved after revision") : r.status === "revealed" ? "Answer revealed" : r.status === "skipped" ? "Skipped" : r.submissions ? "In progress" : "Not checked";
   return `<section class="panel"><h2>API Response Explorer attempts</h2><div class="table-wrap"><table class="report-table"><thead><tr><th scope="col">Challenge</th><th scope="col">Outcome</th><th scope="col">Checks</th><th scope="col">Hints</th></tr></thead><tbody>${challenges.slice(-50).reverse().map((r) => `<tr><th scope="row">${esc(r.topicTitle)}</th><td>${outcome(r)}</td><td>${r.submissions}</td><td>${r.details?.responseExplorer?.hintsShown || 0}</td></tr>`).join("")}</tbody></table></div></section>`;
 }
+function traceVariableAttempts(records) {
+  const attempts = Object.values(records).filter((r) => r.game === "variable-lab" && r.details?.mode === "trace");
+  if (!attempts.length) return "";
+  const format = { print: "Printed output", final: "Final value", checkpoint: "Value after a line" };
+  const outcome = (r) => r.submissions
+    ? r.details?.correct === true ? "Correct" : r.details?.correct === false ? "Incorrect" : "Submitted"
+    : r.status === "revealed" ? "Answer revealed" : r.status === "skipped" ? "Skipped" : "Not checked";
+  return `<section class="panel"><h2>Trace the Variable attempts</h2><div class="table-wrap"><table class="report-table"><thead><tr><th scope="col">Skill</th><th scope="col">Difficulty</th><th scope="col">Question</th><th scope="col">Outcome</th></tr></thead><tbody>${attempts.slice(-50).reverse().map((r) => `<tr><th scope="row">${esc(r.topicTitle)}</th><td>${esc(r.details?.difficulty || "—")}</td><td>${esc(format[r.details?.format] || r.details?.format || "—")}</td><td>${outcome(r)}</td></tr>`).join("")}</tbody></table></div></section>`;
+}
 function render() {
   const d = tracker.snapshot(),
     m = d.totals,
@@ -63,7 +72,7 @@ function render() {
             `<section class="topic-report"><h3>${esc(g.title)}</h3>${table(Object.values(g.topics))}</section>`,
         )
         .join("") || "<p>Topic results appear as you practice.</p>"
-    }</section><p class="print-note">Locally stored formative practice evidence. This report is not tamper-proof. Inactive and away time are excluded from active practice time.</p>`;
+    }</section>${traceVariableAttempts(d.records)}<p class="print-note">Locally stored formative practice evidence. This report is not tamper-proof. Inactive and away time are excluded from active practice time.</p>`;
 }
 for (let field of ["student-name", "student-period"])
   $(field).addEventListener("change", () => {
