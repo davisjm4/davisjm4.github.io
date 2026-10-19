@@ -666,7 +666,7 @@ function splitArgs(s) {
     ok(/import \{ arrayListGame \} from "\.\/arraylist-lab\/engine\.js/.test(app), "app.js imports arrayListGame (apply patches/java-games-integration.patch)");
     ok(app.includes('"arraylist-lab": arrayListGame'), "app.js lists the ArrayList Lab card");
     const html = fs.readFileSync(path.join(GAME_DIR, "index.html"), "utf8");
-    ok(html.includes('href="../"') && html.includes('data-game="arraylist-lab"'));
+    ok(html.includes('href="/cs-games/advanced/"') && html.includes('data-game="arraylist-lab"'));
     ok(html.includes("../style.css") && html.includes("./script.js"), "relative paths for GitHub Pages");
     ok(!/https?:\/\//.test(fs.readFileSync(path.join(GAME_DIR, "script.js"), "utf8")), "no network requests");
     eq(E.arrayListGame.name, "ArrayList Lab");

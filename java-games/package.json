@@ -16,7 +16,8 @@
     "test:boolean": "node boolean-conditional-lab/boolean-tests.mjs",
     "test:recursion": "node recursion-lab/recursion-tests.mjs",
     "test:arraylist": "node ../tests/arraylist-lab.test.js",
-    "test:arraylist-jvm": "node ../tests/arraylist-lab-jvm.test.js"
+    "test:arraylist-jvm": "node ../tests/arraylist-lab-jvm.test.js",
+    "test:catalog": "node ../cs-games/catalog-tests.mjs"
   },
   "devDependencies": {
     "linkedom": "^0.18.12"

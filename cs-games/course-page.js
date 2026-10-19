@@ -33,9 +33,11 @@ function render(){
   const topic = document.getElementById("topic-filter").value;
   const results = document.getElementById("results");
   let shown = 0;
+  const rendered = new Set();
   results.innerHTML = groups.map(([id,title,topics]) => {
-    const groupItems = items.filter(g => g.topics.some(t => topics.includes(t)) && matches(g,query,topic));
+    const groupItems = items.filter(g => g.topics.some(t => topics.includes(t)) && matches(g,query,topic) && (isCsp || !rendered.has(g.id)));
     if (!groupItems.length) return "";
+    groupItems.forEach(g => rendered.add(g.id));
     shown += groupItems.length;
     const sub = topics.length ? '<div class="topic-list">'+topics.map(t => {const count=items.filter(g=>g.topics.includes(t)).length; return '<button class="topic-chip'+(topic===t?' active':'')+'" data-topic="'+esc(t)+'">'+esc(t)+' <span>'+count+'</span></button>';}).join("")+'</div>' : "";
     return '<details class="standard" open><summary><span>'+esc(title)+'</span><small>'+groupItems.length+' activit'+(groupItems.length===1?'y':'ies')+'</small></summary>'+sub+'<div class="game-grid">'+groupItems.map(card).join("")+'</div></details>';

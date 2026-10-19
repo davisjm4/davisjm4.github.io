@@ -167,7 +167,7 @@ ok(!tracker.reset(false)); eq(tracker.snapshot().totals, snapshot.totals);
 // sessions, or shared styles are necessary for the new game.
 const home = fs.readFileSync(new URL("../app.js", import.meta.url), "utf8");
 ok(home.includes('"math-lab": mathGame'));
-ok(document.querySelector('a[href="../"]'));
+ok(document.querySelector('a[href="/cs-games/advanced/"]'));
 eq(document.querySelectorAll("input,textarea").length, 0);
 fs.writeFileSync(path.join(os.tmpdir(), "math-lab-samples.json"), JSON.stringify(samples, null, 2));
 console.log(`Math Lab: ${questions.length} generated questions across 31 structures; ${checks.length} actual Java evaluations; ${assertions} assertions; all choices, 40 UI submissions, scoring locks, skips, persistence, legacy sessions, and Mixed rotation passed. Answer positions: ${JSON.stringify(positions)}`);

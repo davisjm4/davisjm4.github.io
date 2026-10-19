@@ -166,14 +166,10 @@ function launch(slug) {
     },
   };
 }
-const home = launch("");
-eq(home.document.querySelectorAll(".card").length, 14);
-ok(home.document.querySelector('a[href="method-constructor-lab/"]'));
-ok(home.document.querySelector('a[href="boolean-conditional-lab/"]'));
-ok(home.document.querySelector('a[href="robot-algorithms/"]'));
-ok(home.document.querySelector('a[href="class-object-lab/"]'));
-ok(home.document.querySelector('a[href="math-lab/"]'));
-ok(home.document.querySelector('a[href="inheritance-polymorphism-lab/"]'));
+// The retired landing page is a redirect; catalog coverage lives in catalog-tests.mjs.
+const homeHtml = fs.readFileSync(new URL("./index.html", import.meta.url), "utf8");
+ok(homeHtml.includes('url=/cs-games/advanced/'));
+ok(homeHtml.includes('href="/cs-games/advanced/"'));
 for (const [slug, g] of Object.entries(J.games)) {
   const t = launch(slug);
   eq(t.$("mode").value, "mixed");
