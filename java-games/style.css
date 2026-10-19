@@ -21,3 +21,14 @@
 /* Author button layouts must not override intentionally hidden controls. */
 [hidden] { display: none !important; }
 .session-reflection { white-space: pre-wrap; overflow-wrap: anywhere; max-width: 48ch; margin: 6px 0; padding: 8px; border-left: 2px solid #75d7bd; background: #102438; color: #eff6fb; }
+
+
+.trace-table-wrap { overflow-x: auto; margin: 1rem 0; }
+.trace-table { width: 100%; border-collapse: collapse; min-width: 34rem; }
+.trace-table th, .trace-table td { border: 1px solid #456; padding: .55rem .65rem; text-align: left; vertical-align: top; }
+.trace-table code { white-space: nowrap; }
+.trace-explanation p { margin: .45rem 0; }
+@media (max-width: 640px) {
+  .trace-table { min-width: 30rem; font-size: .92rem; }
+  .trace-table th, .trace-table td { padding: .45rem; }
+}
