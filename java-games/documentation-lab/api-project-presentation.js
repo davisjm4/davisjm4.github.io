@@ -4,6 +4,7 @@
 const runtime = { kind: "runtime" };
 const supplied = (reason) => ({ kind: "runtime", reason });
 const fixed = (value, reason) => ({ kind: "fixed", value, reason });
+const accepted = (reason) => ({ kind: "accepted", reason });
 const COMMON_FIELDS = {
   "spotify.get-album-tracks": ["items[].name", "items[].artists[].name", "items[].duration_ms", "items[].track_number", "total"],
   "spotify.get-artist": ["name", "images[].url", "genres", "followers"],
@@ -106,6 +107,15 @@ export const RESPONSE_SOURCE_CHOICES = {
   "openai-textbook-photo-flashcards": {
     "openai.upload-file": {
       input: [
+        { path: "id", label: "The uploaded page image's file ID", explanation: "A later request can refer to the image by its file ID." },
+        { path: "filename", label: "The uploaded image's filename", explanation: "A filename describes the file but does not identify it to the API." },
+        { path: "bytes", label: "The image file's size", explanation: "Size describes the file but is not the reference used by the later request." },
+      ],
+    },
+  },
+  "openai-textbook-photo-flashcards": {
+    "openai.upload-file": {
+      input: [
         { path: "id", label: "The uploaded page image's file ID", explanation: "A later request can refer to the uploaded image by its file ID." },
         { path: "filename", label: "The uploaded image's filename", explanation: "A filename is descriptive but is not the API's file reference." },
         { path: "bytes", label: "The image file's size", explanation: "Size describes the file but does not identify it." },
@@ -114,6 +124,92 @@ export const RESPONSE_SOURCE_CHOICES = {
   },
 };
 export const PROJECT_PRESENTATION = {
+  "openai-reading-quiz-builder": {
+    "openai.create-response": { automatic: {
+      model: fixed("gpt-6-astra", "The app uses a model documented for Structured Outputs."),
+      instructions: accepted("The app supplies the instruction to create four quiz questions in the required format."),
+      input: accepted("The passage is supplied from the text the student pasted into the app."),
+      text: accepted("The app supplies the JSON schema its screen needs; students do not construct the schema."),
+    } },
+    "openai.create-chat-completion": { automatic: {
+      model: fixed("gpt-6-astra", "The app uses a model documented for Structured Outputs."),
+      messages: accepted("The app places its quiz-generation instruction and the student's passage into the conversation."),
+      response_format: accepted("The app supplies the JSON schema its screen needs; students do not construct the schema."),
+    } },
+  },
+  "openai-reading-packet-qa": {
+    "openai.upload-file": { automatic: {
+      file: accepted("The teacher's selected reading packet is supplied as a simulated file."),
+      purpose: fixed("user_data", "The reusable reading packet is uploaded for model input."),
+    } },
+    "openai.create-response": { automatic: {
+      model: fixed("gpt-6-astra", "The app uses a model that accepts PDF input."),
+      input: accepted("The app combines the teacher's question with the file ID returned by the upload step."),
+    } },
+  },
+  "openai-lecture-recap": {
+    "openai.create-transcription": { automatic: {
+      file: accepted("The teacher's uploaded lecture recording is supplied as a simulated file."),
+      model: fixed("gpt-transcribe", "The app selects the documented transcription model for recorded speech."),
+      response_format: fixed("json", "The app requests the transcript in a format with a text field for the next step."),
+    } },
+    "openai.create-response": { automatic: {
+      model: fixed("gpt-6-astra", "The app selects a text-generation model for the recap."),
+      instructions: accepted("The app supplies its five-bullet recap instruction."),
+      input: accepted("The transcript from the transcription step becomes the recap input."),
+    } },
+    "openai.create-chat-completion": { automatic: {
+      model: fixed("gpt-6-astra", "The app selects a text-generation model for the recap."),
+      messages: accepted("The app places its recap instruction and the transcript from the earlier step into the conversation."),
+    } },
+  },
+  "openai-private-essay-feedback": {
+    "openai.create-response": { automatic: {
+      model: fixed("gpt-6-astra", "The app uses a model that accepts PDF input."),
+      instructions: accepted("The app supplies its feedback instructions; student writing stays in the simulated application input."),
+      input: accepted("The student's selected essay is represented as simulated inline file data."),
+      store: fixed(false, "The app follows the project's data-retention requirement."),
+    } },
+    "openai.create-chat-completion": { automatic: {
+      model: fixed("gpt-6-astra", "The app uses a model that accepts PDF input."),
+      messages: accepted("The app supplies feedback instructions and the simulated essay file input."),
+      store: fixed(false, "The app follows the project's data-retention requirement."),
+    } },
+  },
+  "openai-discussion-board-safety": {
+    "openai.create-moderation": { automatic: {
+      model: fixed("omni-moderation-latest", "The app uses the documented moderation operation for its text-and-image safety check."),
+      input: accepted("The student's post text and optional image are supplied as simulated board content."),
+    } },
+    "openai.create-response": { automatic: {
+      model: fixed("gpt-6-astra", "The app uses a model documented for image input and Structured Outputs."),
+      instructions: accepted("The app supplies its classification instruction for the separate response-based approach."),
+      input: accepted("The simulated post text and image are provided to the response operation."),
+      text: accepted("The app supplies the structured flags its board workflow reads."),
+    } },
+    "openai.create-chat-completion": { automatic: {
+      model: fixed("gpt-6-astra", "The app uses a model documented for image input and Structured Outputs."),
+      messages: accepted("The app supplies its classification instruction and simulated post content."),
+      response_format: accepted("The app supplies the structured flags its board workflow reads."),
+    } },
+  },
+  "openai-lab-photo-explainer": {
+    "openai.create-response": { automatic: {
+      model: fixed("gpt-6-astra", "The app selects a model documented for image input."),
+      instructions: accepted("The app supplies its tutoring instruction; the student supplies a question and lab photo."),
+      input: accepted("The app combines the student's question with the simulated lab photo."),
+    } },
+    "openai.create-chat-completion": { automatic: {
+      model: fixed("gpt-6-astra", "The app selects a model documented for image input."),
+      messages: accepted("The app supplies its tutoring instruction, the student's question, and the simulated lab photo."),
+    } },
+  },
+  "openai-flashcard-similarity-index": {
+    "openai.create-embeddings": { automatic: {
+      input: supplied("The app supplies all card texts from the saved deck as one batch."),
+      model: fixed("text-embedding-3-small", "The app selects a documented embedding model; students do not need to memorize model IDs."),
+    } },
+  },
   "spotify-session-rewind-saver": {
     "spotify.get-recently-played": { assessed: ["limit"], numericOptions: { limit: [10, 20, 30, 50] } },
     "spotify.create-playlist": { assessed: ["public"], automatic: { name: fixed("Study Session Rewind", "Playlist name specified by the project") } },
@@ -270,6 +366,14 @@ export function classification(scenario, endpoint) {
 }
 export function automaticParameters(scenario, endpoint) {
   const result = {};
+  const symbolicize = (value) => {
+    if (Array.isArray(value)) return value.map(symbolicize);
+    if (value && typeof value === "object") {
+      if (Object.hasOwn(value, "$runtime")) return { $runtime: true };
+      return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, symbolicize(child)]));
+    }
+    return value;
+  };
   const acceptedValue = (path) => {
     for (const plan of scenario.acceptedPlans || []) for (const step of plan.steps || []) {
       if (step.endpointId !== endpoint.id) continue;
@@ -290,7 +394,10 @@ export function automaticParameters(scenario, endpoint) {
     }
   }
   for (const [path, spec] of Object.entries(presentation(scenario, endpoint).automatic || {})) {
-    const value = spec.kind === "runtime" ? (path.includes(".") ? acceptedValue(path) || { $runtime: true } : { $runtime: true }) : structuredClone(spec.value);
+    const value = spec.kind === "runtime" ? (path.includes(".") ? acceptedValue(path) || { $runtime: true } : { $runtime: true })
+      : spec.kind === "accepted" ? symbolicize(acceptedValue(path))
+        : structuredClone(spec.value);
+    if (value === undefined) continue;
     const keys = path.split("."); let node = result;
     for (const key of keys.slice(0, -1)) node = node[key] ||= {};
     node[keys.at(-1)] = value;
