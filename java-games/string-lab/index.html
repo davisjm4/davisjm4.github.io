@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="String Lab: practice Java String concatenation, length(), charAt(), substring() and indexOf() with endless procedurally generated challenges.">
+  <title>String Lab · Java Strings Practice</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#challenge">Skip to the challenge</a>
+
+  <header class="app-header">
+    <div class="titleblock">
+      <!-- Work: this relative link resolves to /cs-games/advanced/ when published at /java-games/string-lab/ -->
+      <a class="back-link" id="backLink" href="../../cs-games/advanced/">&larr; Advanced CS Games</a>
+      <h1>String Lab</h1>
+      <p class="sub">Predict what Java does with Strings, then see exactly why.</p>
+    </div>
+    <button type="button" id="summaryBtn" class="btn secondary" aria-haspopup="dialog">Session Summary</button>
+  </header>
+
+  <section class="controls" aria-label="Practice settings">
+    <fieldset class="seg" id="modeSet">
+      <legend>Practice mode</legend>
+      <div class="seg-row">
+        <label><input type="radio" name="mode" value="predict" checked><span>Predict the Output</span></label>
+        <label><input type="radio" name="mode" value="index"><span>Find the Index</span></label>
+        <label><input type="radio" name="mode" value="expr"><span>Complete the Expression</span></label>
+        <label><input type="radio" name="mode" value="trace"><span>Trace String Operations</span></label>
+        <label><input type="radio" name="mode" value="mixed"><span>Mixed Practice</span></label>
+      </div>
+    </fieldset>
+    <div class="controls-row">
+      <fieldset class="seg" id="diffSet">
+        <legend>Difficulty</legend>
+        <div class="seg-row">
+          <label><input type="radio" name="difficulty" value="beginner" checked><span>Beginner</span></label>
+          <label><input type="radio" name="difficulty" value="intermediate"><span>Intermediate</span></label>
+          <label><input type="radio" name="difficulty" value="advanced"><span>Advanced</span></label>
+        </div>
+      </fieldset>
+      <button type="button" id="newBtn" class="btn secondary">New Challenge</button>
+    </div>
+  </section>
+
+  <main id="challenge" class="card" aria-labelledby="promptText">
+    <div class="meta" id="meta"></div>
+
+    <h2 class="sr-only">Java code</h2>
+    <ol class="code" id="code" aria-label="Java code"></ol>
+
+    <p class="prompt" id="promptText" tabindex="-1"></p>
+
+    <form id="answerForm" novalidate>
+      <fieldset class="choices" id="choices">
+        <legend class="sr-only">Answer choices. Choose one, then check your answer.</legend>
+      </fieldset>
+      <div class="actions" id="actions">
+        <button type="submit" id="checkBtn" class="btn primary" disabled>Check Answer</button>
+        <button type="button" id="revealBtn" class="btn link">Show the answer</button>
+        <span class="hint" id="keyHint">Tip: press 1&ndash;4 to choose, Enter to check.</span>
+      </div>
+    </form>
+
+    <section id="feedback" class="feedback" hidden aria-live="polite"></section>
+  </main>
+
+  <dialog id="summaryDlg" aria-labelledby="summaryTitle">
+    <form method="dialog" class="dlg-inner">
+      <h2 id="summaryTitle">Session Summary</h2>
+      <div id="summaryBody"></div>
+      <div class="dlg-actions">
+        <button type="button" id="copyBtn" class="btn secondary">Copy summary data</button>
+        <button type="submit" class="btn primary" id="closeBtn">Close</button>
+      </div>
+      <p class="fine">Practice stays on this device; no account or sign-in is used. Teachers: see SESSION_INTEGRATION.md for the event interface.</p>
+    </form>
+  </dialog>
+
+  <div id="liveStatus" class="sr-only" role="status" aria-live="polite"></div>
+
+  <script src="js/rng.js"></script>
+  <script src="js/words.js"></script>
+  <script src="js/java-ast.js"></script>
+  <script src="js/evaluator.js"></script>
+  <script src="js/difficulty.js"></script>
+  <script src="js/distractors.js"></script>
+  <script src="js/gen-helpers.js"></script>
+  <script src="js/families-predict.js"></script>
+  <script src="js/families-trace.js"></script>
+  <script src="js/families-index.js"></script>
+  <script src="js/families-expression.js"></script>
+  <script src="js/generator.js"></script>
+  <script src="js/feedback.js"></script>
+  <script src="js/shared-session-bridge.js"></script>
+  <script src="js/session.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>
