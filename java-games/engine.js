@@ -4,7 +4,7 @@ import {
   shuffle,
 } from "../csp-games/engine.js?v=platform-expansion-v2";
 import { TYPES, scenarioFamilies } from "./variable-scenarios.js?v=variable-lab-v4";
-import { generateTrace } from "./variable-lab/trace-engine.js?v=trace-v1";
+import { generateTrace } from "./variable-lab/trace-engine.js?v=trace-v2";
 export const games = {
   "variable-lab": {
     name: "Variable Lab",
