@@ -57,6 +57,13 @@ function studentPlan(scenario, accepted, content = data, endpointLookup = map) {
     return { endpointId: step.endpointId, parameters, dependencies };
   }) };
 }
+function mergeApplicationValues(target, source) {
+  for (const [name, value] of Object.entries(source || {})) {
+    if (value && typeof value === "object" && !Array.isArray(value) && target[name] && typeof target[name] === "object" && !Array.isArray(target[name])) mergeApplicationValues(target[name], value);
+    else target[name] = structuredClone(value);
+  }
+  return target;
+}
 
 const runtimeIndex = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1-runtime-index.json", import.meta.url), "utf8"));
 const runtimeParts = runtimeIndex.runtimeParts.map((path) => JSON.parse(fs.readFileSync(new URL(`../${path.replace(/^\.\//, "")}`, import.meta.url), "utf8")));
@@ -769,12 +776,39 @@ for (const scenario of publishedScenarios) {
     assert.equal(result.correct, true, `${scenario.id}/${accepted.id}: accepted alternative remains valid`);
     assert.deepEqual(formativeDiagnostics(expandedData, scenario, result, represented.requests), [], `${scenario.id}/${accepted.id}: no false warning on success`);
     const html = requestHtml(represented.requests, expandedMap, scenario);
+    const controlsPlan = structuredClone(represented);
+    for (const step of accepted.steps) {
+      const endpoint = expandedMap.get(step.endpointId), groups = classification(scenario, endpoint);
+      for (const [name, value] of Object.entries(step.parameters || {})) {
+        const parameter = endpoint.parameters.find((entry) => entry.name === name);
+        const symbolic = refs(value).length > 0 || isRuntimeParameter(parameter || { name, in: "query" }, value);
+        assert.ok(groups.assessed.includes(name) || groups.automatic.includes(name) || symbolic,
+          `${scenario.id}/${endpoint.id}.${name}: accepted setting is assessed, application-handled, runtime-supplied, or a response dependency`);
+      }
+    }
     for (const request of represented.requests) {
       const endpoint = expandedMap.get(request.endpointId);
       for (const name of classification(scenario, endpoint).assessed) {
         assert.ok(html.includes(name), `${scenario.id}: assessed setting ${name} appears in rendered request controls`);
         renderedAssessedControls++;
       }
+    }
+    for (let requestIndex = 0; requestIndex < controlsPlan.requests.length; requestIndex++) {
+      const request = controlsPlan.requests[requestIndex];
+      const endpoint = expandedMap.get(request.endpointId);
+      mergeApplicationValues(request.parameters, automaticParameters(scenario, endpoint));
+      for (const name of classification(scenario, endpoint).assessed) {
+        if (Object.hasOwn(represented.requests[requestIndex].parameters, name)) request.parameters[name] = structuredClone(represented.requests[requestIndex].parameters[name]);
+      }
+    }
+    resolveRequestDependencies(scenario, controlsPlan.requests, expandedMap);
+    const controlsResult = validatePlan(expandedData, scenario, controlsPlan);
+    assert.equal(controlsResult.correct, true, `${scenario.id}/${accepted.id}: rendered-control and application-handled values construct a passing plan: ${JSON.stringify(controlsResult)}`);
+    assert.deepEqual(formativeDiagnostics(expandedData, scenario, controlsResult, controlsPlan.requests), [], `${scenario.id}/${accepted.id}: generated successful plan has no false diagnostic`);
+    const handoffHtml = requestHtml(controlsPlan.requests, expandedMap, scenario);
+    for (const request of controlsPlan.requests) {
+      const endpoint = expandedMap.get(request.endpointId);
+      if (Object.keys(automaticParameters(scenario, endpoint)).length) assert.match(handoffHtml, /Handled by the application/, `${scenario.id}: application-handled values are surfaced as read-only information`);
     }
     acceptedVariantsChecked++;
     if (!scenarioNearMissChecked) for (let index = represented.requests.length - 1; index >= 0; index--) {
