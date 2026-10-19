@@ -384,7 +384,7 @@ for (const id of mapsRepairIds) {
       const endpoint = expandedMap.get(request.endpointId), config = presentation(scenario, endpoint), groups = classification(scenario, endpoint);
       for (const name of groups.automatic) {
         const item = endpoint.parameters.find((parameter) => parameter.name === name);
-        assert.ok(requestHtml([request], expandedMap, scenario).includes("Handled by the application"), `${id}: app-handled settings are explained in the plan UI`);
+        assert.ok(requestHtml([request], expandedMap, scenario).includes("Handled by the Application"), `${id}: app-handled settings are explained in the plan UI`);
         if (name === "origins" || name === "destinations" || name === "origin" || name === "destination") {
           assert.deepEqual(request.parameters[name], { $runtime: true }, `${id}/${name}: app uses symbolic configured locations, not typed coordinates or IDs`);
         }
@@ -444,7 +444,7 @@ function representedTikTokPlan(scenario, accepted) {
       parameters[name] = serializeMultiSelection(parameter, [...needed]);
       tiktokRepairStats.assessedControls++;
     }
-    if (groups.automatic.length) assert.match(requestHtml([{ endpointId: step.endpointId, parameters, dependencies }], expandedMap, scenario), /Handled by the application/, `${scenario.id}/${step.endpointId}: automatic settings are explained`);
+    if (groups.automatic.length) assert.match(requestHtml([{ endpointId: step.endpointId, parameters, dependencies }], expandedMap, scenario), /Handled by the Application/, `${scenario.id}/${step.endpointId}: automatic settings are explained`);
     return { endpointId: step.endpointId, parameters, dependencies };
   }) };
 }
@@ -509,7 +509,7 @@ for (const id of openAiRepairIds) {
       const groups = classification(scenario, endpoint);
       assert.ok(groups.automatic.length > 0, `${id}/${endpoint.id}: application-handled fields have explanatory metadata`);
       const markup = requestHtml([{ endpointId: endpoint.id, parameters, dependencies: {} }], expandedMap, scenario);
-      assert.match(markup, /Handled by the application/, `${id}/${endpoint.id}: handled values are disclosed in the student UI`);
+      assert.match(markup, /Handled by the Application/, `${id}/${endpoint.id}: handled values are disclosed in the student UI`);
       for (const name of groups.automatic) {
         assert.ok(Object.hasOwn(parameters, name), `${id}/${endpoint.id}.${name}: automatic value is serialized`);
         assert.doesNotMatch(markup, new RegExp(`data-param="${name}"|data-structured="${name}"`), `${id}/${endpoint.id}.${name}: technical payload is not an editable student field`);
@@ -650,7 +650,7 @@ assert.equal(automaticParameters(data.scenarios.find((s) => s.id === "youtube-st
 assert.equal(automaticParameters(data.scenarios.find((s) => s.id === "youtube-study-video-finder"), map.get("youtube.search-list")).part, "snippet");
 assert.ok(!presentation(data.scenarios.find((s) => s.id === "youtube-study-video-finder"), map.get("youtube.search-list")).automatic.regionCode, "irrelevant optional region filter remains hidden in unrelated projects");
 assert.match(uiSource, /Full Technical Documentation/);
-assert.match(uiSource, /Handled by the application/);
+assert.match(uiSource, /Handled by the Application/);
 assert.match(uiSource, /Learning-focused extract/);
 
 for (const scenario of data.scenarios) {
@@ -808,7 +808,7 @@ for (const scenario of publishedScenarios) {
     const handoffHtml = requestHtml(controlsPlan.requests, expandedMap, scenario);
     for (const request of controlsPlan.requests) {
       const endpoint = expandedMap.get(request.endpointId);
-      if (Object.keys(automaticParameters(scenario, endpoint)).length) assert.match(handoffHtml, /Handled by the application/, `${scenario.id}: application-handled values are surfaced as read-only information`);
+      if (Object.keys(automaticParameters(scenario, endpoint)).length) assert.match(handoffHtml, /Handled by the Application/, `${scenario.id}: application-handled values are surfaced as read-only information`);
     }
     acceptedVariantsChecked++;
     if (!scenarioNearMissChecked) for (let index = represented.requests.length - 1; index >= 0; index--) {

@@ -1,5 +1,5 @@
 /* API Project Builder: schema-v1 content adapter, normalizer, and scorer. */
-import { presentation, classification } from "./api-project-presentation.js";
+import { presentation, classification, scenarioDifficulty } from "./api-project-presentation.js";
 export const GAME_ID = "documentation-lab";
 export const MODE_ID = "api-builder";
 export const MODE_TITLE = "API Project Builder";
@@ -61,7 +61,35 @@ export function isProductionContent(data) { return !data?.developmentOnly && dat
 export function endpointMap(data) { return new Map(data.providers.flatMap((p) => p.endpoints.map((e) => [e.id, e]))); }
 export function endpointsFor(data, scenario) { const map = endpointMap(data); return scenario.availableEndpointIds.map((id) => map.get(id)).filter(Boolean); }
 export function providerFor(data, scenario) { return data.providers.find((p) => p.id === scenario.providerId); }
-export function createScenarioPicker(data, rng = Math.random) { assertValid(data); const seen = new Map(); return (providerId = "all") => { let bag = seen.get(providerId) || []; const pool = data.scenarios.filter((s) => (s.stage1Compatible === undefined || (s.stage1Compatible === true && !(s.engineSupportRequired || []).length)) && (providerId === "all" || s.providerId === providerId)); if (!pool.length) return null; const last = seen.get(`${providerId}:last`), lastScenario = pool.find((s) => s.id === last); if (!bag.length) { bag = pool.slice(); for (let i = bag.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [bag[i], bag[j]] = [bag[j], bag[i]]; } if (bag.length > 1 && lastScenario) { const equivalent = (s) => s.scenarioTemplateId && s.scenarioTemplateId === lastScenario.scenarioTemplateId || s.reasoningFamily && s.reasoningFamily === lastScenario.reasoningFamily; const ix = bag.findIndex(equivalent); if (ix >= 0 && ix === bag.length - 1) [bag[0], bag[ix]] = [bag[ix], bag[0]]; } } let ix = bag.length - 1; if (bag.length > 1 && lastScenario) { const equivalent = (s) => s.scenarioTemplateId && s.scenarioTemplateId === lastScenario.scenarioTemplateId || s.reasoningFamily && s.reasoningFamily === lastScenario.reasoningFamily; const safe = bag.findIndex((s) => !equivalent(s)); if (safe >= 0) ix = safe; } const result = bag.splice(ix, 1)[0]; seen.set(providerId, bag); seen.set(`${providerId}:last`, result.id); return copy(result); }; }
+export function createScenarioPicker(data, rng = Math.random) {
+  assertValid(data);
+  const queues = new Map(), lastByFilter = new Map();
+  return (providerId = "all", difficulty = "mixed") => {
+    const key = `${providerId}|${difficulty}`;
+    const eligible = data.scenarios.filter((scenario) =>
+      (scenario.stage1Compatible === undefined || (scenario.stage1Compatible === true && !(scenario.engineSupportRequired || []).length)) &&
+      (providerId === "all" || scenario.providerId === providerId) &&
+      (difficulty === "mixed" || scenarioDifficulty(scenario) === difficulty));
+    if (!eligible.length) return null;
+    let queue = queues.get(key) || [];
+    if (!queue.length) {
+      queue = eligible.slice();
+      for (let i = queue.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [queue[i], queue[j]] = [queue[j], queue[i]];
+      }
+      const lastId = lastByFilter.get(key);
+      if (queue.length > 1 && queue.at(-1).id === lastId) {
+        const j = Math.floor(rng() * (queue.length - 1));
+        [queue[j], queue[queue.length - 1]] = [queue[queue.length - 1], queue[j]];
+      }
+    }
+    const selected = queue.pop();
+    queues.set(key, queue);
+    lastByFilter.set(key, selected.id);
+    return copy(selected);
+  };
+}
 
 export function isRuntimeParameter(parameter, value) { return (obj(value) && "$runtime" in value) || (parameter.in === "path" && !parameter.allowedValues?.length) || (obj(value) && "$fromStep" in value) || /(^id$|id$|_id$|^forhandle$|^forusername$|^name$)/i.test(parameter.name) && parameter.allowedValues == null; }
 const valueAt = (o, path) => path.split(".").reduce((v, k) => v?.[k], o);

@@ -20,3 +20,4 @@
 
 /* Author button layouts must not override intentionally hidden controls. */
 [hidden] { display: none !important; }
+.session-reflection { white-space: pre-wrap; overflow-wrap: anywhere; max-width: 48ch; margin: 6px 0; padding: 8px; border-left: 2px solid #75d7bd; background: #102438; color: #eff6fb; }

@@ -1,5 +1,5 @@
 import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v19-feedback";
-import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v14-step4-metadata";
+import { presentation, classification, automaticParameters, scenarioDifficulty } from "./api-project-presentation.js?v=curated-v15-step6";
 import { buildRequestFlowModel, requestFlowContentHtml } from "./api-project-request-flow.js?v=api-request-flow-v1";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
@@ -358,22 +358,112 @@ function controlsFor(p, request, index, requests, scenario, map) {
   else control = `<input data-param="${esc(p.name)}" type="${["integer","number"].includes(p.type) ? "number" : "text"}"${["integer","number"].includes(p.type) ? ` step="${p.type === "integer" ? "1" : "any"}"` : ""}${p.minimum != null ? ` min="${p.minimum}"` : ""}${p.maximum != null ? ` max="${p.maximum}"` : ""} value="${esc(Array.isArray(current) ? current.join(", ") : current)}" placeholder="${p.type === "array<string>" ? "Separate values with commas" : p.required ? "Required choice" : "Optional"}">`;
   return `<label class="api-param"><span>${esc(p.name)} ${p.required ? "<b>required</b>" : "<i>optional</i>"} <small>${esc(p.in)} · ${esc(p.type)}</small></span>${control}<em>${esc(p.description)}</em></label>`;
 }
+const PARAMETER_LABELS = { model: "Model", messages: "Application instructions and content", input: "Application input", file: "Simulated file", purpose: "File purpose", fields: "Requested information", filters: "Video selection", query: "Search text", q: "Search text", limit: "Result limit", maxResults: "Result limit", maxResultsPerPage: "Result limit", privacyStatus: "Playlist visibility", public: "Playlist visibility", origin: "Starting location", destination: "Destination", textQuery: "Search text", locationBias: "Search area", locationRestriction: "Search boundary", sessionToken: "Autocomplete session", "X-Goog-FieldMask": "Requested place information", part: "Resource information", type: "Resource type", videoDuration: "Video length filter", order: "Result order", videoCategoryId: "Video category", source_info: "Video source", post_info: "Post settings", response_format: "Response format", store: "Response retention" };
+const displayParameter = (name) => PARAMETER_LABELS[name] || name.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/[_-]+/g, " ").replace(/^./, (c) => c.toUpperCase());
+function handledSettingLines(scenario, endpoint) {
+  const config = presentation(scenario, endpoint), groups = classification(scenario, endpoint), automatic = config.automatic || {}, grouped = new Map();
+  for (const [path, spec] of Object.entries(automatic)) {
+    if (groups.assessed.includes(path)) continue;
+    if (/credential|authorization|api.?key/i.test(path)) continue;
+    const rootName = path.split(".")[0];
+    if (groups.assessed.includes(rootName) && path === rootName) continue;
+    const line = String(spec?.reason || (spec?.kind === "runtime" ? "Provided by the application at run time." : "Supplied automatically for this project."));
+    const bucket = grouped.get(rootName) || [];
+    if (!bucket.some((item) => item.reason === line)) bucket.push({ path, reason: line });
+    grouped.set(rootName, bucket);
+  }
+  for (const name of groups.automatic) {
+    if (groups.assessed.includes(name) || grouped.has(name) || /credential|authorization|api.?key/i.test(name)) continue;
+    grouped.set(name, [{ path: name, reason: "The app supplies this required technical setting automatically." }]);
+  }
+  return [...grouped.entries()].slice(0, 4).map(([rootName, entries]) => {
+    const label = displayParameter(rootName), descriptions = entries.map(({ path, reason }) => {
+      const friendly = path === rootName ? "" : `${displayParameter(path.split(".").at(-1))}: `;
+      return `${friendly}${reason}`;
+    });
+    return { label, descriptions };
+  });
+}
+function applicationHandledHtml(scenario, endpoint) {
+  const lines = handledSettingLines(scenario, endpoint);
+  if (!lines.length) return "";
+  return `<details class="api-handled"><summary>Handled by the Application</summary><ul>${lines.map((item) => `<li><strong>${esc(item.label)}:</strong> ${item.descriptions.map(esc).join(" ")}</li>`).join("")}</ul></details>`;
+}
 function requestHtml(requests, map, scenario) {
   if (!requests.length) return `<p class="muted">No requests yet. Add an operation from the documentation above.</p>`;
-  return requests.map((r, i) => { const e = map.get(r.endpointId), groups = classification(scenario, e), config = presentation(scenario, e);
-    const auto = groups.automatic.filter((name) => !groups.assessed.includes(name)).map((name) => { const spec = Object.entries(config.automatic || {}).find(([path]) => path === name || path.startsWith(`${name}.`))?.[1]; return `<li><code>${esc(name)}</code> — ${esc(spec?.reason || (spec?.kind === "runtime" ? "Supplied at run time by the application" : "Required documented setting"))}</li>`; }).join("");
-    return `<article class="api-request" data-request="${i}"><div class="api-request-head"><span class="api-step">${i + 1}</span><div><strong>${method(e)} ${esc(e.path)}</strong><small>${esc(e.title)}</small></div><button type="button" class="secondary api-remove" data-remove="${i}">Remove Request</button></div><div class="api-request-params">${e.parameters.filter((p) => groups.assessed.includes(p.name)).map((p) => controlsFor(p, r, i, requests, scenario, map)).join("") || `<p class="muted">No settings to choose for this request.</p>`}</div>${auto ? `<details class="api-handled"><summary>Handled by the application</summary><ul>${auto}</ul></details>` : ""}</article>`; }).join("");
+  return requests.map((r, i) => { const e = map.get(r.endpointId), groups = classification(scenario, e);
+    return `<article class="api-request" data-request="${i}"><div class="api-request-head"><span class="api-step">${i + 1}</span><div><strong>${method(e)} ${esc(e.path)}</strong><small>${esc(e.title)}</small></div><button type="button" class="secondary api-remove" data-remove="${i}">Remove Request</button></div><div class="api-request-params">${e.parameters.filter((p) => groups.assessed.includes(p.name)).map((p) => controlsFor(p, r, i, requests, scenario, map)).join("") || `<p class="muted">No settings to choose for this request.</p>`}</div>${applicationHandledHtml(scenario, e)}</article>`; }).join("");
 }
-function readablePlan(plan, map) {
-  const find = (value, out = []) => { if (object(value) && "$fromStep" in value) out.push(value); else if (object(value)) Object.values(value).forEach((v) => find(v, out)); else if (Array.isArray(value)) value.forEach((v) => find(v, out)); return out; };
-  return `<div class="api-readable-plan">${plan.steps.map((s, i) => { const e = map.get(s.endpointId), runtime = [], settings = [], fields = [], deps = []; for (const [name, v] of Object.entries(s.parameters)) { const p = e.parameters.find((x) => x.name === name), refs = find(v); if (refs.length) deps.push(`${name} comes from ${refs.map((ref) => ref.path).join(", ")} in an earlier response`); else if (p?.name === "X-Goog-FieldMask" || p?.name === "fields") fields.push(...String(v).split(",").map((x) => x.trim())); else if (p && runtimeParam(p)) runtime.push(name); else settings.push(`${name}: ${typeof v === "object" ? JSON.stringify(v) : v}`); } return `<article class="api-readable-request"><h4>Request ${i + 1} — ${esc(e.title)}</h4><p><strong>Method:</strong> ${esc(e.method)} <code>${esc(e.path)}</code></p>${s.purpose ? `<p><strong>Purpose:</strong> ${esc(s.purpose)}</p>` : ""}${runtime.length ? `<p><strong>Runtime inputs:</strong> ${runtime.map(esc).join(", ")} supplied by the application.</p>` : ""}${settings.length ? `<p><strong>Application settings:</strong> ${settings.map(esc).join(" · ")}</p>` : ""}${fields.length ? `<p><strong>Information requested:</strong> ${fields.map((x) => `<code>${esc(x)}</code>`).join(", ")}</p>` : ""}${deps.length ? `<p><strong>Dependencies:</strong> ${deps.map(esc).join("; ")}.</p>` : ""}<p><strong>Why this request is needed:</strong> It provides documented response data used by the application.</p><details class="api-technical-preview"><summary>View Actual API Request</summary><pre>${esc(JSON.stringify({ method: e.method, path: e.path, parameters: s.parameters }, null, 2))}</pre></details></article>`; }).join("")}</div>`;
+function responseDescription(endpoint, path) {
+  return endpoint.responseFields.find((field) => field.path === path || field.path.replace(/\[\]/g, "") === String(path).replace(/\[\]/g, ""))?.description?.replace(/[.]$/, "") || pathLabel(path);
+}
+function sourceFieldLabel(scenario, endpoint, parameter, path) {
+  const curated = presentation(scenario, endpoint).sourceChoices?.[parameter]?.find((choice) => choice.path === path)?.label;
+  return curated || responseDescription(endpoint, path);
+}
+function readableValue(scenario, endpoint, name, value) {
+  const config = presentation(scenario, endpoint), p = endpoint.parameters.find((item) => item.name === name);
+  if (name === "X-Goog-FieldMask" || name === "fields") return String(value).split(",").map((path) => responseDescription(endpoint, path.trim())).join(", ");
+  const options = config.multiOptions?.[name] || [];
+  if (options.length && Array.isArray(value)) return value.map((item) => options.find((option) => option.value === item)?.label || item).join(", ");
+  const choiceGroups = [config.numericOptions?.[name], config.arrayOptions?.[name], config.valueChoices?.[name]].filter(Array.isArray).flat();
+  const chosen = choiceGroups.find((option) => JSON.stringify(option.value) === JSON.stringify(value));
+  if (chosen?.label) return chosen.label;
+  if (Array.isArray(value)) return value.map((item) => VALUE_DESCRIPTIONS[name]?.[item] || item).join(", ");
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (typeof value === "string" || typeof value === "number") return VALUE_DESCRIPTIONS[name]?.[value] || (p?.allowedValues?.length && VALUE_DESCRIPTIONS[name]?.[value]) || String(value);
+  return "Supplied by the application for this project.";
+}
+function acceptedToStudentRequests(plan) {
+  return plan.steps.map((step, index) => {
+    const request = { endpointId: step.endpointId, parameters: {}, dependencies: {} };
+    for (const [name, value] of Object.entries(step.parameters || {})) {
+      const refs = findReferences(value);
+      if (!refs.length) { request.parameters[name] = structuredClone(value); continue; }
+      const grouped = new Map();
+      for (const ref of refs) {
+        const sourceIndex = plan.steps.findIndex((candidate) => candidate.step === ref.$fromStep);
+        const paths = grouped.get(sourceIndex) || [];
+        if (!paths.includes(ref.path)) paths.push(ref.path);
+        grouped.set(sourceIndex, paths);
+      }
+      const bindings = [...grouped].map(([fromRequest, paths]) => ({ fromRequest, paths }));
+      request.dependencies[name] = { source: "request", fromRequest: bindings[0]?.fromRequest ?? null, paths: bindings[0]?.paths || [], ...(bindings.length > 1 ? { bindings } : {}) };
+      request.parameters[name] = { $runtime: true };
+    }
+    return request;
+  });
+}
+export function readablePlan(scenario, plan, data) {
+  const map = endpointMap(data), steps = plan.steps || [];
+  const requests = acceptedToStudentRequests(plan), flow = requestFlowContentHtml(buildRequestFlowModel(scenario, requests, map));
+  const reasonedMistakes = (scenario.rejectedPlans || []).map((item) => item.reason).filter(Boolean).slice(0, 2).map((reason) => reason.length > 210 ? `${reason.slice(0, 207).trimEnd()}…` : reason);
+  return `<section class="api-solution-explanation"><h3>Why the application needs these requests</h3><p>${esc(scenario.explanation.summary)}</p><p>${scenario.explanation.keyIdeas.slice(0, 2).map(esc).join(" ")}</p></section><div class="api-readable-plan">${steps.map((step, i) => {
+    const endpoint = map.get(step.endpointId), config = presentation(scenario, endpoint), groups = classification(scenario, endpoint), incoming = [], outgoing = [], decisions = [];
+    for (const [name, value] of Object.entries(step.parameters || {})) {
+      const refs = findReferences(value);
+      if (refs.length) for (const ref of refs) {
+        const sourceStep = steps.find((candidate) => candidate.step === ref.$fromStep), sourceEndpoint = sourceStep && map.get(sourceStep.endpointId);
+        if (sourceStep && sourceEndpoint) incoming.push(`${sourceFieldLabel(scenario, sourceEndpoint, name, ref.path)} from Request ${steps.indexOf(sourceStep) + 1}`);
+      }
+      else if (groups.assessed.includes(name)) decisions.push(`${displayParameter(name)}: ${readableValue(scenario, endpoint, name, value)}`);
+    }
+    for (let later = i + 1; later < steps.length; later++) for (const [name, value] of Object.entries(steps[later].parameters || {})) for (const ref of findReferences(value)) if (ref.$fromStep === step.step) outgoing.push(`${sourceFieldLabel(scenario, endpoint, name, ref.path)} is used by Request ${later + 1}`);
+    const purpose = step.purpose || endpoint.description.split(/(?<=[.!?])\s+/)[0];
+    const provided = (config.fields || []).slice(0, 4).map((path) => responseDescription(endpoint, path));
+    const auto = applicationHandledHtml(scenario, endpoint);
+    return `<article class="api-readable-request"><h4>Request ${i + 1} — ${esc(endpoint.title)}</h4><p><strong>Purpose:</strong> ${esc(purpose)}</p>${incoming.length ? `<p><strong>Uses information from:</strong> ${incoming.map(esc).join("; ")}.</p>` : ""}${decisions.length ? `<p><strong>Important application decisions:</strong> ${decisions.map(esc).join(" · ")}</p>` : ""}${provided.length ? `<p><strong>Relevant information returned:</strong> ${provided.map(esc).join("; ")}.</p>` : ""}${outgoing.length ? `<p><strong>Provides to later requests:</strong> ${outgoing.map(esc).join("; ")}.</p>` : ""}${auto}</article>`;
+  }).join("")}</div><details class="api-solution-connections"><summary>See how the requests connect</summary>${flow}</details>${reasonedMistakes.length ? `<details class="api-common-mistakes"><summary>Common misconceptions</summary><ul>${reasonedMistakes.map((reason) => `<li>${esc(reason)}</li>`).join("")}</ul></details>` : ""}<details class="api-technical-preview"><summary>Technical details</summary>${steps.map((step, i) => `<details><summary>Request ${i + 1} parameters</summary><pre>${esc(JSON.stringify(step.parameters, null, 2))}</pre></details>`).join("")}</details>`;
 }
 function feedbackHtml(result, scenario, diagnostics, attempts) {
-  if (result.correct) return `<strong>✓ Project Complete</strong><p>Solved in ${attempts} ${attempts === 1 ? "check" : "checks"}. ${esc(result.efficient ? "Your plan meets the project requirements." : "Your plan works; a simpler plan may also meet the requirements.")}</p><p class="api-explanation"><strong>Why it works:</strong> ${esc(scenario.explanation.summary)} ${scenario.explanation.keyIdeas.map(esc).join(" ")}</p><p class="muted">Your completed request plan remains above for review.</p>`;
+  if (result.correct) return `<strong>✓ Project Complete</strong><p>Solved in ${attempts} ${attempts === 1 ? "check" : "checks"}. ${esc(result.efficient ? "Your plan meets the project requirements." : "Your plan works; a simpler plan may also meet the requirements.")}</p><p class="api-explanation"><strong>Why it works:</strong> ${esc(scenario.explanation.summary)} ${scenario.explanation.keyIdeas.map(esc).join(" ")}</p><p class="muted">Your completed request plan remains above for review.</p>${reflectionHtml()}`;
   return `<strong>Needs Revision · Attempt ${attempts}</strong><ul class="api-review">${diagnostics.map((d) => `<li class="api-feedback-issue">${d.heading ? `<strong class="api-feedback-heading">${esc(d.heading)}</strong>` : ""}<p>${esc(d.message)}</p>${d.review ? `<p><strong>What to check:</strong> ${esc(d.review)}</p>` : ""}</li>`).join("")}</ul>`;
 }
+function reflectionHtml() {
+  return `<details class="api-reflection"><summary>Explain Your Plan (Optional)</summary><label for="api-reflection-text">What information does your application get from its API requests, and how does it use that information?</label><p class="api-reflection-starter">Sentence starter: “First, the app needs to ___ so that it can ___.”</p><textarea id="api-reflection-text" rows="3" maxlength="800" placeholder="Write a short explanation…"></textarea><p class="muted">Optional · not graded. Saved only in this browser.</p></details>`;
+}
 export function mount({ root, controls, tracker }) {
-  const state = { stopped: false, data: null, scenario: null, plan: [], picker: null, instance: null, closed: false, providerId: "all", attempts: 0, hintsShown: 0, hintIssueId: null, lastResult: null };
+  const state = { stopped: false, data: null, scenario: null, plan: [], picker: null, instance: null, closed: false, providerId: "all", difficulty: "mixed", attempts: 0, hintsShown: 0, hintIssueId: null, lastResult: null, introDismissed: false, introShown: false };
   const set = (id, html) => { const el = root.querySelector(`#${id}`); if (el) el.innerHTML = html; };
   const stat = () => { const el = document.getElementById("stats"); if (el && controls.roundSummary) el.textContent = controls.roundSummary(); };
   const clearStaleFeedback = () => { if (state.lastResult) { state.lastResult = null; const feedback = document.getElementById("feedback"); feedback.hidden = true; feedback.innerHTML = ""; } const hint = root.querySelector("#api-hint-text"); if (hint) hint.textContent = ""; };
@@ -391,9 +481,21 @@ export function mount({ root, controls, tracker }) {
   const updateHintButton = () => { const button = root.querySelector("#api-get-hint"); if (!button) return; const issue = diagnosticsForCurrentPlan()[0]; button.hidden = state.closed || !issue || !issue.hints?.length || state.hintsShown >= Math.min(3, issue.hints.length); };
   const showActionButtons = () => { controls.submit.textContent = "Check My Plan"; controls.show.textContent = "Show Answer"; controls.show.hidden = false; controls.show.disabled = false; controls.skip.textContent = "Skip"; controls.skip.hidden = false; controls.nextButton.textContent = "Next Project →"; controls.nextButton.hidden = true; controls.submit.hidden = false; controls.submit.disabled = false; controls.skip.disabled = false; };
   const renderBrief = () => {
-    const s = state.scenario, p = providerFor(state.data, s);
+    const s = state.scenario;
+    if (!s) { set("blocks", `<section class="api-project-goal"><h2>No projects match these filters</h2><p>Choose a different provider or difficulty to continue.</p></section>`); return; }
+    const p = providerFor(state.data, s), difficultyName = state.difficulty === "mixed" ? scenarioDifficulty(s) : state.difficulty;
     const constraints = s.constraints.map(studentConstraint).filter(Boolean);
-    set("blocks", `<section class="api-project-goal"><h2>${esc(s.title)}</h2><h3>Goal</h3><p>${esc(studentGoal(s))}</p><h3>Required information</h3><ul>${s.requirements.map((r) => `<li>${esc(studentRequirement(s, r))}</li>`).join("")}</ul><h3>Constraints</h3><ul>${constraints.map((c) => `<li>${esc(c)}</li>`).join("")}</ul><p class="api-provider"><strong>Provider:</strong> ${esc(p.name)} · <a href="${esc(p.documentationUrl)}" target="_blank" rel="noreferrer">Official API documentation ↗</a></p>${HTTP_REFERENCE}</section>`);
+    const intro = state.introDismissed || state.introShown ? "" : `<aside class="api-first-use" id="api-first-use"><button class="api-intro-dismiss secondary" type="button" aria-label="Dismiss API Project Builder introduction">Dismiss</button><p><strong>Choose API requests.</strong> Decide which operations your application would need.</p><p><strong>Connect information.</strong> Some requests use data returned by earlier requests.</p><p><strong>Check and improve.</strong> Submit your plan, review feedback, and revise it.</p><p>You're designing a request plan, not building a working app. This is a simulation—no code, account, or API key is required.</p></aside>`;
+    if (intro) {
+      state.introShown = true;
+      try { globalThis.localStorage?.setItem("doclab.apiProjectBuilder.introDismissed.v1", "true"); } catch {}
+    }
+    set("blocks", `${intro}<section class="api-project-goal"><h2>${esc(s.title)}</h2><p class="api-difficulty">Difficulty: <strong>${esc(difficultyName[0].toUpperCase() + difficultyName.slice(1))}</strong></p><h3>Goal</h3><p>${esc(studentGoal(s))}</p><h3>Required information</h3><ul>${s.requirements.map((r) => `<li>${esc(studentRequirement(s, r))}</li>`).join("")}</ul><h3>Constraints</h3><ul>${constraints.map((c) => `<li>${esc(c)}</li>`).join("")}</ul><p class="api-provider"><strong>Provider:</strong> ${esc(p.name)} · <a href="${esc(p.documentationUrl)}" target="_blank" rel="noreferrer">Official API documentation ↗</a></p>${HTTP_REFERENCE}</section>`);
+    root.querySelector(".api-intro-dismiss")?.addEventListener("click", () => {
+      state.introDismissed = true;
+      try { globalThis.localStorage?.setItem("doclab.apiProjectBuilder.introDismissed.v1", "true"); } catch {}
+      root.querySelector("#api-first-use")?.remove();
+    });
   };
   const refreshRequestFlow = () => {
     const target = root.querySelector("#api-request-flow-content");
@@ -401,6 +503,7 @@ export function mount({ root, controls, tracker }) {
     target.innerHTML = requestFlowContentHtml(buildRequestFlowModel(state.scenario, state.plan, endpointMap(state.data)));
   };
   const renderPlan = () => {
+    if (!state.scenario) { set("interaction", `<section class="api-plan"><h2>My Request Plan</h2><p class="muted">Choose filters that include an enabled project to begin.</p></section>`); return; }
     const map = endpointMap(state.data);
     resolveRequestDependencies(state.scenario, state.plan, map);
     const flowModel = buildRequestFlowModel(state.scenario, state.plan, map);
@@ -444,11 +547,14 @@ export function mount({ root, controls, tracker }) {
     updateHintButton();
   };
   const renderDocs = (query = "") => {
-    const s = state.scenario, p = providerFor(state.data, s), endpoints = endpointsFor(state.data, s).filter((e) => `${e.title} ${e.path} ${e.description} ${e.method}`.toLowerCase().includes(query.toLowerCase()));
-    const filters = `<label class="api-provider-filter">Projects <select id="api-provider-filter"><option value="all">All Projects</option>${state.data.providers.map((v) => `<option value="${esc(v.id)}"${v.id === state.providerId ? " selected" : ""}>${esc(v.name)}</option>`).join("")}</select></label>`;
-    set("docs", `<section class="api-docs-browser"><div class="api-docs-head"><div><h2>Browse API Documentation</h2><p class="muted">Read the learning-focused reference and select the operations your application needs.</p></div><div class="api-browse-controls">${filters}<label class="api-search">Search endpoints <input id="api-search" type="search" placeholder="Search title, path, or description" value="${esc(query)}"></label></div></div><div class="api-entry-list">${endpoints.map((e) => docsHtml(e, p, s)).join("") || `<p class="muted">No matching endpoints. Try another search.</p>`}</div></section>`);
+    const s = state.scenario, p = s ? providerFor(state.data, s) : null, endpoints = s ? endpointsFor(state.data, s).filter((e) => `${e.title} ${e.path} ${e.description} ${e.method}`.toLowerCase().includes(query.toLowerCase())) : [];
+    const providers = `<label class="api-provider-filter">Projects <select id="api-provider-filter"><option value="all">All Projects</option>${state.data.providers.map((v) => `<option value="${esc(v.id)}"${v.id === state.providerId ? " selected" : ""}>${esc(v.name)}</option>`).join("")}</select></label>`;
+    const difficulties = `<label class="api-provider-filter">Difficulty <select id="api-difficulty-filter"><option value="mixed"${state.difficulty === "mixed" ? " selected" : ""}>Mixed Practice</option><option value="beginner"${state.difficulty === "beginner" ? " selected" : ""}>Beginner</option><option value="intermediate"${state.difficulty === "intermediate" ? " selected" : ""}>Intermediate</option><option value="advanced"${state.difficulty === "advanced" ? " selected" : ""}>Advanced</option></select></label>`;
+    const emptyMessage = !s ? `No enabled projects match ${state.providerId === "all" ? "all providers" : "this provider"} at ${state.difficulty === "mixed" ? "Mixed Practice" : `${state.difficulty[0].toUpperCase()}${state.difficulty.slice(1)}`} difficulty. Choose another filter combination.` : "No matching endpoints. Try another search.";
+    set("docs", `<section class="api-docs-browser"><div class="api-docs-head"><div><h2>Browse API Documentation</h2><p class="muted">Read the learning-focused reference and select the operations your application needs.</p></div><div class="api-browse-controls">${providers}${difficulties}<label class="api-search">Search endpoints <input id="api-search" type="search" placeholder="Search title, path, or description" value="${esc(query)}"></label></div></div><div class="api-entry-list">${endpoints.map((e) => docsHtml(e, p, s)).join("") || `<p class="muted api-filter-empty" role="status">${esc(emptyMessage)}</p>`}</div></section>`);
     const search = root.querySelector("#api-search"); search.oninput = () => { const query = search.value; renderDocs(query); const restored = root.querySelector("#api-search"); restored.focus(); restored.setSelectionRange(query.length, query.length); };
     root.querySelector("#api-provider-filter").onchange = (event) => { state.providerId = event.target.value; nextChallenge(); };
+    root.querySelector("#api-difficulty-filter").onchange = (event) => { state.difficulty = event.target.value; nextChallenge(); };
     for (const b of root.querySelectorAll("[data-add]")) b.onclick = () => { const endpointId = b.dataset.add; state.plan.push({ endpointId, parameters: automaticParameters(s, endpointMap(state.data).get(endpointId)), dependencies: {} }); state.lastAddedEndpoint = endpointId; touch(); renderPlan(); root.querySelector("#interaction")?.scrollIntoView({ block: "start", behavior: "smooth" }); };
   };
   const finish = (result, revealed = false) => {
@@ -456,7 +562,12 @@ export function mount({ root, controls, tracker }) {
     root.querySelectorAll("input,select,button").forEach((b) => { b.disabled = true; });
     const feedback = document.getElementById("feedback"); feedback.hidden = false; feedback.setAttribute("aria-live", "polite"); feedback.setAttribute("aria-atomic", "true");
     feedback.className = `feedback dl-feedback ${result.correct ? "good" : "shown"}`;
-    feedback.innerHTML = revealed ? `<strong>Project revealed · ${state.attempts} ${state.attempts === 1 ? "check" : "checks"}</strong><p>${esc(state.scenario.explanation.summary)} ${state.scenario.explanation.keyIdeas.map(esc).join(" ")}</p><details class="api-solution" open><summary>A valid request plan</summary>${readablePlan(preferredPlan(state.scenario), endpointMap(state.data))}</details><p class="muted dl-small">Recorded as revealed, not independently completed.</p>` : feedbackHtml(result, state.scenario, formativeDiagnostics(state.data, state.scenario, result, state.plan), state.attempts);
+    feedback.innerHTML = revealed ? `<strong>Project revealed · ${state.attempts} ${state.attempts === 1 ? "check" : "checks"}</strong><details class="api-solution" open><summary>How a valid request plan works</summary>${readablePlan(state.scenario, preferredPlan(state.scenario), state.data)}</details><p class="muted dl-small">Recorded as revealed, not independently completed.</p>${reflectionHtml()}` : feedbackHtml(result, state.scenario, formativeDiagnostics(state.data, state.scenario, result, state.plan), state.attempts);
+    const reflection = feedback.querySelector("#api-reflection-text");
+    if (reflection) {
+      reflection.value = tracker.snapshot().records[state.instance]?.details?.apiProjectReflection || "";
+      reflection.addEventListener("input", () => tracker.annotate(state.instance, { apiProjectReflection: reflection.value }));
+    }
     controls.submit.hidden = true; controls.show.hidden = true; controls.skip.hidden = true; controls.nextButton.textContent = "Next Project →"; controls.nextButton.hidden = false; controls.nextButton.disabled = false; controls.nextButton.focus({ preventScroll: true }); stat();
   };
   const submit = () => {
@@ -480,7 +591,13 @@ export function mount({ root, controls, tracker }) {
   const nextChallenge = () => {
     if (state.stopped) return;
     if (state.instance && tracker.status(state.instance) === "active") tracker.skip(state.instance);
-    state.scenario = state.picker(state.providerId); if (!state.scenario) return;
+    state.scenario = state.picker(state.providerId, state.difficulty);
+    if (!state.scenario) {
+      state.plan = []; state.instance = null; state.closed = false; state.attempts = 0; state.lastResult = null;
+      document.getElementById("stage").dataset.mode = "api-builder";
+      const feedback = document.getElementById("feedback"); feedback.hidden = true; feedback.innerHTML = "";
+      renderBrief(); renderDocs(); renderPlan(); controls.submit.hidden = true; controls.show.hidden = true; controls.skip.hidden = true; controls.nextButton.hidden = true; stat(); return;
+    }
     state.plan = []; state.lastAddedEndpoint = null; state.closed = false; state.attempts = 0; state.hintsShown = 0; state.hintIssueId = null; state.lastResult = null; state.instance = tracker.begin("documentation-lab", "Documentation Lab", `api-project/${state.scenario.id}`, state.scenario.title);
     document.getElementById("mode-label").textContent = ""; document.getElementById("family").textContent = "";
     document.getElementById("instructions").textContent = "Read the API documentation and select the requests your application needs.";
@@ -495,7 +612,9 @@ export function mount({ root, controls, tracker }) {
       if (state.stopped) return;
       if (!isProductionContent(state.data)) { set("interaction", `<div class="api-unavailable"><strong>API Project Builder is not available.</strong><p>Verified production content is not present. Development-only examples are never shown as real APIs.</p></div>`); return; }
       state.picker = createScenarioPicker(state.data);
-      state.providerId = "all"; nextChallenge();
+      state.providerId = "all"; state.difficulty = "mixed";
+      try { state.introDismissed = globalThis.localStorage?.getItem("doclab.apiProjectBuilder.introDismissed.v1") === "true"; } catch {}
+      nextChallenge();
     } catch (error) { set("interaction", `<div class="api-unavailable"><strong>API documentation could not be loaded.</strong><p>${esc(error.message)}</p></div>`); }
   };
   controls.submit.onclick = submit; controls.show.onclick = showAnswer; controls.skip.onclick = nextChallenge; controls.nextButton.onclick = nextChallenge;

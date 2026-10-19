@@ -21,6 +21,37 @@ const COMMON_FIELDS = {
   "maps.places-details": ["displayName", "formattedAddress", "photos[].name", "rating"],
 };
 
+// Instructional difficulty is maintained as presentation metadata; API research,
+// accepted plans, and grading data remain untouched.
+const BEGINNER_SCENARIOS = new Set([
+  "spotify-monthly-recap", "spotify-concert-alert-wall", "spotify-club-now-playing",
+  "youtube-gaming-trend-wall", "youtube-media-club-playlist-shelf",
+  "maps-class-dinner-checklist", "maps-late-start-bus-check",
+  "discord-study-hall-catch-up", "discord-pinned-resources-board", "discord-club-channel-directory",
+  "openai-flashcard-similarity-index",
+]);
+const ADVANCED_SCENARIOS = new Set([
+  "spotify-session-rewind-saver", "youtube-video-compare",
+  "maps-museum-walk-planner", "maps-venue-distance-board",
+  "tiktok-club-recap-publisher", "openai-discussion-board-safety",
+]);
+const INTERMEDIATE_SCENARIOS = new Set([
+  "spotify-album-spotlight", "spotify-my-playlists-browser",
+  "youtube-channel-hub", "youtube-study-video-finder", "youtube-subscription-swap",
+  "maps-lunch-spot-finder", "maps-saved-place-card", "maps-trip-destination-picker",
+  "discord-my-servers-dashboard", "discord-event-volunteer-desk", "discord-weekly-club-announcements",
+  "tiktok-creator-portfolio-header", "tiktok-featured-reel-showcase", "tiktok-spotlight-embed-choice",
+  "openai-reading-quiz-builder", "openai-reading-packet-qa", "openai-lecture-recap", "openai-private-essay-feedback", "openai-lab-photo-explainer",
+]);
+export const SCENARIO_DIFFICULTY = Object.freeze(Object.fromEntries([
+  ...[...BEGINNER_SCENARIOS].map((id) => [id, "beginner"]),
+  ...[...INTERMEDIATE_SCENARIOS].map((id) => [id, "intermediate"]),
+  ...[...ADVANCED_SCENARIOS].map((id) => [id, "advanced"]),
+]));
+export function scenarioDifficulty(scenario) {
+  return SCENARIO_DIFFICULTY[scenario?.id] || "intermediate";
+}
+
 // Curated source-field choices for audited hand-offs. This instructional metadata
 // is separate from the verified API definitions; every path below must exist in
 // the corresponding endpoint responseFields list.
