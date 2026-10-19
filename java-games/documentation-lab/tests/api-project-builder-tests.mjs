@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { validateApiData, assertValid, validatePlan, formativeDiagnostics, endpointsFor, createScenarioPicker, isRuntimeParameter, isProductionContent, endpointMap } from "../api-project-builder-engine.js";
-import { presentationFor, fieldMaskChoices, serializeMultiSelection, serializeArrayChoice, serializeNestedMultiChoice, responseSourceChoices, responseSourceControl, focusedFields, dependencySourceCandidates, dependencyConnectionControl, originControl, resolveRequestDependencies, controlsFor, requestHtml, putPath } from "../api-project-builder-ui.js";
+import { presentationFor, fieldMaskChoices, serializeMultiSelection, serializeArrayChoice, serializeObjectChoice, responseSourceChoices, responseSourceControl, focusedFields, dependencySourceCandidates, dependencyConnectionControl, originControl, resolveRequestDependencies, controlsFor, requestHtml, putPath } from "../api-project-builder-ui.js";
 import { presentation, classification, automaticParameters, PROJECT_PRESENTATION, RESPONSE_SOURCE_CHOICES } from "../api-project-presentation.js";
 
 const data = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1.json", import.meta.url), "utf8"));
@@ -352,17 +352,11 @@ function representedMapsPlan(scenario, accepted) {
         assert.match(control, /type="radio"[^>]*data-param-array-choice=/, `${scenario.id}: a single array choice uses radio buttons`);
         const choiceIndex = config.arrayOptions[name].indexOf(option);
         parameters[name] = serializeArrayChoice(config, name, choiceIndex);
-      } else if (config.nestedMultiChoices?.[name]) {
-        for (const [path, options] of Object.entries(config.nestedMultiChoices[name])) {
-          const values = path.split(".").reduce((node, key) => node?.[key], expected);
-          assert.ok(Array.isArray(values), `${scenario.id}: the accepted nested setting remains an array`);
-          for (const value of values) assert.ok(options.some((option) => option.value === value), `${scenario.id}: ${value} is selectable`);
-          assert.match(control, /type="checkbox"[^>]*data-nested-multi-choice=/, `${scenario.id}: multiple transit modes use checkboxes`);
-        }
-        parameters[name] = Object.entries(config.nestedMultiChoices[name]).reduce((current, [path]) => {
-          const values = path.split(".").reduce((node, key) => node?.[key], expected);
-          return serializeNestedMultiChoice(current, path, values);
-        }, {});
+      } else if (config.valueChoices?.[name]) {
+        const option = config.valueChoices[name].find((candidate) => JSON.stringify(candidate.value) === JSON.stringify(expected));
+        assert.ok(option, `${scenario.id}: accepted structured setting has a choice`);
+        assert.match(control, /type="radio"[^>]*data-param-object-choice=/, `${scenario.id}: one transit combination uses a radio group`);
+        parameters[name] = serializeObjectChoice(config, name, config.valueChoices[name].indexOf(option));
       } else parameters[name] = structuredClone(expected);
     }
     return { endpointId: endpoint.id, parameters, dependencies };
@@ -390,7 +384,11 @@ for (const id of mapsRepairIds) {
     const wrong = structuredClone(represented);
     if (id === "maps-class-dinner-checklist") wrong.requests[0].parameters["X-Goog-FieldMask"] = "displayName,priceLevel,rating,userRatingCount,formattedAddress,currentOpeningHours";
     else if (id === "maps-trip-destination-picker") wrong.requests[0].parameters.includedRegionCodes = ["ca"];
-    else if (id === "maps-late-start-bus-check") wrong.requests[0].parameters.transitPreferences.allowedTravelModes.push("SUBWAY");
+    else if (id === "maps-late-start-bus-check") {
+      const config = presentation(scenario, expandedMap.get("maps.routes-compute-route-matrix"));
+      const incorrect = config.valueChoices.transitPreferences.findIndex((option) => JSON.stringify(option.value.allowedTravelModes) === JSON.stringify(["BUS", "SUBWAY"]));
+      wrong.requests[0].parameters.transitPreferences = serializeObjectChoice(config, "transitPreferences", incorrect);
+    }
     else continue; // Both documented venue strategies are intentionally accepted.
     assert.equal(validatePlan(expandedData, scenario, wrong).correct, false, `${id}: plausible incorrect student choice is rejected`);
     mapsRepairStats.incorrect++;
