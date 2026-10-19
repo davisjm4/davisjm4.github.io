@@ -126,7 +126,7 @@ for (const game of ["loop-lab", "array-lab", "variable-lab"])
       source = `import java.util.*; public class Practice {public static void main(String[] args){${q.code}\nSystem.out.println(${q.topic.endsWith("-search") ? "found" : "result"});}}`;
       expected = String(q.answer);
       parse = (out) => out.trim();
-    } else if (game === "variable-lab" && q.resultVariable) {
+    } else if (game === "variable-lab" && q.mode !== "trace" && q.resultVariable) {
       source = `public class Practice {public static void main(String[] args){${q.code}\nSystem.out.println(${q.resultVariable});}}`;
       expected = String(q.answer);
       parse = (out) => out.trim();
