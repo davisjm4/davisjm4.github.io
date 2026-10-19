@@ -1,4 +1,4 @@
-import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v18";
+import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v19-feedback";
 import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v12";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
@@ -369,16 +369,25 @@ function readablePlan(plan, map) {
 }
 function feedbackHtml(result, scenario, diagnostics, attempts) {
   if (result.correct) return `<strong>✓ Project Complete</strong><p>Solved in ${attempts} ${attempts === 1 ? "check" : "checks"}. ${esc(result.efficient ? "Your plan meets the project requirements." : "Your plan works; a simpler plan may also meet the requirements.")}</p><p class="api-explanation"><strong>Why it works:</strong> ${esc(scenario.explanation.summary)} ${scenario.explanation.keyIdeas.map(esc).join(" ")}</p><p class="muted">Your completed request plan remains above for review.</p>`;
-  return `<strong>Needs Revision · Attempt ${attempts}</strong><ul class="api-review">${diagnostics.map((d) => `<li>${esc(d.message)}</li>`).join("")}</ul>`;
+  return `<strong>Needs Revision · Attempt ${attempts}</strong><ul class="api-review">${diagnostics.map((d) => `<li class="api-feedback-issue">${d.heading ? `<strong class="api-feedback-heading">${esc(d.heading)}</strong>` : ""}<p>${esc(d.message)}</p>${d.review ? `<p><strong>What to check:</strong> ${esc(d.review)}</p>` : ""}</li>`).join("")}</ul>`;
 }
 export function mount({ root, controls, tracker }) {
-  const state = { stopped: false, data: null, scenario: null, plan: [], picker: null, instance: null, closed: false, providerId: "all", attempts: 0, hintsShown: 0, lastResult: null };
+  const state = { stopped: false, data: null, scenario: null, plan: [], picker: null, instance: null, closed: false, providerId: "all", attempts: 0, hintsShown: 0, hintIssueId: null, lastResult: null };
   const set = (id, html) => { const el = root.querySelector(`#${id}`); if (el) el.innerHTML = html; };
   const stat = () => { const el = document.getElementById("stats"); if (el && controls.roundSummary) el.textContent = controls.roundSummary(); };
   const clearStaleFeedback = () => { if (state.lastResult) { state.lastResult = null; const feedback = document.getElementById("feedback"); feedback.hidden = true; feedback.innerHTML = ""; } const hint = root.querySelector("#api-hint-text"); if (hint) hint.textContent = ""; };
-  const touch = () => { clearStaleFeedback(); if (state.instance && tracker.status(state.instance) === "active") tracker.interact(state.instance); };
+  const diagnosticsForCurrentPlan = () => {
+    if (!state.data || !state.scenario) return [];
+    const result = validatePlan(state.data, state.scenario, { requests: state.plan });
+    return result.correct ? [] : formativeDiagnostics(state.data, state.scenario, result, state.plan);
+  };
+  const syncHintIssue = () => {
+    const issue = diagnosticsForCurrentPlan()[0], id = issue?.id || null;
+    if (id !== state.hintIssueId) { state.hintIssueId = id; state.hintsShown = 0; }
+  };
+  const touch = () => { clearStaleFeedback(); syncHintIssue(); updateHintButton(); if (state.instance && tracker.status(state.instance) === "active") tracker.interact(state.instance); };
   const next = () => controls.next();
-  const updateHintButton = () => { const button = root.querySelector("#api-get-hint"); if (button) button.hidden = state.attempts < 2 || state.hintsShown >= 3 || state.closed; };
+  const updateHintButton = () => { const button = root.querySelector("#api-get-hint"); if (!button) return; const issue = diagnosticsForCurrentPlan()[0]; button.hidden = state.closed || !issue || !issue.hints?.length || state.hintsShown >= Math.min(3, issue.hints.length); };
   const showActionButtons = () => { controls.submit.textContent = "Check My Plan"; controls.show.textContent = "Show Answer"; controls.show.hidden = false; controls.show.disabled = false; controls.skip.textContent = "Skip"; controls.skip.hidden = false; controls.nextButton.textContent = "Next Project →"; controls.nextButton.hidden = true; controls.submit.hidden = false; controls.submit.disabled = false; controls.skip.disabled = false; };
   const renderBrief = () => {
     const s = state.scenario, p = providerFor(state.data, s);
@@ -417,10 +426,10 @@ export function mount({ root, controls, tracker }) {
     });
     const hintButton = root.querySelector("#api-get-hint");
     hintButton.onclick = () => {
-      const current = validatePlan(state.data, state.scenario, { requests: state.plan });
-      if (current.correct) { root.querySelector("#api-hint-text").textContent = "Your current plan appears to meet the requirements. Check it to record your result."; return; }
-      const diagnostic = formativeDiagnostics(state.data, state.scenario, current, state.plan)[0];
-      if (!diagnostic || state.hintsShown >= 3) return;
+      const diagnostic = diagnosticsForCurrentPlan()[0];
+      if (!diagnostic || !diagnostic.hints?.length) return;
+      if (state.hintIssueId !== diagnostic.id) { state.hintIssueId = diagnostic.id; state.hintsShown = 0; }
+      if (state.hintsShown >= Math.min(3, diagnostic.hints.length)) return;
       root.querySelector("#api-hint-text").textContent = `Hint ${state.hintsShown + 1}: ${diagnostic.hints[state.hintsShown]}`;
       state.hintsShown++; updateHintButton(); if (state.instance) tracker.interact(state.instance);
     };
@@ -447,6 +456,7 @@ export function mount({ root, controls, tracker }) {
     const result = validatePlan(state.data, state.scenario, { requests: state.plan }), record = tracker.submit(state.instance, result.correct);
     if (!record.accepted) return;
     state.attempts = record.submissions; state.lastResult = result;
+    syncHintIssue();
     const attemptStatus = root.querySelector("#api-attempt-status"); if (attemptStatus) attemptStatus.textContent = `Checks so far: ${state.attempts}.`;
     if (result.correct) finish(result);
     else {
@@ -463,7 +473,7 @@ export function mount({ root, controls, tracker }) {
     if (state.stopped) return;
     if (state.instance && tracker.status(state.instance) === "active") tracker.skip(state.instance);
     state.scenario = state.picker(state.providerId); if (!state.scenario) return;
-    state.plan = []; state.lastAddedEndpoint = null; state.closed = false; state.attempts = 0; state.hintsShown = 0; state.lastResult = null; state.instance = tracker.begin("documentation-lab", "Documentation Lab", `api-project/${state.scenario.id}`, state.scenario.title);
+    state.plan = []; state.lastAddedEndpoint = null; state.closed = false; state.attempts = 0; state.hintsShown = 0; state.hintIssueId = null; state.lastResult = null; state.instance = tracker.begin("documentation-lab", "Documentation Lab", `api-project/${state.scenario.id}`, state.scenario.title);
     document.getElementById("mode-label").textContent = ""; document.getElementById("family").textContent = "";
     document.getElementById("instructions").textContent = "Read the API documentation and select the requests your application needs.";
     document.getElementById("question").textContent = ""; document.getElementById("prompt").hidden = true;
