@@ -1,4 +1,4 @@
-import * as J from "./engine.js?v=variable-lab-v4";
+import * as J from "./engine.js?v=variable-lab-v5";
 import { mathGame } from "./math-lab/engine.js?v=math-v1";
 import { robotGame } from "./robot-algorithms/engine.js?v=robot-v3";
 import { classObjectGame } from "./class-object-lab/class-engine.js?v=class-object-v1";
@@ -42,7 +42,12 @@ if (!slug) {
 } else startGame();
 function startGame() {
   const game = J.games[slug],
-    tracker = sessionTracker();
+    tracker = sessionTracker(),
+    params = typeof URLSearchParams !== "undefined" && typeof location !== "undefined"
+      ? new URLSearchParams(location.search)
+      : null,
+    requestedMode = params?.get("mode"),
+    requestedDifficulty = params?.get("difficulty");
   let q,
     instance,
     selected = null,
@@ -60,8 +65,28 @@ function startGame() {
       .map(([id, label]) => `<option value="${id}">${label}</option>`)
       .join(
         "",
-      )}</select></label><button id="new" class="secondary">New Challenge</button></div><section id="stage" class="panel"></section><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div><p id="stats" class="stats"></p>`;
+      )}</select></label>${slug === "variable-lab" ? '<label id="difficulty-wrap" hidden>Difficulty <select id="difficulty"><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option></select></label>' : ""}<button id="new" class="secondary">New Challenge</button></div><p id="mode-description" class="muted"></p><section id="stage" class="panel"></section><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div><p id="stats" class="stats"></p>`;
   addSessionNavigation("../");
+  if (requestedMode && game.modes[requestedMode]) $("mode").value = requestedMode;
+  if ($("difficulty") && ["beginner", "intermediate", "advanced"].includes(requestedDifficulty))
+    $("difficulty").value = requestedDifficulty;
+  const syncTraceControls = () => {
+      const trace = slug === "variable-lab" && $("mode").value === "trace";
+      if ($("difficulty-wrap")) $("difficulty-wrap").hidden = !trace;
+      $("mode-description").textContent = trace
+        ? "Follow changes to Java variables and predict their values or printed output."
+        : "";
+    },
+    syncUrl = () => {
+      if (typeof history === "undefined" || typeof location === "undefined" || !history.replaceState) return;
+      const url = new URL(location.href);
+      if ($("mode").value === "mixed") url.searchParams.delete("mode");
+      else url.searchParams.set("mode", $("mode").value);
+      if ($("mode").value === "trace" && $("difficulty")) url.searchParams.set("difficulty", $("difficulty").value);
+      else url.searchParams.delete("difficulty");
+      history.replaceState(null, "", url);
+    };
+  syncTraceControls();
   const active = () => tracker.status(instance) === "active",
     stats = () => {
       $("stats").textContent = roundSummary(slug);
@@ -74,12 +99,19 @@ function startGame() {
   function next() {
     if (timer) clearTimeout(timer);
     if (instance) tracker.skip(instance);
-    q = J.generate(slug, $("mode").value);
+    q = J.generate(
+      slug,
+      $("mode").value,
+      undefined,
+      slug === "variable-lab" && $("mode").value === "trace"
+        ? { difficulty: $("difficulty")?.value || "beginner" }
+        : {},
+    );
     instance = tracker.begin(
       slug,
       game.name,
       q.topic,
-      q.topic.replaceAll("-", " "),
+      q.topicTitle || q.topic.replaceAll("-", " "),
     );
     selected = null;
     selectedFix = null;
@@ -90,7 +122,7 @@ function startGame() {
     $("feedback").hidden = true;
     const diag = diagnostics[q.variant];
     $("stage").innerHTML =
-      `<div class="eyebrow">${game.modes[q.mode]}</div><h2>${esc(q.prompt)}</h2>${
+      `<div class="eyebrow">${game.modes[q.mode]}${q.mode === "trace" ? " · " + esc(q.difficulty[0].toUpperCase() + q.difficulty.slice(1)) : ""}</div><h2>${esc(q.prompt)}</h2>${
         q.kind === "debug"
           ? `<p>${esc(q.context)}</p><p class="muted">${esc(q.symptom)}</p>${diag ? `<details class="compiler-diagnostic"><summary>Compiler message</summary><p>Verified javac 17 diagnostic, line ${diag.line}: ${esc(diag.message)}</p></details>` : ""}<pre id="java-code" class="snippet debug-code">${q.tokens.map(t => t.selectable || t.gap ? `<button type="button" class="java-token${t.gap ? " token-gap" : ""}" data-location="${t.id}" aria-pressed="false" aria-label="${esc(t.gap ? "Missing component gap" : t.text)}">${esc(t.gap ? "▯" : t.text)}</button>` : esc(t.text)).join("")}</pre><h3>Choose a correction</h3><div id="fix-bank" class="block-bank">${q.fixes.map((fix, i) => `<button class="secondary" data-fix="${i}"><code>${esc(fix)}</code></button>`).join("")}</div>`
           : q.kind === "assemble"
@@ -238,6 +270,26 @@ function startGame() {
     $("feedback").focus();
     stats();
   }
+  function showTraceFeedback() {
+    if (q.mode !== "trace" || !q.traceRows) return;
+    const variables = Object.keys(q.types || {});
+    const header = variables.map((name) => `<th scope="col">${esc(name)}</th>`).join("");
+    const rows = q.traceRows
+      .map((step) => `<tr><th scope="row">Line ${step.line}</th><td><code>${esc(step.statement)}</code></td>${variables.map((name) => `<td>${step.variables[name] === undefined ? "—" : esc(step.variables[name])}</td>`).join("")}<td>${step.output === null ? "—" : esc(step.output)}</td></tr>`)
+      .join("");
+    $("execution").hidden = false;
+    $("execution").innerHTML =
+      `<h3>Execution trace</h3><div class="trace-table-wrap"><table class="trace-table"><thead><tr><th scope="col">Step</th><th scope="col">Statement</th>${header}<th scope="col">Printed output</th></tr></thead><tbody>${rows}</tbody></table></div><div class="trace-explanation">${q.traceRows.map((step) => `<p><strong>Line ${step.line}:</strong> ${esc(step.explanation)}</p>`).join("")}</div>`;
+  }
+  function lockTraceIncorrect() {
+    tracker.reveal(instance);
+    selected = String(q.answer);
+    paint();
+    for (const el of $("stage").querySelectorAll("button,select,input")) el.disabled = true;
+    $("next").disabled = false;
+    message(false, `Incorrect. Correct answer: ${q.answer}. Review the execution trace below, then choose Next Challenge.`);
+    showTraceFeedback();
+  }
   function check() {
     if (!active()) {
       message(
@@ -262,11 +314,20 @@ function startGame() {
     submitted = true;
     if ($("watch")) { $("watch").hidden = false; $("watch").disabled = false; }
     if (!correct) {
+      if (q.mode === "trace") {
+        lockTraceIncorrect();
+        return;
+      }
       wrong++;
       message(
         false,
         `Not quite. Hint ${Math.min(3, wrong)}: ${J.hint(q, wrong)}\nRetry independently, skip, or choose Show Answer.`,
       );
+      return;
+    }
+    if (q.mode === "trace") {
+      finish(false, "Correct on the first try. Review the execution trace below.");
+      showTraceFeedback();
       return;
     }
     finish(
@@ -297,6 +358,7 @@ function startGame() {
         q.explanation +
         "\nThis challenge cannot earn independent credit.",
     );
+    if (q.mode === "trace") showTraceFeedback();
   }
   function finish(revealed, text) {
     for (const el of $("stage").querySelectorAll("button,select,input"))
@@ -365,7 +427,15 @@ function startGame() {
     step();
   }
   $("new").onclick = next;
-  $("mode").onchange = next;
+  $("mode").onchange = () => {
+    syncTraceControls();
+    syncUrl();
+    next();
+  };
+  if ($("difficulty")) $("difficulty").onchange = () => {
+    syncUrl();
+    next();
+  };
   for (const type of ["click", "input", "change"])
     $("stage").addEventListener(type, () => tracker.interact(instance));
   window.addEventListener("pagehide", () => {
