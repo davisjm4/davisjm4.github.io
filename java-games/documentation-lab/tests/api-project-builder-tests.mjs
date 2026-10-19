@@ -725,9 +725,11 @@ assert.ok(!JSON.stringify(emptyFeedback).includes("spotify.get-album"), "missing
 
 const authScenario = data.scenarios.find((s) => s.id === "spotify-album-spotlight");
 const authPlan = { requests: [{ endpointId: "spotify.get-current-user-playlists", parameters: {}, dependencies: {} }] };
-assert.ok(formativeDiagnostics(data, authScenario, validatePlan(data, authScenario, authPlan), authPlan.requests).some((d) => d.key === "access"));
+const authFeedback = formativeDiagnostics(data, authScenario, validatePlan(data, authScenario, authPlan), authPlan.requests);
+assert.ok(authFeedback.length <= 2 && authFeedback.some((d) => ["missing", "operation"].includes(d.key)), "higher-priority operation issues precede access restrictions");
 const legacyPlan = { requests: [{ endpointId: "maps.directions-legacy", parameters: { origin: "hotel", destination: "museum" }, dependencies: {} }] };
-assert.ok(formativeDiagnostics(data, museum, validatePlan(data, museum, legacyPlan), legacyPlan.requests).some((d) => d.key === "access"));
+const legacyFeedback = formativeDiagnostics(data, museum, validatePlan(data, museum, legacyPlan), legacyPlan.requests);
+assert.ok(legacyFeedback.length <= 2 && legacyFeedback.some((d) => ["missing", "operation"].includes(d.key)), "an unavailable operation is prioritized before lower-level diagnostics");
 
 const museumMaskPlan = studentPlan(museum, museum.acceptedPlans[0]);
 museumMaskPlan.requests[0].parameters["X-Goog-FieldMask"] = "places.id";
@@ -755,5 +757,106 @@ for (let i = 0; i < data.scenarios.length * 2; i++) {
 }
 const spotifyPick = picker("spotify");
 assert.equal(spotifyPick.providerId, "spotify");
+
+// Step 4 regression: every accepted variant remains valid and has no diagnostic,
+// while the same rendered student controls expose all assessed values.
+let acceptedVariantsChecked = 0, renderedAssessedControls = 0;
+for (const scenario of publishedScenarios) {
+  let scenarioNearMissChecked = false;
+  for (const accepted of scenario.acceptedPlans) {
+    const represented = studentPlan(scenario, accepted, expandedData, expandedMap);
+    const result = validatePlan(expandedData, scenario, represented);
+    assert.equal(result.correct, true, `${scenario.id}/${accepted.id}: accepted alternative remains valid`);
+    assert.deepEqual(formativeDiagnostics(expandedData, scenario, result, represented.requests), [], `${scenario.id}/${accepted.id}: no false warning on success`);
+    const html = requestHtml(represented.requests, expandedMap, scenario);
+    for (const request of represented.requests) {
+      const endpoint = expandedMap.get(request.endpointId);
+      for (const name of classification(scenario, endpoint).assessed) {
+        assert.ok(html.includes(name), `${scenario.id}: assessed setting ${name} appears in rendered request controls`);
+        renderedAssessedControls++;
+      }
+    }
+    acceptedVariantsChecked++;
+    if (!scenarioNearMissChecked) for (let index = represented.requests.length - 1; index >= 0; index--) {
+      const nearMiss = structuredClone(represented);
+      nearMiss.requests.splice(index, 1);
+      const rejected = validatePlan(expandedData, scenario, nearMiss);
+      if (rejected.correct) continue; // Another accepted alternative may omit this operation.
+      const feedback = formativeDiagnostics(expandedData, scenario, rejected, nearMiss.requests);
+      assert.ok(feedback.length > 0 && feedback.length <= 2, `${scenario.id}: current incomplete plan gets concise feedback`);
+      assert.ok(feedback[0].hints?.length === 3, `${scenario.id}: its leading issue has three progressive hints`);
+      for (const issue of feedback) if (Number.isInteger(issue.requestIndex)) {
+        assert.ok(nearMiss.requests[issue.requestIndex], `${scenario.id}: feedback references a current request row`);
+      }
+      scenarioNearMissChecked = true;
+      break;
+    }
+  }
+  assert.ok(scenarioNearMissChecked || scenario.acceptedPlans.some((plan) => !plan.steps.length), `${scenario.id}: a constructible incomplete-plan feedback case exists`);
+}
+assert.equal(acceptedVariantsChecked, 54, "all accepted alternatives across the enabled library are exercised");
+
+// The newest submitted plan supplies current step numbers and prioritized issues.
+const hintSource = fs.readFileSync(new URL("../api-project-builder-ui.js", import.meta.url), "utf8");
+assert.match(hintSource, /diagnosticsForCurrentPlan\(\)/, "hints are derived from the current plan");
+assert.match(hintSource, /state\.hintIssueId !== diagnostic\.id/, "hint progress resets when the leading issue changes");
+assert.match(hintSource, /aria-live="polite"/, "hint updates are announced accessibly");
+assert.doesNotMatch(hintSource, /attempts\s*>=\s*2/, "hint access is independent of failed submission count");
+assert.match(fs.readFileSync(new URL("../api-project-builder-engine.js", import.meta.url), "utf8"), /\.slice\(0, 2\)/, "feedback is limited to two prioritized issues");
+
+// Feedback must identify editable concepts without quoting answer values.
+const feedbackCase = (scenarioId, edit) => {
+  const scenario = publishedScenarios.find((item) => item.id === scenarioId);
+  assert.ok(scenario, `${scenarioId} is published`);
+  const plan = studentPlan(scenario, scenario.acceptedPlans[0], expandedData, expandedMap);
+  edit(plan, scenario);
+  const evaluated = validatePlan(expandedData, scenario, plan);
+  assert.equal(evaluated.correct, false, `${scenarioId}: plausible mistake remains rejected`);
+  const diagnostics = formativeDiagnostics(expandedData, scenario, evaluated, plan.requests);
+  assert.ok(diagnostics.length > 0 && diagnostics.length <= 2, `${scenarioId}: concise actionable feedback exists`);
+  assert.ok(diagnostics.some((issue) => issue.heading || issue.key === "missing"), `${scenarioId}: feedback identifies a request or missing capability`);
+  assert.ok(!JSON.stringify(diagnostics).includes("One or more parameter choices do not match the accepted plan"), `${scenarioId}: generic answer-key feedback is absent`);
+  return { scenario, plan, evaluated, diagnostics };
+};
+
+const rangeFeedback = feedbackCase("spotify-monthly-recap", (plan) => { plan.requests[0].parameters.time_range = "long_term"; });
+assert.equal(rangeFeedback.diagnostics[0].heading, "Request 1 — Get User's Top Items");
+assert.equal(rangeFeedback.diagnostics[0].setting, "Time period");
+assert.equal(rangeFeedback.diagnostics[0].hints.length, 3);
+assert.ok(!JSON.stringify(rangeFeedback.diagnostics).includes("short_term"), "hint/feedback does not reveal the accepted value");
+const repeatedRange = formativeDiagnostics(expandedData, rangeFeedback.scenario, rangeFeedback.evaluated, rangeFeedback.plan.requests);
+assert.equal(repeatedRange[0].id, rangeFeedback.diagnostics[0].id, "unchanged issue keeps a stable hint target");
+
+const missingOperation = feedbackCase("youtube-study-video-finder", (plan) => { plan.requests.pop(); });
+assert.ok(missingOperation.diagnostics.some((issue) => issue.key === "missing"), "missing operation feedback names the missing capability");
+assert.ok(!JSON.stringify(missingOperation.diagnostics).includes("youtube.videos-list"), "missing operation feedback does not name the answer endpoint");
+
+const wrongField = feedbackCase("spotify-session-rewind-saver", (plan) => {
+  const request = plan.requests.find((item) => item.dependencies.uris);
+  request.dependencies.uris.paths = ["items[].track.name"];
+});
+assert.ok(wrongField.diagnostics.some((issue) => issue.key === "dependency"), "wrong response field is diagnosed");
+assert.ok(wrongField.diagnostics[0].message.includes("display name") || wrongField.diagnostics[0].message.includes("different kind of information"), "field misconception is explained without naming the answer");
+
+const brokenOrder = feedbackCase("maps-museum-walk-planner", (plan) => { plan.requests.reverse(); });
+assert.ok(brokenOrder.diagnostics.some((issue) => issue.key === "dependency"), "request order/dependency error is diagnosed");
+assert.ok(brokenOrder.diagnostics.some((issue) => /Request [12]/.test(issue.heading || "")), "diagnostic request numbers reflect current ordering");
+
+const wrongLimit = feedbackCase("maps-lunch-spot-finder", (plan) => { plan.requests[0].parameters.maxResultCount = 20; });
+assert.ok(wrongLimit.diagnostics.some((issue) => issue.setting === "Result limit"), "numeric setting feedback names the editable limit");
+
+const wrongPrivacy = feedbackCase("spotify-session-rewind-saver", (plan) => {
+  const request = plan.requests.find((item) => Object.hasOwn(item.parameters, "public"));
+  request.parameters.public = !request.parameters.public;
+});
+assert.ok(wrongPrivacy.diagnostics.some((issue) => /privacy|visibility/i.test(`${issue.setting || ""} ${issue.message}`)), "privacy configuration feedback is conceptual");
+
+const repeatedCheckChange = structuredClone(rangeFeedback.plan);
+repeatedCheckChange.requests[0].parameters.time_range = "medium_term";
+const changedRangeResult = validatePlan(expandedData, rangeFeedback.scenario, repeatedCheckChange);
+const changedRangeIssues = formativeDiagnostics(expandedData, rangeFeedback.scenario, changedRangeResult, repeatedCheckChange.requests);
+assert.ok(changedRangeIssues.length, "a revised plan is diagnosed from its current values");
+
+console.log(`Step 4 diagnostics: ${publishedScenarios.length} enabled scenarios, ${acceptedVariantsChecked} accepted alternatives, ${renderedAssessedControls} rendered assessed controls; missing-operation, dependency, field, limit, privacy, hint progression, and current-order diagnostics passed.`);
 
 console.log("API Project Builder: schema, all 9 scenarios/16 accepted plans, runtime IDs, parameter grading, dependencies, rejected-plan feedback, and rotation passed.");
