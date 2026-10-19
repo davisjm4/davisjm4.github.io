@@ -1,5 +1,5 @@
 import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v18";
-import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v11";
+import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v12";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
@@ -128,7 +128,9 @@ export function resolveRequestDependencies(scenario, requests, map) {
       }
       const candidates = dependencySourceCandidates(scenario, endpoint.id, parameter.name, requests, index, map);
       if (candidates.length === 1) {
-        request.dependencies[parameter.name] = { ...(current || {}), source: "request", fromRequest: candidates[0].index, paths: current?.fromRequest === candidates[0].index ? (current.paths || []) : [], automatic: true, invalid: false };
+        const handledByApp = classification(scenario, endpoint).automatic.includes(parameter.name);
+        const paths = current?.fromRequest === candidates[0].index && current.paths?.length ? current.paths : handledByApp ? candidates[0].paths : [];
+        request.dependencies[parameter.name] = { ...(current || {}), source: "request", fromRequest: candidates[0].index, paths, automatic: true, invalid: false };
         request.parameters[parameter.name] = { $runtime: true };
       } else if (candidates.length > 1) {
         const selected = !current?.automatic && candidates.some((candidate) => candidate.index === current?.fromRequest) ? current.fromRequest : null;
