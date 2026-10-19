@@ -1,5 +1,5 @@
 /* API Project Builder: schema-v1 content adapter, normalizer, and scorer. */
-import { presentation } from "./api-project-presentation.js";
+import { presentation, classification } from "./api-project-presentation.js";
 export const GAME_ID = "documentation-lab";
 export const MODE_ID = "api-builder";
 export const MODE_TITLE = "API Project Builder";
@@ -362,38 +362,223 @@ function scenarioDiagnostic(scenario, key, context = {}) {
   return { key, id: key, message: FORMATIVE_MESSAGES[key], review: key === "missing" ? "Compare the project's required information with the documented response fields." : "Review the relevant operation, parameter, or response-field documentation.", hints: HINTS[key] };
 }
 
-export function formativeDiagnostics(data, scenario, result, submittedRequests = []) {
-  const map = endpointMap(data), requests = submittedRequests || [], issues = new Map(), maskIds = new Set();
-  const add = (diagnostic) => { if (!issues.has(diagnostic.key)) issues.set(diagnostic.key, diagnostic); };
-  for (let i = 0; i < requests.length; i++) {
-    const request = requests[i], endpoint = map.get(request.endpointId);
-    if (!endpoint) { add(scenarioDiagnostic(scenario, "operation")); continue; }
-    if (fieldMaskMismatch(scenario, endpoint, request)) { add(scenarioDiagnostic(scenario, "fieldMask", { endpoint, request })); maskIds.add(endpoint.id); }
-    if (dependencyMismatch(scenario, requests, i, request)) add(scenarioDiagnostic(scenario, "dependency"));
+const humanizeSetting = (name) => ({
+  part: "requested information", fields: "requested information", fieldMask: "requested information", "X-Goog-FieldMask": "requested information",
+  time_range: "time period", maxResults: "result limit", maxResultCount: "result limit", limit: "result limit", rankPreference: "result ordering", order: "result ordering", sort: "result ordering",
+  type: "resource type", videoDuration: "video length filter", locationRestriction: "search distance", includedRegionCodes: "location filter", privacy_status: "privacy choice", privacyStatus: "privacy choice", store: "data-retention choice",
+  playlistId: "playlist selection", trackUris: "track selection", videoIds: "video selection", input: "application input", messages: "message content", model: "model setting", file: "simulated file"
+}[name] || String(name).replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/[_-]+/g, " ").toLowerCase());
+const titleCase = (value) => value ? value[0].toUpperCase() + value.slice(1) : value;
+const requestHeading = (endpoint, index) => endpoint ? `Request ${index + 1} — ${endpoint.title}` : "Request plan";
+const assignedSteps = (plan, requests) => {
+  const unmatched = requests.map((request, index) => ({ request, index, used: false })), mapped = [];
+  for (const step of plan.steps) {
+    const match = unmatched.find((item) => !item.used && item.request.endpointId === step.endpointId);
+    if (match) { match.used = true; mapped.push({ step, request: match.request, requestIndex: match.index }); }
+    else mapped.push({ step, request: null, requestIndex: -1 });
   }
-  if (result.incorrectEndpoints.length || result.missing.length && requests.length) add(scenarioDiagnostic(scenario, "operation"));
-  if (result.incompleteRequests.some((id) => !maskIds.has(id))) add(scenarioDiagnostic(scenario, "incomplete"));
-  const mismatches = parameterMismatches(scenario, requests, map);
-  if (scenario.id === "youtube-channel-hub") {
-    for (const request of requests) {
-      const parts = String(request.parameters?.part || "").split(",").map((value) => value.trim());
-      const endpoint = map.get(request.endpointId);
-      if (request.endpointId === "youtube.playlistitems-list" && !parts.includes("contentDetails")) add(scenarioDiagnostic(scenario, "parameters", { parameter: { name: "part" }, endpoint }));
-      if (request.endpointId === "youtube.channels-list" && !parts.includes("contentDetails")) add(scenarioDiagnostic(scenario, "parameters", { parameter: { name: "part" }, endpoint }));
+  return { mapped, extras: unmatched.filter((item) => !item.used) };
+};
+function candidatePlanScore(scenario, plan, requests, map) {
+  const { mapped, extras } = assignedSteps(plan, requests);
+  let dependencyErrors = 0, sourceFieldErrors = 0, parameterErrors = 0, invalidErrors = 0;
+  for (const { step, request, requestIndex } of mapped) {
+    if (!request) continue;
+    const endpoint = map.get(step.endpointId);
+    for (const [name, expected] of Object.entries(step.parameters || {})) {
+      const refs = findRefBindings(expected), actual = request.parameters?.[name];
+      if (refs.length) {
+        const dep = request.dependencies?.[name];
+        const expectedBindings = refs.map((ref) => ({ targetPath: ref.targetPath, path: ref.path, fromRequest: mapped.find((item) => item.step.step === ref.fromStep)?.requestIndex ?? -1 }));
+        const actualBindings = arr(dep?.bindings) ? dep.bindings.map((binding) => ({ targetPath: binding.targetPath, path: binding.path, fromRequest: binding.fromRequest })) : [];
+        const multi = new Set(expectedBindings.map((binding) => binding.fromRequest)).size > 1;
+        const good = multi
+          ? JSON.stringify(actualBindings.map((binding) => `${binding.targetPath}|${binding.fromRequest}|${binding.path}`).sort()) === JSON.stringify(expectedBindings.map((binding) => `${binding.targetPath}|${binding.fromRequest}|${binding.path}`).sort()) && expectedBindings.every((binding) => binding.fromRequest >= 0 && binding.fromRequest < requestIndex)
+          : !!dep && dep.fromRequest === expectedBindings[0]?.fromRequest && expectedBindings.every((binding) => binding.fromRequest >= 0 && binding.fromRequest < requestIndex) && JSON.stringify([...(dep.paths || (dep.path ? [dep.path] : []))].sort()) === JSON.stringify(expectedBindings.map((binding) => binding.path).sort());
+        if (!good) {
+          dependencyErrors++;
+          const expectedSourceIndexes = new Set(expectedBindings.map((binding) => binding.fromRequest));
+          const actualSourceIndexes = new Set(multi ? actualBindings.map((binding) => binding.fromRequest) : dep?.fromRequest == null ? [] : [dep.fromRequest]);
+          if (expectedBindings.some((binding) => binding.fromRequest < requestIndex) && expectedSourceIndexes.size && JSON.stringify([...expectedSourceIndexes].sort()) === JSON.stringify([...actualSourceIndexes].sort()) && refs.some((ref) => ![...(dep?.paths || [])].includes(ref.path))) sourceFieldErrors++;
+        }
+        continue;
+      }
+      const p = endpoint.parameters.find((parameter) => parameter.name === name), assessed = classification(scenario, endpoint).assessed.includes(name);
+      if (!assessed) continue;
+      const matched = assessmentMatches(actual, expected, step.assessment?.[name], p);
+      if (!matched) {
+        parameterErrors++;
+        if (name.toLowerCase() === "fields" || name.toLowerCase().includes("fieldmask") || name === "part") sourceFieldErrors++;
+      }
+    }
+    const invalid = validateRules(endpoint, request.parameters || {});
+    invalidErrors += invalid.length;
+  }
+  const missingCount = mapped.filter((item) => !item.request).length;
+  return { plan, mapped, extras, operationErrors: missingCount + extras.length, missingCount, dependencyErrors, sourceFieldErrors, parameterErrors, invalidErrors,
+    score: [missingCount + extras.length, dependencyErrors, sourceFieldErrors, parameterErrors, invalidErrors] };
+}
+function compareScores(a, b) { for (let i = 0; i < Math.max(a.length, b.length); i++) if ((a[i] || 0) !== (b[i] || 0)) return (a[i] || 0) - (b[i] || 0); return 0; }
+function selectedFieldChoice(scenario, sourceEndpoint, parameterName, path) {
+  const choices = presentation(scenario, sourceEndpoint).sourceChoices?.[parameterName] || [];
+  return choices.find((choice) => choice.path === path)?.label || "the selected response information";
+}
+function dependencyIssue(scenario, map, candidate, request, requestIndex) {
+  const expected = candidate.mapped.find((item) => item.requestIndex === requestIndex && item.request === request);
+  if (!expected) return null;
+  const endpoint = map.get(request.endpointId);
+  for (const [parameterName, value] of Object.entries(expected.step.parameters || {})) {
+    const refs = findRefBindings(value); if (!refs.length) continue;
+    const dep = request.dependencies?.[parameterName], expectedBindings = refs.map((ref) => ({ ref, source: candidate.mapped.find((item) => item.step.step === ref.fromStep) }));
+    const sourceIndexes = expectedBindings.map(({ source }) => source?.requestIndex ?? -1), multi = new Set(sourceIndexes).size > 1;
+    const actualSourceIndexes = multi ? (dep?.bindings || []).map((binding) => binding.fromRequest) : dep?.fromRequest == null ? [] : [dep.fromRequest];
+    const paths = multi ? (dep?.bindings || []).map((binding) => binding.path) : dep?.paths || (dep?.path ? [dep.path] : []);
+    const sourceWrong = !dep || sourceIndexes.some((index) => index < 0 || !actualSourceIndexes.includes(index)) || sourceIndexes.some((index) => index >= requestIndex);
+    const pathWrong = !sourceWrong && expectedBindings.some(({ ref }) => !paths.includes(ref.path));
+    if (!sourceWrong && !pathWrong) continue;
+    const setting = humanizeSetting(parameterName);
+    let message, review, hints;
+    if (sourceWrong) {
+      message = `This request needs information from an earlier step, but its current connection does not point to a suitable response.`;
+      review = `Compare the selected source request with the kind of information this request uses.`;
+      hints = ["Think about which earlier result the application is using here.", "Review the response descriptions for the earlier requests and compare their resource types.", "A request can use an earlier result only when that response contains the kind of value this setting needs."];
+    } else {
+      const sourceIndex = sourceIndexes[0], sourceRequest = request.dependencies?.[parameterName]?.fromRequest;
+      const sourceEndpoint = map.get(candidate.mapped.find((item) => item.requestIndex === sourceIndex)?.request?.endpointId);
+      const currentPath = paths[0], label = selectedFieldChoice(scenario, sourceEndpoint || {}, parameterName, currentPath);
+      const expectedPaths = expectedBindings.map(({ ref }) => ref.path).join(" ").toLowerCase();
+      const actualPaths = paths.join(" ").toLowerCase();
+      const displayValue = /(^|[.\[\]])(name|title|displayname|username|label)(\[\]|$)/.test(actualPaths) && /(^|[.\[\]])(id|uri|url|key)(\[\]|$)/.test(expectedPaths);
+      const collectionValue = !actualPaths.includes("[]") && expectedPaths.includes("[]");
+      const misconception = displayValue ? " A display name can describe an item without identifying it for the next request." : collectionValue ? " The next request needs information about individual items, not only the collection." : "";
+      message = `The source request is suitable, but the selected ${setting} represents a different kind of information than this request needs.${misconception}`;
+      review = `Review the choices for the response returned by Request ${sourceRequest + 1}: ${label}.`;
+      hints = ["Think about what kind of information the next request needs from the earlier result.", "Compare the meanings of the response choices for the selected earlier request.", "A readable name or summary may describe a resource without identifying the specific item the next request must use."];
+    }
+    return { key: "dependency", id: `dependency:${endpoint.title}:${requestIndex}:${sourceWrong ? "source" : "field"}`, requestIndex, setting, heading: requestHeading(endpoint, requestIndex), message, review, hints };
+  }
+  return null;
+}
+function parameterIssue(scenario, endpoint, request, requestIndex, name) {
+  const setting = humanizeSetting(name), label = titleCase(setting);
+  const lowered = name.toLowerCase();
+  let concept = "does not yet fit the application's stated needs";
+  if (/limit|count|maxresults|page_size|per_page/.test(lowered)) concept = "changes how many results the application can show";
+  else if (/rank|sort|order/.test(lowered)) concept = "prioritizes a different kind of result than the application needs";
+  else if (/privacy|store|retention|public|visibility/.test(lowered)) concept = "does not match the project's privacy or data-handling requirements";
+  else if (/filter|type|duration|market|range|time/.test(lowered)) concept = "filters the request in a way that does not fit the project goal";
+  else if (/field|part/.test(lowered)) concept = "does not include the kinds of information the application needs";
+  const custom = scenarioDiagnostic(scenario, name.toLowerCase().includes("fieldmask") || name.toLowerCase() === "fields" ? "fieldMask" : "parameters", { endpoint, request, parameter: { name } });
+  return { key: name.toLowerCase().includes("fieldmask") || name.toLowerCase() === "fields" || name === "part" ? "fieldMask" : "parameters", id: `parameter:${endpoint.title}:${name}`, requestIndex, setting: label,
+    heading: requestHeading(endpoint, requestIndex), message: custom?.id !== "parameters" && custom?.id !== "fieldMask" ? custom.message : `The current ${setting} choice ${concept}.`,
+    review: custom?.id !== "parameters" && custom?.id !== "fieldMask" ? custom.review : `Compare the project goal with the documented choices for ${setting}.`,
+    hints: custom?.id !== "parameters" && custom?.id !== "fieldMask" ? custom.hints : [
+      `Think about what the application needs this ${setting} to accomplish.`,
+      `Review the documentation for ${setting} and compare the described options with the project requirements.`,
+      `The selected value changes the request's behavior; choose the documented behavior that matches the application goal.`
+    ] };
+}
+function operationPurpose(step, endpoint) {
+  if (step?.purpose) return step.purpose.replace(/[.;]+$/, "").toLowerCase();
+  const description = endpoint?.description || "the information the application still needs";
+  return description.split(/[.!?]/)[0].replace(/^(returns|retrieves|lists|gets|creates|provides|searches|converts)\s+/i, "").replace(/[.;]+$/, "").toLowerCase();
+}
+function incompleteIssue(scenario, map, request, requestIndex) {
+  const endpoint = map.get(request.endpointId); if (!endpoint) return null;
+  const groups = classification(scenario, endpoint), missingAssessed = endpoint.parameters.filter((parameter) => parameter.required && groups.assessed.includes(parameter.name) && !hasVal(request.parameters?.[parameter.name]));
+  if (missingAssessed.length) {
+    const parameter = missingAssessed[0], setting = titleCase(humanizeSetting(parameter.name));
+    return { key: "incomplete", id: `incomplete:${endpoint.title}:${parameter.name}`, requestIndex, setting, heading: requestHeading(endpoint, requestIndex),
+      message: `This request still needs a choice for ${humanizeSetting(parameter.name)} before the application can use it.`, review: `Review the required ${humanizeSetting(parameter.name)} setting and its documented options.`,
+      hints: ["Think about what this step must provide to the application.", `Review the ${humanizeSetting(parameter.name)} setting in this request's documentation.`, "Required settings describe what information or behavior the request will produce; choose a documented value that fits the goal."] };
+  }
+  const missingAuto = endpoint.parameters.find((parameter) => parameter.required && groups.automatic.includes(parameter.name) && !hasVal(request.parameters?.[parameter.name]));
+  if (missingAuto) return { key: "internal", id: `internal:${endpoint.title}:${missingAuto.name}`, requestIndex, setting: titleCase(humanizeSetting(missingAuto.name)), heading: requestHeading(endpoint, requestIndex), internal: true,
+    message: "The application could not prepare a required setting for this request. It is not a student choice; restart this project or ask your teacher for help.", review: "No change to your plan is needed for this application-handled setting.", hints: [] };
+  return null;
+}
+export function formativeDiagnostics(data, scenario, result, submittedRequests = []) {
+  if (result?.correct) return [];
+  const map = endpointMap(data), requests = submittedRequests || [];
+  const candidates = (scenario.acceptedPlans || []).map((plan) => candidatePlanScore(scenario, plan, requests, map)).sort((a, b) => compareScores(a.score, b.score));
+  const candidate = candidates[0], issues = [];
+  const add = (issue) => { if (issue && !issues.some((item) => item.id === issue.id)) issues.push(issue); };
+  // Priority 1: operations. Compare only against one closest accepted alternative.
+  if (candidate) {
+    const missing = candidate.mapped.find((item) => !item.request);
+    if (missing) {
+      const endpoint = map.get(missing.step.endpointId), purpose = operationPurpose(missing.step, endpoint);
+      add({ key: "missing", id: `operation:missing:${endpoint.title}`, heading: "A needed capability is missing", message: `Your plan still needs a way to ${purpose}. Compare the available operation descriptions with the information the application still needs.`, review: "Check which kind of operation can provide the missing project capability.", hints: ["What application need is not served by your current requests?", "Compare the descriptions of available operations with that remaining need.", "Operations can return different kinds of resources; choose one whose documented purpose covers the missing capability."] });
+    }
+    const extra = candidate.extras.find(({ request }) => map.has(request.endpointId));
+    if (missing && extra) {
+      const endpoint = map.get(extra.request.endpointId);
+      add({ key: "operation", id: `operation:extra:${extra.index}:${endpoint.title}`, requestIndex: extra.index, heading: requestHeading(endpoint, extra.index), message: "This operation does not add information or behavior required by the application goal. Compare its purpose with the project's remaining needs.", review: "Check whether another selected request already provides the same information.", hints: ["Think about what this request adds to the application's plan.", "Compare its documented response with the information the project displays or uses.", "An operation is unnecessary when its result is not used to meet a project requirement."] });
     }
   }
-  if (result.invalidParameterRequests.some((id) => !maskIds.has(id))) add(scenarioDiagnostic(scenario, "parameters", mismatches.length ? { parameter: mismatches[0], endpoint: mismatches[0].endpoint } : {}));
-  if (mismatches.length && !issues.has("parameters")) add(scenarioDiagnostic(scenario, "parameters", { parameter: mismatches[0], endpoint: mismatches[0].endpoint }));
-  if (result.incorrectlyConfiguredRequests.some(({ endpointId }) => {
-    if (maskIds.has(endpointId)) return false;
-    const i = requests.findIndex((r) => r.endpointId === endpointId), endpoint = map.get(endpointId);
-    return !endpoint || !dependencyMismatch(scenario, requests, i, requests[i]) && !hasAccessConflict(scenario, endpoint, requests[i]);
-  })) add(scenarioDiagnostic(scenario, "parameters", mismatches.length ? { parameter: mismatches[0], endpoint: mismatches[0].endpoint } : {}));
-  if (requests.some((request) => hasAccessConflict(scenario, map.get(request.endpointId), request))) add(scenarioDiagnostic(scenario, "access"));
-  if (result.unnecessary.length) add(scenarioDiagnostic(scenario, "unnecessary"));
-  if (!issues.size || !requests.length && result.missing.length) add(scenarioDiagnostic(scenario, "missing"));
-  const order = ["operation", "dependency", "fieldMask", "incomplete", "parameters", "access", "unnecessary", "missing"];
-  return order.filter((key) => issues.has(key)).slice(0, 2).map((key) => issues.get(key));
+  // Invalid operation IDs cannot be fixed with the available student controls.
+  if (!candidate || result?.incorrectEndpoints?.length) add({ key: "internal", id: "internal:unavailable-operation", internal: true, heading: "Request plan issue", message: "This plan contains an operation that is not available in this project's documentation. Remove it and choose from the listed operations.", review: "Use only operations shown in Browse API Documentation.", hints: [] });
+  // Priority 2–3: request order/relationships and response-source fields.
+  if (candidate) for (let index = 0; index < requests.length; index++) {
+    const request = requests[index], endpoint = map.get(request.endpointId); if (!endpoint) continue;
+    const issue = dependencyIssue(scenario, map, candidate, request, index); if (issue) add(issue);
+  }
+  // Priority 4–5: assessed response fields and behavior settings. Never blame app-handled values.
+  if (candidate) for (const item of candidate.mapped) {
+    const { step, request, requestIndex } = item; if (!request) continue;
+    const endpoint = map.get(step.endpointId), groups = classification(scenario, endpoint);
+    for (const [name, expected] of Object.entries(step.parameters || {})) {
+      if (findRefs(expected).length || !groups.assessed.includes(name)) continue;
+      const parameter = endpoint.parameters.find((entry) => entry.name === name);
+      if (assessmentMatches(request.parameters?.[name], expected, step.assessment?.[name], parameter)) continue;
+      if (!hasVal(request.parameters?.[name])) {
+        const setting = titleCase(humanizeSetting(name));
+        add({ key: "incomplete", id: `incomplete:${endpoint.title}:${name}`, requestIndex, setting, heading: requestHeading(endpoint, requestIndex),
+          message: `This request still needs a choice for ${humanizeSetting(name)} before the application can use it.`, review: `Review the documented options for ${humanizeSetting(name)} and choose what fits the project goal.`,
+          hints: [`Think about what information or behavior this request must provide.`, `Review the ${humanizeSetting(name)} choices in this request's documentation.`, "Choose a documented option that supports the application's stated purpose."] });
+      } else add(parameterIssue(scenario, endpoint, request, requestIndex, name));
+    }
+    for (const name of groups.assessed) {
+      if (Object.hasOwn(step.parameters || {}, name)) continue;
+      const parameter = endpoint.parameters.find((entry) => entry.name === name);
+      if (parameter?.required && !hasVal(request.parameters?.[name])) add(incompleteIssue(scenario, map, request, requestIndex));
+    }
+  }
+  for (let index = 0; index < requests.length; index++) {
+    const request = requests[index], endpoint = map.get(request.endpointId);
+    if (!endpoint || !hasAccessConflict(scenario, endpoint, request)) continue;
+    add({ key: "access", id: `access:${endpoint.title}:${index}`, requestIndex: index, heading: requestHeading(endpoint, index),
+      message: "This operation's access requirements do not fit the application's stated login or authorization limits.",
+      review: "Compare the project's access constraints with the operation's authorization notes.",
+      hints: ["Check who is allowed to sign in or authorize this application.", "Review the documentation for this operation's access and scope requirements.", "An operation can be documented but still require a user or permission the project does not allow."] });
+  }
+  if (!issues.some((issue) => issue.key === "dependency" || issue.key === "parameters" || issue.key === "fieldMask")) {
+    const invalid = result?.invalidParameterRequests || [];
+    for (const id of invalid) {
+      const index = requests.findIndex((request) => request.endpointId === id), request = requests[index];
+      if (!request || index < 0) continue;
+      const issue = incompleteIssue(scenario, map, request, index);
+      if (issue) add(issue);
+      else {
+        const endpoint = map.get(id), groups = classification(scenario, endpoint);
+        const invalidReason = result?.errors?.find((error) => error.endpointId === id)?.reason || "";
+        const parameterName = endpoint.parameters.find((entry) => invalidReason.toLowerCase().includes(entry.name.toLowerCase()))?.name;
+        const parameter = parameterName && endpoint.parameters.find((entry) => entry.name === parameterName);
+        if (parameter && groups.assessed.includes(parameter.name)) add(parameterIssue(scenario, endpoint, request, index, parameter.name));
+        else add({ key: "internal", id: `internal:invalid:${endpoint.title}:${parameterName || "setting"}`, requestIndex: index, heading: requestHeading(endpoint, index), internal: true, message: "The application could not prepare one of this request's required settings. This is not a student-editable choice; ask your teacher for help.", review: "Your selected plan does not need another student change for this setting.", hints: [] });
+      }
+    }
+  }
+  // Priority 6: redundant requests, only after unresolved operations and settings.
+  if (candidate && candidate.extras.length) for (const extra of candidate.extras) {
+    const endpoint = map.get(extra.request.endpointId); if (!endpoint) continue;
+    add({ key: "unnecessary", id: `unnecessary:${extra.index}:${endpoint.title}`, requestIndex: extra.index, heading: requestHeading(endpoint, extra.index), message: "This request appears to repeat information already available elsewhere in the plan.", review: "Compare the response data from this request with the other selected operations.", hints: ["Check whether the application uses a new kind of information from this request.", "Compare its documented response fields with the responses already planned.", "Keep a request only when it supplies a distinct result the application needs."] });
+  }
+  if (!issues.length && result?.missing?.length) {
+    add({ key: "missing", id: "operation:missing", heading: "A needed capability is missing", message: "Your plan does not yet cover all information required by the application. Revisit the project's needs and compare them with the available operations.", review: "Check which information is still missing from the plan.", hints: HINTS.missing });
+  }
+  const priority = { operation: 1, missing: 1, dependency: 2, fieldMask: 3, parameters: 4, incomplete: 5, internal: 5, access: 5, unnecessary: 6 };
+  return issues.sort((a, b) => (priority[a.key] || 9) - (priority[b.key] || 9)).slice(0, 2);
 }
 export function preferredPlan(scenario) { return scenario.acceptedPlans.find((p) => p.preferred) || scenario.acceptedPlans[0]; }
 export function planFromAccepted(scenario, plan = preferredPlan(scenario)) { return { requests: plan.steps.map((step) => ({ endpointId: step.endpointId, parameters: Object.fromEntries(Object.entries(step.parameters).filter(([name, value]) => { const e = scenario.availableEndpointIds; return !obj(value) || !("$fromStep" in value); })), dependencies: {} })) }; }
