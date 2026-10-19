@@ -20,7 +20,7 @@ const groups = isCsp ? [
   ["5","5.0 — Impacts of Computing",["5.0 Impacts of Computing"]],
   ["6","6.0 — Networks and the Internet",["6.0 Networks and the Internet"]],
   ["7","7.0 — Emerging Technologies",[]],
-  ["eop","EOP extensions — related Java concepts",[]]
+  ["eop","EOP extensions — related Java concepts",["Strings","Indexing","String Methods","Output Tracing"]]
 ];
 const topicText = g => g.topics.join(" · ");
 function card(g){
