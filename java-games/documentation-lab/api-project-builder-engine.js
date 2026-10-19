@@ -84,9 +84,9 @@ function sameRuntimeShape(actual, expected) {
   return Object.is(actual, expected);
 }
 function equivalentValue(actual, expected, runtime, parameter) {
-  if (containsRuntime(expected)) return sameRuntimeShape(actual, expected);
   if (runtime && obj(expected) && "$fromStep" in expected) return obj(actual) && Number.isInteger(actual.fromRequest) && actual.fromRequest >= 0;
   if (runtime) return true;
+  if (containsRuntime(expected)) return sameRuntimeShape(actual, expected);
   if (typeof actual === "string" && typeof expected === "string" && actual.includes("places.") && expected.includes("places.")) {
     const fields = (value) => new Set(value.split(",").map((part) => part.trim()).filter(Boolean));
     const a = fields(actual), e = fields(expected);
