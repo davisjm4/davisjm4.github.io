@@ -313,6 +313,7 @@ function startGame() {
     const correct = J.assess(q, r),
       result = tracker.submit(instance, correct);
     if (!result.accepted) return;
+    if (q.mode === "trace") tracker.annotate(instance, { correct });
     submitted = true;
     if ($("watch")) { $("watch").hidden = false; $("watch").disabled = false; }
     if (!correct) {
