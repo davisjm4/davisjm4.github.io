@@ -350,12 +350,14 @@ function representedMapsPlan(scenario, accepted) {
         const option = config.arrayOptions[name].find((candidate) => JSON.stringify(candidate.value) === JSON.stringify(expected));
         assert.ok(option, `${scenario.id}: accepted array setting has a radio option`);
         assert.match(control, /type="radio"[^>]*data-param-array-choice=/, `${scenario.id}: a single array choice uses radio buttons`);
+        assert.doesNotMatch(controlsFor(parameter, { endpointId: endpoint.id, parameters: automaticParameters(scenario, endpoint), dependencies: {} }, requestIndex, [], scenario, expandedMap), /checked/, `${scenario.id}: the assessed region choice is not preselected`);
         const choiceIndex = config.arrayOptions[name].indexOf(option);
         parameters[name] = serializeArrayChoice(config, name, choiceIndex);
       } else if (config.valueChoices?.[name]) {
         const option = config.valueChoices[name].find((candidate) => JSON.stringify(candidate.value) === JSON.stringify(expected));
         assert.ok(option, `${scenario.id}: accepted structured setting has a choice`);
         assert.match(control, /type="radio"[^>]*data-param-object-choice=/, `${scenario.id}: one transit combination uses a radio group`);
+        assert.doesNotMatch(controlsFor(parameter, { endpointId: endpoint.id, parameters: automaticParameters(scenario, endpoint), dependencies: {} }, requestIndex, [], scenario, expandedMap), /checked/, `${scenario.id}: the assessed transit choice is not preselected`);
         parameters[name] = serializeObjectChoice(config, name, config.valueChoices[name].indexOf(option));
       } else parameters[name] = structuredClone(expected);
     }
