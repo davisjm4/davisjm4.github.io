@@ -77,8 +77,14 @@ function assessmentMatches(actual, expected, assessment, parameter) {
   if (assessment.mode === "includesAll") { const actualValues = arr(actual) ? actual : typeof actual === "string" ? actual.split(",").map((v) => v.trim()).filter(Boolean) : []; return (assessment.values || []).flatMap((value) => arr(value) ? value : [value]).every((value) => actualValues.some((actualValue) => deepEqual(actualValue, value))); }
   return equivalentValue(actual, expected, false, parameter);
 }
+function sameRuntimeShape(actual, expected) {
+  if (obj(expected) && "$runtime" in expected) return obj(actual) && "$runtime" in actual;
+  if (arr(expected)) return arr(actual) && actual.length === expected.length && expected.every((value, index) => sameRuntimeShape(actual[index], value));
+  if (obj(expected)) return obj(actual) && Object.keys(actual).length === Object.keys(expected).length && Object.entries(expected).every(([key, value]) => Object.hasOwn(actual, key) && sameRuntimeShape(actual[key], value));
+  return Object.is(actual, expected);
+}
 function equivalentValue(actual, expected, runtime, parameter) {
-  if (containsRuntime(expected)) return containsRuntime(actual);
+  if (containsRuntime(expected)) return sameRuntimeShape(actual, expected);
   if (runtime && obj(expected) && "$fromStep" in expected) return obj(actual) && Number.isInteger(actual.fromRequest) && actual.fromRequest >= 0;
   if (runtime) return true;
   if (typeof actual === "string" && typeof expected === "string" && actual.includes("places.") && expected.includes("places.")) {
