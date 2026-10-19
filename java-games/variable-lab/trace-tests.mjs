@@ -81,7 +81,7 @@ for(let i=0;i<samples.length;i++){
   }
   methods.push(`static void q${i}(){${body.join("\n")}}`);
 }
-const javaSource=`public class TraceDeepVerify {${methods.join("\n")} public static void main(String[] args){${samples.map((_,i)=>`q${i}();`).join("\n")}}`;
+const javaSource=`public class TraceDeepVerify {${methods.join("\n")} public static void main(String[] args){${samples.map((_,i)=>`q${i}();`).join("\n")}}}`;
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),"trace-variable-verify-")),src=path.join(dir,"TraceDeepVerify.java");fs.writeFileSync(src,javaSource);
 execFileSync("javac",[src],{timeout:120000,maxBuffer:10_000_000});
 const raw=execFileSync("java",["-cp",dir,"TraceDeepVerify"],{encoding:"utf8",timeout:120000,maxBuffer:30_000_000}),actual=new Map();
