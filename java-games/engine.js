@@ -164,11 +164,11 @@ export function createTypeQueue(types = TYPES, perBlock = 5) {
   };
 }
 const assembleTypes = createTypeQueue(), identifyTypes = createTypeQueue();
-let recentFamilies = [], recentItems = [], lastIdentifyVariant = null;
+let recentFamilies = [], recentItems = [], lastIdentifyVariant = null, lastTraceFamily = null;
 export function resetVariableLabState() {
   Object.assign(assembleTypes, createTypeQueue());
   Object.assign(identifyTypes, createTypeQueue());
-  recentFamilies = []; recentItems = []; lastIdentifyVariant = null;
+  recentFamilies = []; recentItems = []; lastIdentifyVariant = null; lastTraceFamily = null;
 }
 // Pick a scenario for a type chosen first. Recently used families and items are
 // avoided so contexts rotate across all families.
@@ -332,7 +332,15 @@ function identifyChallenge(forced) {
   return q;
 }
 function variable(mode, forced, options = {}) {
-  if (mode === "trace") return generateTrace(options);
+  if (mode === "trace") {
+    let q = generateTrace(options);
+    if (options.seed === undefined) {
+      for (let tries = 0; tries < 5 && q.traceFamily === lastTraceFamily; tries++)
+        q = generateTrace(options);
+      lastTraceFamily = q.traceFamily;
+    }
+    return q;
+  }
   return mode === "assemble" ? assembleChallenge() : identifyChallenge(forced);
 }
 export function loopValues({ start, bound, step, op }) {
