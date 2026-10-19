@@ -263,6 +263,14 @@ export function createSessionTracker({
     save();
     return true;
   }
+  function closeIncorrect(instance) {
+    read();
+    const r = data.records[instance];
+    if (!r || r.status !== "active" || r.submissions < 1) return false;
+    r.status = "solved";
+    activity();
+    return true;
+  }
   function status(instance) {
     read();
     return data.records[instance]?.status || "expired";
@@ -285,6 +293,7 @@ export function createSessionTracker({
     reset,
     status,
     annotate,
+    closeIncorrect,
     addActiveSeconds,
     get warning() {
       return warning;
