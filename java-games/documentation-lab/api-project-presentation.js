@@ -214,9 +214,32 @@ export const PROJECT_PRESENTATION = {
     "spotify.get-recently-played": { assessed: ["limit"], numericOptions: { limit: [10, 20, 30, 50] } },
     "spotify.create-playlist": { assessed: ["public"], automatic: { name: fixed("Study Session Rewind", "Playlist name specified by the project") } },
   },
+  "spotify-concert-alert-wall": {
+    "spotify.get-followed-artists": { automatic: {
+      type: fixed("artist", "The screen lists followed artists, not other resource types"),
+      limit: fixed(50, "The project specifies a first page of up to 50 artists"),
+    } },
+  },
+  "spotify-club-now-playing": {
+    "spotify.get-currently-playing": { automatic: { additional_types: fixed("track,episode", "The screen supports both songs and podcast episodes") } },
+    "spotify.get-playback-state": { automatic: { additional_types: fixed("track,episode", "The device picker supports both songs and podcast episodes") } },
+  },
   "discord-event-volunteer-desk": {
     "discord.search-guild-members": { assessed: ["limit"], numericOptions: { limit: [5, 10, 20] }, automatic: { guild_id: runtime, query: runtime } },
     "discord.add-guild-member-role": { automatic: { guild_id: runtime, role_id: runtime } },
+  },
+  "discord-study-hall-catch-up": {
+    "discord.get-channel-messages": { automatic: { limit: fixed(100, "The project displays a batch of up to 100 unread messages") } },
+  },
+  "discord-weekly-club-announcements": {
+    "discord.create-message": { automatic: { embeds: accepted("The app builds the configured announcement card from the officer's update") } },
+    "discord.execute-webhook": { automatic: {
+      wait: fixed(true, "The app needs the created message response so it can save its ID"),
+      embeds: accepted("The app builds the configured announcement card from the officer's update"),
+    } },
+  },
+  "discord-pinned-resources-board": {
+    "discord.get-channel-pins": { automatic: { limit: fixed(20, "The panel displays the 20 most recently pinned messages") } },
   },
   "tiktok-club-recap-publisher": {
     "tiktok.direct-post-video-init": {
@@ -332,7 +355,7 @@ export const PROJECT_PRESENTATION = {
   },
   "maps-saved-place-card": {
     "maps.places-details": { assessed: ["X-Goog-FieldMask"], automatic: { placeId: runtime }, fieldOptions: ["displayName", "formattedAddress", "nationalPhoneNumber", "websiteUri", "regularOpeningHours", "currentOpeningHours", "photos", "rating", "googleMapsUri"], fields: ["displayName", "formattedAddress", "nationalPhoneNumber", "websiteUri", "regularOpeningHours.weekdayDescriptions", "currentOpeningHours.openNow", "photos[].name", "photos[].authorAttributions[].displayName", "rating"] },
-    "maps.places-photo": { assessed: ["name"], automatic: { maxWidthPx: fixed(800, "Card image size chosen by the application") }, fields: ["name", "photoUri"] },
+    "maps.places-photo": { assessed: ["name"], automatic: { maxWidthPx: fixed(800, "Card image size chosen by the application"), skipHttpRedirect: fixed(true, "The app reads the photo response directly rather than following a browser redirect") }, fields: ["name", "photoUri"] },
   },
   "maps-museum-walk-planner": {
     "maps.places-text-search": { assessed: ["X-Goog-FieldMask"], automatic: { textQuery: runtime, locationBias: fixed({ circle: { center: { latitude: 36.118, longitude: -115.172 }, radius: 5000 } }, "Hotel area supplied by the application") }, fieldOptions: ["places.id", "places.displayName", "places.formattedAddress", "places.rating", "places.location", "places.currentOpeningHours", "places.photos"], fields: ["places[].id", "places[].displayName", "places[].formattedAddress", "places[].rating", "places[].location"] },
@@ -406,3 +429,4 @@ export function automaticParameters(scenario, endpoint) {
   for (const p of endpoint.parameters) if (p.required && p.allowedValues?.length === 1 && !Object.hasOwn(result, p.name) && !(presentation(scenario, endpoint).assessed || []).includes(p.name)) result[p.name] = p.allowedValues[0];
   return result;
 }
+
