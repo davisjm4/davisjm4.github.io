@@ -4,6 +4,7 @@ import {
   shuffle,
 } from "../csp-games/engine.js?v=platform-expansion-v2";
 import { TYPES, scenarioFamilies } from "./variable-scenarios.js?v=variable-lab-v4";
+import { generateTrace } from "./variable-lab/trace-engine.js?v=trace-v1";
 export const games = {
   "variable-lab": {
     name: "Variable Lab",
@@ -11,7 +12,7 @@ export const games = {
     description:
       "Identify declaration components, values, and types with selectable Java pieces.",
     concepts: "Types · Declarations · Assignment · Conversions",
-    modes: { identify: "Identification", assemble: "Assemble Declaration" },
+    modes: { identify: "Identification", assemble: "Assemble Declaration", trace: "Trace the Variable" },
   },
   "debugger-lab": {
     name: "Debugger Lab",
@@ -76,11 +77,11 @@ const choices = (answer, wrong) =>
 // Assemble scenarios: every family offers one variable of each type, so the
 // type is chosen first from a balanced queue and never skewed by the pool.
 export const declarationScenarios = scenarioFamilies.flatMap(f => f.items.map(item => ({...item, family: f.id, context: f.context})));
-export function generate(game, mode = "mixed", forced) {
+export function generate(game, mode = "mixed", forced, options = {}) {
   const selected =
     mode === "mixed" ? pick(Object.keys(games[game].modes)) : mode;
   if (!games[game].modes[selected]) throw Error("Unknown mode");
-  const q = generators[game](selected, forced);
+  const q = generators[game](selected, forced, options);
   q.game = game;
   q.mode = selected;
   q.code = q.root ? source(q.root) : q.code;
@@ -330,7 +331,8 @@ function identifyChallenge(forced) {
   q.compilerSource = `public class Practice { public static void main(String[] args) { ${source(q.root)} } }`;
   return q;
 }
-function variable(mode, forced) {
+function variable(mode, forced, options = {}) {
+  if (mode === "trace") return generateTrace(options);
   return mode === "assemble" ? assembleChallenge() : identifyChallenge(forced);
 }
 export function loopValues({ start, bound, step, op }) {
