@@ -92,6 +92,18 @@ java.submit(j, true);
 assert.deepEqual(csp.snapshot(), cspBefore);
 assert.equal(java.snapshot().totals.firstTry, 0);
 assert.equal(java.snapshot().totals.afterRetry, 1);
+// closeIncorrect preserves one-attempt metrics without recording a reveal, skip, or retry.
+const oneAttempt = java.begin("variable-lab", "Variable Lab", "trace-reassignment", "Reassignment");
+java.submit(oneAttempt, false);
+const beforeClose = java.snapshot().totals;
+assert.equal(java.closeIncorrect(oneAttempt), true);
+const afterClose = java.snapshot().totals;
+assert.equal(afterClose.attempted, beforeClose.attempted);
+assert.equal(afterClose.submissions, beforeClose.submissions);
+assert.equal(afterClose.incorrect, beforeClose.incorrect);
+assert.equal(afterClose.revealed, beforeClose.revealed);
+assert.equal(afterClose.skipped, beforeClose.skipped);
+assert.equal(afterClose.afterRetry, beforeClose.afterRetry);
 java.reset(true);
 assert.deepEqual(csp.snapshot(), cspBefore);
 assert.notEqual(JS.SESSION_KEY, CS.SESSION_KEY);
