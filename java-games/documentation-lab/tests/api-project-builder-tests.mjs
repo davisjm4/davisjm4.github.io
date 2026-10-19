@@ -411,7 +411,7 @@ assert.equal(focusedInventory.length, 9);
 assert.deepEqual(classification(data.scenarios.find((s) => s.id === "youtube-study-video-finder"), map.get("youtube.search-list")).assessed, ["type", "videoDuration", "maxResults"]);
 assert.equal(automaticParameters(data.scenarios.find((s) => s.id === "youtube-study-video-finder"), map.get("youtube.search-list")).q.$runtime, true);
 assert.equal(automaticParameters(data.scenarios.find((s) => s.id === "youtube-study-video-finder"), map.get("youtube.search-list")).part, "snippet");
-assert.ok(!JSON.stringify(PROJECT_PRESENTATION).includes("regionCode"), "irrelevant optional region filter is not displayed");
+assert.ok(!presentation(data.scenarios.find((s) => s.id === "youtube-study-video-finder"), map.get("youtube.search-list")).automatic.regionCode, "irrelevant optional region filter remains hidden in unrelated projects");
 assert.match(uiSource, /Full Technical Documentation/);
 assert.match(uiSource, /Handled by the application/);
 assert.match(uiSource, /Learning-focused extract/);
