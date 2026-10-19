@@ -113,6 +113,26 @@ export const RESPONSE_SOURCE_CHOICES = {
   },
 };
 export const PROJECT_PRESENTATION = {
+  "spotify-session-rewind-saver": {
+    "spotify.get-recently-played": { assessed: ["limit"], numericOptions: { limit: [10, 20, 30, 50] } },
+    "spotify.create-playlist": { assessed: ["public"], automatic: { name: fixed("Study Session Rewind", "Playlist name specified by the project") } },
+  },
+  "discord-event-volunteer-desk": {
+    "discord.search-guild-members": { assessed: ["limit"], numericOptions: { limit: [5, 10, 20] }, automatic: { guild_id: runtime, query: runtime } },
+    "discord.add-guild-member-role": { automatic: { guild_id: runtime, role_id: runtime } },
+  },
+  "tiktok-club-recap-publisher": {
+    "tiktok.direct-post-video-init": {
+      assessed: ["post_info"],
+      nestedChoices: { post_info: { "privacy_level": ["PUBLIC_TO_EVERYONE", "MUTUAL_FOLLOW_FRIENDS", "FOLLOWER_OF_CREATOR", "SELF_ONLY"] } },
+      automatic: {
+        "post_info.title": runtime,
+        "post_info.brand_content_toggle": fixed(false, "The project does not describe a paid brand promotion"),
+        "source_info.source": fixed("PULL_FROM_URL", "The public video URL uses TikTok's documented verified-domain flow"),
+        "source_info.video_url": runtime,
+      },
+    },
+  },
   "spotify-album-spotlight": {
     "spotify.get-album": { assessed: ["market"], automatic: { id: runtime }, marketOptions: ["US", "GB", "CA"], fields: ["name", "images[].url", "release_date", "artists[].name", "tracks.items[].name", "tracks.items[].track_number", "tracks.items[].duration_ms", "tracks.total"] },
   },
@@ -175,8 +195,27 @@ export function classification(scenario, endpoint) {
 }
 export function automaticParameters(scenario, endpoint) {
   const result = {};
+  const acceptedValue = (path) => {
+    for (const plan of scenario.acceptedPlans || []) for (const step of plan.steps || []) {
+      if (step.endpointId !== endpoint.id) continue;
+      let value = step.parameters;
+      for (const key of path.split(".")) value = value?.[key];
+      if (value !== undefined) return structuredClone(value);
+    }
+    return undefined;
+  };
+  for (const [root, fields] of Object.entries(presentation(scenario, endpoint).nestedChoices || {})) {
+    const seed = acceptedValue(root);
+    if (seed === undefined) continue;
+    result[root] = seed;
+    for (const path of Object.keys(fields)) {
+      const keys = path.split("."); let node = result[root];
+      for (const key of keys.slice(0, -1)) node = node[key] ||= {};
+      node[keys.at(-1)] = "";
+    }
+  }
   for (const [path, spec] of Object.entries(presentation(scenario, endpoint).automatic || {})) {
-    const value = spec.kind === "runtime" ? { $runtime: true } : structuredClone(spec.value);
+    const value = spec.kind === "runtime" ? (path.includes(".") ? acceptedValue(path) || { $runtime: true } : { $runtime: true }) : structuredClone(spec.value);
     const keys = path.split("."); let node = result;
     for (const key of keys.slice(0, -1)) node = node[key] ||= {};
     node[keys.at(-1)] = value;
