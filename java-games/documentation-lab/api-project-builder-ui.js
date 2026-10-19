@@ -1,5 +1,5 @@
-import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v15";
-import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v4";
+import { loadApiContent, isProductionContent, validatePlan, formativeDiagnostics, endpointsFor, endpointMap, providerFor, createScenarioPicker, preferredPlan } from "./api-project-builder-engine.js?v=api-builder-v16";
+import { presentation, classification, automaticParameters } from "./api-project-presentation.js?v=curated-v5";
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const object = (v) => !!v && typeof v === "object";
 const val = (v) => v !== undefined && v !== null && v !== "";
@@ -310,6 +310,7 @@ function controlsFor(p, request, index, requests, scenario, map) {
   }
   if (runtimeParam(p) && p.in === "path") return `<div class="api-param"><strong>${esc(p.name)} <b>runtime path value</b></strong><span class="api-symbolic">The application supplies this identifier when a user selects the resource. No value needs to be entered.</span><em>${esc(p.description)}</em></div>`;
   if (runtimeParam(p)) return `<label class="api-param"><span>${esc(p.name)} <b>runtime value</b> <small>${esc(p.in)}</small></span><span class="api-symbolic">The application supplies this selected resource or user input at run time.</span><label class="api-runtime-choice"><input type="checkbox" data-runtime="${esc(p.name)}"${val(request.parameters[p.name]) ? " checked" : ""}> Use the application-supplied value</label><em>${esc(p.description)}</em></label>`;
+  if (config.nestedChoices?.[p.name]) return `<fieldset class="api-multi-selector api-nested-choice"><legend>${esc(p.name)} · choose the documented setting</legend>${Object.entries(config.nestedChoices[p.name]).map(([path, values]) => `<fieldset><legend>${esc(pathLabel(path))}</legend>${values.map((value) => `<label><input type="radio" name="api-nested-${index}-${esc(p.name)}-${esc(path)}" data-nested-choice="${esc(p.name)}" data-nested-path="${esc(path)}" value="${esc(value)}"${getPath(request.parameters[p.name], path) === value ? " checked" : ""}><span><code>${esc(value)}</code></span></label>`).join("")}</fieldset>`).join("")}<em>${esc(p.description)}</em></fieldset>`;
   if (p.name === "X-Goog-FieldMask") return fieldMaskControl(map.get(request.endpointId), request, p, config);
   if (presentationFor(map.get(request.endpointId), p) === "location") return locationControl(scenario, request, p, variants);
   if (p.type === "object") {
@@ -326,6 +327,7 @@ function controlsFor(p, request, index, requests, scenario, map) {
   const current = request.parameters[p.name];
   let control;
   if (presentationFor(map.get(request.endpointId), p) === "multi") return multiChoiceControl(p, request, config);
+  else if (config.numericOptions?.[p.name]) control = `<select data-param="${esc(p.name)}"><option value="">Choose a number…</option>${config.numericOptions[p.name].map((v) => `<option value="${v}"${String(current) === String(v) ? " selected" : ""}>${v}</option>`).join("")}</select>`;
   else if (p.name === "market" && config.marketOptions) control = `<select data-param="${esc(p.name)}"><option value="">Choose a market…</option>${config.marketOptions.map((v) => `<option value="${esc(v)}"${current === v ? " selected" : ""}>${esc(v)}</option>`).join("")}</select>`;
   else if (p.allowedValues?.length) control = `<select data-param="${esc(p.name)}"><option value="">Choose…</option>${p.allowedValues.map((v) => `<option value="${esc(v)}"${String(current) === String(v) ? " selected" : ""}>${esc(v)}</option>`).join("")}</select>`;
   else if (p.type === "boolean") control = `<select data-param="${esc(p.name)}"><option value="">Choose…</option><option value="true"${current === true ? " selected" : ""}>true</option><option value="false"${current === false ? " selected" : ""}>false</option></select>`;
@@ -341,7 +343,7 @@ function controlsFor(p, request, index, requests, scenario, map) {
 function requestHtml(requests, map, scenario) {
   if (!requests.length) return `<p class="muted">No requests yet. Add an operation from the documentation above.</p>`;
   return requests.map((r, i) => { const e = map.get(r.endpointId), groups = classification(scenario, e), config = presentation(scenario, e);
-    const auto = groups.automatic.map((name) => { const spec = Object.entries(config.automatic || {}).find(([path]) => path === name || path.startsWith(`${name}.`))?.[1]; return `<li><code>${esc(name)}</code> — ${esc(spec?.reason || (spec?.kind === "runtime" ? "Supplied at run time by the application" : "Required documented setting"))}</li>`; }).join("");
+    const auto = groups.automatic.filter((name) => !groups.assessed.includes(name)).map((name) => { const spec = Object.entries(config.automatic || {}).find(([path]) => path === name || path.startsWith(`${name}.`))?.[1]; return `<li><code>${esc(name)}</code> — ${esc(spec?.reason || (spec?.kind === "runtime" ? "Supplied at run time by the application" : "Required documented setting"))}</li>`; }).join("");
     return `<article class="api-request" data-request="${i}"><div class="api-request-head"><span class="api-step">${i + 1}</span><div><strong>${method(e)} ${esc(e.path)}</strong><small>${esc(e.title)}</small></div><button type="button" class="secondary api-remove" data-remove="${i}">Remove Request</button></div><div class="api-request-params">${e.parameters.filter((p) => groups.assessed.includes(p.name)).map((p) => controlsFor(p, r, i, requests, scenario, map)).join("") || `<p class="muted">No settings to choose for this request.</p>`}</div>${auto ? `<details class="api-handled"><summary>Handled by the application</summary><ul>${auto}</ul></details>` : ""}</article>`; }).join("");
 }
 function readablePlan(plan, map) {
@@ -386,6 +388,7 @@ export function mount({ root, controls, tracker }) {
         touch(); renderPlan();
       }; });
       card.querySelectorAll("[data-structured]").forEach((input) => { input.oninput = () => { const name = input.dataset.structured, value = input.type === "number" ? (input.value === "" ? "" : Number(input.value)) : input.value; state.plan[i].parameters[name] = putPath(state.plan[i].parameters[name], input.dataset.structuredPath, value); touch(); }; });
+      card.querySelectorAll("[data-nested-choice]").forEach((input) => { input.onchange = () => { const name = input.dataset.nestedChoice; state.plan[i].parameters[name] = putPath(state.plan[i].parameters[name], input.dataset.nestedPath, input.value); touch(); }; });
       card.querySelectorAll("[data-runtime]").forEach((toggle) => { toggle.onchange = () => { if (toggle.checked) state.plan[i].parameters[toggle.dataset.runtime] = { $runtime: true }; else delete state.plan[i].parameters[toggle.dataset.runtime]; touch(); }; });
       card.querySelectorAll("[data-dependency-mode]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependencyMode, parameter = map.get(state.plan[i].endpointId).parameters.find((x) => x.name === p), variants = parameterVariants(state.scenario, state.plan[i], parameter); if (!select.value) { delete state.plan[i].dependencies[p]; delete state.plan[i].parameters[p]; } else if (select.value === "context") { const variant = variants[0]; state.plan[i].dependencies[p] = { source: "context", shape: variant?.shape || "" }; state.plan[i].parameters[p] = blankShape(variant?.value || {}); } else { state.plan[i].dependencies[p] = { source: "request", fromRequest: null, paths: [] }; delete state.plan[i].parameters[p]; } touch(); renderPlan(); }; });
       card.querySelectorAll("[data-dependency-shape]").forEach((select) => { select.onchange = () => { const p = select.dataset.dependencyShape, parameter = map.get(state.plan[i].endpointId).parameters.find((x) => x.name === p), variant = parameterVariants(state.scenario, state.plan[i], parameter).find((x) => x.shape === select.value); state.plan[i].dependencies[p].shape = select.value; state.plan[i].parameters[p] = blankShape(variant?.value || {}); touch(); renderPlan(); }; });
@@ -463,4 +466,4 @@ export function mount({ root, controls, tracker }) {
   return { stop() { state.stopped = true; if (state.instance && tracker.status(state.instance) === "active") tracker.skip(state.instance); } };
 }
 
-export { presentationFor, fieldMaskChoices, serializeMultiSelection, focusedFields, responseSourceControl };
+export { presentationFor, fieldMaskChoices, serializeMultiSelection, focusedFields, responseSourceControl, controlsFor, requestHtml, putPath };
