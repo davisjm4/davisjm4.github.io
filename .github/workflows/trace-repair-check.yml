@@ -1,0 +1,43 @@
+name: Trace Repair Verification
+on:
+  push:
+    paths:
+      - "java-games/**"
+      - ".github/workflows/trace-repair-check.yml"
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Prepare Java Games
+        working-directory: java-games
+        run: npm install
+      - name: Trace 15k audit and JVM verification
+        working-directory: java-games
+        run: node variable-lab/trace-tests.mjs
+      - name: Shared engine regression
+        working-directory: java-games
+        run: node tests.mjs
+      - name: Shared UI regression
+        working-directory: java-games
+        run: node ui-tests.mjs
+      - name: Variable Lab quality regression
+        working-directory: java-games
+        env:
+          JAVA_BIN: java
+        run: node quality-tests.mjs
+      - name: Compiler and JVM regression
+        working-directory: java-games
+        run: |
+          sudo mkdir -p /usr/lib/jvm/java-17-openjdk-amd64/bin
+          sudo ln -sf "$(which java)" /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+          node compiler-tests.mjs
