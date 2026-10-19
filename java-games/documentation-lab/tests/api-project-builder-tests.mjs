@@ -333,6 +333,39 @@ const enabledCoverage = publishedScenarios.map((scenario) => {
 const fullyConstructible = enabledCoverage.filter((item) => !item.blockers.length);
 assert.ok(configRepairIds.every((id) => enabledCoverage.find((item) => item.id === id)?.blockers.length === 0), "the three targeted projects have no required settings without controls or application handling");
 console.log(`Enabled-scenario required-control audit: ${enabledCoverage.length} checked; ${fullyConstructible.length} have all required settings represented by a student control, application value, runtime path, or dependency. Additional blockers: ${enabledCoverage.filter((item) => item.blockers.length).map((item) => `${item.id} (${item.blockers.join(", ")})`).join("; ") || "none"}.`);
+ 
+// YouTube part settings: assess meaningful information selection, and handle the
+// snippet-only subscription response in the app because the project assesses access rules.
+for (const [id, endpointId, expectedPart, assessed] of [
+  ["youtube-gaming-trend-wall", "youtube.videos-list", "snippet,statistics", true],
+  ["youtube-subscription-swap", "youtube.subscriptions-list", "snippet", false],
+  ["youtube-media-club-playlist-shelf", "youtube.playlists-list", "snippet,contentDetails", true],
+]) {
+  const scenario = expandedData.scenarios.find((item) => item.id === id), endpoint = expandedMap.get(endpointId);
+  const config = presentation(scenario, endpoint), groups = classification(scenario, endpoint);
+  const allowed = endpoint.parameters.find((item) => item.name === "part").allowedValues;
+  if (assessed) {
+    assert.ok(groups.assessed.includes("part"), `${id}: part is an assessed data-selection decision`);
+    assert.ok(config.partOptions?.length >= 3 && config.partOptions.length <= 5, `${id}: the curated part control stays focused`);
+    assert.ok(config.partOptions.every((value) => allowed.includes(value)), `${id}: each offered part is documented for this endpoint`);
+    const seed = automaticParameters(scenario, endpoint);
+    const request = { endpointId, parameters: { ...seed, part: "" }, dependencies: {} };
+    const control = controlsFor(endpoint.parameters.find((item) => item.name === "part"), request, 0, [request], scenario, expandedMap);
+    assert.match(control, /data-param-multi="part"/, `${id}: part values are selectable in the rendered multiselect`);
+    for (const value of expectedPart.split(",")) assert.match(control, new RegExp(`value="${value}"`), `${id}: required ${value} part is offered`);
+    const accepted = scenario.acceptedPlans[0], represented = studentPlan(scenario, accepted, expandedData, expandedMap);
+    assert.equal(validatePlan(expandedData, scenario, represented).correct, true, `${id}: accepted combination passes the evaluator`);
+    const bad = structuredClone(represented); bad.requests[0].parameters.part = expectedPart.split(",")[0];
+    assert.equal(validatePlan(expandedData, scenario, bad).correct, false, `${id}: incomplete plausible part choice is rejected`);
+  } else {
+    assert.ok(!groups.assessed.includes("part") && groups.automatic.includes("part"), `${id}: the app handles the non-target part setting`);
+    assert.equal(automaticParameters(scenario, endpoint).part, expectedPart, `${id}: exact documented part is serialized automatically`);
+    const accepted = scenario.acceptedPlans[0], represented = studentPlan(scenario, accepted, expandedData, expandedMap);
+    assert.ok(represented.requests.every((request) => request.parameters.part === expectedPart), `${id}: app-handled value reaches both requests`);
+    assert.equal(validatePlan(expandedData, scenario, represented).correct, true, `${id}: app-handled plan passes the evaluator`);
+  }
+}
+
 
 // The focused-control checks below cover the original nine scenarios only.
 const focusedInventory = [];
