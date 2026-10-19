@@ -155,7 +155,7 @@ assert.equal(positions.size,2);
 // unforced identification never repeats the same variant twice in a row and covers all variants
 let prev=null;const seenV=new Set();for(let i=0;i<500;i++){const q=J.generate('variable-lab','identify');assert.notEqual(q.topic,prev);prev=q.topic;seenV.add(q.topic);}
 assert.equal(seenV.size,J.identifyVariants.length);
-const modes=new Set(Array.from({length:100},()=>J.generate('variable-lab').mode));assert.deepEqual([...modes].sort(),['assemble','identify']);
+const modes=new Set(Array.from({length:100},()=>J.generate('variable-lab').mode));assert.deepEqual([...modes].sort(),['assemble','identify','trace']);
 // Mixed Practice shows all five types in Assemble challenges
 const mixedTypes={};for(let i=0;i<400;i++){const q=J.generate('variable-lab');if(q.kind==='assemble') mixedTypes[q.answer.type]=(mixedTypes[q.answer.type]||0)+1;}
 assert.deepEqual(Object.keys(mixedTypes).sort(),[...TYPES].sort());
