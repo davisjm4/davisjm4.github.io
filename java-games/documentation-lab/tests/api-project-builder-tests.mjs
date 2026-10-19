@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { validateApiData, assertValid, validatePlan, formativeDiagnostics, endpointsFor, createScenarioPicker, isRuntimeParameter, isProductionContent, endpointMap } from "../api-project-builder-engine.js";
-import { presentationFor, fieldMaskChoices, serializeMultiSelection, responseSourceChoices, responseSourceControl, focusedFields, dependencySourceCandidates, dependencyConnectionControl, originControl, resolveRequestDependencies, controlsFor, requestHtml, putPath } from "../api-project-builder-ui.js";
+import { presentationFor, fieldMaskChoices, serializeMultiSelection, serializeArrayChoice, serializeNestedMultiChoice, responseSourceChoices, responseSourceControl, focusedFields, dependencySourceCandidates, dependencyConnectionControl, originControl, resolveRequestDependencies, controlsFor, requestHtml, putPath } from "../api-project-builder-ui.js";
 import { presentation, classification, automaticParameters, PROJECT_PRESENTATION, RESPONSE_SOURCE_CHOICES } from "../api-project-presentation.js";
 
 const data = JSON.parse(fs.readFileSync(new URL("../api-project-data-v1.json", import.meta.url), "utf8"));
@@ -318,6 +318,89 @@ for (const id of configRepairIds) {
 assert.equal(configRepairStats.accepted, 4, "all accepted alternatives for the three repaired projects are constructible");
 console.log(`Configuration-control repairs: ${configRepairIds.length} projects; ${configRepairStats.controls} assessed controls generated, ${configRepairStats.accepted} accepted-plan variants constructible, ${configRepairStats.incorrect} plausible incorrect settings rejected.`);
 
+// Google Maps configuration coverage: build each accepted plan from the same
+// app-handled metadata and rendered controls students receive in the planner.
+const mapsRepairIds = ["maps-class-dinner-checklist", "maps-trip-destination-picker", "maps-venue-distance-board", "maps-late-start-bus-check"];
+const mapsRepairStats = { acceptedPlans: 0, assessedControls: 0, appHandled: 0, incorrect: 0 };
+function representedMapsPlan(scenario, accepted) {
+  const requests = accepted.steps.map((step, requestIndex) => {
+    const endpoint = expandedMap.get(step.endpointId), config = presentation(scenario, endpoint), groups = classification(scenario, endpoint);
+    const parameters = automaticParameters(scenario, endpoint), dependencies = {};
+    for (const [name, expected] of Object.entries(step.parameters)) {
+      const parameter = endpoint.parameters.find((item) => item.name === name), references = refs(expected);
+      if (references.length) {
+        const ref = references[0], sourceStep = accepted.steps.findIndex((candidate) => candidate.step === ref.$fromStep);
+        dependencies[name] = { fromRequest: sourceStep, paths: references.map((item) => item.path) };
+        parameters[name] = { $runtime: true };
+        continue;
+      }
+      if (groups.automatic.includes(name)) {
+        assert.ok(Object.hasOwn(parameters, name), `${scenario.id}/${endpoint.id}.${name}: app supplies accepted setting`);
+        continue;
+      }
+      if (!groups.assessed.includes(name)) continue;
+      const control = controlsFor(parameter, { endpointId: endpoint.id, parameters, dependencies }, requestIndex, [], scenario, expandedMap);
+      assert.ok(control && !control.includes("No settings to choose"), `${scenario.id}/${endpoint.id}.${name}: student control is rendered`);
+      mapsRepairStats.assessedControls++;
+      if (name === "X-Goog-FieldMask") {
+        const selected = String(expected).split(",");
+        for (const path of selected) assert.ok(control.includes(`value="${path}"`), `${scenario.id}: mask field ${path} is selectable`);
+        parameters[name] = selected.join(",");
+      } else if (config.arrayOptions?.[name]) {
+        const option = config.arrayOptions[name].find((candidate) => JSON.stringify(candidate.value) === JSON.stringify(expected));
+        assert.ok(option, `${scenario.id}: accepted array setting has a radio option`);
+        assert.match(control, /type="radio"[^>]*data-param-array-choice=/, `${scenario.id}: a single array choice uses radio buttons`);
+        const choiceIndex = config.arrayOptions[name].indexOf(option);
+        parameters[name] = serializeArrayChoice(config, name, choiceIndex);
+      } else if (config.nestedMultiChoices?.[name]) {
+        for (const [path, options] of Object.entries(config.nestedMultiChoices[name])) {
+          const values = path.split(".").reduce((node, key) => node?.[key], expected);
+          assert.ok(Array.isArray(values), `${scenario.id}: the accepted nested setting remains an array`);
+          for (const value of values) assert.ok(options.some((option) => option.value === value), `${scenario.id}: ${value} is selectable`);
+          assert.match(control, /type="checkbox"[^>]*data-nested-multi-choice=/, `${scenario.id}: multiple transit modes use checkboxes`);
+        }
+        parameters[name] = Object.entries(config.nestedMultiChoices[name]).reduce((current, [path]) => {
+          const values = path.split(".").reduce((node, key) => node?.[key], expected);
+          return serializeNestedMultiChoice(current, path, values);
+        }, {});
+      } else parameters[name] = structuredClone(expected);
+    }
+    return { endpointId: endpoint.id, parameters, dependencies };
+  });
+  return { requests };
+}
+for (const id of mapsRepairIds) {
+  const scenario = expandedData.scenarios.find((item) => item.id === id);
+  for (const accepted of scenario.acceptedPlans) {
+    const represented = representedMapsPlan(scenario, accepted);
+    assert.equal(validatePlan(expandedData, scenario, represented).correct, true, `${id}/${accepted.id}: UI-representable plan passes`);
+    mapsRepairStats.acceptedPlans++;
+    for (const request of represented.requests) {
+      const endpoint = expandedMap.get(request.endpointId), config = presentation(scenario, endpoint), groups = classification(scenario, endpoint);
+      for (const name of groups.automatic) {
+        const item = endpoint.parameters.find((parameter) => parameter.name === name);
+        assert.ok(requestHtml([request], expandedMap, scenario).includes("Handled by the application"), `${id}: app-handled settings are explained in the plan UI`);
+        if (name === "origins" || name === "destinations" || name === "origin" || name === "destination") {
+          assert.deepEqual(request.parameters[name], { $runtime: true }, `${id}/${name}: app uses symbolic configured locations, not typed coordinates or IDs`);
+        }
+        if (name === "X-Goog-FieldMask") assert.equal(request.parameters[name], stepMask(accepted, request.endpointId), `${id}: field mask reaches evaluator in canonical form`);
+        mapsRepairStats.appHandled++;
+      }
+    }
+    const wrong = structuredClone(represented);
+    if (id === "maps-class-dinner-checklist") wrong.requests[0].parameters["X-Goog-FieldMask"] = "displayName,priceLevel,rating,userRatingCount,formattedAddress,currentOpeningHours";
+    else if (id === "maps-trip-destination-picker") wrong.requests[0].parameters.includedRegionCodes = ["ca"];
+    else if (id === "maps-late-start-bus-check") wrong.requests[0].parameters.transitPreferences.allowedTravelModes.push("SUBWAY");
+    else continue; // Both documented venue strategies are intentionally accepted.
+    assert.equal(validatePlan(expandedData, scenario, wrong).correct, false, `${id}: plausible incorrect student choice is rejected`);
+    mapsRepairStats.incorrect++;
+  }
+}
+function stepMask(accepted, endpointId) { return accepted.steps.find((step) => step.endpointId === endpointId).parameters["X-Goog-FieldMask"]; }
+assert.equal(mapsRepairStats.acceptedPlans, 5, "all Maps accepted plan variants, including the alternative with three separate Routes calls, are representable");
+assert.equal(mapsRepairStats.incorrect, 3, "incorrect Maps field, region, and bus-mode choices are rejected");
+console.log(`Google Maps configuration repairs: ${mapsRepairIds.length} projects; ${mapsRepairStats.acceptedPlans} accepted-plan variants represented; ${mapsRepairStats.assessedControls} assessed controls generated; ${mapsRepairStats.appHandled} app-handled settings serialized; ${mapsRepairStats.incorrect} plausible incorrect choices rejected.`);
+
 const enabledCoverage = publishedScenarios.map((scenario) => {
   const blockers = new Set();
   for (const accepted of scenario.acceptedPlans) for (const step of accepted.steps) {
@@ -333,7 +416,7 @@ const enabledCoverage = publishedScenarios.map((scenario) => {
 const fullyConstructible = enabledCoverage.filter((item) => !item.blockers.length);
 assert.ok(configRepairIds.every((id) => enabledCoverage.find((item) => item.id === id)?.blockers.length === 0), "the three targeted projects have no required settings without controls or application handling");
 console.log(`Enabled-scenario required-control audit: ${enabledCoverage.length} checked; ${fullyConstructible.length} have all required settings represented by a student control, application value, runtime path, or dependency. Additional blockers: ${enabledCoverage.filter((item) => item.blockers.length).map((item) => `${item.id} (${item.blockers.join(", ")})`).join("; ") || "none"}.`);
- 
+
 // YouTube part settings: assess meaningful information selection, and handle the
 // snippet-only subscription response in the app because the project assesses access rules.
 for (const [id, endpointId, expectedPart, assessed] of [
@@ -368,6 +451,7 @@ for (const [id, endpointId, expectedPart, assessed] of [
     assert.deepEqual({ order: automatic.order, maxResults: automatic.maxResults }, { order: "alphabetical", maxResults: 50 }, `${id}: sorting and shelf size are application-handled`);
     assert.ok(groups.assessed.includes("mine") && groups.assessed.includes("channelId"), `${id}: the two different subscription filters remain meaningful decisions`);
     for (const name of ["mine", "channelId"]) {
+      const value = scenario.acceptedPlans[0].steps[0].parameters[name];
       const request = { endpointId, parameters: { ...automatic, ...(name === "mine" ? { mine: true } : { channelId: { $runtime: true } }) }, dependencies: {} };
       const control = controlsFor(endpoint.parameters.find((item) => item.name === name), request, 0, [request], scenario, expandedMap);
       assert.ok(control && !control.includes("No settings to choose"), `${id}: ${name} has a visible student control`);
@@ -377,7 +461,6 @@ for (const [id, endpointId, expectedPart, assessed] of [
     assert.equal(validatePlan(expandedData, scenario, represented).correct, true, `${id}: app-handled plan passes the evaluator`);
   }
 }
-
 
 // The focused-control checks below cover the original nine scenarios only.
 const focusedInventory = [];
