@@ -113,6 +113,8 @@ function startGame() {
       q.topic,
       q.topicTitle || q.topic.replaceAll("-", " "),
     );
+    if (q.mode === "trace")
+      tracker.annotate(instance, { mode: "trace", difficulty: q.difficulty, family: q.traceFamily, format: q.format });
     selected = null;
     selectedFix = null;
     marked.clear();
@@ -282,7 +284,7 @@ function startGame() {
       `<h3>Execution trace</h3><div class="trace-table-wrap"><table class="trace-table"><thead><tr><th scope="col">Step</th><th scope="col">Statement</th>${header}<th scope="col">Printed output</th></tr></thead><tbody>${rows}</tbody></table></div><div class="trace-explanation">${q.traceRows.map((step) => `<p><strong>Line ${step.line}:</strong> ${esc(step.explanation)}</p>`).join("")}</div>`;
   }
   function lockTraceIncorrect() {
-    tracker.reveal(instance);
+    tracker.closeIncorrect(instance);
     selected = String(q.answer);
     paint();
     for (const el of $("stage").querySelectorAll("button,select,input")) el.disabled = true;
