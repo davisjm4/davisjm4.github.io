@@ -252,6 +252,14 @@ for (const [slug, g] of Object.entries(J.games)) {
         eq(t.tracker.snapshot().totals.submissions, b3.submissions + 1);
         eq(t.tracker.snapshot().totals.afterRetry, b3.afterRetry);
         ok(t.$("feedback").textContent.includes(String(current.answer)));
+        const diagnosed = current.choiceDetails?.find(
+          (choice) => String(choice.value) === String(wrong.answer) && choice.misconceptionId,
+        );
+        if (diagnosed) {
+          ok(t.$("feedback").textContent.includes(diagnosed.explanation));
+          const latestRecord = Object.values(t.tracker.snapshot().records).at(-1);
+          eq(latestRecord.details?.misconceptionId, diagnosed.misconceptionId);
+        }
         ok(!t.$("execution").hidden);
         ok(t.$("execution").textContent.includes("Execution trace"));
         ok(t.$("execution").textContent.includes("Line 1"));
