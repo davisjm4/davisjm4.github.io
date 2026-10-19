@@ -1,0 +1,552 @@
+[
+ {
+  "id": "mars-rovers",
+  "subject": "Space exploration",
+  "title": "Mars rovers",
+  "intro": "Robotic rovers have driven across the surface of Mars to study its rocks, soil, and landscape.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "A radio message between Earth and Mars takes several minutes to travel, so engineers cannot steer a rover with a joystick.",
+    "ev": "Radio messages between Earth and Mars take several minutes to travel, so engineers cannot steer a rover with a joystick.",
+    "tag": "delays in radio messages"
+   },
+   {
+    "id": "f2",
+    "text": "Rovers receive a list of instructions from Earth and then carry out the steps on their own, often during the Martian day.",
+    "ev": "Rovers receive a list of instructions from Earth and then carry out the steps on their own.",
+    "tag": "following instruction lists"
+   },
+   {
+    "id": "f3",
+    "text": "Some rovers carry drills and cameras, which allow scientists to study rocks in detail from far away.",
+    "ev": "Some rovers carry drills and cameras that allow scientists to study rocks in detail from far away.",
+    "tag": "drills and cameras"
+   },
+   {
+    "id": "f4",
+    "text": "The rover Curiosity landed on Mars in 2012 inside a huge basin called Gale Crater.",
+    "ev": "The rover Curiosity landed on Mars in 2012 inside a huge basin called Gale Crater.",
+    "tag": "Curiosity's landing"
+   },
+   {
+    "id": "f5",
+    "text": "Rover wheels are made of metal and have grooves that help them grip loose sand and rocks.",
+    "ev": "Rover wheels are made of metal and have grooves that help them grip loose sand and rocks.",
+    "tag": "rover wheels"
+   },
+   {
+    "id": "f6",
+    "text": "A day on Mars lasts about 24 hours and 37 minutes, slightly longer than a day on Earth.",
+    "ev": "A day on Mars lasts about 24 hours and 37 minutes, slightly longer than a day on Earth.",
+    "tag": "the length of a Martian day"
+   },
+   {
+    "id": "f7",
+    "text": "In 2021, a small helicopter named Ingenuity made the first powered flight on another planet.",
+    "ev": "In 2021, a small helicopter named Ingenuity made the first powered flight on another planet.",
+    "tag": "the Ingenuity helicopter"
+   },
+   {
+    "id": "f8",
+    "text": "Some rovers take pictures of the sky to measure how much dust is in the air.",
+    "ev": "Some rovers take pictures of the sky to measure how much dust is in the air.",
+    "tag": "photographing the sky"
+   }
+  ],
+  "models": [
+   {
+    "id": "mars-rovers-m1",
+    "family": "cause-effect",
+    "level": "intermediate",
+    "q": "Why do Mars rovers need to carry out instructions on their own?",
+    "restate": "Mars rovers need to carry out instructions on their own instead of being steered directly.",
+    "answer": "Rovers act on their own because messages from Earth arrive too slowly for real-time control.",
+    "ev": [
+     "f1",
+     "f2"
+    ],
+    "exp": [
+     "A joystick only works if the rover responds right away, which cannot happen when every signal needs minutes to cross space.",
+     "Receiving a full list in advance means the rover can keep working even while it waits for the next message."
+    ],
+    "rep": [
+     "Radio messages need several minutes to travel between Earth and Mars.",
+     "Rovers get a list of instructions from Earth and then carry out the steps on their own."
+    ],
+    "sum": "The slow trip of radio messages is why rovers must follow instructions independently.",
+    "sumNew": "The slow trip of radio messages is why rovers work independently, and their metal wheels have grooves for gripping loose sand.",
+    "bad": "Rovers act on their own because their batteries cannot power a radio receiver.",
+    "badRestate": "Rovers are built with special wheels to travel across the rough Martian ground.",
+    "off": "f5",
+    "offExp": "Grooved metal wheels allow a rover to keep moving across loose ground without slipping much."
+   },
+   {
+    "id": "mars-rovers-m2",
+    "family": "process",
+    "level": "advanced",
+    "q": "How do rovers help scientists learn about Mars?",
+    "restate": "Rovers contribute to what scientists have learned about Mars.",
+    "answer": "Rovers help scientists by carrying instruments to places people cannot yet visit and gathering detailed observations.",
+    "ev": [
+     "f3",
+     "f8"
+    ],
+    "exp": [
+     "Examining rocks through a rover's drills and cameras lets scientists study the planet closely while staying on Earth.",
+     "Measuring dust in the air gives scientists information about the Martian atmosphere that no one on Earth could collect directly."
+    ],
+    "rep": [
+     "Some rovers have drills and cameras for studying rocks from far away.",
+     "Certain rovers photograph the sky to find out how much dust is in the air."
+    ],
+    "sum": "Rovers act as the scientists' eyes and tools on Mars, collecting data about both the ground and the sky.",
+    "sumNew": "Rovers act as the scientists' tools on Mars, and in 2021 a helicopter named Ingenuity flew there for the first time.",
+    "bad": "Rovers help scientists by bringing Martian rocks back to Earth so they can be tested in laboratories.",
+    "badRestate": "A small helicopter made the first powered flight on another planet in 2021.",
+    "off": "f7",
+    "offExp": "A powered flight above the surface showed that flying machines could operate on another planet."
+   }
+  ]
+ },
+ {
+  "id": "printing-press",
+  "subject": "Inventions",
+  "title": "The printing press",
+  "intro": "Before the 1400s, books in Europe were copied by hand, a slow process that made each book rare and costly.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "Around 1450, Johannes Gutenberg developed a printing system in Germany that used movable metal letters.",
+    "ev": "Around 1450, Johannes Gutenberg developed a printing system in Germany that used movable metal letters.",
+    "tag": "movable metal letters"
+   },
+   {
+    "id": "f2",
+    "text": "Each metal letter could be arranged into words, locked in a frame, and then reused for a different page.",
+    "ev": "Each metal letter could be arranged into words, locked in a frame, and then reused for a different page.",
+    "tag": "reusing the letters"
+   },
+   {
+    "id": "f3",
+    "text": "A printer could produce hundreds of identical copies of a page using the same arranged letters.",
+    "ev": "A printer could produce hundreds of identical copies of a page from one arrangement of letters.",
+    "tag": "making identical copies"
+   },
+   {
+    "id": "f4",
+    "text": "Within about fifty years, printing shops had opened in many cities across Europe.",
+    "ev": "Within about fifty years, printing shops had opened in many cities across Europe.",
+    "tag": "printing shops spreading"
+   },
+   {
+    "id": "f5",
+    "text": "Printed books cost less than hand-copied ones, so more people could afford them.",
+    "ev": "The reading notes that printed books cost less than hand-copied ones, so more people could afford them.",
+    "tag": "lower book prices"
+   },
+   {
+    "id": "f6",
+    "text": "Gutenberg's press was adapted from the screw presses already used to squeeze grapes and olives.",
+    "ev": "Gutenberg's press was adapted from screw presses already used to squeeze grapes and olives.",
+    "tag": "screw presses"
+   },
+   {
+    "id": "f7",
+    "text": "Printing ink was thick and oily so that it would stick to the metal letters.",
+    "ev": "Printing ink was thick and oily so that it would stick to the metal letters.",
+    "tag": "oil-based ink"
+   },
+   {
+    "id": "f8",
+    "text": "Early printed books often copied the style of handwritten pages.",
+    "ev": "Early printed books often copied the style of handwritten pages.",
+    "tag": "pages that imitated handwriting"
+   }
+  ],
+  "models": [
+   {
+    "id": "printing-press-m1",
+    "family": "process",
+    "level": "intermediate",
+    "q": "How did movable metal letters make printing faster?",
+    "restate": "Movable metal letters changed how quickly books could be made.",
+    "answer": "Movable letters sped up printing because they could be reused and could produce many copies at once.",
+    "ev": [
+     "f2",
+     "f3"
+    ],
+    "exp": [
+     "Since the same letters could be rearranged for the next page, printers did not have to make a new set each time.",
+     "Making copies from one arrangement meant a page did not have to be written out again for every reader."
+    ],
+    "rep": [
+     "Metal letters could be arranged into words, locked in a frame, and reused on another page.",
+     "One arrangement of letters could produce hundreds of identical page copies."
+    ],
+    "sum": "Reusable letters and repeatable copies let printers make books much faster than hand copying.",
+    "sumNew": "Reusable letters let printers work faster, and a thick, oily ink was used so it would stick to the metal.",
+    "bad": "Movable letters sped up printing because they wrote the words on their own without any human help.",
+    "badRestate": "The ink used in printing needed to stick well to metal letters.",
+    "off": "f7",
+    "offExp": "A sticky ink was needed so that the letters would leave a clear mark on the paper."
+   },
+   {
+    "id": "printing-press-m2",
+    "family": "cause-effect",
+    "level": "advanced",
+    "q": "Why did the printing press lead to more people owning books?",
+    "restate": "The printing press made it possible for many more people to own books.",
+    "answer": "The press led to wider book ownership because it lowered prices and let printing spread quickly to new places.",
+    "ev": [
+     "f5",
+     "f4"
+    ],
+    "exp": [
+     "When a book costs less, families with modest incomes can buy one instead of leaving books to the wealthy few.",
+     "As printing shops opened in more cities, books could be made close to the readers who wanted them."
+    ],
+    "rep": [
+     "Printed books cost less than hand-copied books, so more people could buy them.",
+     "Printing shops had opened in many European cities within about fifty years."
+    ],
+    "sum": "Overall, cheaper books and a growing number of printing shops put books within reach of many more people.",
+    "sumNew": "Overall, cheaper books and more printing shops put books within reach of many people, and Gutenberg adapted his press from screw presses used for grapes.",
+    "bad": "The press led to wider ownership because every printed book was given away for free.",
+    "badRestate": "Gutenberg's press borrowed ideas from machines that were already used on farms.",
+    "off": "f6",
+    "offExp": "Reusing an existing machine design helped Gutenberg build his press without inventing every part from scratch."
+   }
+  ]
+ },
+ {
+  "id": "coral-reefs",
+  "subject": "Environmental science",
+  "title": "Coral reefs",
+  "intro": "A coral reef is a structure in warm, shallow ocean water built by tiny animals called corals.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "Reefs cover less than one percent of the ocean floor, yet about a quarter of all ocean species depend on them at some point.",
+    "ev": "Reefs cover less than one percent of the ocean floor, yet about a quarter of all ocean species depend on them at some point.",
+    "tag": "species that depend on reefs"
+   },
+   {
+    "id": "f2",
+    "text": "Many young fish live among the branches of coral until they are large enough to survive in open water.",
+    "ev": "Many young fish live among the branches of coral until they are large enough to survive in open water.",
+    "tag": "young fish sheltering in coral"
+   },
+   {
+    "id": "f3",
+    "text": "A reef forms a barrier that breaks up waves before they reach the shore.",
+    "ev": "A reef forms a barrier that breaks up waves before they reach the shore.",
+    "tag": "reefs breaking waves"
+   },
+   {
+    "id": "f4",
+    "text": "Corals build hard skeletons of limestone, and over many years the skeletons pile up to form the reef.",
+    "ev": "Corals build hard skeletons of limestone, and over many years the skeletons pile up to form the reef.",
+    "tag": "limestone skeletons"
+   },
+   {
+    "id": "f5",
+    "text": "Tiny algae live inside coral and make food from sunlight, which is why reefs grow in shallow, sunny water.",
+    "ev": "Tiny algae live inside coral and make food from sunlight, which is why reefs grow in shallow, sunny water.",
+    "tag": "algae living inside coral"
+   },
+   {
+    "id": "f6",
+    "text": "Many reefs attract visitors who enjoy swimming and snorkeling.",
+    "ev": "Many reefs attract visitors who enjoy swimming and snorkeling.",
+    "tag": "snorkeling visitors"
+   },
+   {
+    "id": "f7",
+    "text": "The largest reef system, the Great Barrier Reef near Australia, can be seen from space.",
+    "ev": "The largest reef system, the Great Barrier Reef near Australia, can be seen from space.",
+    "tag": "the Great Barrier Reef"
+   },
+   {
+    "id": "f8",
+    "text": "Divers sometimes find reef animals in bright colors, including blue, orange, and yellow fish.",
+    "ev": "Divers sometimes find reef animals in bright colors, including blue, orange, and yellow fish.",
+    "tag": "colorful reef animals"
+   }
+  ],
+  "models": [
+   {
+    "id": "coral-reefs-m1",
+    "family": "scale",
+    "level": "intermediate",
+    "q": "Why are coral reefs important to ocean life?",
+    "restate": "Coral reefs matter a great deal to the life of the ocean.",
+    "answer": "Coral reefs are important because they provide homes and shelter for a large share of ocean animals.",
+    "ev": [
+     "f1",
+     "f2"
+    ],
+    "exp": [
+     "A tiny fraction of the sea floor supporting so many species means that damage to a reef would affect a great deal of ocean life.",
+     "Shelter among the coral protects young fish while they grow, so more of them can reach adulthood."
+    ],
+    "rep": [
+     "Reefs cover under one percent of the ocean floor, but about a quarter of ocean species rely on them.",
+     "Young fish often live in the branches of coral until they can survive in open water."
+    ],
+    "sum": "Reefs deserve attention because so many ocean animals depend on them for shelter and growth.",
+    "sumNew": "Reefs deserve attention because so many animals depend on them, and many reefs attract visitors who enjoy snorkeling.",
+    "bad": "Coral reefs are important because they produce most of the oxygen in the atmosphere.",
+    "badRestate": "Many people travel to reefs to enjoy swimming and snorkeling.",
+    "off": "f6",
+    "offExp": "Visitors who snorkel above a reef can see the wildlife without having to dive deep."
+   },
+   {
+    "id": "coral-reefs-m2",
+    "family": "process",
+    "level": "advanced",
+    "q": "How does a coral reef come to protect a nearby shore?",
+    "restate": "The way a coral reef comes to protect a nearby shore can be explained.",
+    "answer": "A reef protects the shore because corals build a solid barrier that weakens approaching waves.",
+    "ev": [
+     "f4",
+     "f3"
+    ],
+    "exp": [
+     "Because the skeletons pile up over many years, the reef grows into a large, solid structure rather than a thin layer.",
+     "Waves that lose energy against the reef arrive at the beach with less force than they began with."
+    ],
+    "rep": [
+     "Limestone skeletons built by corals pile up over many years to form a reef.",
+     "A reef acts as a barrier that breaks up waves before they reach land."
+    ],
+    "sum": "By growing into a barrier that takes the force out of waves, a reef shields the shore.",
+    "sumNew": "By growing into a barrier, a reef shields the shore, and tiny algae inside the corals make food from sunlight.",
+    "bad": "A reef protects the shore because its bright colors scare large waves away.",
+    "badRestate": "Corals grow in sunny water because algae living inside them need light.",
+    "off": "f5",
+    "offExp": "Since the algae make food from sunlight, coral can grow well only where light reaches it."
+   }
+  ]
+ },
+ {
+  "id": "lightning",
+  "subject": "Weather and climate",
+  "title": "Lightning and thunder",
+  "intro": "Lightning is a giant spark of electricity that jumps through the air during some storms.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "Inside a storm cloud, ice crystals and water droplets collide, and these collisions separate electric charges within the cloud.",
+    "ev": "Inside a storm cloud, colliding ice crystals and water droplets separate electric charges.",
+    "tag": "colliding ice and droplets"
+   },
+   {
+    "id": "f2",
+    "text": "When the difference in electric charge becomes large enough, a spark leaps between the cloud and the ground or between parts of the cloud.",
+    "ev": "When the difference in electric charge becomes large enough, a spark leaps between the cloud and the ground or within the cloud.",
+    "tag": "a spark leaping"
+   },
+   {
+    "id": "f3",
+    "text": "A lightning bolt heats the air around it to about 30,000 degrees Celsius, far hotter than the surface of the Sun.",
+    "ev": "A lightning bolt heats the surrounding air to about 30,000 degrees Celsius, far hotter than the surface of the Sun.",
+    "tag": "the extreme heat of a bolt"
+   },
+   {
+    "id": "f4",
+    "text": "The heated air expands so quickly that it creates a booming sound wave, which people hear as thunder.",
+    "ev": "The heated air expands so quickly that it creates a booming sound wave that people hear as thunder.",
+    "tag": "thunder"
+   },
+   {
+    "id": "f5",
+    "text": "Light travels much faster than sound, so people see a flash before they hear thunder.",
+    "ev": "The passage explains that light travels much faster than sound, so people see a flash before they hear thunder.",
+    "tag": "seeing lightning before hearing thunder"
+   },
+   {
+    "id": "f6",
+    "text": "Counting the seconds between a flash and its thunder can tell a person roughly how far away the strike was.",
+    "ev": "Counting the seconds between a flash and its thunder can tell a person roughly how far away the strike was.",
+    "tag": "counting seconds"
+   },
+   {
+    "id": "f7",
+    "text": "Tall, pointed objects such as trees and towers are more likely to be struck.",
+    "ev": "Tall, pointed objects such as trees and towers are more likely to be struck.",
+    "tag": "tall objects"
+   },
+   {
+    "id": "f8",
+    "text": "Lightning rods are metal poles that give a strike a safe path to the ground.",
+    "ev": "Lightning rods are metal poles that give a strike a safe path to the ground.",
+    "tag": "lightning rods"
+   }
+  ],
+  "models": [
+   {
+    "id": "lightning-m1",
+    "family": "cause-effect",
+    "level": "intermediate",
+    "q": "What causes the sound of thunder?",
+    "restate": "The sound of thunder has a cause that can be explained.",
+    "answer": "Thunder is caused by air that lightning heats so fast that it expands violently.",
+    "ev": [
+     "f3",
+     "f4"
+    ],
+    "exp": [
+     "Such an enormous jump in temperature gives the surrounding air no time to adjust gradually.",
+     "The sudden expansion pushes air outward in a wave, and that moving wave is what reaches our ears as a boom."
+    ],
+    "rep": [
+     "A lightning bolt heats the air around it to about 30,000 degrees Celsius.",
+     "Heated air expands quickly and makes a sound wave that people hear as thunder."
+    ],
+    "sum": "In short, thunder is the sound of air that was heated and pushed outward by a lightning bolt.",
+    "sumNew": "In short, thunder is the sound of air pushed outward by a bolt, and metal lightning rods guide strikes safely to the ground.",
+    "bad": "Thunder is caused by storm clouds crashing into each other like heavy objects.",
+    "badRestate": "Lightning rods are used on buildings to guide strikes toward the ground.",
+    "off": "f8",
+    "offExp": "A metal pole offers a path that carries the electricity safely away from a building."
+   },
+   {
+    "id": "lightning-m2",
+    "family": "scale",
+    "level": "advanced",
+    "q": "How can a person estimate how far away a lightning strike was?",
+    "restate": "There is a way for a person to estimate how far away a lightning strike was.",
+    "answer": "A person can estimate the distance by timing the gap between the flash and the thunder.",
+    "ev": [
+     "f5",
+     "f6"
+    ],
+    "exp": [
+     "Because light arrives almost instantly, the flash marks the moment of the strike, and the thunder follows later.",
+     "A longer count means the sound had farther to travel, so the strike must have been farther away."
+    ],
+    "rep": [
+     "Light travels much faster than sound, so a flash is seen before thunder is heard.",
+     "Counting the seconds between a flash and thunder gives a rough idea of the distance."
+    ],
+    "sum": "The delay between flash and thunder gives people a simple way to judge how far away a strike was.",
+    "sumNew": "The delay between flash and thunder shows how far away a strike was, and tall, pointed objects are more likely to be hit.",
+    "bad": "A person can estimate the distance by measuring how bright the flash looks at night.",
+    "badRestate": "Tall, pointed objects such as trees and towers are struck more often than shorter objects.",
+    "off": "f7",
+    "offExp": "Since tall, pointed objects stand above their surroundings, a bolt is more likely to reach them first."
+   }
+  ]
+ },
+ {
+  "id": "binary-numbers",
+  "subject": "Computer technology",
+  "title": "Binary numbers",
+  "intro": "Computers store and process all information, from photos to music, using only two symbols: 0 and 1.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "Each 0 or 1 is called a bit, and a bit can be represented by a switch that is either off or on.",
+    "ev": "Each 0 or 1 is called a bit, and a bit can be represented by a switch that is either off or on.",
+    "tag": "bits as off-or-on switches"
+   },
+   {
+    "id": "f2",
+    "text": "Eight bits grouped together make one byte, which can form 256 different patterns.",
+    "ev": "Eight bits grouped together make one byte, which can form 256 different patterns.",
+    "tag": "bytes and patterns"
+   },
+   {
+    "id": "f3",
+    "text": "Each letter and symbol on a keyboard is assigned its own number, which is stored as a pattern of bits.",
+    "ev": "The source states that each letter and symbol on a keyboard is assigned its own number, which is stored as a pattern of bits.",
+    "tag": "letters stored as numbers"
+   },
+   {
+    "id": "f4",
+    "text": "In binary counting, each place is worth twice as much as the place to its right, such as 1, 2, 4, and 8.",
+    "ev": "In binary counting, each place is worth twice as much as the place to its right, such as 1, 2, 4, and 8.",
+    "tag": "binary place values"
+   },
+   {
+    "id": "f5",
+    "text": "Electronic circuits can tell two states apart very reliably, such as high voltage and low voltage.",
+    "ev": "Electronic circuits can tell two states apart very reliably, such as high voltage and low voltage.",
+    "tag": "reliable two-state circuits"
+   },
+   {
+    "id": "f6",
+    "text": "A kilobyte is about one thousand bytes, and a short email might take up a few kilobytes.",
+    "ev": "A kilobyte is about one thousand bytes, and a short email might take up a few kilobytes.",
+    "tag": "kilobytes"
+   },
+   {
+    "id": "f7",
+    "text": "Early computers filled whole rooms and were operated using punched cards.",
+    "ev": "Early computers filled whole rooms and were operated using punched cards.",
+    "tag": "early computers"
+   },
+   {
+    "id": "f8",
+    "text": "Colors on a screen are stored as numbers that tell how much red, green, and blue light to show.",
+    "ev": "Colors on a screen are stored as numbers that tell how much red, green, and blue light to show.",
+    "tag": "colors stored as numbers"
+   }
+  ],
+  "models": [
+   {
+    "id": "binary-numbers-m1",
+    "family": "function",
+    "level": "intermediate",
+    "q": "Why do computers use only two symbols to store information?",
+    "restate": "Computers rely on just two symbols to represent every kind of information.",
+    "answer": "Computers use two symbols because circuits can reliably tell two states apart and group them into larger patterns.",
+    "ev": [
+     "f5",
+     "f2"
+    ],
+    "exp": [
+     "If a circuit only has to choose between two states, mistakes are less likely than if it had to tell many levels apart.",
+     "Grouping eight bits gives hundreds of patterns, so two symbols are enough to represent a great variety of things."
+    ],
+    "rep": [
+     "Electronic circuits can reliably tell two states apart, such as high and low voltage.",
+     "A byte is eight bits and can form 256 different patterns."
+    ],
+    "sum": "Two reliable symbols, grouped into patterns, give computers all they need to store information.",
+    "sumNew": "Two reliable symbols grouped into patterns are enough for computers, and early computers were run with punched cards.",
+    "bad": "Computers use two symbols because larger sets of symbols cannot be shown on a screen.",
+    "badRestate": "Early computers were very large machines that were operated with punched cards.",
+    "off": "f7",
+    "offExp": "Because they relied on punched cards, early computers had to be given information in a very different way."
+   },
+   {
+    "id": "binary-numbers-m2",
+    "family": "process",
+    "level": "advanced",
+    "q": "How can a computer store written text using only numbers?",
+    "restate": "The way a computer stores written text using only numbers can be explained.",
+    "answer": "A computer stores text by giving each character a number and recording that number as a pattern of bits.",
+    "ev": [
+     "f3",
+     "f4"
+    ],
+    "exp": [
+     "Because every character has its own number, the computer can keep a letter by recording its number instead of its shape.",
+     "Place values let a row of 0s and 1s stand for larger numbers, so even a long list of characters can be written in two symbols."
+    ],
+    "rep": [
+     "Each keyboard letter and symbol is given a number stored as a pattern of bits.",
+     "In binary counting, each place is worth twice the place to its right, such as 1, 2, 4, and 8."
+    ],
+    "sum": "Overall, text can be stored because characters become numbers and numbers can be written as patterns of bits.",
+    "sumNew": "Overall, text becomes numbers and then bits, and screen colors are also stored as numbers for red, green, and blue light.",
+    "bad": "A computer stores text by taking a tiny photograph of each letter and saving the picture.",
+    "badRestate": "A computer stores screen colors by saving how much red, green, and blue light to show.",
+    "off": "f8",
+    "offExp": "Since colors are stored as numbers, the screen can recreate a color by showing the right amount of each light."
+   }
+  ]
+ }
+]

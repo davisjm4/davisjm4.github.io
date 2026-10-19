@@ -152,3 +152,7 @@ details summary { cursor: pointer; color: var(--muted); min-height: 2.5rem; disp
   body { background: #fff; color: #000; } .site-header, .site-footer, .actions, .top-nav, .confirm { display: none !important; }
   .tile, .focus { border-color: #000; background: #fff; } .tile span, .row .score, .fine { color: #333; } .bar { background: #fff; border-color: #000; } .bar i { background: #000; }
 }
+/* Shared platform breadcrumb */
+.platform-home{display:inline-block;margin:12px 20px 0;color:#b4c5d3;font-size:.9rem;text-decoration:none}
+.platform-home:hover{color:#62dbc5}
+.platform-home:focus-visible{outline:2px solid #62dbc5;outline-offset:3px}

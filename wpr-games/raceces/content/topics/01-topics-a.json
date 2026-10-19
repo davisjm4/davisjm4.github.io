@@ -1,0 +1,552 @@
+[
+ {
+  "id": "honeybees",
+  "subject": "Biology",
+  "title": "Honeybees and pollen",
+  "intro": "Honeybees live in large colonies and spend much of the warm season collecting food from flowers.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "A worker bee visits dozens of flowers on a single trip, and pollen sticks to the tiny hairs on her body.",
+    "ev": "Pollen sticks to the tiny hairs on a worker bee's body as she visits dozens of flowers on one trip.",
+    "tag": "pollen on a bee's body"
+   },
+   {
+    "id": "f2",
+    "text": "When a bee lands on the next flower, some of that pollen rubs off onto the part of the flower that makes seeds.",
+    "ev": "Some pollen rubs off onto the seed-making part of the next flower a bee lands on.",
+    "tag": "pollen rubbing off on the next flower"
+   },
+   {
+    "id": "f3",
+    "text": "Many fruits and vegetables, including apples and squash, only form when pollen reaches their flowers.",
+    "ev": "The source points out that foods such as apples and squash only form after pollen reaches their flowers.",
+    "tag": "apples and squash"
+   },
+   {
+    "id": "f4",
+    "text": "A single hive can hold more than 20,000 bees, and thousands of them search for food each day.",
+    "ev": "A single hive can hold more than 20,000 bees, with thousands searching for food every day.",
+    "tag": "the size of a hive"
+   },
+   {
+    "id": "f5",
+    "text": "Bees drink nectar, a sugary liquid inside flowers, and use it to make honey.",
+    "ev": "Bees drink nectar from flowers and use it to make honey.",
+    "tag": "honey production"
+   },
+   {
+    "id": "f6",
+    "text": "Honeybees communicate by dancing, and the pattern of a dance tells other bees where flowers are located.",
+    "ev": "The pattern of a honeybee's dance tells hive mates where flowers are located.",
+    "tag": "the bees' dance"
+   },
+   {
+    "id": "f7",
+    "text": "In winter, honeybees cluster together inside the hive and eat stored honey to stay warm.",
+    "ev": "In winter, honeybees cluster inside the hive and eat stored honey to stay warm.",
+    "tag": "winter clusters"
+   },
+   {
+    "id": "f8",
+    "text": "A honeybee's wings beat about 200 times per second, which produces the buzzing sound people hear.",
+    "ev": "A honeybee's wings beat about 200 times per second, producing the buzzing sound people hear.",
+    "tag": "wing beats"
+   }
+  ],
+  "models": [
+   {
+    "id": "honeybees-m1",
+    "family": "process",
+    "level": "beginner",
+    "q": "How do honeybees help flowering plants reproduce?",
+    "restate": "Honeybees help flowering plants reproduce in an important way.",
+    "answer": "Honeybees carry pollen from flower to flower, which allows plants to make seeds.",
+    "ev": [
+     "f1",
+     "f2"
+    ],
+    "exp": [
+     "Because the hairs hold the pollen, the bee is carrying plant material from one flower toward the next.",
+     "Pollen that reaches the seed-making part of a flower can start the process of forming seeds."
+    ],
+    "rep": [
+     "A bee's body hairs hold pollen as she travels among dozens of flowers.",
+     "Pollen rubs off onto flowers when a bee lands on them."
+    ],
+    "sum": "In short, honeybees move pollen between flowers, and that movement lets plants make seeds.",
+    "sumNew": "In short, honeybees move pollen between flowers, and they also huddle in the hive during winter to eat stored honey.",
+    "bad": "Honeybees help plants reproduce by planting seeds in the soil beneath each flower.",
+    "badRestate": "Honeybees spend the warm season gathering food for their colonies.",
+    "off": "f5",
+    "offExp": "Because nectar is sugary, bees can turn it into honey that feeds the colony."
+   },
+   {
+    "id": "honeybees-m2",
+    "family": "cause-effect",
+    "level": "intermediate",
+    "q": "Why are honeybees important for the food people eat?",
+    "restate": "Honeybees play a part in providing the food that people eat.",
+    "answer": "Honeybees matter for food supplies because many crops depend on the pollen they spread.",
+    "ev": [
+     "f3",
+     "f4"
+    ],
+    "exp": [
+     "Since these foods depend on pollen, the bees that deliver it help make the harvest possible.",
+     "With so many bees working each day, pollen can be spread across a very large number of flowers."
+    ],
+    "rep": [
+     "Apples and squash form only when pollen reaches their flowers.",
+     "A hive holds more than 20,000 bees, and thousands search for food daily."
+    ],
+    "sum": "The pollen-spreading work of honeybees supports the production of foods that people rely on.",
+    "sumNew": "The pollen-spreading work of honeybees supports our food, and their wings beat about 200 times per second.",
+    "bad": "Honeybees matter for food because they grow apples and squash inside their hives.",
+    "badRestate": "Honeybees make a buzzing sound that people hear whenever the bees fly.",
+    "off": "f8",
+    "offExp": "Because the wings beat so quickly, the air vibrates and people hear a steady buzz."
+   }
+  ]
+ },
+ {
+  "id": "solar-panels",
+  "subject": "Energy and technology",
+  "title": "Solar panels",
+  "intro": "Solar panels are flat devices made of many small cells that capture energy from sunlight.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "Each cell in a solar panel is made of a material that produces an electric current when light strikes it.",
+    "ev": "A solar cell produces an electric current whenever light strikes its surface.",
+    "tag": "how cells react to light"
+   },
+   {
+    "id": "f2",
+    "text": "Panels have no moving parts, so they make electricity quietly and need little repair.",
+    "ev": "Panels have no moving parts, so they work quietly and need little repair.",
+    "tag": "having no moving parts"
+   },
+   {
+    "id": "f3",
+    "text": "Panels can be bolted onto rooftops, which lets a building use space that is otherwise empty.",
+    "ev": "Panels can be bolted onto rooftops, using space that is otherwise empty.",
+    "tag": "rooftop installation"
+   },
+   {
+    "id": "f4",
+    "text": "On cloudy days, a panel still produces some electricity, though usually less than on a bright day.",
+    "ev": "The passage notes that even on cloudy days a panel produces some electricity, though less than in bright sunlight.",
+    "tag": "cloudy-day output"
+   },
+   {
+    "id": "f5",
+    "text": "A solar panel does not burn fuel while it operates, so it gives off no smoke.",
+    "ev": "An operating panel burns no fuel and gives off no smoke.",
+    "tag": "not burning fuel"
+   },
+   {
+    "id": "f6",
+    "text": "Some calculators contain tiny solar cells that let them run without batteries.",
+    "ev": "Certain calculators run on tiny solar cells instead of batteries.",
+    "tag": "solar calculators"
+   },
+   {
+    "id": "f7",
+    "text": "Engineers measure a panel's output in watts, which describes how much power it can produce.",
+    "ev": "Engineers describe how much power a panel can produce by measuring its output in watts.",
+    "tag": "measuring output in watts"
+   },
+   {
+    "id": "f8",
+    "text": "The first practical silicon solar cell was announced in 1954.",
+    "ev": "The first practical silicon solar cell was announced in 1954.",
+    "tag": "the 1954 solar cell"
+   }
+  ],
+  "models": [
+   {
+    "id": "solar-panels-m1",
+    "family": "function",
+    "level": "beginner",
+    "q": "What makes solar panels a practical way to make electricity?",
+    "restate": "Solar panels are a practical way to make electricity because of how they work and where they can go.",
+    "answer": "Solar panels are practical because they turn light directly into electricity and fit onto spaces that already exist.",
+    "ev": [
+     "f1",
+     "f3"
+    ],
+    "exp": [
+     "That means sunlight itself becomes the source of power, with no extra step such as burning something.",
+     "Using a roof lets a building produce power without needing a new piece of land."
+    ],
+    "rep": [
+     "Light that strikes a cell causes it to produce an electric current.",
+     "Panels are placed on rooftops that would otherwise be empty."
+    ],
+    "sum": "Altogether, panels are practical because they change light into electricity and can sit on spaces buildings already have.",
+    "sumNew": "Altogether, panels are practical because they change light into electricity, and engineers rate each one in watts.",
+    "bad": "Solar panels are practical because they store enough energy to power a building for a year without sunlight.",
+    "badRestate": "Panels come in many sizes and are rated by how much power they can produce.",
+    "off": "f7",
+    "offExp": "Because output is measured in watts, buyers can compare how much power different panels produce."
+   },
+   {
+    "id": "solar-panels-m2",
+    "family": "evaluation",
+    "level": "intermediate",
+    "q": "Is a solar panel a dependable source of electricity?",
+    "restate": "Whether a solar panel is dependable depends on how it is built and how it performs in different weather.",
+    "answer": "Solar panels are fairly dependable because they have few parts that can wear out and still work in weak light.",
+    "ev": [
+     "f2",
+     "f4"
+    ],
+    "exp": [
+     "With nothing mechanical to break down, a panel is less likely to stop working than a machine with many moving pieces.",
+     "Producing at least some power under clouds means electricity does not disappear whenever the sky is not clear."
+    ],
+    "rep": [
+     "Panels contain no moving parts and work quietly with little repair.",
+     "A cloudy day still produces some electricity, but less than a bright day."
+    ],
+    "sum": "The simple design and partial cloudy-day output together make solar panels a reasonably dependable source of electricity.",
+    "sumNew": "The simple design and partial cloudy-day output make panels dependable, and they also burn no fuel or give off smoke.",
+    "bad": "Solar panels are dependable because they make exactly the same amount of electricity every hour of the day.",
+    "badRestate": "Solar panels are helpful because they do not burn fuel or give off smoke while operating.",
+    "off": "f5",
+    "offExp": "Since no fuel is burned, the panel itself does not release smoke into the air around it."
+   }
+  ]
+ },
+ {
+  "id": "water-cycle",
+  "subject": "Earth science",
+  "title": "The water cycle",
+  "intro": "Water on Earth is always moving between the oceans, the air, and the land in a pattern called the water cycle.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "The Sun warms the surface of oceans and lakes, and some liquid water changes into an invisible gas called water vapor.",
+    "ev": "Heat from the Sun turns some water from oceans and lakes into an invisible gas called water vapor.",
+    "tag": "evaporation from oceans and lakes"
+   },
+   {
+    "id": "f2",
+    "text": "As water vapor rises, the air around it cools, and the vapor changes back into tiny droplets that form clouds.",
+    "ev": "Rising water vapor cools and changes back into tiny droplets that form clouds.",
+    "tag": "cloud formation"
+   },
+   {
+    "id": "f3",
+    "text": "When droplets in a cloud join together and grow heavy, they fall to the ground as rain, snow, or hail.",
+    "ev": "Cloud droplets that join together and grow heavy fall as rain, snow, or hail.",
+    "tag": "precipitation"
+   },
+   {
+    "id": "f4",
+    "text": "Rain that lands on hills and mountains flows downhill into streams and rivers, which carry the water toward the sea.",
+    "ev": "As the source describes, rain on hills and mountains flows downhill into streams and rivers that carry the water toward the sea.",
+    "tag": "runoff into rivers"
+   },
+   {
+    "id": "f5",
+    "text": "Plants take in water through their roots and release some of it as vapor through tiny openings in their leaves.",
+    "ev": "Plants take in water through their roots and release part of it as vapor through their leaves.",
+    "tag": "plants releasing vapor"
+   },
+   {
+    "id": "f6",
+    "text": "About 97 percent of Earth's water is salt water found in the oceans.",
+    "ev": "About 97 percent of Earth's water is salt water found in the oceans.",
+    "tag": "salt water in the oceans"
+   },
+   {
+    "id": "f7",
+    "text": "Some rain soaks into the soil and becomes groundwater, which can stay underground for many years.",
+    "ev": "Some rain soaks into the soil and becomes groundwater that can stay underground for many years.",
+    "tag": "groundwater"
+   },
+   {
+    "id": "f8",
+    "text": "Fog forms when water vapor cools into droplets close to the ground instead of high in the sky.",
+    "ev": "Fog forms when water vapor cools into droplets close to the ground.",
+    "tag": "fog"
+   }
+  ],
+  "models": [
+   {
+    "id": "water-cycle-m1",
+    "family": "process",
+    "level": "beginner",
+    "q": "How does ocean water end up as clouds and rain?",
+    "restate": "Water from the ocean can become clouds and rain through a series of steps.",
+    "answer": "Heat lifts ocean water into the air as vapor, and cooling turns that vapor into the clouds that produce rain.",
+    "ev": [
+     "f1",
+     "f2"
+    ],
+    "exp": [
+     "Without this first step, liquid water would stay in the ocean and never enter the air.",
+     "Clouds are where the scattered vapor gathers again as droplets, linking the water in the air to the rain that falls."
+    ],
+    "rep": [
+     "The Sun's heat changes some of the water from oceans and lakes into water vapor.",
+     "Vapor that rises into cooler air changes into tiny droplets that make up clouds."
+    ],
+    "sum": "In short, the Sun's heat lifts water into the air, and cooling turns it into the clouds that bring rain.",
+    "sumNew": "In short, the Sun's heat lifts water into the air and cooling forms clouds, and about 97 percent of Earth's water is salty ocean water.",
+    "bad": "Ocean water becomes rain when the wind pushes the waves up into the sky until they freeze.",
+    "badRestate": "Most of the water on Earth is found in the oceans.",
+    "off": "f6",
+    "offExp": "Because so much of Earth's water is in the oceans, most of the planet's water is salty."
+   },
+   {
+    "id": "water-cycle-m2",
+    "family": "pattern",
+    "level": "intermediate",
+    "q": "Why does water on Earth keep moving instead of staying in one place?",
+    "restate": "Earth's water keeps moving from place to place rather than staying in one spot.",
+    "answer": "Water keeps moving because the Sun's heat lifts it into the air and falling rain carries it back toward the sea.",
+    "ev": [
+     "f1",
+     "f4"
+    ],
+    "exp": [
+     "Since the Sun keeps warming oceans and lakes, water is repeatedly lifted out of them as vapor.",
+     "Because the water flows downhill, rain that falls on high ground is carried back toward the sea, which completes the loop."
+    ],
+    "rep": [
+     "The Sun warms oceans and lakes, and some of the water becomes invisible vapor.",
+     "Rain that lands on mountains flows downhill into streams and rivers."
+    ],
+    "sum": "Water is always on the move because the Sun lifts it into the air and flowing rain returns it.",
+    "sumNew": "Water is always on the move because the Sun lifts it into the air and flowing rain returns it, and some even soaks into the ground for many years.",
+    "bad": "Water keeps moving because the ocean is pulled from one side of the planet to the other by the Moon.",
+    "badRestate": "Some rain sinks into the ground instead of flowing to streams and rivers.",
+    "off": "f7",
+    "offExp": "Because groundwater can stay underground for years, some of the water leaves the visible cycle for a long time."
+   }
+  ]
+ },
+ {
+  "id": "arch-bridges",
+  "subject": "Engineering and architecture",
+  "title": "Arch bridges",
+  "intro": "An arch bridge uses a curved shape to carry the weight of the roadway and everything that travels across it.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "The curve of an arch pushes weight outward and downward along the curve, toward the supports at each end.",
+    "ev": "The curve of an arch pushes weight outward and downward toward the supports at each end.",
+    "tag": "how the curve carries weight"
+   },
+   {
+    "id": "f2",
+    "text": "Stone arches built by Roman engineers about two thousand years ago still stand in parts of Europe.",
+    "ev": "Stone arches built by Roman engineers about two thousand years ago still stand in parts of Europe.",
+    "tag": "the Roman arches still standing"
+   },
+   {
+    "id": "f3",
+    "text": "Because stone resists squeezing very well, a stone arch stays strong as long as its pieces are pressed tightly together.",
+    "ev": "A stone arch stays strong as long as its pieces are pressed tightly together, since stone resists squeezing very well.",
+    "tag": "stone resisting squeezing"
+   },
+   {
+    "id": "f4",
+    "text": "The supports at the ends of an arch, called abutments, must be firmly anchored in the ground or in solid rock.",
+    "ev": "The supports at the ends of an arch, called abutments, must be firmly anchored in the ground or in solid rock.",
+    "tag": "abutments at the ends"
+   },
+   {
+    "id": "f5",
+    "text": "Arch bridges can span wide gaps, such as rivers and valleys, without placing many supports in the water.",
+    "ev": "According to the text, arch bridges can span rivers and valleys without placing many supports in the water.",
+    "tag": "crossing wide gaps"
+   },
+   {
+    "id": "f6",
+    "text": "Modern arches are often built from steel or concrete, which can be shaped into long, thin curves.",
+    "ev": "Modern arches are often built from steel or concrete, which can be shaped into long, thin curves.",
+    "tag": "steel and concrete arches"
+   },
+   {
+    "id": "f7",
+    "text": "A bridge builder first constructs a temporary wooden frame, which holds the stones in place until the arch is complete.",
+    "ev": "Builders first make a temporary wooden frame that holds the stones in place until the arch is complete.",
+    "tag": "the temporary frame"
+   },
+   {
+    "id": "f8",
+    "text": "Many arch bridges have a smooth, curved outline that people consider attractive.",
+    "ev": "Many arch bridges have a smooth, curved outline that people consider attractive.",
+    "tag": "the bridge's appearance"
+   }
+  ],
+  "models": [
+   {
+    "id": "arch-bridges-m1",
+    "family": "adaptation",
+    "level": "beginner",
+    "q": "Why is an arch a strong shape for a bridge?",
+    "restate": "The arch shape gives a bridge a great deal of strength.",
+    "answer": "An arch is strong because its curve directs the weight of the bridge toward solid supports.",
+    "ev": [
+     "f1",
+     "f3"
+    ],
+    "exp": [
+     "Sending the load along the curve means that no single spot has to hold up all of the weight alone.",
+     "Pressing the stones together uses the very kind of force that stone handles best."
+    ],
+    "rep": [
+     "The curve of an arch pushes weight outward and downward toward the end supports.",
+     "A stone arch remains strong as long as its pieces are pressed together tightly."
+    ],
+    "sum": "An arch stays strong because its curve guides weight to the supports and keeps the stone pieces pressed together.",
+    "sumNew": "An arch stays strong because its curve guides weight to the supports, and its smooth outline is considered attractive.",
+    "bad": "An arch is strong because the roadway on top of it is made from the hardest stone in the world.",
+    "badRestate": "The look of an arch bridge is one reason people enjoy these structures.",
+    "off": "f8",
+    "offExp": "Since people find the smooth outline pleasing, an arch can make a bridge look graceful."
+   },
+   {
+    "id": "arch-bridges-m2",
+    "family": "evaluation",
+    "level": "intermediate",
+    "q": "What advantages do arch bridges offer for crossing rivers and valleys?",
+    "restate": "Arch bridges offer certain advantages when builders need to cross rivers and valleys.",
+    "answer": "Arch bridges suit wide crossings because they can stretch across gaps and can last for centuries.",
+    "ev": [
+     "f5",
+     "f2"
+    ],
+    "exp": [
+     "Needing fewer supports in the water means builders face fewer difficulties working in the river itself.",
+     "Structures that still stand after about two thousand years show how durable a well-built arch can be."
+    ],
+    "rep": [
+     "Arch bridges can cross rivers and valleys without many supports in the water.",
+     "Roman stone arches from about two thousand years ago still stand in parts of Europe."
+    ],
+    "sum": "Overall, arches suit rivers and valleys because they cross wide gaps and can remain in use for a very long time.",
+    "sumNew": "Overall, arches suit rivers and valleys because they cross wide gaps and last, and builders use a temporary wooden frame while constructing them.",
+    "bad": "Arch bridges are the best choice for crossing any gap because they never need any repairs.",
+    "badRestate": "Builders construct a temporary frame to hold the stones while an arch is built.",
+    "off": "f7",
+    "offExp": "Because the frame supports the stones during construction, builders can place each piece safely before the arch is finished."
+   }
+  ]
+ },
+ {
+  "id": "public-libraries",
+  "subject": "Libraries and education",
+  "title": "Public libraries",
+  "intro": "A public library is a community resource that lends books and other materials to people who live nearby.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "With a library card, a person can borrow books for a few weeks at no charge and return them when finished.",
+    "ev": "With a library card, a person can borrow books for a few weeks at no charge.",
+    "tag": "borrowing books for free"
+   },
+   {
+    "id": "f2",
+    "text": "Many libraries offer computers and internet access, which people can use for homework and job applications.",
+    "ev": "Many libraries provide computers and internet access that people can use for homework and job applications.",
+    "tag": "computers and internet access"
+   },
+   {
+    "id": "f3",
+    "text": "Libraries host free programs, such as reading hours for young children and tutoring for students.",
+    "ev": "The passage says libraries host free programs, including reading hours for young children and tutoring for students.",
+    "tag": "free programs"
+   },
+   {
+    "id": "f4",
+    "text": "Librarians help visitors find reliable sources and teach them how to search for information.",
+    "ev": "Librarians help visitors find reliable sources and teach them how to search for information.",
+    "tag": "help from librarians"
+   },
+   {
+    "id": "f5",
+    "text": "Some libraries stay open late in the evening so that people who work during the day can visit.",
+    "ev": "Some libraries stay open late in the evening so that people who work during the day can visit.",
+    "tag": "evening hours"
+   },
+   {
+    "id": "f6",
+    "text": "Library buildings often include quiet rooms for studying.",
+    "ev": "Library buildings often include quiet rooms for studying.",
+    "tag": "quiet study rooms"
+   },
+   {
+    "id": "f7",
+    "text": "The oldest known libraries were collections of clay tablets in ancient Mesopotamia.",
+    "ev": "The oldest known libraries were collections of clay tablets in ancient Mesopotamia.",
+    "tag": "ancient libraries"
+   },
+   {
+    "id": "f8",
+    "text": "Libraries buy books in large numbers and share each copy with many different readers.",
+    "ev": "Libraries buy books in large numbers and share each copy with many readers.",
+    "tag": "sharing copies among readers"
+   }
+  ],
+  "models": [
+   {
+    "id": "public-libraries-m1",
+    "family": "function",
+    "level": "beginner",
+    "q": "How do public libraries help students learn?",
+    "restate": "Public libraries support students' learning in several ways.",
+    "answer": "Libraries help students learn by giving them free access to reading materials and to tools for schoolwork.",
+    "ev": [
+     "f1",
+     "f2"
+    ],
+    "exp": [
+     "Since the books cost nothing to borrow, students can read widely without spending any money.",
+     "A student who has no computer at home can still finish assignments that require one."
+    ],
+    "rep": [
+     "A person with a library card can borrow books at no charge for a few weeks.",
+     "Libraries provide computers and internet access for homework and job applications."
+    ],
+    "sum": "Libraries help students learn by offering free books and the technology needed for assignments.",
+    "sumNew": "Libraries help students learn by offering free books and technology, and the oldest known libraries held clay tablets.",
+    "bad": "Libraries help students learn by writing each student's homework assignments for them.",
+    "badRestate": "Libraries have a long history that began with collections of clay tablets.",
+    "off": "f7",
+    "offExp": "Because clay tablets were stored together, ancient communities could keep their records in one place."
+   },
+   {
+    "id": "public-libraries-m2",
+    "family": "evaluation",
+    "level": "intermediate",
+    "q": "Why is a library a valuable resource for a whole community?",
+    "restate": "A library serves an entire community, not only people who already read often.",
+    "answer": "A library is valuable to a whole community because it offers programs and expert help that people of many ages can use.",
+    "ev": [
+     "f3",
+     "f4"
+    ],
+    "exp": [
+     "Reading hours for young children and tutoring for students show that the library serves different age groups.",
+     "Guidance in finding reliable sources helps visitors judge information, a skill useful at any age."
+    ],
+    "rep": [
+     "Libraries host free programs, including reading hours and tutoring.",
+     "Librarians help visitors locate reliable sources and show them how to search."
+    ],
+    "sum": "By offering programs and guidance, a library benefits people of every age in the whole community.",
+    "sumNew": "By offering programs and guidance, a library benefits the whole community, and its buildings often have quiet rooms for studying.",
+    "bad": "A library is valuable to a community because it pays visitors to read books every day.",
+    "badRestate": "Many library buildings include quiet rooms where visitors can study.",
+    "off": "f6",
+    "offExp": "Because the rooms are quiet, students can concentrate while they study."
+   }
+  ]
+ }
+]

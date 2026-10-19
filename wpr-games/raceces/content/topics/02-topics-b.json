@@ -1,0 +1,552 @@
+[
+ {
+  "id": "moon-phases",
+  "subject": "Astronomy",
+  "title": "Phases of the Moon",
+  "intro": "The Moon does not make its own light; it shines because it reflects sunlight toward Earth.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "The Moon orbits Earth, and half of it is always lit by the Sun, but the part of that lit half we can see changes as it moves.",
+    "ev": "The Moon orbits Earth, and the part of its lit half that we can see changes as it moves.",
+    "tag": "the Moon's orbit"
+   },
+   {
+    "id": "f2",
+    "text": "A full cycle of phases, from one new moon to the next, takes about 29 days.",
+    "ev": "A full cycle of phases, from one new moon to the next, takes about 29 days.",
+    "tag": "the length of the cycle"
+   },
+   {
+    "id": "f3",
+    "text": "During a new moon, the lit side faces away from Earth, so the Moon is nearly invisible in the night sky.",
+    "ev": "During a new moon, the lit side faces away from Earth, so the Moon is nearly invisible in the night sky.",
+    "tag": "the new moon"
+   },
+   {
+    "id": "f4",
+    "text": "At full moon, we see the whole lit side of the Moon, and it appears as a bright circle.",
+    "ev": "At full moon, we see the whole lit side of the Moon as a bright circle.",
+    "tag": "the full moon"
+   },
+   {
+    "id": "f5",
+    "text": "The Moon's surface is covered in craters formed by rocks that crashed into it long ago.",
+    "ev": "The Moon's surface is covered in craters formed by rocks that crashed into it long ago.",
+    "tag": "craters"
+   },
+   {
+    "id": "f6",
+    "text": "Gravity on the Moon is about one sixth as strong as gravity on Earth.",
+    "ev": "Gravity on the Moon is about one sixth as strong as gravity on Earth.",
+    "tag": "the Moon's gravity"
+   },
+   {
+    "id": "f7",
+    "text": "Ocean tides rise and fall mainly because of the pull of the Moon's gravity on Earth's water.",
+    "ev": "Ocean tides rise and fall mainly because of the pull of the Moon's gravity on Earth's water.",
+    "tag": "ocean tides"
+   },
+   {
+    "id": "f8",
+    "text": "People have used the repeating phases of the Moon to build calendars for thousands of years.",
+    "ev": "The source mentions that people have used the repeating phases of the Moon to build calendars for thousands of years.",
+    "tag": "calendars"
+   }
+  ],
+  "models": [
+   {
+    "id": "moon-phases-m1",
+    "family": "cause-effect",
+    "level": "beginner",
+    "q": "Why does the Moon look different from night to night?",
+    "restate": "The Moon's appearance changes from one night to the next.",
+    "answer": "The Moon looks different because we see a different amount of its sunlit side as it travels around Earth.",
+    "ev": [
+     "f1",
+     "f3"
+    ],
+    "exp": [
+     "Since the Moon keeps moving along its path, the angle from which we view its bright half is always changing.",
+     "When the bright half points away from us, almost nothing of the Moon can be seen, which is the darkest point of its cycle."
+    ],
+    "rep": [
+     "The Moon orbits Earth, and the visible part of its lit half changes as it moves.",
+     "A new moon happens when the lit side faces away from Earth, so the Moon is almost invisible."
+    ],
+    "sum": "The Moon's changing look comes from how much of its lit half faces Earth as it orbits.",
+    "sumNew": "The Moon's changing look comes from how much of its lit half faces Earth, and its surface is covered with craters formed long ago.",
+    "bad": "The Moon looks different because Earth's shadow slowly covers a little more of it each night.",
+    "badRestate": "The Moon's surface looks different up close because of its many craters.",
+    "off": "f5",
+    "offExp": "The marks left by past collisions explain why the Moon's surface looks rough up close."
+   },
+   {
+    "id": "moon-phases-m2",
+    "family": "pattern",
+    "level": "advanced",
+    "q": "How can the repeating pattern of the Moon's phases be useful to people?",
+    "restate": "The repeating pattern of the Moon's phases can serve people in practical ways.",
+    "answer": "The regular pattern of phases is useful because it lets people predict the Moon's appearance and keep track of time.",
+    "ev": [
+     "f2",
+     "f8"
+    ],
+    "exp": [
+     "Because each cycle lasts about the same length, anyone who counts nights can estimate when the next new moon will arrive.",
+     "Since the same cycle returns again and again, people could count on it as a dependable way to organize their months."
+    ],
+    "rep": [
+     "One cycle from a new moon to the next lasts about 29 days.",
+     "Calendars have been based on the Moon's repeating phases for thousands of years."
+    ],
+    "sum": "Overall, the Moon's predictable cycle gives people a natural way to anticipate its appearance and measure the passing of time.",
+    "sumNew": "Overall, the Moon's predictable cycle helps people measure time, and the Moon's gravity is about one sixth as strong as Earth's.",
+    "bad": "The Moon's phases are useful because they control when each season begins on Earth.",
+    "badRestate": "The Moon's gravity is much weaker than Earth's, which affects how objects behave there.",
+    "off": "f6",
+    "offExp": "Because the Moon's gravity is weaker, an object there would weigh less than it does on Earth."
+   }
+  ]
+ },
+ {
+  "id": "cactus",
+  "subject": "Plants and animals",
+  "title": "Desert cacti",
+  "intro": "Cacti are plants that grow in deserts, where rain is rare and the sun is strong.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "A cactus stem is thick and spongy, and it stores large amounts of water after a rainfall.",
+    "ev": "The thick, spongy stem of a cactus stores large amounts of water after a rainfall.",
+    "tag": "the thick stem storing water"
+   },
+   {
+    "id": "f2",
+    "text": "Instead of broad leaves, a cactus has narrow spines, which lose much less water to the dry air.",
+    "ev": "A cactus has narrow spines instead of broad leaves, so it loses much less water to the dry air.",
+    "tag": "spines instead of leaves"
+   },
+   {
+    "id": "f3",
+    "text": "Many cacti have shallow roots that spread wide near the surface and quickly soak up rain before it dries up.",
+    "ev": "Many cacti have shallow roots that spread wide near the surface and quickly soak up rain.",
+    "tag": "shallow, wide-spreading roots"
+   },
+   {
+    "id": "f4",
+    "text": "Spines also provide a little shade and keep some animals from eating the plant.",
+    "ev": "Spines also provide a little shade and keep some animals from eating the plant.",
+    "tag": "spines giving shade and protection"
+   },
+   {
+    "id": "f5",
+    "text": "Some cacti can survive for a year or more without any rain.",
+    "ev": "Some cacti can survive for a year or more without any rain.",
+    "tag": "surviving without rain"
+   },
+   {
+    "id": "f6",
+    "text": "The tallest cactus, the saguaro, can grow taller than a house with two stories.",
+    "ev": "The saguaro, the tallest cactus, can grow taller than a house with two stories.",
+    "tag": "the saguaro's height"
+   },
+   {
+    "id": "f7",
+    "text": "Cactus flowers often open at night and are pollinated by bats and moths.",
+    "ev": "Cactus flowers often open at night and are pollinated by bats and moths.",
+    "tag": "night-blooming flowers"
+   },
+   {
+    "id": "f8",
+    "text": "People grow cacti in pots because they need very little watering.",
+    "ev": "People grow cacti in pots because they need very little watering.",
+    "tag": "cacti as houseplants"
+   }
+  ],
+  "models": [
+   {
+    "id": "cactus-m1",
+    "family": "adaptation",
+    "level": "beginner",
+    "q": "How is a cactus able to survive in a desert?",
+    "restate": "A cactus is able to live in a place that gets very little rain.",
+    "answer": "A cactus survives in the desert because its body is built to store water and to lose very little of it.",
+    "ev": [
+     "f1",
+     "f2"
+    ],
+    "exp": [
+     "Having a reserve of stored water allows the plant to keep living through the long periods between rainstorms.",
+     "With less water escaping through spines than broad leaves would allow, the plant keeps more of what it has stored."
+    ],
+    "rep": [
+     "After a rainfall, the thick, spongy stem of a cactus holds a large amount of water.",
+     "A cactus has narrow spines instead of broad leaves, so it loses less water to dry air."
+    ],
+    "sum": "A cactus survives desert conditions because it keeps a supply of water and wastes very little.",
+    "sumNew": "A cactus survives desert conditions by keeping water, and its flowers often open at night for bats and moths.",
+    "bad": "A cactus survives in the desert because its roots reach water hundreds of feet underground.",
+    "badRestate": "Cactus flowers often open at night, which helps the plant get pollinated.",
+    "off": "f7",
+    "offExp": "Flowers that open at night can attract nighttime visitors such as bats and moths."
+   },
+   {
+    "id": "cactus-m2",
+    "family": "process",
+    "level": "advanced",
+    "q": "Why can a cactus make good use of a brief rainstorm?",
+    "restate": "A cactus is able to benefit from rain that lasts only a short time.",
+    "answer": "A cactus uses a brief storm well because it absorbs water quickly and holds on to what it takes in.",
+    "ev": [
+     "f3",
+     "f1"
+    ],
+    "exp": [
+     "Roots that stay near the surface and spread wide catch the water as soon as it soaks into the soil, before the sun dries it out.",
+     "Because the stem keeps the absorbed water inside, the plant can use it slowly after the storm is over."
+    ],
+    "rep": [
+     "Shallow roots spread wide near the surface and soak up rain for many cacti.",
+     "A cactus stem is thick and spongy and stores large amounts of water after rainfall."
+    ],
+    "sum": "A cactus makes the most of short storms by soaking up water fast and storing it for later.",
+    "sumNew": "A cactus makes the most of short storms by soaking up water fast, and its spines also keep some animals from eating it.",
+    "bad": "A cactus uses brief storms well because its spines can make rain fall on the plant.",
+    "badRestate": "Spines help protect a cactus by keeping some animals from eating it.",
+    "off": "f4",
+    "offExp": "Since spines cast a little shade, the plant's surface stays slightly cooler in the strong sun."
+   }
+  ]
+ },
+ {
+  "id": "levers",
+  "subject": "Physics",
+  "title": "Levers",
+  "intro": "A lever is a simple machine made of a stiff bar that turns around a fixed point called a fulcrum.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "When the fulcrum is close to the load, a small push far from the fulcrum can lift a heavy object.",
+    "ev": "When the fulcrum is close to the load, a small push far from the fulcrum can lift a heavy object.",
+    "tag": "the fulcrum near the load"
+   },
+   {
+    "id": "f2",
+    "text": "A crowbar lets a person pry up a nail by pushing down on the long end of the bar.",
+    "ev": "A person can pry up a nail with a crowbar by pushing down on the long end of the bar.",
+    "tag": "the crowbar"
+   },
+   {
+    "id": "f3",
+    "text": "A seesaw is a lever with the fulcrum in the middle, so two children of equal weight can balance each other.",
+    "ev": "A seesaw is a lever with its fulcrum in the middle, so two children of equal weight can balance.",
+    "tag": "the seesaw"
+   },
+   {
+    "id": "f4",
+    "text": "The farther you push from the fulcrum, the less force you need, but you must move your hand through a longer distance.",
+    "ev": "The text states that pushing farther from the fulcrum takes less force, but the hand must move through a longer distance.",
+    "tag": "force versus distance"
+   },
+   {
+    "id": "f5",
+    "text": "Scissors are made of two levers joined at a shared fulcrum.",
+    "ev": "Scissors are made of two levers joined at a shared fulcrum.",
+    "tag": "scissors"
+   },
+   {
+    "id": "f6",
+    "text": "People have used levers for thousands of years to move heavy stones.",
+    "ev": "People have used levers for thousands of years to move heavy stones.",
+    "tag": "the ancient use of levers"
+   },
+   {
+    "id": "f7",
+    "text": "A wheelbarrow is a lever with the fulcrum at the wheel, so the person lifting the handles carries only part of the load.",
+    "ev": "A wheelbarrow is a lever with the fulcrum at the wheel, so the person lifting the handles carries only part of the load.",
+    "tag": "the wheelbarrow"
+   },
+   {
+    "id": "f8",
+    "text": "A lever does not create energy; it only changes how effort is applied.",
+    "ev": "A lever does not create energy; it only changes how effort is applied.",
+    "tag": "levers and energy"
+   }
+  ],
+  "models": [
+   {
+    "id": "levers-m1",
+    "family": "function",
+    "level": "beginner",
+    "q": "How does a lever make heavy objects easier to lift?",
+    "restate": "A lever changes how much effort a person needs to lift a heavy object.",
+    "answer": "A lever makes lifting easier by letting a small force applied far from the fulcrum move a heavy load.",
+    "ev": [
+     "f1",
+     "f2"
+    ],
+    "exp": [
+     "Placing the fulcrum near the load gives the person leverage, so a little effort becomes a large lifting force.",
+     "The nail resists being pulled out, yet the long end of the bar lets a modest push overcome that resistance."
+    ],
+    "rep": [
+     "A small push far from a fulcrum that is close to the load can lift a heavy object.",
+     "A crowbar lets someone push down on its long end to pry up a nail."
+    ],
+    "sum": "In short, a lever helps by turning a small push far from the fulcrum into enough force to move a heavy load.",
+    "sumNew": "In short, a lever turns a small push into enough force to move a heavy load, and a seesaw is a lever with its fulcrum in the middle.",
+    "bad": "A lever makes lifting easier by creating extra energy that the person did not supply.",
+    "badRestate": "A seesaw balances two children by placing a fulcrum between them.",
+    "off": "f3",
+    "offExp": "Because the fulcrum is in the middle, a seesaw balances when the weights on both sides match."
+   },
+   {
+    "id": "levers-m2",
+    "family": "tradeoff",
+    "level": "advanced",
+    "q": "What does a person give up when a lever makes a task need less force?",
+    "restate": "It is worth understanding what a person gives up when a lever lowers the force a task needs.",
+    "answer": "A person gives up distance, because the easier the push becomes, the farther the hand must travel.",
+    "ev": [
+     "f4",
+     "f8"
+    ],
+    "exp": [
+     "Since the hand must travel through a longer distance, the smaller force is paid for with extra motion.",
+     "Because no energy is created, the lever cannot reduce the force a person needs without asking for something in return."
+    ],
+    "rep": [
+     "Pushing farther from the fulcrum takes less force but a longer movement of the hand.",
+     "A lever only changes how effort is applied and does not create energy."
+    ],
+    "sum": "A lever trades force for distance rather than producing any extra energy.",
+    "sumNew": "A lever trades force for distance, and scissors use two levers that share a fulcrum.",
+    "bad": "A person gives up strength, because using a lever always makes the user weaker over time.",
+    "badRestate": "Scissors use two levers that share a fulcrum, which gives them cutting power.",
+    "off": "f5",
+    "offExp": "Because the two blades pivot on one shared point, they cut by squeezing the material between them."
+   }
+  ]
+ },
+ {
+  "id": "bicycle-gears",
+  "subject": "Transportation",
+  "title": "Bicycle gears",
+  "intro": "Most bicycles have gears, which are wheels with teeth that connect the pedals to the back wheel by a chain.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "In a low gear, each turn of the pedals moves the bike only a short distance, which makes pedaling easier on a steep hill.",
+    "ev": "In a low gear, each turn of the pedals moves the bike only a short distance, which makes a steep hill easier to climb.",
+    "tag": "low gears on hills"
+   },
+   {
+    "id": "f2",
+    "text": "In a high gear, each turn of the pedals moves the bike a long distance, so a rider can reach a high speed on flat ground.",
+    "ev": "In a high gear, each turn of the pedals moves the bike a long distance, so a rider can reach a high speed on flat ground.",
+    "tag": "high gears on flat ground"
+   },
+   {
+    "id": "f3",
+    "text": "A rider changes gears by moving a lever that shifts the chain from one toothed wheel to another.",
+    "ev": "A rider changes gears by moving a lever that shifts the chain from one toothed wheel to another.",
+    "tag": "shifting the chain"
+   },
+   {
+    "id": "f4",
+    "text": "Many bikes have between seven and twenty-one gear combinations.",
+    "ev": "Many bikes have between seven and twenty-one gear combinations.",
+    "tag": "the number of gear combinations"
+   },
+   {
+    "id": "f5",
+    "text": "A good gear choice lets a rider keep pedaling at a steady, comfortable pace.",
+    "ev": "A good gear choice lets a rider keep pedaling at a steady, comfortable pace.",
+    "tag": "a steady pedaling pace"
+   },
+   {
+    "id": "f6",
+    "text": "Bicycle helmets are designed to absorb impact and protect the head.",
+    "ev": "Bicycle helmets are designed to absorb impact and protect the head.",
+    "tag": "helmets"
+   },
+   {
+    "id": "f7",
+    "text": "The first bicycles, built in the early 1800s, had no pedals at all and were pushed along by the rider's feet.",
+    "ev": "The first bicycles, built in the early 1800s, had no pedals and were pushed along by the rider's feet.",
+    "tag": "early bicycles"
+   },
+   {
+    "id": "f8",
+    "text": "Chains are usually oiled so they move smoothly across the teeth.",
+    "ev": "Chains are usually oiled so they move smoothly across the teeth.",
+    "tag": "oiling the chain"
+   }
+  ],
+  "models": [
+   {
+    "id": "bicycle-gears-m1",
+    "family": "function",
+    "level": "beginner",
+    "q": "Why do bicycles have more than one gear?",
+    "restate": "Many bicycles come with several gears instead of just one.",
+    "answer": "Bicycles have several gears so riders can adjust how hard they pedal for different kinds of ground.",
+    "ev": [
+     "f1",
+     "f2"
+    ],
+    "exp": [
+     "On a steep hill, an easier gear keeps the rider from having to push very hard just to keep climbing.",
+     "On level ground, a harder gear turns each pedal stroke into more distance, letting the rider build up speed."
+    ],
+    "rep": [
+     "A low gear moves the bike a short distance with each turn of the pedals.",
+     "A high gear moves the bike a long distance with each turn of the pedals."
+    ],
+    "sum": "In short, several gears let a rider match the effort of pedaling to hills and flat roads alike.",
+    "sumNew": "In short, several gears let a rider match effort to the road, and the first bicycles from the early 1800s had no pedals.",
+    "bad": "Bicycles have several gears because the chain would break if it only used one.",
+    "badRestate": "The first bicycles looked very different from the ones people ride today.",
+    "off": "f7",
+    "offExp": "Since early bicycles had no pedals, riders had to push themselves along with their feet."
+   },
+   {
+    "id": "bicycle-gears-m2",
+    "family": "tradeoff",
+    "level": "advanced",
+    "q": "How does choosing the right gear help a rider stay comfortable?",
+    "restate": "The gear a rider chooses can affect how comfortable a ride feels.",
+    "answer": "The right gear keeps the effort of pedaling steady, whatever the slope of the road.",
+    "ev": [
+     "f5",
+     "f1"
+    ],
+    "exp": [
+     "Pedaling at a steady pace avoids sudden bursts of effort that would tire a rider quickly.",
+     "Making each turn easier on a hill keeps the rider's pace from slowing to a struggle."
+    ],
+    "rep": [
+     "A good gear lets a rider keep a steady, comfortable pedaling pace.",
+     "A low gear moves the bike a short distance per pedal turn on a steep hill."
+    ],
+    "sum": "Choosing a gear to suit the slope lets a rider pedal at a steady and comfortable pace.",
+    "sumNew": "Choosing a gear to suit the slope keeps pedaling comfortable, and chains are usually oiled to move smoothly.",
+    "bad": "The right gear keeps a rider comfortable because it makes the bicycle weigh less on hills.",
+    "badRestate": "Oiling a bicycle chain helps it move smoothly across the teeth.",
+    "off": "f8",
+    "offExp": "Oil reduces friction, so the chain slides over the teeth with less resistance."
+   }
+  ]
+ },
+ {
+  "id": "rust",
+  "subject": "Chemistry",
+  "title": "Rust and iron",
+  "intro": "Rust is the reddish-brown coating that can appear on objects made of iron or steel.",
+  "facts": [
+   {
+    "id": "f1",
+    "text": "Rust forms when iron reacts with oxygen in the presence of water.",
+    "ev": "Rust forms when iron reacts with oxygen in the presence of water.",
+    "tag": "iron reacting with oxygen and water"
+   },
+   {
+    "id": "f2",
+    "text": "Rust is weaker than iron, so a badly rusted object can crumble or break.",
+    "ev": "Rust is weaker than iron, so a badly rusted object can crumble or break.",
+    "tag": "rust being weaker than iron"
+   },
+   {
+    "id": "f3",
+    "text": "Painting a metal object keeps water and air away from the iron underneath.",
+    "ev": "Paint on a metal object keeps water and air away from the iron underneath.",
+    "tag": "painting the metal"
+   },
+   {
+    "id": "f4",
+    "text": "Rust forms faster in damp places, and salty seawater makes the process even quicker.",
+    "ev": "Rust forms faster in damp places, and salty seawater makes the process even quicker.",
+    "tag": "damp and salty places"
+   },
+   {
+    "id": "f5",
+    "text": "Stainless steel contains chromium, which forms a thin protective layer on the surface.",
+    "ev": "Stainless steel contains chromium, which forms a thin protective layer on its surface.",
+    "tag": "stainless steel"
+   },
+   {
+    "id": "f6",
+    "text": "Steel is made mostly of iron, with small amounts of other materials added.",
+    "ev": "Steel is made mostly of iron, with small amounts of other materials added.",
+    "tag": "steel containing iron"
+   },
+   {
+    "id": "f7",
+    "text": "Some metals, such as gold, do not rust at all.",
+    "ev": "Some metals, such as gold, do not rust at all.",
+    "tag": "gold not rusting"
+   },
+   {
+    "id": "f8",
+    "text": "Gardeners often wipe their tools dry and coat them with oil after using them.",
+    "ev": "Gardeners often wipe their tools dry and coat them with oil after use.",
+    "tag": "oiled garden tools"
+   }
+  ],
+  "models": [
+   {
+    "id": "rust-m1",
+    "family": "cause-effect",
+    "level": "beginner",
+    "q": "What causes rust to form on an iron object?",
+    "restate": "Rust forming on an iron object has a specific cause that can be identified.",
+    "answer": "Rust forms when iron is exposed to both oxygen and water.",
+    "ev": [
+     "f1",
+     "f4"
+    ],
+    "exp": [
+     "Since iron, oxygen, and water must all meet, an iron object kept dry is much less likely to rust.",
+     "Damp air and salty water supply the moisture that speeds up the change, so objects near the sea rust quickly."
+    ],
+    "rep": [
+     "Iron reacts with oxygen in the presence of water to form rust.",
+     "Rust forms faster in damp places, and salty seawater speeds it up even more."
+    ],
+    "sum": "Rust develops when iron meets oxygen and water, and extra moisture makes it happen faster.",
+    "sumNew": "Rust develops when iron meets oxygen and water, but gold avoids the problem because it does not rust.",
+    "bad": "Rust forms when iron is heated until it glows red-hot in the open air.",
+    "badRestate": "Some metals never rust, no matter how long they are left outside.",
+    "off": "f7",
+    "offExp": "Because gold does not rust, it can keep its shine without any protection."
+   },
+   {
+    "id": "rust-m2",
+    "family": "function",
+    "level": "advanced",
+    "q": "How can people protect iron objects from rust?",
+    "restate": "People can take steps to keep iron objects from rusting.",
+    "answer": "People protect iron by keeping water and oxygen from reaching its surface.",
+    "ev": [
+     "f3",
+     "f5"
+    ],
+    "exp": [
+     "Because rust needs both water and air, a coating that blocks them stops the change before it starts.",
+     "The thin layer formed by chromium acts like a built-in coating, so stainless steel protects itself."
+    ],
+    "rep": [
+     "Painting a metal object keeps water and air away from the iron below.",
+     "Stainless steel contains chromium, which forms a thin layer on the surface."
+    ],
+    "sum": "Blocking the contact between iron and the water and air it needs is how rust can be prevented.",
+    "sumNew": "Blocking the contact between iron and the water and air it needs prevents rust, and rusted iron is weaker than ordinary iron.",
+    "bad": "People protect iron by leaving it in damp, salty places so that rust cannot spread.",
+    "badRestate": "Rust damages iron objects by making them weaker over time.",
+    "off": "f2",
+    "offExp": "Since rust is weaker than iron, a badly rusted beam may no longer hold as much weight."
+   }
+  ]
+ }
+]

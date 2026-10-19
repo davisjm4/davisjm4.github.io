@@ -1,0 +1,16 @@
+{
+  "name": "raceces-writing-games",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RACECES Writing Games: a standalone, account-free academic writing practice site.",
+  "devDependencies": { "playwright": "^1.56.0" },
+  "scripts": {
+    "build": "node tools/build.js",
+    "validate": "node tools/validate-content.js",
+    "test:unit": "node tests/run-all.js",
+    "test:browser": "node tests/browser/run.js",
+    "sweep": "node tests/sweep.js",
+    "docs": "node tools/gen-docs.js",
+    "test": "npm run build && npm run validate && npm run test:unit && npm run test:browser && npm run docs"
+  }
+}

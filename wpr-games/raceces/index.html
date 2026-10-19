@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RACECES Writing | WPR Games</title>
+<meta name="description" content="Practice the structure of an evidence-based written response: identify the parts, rearrange the response, and choose the missing piece.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the practice area</a>
+<header class="top">
+  <a class="platform-home" href="../">← WPR Games</a>
+  <h1>RACECES Writing Games</h1>
+  <nav aria-label="Practice modes">
+    <ul id="nav">
+      <li><a href="#/mixed" data-route="mixed">Mixed Practice</a></li>
+      <li><a href="#/identify" data-route="identify">Identify the Parts</a></li>
+      <li><a href="#/rearrange" data-route="rearrange">Rearrange the Response</a></li>
+      <li><a href="#/missing" data-route="missing">Choose the Missing Piece</a></li>
+      <li><a href="#/summary" data-route="summary">Session Summary</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main" tabindex="-1">
+  <div id="toolbar" class="toolbar" hidden>
+    <fieldset class="levels">
+      <legend>Difficulty</legend>
+      <label><input type="radio" name="level" value="all"> All levels</label>
+      <label><input type="radio" name="level" value="beginner"> Beginner</label>
+      <label><input type="radio" name="level" value="intermediate"> Intermediate</label>
+      <label><input type="radio" name="level" value="advanced"> Advanced</label>
+    </fieldset>
+  </div>
+  <div id="stage"></div>
+</main>
+<div id="live" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+<noscript><p class="noscript">RACECES Writing Games needs JavaScript to run. It works offline once loaded and never sends information anywhere.</p></noscript>
+
+<script src="js/engine/rng.js"></script>
+<script src="js/engine/structure.js"></script>
+<script src="js/data/content-bundle.js"></script>
+<script src="js/engine/model.js"></script>
+<script src="js/engine/feedback.js"></script>
+<script src="js/engine/identify.js"></script>
+<script src="js/engine/rearrange.js"></script>
+<script src="js/engine/missing.js"></script>
+<script src="js/engine/generator.js"></script>
+<script src="js/engine/validator.js"></script>
+<script src="js/engine/session.js"></script>
+<script src="js/ui/dom.js"></script>
+<script src="js/ui/identify-ui.js"></script>
+<script src="js/ui/rearrange-ui.js"></script>
+<script src="js/ui/missing-ui.js"></script>
+<script src="js/ui/summary-ui.js"></script>
+<script src="js/ui/app.js"></script>
+</body>
+</html>
