@@ -1,11 +1,13 @@
-import * as E from "./engine.js?v=bool-v4";
+import * as E from "./engine.js?v=bool-v5";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=java-v1";
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#39;"}[c]));
 const tracker = sessionTracker();
-let q, instance, selected = null, closed = false, rng = Math.random;
-const recentQuestions = [];
+let q, instance, selected = null, closed = false;
+// Bounded in-memory repeat avoidance (120 challenges). It is a safeguard only;
+// the generators themselves provide the variety.
+const practice = E.createPracticeSession({ historySize: 120 });
 
 function stats() { $("stats").textContent = roundSummary("boolean-conditional-lab"); }
 function codeHtml() {
@@ -32,11 +34,7 @@ function render() {
 }
 function next() {
   if (instance && tracker.status(instance) === "active") tracker.skip(instance);
-  const challengeSeed = Math.floor(Math.random() * 0x7fffffff) + 1; rng = E.makeRng(challengeSeed);
-  let tries = 0;
-  do { q = E.generate($("mode").value, rng, $("difficulty").value); tries++; }
-  while (recentQuestions.includes(E.signature(q)) && tries < 40);
-  recentQuestions.push(E.signature(q)); if (recentQuestions.length > 30) recentQuestions.shift();
+  q = practice.next($("mode").value, $("difficulty").value);
   instance = tracker.begin("boolean-conditional-lab", E.booleanGame.name, q.topic, E.booleanGame.modes[q.topic]); closed = false; selected = null; render();
 }
 function submit() {
