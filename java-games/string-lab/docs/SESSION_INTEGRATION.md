@@ -6,4 +6,4 @@ The bridge buffers startup events until the shared ES module loads, then creates
 
 The built-in Session Summary remains available through the game’s button. The bridge also adds the standard Java Games Session Summary link to the header; both summaries use local browser storage, and the Advanced CS catalog retains its course-level summary link.
 
-Seven bounded skills are used as topics: Concatenation, Length, Character Indexing, Substrings, Searching, String Immutability, and Multi-Step String Tracing. Generated text and challenge identifiers are not used as topics.
+Ten bounded skills are used as topics: Concatenation, Length, Character Indexing, Substrings, Searching, String Immutability, Multi-Step String Tracing, String Algorithm Tracing, String Comparisons, and String Loop Construction. Generated text and challenge identifiers are not used as topics.

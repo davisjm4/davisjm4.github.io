@@ -17,14 +17,17 @@
   var SL = (root.StringLab = root.StringLab || {});
   var J = SL.J, E = SL.Evaluator, D = SL.Distractors, DF = SL.Difficulty, H = SL.GenHelpers, Rng = SL.Rng;
 
-  var VERSION = '1.0.0';
+  var VERSION = '1.1.0';
   var MODES = [
     { id: 'predict', label: 'Predict the Output', short: 'Predict' },
     { id: 'index', label: 'Find the Index', short: 'Index' },
     { id: 'expr', label: 'Complete the Expression', short: 'Complete' },
-    { id: 'trace', label: 'Trace String Operations', short: 'Trace' }
+    { id: 'trace', label: 'Trace String Operations', short: 'Trace' },
+    { id: 'algorithms', label: 'Trace String Algorithms', short: 'Algorithms' },
+    { id: 'compare', label: 'Compare Strings', short: 'Compare' },
+    { id: 'loop', label: 'Complete the String Loop', short: 'String Loop' }
   ];
-  var SKILLS = ['Concatenation', 'Length', 'Character Indexing', 'Substrings', 'Searching', 'String Immutability', 'Multi-Step String Tracing'];
+  var SKILLS = ['Concatenation', 'Length', 'Character Indexing', 'Substrings', 'Searching', 'String Immutability', 'Multi-Step String Tracing', 'String Algorithm Tracing', 'String Comparisons', 'String Loop Construction'];
   var LEVELS = DF.LEVELS;
 
   function familiesFor(mode, lvl) {
@@ -63,6 +66,19 @@
   }
 
   function assemble(fam, draft, lvl, r, seed) {
+    if (draft.type === 'structured') {
+      if (draft.mode !== fam.mode || draft.difficulty !== lvl || !draft.code.length || draft.choices.length < 2 || draft.choices.length > 4) return null;
+      var correctCount = draft.choices.filter(function (c) { return c.text === draft.answer; }).length;
+      var distinct = draft.choices.map(function (c) { return c.text; }).filter(function (x, i, a) { return a.indexOf(x) === i; }).length;
+      if (correctCount !== 1 || distinct !== draft.choices.length || draft.choices[draft.correctIndex].text !== draft.answer) return null;
+      draft.choices.forEach(function (c, i) { c.id = String.fromCharCode(97 + i); c.correct = i === draft.correctIndex; });
+      draft.id = fam.id + ':' + lvl + ':' + seed;
+      draft.seed = seed;
+      draft.version = VERSION;
+      draft.generatorFamily = fam.id;
+      draft.model = { answer: draft.answer, validated: true };
+      return draft;
+    }
     var base = {
       id: fam.id + ':' + lvl + ':' + seed, seed: seed, mode: fam.mode, difficulty: lvl, family: fam.id, familyLabel: fam.label,
       skill: fam.skill, rule: fam.rule, version: VERSION

@@ -103,3 +103,15 @@ Every distractor carries a misconception id; the feedback module (`js/feedback.j
 | `near` | That is not what Java computes here. Follow the step-by-step trace below to see where it differs. |
 
 Misconceptions that map to an evaluator flag (`oneBased`, `inclusiveEnd`, `startEarly`, `startLate`, `mutates`, `aliasFollows`, `sumNumbers`, `allConcat`, `lastOccurrence`, `oneBasedFind`, `notFoundZero`, `lengthLastIdx`, `lengthPlus`, `stoppedEarly`) are produced by **re-running the actual program under that misconception**, so the wrong answer is exactly what a student holding that belief would compute. The rest are authored per family because they depend on the question wording.
+
+## Structured practice families
+
+`families-practice.js` registers the additional families. Inputs are drawn from the existing word catalog and parameterized positions, targets, directions, conditions, aliases, and boundaries.
+
+| Mode | Family identifiers | Advanced-only structure |
+|---|---|---|
+| Trace String Algorithms | `algo.count.forward`, `algo.count.backward`, `algo.find.position`, `algo.find.indexof`, `algo.find.substring`, `algo.reverse.build`, `algo.transform.filter`, `algo.transform.replace`, `algo.substring.count`, `algo.palindrome.compare` | `algo.multi.filter` combines a character match with an even-index condition and tracks both a String and a count |
+| Compare Strings | `compare.equals`, `compare.compareto.sign`, `compare.compareto.value`, `compare.identity.alias`, `compare.conditional.branch`, `compare.choose.expression` | `compare.alias.reassign` traces aliasing, concatenation, reassignment, reference identity, content equality, and lexical ordering |
+| Complete the String Loop | `loop.bound`, `loop.substring.endpoint`, `loop.reverse`, `loop.matching`, `loop.accumulator`, `loop.bug`, `loop.edge` | `loop.combined` completes a backward search that uses two conditions to retain the rightmost match |
+
+The String substring-count family searches a suffix with the AP Quick Reference `indexOf(String)` overload. Its index update advances one position for overlapping matches or by the target length for nonoverlapping matches.

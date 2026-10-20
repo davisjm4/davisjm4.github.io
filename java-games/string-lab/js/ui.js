@@ -32,7 +32,7 @@
   function randomSeed() {
     try { var a = new Uint32Array(1); root.crypto.getRandomValues(a); return (a[0] % 2147483646) + 1; } catch (e) { return Math.floor(Math.random() * 2147483645) + 1; }
   }
-  var validModes = ['predict', 'index', 'expr', 'trace', 'mixed'];
+  var validModes = G.MODES.map(function (m) { return m.id; }).concat(['mixed']);
   var settings = {
     mode: validModes.indexOf(params.get('mode')) >= 0 ? params.get('mode') : 'predict',
     difficulty: G.LEVELS.indexOf(params.get('difficulty')) >= 0 ? params.get('difficulty') : 'beginner'

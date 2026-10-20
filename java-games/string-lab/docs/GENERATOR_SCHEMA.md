@@ -11,7 +11,8 @@ All generator code is DOM-free and runs in the browser and in Node (`tests/load.
 | `js/difficulty.js` | Metrics (`analyze`) and classifier (`classify`) |
 | `js/distractors.js` | Distractor construction (`variantCandidates`, `nearCandidates`, `finalize`) |
 | `js/gen-helpers.js` | Shared builders (`numQuestion`, `exprQuestion`, key/letter finders) and the family registry |
-| `js/families-*.js` | 36 reasoning families (see REASONING_FAMILIES.md) |
+| `js/families-*.js` | Existing AST families (see REASONING_FAMILIES.md) |
+| `js/families-practice.js` | Structured families for algorithm tracing, String comparisons, and loop completion |
 | `js/generator.js` | `generateChallenge`, `createSession`, assembly and validation |
 | `js/feedback.js` | Rules, misconception text, trace and index-map builders |
 | `js/session.js` | Session adapter (events and summary) |
@@ -29,9 +30,12 @@ G.generateChallenge({ seed: 12345, mode: 'trace', difficulty: 'advanced' /*, fam
 const s = G.createSession({ seed: 42, mode: 'mixed', difficulty: 'intermediate' });
 s.next(); s.setMode('index'); s.setDifficulty('advanced');
 
-G.MODES      // [{id:'predict'|'index'|'expr'|'trace', label, short}]
-G.SKILLS     // the 7 bounded skill categories
+G.MODES      // seven individual modes; the UI adds Mixed Practice
+G.SKILLS     // bounded skill categories, including the three new practice areas
 G.families() // registry; G.familiesFor(mode, difficulty); G.familyById(id)
+
+// Teacher Tools-ready API. Uses the same seeded generator and returns a complete challenge.
+StringLab.PracticeFamilies.build('algo.substring.count', 12345, 'advanced')
 ```
 
 ## Challenge object
@@ -57,7 +61,7 @@ G.families() // registry; G.familiesFor(mode, difficulty); G.familyById(id)
 }
 ```
 
-`probes` are complete Java programs with their expected stdout. They are what the independent parser (`tests/mini-java.js`) and the real JVM (`tests/jvm/run-jvm.js`) execute: Mode A/D = the shown program; Mode C = one program per answer choice with that expression substituted; Mode B = the `indexOf`/`substring` programs that prove the numeric answer.
+AST challenges include `probes` as complete Java programs with expected stdout. The new structured challenge objects instead include `explanation`, optional per-iteration `trace`, normalized `signature`, `meta.familyId`, and a verified deterministic model answer. They retain the same top-level mode, difficulty, family, skill, question, Java code, answer choices, seed, and correct answer fields.
 
 ## Program AST
 
@@ -84,7 +88,7 @@ Custom draft (Modes B, C): `{ type:'custom', kind, stmts /*shown*/, analysis /*p
 
 ## Assembly and validation (`generator.js`)
 
-For every draft: evaluate with real semantics (reject on any exception) → measure metrics and classify (reject if ≠ requested difficulty) → reject any untagged statement whose removal does not change the result or break the program (no dead code) → gather distractors (misconception re-runs + family extras + generic near-misses as last resort) → `finalize` (unique texts, never the correct text, realistic misconceptions preferred, seeded shuffle) → reject if no distractor is a realistic misconception → re-evaluate every probe. Rejected drafts are rebuilt from a fresh deterministic sub-stream (`rng.fork('try'+n)`, up to 120 attempts); a typical challenge needs 1–3.
+For AST drafts: evaluate with Java semantics (reject on exception) → measure metrics and classify (reject if different from requested difficulty) → reject dead statements → construct and shuffle unique distractors → verify probes. Structured drafts use dedicated deterministic execution models for loops, comparisons, and references, validate one correct answer and unique choices, and use seeded parameters. Each challenge includes a normalized structural signature for repeat avoidance and diversity measurement.
 
 ## Session generator
 

@@ -137,6 +137,18 @@
   }
 
   function build(ch, selectedIndex) {
+    if (ch.explanation) {
+      var revealedStructured = selectedIndex === null || selectedIndex === undefined;
+      var selectedStructured = revealedStructured ? null : ch.choices[selectedIndex];
+      var correctStructured = !revealedStructured && selectedIndex === ch.correctIndex;
+      return {
+        correct: correctStructured, revealed: revealedStructured,
+        verdict: revealedStructured ? 'Answer revealed.' : correctStructured ? 'Correct!' : 'Not quite.',
+        answerText: ch.answer, selectedText: selectedStructured ? selectedStructured.text : null,
+        rule: ch.explanation, misconception: selectedStructured && !correctStructured ? 'Check the exact loop boundary, String content, or reference relationship shown in the code.' : null,
+        trace: (ch.trace || []).map(function (line, i) { return { code: 'Step ' + (i + 1), notes: [line] }; }), views: []
+      };
+    }
     var revealed = selectedIndex === null || selectedIndex === undefined;
     var sel = revealed ? null : ch.choices[selectedIndex];
     var correct = !revealed && selectedIndex === ch.correctIndex;

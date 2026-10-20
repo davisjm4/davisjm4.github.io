@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="description" content="String Lab: practice Java String concatenation, length(), charAt(), substring() and indexOf() with endless procedurally generated challenges.">
+  <meta name="description" content="String Lab: practice Java String algorithms, comparisons, loops, concatenation, substring() and indexOf() with endless generated challenges.">
   <title>String Lab · Java Strings Practice</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -16,7 +16,7 @@
       <!-- Work: this relative link resolves to /cs-games/advanced/ when published at /java-games/string-lab/ -->
       <a class="back-link" id="backLink" href="../../cs-games/advanced/">&larr; Advanced CS Games</a>
       <h1>String Lab</h1>
-      <p class="sub">Predict what Java does with Strings, then see exactly why.</p>
+  <p class="sub">Practice Java String methods, algorithms, comparisons, and loops.</p>
     </div>
     <button type="button" id="summaryBtn" class="btn secondary" aria-haspopup="dialog">Session Summary</button>
   </header>
@@ -29,6 +29,9 @@
         <label><input type="radio" name="mode" value="index"><span>Find the Index</span></label>
         <label><input type="radio" name="mode" value="expr"><span>Complete the Expression</span></label>
         <label><input type="radio" name="mode" value="trace"><span>Trace String Operations</span></label>
+        <label><input type="radio" name="mode" value="algorithms"><span>Trace String Algorithms</span></label>
+        <label><input type="radio" name="mode" value="compare"><span>Compare Strings</span></label>
+        <label><input type="radio" name="mode" value="loop"><span>Complete the String Loop</span></label>
         <label><input type="radio" name="mode" value="mixed"><span>Mixed Practice</span></label>
       </div>
     </fieldset>
@@ -92,6 +95,7 @@
   <script src="js/families-trace.js"></script>
   <script src="js/families-index.js"></script>
   <script src="js/families-expression.js"></script>
+  <script src="js/families-practice.js"></script>
   <script src="js/generator.js"></script>
   <script src="js/feedback.js"></script>
   <script src="js/shared-session-bridge.js?v=bridge-v3"></script>
