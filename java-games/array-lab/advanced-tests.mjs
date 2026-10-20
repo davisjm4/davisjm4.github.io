@@ -20,12 +20,13 @@ for (const mode of modes) for (const difficulty of levels) {
     assertOk(formatFamilies[mode].includes(q.family), `${mode} generated an unregistered family`);
     assert.equal(q.choices.length, 4); assert.equal(new Set(q.choices).size, 4);
     assert.equal(q.choices.filter(x => x === q.answer).length, 1);
+    assertOk(q.choices.every(choice => !String(choice).startsWith("Alternative")), `${q.family} used a filler distractor`);
     assertOk(q.choices.every(x => x !== q.answer || x === q.correctAnswer));
     assertOk(q.code.includes("int") || mode === "create-references");
     assertOk(q.prompt.length > 12 && q.explanation.length > 20);
     assertOk(assessArray(q, {answer: q.answer}));
     assert.equal(solutionArray(q).answer, q.answer);
-    const fingerprint = JSON.stringify([q.prompt, q.code, q.choices]);
+    const fingerprint = JSON.stringify([q.prompt, q.code, [...q.choices].sort()]);
     exact.add(fingerprint);
     const shape = q.code.replace(/-?\d+/g, "#").replace(/\{[^{}]*\}/g, "{LITERAL}").replace(/"[^"]*"/g, '"TEXT"');
     structures.add(`${q.family}|${shape}`);

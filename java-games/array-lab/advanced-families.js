@@ -63,24 +63,24 @@ function build(format, variant, difficulty, seed) {
     let arrayData = null;
     if (variant === "primitive-default" || variant === "reference-default") {
       const type = variant === "primitive-default" ? r.pick(["int", "double", "boolean"]) : "String";
-      const index = r.int(0, 3), size = r.int(3, 6);
-      code = `${type}[] items = new ${type}[${size}];\nSystem.out.println(items[${index}]);`;
+      const name = r.pick(["items", "data", "values", "scores", "records"]), size = r.int(3, 12), index = r.int(0, size - 1);
+      code = `${type}[] ${name} = new ${type}[${size}];\nSystem.out.println(${name}[${index}]);`;
       arrayData = {type, length: size, elements: Array(size).fill(defaults[type])};
       answer = defaults[type]; wrong = type === "int" ? ["null", "1", String(size)] : type === "double" ? ["null", "0", "1.0"] : type === "boolean" ? ["null", "true", "0"] : ['"null"', '""', "0"];
-      prompt = `What does this code print for items[${index}]?`;
+      prompt = `What does this code print for ${name}[${index}]?`;
       explanation = `A new ${type}[] initializes every element to ${defaults[type]}; index ${index} exists because it is below length ${size}.`;
     } else if (variant === "length-and-index") {
-      const size = r.int(0, 7), ask = r.pick(["length", "last", "empty"]);
-      code = `int[] items = new int[${size}];`;
+      const size = r.int(0, 12), ask = r.pick(["length", "last", "empty"]), name = r.pick(["items", "data", "values", "scores", "numbers"]);
+      code = `int[] ${name} = new int[${size}];`;
       arrayData = {type: "int", length: size, elements: Array(size).fill(0)};
-      answer = ask === "length" ? size : ask === "last" ? (size ? size - 1 : "No valid index") : size === 0 ? "No valid index" : 0;
-      prompt = ask === "length" ? "What is items.length?" : ask === "last" ? "What is the last valid index?" : "Does this array have a valid index 0?";
+      answer = ask === "length" ? size : ask === "last" ? (size ? size - 1 : "No valid index") : size === 0 ? "false" : "true";
+      prompt = ask === "length" ? `What is ${name}.length?` : ask === "last" ? `What is the last valid index for ${name}?` : `Does ${name} have a valid index 0?`;
       if (ask === "empty") { answer = size > 0 ? "true" : "false"; wrong = [String(size === 0), "null", "0"]; }
       else wrong = [size - 1, size + 1, 0];
       explanation = size === 0 ? "The allocated array has length 0, so it has no valid element index." : `Length is ${size}; valid indexes range from 0 through ${size - 1}.`;
     } else if (variant === "negative-length") {
-      const size = -r.int(1, 12), name = r.pick(["items", "data", "values", "scores"]);
-      code = `int size = ${size};\nint[] ${name} = new int[size];`;
+      const size = -r.int(1, 15), name = r.pick(["items", "data", "values", "scores", "records"]), type = r.pick(["int", "double", "boolean", "String"]);
+      code = `int size = ${size};\n${type}[] ${name} = new ${type}[size];`;
       answer = "Runtime exception: NegativeArraySizeException"; wrong = ["Compile-time error", "An empty array with length 0", "ArrayIndexOutOfBoundsException"];
       prompt = "What happens when this allocation executes?"; explanation = "The syntax compiles, but array lengths cannot be negative; execution throws NegativeArraySizeException at the allocation.";
       arrayData = {type: "int", requestedLength: size, outcome: "NegativeArraySizeException"};
@@ -96,10 +96,10 @@ function build(format, variant, difficulty, seed) {
       prompt = "Does this snippet compile, and if not, why?"; explanation = `A local reference variable ${name} has no default value. Java rejects its use before assignment during compilation; it does not get an automatic null value.`;
       arrayData = {reference: name, initialized: false, outcome: "compile-time error"};
     } else if (variant === "invalid-boundary-access") {
-      const type = r.pick(["int", "double", "boolean"]), size = r.int(0, 2), name = r.pick(["items", "data", "values", "scores"]);
-      code = `${type}[] ${name} = new ${type}[${size}];\nSystem.out.println(${name}[${name}.length]);`;
+      const type = r.pick(["int", "double", "boolean"]), size = r.int(0, 8), name = r.pick(["items", "data", "values", "scores"]), useLength = r.pick([true,false]);
+      code = `${type}[] ${name} = new ${type}[${size}];\nSystem.out.println(${name}[${useLength ? `${name}.length` : size}]);`;
       answer = "Runtime exception: ArrayIndexOutOfBoundsException"; wrong = ["Prints 0", "Compile-time error", "Prints null"];
-      prompt = "What happens when this code runs?"; explanation = size === 0 ? "The allocation is valid and creates length 0, but index 0 is not valid because the array has no elements. Access throws ArrayIndexOutOfBoundsException." : `The valid indexes stop at ${size - 1}. Using ${name}.length evaluates to ${size}, which is outside the array, so access throws ArrayIndexOutOfBoundsException.`;
+      prompt = "What happens when this code runs?"; explanation = size === 0 ? "The allocation is valid and creates length 0, but index 0 is not valid because the array has no elements. Access throws ArrayIndexOutOfBoundsException." : `The valid indexes stop at ${size - 1}. The attempted index ${useLength ? `${name}.length` : size} evaluates to ${size}, which is outside the array, so access throws ArrayIndexOutOfBoundsException.`;
       arrayData = {type, length: size, elements: Array(size).fill(defaults[type]), accessedIndex: size, outcome: "ArrayIndexOutOfBoundsException"};
     } else if (variant === "alias-mutation") {
       const a = Array.from({length: 3 + level * 2}, () => r.int(1, 29)), index = r.int(0, a.length - 1), val = r.int(31, 49);
