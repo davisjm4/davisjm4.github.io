@@ -1,4 +1,4 @@
-import * as E from "./engine.js?v=bool-v2";
+import * as E from "./engine.js?v=bool-v3";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=java-v1";
 
 const $ = id => document.getElementById(id);
