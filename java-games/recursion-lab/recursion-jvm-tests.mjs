@@ -13,7 +13,7 @@ function run(name, source, expected) {
   const result = spawnSync("java", ["--source", "17", file], { encoding: "utf8", timeout: 10000 });
   assert.equal(result.status, 0, `${name} JVM compile/run failed: ${result.stderr}`);
   compiled++;
-  if (expected !== undefined) { assert.equal(result.stdout.trim(), String(expected), `${name} output mismatch`); executed++; }
+  if (expected !== undefined) { assert.equal(result.stdout, String(expected), `${name} output mismatch`); executed++; }
 }
 try {
   const gen = createRecursionGenerator(314159);
@@ -50,6 +50,11 @@ try {
     const calls=[`${method}(${a}, 0)`,`${method}(${a}, 0, ${t})`,`${method}(${a}, 0, ${t})`,`${method}(${a}, ${q.data.array.length-1})`,`${method}(${a}, 0)`,`${method}(${a}, ${i})`,`${method}(${a}, 0)`,`${method}(${a}, ${q.data.array.length-1})`];
     run(`Run_array_${operation}`,`public class Run_array_${operation} {\n${q.code}\npublic static void main(String[] args) { System.out.print(${calls[operation]}); }\n}`,q.answer);
   }
+
+  let order;
+  for(let i=0;i<500;i++){order=gen.next("debug","Advanced");if(order.family==="execution-order")break;}
+  const orderMethod=order.code.match(/public static void (\w+)\(int n\)/)[1], orderN=Number(order.code.match(/call: \w+\((\d+)\)/)?.[1]);
+  run("Run_execution_order",`public class Run_execution_order {\n${order.code}\npublic static void main(String[] args) { ${orderMethod}(${orderN}); }\n}`,Array.from({length:orderN},(_,i)=>i+1).join(""));
 
   // Execute the generated branching-recursion code and compare its return.
   let branch;

@@ -1,4 +1,4 @@
-import { modeNames, difficulties, createRecursionGenerator, assessRecursion } from "./engine.js?v=recursion-v3";
+import { modeNames, difficulties, createRecursionGenerator, assessRecursion } from "./engine.js?v=recursion-v4";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=java-v1";
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 export function startRecursionLab() {
