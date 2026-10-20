@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { booleanGame, generate, assess, makeRng, signature } from "./engine.js";
+import { booleanGame, generate, assess, makeRng, signature, enumerateTruthTable, evaluateBooleanExpression } from "./engine.js";
 
 let checks = 0;
 const modes = Object.keys(booleanGame.modes);
@@ -37,3 +37,27 @@ for (let i = 0; i < 1050; i++) mixedModes.add(generate("mixed", mixed).mode);
 assert.deepEqual([...mixedModes].sort(), [...modes].sort()); checks++;
 assert.equal(booleanGame.modes.evaluate, "Evaluate Expressions"); checks++;
 console.log(`Boolean & Conditional Lab: ${checks} checks passed; ${variants.size} distinct generated signatures across ${modes.length} modes and 1,050 mixed challenges.`);
+
+const newModes = ["truthTable", "switchIf", "coverage"], levels = ["Beginner", "Intermediate", "Advanced"];
+const report = [];
+for (const mode of newModes) for (const difficulty of levels) {
+  const exact = new Set(), structure = new Set(), families = new Set();
+  const rng = makeRng(61000 + newModes.indexOf(mode) * 100 + levels.indexOf(difficulty));
+  for (let i=0;i<1000;i++) {
+    const q=generate(mode,rng,difficulty); exact.add(signature(q)); families.add(q.family);
+    structure.add(`${q.family}|${q.code.replace(/\b\d+\b/g,"#").replace(/\b(?:true|false)\b/g,"BOOL").replace(/"[^"]*"/g,'"TEXT"')}`);
+    assert.equal(q.difficulty,difficulty); assert.ok(q.seed); assert.ok(q.family && q.skill && q.questionStem && q.javaCode && q.answerOptions && q.correctAnswer); checks+=2;
+    assert.equal(new Set(q.choices).size,q.choices.length); assert.equal(assess(q,q.answer),true); assert.equal(assess(q,(q.answer+1)%q.choices.length),false); checks+=3;
+    if(mode==="truthTable") {
+      assert.ok(q.table?.length >= 4 && q.table.length <= 8); checks++;
+      if(q.expression) for(const row of (q.allRows||q.table)) assert.equal(row.result,evaluateBooleanExpression(q.expression,row));
+      if(q.expressions) assert.equal(q.choices[q.answer]==="Equivalent",q.table.every(row=>evaluateBooleanExpression(q.expressions[0],row)===evaluateBooleanExpression(q.expressions[1],row)));
+    }
+  }
+  assert.ok(families.size >= 4,`${mode}/${difficulty} family variety`); assert.ok(structure.size >= 4,`${mode}/${difficulty} structural variety`); checks+=2;
+  report.push({mode,difficulty,tested:1000,exactDuplicates:1000-exact.size,structuralPatterns:structure.size,families:families.size});
+}
+assert.deepEqual(generate("switchIf",makeRng(77)),generate("switchIf",makeRng(77))); checks++;
+assert.equal(enumerateTruthTable("!(a && b)",["a","b"]).length,4); checks++;
+console.log(`New mode matrix: ${JSON.stringify(report)}`);
+console.log(`Expanded Boolean & Conditional Lab: ${checks} checks passed; 9,000 new-mode/difficulty challenges verified.`);
