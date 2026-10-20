@@ -103,6 +103,8 @@ try {
   java("parameter_reassignment",q.code,"",String(q.answer));
   q=generateArray("create-references","returned-reference",{difficulty:d,seed:112});
   java("returned_reference",q.code,"",String(q.answer));
+  q=generateArray("create-references","reference-equality",{difficulty:d,seed:126});
+  java("reference_equality",q.code,"",String(q.answer));
   q=generateArray("in-place","rotate-left",{difficulty:d,seed:104});
   java("rotate_left",q.code,`System.out.print(Arrays.toString(values));`, `[${String(q.answer).slice(1,-1)}]`);
   q=generateArray("in-place","rotate-right",{difficulty:d,seed:105});

@@ -3,7 +3,7 @@ import {
   generateArray,
   assessArray,
   solutionArray,
-} from "./array-engine.js?v=array-modes-v1";
+} from "./array-engine.js?v=array-modes-v2";
 import {
   sessionTracker,
   addSessionNavigation,

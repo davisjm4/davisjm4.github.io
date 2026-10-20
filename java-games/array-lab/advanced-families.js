@@ -14,7 +14,7 @@ const rng = (seed) => {
   }};
 };
 const families = {
-  "create-references": ["primitive-default", "reference-default", "length-and-index", "alias-mutation", "reassign-reference", "method-mutation", "parameter-reassignment", "returned-reference", "separate-arrays", "negative-length", "uninitialized-local", "invalid-boundary-access"],
+  "create-references": ["primitive-default", "reference-default", "length-and-index", "alias-mutation", "reassign-reference", "method-mutation", "parameter-reassignment", "returned-reference", "separate-arrays", "negative-length", "uninitialized-local", "invalid-boundary-access", "reference-equality"],
   "in-place": ["shift-left", "shift-right", "reverse-step", "reverse-complete", "rotate-left", "rotate-right", "conditional-swap", "compact-filter", "reverse-section"],
   "trace-2d": ["grid-search", "grid-count", "minimum-coordinate", "maximum-row-sum", "minimum-column-sum", "traversal-order", "diagonal-sum", "neighbor-count", "swap-rows", "conditional-grid-update"],
 };
@@ -83,7 +83,7 @@ function build(format, variant, difficulty, seed) {
       code = `int size = ${size};\nint[] ${name} = new int[size];`;
       answer = "Runtime exception: NegativeArraySizeException"; wrong = ["Compile-time error", "An empty array with length 0", "ArrayIndexOutOfBoundsException"];
       prompt = "What happens when this allocation executes?"; explanation = "The syntax compiles, but array lengths cannot be negative; execution throws NegativeArraySizeException at the allocation.";
-      arrayData = {type: "int", requestedLength: -1, outcome: "NegativeArraySizeException"};
+      arrayData = {type: "int", requestedLength: size, outcome: "NegativeArraySizeException"};
     } else if (variant === "uninitialized-local") {
       const type = r.pick(["int", "double", "boolean", "String"]), name = r.pick(["items", "data", "values", "records", "scores"]), pattern = r.int(0, 2);
       const create = `new ${type}[2]`;
@@ -92,14 +92,14 @@ function build(format, variant, difficulty, seed) {
         : pattern === 1
           ? `boolean ready = ${r.pick(["true", "false"])};\n${type}[] ${name};\nif (ready) ${name} = ${create};\nSystem.out.println(${name}.length);`
           : `${type}[] ${name};\nfor (int i = 0; i < 1; i++) {\n    ${name} = ${create};\n}\nSystem.out.println(${name}.length);`;
-      answer = "Compile-time error: items might not have been initialized"; wrong = ["Prints 0", "Throws NullPointerException", "Creates an empty array"];
-      prompt = "Does this snippet compile, and if not, why?"; explanation = "A local reference variable has no default value. Java rejects its use before assignment during compilation; it does not get an automatic null value.";
-      arrayData = {reference: "items", initialized: false, outcome: "compile-time error"};
+      answer = `Compile-time error: ${name} might not have been initialized`; wrong = ["Prints 0", "Throws NullPointerException", "Creates an empty array"];
+      prompt = "Does this snippet compile, and if not, why?"; explanation = `A local reference variable ${name} has no default value. Java rejects its use before assignment during compilation; it does not get an automatic null value.`;
+      arrayData = {reference: name, initialized: false, outcome: "compile-time error"};
     } else if (variant === "invalid-boundary-access") {
       const type = r.pick(["int", "double", "boolean"]), size = r.int(0, 2), name = r.pick(["items", "data", "values", "scores"]);
       code = `${type}[] ${name} = new ${type}[${size}];\nSystem.out.println(${name}[${name}.length]);`;
       answer = "Runtime exception: ArrayIndexOutOfBoundsException"; wrong = ["Prints 0", "Compile-time error", "Prints null"];
-      prompt = "What happens when this code runs?"; explanation = size === 0 ? "The allocation is valid and creates length 0, but index 0 is not valid because the array has no elements. Access throws ArrayIndexOutOfBoundsException." : `The valid indexes stop at ${size - 1}. Using items.length evaluates to ${size}, which is outside the array, so access throws ArrayIndexOutOfBoundsException.`;
+      prompt = "What happens when this code runs?"; explanation = size === 0 ? "The allocation is valid and creates length 0, but index 0 is not valid because the array has no elements. Access throws ArrayIndexOutOfBoundsException." : `The valid indexes stop at ${size - 1}. Using ${name}.length evaluates to ${size}, which is outside the array, so access throws ArrayIndexOutOfBoundsException.`;
       arrayData = {type, length: size, elements: Array(size).fill(defaults[type]), accessedIndex: size, outcome: "ArrayIndexOutOfBoundsException"};
     } else if (variant === "alias-mutation") {
       const a = Array.from({length: 3 + level * 2}, () => r.int(1, 29)), index = r.int(0, a.length - 1), val = r.int(31, 49);
@@ -119,6 +119,13 @@ function build(format, variant, difficulty, seed) {
       arrayData = {data: [...a], index, assignedValue: val, parameterMutation: variant === "method-mutation"};
       answer = variant === "method-mutation" ? val : a[index]; wrong = [a[index], val, "null"]; prompt = `What value prints from data[${index}]?`;
       explanation = variant === "method-mutation" ? `The parameter receives a copy of the reference to the same array. Mutating that array is visible to the caller.` : `Reassigning the local parameter changes only its copied reference; data still refers to the original array.`;
+    } else if (variant === "reference-equality") {
+      const a = Array.from({length: 3 + level * 2}, () => r.int(0, 20));
+      code = `int[] first = {${a.join(", ")}};\nint[] second = {${a.join(", ")}};\nint[] alias = first;\nSystem.out.print((first == second) + "," + (first == alias));`;
+      answer = "false,true"; wrong = ["true,false", "true,true", "false,false"];
+      prompt = "What pair prints: (first == second), then (first == alias)?";
+      explanation = "first and second were created by separate array initializers, so their references differ even though their contents match. alias receives first's reference, so that comparison is true.";
+      arrayData = {first: [...a], second: [...a], aliasOf: "first", referenceEquality: [false, true]};
     } else {
       const a = Array.from({length: 3 + level * 2}, () => r.int(2, 29)), index = r.int(0, a.length - 1), val = r.int(31, 49);
       code = `public static int[] change(int[] input) {\n    input[${index}] = ${val};\n    return input;\n}\nint[] first = {${a.join(", ")}};\nint[] second = change(first);\nSystem.out.println(first == second);`;
@@ -148,18 +155,18 @@ function build(format, variant, difficulty, seed) {
       prompt = variant === "reverse-step" ? "What is the array immediately after this swap?" : `What is the array after reversing indexes ${left} through ${right}?`;
       explanation = `The temporary variable preserves the left value while the endpoints exchange. State: {${state.join(", ")}}.`;
     } else if (variant === "rotate-left" || variant === "rotate-right") {
-      const k = r.int(1, a.length - 1), left = variant === "rotate-left";
+      const requested = r.int(1, a.length * (level === 0 ? 1 : 2) + (level === 2 ? 3 : 0)), k = requested % a.length, left = variant === "rotate-left";
       state = left ? [...a.slice(k), ...a.slice(0, k)] : [...a.slice(-k), ...a.slice(0, -k)];
       if (level < 2) {
-        code = `${codeArray("values", a)}\nint steps = ${k};\nfor (int step = 0; step < steps; step++) {\n    ${left ? "int first = values[0];\n    for (int i = 0; i < values.length - 1; i++) values[i] = values[i + 1];\n    values[values.length - 1] = first;" : "int last = values[values.length - 1];\n    for (int i = values.length - 1; i > 0; i--) values[i] = values[i - 1];\n    values[0] = last;"}\n}`;
-        explanation = `Each pass saves the value that wraps around before shifting the other values. After ${k} pass(es), the array is {${state.join(", ")}}.`;
+        code = `${codeArray("values", a)}\nint steps = ${requested};\nfor (int step = 0; step < steps; step++) {\n    ${left ? "int first = values[0];\n    for (int i = 0; i < values.length - 1; i++) values[i] = values[i + 1];\n    values[values.length - 1] = first;" : "int last = values[values.length - 1];\n    for (int i = values.length - 1; i > 0; i--) values[i] = values[i - 1];\n    values[0] = last;"}\n}`;
+        explanation = `Each pass saves the value that wraps around before shifting the other values. ${requested} steps have an effective rotation of ${k} (mod ${a.length}); final state: {${state.join(", ")}}.`;
       } else {
         const reverse = (lo, hi) => `left = ${lo};\nright = ${hi};\nwhile (left < right) {\n    int temp = values[left];\n    values[left] = values[right];\n    values[right] = temp;\n    left++;\n    right--;\n}`;
         const steps = left ? [reverse(0, k - 1), reverse(k, a.length - 1), reverse(0, a.length - 1)] : [reverse(0, a.length - 1), reverse(0, k - 1), reverse(k, a.length - 1)];
-        code = `${codeArray("values", a)}\nint left, right;\n${steps.join("\n")}`;
-        explanation = `Three in-place reversals rotate the array without allocating a replacement: the sections are reversed in sequence. Result after ${k} positions: {${state.join(", ")}}.`;
+        code = `${codeArray("values", a)}\nint steps = ${requested} % values.length;\nint left, right;\n${steps.join("\n")}`;
+        explanation = `Three in-place reversals rotate the array without allocating a replacement. ${requested} steps reduce to ${k} (mod ${a.length}); result: {${state.join(", ")}}.`;
       }
-      prompt = `What is the array after rotating ${left ? "left" : "right"} in place by ${k}?`;
+      prompt = `What is the array after rotating ${left ? "left" : "right"} in place by ${requested} step(s)?`;
     } else if (variant === "conditional-swap") {
       const i = r.int(0, a.length - 2), j = i + 1; code = `${codeArray("values", a)}\nif (values[${i}] > values[${j}]) {\n    int temp = values[${i}];\n    values[${i}] = values[${j}];\n    values[${j}] = temp;\n}`;
       if (state[i] > state[j]) [state[i], state[j]] = [state[j], state[i]];
@@ -217,8 +224,9 @@ function build(format, variant, difficulty, seed) {
     const n=r.int(2,4); grid=Array.from({length:n},()=>Array.from({length:n},()=>r.int(-4,15))); rows=columns=n; const secondary=r.pick([true,false]); answer=grid.reduce((s,row,i)=>s+row[secondary?n-1-i:i],0); wrong=[grid.reduce((s,row,i)=>s+row[secondary?i:n-1-i],0),grid.flat().reduce((s,v)=>s+v,0),0];
     code=`${codeGrid(grid)}\nint sum = 0;\nfor (int i = 0; i < grid.length; i++) {\n    sum += grid[i][${secondary?"grid.length - 1 - i":"i"}];\n}`; prompt=`What is the ${secondary?"secondary":"main"} diagonal sum?`; explanation=`At each i, the algorithm adds grid[i][${secondary?"length - 1 - i":"i"}]. The total is ${answer}.`;
   } else if (variant === "neighbor-count") {
-    const row=r.int(0,rows-1), col=r.int(0,columns-1), neighbors=[[row-1,col],[row+1,col],[row,col-1],[row,col+1]].filter(([rr,cc])=>rr>=0&&rr<rows&&cc>=0&&cc<columns); answer=neighbors.length;
-    code=`${codeGrid(grid)}\nint count = 0;\nint row = ${row}, col = ${col};\nif (row > 0) count++;\nif (row < grid.length - 1) count++;\nif (col > 0) count++;\nif (col < grid[row].length - 1) count++;`; wrong=[4, Math.max(0,answer-1), Math.min(rows,columns)]; prompt=`How many orthogonal neighbors does grid[${row}][${col}] have?`; explanation=`The boundary checks count only cells directly above, below, left, or right; this location has ${answer} valid neighbor(s).`;
+    const row=r.int(0,rows-1), col=r.int(0,columns-1), neighbors=[[row-1,col],[row+1,col],[row,col-1],[row,col+1]].filter(([rr,cc])=>rr>=0&&rr<rows&&cc>=0&&cc<columns), relation=r.pick([">","<","=="]), center=grid[row][col];
+    answer=neighbors.filter(([rr,cc])=>relation==="=="?grid[rr][cc]===center:relation==="<"?grid[rr][cc]<center:grid[rr][cc]>center).length;
+    code=`${codeGrid(grid)}\nint count = 0;\nint row = ${row}, col = ${col};\nint center = grid[row][col];\nif (row > 0 && grid[row - 1][col] ${relation} center) count++;\nif (row < grid.length - 1 && grid[row + 1][col] ${relation} center) count++;\nif (col > 0 && grid[row][col - 1] ${relation} center) count++;\nif (col < grid[row].length - 1 && grid[row][col + 1] ${relation} center) count++;`; wrong=[neighbors.length, Math.max(0,answer-1), Math.min(rows,columns)]; prompt=`How many orthogonal neighbors of grid[${row}][${col}] satisfy value ${relation} ${center}?`; explanation=`The && operator checks the boundary before indexing. Only the four orthogonal cells are considered; ${answer} valid neighbor(s) satisfy ${relation} ${center}.`;
   } else if (variant === "swap-rows") {
     const a=0,b=rows-1; [grid[a],grid[b]]=[grid[b],grid[a]]; answer=`row ${a} ↔ row ${b}`; wrong=[`column ${a} ↔ column ${b}`,`row ${a} copied into row ${b}`,"no change"];
       code=`${codeGrid(originalGrid)}\nint[] temp = grid[${a}];\ngrid[${a}] = grid[${b}];\ngrid[${b}] = temp;`; prompt="Which rows are exchanged?"; explanation=`The temporary reference preserves row ${a}, and the row references are exchanged.`;

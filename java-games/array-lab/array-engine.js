@@ -1,5 +1,5 @@
 import { int, pick, shuffle } from "../../csp-games/engine.js?v=platform-expansion-v2";
-import { advancedFormatFamilies, generateAdvancedArray } from "./advanced-families.js?v=array-modes-v1";
+import { advancedFormatFamilies, generateAdvancedArray } from "./advanced-families.js?v=array-modes-v2";
 
 export const formatNames = {
   element: "Select an Array Element",

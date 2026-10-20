@@ -195,6 +195,14 @@ for (const [format, variants] of Object.entries(A.formatFamilies)) {
   $("submit").onclick();
   eq(tracker.snapshot().totals.firstTry, before.firstTry + 1);
   eq(tracker.snapshot().totals.submissions, before.submissions + 1);
+  if (["create-references", "in-place", "trace-2d"].includes(format)) {
+    const record = Object.values(tracker.snapshot().records).at(-1);
+    eq(record.details.mode, A.formatNames[format]);
+    eq(record.details.difficulty, current.difficulty);
+    eq(record.details.skill, current.skill);
+    eq(record.details.family, current.family);
+    eq(record.details.seed, current.seed);
+  }
   ok($("submit").disabled);
   ok($("feedback").textContent.includes("Correct answer:"));
   if (current.revealIndices)
