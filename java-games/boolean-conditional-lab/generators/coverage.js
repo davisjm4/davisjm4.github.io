@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 12758)
-Total output lines: 466
-
 /* Conditional Coverage & Branch Reasoning.
  * Programs are trees of if / else-if / else built from comparison predicates.
  * Every domain is a stated finite integer range, so reachability, coverage and
@@ -242,7 +239,28 @@ F.unreachable = (rng, L) => {
   if (dead) { const i = int(0, n - 2, rng), j = int(i + 1, n - 1, rng); [order[i], order[j]] = [order[j], order[i]]; }
   const arms = order.map((t, i) => ({ cond: B.CMP(ctx.v, ">=", t), body: [P(ctx.labels[i])] }));
   const stmts = [chain(arms, [P(ctx.labels[n])])];
-  const dom = domain…758 tokens truncated…;
+  const dom = domainOf([[ctx.v, ctx.lo, ctx.hi]]);
+  const reached = new Set(dom.map(e => run(stmts, e)[0]));
+  const deadLabels = arms.map(a => a.body[0].s).filter(l => !reached.has(l));
+  if (dead !== (deadLabels.length > 0)) reject("mismatch");
+  const opt = (l, tag) => ({ text: `The "${l}" branch can never run`, tag, claim: { t: "neverPrints", p: "c", mark: l } });
+  const every = { text: "Every branch can run for some value", claim: { t: "allPrint", p: "c", marks: [...arms.map(a => a.body[0].s), ctx.labels[n]] } };
+  let correct, wrong;
+  const live = [...arms.map(a => a.body[0].s), ctx.labels[n]].filter(l => reached.has(l));
+  if (deadLabels.length === 1) { correct = opt(deadLabels[0], "correct"); wrong = [{ ...every, tag: "ignores-shadowing" }, ...sample(live, 2, rng).map(l => opt(l, "reachable-branch"))]; }
+  else if (deadLabels.length === 0) { correct = { ...every, tag: "correct" }; wrong = sample(live, 3, rng).map(l => opt(l, "thinks-overlap-blocks-it")); }
+  else { correct = { text: `Both ${join(deadLabels.map(l => `"${l}"`))} can never run`, tag: "correct", claim: { t: "all", of: deadLabels.map(l => ({ t: "neverPrints", p: "c", mark: l })) } }; wrong = [{ ...every, tag: "ignores-shadowing" }, ...sample(deadLabels, Math.min(2, deadLabels.length), rng).map(l => ({ ...opt(l, "finds-only-one-dead-branch"), claim: { t: "all", of: [{ t: "neverPrints", p: "c", mark: l }, { t: "allPrint", p: "c", marks: deadLabels.filter(x => x !== l) }] } }))]; if (wrong.length < 3) wrong.push(opt(pick(live, rng), "reachable-branch")); }
+  return challenge({ ...base("unreachable"), rng, question: `${ctx.v} can be any int from ${ctx.lo} to ${ctx.hi}. Which statement is true?`, code: codeOf(stmts, declLine(ctx)), correct, wrong,
+    explanation: deadLabels.length ? `An else-if is tested only when every earlier condition is false. Every value that satisfies the shadowed test also satisfies an earlier, less selective test, so ${join(deadLabels.map(l => `"${l}"`))} never prints.` : `The thresholds are tested from most to least selective, so each branch has values that reach it.`,
+    structure: `unreach-${deadLabels.length}|${shapeOf(stmts)}`, complexity: complexity("unreachable", stmts, 1), check: { programs: { c: progOf(stmts, [ctx.v]) }, inputs: { c: inputsOf(dom, [[ctx.v]]) } } });
+};
+// Advanced: an earlier range test contains a later range test, so the later one is shadowed.
+function unreachableIntervals(rng, L) {
+  const ctx = pick(CONTEXTS, rng); const [a, b, c, d] = thresholds(rng, ctx, 4).sort((x, y) => x - y);
+  const shadow = chance(0.75, rng);
+  const r1 = B.AND(B.CMP(ctx.v, ">=", a), B.CMP(ctx.v, "<", d));
+  const inner = shadow ? B.AND(B.CMP(ctx.v, ">", b), B.CMP(ctx.v, "<=", c)) : B.AND(B.CMP(ctx.v, ">", b), B.CMP(ctx.v, "<=", d + int(1, 5, rng)));
+  const arms = [{ cond: B.CMP(ctx.v, ">=", d + int(5, 9, rng) <= ctx.hi ? d + 5 : d), body: [P(ctx.labels[0])] }, { cond: r1, body: [P(ctx.labels[1])] }, { cond: inner, body: [P(ctx.labels[2])] }, { cond: B.CMP(ctx.v, "<", a), body: [P(ctx.labels[3])] }];
   const stmts = [chain(arms, [P(ctx.labels[4])])];
   const dom = domainOf([[ctx.v, ctx.lo, ctx.hi]]); const reached = new Set(dom.map(e => run(stmts, e)[0]));
   const labels = [...arms.map(x => x.body[0].s), ctx.labels[4]]; const dead = labels.filter(l => !reached.has(l)), live = labels.filter(l => reached.has(l));
