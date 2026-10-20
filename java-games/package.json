@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests.mjs && node ui-tests.mjs && node math-lab/tests.mjs && node math-lab/expansion/tests/expansion-tests.mjs && node math-lab/expansion/tests/ui-tests.mjs && node array-lab/array-redesign-tests.mjs && node array-lab/advanced-tests.mjs && node debugger-lab/debugger-redesign-tests.mjs && node ../tests/robot-algorithms.test.js && node loop-lab/loop-redesign-tests.mjs && node class-object-lab/class-object-tests.mjs && node ../tests/method-constructor-lab.test.js && node boolean-conditional-lab/boolean-tests.mjs && node ../cs-games/teacher/qti-tests.mjs && node recursion-lab/recursion-tests.mjs && node recursion-lab/recursion-jvm-tests.mjs && node ../tests/arraylist-lab.test.js && node string-lab/tests/generator.test.cjs && npm run test:search-sort-lab",
+    "test": "node tests.mjs && node ui-tests.mjs && node math-lab/tests.mjs && node math-lab/expansion/tests/expansion-tests.mjs && node math-lab/expansion/tests/ui-tests.mjs && node array-lab/array-redesign-tests.mjs && node array-lab/advanced-tests.mjs && node debugger-lab/debugger-redesign-tests.mjs && node ../tests/robot-algorithms.test.js && node loop-lab/loop-redesign-tests.mjs && node class-object-lab/class-object-tests.mjs && node ../tests/method-constructor-lab.test.js && node boolean-conditional-lab/boolean-tests.mjs && node boolean-conditional-lab/tests/quality-gates.mjs 1000 && node ../cs-games/teacher/qti-tests.mjs && node recursion-lab/recursion-tests.mjs && node recursion-lab/recursion-jvm-tests.mjs && node ../tests/arraylist-lab.test.js && node string-lab/tests/generator.test.cjs && npm run test:search-sort-lab",
     "test:qti": "node ../cs-games/teacher/qti-tests.mjs",
     "test:search-sort-lab": "node search-sort-lab/tests/algorithms.test.mjs && node search-sort-lab/tests/generator.test.mjs && node search-sort-lab/tests/quality.test.mjs && node search-sort-lab/tests/jvm.test.mjs && node search-sort-lab/tests/ui.test.mjs",
     "test:string-lab": "node string-lab/tests/generator.test.cjs",
@@ -20,6 +20,8 @@
     "test:mcl": "node ../tests/method-constructor-lab.test.js",
     "test:mcl-jvm": "node ../tests/method-constructor-lab-jvm.test.js",
     "test:boolean": "node boolean-conditional-lab/boolean-tests.mjs",
+    "test:boolean-quality": "node boolean-conditional-lab/tests/quality-gates.mjs 1000",
+    "test:boolean-java": "node boolean-conditional-lab/tests/java-verify.mjs 1000 truthTable,switchIf,coverage && node boolean-conditional-lab/tests/java-verify.mjs 300 evaluate,branch,conditions,equivalent,short,construct",
     "test:recursion": "node recursion-lab/recursion-tests.mjs && node recursion-lab/recursion-jvm-tests.mjs",
     "test:arraylist": "node ../tests/arraylist-lab.test.js",
     "test:arraylist-jvm": "node ../tests/arraylist-lab-jvm.test.js",
