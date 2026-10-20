@@ -15,6 +15,13 @@ h2 { font-size: 1.25rem; margin: 10px 0; }
 .bool-token.answer { outline: 2px solid var(--accent); }
 .bool-token.wrong { text-decoration: line-through; border-color: var(--red); }
 .bool-code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.truth-wrap { margin: 12px 0; overflow-x: auto; }
+.truth-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.truth-table caption { text-align: left; font-weight: 700; padding: 6px 0; }
+.truth-table th, .truth-table td { border: 1px solid var(--line); padding: 7px 9px; text-align: center; }
+.truth-table th { background: rgba(255,255,255,.06); }
+.truth-table .focus-row { outline: 2px solid var(--gold); outline-offset: -2px; font-weight: 700; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
 .feedback { white-space: pre-line; margin: 14px 0 0; padding: 12px; }
 .stats { color: var(--muted); font-size: .85rem; }
