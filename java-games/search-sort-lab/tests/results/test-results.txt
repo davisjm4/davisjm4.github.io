@@ -1,0 +1,57 @@
+
+
+algorithms.test.mjs
+  ✓ hand-worked examples from the assignment (7 checks, 1 ms)
+  ✓ binary search edge cases (17 checks, 0 ms)
+  ✓ binary search with duplicates follows the documented implementation (not first/last) (5 checks, 0 ms)
+  ✓ binary search matches brute force on 3000 random sorted arrays (6000 checks, 24 ms)
+  ✓ binary search defects behave as documented (4 checks, 1 ms)
+  ✓ linear search (4 checks, 0 ms)
+  ✓ every sort: sorted result + same multiset, across structured shapes (5040 checks, 65 ms)
+  ✓ selection sort: intermediate states, counts, self-swaps, ties (2263 checks, 6 ms)
+  ✓ insertion sort: shifts vs swaps, stability, counts (612 checks, 4 ms)
+  ✓ merge sort: splits, merge order, comparison convention, uneven sizes (3698 checks, 22 ms)
+  ✓ operation counts agree with direct instrumentation (900 checks, 14 ms)
+algorithms.test.mjs: 18550 checks passed in 11 sections
+generator.test.mjs (PER_CELL=1000)
+  ✓ 1000 challenges per mode x difficulty are valid, solvable, and independently verified (72054 checks, 1922 ms)
+  ✓ same seed reproduces the identical challenge; different seeds differ (2178 checks, 358 ms)
+  ✓ difficulty metadata is consistent and genuinely graded (24012 checks, 32 ms)
+  ✓ every challenge family is reachable at the difficulties it declares (224 checks, 2 ms)
+  ✓ session behavior: no immediate repeats, mode/difficulty switching, export schema (8196 checks, 766 ms)
+  ✓ distractors: distinct, actually wrong, and carry a misconception explanation (54001 checks, 11 ms)
+generator.test.mjs: 160665 checks passed in 6 sections; 18000 challenges generated and verified
+quality.test.mjs (N=1000 per cell, session length 200)
+  ✓ variety analysis (108 checks, 1800 ms)
+  ✓ per-family repetitiveness (investigating overly repetitive families) (1 checks, 2633 ms)
+  ✓ repetition frequency over simulated 200-challenge classroom sessions (1 checks, 675 ms)
+quality.test.mjs: 110 checks passed in 3 sections; flags: 15
+binary/beginner/b-first-mid: only 2 distinct answers
+binary/beginner/b-update-line: only 2 distinct answers
+binary/intermediate/b-update-line: only 2 distinct answers
+binary/advanced/b-unsorted-return: only 1 distinct answers
+selection/beginner/s-sorted-region: only 2 distinct answers
+insertion/beginner/i-vs-selection: only 2 distinct answers
+insertion/intermediate/i-vs-selection: only 2 distinct answers
+insertion/advanced/i-vs-selection: only 2 distinct answers
+compare/beginner/c-which-search: only 2 distinct answers
+compare/intermediate/c-which-search: only 2 distinct answers
+compare/advanced/c-which-search: only 2 distinct answers
+compare/intermediate/c-sort-fewer: only 2 distinct answers
+compare/beginner/c-fit: only 2 distinct answers
+compare/intermediate/c-fit: only 2 distinct answers
+compare/advanced/c-fit: only 2 distinct answers
+jvm.test.mjs
+  ✓ Part 1: real Java algorithms match the simulators (600 random arrays) (601 checks, 1659 ms)
+    574 distinct snippet shapes compiled
+  ✓ Part 2: every distinct displayed Java snippet compiles (1 checks, 4204 ms)
+jvm.test.mjs: 602 checks passed in 2 sections
+ui.test.mjs
+  ✓ page structure, navigation, accessibility markers (12 checks, 2 ms)
+  ✓ all 6 modes x 3 difficulties render a complete, answerable challenge (144 checks, 81 ms)
+  ✓ one submitted answer = one scored attempt; answers lock (16 checks, 11 ms)
+  ✓ switching mode/difficulty never carries an old answer or scores the wrong challenge (7 checks, 15 ms)
+  ✓ keyboard: arrows and number keys choose, Enter submits (6 checks, 7 ms)
+  ✓ Session Summary and restart (7 checks, 11 ms)
+  ✓ seeded sessions are reproducible via ?seed= (2 checks, 0 ms)
+ui.test.mjs: 194 checks passed in 7 sections

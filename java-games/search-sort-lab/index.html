@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Search & Sort Lab: unlimited Java practice with binary search, selection sort, insertion sort, merge sort, algorithm identification, and efficiency. No sign-in required." />
+    <meta name="theme-color" content="#0c1722" />
+    <title>Search &amp; Sort Lab | Java Games</title>
+    <!-- In the repository the shared stylesheet loads first; styles.css is self-sufficient and only adds this game's rules. -->
+    <link rel="stylesheet" href="../style.css?v=java-quality-v3" onerror="this.remove()" />
+    <link rel="stylesheet" href="./styles.css?v=ssl-v1" />
+    <script type="module" src="./app.js?v=ssl-v1"></script>
+  </head>
+  <body data-game="search-sort-lab">
+    <header>
+      <a href="https://davisjm4.github.io/cs-games/advanced/">← Advanced CS Games</a>
+      <small>DevCat Studios · Build your understanding</small>
+    </header>
+    <main id="main" class="ssl">
+      <div class="eyebrow">Java · searching · sorting · tracing · efficiency</div>
+      <h1>Search &amp; Sort Lab</h1>
+      <p class="intro">Trace binary search, selection sort, insertion sort, and merge sort one step at a time. Every challenge is generated fresh, so you can practice as long as you like.</p>
+      <div class="toolbar ssl-toolbar">
+        <label>Practice mode
+          <select id="mode"></select></label>
+        <label>Difficulty
+          <select id="difficulty">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate" selected>Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select></label>
+        <button id="new" class="secondary" type="button">New Challenge</button>
+        <button id="summary-toggle" class="secondary" type="button" aria-expanded="false" aria-controls="summary">Session Summary</button>
+        <details class="ssl-ref">
+          <summary>Conventions used here</summary>
+          <dl>
+            <dt>Binary search</dt><dd><code>mid = (low + high) / 2</code> (integer division). Returns the first match its midpoints reach, which is not always the first or last duplicate.</dd>
+            <dt>Selection sort</dt><dd>One swap per pass (even with itself). Strict <code>&lt;</code>, so ties keep the earlier index.</dd>
+            <dt>Insertion sort</dt><dd>Elements <code>&gt; key</code> shift right (one write each). Equal elements do not shift. A shift is not a swap.</dd>
+            <dt>Merge sort</dt><dd><code>mid = (lo + hi) / 2</code>, so the left half is larger for odd sizes. Ties go to the left. Each <code>a[i] &lt;= a[j]</code> test is one comparison.</dd>
+          </dl>
+        </details>
+      </div>
+
+      <section id="stage" class="panel ssl-stage" aria-labelledby="question">
+        <div class="ssl-head">
+          <span class="eyebrow" id="mode-label"></span>
+          <span id="difficulty-chip" class="ssl-chip"></span>
+          <span id="skill-chip" class="ssl-chip"></span>
+        </div>
+        <h2 id="question" class="ssl-question" tabindex="-1"></h2>
+        <p id="rule" class="ssl-rule" hidden></p>
+        <p id="description" class="ssl-description" hidden></p>
+        <div id="code-wrap" class="ssl-code-wrap" hidden>
+          <p id="code-label" class="ssl-code-label"></p>
+          <pre id="code" class="ssl-code" tabindex="0" aria-label="Java code"></pre>
+        </div>
+        <div id="visuals" class="ssl-visuals"></div>
+        <div id="choices" class="ssl-choices" role="radiogroup" aria-labelledby="question"></div>
+        <div class="actions ssl-actions">
+          <button id="submit" type="button" disabled>Check Answer</button>
+          <button id="skip" type="button" class="secondary">Skip</button>
+          <button id="next" type="button" hidden>Next Challenge →</button>
+        </div>
+        <div id="feedback" class="feedback ssl-feedback" role="status" tabindex="-1" hidden></div>
+        <div id="reveal" class="ssl-reveal" hidden></div>
+      </section>
+
+      <p id="stats" class="stats"></p>
+
+      <section id="summary" class="panel ssl-summary" hidden aria-labelledby="summary-title">
+        <h2 id="summary-title">Session Summary</h2>
+        <div id="summary-body"></div>
+        <div class="actions">
+          <button id="restart" type="button" class="secondary">Restart practice</button>
+          <a class="button secondary" id="shared-summary" href="../session-summary/">Open the Advanced CS Session Summary</a>
+        </div>
+      </section>
+      <dialog id="restart-dialog" aria-labelledby="restart-title">
+        <h2 id="restart-title">Restart practice?</h2>
+        <p>This clears the summary on this page (attempts, accuracy, and skills) and starts a new set of challenges. Your Advanced CS Session Summary from other games is not changed.</p>
+        <div class="actions"><button id="restart-cancel" class="secondary" type="button">Cancel</button><button id="restart-confirm" type="button">Restart</button></div>
+      </dialog>
+    </main>
+    <noscript><p>Enable JavaScript to play these interactive games.</p></noscript>
+    <footer>Practice freely. No accounts or data uploads. Results are stored locally in this browser. Independent practice tools; not affiliated with College Board.</footer>
+  </body>
+</html>

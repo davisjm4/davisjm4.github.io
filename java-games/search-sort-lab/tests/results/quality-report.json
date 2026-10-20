@@ -1,0 +1,1542 @@
+{
+  "perCell": {
+    "binary/beginner": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 18,
+      "normalizedStems": 4,
+      "reasoningPatterns": 6,
+      "families": 4,
+      "familyEntropy": 0.884,
+      "maxFamilyShare": 0.363,
+      "reasoningTypes": {
+        "one-step": 1000
+      },
+      "answerKinds": {
+        "int": 415,
+        "text": 358,
+        "code": 227
+      },
+      "algorithms": {
+        "binary": 1000
+      },
+      "distinctMisconceptions": 28,
+      "misconceptionDistractorRate": 1
+    },
+    "binary/intermediate": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 67,
+      "normalizedStems": 8,
+      "reasoningPatterns": 11,
+      "families": 7,
+      "familyEntropy": 0.898,
+      "maxFamilyShare": 0.274,
+      "reasoningTypes": {
+        "multi-step": 925,
+        "full-trace": 44,
+        "precondition": 31
+      },
+      "answerKinds": {
+        "int": 526,
+        "code": 137,
+        "text": 306,
+        "array": 31
+      },
+      "algorithms": {
+        "binary": 1000
+      },
+      "distinctMisconceptions": 46,
+      "misconceptionDistractorRate": 0.985
+    },
+    "binary/advanced": {
+      "challenges": 1000,
+      "exactUnique": 999,
+      "exactUniqueRate": 0.999,
+      "structuralUnique": 152,
+      "normalizedStems": 14,
+      "reasoningPatterns": 17,
+      "families": 10,
+      "familyEntropy": 0.978,
+      "maxFamilyShare": 0.166,
+      "reasoningTypes": {
+        "full-trace": 340,
+        "debug": 251,
+        "multi-step": 137,
+        "implementation": 117,
+        "precondition": 155
+      },
+      "answerKinds": {
+        "text": 546,
+        "int": 240,
+        "code": 117,
+        "array": 97
+      },
+      "algorithms": {
+        "binary": 1000
+      },
+      "distinctMisconceptions": 64,
+      "misconceptionDistractorRate": 0.995
+    },
+    "selection/beginner": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 10,
+      "normalizedStems": 5,
+      "reasoningPatterns": 5,
+      "families": 5,
+      "familyEntropy": 0.964,
+      "maxFamilyShare": 0.336,
+      "reasoningTypes": {
+        "one-pass": 1000
+      },
+      "answerKinds": {
+        "array": 212,
+        "int": 336,
+        "text": 452
+      },
+      "algorithms": {
+        "selection": 1000
+      },
+      "distinctMisconceptions": 25,
+      "misconceptionDistractorRate": 1
+    },
+    "selection/intermediate": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 35,
+      "normalizedStems": 12,
+      "reasoningPatterns": 11,
+      "families": 9,
+      "familyEntropy": 0.932,
+      "maxFamilyShare": 0.211,
+      "reasoningTypes": {
+        "pass-state": 681,
+        "count": 211,
+        "multi-step": 75,
+        "full-trace": 33
+      },
+      "answerKinds": {
+        "text": 387,
+        "array": 199,
+        "int": 381,
+        "trace": 33
+      },
+      "algorithms": {
+        "selection": 1000
+      },
+      "distinctMisconceptions": 53,
+      "misconceptionDistractorRate": 0.996
+    },
+    "selection/advanced": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 64,
+      "normalizedStems": 18,
+      "reasoningPatterns": 12,
+      "families": 9,
+      "familyEntropy": 0.93,
+      "maxFamilyShare": 0.204,
+      "reasoningTypes": {
+        "count": 204,
+        "pass-state": 539,
+        "full-trace": 135,
+        "debug": 122
+      },
+      "answerKinds": {
+        "int": 264,
+        "array": 154,
+        "trace": 135,
+        "text": 447
+      },
+      "algorithms": {
+        "selection": 1000
+      },
+      "distinctMisconceptions": 55,
+      "misconceptionDistractorRate": 0.996
+    },
+    "insertion/beginner": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 11,
+      "normalizedStems": 6,
+      "reasoningPatterns": 6,
+      "families": 4,
+      "familyEntropy": 0.916,
+      "maxFamilyShare": 0.401,
+      "reasoningTypes": {
+        "one-step": 509,
+        "one-pass": 401,
+        "recognize": 90
+      },
+      "answerKinds": {
+        "int": 509,
+        "array": 401,
+        "text": 90
+      },
+      "algorithms": {
+        "insertion": 1000
+      },
+      "distinctMisconceptions": 34,
+      "misconceptionDistractorRate": 0.977
+    },
+    "insertion/intermediate": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 23,
+      "normalizedStems": 9,
+      "reasoningPatterns": 9,
+      "families": 7,
+      "familyEntropy": 0.948,
+      "maxFamilyShare": 0.23,
+      "reasoningTypes": {
+        "pass-state": 230,
+        "count": 191,
+        "evidence": 118,
+        "multi-step": 414,
+        "full-trace": 47
+      },
+      "answerKinds": {
+        "array": 230,
+        "int": 497,
+        "text": 226,
+        "trace": 47
+      },
+      "algorithms": {
+        "insertion": 1000
+      },
+      "distinctMisconceptions": 49,
+      "misconceptionDistractorRate": 0.985
+    },
+    "insertion/advanced": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 37,
+      "normalizedStems": 12,
+      "reasoningPatterns": 12,
+      "families": 7,
+      "familyEntropy": 0.984,
+      "maxFamilyShare": 0.195,
+      "reasoningTypes": {
+        "count": 195,
+        "pass-state": 147,
+        "debug": 195,
+        "full-trace": 118,
+        "multi-step": 102,
+        "defect": 133,
+        "evidence": 110
+      },
+      "answerKinds": {
+        "int": 347,
+        "array": 230,
+        "text": 305,
+        "trace": 118
+      },
+      "algorithms": {
+        "insertion": 1000
+      },
+      "distinctMisconceptions": 56,
+      "misconceptionDistractorRate": 0.993
+    },
+    "merge/beginner": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 7,
+      "normalizedStems": 5,
+      "reasoningPatterns": 5,
+      "families": 5,
+      "familyEntropy": 0.974,
+      "maxFamilyShare": 0.322,
+      "reasoningTypes": {
+        "one-step": 1000
+      },
+      "answerKinds": {
+        "array": 159,
+        "int": 322,
+        "text": 519
+      },
+      "algorithms": {
+        "merge": 1000
+      },
+      "distinctMisconceptions": 23,
+      "misconceptionDistractorRate": 0.999
+    },
+    "merge/intermediate": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 31,
+      "normalizedStems": 15,
+      "reasoningPatterns": 12,
+      "families": 9,
+      "familyEntropy": 0.955,
+      "maxFamilyShare": 0.185,
+      "reasoningTypes": {
+        "multi-step": 707,
+        "count": 256,
+        "full-trace": 37
+      },
+      "answerKinds": {
+        "text": 382,
+        "array": 217,
+        "int": 364,
+        "lines": 37
+      },
+      "algorithms": {
+        "merge": 1000
+      },
+      "distinctMisconceptions": 51,
+      "misconceptionDistractorRate": 0.994
+    },
+    "merge/advanced": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 42,
+      "normalizedStems": 17,
+      "reasoningPatterns": 12,
+      "families": 8,
+      "familyEntropy": 0.929,
+      "maxFamilyShare": 0.203,
+      "reasoningTypes": {
+        "multi-step": 401,
+        "evidence": 68,
+        "full-trace": 154,
+        "count": 247,
+        "debug": 130
+      },
+      "answerKinds": {
+        "array": 194,
+        "text": 401,
+        "lines": 154,
+        "int": 251
+      },
+      "algorithms": {
+        "merge": 1000
+      },
+      "distinctMisconceptions": 52,
+      "misconceptionDistractorRate": 0.999
+    },
+    "name/beginner": {
+      "challenges": 1000,
+      "exactUnique": 994,
+      "exactUniqueRate": 0.994,
+      "structuralUnique": 178,
+      "normalizedStems": 5,
+      "reasoningPatterns": 16,
+      "families": 3,
+      "familyEntropy": 0.959,
+      "maxFamilyShare": 0.477,
+      "reasoningTypes": {
+        "recognize": 1000
+      },
+      "answerKinds": {
+        "text": 1000
+      },
+      "algorithms": {
+        "merge": 147,
+        "insertion": 234,
+        "selection": 214,
+        "binary": 198,
+        "linear": 207
+      },
+      "distinctMisconceptions": 20,
+      "misconceptionDistractorRate": 1
+    },
+    "name/intermediate": {
+      "challenges": 1000,
+      "exactUnique": 998,
+      "exactUniqueRate": 0.998,
+      "structuralUnique": 260,
+      "normalizedStems": 11,
+      "reasoningPatterns": 20,
+      "families": 3,
+      "familyEntropy": 0.932,
+      "maxFamilyShare": 0.495,
+      "reasoningTypes": {
+        "recognize-code": 495,
+        "evidence": 505
+      },
+      "answerKinds": {
+        "text": 1000
+      },
+      "algorithms": {
+        "merge": 211,
+        "insertion": 208,
+        "selection": 206,
+        "linear": 193,
+        "binary": 182
+      },
+      "distinctMisconceptions": 20,
+      "misconceptionDistractorRate": 1
+    },
+    "name/advanced": {
+      "challenges": 1000,
+      "exactUnique": 998,
+      "exactUniqueRate": 0.998,
+      "structuralUnique": 542,
+      "normalizedStems": 11,
+      "reasoningPatterns": 41,
+      "families": 4,
+      "familyEntropy": 0.985,
+      "maxFamilyShare": 0.313,
+      "reasoningTypes": {
+        "defect": 313,
+        "implementation": 236,
+        "misleading": 274,
+        "evidence": 177
+      },
+      "answerKinds": {
+        "text": 1000
+      },
+      "algorithms": {
+        "linear": 214,
+        "insertion": 199,
+        "merge": 173,
+        "selection": 222,
+        "binary": 192
+      },
+      "distinctMisconceptions": 33,
+      "misconceptionDistractorRate": 1
+    },
+    "compare/beginner": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 10,
+      "normalizedStems": 10,
+      "reasoningPatterns": 9,
+      "families": 5,
+      "familyEntropy": 0.998,
+      "maxFamilyShare": 0.227,
+      "reasoningTypes": {
+        "one-step": 802,
+        "recognize": 198
+      },
+      "answerKinds": {
+        "int": 575,
+        "text": 425
+      },
+      "algorithms": {
+        "linear": 130,
+        "binary": 736,
+        "selection": 46,
+        "insertion": 88
+      },
+      "distinctMisconceptions": 44,
+      "misconceptionDistractorRate": 0.986
+    },
+    "compare/intermediate": {
+      "challenges": 1000,
+      "exactUnique": 1000,
+      "exactUniqueRate": 1,
+      "structuralUnique": 22,
+      "normalizedStems": 22,
+      "reasoningPatterns": 14,
+      "families": 6,
+      "familyEntropy": 0.978,
+      "maxFamilyShare": 0.224,
+      "reasoningTypes": {
+        "count": 423,
+        "compare-run": 577
+      },
+      "answerKinds": {
+        "int": 423,
+        "text": 577
+      },
+      "algorithms": {
+        "insertion": 323,
+        "binary": 411,
+        "merge": 75,
+        "linear": 95,
+        "selection": 96
+      },
+      "distinctMisconceptions": 59,
+      "misconceptionDistractorRate": 0.976
+    },
+    "compare/advanced": {
+      "challenges": 1000,
+      "exactUnique": 999,
+      "exactUniqueRate": 0.999,
+      "structuralUnique": 36,
+      "normalizedStems": 31,
+      "reasoningPatterns": 20,
+      "families": 7,
+      "familyEntropy": 0.961,
+      "maxFamilyShare": 0.211,
+      "reasoningTypes": {
+        "compare-run": 236,
+        "count": 247,
+        "compare-analysis": 193,
+        "growth": 211,
+        "precondition": 113
+      },
+      "answerKinds": {
+        "text": 542,
+        "int": 458
+      },
+      "algorithms": {
+        "insertion": 318,
+        "binary": 381,
+        "linear": 89,
+        "selection": 151,
+        "merge": 61
+      },
+      "distinctMisconceptions": 89,
+      "misconceptionDistractorRate": 0.99
+    }
+  },
+  "perFamily": {
+    "binary/beginner/b-first-mid": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 2
+    },
+    "binary/beginner/b-bounds-first": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 6
+    },
+    "binary/beginner/b-update-line": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 2,
+      "distinctAnswers": 2
+    },
+    "binary/intermediate/b-update-line": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 2,
+      "distinctAnswers": 2
+    },
+    "binary/intermediate/b-step-k": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 23
+    },
+    "binary/advanced/b-step-k": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 67
+    },
+    "binary/beginner/b-return": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 2,
+      "distinctAnswers": 9
+    },
+    "binary/intermediate/b-return": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 3,
+      "distinctAnswers": 15
+    },
+    "binary/advanced/b-return": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 3,
+      "distinctAnswers": 26
+    },
+    "binary/intermediate/b-exit-bounds": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 16
+    },
+    "binary/advanced/b-exit-bounds": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 29
+    },
+    "binary/intermediate/b-passes": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 3
+    },
+    "binary/advanced/b-passes": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 3
+    },
+    "binary/intermediate/b-mid-sequence": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 29
+    },
+    "binary/advanced/b-mid-sequence": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 121
+    },
+    "binary/intermediate/b-precondition": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "binary/advanced/b-precondition": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "binary/advanced/b-unsorted-return": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 1
+    },
+    "binary/advanced/b-bug-behavior": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 3,
+      "variants": 3,
+      "distinctAnswers": 52
+    },
+    "binary/advanced/b-find-bug": {
+      "n": 400,
+      "exactUnique": 387,
+      "exactRate": 0.968,
+      "normalizedStems": 2,
+      "variants": 3,
+      "distinctAnswers": 3
+    },
+    "binary/advanced/b-impl-compare": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 26
+    },
+    "selection/beginner/s-min-index": {
+      "n": 400,
+      "exactUnique": 399,
+      "exactRate": 0.998,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 5
+    },
+    "selection/intermediate/s-min-index": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 8
+    },
+    "selection/advanced/s-min-index": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 10
+    },
+    "selection/beginner/s-after-pass": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 389
+    },
+    "selection/intermediate/s-after-pass": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "selection/advanced/s-after-pass": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 7,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "selection/beginner/s-next-swap": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 5
+    },
+    "selection/intermediate/s-next-swap": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 26
+    },
+    "selection/advanced/s-next-swap": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 34
+    },
+    "selection/intermediate/s-count": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 6
+    },
+    "selection/advanced/s-count": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 3,
+      "variants": 3,
+      "distinctAnswers": 23
+    },
+    "selection/beginner/s-sorted-region": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 2
+    },
+    "selection/intermediate/s-sorted-region": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 4
+    },
+    "selection/advanced/s-sorted-region": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 3
+    },
+    "selection/beginner/s-inner-loop": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 4
+    },
+    "selection/intermediate/s-inner-loop": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 62
+    },
+    "selection/advanced/s-inner-loop": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 97
+    },
+    "selection/intermediate/s-dup-rule": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 5
+    },
+    "selection/advanced/s-dup-rule": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 5
+    },
+    "selection/intermediate/s-invalid-step": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 4
+    },
+    "selection/advanced/s-invalid-step": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 5
+    },
+    "selection/intermediate/s-full-trace": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "selection/advanced/s-full-trace": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "insertion/beginner/i-key-pos": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 15
+    },
+    "insertion/intermediate/i-key-pos": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 7
+    },
+    "insertion/beginner/i-after-pass": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 393
+    },
+    "insertion/intermediate/i-after-pass": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "insertion/advanced/i-after-pass": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "insertion/beginner/i-next-shift": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 4
+    },
+    "insertion/intermediate/i-next-shift": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 7
+    },
+    "insertion/advanced/i-next-shift": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 8
+    },
+    "insertion/intermediate/i-count": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 16
+    },
+    "insertion/advanced/i-count": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 3,
+      "variants": 3,
+      "distinctAnswers": 39
+    },
+    "insertion/beginner/i-vs-selection": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 2
+    },
+    "insertion/intermediate/i-vs-selection": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 2
+    },
+    "insertion/advanced/i-vs-selection": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 2
+    },
+    "insertion/intermediate/i-invalid-step": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 4
+    },
+    "insertion/advanced/i-invalid-step": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 5
+    },
+    "insertion/advanced/i-defect": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 3,
+      "variants": 3,
+      "distinctAnswers": 277
+    },
+    "insertion/intermediate/i-full-trace": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 399
+    },
+    "insertion/advanced/i-full-trace": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "merge/beginner/m-next-merged": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 19
+    },
+    "merge/intermediate/m-next-merged": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 27
+    },
+    "merge/advanced/m-next-merged": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 28
+    },
+    "merge/beginner/m-merge-result": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "merge/intermediate/m-merge-result": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "merge/advanced/m-merge-result": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "merge/beginner/m-split": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "merge/intermediate/m-split": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 217
+    },
+    "merge/beginner/m-base-case": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 6
+    },
+    "merge/beginner/m-pair-sorted": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "merge/intermediate/m-kth-call": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 252
+    },
+    "merge/advanced/m-kth-call": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 285
+    },
+    "merge/intermediate/m-count-calls": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 3,
+      "variants": 3,
+      "distinctAnswers": 7
+    },
+    "merge/advanced/m-count-calls": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 3,
+      "variants": 3,
+      "distinctAnswers": 11
+    },
+    "merge/intermediate/m-after-merge": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "merge/advanced/m-after-merge": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "merge/intermediate/m-compares": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 4,
+      "variants": 1,
+      "distinctAnswers": 6
+    },
+    "merge/advanced/m-compares": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 8,
+      "variants": 3,
+      "distinctAnswers": 69
+    },
+    "merge/intermediate/m-invalid-merge": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 4
+    },
+    "merge/advanced/m-invalid-merge": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 4
+    },
+    "merge/intermediate/m-full-trace": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "merge/advanced/m-full-trace": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 400
+    },
+    "name/beginner/n-code": {
+      "n": 400,
+      "exactUnique": 396,
+      "exactRate": 0.99,
+      "normalizedStems": 1,
+      "variants": 9,
+      "distinctAnswers": 5
+    },
+    "name/intermediate/n-code": {
+      "n": 400,
+      "exactUnique": 397,
+      "exactRate": 0.993,
+      "normalizedStems": 1,
+      "variants": 12,
+      "distinctAnswers": 5
+    },
+    "name/advanced/n-code": {
+      "n": 400,
+      "exactUnique": 397,
+      "exactRate": 0.993,
+      "normalizedStems": 1,
+      "variants": 12,
+      "distinctAnswers": 5
+    },
+    "name/beginner/n-trace": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 3,
+      "variants": 2,
+      "distinctAnswers": 4
+    },
+    "name/intermediate/n-trace": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 9,
+      "variants": 3,
+      "distinctAnswers": 5
+    },
+    "name/advanced/n-trace": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 8,
+      "variants": 3,
+      "distinctAnswers": 5
+    },
+    "name/beginner/n-description": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 5,
+      "distinctAnswers": 5
+    },
+    "name/intermediate/n-description": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 5,
+      "distinctAnswers": 5
+    },
+    "name/advanced/n-defect": {
+      "n": 400,
+      "exactUnique": 399,
+      "exactRate": 0.998,
+      "normalizedStems": 1,
+      "variants": 13,
+      "distinctAnswers": 5
+    },
+    "name/advanced/n-misleading": {
+      "n": 400,
+      "exactUnique": 394,
+      "exactRate": 0.985,
+      "normalizedStems": 1,
+      "variants": 13,
+      "distinctAnswers": 5
+    },
+    "compare/beginner/c-which-search": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 1,
+      "distinctAnswers": 2
+    },
+    "compare/intermediate/c-which-search": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 1,
+      "distinctAnswers": 2
+    },
+    "compare/advanced/c-which-search": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 1,
+      "distinctAnswers": 2
+    },
+    "compare/beginner/c-count-search": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 7
+    },
+    "compare/intermediate/c-count-search": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 16
+    },
+    "compare/advanced/c-count-search": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 2,
+      "variants": 2,
+      "distinctAnswers": 16
+    },
+    "compare/intermediate/c-count-sort-op": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 7,
+      "variants": 3,
+      "distinctAnswers": 13
+    },
+    "compare/advanced/c-count-sort-op": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 10,
+      "variants": 3,
+      "distinctAnswers": 13
+    },
+    "compare/intermediate/c-sort-fewer": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 4,
+      "variants": 1,
+      "distinctAnswers": 2
+    },
+    "compare/advanced/c-sort-fewer": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 5,
+      "variants": 2,
+      "distinctAnswers": 3
+    },
+    "compare/intermediate/c-input-order": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 6,
+      "variants": 6,
+      "distinctAnswers": 3
+    },
+    "compare/advanced/c-input-order": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 6,
+      "variants": 6,
+      "distinctAnswers": 3
+    },
+    "compare/advanced/c-growth": {
+      "n": 400,
+      "exactUnique": 392,
+      "exactRate": 0.98,
+      "normalizedStems": 5,
+      "variants": 5,
+      "distinctAnswers": 124
+    },
+    "compare/beginner/c-narrowing": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 6
+    },
+    "compare/beginner/c-simple-count": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 4,
+      "variants": 4,
+      "distinctAnswers": 6
+    },
+    "compare/beginner/c-fit": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 2
+    },
+    "compare/intermediate/c-fit": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 2
+    },
+    "compare/advanced/c-fit": {
+      "n": 400,
+      "exactUnique": 400,
+      "exactRate": 1,
+      "normalizedStems": 1,
+      "variants": 1,
+      "distinctAnswers": 2
+    }
+  },
+  "flags": [
+    "binary/beginner/b-first-mid: only 2 distinct answers",
+    "binary/beginner/b-update-line: only 2 distinct answers",
+    "binary/intermediate/b-update-line: only 2 distinct answers",
+    "binary/advanced/b-unsorted-return: only 1 distinct answers",
+    "selection/beginner/s-sorted-region: only 2 distinct answers",
+    "insertion/beginner/i-vs-selection: only 2 distinct answers",
+    "insertion/intermediate/i-vs-selection: only 2 distinct answers",
+    "insertion/advanced/i-vs-selection: only 2 distinct answers",
+    "compare/beginner/c-which-search: only 2 distinct answers",
+    "compare/intermediate/c-which-search: only 2 distinct answers",
+    "compare/advanced/c-which-search: only 2 distinct answers",
+    "compare/intermediate/c-sort-fewer: only 2 distinct answers",
+    "compare/beginner/c-fit: only 2 distinct answers",
+    "compare/intermediate/c-fit: only 2 distinct answers",
+    "compare/advanced/c-fit: only 2 distinct answers"
+  ],
+  "sessions": {
+    "binary/beginner": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "binary/intermediate": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "binary/advanced": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "selection/beginner": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "selection/intermediate": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "selection/advanced": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "insertion/beginner": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "insertion/intermediate": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "insertion/advanced": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "merge/beginner": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 56,
+      "adjacentSameFamily": 0
+    },
+    "merge/intermediate": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "merge/advanced": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "name/beginner": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "name/intermediate": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "name/advanced": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "compare/beginner": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "compare/intermediate": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    },
+    "compare/advanced": {
+      "session": 200,
+      "exactRepeats": 0,
+      "structuralRepeatsWithin2": 0,
+      "structuralRepeatsWithin5": 0,
+      "adjacentSameFamily": 0
+    }
+  },
+  "sessionFailures": []
+}

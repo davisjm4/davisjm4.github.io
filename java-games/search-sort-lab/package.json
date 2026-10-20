@@ -1,0 +1,13 @@
+{
+  "name": "search-sort-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Search & Sort Lab: procedurally generated Java algorithm practice for CS Games",
+  "scripts": {
+    "test": "node tests/algorithms.test.mjs && node tests/generator.test.mjs && node tests/quality.test.mjs && node tests/jvm.test.mjs && node tests/ui.test.mjs",
+    "test:fast": "PER_CELL=200 node tests/algorithms.test.mjs && PER_CELL=200 node tests/generator.test.mjs && node tests/ui.test.mjs",
+    "serve": "python3 -m http.server 8080"
+  },
+  "devDependencies": { "linkedom": "^0.18.12" }
+}

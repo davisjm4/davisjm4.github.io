@@ -1,0 +1,86 @@
+{
+  "binary": {
+    "beginner": {
+      "steps": 1,
+      "len": 7
+    },
+    "intermediate": {
+      "steps": 3,
+      "len": 12
+    },
+    "advanced": {
+      "steps": 5,
+      "len": 19
+    }
+  },
+  "selection": {
+    "beginner": {
+      "steps": 4,
+      "len": 4
+    },
+    "intermediate": {
+      "steps": 6,
+      "len": 7
+    },
+    "advanced": {
+      "steps": 10,
+      "len": 8
+    }
+  },
+  "insertion": {
+    "beginner": {
+      "steps": 3,
+      "len": 5
+    },
+    "intermediate": {
+      "steps": 6,
+      "len": 7
+    },
+    "advanced": {
+      "steps": 10,
+      "len": 8
+    }
+  },
+  "merge": {
+    "beginner": {
+      "steps": 2,
+      "len": 5
+    },
+    "intermediate": {
+      "steps": 6,
+      "len": 7
+    },
+    "advanced": {
+      "steps": 11,
+      "len": 9
+    }
+  },
+  "name": {
+    "beginner": {
+      "steps": 4,
+      "len": 6
+    },
+    "intermediate": {
+      "steps": 9,
+      "len": 7
+    },
+    "advanced": {
+      "steps": 11,
+      "len": 8
+    }
+  },
+  "compare": {
+    "beginner": {
+      "steps": 3,
+      "len": 7
+    },
+    "intermediate": {
+      "steps": 5,
+      "len": 9
+    },
+    "advanced": {
+      "steps": 10,
+      "len": 10
+    }
+  }
+}

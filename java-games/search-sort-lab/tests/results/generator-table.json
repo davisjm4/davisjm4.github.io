@@ -1,0 +1,128 @@
+[
+  {
+    "mode": "binary",
+    "cells": {
+      "beginner": {
+        "tested": 1000,
+        "avgAttempts": 1,
+        "ms": 29
+      },
+      "intermediate": {
+        "tested": 1000,
+        "avgAttempts": 1.04,
+        "ms": 36
+      },
+      "advanced": {
+        "tested": 1000,
+        "avgAttempts": 1.16,
+        "ms": 84
+      }
+    },
+    "issues": []
+  },
+  {
+    "mode": "selection",
+    "cells": {
+      "beginner": {
+        "tested": 1000,
+        "avgAttempts": 1.15,
+        "ms": 40
+      },
+      "intermediate": {
+        "tested": 1000,
+        "avgAttempts": 1.14,
+        "ms": 39
+      },
+      "advanced": {
+        "tested": 1000,
+        "avgAttempts": 1.29,
+        "ms": 40
+      }
+    },
+    "issues": []
+  },
+  {
+    "mode": "insertion",
+    "cells": {
+      "beginner": {
+        "tested": 1000,
+        "avgAttempts": 1.28,
+        "ms": 31
+      },
+      "intermediate": {
+        "tested": 1000,
+        "avgAttempts": 1.13,
+        "ms": 37
+      },
+      "advanced": {
+        "tested": 1000,
+        "avgAttempts": 1.26,
+        "ms": 52
+      }
+    },
+    "issues": []
+  },
+  {
+    "mode": "merge",
+    "cells": {
+      "beginner": {
+        "tested": 1000,
+        "avgAttempts": 1.05,
+        "ms": 36
+      },
+      "intermediate": {
+        "tested": 1000,
+        "avgAttempts": 1.14,
+        "ms": 34
+      },
+      "advanced": {
+        "tested": 1000,
+        "avgAttempts": 1.39,
+        "ms": 72
+      }
+    },
+    "issues": []
+  },
+  {
+    "mode": "name",
+    "cells": {
+      "beginner": {
+        "tested": 1000,
+        "avgAttempts": 1.02,
+        "ms": 31
+      },
+      "intermediate": {
+        "tested": 1000,
+        "avgAttempts": 1.02,
+        "ms": 22
+      },
+      "advanced": {
+        "tested": 1000,
+        "avgAttempts": 1.04,
+        "ms": 26
+      }
+    },
+    "issues": []
+  },
+  {
+    "mode": "compare",
+    "cells": {
+      "beginner": {
+        "tested": 1000,
+        "avgAttempts": 1.01,
+        "ms": 22
+      },
+      "intermediate": {
+        "tested": 1000,
+        "avgAttempts": 1.11,
+        "ms": 16
+      },
+      "advanced": {
+        "tested": 1000,
+        "avgAttempts": 1.02,
+        "ms": 107
+      }
+    },
+    "issues": []
+  }
+]
