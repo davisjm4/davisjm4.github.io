@@ -3,7 +3,10 @@ import {
   generateDebugger,
   assessDebugger,
   solutionDebugger,
-} from "./debugger-engine.js?v=debugger-redesign-v1";
+  createDebuggerSession,
+  DIFFICULTIES,
+  DIFFICULTY_NAMES,
+} from "./debugger-engine.js?v=debugger-generator-v2";
 import {
   sessionTracker,
   addSessionNavigation,
@@ -17,6 +20,7 @@ const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({
 export function startDebuggerLab() {
   const $ = (id) => document.getElementById(id);
   const tracker = sessionTracker();
+  const practice = createDebuggerSession({seed: (()=>{try{return crypto.getRandomValues(new Uint32Array(1))[0];}catch{return Date.now()>>>0;}})()});
   let question, instanceId, selected = null, closed = false;
 
   $("main").innerHTML = `
@@ -29,6 +33,9 @@ export function startDebuggerLab() {
           <option value="mixed" selected>Mixed Practice</option>
           ${Object.entries(formatNames).map(([value, label]) => `<option value="${value}">${label}</option>`).join("")}
         </select>
+      </label>
+      <label>Difficulty
+        <select id="difficulty">${DIFFICULTIES.map(value=>`<option value="${value}">${DIFFICULTY_NAMES[value]}</option>`).join("")}</select>
       </label>
       <button id="new" class="secondary">New Challenge</button>
     </div>
@@ -74,26 +81,35 @@ export function startDebuggerLab() {
   function finish(correct) {
     closed = true;
     revealAnswer();
+    if (question.errorLine && question.errorLine > 0) {
+      const snippet = $("stage").querySelector(".debug-snippet code");
+      if (snippet) {
+        const codeLines = question.code.split("\n");
+        snippet.innerHTML = codeLines.map((line,index)=>`<span class="${index+1===question.errorLine?"error-line":""}">${esc(line)||" "}</span>`).join("\n");
+        snippet.setAttribute("aria-label", `Java code. Line ${question.errorLine} is the first failing statement.`);
+      }
+    }
     for (const control of $("stage").querySelectorAll("button")) control.disabled = true;
     $("next").disabled = false;
     $("feedback").hidden = false;
     $("feedback").className = `feedback ${correct ? "good" : "bad"}`;
     $("feedback").textContent =
       `${correct ? "Correct." : "Not quite."}\nCorrect answer: ${question.correctAnswer}\n` +
-      `${question.errorCategoryName}: ${question.explanation}`;
+      `${question.errorCategoryName}: ${question.explanation}${question.fix?`\nCorrection: ${question.fix}`:""}`;
     $("feedback").focus();
     updateStats();
   }
 
   function next() {
     if (instanceId) tracker.skip(instanceId);
-    question = generateDebugger($("mode").value);
+    question = practice.next({mode:$("mode").value,difficulty:$("difficulty").value});
     instanceId = tracker.begin(question.game, question.title, question.topic, question.topicTitle);
+    tracker.annotate(instanceId,{mode:question.format,difficulty:question.difficulty,skill:question.skill,generatorFamily:question.familyId,seed:question.seed,errorCategory:question.errorCategory});
     selected = null;
     closed = false;
     $("feedback").hidden = true;
     $("stage").innerHTML = `
-      <div class="challenge-meta">${esc(question.formatName)}</div>
+      <div class="challenge-meta">${esc(question.formatName)} · ${esc(question.difficultyName)}</div>
       <p class="requirement"><strong>Requirement:</strong> ${esc(question.requirement)}</p>
       <h2>${esc(question.prompt)}</h2>
       ${question.kind === "line" ? "" : `<pre class="snippet debug-snippet"><code>${esc(question.code)}</code></pre>`}
@@ -125,6 +141,7 @@ export function startDebuggerLab() {
   }
 
   $("mode").onchange = next;
+  $("difficulty").onchange = next;
   $("new").onclick = next;
   window.addEventListener("pagehide", () => { if (instanceId) tracker.skip(instanceId); });
   next();
