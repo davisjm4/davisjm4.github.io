@@ -1,0 +1,42 @@
+{
+ "ranAt": "2026-10-20T15:42:11.146Z",
+ "quick": false,
+ "node": "v24.19.0",
+ "results": [
+  {
+   "name": "Original Loop Lab test (updated)",
+   "command": "node loop-redesign-tests.mjs",
+   "status": "PASSED",
+   "seconds": 6.231,
+   "summary": "Loop Lab redesign (updated for expansion): 30440 checks passed; 75 seeded legacy fixtures; 95 structural variants across 10 families; mixed distribution {\"iterations\":599,\"final\":610,\"choose\":609,\"components\":601,\"conditional\":603,\"while\":580,\"nested\":588,\"debug\":647,\"algorithms\":601,\"executions\":562}."
+  },
+  {
+   "name": "Engine correctness",
+   "command": "node tests/engine.test.mjs 1200 300",
+   "status": "PASSED",
+   "seconds": 13.37,
+   "summary": "Loop Lab engine: 493,138 checks passed; 7,200 new-mode + 7,200 original-mode challenges; 2,088 answers matched independent closed-form oracles; 13.251s."
+  },
+  {
+   "name": "Diversity",
+   "command": "node tests/diversity.test.mjs 1000 1000 5",
+   "status": "PASSED",
+   "seconds": 61.584,
+   "summary": "Loop Lab diversity: 144 checks passed; 30,000 sampled challenges; 33 session cells × 5 × 100 simulated; overall fallback share 0.030."
+  },
+  {
+   "name": "JVM verification",
+   "command": "node tests/jvm.test.mjs 40 60",
+   "status": "PASSED",
+   "seconds": 26.559,
+   "summary": "Loop Lab JVM: 18,942 checks passed on openjdk version \"17.0.20\" 2026-07-21; 1860 challenges → 1860 instrumented runs (output + every statement/condition/body/comparison count) and 1860 runs of the displayed code; 120 terminating buggy debug programs behave as modeled; 26.411s."
+  },
+  {
+   "name": "Browser (Chromium)",
+   "command": "node tests/browser.test.mjs",
+   "status": "SKIPPED",
+   "seconds": 0.075,
+   "summary": "SKIPPED: puppeteer-core not found (npm install puppeteer-core, or set PUPPETEER_CORE_PATH)."
+  }
+ ]
+}

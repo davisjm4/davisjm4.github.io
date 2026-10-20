@@ -1,0 +1,527 @@
+[
+ {
+  "mode": "iterations",
+  "variant": "inc-exclusive",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "5"
+ },
+ {
+  "mode": "iterations",
+  "variant": "inc-exclusive",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "6"
+ },
+ {
+  "mode": "iterations",
+  "variant": "inc-exclusive",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "3"
+ },
+ {
+  "mode": "iterations",
+  "variant": "dec-inclusive",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "3"
+ },
+ {
+  "mode": "iterations",
+  "variant": "dec-inclusive",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "4"
+ },
+ {
+  "mode": "iterations",
+  "variant": "dec-inclusive",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "5"
+ },
+ {
+  "mode": "iterations",
+  "variant": "zero-start",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "0"
+ },
+ {
+  "mode": "iterations",
+  "variant": "zero-start",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "0"
+ },
+ {
+  "mode": "iterations",
+  "variant": "zero-start",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "0"
+ },
+ {
+  "mode": "iterations",
+  "variant": "while-decrement",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "12"
+ },
+ {
+  "mode": "iterations",
+  "variant": "while-decrement",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "5"
+ },
+ {
+  "mode": "iterations",
+  "variant": "while-decrement",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "12"
+ },
+ {
+  "mode": "iterations",
+  "variant": "one-step",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "1"
+ },
+ {
+  "mode": "iterations",
+  "variant": "one-step",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "1"
+ },
+ {
+  "mode": "iterations",
+  "variant": "one-step",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "1"
+ },
+ {
+  "mode": "iterations",
+  "variant": "skip-step",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "5"
+ },
+ {
+  "mode": "iterations",
+  "variant": "skip-step",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "5"
+ },
+ {
+  "mode": "iterations",
+  "variant": "skip-step",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "4"
+ },
+ {
+  "mode": "final",
+  "variant": "sum-range",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "52"
+ },
+ {
+  "mode": "final",
+  "variant": "sum-range",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "45"
+ },
+ {
+  "mode": "final",
+  "variant": "sum-range",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "58"
+ },
+ {
+  "mode": "final",
+  "variant": "product",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "60"
+ },
+ {
+  "mode": "final",
+  "variant": "product",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "336"
+ },
+ {
+  "mode": "final",
+  "variant": "product",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "7920"
+ },
+ {
+  "mode": "final",
+  "variant": "overwrite",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "6"
+ },
+ {
+  "mode": "final",
+  "variant": "overwrite",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "12"
+ },
+ {
+  "mode": "final",
+  "variant": "overwrite",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "12"
+ },
+ {
+  "mode": "final",
+  "variant": "count-even",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "6"
+ },
+ {
+  "mode": "final",
+  "variant": "count-even",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "4"
+ },
+ {
+  "mode": "final",
+  "variant": "count-even",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "6"
+ },
+ {
+  "mode": "final",
+  "variant": "continue-sum",
+  "difficulty": "intermediate",
+  "seed": 11,
+  "answer": "34"
+ },
+ {
+  "mode": "final",
+  "variant": "continue-sum",
+  "difficulty": "intermediate",
+  "seed": 222,
+  "answer": "26"
+ },
+ {
+  "mode": "final",
+  "variant": "continue-sum",
+  "difficulty": "intermediate",
+  "seed": 3333,
+  "answer": "16"
+ },
+ {
+  "mode": "final",
+  "variant": "break-sum",
+  "difficulty": "intermediate",
+  "seed": 11,
+  "answer": "32"
+ },
+ {
+  "mode": "final",
+  "variant": "break-sum",
+  "difficulty": "intermediate",
+  "seed": 222,
+  "answer": "7"
+ },
+ {
+  "mode": "final",
+  "variant": "break-sum",
+  "difficulty": "intermediate",
+  "seed": 3333,
+  "answer": "18"
+ },
+ {
+  "mode": "conditional",
+  "variant": "odd-count",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "3"
+ },
+ {
+  "mode": "conditional",
+  "variant": "odd-count",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "3"
+ },
+ {
+  "mode": "conditional",
+  "variant": "odd-count",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "3"
+ },
+ {
+  "mode": "conditional",
+  "variant": "greater-sum",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "20"
+ },
+ {
+  "mode": "conditional",
+  "variant": "greater-sum",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "13"
+ },
+ {
+  "mode": "conditional",
+  "variant": "greater-sum",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "25"
+ },
+ {
+  "mode": "conditional",
+  "variant": "continue-even",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "4"
+ },
+ {
+  "mode": "conditional",
+  "variant": "continue-even",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "4"
+ },
+ {
+  "mode": "conditional",
+  "variant": "continue-even",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "3"
+ },
+ {
+  "mode": "conditional",
+  "variant": "break-target",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "8"
+ },
+ {
+  "mode": "conditional",
+  "variant": "break-target",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "6"
+ },
+ {
+  "mode": "conditional",
+  "variant": "break-target",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "6"
+ },
+ {
+  "mode": "while",
+  "variant": "integer-half",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "4"
+ },
+ {
+  "mode": "while",
+  "variant": "integer-half",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "3"
+ },
+ {
+  "mode": "while",
+  "variant": "integer-half",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "9"
+ },
+ {
+  "mode": "while",
+  "variant": "increment-sentinel",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "43"
+ },
+ {
+  "mode": "while",
+  "variant": "increment-sentinel",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "22"
+ },
+ {
+  "mode": "while",
+  "variant": "increment-sentinel",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "13"
+ },
+ {
+  "mode": "while",
+  "variant": "zero-while",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "15"
+ },
+ {
+  "mode": "while",
+  "variant": "zero-while",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "2"
+ },
+ {
+  "mode": "while",
+  "variant": "zero-while",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "34"
+ },
+ {
+  "mode": "while",
+  "variant": "decrement",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "-1"
+ },
+ {
+  "mode": "while",
+  "variant": "decrement",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "6"
+ },
+ {
+  "mode": "while",
+  "variant": "decrement",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "3"
+ },
+ {
+  "mode": "nested",
+  "variant": "rectangle",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "9"
+ },
+ {
+  "mode": "nested",
+  "variant": "rectangle",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "12"
+ },
+ {
+  "mode": "nested",
+  "variant": "rectangle",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "9"
+ },
+ {
+  "mode": "nested",
+  "variant": "diagonal",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "2"
+ },
+ {
+  "mode": "nested",
+  "variant": "diagonal",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "2"
+ },
+ {
+  "mode": "nested",
+  "variant": "diagonal",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "3"
+ },
+ {
+  "mode": "nested",
+  "variant": "triangular",
+  "difficulty": "intermediate",
+  "seed": 11,
+  "answer": "6"
+ },
+ {
+  "mode": "nested",
+  "variant": "triangular",
+  "difficulty": "intermediate",
+  "seed": 222,
+  "answer": "10"
+ },
+ {
+  "mode": "nested",
+  "variant": "triangular",
+  "difficulty": "intermediate",
+  "seed": 3333,
+  "answer": "3"
+ },
+ {
+  "mode": "nested",
+  "variant": "inner-step",
+  "difficulty": "beginner",
+  "seed": 11,
+  "answer": "48"
+ },
+ {
+  "mode": "nested",
+  "variant": "inner-step",
+  "difficulty": "beginner",
+  "seed": 222,
+  "answer": "10"
+ },
+ {
+  "mode": "nested",
+  "variant": "inner-step",
+  "difficulty": "beginner",
+  "seed": 3333,
+  "answer": "66"
+ },
+ {
+  "mode": "nested",
+  "variant": "break-inner",
+  "difficulty": "intermediate",
+  "seed": 11,
+  "answer": "12"
+ },
+ {
+  "mode": "nested",
+  "variant": "break-inner",
+  "difficulty": "intermediate",
+  "seed": 222,
+  "answer": "2"
+ },
+ {
+  "mode": "nested",
+  "variant": "break-inner",
+  "difficulty": "intermediate",
+  "seed": 3333,
+  "answer": "4"
+ }
+]

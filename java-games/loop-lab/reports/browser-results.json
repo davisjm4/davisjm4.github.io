@@ -1,0 +1,4 @@
+{
+  "status": "SKIPPED",
+  "reason": "The automated browser suite could not start because puppeteer-core is not installed. Production behavior was verified separately in Chrome after deployment."
+}

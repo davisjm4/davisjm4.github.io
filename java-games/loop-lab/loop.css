@@ -1,2 +1,12 @@
 @import url("../style.css?v=java-quality-v3");
 [hidden]{display:none!important}.challenge-meta{color:var(--muted,#b7c8d4);font-weight:750;font-size:.9rem}.loop-snippet{max-width:100%;overflow-x:auto;white-space:pre;line-height:1.55}.loop-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;margin:1rem 0}.loop-choice{min-height:3.5rem;text-align:left;white-space:normal;overflow-wrap:anywhere;line-height:1.35}.choice-letter{display:inline-grid;place-items:center;width:1.7rem;height:1.7rem;margin-right:.55rem;border-radius:50%;background:rgba(255,255,255,.1);font-weight:800}.loop-choice.selected{outline:3px solid var(--accent,#79ddc6);outline-offset:-3px;background:#234a51}.correct-answer{outline:3px solid #64d89b!important;outline-offset:-3px;background:#174936!important}.incorrect-answer{outline:3px solid #ff8585!important;outline-offset:-3px;background:#552f38!important}@media(max-width:600px){.loop-choices{grid-template-columns:minmax(0,1fr)}.loop-choice{min-height:3rem}.actions{flex-wrap:wrap}}
+/* loop-expansion-v2 additions */
+.toolbar label{margin-right:.6rem}.block-choices{grid-template-columns:minmax(0,1fr)}
+.loop-choice .choice-text{white-space:pre-wrap}.code-choice .choice-text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92rem}
+.loop-choice:focus-visible{outline:3px solid var(--accent,#79ddc6);outline-offset:2px}
+.trace-scroll{max-width:100%;overflow-x:auto;margin:.6rem 0}
+.loop-trace table,.student-trace{border-collapse:collapse;font-size:.9rem;min-width:14rem}
+.loop-trace th,.loop-trace td,.student-trace th,.student-trace td{border:1px solid rgba(255,255,255,.18);padding:.25rem .55rem;text-align:left}
+.loop-trace summary{cursor:pointer;font-weight:700;margin-top:.4rem}
+.misconception{border-left:4px solid #ffb86b;padding-left:.6rem}
+.answer-text{white-space:pre-wrap}

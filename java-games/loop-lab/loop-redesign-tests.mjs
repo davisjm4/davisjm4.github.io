@@ -8,9 +8,9 @@ const seen = new Set(), variants = new Set(), concepts = new Set();
 const familyCounts = Object.fromEntries(Object.keys(familyNames).map(k => [k, 0]));
 const positions = new Set();
 
-for (let i = 0; i < 1200; i++) {
+for (let i = 0; i < 6000; i++) {
   const q = generateLoop();
-  seen.add(q.family); variants.add(q.variant); concepts.add(q.concept); familyCounts[q.family]++;
+  seen.add(q.family); variants.add(`${q.family}/${q.variant}`); concepts.add(q.concept); familyCounts[q.family]++;
   ok(q.code.length > 10 && q.prompt.length > 10 && q.explanation.length > 15);
   ok(q.choices.length === 4 && new Set(q.choices).size === 4);
   ok(q.choices.includes(q.answer) && q.correctAnswer === q.answer);
@@ -20,7 +20,7 @@ for (let i = 0; i < 1200; i++) {
 }
 eq([...seen].sort(), Object.keys(familyNames).sort());
 eq(positions.size, 4, "correct answer position should vary");
-ok(Object.values(familyCounts).every(n => n >= 90), "mixed practice should cover every family");
+ok(Object.values(familyCounts).every(n => n >= 450), "mixed practice should cover every family");
 eq(variants.size, Object.values(challengeFamilies).flat().length, "all structural variants should appear");
 ok(concepts.size >= 18, "concept labels should vary beyond iteration-count wording");
 
@@ -33,16 +33,14 @@ for (const [family, names] of Object.entries(challengeFamilies)) {
   }
 }
 
-const expected = {
-  "iterations/inc-exclusive": 4, "iterations/dec-inclusive": 4, "iterations/zero-start": 0, "iterations/while-decrement": 3, "iterations/one-step": 1, "iterations/skip-step": 4,
-  "final/sum-range": 17, "final/product": 24, "final/overwrite": 10, "final/count-even": 3, "final/continue-sum": 18, "final/break-sum": 12,
-  "conditional/odd-count": 0, "conditional/greater-sum": 15, "conditional/continue-even": 4, "conditional/break-target": 3,
-  "while/integer-half": 2, "while/increment-sentinel": 10, "while/zero-while": 4, "while/decrement": 3,
-  "nested/rectangle": 6, "nested/diagonal": 2, "nested/triangular": 10, "nested/inner-step": 18, "nested/break-inner": 6,
-};
-for (const [key, answer] of Object.entries(expected)) {
-  const [family, variant] = key.split("/");
-  eq(Number(generateLoop(family, variant).answer), answer, `independent expected result ${key}`);
+// The original pinned table (25 literal answers from the static bank) cannot apply to generated
+// questions. It is replaced by seeded regression fixtures: the legacy variants at fixed seeds must keep
+// producing these answers. Regenerate with: node tools/make-fixtures.mjs (only after an intended change).
+import fixtures from "./tests/legacy-fixtures.json" with { type: "json" };
+import { generateChallenge } from "./loop-engine.js";
+for (const f of fixtures) {
+  const q = generateChallenge({ mode: f.mode, difficulty: f.difficulty, seed: f.seed, family: f.variant });
+  eq(q.variant, f.variant, `fixture variant ${f.mode}/${f.variant}`);
+  eq(q.answer, f.answer, `fixture answer ${f.mode}/${f.variant} seed ${f.seed}`);
 }
-
-console.log(`Loop Lab redesign: ${checks} checks passed; ${variants.size} structural variants across ${seen.size} families; mixed distribution ${JSON.stringify(familyCounts)}.`);
+console.log(`Loop Lab redesign (updated for expansion): ${checks} checks passed; ${fixtures.length} seeded legacy fixtures; ${variants.size} structural variants across ${seen.size} families; mixed distribution ${JSON.stringify(familyCounts)}.`);

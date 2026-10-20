@@ -14,6 +14,7 @@
     "test:robot": "node ../tests/robot-algorithms.test.js",
     "test:robot-jvm": "node ../tests/robot-algorithms-jvm.test.js",
     "test:loop": "node loop-lab/loop-redesign-tests.mjs",
+    "test:loop-expansion": "node loop-lab/tests/run-all.mjs",
     "test:class-object": "node class-object-lab/class-object-tests.mjs",
     "test:mcl": "node ../tests/method-constructor-lab.test.js",
     "test:mcl-jvm": "node ../tests/method-constructor-lab-jvm.test.js",

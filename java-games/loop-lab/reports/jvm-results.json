@@ -1,0 +1,10 @@
+{
+ "java": "/usr/lib/jvm/java-17-openjdk-amd64/bin/java",
+ "version": "openjdk version \"17.0.20\" 2026-07-21",
+ "challenges": 1860,
+ "instrumentedRuns": 1860,
+ "plainRuns": 1860,
+ "buggyDebugRuns": 120,
+ "checks": 18942,
+ "seconds": 26.411
+}
