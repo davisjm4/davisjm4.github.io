@@ -17,6 +17,10 @@ for (const mode of all) for (const difficulty of difficulties) {
       ok(q.choices.length === 4 && new Set(q.choices).size === 4 && q.choices.filter(x => x === q.answer).length === 1, "answer choices are distinct and contain one key");
       ok(assessRecursion(q, q.answer) && !assessRecursion(q, "unlikely-invalid"), "answer validator recognizes the key");
       ok(!q.code.includes("eval(") && q.callCount > 0 && q.callDepth >= 0, "generated trace is bounded");
+      if (mode === "base" && q.prompt.startsWith("Which condition")) {
+        const actual=q.code.match(/if \(([^)]+)\)/)[1], vector=expr=>Array.from({length:16},(_,j)=>j-3).map(n=>{const [,op,num]=expr.match(/^n (<=|<|==|>=|>) (\d+)$/);return op==="<="?n<=+num:op==="<"?n<+num:op==="=="?n===+num:op===">="?n>=+num:n>+num}).join("");
+        ok(q.answer===actual && new Set(q.choices.map(vector)).size===4,"base-case answer has one semantically unique condition");
+      }
       if (mode === "arrays") {
         const a=q.data.array,t=q.data.target,i=q.data.index,k=q.data.operation;
         const expected=[a.reduce((x,y)=>x+y,0),a.filter(x=>x===t).length,a.indexOf(t),a.reduce((x,y)=>x+y,0),String(a.some(x=>x%2===0)),Math.max(...a.slice(i)),a.reduce((s,x,j)=>s+(j%2===0?x:-x),0),a.slice().reverse().join(" ")][k];
