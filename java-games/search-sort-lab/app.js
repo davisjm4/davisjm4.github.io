@@ -181,7 +181,7 @@ function init() {
   document.addEventListener("keydown", (e) => {
     if (locked || e.ctrlKey || e.metaKey || e.altKey || /^(SELECT|INPUT|TEXTAREA)$/.test(e.target?.tagName || "")) return;
     if (/^[1-4]$/.test(e.key)) choose(Number(e.key) - 1);
-    else if (e.key === "Enter" && selection !== null && e.target?.tagName !== "BUTTON") submit();
+    else if (e.key === "Enter" && selection !== null && e.target?.tagName !== "BUTTON") { e.preventDefault(); submit(); }
   });
   globalThis.addEventListener?.("pagehide", () => { if (instance && tracker.status(instance) === "active") tracker.skip(instance); });
   newChallenge();

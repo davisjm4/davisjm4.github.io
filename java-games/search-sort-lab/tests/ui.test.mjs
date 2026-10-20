@@ -24,7 +24,7 @@ const L = globalThis.SearchSortLab;
 const $ = (id) => document.getElementById(id);
 const change = (id, v) => { $(id).value = v; $(id).onchange(); };
 const click = (el) => el.onclick({ preventDefault() {} });
-const key = (k, target) => document.dispatchEvent(Object.assign(new window.Event("keydown", { bubbles: true }), { key: k, target }));
+const key = (k, target) => { const event = Object.assign(new window.Event("keydown", { bubbles: true, cancelable: true }), { key: k, target }); document.dispatchEvent(event); return event; };
 
 await section("page structure, navigation, accessibility markers", () => {
   eq($("mode").options.length, 6);
@@ -124,8 +124,10 @@ await section("keyboard: arrows and number keys choose, Enter submits", () => {
   ok(bs()[3].getAttribute("aria-checked") === "true" && bs()[0].getAttribute("aria-checked") === "false");
   ok(bs()[3].getAttribute("tabindex") === "0" && bs()[0].getAttribute("tabindex") === "-1", "roving tabindex");
   const n = L.local().length;
-  key("Enter", document.body);
+  const enter = key("Enter", document.body);
   eq(L.local().length, n + 1, "Enter submits once");
+  ok(enter.defaultPrevented, "Enter prevents native activation of the newly focused Next Challenge button");
+  ok(!$("feedback").hidden && !$("next").hidden && $("submit").hidden, "keyboard submission leaves feedback visible and the answer locked");
   key("1", document.body);
   eq(L.local().length, n + 1, "keys do nothing once locked");
 });
