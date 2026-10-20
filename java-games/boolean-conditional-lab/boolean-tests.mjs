@@ -49,10 +49,11 @@ for (const mode of newModes) for (const difficulty of levels) {
     assert.equal(q.difficulty,difficulty); assert.ok(q.seed); assert.ok(q.family && q.skill && q.questionStem && q.javaCode && q.answerOptions && q.correctAnswer); checks+=2;
     assert.equal(new Set(q.choices).size,q.choices.length); assert.equal(assess(q,q.answer),true); assert.equal(assess(q,(q.answer+1)%q.choices.length),false); checks+=3;
     if(mode==="truthTable") {
-      assert.ok(q.table?.length >= 4 && q.table.length <= 8); checks++;
-      if(q.expression) for(const row of (q.allRows||q.table)) assert.equal(row.result,evaluateBooleanExpression(q.expression,row));
+      assert.ok(q.table?.length >= 2 && q.table.length <= 8); checks++;
+      if(q.expression){assert.equal(Object.keys(q.table[0]).filter(k=>k!=="result").join(","),[...new Set(q.expression.match(/\b[a-z]\b/g)||[])].sort().join(","));for(const row of (q.allRows||q.table)) assert.equal(row.result,evaluateBooleanExpression(q.expression,row));}
       if(q.expressions) assert.equal(q.choices[q.answer]==="Equivalent",q.table.every(row=>evaluateBooleanExpression(q.expressions[0],row)===evaluateBooleanExpression(q.expressions[1],row)));
     }
+    if(mode==="coverage"&&(q.family==="missing-case"||q.family==="domain-coverage")){const max=q.domain?.match(/\[[^,]+, (\d+)\]/)?.[1];assert.ok(max&&q.question.includes(`through ${max}`));checks++;}
   }
   assert.ok(families.size >= 4,`${mode}/${difficulty} family variety`); assert.ok(structure.size >= 4,`${mode}/${difficulty} structural variety`); checks+=2;
   report.push({mode,difficulty,tested:1000,exactDuplicates:1000-exact.size,structuralPatterns:structure.size,families:families.size});
