@@ -128,7 +128,8 @@ function finish(correct) {
   if (ch.trace?.length) parts.push(`<details><summary>Full trace (review only, not scored)</summary><ol>${ch.trace.map((t) => `<li>${esc(t)}</li>`).join("")}</ol></details>`);
   $("reveal").innerHTML = parts.join(""); $("reveal").hidden = !parts.length;
   $("submit").hidden = true; $("skip").hidden = true; $("next").hidden = false;
-  $("next").focus({ preventScroll: true });
+  // Focus the feedback region, not Next: Enter must not activate the newly shown button.
+  fb.focus({ preventScroll: true });
   stats(); if (!$("summary").hidden) renderSummary();
 }
 const pct = (a, b) => (b ? Math.round((100 * a) / b) + "%" : "—");
