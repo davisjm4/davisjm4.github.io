@@ -1,4 +1,5 @@
 import { int, pick, shuffle } from "../../csp-games/engine.js?v=platform-expansion-v2";
+import { advancedFormatFamilies, generateAdvancedArray } from "./advanced-families.js?v=array-modes-v1";
 
 export const formatNames = {
   element: "Select an Array Element",
@@ -10,6 +11,9 @@ export const formatNames = {
   "update-2d": "Update a 2D Array",
   nested: "Nested Loops and 2D Traversal",
   reverse: "Choose the Java Statement",
+  "create-references": "Create Arrays & Trace References",
+  "in-place": "In-Place Array Algorithms",
+  "trace-2d": "Trace 2D Array Algorithms",
 };
 
 const names = ["values", "scores", "numbers", "readings", "data"];
@@ -412,6 +416,7 @@ export const formatFamilies = {
   "update-2d": ["assign", "copy", "compound", "row-sum", "column-sum", "swap"],
   nested: ["count", "sum-all", "row-sum", "column-sum", "execution-count", "conditional-update"],
   reverse: ["last-zero", "first-copy", "increment-last", "valid-last", "grid-cell", "swap"],
+  ...advancedFormatFamilies,
 };
 const generators = {
   element: elementChallenge,
@@ -425,9 +430,23 @@ const generators = {
   reverse: reverseChallenge,
 };
 
-export function generateArray(format = "mixed", forcedVariant) {
+export function generateArray(format = "mixed", forcedVariant, options = {}) {
   const selected = format === "mixed" ? pick(Object.keys(formatNames)) : format;
-  if (!generators[selected]) throw Error("Unknown Array Lab format");
+  if (!generators[selected] && !advancedFormatFamilies[selected]) throw Error("Unknown Array Lab format");
+  if (advancedFormatFamilies[selected]) {
+    const difficulty = options.difficulty || "Beginner";
+    let question;
+    for (let attempt = 0; attempt < 24; attempt++) {
+      const seed = options.seed == null ? undefined : (Number(options.seed) + attempt) >>> 0;
+      question = generateAdvancedArray(selected, difficulty, seed, forcedVariant);
+      const signature = `${question.prompt}\n${question.code}`;
+      if (!options.history || !options.history.has(signature)) {
+        if (options.history) options.history.add(signature);
+        return question;
+      }
+    }
+    return question;
+  }
   const question = generators[selected](forcedVariant);
   if (!formatFamilies[selected].includes(question.variant)) throw Error("Unknown Array Lab variant");
   return question;
@@ -445,4 +464,23 @@ export function solutionArray(question) {
   if (question.kind === "choice") return {answer: question.answer};
   if (question.kind === "cell" || question.kind === "cell-2d") return {cell: question.correctCell};
   return {state: question.answerState};
+}
+
+export function exportArrayQuestion(question) {
+  return {
+    game: question.game,
+    mode: question.format,
+    difficulty: question.difficulty || null,
+    skill: question.skill || question.topic,
+    family: question.family || question.variant,
+    seed: question.seed ?? null,
+    question: question.prompt,
+    code: question.code,
+    arrayData: question.arrayData ?? question.values ?? question.grid ?? null,
+    answerChoices: [...(question.choices || [])],
+    correctAnswer: question.answer ?? question.correctAnswer,
+    correctIndex: question.choices?.indexOf(question.answer) ?? null,
+    explanation: question.explanation,
+    trace: question.trace || [],
+  };
 }

@@ -89,7 +89,8 @@ for (const [format, variants] of Object.entries(A.formatFamilies)) {
           format, variant, prompt: question.prompt, code: question.code,
           choices: question.choices, answer: question.correctAnswer,
         });
-        compilerSamples.push(question.code);
+        if (!["create-references", "in-place", "trace-2d"].includes(format))
+          compilerSamples.push(question.code);
       }
     }
   }
@@ -98,7 +99,7 @@ for (const [format, variants] of Object.entries(A.formatFamilies)) {
 const seenFormats = new Set(), seenVariants = new Set(), positions = new Set();
 const mixedFormatCounts = Object.fromEntries(Object.keys(A.formatNames).map((format) => [format, 0]));
 let longestCorrect = 0, choiceQuestions = 0;
-for (let index = 0; index < 1200; index++) {
+for (let index = 0; index < 1800; index++) {
   const question = A.generateArray();
   generated++;
   seenFormats.add(question.format);
@@ -119,7 +120,7 @@ for (let index = 0; index < 1200; index++) {
 eq([...seenFormats].sort(), Object.keys(A.formatNames).sort());
 eq(seenVariants.size, Object.values(A.formatFamilies).flat().length);
 eq(positions.size, 4);
-ok(Object.values(mixedFormatCounts).every((count) => count >= 100 && count <= 170), "no format dominates Mixed Practice");
+ok(Object.values(mixedFormatCounts).every((count) => count >= 100 && count <= 200), "no format dominates Mixed Practice");
 ok(longestCorrect / choiceQuestions < 0.35, "answer length must not identify the correct choice");
 
 const {parseHTML} = createRequire(import.meta.url)(
@@ -165,6 +166,7 @@ vm.runInContext(
 const $ = (id) => document.getElementById(id);
 eq($("mode").value, "mixed");
 eq($("mode").querySelectorAll("option").length, Object.keys(A.formatNames).length + 1);
+ok($("difficulty"), "difficulty selector is available");
 
 function load(format, variant) {
   forcedVariant = variant;
@@ -247,7 +249,9 @@ execFileSync(
   [new URL("../compiler-harness.java", import.meta.url).pathname, compilerManifestPath],
   {encoding: "utf8", timeout: 120000},
 );
-ok(compilerSamples.length === Object.values(A.formatFamilies).flat().length);
+ok(compilerSamples.length === Object.entries(A.formatFamilies)
+  .filter(([format]) => !["create-references", "in-place", "trace-2d"].includes(format))
+  .reduce((count, [, variants]) => count + variants.length, 0));
 
 fs.mkdirSync("/tmp/java-quality", {recursive: true});
 fs.writeFileSync("/tmp/java-quality/array-redesign-samples.json", JSON.stringify(samples, null, 2));

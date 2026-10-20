@@ -3,7 +3,7 @@ import {
   generateArray,
   assessArray,
   solutionArray,
-} from "./array-engine.js?v=array-redesign-v2";
+} from "./array-engine.js?v=array-modes-v1";
 import {
   sessionTracker,
   addSessionNavigation,
@@ -19,6 +19,7 @@ export function startArrayLab() {
   const tracker = sessionTracker();
   let question, instanceId, selectedAnswer = null, selectedCell = null;
   let selectedCells = [], workingState = [], closed = false;
+  const recent = new Set();
 
   $("main").innerHTML = `
     <div class="eyebrow">Java · Arrays · Traversal · 2D Arrays</div>
@@ -29,6 +30,11 @@ export function startArrayLab() {
         <select id="mode">
           <option value="mixed" selected>Mixed Practice</option>
           ${Object.entries(formatNames).map(([value, label]) => `<option value="${value}">${label}</option>`).join("")}
+        </select>
+      </label>
+      <label>Difficulty for new modes
+        <select id="difficulty" aria-label="Challenge difficulty">
+          <option>Beginner</option><option selected>Intermediate</option><option>Advanced</option>
         </select>
       </label>
       <button id="new" class="secondary">New Challenge</button>
@@ -162,16 +168,33 @@ export function startArrayLab() {
     $("next").disabled = false;
     $("feedback").hidden = false;
     $("feedback").className = `feedback ${correct ? "good" : "bad"}`;
+    const trace = Array.isArray(question.trace) && question.trace.length
+      ? `\nState trace:\n${question.trace.map((step, index) => {
+        const state = step.state ? `{${step.state.join(", ")}}` : step.grid ? step.grid.map((row) => `[${row.join(", ")}]`).join("  ") : "";
+        return state ? `${index + 1}. ${state}` : "";
+      }).filter(Boolean).join("\n")}`
+      : "";
     $("feedback").textContent =
-      `${correct ? "Correct." : "Not quite."}\nCorrect answer: ${question.correctAnswer}\n${question.explanation}`;
+      `${correct ? "Correct." : "Not quite."}\nCorrect answer: ${question.correctAnswer}\n${question.explanation}${trace}`;
     $("feedback").focus();
     stats();
   }
 
   function next() {
     if (instanceId) tracker.skip(instanceId);
-    question = generateArray($("mode").value);
+    question = generateArray($("mode").value, undefined, {
+      difficulty: $("difficulty").value,
+      history: recent,
+    });
+    while (recent.size > 240) recent.delete(recent.values().next().value);
     instanceId = tracker.begin(question.game, question.title, question.topic, question.topicTitle);
+    tracker.annotate(instanceId, {
+      mode: question.formatName,
+      difficulty: question.difficulty || null,
+      skill: question.skill || question.topic,
+      family: question.family || question.variant,
+      seed: question.seed ?? null,
+    });
     selectedAnswer = null;
     selectedCell = null;
     selectedCells = [];
@@ -179,7 +202,7 @@ export function startArrayLab() {
     closed = false;
     $("feedback").hidden = true;
     $("stage").innerHTML = `
-      <div class="challenge-meta">${esc(question.formatName)}</div>
+      <div class="challenge-meta">${esc(question.formatName)} · ${esc(question.difficulty || "All levels")}${question.family ? ` · ${esc(question.family)}` : ""}</div>
       <h2>${esc(question.prompt)}</h2>
       <pre class="snippet array-code"><code>${esc(question.code)}</code></pre>
       ${renderInteraction()}
@@ -221,6 +244,7 @@ export function startArrayLab() {
   }
 
   $("mode").onchange = next;
+  $("difficulty").onchange = next;
   $("new").onclick = next;
   window.addEventListener("pagehide", () => { if (instanceId) tracker.skip(instanceId); });
   next();
