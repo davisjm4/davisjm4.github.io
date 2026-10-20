@@ -7,6 +7,7 @@ import { execFileSync } from "node:child_process";
 import { createRequire } from "node:module";
 import * as M from "./engine.js";
 import * as S from "../session.js";
+import * as X from "./expansion/generator.js";
 
 let seed = 761234;
 const rng = () => (seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 2 ** 32;
@@ -126,6 +127,9 @@ const listeners = {}, context = {
   mathGame: M.mathGame, createDeck: () => {
     const d = M.createDeck(rng); return { next: mode => (q = d.next(mode)) };
   }, assess: M.assess, sessionTracker: () => tracker, addSessionNavigation: () => {},
+  // Expansion bindings (app.js imports these); legacy assertions below are unchanged.
+  EXPANSION_MODES: X.EXPANSION_MODES, DIFFICULTIES: X.DIFFICULTIES, DIFFICULTY_TITLES: X.DIFFICULTY_TITLES,
+  createExpansionDeck: () => X.createExpansionDeck({ seed: 7 }), assessExpansion: X.assessExpansion,
   roundSummary: () => JSON.stringify(tracker.snapshot().games["math-lab"]),
 };
 vm.createContext(context);

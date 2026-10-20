@@ -1,0 +1,764 @@
+{
+  "generatedAt": "2026-10-20T11:49:31.639Z",
+  "node": "v24.19.0",
+  "perCell": 1000,
+  "cells": {
+    "math-methods/beginner": {
+      "generated": 1000,
+      "exactUnique": 935,
+      "exactDuplicates": 65,
+      "structuralUnique": 42,
+      "families": 11,
+      "familyCounts": {
+        "mm.pow": 131,
+        "mm.abs": 117,
+        "mm.sqrt": 108,
+        "mm.random-values": 91,
+        "mm.random-count": 62,
+        "mm.random-basics": 103,
+        "mm.supplied-random": 72,
+        "mm.return-type": 85,
+        "mm.random-choose": 86,
+        "mm.random-bounds": 111,
+        "mm.combined": 34
+      },
+      "shapes": 39,
+      "questionTypes": {
+        "output": 525,
+        "membership": 170,
+        "count": 62,
+        "set-description": 24,
+        "code-choice": 108,
+        "range": 111
+      },
+      "distinctMisconceptions": 35,
+      "topMisconceptions": [
+        [
+          "randomInclusive",
+          216
+        ],
+        [
+          "randomNoZero",
+          208
+        ],
+        [
+          "missingOffset",
+          206
+        ],
+        [
+          "powMultiply",
+          202
+        ],
+        [
+          "oneTooFew",
+          188
+        ],
+        [
+          "powInt",
+          161
+        ],
+        [
+          "absDouble",
+          138
+        ],
+        [
+          "sqrtInt",
+          133
+        ]
+      ],
+      "answerPositions": [
+        219,
+        241,
+        258,
+        282
+      ],
+      "meanComplexity": 3.43,
+      "meanCodeLines": 1.29
+    },
+    "math-methods/intermediate": {
+      "generated": 1000,
+      "exactUnique": 991,
+      "exactDuplicates": 9,
+      "structuralUnique": 62,
+      "families": 12,
+      "familyCounts": {
+        "mm.combined": 107,
+        "mm.abs": 66,
+        "mm.pow": 69,
+        "mm.random-debug": 66,
+        "mm.return-type": 81,
+        "mm.random-basics": 82,
+        "mm.random-bounds": 111,
+        "mm.random-count": 66,
+        "mm.random-values": 108,
+        "mm.random-choose": 103,
+        "mm.sqrt": 80,
+        "mm.supplied-random": 61
+      },
+      "shapes": 61,
+      "questionTypes": {
+        "output": 406,
+        "set-description": 54,
+        "code-choice": 190,
+        "membership": 173,
+        "range": 111,
+        "count": 66
+      },
+      "distinctMisconceptions": 45,
+      "topMisconceptions": [
+        [
+          "missingOffset",
+          268
+        ],
+        [
+          "randomInclusive",
+          241
+        ],
+        [
+          "oneTooFew",
+          226
+        ],
+        [
+          "randomNoZero",
+          207
+        ],
+        [
+          "offsetInsideOnly",
+          177
+        ],
+        [
+          "castPlacement",
+          130
+        ],
+        [
+          "compileStrict",
+          130
+        ],
+        [
+          "oneTooMany",
+          116
+        ]
+      ],
+      "answerPositions": [
+        268,
+        231,
+        251,
+        250
+      ],
+      "meanComplexity": 4.3,
+      "meanCodeLines": 1.38
+    },
+    "math-methods/advanced": {
+      "generated": 1000,
+      "exactUnique": 989,
+      "exactDuplicates": 11,
+      "structuralUnique": 96,
+      "families": 12,
+      "familyCounts": {
+        "mm.return-type": 43,
+        "mm.random-choose": 119,
+        "mm.sqrt": 96,
+        "mm.abs": 77,
+        "mm.supplied-random": 73,
+        "mm.random-values": 112,
+        "mm.random-debug": 119,
+        "mm.random-bounds": 75,
+        "mm.combined": 112,
+        "mm.random-count": 71,
+        "mm.pow": 64,
+        "mm.random-basics": 39
+      },
+      "shapes": 73,
+      "questionTypes": {
+        "code-choice": 217,
+        "output": 431,
+        "membership": 137,
+        "set-description": 69,
+        "range": 75,
+        "count": 71
+      },
+      "distinctMisconceptions": 48,
+      "topMisconceptions": [
+        [
+          "missingOffset",
+          273
+        ],
+        [
+          "oneTooFew",
+          237
+        ],
+        [
+          "offsetInsideOnly",
+          219
+        ],
+        [
+          "randomInclusive",
+          208
+        ],
+        [
+          "randomNoZero",
+          183
+        ],
+        [
+          "castPlacement",
+          161
+        ],
+        [
+          "oneTooMany",
+          131
+        ],
+        [
+          "compileStrict",
+          121
+        ]
+      ],
+      "answerPositions": [
+        248,
+        245,
+        257,
+        250
+      ],
+      "meanComplexity": 5.93,
+      "meanCodeLines": 2.08
+    },
+    "numeric-limits/beginner": {
+      "generated": 1000,
+      "exactUnique": 980,
+      "exactDuplicates": 20,
+      "structuralUnique": 27,
+      "families": 11,
+      "familyCounts": {
+        "nl.float-print": 92,
+        "nl.midpoint": 42,
+        "nl.float-equality": 79,
+        "nl.div-zero": 117,
+        "nl.literal-cast": 80,
+        "nl.trace": 48,
+        "nl.average": 81,
+        "nl.int-division": 121,
+        "nl.int-limits": 160,
+        "nl.rounding": 103,
+        "nl.overflow-multiply": 77
+      },
+      "shapes": 20,
+      "questionTypes": {
+        "output": 1000
+      },
+      "distinctMisconceptions": 26,
+      "topMisconceptions": [
+        [
+          "overflowClamps",
+          317
+        ],
+        [
+          "intDivRound",
+          292
+        ],
+        [
+          "doubleShowsInt",
+          250
+        ],
+        [
+          "intDivReal",
+          237
+        ],
+        [
+          "noOverflow",
+          237
+        ],
+        [
+          "overflowThrows",
+          237
+        ],
+        [
+          "overcautiousDouble",
+          230
+        ],
+        [
+          "roundOffDirection",
+          170
+        ]
+      ],
+      "answerPositions": [
+        243,
+        247,
+        244,
+        266
+      ],
+      "meanComplexity": 4.47,
+      "meanCodeLines": 2.95
+    },
+    "numeric-limits/intermediate": {
+      "generated": 1000,
+      "exactUnique": 948,
+      "exactDuplicates": 52,
+      "structuralUnique": 52,
+      "families": 14,
+      "familyCounts": {
+        "nl.int-division": 97,
+        "nl.average": 59,
+        "nl.midpoint": 55,
+        "nl.div-zero": 78,
+        "nl.trace": 79,
+        "nl.overflow-detect": 64,
+        "nl.overflow-multiply": 77,
+        "nl.int-limits": 67,
+        "nl.literal-cast": 62,
+        "nl.float-equality": 81,
+        "nl.float-print": 54,
+        "nl.first-problem": 65,
+        "nl.rounding": 79,
+        "nl.compound-narrowing": 83
+      },
+      "shapes": 39,
+      "questionTypes": {
+        "output": 871,
+        "code-choice": 64,
+        "statement-choice": 65
+      },
+      "distinctMisconceptions": 41,
+      "topMisconceptions": [
+        [
+          "overflowThrows",
+          229
+        ],
+        [
+          "overflowClamps",
+          226
+        ],
+        [
+          "noOverflow",
+          224
+        ],
+        [
+          "doubleShowsInt",
+          170
+        ],
+        [
+          "castRounds",
+          170
+        ],
+        [
+          "intDivRound",
+          160
+        ],
+        [
+          "overcautiousDouble",
+          159
+        ],
+        [
+          "roundOffDirection",
+          128
+        ]
+      ],
+      "answerPositions": [
+        251,
+        253,
+        250,
+        246
+      ],
+      "meanComplexity": 5.35,
+      "meanCodeLines": 3.14
+    },
+    "numeric-limits/advanced": {
+      "generated": 1000,
+      "exactUnique": 953,
+      "exactDuplicates": 47,
+      "structuralUnique": 53,
+      "families": 14,
+      "familyCounts": {
+        "nl.int-division": 59,
+        "nl.literal-cast": 67,
+        "nl.trace": 112,
+        "nl.compound-narrowing": 80,
+        "nl.first-problem": 84,
+        "nl.rounding": 54,
+        "nl.float-print": 85,
+        "nl.div-zero": 82,
+        "nl.overflow-detect": 49,
+        "nl.midpoint": 71,
+        "nl.int-limits": 68,
+        "nl.overflow-multiply": 73,
+        "nl.float-equality": 68,
+        "nl.average": 48
+      },
+      "shapes": 41,
+      "questionTypes": {
+        "output": 867,
+        "statement-choice": 84,
+        "code-choice": 49
+      },
+      "distinctMisconceptions": 44,
+      "topMisconceptions": [
+        [
+          "noOverflow",
+          247
+        ],
+        [
+          "overflowThrows",
+          246
+        ],
+        [
+          "intDivReal",
+          217
+        ],
+        [
+          "doubleShowsInt",
+          164
+        ],
+        [
+          "overflowClamps",
+          136
+        ],
+        [
+          "intDivRound",
+          115
+        ],
+        [
+          "castRounds",
+          91
+        ],
+        [
+          "equalityTolerant",
+          88
+        ]
+      ],
+      "answerPositions": [
+        254,
+        258,
+        251,
+        237
+      ],
+      "meanComplexity": 8.09,
+      "meanCodeLines": 3.95
+    }
+  },
+  "sessions": {
+    "math-methods/beginner/100": [
+      {
+        "seed": 1,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 36,
+        "structuralRepeatsWithin12": 9,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 11,
+        "maxFamilyShare": 0.12
+      },
+      {
+        "seed": 2,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 34,
+        "structuralRepeatsWithin12": 10,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 11,
+        "maxFamilyShare": 0.12
+      },
+      {
+        "seed": 3,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 34,
+        "structuralRepeatsWithin12": 11,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 11,
+        "maxFamilyShare": 0.12
+      }
+    ],
+    "math-methods/beginner/300": [
+      {
+        "seed": 4,
+        "length": 300,
+        "exactRepeats": 0,
+        "structuralUnique": 39,
+        "structuralRepeatsWithin12": 32,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 11,
+        "maxFamilyShare": 0.12
+      }
+    ],
+    "math-methods/intermediate/100": [
+      {
+        "seed": 1,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 43,
+        "structuralRepeatsWithin12": 14,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 12,
+        "maxFamilyShare": 0.11
+      },
+      {
+        "seed": 2,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 44,
+        "structuralRepeatsWithin12": 11,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 12,
+        "maxFamilyShare": 0.11
+      },
+      {
+        "seed": 3,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 46,
+        "structuralRepeatsWithin12": 13,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 12,
+        "maxFamilyShare": 0.11
+      }
+    ],
+    "math-methods/intermediate/300": [
+      {
+        "seed": 4,
+        "length": 300,
+        "exactRepeats": 0,
+        "structuralUnique": 59,
+        "structuralRepeatsWithin12": 38,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 12,
+        "maxFamilyShare": 0.11
+      }
+    ],
+    "math-methods/advanced/100": [
+      {
+        "seed": 1,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 48,
+        "structuralRepeatsWithin12": 7,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 12,
+        "maxFamilyShare": 0.12
+      },
+      {
+        "seed": 2,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 50,
+        "structuralRepeatsWithin12": 6,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 12,
+        "maxFamilyShare": 0.12
+      },
+      {
+        "seed": 3,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 52,
+        "structuralRepeatsWithin12": 7,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 12,
+        "maxFamilyShare": 0.12
+      }
+    ],
+    "math-methods/advanced/300": [
+      {
+        "seed": 4,
+        "length": 300,
+        "exactRepeats": 0,
+        "structuralUnique": 79,
+        "structuralRepeatsWithin12": 22,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 12,
+        "maxFamilyShare": 0.12
+      }
+    ],
+    "numeric-limits/beginner/100": [
+      {
+        "seed": 1,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 25,
+        "structuralRepeatsWithin12": 18,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 11,
+        "maxFamilyShare": 0.16
+      },
+      {
+        "seed": 2,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 25,
+        "structuralRepeatsWithin12": 13,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 11,
+        "maxFamilyShare": 0.16
+      },
+      {
+        "seed": 3,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 24,
+        "structuralRepeatsWithin12": 15,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 11,
+        "maxFamilyShare": 0.16
+      }
+    ],
+    "numeric-limits/beginner/300": [
+      {
+        "seed": 4,
+        "length": 300,
+        "exactRepeats": 0,
+        "structuralUnique": 26,
+        "structuralRepeatsWithin12": 58,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 11,
+        "maxFamilyShare": 0.16
+      }
+    ],
+    "numeric-limits/intermediate/100": [
+      {
+        "seed": 1,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 41,
+        "structuralRepeatsWithin12": 0,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 14,
+        "maxFamilyShare": 0.09
+      },
+      {
+        "seed": 2,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 42,
+        "structuralRepeatsWithin12": 3,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 14,
+        "maxFamilyShare": 0.09
+      },
+      {
+        "seed": 3,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 43,
+        "structuralRepeatsWithin12": 3,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 14,
+        "maxFamilyShare": 0.09
+      }
+    ],
+    "numeric-limits/intermediate/300": [
+      {
+        "seed": 4,
+        "length": 300,
+        "exactRepeats": 0,
+        "structuralUnique": 47,
+        "structuralRepeatsWithin12": 3,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 14,
+        "maxFamilyShare": 0.09
+      }
+    ],
+    "numeric-limits/advanced/100": [
+      {
+        "seed": 1,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 41,
+        "structuralRepeatsWithin12": 5,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 14,
+        "maxFamilyShare": 0.09
+      },
+      {
+        "seed": 2,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 38,
+        "structuralRepeatsWithin12": 3,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 14,
+        "maxFamilyShare": 0.12
+      },
+      {
+        "seed": 3,
+        "length": 100,
+        "exactRepeats": 0,
+        "structuralUnique": 40,
+        "structuralRepeatsWithin12": 4,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 14,
+        "maxFamilyShare": 0.12
+      }
+    ],
+    "numeric-limits/advanced/300": [
+      {
+        "seed": 4,
+        "length": 300,
+        "exactRepeats": 0,
+        "structuralUnique": 50,
+        "structuralRepeatsWithin12": 16,
+        "sameFamilyBackToBack": 0,
+        "familiesSeen": 14,
+        "maxFamilyShare": 0.11666666666666667
+      }
+    ]
+  },
+  "java": {
+    "programs": 9955,
+    "byType": {
+      "output": {
+        "checked": 4243,
+        "families": 18
+      },
+      "randomInts": {
+        "checked": 4102,
+        "families": 6
+      },
+      "randomDouble": {
+        "checked": 128,
+        "families": 1
+      },
+      "compile-error": {
+        "checked": 539,
+        "families": 4
+      },
+      "exception": {
+        "checked": 116,
+        "families": 1
+      },
+      "overflow-detect": {
+        "checked": 678,
+        "families": 1
+      },
+      "first-problem": {
+        "checked": 149,
+        "families": 1
+      }
+    },
+    "failures": [],
+    "failureCount": 0,
+    "perCell": {
+      "math-methods/beginner": {
+        "checks": 1601,
+        "challengesCovered": 1000
+      },
+      "math-methods/intermediate": {
+        "checks": 2312,
+        "challengesCovered": 1000
+      },
+      "math-methods/advanced": {
+        "checks": 2477,
+        "challengesCovered": 1000
+      },
+      "numeric-limits/beginner": {
+        "checks": 1000,
+        "challengesCovered": 1000
+      },
+      "numeric-limits/intermediate": {
+        "checks": 1320,
+        "challengesCovered": 1000
+      },
+      "numeric-limits/advanced": {
+        "checks": 1245,
+        "challengesCovered": 1000
+      }
+    }
+  },
+  "anchors": 46
+}

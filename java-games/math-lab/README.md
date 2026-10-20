@@ -70,6 +70,23 @@ incorrect choices in every mode, lockout, duplicate clicks, skips, mode
 changes, back/forward restoration, persistence, and preserved legacy results.
 Mixed Practice and cast spacing are checked over 150-round sequences.
 
+## Java numeric reasoning expansion
+
+The game also offers **Math Methods & Random Ranges** and **Numeric Limits,
+Overflow & Round-off**, each at Beginner, Intermediate, and Advanced levels.
+These modes use the DOM-free modules in `expansion/`: a seeded generator,
+Java numeric interpreter, Math.random range analyzer, 26 weighted reasoning
+families, misconception-tagged choices, and a bounded recent-question deck.
+`generateChallenge({ mode, difficulty, seed })` is the reusable Teacher Tools
+entry point; `createExpansionDeck()` supplies continuous play without a
+question-bank limit. The original expression engine and five modes remain
+unchanged, and Mixed Practice continues to use only the original modes.
+
+Run the expansion checks with `npm run test:math-expansion`. They sample 1,000
+seeds per mode and difficulty, validate deterministic keys and distractors,
+and independently compile/run generated examples against the installed Java
+runtime. The UI test uses the shared session tracker in a simulated DOM.
+
 The shared engine, existing games, session tracker, summary, and styles are
 unchanged. Registration adds Math Lab metadata to the home-page catalog only.
 The home-page script version and its card-count assertion are updated.
