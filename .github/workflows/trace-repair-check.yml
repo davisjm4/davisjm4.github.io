@@ -28,10 +28,39 @@ jobs:
         working-directory: java-games
         run: |
           node --input-type=module - <<'NODE'
-          import {generateTrace} from "./variable-lab/trace-engine.js";
-          for (const [family, seed] of [["advancedCopyModify",9101],["advancedDivRem",9102],["advancedPrecedence",9103]]) {
-            const q=generateTrace({difficulty:"advanced",family,seed,format:"print"});
-            console.log(JSON.stringify({family,seed,code:q.rawCode,answer:q.answer,distractors:q.distractors,complexity:q.complexity}));
+          import assert from "node:assert/strict";
+          import { generateTraceChallenge, verifyChallengeModel, validateDifficulty } from "./variable-lab/trace-generator/src/index.js";
+
+          for (const seed of [9101, 9102, 9103]) {
+            const q = generateTraceChallenge({ difficulty: "advanced", seed });
+            const verification = verifyChallengeModel(q);
+            const difficulty = validateDifficulty(q.difficultyMetrics, "advanced", { format: q.format, type: q.type });
+            const choiceTexts = q.choices.map(choice => choice.text);
+
+            assert.equal(q.difficulty, "advanced", "sample must retain Advanced metadata");
+            assert.equal(q.difficultyMetrics.validated, true, "sample must pass generator difficulty validation");
+            assert.equal(difficulty.ok, true, `difficulty metrics must validate: ${difficulty.failures.join(", ")}`);
+            assert.equal(verification.ok, true, `generated answer must match Java model execution: ${verification.error || verification.text}`);
+            assert.equal(new Set(choiceTexts).size, choiceTexts.length, "answer choices must be distinct");
+            assert.equal(q.distractors.length, q.choices.length - 1, "every incorrect choice must be explained as a distractor");
+            assert.ok(q.distractors.every(d => d.misconceptionId && d.explanation && d.text !== q.correct.text), "distractors must be distinct and misconception-based");
+
+            console.log(JSON.stringify({
+              seed,
+              difficulty: q.difficulty,
+              format: q.format,
+              reasoningFamilies: q.reasoningFamilies,
+              code: q.code,
+              answer: q.correct.text,
+              distractors: q.distractors.map(({ text, misconceptionId }) => ({ text, misconceptionId })),
+              metrics: {
+                relevantChanges: q.difficultyMetrics.relevantChanges,
+                dependencyDepth: q.difficultyMetrics.dependencyDepth,
+                variablesInSlice: q.difficultyMetrics.variablesInSlice,
+                statements: q.difficultyMetrics.statements,
+              },
+              modelVerified: verification.ok,
+            }));
           }
           NODE
       - name: Shared engine regression
