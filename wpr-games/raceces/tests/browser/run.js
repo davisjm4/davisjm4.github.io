@@ -81,6 +81,46 @@ async function run() {
   await check('Mixed Practice is current on load', async () => (await page.getAttribute('#nav a[data-route=mixed]', 'aria-current')) === 'page');
   await check('source excerpt and writing question displayed', async () => (await page.textContent('.passage')).length > 300 && (await page.textContent('.question')).endsWith('?'));
   await check('difficulty filter has four options', async () => (await page.$$('input[name=level]')).length === 4);
+  await check('subject and topic controls are available', async () => (await page.$$('#subject-select option')).length === 16 && (await page.$$('#topic-options input[type=checkbox]')).length === 15);
+  await check('topic selection limits generated content and can be reset', async () => {
+    await page.selectOption('#subject-select', 'Earth science');
+    await page.waitForFunction(() => window.RACECES.app.current().topicId === 'water-cycle');
+    const visible = await page.$$eval('#topic-options input[type=checkbox]', xs => xs.map(x => x.value));
+    const challenge = await cur(page);
+    const good = visible.length === 1 && visible[0] === 'water-cycle' && challenge.topicId === 'water-cycle' && (await page.textContent('.chips')).includes('Earth science');
+    await page.click('#all-topics');
+    return good && (await page.$$('#topic-options input[type=checkbox]')).length === 15;
+  });
+  await check('shareable link applies subject, topics, and difficulty settings', async () => {
+    const fp = await dctx.newPage();
+    await fp.goto(url + '?subject=all&topics=water-cycle,lightning&level=intermediate&seed=shared#\/mixed');
+    await fp.waitForSelector('.task');
+    const settings = await fp.evaluate(() => ({ subject: document.querySelector('#subject-select').value, topics: Array.from(document.querySelectorAll('#topic-options input:checked')).map(x => x.value).sort(), level: document.querySelector('input[name=level]:checked').value, topic: window.RACECES.app.current().topicId }));
+    await fp.close();
+    return settings.subject === 'all' && settings.topics.join(',') === 'lightning,water-cycle' && settings.level === 'intermediate' && ['lightning', 'water-cycle'].includes(settings.topic);
+  });
+  await check('topic, subject, and difficulty preferences restore after refresh', async () => {
+    await page.selectOption('#subject-select', 'Physics');
+    await page.check('#topic-options input[value=levers]');
+    await page.check('input[name=level][value=advanced]');
+    await page.reload(); await page.waitForSelector('.task');
+    const saved = await page.evaluate(() => ({ subject: document.querySelector('#subject-select').value, topics: Array.from(document.querySelectorAll('#topic-options input:checked')).map(x => x.value), level: document.querySelector('input[name=level]:checked').value, challengeTopic: window.RACECES.app.current().topicId }));
+    await page.click('#all-topics'); await page.check('input[name=level][value=all]');
+    return saved.subject === 'Physics' && saved.topics.join(',') === 'levers' && saved.level === 'advanced' && saved.challengeTopic === 'levers';
+  });
+  await check('copy activity link contains only selected practice settings', async () => {
+    const origin = new URL(url).origin;
+    await dctx.grantPermissions(['clipboard-read', 'clipboard-write'], { origin });
+    await page.selectOption('#subject-select', 'Chemistry');
+    await page.check('#topic-options input[value=rust]');
+    await page.check('input[name=level][value=beginner]');
+    await page.click('#share-focus');
+    const copied = await page.evaluate(() => navigator.clipboard.readText());
+    const parsed = new URL(copied);
+    const ok = parsed.searchParams.get('subject') === 'Chemistry' && parsed.searchParams.get('topics') === 'rust' && parsed.searchParams.get('level') === 'beginner' && !/student|teacher|email|name/i.test(copied);
+    await page.click('#all-topics'); await page.check('input[name=level][value=all]');
+    return ok;
+  });
   for (const r of ['identify', 'rearrange', 'missing', 'mixed']) {
     await check('navigate to ' + r, async () => { await go(page, r); return (await page.getAttribute('#nav a[data-route=' + r + ']', 'aria-current')) === 'page'; });
   }

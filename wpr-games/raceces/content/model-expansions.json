@@ -1,0 +1,1217 @@
+[
+  {
+    "topicId": "honeybees",
+    "models": [
+      {
+        "id": "honeybees-x1",
+        "level": "beginner",
+        "family": "cause-effect",
+        "q": "How can the movement of pollen help fruit and vegetable crops grow?",
+        "restate": "The response explains how moving pollen helps some crops grow.",
+        "answer": "When bees move pollen between flowers, plants can form fruits and vegetables such as apples and squash.",
+        "ev": [
+          "f1",
+          "f3"
+        ],
+        "exp": [
+          "Pollen clings to a bee while it travels among flowers, so the bee can carry it away from the first flower.",
+          "The source says apples and squash form only when pollen reaches their flowers, connecting pollen delivery to crop growth."
+        ],
+        "sum": "Bee visits can connect pollen from one flower with the seed-making process that allows some crops to form.",
+        "bad": "Bees help crops grow by carrying finished apples and squash back to their hives.",
+        "off": "f7"
+      },
+      {
+        "id": "honeybees-x2",
+        "level": "intermediate",
+        "family": "process",
+        "q": "How does a honeybee's dance help the colony use food sources?",
+        "restate": "The response describes how a honeybee's dance can help its colony use food sources.",
+        "answer": "A dance communicates where flowers are, helping other bees locate food instead of searching without a direction.",
+        "ev": [
+          "f6",
+          "f5"
+        ],
+        "exp": [
+          "The dance pattern gives hive mates information about the location of flowers.",
+          "Nectar is the sugary liquid bees collect from flowers, so finding those flowers helps bees gather a food source used to make honey."
+        ],
+        "sum": "By pointing other bees toward flowers, a dance helps the colony locate nectar for honey production.",
+        "bad": "A honeybee's dance makes flowers produce nectar more quickly.",
+        "off": "f8"
+      },
+      {
+        "id": "honeybees-x3",
+        "level": "advanced",
+        "family": "process",
+        "q": "How do a honeybee's seasonal behaviors help it get through winter?",
+        "restate": "The response considers how honeybee behavior changes with the season.",
+        "answer": "Honeybees prepare to endure winter by storing honey as food and clustering together inside the hive to stay warm.",
+        "ev": [
+          "f5",
+          "f7"
+        ],
+        "exp": [
+          "Nectar collected during warmer periods can be turned into honey, leaving food that bees can use later.",
+          "Clustering and eating stored honey address two different winter needs: warmth and energy."
+        ],
+        "sum": "Stored food and close clustering help honeybees meet the challenges of winter inside the hive.",
+        "bad": "Honeybees survive winter by migrating to warmer regions after storing pollen in their wings.",
+        "off": "f6"
+      },
+      {
+        "id": "honeybees-x4",
+        "level": "advanced",
+        "family": "scale",
+        "q": "Why can the work of many bees affect more flowers than the work of one bee?",
+        "restate": "The response examines why a colony's many bees can affect numerous flowers.",
+        "answer": "A colony can spread pollen broadly because thousands of bees search for food and an individual worker visits many flowers on a trip.",
+        "ev": [
+          "f4",
+          "f1"
+        ],
+        "exp": [
+          "The hive's large number of foraging bees means the pollen-carrying work is not limited to one worker.",
+          "Each worker can visit dozens of flowers during a trip, extending pollen movement across many flowers."
+        ],
+        "sum": "Many foraging bees, each visiting many flowers, allow pollen to be carried across a broad area.",
+        "bad": "A large hive affects more flowers because every bee carries a different kind of seed.",
+        "off": "f8"
+      }
+    ]
+  },
+  {
+    "topicId": "solar-panels",
+    "models": [
+      {
+        "id": "solar-panels-x1",
+        "level": "beginner",
+        "family": "function",
+        "q": "How can a small solar cell provide power to a calculator?",
+        "restate": "The response explains how a small solar cell can provide power to a calculator.",
+        "answer": "Light striking a solar cell produces electric current, and a small cell can supply enough power for some calculators to run without batteries.",
+        "ev": [
+          "f1",
+          "f6"
+        ],
+        "exp": [
+          "The cell changes incoming light into an electric current rather than needing a moving fuel source.",
+          "The source gives calculators as an example of a device that uses a tiny solar cell instead of batteries."
+        ],
+        "sum": "A solar cell can turn light into current that powers a small device such as a calculator.",
+        "bad": "A calculator's solar cell stores sunlight as heat until the user presses a key.",
+        "off": "f8"
+      },
+      {
+        "id": "solar-panels-x2",
+        "level": "intermediate",
+        "family": "evaluation",
+        "q": "Why can rooftop panels be a practical choice for some buildings?",
+        "restate": "The response considers why rooftop panels can be practical for a building.",
+        "answer": "Rooftop panels use otherwise empty space, and their lack of moving parts lets them make electricity quietly with little repair.",
+        "ev": [
+          "f3",
+          "f2"
+        ],
+        "exp": [
+          "Placing panels on a roof makes use of an area that might otherwise do no work for the building.",
+          "With no moving parts, the panels avoid the noise and some of the repair needs associated with moving machinery."
+        ],
+        "sum": "Rooftop placement and a simple, quiet design are two practical features of solar panels.",
+        "bad": "Rooftop panels are practical because they make the building receive sunlight after dark.",
+        "off": "f7"
+      },
+      {
+        "id": "solar-panels-x3",
+        "level": "advanced",
+        "family": "evaluation",
+        "q": "What should a building consider when judging how steady solar electricity will be?",
+        "restate": "The response examines what affects the steadiness of a building's solar electricity.",
+        "answer": "A building should consider changing sunlight conditions, because a panel produces less electricity on a cloudy day than on a bright day.",
+        "ev": [
+          "f4",
+          "f7"
+        ],
+        "exp": [
+          "The same panel does not produce an identical amount in every weather condition; cloud cover can reduce its output.",
+          "Measuring output in watts gives engineers a way to describe and compare how much power the panel is producing."
+        ],
+        "sum": "Solar output varies with conditions, and watt measurements help describe that changing production.",
+        "bad": "A panel produces more electricity on cloudy days because clouds concentrate sunlight onto its cells.",
+        "off": "f5"
+      },
+      {
+        "id": "solar-panels-x4",
+        "level": "advanced",
+        "family": "tradeoff",
+        "q": "What is one conclusion the source supports about solar panels while they are operating?",
+        "restate": "The response evaluates a feature of solar panels during operation.",
+        "answer": "During operation, panels can make electricity without burning fuel or producing smoke, while their simple design needs little repair.",
+        "ev": [
+          "f5",
+          "f2"
+        ],
+        "exp": [
+          "Not burning fuel describes what the panel does not release while it is generating electricity.",
+          "Having few moving parts supports the separate point that panels work quietly and need little repair."
+        ],
+        "sum": "The source connects solar panels' operation with no fuel smoke and a low-maintenance design.",
+        "bad": "Solar panels produce no environmental effects at any point, including when they are manufactured and removed.",
+        "off": "f8"
+      }
+    ]
+  },
+  {
+    "topicId": "water-cycle",
+    "models": [
+      {
+        "id": "water-cycle-x1",
+        "level": "beginner",
+        "family": "process",
+        "q": "How can water vapor in the air become rain?",
+        "restate": "The response explains how water vapor in the air can become rain.",
+        "answer": "Water vapor cools into droplets that form clouds; when cloud droplets join and grow heavy, they fall as precipitation.",
+        "ev": [
+          "f2",
+          "f3"
+        ],
+        "exp": [
+          "Cooling changes vapor back into tiny liquid droplets, which gather to form clouds.",
+          "As cloud droplets join and grow heavy, gravity brings them down as rain, snow, or hail."
+        ],
+        "sum": "Cooling and droplet growth move water from vapor to clouds and then back to the ground.",
+        "bad": "Rain forms when clouds freeze into solid rocks that fall to Earth.",
+        "off": "f8"
+      },
+      {
+        "id": "water-cycle-x2",
+        "level": "intermediate",
+        "family": "pattern",
+        "q": "How do oceans and plants provide different routes for water to enter the air?",
+        "restate": "The response compares how oceans and plants add water vapor to the air.",
+        "answer": "Water enters the air through evaporation from oceans and lakes and through vapor released by plants from their leaves.",
+        "ev": [
+          "f1",
+          "f5"
+        ],
+        "exp": [
+          "Sunlight warms surface water, allowing some liquid water to change into vapor.",
+          "Plants take in water through roots and release some of it through leaf openings, providing another route for vapor to enter the air."
+        ],
+        "sum": "Surface-water evaporation and plant release both move water into the atmosphere.",
+        "bad": "Plants create new water in their leaves, while the Sun changes ocean water into salt.",
+        "off": "f6"
+      },
+      {
+        "id": "water-cycle-x3",
+        "level": "advanced",
+        "family": "scale",
+        "q": "How can water's movement include both rapid surface flow and long-term storage?",
+        "restate": "The response describes different time scales in water's movement.",
+        "answer": "Water can move downhill toward rivers after rain, while some water soaks into soil and remains underground for many years.",
+        "ev": [
+          "f4",
+          "f7"
+        ],
+        "exp": [
+          "Runoff moves water along hillsides into streams and rivers, providing a route back toward the sea.",
+          "Groundwater stores some rain below the surface for a much longer period, so not every part of the cycle moves at the same speed."
+        ],
+        "sum": "The water cycle includes fast surface movement as well as slower underground storage.",
+        "bad": "All rain immediately reaches the ocean because soil cannot hold water underground.",
+        "off": "f8"
+      },
+      {
+        "id": "water-cycle-x4",
+        "level": "advanced",
+        "family": "process",
+        "q": "How does the same cooling process help create both clouds and fog?",
+        "restate": "The response connects cloud formation with fog near the ground.",
+        "answer": "When water vapor cools into droplets, it can form clouds higher in the air or fog close to the ground.",
+        "ev": [
+          "f2",
+          "f8"
+        ],
+        "exp": [
+          "The passage explains that rising vapor cools and becomes tiny droplets that gather into clouds.",
+          "Fog uses the same change from vapor to droplets, but the droplets form near the ground rather than high in the sky."
+        ],
+        "sum": "Clouds and fog both form when vapor cools into droplets, with their location making the visible result different.",
+        "bad": "Fog is rain that has evaporated after reaching the ground and then freezes in place.",
+        "off": "f6"
+      }
+    ]
+  },
+  {
+    "topicId": "arch-bridges",
+    "models": [
+      {
+        "id": "arch-bridges-x1",
+        "level": "beginner",
+        "family": "adaptation",
+        "q": "Why do the ends of an arch bridge need firm supports?",
+        "restate": "The response explains why an arch bridge needs firm supports at its ends.",
+        "answer": "An arch directs weight outward and downward, so firmly anchored abutments are needed to resist the force at each end.",
+        "ev": [
+          "f1",
+          "f4"
+        ],
+        "exp": [
+          "The curved shape carries weight toward the ends instead of leaving it unsupported in the middle.",
+          "The abutments must be anchored in solid ground or rock to hold against the forces the arch transfers to them."
+        ],
+        "sum": "The arch carries weight to its ends, where firm abutments help support the bridge.",
+        "bad": "The end supports are needed because arches send all bridge weight straight upward.",
+        "off": "f8"
+      },
+      {
+        "id": "arch-bridges-x2",
+        "level": "intermediate",
+        "family": "evaluation",
+        "q": "How can an arch bridge cross a river while limiting supports in the water?",
+        "restate": "The response considers how an arch bridge can cross a river with few supports in the water.",
+        "answer": "An arch can span a wide gap by transferring its weight toward anchored supports at the ends rather than relying on many supports in the river.",
+        "ev": [
+          "f5",
+          "f4"
+        ],
+        "exp": [
+          "The source says arches can cross wide rivers and valleys without placing many supports in the water.",
+          "That design depends on abutments at the ends being firmly anchored to the ground or solid rock."
+        ],
+        "sum": "A wide arch span can reduce in-water supports when its end supports are secure.",
+        "bad": "An arch crosses a river by floating on the water and moving with the current.",
+        "off": "f8"
+      },
+      {
+        "id": "arch-bridges-x3",
+        "level": "advanced",
+        "family": "process",
+        "q": "What changes as a stone arch bridge moves from construction to a completed structure?",
+        "restate": "The response traces a change between building and using a stone arch bridge.",
+        "answer": "A temporary frame first holds the stones in place; after the arch is complete, the curve transfers weight toward the end supports.",
+        "ev": [
+          "f7",
+          "f1"
+        ],
+        "exp": [
+          "During construction the incomplete stones need a wooden frame to stay in position.",
+          "Once the arch is complete, its curve directs weight outward and downward along the structure toward the ends."
+        ],
+        "sum": "The temporary frame supports the stones during construction, and the finished arch carries its load to the ends.",
+        "bad": "The wooden frame remains inside a completed stone arch and carries all of its weight permanently.",
+        "off": "f8"
+      },
+      {
+        "id": "arch-bridges-x4",
+        "level": "advanced",
+        "family": "evaluation",
+        "q": "What evidence shows that the arch form can be built with more than one material?",
+        "restate": "The response examines how arch construction uses different materials.",
+        "answer": "The arch form is not limited to ancient stone: modern builders also shape steel or concrete into long, thin curves.",
+        "ev": [
+          "f2",
+          "f6"
+        ],
+        "exp": [
+          "The passage gives surviving Roman stone arches as evidence of earlier stone construction.",
+          "It also identifies steel and concrete as materials shaped into modern arch curves, showing the form continues across materials."
+        ],
+        "sum": "Arch construction has used stone historically and steel or concrete in modern bridges.",
+        "bad": "Modern bridges use steel because stone arches cannot remain standing for long.",
+        "off": "f8"
+      }
+    ]
+  },
+  {
+    "topicId": "public-libraries",
+    "models": [
+      {
+        "id": "public-libraries-x1",
+        "level": "beginner",
+        "family": "function",
+        "q": "How can a public library give students more than one way to learn?",
+        "restate": "The response explains how a public library can support student learning in different ways.",
+        "answer": "Students can borrow books and attend free programs such as reading hours or tutoring at a library.",
+        "ev": [
+          "f1",
+          "f3"
+        ],
+        "exp": [
+          "Borrowing lets a student use a book without paying to keep it permanently.",
+          "Programs such as tutoring provide direct learning support in addition to materials students read on their own."
+        ],
+        "sum": "Books to borrow and free learning programs give students complementary ways to use a library.",
+        "bad": "Libraries help students by requiring them to purchase every book they use.",
+        "off": "f7"
+      },
+      {
+        "id": "public-libraries-x2",
+        "level": "intermediate",
+        "family": "cause-effect",
+        "q": "Why can evening hours matter to people who work during the day?",
+        "restate": "The response considers how evening library hours affect access for daytime workers.",
+        "answer": "Later hours give people who are busy during the day another time to visit and use library resources.",
+        "ev": [
+          "f5",
+          "f2"
+        ],
+        "exp": [
+          "Staying open into the evening changes the hours when the building can be reached.",
+          "Computers and internet access support tasks such as job applications, making those later hours useful for working visitors."
+        ],
+        "sum": "Evening access can connect daytime workers with library technology and services.",
+        "bad": "Evening hours help workers because libraries complete job applications for every visitor.",
+        "off": "f7"
+      },
+      {
+        "id": "public-libraries-x3",
+        "level": "advanced",
+        "family": "evaluation",
+        "q": "How do librarians and study spaces support two different parts of research?",
+        "restate": "The response compares guidance from librarians with the role of a study space.",
+        "answer": "Librarians can help a visitor locate reliable information, while quiet rooms provide a place to concentrate on using it.",
+        "ev": [
+          "f4",
+          "f6"
+        ],
+        "exp": [
+          "Finding dependable sources is an information-selection task that librarians can teach visitors to perform.",
+          "A quiet study room addresses a different need by reducing distractions while someone reads or organizes information."
+        ],
+        "sum": "Libraries can support research both by guiding source selection and by providing room to study.",
+        "bad": "Librarians make every source reliable simply by placing it in a quiet room.",
+        "off": "f7"
+      },
+      {
+        "id": "public-libraries-x4",
+        "level": "advanced",
+        "family": "scale",
+        "q": "How can shared library books serve more readers than a privately kept copy?",
+        "restate": "The response explains how sharing books changes their reach.",
+        "answer": "A library can let many people use books it purchases, and borrowing allows each copy to reach different readers over time.",
+        "ev": [
+          "f8",
+          "f1"
+        ],
+        "exp": [
+          "The source says libraries share each purchased book with many different readers rather than assigning it to one owner.",
+          "Borrowing for a limited time allows a book to return and become available to someone else."
+        ],
+        "sum": "Shared copies and borrowing let library books serve a wider group of readers.",
+        "bad": "Shared books reach more readers because a single copy can be read by everyone at the same moment.",
+        "off": "f7"
+      }
+    ]
+  },
+  {
+    "topicId": "moon-phases",
+    "models": [
+      {
+        "id": "moon-phases-x1",
+        "level": "beginner",
+        "family": "cause-effect",
+        "q": "Why does a new moon look different from a full moon?",
+        "restate": "The response compares the Moon's appearance at new moon and full moon.",
+        "answer": "At new moon the lit side faces away from Earth, while at full moon observers see the whole lit side.",
+        "ev": [
+          "f3",
+          "f4"
+        ],
+        "exp": [
+          "The new moon is nearly invisible because the illuminated half points away from our view.",
+          "At full moon the lit half faces Earth, so the visible shape appears as a bright circle."
+        ],
+        "sum": "The Moon's phase changes which portion of its sunlit half is visible from Earth.",
+        "bad": "A full moon looks larger because the Moon creates extra light during that phase.",
+        "off": "f5"
+      },
+      {
+        "id": "moon-phases-x2",
+        "level": "intermediate",
+        "family": "pattern",
+        "q": "How does the Moon's changing position create a pattern people can observe?",
+        "restate": "The response explains how the Moon's orbit produces an observable pattern.",
+        "answer": "As the Moon moves around Earth, the portion of its sunlit half visible to observers changes in a recurring sequence.",
+        "ev": [
+          "f1",
+          "f8"
+        ],
+        "exp": [
+          "The Moon's position changes during its orbit, changing how much of its lit half observers can see.",
+          "People can track this recurring sequence of visible phases, which has been used to build calendars over time."
+        ],
+        "sum": "The Moon's orbit produces a repeating pattern of visible phases that people can observe and track.",
+        "bad": "People use Moon phases as a calendar because each phase permanently changes Earth's orbit.",
+        "off": "f5"
+      },
+      {
+        "id": "moon-phases-x3",
+        "level": "advanced",
+        "family": "cause-effect",
+        "q": "How does the Moon's gravity connect it to changing ocean tides?",
+        "restate": "The response connects lunar gravity with changes in ocean water.",
+        "answer": "The Moon's gravitational pull on Earth's water is a main cause of tides rising and falling.",
+        "ev": [
+          "f6",
+          "f7"
+        ],
+        "exp": [
+          "The Moon's gravity is weaker than Earth's at its surface, but it still exerts a pull on water across Earth.",
+          "That pull shifts the distribution of ocean water, producing the tide changes described in the source."
+        ],
+        "sum": "The source links the Moon's gravitational pull with the rising and falling of ocean tides.",
+        "bad": "The Moon's gravity heats ocean water until it rises and falls like boiling liquid.",
+        "off": "f5"
+      },
+      {
+        "id": "moon-phases-x4",
+        "level": "intermediate",
+        "family": "pattern",
+        "q": "How are the Moon's orbit and visible phases related over time?",
+        "restate": "The response examines how the Moon's orbit relates to its repeating appearance.",
+        "answer": "As the Moon moves around Earth, our view of its sunlit half changes in a repeating sequence of phases.",
+        "ev": [
+          "f1",
+          "f2"
+        ],
+        "exp": [
+          "Half of the Moon remains lit, but its changing position alters how much of that half is visible from Earth.",
+          "The source gives the time for a full phase cycle, showing that the changing view repeats on a regular schedule."
+        ],
+        "sum": "The Moon's orbit changes our view of its sunlit half and produces a recurring phase cycle.",
+        "bad": "The Moon's phases happen because Earth casts a shadow on the Moon every night.",
+        "off": "f5"
+      }
+    ]
+  },
+  {
+    "topicId": "cactus",
+    "models": [
+      {
+        "id": "cactus-x1",
+        "level": "beginner",
+        "family": "adaptation",
+        "q": "How do different cactus features help it conserve and collect water?",
+        "restate": "The response compares how a cactus conserves water and collects it.",
+        "answer": "Narrow spines reduce water loss, while wide, shallow roots quickly absorb rain near the surface.",
+        "ev": [
+          "f2",
+          "f3"
+        ],
+        "exp": [
+          "Compared with broad leaves, narrow spines lose much less water to dry air.",
+          "Wide shallow roots address the other side of the problem by collecting rain before it dries away."
+        ],
+        "sum": "Cacti conserve water with narrow spines and collect brief rain with shallow, spreading roots.",
+        "bad": "Cacti make rain in their stems and send it into the soil through their roots.",
+        "off": "f7"
+      },
+      {
+        "id": "cactus-x2",
+        "level": "intermediate",
+        "family": "adaptation",
+        "q": "How do cactus spines help it survive in a dry environment?",
+        "restate": "The response explains how cactus spines contribute to survival in dry conditions.",
+        "answer": "Narrow spines lose less water than broad leaves, and they can also shade the plant and discourage some animals from eating it.",
+        "ev": [
+          "f2",
+          "f4"
+        ],
+        "exp": [
+          "Replacing broad leaves with narrow spines reduces the surface that loses water to dry air.",
+          "The same spines provide some shade and protection, giving them more than one useful role."
+        ],
+        "sum": "Cactus spines help conserve water while also offering shade and protection.",
+        "bad": "Spines help cacti by collecting large amounts of water from the desert wind.",
+        "off": "f6"
+      },
+      {
+        "id": "cactus-x3",
+        "level": "advanced",
+        "family": "evaluation",
+        "q": "What evidence supports the idea that cacti can be low-water plants for people?",
+        "restate": "The response evaluates evidence about cacti's ability to live with little water.",
+        "answer": "Some cacti survive long periods without rain, which helps explain why people can grow them in pots that need little watering.",
+        "ev": [
+          "f5",
+          "f8"
+        ],
+        "exp": [
+          "Surviving a year or more without rain shows that some cacti are adapted to long dry periods.",
+          "The source connects that low-water need to their use as houseplants that require little watering."
+        ],
+        "sum": "A cactus's tolerance of dry periods makes it suitable for people seeking a low-water houseplant.",
+        "bad": "Cacti need little watering because their pots produce water whenever the plant becomes dry.",
+        "off": "f7"
+      },
+      {
+        "id": "cactus-x4",
+        "level": "intermediate",
+        "family": "adaptation",
+        "q": "How do different cactus features address separate desert challenges?",
+        "restate": "The response compares different features that help a cactus in desert conditions.",
+        "answer": "A cactus can conserve and store water with its spines and stem while its wide roots collect rain quickly when it arrives.",
+        "ev": [
+          "f2",
+          "f3"
+        ],
+        "exp": [
+          "Narrow spines reduce water loss compared with broad leaves, helping conserve water already in the plant.",
+          "Wide shallow roots solve a different problem by quickly absorbing water near the surface after rain."
+        ],
+        "sum": "Water conservation and rapid collection work together to help a cactus manage scarce rainfall.",
+        "bad": "Cacti survive by turning their spines into deep roots that reach underground rivers.",
+        "off": "f7"
+      }
+    ]
+  },
+  {
+    "topicId": "levers",
+    "models": [
+      {
+        "id": "levers-x1",
+        "level": "beginner",
+        "family": "function",
+        "q": "How can pushing farther from a fulcrum change the effort needed to pry with a crowbar?",
+        "restate": "The response explains how a person's push relates to effort when using a crowbar.",
+        "answer": "Pushing farther from the fulcrum can reduce the force needed to lift a load, although the hand must travel a longer distance.",
+        "ev": [
+          "f2",
+          "f4"
+        ],
+        "exp": [
+          "A crowbar lets a person push on its long end to pry a nail upward.",
+          "The source explains the tradeoff: a longer distance from the fulcrum lowers needed force but requires more hand movement."
+        ],
+        "sum": "A crowbar's lever arm can reduce force while increasing the distance the hand moves.",
+        "bad": "A crowbar lifts a nail because it makes the nail weigh less before the person touches it.",
+        "off": "f5"
+      },
+      {
+        "id": "levers-x2",
+        "level": "intermediate",
+        "family": "function",
+        "q": "How can levers use different fulcrum positions for different tasks?",
+        "restate": "The response compares how fulcrum position relates to a lever's use.",
+        "answer": "A lever's fulcrum can be arranged to lift a load, as in a wheelbarrow, or placed between two sides to balance them, as in a seesaw.",
+        "ev": [
+          "f7",
+          "f3"
+        ],
+        "exp": [
+          "A wheelbarrow pivots around the wheel, allowing the person to carry only part of the load at the handles.",
+          "A seesaw's middle fulcrum lets two riders balance when their weights are equal."
+        ],
+        "sum": "Changing where a lever pivots changes how it supports or balances a load.",
+        "bad": "A wheelbarrow and a seesaw work because neither one has a fulcrum.",
+        "off": "f5"
+      },
+      {
+        "id": "levers-x3",
+        "level": "advanced",
+        "family": "tradeoff",
+        "q": "How does fulcrum placement affect the force-and-distance tradeoff of a lever?",
+        "restate": "The response examines how fulcrum placement affects a lever's tradeoff.",
+        "answer": "Placing a fulcrum near the load lets a smaller push farther away lift a heavy object, but the hand must move through a longer distance.",
+        "ev": [
+          "f1",
+          "f4"
+        ],
+        "exp": [
+          "A fulcrum near the load makes it possible for a push farther away to lift a heavy object.",
+          "The farther push reduces force but increases how far the hand travels, so the placement changes the balance between effort and movement."
+        ],
+        "sum": "Fulcrum placement changes the balance between the force needed and the distance the hand travels.",
+        "bad": "A lever reduces force by creating extra energy that was not present in the person or tool.",
+        "off": "f5"
+      },
+      {
+        "id": "levers-x4",
+        "level": "intermediate",
+        "family": "adaptation",
+        "q": "How do scissors and a crowbar show that levers can be adapted to different actions?",
+        "restate": "The response compares two tools that use lever action for different purposes.",
+        "answer": "Scissors use two joined levers to cut, while a crowbar uses a long bar and a pivot to pry a nail upward.",
+        "ev": [
+          "f5",
+          "f2"
+        ],
+        "exp": [
+          "The shared fulcrum in scissors connects two lever arms so their movement can act on material between them.",
+          "The crowbar's lever action instead transfers a push on its long end into a lifting action at a nail."
+        ],
+        "sum": "Lever principles support different tool designs, from cutting with scissors to prying with a crowbar.",
+        "bad": "Scissors and crowbars work because their metal blades attract the objects they move.",
+        "off": "f6"
+      }
+    ]
+  },
+  {
+    "topicId": "bicycle-gears",
+    "models": [
+      {
+        "id": "bicycle-gears-x1",
+        "level": "beginner",
+        "family": "function",
+        "q": "How can a rider make pedaling easier on a steep hill?",
+        "restate": "The response explains how a rider can make pedaling easier on a hill.",
+        "answer": "The rider can shift to a low gear, in which each pedal turn moves the bicycle a shorter distance and requires less effort.",
+        "ev": [
+          "f1",
+          "f3"
+        ],
+        "exp": [
+          "In a low gear the bike travels a shorter distance per pedal turn, which makes pedaling easier on a steep hill.",
+          "The rider changes gears by moving a lever that shifts the chain to another toothed wheel."
+        ],
+        "sum": "Shifting to a low gear helps a rider pedal up a steep hill with less effort.",
+        "bad": "A low gear makes each pedal turn move the bike farther up the hill.",
+        "off": "f6"
+      },
+      {
+        "id": "bicycle-gears-x2",
+        "level": "intermediate",
+        "family": "function",
+        "q": "Why might a rider select a high gear on flat ground?",
+        "restate": "The response considers why a higher bicycle gear can suit flat ground.",
+        "answer": "A high gear moves the bike farther with each pedal turn, which can help a rider reach a higher speed on flat ground.",
+        "ev": [
+          "f2",
+          "f5"
+        ],
+        "exp": [
+          "The high gear's longer travel for each pedal turn makes it useful when the ground is flat.",
+          "A suitable gear also helps the rider maintain a steady and comfortable pedaling pace."
+        ],
+        "sum": "On flat ground, a high gear can increase distance per pedal turn while supporting a steady pace.",
+        "bad": "A high gear is best on flat ground because it makes the bicycle stop moving between pedal turns.",
+        "off": "f6"
+      },
+      {
+        "id": "bicycle-gears-x3",
+        "level": "advanced",
+        "family": "evaluation",
+        "q": "How does having several gear combinations help a rider respond to changing conditions?",
+        "restate": "The response explains why a range of gear combinations can be useful.",
+        "answer": "A range of gears lets a rider choose shorter travel per pedal turn for a hill or longer travel on flat ground, adapting effort and speed to conditions.",
+        "ev": [
+          "f4",
+          "f1"
+        ],
+        "exp": [
+          "Many bicycles provide several gear combinations, giving a rider more than one fixed ratio to use.",
+          "The low-gear example shows how one choice reduces effort on a steep hill, demonstrating why different conditions call for different ratios."
+        ],
+        "sum": "A range of gear choices gives riders flexibility to match pedaling to the terrain.",
+        "bad": "More gear combinations make every gear equally easy on every kind of terrain.",
+        "off": "f8"
+      },
+      {
+        "id": "bicycle-gears-x4",
+        "level": "intermediate",
+        "family": "tradeoff",
+        "q": "How can a low gear support both easier pedaling and a comfortable pace on a hill?",
+        "restate": "The response explains how a gear choice can affect effort and riding pace on a hill.",
+        "answer": "A low gear shortens the distance moved per pedal turn, making a steep climb easier and helping the rider maintain a comfortable pace.",
+        "ev": [
+          "f1",
+          "f5"
+        ],
+        "exp": [
+          "The shorter travel per pedal turn in a low gear reduces how hard the rider must push on a steep hill.",
+          "Choosing an appropriate gear helps a rider keep a steady, comfortable pedaling pace rather than forcing one speed everywhere."
+        ],
+        "sum": "A low gear can make climbing easier while helping a rider keep a steady pace.",
+        "bad": "Low and high gears differ only in the color of the chain, not in how far the bicycle moves.",
+        "off": "f6"
+      }
+    ]
+  },
+  {
+    "topicId": "rust",
+    "models": [
+      {
+        "id": "rust-x1",
+        "level": "beginner",
+        "family": "cause-effect",
+        "q": "Why can rust make an iron object more likely to break?",
+        "restate": "The response explains how rust affects an iron object's strength.",
+        "answer": "Rust is weaker than iron, so an object can crumble or break when much of its iron surface has rusted.",
+        "ev": [
+          "f1",
+          "f2"
+        ],
+        "exp": [
+          "The reaction of iron with oxygen in the presence of water forms rust on the object.",
+          "Because rust is weaker than iron, a badly rusted object can lose strength and break apart."
+        ],
+        "sum": "Rust forms on iron and is weaker than the metal, which can leave an object more likely to fail.",
+        "bad": "Iron rusts faster in damp places because water removes all oxygen from the metal.",
+        "off": "f7"
+      },
+      {
+        "id": "rust-x2",
+        "level": "intermediate",
+        "family": "function",
+        "q": "How can a gardener reduce rust on an iron tool after using it?",
+        "restate": "The response describes a way to protect a garden tool from rust.",
+        "answer": "The gardener can dry the tool and coat it with oil, creating a barrier that limits contact between iron, water, and air.",
+        "ev": [
+          "f8",
+          "f3"
+        ],
+        "exp": [
+          "Wiping the tool dry removes water left from use before it can take part in rust formation.",
+          "Painting keeps air and water away from iron; an oil coating serves the same protective purpose on a tool."
+        ],
+        "sum": "Drying and coating an iron tool help keep the conditions for rust away from its surface.",
+        "bad": "A gardener can stop rust by leaving a wet tool outside so the water washes the iron away.",
+        "off": "f7"
+      },
+      {
+        "id": "rust-x3",
+        "level": "advanced",
+        "family": "evaluation",
+        "q": "What do stainless steel and paint have in common as rust-prevention methods?",
+        "restate": "The response compares two ways of reducing rust.",
+        "answer": "Both methods protect iron by limiting its exposure to conditions that cause rust, though stainless steel uses a chromium layer and paint covers the surface.",
+        "ev": [
+          "f5",
+          "f3"
+        ],
+        "exp": [
+          "Chromium in stainless steel forms a thin protective layer at the surface.",
+          "Paint acts as a covering that keeps air and water from reaching the iron underneath, achieving a related protective result by another method."
+        ],
+        "sum": "Different surface barriers can protect iron from rust-producing exposure.",
+        "bad": "Stainless steel and paint prevent rust by removing all iron from the object.",
+        "off": "f7"
+      },
+      {
+        "id": "rust-x4",
+        "level": "intermediate",
+        "family": "evaluation",
+        "q": "Why does the source distinguish iron-containing steel from gold when describing rust?",
+        "restate": "The response examines how the materials in an object relate to rust.",
+        "answer": "Steel is mostly iron and can rust, whereas the passage gives gold as an example of a metal that does not rust.",
+        "ev": [
+          "f6",
+          "f7"
+        ],
+        "exp": [
+          "Because steel contains mostly iron, it includes the metal involved in rust formation.",
+          "Gold provides a contrast: not every metal responds to rust in the same way as iron."
+        ],
+        "sum": "Material composition matters because iron-containing steel and gold do not behave alike around rust.",
+        "bad": "Steel cannot rust because adding any other material removes its iron.",
+        "off": "f8"
+      }
+    ]
+  },
+  {
+    "topicId": "mars-rovers",
+    "models": [
+      {
+        "id": "mars-rovers-x1",
+        "level": "beginner",
+        "family": "function",
+        "q": "How do a rover's wheels and cameras work together during exploration?",
+        "restate": "The response explains how rover movement can support observation.",
+        "answer": "Grooved wheels help a rover cross loose ground, while cameras let it study rocks from a distance.",
+        "ev": [
+          "f5",
+          "f3"
+        ],
+        "exp": [
+          "The grooves help the metal wheels grip loose sand and rocks so the rover can keep moving.",
+          "Once in position, cameras allow scientists to examine rocks without traveling to the rover themselves."
+        ],
+        "sum": "Mobility across loose ground and onboard cameras help rovers reach and observe Martian features.",
+        "bad": "Rover wheels photograph rocks by turning their grooves toward the surface.",
+        "off": "f7"
+      },
+      {
+        "id": "mars-rovers-x2",
+        "level": "intermediate",
+        "family": "cause-effect",
+        "q": "How does the length of a Martian day affect the timing of rover work?",
+        "restate": "The response considers how a Martian day shapes the timing of rover activity.",
+        "answer": "A Martian day lasts slightly longer than an Earth day, and rovers often carry out instruction lists during the Martian day.",
+        "ev": [
+          "f6",
+          "f2"
+        ],
+        "exp": [
+          "The source gives the length of a Martian day as a little longer than a day on Earth.",
+          "Since rovers often perform instructions during that local day, mission teams must account for the different daily schedule."
+        ],
+        "sum": "Rover operations follow a Martian day that is slightly longer than an Earth day.",
+        "bad": "Engineers use a joystick because radio messages arrive before they are sent from Earth.",
+        "off": "f7"
+      },
+      {
+        "id": "mars-rovers-x3",
+        "level": "advanced",
+        "family": "process",
+        "q": "How can a rover turn a visit to a rock into useful information for scientists on Earth?",
+        "restate": "The response traces how rover instruments produce information for scientists.",
+        "answer": "A rover can use a drill or camera to examine a rock and send observations that scientists can study from Earth.",
+        "ev": [
+          "f3",
+          "f1"
+        ],
+        "exp": [
+          "Drills and cameras allow a rover to gather close information about rocks at its location.",
+          "Because radio messages travel with a delay, collected observations can be transmitted back for scientists to examine later rather than steering the rover moment by moment."
+        ],
+        "sum": "Rover instruments collect local evidence that can be sent to Earth for later scientific study.",
+        "bad": "Rovers teach scientists about rocks by bringing every sample back to Earth immediately.",
+        "off": "f7"
+      },
+      {
+        "id": "mars-rovers-x4",
+        "level": "beginner",
+        "family": "adaptation",
+        "q": "How do rovers and a small helicopter represent different ways to explore another planet?",
+        "restate": "The response compares two kinds of robotic exploration on another planet.",
+        "answer": "Rovers travel across the surface on wheels, while the Ingenuity helicopter explored above the surface through powered flight.",
+        "ev": [
+          "f5",
+          "f7"
+        ],
+        "exp": [
+          "Grooved wheels are suited to gripping loose sand and rocks along the ground.",
+          "Ingenuity's powered flight provided a different way to explore by moving through the air rather than over the surface."
+        ],
+        "sum": "Surface travel and powered flight give robotic missions different ways to examine another planet.",
+        "bad": "The Ingenuity helicopter explored Mars by rolling across the ground on grooved wheels.",
+        "off": "f6"
+      }
+    ]
+  },
+  {
+    "topicId": "printing-press",
+    "models": [
+      {
+        "id": "printing-press-x1",
+        "level": "beginner",
+        "family": "process",
+        "q": "How could printers change the words in a new page without making new metal letters?",
+        "restate": "The response explains how printers could prepare different words with reusable type.",
+        "answer": "Printers could rearrange the same metal letters into a new frame for another page instead of making a new set of letters.",
+        "ev": [
+          "f1",
+          "f2"
+        ],
+        "exp": [
+          "Movable metal letters were the parts arranged to create printed words.",
+          "Because the type could be reused, printers could rearrange existing letters for a different page."
+        ],
+        "sum": "Movable type let printers rearrange reusable letters to prepare different pages.",
+        "bad": "Printers reused movable letters by melting each printed page back into metal.",
+        "off": "f7"
+      },
+      {
+        "id": "printing-press-x2",
+        "level": "intermediate",
+        "family": "cause-effect",
+        "q": "How could lower book prices and new printing shops together widen access to books?",
+        "restate": "The response considers how price and location affected access to books.",
+        "answer": "Lower prices made books affordable to more people, and shops in many cities brought printing closer to readers.",
+        "ev": [
+          "f5",
+          "f4"
+        ],
+        "exp": [
+          "When printed books cost less than hand-copied ones, more people could afford to buy them.",
+          "As printing shops spread to more cities, readers could obtain books from more local places."
+        ],
+        "sum": "More affordable books and more places to print them widened access for readers.",
+        "bad": "Book prices fell because every printing shop gave all books away for free.",
+        "off": "f8"
+      },
+      {
+        "id": "printing-press-x3",
+        "level": "advanced",
+        "family": "adaptation",
+        "q": "How did early printed books combine a new production method with a familiar visual style?",
+        "restate": "The response examines how early printed books balanced production changes with appearance.",
+        "answer": "Printers used movable type for production while early books often imitated the style of handwritten pages.",
+        "ev": [
+          "f1",
+          "f8"
+        ],
+        "exp": [
+          "Movable metal letters changed how text could be arranged and reproduced.",
+          "The copied handwritten appearance shows that a new production method did not require every visual feature of a book to change at once."
+        ],
+        "sum": "Early printing changed how pages were produced while retaining familiar page styles.",
+        "bad": "Early books looked handwritten because each copy was still written out by hand after printing.",
+        "off": "f7"
+      },
+      {
+        "id": "printing-press-x4",
+        "level": "beginner",
+        "family": "process",
+        "q": "How did the printing press depend on both a mechanical system and a suitable ink?",
+        "restate": "The response explains how different components supported printing.",
+        "answer": "A press adapted from screw presses applied mechanical force, while thick oil-based ink helped the metal letters leave marks on paper.",
+        "ev": [
+          "f6",
+          "f7"
+        ],
+        "exp": [
+          "The adapted screw-press design supplied a mechanism for pressing the arranged type against a surface.",
+          "The ink's thick, oily quality helped it stick to metal letters so it could be transferred in printing."
+        ],
+        "sum": "Printing required both a mechanism to press type and ink suited to the metal letters.",
+        "bad": "Oil-based ink supplied the mechanical force that moved the press screw.",
+        "off": "f8"
+      }
+    ]
+  },
+  {
+    "topicId": "coral-reefs",
+    "models": [
+      {
+        "id": "coral-reefs-x1",
+        "level": "beginner",
+        "family": "scale",
+        "q": "How can coral reefs have value for both ocean life and visitors?",
+        "restate": "The response compares ways coral reefs can matter to animals and people.",
+        "answer": "Reefs support many ocean species, and they also attract people who visit to swim and snorkel.",
+        "ev": [
+          "f1",
+          "f6"
+        ],
+        "exp": [
+          "The source describes species that depend on reefs, showing an ecological role.",
+          "It also says many reefs attract visitors, providing a separate reason people value them."
+        ],
+        "sum": "Reefs can be important habitats and places people visit to experience ocean life.",
+        "bad": "Reefs support many species because they cover most of the ocean floor.",
+        "off": "f8"
+      },
+      {
+        "id": "coral-reefs-x2",
+        "level": "intermediate",
+        "family": "cause-effect",
+        "q": "How does the reef structure provide a place for young fish to grow?",
+        "restate": "The response explains how coral structure can support young fish.",
+        "answer": "The branches of coral provide shelter where young fish can live until they are large enough for open water.",
+        "ev": [
+          "f2",
+          "f4"
+        ],
+        "exp": [
+          "The branching coral gives small fish spaces to shelter while they are young.",
+          "Those branches are part of a reef formed from coral skeletons that accumulate over time."
+        ],
+        "sum": "Coral branches offer shelter that can help young fish grow before moving into open water.",
+        "bad": "Reefs protect shores by pulling waves beneath the ocean floor.",
+        "off": "f8"
+      },
+      {
+        "id": "coral-reefs-x3",
+        "level": "advanced",
+        "family": "process",
+        "q": "How do algae and coral skeletons contribute different parts to reef growth?",
+        "restate": "The response compares two contributions to reef development.",
+        "answer": "Algae inside coral make food using sunlight, while coral builds hard skeletons that accumulate to form reef structure.",
+        "ev": [
+          "f5",
+          "f4"
+        ],
+        "exp": [
+          "The algae's food-making role helps explain why reef-building coral is associated with shallow, sunny water.",
+          "The skeletons provide the material that builds up over many years into the physical reef."
+        ],
+        "sum": "Food production and accumulated skeletons contribute different requirements for reef growth.",
+        "bad": "The algae create limestone skeletons by turning sunlight directly into stone.",
+        "off": "f6"
+      },
+      {
+        "id": "coral-reefs-x4",
+        "level": "beginner",
+        "family": "evaluation",
+        "q": "What combination of evidence supports the idea that reefs can benefit both ecosystems and nearby people?",
+        "restate": "The response evaluates benefits reefs can provide to ecosystems and nearby communities.",
+        "answer": "Reefs support dependent ocean species and can also break up waves before they reach a nearby shore.",
+        "ev": [
+          "f1",
+          "f3"
+        ],
+        "exp": [
+          "The source describes species that rely on reefs, showing an ecological benefit.",
+          "The barrier effect provides a separate benefit by reducing the force of waves reaching land."
+        ],
+        "sum": "Reefs can be valuable for ocean life and for the protection their structure provides to shorelines.",
+        "bad": "Reefs benefit people because they stop every storm from reaching land.",
+        "off": "f6"
+      }
+    ]
+  },
+  {
+    "topicId": "lightning",
+    "models": [
+      {
+        "id": "lightning-x1",
+        "level": "beginner",
+        "family": "process",
+        "q": "How can electrical charge build up into a lightning spark?",
+        "restate": "The response describes how charge differences can lead to lightning.",
+        "answer": "Collisions between ice crystals and water droplets separate electric charges, and a large enough difference can produce a spark.",
+        "ev": [
+          "f1",
+          "f2"
+        ],
+        "exp": [
+          "The source describes collisions inside storm clouds as the process that separates charge.",
+          "When the charge difference becomes large enough, the spark can leap between a cloud and the ground or between cloud regions."
+        ],
+        "sum": "Charge separation in a storm cloud can build until a lightning spark occurs.",
+        "bad": "Lightning forms when water droplets turn into magnets that pull the cloud toward the ground.",
+        "off": "f8"
+      },
+      {
+        "id": "lightning-x2",
+        "level": "intermediate",
+        "family": "scale",
+        "q": "How can a tall structure and a lightning rod affect a lightning strike?",
+        "restate": "The response considers how tall structures and rods relate to lightning strikes.",
+        "answer": "Tall objects are more likely to be struck, and a lightning rod gives a strike a metal path safely toward the ground.",
+        "ev": [
+          "f7",
+          "f8"
+        ],
+        "exp": [
+          "The source identifies tall, pointed objects as more likely to be struck.",
+          "A rod provides a safe route to ground, addressing what can happen when a strike reaches a structure."
+        ],
+        "sum": "Tall structures may be struck, while a lightning rod provides a safer path to ground.",
+        "bad": "Thunder arrives after lightning because the sound travels faster and passes the flash on its way.",
+        "off": "f6"
+      },
+      {
+        "id": "lightning-x3",
+        "level": "advanced",
+        "family": "function",
+        "q": "How does electrical activity inside a cloud lead to heating in a lightning bolt?",
+        "restate": "The response traces how electrical activity can lead to a lightning bolt's heat.",
+        "answer": "Collisions separate electric charges inside a storm cloud, and a spark between separated charges forms a bolt that heats the surrounding air.",
+        "ev": [
+          "f1",
+          "f3"
+        ],
+        "exp": [
+          "Collisions among ice crystals and droplets separate charges within the cloud.",
+          "When a spark leaps between regions, the resulting bolt heats the air around its path."
+        ],
+        "sum": "Charge separation can produce a lightning bolt, which then heats nearby air.",
+        "bad": "A lightning rod prevents all lightning from forming anywhere near a building.",
+        "off": "f6"
+      },
+      {
+        "id": "lightning-x4",
+        "level": "beginner",
+        "family": "cause-effect",
+        "q": "How can a lightning bolt create both extreme heat and thunder?",
+        "restate": "The response connects a lightning bolt to heat and sound.",
+        "answer": "A bolt heats surrounding air rapidly, and the air's sudden expansion creates the sound wave heard as thunder.",
+        "ev": [
+          "f3",
+          "f4"
+        ],
+        "exp": [
+          "The source reports that the air around a bolt becomes extremely hot.",
+          "The heated air expands quickly, pushing a sound wave outward that people hear as thunder."
+        ],
+        "sum": "Thunder is the sound wave caused when lightning rapidly heats and expands nearby air.",
+        "bad": "Thunder forms when a lightning bolt cools the air until it collapses silently.",
+        "off": "f8"
+      }
+    ]
+  },
+  {
+    "topicId": "binary-numbers",
+    "models": [
+      {
+        "id": "binary-numbers-x1",
+        "level": "beginner",
+        "family": "function",
+        "q": "Why are two-state circuits useful for representing bits?",
+        "restate": "The response explains how circuit states can represent binary symbols.",
+        "answer": "A bit can be represented as an on-or-off switch, and circuits can distinguish two states such as high and low voltage reliably.",
+        "ev": [
+          "f1",
+          "f5"
+        ],
+        "exp": [
+          "The source describes a bit as one of two states, similar to a switch being on or off.",
+          "A circuit that can reliably distinguish two states provides a physical way for a computer to represent those symbols."
+        ],
+        "sum": "Reliable two-state circuits give computers a way to represent bits as on or off.",
+        "bad": "A bit is represented by a switch that can hold every possible voltage as a separate symbol.",
+        "off": "f7"
+      },
+      {
+        "id": "binary-numbers-x2",
+        "level": "intermediate",
+        "family": "process",
+        "q": "How does grouping bits let a computer represent much more than one yes-or-no choice?",
+        "restate": "The response explains how groups of bits expand the information a computer can represent.",
+        "answer": "A byte groups eight bits into 256 possible patterns, and digital messages can use many bytes to represent larger amounts of information.",
+        "ev": [
+          "f2",
+          "f6"
+        ],
+        "exp": [
+          "The source states that eight bits can form a byte with 256 different patterns, far more than a single on-or-off choice.",
+          "A short email can take up a few kilobytes, showing that a message uses many grouped units of digital information."
+        ],
+        "sum": "Grouping bits creates many patterns, and collections of bytes can represent larger messages.",
+        "bad": "A computer stores a written character by printing it onto a punched card every time it is used.",
+        "off": "f8"
+      },
+      {
+        "id": "binary-numbers-x3",
+        "level": "advanced",
+        "family": "process",
+        "q": "How can a binary number help describe a screen color?",
+        "restate": "The response explains how numeric information can represent a screen color.",
+        "answer": "A color can be stored as numbers describing red, green, and blue light, and binary place values let computers represent those numbers with bits.",
+        "ev": [
+          "f8",
+          "f4"
+        ],
+        "exp": [
+          "The source explains that the screen's red, green, and blue amounts are represented by numbers.",
+          "Binary place values provide a system for writing numbers with patterns of zeros and ones."
+        ],
+        "sum": "Screen color amounts can be represented numerically and encoded using binary place values.",
+        "bad": "A screen color is stored by changing the physical color of each bit in the computer.",
+        "off": "f7"
+      },
+      {
+        "id": "binary-numbers-x4",
+        "level": "beginner",
+        "family": "scale",
+        "q": "How does grouping bits allow computers to represent more than two patterns?",
+        "restate": "The response considers how groups of bits expand the number of possible patterns.",
+        "answer": "A single bit has two states, but grouping eight bits into a byte creates 256 possible patterns.",
+        "ev": [
+          "f1",
+          "f2"
+        ],
+        "exp": [
+          "One bit represents an on-or-off choice, giving it two possible states.",
+          "Combining eight such positions creates many arrangements; the source states that a byte can form 256 patterns."
+        ],
+        "sum": "Combining bits into bytes greatly expands the patterns a computer can represent.",
+        "bad": "A byte has only two possible patterns because all eight bits must always match.",
+        "off": "f7"
+      }
+    ]
+  }
+]

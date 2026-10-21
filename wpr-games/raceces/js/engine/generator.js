@@ -12,7 +12,7 @@
   'use strict';
 
   var MODE_IMPL = { identify: Identify, rearrange: Rearrange, missing: Missing };
-  var HISTORY_MAX = 60;
+  var HISTORY_MAX = 120;
 
   function targetKeysFor(mode) {
     if (mode === 'identify') return Identify.TARGETS;
@@ -40,11 +40,17 @@
     this.seed = String(seed === undefined ? 'raceces' : seed);
     this.n = 0;
     this.history = []; // bounded: {mode, level, modelId, topicId, family, key}
+    this.seenModels = []; // bounded by the authored content pool; supports honest review labels after history rolls over
   }
 
-  Generator.prototype.restore = function (history) {
+  Generator.prototype.restore = function (history, seenModels) {
     this.history = (history || []).slice(-HISTORY_MAX);
+    var allowed = this.bundle.models.map(function (m) { return m.id; });
+    var prior = Array.isArray(seenModels) ? seenModels : [];
+    this.seenModels = Array.from(new Set(prior.concat(this.history.map(function (e) { return e.modelId; })).filter(function (id) { return allowed.indexOf(id) >= 0; })));
   };
+
+  Generator.prototype.getSeenModels = function () { return this.seenModels.slice(); };
 
   function countIn(list, pred) { var n = 0; for (var i = 0; i < list.length; i++) if (pred(list[i])) n++; return n; }
 
@@ -57,9 +63,42 @@
     return best;
   };
 
-  /* opts: { mode: 'identify'|'rearrange'|'missing'|'mixed', level: 'beginner'|'intermediate'|'advanced'|'all' } */
+  Generator.prototype.setSelection = function (selection) {
+    selection = selection || {};
+    var allowed = this.bundle.topics.map(function (t) { return t.id; });
+    var topicIds = Array.isArray(selection.topics) ? selection.topics.filter(function (id) { return allowed.indexOf(id) >= 0; }) : null;
+    this.selection = {
+      subject: selection.subject && selection.subject !== 'all' ? selection.subject : 'all',
+      topics: topicIds && topicIds.length ? topicIds : null
+    };
+    return this.selection;
+  };
+
+  Generator.prototype.availableModels = function (selection, level) {
+    var pick = selection || this.selection || { subject: 'all', topics: null };
+    var topicSet = pick.topics ? pick.topics : null;
+    var topics = this.bundle.topics;
+    var allowedTopics = topics.filter(function (t) {
+      return (!topicSet || topicSet.indexOf(t.id) >= 0) && (!pick.subject || pick.subject === 'all' || t.subject === pick.subject);
+    }).map(function (t) { return t.id; });
+    var allowed = this.bundle.models.filter(function (m) {
+      return allowedTopics.indexOf(m.topicId) >= 0 && (!level || level === 'all' || m.level === level);
+    });
+    return allowed;
+  };
+
+  Generator.prototype.availability = function (selection) {
+    var self = this, counts = {};
+    Structure.LEVELS.forEach(function (level) { counts[level] = self.availableModels(selection, level).length; });
+    return counts;
+  };
+
+  /* opts: { mode, level, subject, topics }. Topic ids constrain the model pool without changing mode or scoring. */
   Generator.prototype.next = function (opts) {
     opts = opts || {};
+    var selected = (opts.subject !== undefined || opts.topics !== undefined)
+      ? this.setSelection({ subject: opts.subject, topics: opts.topics })
+      : (this.selection || this.setSelection({}));
     var rng = RNG.create(this.seed + '#' + this.n);
     this.n++;
     var h = this.history;
@@ -73,18 +112,23 @@
 
     // 2. Level.
     var level = opts.level || 'all';
+    var availableLevels = Structure.LEVELS.filter(function (l) { return this.availableModels(selected, l).length > 0; }, this);
+    if (!availableLevels.length) throw new Error('No writing models match the selected content and difficulty. Broaden the topic selection or choose another difficulty.');
     if (level === 'all') {
       var recentLv = h.slice(-9);
-      level = this._pickLeast(Structure.LEVELS, function (l) { return countIn(recentLv, function (e) { return e.level === l; }); }, rng);
+      level = this._pickLeast(availableLevels, function (l) { return countIn(recentLv, function (e) { return e.level === l; }); }, rng);
+    } else if (availableLevels.indexOf(level) < 0) {
+      throw new Error('No ' + level + ' writing models match the selected content. Broaden the topic selection or choose another difficulty.');
     }
 
     // 3. Writing model: hard-exclude recent models, then penalize repeated topic / family / heavy use.
-    var all = this.index.modelsByLevel[level] || [];
-    var K = Math.max(0, Math.min(8, all.length - 2));
-    var recentModels = h.slice(-K).map(function (e) { return e.modelId; });
-    var cands = all.filter(function (m) { return recentModels.indexOf(m.id) < 0; });
-    if (!cands.length) cands = all;
-    if (mode === 'rearrange') {
+    var all = this.availableModels(selected, level);
+    var seenModels = this.seenModels;
+    var unseen = all.filter(function (m) { return seenModels.indexOf(m.id) < 0; });
+    // Visit every eligible underlying problem before entering review. A filtered pool never
+    // borrows a passage from an unrelated topic to hide exhaustion.
+    var cands = unseen.length ? unseen : all;
+    if (!unseen.length && mode === 'rearrange') {
       // Rearrange has one signature per writing model, so avoid models seen in this mode within the last 30 challenges.
       var seenRe = h.slice(-30).filter(function (e) { return e.mode === 'rearrange'; }).map(function (e) { return e.modelId; });
       var fresh = cands.filter(function (m) { return seenRe.indexOf(m.id) < 0; });
@@ -119,7 +163,10 @@
     }
 
     var ch = build(this.index, { mode: mode, modelId: model.id, targetKey: key, seed: this.seed + '#' + (this.n - 1) });
-    h.push({ mode: mode, level: level, modelId: model.id, topicId: model.topicId, family: model.family, key: key, role: ch.role });
+    var wasUsed = seenModels.indexOf(model.id) >= 0;
+    ch.pool = { models: all.length, unseenBefore: unseen.length, review: wasUsed, label: wasUsed ? 'Review practice' : 'New writing problem' };
+    if (!wasUsed) this.seenModels.push(model.id);
+    h.push({ mode: mode, level: level, modelId: model.id, topicId: model.topicId, passageId: ch.passageId, family: model.family, key: key, role: ch.role, signature: ch.signature });
     if (h.length > HISTORY_MAX) h.splice(0, h.length - HISTORY_MAX);
     return ch;
   };

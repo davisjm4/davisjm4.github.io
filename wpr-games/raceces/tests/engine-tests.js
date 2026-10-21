@@ -24,9 +24,12 @@ function runEngineTests() {
   T.suite('content', () => {
     const r = V.validateContent(bundle);
     T.ok(r.errors.length === 0, 'content errors: ' + r.errors.slice(0, 5).join(' | '));
-    T.ok(bundle.models.length >= 30, 'at least 30 writing models');
+    T.ok(bundle.models.length >= 90, 'expanded library has at least 90 writing models');
     T.ok(bundle.families.length >= 8, 'at least 8 reasoning families');
-    Struct.LEVELS.forEach(l => T.ok(bundle.models.filter(m => m.level === l).length >= 10, 'at least 10 models at ' + l));
+    T.eq(bundle.topics.reduce((n, t) => n + t.facts.length, 0), 135, '15 sourced supplementary facts expand the passage fact pool');
+    T.ok(bundle.topics.every(t => t.facts.some(f => f.id === 'f9' && /^https:\/\//.test(f.sourceUrl || ''))), 'each topic has an attributable supplementary fact');
+    Struct.LEVELS.forEach(l => T.ok(bundle.models.filter(m => m.level === l).length >= 30, 'at least 30 models at ' + l));
+    bundle.topics.forEach(t => Struct.LEVELS.forEach(l => T.eq(bundle.models.filter(m => m.topicId === t.id && m.level === l).length, 2, t.id + ' has a balanced authored pool at ' + l)));
     bundle.models.forEach(m => {
       const t = idx.topicsById[m.topicId];
       m.ev.forEach(fid => T.ok(t.factsById[fid], m.id + ' evidence fact exists'));
@@ -209,6 +212,34 @@ function runEngineTests() {
       const g = new G.Generator(bundle, 'm' + mode);
       for (let i = 0; i < 40; i++) T.eq(g.next({ mode, level: 'all' }).mode, mode, 'mode filter honored');
     });
+    const selected = new G.Generator(bundle, 'topic-selection');
+    selected.setSelection({ subject: 'Earth science', topics: ['water-cycle'] });
+    T.eq(selected.availability()['beginner'], 2, 'topic filter reports actual beginner capacity');
+    T.eq(selected.availability()['advanced'], 2, 'topic filter reports actual advanced capacity');
+    const seen = new Set();
+    for (let i = 0; i < 2; i++) {
+      const c = selected.next({ mode: 'mixed', level: 'beginner' });
+      T.eq(c.topicId, 'water-cycle', 'selected topic is honored');
+      T.ok(!c.pool.review, 'unseen topic model is not labeled review');
+      seen.add(c.modelId);
+    }
+    T.eq(seen.size, 2, 'both distinct topic models appear before review');
+    const review = selected.next({ mode: 'mixed', level: 'beginner' });
+    T.ok(review.pool.review, 'small topic pool explicitly enters review after exhaustion');
+    const physics = selected.next({ mode: 'mixed', level: 'intermediate', subject: 'Physics', topics: ['levers'] });
+    T.eq(physics.topicId, 'levers', 'subject and topic filters can be combined');
+    let rejectedMismatch = false;
+    try { selected.next({ mode: 'mixed', level: 'advanced', subject: 'Physics', topics: ['water-cycle'] }); } catch (e) { rejectedMismatch = /No writing models/.test(e.message); }
+    T.ok(rejectedMismatch, 'no cross-subject mismatch is silently substituted');
+    const longPool = new G.Generator(bundle, 'review-rollover');
+    for (let i = 0; i < 150; i++) {
+      const c = longPool.next({ mode: 'mixed', level: 'beginner' });
+      if (i < 30) T.ok(!c.pool.review, 'all beginner models are new before the pool is exhausted');
+      else T.ok(c.pool.review, 'review remains labeled after bounded recent history rolls over');
+    }
+    const restored = new G.Generator(bundle, 'review-restore');
+    restored.restore([], longPool.getSeenModels());
+    T.ok(restored.next({ mode: 'mixed', level: 'beginner' }).pool.review, 'seen-model state persists independently of bounded history');
   });
 
   T.suite('session tracking', () => {
@@ -224,8 +255,10 @@ function runEngineTests() {
     T.eq(st.modes.identify.pct, 50, 'identify accuracy'); T.eq(st.roles.E.pct, 50, 'role accuracy');
     T.eq(st.activeMs, 46000, 'active time');
     T.ok(st.errors.some(e => e.key === 'evidence-vs-explanation'), 'error category tracked');
+    s.setRecent([{ modelId: 'm1' }], ['m1', 'm2']);
     const s2 = new Sess.Session(storage, now);
     T.eq(s2.stats().done, 4, 'persists across reloads');
+    T.eq(s2.getSeenModels().join(','), 'm1,m2', 'seen writing models persist for honest review labeling');
     T.ok(Object.keys(mem).every(k => k.indexOf('raceces-writing-games') === 0), 'uses its own storage namespace');
     T.ok(!/name|email/i.test(Object.values(mem).join('')), 'collects no names or emails');
     s2.reset();
