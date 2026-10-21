@@ -1,6 +1,7 @@
 import { sources, sourceById, generateAssessmentItem } from "./adapters.js?v=20261022-workplace1";
 import { racecesCatalog } from "./raceces-adapter.js?v=20261021-raceces1";
 import { workplaceCatalog } from "./workplace-adapter.js?v=20261022-workplace1";
+import { distributePairs } from "./quiz-distribution.js?v=20261022-workplace1";
 import { buildAssessmentXml, buildManifest, createZip, escapeHtml, formatChoiceHtml, formatQuestionHtml } from "./qti.js?v=20261022-workplace1";
 const $ = id => document.getElementById(id);
 const hash = text => { let h=2166136261; for (const ch of text) { h ^= ch.charCodeAt(0); h=Math.imul(h,16777619); } return (h>>>0).toString(36); };
@@ -68,9 +69,9 @@ function attemptItem(pair,index,used,excluded=new Set()){
 }
 function buildQuiz(c,count=c.count,excluded=new Set()){
  const used=new Set(excluded),items=[];if(!c.pairs.length)return{items,error:"Select at least one exportable practice mode."};
- const ordered=c.pairs.map((_,i)=>c.pairs[(i+Math.floor(indexOffset(c.seed)))%c.pairs.length]);
+ const ordered=distributePairs(c.pairs,count,c.seed);
  for(let i=0;i<count;i++){
-   const pair=ordered[i%ordered.length],item=attemptItem(pair,i,used);
+   const pair=ordered[i],item=attemptItem(pair,i,used);
    if(!item)return{items,error:`Could create ${items.length} of ${count} distinct validated questions. Reduce the count or choose more modes/sources; questions were not repeated.`};
    items.push(item);
  }
