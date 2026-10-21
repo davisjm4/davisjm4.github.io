@@ -1,0 +1,679 @@
+{
+  "skill": "conflict-resolution",
+  "kits": [
+    {
+      "id": "con-shared-task-dispute",
+      "skill": "conflict-resolution",
+      "family": "conflict-resolution.cx-shared-task-dispute",
+      "familyName": "A disagreement over a shared task",
+      "framework": "communication-failure",
+      "concepts": [
+        "conflict-resolution:diplomatic-negotiation",
+        "conflict-resolution:work-style-differences",
+        "conflict-resolution:when-to-escalate"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. You and {coworker} share responsibility for {task|the}, and you disagree about how to do it.",
+        "As {role|a} at {workplace|a}, you and {coworker} keep clashing over how to handle {task|the}."
+      ],
+      "pressure": [
+        "{coworker3} says you should just stand your ground.",
+        "{Lead|the} expects {task|the} to be finished today."
+      ],
+      "detail": [
+        "You have worked with {coworker} for about six months.",
+        "The disagreement started this morning."
+      ],
+      "tiers": {
+        "1": "When a conflict turns aggressive, safety and a supervisor come first.",
+        "2": "A conflict in front of others should move somewhere private first.",
+        "3": "You cannot resolve a disagreement you do not yet understand.",
+        "4": "A fair compromise comes once both sides are understood."
+      },
+      "issues": [
+        {
+          "id": "aggressive",
+          "tier": 1,
+          "rule": "escalate-aggression",
+          "principle": "con.step-away-and-escalate",
+          "fact": [
+            "{coworker} starts shouting and slams a tool down on the counter next to you."
+          ],
+          "short": "{coworker}'s aggressive behavior",
+          "action": "Step away calmly and get {lead|the} involved right away.",
+          "brief": "step away and bring in {lead|the}",
+          "reason": "Aggressive behavior is beyond what coworkers should handle alone. Stepping away keeps you safe, and the lead can deal with the behavior.",
+          "lesson": "When a conflict becomes aggressive, step back and involve a supervisor.",
+          "shortcut": [
+            {
+              "text": "Raise your voice too, so {coworker} knows you will not be pushed around.",
+              "brief": "raise your voice back",
+              "why": "Matching aggression makes the situation more dangerous and harder to resolve.",
+              "mis": "Standing up for yourself means matching the other person's anger."
+            }
+          ]
+        },
+        {
+          "id": "public",
+          "tier": 2,
+          "rule": "move-conflict-private",
+          "principle": "con.take-dispute-private",
+          "fact": [
+            "The argument is happening in front of several {client.plural}."
+          ],
+          "short": "arguing in front of {client.plural}",
+          "action": "Suggest that the two of you talk it over somewhere private.",
+          "brief": "suggest moving somewhere private",
+          "reason": "Arguing in front of {client.plural} embarrasses everyone and hurts the workplace's reputation. A private space makes calm discussion easier.",
+          "lesson": "Move disagreements out of public view before trying to settle them.",
+          "shortcut": [
+            {
+              "text": "Finish the argument quickly right there so it is settled.",
+              "brief": "settle it right there",
+              "why": "Continuing in front of {client.plural} is unprofessional and makes a calm resolution less likely.",
+              "mis": "Settling a dispute fast matters more than where it happens."
+            }
+          ],
+          "clear": [
+            "You and {coworker} have already stepped into the break room to talk."
+          ],
+          "done": "you have already moved somewhere private"
+        },
+        {
+          "id": "unclear",
+          "tier": 3,
+          "rule": "seek-to-understand",
+          "principle": "con.understand-the-objection",
+          "fact": [
+            "You are not actually sure what {coworker} objects to."
+          ],
+          "clear": [
+            "{coworker} explained the concern clearly: your method slows down their part of the job."
+          ],
+          "done": "{coworker} already explained the concern",
+          "short": "not knowing what {coworker} objects to",
+          "action": "Ask {coworker} to explain the concern, and listen without interrupting.",
+          "brief": "ask {coworker} to explain, and listen",
+          "reason": "Many disagreements shrink once each side understands the other. Listening first also lowers the tension.",
+          "lesson": "Understand the other person's concern before trying to resolve a disagreement.",
+          "shortcut": [
+            {
+              "text": "Explain again why your way is better until {coworker} agrees.",
+              "brief": "repeat why your way is better",
+              "why": "Repeating your own view does not address {coworker}'s concern, which you still do not know.",
+              "mis": "Conflicts end when the other person is convinced."
+            }
+          ]
+        },
+        {
+          "id": "style",
+          "tier": 4,
+          "rule": "blend-work-styles",
+          "principle": "con.compromise-on-work-style",
+          "noProceed": true,
+          "fact": [
+            "{coworker} likes to plan every detail first, while you prefer to start quickly and adjust."
+          ],
+          "short": "your different work styles",
+          "action": "Suggest a short planning step first, then starting the work and adjusting as you go.",
+          "brief": "suggest a short plan, then start and adjust",
+          "reason": "Both styles have strengths. A plan that uses some of each respects both of you and gets the task moving.",
+          "lesson": "Treat work-style differences as something to combine, not a contest to win.",
+          "shortcut": [
+            {
+              "text": "Insist on doing it your way, since starting fast gets more done.",
+              "brief": "insist on your way",
+              "why": "Dismissing a coworker's style ignores its strengths and keeps the conflict going.",
+              "mis": "Your own work style is the right one."
+            }
+          ]
+        },
+        {
+          "id": "repeat",
+          "tier": 4,
+          "rule": "escalate-recurring-conflict",
+          "principle": "con.involve-lead-in-recurring-dispute",
+          "fact": [
+            "This is the third time this month that the same disagreement has come up."
+          ],
+          "short": "the recurring disagreement",
+          "action": "Suggest asking {lead|the} to help set a clear process for {task|the}.",
+          "brief": "ask {lead|the} to help set a process",
+          "reason": "A disagreement that keeps returning needs a lasting fix. The lead can set a process both of you follow.",
+          "lesson": "When the same conflict keeps coming back, involve someone who can set a clear process.",
+          "shortcut": [
+            {
+              "text": "Keep sorting it out between the two of you each time it comes up.",
+              "brief": "keep handling it between you",
+              "why": "Handling the same conflict over and over wastes time and wears down the relationship.",
+              "mis": "Involving a supervisor means you failed."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Work with {coworker} on a solution that addresses both of your concerns.",
+        "why": "You understand the concern and nothing else needs handling first, so working out a joint solution is the next step.",
+        "lesson": "Once both sides are understood, work together toward a solution that meets both needs."
+      },
+      "generic": [
+        {
+          "text": "Avoid {coworker} for the rest of the week until things cool off.",
+          "why": "Avoiding a shared-task partner leaves the task and the conflict unresolved.",
+          "mis": "Conflicts fade if you avoid the person."
+        },
+        {
+          "text": "Complain about {coworker} to other teammates during lunch.",
+          "why": "Complaining to others spreads the conflict and damages trust without solving anything.",
+          "mis": "Getting others on your side helps resolve a conflict."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to decide every detail for the two of you.",
+          "why": "You already understand each other's concern. Handing every decision to the lead is unnecessary.",
+          "mis": "A supervisor should settle every disagreement."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You and {coworker} at {workplace|the} need to settle a disagreement about {task|the}."
+        ],
+        "because": {
+          "public": [
+            "The disagreement started out on the floor in front of {client.plural}."
+          ],
+          "repeat": [
+            "The same disagreement has come up several times this month."
+          ]
+        },
+        "steps": [
+          {
+            "id": "move",
+            "text": "Move to a private place to talk",
+            "issue": "public"
+          },
+          {
+            "id": "listen",
+            "text": "Each person explains their view while the other listens",
+            "core": true
+          },
+          {
+            "id": "options",
+            "text": "List options that could work for both",
+            "core": true
+          },
+          {
+            "id": "lead",
+            "text": "Bring {lead|the} in to help set a process",
+            "issue": "repeat"
+          },
+          {
+            "id": "agree",
+            "text": "Agree on the plan and how to check it",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "move",
+            "listen",
+            "A calm conversation needs a private place."
+          ],
+          [
+            "listen",
+            "options",
+            "Options should come from understanding both views."
+          ],
+          [
+            "options",
+            "agree",
+            "You agree on a plan after listing options."
+          ],
+          [
+            "listen",
+            "lead",
+            "The lead needs to hear both views to help."
+          ],
+          [
+            "lead",
+            "agree",
+            "The process the lead helps set becomes part of the plan."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Go private, listen to both sides, look for options, and agree on a plan."
+      },
+      "doc": {
+        "type": "chat",
+        "title": [
+          "Your message to {coworker}"
+        ],
+        "intro": [
+          "You are about to send {coworker} a message after this morning's disagreement. Check it first."
+        ],
+        "prompt": [
+          "Which line is likely to make the conflict worse?",
+          "Which line is the problem?"
+        ],
+        "lesson": "Messages after a conflict should be respectful, specific and focused on a shared solution.",
+        "lines": [
+          {
+            "id": "open",
+            "text": "Hi {coworker}, I would like to sort out how we handle {task|the}.",
+            "fine": "A calm, direct opening."
+          },
+          {
+            "id": "own",
+            "text": "I could have listened better this morning.",
+            "fine": "Owns your part without blaming."
+          },
+          {
+            "id": "view",
+            "text": "I think starting quickly saves time, and I know you prefer to plan first.",
+            "fine": "States both views fairly.",
+            "bad": [
+              {
+                "id": "view-insult",
+                "level": "beginner",
+                "text": "Honestly, your way of planning everything is just slow and pointless.",
+                "why": "Dismissing the other person's approach is insulting and will deepen the conflict.",
+                "principle": "con.doc-dismissive-language"
+              }
+            ]
+          },
+          {
+            "id": "idea",
+            "text": "Could we plan for ten minutes, then start and adjust as we go?",
+            "fine": "Proposes a compromise that respects both styles.",
+            "bad": [
+              {
+                "id": "idea-ultimatum",
+                "level": "intermediate",
+                "text": "From now on we do it my way, or I will just do the whole thing myself.",
+                "why": "An ultimatum ends the discussion rather than solving it and ignores the other person's needs.",
+                "principle": "con.doc-ultimatum"
+              }
+            ]
+          },
+          {
+            "id": "private",
+            "text": "Want to talk in the break room at 2?",
+            "fine": "Suggests a private, specific time.",
+            "bad": [
+              {
+                "id": "private-public",
+                "level": "advanced",
+                "needs": [
+                  "open"
+                ],
+                "text": "I am also posting this in the team chat so everyone can weigh in.",
+                "why": "Making a two-person disagreement public invites others to take sides and embarrasses your coworker.",
+                "principle": "con.doc-made-dispute-public"
+              }
+            ]
+          },
+          {
+            "id": "close",
+            "text": "Thanks for working through this with me.",
+            "fine": "A respectful close."
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Style and repeat share tier 4 (exclusive by tier) because their order is debatable."
+      }
+    },
+    {
+      "id": "con-performance-concern",
+      "skill": "conflict-resolution",
+      "family": "conflict-resolution.cx-performance-concern",
+      "familyName": "Raising a concern about a coworker's work",
+      "framework": "conflicting-instructions",
+      "concepts": [
+        "conflict-resolution:performance-concerns",
+        "conflict-resolution:when-to-escalate",
+        "conflict-resolution:personality-and-culture"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. There may be a problem with how {coworker} leaves {equipment|the} at the end of each shift.",
+        "As {role|a} at {workplace|a}, you are concerned about how {coworker}, who works the shift before yours, leaves {equipment|the}."
+      ],
+      "pressure": [
+        "{coworker3} says you should report {coworker} and be done with it."
+      ],
+      "detail": [
+        "You usually see {coworker} only during the shift change."
+      ],
+      "tiers": {
+        "1": "A safety problem has to be dealt with today, not saved for a talk.",
+        "2": "Raise only what you know firsthand.",
+        "3": "A coworker deserves a direct conversation before you go over their head.",
+        "4": "When talking has not worked, it is time to involve the supervisor."
+      },
+      "issues": [
+        {
+          "id": "unsafe",
+          "tier": 1,
+          "rule": "control-hazard-first",
+          "principle": "con.report-unsafe-handoff",
+          "fact": [
+            "This morning, {equipment|the} was left in a state that could injure the next person who used it."
+          ],
+          "short": "the unsafe state of the equipment",
+          "action": "Make the equipment safe or mark it, and tell {lead|the} about it today.",
+          "brief": "make it safe and tell {lead|the} today",
+          "reason": "A safety risk cannot wait for a friendly conversation. The lead needs to know the same day.",
+          "lesson": "Safety concerns about a coworker's work go to the supervisor right away.",
+          "shortcut": [
+            {
+              "text": "Fix it quietly every morning so {coworker} does not feel criticized.",
+              "brief": "fix it quietly each morning",
+              "why": "Quietly fixing a safety risk leaves it in place for anyone who gets there before you.",
+              "mis": "Avoiding criticism matters more than reporting a hazard."
+            }
+          ]
+        },
+        {
+          "id": "secondhand",
+          "tier": 2,
+          "rule": "check-facts-first",
+          "principle": "con.verify-secondhand-complaint",
+          "fact": [
+            "You have not seen it yourself; {coworker2} told you about it."
+          ],
+          "clear": [
+            "You saw how {equipment|the} was left yourself on Monday and Tuesday."
+          ],
+          "done": "you already saw the problem yourself",
+          "short": "only having secondhand information",
+          "action": "Check the equipment yourself for a few days before raising anything.",
+          "brief": "check it yourself before raising it",
+          "reason": "A concern based on hearsay may be wrong or exaggerated. Seeing it yourself lets you describe it fairly.",
+          "lesson": "Base a concern about someone's work on what you have seen yourself.",
+          "shortcut": [
+            {
+              "text": "Repeat what {coworker2} told you as if you had seen it yourself.",
+              "brief": "repeat it as if you saw it",
+              "why": "Passing on secondhand claims as fact is unfair to {coworker} and may be inaccurate.",
+              "mis": "If a coworker said it, it must be true."
+            }
+          ]
+        },
+        {
+          "id": "nevertold",
+          "tier": 3,
+          "rule": "talk-directly-first",
+          "principle": "con.raise-concern-directly",
+          "fact": [
+            "You have never mentioned the problem to {coworker}."
+          ],
+          "short": "never having told {coworker}",
+          "action": "Talk with {coworker} privately and describe the specific problem.",
+          "brief": "talk with {coworker} privately",
+          "reason": "{coworker} may not know the setup causes problems. A private, specific conversation gives them the chance to fix it.",
+          "lesson": "Raise a work concern with the person directly before going to a supervisor.",
+          "shortcut": [
+            {
+              "text": "Complain to {lead|the} without saying anything to {coworker} first.",
+              "brief": "complain to {lead|the}",
+              "why": "Going over a coworker's head on a minor issue, without talking first, damages trust and skips the simplest fix.",
+              "mis": "Supervisors should handle every complaint."
+            }
+          ]
+        },
+        {
+          "id": "unchanged",
+          "tier": 3,
+          "rule": "escalate-after-trying",
+          "principle": "con.escalate-after-direct-talk-fails",
+          "fact": [
+            "You talked with {coworker} about it two weeks ago, and nothing has changed."
+          ],
+          "short": "the problem continuing after your talk",
+          "action": "Explain the situation to {lead|the} with specific examples.",
+          "brief": "tell {lead|the} with specific examples",
+          "reason": "You tried the direct approach. Specific examples let the lead address it fairly.",
+          "lesson": "If a direct conversation does not fix the problem, involve the supervisor with specifics.",
+          "shortcut": [
+            {
+              "text": "Keep fixing it yourself and stop expecting {coworker} to change.",
+              "brief": "keep fixing it yourself",
+              "why": "The problem costs time every day. Silently absorbing it leaves the cause untouched.",
+              "mis": "Escalating after talking makes you a troublemaker."
+            }
+          ]
+        },
+        {
+          "id": "culture",
+          "tier": 4,
+          "rule": "adapt-to-person",
+          "principle": "con.adapt-feedback-to-person",
+          "noProceed": true,
+          "fact": [
+            "{coworker} is new and has said that blunt criticism in front of others feels humiliating."
+          ],
+          "short": "how {coworker} prefers to hear feedback",
+          "action": "Plan to raise it one-on-one, in a calm and specific way.",
+          "brief": "plan a calm one-on-one talk",
+          "reason": "Adapting how you give feedback to the person makes it easier to hear and act on.",
+          "lesson": "Give feedback in a way that respects the person's background and preferences.",
+          "shortcut": [
+            {
+              "text": "Bring it up at the team meeting so everyone hears the standard.",
+              "brief": "raise it at the team meeting",
+              "why": "Public criticism humiliates {coworker} and makes a defensive reaction more likely.",
+              "mis": "Public feedback is more efficient."
+            }
+          ]
+        }
+      ],
+      "exclusive": [
+        [
+          "unsafe",
+          "secondhand"
+        ]
+      ],
+      "proceed": {
+        "text": "Talk with {coworker} about it in a calm, specific way.",
+        "why": "You have firsthand information and nothing more urgent applies, so a direct conversation is the right next step.",
+        "lesson": "Raise concerns directly and specifically once you know the facts."
+      },
+      "generic": [
+        {
+          "text": "Leave {coworker} an anonymous note telling them to do better.",
+          "why": "An anonymous note is vague and feels like an attack. A direct conversation works better.",
+          "mis": "Anonymous criticism avoids conflict."
+        },
+        {
+          "text": "Set up {equipment|the} wrong on purpose so {coworker} sees how it feels.",
+          "why": "Getting even creates new problems and makes the conflict personal.",
+          "mis": "Teaching someone a lesson solves the problem."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Keep a secret log for another month before saying anything.",
+          "why": "You already have firsthand facts. Waiting a month lets the problem continue.",
+          "mis": "More evidence is always needed before speaking up."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You want to address how {coworker} leaves {equipment|the} at the end of each shift at {workplace|the}."
+        ],
+        "because": {
+          "secondhand": [
+            "So far you have only heard about the problem from {coworker2}."
+          ],
+          "unchanged": [
+            "An earlier talk with {coworker} has not changed anything."
+          ]
+        },
+        "steps": [
+          {
+            "id": "see",
+            "text": "Check the equipment yourself for a few days",
+            "issue": "secondhand"
+          },
+          {
+            "id": "examples",
+            "text": "Write down specific examples",
+            "core": true
+          },
+          {
+            "id": "talk",
+            "text": "Talk privately with {coworker}",
+            "core": true
+          },
+          {
+            "id": "lead",
+            "text": "Share the examples with {lead|the}",
+            "issue": "unchanged"
+          },
+          {
+            "id": "followup",
+            "text": "Check whether the setup improves",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "see",
+            "examples",
+            "Examples should come from what you saw yourself."
+          ],
+          [
+            "examples",
+            "talk",
+            "Specific examples make the conversation clear and fair."
+          ],
+          [
+            "talk",
+            "followup",
+            "You check for improvement after raising it."
+          ],
+          [
+            "talk",
+            "lead",
+            "The supervisor comes in after a direct talk."
+          ],
+          [
+            "examples",
+            "lead",
+            "The lead needs specific examples."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Get firsthand facts, talk directly, then escalate with specifics if needed."
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "'nevertold' and 'unchanged' share tier 3 and contradict each other, so they never co-occur."
+      },
+      "doc": {
+        "type": "note",
+        "title": [
+          "Your notes for the talk with {coworker}"
+        ],
+        "intro": [
+          "You wrote these notes before talking with {coworker}. Check them first."
+        ],
+        "prompt": [
+          "Which note would make the conversation go badly?",
+          "Which line is the problem?"
+        ],
+        "lesson": "Raising a concern works best when it is private, specific, factual and focused on a fix.",
+        "lines": [
+          {
+            "id": "where",
+            "text": "Talk privately at the start of my shift.",
+            "fine": "A private setting.",
+            "bad": [
+              {
+                "id": "where-public",
+                "level": "beginner",
+                "text": "Bring it up in front of the whole team so everyone hears.",
+                "why": "Raising a concern in public embarrasses the coworker and makes them defensive.",
+                "principle": "con.doc-public-criticism"
+              }
+            ]
+          },
+          {
+            "id": "facts",
+            "text": "On Monday and Tuesday, the guide was left loose.",
+            "fine": "Specific, firsthand facts.",
+            "bad": [
+              {
+                "id": "facts-always",
+                "level": "beginner",
+                "text": "You always mess up the equipment.",
+                "why": "\"Always\" is an exaggeration and an attack, not a specific fact.",
+                "principle": "con.doc-generalized-blame"
+              }
+            ]
+          },
+          {
+            "id": "effect",
+            "text": "It takes me 15 minutes to reset it each morning.",
+            "fine": "Explains the impact.",
+            "bad": [
+              {
+                "id": "effect-exagg",
+                "level": "beginner",
+                "text": "You are ruining everyone's mornings on purpose.",
+                "why": "Accusing someone of acting on purpose is an attack, not a description of the impact.",
+                "principle": "con.doc-accuses-intent"
+              }
+            ]
+          },
+          {
+            "id": "ask",
+            "text": "Ask whether something makes the end of the shift rushed.",
+            "fine": "Seeks to understand the other side.",
+            "bad": [
+              {
+                "id": "ask-assume",
+                "level": "intermediate",
+                "text": "Tell {coworker} the problem is laziness.",
+                "why": "Assuming a motive is unfair and shuts down the conversation.",
+                "principle": "con.doc-assumes-motive"
+              }
+            ]
+          },
+          {
+            "id": "fix",
+            "text": "Suggest a two-minute checklist at shift change.",
+            "fine": "Proposes a practical fix."
+          },
+          {
+            "id": "next",
+            "text": "If nothing changes in two weeks, talk to {lead|the}.",
+            "fine": "A sensible escalation plan.",
+            "bad": [
+              {
+                "id": "next-now",
+                "level": "advanced",
+                "needs": [
+                  "fix"
+                ],
+                "text": "Report {coworker} to {lead|the} today, before trying the checklist idea.",
+                "why": "The notes plan a direct fix first; escalating today skips it for a non-safety issue.",
+                "principle": "con.doc-escalates-before-trying-fix"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

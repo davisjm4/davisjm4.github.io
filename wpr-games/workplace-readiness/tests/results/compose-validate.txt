@@ -1,0 +1,6 @@
+
+> workplace-readiness-games@1.0.0 validate
+> node tools/validate.js
+
+templates: 140 | families: 137 | skills: 22 | contexts: 13
+library errors: 0 | warnings: 0

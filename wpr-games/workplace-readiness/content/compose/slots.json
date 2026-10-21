@@ -1,0 +1,299 @@
+{
+ "_about": "Typed slot pools that extend each existing setting bundle (keyed by bundle id). Every value fits that bundle's workplace. A kit lists the typed slots it needs in `requires`; bundles without them are excluded automatically, so incompatible vocabulary can never be combined.",
+ "_slots": {
+  "powered": "powered equipment with a cord or motor (bare noun)",
+  "chemical": "a work or cleaning chemical with a label and SDS (bare noun)",
+  "ppe": "the protective gear that chemical calls for (phrase, no article)",
+  "private": "confidential information handled in this workplace (plural phrase, no article)",
+  "supply": "a consumable supply with plural",
+  "area": "a work area in this workplace (bare noun)"
+ },
+ "bundles": {
+  "greenhouse-nursery": {
+   "powered": "soil mixer",
+   "chemical": "fertilizer concentrate",
+   "ppe": "chemical-resistant gloves and goggles",
+   "private": "customer payment details",
+   "supply": {
+    "text": "plant tray",
+    "plural": "plant trays"
+   },
+   "area": "potting area"
+  },
+  "dairy-farm": {
+   "powered": "milk pump",
+   "chemical": "pipeline cleaner",
+   "ppe": "rubber gloves and goggles",
+   "private": "buyer contract prices",
+   "supply": {
+    "text": "milk filter",
+    "plural": "milk filters"
+   },
+   "area": "milk room"
+  },
+  "repair-shop": {
+   "powered": "bench grinder",
+   "chemical": "brake cleaner",
+   "ppe": "nitrile gloves and safety glasses",
+   "private": "customer payment details",
+   "supply": {
+    "text": "oil filter",
+    "plural": "oil filters"
+   },
+   "area": "service bay"
+  },
+  "dealership-service": {
+   "powered": "tire balancer",
+   "chemical": "parts-washer solvent",
+   "ppe": "nitrile gloves and safety glasses",
+   "private": "copies of customer driver's licenses",
+   "supply": {
+    "text": "shop towel",
+    "plural": "shop towels"
+   },
+   "area": "service drive"
+  },
+  "community-bank": {
+   "powered": "currency counter",
+   "chemical": "disinfectant spray",
+   "ppe": "disposable gloves",
+   "private": "customer account numbers",
+   "supply": {
+    "text": "receipt paper roll",
+    "plural": "receipt paper rolls"
+   },
+   "area": "teller line"
+  },
+  "accounting-office": {
+   "powered": "paper shredder",
+   "chemical": "disinfectant spray",
+   "ppe": "disposable gloves",
+   "private": "client tax files",
+   "supply": {
+    "text": "toner cartridge",
+    "plural": "toner cartridges"
+   },
+   "area": "front office"
+  },
+  "framing-crew": {
+   "powered": "circular saw",
+   "chemical": "construction adhesive",
+   "ppe": "work gloves and safety glasses",
+   "private": "homeowner's alarm code",
+   "supply": {
+    "text": "box of nails",
+    "plural": "boxes of nails"
+   },
+   "area": "work site"
+  },
+  "remodel-company": {
+   "powered": "miter saw",
+   "chemical": "wood stain",
+   "ppe": "chemical-resistant gloves and safety glasses",
+   "private": "customer's door code",
+   "supply": {
+    "text": "box of screws",
+    "plural": "boxes of screws"
+   },
+   "area": "customer's kitchen"
+  },
+  "restaurant-kitchen": {
+   "powered": "slicer",
+   "chemical": "oven cleaner",
+   "ppe": "rubber gloves and goggles",
+   "private": "staff phone list",
+   "supply": {
+    "text": "food container",
+    "plural": "food containers"
+   },
+   "area": "prep station"
+  },
+  "catering-company": {
+   "powered": "food processor",
+   "chemical": "degreaser",
+   "ppe": "rubber gloves and goggles",
+   "private": "client payment details",
+   "supply": {
+    "text": "serving tray",
+    "plural": "serving trays"
+   },
+   "area": "loading area"
+  },
+  "elementary-school": {
+   "powered": "laminator",
+   "chemical": "disinfectant spray",
+   "ppe": "disposable gloves",
+   "private": "student records",
+   "supply": {
+    "text": "glue stick",
+    "plural": "glue sticks"
+   },
+   "area": "classroom"
+  },
+  "training-center": {
+   "powered": "copier",
+   "chemical": "disinfectant spray",
+   "ppe": "disposable gloves",
+   "private": "learner records",
+   "supply": {
+    "text": "binder",
+    "plural": "binders"
+   },
+   "area": "classroom"
+  },
+  "engineering-lab": {
+   "powered": "drill press",
+   "chemical": "isopropyl alcohol",
+   "ppe": "nitrile gloves and safety glasses",
+   "private": "client test results",
+   "supply": {
+    "text": "filament spool",
+    "plural": "filament spools"
+   },
+   "area": "test bench"
+  },
+  "design-firm": {
+   "powered": "large-format plotter",
+   "chemical": "isopropyl alcohol",
+   "ppe": "nitrile gloves and safety glasses",
+   "private": "client project drawings",
+   "supply": {
+    "text": "plotter paper roll",
+    "plural": "plotter paper rolls"
+   },
+   "area": "plotting room"
+  },
+  "outpatient-clinic": {
+   "powered": "centrifuge",
+   "chemical": "surface disinfectant",
+   "ppe": "disposable gloves",
+   "private": "patient records",
+   "supply": {
+    "text": "box of exam gloves",
+    "plural": "boxes of exam gloves"
+   },
+   "area": "exam room"
+  },
+  "dental-office": {
+   "powered": "ultrasonic cleaner",
+   "chemical": "instrument disinfectant",
+   "ppe": "utility gloves and eye protection",
+   "private": "patient records",
+   "supply": {
+    "text": "box of masks",
+    "plural": "boxes of masks"
+   },
+   "area": "treatment room"
+  },
+  "hotel": {
+   "powered": "industrial vacuum",
+   "chemical": "bathroom cleaner",
+   "ppe": "rubber gloves",
+   "private": "guest room numbers",
+   "supply": {
+    "text": "key card",
+    "plural": "key cards"
+   },
+   "area": "lobby"
+  },
+  "restaurant": {
+   "powered": "commercial blender",
+   "chemical": "sanitizer concentrate",
+   "ppe": "rubber gloves and goggles",
+   "private": "guest credit card slips",
+   "supply": {
+    "text": "to-go container",
+    "plural": "to-go containers"
+   },
+   "area": "dining room"
+  },
+  "help-desk": {
+   "powered": "docking station",
+   "chemical": "contact cleaner",
+   "ppe": "nitrile gloves",
+   "private": "employee account details",
+   "supply": {
+    "text": "network cable",
+    "plural": "network cables"
+   },
+   "area": "equipment room"
+  },
+  "school-district-it": {
+   "powered": "charging cart",
+   "chemical": "screen cleaner concentrate",
+   "ppe": "nitrile gloves",
+   "private": "student account details",
+   "supply": {
+    "text": "charging cable",
+    "plural": "charging cables"
+   },
+   "area": "storage room"
+  },
+  "assembly-plant": {
+   "powered": "bench grinder",
+   "chemical": "thread-locking compound",
+   "ppe": "nitrile gloves and safety glasses",
+   "private": "production cost figures",
+   "supply": {
+    "text": "box of fasteners",
+    "plural": "boxes of fasteners"
+   },
+   "area": "assembly line"
+  },
+  "packaging-facility": {
+   "powered": "shrink-wrap machine",
+   "chemical": "adhesive cleaner",
+   "ppe": "nitrile gloves and safety glasses",
+   "private": "customer shipping lists",
+   "supply": {
+    "text": "roll of shrink film",
+    "plural": "rolls of shrink film"
+   },
+   "area": "packing line"
+  },
+  "design-studio": {
+   "powered": "color printer",
+   "chemical": "spray adhesive",
+   "ppe": "nitrile gloves",
+   "private": "unreleased client designs",
+   "supply": {
+    "text": "poster board",
+    "plural": "poster boards"
+   },
+   "area": "print room"
+  },
+  "video-production": {
+   "powered": "studio light",
+   "chemical": "contact cleaner",
+   "ppe": "nitrile gloves",
+   "private": "unreleased client footage",
+   "supply": {
+    "text": "memory card",
+    "plural": "memory cards"
+   },
+   "area": "studio floor"
+  },
+  "grocery-store": {
+   "powered": "cardboard baler",
+   "chemical": "floor cleaner concentrate",
+   "ppe": "rubber gloves and goggles",
+   "private": "special-order customer phone numbers",
+   "supply": {
+    "text": "produce bag roll",
+    "plural": "produce bag rolls"
+   },
+   "area": "back stockroom"
+  },
+  "electronics-store": {
+   "powered": "label printer",
+   "chemical": "adhesive remover",
+   "ppe": "nitrile gloves",
+   "private": "customer payment details",
+   "supply": {
+    "text": "security tag",
+    "plural": "security tags"
+   },
+   "area": "sales floor"
+  }
+ }
+}

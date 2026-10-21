@@ -1,0 +1,6 @@
+
+> workplace-readiness-games@1.0.0 build
+> node tools/build-bundle.js
+
+Wrote js/data/content-bundle.js (354823 bytes, 140 templates)
+Wrote js/data/compose-bundle.js (486339 bytes, 51 kits)

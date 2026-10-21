@@ -1,0 +1,541 @@
+{
+  "skill": "listening-and-speaking",
+  "kits": [
+    {
+      "id": "lis-spoken-instructions",
+      "skill": "listening-and-speaking",
+      "family": "listening-and-speaking.cx-spoken-instructions",
+      "familyName": "Taking in spoken instructions",
+      "framework": "critical-information",
+      "concepts": [
+        "listening-and-speaking:active-listening",
+        "listening-and-speaking:nonverbal-cues"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. At the start of the shift, {lead|the} quickly explains a rush job to you and two coworkers.",
+        "As {role|a} at {workplace|a}, you are in a quick huddle where {lead|the} explains today's rush job."
+      ],
+      "pressure": [
+        "{Lead|the} says the team needs to get moving in two minutes.",
+        "{coworker3} whispers that it will all make sense once you start."
+      ],
+      "detail": [
+        "The huddle is happening next to the time clock.",
+        "Two other coworkers are listening too."
+      ],
+      "tiers": {
+        "1": "A safety warning you did not fully hear has to be cleared up first.",
+        "2": "Signs that a teammate disagrees are worth raising while everyone is still together.",
+        "3": "A missing detail you need for the job should be confirmed before you start.",
+        "4": "Losing track of the instructions calls for a recap before work begins.",
+        "5": "Checking your understanding is useful once the gaps are filled."
+      },
+      "issues": [
+        {
+          "id": "warning",
+          "tier": 1,
+          "rule": "confirm-safety-information",
+          "principle": "lis.confirm-misheard-warning",
+          "fact": [
+            "Over the noise, you only partly heard a warning {lead|the} gave about {equipment|the}."
+          ],
+          "clear": [
+            "{Lead|the} also handed out the warning about {equipment|the} in writing."
+          ],
+          "done": "the warning was already given in writing",
+          "short": "the warning you only partly heard",
+          "action": "Ask {lead|the} to repeat the warning about {equipment|the} before you start.",
+          "brief": "ask {lead|the} to repeat the warning",
+          "reason": "A safety warning only protects you if you heard all of it. Asking now takes seconds.",
+          "lesson": "If you did not fully hear a safety warning, ask for it again before you act.",
+          "shortcut": [
+            {
+              "text": "Ask {coworker} later what the warning was about.",
+              "brief": "ask {coworker} about it later",
+              "why": "{coworker} may not have heard it fully either, and you need it before using the equipment.",
+              "mis": "A coworker's memory is as good as the original instructions."
+            }
+          ]
+        },
+        {
+          "id": "body",
+          "tier": 2,
+          "rule": "respond-to-nonverbal-cue",
+          "principle": "lis.check-on-nonverbal-disagreement",
+          "fact": [
+            "{coworker} says the plan is fine but crosses both arms and frowns."
+          ],
+          "short": "{coworker}'s mixed signals",
+          "action": "Ask {coworker} gently whether something about the plan seems off.",
+          "brief": "gently ask {coworker} about the plan",
+          "reason": "Body language that does not match the words often means an unspoken concern. Asking now may surface a real problem.",
+          "lesson": "Notice when body language and words do not match, and check in.",
+          "shortcut": [
+            {
+              "text": "Take {coworker} at their word, since they said the plan is fine.",
+              "brief": "take {coworker} at their word",
+              "why": "The crossed arms and frown suggest a concern. Ignoring the signal may leave a problem unspoken.",
+              "mis": "Only spoken words matter in a conversation."
+            }
+          ]
+        },
+        {
+          "id": "time",
+          "tier": 3,
+          "rule": "confirm-missed-detail",
+          "principle": "lis.confirm-missed-deadline",
+          "fact": [
+            "You missed the deadline {lead|the} mentioned for finishing the job."
+          ],
+          "clear": [
+            "{Lead|the} wrote the ready time on the board."
+          ],
+          "done": "the ready time is already written on the board",
+          "short": "the ready time you missed",
+          "action": "Ask {lead|the} to confirm what time the job must be ready.",
+          "brief": "confirm the ready time with {lead|the}",
+          "reason": "The deadline shapes how you plan the job. Confirming it now prevents a costly misunderstanding.",
+          "lesson": "Confirm key details you missed instead of guessing.",
+          "shortcut": [
+            {
+              "text": "Assume the job is due at the usual end-of-shift time.",
+              "brief": "assume the usual deadline",
+              "why": "A rush job may have a different deadline. Guessing risks finishing too late.",
+              "mis": "The usual answer is probably the right one."
+            }
+          ]
+        },
+        {
+          "id": "lost",
+          "tier": 4,
+          "rule": "request-recap",
+          "principle": "lis.ask-for-recap",
+          "fact": [
+            "{coworker2} keeps cutting in with side comments, and you are losing track of the steps."
+          ],
+          "short": "losing track of the steps",
+          "action": "At the next pause, ask {lead|the} to recap the key steps.",
+          "brief": "ask {lead|the} for a quick recap",
+          "reason": "A short recap fixes gaps caused by interruptions, and waiting for a pause is respectful.",
+          "lesson": "When interruptions break your understanding, politely ask for a recap.",
+          "shortcut": [
+            {
+              "text": "Nod along and figure out the steps once the work starts.",
+              "brief": "nod along and figure it out later",
+              "why": "Pretending to understand hides the gap until it causes a mistake.",
+              "mis": "Nodding along is the polite thing to do."
+            }
+          ]
+        },
+        {
+          "id": "check",
+          "tier": 5,
+          "rule": "summarize-back",
+          "principle": "lis.paraphrase-to-confirm",
+          "noProceed": true,
+          "fact": [
+            "{Lead|the} asks whether everyone understands the plan."
+          ],
+          "short": "checking your understanding",
+          "action": "Briefly summarize the plan back to {lead|the} to check you have it right.",
+          "brief": "summarize the plan back",
+          "reason": "Repeating the plan in your own words is the quickest way to catch a misunderstanding before work starts.",
+          "lesson": "Paraphrase instructions back to confirm you understood them.",
+          "shortcut": [
+            {
+              "text": "Say yes, since asking questions might slow everyone down.",
+              "brief": "just say yes",
+              "why": "A quick yes skips the chance to catch a misunderstanding.",
+              "mis": "Saying you understand is the same as understanding."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Start the rush job the way {lead|the} described it.",
+        "why": "You have the details you need, so starting the job as described is the right move.",
+        "lesson": "Once you have heard and understood the instructions, act on them."
+      },
+      "generic": [
+        {
+          "text": "Look at your phone during the huddle and catch up afterward.",
+          "why": "Not paying attention during instructions guarantees you will miss something.",
+          "mis": "You can catch up on instructions later."
+        },
+        {
+          "text": "Interrupt {lead|the} mid-sentence to ask about something unrelated.",
+          "why": "Cutting in with an unrelated question breaks everyone's focus.",
+          "mis": "Any question is worth asking right away."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to repeat all of the instructions from the start.",
+          "why": "You already have the details. Asking for a full repeat holds up the whole team.",
+          "mis": "Hearing everything twice is always safer."
+        }
+      ],
+      "process": {
+        "setup": [
+          "{Lead|the} at {workplace|the} is about to explain a rush job to your team."
+        ],
+        "because": {
+          "warning": [
+            "Part of a warning about {equipment|the} was drowned out by noise."
+          ],
+          "time": [
+            "You did not catch when the job is due."
+          ]
+        },
+        "steps": [
+          {
+            "id": "listen",
+            "text": "Listen closely without interrupting",
+            "core": true
+          },
+          {
+            "id": "warn",
+            "text": "Ask to hear the warning again",
+            "issue": "warning"
+          },
+          {
+            "id": "due",
+            "text": "Confirm the ready time",
+            "issue": "time"
+          },
+          {
+            "id": "recap",
+            "text": "Repeat the plan back in your own words",
+            "core": true
+          },
+          {
+            "id": "begin",
+            "text": "Begin the rush job",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "listen",
+            "warn",
+            "You ask about what you missed once the explanation ends."
+          ],
+          [
+            "listen",
+            "due",
+            "You ask about the missed detail after the explanation."
+          ],
+          [
+            "listen",
+            "recap",
+            "You can only repeat back what you have heard."
+          ],
+          [
+            "warn",
+            "begin",
+            "The warning has to be clear before work starts."
+          ],
+          [
+            "due",
+            "recap",
+            "Your recap should include the ready time."
+          ],
+          [
+            "recap",
+            "begin",
+            "Confirm your understanding before starting."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Listen first, clear up what you missed, confirm your understanding, then begin."
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Active listening and nonverbal cues; all issues occur during one huddle."
+      }
+    },
+    {
+      "id": "lis-group-update",
+      "skill": "listening-and-speaking",
+      "family": "listening-and-speaking.cx-group-update",
+      "familyName": "Preparing a short spoken update",
+      "framework": "communication-failure",
+      "concepts": [
+        "listening-and-speaking:presenting",
+        "listening-and-speaking:audience-and-setting"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. Tomorrow you will give a short spoken update about a change to {task|the}.",
+        "As {role|a} at {workplace|a}, you have been asked to present a change to {task|the} at tomorrow's meeting."
+      ],
+      "pressure": [
+        "{coworker3} says nobody really listens to these updates anyway.",
+        "You have only tonight to prepare."
+      ],
+      "detail": [
+        "You wrote your notes on index cards.",
+        "This is your first time presenting at work."
+      ],
+      "tiers": {
+        "1": "Getting a fact wrong in front of a group misleads everyone at once.",
+        "2": "The time limit decides how much you can say.",
+        "3": "Words the audience does not know make the message useless.",
+        "4": "A setting where people cannot hear needs fixing before the content.",
+        "5": "Slide design matters less than accuracy, timing and clarity."
+      },
+      "issues": [
+        {
+          "id": "number",
+          "tier": 1,
+          "rule": "verify-before-presenting",
+          "principle": "lis.verify-figure-before-presenting",
+          "fact": [
+            "One number in your notes is from last month, and you are not sure it is still right."
+          ],
+          "clear": [
+            "{coworker} confirmed this morning that the number is still current."
+          ],
+          "done": "the number was already confirmed",
+          "short": "the possibly outdated number",
+          "action": "Check that number with {coworker} or the records before you present it.",
+          "brief": "check the number before presenting",
+          "reason": "Presenting a wrong figure misleads everyone in the room. Checking it first protects your credibility.",
+          "lesson": "Verify the facts you plan to present before you speak.",
+          "shortcut": [
+            {
+              "text": "Leave the number in, since it is probably close enough.",
+              "brief": "keep the number as it is",
+              "why": "A wrong number spoken to a group spreads quickly and is hard to correct.",
+              "mis": "Numbers in a talk do not need to be exact."
+            }
+          ]
+        },
+        {
+          "id": "long",
+          "tier": 2,
+          "rule": "fit-the-time",
+          "principle": "lis.cut-to-time-limit",
+          "fact": [
+            "You have three minutes, but your notes would take about ten."
+          ],
+          "short": "notes that run three times too long",
+          "action": "Cut the update down to the three points people most need to know.",
+          "brief": "cut it to the three key points",
+          "reason": "Going over time loses the audience and the meeting. Choosing the key points makes the message stick.",
+          "lesson": "Fit your message to the time you have by focusing on what matters most.",
+          "shortcut": [
+            {
+              "text": "Plan to talk faster so everything fits into three minutes.",
+              "brief": "plan to talk faster",
+              "why": "Rushing makes the update harder to follow. Cutting content works better than speeding up.",
+              "mis": "Speaking faster lets you say more."
+            }
+          ]
+        },
+        {
+          "id": "jargon",
+          "tier": 3,
+          "rule": "match-audience",
+          "principle": "lis.plain-words-for-audience",
+          "fact": [
+            "Some of the audience will be {client.plural} who do not know the team's shorthand terms."
+          ],
+          "short": "terms the {client.plural} will not know",
+          "action": "Replace the shorthand terms with plain words everyone will know.",
+          "brief": "swap the shorthand for plain words",
+          "reason": "An audience cannot act on words it does not understand. Plain language reaches everyone in the room.",
+          "lesson": "Choose words that fit your audience, not just your team.",
+          "shortcut": [
+            {
+              "text": "Keep the shorthand, since it sounds more professional.",
+              "brief": "keep the shorthand terms",
+              "why": "Jargon the audience does not know sounds confusing, not professional.",
+              "mis": "Technical terms make a speaker sound more credible."
+            }
+          ],
+          "clear": [
+            "You already replaced the shorthand terms with plain words."
+          ],
+          "done": "the shorthand was already replaced"
+        },
+        {
+          "id": "noisy",
+          "tier": 4,
+          "rule": "fit-the-setting",
+          "principle": "lis.fix-setting-before-speaking",
+          "fact": [
+            "The meeting is in a noisy {area}, and there is no microphone."
+          ],
+          "clear": [
+            "{Lead|the} already moved the meeting to a quiet room."
+          ],
+          "done": "the meeting was already moved to a quiet room",
+          "short": "the noisy room",
+          "action": "Ask {lead|the} whether the meeting can move somewhere quieter.",
+          "brief": "ask {lead|the} about a quieter room",
+          "reason": "A message nobody can hear accomplishes nothing. Fixing the setting makes everything else work.",
+          "lesson": "Make sure the setting lets your audience hear you.",
+          "shortcut": [
+            {
+              "text": "Plan to shout over the noise so everyone can hear.",
+              "brief": "plan to speak over the noise",
+              "why": "Speaking over loud noise strains your voice and still leaves people missing parts.",
+              "mis": "Louder always means clearer."
+            }
+          ]
+        },
+        {
+          "id": "slides",
+          "tier": 5,
+          "rule": "simplify-visuals",
+          "principle": "lis.simplify-crowded-slides",
+          "fact": [
+            "Your one slide is packed with small text."
+          ],
+          "short": "the crowded slide",
+          "action": "Simplify the slide to a few large words that support what you say.",
+          "brief": "simplify the slide",
+          "reason": "People cannot read small text and listen at the same time. A simple slide supports your words.",
+          "lesson": "Use visuals that support your talk rather than compete with it.",
+          "shortcut": [
+            {
+              "text": "Read the slide aloud word for word so nothing is missed.",
+              "brief": "read the slide aloud",
+              "why": "Reading a crowded slide aloud is slow and loses the audience.",
+              "mis": "Reading the slide is the safest way to present."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Give the update as planned, speaking clearly and looking at the group.",
+        "why": "The content, timing and setting are ready, so delivering the update clearly is all that is left.",
+        "lesson": "When the message is accurate and fits the audience, deliver it clearly and confidently."
+      },
+      "generic": [
+        {
+          "text": "Ask {coworker2} to give the update for you.",
+          "why": "The update is your assignment. Handing it off without a reason avoids a useful skill.",
+          "mis": "Avoiding a presentation avoids the risk."
+        },
+        {
+          "text": "Skip preparing and speak off the top of your head tomorrow.",
+          "why": "Unprepared talks ramble and miss key points.",
+          "mis": "Speaking naturally does not need preparation."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask to postpone the update until next week to prepare more.",
+          "why": "The update is ready. Postponing delays information people need.",
+          "mis": "More preparation time always helps."
+        }
+      ],
+      "doc": {
+        "type": "note",
+        "title": [
+          "Your speaking notes"
+        ],
+        "intro": [
+          "These are your notes for tomorrow's three-minute update to staff and {client.plural}. Check them."
+        ],
+        "prompt": [
+          "Which line of the notes is the problem?",
+          "Which line should you change?"
+        ],
+        "lesson": "Good speaking notes are accurate, fit the time and use words the audience knows.",
+        "lines": [
+          {
+            "id": "hook",
+            "text": "Start: one sentence on why the change matters.",
+            "fine": "A short, clear opening."
+          },
+          {
+            "id": "what",
+            "text": "Point 1: what is changing about {task|the}, in plain words.",
+            "fine": "Uses plain language for a mixed audience.",
+            "bad": [
+              {
+                "id": "what-jargon",
+                "level": "intermediate",
+                "text": "Point 1: explain the change using our internal codes and abbreviations.",
+                "why": "{client.plural} in the audience will not know internal codes. Plain words reach everyone.",
+                "principle": "lis.doc-jargon-for-mixed-audience"
+              }
+            ]
+          },
+          {
+            "id": "when",
+            "text": "Point 2: the change starts Monday.",
+            "fine": "A specific date."
+          },
+          {
+            "id": "who",
+            "text": "Point 3: who to ask with questions.",
+            "fine": "Tells the audience what to do next."
+          },
+          {
+            "id": "time",
+            "text": "Keep the whole update under three minutes.",
+            "fine": "Respects the time limit.",
+            "bad": [
+              {
+                "id": "time-over",
+                "level": "advanced",
+                "needs": [
+                  "hook"
+                ],
+                "text": "Add Points 4 through 9 with the full history of the old process.",
+                "why": "Six more points will not fit in a three-minute update and bury the three that matter.",
+                "principle": "lis.doc-overloaded-short-talk"
+              }
+            ]
+          },
+          {
+            "id": "eye",
+            "text": "Look up from the notes and speak to the room.",
+            "fine": "Encourages eye contact and connection.",
+            "bad": [
+              {
+                "id": "eye-read",
+                "level": "beginner",
+                "text": "Read the notes word for word without looking up.",
+                "why": "Reading without looking up loses the audience's attention.",
+                "principle": "lis.doc-no-eye-contact"
+              }
+            ]
+          },
+          {
+            "id": "end",
+            "text": "End: ask whether there are any questions.",
+            "fine": "Invites questions.",
+            "bad": [
+              {
+                "id": "end-rush",
+                "level": "beginner",
+                "text": "End: leave right away without taking questions.",
+                "why": "Skipping questions leaves confusion unresolved.",
+                "principle": "lis.doc-no-questions"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Presenting and audience/setting; issues are all preparation-time facts."
+      },
+      "requires": [
+        "area"
+      ]
+    }
+  ]
+}

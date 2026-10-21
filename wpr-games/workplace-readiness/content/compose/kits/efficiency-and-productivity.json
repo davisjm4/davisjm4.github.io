@@ -1,0 +1,548 @@
+{
+  "skill": "efficiency-and-productivity",
+  "kits": [
+    {
+      "id": "eff-morning-plan",
+      "skill": "efficiency-and-productivity",
+      "family": "efficiency-and-productivity.cx-planning-the-day",
+      "familyName": "Planning a crowded workday",
+      "framework": "competing-priorities",
+      "concepts": [
+        "efficiency-and-productivity:work-plan",
+        "efficiency-and-productivity:prioritize-tasks",
+        "efficiency-and-productivity:adapt-goals"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a} and have a long list of tasks for today.",
+        "As {role|a} at {workplace|a}, you are planning a day with more tasks than usual."
+      ],
+      "pressure": [
+        "{coworker3} says to just start at the top of the list and keep going.",
+        "You have already lost 20 minutes to a late start."
+      ],
+      "detail": [
+        "The list is written on the whiteboard.",
+        "Your lunch break is at noon."
+      ],
+      "tiers": {
+        "1": "The task with the nearest fixed deadline has to come first.",
+        "2": "Work that is blocked should be moved, not waited on.",
+        "3": "A large task due later needs a start today.",
+        "4": "Protecting focused time makes every task faster.",
+        "5": "Grouping similar tasks saves time once the order is set."
+      },
+      "issues": [
+        {
+          "id": "due10",
+          "tier": 1,
+          "rule": "prioritize-deadline",
+          "principle": "eff.nearest-deadline-first",
+          "fact": [
+            "One task on the list is due to a {client} by 10 a.m."
+          ],
+          "clear": [
+            "You finished the 10 a.m. task before leaving yesterday."
+          ],
+          "done": "the 10 a.m. task is already finished",
+          "short": "the 10 a.m. deadline",
+          "action": "Do the task that is due at 10 a.m. first.",
+          "brief": "do the 10 a.m. task",
+          "reason": "A fixed deadline in a few hours outranks tasks with more time. Missing it affects a {client}.",
+          "lesson": "Put the tasks with the nearest fixed deadlines first.",
+          "shortcut": [
+            {
+              "text": "Start with the quick, easy tasks to build momentum.",
+              "brief": "start with the easy tasks",
+              "why": "Easy tasks feel productive, but they can push the urgent task past its deadline.",
+              "mis": "Easy tasks first is always efficient."
+            }
+          ]
+        },
+        {
+          "id": "blocked",
+          "tier": 2,
+          "rule": "reorder-around-blocker",
+          "principle": "eff.work-around-blocked-task",
+          "fact": [
+            "One task cannot start until {coworker} sends a file this afternoon."
+          ],
+          "clear": [
+            "{coworker} already sent the file you were waiting for."
+          ],
+          "done": "the file already arrived",
+          "short": "the blocked task",
+          "action": "Move that task to the afternoon and work on tasks you can do now.",
+          "brief": "move it later and do what you can now",
+          "reason": "Waiting on a blocked task wastes the morning. Reordering keeps you productive.",
+          "lesson": "Plan around blocked tasks instead of waiting on them.",
+          "shortcut": [
+            {
+              "text": "Wait at your desk until {coworker} sends the file.",
+              "brief": "wait for the file",
+              "why": "Waiting all morning wastes time that other tasks could use.",
+              "mis": "You should do tasks strictly in list order."
+            }
+          ]
+        },
+        {
+          "id": "large",
+          "tier": 3,
+          "rule": "break-down-large-task",
+          "principle": "eff.start-large-task-early",
+          "fact": [
+            "A large task due Friday has not been started yet."
+          ],
+          "short": "the unstarted large task",
+          "action": "Break the large task into steps and schedule the first step today.",
+          "brief": "break it into steps and start one today",
+          "reason": "Large tasks left until the end become rushed. Small scheduled steps make Friday realistic.",
+          "lesson": "Break big tasks into steps and start them early.",
+          "shortcut": [
+            {
+              "text": "Leave the large task until Thursday, when there is more time.",
+              "brief": "leave it until Thursday",
+              "why": "Waiting until Thursday leaves no room for problems.",
+              "mis": "Big tasks are best done all at once at the end."
+            }
+          ],
+          "clear": [
+            "You already broke the Friday task into steps and scheduled them this week."
+          ],
+          "done": "the large task is already broken into scheduled steps"
+        },
+        {
+          "id": "interrupt",
+          "tier": 4,
+          "rule": "protect-focus-time",
+          "principle": "eff.batch-messages",
+          "noProceed": true,
+          "fact": [
+            "Messages keep interrupting you every few minutes."
+          ],
+          "short": "the constant interruptions",
+          "action": "Set aside blocks of focused time and check messages between them.",
+          "brief": "check messages between focus blocks",
+          "reason": "Constant switching slows every task. Checking at set times keeps you responsive and focused.",
+          "lesson": "Protect focused time by handling messages in batches.",
+          "shortcut": [
+            {
+              "text": "Answer every message the moment it arrives.",
+              "brief": "answer every message instantly",
+              "why": "Answering instantly breaks your focus every few minutes.",
+              "mis": "Instant replies are always the most productive."
+            }
+          ]
+        },
+        {
+          "id": "batch",
+          "tier": 5,
+          "rule": "group-similar-tasks",
+          "principle": "eff.group-setup-tasks",
+          "noProceed": true,
+          "fact": [
+            "Three small tasks on the list all need {equipment|the} set up."
+          ],
+          "short": "the three tasks that share a setup",
+          "action": "Group the three tasks so {equipment|the} is set up only once.",
+          "brief": "group the three tasks",
+          "reason": "Setting up once instead of three times saves real time.",
+          "lesson": "Group tasks that share setup or tools.",
+          "shortcut": [
+            {
+              "text": "Do the three tasks at different times as they come up on the list.",
+              "brief": "do them at separate times",
+              "why": "Setting up three separate times wastes effort.",
+              "mis": "Task order on the list is the most efficient order."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Work through the tasks in order of importance and deadline.",
+        "why": "Nothing on the list needs special handling, so working by importance and deadline is the efficient plan.",
+        "lesson": "Order work by importance and deadline, and adjust as things change."
+      },
+      "generic": [
+        {
+          "text": "Spend the first hour making a detailed color-coded schedule.",
+          "why": "A short plan helps, but an hour of planning eats time the tasks need.",
+          "mis": "More planning always means more productivity."
+        },
+        {
+          "text": "Ask {coworker2} to take half of your list without checking with {lead|the}.",
+          "why": "Shifting work without checking can overload a coworker and confuse the plan.",
+          "mis": "Handing off work is the fastest fix for a full list."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to rank every task for you before starting.",
+          "why": "The priorities are clear. Asking the lead to rank everything delays the start.",
+          "mis": "Only a supervisor can set your priorities."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}, organizing a full day of tasks."
+        ],
+        "because": {
+          "due10": [
+            "Something on the list is due to a {client} this morning."
+          ],
+          "large": [
+            "A big task due later this week has not been started."
+          ],
+          "batch": [
+            "Several small tasks need the same equipment."
+          ]
+        },
+        "steps": [
+          {
+            "id": "list",
+            "text": "List every task with its deadline",
+            "core": true
+          },
+          {
+            "id": "urgent",
+            "text": "Finish the 10 a.m. task",
+            "issue": "due10"
+          },
+          {
+            "id": "group",
+            "text": "Group the tasks that share a setup",
+            "issue": "batch"
+          },
+          {
+            "id": "split",
+            "text": "Split the big task into steps",
+            "issue": "large"
+          },
+          {
+            "id": "work",
+            "text": "Work through the rest of the plan",
+            "core": true
+          },
+          {
+            "id": "review",
+            "text": "Review what is left at the end of the day",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "list",
+            "urgent",
+            "You need the full list to confirm what is most urgent."
+          ],
+          [
+            "urgent",
+            "work",
+            "The deadline task comes before the rest."
+          ],
+          [
+            "list",
+            "group",
+            "Grouping happens once you see all the tasks."
+          ],
+          [
+            "group",
+            "work",
+            "Grouped tasks are planned before you start them."
+          ],
+          [
+            "list",
+            "split",
+            "You see the big task when you list everything."
+          ],
+          [
+            "split",
+            "work",
+            "The first step of the big task goes into today's plan."
+          ],
+          [
+            "list",
+            "work",
+            "Plan before working."
+          ],
+          [
+            "work",
+            "review",
+            "You review once the work is done."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "List everything, handle deadlines, organize the rest, work, then review."
+      },
+      "doc": {
+        "type": "schedule",
+        "title": [
+          "Your plan for today"
+        ],
+        "intro": [
+          "You drafted today's plan. Check it before you start."
+        ],
+        "lesson": "An efficient plan puts fixed deadlines first and works around blocked tasks.",
+        "lines": [
+          {
+            "id": "a",
+            "text": "8:00 - Finish the {client} task due at 10 a.m.",
+            "fine": "The nearest deadline comes first."
+          },
+          {
+            "id": "b",
+            "text": "9:30 - Set up {equipment|the} and do all three tasks that need it.",
+            "fine": "Groups tasks that share a setup.",
+            "bad": [
+              {
+                "id": "b-split",
+                "level": "intermediate",
+                "text": "9:30 - Set up {equipment|the} for one task; set it up again at 1:00 and 3:00 for the others.",
+                "why": "Setting up three times wastes time when the tasks could be grouped.",
+                "principle": "eff.doc-repeated-setup"
+              }
+            ]
+          },
+          {
+            "id": "c",
+            "text": "11:00 - First step of the large Friday task.",
+            "fine": "Starts the big task early.",
+            "bad": [
+              {
+                "id": "c-later",
+                "level": "beginner",
+                "text": "11:00 - Leave the large Friday task until Thursday night.",
+                "why": "Waiting until the last night leaves no room for problems.",
+                "principle": "eff.doc-delays-large-task"
+              }
+            ]
+          },
+          {
+            "id": "d",
+            "text": "1:00 - Task that needs {coworker}'s file, which arrives after lunch.",
+            "fine": "Schedules the blocked task after the file arrives.",
+            "bad": [
+              {
+                "id": "d-early",
+                "level": "advanced",
+                "needs": [
+                  "a"
+                ],
+                "text": "8:00 - Task that needs {coworker}'s file, which arrives this afternoon.",
+                "why": "The file will not arrive until the afternoon, and 8:00 is already set aside for the 10 a.m. deadline.",
+                "principle": "eff.doc-schedules-blocked-task-early"
+              }
+            ]
+          },
+          {
+            "id": "e",
+            "text": "Check messages at 9:30, 11:30, 1:30 and 3:30.",
+            "fine": "Batches messages to protect focus.",
+            "bad": [
+              {
+                "id": "e-constant",
+                "level": "beginner",
+                "text": "Answer every message the moment it arrives, all day.",
+                "why": "Constant interruptions slow every task.",
+                "principle": "eff.doc-constant-interruptions"
+              }
+            ]
+          },
+          {
+            "id": "f",
+            "text": "4:30 - Review what is left and plan tomorrow.",
+            "fine": "Ends with a review.",
+            "bad": [
+              {
+                "id": "f-none",
+                "level": "beginner",
+                "text": "4:30 - Leave without checking what is left.",
+                "why": "Skipping the review means unfinished tasks are forgotten.",
+                "principle": "eff.doc-no-end-review"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Prioritization by deadline, dependency and effort."
+      }
+    },
+    {
+      "id": "eff-resources",
+      "skill": "efficiency-and-productivity",
+      "family": "efficiency-and-productivity.cx-using-resources-well",
+      "familyName": "Using people, tools and materials well",
+      "framework": "consequences",
+      "concepts": [
+        "efficiency-and-productivity:human-resources",
+        "efficiency-and-productivity:capital-resources",
+        "efficiency-and-productivity:natural-resources"
+      ],
+      "contexts": "any",
+      "requires": [
+        "supply"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}. {Lead|the} asked you and the team to finish a large job for a {client} by tomorrow.",
+        "As {role|a} at {workplace|a}, you are coordinating today's work on a big job for a {client}."
+      ],
+      "pressure": [
+        "{coworker3} says the fastest way is to just throw everything at it.",
+        "The job is the biggest one this month."
+      ],
+      "detail": [
+        "The team has four people today.",
+        "The work area is clean and ready."
+      ],
+      "tiers": {
+        "1": "Equipment that is failing has to be dealt with before it wastes the whole order.",
+        "2": "Matching tasks to people's skills makes the team faster.",
+        "3": "Materials wasted now cost money the order cannot recover.",
+        "4": "Idle time is a resource too.",
+        "5": "Saving energy is worthwhile once the work is organized."
+      },
+      "issues": [
+        {
+          "id": "machine",
+          "tier": 1,
+          "rule": "maintain-equipment",
+          "principle": "eff.report-failing-equipment",
+          "fact": [
+            "{Equipment|the} has started making a grinding noise and slowing down."
+          ],
+          "short": "the failing equipment",
+          "action": "Stop using {equipment|the} and report the noise to {lead|the} so it can be checked.",
+          "brief": "stop and report the equipment noise",
+          "reason": "Running failing equipment can break it completely and ruin work in progress. Reporting it early protects the order.",
+          "lesson": "Care for equipment by reporting problems before they become breakdowns.",
+          "shortcut": [
+            {
+              "text": "Keep running it until the order is done, then report it.",
+              "brief": "run it until the order is done",
+              "why": "Failing equipment can break mid-order and damage more work.",
+              "mis": "Equipment problems can wait until the job is finished."
+            }
+          ]
+        },
+        {
+          "id": "skills",
+          "tier": 2,
+          "rule": "match-tasks-to-people",
+          "principle": "eff.assign-by-skill",
+          "fact": [
+            "{coworker} is fastest at the detailed step, but has been assigned to stocking."
+          ],
+          "short": "the mismatched assignments",
+          "action": "Suggest switching assignments so {coworker} does the detailed step.",
+          "brief": "suggest moving {coworker} to the detailed step",
+          "reason": "Putting people where their skills fit speeds up the whole team.",
+          "lesson": "Use people's strengths when assigning work.",
+          "shortcut": [
+            {
+              "text": "Keep the assignments, since changing them might upset people.",
+              "brief": "keep the assignments",
+              "why": "A quick, respectful suggestion is unlikely to upset anyone and saves real time.",
+              "mis": "Assignments should never change once made."
+            }
+          ]
+        },
+        {
+          "id": "waste",
+          "tier": 3,
+          "rule": "reduce-waste",
+          "principle": "eff.cut-material-waste",
+          "fact": [
+            "You notice the team is opening new {supply.plural} while half-used ones sit on the shelf."
+          ],
+          "short": "the wasted {supply.plural}",
+          "action": "Point out the half-used {supply.plural} and suggest using those first.",
+          "brief": "use the half-used supplies",
+          "reason": "Using what is already open saves materials and money without slowing the work.",
+          "lesson": "Use materials fully before opening new ones.",
+          "shortcut": [
+            {
+              "text": "Ignore it, since new {supply.plural} are faster to grab.",
+              "brief": "ignore the waste",
+              "why": "Small waste repeated across a big order adds up.",
+              "mis": "Speed always outweighs saving materials."
+            }
+          ]
+        },
+        {
+          "id": "idle",
+          "tier": 4,
+          "rule": "use-idle-time",
+          "principle": "eff.fill-idle-time",
+          "fact": [
+            "{coworker2} is waiting with nothing to do until the next batch is ready."
+          ],
+          "short": "{coworker2}'s idle time",
+          "action": "Suggest {coworker2} prepare the labels for the next batch while waiting.",
+          "brief": "have {coworker2} prep labels while waiting",
+          "reason": "Idle time is a lost resource. Useful prep work keeps the whole order moving.",
+          "lesson": "Find useful work for idle time.",
+          "shortcut": [
+            {
+              "text": "Let {coworker2} wait, since the batch will be ready soon.",
+              "brief": "let {coworker2} wait",
+              "why": "Waiting time adds up across the day when useful prep work is available.",
+              "mis": "Short waits do not matter."
+            }
+          ]
+        },
+        {
+          "id": "energy",
+          "tier": 5,
+          "rule": "reduce-waste",
+          "principle": "eff.switch-off-unused-equipment",
+          "noProceed": true,
+          "fact": [
+            "Two machines in the area are running even though nobody is using them."
+          ],
+          "short": "the idle machines",
+          "action": "Switch off the unused machines, following their normal shutdown steps.",
+          "brief": "switch off the unused machines",
+          "reason": "Idle machines waste energy and add wear for no benefit.",
+          "lesson": "Conserve energy by switching off equipment that is not in use.",
+          "shortcut": [
+            {
+              "text": "Leave them running, since turning them back on takes time.",
+              "brief": "leave them running",
+              "why": "If they are not needed, leaving them on only wastes energy.",
+              "mis": "Equipment should always stay on in case it is needed."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Keep the team working through the order as planned.",
+        "why": "People, equipment and materials are being used well, so the plan should continue.",
+        "lesson": "When resources are used well, keep the work moving as planned."
+      },
+      "generic": [
+        {
+          "text": "Ask {lead|the} to bring in extra staff right away.",
+          "why": "Extra staff costs money and may not be needed if current resources are used well.",
+          "mis": "More people always means faster work."
+        },
+        {
+          "text": "Order extra {supply.plural} just in case.",
+          "why": "Ordering extra without checking needs ties up money and space.",
+          "mis": "Having extra is always efficient."
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Human, capital and natural resources."
+      }
+    }
+  ]
+}

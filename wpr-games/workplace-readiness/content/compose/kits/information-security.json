@@ -1,0 +1,829 @@
+{
+  "skill": "information-security",
+  "kits": [
+    {
+      "id": "ise-suspicious-email",
+      "skill": "information-security",
+      "family": "information-security.cx-suspicious-email",
+      "familyName": "An email that might be a scam",
+      "framework": "evidence-reliability",
+      "concepts": [
+        "information-security:cyber-threats",
+        "information-security:security-procedures"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. An email arrives that appears to come from {lead|the}, asking you to handle something right away.",
+        "As {role|a} at {workplace|a}, you get an email that looks like it is from {lead|the}."
+      ],
+      "pressure": [
+        "{coworker3} says these warnings are overblown and to just get it done.",
+        "You are in the middle of a busy afternoon."
+      ],
+      "detail": [
+        "The email arrived at 2:14 p.m.",
+        "The email has the workplace logo at the top."
+      ],
+      "tiers": {
+        "1": "Handing over a password can expose every system you can reach.",
+        "2": "Confirming who sent a message comes before acting on it.",
+        "3": "An unexpected attachment stays closed until the sender is confirmed.",
+        "4": "Spreading a suspicious email puts more people at risk."
+      },
+      "issues": [
+        {
+          "id": "password",
+          "tier": 1,
+          "rule": "protect-credentials",
+          "principle": "ise.never-enter-password-from-email-link",
+          "fact": [
+            "The email asks you to confirm your password through a link, and the security policy says never to do that."
+          ],
+          "short": "the request for your password",
+          "action": "Leave the link alone and report the email the way the security policy describes.",
+          "brief": "skip the link and report the email",
+          "reason": "Password requests through email links are a common scam. Reporting it protects you and warns the security team.",
+          "lesson": "Never enter your password through a link in an unexpected email; report it instead.",
+          "shortcut": [
+            {
+              "text": "Click the link just to see whether the page looks real.",
+              "brief": "click to see if it looks real",
+              "why": "Fake login pages are designed to look real, and clicking can itself cause harm.",
+              "mis": "You can spot a fake page by looking at it."
+            }
+          ]
+        },
+        {
+          "id": "sender",
+          "tier": 2,
+          "rule": "verify-sender",
+          "principle": "ise.verify-sender-out-of-band",
+          "fact": [
+            "The sender's address is spelled slightly differently from {lead|the}'s usual address."
+          ],
+          "clear": [
+            "You called {lead|the} at the usual number, and {lead|the} confirmed sending the email."
+          ],
+          "done": "the sender was already confirmed by phone",
+          "short": "the odd sender address",
+          "action": "Check with {lead|the} by phone or in person, not by replying, before doing anything.",
+          "brief": "check with {lead|the} by phone",
+          "reason": "A lookalike address is a warning sign. Replying goes to the scammer, so confirm another way.",
+          "lesson": "Confirm a suspicious message's sender through a separate, known channel.",
+          "shortcut": [
+            {
+              "text": "Reply to the email and ask whether it is really from {lead|the}.",
+              "brief": "reply and ask if it is real",
+              "why": "A reply goes straight to whoever sent it, who will simply say yes.",
+              "mis": "Replying is a good way to verify a sender."
+            }
+          ]
+        },
+        {
+          "id": "attachment",
+          "tier": 3,
+          "rule": "avoid-unexpected-attachment",
+          "principle": "ise.hold-unexpected-attachment",
+          "fact": [
+            "The email includes an attachment called \"invoice\" that you were not expecting."
+          ],
+          "short": "the unexpected attachment",
+          "action": "Leave the attachment unopened until the sender is confirmed.",
+          "brief": "leave the attachment unopened",
+          "reason": "Unexpected attachments are a common way to deliver harmful software.",
+          "lesson": "Do not open unexpected attachments until you confirm who sent them.",
+          "shortcut": [
+            {
+              "text": "Open the attachment, since invoices are normal at work.",
+              "brief": "open it since invoices are normal",
+              "why": "An invoice you were not expecting is exactly the kind of file scammers use.",
+              "mis": "Ordinary-looking files are always safe."
+            }
+          ]
+        },
+        {
+          "id": "forward",
+          "tier": 4,
+          "rule": "contain-threat",
+          "principle": "ise.report-instead-of-forwarding",
+          "fact": [
+            "{coworker} suggests forwarding the email to the whole team to ask if anyone thinks it is real."
+          ],
+          "short": "the idea of forwarding it to everyone",
+          "action": "Report the email through the security process instead of forwarding it.",
+          "brief": "report it instead of forwarding",
+          "reason": "Forwarding spreads the risk to everyone who receives it. The security team is the right audience.",
+          "lesson": "Report suspicious messages to security rather than spreading them.",
+          "shortcut": [
+            {
+              "text": "Forward it to the team so everyone can vote on it.",
+              "brief": "forward it to the team",
+              "why": "Forwarding gives every coworker a chance to click the harmful link.",
+              "mis": "Sharing a threat helps everyone stay safe."
+            }
+          ]
+        }
+      ],
+      "exclusive": [
+        [
+          "password",
+          "forward"
+        ]
+      ],
+      "proceed": {
+        "text": "Go ahead with the request in the email.",
+        "why": "The sender is confirmed and nothing in the email raises a warning, so the request can be handled.",
+        "lesson": "Act on requests once you have confirmed they are real."
+      },
+      "generic": [
+        {
+          "text": "Delete the email and say nothing to anyone.",
+          "why": "Deleting without reporting leaves others exposed to the same scam.",
+          "mis": "Deleting a scam is the same as reporting it."
+        },
+        {
+          "text": "Turn off your computer and leave it off for the day.",
+          "why": "Turning off your computer does not deal with the email or warn anyone.",
+          "mis": "Shutting down solves security problems."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Refuse to handle any email from {lead|the} for the rest of the week.",
+          "why": "The sender is confirmed. Refusing real requests stops your work for no reason.",
+          "mis": "Every email is a threat."
+        }
+      ],
+      "process": {
+        "setup": [
+          "An unexpected email at {workplace|the} asks you to take action quickly."
+        ],
+        "because": {
+          "sender": [
+            "The sender's address looks almost, but not exactly, right."
+          ],
+          "attachment": [
+            "The email has an attachment you did not expect."
+          ]
+        },
+        "steps": [
+          {
+            "id": "stop",
+            "text": "Stop before clicking anything",
+            "core": true
+          },
+          {
+            "id": "call",
+            "text": "Call {lead|the} at the usual number",
+            "issue": "sender"
+          },
+          {
+            "id": "hold",
+            "text": "Leave the file unopened",
+            "issue": "attachment"
+          },
+          {
+            "id": "report",
+            "text": "Report it through the security process",
+            "core": true
+          },
+          {
+            "id": "delete",
+            "text": "Delete it once it has been reported",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "stop",
+            "call",
+            "Pause first, then verify."
+          ],
+          [
+            "stop",
+            "hold",
+            "Pausing is what keeps the file closed."
+          ],
+          [
+            "call",
+            "report",
+            "Your report should include what you learned."
+          ],
+          [
+            "hold",
+            "report",
+            "The report covers the unopened file."
+          ],
+          [
+            "stop",
+            "report",
+            "Report after pausing to look."
+          ],
+          [
+            "report",
+            "delete",
+            "Security may need the email, so report first."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Pause, verify through a known channel, report, and only then delete."
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Security policy stated in the password fact. General phishing guidance, no legal claims."
+      }
+    },
+    {
+      "id": "ise-workstation",
+      "skill": "information-security",
+      "family": "information-security.cx-workstation-habits",
+      "familyName": "Everyday security at your workstation",
+      "framework": "ethical-dilemma",
+      "concepts": [
+        "information-security:confidentiality",
+        "information-security:acceptable-use",
+        "information-security:security-procedures",
+        "information-security:information-formats"
+      ],
+      "contexts": "any",
+      "requires": [
+        "private"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}, where your computer gives you access to {private}.",
+        "As {role|a} at {workplace|a}, you handle {private} on the computer at your station."
+      ],
+      "detail": [
+        "Your station is near the front.",
+        "It is a normal weekday."
+      ],
+      "issues": [
+        {
+          "id": "screen",
+          "tier": 1,
+          "rule": "protect-confidential-data",
+          "principle": "ise.lock-screen-when-away",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You need to step away, and {private} are open on your screen where others could see."
+          ],
+          "short": "the information open on your screen",
+          "action": "Lock your screen before you step away.",
+          "reason": "Anyone walking by could see confidential information. Locking takes a second and protects it.",
+          "lesson": "Lock your screen whenever you step away.",
+          "shortcut": [
+            {
+              "text": "Turn the monitor slightly away and step out quickly.",
+              "why": "Angling the screen does not stop someone from seeing or using it.",
+              "mis": "Partly hiding a screen is enough."
+            }
+          ]
+        },
+        {
+          "id": "misdirected",
+          "tier": 1,
+          "rule": "report-security-mistake",
+          "principle": "ise.report-misdirected-email",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You realize you just emailed a file with {private} to the wrong person."
+          ],
+          "short": "the email sent to the wrong person",
+          "action": "Tell {lead|the} right away so the mistake can be handled quickly.",
+          "reason": "Quick reporting gives the workplace the best chance to limit the harm, such as asking for the email to be deleted.",
+          "lesson": "Report security mistakes immediately, even your own.",
+          "shortcut": [
+            {
+              "text": "Say nothing and hope the person deletes it.",
+              "why": "Hiding the mistake removes the chance to limit the damage.",
+              "mis": "Small security mistakes are best kept quiet."
+            }
+          ]
+        },
+        {
+          "id": "login",
+          "tier": 2,
+          "rule": "protect-credentials",
+          "principle": "ise.no-shared-logins",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "{coworker} asks to use your login because theirs is locked, and the policy says logins are never shared."
+          ],
+          "short": "the request to share your login",
+          "action": "Decline, and suggest {coworker} contact the help desk to unlock the account.",
+          "reason": "Shared logins break the policy and make it impossible to know who did what.",
+          "lesson": "Never share your login, even with a trusted coworker.",
+          "shortcut": [
+            {
+              "text": "Log in for {coworker} and stay nearby while they work.",
+              "why": "Logging in for someone is still sharing access, which the policy forbids.",
+              "mis": "Sharing is fine if you watch what they do."
+            }
+          ]
+        },
+        {
+          "id": "usb",
+          "tier": 3,
+          "rule": "avoid-unknown-device",
+          "principle": "ise.hand-in-found-drive",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You find an unlabeled USB drive in the parking lot."
+          ],
+          "short": "the unknown USB drive",
+          "action": "Hand the drive to {lead|the} or the help desk without plugging it in.",
+          "reason": "Unknown drives can carry harmful software. Handing it in lets the right people deal with it safely.",
+          "lesson": "Never plug in devices you find; hand them in.",
+          "shortcut": [
+            {
+              "text": "Plug it in to see whose it is so you can return it.",
+              "why": "Plugging in an unknown drive can install harmful software.",
+              "mis": "Plugging in a drive is harmless."
+            }
+          ]
+        },
+        {
+          "id": "download",
+          "tier": 4,
+          "rule": "follow-acceptable-use",
+          "principle": "ise.follow-acceptable-use-policy",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You want to download a game on the work computer during break, which the acceptable-use policy forbids."
+          ],
+          "short": "the forbidden download",
+          "action": "Skip the download, since the acceptable-use policy does not allow it.",
+          "reason": "Acceptable-use rules exist because downloads can bring in harmful software and use work resources.",
+          "lesson": "Follow acceptable-use rules on work devices, even on your break.",
+          "shortcut": [
+            {
+              "text": "Download it, since it is your break and not work time.",
+              "why": "The policy applies to the work computer at all times.",
+              "mis": "Work rules do not apply during breaks."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Carry on with your work, since none of this is a real risk.",
+        "why": "Each of these situations is a real security risk that needs a response.",
+        "lesson": "Small security habits protect confidential information every day."
+      },
+      "generic": [
+        {
+          "text": "Ask {coworker2} what they usually do and copy that.",
+          "why": "A coworker's habit is not the policy, and it may be unsafe.",
+          "mis": "Common practice is always safe practice."
+        },
+        {
+          "text": "Write your password on a note under the keyboard to save time later.",
+          "why": "Written passwords near a computer are easy for others to find.",
+          "mis": "Hidden notes are a safe place for passwords."
+        }
+      ],
+      "doc": {
+        "type": "procedure",
+        "title": [
+          "Workstation security reminders"
+        ],
+        "intro": [
+          "You are checking this reminder sheet before it is posted at every station."
+        ],
+        "prompt": [
+          "Which line gives unsafe advice?",
+          "Which line is the problem?"
+        ],
+        "lesson": "Security reminders must protect logins, devices and confidential information.",
+        "lines": [
+          {
+            "id": "lock",
+            "text": "Lock your screen every time you leave your station.",
+            "fine": "Protects information when you are away."
+          },
+          {
+            "id": "share",
+            "text": "Never share your login; the help desk can unlock accounts.",
+            "fine": "Keeps each login tied to one person.",
+            "bad": [
+              {
+                "id": "share-ok",
+                "level": "beginner",
+                "text": "Share your login with trusted coworkers when theirs is locked.",
+                "why": "Sharing logins breaks security and accountability, no matter how trusted the person is.",
+                "principle": "ise.doc-share-login"
+              }
+            ]
+          },
+          {
+            "id": "usb",
+            "text": "Hand in any device you find; never plug it in.",
+            "fine": "Avoids malware from unknown devices.",
+            "bad": [
+              {
+                "id": "usb-plug",
+                "level": "intermediate",
+                "text": "Plug in found USB drives to identify the owner.",
+                "why": "Unknown drives can carry malware. They should be handed in, not plugged in.",
+                "principle": "ise.doc-plug-in-unknown-drive"
+              }
+            ]
+          },
+          {
+            "id": "email",
+            "text": "Report suspicious emails to the help desk.",
+            "fine": "Routes threats to the right team."
+          },
+          {
+            "id": "mistake",
+            "text": "If you send confidential information to the wrong person, tell {lead|the} right away.",
+            "fine": "Encourages quick reporting of mistakes.",
+            "bad": [
+              {
+                "id": "mistake-hide",
+                "level": "advanced",
+                "needs": [
+                  "email"
+                ],
+                "text": "If you send confidential information to the wrong person, wait to see if they notice.",
+                "why": "Waiting removes the chance to limit the harm. Mistakes should be reported immediately.",
+                "principle": "ise.doc-hide-data-mistake"
+              }
+            ]
+          },
+          {
+            "id": "password",
+            "text": "Use a long passphrase and keep it to yourself.",
+            "fine": "Good password practice.",
+            "bad": [
+              {
+                "id": "password-note",
+                "level": "beginner",
+                "text": "Write your password on a sticky note so you do not forget it.",
+                "why": "Written passwords are easy for others to find and use.",
+                "principle": "ise.doc-written-password"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Login-sharing and acceptable-use rules stated as policy. Beginner-only issues because these would not naturally co-occur."
+      }
+    },
+    {
+      "id": "ise-data-request",
+      "skill": "information-security",
+      "family": "information-security.cx-request-for-records",
+      "familyName": "A request for confidential records",
+      "framework": "conflicting-instructions",
+      "concepts": [
+        "information-security:confidentiality",
+        "information-security:security-procedures",
+        "information-security:information-formats"
+      ],
+      "contexts": "any",
+      "requires": [
+        "private"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}. A caller says they work for a partner company and asks you to send them {private}.",
+        "As {role|a} at {workplace|a}, you get a phone request to send {private} to someone outside the team."
+      ],
+      "pressure": [
+        "The caller says their boss needs it within the hour.",
+        "{coworker3} says it is easier to just send it."
+      ],
+      "detail": [
+        "The call came in on the main line.",
+        "It is a busy morning."
+      ],
+      "tiers": {
+        "1": "Identity must be confirmed before confidential information goes anywhere.",
+        "2": "Only the person the policy names can approve sharing.",
+        "3": "Share only the information that is actually needed.",
+        "4": "The sending method has to protect the information.",
+        "5": "Keeping a record of what was shared comes last."
+      },
+      "issues": [
+        {
+          "id": "identity",
+          "tier": 1,
+          "rule": "verify-identity",
+          "principle": "ise.verify-outside-requester",
+          "fact": [
+            "You have never heard of the caller, and the policy says outside requests must be verified first."
+          ],
+          "clear": [
+            "You called the partner company's listed number, and they confirmed the caller works there."
+          ],
+          "done": "the caller was already verified",
+          "short": "the unverified caller",
+          "action": "Verify the caller through the company's listed number before sharing anything.",
+          "brief": "verify the caller",
+          "reason": "Scammers often pose as partners. Checking through a number you find yourself confirms who is asking.",
+          "lesson": "Verify who is asking before sharing confidential information.",
+          "shortcut": [
+            {
+              "text": "Trust the caller, since they know details about the account.",
+              "brief": "trust the caller",
+              "why": "Scammers often know a few details. That is not verification.",
+              "mis": "Knowing details proves who someone is."
+            }
+          ]
+        },
+        {
+          "id": "approval",
+          "tier": 2,
+          "rule": "route-to-decision-maker",
+          "principle": "ise.get-approval-to-share",
+          "fact": [
+            "The policy says {lead|the} must approve any sharing of {private} outside the team."
+          ],
+          "clear": [
+            "{Lead|the} already approved sharing these records with this partner."
+          ],
+          "done": "the sharing was already approved",
+          "short": "the missing approval",
+          "action": "Ask {lead|the} to approve the request before sending anything.",
+          "brief": "get {lead|the}'s approval",
+          "reason": "The policy puts this decision with the lead, who knows whether the partner should receive the records.",
+          "lesson": "Follow the approval steps before sharing protected information.",
+          "shortcut": [
+            {
+              "text": "Send it, since partners usually get this kind of information.",
+              "brief": "send it because partners usually do",
+              "why": "Usual practice is not approval. The policy requires the lead's approval.",
+              "mis": "Past practice replaces approval."
+            }
+          ]
+        },
+        {
+          "id": "extra",
+          "tier": 3,
+          "rule": "minimum-necessary",
+          "principle": "ise.share-only-what-is-needed",
+          "fact": [
+            "The caller asks for the full file, but the request only needs two items from it."
+          ],
+          "short": "the request for more than is needed",
+          "action": "Offer to share only the two items the request actually needs.",
+          "brief": "share only what is needed",
+          "reason": "Sharing only what is needed limits the harm if the information is lost or misused.",
+          "lesson": "Share the minimum information needed for the task.",
+          "shortcut": [
+            {
+              "text": "Send the full file so they do not have to ask again.",
+              "brief": "send the full file",
+              "why": "Extra information adds risk without any benefit.",
+              "mis": "Sharing more saves time."
+            }
+          ]
+        },
+        {
+          "id": "channel",
+          "tier": 4,
+          "rule": "use-approved-channel",
+          "principle": "ise.use-secure-channel",
+          "fact": [
+            "The caller asks you to text the information to a personal phone."
+          ],
+          "clear": [
+            "The partner has an approved secure portal set up for these files."
+          ],
+          "done": "a secure portal is already set up",
+          "short": "the request to text it",
+          "action": "Send it only through the approved secure method, not by text.",
+          "brief": "use the approved secure method",
+          "reason": "Text messages to personal phones are not protected. Approved channels keep the information secure.",
+          "lesson": "Send confidential information only through approved, secure channels.",
+          "shortcut": [
+            {
+              "text": "Text it, since it is faster and the caller asked.",
+              "brief": "text it as asked",
+              "why": "Speed does not make an unprotected channel safe.",
+              "mis": "The requester decides how information is sent."
+            }
+          ]
+        },
+        {
+          "id": "log",
+          "tier": 5,
+          "rule": "keep-records",
+          "principle": "ise.log-what-was-shared",
+          "noProceed": true,
+          "fact": [
+            "The policy says every outside sharing must be noted in {record|the}."
+          ],
+          "short": "the sharing record",
+          "action": "Note in {record|the} what you shared, with whom and when.",
+          "brief": "record what was shared",
+          "reason": "A sharing record lets the workplace track where confidential information has gone.",
+          "lesson": "Record what confidential information you share and with whom.",
+          "shortcut": [
+            {
+              "text": "Skip the note, since the email shows what was sent.",
+              "brief": "skip the record",
+              "why": "The policy requires the record, and emails are not always kept or searchable.",
+              "mis": "Emails are a complete record."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Send the requested information through the usual approved method.",
+        "why": "The requester is verified, sharing is approved and the method is secure, so the request can be completed.",
+        "lesson": "Share protected information only after verification, approval and a secure method are in place."
+      },
+      "generic": [
+        {
+          "text": "Put the caller on hold and hope they hang up.",
+          "why": "Avoiding the request does not resolve it and is unprofessional.",
+          "mis": "Ignoring a hard request makes it go away."
+        },
+        {
+          "text": "Read the information aloud over the phone to save time.",
+          "why": "Reading confidential information aloud bypasses every check the policy requires.",
+          "mis": "Saying something aloud is safer than sending it."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Refuse the request and tell the caller never to call again.",
+          "why": "The request is verified and approved; refusing blocks legitimate work.",
+          "mis": "Every outside request is a threat."
+        }
+      ],
+      "process": {
+        "setup": [
+          "A partner company has asked {workplace|the} for {private}."
+        ],
+        "because": {
+          "identity": [
+            "You do not recognize the person asking."
+          ],
+          "approval": [
+            "Sharing these records needs {lead|the}'s approval."
+          ],
+          "log": [
+            "The policy requires a record of every outside sharing."
+          ]
+        },
+        "steps": [
+          {
+            "id": "verify",
+            "text": "Call back on the company's listed number",
+            "issue": "identity"
+          },
+          {
+            "id": "approve",
+            "text": "Get {lead|the}'s approval",
+            "issue": "approval"
+          },
+          {
+            "id": "select",
+            "text": "Pick out only the items needed",
+            "core": true
+          },
+          {
+            "id": "send",
+            "text": "Send them through the secure method",
+            "core": true
+          },
+          {
+            "id": "note",
+            "text": "Record what was shared",
+            "issue": "log"
+          }
+        ],
+        "rel": [
+          [
+            "verify",
+            "approve",
+            "The lead needs to know who is really asking."
+          ],
+          [
+            "verify",
+            "send",
+            "Nothing is sent before the requester is verified."
+          ],
+          [
+            "approve",
+            "send",
+            "Sharing needs approval first."
+          ],
+          [
+            "select",
+            "send",
+            "Choose what to send before sending."
+          ],
+          [
+            "send",
+            "note",
+            "You record what was actually sent."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Verify, approve, limit, send securely, then record."
+      },
+      "doc": {
+        "type": "email",
+        "title": [
+          "Your reply to the partner company"
+        ],
+        "intro": [
+          "You are about to reply to the partner company's request. Check the message first."
+        ],
+        "lesson": "Replies about confidential information must follow verification, approval, minimum sharing and secure delivery.",
+        "lines": [
+          {
+            "id": "thanks",
+            "text": "Thank you for your request.",
+            "fine": "A courteous opening."
+          },
+          {
+            "id": "verify",
+            "text": "We confirmed your request through your company's main number.",
+            "fine": "Shows the requester was verified."
+          },
+          {
+            "id": "items",
+            "text": "Attached through our secure portal are the two items you need.",
+            "fine": "Minimum necessary, secure channel.",
+            "bad": [
+              {
+                "id": "items-all",
+                "level": "beginner",
+                "text": "I attached the full file of {private} in case it helps.",
+                "why": "Sending the whole file shares far more than needed.",
+                "principle": "ise.doc-overshares"
+              }
+            ]
+          },
+          {
+            "id": "approved",
+            "text": "{Lead|the} approved this sharing on Monday.",
+            "fine": "Records the approval."
+          },
+          {
+            "id": "method",
+            "text": "Please download them from the portal within 7 days.",
+            "fine": "Secure delivery with a time limit.",
+            "bad": [
+              {
+                "id": "method-text",
+                "level": "intermediate",
+                "text": "I will also text the same files to your personal phone.",
+                "why": "Personal phones and texts are not approved, secure channels.",
+                "principle": "ise.doc-insecure-channel"
+              }
+            ]
+          },
+          {
+            "id": "close",
+            "text": "Let me know if you have trouble with the portal.",
+            "fine": "Offers help.",
+            "bad": [
+              {
+                "id": "close-forward",
+                "level": "advanced",
+                "needs": [
+                  "items"
+                ],
+                "text": "Feel free to forward them to anyone on your team.",
+                "why": "The approval covered this requester; inviting wider forwarding defeats the limits.",
+                "principle": "ise.doc-invites-forwarding"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Verification, approval and logging stated as workplace policy."
+      }
+    }
+  ]
+}

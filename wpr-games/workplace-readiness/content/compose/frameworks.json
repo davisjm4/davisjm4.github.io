@@ -1,0 +1,377 @@
+{
+  "_about": "Reusable reasoning frameworks. A kit names one framework and inherits its prompts, feedback templates and default priority-tier explanations; a kit or an issue may override any of them. Feedback templates use <name> placeholders filled by the engine (<name|cap> capitalises).",
+  "frameworks": [
+    {
+      "id": "_defaults",
+      "letter": null,
+      "name": "Shared defaults",
+      "text": {
+        "acceptableWhy": "Dealing with <other> matters, but dealing with <first> has to come first.",
+        "redundantWhy": "<done|cap>, so that step is not needed and only delays dealing with <first>.",
+        "redundantClearWhy": "<done|cap>, so that step is not needed and only delays work that is ready to go ahead.",
+        "redundantMis": "Repeating a step that is already done is always the careful choice.",
+        "ignoreWhy": "Carrying on as if nothing were wrong leaves <short> unresolved.",
+        "proceedMis": "If the work can technically continue, it should continue.",
+        "orderMis": "Every real issue matters equally, so the order does not matter.",
+        "planReverseWhy": "Both steps are needed, but the order is backwards: dealing with <first> has to come before <other>.",
+        "planSecondWhy": "The first step is right, but the second step mishandles <short>."
+      },
+      "tiers": {
+        "1": "Anything that could hurt someone comes before other work.",
+        "2": "Work cannot go ahead until it is allowed under the stated rules.",
+        "3": "Acting on missing or wrong information wastes everything that follows.",
+        "4": "The people affected need to hear about the problem before it grows.",
+        "5": "Improvements can wait until the immediate problems are handled."
+      }
+    },
+    {
+      "id": "critical-information",
+      "letter": "A",
+      "name": "Identify the critical information",
+      "engines": [
+        "state",
+        "defect"
+      ],
+      "description": "The student decides which missing or unclear fact must be obtained before acting, and recognises when the fact is already in hand.",
+      "prompts": {
+        "decision": [
+          "What is the most appropriate action?",
+          "What should you do?"
+        ],
+        "nextstep": [
+          "What should you do first?",
+          "What is the best next step right now?"
+        ],
+        "plan": [
+          "Which plan handles this situation best?"
+        ],
+        "order": [
+          "Put these steps in a sensible order."
+        ],
+        "find": [
+          "Which line contains the problem?",
+          "Which line is the problem?"
+        ]
+      }
+    },
+    {
+      "id": "competing-priorities",
+      "letter": "B",
+      "name": "Evaluate competing priorities",
+      "engines": [
+        "state",
+        "process"
+      ],
+      "description": "Several demands compete; urgency, importance, dependencies and consequences decide which comes first.",
+      "prompts": {
+        "decision": [
+          "What is the most appropriate action?",
+          "How should you handle this?"
+        ],
+        "nextstep": [
+          "What should you do first?",
+          "What should you handle first?"
+        ],
+        "plan": [
+          "Which plan handles these demands best?"
+        ],
+        "order": [
+          "Put these tasks in a sensible order."
+        ],
+        "find": [
+          "Which line contains the problem?",
+          "Which line is the problem?"
+        ]
+      }
+    },
+    {
+      "id": "safest-action",
+      "letter": "C",
+      "name": "Choose the safest appropriate action",
+      "engines": [
+        "state",
+        "process",
+        "defect"
+      ],
+      "description": "The student separates safe responses from shortcuts that add risk, and recognises when a hazard is already controlled.",
+      "prompts": {
+        "decision": [
+          "What is the safest appropriate action?",
+          "What should you do?"
+        ],
+        "nextstep": [
+          "What should you do first?",
+          "What is the safest next step right now?"
+        ],
+        "plan": [
+          "Which plan handles this situation safely?"
+        ],
+        "order": [
+          "Put these steps in a safe order."
+        ],
+        "find": [
+          "Which line is the safety problem?"
+        ]
+      }
+    },
+    {
+      "id": "conflicting-instructions",
+      "letter": "D",
+      "name": "Resolve conflicting instructions",
+      "engines": [
+        "state",
+        "defect"
+      ],
+      "description": "Instructions disagree; the student works out which conflict matters and who is authorised to settle it.",
+      "prompts": {
+        "decision": [
+          "What is the most appropriate action?",
+          "How should you handle these instructions?"
+        ],
+        "nextstep": [
+          "What should you do first?",
+          "What is the best next step right now?"
+        ],
+        "plan": [
+          "Which plan handles these instructions best?"
+        ],
+        "order": [
+          "Put these steps in a sensible order."
+        ],
+        "find": [
+          "Which line contains the problem?",
+          "Which line is the problem?"
+        ]
+      }
+    },
+    {
+      "id": "communication-failure",
+      "letter": "E",
+      "name": "Identify a communication failure",
+      "engines": [
+        "state",
+        "defect"
+      ],
+      "description": "The student spots ambiguity, missing context, tone problems, incomplete handoffs or the wrong channel, and repairs them.",
+      "prompts": {
+        "decision": [
+          "What is the most appropriate response?",
+          "What should you do?"
+        ],
+        "nextstep": [
+          "What should you do first?",
+          "What is the best next step right now?"
+        ],
+        "plan": [
+          "Which plan fixes the communication best?"
+        ],
+        "order": [
+          "Put these steps in a sensible order."
+        ],
+        "find": [
+          "Which line is the communication problem?"
+        ]
+      }
+    },
+    {
+      "id": "evidence-reliability",
+      "letter": "F",
+      "name": "Evaluate evidence and reliability",
+      "engines": [
+        "state",
+        "defect"
+      ],
+      "description": "The student separates verified information from assumptions, outdated data and unreliable sources.",
+      "prompts": {
+        "decision": [
+          "What is the most appropriate action?",
+          "What should you do with this information?"
+        ],
+        "nextstep": [
+          "What should you do first?",
+          "What is the best next step before using this information?"
+        ],
+        "plan": [
+          "Which plan uses the information most responsibly?"
+        ],
+        "order": [
+          "Put these steps in a sensible order."
+        ],
+        "find": [
+          "Which line contains the problem?",
+          "Which line is the problem?"
+        ]
+      }
+    },
+    {
+      "id": "process-dependency",
+      "letter": "G",
+      "name": "Identify a process dependency",
+      "engines": [
+        "process",
+        "state"
+      ],
+      "description": "The student works out what must happen before another workplace action can proceed.",
+      "prompts": {
+        "decision": [
+          "What is the most appropriate action?"
+        ],
+        "nextstep": [
+          "What has to happen first?",
+          "What should you do first?"
+        ],
+        "plan": [
+          "Which plan respects what each step depends on?"
+        ],
+        "order": [
+          "Put these steps in an order that respects what each one depends on."
+        ],
+        "find": [
+          "Which line contains the problem?",
+          "Which line is the problem?"
+        ]
+      }
+    },
+    {
+      "id": "numeric-decision",
+      "letter": "H",
+      "name": "Evaluate a numerical decision",
+      "engines": [
+        "numeric"
+      ],
+      "description": "Calculations, rates, budgets, quantities and measurements decide the answer; the engine calculates it from the generated numbers.",
+      "prompts": {
+        "decision": [
+          "Which choice is correct?",
+          "What is the best decision?"
+        ],
+        "nextstep": [
+          "What should you do first?"
+        ],
+        "find": [
+          "Which line contains the calculation error?"
+        ]
+      }
+    },
+    {
+      "id": "unexpected-change",
+      "letter": "I",
+      "name": "Respond to an unexpected change",
+      "engines": [
+        "state",
+        "process"
+      ],
+      "description": "Resources, schedules, priorities or requirements change; the student adapts the plan and tells the right people.",
+      "prompts": {
+        "decision": [
+          "What is the most appropriate response to the change?",
+          "What should you do?"
+        ],
+        "nextstep": [
+          "What should you do first?",
+          "What is the best next step right now?"
+        ],
+        "plan": [
+          "Which plan adapts to the change best?"
+        ],
+        "order": [
+          "Put these steps in a sensible order."
+        ],
+        "find": [
+          "Which line contains the problem?",
+          "Which line is the problem?"
+        ]
+      }
+    },
+    {
+      "id": "ethical-dilemma",
+      "letter": "J",
+      "name": "Evaluate an ethical dilemma",
+      "engines": [
+        "state",
+        "defect"
+      ],
+      "description": "Honesty, confidentiality, fairness, professionalism and accountability pull against convenience or pressure.",
+      "prompts": {
+        "decision": [
+          "What is the most appropriate action?",
+          "What should you do?"
+        ],
+        "nextstep": [
+          "What should you do first?",
+          "What is the best next step right now?"
+        ],
+        "plan": [
+          "Which plan handles this situation best?"
+        ],
+        "order": [
+          "Put these steps in a sensible order."
+        ],
+        "find": [
+          "Which line contains the problem?",
+          "Which line is the problem?"
+        ]
+      }
+    },
+    {
+      "id": "root-cause",
+      "letter": "K",
+      "name": "Identify a root cause",
+      "engines": [
+        "state",
+        "defect"
+      ],
+      "description": "The student targets the underlying cause that the evidence points to rather than the visible symptom.",
+      "prompts": {
+        "decision": [
+          "What is the most appropriate action?",
+          "What response gets at the real cause?"
+        ],
+        "nextstep": [
+          "What should you do first?",
+          "What is the best next step right now?"
+        ],
+        "plan": [
+          "Which plan deals with the real causes best?"
+        ],
+        "order": [
+          "Put these steps in a sensible order."
+        ],
+        "find": [
+          "Which line contains the problem?",
+          "Which line is the problem?"
+        ]
+      }
+    },
+    {
+      "id": "consequences",
+      "letter": "L",
+      "name": "Evaluate consequences",
+      "engines": [
+        "state",
+        "process"
+      ],
+      "description": "Several plausible actions are compared by predicting which best meets the workplace objective under the stated conditions.",
+      "prompts": {
+        "decision": [
+          "Which action best meets the goal?",
+          "What is the most appropriate action?"
+        ],
+        "nextstep": [
+          "What should you do first?",
+          "What is the best next step right now?"
+        ],
+        "plan": [
+          "Which plan leads to the best outcome?"
+        ],
+        "order": [
+          "Put these steps in a sensible order."
+        ],
+        "find": [
+          "Which line contains the problem?",
+          "Which line is the problem?"
+        ]
+      }
+    }
+  ]
+}

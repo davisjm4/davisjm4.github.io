@@ -1,0 +1,549 @@
+{
+  "skill": "career-and-life-management",
+  "kits": [
+    {
+      "id": "car-next-step",
+      "skill": "career-and-life-management",
+      "family": "career-and-life-management.cx-planning-next-career-step",
+      "familyName": "Planning the next career step",
+      "framework": "process-dependency",
+      "concepts": [
+        "career-and-life-management:qualifications-and-advancement",
+        "career-and-life-management:smart-goals",
+        "career-and-life-management:benefits-and-resources",
+        "career-and-life-management:wellness-and-finances"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a} and want to move up to a higher-level job within a year.",
+        "As {role|a} at {workplace|a}, you have decided you want a promotion in the next year."
+      ],
+      "pressure": [
+        "{coworker3} says promotions mostly come down to luck.",
+        "A friend says you should just apply everywhere and see what happens."
+      ],
+      "detail": [
+        "You have worked here for about a year.",
+        "Your current job is going well."
+      ],
+      "tiers": {
+        "1": "Your health has to be sustainable before you add new goals.",
+        "2": "Knowing what your supervisor thinks you need shapes every other step.",
+        "3": "A clear, measurable goal turns a wish into a plan.",
+        "4": "A required qualification has to be planned for early.",
+        "5": "Using available benefits makes the plan easier once it is set."
+      },
+      "issues": [
+        {
+          "id": "burnout",
+          "tier": 1,
+          "rule": "protect-wellness",
+          "principle": "car.sustainable-schedule-first",
+          "fact": [
+            "You have worked extra shifts for six weeks straight and feel exhausted most days."
+          ],
+          "short": "your exhaustion",
+          "action": "Talk with {lead|the} about a more sustainable schedule before taking on new goals.",
+          "brief": "ask {lead|the} about a sustainable schedule",
+          "reason": "Exhaustion makes every other goal harder and can harm your health. A sustainable schedule comes first.",
+          "lesson": "Take care of your wellness so your career goals are sustainable.",
+          "shortcut": [
+            {
+              "text": "Add evening classes on top of the extra shifts to move up faster.",
+              "brief": "add evening classes on top",
+              "why": "Piling more onto an exhausting schedule risks your health and your performance.",
+              "mis": "Working harder always speeds up a career."
+            }
+          ]
+        },
+        {
+          "id": "feedback",
+          "tier": 2,
+          "rule": "seek-feedback",
+          "principle": "car.ask-what-to-develop",
+          "fact": [
+            "You do not know what {lead|the} thinks you would need to improve to be promoted."
+          ],
+          "clear": [
+            "{Lead|the} told you last week that leading a small project is your next step."
+          ],
+          "done": "{lead|the} already told you what to work on",
+          "short": "not knowing what to improve",
+          "action": "Ask {lead|the} for specific feedback on what you would need to develop.",
+          "brief": "ask {lead|the} what to develop",
+          "reason": "Your supervisor knows what the next job requires. Their feedback points your effort where it counts.",
+          "lesson": "Ask for specific feedback about what advancement requires.",
+          "shortcut": [
+            {
+              "text": "Guess what matters and start working on that.",
+              "brief": "guess what matters",
+              "why": "Guessing may spend months on the wrong skills.",
+              "mis": "You already know what your supervisor values."
+            }
+          ]
+        },
+        {
+          "id": "vague",
+          "tier": 3,
+          "rule": "set-smart-goal",
+          "principle": "car.make-goal-smart",
+          "fact": [
+            "Your written goal says only \"get better at my job.\""
+          ],
+          "clear": [
+            "You already wrote a goal with a specific measure and a date."
+          ],
+          "done": "your goal is already specific, measurable and dated",
+          "short": "the vague goal",
+          "action": "Rewrite the goal so it is specific, measurable, realistic and has a deadline.",
+          "brief": "rewrite the goal as a SMART goal",
+          "reason": "A vague goal gives you nothing to plan or measure. A SMART goal shows what to do and when you have succeeded.",
+          "lesson": "Write goals that are specific, measurable, achievable, relevant and time-bound.",
+          "shortcut": [
+            {
+              "text": "Keep the goal broad so you cannot fail it.",
+              "brief": "keep the goal broad",
+              "why": "A goal you cannot fail is also a goal you cannot measure or plan for.",
+              "mis": "Broad goals are safer than specific ones."
+            }
+          ]
+        },
+        {
+          "id": "cert",
+          "tier": 4,
+          "rule": "plan-for-qualification",
+          "principle": "car.plan-required-certification",
+          "fact": [
+            "The posting for the higher-level job lists a certification you do not have yet."
+          ],
+          "short": "the missing certification",
+          "action": "Find out what the certification takes and add it to your plan with dates.",
+          "brief": "plan for the certification with dates",
+          "reason": "Required qualifications can take months. Planning early means you can be ready when a position opens.",
+          "lesson": "Learn what qualifications advancement requires and plan to earn them.",
+          "shortcut": [
+            {
+              "text": "Apply anyway and hope the certification is not checked.",
+              "brief": "apply and hope it is not checked",
+              "why": "Listed requirements are usually checked. Applying without a plan wastes the opportunity.",
+              "mis": "Requirements in job postings are only suggestions."
+            }
+          ],
+          "clear": [
+            "You already enrolled in the certification course that starts next month."
+          ],
+          "done": "you are already enrolled in the course"
+        },
+        {
+          "id": "benefit",
+          "tier": 5,
+          "rule": "use-available-resources",
+          "principle": "car.use-course-benefit",
+          "fact": [
+            "The employee handbook says the company pays for job-related courses, but you have not looked into it."
+          ],
+          "clear": [
+            "You already confirmed the company will pay for your course."
+          ],
+          "done": "the course benefit was already confirmed",
+          "short": "the unused course benefit",
+          "action": "Read that handbook section and ask {lead|the} how to apply for the benefit.",
+          "brief": "check the course benefit",
+          "reason": "A benefit you do not use is money left on the table. It may cover a course you need.",
+          "lesson": "Know the benefits and resources your employer offers, and use them.",
+          "shortcut": [
+            {
+              "text": "Pay for courses yourself, since asking about benefits seems pushy.",
+              "brief": "pay for it yourself",
+              "why": "Benefits are part of your pay. Asking about them is normal and professional.",
+              "mis": "Using benefits makes you look demanding."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Follow your written plan and check your progress each month.",
+        "why": "Your plan is clear, supported and sustainable, so steady progress and regular check-ins are next.",
+        "lesson": "With a clear plan in place, act on it and track your progress."
+      },
+      "generic": [
+        {
+          "text": "Quit and look for a higher-level job somewhere else right away.",
+          "why": "Leaving without a plan or the needed qualifications does not solve the gap.",
+          "mis": "Moving up means moving out."
+        },
+        {
+          "text": "Wait for {lead|the} to offer you a promotion.",
+          "why": "Advancement usually takes planning and asking. Waiting leaves your career to chance.",
+          "mis": "Good work is always noticed and rewarded without asking."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Put the plan on hold until you feel completely ready.",
+          "why": "The plan is ready now. Waiting for a perfect moment delays progress.",
+          "mis": "You should feel completely ready before starting."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}, planning how to earn a promotion within a year."
+        ],
+        "because": {
+          "feedback": [
+            "You have not asked {lead|the} what you would need to improve."
+          ],
+          "cert": [
+            "The higher-level job lists a certification you have not earned."
+          ],
+          "benefit": [
+            "The handbook mentions a course benefit you have not checked."
+          ]
+        },
+        "steps": [
+          {
+            "id": "ask",
+            "text": "Get feedback from {lead|the}",
+            "issue": "feedback"
+          },
+          {
+            "id": "goal",
+            "text": "Write a SMART goal",
+            "core": true
+          },
+          {
+            "id": "benefit",
+            "text": "Check the course benefit",
+            "issue": "benefit"
+          },
+          {
+            "id": "enroll",
+            "text": "Enroll in the certification course",
+            "issue": "cert"
+          },
+          {
+            "id": "act",
+            "text": "Work on the plan each week",
+            "core": true
+          },
+          {
+            "id": "review",
+            "text": "Review progress with {lead|the}",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "ask",
+            "goal",
+            "Feedback tells you what the goal should target."
+          ],
+          [
+            "goal",
+            "act",
+            "You act on the plan once the goal is set."
+          ],
+          [
+            "goal",
+            "enroll",
+            "The certification fits into the goal's plan."
+          ],
+          [
+            "benefit",
+            "enroll",
+            "Check whether the course is paid for before enrolling."
+          ],
+          [
+            "enroll",
+            "act",
+            "The course is part of the weekly work."
+          ],
+          [
+            "act",
+            "review",
+            "You review progress after working on the plan."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Get feedback, set a SMART goal, line up resources, act, and review."
+      },
+      "doc": {
+        "type": "note",
+        "title": [
+          "Your one-year career plan"
+        ],
+        "intro": [
+          "You are reviewing your draft career plan before sharing it with {lead|the}."
+        ],
+        "lesson": "A strong career plan has a measurable goal, realistic steps and dates, and uses available support.",
+        "lines": [
+          {
+            "id": "goal",
+            "text": "Goal: be ready to apply for the higher-level job by next September.",
+            "fine": "Specific and time-bound."
+          },
+          {
+            "id": "measure",
+            "text": "Measure: complete the required certification and lead one project.",
+            "fine": "Measurable targets tied to the job requirements.",
+            "bad": [
+              {
+                "id": "measure-vague",
+                "level": "beginner",
+                "text": "Measure: feel more confident at work.",
+                "why": "A feeling cannot be measured. The plan needs concrete targets.",
+                "principle": "car.doc-unmeasurable-goal"
+              }
+            ]
+          },
+          {
+            "id": "course",
+            "text": "Step 1: enroll in the certification course in January.",
+            "fine": "A dated step.",
+            "bad": [
+              {
+                "id": "course-someday",
+                "level": "beginner",
+                "text": "Step 1: enroll in a course someday.",
+                "why": "\"Someday\" is not a step anyone can plan around; the plan needs a date.",
+                "principle": "car.doc-undated-step"
+              }
+            ]
+          },
+          {
+            "id": "pay",
+            "text": "Cost: covered by the company course benefit, confirmed with {lead|the}.",
+            "fine": "Uses an available benefit."
+          },
+          {
+            "id": "time",
+            "text": "Time: about three hours a week, which fits my current schedule.",
+            "fine": "A realistic time commitment.",
+            "bad": [
+              {
+                "id": "time-impossible",
+                "level": "advanced",
+                "needs": [
+                  "goal"
+                ],
+                "text": "Time: finish the whole certification this weekend.",
+                "why": "A certification that takes months cannot be finished in a weekend. The plan needs realistic steps.",
+                "principle": "car.doc-unrealistic-timeline"
+              }
+            ]
+          },
+          {
+            "id": "check",
+            "text": "Check-in: review progress with {lead|the} every two months.",
+            "fine": "Regular review keeps the plan on track.",
+            "bad": [
+              {
+                "id": "check-none",
+                "level": "intermediate",
+                "text": "Check-in: none needed until I apply.",
+                "why": "Without check-ins, problems are not caught until it is too late.",
+                "principle": "car.doc-no-progress-check"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Course benefit stated as a handbook policy. No claims about laws or specific benefit rules."
+      }
+    },
+    {
+      "id": "car-paycheck",
+      "skill": "career-and-life-management",
+      "family": "career-and-life-management.cx-paycheck-and-wellness",
+      "familyName": "Managing pay, benefits and wellness",
+      "framework": "competing-priorities",
+      "concepts": [
+        "career-and-life-management:wellness-and-finances",
+        "career-and-life-management:benefits-and-resources"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a} and just got your second paycheck.",
+        "As {role|a} at {workplace|a}, you are sorting out your pay and benefits after your first month."
+      ],
+      "pressure": [
+        "A friend says budgeting is only for people with big paychecks.",
+        "{coworker3} says benefits paperwork can wait."
+      ],
+      "detail": [
+        "You get paid every two weeks.",
+        "You started this job a month ago."
+      ],
+      "tiers": {
+        "1": "A benefit deadline that is about to pass comes first.",
+        "2": "Understand your pay before you plan with it.",
+        "3": "A budget turns a paycheck into a plan.",
+        "4": "A costly credit decision deserves careful thought before smaller daily habits.",
+        "5": "Daily wellness habits matter once the urgent money questions are handled."
+      },
+      "issues": [
+        {
+          "id": "enroll",
+          "tier": 1,
+          "rule": "meet-benefit-deadline",
+          "principle": "car.enroll-before-deadline",
+          "fact": [
+            "Enrollment for the workplace health plan closes Friday, and you have not chosen yet."
+          ],
+          "short": "the enrollment deadline",
+          "action": "Review the plan options and enroll before Friday's deadline.",
+          "brief": "enroll before Friday",
+          "reason": "Missing the enrollment deadline can mean waiting months for coverage.",
+          "lesson": "Know your benefit deadlines and act before they pass.",
+          "shortcut": [
+            {
+              "text": "Wait until you get sick to decide about the plan.",
+              "brief": "wait until you need it",
+              "why": "Coverage usually has to be chosen before you need it.",
+              "mis": "Benefits can be picked up anytime."
+            }
+          ],
+          "clear": [
+            "You already enrolled in the health plan last week."
+          ],
+          "done": "you are already enrolled"
+        },
+        {
+          "id": "stub",
+          "tier": 2,
+          "rule": "understand-pay",
+          "principle": "car.read-pay-stub",
+          "fact": [
+            "Your paycheck is lower than you expected, and you have not read the deductions."
+          ],
+          "short": "the unexplained smaller paycheck",
+          "action": "Read the deductions on your pay stub and ask payroll about anything unclear.",
+          "brief": "read the deductions and ask payroll",
+          "reason": "Deductions such as taxes and benefits explain the difference. Understanding them prevents surprises.",
+          "lesson": "Read your pay stub and understand each deduction.",
+          "shortcut": [
+            {
+              "text": "Assume payroll made a mistake and complain to {lead|the}.",
+              "brief": "assume it is a mistake",
+              "why": "Most differences come from normal deductions; read the stub first.",
+              "mis": "A smaller check always means an error."
+            }
+          ],
+          "clear": [
+            "Payroll already explained each deduction on your stub."
+          ],
+          "done": "the deductions were already explained"
+        },
+        {
+          "id": "budget",
+          "tier": 3,
+          "rule": "plan-finances",
+          "principle": "car.write-simple-budget",
+          "fact": [
+            "You have no plan for how your pay covers rent, food and savings."
+          ],
+          "short": "the missing budget",
+          "action": "Write a simple monthly budget for needs, savings and wants.",
+          "brief": "write a simple budget",
+          "reason": "A budget shows whether your pay covers your needs and helps you save on purpose.",
+          "lesson": "Plan how your pay will be spent and saved.",
+          "shortcut": [
+            {
+              "text": "Spend as you go and see what is left at the end of the month.",
+              "brief": "spend as you go",
+              "why": "Without a plan, savings and bills can come up short.",
+              "mis": "Budgets are only needed when money runs out."
+            }
+          ],
+          "clear": [
+            "You already wrote a simple monthly budget."
+          ],
+          "done": "you already have a budget"
+        },
+        {
+          "id": "card",
+          "tier": 4,
+          "rule": "avoid-high-cost-credit",
+          "principle": "car.weigh-high-interest-card",
+          "fact": [
+            "A store offers a credit card with high interest in exchange for 10 percent off today."
+          ],
+          "short": "the high-interest card offer",
+          "action": "Skip the card unless you are sure you can pay the full balance each month.",
+          "brief": "skip the card unless you pay in full",
+          "reason": "High interest can quickly cost more than the one-time discount saves.",
+          "lesson": "Compare the long-term cost of credit with the short-term savings.",
+          "shortcut": [
+            {
+              "text": "Sign up, since 10 percent off is free money.",
+              "brief": "sign up for the discount",
+              "why": "The discount is one-time; interest on any unpaid balance keeps adding up.",
+              "mis": "Store discounts make credit cards free."
+            }
+          ]
+        },
+        {
+          "id": "breaks",
+          "tier": 5,
+          "rule": "protect-wellness",
+          "principle": "car.take-scheduled-breaks",
+          "fact": [
+            "You have been skipping breaks to finish work faster."
+          ],
+          "short": "the skipped breaks",
+          "action": "Take your scheduled breaks so you stay healthy and focused.",
+          "brief": "take your scheduled breaks",
+          "reason": "Breaks help you stay healthy and focused, which supports good work over time.",
+          "lesson": "Build habits that keep you healthy at work.",
+          "shortcut": [
+            {
+              "text": "Keep skipping breaks, since it shows dedication.",
+              "brief": "keep skipping breaks",
+              "why": "Skipping breaks wears you down and can lower your work quality.",
+              "mis": "Skipping breaks impresses supervisors."
+            }
+          ],
+          "noProceed": true
+        }
+      ],
+      "proceed": {
+        "text": "Stick with the budget and benefit choices you have made.",
+        "why": "Your benefits, pay and budget are in order, so following your plan is next.",
+        "lesson": "Once your plan is set, follow it and review it now and then."
+      },
+      "generic": [
+        {
+          "text": "Borrow money from coworkers until the next paycheck.",
+          "why": "Borrowing from coworkers strains relationships and does not fix the plan.",
+          "mis": "Coworkers are a good source of loans."
+        },
+        {
+          "text": "Ignore the paperwork until someone reminds you.",
+          "why": "Deadlines and deductions do not wait for reminders.",
+          "mis": "Someone will always remind you."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask payroll to explain your stub again every pay period.",
+          "why": "The deductions were already explained; repeating the question wastes time.",
+          "mis": "You can never ask about pay too often."
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Enrollment deadline stated in the scenario. General personal-finance guidance, no tax or legal claims."
+      }
+    }
+  ]
+}

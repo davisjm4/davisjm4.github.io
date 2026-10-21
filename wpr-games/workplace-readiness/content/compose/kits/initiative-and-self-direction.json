@@ -1,0 +1,693 @@
+{
+  "skill": "initiative-and-self-direction",
+  "kits": [
+    {
+      "id": "ini-finished-early",
+      "skill": "initiative-and-self-direction",
+      "family": "initiative-and-self-direction.cx-finished-early",
+      "familyName": "Using time well after finishing early",
+      "framework": "competing-priorities",
+      "concepts": [
+        "initiative-and-self-direction:proactive-decisions",
+        "initiative-and-self-direction:identify-needs",
+        "initiative-and-self-direction:minimal-supervision"
+      ],
+      "contexts": "any",
+      "requires": [
+        "area"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}. You finished your assigned tasks an hour early, and {lead|the} is in a long meeting.",
+        "As {role|a} at {workplace|a}, you have finished everything on your list early. {Lead|the} is in a meeting for the next hour."
+      ],
+      "pressure": [
+        "{coworker3} says nobody will notice if you just take it easy.",
+        "{coworker3} jokes that finishing early means you earned a long break."
+      ],
+      "detail": [
+        "The {area} is quieter than usual today.",
+        "It is the middle of the shift."
+      ],
+      "tiers": {
+        "1": "A hazard someone could walk into comes before any other task.",
+        "2": "Your own error should be fixed before it causes problems for others.",
+        "3": "Stay within what you are allowed to do, even when trying to help.",
+        "4": "Helping a teammate who is behind comes before improvements.",
+        "5": "Ideas for improvement can be raised once the urgent needs are met."
+      },
+      "issues": [
+        {
+          "id": "hazard",
+          "tier": 1,
+          "rule": "control-hazard-first",
+          "principle": "ini.act-on-spotted-hazard",
+          "fact": [
+            "On your way back from the break room, you notice {hazard}."
+          ],
+          "short": "the hazard you noticed",
+          "action": "Mark off the hazard so nobody walks into it, and report it right away.",
+          "brief": "mark off the hazard and report it",
+          "reason": "Taking initiative includes acting on hazards you notice. Marking it off protects people until it is fixed.",
+          "lesson": "When you spot a hazard, protect people from it and report it; do not assume someone else will.",
+          "shortcut": [
+            {
+              "text": "Mention the hazard to {lead|the} after the meeting ends.",
+              "brief": "mention the hazard after the meeting",
+              "why": "Someone could be hurt in the next hour. A hazard needs action now, not later.",
+              "mis": "Problems can wait until the supervisor is free."
+            }
+          ]
+        },
+        {
+          "id": "ownerror",
+          "tier": 2,
+          "rule": "correct-own-error",
+          "principle": "ini.fix-own-error-unprompted",
+          "fact": [
+            "You realize an entry you made in {record|the} this morning has the wrong date."
+          ],
+          "short": "the wrong date in your entry",
+          "action": "Correct your entry in {record|the} the usual way and note that you changed it.",
+          "brief": "correct your entry and note the change",
+          "reason": "Fixing your own mistake without being asked keeps the record reliable and shows self-direction.",
+          "lesson": "Correct your own mistakes as soon as you find them, without waiting to be told.",
+          "shortcut": [
+            {
+              "text": "Leave the wrong date, since nobody has noticed it.",
+              "brief": "leave the wrong date alone",
+              "why": "Others rely on the record. An error left in place can cause confusion later.",
+              "mis": "A mistake nobody noticed does not need fixing."
+            }
+          ]
+        },
+        {
+          "id": "outside",
+          "tier": 3,
+          "rule": "stay-within-authority",
+          "principle": "ini.choose-task-within-role",
+          "fact": [
+            "The obvious next task needs a certification you do not have."
+          ],
+          "short": "the task that needs certification",
+          "action": "Leave the certified task for qualified staff and pick another useful task.",
+          "brief": "leave the certified task and pick another",
+          "reason": "Initiative means finding useful work within what you are allowed to do. Certified tasks are restricted for good reasons.",
+          "lesson": "Take initiative within the limits of your role and training.",
+          "shortcut": [
+            {
+              "text": "Do the certified task anyway, since you have watched it done many times.",
+              "brief": "do the certified task anyway",
+              "why": "Watching is not certification. Doing restricted work can cause harm and break workplace rules.",
+              "mis": "Having seen a task done is enough to do it."
+            }
+          ]
+        },
+        {
+          "id": "unclear",
+          "tier": 3,
+          "rule": "find-needed-work",
+          "principle": "ini.find-what-needs-doing",
+          "fact": [
+            "Nobody has told you what to do next."
+          ],
+          "clear": [
+            "{Lead|the} left a list of extra tasks for anyone who finishes early."
+          ],
+          "done": "a task list was already left for you",
+          "short": "not knowing what to do next",
+          "action": "Check the task board or ask {coworker} what needs doing.",
+          "brief": "check the task board or ask {coworker}",
+          "reason": "Finding out what needs doing, instead of waiting to be told, is the core of self-direction.",
+          "lesson": "When your work is done, look for what needs doing instead of waiting to be told.",
+          "shortcut": [
+            {
+              "text": "Wait at your station until {lead|the} comes out of the meeting.",
+              "brief": "wait at your station for {lead|the}",
+              "why": "An hour of waiting wastes time that could help the team. You can find work without your supervisor.",
+              "mis": "You should only work on what you are told to do."
+            }
+          ]
+        },
+        {
+          "id": "teammate",
+          "tier": 4,
+          "rule": "help-where-needed",
+          "principle": "ini.offer-help-to-busy-teammate",
+          "fact": [
+            "{coworker2} is falling behind on a rush order that you know how to help with."
+          ],
+          "short": "{coworker2}'s rush order",
+          "action": "Offer to help {coworker2} with the rush order.",
+          "brief": "offer to help {coworker2}",
+          "reason": "Seeing where help is needed and offering it moves the team's work forward.",
+          "lesson": "Notice where your help is needed and offer it.",
+          "shortcut": [
+            {
+              "text": "Leave {coworker2} to it, since your own work is finished.",
+              "brief": "leave {coworker2} to it",
+              "why": "The team's work is not finished. Helping a teammate who is behind is a good use of spare time.",
+              "mis": "Once your own work is done, the rest is not your concern."
+            }
+          ]
+        },
+        {
+          "id": "pattern",
+          "tier": 5,
+          "rule": "suggest-improvement-after",
+          "principle": "ini.note-recurring-problem",
+          "fact": [
+            "You notice that {equipment|the} jams at about the same time every afternoon."
+          ],
+          "short": "the repeated jams",
+          "action": "Write down when the jams happen and share the pattern with {lead|the} later.",
+          "brief": "write down when it jams and share the pattern",
+          "reason": "Noticing a pattern and recording it gives the right people what they need to fix the cause.",
+          "lesson": "Record patterns you notice so the right person can act on them.",
+          "shortcut": [
+            {
+              "text": "Take {equipment|the} apart yourself to find out what is wrong.",
+              "brief": "take the equipment apart yourself",
+              "why": "Repairs may need training or permission. Recording and reporting the pattern is the useful step.",
+              "mis": "Initiative means fixing everything yourself."
+            }
+          ],
+          "noProceed": true
+        }
+      ],
+      "proceed": {
+        "text": "Start another useful task and tell {lead|the} what you picked up.",
+        "why": "Nothing more urgent needs attention, so starting useful work and keeping the lead informed is the best use of the time.",
+        "lesson": "Use spare time on useful work and keep your supervisor informed."
+      },
+      "generic": [
+        {
+          "text": "Spend the hour on your phone, since your assigned work is done.",
+          "why": "The workday is not over. Using spare time well is part of being dependable and self-directed.",
+          "mis": "Finishing your list early means the rest of the time is yours."
+        },
+        {
+          "text": "Interrupt {lead|the}'s meeting to ask what to do next.",
+          "why": "Interrupting a meeting for something you can figure out yourself is not necessary.",
+          "mis": "Only a supervisor can say what needs doing."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Wait until {lead|the} confirms the list is still current before starting.",
+          "why": "The list was left for exactly this situation. Waiting wastes the time it was meant to fill.",
+          "mis": "Instructions always need to be reconfirmed."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}. You finished your work early, and {lead|the} is unavailable."
+        ],
+        "because": {
+          "unclear": [
+            "You are not sure what is most needed right now."
+          ],
+          "ownerror": [
+            "You spot a mistake in something you filled out this morning."
+          ],
+          "teammate": [
+            "{coworker2} is struggling with a rush order."
+          ]
+        },
+        "steps": [
+          {
+            "id": "fixown",
+            "text": "Fix the mistake you made earlier",
+            "issue": "ownerror"
+          },
+          {
+            "id": "find",
+            "text": "Check the task board for what is needed",
+            "issue": "unclear"
+          },
+          {
+            "id": "help",
+            "text": "Offer {coworker2} a hand",
+            "issue": "teammate"
+          },
+          {
+            "id": "do",
+            "text": "Work on the extra task",
+            "core": true
+          },
+          {
+            "id": "tell",
+            "text": "Tell {lead|the} what you did with the time",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "fixown",
+            "do",
+            "Your own mistake should be fixed before you move on."
+          ],
+          [
+            "find",
+            "do",
+            "You need to know which task is needed before starting it."
+          ],
+          [
+            "help",
+            "do",
+            "A teammate's rush order comes before optional extra tasks."
+          ],
+          [
+            "do",
+            "tell",
+            "You report what you did after doing it."
+          ],
+          [
+            "fixown",
+            "tell",
+            "Your report should include the correction."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Fix your own errors, find what is needed, help where it counts, then report."
+      },
+      "doc": {
+        "type": "note",
+        "title": [
+          "Your note to {lead|the}"
+        ],
+        "intro": [
+          "You are leaving {lead|the} a note about what you did after finishing early. Check it first."
+        ],
+        "lesson": "A self-directed worker reports what they did, stays within their role and flags what needs attention.",
+        "lines": [
+          {
+            "id": "done",
+            "text": "I finished my assigned list about an hour early.",
+            "fine": "A clear, factual start."
+          },
+          {
+            "id": "help",
+            "text": "I helped {coworker2} finish the rush order.",
+            "fine": "Reports help given where it was needed."
+          },
+          {
+            "id": "task",
+            "text": "Then I restocked the {area} from the extra-tasks list.",
+            "fine": "Chose a useful task from the list.",
+            "bad": [
+              {
+                "id": "task-cert",
+                "level": "intermediate",
+                "text": "Then I did the certified equipment check, since I have watched it many times.",
+                "why": "Certified tasks are restricted to qualified staff. Watching does not qualify you.",
+                "principle": "ini.doc-acted-outside-role"
+              }
+            ]
+          },
+          {
+            "id": "hazard",
+            "text": "I marked off {hazard} and reported it to {coworker3}, who was in charge while you were out.",
+            "fine": "Acted on a hazard and reported it to the person covering.",
+            "bad": [
+              {
+                "id": "hazard-later",
+                "level": "beginner",
+                "text": "I noticed {hazard}, but I left it for you to deal with later.",
+                "why": "A hazard can hurt someone before the supervisor returns. It needed to be marked off and reported right away.",
+                "principle": "ini.doc-left-hazard"
+              }
+            ]
+          },
+          {
+            "id": "jam",
+            "text": "{Equipment|the} jammed three afternoons this week around 2 p.m.; I wrote down the times.",
+            "fine": "Records a pattern for the right person to act on.",
+            "bad": [
+              {
+                "id": "jam-repair",
+                "level": "advanced",
+                "text": "{Equipment|the} kept jamming, so I took it apart to look; it is in pieces on the bench.",
+                "why": "Taking equipment apart without permission or training can damage it and leave it out of service. Recording the pattern is the right step.",
+                "principle": "ini.doc-unauthorized-repair"
+              }
+            ]
+          },
+          {
+            "id": "fix",
+            "text": "I corrected the wrong date I had entered in {record|the} and initialed the change.",
+            "fine": "Fixed own mistake and marked the change.",
+            "bad": [
+              {
+                "id": "fix-hide",
+                "level": "beginner",
+                "text": "I noticed a wrong date I had entered, but left it, since nobody had spotted it.",
+                "why": "Leaving a known error in a record is not acceptable; it should be corrected.",
+                "principle": "ini.doc-left-own-error"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Uses the bundle hazard slot (recognizable hazards). 'outside' and 'unclear' share tier 3 and never co-occur."
+      }
+    },
+    {
+      "id": "ini-new-task-solo",
+      "skill": "initiative-and-self-direction",
+      "family": "initiative-and-self-direction.cx-new-task-solo",
+      "familyName": "Working through a new task with little supervision",
+      "framework": "critical-information",
+      "concepts": [
+        "initiative-and-self-direction:minimal-supervision",
+        "initiative-and-self-direction:apply-solutions",
+        "initiative-and-self-direction:proactive-decisions"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You are {role|a} at {workplace|a}. {Lead|the} gave you written instructions for a task you have never done and will be out until the end of the day.",
+        "As {role|a} at {workplace|a}, you are doing a new task alone from written instructions while {lead|the} is out."
+      ],
+      "pressure": [
+        "{coworker3} tells you to just do your best and not bother anyone.",
+        "{coworker3} says asking questions makes new people look weak."
+      ],
+      "detail": [
+        "The instructions are two pages long.",
+        "You have the work area to yourself today."
+      ],
+      "tiers": {
+        "1": "A step that could damage equipment comes before everything else.",
+        "2": "A schedule problem should be raised as early as possible.",
+        "3": "Fill gaps in the instructions before they cause rework.",
+        "4": "After real effort, asking for help beats staying stuck.",
+        "5": "Routine updates come after urgent questions."
+      },
+      "issues": [
+        {
+          "id": "risk",
+          "tier": 1,
+          "rule": "stop-and-ask-on-risk",
+          "principle": "ini.ask-before-risky-step",
+          "fact": [
+            "One step could damage {equipment|the} if done wrong, and you do not understand how to do it."
+          ],
+          "short": "the risky step you do not understand",
+          "action": "Pause at that step and call or message {lead|the} for guidance before doing it.",
+          "brief": "pause and contact {lead|the} about that step",
+          "reason": "Working independently does not mean guessing on a step that could cause damage. A quick question prevents an expensive mistake.",
+          "lesson": "Work independently, but ask before a step where a mistake could cause damage.",
+          "shortcut": [
+            {
+              "text": "Try the step carefully and see what happens.",
+              "brief": "try the step and see what happens",
+              "why": "Experimenting on a step that could damage equipment risks a costly mistake. A quick question is cheaper.",
+              "mis": "Figuring it out alone is always the self-directed choice."
+            }
+          ]
+        },
+        {
+          "id": "behind",
+          "tier": 2,
+          "rule": "communicate-delay-early",
+          "principle": "ini.report-delay-early",
+          "fact": [
+            "At your current pace, the task will not be done by the end of the day as {lead|the} expects."
+          ],
+          "clear": [
+            "{Lead|the} already moved the due time to tomorrow morning."
+          ],
+          "done": "the due time was already moved to tomorrow",
+          "short": "the expected delay",
+          "action": "Message {lead|the} now that the task is running behind and why.",
+          "brief": "tell {lead|the} the task is running behind",
+          "reason": "Early warning lets the lead plan around the delay or send help. Waiting until the end of the day removes those options.",
+          "lesson": "Tell your supervisor about delays as soon as you see them coming.",
+          "shortcut": [
+            {
+              "text": "Say nothing and hope you can speed up later.",
+              "brief": "say nothing and try to speed up",
+              "why": "If you cannot catch up, the lead learns about the delay too late to adjust.",
+              "mis": "Raising a delay makes you look bad, so it is better to hide it."
+            }
+          ]
+        },
+        {
+          "id": "gap",
+          "tier": 3,
+          "rule": "apply-known-solution",
+          "principle": "ini.use-past-example-for-gap",
+          "fact": [
+            "The written instructions do not say how the finished work should be labeled."
+          ],
+          "clear": [
+            "{coworker} showed you how past finished work was labeled."
+          ],
+          "done": "you already found out how past work was labeled",
+          "short": "the missing labeling instructions",
+          "action": "Look at how similar past work was labeled and follow that example.",
+          "brief": "follow how past work was labeled",
+          "reason": "Using an existing example is a sensible, independent way to fill a gap in the instructions.",
+          "lesson": "Fill gaps in instructions by applying solutions that already exist.",
+          "shortcut": [
+            {
+              "text": "Leave the work unlabeled until {lead|the} returns tomorrow.",
+              "brief": "leave it unlabeled until tomorrow",
+              "why": "Unlabeled work can get lost or mixed up. A past example gives you a reasonable answer now.",
+              "mis": "If the instructions do not say, the step can be skipped."
+            }
+          ]
+        },
+        {
+          "id": "stuck",
+          "tier": 4,
+          "rule": "ask-for-help-after-trying",
+          "principle": "ini.ask-help-after-trying",
+          "fact": [
+            "You have tried two ways to fix a formatting problem, and neither worked."
+          ],
+          "short": "the formatting problem you are stuck on",
+          "action": "Ask {coworker} for help, explaining what you have already tried.",
+          "brief": "ask {coworker} for help with what you tried",
+          "reason": "You have made a real effort. Asking for help now, with what you tried, saves time and respects the helper's time.",
+          "lesson": "Try on your own first, then ask for help and explain what you tried.",
+          "shortcut": [
+            {
+              "text": "Keep trying new things on your own for the rest of the day.",
+              "brief": "keep trying alone all day",
+              "why": "Spending the day stuck wastes time. Self-direction includes knowing when to ask.",
+              "mis": "Asking for help means you are not self-directed."
+            }
+          ]
+        },
+        {
+          "id": "update",
+          "tier": 5,
+          "rule": "keep-supervisor-informed",
+          "principle": "ini.send-requested-update",
+          "fact": [
+            "{Lead|the} asked for a short update when you reached the halfway point, and you just did."
+          ],
+          "clear": [
+            "You already sent {lead|the} the halfway update."
+          ],
+          "done": "the halfway update was already sent",
+          "short": "the requested halfway update",
+          "action": "Send {lead|the} a short message saying you have reached the halfway point.",
+          "brief": "send {lead|the} the halfway update",
+          "reason": "The lead asked for this update. Sending it keeps them informed without needing to check on you.",
+          "lesson": "Keep your supervisor informed the way they asked, especially when working alone.",
+          "shortcut": [
+            {
+              "text": "Skip the update, since things are going fine.",
+              "brief": "skip the update",
+              "why": "The lead asked for it. Skipping it leaves them wondering how the task is going.",
+              "mis": "Updates only matter when something is wrong."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Continue through the instructions on your own, step by step.",
+        "why": "Nothing in the situation needs a question or a warning, so steady independent work is exactly what the lead expects.",
+        "lesson": "When the path is clear, keep working independently and steadily."
+      },
+      "generic": [
+        {
+          "text": "Stop and wait for {lead|the} to return before doing anything else.",
+          "why": "Stopping all work for a whole day wastes time when much of the task can go ahead.",
+          "mis": "Without a supervisor present, it is safer to do nothing."
+        },
+        {
+          "text": "Ask {coworker3} to finish the task for you.",
+          "why": "The task was given to you. Handing it off without a reason skips the chance to learn and may overload a coworker.",
+          "mis": "Handing off unfamiliar work is a good way to avoid mistakes."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Message {lead|the} for approval before each step.",
+          "why": "Nothing in the situation needs a question. Asking at every step defeats the purpose of working independently.",
+          "mis": "More check-ins are always better."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}, doing an unfamiliar task from written instructions while {lead|the} is out."
+        ],
+        "because": {
+          "gap": [
+            "The instructions leave out how to label the finished work."
+          ],
+          "update": [
+            "{Lead|the} wants a message once you are halfway done."
+          ]
+        },
+        "steps": [
+          {
+            "id": "read",
+            "text": "Read all of the instructions first",
+            "core": true
+          },
+          {
+            "id": "example",
+            "text": "Find an example of past labeling",
+            "issue": "gap"
+          },
+          {
+            "id": "first",
+            "text": "Complete the first half of the task",
+            "core": true
+          },
+          {
+            "id": "update",
+            "text": "Send {lead|the} a halfway message",
+            "issue": "update"
+          },
+          {
+            "id": "finish",
+            "text": "Finish and label the work",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "read",
+            "first",
+            "Reading the whole set first helps you spot problems early."
+          ],
+          [
+            "read",
+            "example",
+            "Reading the instructions is how you notice what they leave out."
+          ],
+          [
+            "example",
+            "finish",
+            "You need the labeling example before you label."
+          ],
+          [
+            "first",
+            "update",
+            "The halfway message comes once you are halfway done."
+          ],
+          [
+            "update",
+            "finish",
+            "The update is meant to arrive before the task is complete."
+          ],
+          [
+            "first",
+            "finish",
+            "The second half follows the first."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Read everything first, fill gaps with existing examples, and keep your supervisor updated along the way."
+      },
+      "doc": {
+        "type": "chat",
+        "title": [
+          "Your message to {lead|the}"
+        ],
+        "intro": [
+          "You are about to message {lead|the} about the new task. Check the message first."
+        ],
+        "lesson": "Good independent work includes clear, timely, honest messages about progress and problems.",
+        "lines": [
+          {
+            "id": "status",
+            "text": "Halfway update: the first half is finished.",
+            "fine": "Gives the requested update."
+          },
+          {
+            "id": "label",
+            "text": "I labeled the finished pieces the same way as last month's work.",
+            "fine": "Filled a gap by following an existing example.",
+            "bad": [
+              {
+                "id": "label-skip",
+                "level": "beginner",
+                "text": "The instructions did not say how to label things, so I skipped labeling.",
+                "why": "Skipping a needed step because instructions are unclear can cause lost or mixed-up work. An existing example would have filled the gap.",
+                "principle": "ini.doc-skipped-unclear-step"
+              }
+            ]
+          },
+          {
+            "id": "pace",
+            "text": "At this pace I will need about an hour tomorrow morning to finish.",
+            "fine": "Warns about a delay early and specifically."
+          },
+          {
+            "id": "risky",
+            "text": "Before step 6, could you tell me how to set the guide? I do not want to damage it.",
+            "fine": "Asks before a step that could cause damage.",
+            "bad": [
+              {
+                "id": "risky-tried",
+                "level": "intermediate",
+                "text": "I was not sure how to do step 6, so I tried a few settings until one seemed to work.",
+                "why": "Guessing on a step that could damage equipment risks costly harm. That step called for a question first.",
+                "principle": "ini.doc-guessed-risky-step"
+              }
+            ]
+          },
+          {
+            "id": "stuck",
+            "text": "{coworker} helped with the formatting after I had tried two fixes.",
+            "fine": "Asked for help after real effort and says so.",
+            "bad": [
+              {
+                "id": "stuck-hours",
+                "level": "advanced",
+                "needs": [
+                  "pace"
+                ],
+                "text": "I spent three hours alone on the formatting so I would not bother anyone.",
+                "why": "The task is already running behind. Hours stuck without asking made the delay worse; asking earlier was the better choice.",
+                "principle": "ini.doc-stayed-stuck"
+              }
+            ]
+          },
+          {
+            "id": "close",
+            "text": "I will keep going with the second half now.",
+            "fine": "States the next step."
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Self-direction with appropriate help-seeking; tiers favour preventing damage and early communication."
+      }
+    }
+  ]
+}

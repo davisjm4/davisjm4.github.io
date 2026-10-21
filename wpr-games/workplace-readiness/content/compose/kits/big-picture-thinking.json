@@ -1,0 +1,797 @@
+{
+  "skill": "big-picture-thinking",
+  "kits": [
+    {
+      "id": "big-change-request",
+      "skill": "big-picture-thinking",
+      "family": "big-picture-thinking.cx-easy-change-wider-impact",
+      "familyName": "An easy change with wider effects",
+      "framework": "consequences",
+      "concepts": [
+        "big-picture-thinking:impacts-of-actions",
+        "big-picture-thinking:organization-structure",
+        "big-picture-thinking:role-in-mission"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. A {client} asks you to change how their {deliverable} is handled, and the change would be easy for you.",
+        "As {role|a} at {workplace|a}, you get a request from a {client} for a small change in how their {deliverable} is handled."
+      ],
+      "pressure": [
+        "The {client} says other places do it this way without any fuss.",
+        "{coworker3} says to just do it and keep the {client} happy."
+      ],
+      "detail": [
+        "The {client} has been coming here for years.",
+        "The request came in by phone."
+      ],
+      "tiers": {
+        "1": "A step that protects people outweighs convenience.",
+        "2": "The person the organization assigns to decide has to decide.",
+        "3": "The teams down the line need a say before their work changes.",
+        "4": "Flagging a possible precedent comes after the decision itself is in the right hands.",
+        "5": "Explaining the reason helps once the bigger questions are settled."
+      },
+      "issues": [
+        {
+          "id": "protects",
+          "tier": 1,
+          "rule": "protect-requirements",
+          "principle": "big.keep-protective-step",
+          "fact": [
+            "The change would skip a step that exists to protect {client.plural}."
+          ],
+          "short": "the protective step",
+          "action": "Explain that the step protects {client.plural}, and offer an option that keeps it.",
+          "brief": "keep the protective step and offer an option",
+          "reason": "The step exists for everyone's protection. Offering an alternative meets the {client}'s need without removing it.",
+          "lesson": "Weigh a request against the purpose of the steps it would change.",
+          "shortcut": [
+            {
+              "text": "Skip the step just for this {client}, since it is only one order.",
+              "brief": "skip it for this one order",
+              "why": "The protection matters on every order. One exception can be the one that goes wrong.",
+              "mis": "A single exception has no wider effect."
+            }
+          ]
+        },
+        {
+          "id": "authority",
+          "tier": 2,
+          "rule": "route-to-decision-maker",
+          "principle": "big.route-to-assigned-decider",
+          "fact": [
+            "The posted chart of responsibilities says {lead|the} decides changes like this."
+          ],
+          "clear": [
+            "{Lead|the} already approved changes like this one last week."
+          ],
+          "done": "changes like this were already approved",
+          "short": "who decides this change",
+          "action": "Pass the request to {lead|the}, who decides changes like this.",
+          "brief": "pass it to {lead|the} to decide",
+          "reason": "Knowing who decides what is part of understanding how the organization works. It keeps decisions consistent.",
+          "lesson": "Know who is responsible for which decisions, and route requests to them.",
+          "shortcut": [
+            {
+              "text": "Make the change yourself, since you are the one the {client} asked.",
+              "brief": "make the change yourself",
+              "why": "Being asked does not give you authority. The chart says the lead decides.",
+              "mis": "Whoever gets a request can decide it."
+            }
+          ]
+        },
+        {
+          "id": "downstream",
+          "tier": 3,
+          "rule": "consult-affected-people",
+          "principle": "big.check-downstream-team",
+          "fact": [
+            "The change would add work for the team that handles the next step."
+          ],
+          "clear": [
+            "The next team already said the change works for them."
+          ],
+          "done": "the next team already agreed",
+          "short": "the extra work for the next team",
+          "action": "Check with the next team about the extra work before agreeing.",
+          "brief": "check with the next team",
+          "reason": "A change that is easy for you may be hard for the team after you. Checking first avoids surprising them.",
+          "lesson": "Think about how your actions affect the people who work after you.",
+          "shortcut": [
+            {
+              "text": "Agree to the change, since it does not make your own job harder.",
+              "brief": "agree since it is easy for you",
+              "why": "Judging a change only by your own work ignores its effect on the next team.",
+              "mis": "If it is easy for you, it is easy for everyone."
+            }
+          ]
+        },
+        {
+          "id": "precedent",
+          "tier": 4,
+          "rule": "flag-wider-impact",
+          "principle": "big.flag-precedent",
+          "fact": [
+            "If the change is made, other {client.plural} are likely to ask for the same thing."
+          ],
+          "short": "the precedent the change would set",
+          "action": "Tell {lead|the} that making this change may lead others to expect it too.",
+          "brief": "flag the precedent to {lead|the}",
+          "reason": "Decisions often repeat. Flagging the wider effect helps the lead decide with the full picture.",
+          "lesson": "Consider whether a one-time decision will become an expectation.",
+          "shortcut": [
+            {
+              "text": "Ignore that, since you can deal with other requests when they come.",
+              "brief": "deal with other requests later",
+              "why": "Once a change is made for one {client}, refusing others becomes harder.",
+              "mis": "Each decision stands alone."
+            }
+          ],
+          "clear": [
+            "{Lead|the} already knows other {client.plural} may ask for the same change."
+          ],
+          "done": "the lead already knows about the precedent"
+        }
+      ],
+      "proceed": {
+        "text": "Make the change for the {client} and note it in {record|the}.",
+        "why": "The change is approved, others are on board and nothing is put at risk, so making and recording it is right.",
+        "lesson": "When a change is approved and its effects are understood, carry it out and record it."
+      },
+      "generic": [
+        {
+          "text": "Tell the {client} no without explaining why.",
+          "why": "A flat refusal with no explanation leaves the {client} confused and unhappy.",
+          "mis": "Saying no firmly is enough."
+        },
+        {
+          "text": "Promise the {client} the change before checking anything.",
+          "why": "Promising first may commit the workplace to something it cannot or should not do.",
+          "mis": "A promise can always be undone later."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask every department to review the change before you do anything.",
+          "why": "The change is already approved and agreed. A full review is unnecessary.",
+          "mis": "More reviews always make a decision better."
+        }
+      ],
+      "process": {
+        "setup": [
+          "A {client} at {workplace|the} has asked for a change in how their {deliverable} is handled."
+        ],
+        "because": {
+          "authority": [
+            "The chart of responsibilities assigns this kind of decision to {lead|the}."
+          ],
+          "downstream": [
+            "Another team handles the step after yours."
+          ]
+        },
+        "steps": [
+          {
+            "id": "understand",
+            "text": "Find out exactly what the {client} wants changed",
+            "core": true
+          },
+          {
+            "id": "next",
+            "text": "Ask the next team how it affects them",
+            "issue": "downstream"
+          },
+          {
+            "id": "decide",
+            "text": "Bring the request to {lead|the} for a decision",
+            "issue": "authority"
+          },
+          {
+            "id": "tell",
+            "text": "Tell the {client} the outcome",
+            "core": true
+          },
+          {
+            "id": "record",
+            "text": "Record the change",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "understand",
+            "next",
+            "You need the details before asking about the effect."
+          ],
+          [
+            "understand",
+            "decide",
+            "The lead needs the details to decide."
+          ],
+          [
+            "next",
+            "decide",
+            "The decision should include the next team's view."
+          ],
+          [
+            "decide",
+            "tell",
+            "The {client} hears the outcome after the decision."
+          ],
+          [
+            "understand",
+            "tell",
+            "You respond after understanding the request."
+          ],
+          [
+            "tell",
+            "record",
+            "You record what was agreed."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Understand the request, gather the affected views, let the right person decide, then follow through."
+      },
+      "doc": {
+        "type": "email",
+        "title": [
+          "Your reply to the {client}"
+        ],
+        "intro": [
+          "You are about to reply to the {client}'s request. Check the message first."
+        ],
+        "lesson": "Big-picture replies explain decisions in terms of their purpose and route them to the right people.",
+        "lines": [
+          {
+            "id": "thanks",
+            "text": "Thank you for your request about how your {deliverable} is handled.",
+            "fine": "Acknowledges the request."
+          },
+          {
+            "id": "why",
+            "text": "The extra check you asked us to skip is there to protect every {client}.",
+            "fine": "Explains the purpose of the step."
+          },
+          {
+            "id": "offer",
+            "text": "We can instead have your order ready an hour earlier.",
+            "fine": "Offers an alternative that keeps the check.",
+            "bad": [
+              {
+                "id": "offer-skip",
+                "level": "advanced",
+                "needs": [
+                  "why"
+                ],
+                "text": "So we will skip that check for your orders from now on.",
+                "why": "The same message says the check protects every {client}. Dropping it contradicts that reason.",
+                "principle": "big.doc-contradicts-stated-purpose"
+              }
+            ]
+          },
+          {
+            "id": "who",
+            "text": "I have passed your request to {lead|the}, who makes these decisions.",
+            "fine": "Routes the decision to the right person.",
+            "bad": [
+              {
+                "id": "who-self",
+                "level": "intermediate",
+                "text": "I have decided to change our process for everyone starting today.",
+                "why": "Changing the process for everyone is not an individual's decision; it belongs to the person responsible.",
+                "principle": "big.doc-overstepped-authority"
+              }
+            ]
+          },
+          {
+            "id": "time",
+            "text": "You will hear back by Friday.",
+            "fine": "Sets a clear expectation.",
+            "bad": [
+              {
+                "id": "time-never",
+                "level": "beginner",
+                "text": "We will get back to you whenever someone has time.",
+                "why": "A vague promise leaves the {client} unsure when to expect an answer.",
+                "principle": "big.doc-vague-timeline"
+              }
+            ]
+          },
+          {
+            "id": "close",
+            "text": "Thank you for your patience.",
+            "fine": "A courteous close.",
+            "bad": [
+              {
+                "id": "close-rude",
+                "level": "beginner",
+                "text": "Please stop asking for special treatment.",
+                "why": "This is rude and damages the relationship with the {client}.",
+                "principle": "big.doc-rude-close"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Organization structure stated via a posted chart of responsibilities."
+      }
+    },
+    {
+      "id": "big-closing-impacts",
+      "skill": "big-picture-thinking",
+      "family": "big-picture-thinking.cx-closing-impacts",
+      "familyName": "Small closing habits with wider effects",
+      "framework": "consequences",
+      "concepts": [
+        "big-picture-thinking:impacts-of-actions",
+        "big-picture-thinking:community-and-industry"
+      ],
+      "contexts": "any",
+      "requires": [
+        "supply",
+        "powered"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}, and you are the last one closing up tonight.",
+        "As {role|a} at {workplace|a}, you are finishing the closing routine on your own."
+      ],
+      "detail": [
+        "It has been a long day.",
+        "Everyone else left about ten minutes ago."
+      ],
+      "issues": [
+        {
+          "id": "trash",
+          "tier": 1,
+          "rule": "honor-community-commitment",
+          "principle": "big.keep-promise-to-neighbors",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "Trash bags by the back door are spilling onto the sidewalk, and {workplace|the} promised neighbors to keep trash in closed bins."
+          ],
+          "short": "the trash on the sidewalk",
+          "action": "Put the trash in the closed bins, keeping the promise made to the neighbors.",
+          "reason": "The workplace's reputation in the neighborhood depends on keeping its promises. A few minutes now protects that relationship.",
+          "lesson": "Your everyday actions shape how the community sees your workplace.",
+          "shortcut": [
+            {
+              "text": "Leave the bags for the morning crew, since it is late.",
+              "why": "Overnight, the trash stays on the sidewalk and breaks the promise to neighbors.",
+              "mis": "Small messes outside do not affect the business."
+            }
+          ]
+        },
+        {
+          "id": "power",
+          "tier": 2,
+          "rule": "reduce-waste",
+          "principle": "big.shut-down-unneeded-equipment",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "{Powered|the} is still running in an empty room, and the closing list says it should be off overnight."
+          ],
+          "short": "the equipment left running",
+          "action": "Switch off {powered|the} using the normal shutdown steps.",
+          "reason": "Leaving equipment on wastes energy and money and adds wear. The closing list exists because those costs add up.",
+          "lesson": "Small wastes repeated every night become big costs for the organization.",
+          "shortcut": [
+            {
+              "text": "Leave it on, since one night of power costs almost nothing.",
+              "why": "Habits repeat. One night becomes every night, and the cost adds up.",
+              "mis": "Small costs do not matter to a business."
+            }
+          ]
+        },
+        {
+          "id": "materials",
+          "tier": 3,
+          "rule": "reduce-waste",
+          "principle": "big.rescue-usable-materials",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "A sealed box of unused {supply.plural} has been thrown in the trash."
+          ],
+          "short": "the sealed box in the trash",
+          "action": "Take the sealed box out of the trash and return it to the supply shelf.",
+          "reason": "Unused supplies cost money to replace. Returning them protects the budget everyone depends on.",
+          "lesson": "Treat the organization's resources as if your own budget depended on them.",
+          "shortcut": [
+            {
+              "text": "Leave it, since someone must have had a reason to throw it out.",
+              "why": "A sealed, unused box has value. If there is a reason, it can be checked tomorrow.",
+              "mis": "Whatever is in the trash must be waste."
+            }
+          ]
+        },
+        {
+          "id": "pattern",
+          "tier": 4,
+          "rule": "flag-wider-impact",
+          "principle": "big.report-repeating-closing-gap",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "This is the third night this week the closing list has been left half done."
+          ],
+          "short": "the repeated half-done closing",
+          "action": "Finish the list, then let {lead|the} know it keeps happening so the routine can be fixed.",
+          "reason": "Fixing tonight's gaps helps once. Telling the lead about the pattern helps fix the routine for every night.",
+          "lesson": "Look beyond the single incident to the pattern behind it.",
+          "shortcut": [
+            {
+              "text": "Finish the list again and say nothing, since it is easier.",
+              "why": "Quietly covering a repeated gap leaves the cause in place.",
+              "mis": "Covering a problem is the same as solving it."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Lock up and head home, since tonight's closing is someone else's job.",
+        "why": "Closing is your responsibility tonight, so leaving things undone is not an option.",
+        "lesson": "Every closing task protects something bigger than the task itself."
+      },
+      "generic": [
+        {
+          "text": "Write a note about it and leave everything as it is.",
+          "why": "A note does not fix a problem you can handle in minutes.",
+          "mis": "Writing a note is the same as handling it."
+        },
+        {
+          "text": "Text {coworker} to come back and handle it.",
+          "why": "You are the one closing. Calling someone back is not necessary for a task you can do.",
+          "mis": "Closing problems belong to whoever caused them."
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Beginner-only issues; the promise to neighbors and the closing list are stated in the scenario."
+      }
+    },
+    {
+      "id": "big-supplier-switch",
+      "skill": "big-picture-thinking",
+      "family": "big-picture-thinking.cx-supplier-switch",
+      "familyName": "Weighing a cheaper supplier",
+      "framework": "consequences",
+      "concepts": [
+        "big-picture-thinking:impacts-of-actions",
+        "big-picture-thinking:community-and-industry",
+        "big-picture-thinking:organization-structure"
+      ],
+      "contexts": "any",
+      "requires": [
+        "supply"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}. {Lead|the} asked you to look into switching to a cheaper supplier for {supply.plural}.",
+        "As {role|a} at {workplace|a}, you are comparing the current supplier of {supply.plural} with a cheaper one for {lead|the}."
+      ],
+      "pressure": [
+        "{coworker3} says cheaper is always better and to just switch.",
+        "{Lead|the} wants a recommendation this week."
+      ],
+      "detail": [
+        "The cheaper supplier sent free samples.",
+        "The current supplier has been used for years."
+      ],
+      "tiers": {
+        "1": "A safety concern stops the change until it is resolved.",
+        "2": "Commitments the workplace already made have to be checked before changing.",
+        "3": "The people whose work changes need a say.",
+        "4": "A fair comparison needs the full cost.",
+        "5": "Wider effects belong in the summary once the facts are in."
+      },
+      "issues": [
+        {
+          "id": "safety",
+          "tier": 1,
+          "rule": "protect-safety",
+          "principle": "big.flag-safety-concern",
+          "fact": [
+            "The cheaper {supply.plural} failed a safety test at another workplace."
+          ],
+          "short": "the failed safety test",
+          "action": "Report the failed safety test to {lead|the} before the switch goes further.",
+          "brief": "report the failed safety test",
+          "reason": "A cheaper product that may be unsafe could cost far more than it saves.",
+          "lesson": "Weigh safety before savings.",
+          "shortcut": [
+            {
+              "text": "Switch anyway, since the test was at a different workplace.",
+              "brief": "switch suppliers anyway",
+              "why": "A failed test elsewhere is a warning the lead needs to hear.",
+              "mis": "Problems elsewhere do not apply here."
+            }
+          ]
+        },
+        {
+          "id": "contract",
+          "tier": 2,
+          "rule": "check-commitments",
+          "principle": "big.check-existing-agreement",
+          "fact": [
+            "The agreement with the current supplier, kept by {lead|the}, may require notice before switching."
+          ],
+          "short": "the possible notice requirement",
+          "action": "Ask {lead|the} to check the agreement before anything changes.",
+          "brief": "have {lead|the} check the agreement",
+          "reason": "Breaking an agreement can cost money and trust. The lead holds the agreement.",
+          "lesson": "Check existing commitments before changing course.",
+          "shortcut": [
+            {
+              "text": "Assume the agreement does not matter, since the switch saves money.",
+              "brief": "ignore the agreement",
+              "why": "Savings do not cancel a commitment the workplace made.",
+              "mis": "Agreements do not matter if money is saved."
+            }
+          ],
+          "clear": [
+            "{Lead|the} checked, and the agreement allows switching at any time."
+          ],
+          "done": "the agreement was already checked"
+        },
+        {
+          "id": "nextteam",
+          "tier": 3,
+          "rule": "consult-affected-people",
+          "principle": "big.consult-team-using-supply",
+          "fact": [
+            "The cheaper version would mean the next team changes how they work."
+          ],
+          "short": "the effect on the next team",
+          "action": "Ask the next team how the change would affect their work.",
+          "brief": "ask the next team about the effect",
+          "reason": "Savings in one place can create costs in another. The next team knows their side.",
+          "lesson": "Look at how a change affects the whole operation.",
+          "shortcut": [
+            {
+              "text": "Leave them out, since purchasing is not their job.",
+              "brief": "leave the next team out",
+              "why": "They will live with the change; leaving them out risks hidden costs.",
+              "mis": "Only the buyer's view matters."
+            }
+          ],
+          "clear": [
+            "The next team tested the samples and said they work fine."
+          ],
+          "done": "the next team already tested the samples"
+        },
+        {
+          "id": "shipping",
+          "tier": 4,
+          "rule": "full-cost",
+          "principle": "big.compare-total-cost",
+          "fact": [
+            "The cheaper price does not include shipping, which the current supplier covers."
+          ],
+          "short": "the missing shipping cost",
+          "action": "Compare the total cost with shipping included, not just the price.",
+          "brief": "compare totals with shipping",
+          "reason": "A lower price can become a higher total once all costs are counted.",
+          "lesson": "Compare total costs, not sticker prices.",
+          "shortcut": [
+            {
+              "text": "Compare the prices only, since shipping is a small extra.",
+              "brief": "compare prices only",
+              "why": "Shipping can erase the savings.",
+              "mis": "Extra costs are too small to matter."
+            }
+          ],
+          "clear": [
+            "You already compared both options with shipping included."
+          ],
+          "done": "the full costs were already compared"
+        },
+        {
+          "id": "local",
+          "tier": 5,
+          "rule": "weigh-community",
+          "principle": "big.consider-local-relationship",
+          "fact": [
+            "The current supplier is a local business that many {client.plural} know."
+          ],
+          "short": "the local relationship",
+          "action": "Mention the local relationship in your summary for {lead|the}.",
+          "brief": "mention the local relationship",
+          "reason": "Community relationships affect reputation. The lead should weigh them with the numbers.",
+          "lesson": "Consider how decisions affect the community.",
+          "shortcut": [
+            {
+              "text": "Leave it out, since only the price matters.",
+              "brief": "leave it out",
+              "why": "Leaving out a real factor gives the lead an incomplete picture.",
+              "mis": "Business decisions are only about price."
+            }
+          ],
+          "noProceed": true
+        }
+      ],
+      "proceed": {
+        "text": "Recommend the option that comes out best, with your comparison, to {lead|the}.",
+        "why": "The facts are in and nothing blocks a decision, so a clear recommendation is the next step.",
+        "lesson": "Recommend a change once its effects across the organization are understood."
+      },
+      "generic": [
+        {
+          "text": "Switch suppliers yourself today to save time.",
+          "why": "The lead asked for a recommendation, not a decision.",
+          "mis": "Being asked to look into something means you decide."
+        },
+        {
+          "text": "Tell {lead|the} the current supplier is fine without looking further.",
+          "why": "Skipping the comparison leaves the lead without the information requested.",
+          "mis": "Keeping things the same never needs a reason."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask for three more months to study the options.",
+          "why": "The facts are already in; more delay adds no value.",
+          "mis": "More study always improves a decision."
+        }
+      ],
+      "process": {
+        "setup": [
+          "{Lead|the} at {workplace|the} asked you to compare a cheaper supplier of {supply.plural} with the current one."
+        ],
+        "because": {
+          "contract": [
+            "The current supplier agreement may have conditions."
+          ],
+          "nextteam": [
+            "Another team uses these supplies after you."
+          ],
+          "shipping": [
+            "The two suppliers handle shipping differently."
+          ]
+        },
+        "steps": [
+          {
+            "id": "agree",
+            "text": "Have {lead|the} check the current agreement",
+            "issue": "contract"
+          },
+          {
+            "id": "team",
+            "text": "Ask the next team to test samples",
+            "issue": "nextteam"
+          },
+          {
+            "id": "costs",
+            "text": "Add up the total cost of each option",
+            "issue": "shipping"
+          },
+          {
+            "id": "compare",
+            "text": "Compare the options side by side",
+            "core": true
+          },
+          {
+            "id": "recommend",
+            "text": "Send {lead|the} a recommendation",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "agree",
+            "recommend",
+            "The recommendation depends on whether switching is allowed."
+          ],
+          [
+            "team",
+            "compare",
+            "The comparison needs the next team's results."
+          ],
+          [
+            "costs",
+            "compare",
+            "The comparison uses total costs."
+          ],
+          [
+            "compare",
+            "recommend",
+            "Recommend after comparing."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Check commitments, gather affected views and full costs, compare, then recommend."
+      },
+      "doc": {
+        "type": "note",
+        "title": [
+          "Supplier comparison for {lead|the}"
+        ],
+        "intro": [
+          "Check your supplier comparison before sending it."
+        ],
+        "lesson": "A big-picture recommendation counts safety, commitments, other teams, full cost and community effects.",
+        "lines": [
+          {
+            "id": "price",
+            "text": "Price: the new supplier is 12 percent cheaper per item.",
+            "fine": "A fact for comparison."
+          },
+          {
+            "id": "ship",
+            "text": "Shipping: the new supplier adds a fee; the total saving is 4 percent.",
+            "fine": "Counts the full cost.",
+            "bad": [
+              {
+                "id": "ship-ignore",
+                "level": "beginner",
+                "text": "Shipping: not considered.",
+                "why": "Leaving out shipping can hide costs that erase the savings.",
+                "principle": "big.doc-ignores-full-cost"
+              }
+            ]
+          },
+          {
+            "id": "team",
+            "text": "The next team tested samples and found no problems.",
+            "fine": "Includes the affected team's view.",
+            "bad": [
+              {
+                "id": "team-skip",
+                "level": "intermediate",
+                "text": "The next team was not asked, since it is not their decision.",
+                "why": "The team that uses the supplies should be consulted.",
+                "principle": "big.doc-skips-affected-team"
+              }
+            ]
+          },
+          {
+            "id": "agree",
+            "text": "The current agreement allows switching with 30 days' notice.",
+            "fine": "Checks the existing commitment."
+          },
+          {
+            "id": "local",
+            "text": "The current supplier is a long-time local business.",
+            "fine": "Notes a community factor."
+          },
+          {
+            "id": "rec",
+            "text": "Recommendation: switch after giving 30 days' notice.",
+            "fine": "Consistent with the facts above.",
+            "bad": [
+              {
+                "id": "rec-now",
+                "level": "advanced",
+                "needs": [
+                  "agree"
+                ],
+                "text": "Recommendation: switch starting tomorrow.",
+                "why": "The agreement requires 30 days' notice, so switching tomorrow breaks it.",
+                "principle": "big.doc-recommendation-breaks-agreement"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Agreement terms are stated as facts in the scenario; no legal claims."
+      }
+    }
+  ]
+}

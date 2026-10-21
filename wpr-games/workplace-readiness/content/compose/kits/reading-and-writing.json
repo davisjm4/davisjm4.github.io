@@ -1,0 +1,523 @@
+{
+  "skill": "reading-and-writing",
+  "kits": [
+    {
+      "id": "raw-delay-email",
+      "skill": "reading-and-writing",
+      "family": "reading-and-writing.cx-writing-a-delay-notice",
+      "familyName": "Writing a clear delay notice",
+      "framework": "communication-failure",
+      "concepts": [
+        "reading-and-writing:clarity",
+        "reading-and-writing:tone-and-audience",
+        "reading-and-writing:conventions"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. You are writing an email to tell a {client} that their {deliverable} will be late.",
+        "As {role|a} at {workplace|a}, you are drafting a message to a {client} about a delay with their {deliverable}."
+      ],
+      "pressure": [
+        "The {client} has asked about it three times today.",
+        "{coworker3} says to just send something quickly."
+      ],
+      "detail": [
+        "The draft is about 150 words long.",
+        "You are writing it on the shared computer."
+      ],
+      "tiers": {
+        "1": "The facts in the message have to be right before anything else.",
+        "2": "The reader has to be able to understand the words.",
+        "3": "A calm, polite tone keeps the relationship intact.",
+        "4": "The key information belongs at the start.",
+        "5": "Proofreading is the last step once the content is right."
+      },
+      "issues": [
+        {
+          "id": "date",
+          "tier": 1,
+          "rule": "verify-before-writing",
+          "principle": "raw.confirm-facts-before-sending",
+          "fact": [
+            "You are not sure of the new date the {deliverable} will be ready."
+          ],
+          "clear": [
+            "{Lead|the} confirmed that the new date is Thursday."
+          ],
+          "done": "the new date was already confirmed",
+          "short": "the unconfirmed new date",
+          "action": "Confirm the new date with {lead|the} before putting it in the email.",
+          "brief": "confirm the new date",
+          "reason": "A wrong date in writing creates a second broken promise. Confirming it first keeps the message accurate.",
+          "lesson": "Confirm the facts before you put them in writing.",
+          "shortcut": [
+            {
+              "text": "Write a date that seems likely and fix it later if needed.",
+              "brief": "write a likely date",
+              "why": "A guessed date in writing is a promise you may not keep.",
+              "mis": "Written dates can be changed easily later."
+            }
+          ]
+        },
+        {
+          "id": "jargon",
+          "tier": 2,
+          "rule": "write-for-audience",
+          "principle": "raw.plain-words-for-client",
+          "fact": [
+            "Your draft uses the team's shorthand codes, which the {client} will not know."
+          ],
+          "short": "the shorthand codes",
+          "action": "Replace the shorthand with plain words the {client} will understand.",
+          "brief": "replace shorthand with plain words",
+          "reason": "The {client} cannot act on a message they cannot understand.",
+          "lesson": "Write in words your reader knows.",
+          "shortcut": [
+            {
+              "text": "Keep the codes, since they are more precise.",
+              "brief": "keep the codes",
+              "why": "Precision does not help if the reader cannot decode it.",
+              "mis": "Technical wording is always clearer."
+            }
+          ]
+        },
+        {
+          "id": "tone",
+          "tier": 3,
+          "rule": "adjust-tone",
+          "principle": "raw.calm-polite-tone",
+          "fact": [
+            "Your draft sounds irritated, because the {client} has asked about the order three times."
+          ],
+          "short": "the irritated tone",
+          "action": "Revise the draft so it sounds calm and polite.",
+          "brief": "make the tone calm and polite",
+          "reason": "The {client}'s questions are reasonable. An irritated tone damages the relationship.",
+          "lesson": "Match your tone to a respectful professional relationship.",
+          "shortcut": [
+            {
+              "text": "Keep the tone, since the {client} needs to stop asking.",
+              "brief": "keep the irritated tone",
+              "why": "An irritated tone may make the {client} more upset, not less.",
+              "mis": "Showing frustration makes people stop asking."
+            }
+          ]
+        },
+        {
+          "id": "buried",
+          "tier": 4,
+          "rule": "organize-for-reader",
+          "principle": "raw.lead-with-key-information",
+          "fact": [
+            "The ready date and what happens next are buried in the fourth paragraph."
+          ],
+          "short": "the buried key information",
+          "action": "Move the new date and next step into the first two sentences.",
+          "brief": "move the key facts to the top",
+          "reason": "Readers look for the key facts first. Putting them up front makes the message clear at a glance.",
+          "lesson": "Put the most important information first.",
+          "shortcut": [
+            {
+              "text": "Leave it, since the {client} will read the whole thing.",
+              "brief": "leave the order as is",
+              "why": "Many readers skim. Buried facts get missed.",
+              "mis": "Readers read every word carefully."
+            }
+          ]
+        },
+        {
+          "id": "proof",
+          "tier": 5,
+          "rule": "proofread",
+          "principle": "raw.proofread-before-sending",
+          "noProceed": true,
+          "fact": [
+            "You have not proofread the draft yet."
+          ],
+          "short": "the unproofread draft",
+          "action": "Proofread the email for spelling and grammar before you send it.",
+          "brief": "proofread before sending",
+          "reason": "Errors distract the reader and make the message look careless.",
+          "lesson": "Proofread before sending anything a customer will read.",
+          "shortcut": [
+            {
+              "text": "Send it now and correct any errors in a follow-up.",
+              "brief": "send now and correct later",
+              "why": "A follow-up correction draws more attention to the mistakes.",
+              "mis": "Errors do not matter if you fix them later."
+            }
+          ],
+          "clear": [
+            "You already proofread the draft twice."
+          ],
+          "done": "the draft was already proofread"
+        }
+      ],
+      "proceed": {
+        "text": "Send the email to the {client}.",
+        "why": "The message is accurate, clear and polite, so it is ready to send.",
+        "lesson": "Send a message once it is accurate, clear and suited to the reader."
+      },
+      "generic": [
+        {
+          "text": "Call the {client} and say you will email something eventually.",
+          "why": "A vague promise adds nothing. The {client} needs the actual information.",
+          "mis": "Contacting someone is the same as informing them."
+        },
+        {
+          "text": "Ask {coworker2} to write and send it under your name.",
+          "why": "Someone else writing under your name is misleading and avoids your job.",
+          "mis": "It does not matter who writes a message."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to rewrite the whole email before you send it.",
+          "why": "The email is ready. A full rewrite delays the {client}'s answer.",
+          "mis": "Supervisors should rewrite every message."
+        }
+      ],
+      "doc": {
+        "type": "email",
+        "title": [
+          "Draft: update on your {deliverable}"
+        ],
+        "intro": [
+          "Check this draft before it goes to the {client}."
+        ],
+        "prompt": [
+          "Which line needs to be fixed before sending?",
+          "Which line is the problem?"
+        ],
+        "lesson": "Clear customer emails lead with the facts, use plain words, keep a polite tone and follow writing conventions.",
+        "lines": [
+          {
+            "id": "open",
+            "text": "Your {deliverable} will be ready Thursday, two days later than planned.",
+            "fine": "Leads with the key fact."
+          },
+          {
+            "id": "why",
+            "text": "A part we needed arrived late from our supplier.",
+            "fine": "Gives a short, plain reason.",
+            "bad": [
+              {
+                "id": "why-jargon",
+                "level": "intermediate",
+                "text": "The delay is due to a BO on SKU 44-B per the PO.",
+                "why": "Abbreviations the {client} does not know make the reason unclear.",
+                "principle": "raw.doc-jargon"
+              }
+            ]
+          },
+          {
+            "id": "sorry",
+            "text": "We are sorry for the inconvenience.",
+            "fine": "A polite apology.",
+            "bad": [
+              {
+                "id": "sorry-irritated",
+                "level": "beginner",
+                "text": "As we have told you several times, these things take time.",
+                "why": "The tone is irritated and talks down to the {client}.",
+                "principle": "raw.doc-irritated-tone"
+              }
+            ]
+          },
+          {
+            "id": "next",
+            "text": "We will call you Thursday morning when it is ready.",
+            "fine": "States the next step clearly."
+          },
+          {
+            "id": "grammar",
+            "text": "Please let us know if you have any questions.",
+            "fine": "A clear, correct close.",
+            "bad": [
+              {
+                "id": "grammar-errors",
+                "level": "beginner",
+                "text": "please let us no if you has any questions",
+                "why": "Spelling, grammar and capitalization errors make the message look careless.",
+                "principle": "raw.doc-convention-errors"
+              }
+            ]
+          },
+          {
+            "id": "date2",
+            "text": "Thank you for your patience.",
+            "fine": "A courteous close.",
+            "bad": [
+              {
+                "id": "date2-conflict",
+                "level": "advanced",
+                "needs": [
+                  "open"
+                ],
+                "text": "Your {deliverable} should be ready by Monday at the latest.",
+                "why": "This contradicts the opening line, which says Thursday. Conflicting dates confuse the reader.",
+                "principle": "raw.doc-conflicting-dates"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Clarity, audience, tone and conventions."
+      }
+    },
+    {
+      "id": "raw-reading-procedure",
+      "skill": "reading-and-writing",
+      "family": "reading-and-writing.cx-reading-a-procedure",
+      "familyName": "Reading a written procedure carefully",
+      "framework": "conflicting-instructions",
+      "concepts": [
+        "reading-and-writing:interpret-documents"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. You are about to follow a written procedure for {task|the} for the first time.",
+        "As {role|a} at {workplace|a}, you have been handed a written procedure for {task|the}."
+      ],
+      "pressure": [
+        "{coworker3} says nobody actually reads the whole procedure.",
+        "{Lead|the} wants the task done before lunch."
+      ],
+      "detail": [
+        "The procedure is three pages long.",
+        "It is printed on colored paper."
+      ],
+      "tiers": {
+        "1": "When two documents disagree, find out which one is current first.",
+        "2": "A warning section has to be read in full before you start.",
+        "3": "An unknown term can change what a step means.",
+        "4": "The revision date tells you whether the copy is current."
+      },
+      "issues": [
+        {
+          "id": "conflict",
+          "tier": 1,
+          "rule": "resolve-conflicting-documents",
+          "principle": "raw.ask-which-document-is-current",
+          "fact": [
+            "The printed procedure and the copy posted on the wall give different steps for the same part."
+          ],
+          "short": "the two conflicting versions",
+          "action": "Ask {lead|the} which version is current before you continue.",
+          "brief": "ask which version is current",
+          "reason": "Following the wrong version could mean doing the task incorrectly. The lead knows which one is current.",
+          "lesson": "When documents conflict, find out which is current before acting.",
+          "shortcut": [
+            {
+              "text": "Follow whichever version seems easier.",
+              "brief": "follow the easier version",
+              "why": "Easier is not the same as current or correct.",
+              "mis": "The simplest instructions are the right ones."
+            }
+          ]
+        },
+        {
+          "id": "warning",
+          "tier": 2,
+          "rule": "read-warnings-fully",
+          "principle": "raw.read-skipped-warning",
+          "fact": [
+            "You skimmed the procedure and skipped a boxed section labeled \"Caution.\""
+          ],
+          "short": "the caution box you skipped",
+          "action": "Go back and read the caution section in full before starting.",
+          "brief": "read the caution section fully",
+          "reason": "Caution sections hold the information most likely to prevent mistakes or injuries.",
+          "lesson": "Read warnings and cautions in full before starting a task.",
+          "shortcut": [
+            {
+              "text": "Start the task and read the caution if something goes wrong.",
+              "brief": "read it only if something goes wrong",
+              "why": "The caution is meant to prevent problems, not explain them afterward.",
+              "mis": "Warnings are only needed when trouble starts."
+            }
+          ]
+        },
+        {
+          "id": "term",
+          "tier": 3,
+          "rule": "clarify-unknown-term",
+          "principle": "raw.look-up-unknown-term",
+          "fact": [
+            "Step 4 uses a term you do not know."
+          ],
+          "clear": [
+            "The glossary on the last page explains the term."
+          ],
+          "done": "the glossary already explains the term",
+          "short": "the unknown term",
+          "action": "Check the glossary or ask {coworker} what the term means.",
+          "brief": "find out what the term means",
+          "reason": "Guessing at a term can change what the step means.",
+          "lesson": "Clarify words you do not know before acting on instructions.",
+          "shortcut": [
+            {
+              "text": "Guess what it means from the rest of the sentence.",
+              "brief": "guess from context",
+              "why": "A wrong guess can mean doing the step incorrectly.",
+              "mis": "Context always makes a term's meaning clear."
+            }
+          ]
+        },
+        {
+          "id": "revision",
+          "tier": 4,
+          "rule": "check-document-currency",
+          "principle": "raw.check-revision-date",
+          "fact": [
+            "The procedure has a revision date from three years ago."
+          ],
+          "clear": [
+            "The revision date shows it was updated last month."
+          ],
+          "done": "the procedure is already confirmed as current",
+          "short": "the old revision date",
+          "action": "Ask {lead|the} whether a newer version of the procedure exists.",
+          "brief": "ask if there is a newer version",
+          "reason": "Procedures change. An old copy may be missing current steps.",
+          "lesson": "Check that a document is current before relying on it.",
+          "shortcut": [
+            {
+              "text": "Follow it as written, since procedures rarely change.",
+              "brief": "follow it as written",
+              "why": "Three years is a long time. Steps may have changed.",
+              "mis": "Old documents are as reliable as new ones."
+            }
+          ]
+        }
+      ],
+      "exclusive": [
+        [
+          "conflict",
+          "revision"
+        ]
+      ],
+      "proceed": {
+        "text": "Follow the procedure step by step.",
+        "why": "The procedure is current, clear and complete, so following it carefully is the right move.",
+        "lesson": "When a procedure is current and understood, follow it step by step."
+      },
+      "generic": [
+        {
+          "text": "Ask {coworker2} to just show you instead of reading anything.",
+          "why": "Watching once may miss steps the written procedure covers.",
+          "mis": "Watching is always better than reading."
+        },
+        {
+          "text": "Skip to the last page to see what the end result looks like and go from there.",
+          "why": "Skipping the steps risks missing what each one requires.",
+          "mis": "Knowing the result is enough to do a task."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to read the whole procedure aloud to you first.",
+          "why": "The procedure is clear and current. Having it read aloud wastes the lead's time.",
+          "mis": "Instructions are only safe if a supervisor reads them out."
+        }
+      ],
+      "doc": {
+        "type": "procedure",
+        "title": [
+          "Procedure: {task}"
+        ],
+        "intro": [
+          "You are checking this procedure before it is reprinted."
+        ],
+        "prompt": [
+          "Which line is unclear or wrong?",
+          "Which line is the problem?"
+        ],
+        "lesson": "Clear procedures use exact wording, keep steps in order and agree with themselves.",
+        "lines": [
+          {
+            "id": "rev",
+            "text": "Revised: this month. Replaces all earlier versions.",
+            "fine": "Shows the document is current."
+          },
+          {
+            "id": "s1",
+            "text": "Step 1: Gather the items listed on the checklist.",
+            "fine": "Clear and specific."
+          },
+          {
+            "id": "s2",
+            "text": "Step 2: Check each item against the checklist before starting.",
+            "fine": "Clear verification step.",
+            "bad": [
+              {
+                "id": "s2-vague",
+                "level": "beginner",
+                "text": "Step 2: Do the usual checks, more or less.",
+                "why": "\"The usual checks, more or less\" is too vague to follow.",
+                "principle": "raw.doc-vague-step"
+              }
+            ]
+          },
+          {
+            "id": "s3",
+            "text": "Step 3: Record the start time in {record|the}.",
+            "fine": "Specific and actionable.",
+            "bad": [
+              {
+                "id": "s3-vague",
+                "level": "beginner",
+                "text": "Step 3: Write down the time somewhere.",
+                "why": "\"Somewhere\" is vague; the procedure should name where to record it.",
+                "principle": "raw.doc-vague-location"
+              }
+            ]
+          },
+          {
+            "id": "s4",
+            "text": "Step 4: Complete the task, then record the finish time.",
+            "fine": "Clear order of actions.",
+            "bad": [
+              {
+                "id": "s4-order",
+                "level": "intermediate",
+                "text": "Step 4: Record the finish time, then complete the task.",
+                "why": "You cannot record a finish time before the task is finished.",
+                "principle": "raw.doc-impossible-order"
+              }
+            ]
+          },
+          {
+            "id": "s5",
+            "text": "Step 5: Return all items to their places.",
+            "fine": "Clear closing step.",
+            "bad": [
+              {
+                "id": "s5-oldversion",
+                "level": "advanced",
+                "needs": [
+                  "rev"
+                ],
+                "text": "Note: for Step 3, keep using last year's version of this procedure.",
+                "why": "The top line says this revision replaces all earlier versions, so pointing to last year's version contradicts it.",
+                "principle": "raw.doc-contradicts-revision-note"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Interpreting documents. Conflicting copies and an old revision date overlap, so they are exclusive."
+      }
+    }
+  ]
+}

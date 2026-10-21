@@ -10,8 +10,15 @@
     "sweep": "node tools/sweep.js",
     "coverage": "node tools/coverage.js",
     "test:unit": "node --test tests/core.test.js tests/validator.test.js tests/generator.test.js tests/grader.test.js tests/app-logic.test.js tests/audit.test.js",
-    "test:browser": "node --test tests/browser/app.test.js",
-    "test": "npm run build && npm run validate && npm run test:unit && npm run test:browser"
+    "test:browser": "node --test tests/browser/app.test.js tests/browser/compose.test.js",
+    "test": "npm run build && npm run validate && npm run test:unit && npm run test:compose && npm run test:browser",
+    "test:compose": "node --test tests/compose-engine.test.js tests/compose-numeric-oracle.test.js tests/compose-bulk.test.js tests/compose-diversity.test.js",
+    "sweep:compose": "node tools/compose-sweep.js --seeds=2",
+    "capacity": "node tools/compose-capacity.js",
+    "audit:compose": "node tools/compose-audit.js",
+    "samples": "node tools/compose-samples.js",
+    "math": "python3 content/compose/src/mathematics.py",
+    "docs:compose": "node tools/compose-audit.js > /dev/null && node tools/compose-docs.js"
   },
   "devDependencies": {
     "axe-core": "^4.14.0",

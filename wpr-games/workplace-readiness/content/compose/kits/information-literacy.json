@@ -1,0 +1,840 @@
+{
+  "skill": "information-literacy",
+  "kits": [
+    {
+      "id": "ili-finding-answer",
+      "skill": "information-literacy",
+      "family": "information-literacy.cx-checking-sources",
+      "familyName": "Checking sources before answering a question",
+      "framework": "evidence-reliability",
+      "concepts": [
+        "information-literacy:evaluate-credibility",
+        "information-literacy:judge-relevance",
+        "information-literacy:locate-sources"
+      ],
+      "contexts": "any",
+      "requires": [
+        "supply"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}. {Lead|the} asked you to find out how {supply.plural} should be stored, and you found an answer online.",
+        "As {role|a} at {workplace|a}, you are researching the right way to store {supply.plural} for {lead|the}."
+      ],
+      "pressure": [
+        "{coworker3} says the first search result is usually good enough.",
+        "{Lead|the} wants an answer by the end of the day."
+      ],
+      "detail": [
+        "You searched on the break-room computer.",
+        "The answer will be posted in the stockroom."
+      ],
+      "issues": [
+        {
+          "id": "ad",
+          "tier": 1,
+          "rule": "check-source-bias",
+          "principle": "ili.check-seller-claim",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "The answer you found comes from a company advertising its own storage cabinets."
+          ],
+          "short": "the source selling a product",
+          "action": "Compare the answer with the manufacturer's instructions or another independent source.",
+          "reason": "A company selling a product has a reason to slant its advice. An independent source tells you whether the claim holds up.",
+          "lesson": "Consider whether a source benefits from what it tells you.",
+          "shortcut": [
+            {
+              "text": "Use the answer, since the company knows a lot about storage.",
+              "why": "Expertise does not remove the interest in selling. The claim still needs checking.",
+              "mis": "A company's advertising is a neutral source."
+            }
+          ]
+        },
+        {
+          "id": "old",
+          "tier": 2,
+          "rule": "check-currency",
+          "principle": "ili.find-current-version",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "The guide you found was published eight years ago."
+          ],
+          "clear": [
+            "You checked, and the guide was updated earlier this year."
+          ],
+          "done": "the guide was already confirmed as current",
+          "short": "the eight-year-old guide",
+          "action": "Look for a current version before relying on it.",
+          "reason": "Products and guidance change. An eight-year-old guide may no longer be correct.",
+          "lesson": "Check that information is current before using it.",
+          "shortcut": [
+            {
+              "text": "Use it, since storage advice does not really change.",
+              "why": "Product formulas and packaging change. You need to confirm the advice is still current.",
+              "mis": "Older information is as good as new."
+            }
+          ]
+        },
+        {
+          "id": "forum",
+          "tier": 3,
+          "rule": "verify-unsourced-claim",
+          "principle": "ili.verify-forum-claim",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "The answer comes from an anonymous forum post that cites no source."
+          ],
+          "clear": [
+            "The forum post links to the manufacturer's official storage instructions."
+          ],
+          "done": "the post already links to the official instructions",
+          "short": "the unsourced forum post",
+          "action": "Check the claim against an official or expert source before using it.",
+          "reason": "Anyone can post anything. An unsourced claim needs confirming before you rely on it.",
+          "lesson": "Verify claims that have no identifiable author or source.",
+          "shortcut": [
+            {
+              "text": "Use the post, since it has many likes.",
+              "why": "Popularity is not evidence. Many people can agree with a wrong claim.",
+              "mis": "Popular posts are accurate."
+            }
+          ]
+        },
+        {
+          "id": "home",
+          "tier": 4,
+          "rule": "judge-relevance",
+          "principle": "ili.match-source-to-question",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "The source explains storage for home use, but your question is about storing large amounts at work."
+          ],
+          "short": "the source about home use",
+          "action": "Find a source that covers storing large amounts at a workplace.",
+          "reason": "A reliable source can still be irrelevant. Storage at work may have different requirements.",
+          "lesson": "Make sure a source actually answers your question.",
+          "shortcut": [
+            {
+              "text": "Use the home advice, since storage is storage.",
+              "why": "Large amounts at work can raise issues home advice does not cover.",
+              "mis": "Any reliable source answers any related question."
+            }
+          ]
+        },
+        {
+          "id": "cite",
+          "tier": 5,
+          "rule": "credit-source",
+          "principle": "ili.include-source-with-answer",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "noProceed": true,
+          "fact": [
+            "You plan to post the answer without saying where it came from."
+          ],
+          "short": "the missing source",
+          "action": "Include where the information came from when you share it.",
+          "reason": "Naming the source lets others check it and trust the answer.",
+          "lesson": "Share information with its source so others can check it.",
+          "shortcut": [
+            {
+              "text": "Leave out the source, since nobody will ask.",
+              "why": "Without the source, nobody can check the answer or update it later.",
+              "mis": "Sources only matter in school."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Share the answer with {lead|the}, along with where it came from.",
+        "why": "The source is current, credible and relevant, so it is ready to share.",
+        "lesson": "Share information once it is checked, and say where it came from."
+      },
+      "generic": [
+        {
+          "text": "Ask {coworker2} what they think and post that instead.",
+          "why": "A coworker's opinion is not a checked source.",
+          "mis": "A coworker's guess is as good as research."
+        },
+        {
+          "text": "Post several different answers so people can choose.",
+          "why": "Conflicting answers confuse people. Your job is to find the reliable one.",
+          "mis": "Giving every answer is the safest choice."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Keep searching for another hour to be completely certain.",
+          "why": "The source already checks out. More searching delays the answer for little gain.",
+          "mis": "You can never check a source enough."
+        }
+      ],
+      "process": {
+        "setup": [
+          "{Lead|the} at {workplace|the} asked you to find reliable storage guidance for {supply.plural}."
+        ],
+        "steps": [
+          {
+            "id": "define",
+            "text": "Write down exactly what you need to know",
+            "core": true
+          },
+          {
+            "id": "search",
+            "text": "Search for sources",
+            "core": true
+          },
+          {
+            "id": "evaluate",
+            "text": "Check each source's author, date and purpose",
+            "core": true
+          },
+          {
+            "id": "share",
+            "text": "Share the answer with its source",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "define",
+            "search",
+            "A clear question makes searching faster and more relevant."
+          ],
+          [
+            "search",
+            "evaluate",
+            "You evaluate sources after finding them."
+          ],
+          [
+            "evaluate",
+            "share",
+            "Only share information that passed your checks."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Define the question, search, evaluate the sources, then share with credit."
+      },
+      "doc": {
+        "type": "note",
+        "title": [
+          "Posted note: storing {supply.plural}"
+        ],
+        "intro": [
+          "You are checking this note before it is posted in the stockroom."
+        ],
+        "prompt": [
+          "Which statement is not supported by reliable information?",
+          "Which line is the problem?"
+        ],
+        "lesson": "Information you share should be current, relevant, credible and credited.",
+        "lines": [
+          {
+            "id": "store",
+            "text": "Store {supply.plural} in a cool, dry place off the floor.",
+            "fine": "Common, sensible storage guidance."
+          },
+          {
+            "id": "source",
+            "text": "Source: manufacturer's storage instructions, updated this year.",
+            "fine": "Credible, current and credited.",
+            "bad": [
+              {
+                "id": "source-forum",
+                "level": "intermediate",
+                "text": "Source: a forum post with no author listed.",
+                "why": "An anonymous post with no source is not reliable enough to post as guidance.",
+                "principle": "ili.doc-unreliable-source"
+              }
+            ]
+          },
+          {
+            "id": "stack",
+            "text": "Do not stack more than four boxes high, per the instructions.",
+            "fine": "A specific claim tied to the source."
+          },
+          {
+            "id": "date",
+            "text": "Use older stock first.",
+            "fine": "Standard stock rotation.",
+            "bad": [
+              {
+                "id": "date-claim",
+                "level": "advanced",
+                "needs": [
+                  "source"
+                ],
+                "text": "{supply.plural|cap} never expire, so dates do not matter.",
+                "why": "Nothing in the cited instructions supports this, and many supplies do expire.",
+                "principle": "ili.doc-unsupported-claim"
+              }
+            ]
+          },
+          {
+            "id": "home",
+            "text": "Keep the storage area labeled and organized.",
+            "fine": "General good practice.",
+            "bad": [
+              {
+                "id": "home-tip",
+                "level": "beginner",
+                "text": "Tip from a home-organizing blog: store them under the kitchen sink.",
+                "why": "Home advice does not fit workplace storage, and the source is not relevant.",
+                "principle": "ili.doc-irrelevant-source"
+              }
+            ]
+          },
+          {
+            "id": "contact",
+            "text": "Questions: ask {lead|the}.",
+            "fine": "Tells readers where to go with questions.",
+            "bad": [
+              {
+                "id": "contact-none",
+                "level": "beginner",
+                "text": "Questions: just do what seems right.",
+                "why": "Readers need someone to ask when the guidance is unclear.",
+                "principle": "ili.doc-no-contact"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Source-evaluation criteria are not strictly ordered, so state issues are beginner-only; intermediate and advanced come from the data kit and document."
+      }
+    },
+    {
+      "id": "ili-report-data",
+      "skill": "information-literacy",
+      "family": "information-literacy.cx-using-data-in-a-report",
+      "familyName": "Using data accurately in a report",
+      "framework": "evidence-reliability",
+      "concepts": [
+        "information-literacy:use-information",
+        "information-literacy:evaluate-credibility",
+        "information-literacy:locate-sources"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. {Lead|the} asked you to write a short report on last month's numbers for {task|the}.",
+        "As {role|a} at {workplace|a}, you are putting together a report on how {task|the} went last month."
+      ],
+      "pressure": [
+        "{coworker3} says the report just needs to look good.",
+        "The report is due at the morning meeting."
+      ],
+      "detail": [
+        "The data is in a shared spreadsheet.",
+        "The report will be one page long."
+      ],
+      "tiers": {
+        "1": "Using the wrong data makes every number in the report wrong.",
+        "2": "Gaps in the data have to be understood before you calculate.",
+        "3": "The report can only claim what the data shows.",
+        "4": "Readers need to know where the numbers came from."
+      },
+      "issues": [
+        {
+          "id": "wrongfile",
+          "tier": 1,
+          "rule": "verify-data-source",
+          "principle": "ili.confirm-correct-dataset",
+          "fact": [
+            "The spreadsheet you were sent has last year's dates on every row."
+          ],
+          "clear": [
+            "{coworker} confirmed the spreadsheet is last month's data."
+          ],
+          "done": "the spreadsheet was already confirmed as current",
+          "short": "the spreadsheet with last year's dates",
+          "action": "Ask {coworker} for the correct, current spreadsheet before you start.",
+          "brief": "get the current spreadsheet",
+          "reason": "A report built on the wrong year's data is wrong from the start.",
+          "lesson": "Make sure you have the right data before analyzing it.",
+          "shortcut": [
+            {
+              "text": "Use it anyway, since last year was probably similar.",
+              "brief": "use last year's data",
+              "why": "Last year's numbers do not describe last month, which is what the report is about.",
+              "mis": "Similar data is good enough."
+            }
+          ]
+        },
+        {
+          "id": "blanks",
+          "tier": 2,
+          "rule": "investigate-gaps",
+          "principle": "ili.understand-missing-data",
+          "fact": [
+            "Several days in the spreadsheet are blank."
+          ],
+          "clear": [
+            "{coworker} explained that the blank days were when {workplace|the} was closed."
+          ],
+          "done": "you already know why the days are blank",
+          "short": "the blank days",
+          "action": "Find out why those days are blank before calculating any totals.",
+          "brief": "find out why days are blank",
+          "reason": "Blanks could mean closures or missing records. The answer changes how you calculate the totals.",
+          "lesson": "Understand gaps in data before drawing conclusions from it.",
+          "shortcut": [
+            {
+              "text": "Count the blank days as zero and keep going.",
+              "brief": "count blanks as zero",
+              "why": "If the blanks are missing records, counting them as zero makes the totals wrong.",
+              "mis": "Blank always means zero."
+            }
+          ]
+        },
+        {
+          "id": "overclaim",
+          "tier": 3,
+          "rule": "report-what-data-shows",
+          "principle": "ili.no-claims-beyond-data",
+          "fact": [
+            "{coworker2} wants the report to say results doubled, but the data shows a 20 percent rise."
+          ],
+          "short": "the claim that results doubled",
+          "action": "Report the 20 percent rise the data actually shows.",
+          "brief": "report the actual 20 percent rise",
+          "reason": "A report has to match its data. Overstating results misleads the people who decide based on it.",
+          "lesson": "Claim only what your data supports.",
+          "shortcut": [
+            {
+              "text": "Say results nearly doubled, since that sounds more impressive.",
+              "brief": "say results nearly doubled",
+              "why": "A 20 percent rise is nowhere near double. The claim would mislead readers.",
+              "mis": "Rounding up results is harmless."
+            }
+          ]
+        },
+        {
+          "id": "nosource",
+          "tier": 4,
+          "rule": "credit-source",
+          "principle": "ili.cite-data-source",
+          "noProceed": true,
+          "fact": [
+            "Your draft does not say where any of the numbers came from."
+          ],
+          "short": "the missing data source",
+          "action": "Add a line naming the spreadsheet and the dates it covers.",
+          "brief": "name the data source",
+          "reason": "Naming the source lets readers check the numbers and trust the report.",
+          "lesson": "Say where your numbers come from.",
+          "shortcut": [
+            {
+              "text": "Leave it out, since everyone trusts your numbers.",
+              "brief": "leave the source out",
+              "why": "Trust is not a substitute for a source that others can check.",
+              "mis": "Good reputations make sources unnecessary."
+            }
+          ],
+          "clear": [
+            "Your draft already names the spreadsheet and the dates it covers."
+          ],
+          "done": "the source line is already in the draft"
+        }
+      ],
+      "proceed": {
+        "text": "Write the report from the data and send it to {lead|the}.",
+        "why": "The data is correct and understood, so the report can be written and shared.",
+        "lesson": "Once the data checks out, report it accurately and clearly."
+      },
+      "generic": [
+        {
+          "text": "Write the report from memory to save time.",
+          "why": "Memory is not data. The report needs the real numbers.",
+          "mis": "You remember the numbers well enough."
+        },
+        {
+          "text": "Copy last month's report and change the date.",
+          "why": "Old numbers do not describe the new month.",
+          "mis": "Reports from month to month are interchangeable."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to recheck the whole spreadsheet before you begin.",
+          "why": "The data is already confirmed. A full recheck delays the report.",
+          "mis": "Data always needs a supervisor's check."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are preparing a short report on last month's numbers at {workplace|the}."
+        ],
+        "because": {
+          "blanks": [
+            "Some days in the data have no entries."
+          ],
+          "nosource": [
+            "The report must say where its figures came from."
+          ]
+        },
+        "steps": [
+          {
+            "id": "confirm",
+            "text": "Confirm you have last month's spreadsheet",
+            "core": true
+          },
+          {
+            "id": "gaps",
+            "text": "Find out why some days are empty",
+            "issue": "blanks"
+          },
+          {
+            "id": "calc",
+            "text": "Calculate the totals",
+            "core": true
+          },
+          {
+            "id": "write",
+            "text": "Write what the totals show",
+            "core": true
+          },
+          {
+            "id": "cite",
+            "text": "Add a line naming the data source",
+            "issue": "nosource"
+          }
+        ],
+        "rel": [
+          [
+            "confirm",
+            "gaps",
+            "You check gaps in the right data."
+          ],
+          [
+            "gaps",
+            "calc",
+            "How you treat the gaps changes the totals."
+          ],
+          [
+            "confirm",
+            "calc",
+            "You calculate from the confirmed data."
+          ],
+          [
+            "calc",
+            "write",
+            "The writing reports the totals."
+          ],
+          [
+            "confirm",
+            "cite",
+            "You can only name the source once it is confirmed."
+          ],
+          [
+            "write",
+            "cite",
+            "The source line goes into the finished report."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Confirm the data, understand its gaps, calculate, report, and cite."
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Use of information; numbers are qualitative (20 percent vs doubled)."
+      }
+    },
+    {
+      "id": "ili-service-schedule",
+      "skill": "information-literacy",
+      "family": "information-literacy.cx-conflicting-guidance",
+      "familyName": "Sorting out conflicting guidance",
+      "framework": "evidence-reliability",
+      "concepts": [
+        "information-literacy:evaluate-credibility",
+        "information-literacy:judge-relevance",
+        "information-literacy:use-information",
+        "information-literacy:locate-sources"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. {Lead|the} asked you to find out how often {equipment|the} should be serviced.",
+        "As {role|a} at {workplace|a}, you are researching the right service schedule for {equipment|the}."
+      ],
+      "pressure": [
+        "{coworker3} says to just pick whichever answer sounds right.",
+        "{Lead|the} wants the answer today."
+      ],
+      "detail": [
+        "The current schedule was set years ago.",
+        "You have about an hour for this."
+      ],
+      "tiers": {
+        "1": "The most authoritative source should settle a disagreement.",
+        "2": "A source has to match your exact equipment.",
+        "3": "Guidance has to be current.",
+        "4": "A coworker's memory should be checked against the source.",
+        "5": "Share the answer with where it came from."
+      },
+      "issues": [
+        {
+          "id": "websites",
+          "tier": 1,
+          "rule": "seek-authoritative-source",
+          "principle": "ili.use-manufacturer-source",
+          "fact": [
+            "Two websites give different service schedules for {equipment|the}."
+          ],
+          "short": "the conflicting websites",
+          "action": "Check the manufacturer's manual for {equipment|the}, the most authoritative source.",
+          "brief": "check the manufacturer's manual",
+          "reason": "The manufacturer knows the equipment best. Its manual settles what random websites disagree about.",
+          "lesson": "When sources conflict, go to the most authoritative one.",
+          "shortcut": [
+            {
+              "text": "Pick the website that appears first in the search.",
+              "brief": "use the top search result",
+              "why": "Search ranking is not a measure of accuracy.",
+              "mis": "The first result is the most reliable."
+            }
+          ]
+        },
+        {
+          "id": "model",
+          "tier": 2,
+          "rule": "judge-relevance",
+          "principle": "ili.match-exact-model",
+          "fact": [
+            "The manual you found is for a different model of {equipment}."
+          ],
+          "short": "the manual for a different model",
+          "action": "Find the manual for your exact model before using its schedule.",
+          "brief": "find your exact model's manual",
+          "reason": "Different models can need different service schedules.",
+          "lesson": "Make sure a source fits your exact situation.",
+          "shortcut": [
+            {
+              "text": "Use it, since the models are probably similar.",
+              "brief": "use the other model's manual",
+              "why": "Similar is not the same; schedules can differ by model.",
+              "mis": "Close enough is good enough."
+            }
+          ],
+          "clear": [
+            "You confirmed the manual matches the model number on {equipment|the}."
+          ],
+          "done": "the manual already matches your model"
+        },
+        {
+          "id": "old",
+          "tier": 3,
+          "rule": "check-currency",
+          "principle": "ili.check-manual-revision",
+          "fact": [
+            "The manual page you are using is from an older printing."
+          ],
+          "short": "the older printing",
+          "action": "Check whether an updated version of the manual exists.",
+          "brief": "check for an updated manual",
+          "reason": "Manufacturers update schedules; an older printing may be out of date.",
+          "lesson": "Check that guidance is current.",
+          "shortcut": [
+            {
+              "text": "Use it, since manuals rarely change.",
+              "brief": "use the older printing",
+              "why": "Schedules do get revised. A quick check prevents relying on old guidance.",
+              "mis": "Manuals never change."
+            }
+          ],
+          "clear": [
+            "The manufacturer's site shows this is the latest version of the manual."
+          ],
+          "done": "the manual is already confirmed as the latest"
+        },
+        {
+          "id": "memory",
+          "tier": 4,
+          "rule": "verify-against-source",
+          "principle": "ili.check-coworker-memory",
+          "fact": [
+            "{coworker} insists the schedule learned years ago is still right."
+          ],
+          "short": "{coworker}'s remembered schedule",
+          "action": "Thank {coworker}, and compare that schedule with the current manual.",
+          "brief": "compare {coworker}'s schedule with the manual",
+          "reason": "Experience is valuable but memory can be outdated; the manual confirms it.",
+          "lesson": "Check remembered information against a reliable source.",
+          "shortcut": [
+            {
+              "text": "Go with {coworker}'s schedule, since experience beats manuals.",
+              "brief": "go with {coworker}'s memory",
+              "why": "Memory can be outdated or mistaken; it needs checking.",
+              "mis": "Experience is always right."
+            }
+          ]
+        },
+        {
+          "id": "cite",
+          "tier": 5,
+          "rule": "credit-source",
+          "principle": "ili.cite-manual-page",
+          "fact": [
+            "You plan to tell the team the schedule without saying where it came from."
+          ],
+          "short": "the unnamed source",
+          "action": "Share the schedule along with the manual page it came from.",
+          "brief": "share it with the source",
+          "reason": "Naming the source lets others check it and update it later.",
+          "lesson": "Share information with its source.",
+          "shortcut": [
+            {
+              "text": "Just tell everyone the schedule, since the source does not matter.",
+              "brief": "share it without a source",
+              "why": "Without the source, nobody can verify or update the schedule.",
+              "mis": "Sources only matter in school."
+            }
+          ],
+          "noProceed": true
+        }
+      ],
+      "exclusive": [
+        [
+          "websites",
+          "model"
+        ],
+        [
+          "websites",
+          "old"
+        ]
+      ],
+      "proceed": {
+        "text": "Share the manual's schedule, and where it came from, with {lead|the}.",
+        "why": "The source is authoritative, relevant and current, so the answer is ready.",
+        "lesson": "Share information once you know it is reliable, relevant and current."
+      },
+      "generic": [
+        {
+          "text": "Average the different schedules you found.",
+          "why": "Averaging conflicting sources produces a number nobody recommended.",
+          "mis": "Averaging conflicting information makes it accurate."
+        },
+        {
+          "text": "Ask {lead|the} to decide without telling them what you found.",
+          "why": "The lead asked you to research it; withholding the findings wastes the work.",
+          "mis": "Research should end with someone else deciding blind."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Call the manufacturer to confirm the manual says what it says.",
+          "why": "The manual is already current and matches your model; calling adds nothing.",
+          "mis": "No written source can be trusted."
+        }
+      ],
+      "doc": {
+        "type": "note",
+        "title": [
+          "Service schedule note for {equipment|the}"
+        ],
+        "intro": [
+          "Check this note before it is posted next to {equipment|the}."
+        ],
+        "prompt": [
+          "Which statement is not supported by reliable information?",
+          "Which line is the problem?"
+        ],
+        "lesson": "Posted guidance should come from the authoritative, current source for your exact equipment.",
+        "lines": [
+          {
+            "id": "sched",
+            "text": "Service every 90 days, per the manufacturer's manual.",
+            "fine": "Authoritative and credited."
+          },
+          {
+            "id": "model",
+            "text": "Manual matches the model number on the label.",
+            "fine": "Confirms relevance.",
+            "bad": [
+              {
+                "id": "model-other",
+                "level": "intermediate",
+                "text": "Manual is for a similar model; ours should be about the same.",
+                "why": "A different model's manual may not apply.",
+                "principle": "ili.doc-wrong-model-source"
+              }
+            ]
+          },
+          {
+            "id": "date",
+            "text": "Manual version: latest, checked this month.",
+            "fine": "Confirms currency.",
+            "bad": [
+              {
+                "id": "date-old",
+                "level": "beginner",
+                "text": "Manual version: an old printing we found in a drawer.",
+                "why": "An old printing may have outdated guidance.",
+                "principle": "ili.doc-outdated-source"
+              }
+            ]
+          },
+          {
+            "id": "log",
+            "text": "Record each service in {record|the}.",
+            "fine": "Useful practice."
+          },
+          {
+            "id": "forum",
+            "text": "Questions: see the manual or ask {lead|the}.",
+            "fine": "Points to reliable help.",
+            "bad": [
+              {
+                "id": "forum-web",
+                "level": "beginner",
+                "text": "Questions: search online and use any answer that sounds right.",
+                "why": "Unvetted online answers are not reliable guidance.",
+                "principle": "ili.doc-unvetted-web-help"
+              }
+            ]
+          },
+          {
+            "id": "sched2",
+            "text": "Next service due: 90 days after the last entry in the log.",
+            "fine": "Consistent with the schedule.",
+            "bad": [
+              {
+                "id": "sched2-conflict",
+                "level": "advanced",
+                "needs": [
+                  "sched"
+                ],
+                "text": "Next service due: once a year.",
+                "why": "This contradicts the manual's 90-day schedule stated above.",
+                "principle": "ili.doc-contradicts-source"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Source evaluation with an explicit priority: authority, relevance, currency, corroboration, citation."
+      }
+    }
+  ]
+}

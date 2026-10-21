@@ -1,0 +1,522 @@
+{
+  "skill": "information-technology",
+  "kits": [
+    {
+      "id": "ite-printer-trouble",
+      "skill": "information-technology",
+      "family": "information-technology.cx-troubleshooting-a-device",
+      "familyName": "Troubleshooting a device that will not work",
+      "framework": "root-cause",
+      "concepts": [
+        "information-technology:troubleshooting",
+        "information-technology:hardware-and-devices"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. The shared printer will not print the {document} you need for a {client}.",
+        "As {role|a} at {workplace|a}, you need to print {document|a}, but the shared printer is not working."
+      ],
+      "pressure": [
+        "The {client} is waiting for the printout.",
+        "{coworker3} says to just keep hitting print until it works."
+      ],
+      "detail": [
+        "The printer is in the back hallway.",
+        "It printed fine this morning."
+      ],
+      "tiers": {
+        "1": "A device that smells like it is burning is a safety problem first.",
+        "2": "Start with the simplest physical checks.",
+        "3": "The exact error message tells you where to look next.",
+        "4": "Knowing whether others are affected narrows down the cause.",
+        "5": "When basic checks do not fix it, escalate with the details."
+      },
+      "issues": [
+        {
+          "id": "burning",
+          "tier": 1,
+          "rule": "control-hazard-first",
+          "principle": "ite.stop-using-overheating-device",
+          "fact": [
+            "You notice a smell of burning plastic coming from the printer."
+          ],
+          "short": "the burning smell",
+          "action": "Stop using the printer, keep people back, and tell {lead|the} right away.",
+          "brief": "stop using it and tell {lead|the}",
+          "reason": "A burning smell can mean overheating or an electrical fault. Safety comes before printing.",
+          "lesson": "Treat smoke or burning smells from devices as a safety issue first.",
+          "shortcut": [
+            {
+              "text": "Open the printer to see what is burning.",
+              "brief": "open it up to look",
+              "why": "Opening an overheating device risks burns or shock.",
+              "mis": "Finding the cause yourself is the fastest fix."
+            }
+          ]
+        },
+        {
+          "id": "power",
+          "tier": 2,
+          "rule": "check-simple-causes",
+          "principle": "ite.check-power-first",
+          "fact": [
+            "The printer's power light is off."
+          ],
+          "short": "the dark power light",
+          "action": "Check that the printer is plugged in and switched on.",
+          "brief": "check the plug and power switch",
+          "reason": "The simplest cause is often the real one. Checking power takes seconds.",
+          "lesson": "Start troubleshooting with the simplest physical checks.",
+          "shortcut": [
+            {
+              "text": "Reinstall the printer software on your computer.",
+              "brief": "reinstall the printer software",
+              "why": "Software cannot fix a printer that has no power, and reinstalling takes far longer.",
+              "mis": "Computer problems always need software fixes."
+            }
+          ],
+          "clear": [
+            "You already checked that the printer is plugged in and switched on."
+          ],
+          "done": "the power was already checked"
+        },
+        {
+          "id": "message",
+          "tier": 3,
+          "rule": "read-the-error",
+          "principle": "ite.read-error-message",
+          "fact": [
+            "A message flashed on the printer screen, but you did not read it."
+          ],
+          "short": "the unread error message",
+          "action": "Read the message on the printer screen and write down exactly what it says.",
+          "brief": "read and note the error message",
+          "reason": "Error messages often say what is wrong, such as a jam or low toner.",
+          "lesson": "Read and record error messages; they point to the cause.",
+          "shortcut": [
+            {
+              "text": "Turn the printer off and on without reading the message.",
+              "brief": "restart without reading it",
+              "why": "Restarting may clear the message without fixing the cause.",
+              "mis": "Restarting fixes everything."
+            }
+          ],
+          "clear": [
+            "You already wrote down the error code shown on the printer screen."
+          ],
+          "done": "the error code is already written down"
+        },
+        {
+          "id": "others",
+          "tier": 4,
+          "rule": "narrow-down-cause",
+          "principle": "ite.check-if-others-affected",
+          "fact": [
+            "You do not know whether other people can print."
+          ],
+          "clear": [
+            "{coworker} printed to the same printer five minutes ago without a problem."
+          ],
+          "done": "you already know others can print",
+          "short": "not knowing if others are affected",
+          "action": "Ask a coworker whether they can print, to narrow down the cause.",
+          "brief": "ask if others can print",
+          "reason": "If others can print, the problem is likely your computer; if not, it is the printer.",
+          "lesson": "Narrow down a problem by checking whether others are affected.",
+          "shortcut": [
+            {
+              "text": "Assume the printer is broken and stop trying.",
+              "brief": "assume the printer is broken",
+              "why": "You do not know yet whether the printer or your computer is the problem.",
+              "mis": "The first suspect is the cause."
+            }
+          ]
+        },
+        {
+          "id": "stuck",
+          "tier": 5,
+          "rule": "escalate-with-details",
+          "principle": "ite.ticket-with-steps-tried",
+          "fact": [
+            "The basic checks are done, and the problem is still there."
+          ],
+          "short": "the problem that basic checks did not fix",
+          "action": "Submit a help desk ticket with the error and what you already tried.",
+          "brief": "submit a ticket with what you tried",
+          "reason": "The help desk can solve it faster when they know what has already been ruled out.",
+          "lesson": "When basic troubleshooting fails, escalate with clear details.",
+          "shortcut": [
+            {
+              "text": "Submit a ticket that just says the printer is broken.",
+              "brief": "submit a ticket saying it is broken",
+              "why": "A vague ticket makes the help desk repeat checks you already did.",
+              "mis": "Details do not matter in a help request."
+            }
+          ]
+        }
+      ],
+      "exclusive": [
+        [
+          "power",
+          "stuck"
+        ],
+        [
+          "power",
+          "message"
+        ]
+      ],
+      "proceed": {
+        "text": "Send the job to the printer again and wait for it to print.",
+        "why": "Sending the job again without understanding the problem will not fix it.",
+        "lesson": "Troubleshoot step by step instead of repeating what failed."
+      },
+      "generic": [
+        {
+          "text": "Unplug other equipment and move things around until something works.",
+          "why": "Random changes can create new problems and make the cause harder to find.",
+          "mis": "Trying random fixes is a good strategy."
+        },
+        {
+          "text": "Tell the {client} that printing is impossible today.",
+          "why": "Giving up before troubleshooting leaves the {client} without help.",
+          "mis": "If a device fails once, it cannot be fixed today."
+        }
+      ],
+      "process": {
+        "setup": [
+          "The shared printer at {workplace|the} will not print your job."
+        ],
+        "steps": [
+          {
+            "id": "power",
+            "text": "Check the power and cables",
+            "core": true
+          },
+          {
+            "id": "read",
+            "text": "Read the error on the printer screen",
+            "core": true
+          },
+          {
+            "id": "others",
+            "text": "Ask whether others can print",
+            "issue": "others"
+          },
+          {
+            "id": "fix",
+            "text": "Try the fix the error points to",
+            "core": true
+          },
+          {
+            "id": "ticket",
+            "text": "Submit a ticket listing the steps tried",
+            "core": true
+          }
+        ],
+        "because": {
+          "others": [
+            "You are not sure if the problem is only on your computer."
+          ]
+        },
+        "rel": [
+          [
+            "power",
+            "read",
+            "The screen only shows a message when the printer has power."
+          ],
+          [
+            "read",
+            "fix",
+            "The message tells you what to try."
+          ],
+          [
+            "others",
+            "fix",
+            "Knowing who is affected tells you where to aim the fix."
+          ],
+          [
+            "fix",
+            "ticket",
+            "You escalate after your own attempts fail."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Check the simple things, read the error, narrow it down, try a fix, then escalate."
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Troubleshooting order. Power-off contradicts a readable screen and a completed basic check, so those pairs are exclusive."
+      }
+    },
+    {
+      "id": "ite-sharing-file",
+      "skill": "information-technology",
+      "family": "information-technology.cx-sharing-a-file",
+      "familyName": "Sharing a file with a client",
+      "framework": "process-dependency",
+      "concepts": [
+        "information-technology:cloud-and-file-sharing",
+        "information-technology:software-and-applications"
+      ],
+      "contexts": "any",
+      "requires": [
+        "private"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}. {Lead|the} asked you to share a project file with a {client} today.",
+        "As {role|a} at {workplace|a}, you need to send a {client} a file from the team's shared folder."
+      ],
+      "pressure": [
+        "The {client} has asked twice for the file.",
+        "{coworker3} says to just send it any way you can."
+      ],
+      "detail": [
+        "The file is in the team's shared folder.",
+        "The {client} prefers email."
+      ],
+      "tiers": {
+        "1": "Private information has to come out before anything is shared.",
+        "2": "The sharing setting decides who can see the file.",
+        "3": "Sending the wrong version wastes the {client}'s time.",
+        "4": "The right tool depends on the file's size.",
+        "5": "Software updates can follow the normal process."
+      },
+      "issues": [
+        {
+          "id": "private",
+          "tier": 1,
+          "rule": "protect-confidential-data",
+          "principle": "ite.remove-private-data-before-sharing",
+          "fact": [
+            "The file includes a page with {private} that the {client} should not see."
+          ],
+          "short": "the private page in the file",
+          "action": "Remove the page with private information before sharing the file.",
+          "brief": "remove the private page",
+          "reason": "Once a file is shared, you cannot take it back. Private information has to be removed first.",
+          "lesson": "Check files for private information before sharing them.",
+          "shortcut": [
+            {
+              "text": "Send it and ask the {client} to ignore that page.",
+              "brief": "ask them to ignore that page",
+              "why": "The private information would already be exposed.",
+              "mis": "Asking someone to ignore information protects it."
+            }
+          ]
+        },
+        {
+          "id": "link",
+          "tier": 2,
+          "rule": "limit-access",
+          "principle": "ite.restrict-sharing-link",
+          "fact": [
+            "The file's sharing setting is \"anyone with the link can view.\""
+          ],
+          "clear": [
+            "{coworker} already set the file so only the {client} can open it."
+          ],
+          "done": "the sharing was already limited to the {client}",
+          "short": "the open sharing link",
+          "action": "Change the setting so only the {client} can open the file.",
+          "brief": "limit access to the {client}",
+          "reason": "An open link can be forwarded to anyone. Limiting access keeps the file where it belongs.",
+          "lesson": "Share files with only the people who need them.",
+          "shortcut": [
+            {
+              "text": "Leave the open link, since only the {client} will get it.",
+              "brief": "leave the link open",
+              "why": "Links can be forwarded or posted. An open link is not limited to one person.",
+              "mis": "A link only reaches the person you send it to."
+            }
+          ]
+        },
+        {
+          "id": "version",
+          "tier": 3,
+          "rule": "confirm-correct-version",
+          "principle": "ite.confirm-final-version",
+          "fact": [
+            "There are two versions of the file with almost the same name."
+          ],
+          "clear": [
+            "{coworker} labeled the final version clearly this morning."
+          ],
+          "done": "the final version is already labeled",
+          "short": "the two similar versions",
+          "action": "Confirm which version is final before sharing.",
+          "brief": "confirm the final version",
+          "reason": "Sending a draft can confuse the {client} and make the team look careless.",
+          "lesson": "Confirm you have the right version before sharing a file.",
+          "shortcut": [
+            {
+              "text": "Send both versions and let the {client} figure it out.",
+              "brief": "send both versions",
+              "why": "Sending both pushes your job onto the {client} and risks the wrong one being used.",
+              "mis": "More files are more helpful."
+            }
+          ]
+        },
+        {
+          "id": "size",
+          "tier": 4,
+          "rule": "choose-right-tool",
+          "principle": "ite.use-approved-sharing-tool",
+          "fact": [
+            "The file is too large to attach to an email."
+          ],
+          "short": "the oversized file",
+          "action": "Share it through {system|the} instead of email.",
+          "brief": "share it through {system|the}",
+          "reason": "The approved system handles large files and keeps sharing under control.",
+          "lesson": "Use the approved tool that fits the job.",
+          "shortcut": [
+            {
+              "text": "Upload it to your personal cloud account and send that link.",
+              "brief": "use your personal cloud account",
+              "why": "Personal accounts are outside the workplace's control and may break its rules.",
+              "mis": "Any cloud service is fine for work files."
+            }
+          ]
+        },
+        {
+          "id": "update",
+          "tier": 5,
+          "rule": "maintain-software",
+          "principle": "ite.install-update-normally",
+          "noProceed": true,
+          "fact": [
+            "The software asks you to install an update before it opens the file."
+          ],
+          "short": "the pending software update",
+          "action": "Install the update through the normal process, or ask the help desk if unsure.",
+          "brief": "install the update normally",
+          "reason": "Updates fix problems and security holes. The normal process keeps them safe.",
+          "lesson": "Keep software updated through approved channels.",
+          "shortcut": [
+            {
+              "text": "Download an older version from a free website instead.",
+              "brief": "download an old version elsewhere",
+              "why": "Unofficial downloads can carry malware.",
+              "mis": "Free download sites are safe sources of software."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Share the file with the {client} the usual approved way.",
+        "why": "The file is checked, limited and ready, so sharing it is the right step.",
+        "lesson": "Share files once they are checked and access is set correctly."
+      },
+      "generic": [
+        {
+          "text": "Print the file and mail it to save the trouble.",
+          "why": "Mailing a printout is slow and still needs the same checks.",
+          "mis": "Paper avoids all technology problems."
+        },
+        {
+          "text": "Ask the {client} to come in and copy it from your screen.",
+          "why": "That wastes the {client}'s time when the file can be shared properly.",
+          "mis": "Showing a screen is safer than sharing a file."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to check the file again before sending.",
+          "why": "The file is already checked and set up. Another review delays the {client}.",
+          "mis": "Every file needs a supervisor's review."
+        }
+      ],
+      "doc": {
+        "type": "procedure",
+        "title": [
+          "Steps for sharing files with {client.plural}"
+        ],
+        "intro": [
+          "You are reviewing the team's file-sharing steps before they are posted."
+        ],
+        "lesson": "File-sharing steps must protect private information and limit access.",
+        "lines": [
+          {
+            "id": "check",
+            "text": "Check the file for private information and remove it.",
+            "fine": "Protects private information first."
+          },
+          {
+            "id": "version",
+            "text": "Confirm you have the final version.",
+            "fine": "Avoids sending drafts."
+          },
+          {
+            "id": "tool",
+            "text": "Share through {system|the}, not personal accounts.",
+            "fine": "Uses the approved tool.",
+            "bad": [
+              {
+                "id": "tool-personal",
+                "level": "intermediate",
+                "text": "Use any free file-sharing site you like.",
+                "why": "Personal or random services are outside the workplace's control.",
+                "principle": "ite.doc-unapproved-tool"
+              }
+            ]
+          },
+          {
+            "id": "access",
+            "text": "Set access so only the intended {client} can open it.",
+            "fine": "Limits access.",
+            "bad": [
+              {
+                "id": "access-open",
+                "level": "beginner",
+                "text": "Set access to anyone with the link so it is easy to open.",
+                "why": "Open links can be forwarded to anyone.",
+                "principle": "ite.doc-open-link"
+              }
+            ]
+          },
+          {
+            "id": "confirm",
+            "text": "Ask the {client} to confirm they received it.",
+            "fine": "Confirms delivery.",
+            "bad": [
+              {
+                "id": "confirm-assume",
+                "level": "beginner",
+                "text": "Assume the {client} got it; no need to check.",
+                "why": "Without confirming, a failed share can go unnoticed.",
+                "principle": "ite.doc-no-delivery-check"
+              }
+            ]
+          },
+          {
+            "id": "remove",
+            "text": "Remove access when the project ends.",
+            "fine": "Closes access when no longer needed.",
+            "bad": [
+              {
+                "id": "remove-keep",
+                "level": "advanced",
+                "needs": [
+                  "access"
+                ],
+                "text": "Leave access on forever so the {client} can always find old files.",
+                "why": "Access that never ends keeps files open long after they are needed.",
+                "principle": "ite.doc-permanent-access"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Cloud sharing and software updates."
+      }
+    }
+  ]
+}

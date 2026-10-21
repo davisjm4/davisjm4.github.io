@@ -1,0 +1,736 @@
+{
+  "skill": "critical-thinking-and-problem-solving",
+  "kits": [
+    {
+      "id": "ctp-deadline-obstacles",
+      "skill": "critical-thinking-and-problem-solving",
+      "family": "critical-thinking-and-problem-solving.cx-deadline-obstacles",
+      "familyName": "What is really blocking the deadline",
+      "framework": "critical-information",
+      "concepts": [
+        "critical-thinking-and-problem-solving:analyze-problems",
+        "critical-thinking-and-problem-solving:logical-decisions"
+      ],
+      "contexts": "any",
+      "requires": [
+        "supply"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}. You are responsible for {deliverable|the}, which is due at 3 p.m. today.",
+        "As {role|a} at {workplace|a}, you are responsible for {deliverable|the}, due at 3 p.m."
+      ],
+      "pressure": [
+        "{coworker3} says {lead|the} hates late work and you need to finish no matter what.",
+        "It is already 1:30 p.m."
+      ],
+      "detail": [
+        "The rest of the team is busy with their own work.",
+        "It has been a quiet afternoon so far."
+      ],
+      "tiers": {
+        "1": "A safety step is never traded for speed.",
+        "2": "Wrong work has to be stopped before it reaches anyone.",
+        "3": "You need to know which job matters most before planning your time.",
+        "4": "The job cannot be finished correctly without what is missing.",
+        "5": "New ideas can wait until urgent problems are handled."
+      },
+      "issues": [
+        {
+          "id": "safety",
+          "tier": 1,
+          "rule": "keep-safety-step",
+          "principle": "ctp.no-skipping-safety-for-deadline",
+          "fact": [
+            "Finishing by 3 p.m. would mean skipping the safety check that {lead|the} requires at the end."
+          ],
+          "short": "the required safety check",
+          "action": "Keep the safety check and let {lead|the} know the work will be late.",
+          "brief": "keep the safety check and warn {lead|the} it will be late",
+          "reason": "A late delivery is a smaller problem than an unsafe one. Telling the lead early lets them adjust plans.",
+          "lesson": "When a deadline and a safety step collide, keep the safety step and communicate the delay.",
+          "shortcut": [
+            {
+              "text": "Skip the safety check this once so {deliverable|the} is on time.",
+              "brief": "skip the safety check this once",
+              "why": "Skipping a required safety check puts people at risk. Being on time does not make that acceptable.",
+              "mis": "Meeting a deadline justifies skipping a step once."
+            }
+          ]
+        },
+        {
+          "id": "error",
+          "tier": 2,
+          "rule": "stop-wrong-work",
+          "principle": "ctp.correct-error-before-delivery",
+          "fact": [
+            "While reviewing, you find a mistake in the part of the job you already completed."
+          ],
+          "short": "the mistake in the finished part",
+          "action": "Correct the mistake, or report it to {lead|the}, before anything is delivered.",
+          "brief": "correct or report the mistake before delivery",
+          "reason": "Delivering work you know is wrong passes the problem to the people relying on it. Stopping it now is cheaper than fixing it later.",
+          "lesson": "Stop known errors before work is delivered, even if it costs time.",
+          "shortcut": [
+            {
+              "text": "Deliver {deliverable|the} on time and fix the mistake in the next version.",
+              "brief": "deliver on time and fix it next time",
+              "why": "Sending work you know is wrong spreads the error to everyone who uses it.",
+              "mis": "On time matters more than correct."
+            }
+          ]
+        },
+        {
+          "id": "priorities",
+          "tier": 3,
+          "rule": "clarify-priorities",
+          "principle": "ctp.clarify-conflicting-deadlines",
+          "fact": [
+            "{Lead|the} also asked you to finish a second job by 3 p.m., and there is not time for both."
+          ],
+          "clear": [
+            "{Lead|the} told you this morning that the second job can wait until tomorrow."
+          ],
+          "done": "the lead already said which job comes first",
+          "short": "the two overlapping deadlines",
+          "action": "Explain the conflict to {lead|the} and ask which job should come first.",
+          "brief": "ask {lead|the} which job comes",
+          "reason": "Only the lead can decide which deadline matters more. Raising the conflict early gives them time to choose or find help.",
+          "lesson": "When deadlines overlap, raise the conflict and let the person in charge set the priority.",
+          "shortcut": [
+            {
+              "text": "Split your time between both jobs and hope both get done.",
+              "brief": "split your time between both jobs",
+              "why": "Without a priority you may finish neither. The lead needs to decide which job matters more.",
+              "mis": "Doing a little of everything is the safest plan."
+            }
+          ]
+        },
+        {
+          "id": "missing",
+          "tier": 4,
+          "rule": "obtain-missing-information",
+          "principle": "ctp.obtain-missing-measurement",
+          "fact": [
+            "A measurement you need from {coworker} has not arrived yet."
+          ],
+          "clear": [
+            "{coworker} sent the measurement you needed an hour ago."
+          ],
+          "done": "the measurement already arrived",
+          "short": "the missing measurement",
+          "action": "Contact {coworker} to get the measurement, and keep working on other parts meanwhile.",
+          "brief": "get the measurement from {coworker}",
+          "reason": "The job depends on that number. Asking for it directly is fast, and working on other parts meanwhile saves time.",
+          "lesson": "Identify the missing information the job depends on and go get it.",
+          "shortcut": [
+            {
+              "text": "Estimate the measurement from a similar past job and keep going.",
+              "brief": "estimate the measurement from an old job",
+              "why": "A guessed number can make the whole job wrong. Getting the real figure is quick compared with redoing work.",
+              "mis": "A reasonable guess is as good as the real number."
+            }
+          ]
+        },
+        {
+          "id": "supplies",
+          "tier": 4,
+          "rule": "approved-alternative",
+          "principle": "ctp.approved-substitute-for-missing-supply",
+          "fact": [
+            "The {supply.plural} the job needs are out of stock."
+          ],
+          "clear": [
+            "A delivery of {supply.plural} arrived this morning."
+          ],
+          "done": "the supplies were already delivered",
+          "short": "the missing supplies",
+          "action": "Ask {lead|the} about an approved substitute and explain how it affects the deadline.",
+          "brief": "ask {lead|the} about an approved substitute",
+          "reason": "The lead knows which substitutes meet the job's requirements. Asking also warns them about the possible delay.",
+          "lesson": "When a resource runs out, check approved alternatives and say how it affects the schedule.",
+          "shortcut": [
+            {
+              "text": "Use whatever similar supply is on the shelf without asking anyone.",
+              "brief": "use a similar supply without asking",
+              "why": "An unapproved substitute may not meet the job's requirements, and nobody will know it was changed.",
+              "mis": "If it looks the same, it works the same."
+            }
+          ]
+        },
+        {
+          "id": "idea",
+          "tier": 5,
+          "rule": "suggest-improvement-after",
+          "principle": "ctp.note-improvement-for-later",
+          "noProceed": true,
+          "fact": [
+            "You notice a way the job could be done faster next time."
+          ],
+          "short": "the idea for next time",
+          "action": "Write the idea down and share it once today's job is delivered.",
+          "brief": "note the idea for after the deadline",
+          "reason": "The idea is worth keeping, but trying a new method under a deadline adds risk. Noting it protects both the deadline and the idea.",
+          "lesson": "Capture improvement ideas without letting them derail urgent work.",
+          "shortcut": [
+            {
+              "text": "Switch to the new method right now to save time.",
+              "brief": "switch methods mid-job",
+              "why": "Changing methods halfway through a deadline job risks new mistakes.",
+              "mis": "A faster idea should always be used immediately."
+            }
+          ]
+        }
+      ],
+      "exclusive": [
+        [
+          "missing",
+          "supplies"
+        ]
+      ],
+      "proceed": {
+        "text": "Keep working on {deliverable|the} so it is ready by 3 p.m.",
+        "why": "Nothing in the situation blocks the work, so the best move is to keep going and finish on time.",
+        "lesson": "When the information, resources and priorities are in place, focus on finishing the work."
+      },
+      "generic": [
+        {
+          "text": "Stop working and wait for someone to notice there is a problem.",
+          "why": "Waiting silently lets the deadline pass without anyone being able to help.",
+          "mis": "Problems get solved if you wait."
+        },
+        {
+          "text": "Complain about the deadline to {coworker2} but keep it from {lead|the}.",
+          "why": "Venting to a coworker changes nothing. The lead needs to hear about problems to help.",
+          "mis": "Telling someone is the same as telling the right person."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to recheck the whole job before you continue.",
+          "why": "Nothing in the situation calls for a full recheck. Asking for one delays work that is ready to continue.",
+          "mis": "Asking for extra checks is always the responsible choice."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}, responsible for {deliverable|the} due at 3 p.m."
+        ],
+        "steps": [
+          {
+            "id": "review",
+            "text": "Review what the job requires",
+            "core": true
+          },
+          {
+            "id": "measure",
+            "text": "Get the measurement from {coworker}",
+            "issue": "missing"
+          },
+          {
+            "id": "priority",
+            "text": "Ask {lead|the} which job comes first",
+            "issue": "priorities"
+          },
+          {
+            "id": "substitute",
+            "text": "Get an approved substitute for the {supply}",
+            "issue": "supplies"
+          },
+          {
+            "id": "work",
+            "text": "Complete the work",
+            "core": true
+          },
+          {
+            "id": "check",
+            "text": "Check the finished work before handing it in",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "review",
+            "work",
+            "You need to know the requirements before doing the work."
+          ],
+          [
+            "review",
+            "measure",
+            "Reviewing the requirements shows what is missing."
+          ],
+          [
+            "review",
+            "substitute",
+            "The requirements tell you what a substitute must match."
+          ],
+          [
+            "measure",
+            "work",
+            "The work depends on the measurement."
+          ],
+          [
+            "priority",
+            "work",
+            "You need to know which job to work on first."
+          ],
+          [
+            "substitute",
+            "work",
+            "The work cannot be done without the supplies."
+          ],
+          [
+            "work",
+            "check",
+            "You can only check work once it is done."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Know the requirements, clear what blocks the work, do it, then check it."
+      },
+      "doc": {
+        "type": "email",
+        "title": [
+          "Update on {deliverable|the}"
+        ],
+        "intro": [
+          "You are about to send {lead|the} this status update. Check it first."
+        ],
+        "lesson": "A status update should be accurate, early and honest about what is at risk.",
+        "lines": [
+          {
+            "id": "open",
+            "text": "Here is an update on {deliverable|the}, which is due at 3 p.m.",
+            "fine": "States what the update is about and the deadline."
+          },
+          {
+            "id": "done",
+            "text": "The first half is finished and I checked it against the job requirements.",
+            "fine": "Reports progress and that it was checked.",
+            "bad": [
+              {
+                "id": "done-unchecked",
+                "level": "intermediate",
+                "text": "The first half is finished; I did not check it, but it should be fine.",
+                "why": "Unchecked work reported as done hides a risk. Check it or say clearly that it has not been checked.",
+                "principle": "ctp.doc-unchecked-work-reported-done"
+              }
+            ]
+          },
+          {
+            "id": "waiting",
+            "text": "I am waiting on a measurement from {coworker}, which I requested at 10 a.m.",
+            "fine": "Names exactly what is missing and what was done about it.",
+            "bad": [
+              {
+                "id": "waiting-guess",
+                "level": "beginner",
+                "text": "The measurement never arrived, so I used my best guess for now.",
+                "why": "A guessed number can make the job wrong. The real measurement should be obtained, or the guess flagged as a risk.",
+                "principle": "ctp.doc-guessed-missing-data"
+              }
+            ]
+          },
+          {
+            "id": "safety",
+            "text": "I will keep the final safety check, even if it takes extra time.",
+            "fine": "Commits to the safety step.",
+            "bad": [
+              {
+                "id": "safety-skip",
+                "level": "beginner",
+                "text": "To stay on time, I will skip the final safety check.",
+                "why": "A deadline never justifies skipping a required safety check.",
+                "principle": "ctp.doc-skips-safety-check"
+              }
+            ]
+          },
+          {
+            "id": "second",
+            "text": "You also asked me to finish the second job by 3 p.m.",
+            "fine": "Accurately restates the competing request."
+          },
+          {
+            "id": "ask",
+            "text": "Could you tell me which job should come first?",
+            "fine": "Asks the person in charge to set the priority.",
+            "bad": [
+              {
+                "id": "ask-both",
+                "level": "advanced",
+                "needs": [
+                  "second"
+                ],
+                "text": "I will work on both jobs at once until 3 p.m.",
+                "why": "Both jobs are due at the same time. Splitting effort risks finishing neither; the lead should choose which comes first.",
+                "principle": "ctp.doc-no-priority-decision"
+              }
+            ]
+          },
+          {
+            "id": "next",
+            "text": "I will send another update at noon.",
+            "fine": "Promises the next update before the deadline.",
+            "bad": [
+              {
+                "id": "next-late",
+                "level": "intermediate",
+                "text": "I will let you know after 3 p.m. if anything went wrong.",
+                "why": "Reporting after the deadline removes the lead's chance to help. Problems should be raised before the deadline.",
+                "principle": "ctp.doc-reports-after-deadline"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Mirrors the five obstacle types (missing information, conflicting priorities, safety, resources, incorrect work). Missing information and missing supplies share a tier and are exclusive because their order is a matter of judgment."
+      }
+    },
+    {
+      "id": "ctp-recurring-errors",
+      "skill": "critical-thinking-and-problem-solving",
+      "family": "critical-thinking-and-problem-solving.cx-recurring-errors",
+      "familyName": "Finding the cause of recurring errors",
+      "framework": "root-cause",
+      "concepts": [
+        "critical-thinking-and-problem-solving:analyze-problems",
+        "critical-thinking-and-problem-solving:evaluate-solutions",
+        "critical-thinking-and-problem-solving:implement-action"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. For weeks, {record|the} has kept coming back with errors, and {lead|the} asked you to help fix it.",
+        "At {workplace|the}, errors keep showing up in {record|the}. {Lead|the} asked you, {role|a}, to help solve the problem."
+      ],
+      "pressure": [
+        "{coworker3} says the team just needs to act fast and stop talking about it.",
+        "{Lead|the} wants a recommendation by tomorrow."
+      ],
+      "detail": [
+        "The errors are not dangerous, but they waste time.",
+        "It is a busy week at {workplace|the}."
+      ],
+      "tiers": {
+        "1": "Without evidence about the errors, every fix is a guess.",
+        "2": "Checking whether the last fix worked comes before adding another.",
+        "3": "Blame without evidence can be unfair and can hide the real cause.",
+        "4": "Extra checking treats the symptom, so it comes after understanding the cause."
+      },
+      "issues": [
+        {
+          "id": "nodata",
+          "tier": 1,
+          "rule": "gather-evidence",
+          "principle": "ctp.collect-data-before-fixing",
+          "fact": [
+            "Nobody has written down when or where the errors happen."
+          ],
+          "clear": [
+            "{coworker} has logged every error, with the time and shift, for the past two weeks."
+          ],
+          "done": "the errors were already logged for two weeks",
+          "short": "the lack of any record of the errors",
+          "action": "Start logging when and where each error happens before choosing a fix.",
+          "brief": "start logging when and where errors happen",
+          "reason": "Without a record, any fix is a guess. A short log shows patterns that point to the real cause.",
+          "lesson": "Collect evidence about a problem before deciding how to fix it.",
+          "shortcut": [
+            {
+              "text": "Pick the fix most coworkers prefer, since there is no data anyway.",
+              "brief": "pick the most popular fix",
+              "why": "Popularity is not evidence. A fix chosen without data may miss the cause entirely.",
+              "mis": "When there is no data, opinion is good enough."
+            }
+          ]
+        },
+        {
+          "id": "pattern",
+          "tier": 1,
+          "rule": "follow-the-evidence",
+          "principle": "ctp.investigate-pattern-in-data",
+          "fact": [
+            "{coworker}'s log shows nearly every error happens during the evening shift."
+          ],
+          "short": "the evening-shift pattern",
+          "action": "Find out what is different about the evening shift before changing anything.",
+          "brief": "find out what is different about evenings",
+          "reason": "The pattern points to something about the evening shift, such as training, staffing or equipment. Targeting that difference addresses the cause.",
+          "lesson": "Let patterns in the evidence point you toward the cause.",
+          "shortcut": [
+            {
+              "text": "Retrain staff on every shift, just to be safe.",
+              "brief": "retrain every shift",
+              "why": "The evidence points to one shift. Retraining everyone spends effort where there is no problem.",
+              "mis": "Treating everyone the same is the fairest fix, whatever the data show."
+            }
+          ]
+        },
+        {
+          "id": "followup",
+          "tier": 2,
+          "rule": "evaluate-previous-solution",
+          "principle": "ctp.check-whether-fix-worked",
+          "fact": [
+            "A new checklist was introduced last week, but nobody has checked whether it reduced the errors."
+          ],
+          "clear": [
+            "You compared the records: errors dropped by half after last week's checklist."
+          ],
+          "done": "you already confirmed the checklist cut errors in half",
+          "short": "the unchecked effect of last week's fix",
+          "action": "Compare errors before and after last week's checklist to see whether it helped.",
+          "brief": "check whether last week's checklist helped",
+          "reason": "Knowing whether the first fix worked tells you whether to keep it, adjust it or try something else.",
+          "lesson": "After putting a fix in place, check whether it actually worked.",
+          "shortcut": [
+            {
+              "text": "Assume the checklist worked, since nobody has complained this week.",
+              "brief": "assume the checklist worked",
+              "why": "A quiet week is not evidence. The records show whether errors actually went down.",
+              "mis": "No complaints means the problem is solved."
+            }
+          ]
+        },
+        {
+          "id": "blame",
+          "tier": 3,
+          "rule": "evidence-before-blame",
+          "principle": "ctp.no-blame-without-evidence",
+          "fact": [
+            "{coworker2} says the newest employee must be careless and should get a warning."
+          ],
+          "short": "the blame aimed at the newest employee",
+          "action": "Point out that the records should show the cause before anyone is blamed.",
+          "brief": "ask for evidence before blaming anyone",
+          "reason": "Blaming a person without evidence can be unfair and can hide a cause in the process itself.",
+          "lesson": "Look at the evidence before blaming a person for a problem.",
+          "shortcut": [
+            {
+              "text": "Agree that the new employee should be warned to be more careful.",
+              "brief": "agree to warn the new employee",
+              "why": "There is no evidence the new employee causes the errors. A warning may be unfair and leave the real cause in place.",
+              "mis": "The newest person is usually the cause of new problems."
+            }
+          ]
+        },
+        {
+          "id": "quickfix",
+          "tier": 4,
+          "rule": "address-cause-not-symptom",
+          "principle": "ctp.compare-symptom-fix-to-cause-fix",
+          "fact": [
+            "{coworker3} proposes having a second person double-check every {record}."
+          ],
+          "short": "the double-check proposal",
+          "action": "Compare the double-check idea with fixes that would remove the cause of the errors.",
+          "brief": "weigh the double-check against fixing the cause",
+          "reason": "Double-checking catches errors but adds work forever. A fix that removes the cause may cost less over time.",
+          "lesson": "Prefer solutions that remove a problem's cause over ones that only catch its symptoms.",
+          "shortcut": [
+            {
+              "text": "Support the double-check right away, since it is sure to catch errors.",
+              "brief": "adopt the double-check right away",
+              "why": "Catching errors is not the same as preventing them. The extra work never ends if the cause stays.",
+              "mis": "More checking is the best way to stop mistakes."
+            }
+          ]
+        }
+      ],
+      "exclusive": [
+        [
+          "nodata",
+          "followup"
+        ],
+        [
+          "pattern",
+          "followup"
+        ]
+      ],
+      "proceed": {
+        "text": "Use the logged evidence to choose a fix aimed at the cause, then track the results.",
+        "why": "The evidence is in place and the earlier fix has been measured, so the next step is a targeted fix and follow-up.",
+        "lesson": "When the evidence is in, act on the cause it points to and keep measuring."
+      },
+      "generic": [
+        {
+          "text": "Tell {lead|the} the errors are just bad luck and will stop on their own.",
+          "why": "Errors that keep happening for weeks have a cause. Calling them luck leaves the problem in place.",
+          "mis": "Repeated problems happen by chance."
+        },
+        {
+          "text": "Fix each error yourself as it comes in, so nobody else is bothered.",
+          "why": "Fixing each case hides the problem and adds to your workload. The cause stays in place.",
+          "mis": "Fixing each case is the same as solving the problem."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Collect another month of data before making any recommendation.",
+          "why": "There is already enough evidence to act. Waiting a month lets the errors continue.",
+          "mis": "More data is always better than acting."
+        }
+      ],
+      "process": {
+        "setup": [
+          "{Lead|the} asked you to help solve a recurring problem with {record|the} at {workplace|the}."
+        ],
+        "steps": [
+          {
+            "id": "log",
+            "text": "Record the time and shift of each mistake",
+            "issue": "nodata"
+          },
+          {
+            "id": "pattern",
+            "text": "Look for a pattern in those records",
+            "core": true
+          },
+          {
+            "id": "past",
+            "text": "Measure what last week's checklist changed",
+            "issue": "followup"
+          },
+          {
+            "id": "fix",
+            "text": "Try a fix aimed at the likely cause",
+            "core": true
+          },
+          {
+            "id": "track",
+            "text": "Count mistakes again after the fix",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "log",
+            "pattern",
+            "You need logged errors before you can find a pattern."
+          ],
+          [
+            "pattern",
+            "fix",
+            "The pattern tells you what the fix should target."
+          ],
+          [
+            "past",
+            "fix",
+            "Knowing whether the earlier fix worked shapes the next one."
+          ],
+          [
+            "fix",
+            "track",
+            "You can only measure a fix after it is in place."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Gather evidence, find the pattern, fix the cause, then measure the result.",
+        "because": {
+          "nodata": [
+            "So far, nobody has kept any record of the mistakes."
+          ],
+          "followup": [
+            "A change made a few days ago has never been evaluated."
+          ]
+        }
+      },
+      "doc": {
+        "type": "note",
+        "title": [
+          "Problem analysis: errors in {record|the}"
+        ],
+        "intro": [
+          "{Lead|the} asked you to review this draft analysis before it goes to the team."
+        ],
+        "lesson": "A good problem analysis separates evidence from assumptions and aims the fix at the cause.",
+        "lines": [
+          {
+            "id": "problem",
+            "text": "Problem: errors in {record|the} have come back every week for a month.",
+            "fine": "A clear description of the problem and how long it has lasted."
+          },
+          {
+            "id": "evidence",
+            "text": "Evidence: the two-week log shows 18 of 20 errors happened on the evening shift.",
+            "fine": "Specific evidence from records."
+          },
+          {
+            "id": "cause",
+            "text": "Likely cause: the evening shift uses an older version of the form.",
+            "fine": "A cause that fits the evidence.",
+            "bad": [
+              {
+                "id": "cause-person",
+                "level": "intermediate",
+                "text": "Likely cause: the newest employee is careless.",
+                "why": "Nothing in the evidence points to one person. The errors cluster on a shift, which suggests a process or tool cause.",
+                "principle": "ctp.doc-blame-not-supported"
+              }
+            ]
+          },
+          {
+            "id": "fix",
+            "text": "Proposed fix: replace the old forms on the evening shift.",
+            "fine": "The fix targets the likely cause.",
+            "bad": [
+              {
+                "id": "fix-symptom",
+                "level": "advanced",
+                "needs": [
+                  "cause"
+                ],
+                "text": "Proposed fix: have a second person recheck every form on every shift.",
+                "why": "The analysis names an old form as the cause, but this fix only catches errors after they happen and adds work on every shift.",
+                "principle": "ctp.doc-fix-ignores-cause"
+              }
+            ]
+          },
+          {
+            "id": "measure",
+            "text": "Follow-up: compare error counts for two weeks after the change.",
+            "fine": "Plans to measure whether the fix worked.",
+            "bad": [
+              {
+                "id": "measure-none",
+                "level": "beginner",
+                "text": "Follow-up: none needed, since the fix will obviously work.",
+                "why": "Without follow-up, no one will know whether the fix worked.",
+                "principle": "ctp.doc-no-follow-up"
+              }
+            ]
+          },
+          {
+            "id": "owner",
+            "text": "Owner: {coworker} will track the counts and report to {lead|the}.",
+            "fine": "Someone is responsible for follow-up."
+          },
+          {
+            "id": "data",
+            "text": "Data source: error log kept by {coworker}.",
+            "fine": "Names the source of the evidence.",
+            "bad": [
+              {
+                "id": "data-rumor",
+                "level": "beginner",
+                "text": "Data source: what people in the break room have been saying.",
+                "why": "Break-room talk is not reliable evidence. The analysis needs recorded data.",
+                "principle": "ctp.doc-unreliable-data-source"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Root-cause kit. Ambiguous pairings (no data vs follow-up, pattern vs follow-up) are exclusive."
+      }
+    }
+  ]
+}

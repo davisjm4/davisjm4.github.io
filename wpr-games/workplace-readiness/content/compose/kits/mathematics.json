@@ -1,0 +1,4713 @@
+{
+  "skill": "mathematics",
+  "_generated": "from content/compose/src/mathematics.py; edit the source, not this file",
+  "kits": [
+    {
+      "skill": "mathematics",
+      "engine": "numeric",
+      "framework": "numeric-decision",
+      "contexts": "any",
+      "requires": [
+        "supply",
+        "area"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}.",
+        "You are {role|a} at {workplace|a}."
+      ],
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario",
+          "numbers-oracle-verified"
+        ],
+        "notes": "Answers are calculated from generated numbers; distractors are named calculation misconceptions; policies (overtime, tip pool, reorder) are stated in the scenario. Verified by tests/compose-numeric-oracle.test.js."
+      },
+      "id": "mat-purchasing",
+      "family": "mathematics.cx-purchasing-math",
+      "familyName": "Purchasing and pricing math",
+      "concepts": [
+        "mathematics:basic-calculations",
+        "mathematics:job-task-math"
+      ],
+      "configs": [
+        {
+          "id": "unit-price",
+          "level": "beginner",
+          "principle": "mat.unit-price-division",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "A pack of {n|int} {supply.plural} costs {p|money}."
+          ],
+          "prompt": [
+            "What is the cost per item?"
+          ],
+          "vars": {
+            "n": {
+              "type": "choice",
+              "values": [
+                4,
+                5,
+                8,
+                10,
+                20,
+                25
+              ]
+            },
+            "p": {
+              "type": "int",
+              "min": 12,
+              "max": 60,
+              "step": 1
+            }
+          },
+          "derive": {
+            "ans": "round2(p/n)",
+            "w1": "round2(n/p)",
+            "w2": "p",
+            "w3": "round2(p*n)"
+          },
+          "constraints": [
+            "ans >= 0.5",
+            "w1 >= 0.05",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The cost per item is {ans|money}.",
+              "ok": "1",
+              "why": "The price per item is the pack price divided by the number of items in the pack.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The cost per item is {w1|money}.",
+              "ok": "0",
+              "why": "This divides the number of items by the price, which is upside down.",
+              "mis": "Divide whichever way gives a small number."
+            },
+            {
+              "key": "w2",
+              "text": "The cost per item is {w2|money}.",
+              "ok": "0",
+              "why": "That is the price of the whole pack, not one item.",
+              "mis": "The pack price is the item price."
+            },
+            {
+              "key": "w3",
+              "text": "The cost per item is {w3|money}.",
+              "ok": "0",
+              "why": "This multiplies instead of dividing.",
+              "mis": "Multiply when you see two numbers."
+            }
+          ],
+          "lesson": "Price per item = pack price \u00f7 items in the pack."
+        },
+        {
+          "id": "total-cost",
+          "level": "beginner",
+          "principle": "mat.total-cost-multiplication",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You need {q|int} {supply.plural}, and each one costs {e|money}."
+          ],
+          "prompt": [
+            "What is the total cost?"
+          ],
+          "vars": {
+            "q": {
+              "type": "int",
+              "min": 3,
+              "max": 15,
+              "step": 1
+            },
+            "e": {
+              "type": "choice",
+              "values": [
+                2.5,
+                3.75,
+                4.2,
+                6.4,
+                8.15,
+                9.6
+              ]
+            }
+          },
+          "derive": {
+            "ans": "round2(q*e)",
+            "w1": "round2(q+e)",
+            "w2": "e",
+            "w3": "round2(q*e+e)"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The total cost comes to {ans|money}.",
+              "ok": "1",
+              "why": "Multiply the number of items by the price of each one.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The total cost comes to {w1|money}.",
+              "ok": "0",
+              "why": "This adds the quantity to the price instead of multiplying.",
+              "mis": "Adding and multiplying give the same kind of total."
+            },
+            {
+              "key": "w2",
+              "text": "The total cost comes to {w2|money}.",
+              "ok": "0",
+              "why": "That is the price of one item, not the total.",
+              "mis": "The listed price is the total."
+            },
+            {
+              "key": "w3",
+              "text": "The total cost comes to {w3|money}.",
+              "ok": "0",
+              "why": "This counts one item too many.",
+              "mis": "Close counts are good enough."
+            }
+          ],
+          "lesson": "Total cost = quantity \u00d7 price per item."
+        },
+        {
+          "id": "change-due",
+          "level": "beginner",
+          "principle": "mat.change-due-subtraction",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "A {client}'s purchase comes to {t|money}, and they pay with a {bill|money0} bill."
+          ],
+          "prompt": [
+            "How much change is due?"
+          ],
+          "vars": {
+            "tc": {
+              "type": "int",
+              "min": 1105,
+              "max": 1895,
+              "step": 1
+            },
+            "bill": {
+              "type": "choice",
+              "values": [
+                20,
+                50
+              ]
+            }
+          },
+          "derive": {
+            "t": "tc/100",
+            "ans": "round2(bill-t)",
+            "w1": "bill-floor(t)",
+            "w2": "bill-ceil(t)",
+            "w3": "round2(bill-t-1)"
+          },
+          "constraints": [
+            "tc % 100 != 0",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The change due is {ans|money}.",
+              "ok": "1",
+              "why": "Change is the amount paid minus the total, including the cents.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The change due is {w1|money}.",
+              "ok": "0",
+              "why": "This ignores the cents in the total.",
+              "mis": "Only the dollars matter when making change."
+            },
+            {
+              "key": "w2",
+              "text": "The change due is {w2|money}.",
+              "ok": "0",
+              "why": "This rounds the total up before subtracting.",
+              "mis": "Rounding first is close enough."
+            },
+            {
+              "key": "w3",
+              "text": "The change due is {w3|money}.",
+              "ok": "0",
+              "why": "This is one dollar short, a borrowing mistake.",
+              "mis": "Subtraction mistakes cancel out."
+            }
+          ],
+          "lesson": "Change due = amount paid \u2212 total."
+        },
+        {
+          "id": "boxes-needed",
+          "level": "beginner",
+          "principle": "mat.round-up-for-whole-packs",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You need {m|int} {supply.plural}, and they come {k|int} to a box."
+          ],
+          "prompt": [
+            "How many boxes do you need to order?"
+          ],
+          "vars": {
+            "m": {
+              "type": "int",
+              "min": 25,
+              "max": 95,
+              "step": 1
+            },
+            "k": {
+              "type": "choice",
+              "values": [
+                6,
+                8,
+                12
+              ]
+            }
+          },
+          "derive": {
+            "ans": "ceil(m/k)",
+            "w1": "floor(m/k)",
+            "w2": "ceil(m/k)+1",
+            "w3": "round(m/k, 1)"
+          },
+          "constraints": [
+            "m % k != 0",
+            "round(m/k,1) != floor(m/k)",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "You need to order {ans|int} boxes.",
+              "ok": "1",
+              "why": "Some items would be left out with fewer boxes, so round up to the next whole box.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "You need to order {w1|int} boxes.",
+              "ok": "0",
+              "why": "Rounding down leaves you short of the items you need.",
+              "mis": "Always round to the nearest whole number."
+            },
+            {
+              "key": "w2",
+              "text": "You need to order {w2|int} boxes.",
+              "ok": "0",
+              "why": "This orders one more box than needed.",
+              "mis": "An extra box is always safer."
+            },
+            {
+              "key": "w3",
+              "text": "You need to order {w3|dec1} boxes.",
+              "ok": "0",
+              "why": "You cannot order part of a box.",
+              "mis": "The exact division is the answer."
+            }
+          ],
+          "lesson": "When items come in packs, round up to whole packs."
+        },
+        {
+          "id": "percent-off",
+          "level": "beginner",
+          "principle": "mat.percent-discount",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "An item normally costs {pr|money0} and is on sale for {d|int} percent off."
+          ],
+          "prompt": [
+            "What is the sale price?"
+          ],
+          "vars": {
+            "pr": {
+              "type": "int",
+              "min": 20,
+              "max": 120,
+              "step": 4
+            },
+            "d": {
+              "type": "choice",
+              "values": [
+                10,
+                15,
+                20,
+                25,
+                30
+              ]
+            }
+          },
+          "derive": {
+            "ans": "round2(pr*(1-d/100))",
+            "w1": "round2(pr*d/100)",
+            "w2": "pr-d",
+            "w3": "round2(pr*(1+d/100))"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The sale price is {ans|money}.",
+              "ok": "1",
+              "why": "Take the discount off the original price: price \u00d7 (1 \u2212 percent off).",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The sale price is {w1|money}.",
+              "ok": "0",
+              "why": "That is the amount saved, not the sale price.",
+              "mis": "The discount amount is the new price."
+            },
+            {
+              "key": "w2",
+              "text": "The sale price is {w2|money}.",
+              "ok": "0",
+              "why": "This subtracts the percent as if it were dollars.",
+              "mis": "Percent and dollars can be subtracted directly."
+            },
+            {
+              "key": "w3",
+              "text": "The sale price is {w3|money}.",
+              "ok": "0",
+              "why": "This adds the percent instead of taking it off.",
+              "mis": "Percent changes always add."
+            }
+          ],
+          "lesson": "Sale price = original price \u2212 (percent off \u00d7 original price)."
+        },
+        {
+          "id": "sales-tax",
+          "level": "beginner",
+          "principle": "mat.add-sales-tax",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "An order comes to {s|money0} before tax, and the tax rate is {t|int} percent."
+          ],
+          "prompt": [
+            "What is the total with tax?"
+          ],
+          "vars": {
+            "s": {
+              "type": "int",
+              "min": 20,
+              "max": 90,
+              "step": 1
+            },
+            "t": {
+              "type": "choice",
+              "values": [
+                5,
+                6,
+                7,
+                8
+              ]
+            }
+          },
+          "derive": {
+            "ans": "round2(s*(1+t/100))",
+            "w1": "s+t",
+            "w2": "round2(s*t/100)",
+            "w3": "round2(s*(1+t/10))"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The total with tax is {ans|money}.",
+              "ok": "1",
+              "why": "Tax is the rate times the price; add it to the price.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The total with tax is {w1|money}.",
+              "ok": "0",
+              "why": "This adds the percent as dollars.",
+              "mis": "A tax rate is a dollar amount."
+            },
+            {
+              "key": "w2",
+              "text": "The total with tax is {w2|money}.",
+              "ok": "0",
+              "why": "That is only the tax, not the total.",
+              "mis": "The tax is the total."
+            },
+            {
+              "key": "w3",
+              "text": "The total with tax is {w3|money}.",
+              "ok": "0",
+              "why": "This moves the decimal point one place, so the tax is ten times too big.",
+              "mis": "Percent means divide by ten."
+            }
+          ],
+          "lesson": "Total with tax = price + (tax rate \u00d7 price)."
+        }
+      ]
+    },
+    {
+      "skill": "mathematics",
+      "engine": "numeric",
+      "framework": "numeric-decision",
+      "contexts": "any",
+      "requires": [
+        "supply",
+        "area"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}.",
+        "You are {role|a} at {workplace|a}."
+      ],
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario",
+          "numbers-oracle-verified"
+        ],
+        "notes": "Answers are calculated from generated numbers; distractors are named calculation misconceptions; policies (overtime, tip pool, reorder) are stated in the scenario. Verified by tests/compose-numeric-oracle.test.js."
+      },
+      "id": "mat-job-measures",
+      "family": "mathematics.cx-job-measures",
+      "familyName": "Measurement, rate and time math",
+      "concepts": [
+        "mathematics:job-task-math",
+        "mathematics:basic-calculations"
+      ],
+      "configs": [
+        {
+          "id": "inches-feet",
+          "level": "beginner",
+          "principle": "mat.convert-inches-to-feet",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "A piece you need to cut is {L|int} inches long."
+          ],
+          "prompt": [
+            "How long is that in feet and inches?"
+          ],
+          "vars": {
+            "L": {
+              "type": "int",
+              "min": 30,
+              "max": 150,
+              "step": 1
+            }
+          },
+          "derive": {
+            "ft": "floor(L/12)",
+            "inch": "L%12",
+            "ans": "ft*100+inch",
+            "w1": "floor(L/10)*100+L%10",
+            "w2": "(ft+1)*100+inch",
+            "w3": "ft*100+12-inch",
+            "w1f": "floor(L/10)",
+            "w1i": "L%10",
+            "w2f": "ft+1",
+            "w3i": "12-inch"
+          },
+          "constraints": [
+            "L % 12 >= 2",
+            "L % 12 <= 10",
+            "L % 12 != 6",
+            "L % 10 >= 2",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The piece is {ft|int} feet {inch|int} inches.",
+              "ok": "1",
+              "why": "There are 12 inches in a foot: divide by 12 for the feet, and the remainder is inches.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The piece is {w1f|int} feet {w1i|int} inches.",
+              "ok": "0",
+              "why": "This uses 10 inches per foot instead of 12.",
+              "mis": "Measurements work in tens like money."
+            },
+            {
+              "key": "w2",
+              "text": "The piece is {w2f|int} feet {inch|int} inches.",
+              "ok": "0",
+              "why": "This counts one foot too many.",
+              "mis": "Round the feet up."
+            },
+            {
+              "key": "w3",
+              "text": "The piece is {ft|int} feet {w3i|int} inches.",
+              "ok": "0",
+              "why": "This gives the inches still needed to reach the next foot, not the leftover inches.",
+              "mis": "The remainder is what is missing."
+            }
+          ],
+          "lesson": "Feet = inches \u00f7 12; the remainder is leftover inches."
+        },
+        {
+          "id": "floor-area",
+          "level": "beginner",
+          "principle": "mat.rectangle-area",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "A rectangular floor in the {area} is {w|int} feet by {l|int} feet."
+          ],
+          "prompt": [
+            "What is the area of the floor?"
+          ],
+          "vars": {
+            "w": {
+              "type": "int",
+              "min": 6,
+              "max": 14,
+              "step": 1
+            },
+            "l": {
+              "type": "int",
+              "min": 8,
+              "max": 20,
+              "step": 1
+            }
+          },
+          "derive": {
+            "ans": "w*l",
+            "w1": "2*(w+l)",
+            "w2": "w+l",
+            "w3": "2*w*l"
+          },
+          "constraints": [
+            "w != l",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The floor area is {ans|int} square feet.",
+              "ok": "1",
+              "why": "Area of a rectangle is length times width.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The floor area is {w1|int} square feet.",
+              "ok": "0",
+              "why": "That is the perimeter, the distance around the edge.",
+              "mis": "Perimeter and area are the same thing."
+            },
+            {
+              "key": "w2",
+              "text": "The floor area is {w2|int} square feet.",
+              "ok": "0",
+              "why": "This adds the sides instead of multiplying.",
+              "mis": "Area means adding the sides."
+            },
+            {
+              "key": "w3",
+              "text": "The floor area is {w3|int} square feet.",
+              "ok": "0",
+              "why": "This doubles the area.",
+              "mis": "Count every side twice."
+            }
+          ],
+          "lesson": "Area = length \u00d7 width."
+        },
+        {
+          "id": "daily-average",
+          "level": "beginner",
+          "principle": "mat.mean-of-values",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "Over four days, you handled {a|int}, {b|int}, {c|int} and {d|int} orders."
+          ],
+          "prompt": [
+            "What was the average number of orders per day?"
+          ],
+          "vars": {
+            "a": {
+              "type": "int",
+              "min": 10,
+              "max": 40,
+              "step": 1
+            },
+            "b": {
+              "type": "int",
+              "min": 10,
+              "max": 40,
+              "step": 1
+            },
+            "c": {
+              "type": "int",
+              "min": 10,
+              "max": 40,
+              "step": 1
+            },
+            "d": {
+              "type": "int",
+              "min": 10,
+              "max": 40,
+              "step": 1
+            }
+          },
+          "derive": {
+            "ans": "(a+b+c+d)/4",
+            "w1": "a+b+c+d",
+            "w2": "(a+d)/2",
+            "w3": "max(max(a,b),max(c,d))"
+          },
+          "constraints": [
+            "(a+b+c+d) % 4 == 0",
+            "(a+d) % 2 == 0",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The daily average is {ans|int} orders.",
+              "ok": "1",
+              "why": "Add the four days and divide by four.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The daily average is {w1|int} orders.",
+              "ok": "0",
+              "why": "That is the total for all four days, not the average.",
+              "mis": "The total is the average."
+            },
+            {
+              "key": "w2",
+              "text": "The daily average is {w2|int} orders.",
+              "ok": "0",
+              "why": "This averages only the first and last days.",
+              "mis": "The first and last values are enough."
+            },
+            {
+              "key": "w3",
+              "text": "The daily average is {w3|int} orders.",
+              "ok": "0",
+              "why": "That is the busiest day, not the average.",
+              "mis": "The biggest value is the typical one."
+            }
+          ],
+          "lesson": "Average = total \u00f7 number of values."
+        },
+        {
+          "id": "percent-of-target",
+          "level": "beginner",
+          "principle": "mat.percent-complete",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "The goal is {T|int} units this week, and the team has finished {k|int}."
+          ],
+          "prompt": [
+            "What percent of the goal is finished?"
+          ],
+          "vars": {
+            "T": {
+              "type": "choice",
+              "values": [
+                200,
+                250,
+                400,
+                500
+              ]
+            },
+            "k": {
+              "type": "int",
+              "min": 40,
+              "max": 190,
+              "step": 2
+            }
+          },
+          "derive": {
+            "ans": "k*100/T",
+            "w1": "100-k*100/T",
+            "w2": "T-k",
+            "w3": "k/10"
+          },
+          "constraints": [
+            "(k*100) % T == 0",
+            "k < T",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The share finished is {ans|pct}.",
+              "ok": "1",
+              "why": "Percent finished = finished \u00f7 goal \u00d7 100.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The share finished is {w1|pct}.",
+              "ok": "0",
+              "why": "That is the percent still left to do.",
+              "mis": "The remaining part is the progress."
+            },
+            {
+              "key": "w2",
+              "text": "The share finished is {w2|pct}.",
+              "ok": "0",
+              "why": "That is the number of units left, not a percent.",
+              "mis": "Counts and percents are interchangeable."
+            },
+            {
+              "key": "w3",
+              "text": "The share finished is {w3|pct}.",
+              "ok": "0",
+              "why": "This does not compare the units to the goal.",
+              "mis": "Percent means divide by ten."
+            }
+          ],
+          "lesson": "Percent complete = finished \u00f7 goal \u00d7 100."
+        },
+        {
+          "id": "budget-left",
+          "level": "beginner",
+          "principle": "mat.subtract-multiple-expenses",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "Your project budget is {B|money0}. You have spent {s1|money0} on materials and {s2|money0} on rentals."
+          ],
+          "prompt": [
+            "How much of the budget is left?"
+          ],
+          "vars": {
+            "B": {
+              "type": "int",
+              "min": 300,
+              "max": 900,
+              "step": 50
+            },
+            "s1": {
+              "type": "int",
+              "min": 60,
+              "max": 200,
+              "step": 5
+            },
+            "s2": {
+              "type": "int",
+              "min": 40,
+              "max": 180,
+              "step": 5
+            }
+          },
+          "derive": {
+            "ans": "B-s1-s2",
+            "w1": "B-s1",
+            "w2": "s1+s2",
+            "w3": "B-s1+s2"
+          },
+          "constraints": [
+            "B-s1-s2 > 20",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The amount left is {ans|money0}.",
+              "ok": "1",
+              "why": "Subtract every expense from the budget.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The amount left is {w1|money0}.",
+              "ok": "0",
+              "why": "This subtracts only the materials.",
+              "mis": "One expense is enough to subtract."
+            },
+            {
+              "key": "w2",
+              "text": "The amount left is {w2|money0}.",
+              "ok": "0",
+              "why": "That is how much was spent, not how much is left.",
+              "mis": "Spending and remaining are the same number."
+            },
+            {
+              "key": "w3",
+              "text": "The amount left is {w3|money0}.",
+              "ok": "0",
+              "why": "This adds the rentals back instead of subtracting them.",
+              "mis": "Signs do not matter when subtracting."
+            }
+          ],
+          "lesson": "Remaining budget = budget \u2212 all spending."
+        },
+        {
+          "id": "scale-batch",
+          "level": "beginner",
+          "principle": "mat.scale-quantity",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "One batch needs {q|int} scoops of mix, and you are making {n|int} batches."
+          ],
+          "prompt": [
+            "How many scoops do you need?"
+          ],
+          "vars": {
+            "q": {
+              "type": "int",
+              "min": 3,
+              "max": 9,
+              "step": 1
+            },
+            "n": {
+              "type": "int",
+              "min": 3,
+              "max": 8,
+              "step": 1
+            }
+          },
+          "derive": {
+            "ans": "q*n",
+            "w1": "q+n",
+            "w2": "q*(n+1)",
+            "w3": "q*n-q"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "You will need {ans|int} scoops.",
+              "ok": "1",
+              "why": "Multiply the amount for one batch by the number of batches.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "You will need {w1|int} scoops.",
+              "ok": "0",
+              "why": "This adds instead of multiplying.",
+              "mis": "Scaling means adding."
+            },
+            {
+              "key": "w2",
+              "text": "You will need {w2|int} scoops.",
+              "ok": "0",
+              "why": "This makes one batch too many.",
+              "mis": "Add a batch to be safe."
+            },
+            {
+              "key": "w3",
+              "text": "You will need {w3|int} scoops.",
+              "ok": "0",
+              "why": "This makes one batch too few.",
+              "mis": "Close is good enough."
+            }
+          ],
+          "lesson": "To scale a recipe, multiply each amount by the number of batches."
+        },
+        {
+          "id": "paid-hours",
+          "level": "beginner",
+          "principle": "mat.elapsed-time-minus-break",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "Your shift runs from {sh|int}:00 a.m. to {eh|int}:30 p.m., with an unpaid 30-minute lunch."
+          ],
+          "prompt": [
+            "How many paid hours is the shift?"
+          ],
+          "vars": {
+            "sh": {
+              "type": "int",
+              "min": 6,
+              "max": 9,
+              "step": 1
+            },
+            "eh": {
+              "type": "int",
+              "min": 2,
+              "max": 5,
+              "step": 1
+            }
+          },
+          "derive": {
+            "ans": "eh+12+0.5-sh-0.5",
+            "w1": "eh+12+0.5-sh",
+            "w2": "eh+12-sh-0.5",
+            "w3": "eh+12-sh-1"
+          },
+          "constraints": [
+            "eh+12-sh <= 11",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The paid time is {ans|dec1} hours.",
+              "ok": "1",
+              "why": "Count from start to end (add 12 to the p.m. hour), then subtract the unpaid half hour.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The paid time is {w1|dec1} hours.",
+              "ok": "0",
+              "why": "This forgets to subtract the unpaid lunch.",
+              "mis": "Breaks are part of paid time."
+            },
+            {
+              "key": "w2",
+              "text": "The paid time is {w2|dec1} hours.",
+              "ok": "0",
+              "why": "This drops the extra half hour at the end of the shift before subtracting lunch.",
+              "mis": "Shifts end on the hour."
+            },
+            {
+              "key": "w3",
+              "text": "The paid time is {w3|dec1} hours.",
+              "ok": "0",
+              "why": "This drops the half hour at the end and subtracts a whole hour for lunch.",
+              "mis": "Half hours can be ignored."
+            }
+          ],
+          "lesson": "Paid time = end \u2212 start \u2212 unpaid breaks; add 12 to p.m. hours."
+        },
+        {
+          "id": "split-bill",
+          "level": "beginner",
+          "principle": "mat.equal-share",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "A team lunch costs {T|money0}, and {n|int} people are splitting it equally."
+          ],
+          "prompt": [
+            "How much is each person's share?"
+          ],
+          "vars": {
+            "T": {
+              "type": "int",
+              "min": 48,
+              "max": 144,
+              "step": 6
+            },
+            "n": {
+              "type": "choice",
+              "values": [
+                3,
+                4,
+                6
+              ]
+            }
+          },
+          "derive": {
+            "ans": "T/n",
+            "w1": "round2(T/(n+1))",
+            "w2": "T*n",
+            "w3": "T-n"
+          },
+          "constraints": [
+            "T % n == 0",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "Each person pays {ans|money}.",
+              "ok": "1",
+              "why": "Divide the total by the number of people.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "Each person pays {w1|money}.",
+              "ok": "0",
+              "why": "This divides by one person too many.",
+              "mis": "Count the person paying twice."
+            },
+            {
+              "key": "w2",
+              "text": "Each person pays {w2|money}.",
+              "ok": "0",
+              "why": "This multiplies instead of dividing.",
+              "mis": "Sharing means multiplying."
+            },
+            {
+              "key": "w3",
+              "text": "Each person pays {w3|money}.",
+              "ok": "0",
+              "why": "This subtracts the number of people.",
+              "mis": "Subtracting people splits a bill."
+            }
+          ],
+          "lesson": "Equal share = total \u00f7 number of people."
+        },
+        {
+          "id": "units-per-hour",
+          "level": "beginner",
+          "principle": "mat.rate-per-hour",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You packed {m|int} {supply.plural} in {h|int} hours."
+          ],
+          "prompt": [
+            "How many did you pack per hour?"
+          ],
+          "vars": {
+            "m": {
+              "type": "int",
+              "min": 40,
+              "max": 180,
+              "step": 4
+            },
+            "h": {
+              "type": "choice",
+              "values": [
+                2,
+                4
+              ]
+            }
+          },
+          "derive": {
+            "ans": "m/h",
+            "w1": "m*h",
+            "w2": "m-h",
+            "w3": "m/h+h"
+          },
+          "constraints": [
+            "m % h == 0",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The packing rate is {ans|int} per hour.",
+              "ok": "1",
+              "why": "Rate per hour = amount \u00f7 hours.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The packing rate is {w1|int} per hour.",
+              "ok": "0",
+              "why": "This multiplies instead of dividing.",
+              "mis": "Rates come from multiplying."
+            },
+            {
+              "key": "w2",
+              "text": "The packing rate is {w2|int} per hour.",
+              "ok": "0",
+              "why": "This subtracts the hours.",
+              "mis": "Subtract time from amount."
+            },
+            {
+              "key": "w3",
+              "text": "The packing rate is {w3|int} per hour.",
+              "ok": "0",
+              "why": "This adds the hours after dividing.",
+              "mis": "Add the time back in."
+            }
+          ],
+          "lesson": "Rate = amount \u00f7 time."
+        },
+        {
+          "id": "gross-pay",
+          "level": "beginner",
+          "principle": "mat.hours-times-rate",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You worked {h|int} hours this week at {r|money} an hour."
+          ],
+          "prompt": [
+            "What is your pay before deductions?"
+          ],
+          "vars": {
+            "h": {
+              "type": "int",
+              "min": 12,
+              "max": 32,
+              "step": 1
+            },
+            "r": {
+              "type": "choice",
+              "values": [
+                13.5,
+                14.25,
+                15,
+                16.75,
+                18
+              ]
+            }
+          },
+          "derive": {
+            "ans": "round2(h*r)",
+            "w1": "round2(h+r)",
+            "w2": "round2(40*r)",
+            "w3": "round2(h*r/2)"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "Your pay before deductions is {ans|money}.",
+              "ok": "1",
+              "why": "Pay before deductions is hours times the hourly rate.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "Your pay before deductions is {w1|money}.",
+              "ok": "0",
+              "why": "This adds hours and rate instead of multiplying.",
+              "mis": "Pay is hours plus rate."
+            },
+            {
+              "key": "w2",
+              "text": "Your pay before deductions is {w2|money}.",
+              "ok": "0",
+              "why": "This assumes a full 40-hour week.",
+              "mis": "Everyone works 40 hours."
+            },
+            {
+              "key": "w3",
+              "text": "Your pay before deductions is {w3|money}.",
+              "ok": "0",
+              "why": "This halves the pay for no reason.",
+              "mis": "Pay is split into halves."
+            }
+          ],
+          "lesson": "Gross pay = hours \u00d7 hourly rate."
+        }
+      ]
+    },
+    {
+      "skill": "mathematics",
+      "engine": "numeric",
+      "framework": "numeric-decision",
+      "contexts": "any",
+      "requires": [
+        "supply",
+        "area"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}.",
+        "You are {role|a} at {workplace|a}."
+      ],
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario",
+          "numbers-oracle-verified"
+        ],
+        "notes": "Answers are calculated from generated numbers; distractors are named calculation misconceptions; policies (overtime, tip pool, reorder) are stated in the scenario. Verified by tests/compose-numeric-oracle.test.js."
+      },
+      "id": "mat-applied",
+      "family": "mathematics.cx-applied-job-math",
+      "familyName": "Multi-step job math",
+      "concepts": [
+        "mathematics:job-task-math",
+        "mathematics:basic-calculations"
+      ],
+      "configs": [
+        {
+          "id": "compare-unit-price",
+          "level": "intermediate",
+          "principle": "mat.compare-unit-not-pack-price",
+          "rule": "calculate-and-compare",
+          "kind": "decision",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "Supplier A sells {supply.plural} in packs of {na|int} for {pa|money0}. Supplier B sells packs of {nb|int} for {pb|money0}."
+          ],
+          "prompt": [
+            "Which supplier has the lower price per item?"
+          ],
+          "vars": {
+            "na": {
+              "type": "choice",
+              "values": [
+                6,
+                8,
+                10
+              ]
+            },
+            "pa": {
+              "type": "int",
+              "min": 10,
+              "max": 40,
+              "step": 1
+            },
+            "nb": {
+              "type": "choice",
+              "values": [
+                12,
+                20,
+                24
+              ]
+            },
+            "pb": {
+              "type": "int",
+              "min": 18,
+              "max": 70,
+              "step": 1
+            }
+          },
+          "derive": {
+            "ua": "round2(pa/na)",
+            "ub": "round2(pb/nb)"
+          },
+          "constraints": [
+            "pa < pb",
+            "ua > ub + 0.05"
+          ],
+          "options": [
+            {
+              "key": "a",
+              "text": "Supplier A, since its pack costs less",
+              "ok": "ua < ub",
+              "why": "A's pack is cheaper, but it holds fewer items, so each item costs more.",
+              "mis": "The cheaper pack is the better deal."
+            },
+            {
+              "key": "b",
+              "text": "Supplier B, at {ub|money} per item",
+              "ok": "ub < ua",
+              "why": "Dividing each pack price by its size shows B costs less per item.",
+              "mis": "-"
+            },
+            {
+              "key": "c",
+              "text": "Supplier A, at {ua|money} per item",
+              "ok": "0",
+              "why": "{ua|money} per item is higher than B's {ub|money}.",
+              "mis": "Any calculated price must be the best one."
+            },
+            {
+              "key": "d",
+              "text": "Either one, since they cost about the same per item",
+              "ok": "ua == ub",
+              "why": "The prices per item are different; B is lower.",
+              "mis": "Similar pack prices mean similar value."
+            }
+          ],
+          "lesson": "Compare price per item, not price per pack."
+        },
+        {
+          "id": "overtime-pay",
+          "level": "intermediate",
+          "principle": "mat.overtime-over-40",
+          "rule": "apply-stated-policy",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You worked {h|int} hours at {r|money0} an hour. The workplace pays 1.5 times the hourly rate for hours over 40."
+          ],
+          "prompt": [
+            "What is your pay before deductions?"
+          ],
+          "vars": {
+            "h": {
+              "type": "int",
+              "min": 42,
+              "max": 50,
+              "step": 1
+            },
+            "r": {
+              "type": "int",
+              "min": 14,
+              "max": 22,
+              "step": 1
+            }
+          },
+          "derive": {
+            "ans": "round2(40*r + (h-40)*1.5*r)",
+            "w1": "h*r",
+            "w2": "round2(h*1.5*r)",
+            "w3": "round2(40*r + (h-40)*0.5*r)"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "Your pay before deductions is {ans|money}.",
+              "ok": "1",
+              "why": "The first 40 hours are at the regular rate; only the extra hours are at 1.5 times.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "Your pay before deductions is {w1|money}.",
+              "ok": "0",
+              "why": "This pays every hour at the regular rate and forgets overtime.",
+              "mis": "Overtime does not change pay."
+            },
+            {
+              "key": "w2",
+              "text": "Your pay before deductions is {w2|money}.",
+              "ok": "0",
+              "why": "This pays every hour at the overtime rate.",
+              "mis": "Overtime applies to the whole week."
+            },
+            {
+              "key": "w3",
+              "text": "Your pay before deductions is {w3|money}.",
+              "ok": "0",
+              "why": "This pays only the extra half-rate for overtime hours, not 1.5 times.",
+              "mis": "Overtime means half pay extra only."
+            }
+          ],
+          "lesson": "Overtime pay = 40 \u00d7 rate + extra hours \u00d7 1.5 \u00d7 rate."
+        },
+        {
+          "id": "net-pay",
+          "level": "intermediate",
+          "principle": "mat.gross-minus-percent-and-flat",
+          "rule": "apply-stated-policy",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "Your weekly pay before deductions is {g|money0}. {t|int} percent is withheld for taxes, and a flat {f|money0} is deducted for parking."
+          ],
+          "prompt": [
+            "What is your take-home pay?"
+          ],
+          "vars": {
+            "g": {
+              "type": "int",
+              "min": 400,
+              "max": 800,
+              "step": 10
+            },
+            "t": {
+              "type": "choice",
+              "values": [
+                10,
+                12,
+                15
+              ]
+            },
+            "f": {
+              "type": "choice",
+              "values": [
+                10,
+                15,
+                20
+              ]
+            }
+          },
+          "derive": {
+            "ans": "round2(g - g*t/100 - f)",
+            "w1": "g-t-f",
+            "w2": "round2(g - g*t/100)",
+            "w3": "round2(g - g*t/100 + f)"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "Your take-home pay is {ans|money}.",
+              "ok": "1",
+              "why": "Subtract the tax (a percent of the pay) and then the flat parking deduction.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "Your take-home pay is {w1|money}.",
+              "ok": "0",
+              "why": "This subtracts the tax percent as dollars.",
+              "mis": "Percent deductions are dollar amounts."
+            },
+            {
+              "key": "w2",
+              "text": "Your take-home pay is {w2|money}.",
+              "ok": "0",
+              "why": "This forgets the parking deduction.",
+              "mis": "Small deductions can be skipped."
+            },
+            {
+              "key": "w3",
+              "text": "Your take-home pay is {w3|money}.",
+              "ok": "0",
+              "why": "This adds the parking deduction instead of subtracting it.",
+              "mis": "Deductions add to pay."
+            }
+          ],
+          "lesson": "Take-home pay = gross \u2212 percent deductions \u2212 flat deductions."
+        },
+        {
+          "id": "boxes-with-waste",
+          "level": "intermediate",
+          "principle": "mat.add-waste-then-round-up",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "The job needs {m|int} square feet of flooring, plus 10 percent extra for waste. Each box covers {k|int} square feet."
+          ],
+          "prompt": [
+            "How many boxes should you order?"
+          ],
+          "vars": {
+            "m": {
+              "type": "int",
+              "min": 120,
+              "max": 400,
+              "step": 10
+            },
+            "k": {
+              "type": "choice",
+              "values": [
+                15,
+                20,
+                24
+              ]
+            }
+          },
+          "derive": {
+            "ans": "ceil(m*1.1/k)",
+            "w1": "ceil(m/k)",
+            "w2": "floor(m*1.1/k)",
+            "w3": "ceil(m*1.1/k)+2"
+          },
+          "constraints": [
+            "(m*11) % (k*10) != 0",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "You should order {ans|int} boxes.",
+              "ok": "1",
+              "why": "Add 10 percent for waste first, then divide by the coverage and round up.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "You should order {w1|int} boxes.",
+              "ok": "0",
+              "why": "This forgets the 10 percent waste allowance.",
+              "mis": "Waste can be ignored in an estimate."
+            },
+            {
+              "key": "w2",
+              "text": "You should order {w2|int} boxes.",
+              "ok": "0",
+              "why": "This rounds down, so the job runs short.",
+              "mis": "Round to the nearest box."
+            },
+            {
+              "key": "w3",
+              "text": "You should order {w3|int} boxes.",
+              "ok": "0",
+              "why": "This orders more than the waste allowance requires.",
+              "mis": "Extra boxes are always better."
+            }
+          ],
+          "lesson": "Add the waste allowance, divide by coverage, then round up to whole boxes."
+        },
+        {
+          "id": "discount-then-tax",
+          "level": "intermediate",
+          "principle": "mat.discount-before-tax",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "An item costs {pr|money0}. It is {d|int} percent off, and {t|int} percent tax is added to the sale price."
+          ],
+          "prompt": [
+            "What is the final price?"
+          ],
+          "vars": {
+            "pr": {
+              "type": "int",
+              "min": 40,
+              "max": 200,
+              "step": 5
+            },
+            "d": {
+              "type": "choice",
+              "values": [
+                10,
+                20,
+                25
+              ]
+            },
+            "t": {
+              "type": "choice",
+              "values": [
+                5,
+                6,
+                8
+              ]
+            }
+          },
+          "derive": {
+            "ans": "round2(pr*(1-d/100)*(1+t/100))",
+            "w1": "round2(pr*(1-d/100))",
+            "w2": "round2(pr*(1+t/100))",
+            "w3": "round2(pr*(1-d/100+t/100))"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The final price is {ans|money}.",
+              "ok": "1",
+              "why": "Take the discount off first, then add tax on the sale price.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The final price is {w1|money}.",
+              "ok": "0",
+              "why": "This forgets the tax.",
+              "mis": "Sale prices include tax."
+            },
+            {
+              "key": "w2",
+              "text": "The final price is {w2|money}.",
+              "ok": "0",
+              "why": "This forgets the discount.",
+              "mis": "Discounts only apply at the register."
+            },
+            {
+              "key": "w3",
+              "text": "The final price is {w3|money}.",
+              "ok": "0",
+              "why": "This combines the percents into one step, which is not the same as taxing the sale price.",
+              "mis": "Percents can be added and subtracted directly."
+            }
+          ],
+          "lesson": "Apply percent changes in order: discount first, then tax on the new price."
+        },
+        {
+          "id": "percent-change",
+          "level": "intermediate",
+          "principle": "mat.percent-change-from-original",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "Last month the team handled {L|int} orders. This month it handled {N|int}."
+          ],
+          "prompt": [
+            "By what percent did orders increase?"
+          ],
+          "vars": {
+            "L": {
+              "type": "choice",
+              "values": [
+                40,
+                50,
+                80,
+                100,
+                200
+              ]
+            },
+            "N": {
+              "type": "int",
+              "min": 44,
+              "max": 260,
+              "step": 2
+            }
+          },
+          "derive": {
+            "ans": "(N-L)*100/L",
+            "w1": "round((N-L)*100/N, 1)",
+            "w2": "N-L",
+            "w3": "N*100/L"
+          },
+          "constraints": [
+            "N > L",
+            "((N-L)*100) % L == 0",
+            "(N-L)*100/L <= 60",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "Orders went up by {ans|pct}.",
+              "ok": "1",
+              "why": "Percent change = change \u00f7 the original amount \u00d7 100.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "Orders went up by {w1|pct}.",
+              "ok": "0",
+              "why": "This divides by the new amount instead of the original.",
+              "mis": "Either month works as the base."
+            },
+            {
+              "key": "w2",
+              "text": "Orders went up by {w2|pct}.",
+              "ok": "0",
+              "why": "That is the number of extra orders, not a percent.",
+              "mis": "The difference is the percent."
+            },
+            {
+              "key": "w3",
+              "text": "Orders went up by {w3|pct}.",
+              "ok": "0",
+              "why": "That is this month as a percent of last month, not the increase.",
+              "mis": "New \u00f7 old is the percent increase."
+            }
+          ],
+          "lesson": "Percent change = (new \u2212 original) \u00f7 original \u00d7 100."
+        },
+        {
+          "id": "hours-to-finish",
+          "level": "intermediate",
+          "principle": "mat.remaining-work-over-rate",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You have {R|int} {supply.plural} left to process, and you process {k|int} per hour."
+          ],
+          "prompt": [
+            "How many more hours will it take?"
+          ],
+          "vars": {
+            "R": {
+              "type": "int",
+              "min": 60,
+              "max": 240,
+              "step": 6
+            },
+            "k": {
+              "type": "choice",
+              "values": [
+                12,
+                15,
+                20
+              ]
+            }
+          },
+          "derive": {
+            "ans": "R/k",
+            "w1": "R*k",
+            "w2": "R/k+1",
+            "w3": "R-k"
+          },
+          "constraints": [
+            "R % k == 0",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "It will take {ans|int} hours.",
+              "ok": "1",
+              "why": "Time = work left \u00f7 rate.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "It will take {w1|int} hours.",
+              "ok": "0",
+              "why": "This multiplies instead of dividing.",
+              "mis": "More work means multiply."
+            },
+            {
+              "key": "w2",
+              "text": "It will take {w2|int} hours.",
+              "ok": "0",
+              "why": "This adds an extra hour that the numbers do not call for.",
+              "mis": "Always add an hour."
+            },
+            {
+              "key": "w3",
+              "text": "It will take {w3|int} hours.",
+              "ok": "0",
+              "why": "This subtracts the rate from the amount.",
+              "mis": "Subtracting the rate gives time."
+            }
+          ],
+          "lesson": "Time needed = amount left \u00f7 rate."
+        },
+        {
+          "id": "dilution",
+          "level": "intermediate",
+          "principle": "mat.ratio-parts",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "The label says to mix 1 part concentrate with {w|int} parts water. You need {T|int} cups of mixed solution."
+          ],
+          "prompt": [
+            "How many cups of concentrate do you need?"
+          ],
+          "vars": {
+            "w": {
+              "type": "choice",
+              "values": [
+                3,
+                4,
+                5,
+                7
+              ]
+            },
+            "T": {
+              "type": "int",
+              "min": 16,
+              "max": 64,
+              "step": 4
+            }
+          },
+          "derive": {
+            "ans": "T/(w+1)",
+            "w1": "round(T/w,1)",
+            "w2": "T*w/(w+1)",
+            "w3": "T/(w+2)",
+            "w1p": "w+1"
+          },
+          "constraints": [
+            "T % (w+1) == 0",
+            "T % (w+2) == 0",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The concentrate needed is {ans|int} cups.",
+              "ok": "1",
+              "why": "The mix has 1 + {w|int} parts in all, so concentrate is the total \u00f7 {w1p|int}.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The concentrate needed is {w1|dec1} cups.",
+              "ok": "0",
+              "why": "This divides by the water parts only and forgets the concentrate part.",
+              "mis": "The ratio's second number is the whole."
+            },
+            {
+              "key": "w2",
+              "text": "The concentrate needed is {w2|int} cups.",
+              "ok": "0",
+              "why": "That is the amount of water, not concentrate.",
+              "mis": "The bigger number is the concentrate."
+            },
+            {
+              "key": "w3",
+              "text": "The concentrate needed is {w3|int} cups.",
+              "ok": "0",
+              "why": "This counts one part too many.",
+              "mis": "Add a part to be safe."
+            }
+          ],
+          "lesson": "In a 1-to-w mix, concentrate = total \u00f7 (1 + w)."
+        },
+        {
+          "id": "area-minus-cutout",
+          "level": "intermediate",
+          "principle": "mat.composite-area",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "A floor is {w|int} feet by {l|int} feet. A built-in counter covers a {a|int}-by-{b|int}-foot section that will not be tiled."
+          ],
+          "prompt": [
+            "How many square feet need tile?"
+          ],
+          "vars": {
+            "w": {
+              "type": "int",
+              "min": 10,
+              "max": 16,
+              "step": 1
+            },
+            "l": {
+              "type": "int",
+              "min": 12,
+              "max": 20,
+              "step": 1
+            },
+            "a": {
+              "type": "choice",
+              "values": [
+                2,
+                3
+              ]
+            },
+            "b": {
+              "type": "choice",
+              "values": [
+                4,
+                5,
+                6
+              ]
+            }
+          },
+          "derive": {
+            "ans": "w*l-a*b",
+            "w1": "w*l",
+            "w2": "w*l+a*b",
+            "w3": "2*(w+l)-a*b"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The area to tile is {ans|int} square feet.",
+              "ok": "1",
+              "why": "Find the whole floor's area, then subtract the area under the counter.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The area to tile is {w1|int} square feet.",
+              "ok": "0",
+              "why": "This forgets to subtract the counter.",
+              "mis": "Cutouts are too small to matter."
+            },
+            {
+              "key": "w2",
+              "text": "The area to tile is {w2|int} square feet.",
+              "ok": "0",
+              "why": "This adds the counter area instead of subtracting it.",
+              "mis": "Every area gets added."
+            },
+            {
+              "key": "w3",
+              "text": "The area to tile is {w3|int} square feet.",
+              "ok": "0",
+              "why": "This starts from the perimeter instead of the area.",
+              "mis": "Perimeter is the starting area."
+            }
+          ],
+          "lesson": "Composite area = whole area \u2212 cut-out area."
+        },
+        {
+          "id": "minutes-cost",
+          "level": "intermediate",
+          "principle": "mat.minutes-to-hourly-cost",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "A repair took {m|int} minutes, and labor is billed at {r|money0} per hour."
+          ],
+          "prompt": [
+            "What is the labor charge?"
+          ],
+          "vars": {
+            "m": {
+              "type": "choice",
+              "values": [
+                15,
+                30,
+                45,
+                90,
+                105
+              ]
+            },
+            "r": {
+              "type": "int",
+              "min": 40,
+              "max": 96,
+              "step": 4
+            }
+          },
+          "derive": {
+            "ans": "round2(m/60*r)",
+            "w1": "m*r",
+            "w2": "round2(m/100*r)",
+            "w3": "r"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The labor charge is {ans|money}.",
+              "ok": "1",
+              "why": "Convert minutes to hours by dividing by 60, then multiply by the hourly rate.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The labor charge is {w1|money}.",
+              "ok": "0",
+              "why": "This bills each minute at the hourly rate.",
+              "mis": "Minutes and hours can be multiplied the same way."
+            },
+            {
+              "key": "w2",
+              "text": "The labor charge is {w2|money}.",
+              "ok": "0",
+              "why": "This treats an hour as 100 minutes.",
+              "mis": "Time works in tens like money."
+            },
+            {
+              "key": "w3",
+              "text": "The labor charge is {w3|money}.",
+              "ok": "0",
+              "why": "This bills a full hour no matter the time.",
+              "mis": "Any part of an hour is billed as one hour."
+            }
+          ],
+          "lesson": "Cost = minutes \u00f7 60 \u00d7 hourly rate."
+        },
+        {
+          "id": "budget-percent-left",
+          "level": "intermediate",
+          "principle": "mat.percent-remaining",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "Your budget is {B|money0}, and you have spent {S|money0} so far."
+          ],
+          "prompt": [
+            "What percent of the budget is left?"
+          ],
+          "vars": {
+            "B": {
+              "type": "choice",
+              "values": [
+                400,
+                500,
+                800,
+                1000
+              ]
+            },
+            "S": {
+              "type": "int",
+              "min": 60,
+              "max": 380,
+              "step": 20
+            }
+          },
+          "derive": {
+            "ans": "100-S*100/B",
+            "w1": "S*100/B",
+            "w2": "B-S",
+            "w3": "round(S/B,2)"
+          },
+          "constraints": [
+            "(S*100) % B == 0",
+            "S < B",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The share left is {ans|pct}.",
+              "ok": "1",
+              "why": "Percent left = amount left \u00f7 budget \u00d7 100.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The share left is {w1|pct}.",
+              "ok": "0",
+              "why": "That is the percent spent, not the percent left.",
+              "mis": "Spent and left are the same percent."
+            },
+            {
+              "key": "w2",
+              "text": "The share left is {w2|pct}.",
+              "ok": "0",
+              "why": "That is the dollar amount left, not a percent.",
+              "mis": "Dollars and percents are the same."
+            },
+            {
+              "key": "w3",
+              "text": "The share left is {w3|pct}.",
+              "ok": "0",
+              "why": "This forgets to multiply by 100.",
+              "mis": "A decimal is already a percent."
+            }
+          ],
+          "lesson": "Percent remaining = (budget \u2212 spent) \u00f7 budget \u00d7 100."
+        },
+        {
+          "id": "bulk-threshold-cheaper",
+          "level": "intermediate",
+          "principle": "mat.bulk-price-lowers-total",
+          "rule": "calculate-and-compare",
+          "kind": "decision",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You need {q|int} {supply.plural}. They cost {e|money} each, or {e2|money} each when you buy 50 or more."
+          ],
+          "prompt": [
+            "What is the cheapest way to get at least {q|int}?"
+          ],
+          "vars": {
+            "q": {
+              "type": "int",
+              "min": 40,
+              "max": 49,
+              "step": 1
+            },
+            "e": {
+              "type": "choice",
+              "values": [
+                2.5,
+                3,
+                3.6,
+                4
+              ]
+            },
+            "e2": {
+              "type": "choice",
+              "values": [
+                1.9,
+                2.2,
+                2.4,
+                2.8
+              ]
+            }
+          },
+          "derive": {
+            "regular": "round2(q*e)",
+            "bulk": "round2(50*e2)"
+          },
+          "constraints": [
+            "e2 < e",
+            "bulk < regular"
+          ],
+          "options": [
+            {
+              "key": "a",
+              "text": "Buy exactly {q|int} at {e|money} each, for {regular|money}",
+              "ok": "regular < bulk",
+              "why": "{regular|money} is more than {bulk|money} for 50 at the bulk price.",
+              "mis": "Buying exactly what you need is always cheapest."
+            },
+            {
+              "key": "b",
+              "text": "Buy 50 at the bulk price, for {bulk|money}",
+              "ok": "bulk < regular",
+              "why": "Fifty at the bulk price costs less than {q|int} at the regular price, and you get extras.",
+              "mis": "-"
+            },
+            {
+              "key": "c",
+              "text": "Buy 25 at a time twice, for {regular|money}",
+              "ok": "0",
+              "why": "Two orders of 25 do not reach the bulk price and cost the regular total.",
+              "mis": "Splitting orders saves money."
+            },
+            {
+              "key": "d",
+              "text": "Wait until you need 50 before ordering",
+              "ok": "0",
+              "why": "You need the items now; waiting does not get the job done.",
+              "mis": "Delaying a purchase is the same as saving."
+            }
+          ],
+          "lesson": "Compare total costs, including bulk prices, before deciding how many to buy."
+        },
+        {
+          "id": "bulk-threshold-not-worth",
+          "level": "intermediate",
+          "principle": "mat.bulk-price-not-worth-it",
+          "rule": "calculate-and-compare",
+          "kind": "decision",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You need {q|int} {supply.plural}. They cost {e|money} each, or {e2|money} each when you buy 50 or more."
+          ],
+          "prompt": [
+            "What is the cheapest way to get at least {q|int}?"
+          ],
+          "vars": {
+            "q": {
+              "type": "int",
+              "min": 30,
+              "max": 38,
+              "step": 1
+            },
+            "e": {
+              "type": "choice",
+              "values": [
+                2.5,
+                3,
+                3.6,
+                4
+              ]
+            },
+            "e2": {
+              "type": "choice",
+              "values": [
+                2.2,
+                2.4,
+                2.8,
+                3.2
+              ]
+            }
+          },
+          "derive": {
+            "regular": "round2(q*e)",
+            "bulk": "round2(50*e2)"
+          },
+          "constraints": [
+            "e2 < e",
+            "regular < bulk"
+          ],
+          "options": [
+            {
+              "key": "a",
+              "text": "Buy exactly {q|int} at {e|money} each, for {regular|money}",
+              "ok": "regular < bulk",
+              "why": "{regular|money} is less than {bulk|money}, so the bulk price is not worth it here.",
+              "mis": "-"
+            },
+            {
+              "key": "b",
+              "text": "Buy 50 at the bulk price, for {bulk|money}",
+              "ok": "bulk < regular",
+              "why": "The lower price per item does not make up for buying many extras: {bulk|money} is more than {regular|money}.",
+              "mis": "A lower price per item always means a lower total."
+            },
+            {
+              "key": "c",
+              "text": "Buy 25 at a time twice, for {regular|money}",
+              "ok": "0",
+              "why": "That buys 50 at the regular price, which costs more than buying exactly what you need.",
+              "mis": "Splitting orders saves money."
+            },
+            {
+              "key": "d",
+              "text": "Wait until you need 50 before ordering",
+              "ok": "0",
+              "why": "You need the items now; waiting does not get the job done.",
+              "mis": "Delaying a purchase is the same as saving."
+            }
+          ],
+          "lesson": "A bulk price only helps if the total is lower for what you actually need."
+        },
+        {
+          "id": "tip-share-by-hours",
+          "level": "intermediate",
+          "principle": "mat.proportional-share",
+          "rule": "apply-stated-policy",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "The team's tip pool is {T|money0}, shared by hours worked. You worked {h1|int} hours, and two coworkers worked {h2|int} and {h3|int}."
+          ],
+          "prompt": [
+            "What is your share?"
+          ],
+          "vars": {
+            "T": {
+              "type": "int",
+              "min": 120,
+              "max": 360,
+              "step": 12
+            },
+            "h1": {
+              "type": "int",
+              "min": 4,
+              "max": 8,
+              "step": 1
+            },
+            "h2": {
+              "type": "int",
+              "min": 4,
+              "max": 8,
+              "step": 1
+            },
+            "h3": {
+              "type": "int",
+              "min": 4,
+              "max": 8,
+              "step": 1
+            }
+          },
+          "derive": {
+            "ans": "round2(T*h1/(h1+h2+h3))",
+            "w1": "round2(T/3)",
+            "w2": "round2(T*h1/(h2+h3))",
+            "w3": "round2(T*h1/8)"
+          },
+          "constraints": [
+            "h1 != h2 || h1 != h3",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "Your share is {ans|money}.",
+              "ok": "1",
+              "why": "Your share = your hours \u00f7 everyone's hours \u00d7 the pool.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "Your share is {w1|money}.",
+              "ok": "0",
+              "why": "This splits evenly, but the pool is shared by hours.",
+              "mis": "Every share is equal."
+            },
+            {
+              "key": "w2",
+              "text": "Your share is {w2|money}.",
+              "ok": "0",
+              "why": "This leaves your own hours out of the total.",
+              "mis": "Compare to the others' hours only."
+            },
+            {
+              "key": "w3",
+              "text": "Your share is {w3|money}.",
+              "ok": "0",
+              "why": "This divides by a standard 8-hour day, not the hours everyone actually worked.",
+              "mis": "Every shift is eight hours."
+            }
+          ],
+          "lesson": "A proportional share = your part \u00f7 the whole \u00d7 the total."
+        },
+        {
+          "id": "staff-needed",
+          "level": "intermediate",
+          "principle": "mat.round-up-staffing",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "About {cph|int} {client.plural} are expected each hour, and one worker can serve {k|int} per hour."
+          ],
+          "prompt": [
+            "How many workers are needed?"
+          ],
+          "vars": {
+            "cph": {
+              "type": "int",
+              "min": 25,
+              "max": 90,
+              "step": 1
+            },
+            "k": {
+              "type": "choice",
+              "values": [
+                8,
+                10,
+                12
+              ]
+            }
+          },
+          "derive": {
+            "ans": "ceil(cph/k)",
+            "w1": "floor(cph/k)",
+            "w2": "round(cph/k, 1)",
+            "w3": "cph*k"
+          },
+          "constraints": [
+            "cph % k != 0",
+            "round(cph/k,1) != floor(cph/k)",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "You will need {ans|int} workers.",
+              "ok": "1",
+              "why": "Divide the demand by what one worker can handle, and round up.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "You will need {w1|int} workers.",
+              "ok": "0",
+              "why": "Rounding down leaves some {client.plural} unserved.",
+              "mis": "Round down to save money."
+            },
+            {
+              "key": "w2",
+              "text": "You will need {w2|dec1} workers.",
+              "ok": "0",
+              "why": "You cannot schedule part of a worker.",
+              "mis": "The exact division is the answer."
+            },
+            {
+              "key": "w3",
+              "text": "You will need {w3|int} workers.",
+              "ok": "0",
+              "why": "This multiplies instead of dividing.",
+              "mis": "More demand means multiply."
+            }
+          ],
+          "lesson": "Staff needed = demand \u00f7 capacity per person, rounded up."
+        }
+      ]
+    },
+    {
+      "skill": "mathematics",
+      "engine": "numeric",
+      "framework": "numeric-decision",
+      "contexts": "any",
+      "requires": [
+        "supply",
+        "area"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}.",
+        "You are {role|a} at {workplace|a}."
+      ],
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario",
+          "numbers-oracle-verified"
+        ],
+        "notes": "Answers are calculated from generated numbers; distractors are named calculation misconceptions; policies (overtime, tip pool, reorder) are stated in the scenario. Verified by tests/compose-numeric-oracle.test.js."
+      },
+      "id": "mat-decisions",
+      "family": "mathematics.cx-numeric-decisions",
+      "familyName": "Numbers that decide a choice",
+      "concepts": [
+        "mathematics:job-task-math",
+        "mathematics:personal-finance"
+      ],
+      "configs": [
+        {
+          "id": "supplier-over-budget",
+          "level": "advanced",
+          "principle": "mat.budget-rules-out-cheaper-unit",
+          "rule": "calculate-and-compare",
+          "kind": "decision",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You need {q|int} {supply.plural} and have a budget of {bud|money0}.",
+            "Supplier A sells packs of {na|int} for {pa|money0}. Supplier B sells packs of {nb|int} for {pb|money0}."
+          ],
+          "prompt": [
+            "Which choice meets the need within the budget?"
+          ],
+          "vars": {
+            "q": {
+              "type": "int",
+              "min": 30,
+              "max": 70,
+              "step": 1
+            },
+            "na": {
+              "type": "choice",
+              "values": [
+                25,
+                40
+              ]
+            },
+            "pa": {
+              "type": "int",
+              "min": 30,
+              "max": 60,
+              "step": 1
+            },
+            "nb": {
+              "type": "choice",
+              "values": [
+                10,
+                12
+              ]
+            },
+            "pb": {
+              "type": "int",
+              "min": 14,
+              "max": 30,
+              "step": 1
+            },
+            "bud": {
+              "type": "int",
+              "min": 100,
+              "max": 260,
+              "step": 10
+            }
+          },
+          "derive": {
+            "ca": "ceil(q/na)*pa",
+            "cb": "ceil(q/nb)*pb",
+            "ua": "round2(pa/na)",
+            "ub": "round2(pb/nb)"
+          },
+          "constraints": [
+            "ua < ub",
+            "ca > bud",
+            "cb <= bud",
+            "q % na != 0"
+          ],
+          "options": [
+            {
+              "key": "a",
+              "text": "Order from Supplier A, since it is cheaper per item ({ca|money0} total)",
+              "ok": "ca <= bud",
+              "why": "A is cheaper per item, but buying enough whole packs costs {ca|money0}, which is over the budget.",
+              "mis": "The lowest price per item always wins."
+            },
+            {
+              "key": "b",
+              "text": "Order from Supplier B ({cb|money0} total)",
+              "ok": "cb <= bud",
+              "why": "B's whole packs cover the need for {cb|money0}, within the {bud|money0} budget.",
+              "mis": "-"
+            },
+            {
+              "key": "c",
+              "text": "Ask {lead|the} to raise the budget so you can use Supplier A",
+              "ok": "0",
+              "why": "That could work, but B already meets the need within the current budget, so it is not necessary.",
+              "mis": "A better deal is always worth asking for more money.",
+              "acceptable": true
+            },
+            {
+              "key": "d",
+              "text": "Order fewer items from A so it fits the budget",
+              "ok": "0",
+              "why": "Ordering fewer than {q|int} leaves the job short.",
+              "mis": "Cutting quantity is a fine way to save."
+            }
+          ],
+          "lesson": "Check total cost in whole packs against the budget, not just price per item."
+        },
+        {
+          "id": "supplier-within-budget",
+          "level": "advanced",
+          "principle": "mat.cheaper-total-within-budget",
+          "rule": "calculate-and-compare",
+          "kind": "decision",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You need {q|int} {supply.plural} and have a budget of {bud|money0}.",
+            "Supplier A sells packs of {na|int} for {pa|money0}. Supplier B sells packs of {nb|int} for {pb|money0}."
+          ],
+          "prompt": [
+            "Which choice meets the need at the lowest cost?"
+          ],
+          "vars": {
+            "q": {
+              "type": "int",
+              "min": 30,
+              "max": 70,
+              "step": 1
+            },
+            "na": {
+              "type": "choice",
+              "values": [
+                25,
+                40
+              ]
+            },
+            "pa": {
+              "type": "int",
+              "min": 30,
+              "max": 60,
+              "step": 1
+            },
+            "nb": {
+              "type": "choice",
+              "values": [
+                10,
+                12
+              ]
+            },
+            "pb": {
+              "type": "int",
+              "min": 14,
+              "max": 30,
+              "step": 1
+            },
+            "bud": {
+              "type": "int",
+              "min": 160,
+              "max": 300,
+              "step": 10
+            }
+          },
+          "derive": {
+            "ca": "ceil(q/na)*pa",
+            "cb": "ceil(q/nb)*pb",
+            "ua": "round2(pa/na)",
+            "ub": "round2(pb/nb)"
+          },
+          "constraints": [
+            "ua < ub",
+            "ca <= bud",
+            "ca < cb",
+            "cb <= bud"
+          ],
+          "options": [
+            {
+              "key": "a",
+              "text": "Order from Supplier A ({ca|money0} total)",
+              "ok": "ca < cb && ca <= bud",
+              "why": "A's packs cover the need for {ca|money0}, the lower total, within the budget.",
+              "mis": "-"
+            },
+            {
+              "key": "b",
+              "text": "Order from Supplier B ({cb|money0} total)",
+              "ok": "cb < ca",
+              "why": "B also fits the budget, but {cb|money0} is more than A's {ca|money0}.",
+              "mis": "Smaller packs waste less, so they cost less."
+            },
+            {
+              "key": "c",
+              "text": "Ask {lead|the} for a bigger budget before ordering",
+              "ok": "0",
+              "why": "Asking is harmless, but both options already fit; A is simply the better total.",
+              "mis": "Always ask for more budget.",
+              "acceptable": true
+            },
+            {
+              "key": "d",
+              "text": "Split the order between both suppliers",
+              "ok": "0",
+              "why": "Splitting buys extra whole packs from both and costs more than A alone.",
+              "mis": "Splitting an order lowers the cost."
+            }
+          ],
+          "lesson": "When every option fits the budget, compare the totals."
+        },
+        {
+          "id": "overtime-vs-temp",
+          "level": "advanced",
+          "principle": "mat.compare-labor-options",
+          "rule": "calculate-and-compare",
+          "kind": "decision",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You need {H|int} extra hours of work this week. Staff overtime costs 1.5 times the {r|money0} hourly rate.",
+            "A temp agency charges {ta|money0} an hour plus a one-time {F|money0} fee."
+          ],
+          "prompt": [
+            "Which option costs less?"
+          ],
+          "vars": {
+            "H": {
+              "type": "int",
+              "min": 10,
+              "max": 30,
+              "step": 2
+            },
+            "r": {
+              "type": "int",
+              "min": 16,
+              "max": 24,
+              "step": 1
+            },
+            "ta": {
+              "type": "int",
+              "min": 20,
+              "max": 30,
+              "step": 1
+            },
+            "F": {
+              "type": "choice",
+              "values": [
+                50,
+                75,
+                100
+              ]
+            }
+          },
+          "derive": {
+            "ot": "H*1.5*r",
+            "tmp": "H*ta+F",
+            "reg": "H*r"
+          },
+          "constraints": [
+            "ot != tmp",
+            "abs(ot - tmp) >= 15"
+          ],
+          "options": [
+            {
+              "key": "a",
+              "text": "Pay staff overtime, at {ot|money0}",
+              "ok": "ot < tmp",
+              "why": "Overtime: {H|int} \u00d7 1.5 \u00d7 {r|money0} = {ot|money0}; the temp option costs {tmp|money0}.",
+              "mis": "Overtime is always the expensive choice."
+            },
+            {
+              "key": "b",
+              "text": "Use the temp agency, at {tmp|money0}",
+              "ok": "tmp < ot",
+              "why": "Temp: {H|int} \u00d7 {ta|money0} + {F|money0} = {tmp|money0}; overtime costs {ot|money0}.",
+              "mis": "Agencies always cost more."
+            },
+            {
+              "key": "c",
+              "text": "Staff hours at the regular rate, at {reg|money0}",
+              "ok": "0",
+              "why": "Extra hours are paid at the overtime rate, so the regular-rate figure is not a real option.",
+              "mis": "Extra hours are paid at the normal rate.",
+              "acceptable": true
+            },
+            {
+              "key": "d",
+              "text": "They cost the same, so either is fine",
+              "ok": "ot == tmp",
+              "why": "The totals are different; one option is clearly cheaper.",
+              "mis": "Similar rates mean similar totals."
+            }
+          ],
+          "lesson": "Compare full costs, including multipliers and one-time fees."
+        },
+        {
+          "id": "extra-staff-for-deadline",
+          "level": "advanced",
+          "principle": "mat.extra-people-to-meet-deadline",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "{R|int} items are left, and they must be done in {t|int} hours. Each person finishes {k|int} items an hour, and {p|int} people are working."
+          ],
+          "prompt": [
+            "How many more people are needed to finish on time?"
+          ],
+          "vars": {
+            "R": {
+              "type": "int",
+              "min": 180,
+              "max": 600,
+              "step": 10
+            },
+            "t": {
+              "type": "choice",
+              "values": [
+                3,
+                4,
+                5
+              ]
+            },
+            "k": {
+              "type": "choice",
+              "values": [
+                8,
+                10,
+                12
+              ]
+            },
+            "p": {
+              "type": "choice",
+              "values": [
+                2,
+                3
+              ]
+            }
+          },
+          "derive": {
+            "need": "ceil(R/(k*t))",
+            "ans": "ceil(R/(k*t))-p",
+            "w1": "ceil(R/(k*t))",
+            "w2": "floor(R/(k*t))-p",
+            "w3": "ceil(R/k)-p"
+          },
+          "constraints": [
+            "ceil(R/(k*t)) - p >= 2",
+            "R % (k*t) != 0",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "You will need {ans|int} more people.",
+              "ok": "1",
+              "why": "Total people needed = items \u00f7 (rate \u00d7 hours), rounded up; subtract the people already working.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "You will need {w1|int} more people.",
+              "ok": "0",
+              "why": "That is the total needed; some of them are already working.",
+              "mis": "The total is the number to add."
+            },
+            {
+              "key": "w2",
+              "text": "You will need {w2|int} more people.",
+              "ok": "0",
+              "why": "Rounding down leaves the job unfinished at the deadline.",
+              "mis": "Round down to save money."
+            },
+            {
+              "key": "w3",
+              "text": "You will need {w3|int} more people.",
+              "ok": "0",
+              "why": "This ignores the hours available.",
+              "mis": "Time does not affect staffing."
+            }
+          ],
+          "lesson": "Extra people = ceil(work \u00f7 (rate \u00d7 time)) \u2212 people already working."
+        },
+        {
+          "id": "tile-cost-with-waste",
+          "level": "advanced",
+          "principle": "mat.waste-boxes-cost",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "A {a|int}-square-foot floor needs tile, plus 10 percent extra for waste. A box covers {c|int} square feet and costs {pr|money0}."
+          ],
+          "prompt": [
+            "What will the boxes cost?"
+          ],
+          "vars": {
+            "a": {
+              "type": "int",
+              "min": 150,
+              "max": 420,
+              "step": 10
+            },
+            "c": {
+              "type": "choice",
+              "values": [
+                12,
+                15,
+                20
+              ]
+            },
+            "pr": {
+              "type": "int",
+              "min": 28,
+              "max": 55,
+              "step": 1
+            }
+          },
+          "derive": {
+            "boxes": "ceil(a*1.1/c)",
+            "ans": "ceil(a*1.1/c)*pr",
+            "w1": "ceil(a/c)*pr",
+            "w2": "floor(a*1.1/c)*pr",
+            "w3": "round2(a*1.1/c*pr)"
+          },
+          "constraints": [
+            "(a*11) % (c*10) != 0",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The boxes will cost {ans|money0}.",
+              "ok": "1",
+              "why": "Add 10 percent, divide by coverage, round up to whole boxes, then multiply by the price.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The boxes will cost {w1|money0}.",
+              "ok": "0",
+              "why": "This forgets the 10 percent waste.",
+              "mis": "Waste does not need to be bought."
+            },
+            {
+              "key": "w2",
+              "text": "The boxes will cost {w2|money0}.",
+              "ok": "0",
+              "why": "This rounds the boxes down, so you run short.",
+              "mis": "Round to the nearest box."
+            },
+            {
+              "key": "w3",
+              "text": "The boxes will cost {w3|money}.",
+              "ok": "0",
+              "why": "This prices part of a box; you can only buy whole boxes.",
+              "mis": "Stores sell partial boxes."
+            }
+          ],
+          "lesson": "Cost = whole boxes (after waste, rounded up) \u00d7 price per box."
+        },
+        {
+          "id": "coupon-percent-better",
+          "level": "advanced",
+          "principle": "mat.percent-coupon-wins-on-large-order",
+          "rule": "calculate-and-compare",
+          "kind": "decision",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "An order totals {P|money0}. You can use one coupon: {d|int} percent off, or {F|money0} off."
+          ],
+          "prompt": [
+            "Which coupon saves more on this order?"
+          ],
+          "vars": {
+            "P": {
+              "type": "int",
+              "min": 120,
+              "max": 400,
+              "step": 10
+            },
+            "d": {
+              "type": "choice",
+              "values": [
+                10,
+                15,
+                20
+              ]
+            },
+            "F": {
+              "type": "choice",
+              "values": [
+                15,
+                20,
+                25,
+                30
+              ]
+            }
+          },
+          "derive": {
+            "pctsave": "round2(P*d/100)"
+          },
+          "constraints": [
+            "pctsave > F + 2"
+          ],
+          "options": [
+            {
+              "key": "a",
+              "text": "The {d|int} percent coupon, which saves {pctsave|money}",
+              "ok": "pctsave > F",
+              "why": "On a {P|money0} order, {d|int} percent is {pctsave|money}, more than {F|money0}.",
+              "mis": "-"
+            },
+            {
+              "key": "b",
+              "text": "The {F|money0} coupon, which takes that amount off",
+              "ok": "F > pctsave",
+              "why": "{F|money0} is less than the {pctsave|money} the percent coupon saves on this order.",
+              "mis": "A fixed dollar amount always saves more."
+            },
+            {
+              "key": "c",
+              "text": "Use both coupons together on the order",
+              "ok": "0",
+              "why": "Only one coupon can be used.",
+              "mis": "Coupons can always be combined."
+            },
+            {
+              "key": "d",
+              "text": "Either one, since they save about the same",
+              "ok": "0",
+              "why": "The savings differ; calculate both to see which is larger.",
+              "mis": "Close-sounding offers are equal.",
+              "acceptable": true
+            }
+          ],
+          "lesson": "Turn percent savings into dollars before comparing."
+        },
+        {
+          "id": "coupon-fixed-better",
+          "level": "advanced",
+          "principle": "mat.fixed-coupon-wins-on-small-order",
+          "rule": "calculate-and-compare",
+          "kind": "decision",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "An order totals {P|money0}. You can use one coupon: {d|int} percent off, or {F|money0} off."
+          ],
+          "prompt": [
+            "Which coupon saves more on this order?"
+          ],
+          "vars": {
+            "P": {
+              "type": "int",
+              "min": 60,
+              "max": 140,
+              "step": 5
+            },
+            "d": {
+              "type": "choice",
+              "values": [
+                10,
+                15,
+                20
+              ]
+            },
+            "F": {
+              "type": "choice",
+              "values": [
+                20,
+                25,
+                30
+              ]
+            }
+          },
+          "derive": {
+            "pctsave": "round2(P*d/100)"
+          },
+          "constraints": [
+            "F > pctsave + 2"
+          ],
+          "options": [
+            {
+              "key": "a",
+              "text": "The {d|int} percent coupon on this order",
+              "ok": "pctsave > F",
+              "why": "On this order, {d|int} percent is only {pctsave|money}, less than {F|money0}.",
+              "mis": "Percent coupons always save more."
+            },
+            {
+              "key": "b",
+              "text": "The {F|money0} coupon, which beats the {pctsave|money} percent savings",
+              "ok": "F > pctsave",
+              "why": "{F|money0} off is more than {d|int} percent of {P|money0}, which is {pctsave|money}.",
+              "mis": "-"
+            },
+            {
+              "key": "c",
+              "text": "Use both coupons together on the order",
+              "ok": "0",
+              "why": "Only one coupon can be used.",
+              "mis": "Coupons can always be combined."
+            },
+            {
+              "key": "d",
+              "text": "Either one, since they save about the same",
+              "ok": "0",
+              "why": "The savings differ; calculate both to see which is larger.",
+              "mis": "Close-sounding offers are equal.",
+              "acceptable": true
+            }
+          ],
+          "lesson": "Which coupon wins depends on the order size; compute the dollar savings."
+        },
+        {
+          "id": "job-offer-annual",
+          "level": "advanced",
+          "principle": "mat.compare-hourly-and-salary",
+          "rule": "personal-finance",
+          "kind": "decision",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "Job A pays {r|money} an hour for 40 hours a week. Job B pays a salary of {S|money0} a year. Assume 52 working weeks."
+          ],
+          "prompt": [
+            "Which job pays more per year?"
+          ],
+          "vars": {
+            "r": {
+              "type": "choice",
+              "values": [
+                16.5,
+                17.25,
+                18,
+                19.5,
+                21
+              ]
+            },
+            "S": {
+              "type": "int",
+              "min": 32000,
+              "max": 44000,
+              "step": 500
+            }
+          },
+          "derive": {
+            "ya": "r*40*52"
+          },
+          "constraints": [
+            "abs(ya - S) >= 600"
+          ],
+          "options": [
+            {
+              "key": "a",
+              "text": "Job A, at {ya|money0} a year",
+              "ok": "ya > S",
+              "why": "{r|money} \u00d7 40 \u00d7 52 = {ya|money0}.",
+              "mis": "Hourly jobs always pay less."
+            },
+            {
+              "key": "b",
+              "text": "Job B, at {S|money0} a year",
+              "ok": "S > ya",
+              "why": "Job A works out to {ya|money0} a year, so compare that with {S|money0}.",
+              "mis": "Salaries always pay more."
+            },
+            {
+              "key": "c",
+              "text": "Job A, because {r|money} an hour sounds higher",
+              "ok": "0",
+              "why": "An hourly rate has to be converted to a yearly amount before comparing.",
+              "mis": "Bigger-sounding numbers are better."
+            },
+            {
+              "key": "d",
+              "text": "They pay the same, so pick either",
+              "ok": "0",
+              "why": "The yearly totals are different.",
+              "mis": "Pay offers are always about equal.",
+              "acceptable": true
+            }
+          ],
+          "lesson": "Convert pay to the same time period before comparing."
+        },
+        {
+          "id": "payment-plan-extra",
+          "level": "advanced",
+          "principle": "mat.true-cost-of-payment-plan",
+          "rule": "personal-finance",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "A tool costs {P|money0} if paid now. A payment plan charges {m|int} monthly payments of {q|money0}."
+          ],
+          "prompt": [
+            "How much more does the payment plan cost?"
+          ],
+          "vars": {
+            "P": {
+              "type": "int",
+              "min": 300,
+              "max": 900,
+              "step": 25
+            },
+            "m": {
+              "type": "choice",
+              "values": [
+                6,
+                10,
+                12
+              ]
+            },
+            "q": {
+              "type": "int",
+              "min": 30,
+              "max": 100,
+              "step": 5
+            }
+          },
+          "derive": {
+            "ans": "m*q-P",
+            "w1": "m*q",
+            "w2": "P-q",
+            "w3": "q"
+          },
+          "constraints": [
+            "m*q - P >= 20",
+            "m*q - P <= P/2",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The plan costs this much more: {ans|money0}.",
+              "ok": "1",
+              "why": "Total of the payments minus the cash price is the extra cost.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The plan costs this much more: {w1|money0}.",
+              "ok": "0",
+              "why": "That is the total of all payments, not the extra cost.",
+              "mis": "The total paid is the extra cost."
+            },
+            {
+              "key": "w2",
+              "text": "The plan costs this much more: {w2|money0}.",
+              "ok": "0",
+              "why": "This subtracts one payment from the price.",
+              "mis": "One payment shows the difference."
+            },
+            {
+              "key": "w3",
+              "text": "The plan costs this much more: {w3|money0}.",
+              "ok": "0",
+              "why": "That is one monthly payment.",
+              "mis": "The monthly payment is the cost."
+            }
+          ],
+          "lesson": "Extra cost of a plan = (number of payments \u00d7 payment) \u2212 cash price."
+        },
+        {
+          "id": "savings-months",
+          "level": "advanced",
+          "principle": "mat.months-to-reach-goal",
+          "rule": "personal-finance",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You want to save {G|money0} for a certification course. You already have {have|money0} and can save {s|money0} a month."
+          ],
+          "prompt": [
+            "How many months until you reach the goal?"
+          ],
+          "vars": {
+            "G": {
+              "type": "int",
+              "min": 600,
+              "max": 1500,
+              "step": 50
+            },
+            "have": {
+              "type": "int",
+              "min": 100,
+              "max": 400,
+              "step": 25
+            },
+            "s": {
+              "type": "choice",
+              "values": [
+                75,
+                90,
+                120,
+                150
+              ]
+            }
+          },
+          "derive": {
+            "ans": "ceil((G-have)/s)",
+            "w1": "ceil(G/s)",
+            "w2": "floor((G-have)/s)",
+            "w3": "round((G-have)/s, 1)"
+          },
+          "constraints": [
+            "(G-have) % s != 0",
+            "G > have + s",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "It will take {ans|int} months.",
+              "ok": "1",
+              "why": "Subtract what you have, divide by the monthly savings, and round up to whole months.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "It will take {w1|int} months.",
+              "ok": "0",
+              "why": "This ignores the money you already have.",
+              "mis": "Start from zero every time."
+            },
+            {
+              "key": "w2",
+              "text": "It will take {w2|int} months.",
+              "ok": "0",
+              "why": "Rounding down leaves you short of the goal.",
+              "mis": "Round to the nearest month."
+            },
+            {
+              "key": "w3",
+              "text": "It will take {w3|dec1} months.",
+              "ok": "0",
+              "why": "Savings arrive in whole months, so round up.",
+              "mis": "Part of a month counts as a month of savings."
+            }
+          ],
+          "lesson": "Months needed = ceil((goal \u2212 current savings) \u00f7 monthly savings)."
+        },
+        {
+          "id": "shipping-threshold",
+          "level": "advanced",
+          "principle": "mat.add-needed-item-for-free-shipping",
+          "rule": "calculate-and-compare",
+          "kind": "decision",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "Your order totals {T|money0}. Shipping is {f|money0}, or free on orders of {F|money0} or more.",
+            "You also need a {x|money0} item next week."
+          ],
+          "prompt": [
+            "What is the cheapest choice overall?"
+          ],
+          "vars": {
+            "T": {
+              "type": "int",
+              "min": 60,
+              "max": 90,
+              "step": 1
+            },
+            "f": {
+              "type": "choice",
+              "values": [
+                9,
+                12,
+                15
+              ]
+            },
+            "F": {
+              "type": "choice",
+              "values": [
+                75,
+                100
+              ]
+            },
+            "x": {
+              "type": "int",
+              "min": 8,
+              "max": 25,
+              "step": 1
+            }
+          },
+          "derive": {
+            "nowpay": "T+f",
+            "add": "T+x",
+            "later": "T+f+x+f"
+          },
+          "constraints": [
+            "T < F",
+            "T + x >= F"
+          ],
+          "options": [
+            {
+              "key": "a",
+              "text": "Add the item now and get free shipping, for {add|money0}",
+              "ok": "add < nowpay + x",
+              "why": "{T|money0} + {x|money0} reaches the free-shipping level, so you pay {add|money0} for both items.",
+              "mis": "-"
+            },
+            {
+              "key": "b",
+              "text": "Pay shipping now, for {nowpay|money0}, and order the item next week",
+              "ok": "0",
+              "why": "That costs {nowpay|money0} now and more shipping later; adding the item now avoids both fees.",
+              "mis": "Ordering only what you need today is always cheapest."
+            },
+            {
+              "key": "c",
+              "text": "Add extra items you do not need to be safe",
+              "ok": "0",
+              "why": "Buying items you do not need wastes money.",
+              "mis": "More items always mean more savings."
+            },
+            {
+              "key": "d",
+              "text": "Pay shipping now and decide about the item later",
+              "ok": "0",
+              "why": "This pays a shipping fee you can avoid with an item you already need.",
+              "mis": "Deciding later saves money.",
+              "acceptable": true
+            }
+          ],
+          "lesson": "Count the costs you can avoid, not just today's total."
+        },
+        {
+          "id": "markup-then-sale",
+          "level": "advanced",
+          "principle": "mat.markup-then-discount",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "An item costs the store {C|money0}. It is marked up {m|int} percent, then put on sale for {d|int} percent off the marked price."
+          ],
+          "prompt": [
+            "What is the sale price?"
+          ],
+          "vars": {
+            "C": {
+              "type": "int",
+              "min": 20,
+              "max": 80,
+              "step": 4
+            },
+            "m": {
+              "type": "choice",
+              "values": [
+                40,
+                50,
+                60
+              ]
+            },
+            "d": {
+              "type": "choice",
+              "values": [
+                10,
+                20,
+                25
+              ]
+            }
+          },
+          "derive": {
+            "ans": "round2(C*(1+m/100)*(1-d/100))",
+            "w1": "round2(C*(1+(m-d)/100))",
+            "w2": "round2(C*(1+m/100))",
+            "w3": "round2(C*(1-d/100))"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "The sale price is {ans|money}.",
+              "ok": "1",
+              "why": "Apply the markup to the cost, then take the discount off the marked price.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "The sale price is {w1|money}.",
+              "ok": "0",
+              "why": "This nets the percents, but the discount is taken from the higher marked price.",
+              "mis": "Percent changes can be combined by subtracting."
+            },
+            {
+              "key": "w2",
+              "text": "The sale price is {w2|money}.",
+              "ok": "0",
+              "why": "This forgets the sale.",
+              "mis": "The marked price is the sale price."
+            },
+            {
+              "key": "w3",
+              "text": "The sale price is {w3|money}.",
+              "ok": "0",
+              "why": "This takes the discount off the cost and forgets the markup.",
+              "mis": "Discounts apply to the store's cost."
+            }
+          ],
+          "lesson": "Apply percent changes one after another, each to the current price."
+        },
+        {
+          "id": "tolerance-check",
+          "level": "advanced",
+          "principle": "mat.find-out-of-spec-measurement",
+          "rule": "compare-to-tolerance",
+          "kind": "pick",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "A part must be {S|int} millimeters long, plus or minus {tol|dec1} millimeters.",
+            "You measure four parts: {m1|dec1}, {m2|dec1}, {m3|dec1} and {m4|dec1} millimeters."
+          ],
+          "prompt": [
+            "Which part is out of spec?"
+          ],
+          "vars": {
+            "S": {
+              "type": "int",
+              "min": 40,
+              "max": 90,
+              "step": 1
+            },
+            "tol": {
+              "type": "choice",
+              "values": [
+                0.5,
+                0.8
+              ]
+            },
+            "d1": {
+              "type": "choice",
+              "values": [
+                -0.3,
+                0.2,
+                0.4
+              ]
+            },
+            "d2": {
+              "type": "choice",
+              "values": [
+                -0.4,
+                0.1,
+                0.3
+              ]
+            },
+            "d3": {
+              "type": "choice",
+              "values": [
+                -0.2,
+                0.3
+              ]
+            },
+            "d4": {
+              "type": "choice",
+              "values": [
+                -1.1,
+                1.0,
+                1.2
+              ]
+            }
+          },
+          "derive": {
+            "m1": "S+d1",
+            "m2": "S+d2",
+            "m3": "S+d3",
+            "m4": "S+d4"
+          },
+          "constraints": [
+            "abs(d1) < tol",
+            "abs(d2) < tol",
+            "abs(d3) < tol",
+            "abs(d4) > tol",
+            "d1 != d2",
+            "d2 != d3",
+            "d1 != d3"
+          ],
+          "options": [
+            {
+              "key": "a",
+              "text": "The part measuring {m1|dec1} mm",
+              "ok": "abs(m1-S) > tol",
+              "why": "{m1|dec1} is within {tol|dec1} of {S|int}.",
+              "mis": "Any difference from the target is a defect."
+            },
+            {
+              "key": "b",
+              "text": "The part measuring {m2|dec1} mm",
+              "ok": "abs(m2-S) > tol",
+              "why": "{m2|dec1} is within {tol|dec1} of {S|int}.",
+              "mis": "Any difference from the target is a defect."
+            },
+            {
+              "key": "c",
+              "text": "The part measuring {m3|dec1} mm",
+              "ok": "abs(m3-S) > tol",
+              "why": "{m3|dec1} is within {tol|dec1} of {S|int}.",
+              "mis": "Any difference from the target is a defect."
+            },
+            {
+              "key": "d",
+              "text": "The part measuring {m4|dec1} mm",
+              "ok": "abs(m4-S) > tol",
+              "why": "{m4|dec1} differs from {S|int} by more than {tol|dec1}.",
+              "mis": "-"
+            }
+          ],
+          "lesson": "A measurement is in spec if it is within the tolerance of the target."
+        },
+        {
+          "id": "reorder-point",
+          "level": "advanced",
+          "principle": "mat.reorder-point",
+          "rule": "apply-stated-policy",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "You use about {u|int} {supply.plural} a day. A new order takes {L|int} days to arrive, and policy is to keep {s|int} extra as safety stock."
+          ],
+          "prompt": [
+            "At what stock level should you reorder?"
+          ],
+          "vars": {
+            "u": {
+              "type": "int",
+              "min": 6,
+              "max": 20,
+              "step": 1
+            },
+            "L": {
+              "type": "int",
+              "min": 3,
+              "max": 7,
+              "step": 1
+            },
+            "s": {
+              "type": "int",
+              "min": 10,
+              "max": 40,
+              "step": 5
+            }
+          },
+          "derive": {
+            "ans": "u*L+s",
+            "w1": "u*L",
+            "w2": "u+L+s",
+            "w3": "u*(L+s)"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "Reorder when stock reaches {ans|int} items.",
+              "ok": "1",
+              "why": "Reorder when stock covers the days until delivery plus the safety stock.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "Reorder when stock reaches {w1|int} items.",
+              "ok": "0",
+              "why": "This forgets the safety stock.",
+              "mis": "Safety stock is optional."
+            },
+            {
+              "key": "w2",
+              "text": "Reorder when stock reaches {w2|int} items.",
+              "ok": "0",
+              "why": "This adds the numbers instead of multiplying daily use by days.",
+              "mis": "All the numbers get added."
+            },
+            {
+              "key": "w3",
+              "text": "Reorder when stock reaches {w3|int} items.",
+              "ok": "0",
+              "why": "This multiplies the safety stock by daily use.",
+              "mis": "Everything gets multiplied by daily use."
+            }
+          ],
+          "lesson": "Reorder point = daily use \u00d7 lead time + safety stock."
+        },
+        {
+          "id": "commute-net-hourly",
+          "level": "advanced",
+          "principle": "mat.net-hourly-after-costs",
+          "rule": "personal-finance",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "A job pays {r|money0} an hour for {h|int} hours a week. Commuting costs {c|money0} a day for {d|int} days a week."
+          ],
+          "prompt": [
+            "What does the job pay per hour after commuting costs?"
+          ],
+          "vars": {
+            "r": {
+              "type": "int",
+              "min": 15,
+              "max": 22,
+              "step": 1
+            },
+            "h": {
+              "type": "choice",
+              "values": [
+                20,
+                25,
+                30,
+                40
+              ]
+            },
+            "c": {
+              "type": "choice",
+              "values": [
+                6,
+                8,
+                10,
+                12
+              ]
+            },
+            "d": {
+              "type": "choice",
+              "values": [
+                4,
+                5
+              ]
+            }
+          },
+          "derive": {
+            "ans": "round2((r*h - c*d)/h)",
+            "w1": "r",
+            "w2": "r-c",
+            "w3": "round2(r - c*d)"
+          },
+          "constraints": [
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "After commuting, the job pays {ans|money}.",
+              "ok": "1",
+              "why": "Subtract the week's commuting cost from the week's pay, then divide by the hours.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "After commuting, the job pays {w1|money}.",
+              "ok": "0",
+              "why": "This ignores the commuting cost.",
+              "mis": "Costs of getting to work do not matter."
+            },
+            {
+              "key": "w2",
+              "text": "After commuting, the job pays {w2|money}.",
+              "ok": "0",
+              "why": "This subtracts a full day's commute from each hour.",
+              "mis": "Daily costs apply to every hour."
+            },
+            {
+              "key": "w3",
+              "text": "After commuting, the job pays {w3|money}.",
+              "ok": "0",
+              "why": "This subtracts the whole week's commute from each hour.",
+              "mis": "Weekly costs come out of each hour."
+            }
+          ],
+          "lesson": "Net hourly pay = (weekly pay \u2212 weekly work costs) \u00f7 weekly hours."
+        },
+        {
+          "id": "break-even",
+          "level": "advanced",
+          "principle": "mat.break-even-units",
+          "rule": "calculate-and-compare",
+          "kind": "numeric",
+          "mode": [
+            "decision"
+          ],
+          "facts": [
+            "A school fundraiser costs {F|money0} to set up. Each item sells for {p|money0} and costs {v|money0} to make."
+          ],
+          "prompt": [
+            "How many items must be sold to cover the setup cost?"
+          ],
+          "vars": {
+            "F": {
+              "type": "int",
+              "min": 120,
+              "max": 400,
+              "step": 20
+            },
+            "p": {
+              "type": "int",
+              "min": 8,
+              "max": 15,
+              "step": 1
+            },
+            "v": {
+              "type": "int",
+              "min": 2,
+              "max": 6,
+              "step": 1
+            }
+          },
+          "derive": {
+            "ans": "ceil(F/(p-v))",
+            "w1": "ceil(F/p)",
+            "w2": "floor(F/(p-v))",
+            "w3": "ceil(F/v)"
+          },
+          "constraints": [
+            "F % (p-v) != 0",
+            "p - v >= 3",
+            "round2(ans) != round2(w1)",
+            "round2(ans) != round2(w2)",
+            "round2(ans) != round2(w3)",
+            "round2(w1) != round2(w2)",
+            "round2(w1) != round2(w3)",
+            "round2(w2) != round2(w3)"
+          ],
+          "options": [
+            {
+              "key": "ans",
+              "text": "You must sell {ans|int} items.",
+              "ok": "1",
+              "why": "Each sale earns the price minus the cost to make it; divide the setup cost by that and round up.",
+              "mis": "-"
+            },
+            {
+              "key": "w1",
+              "text": "You must sell {w1|int} items.",
+              "ok": "0",
+              "why": "This ignores what each item costs to make.",
+              "mis": "The selling price is all profit."
+            },
+            {
+              "key": "w2",
+              "text": "You must sell {w2|int} items.",
+              "ok": "0",
+              "why": "Rounding down leaves the setup cost not quite covered.",
+              "mis": "Round to the nearest item."
+            },
+            {
+              "key": "w3",
+              "text": "You must sell {w3|int} items.",
+              "ok": "0",
+              "why": "This divides by the cost to make, not the profit per item.",
+              "mis": "Cost per item decides the break-even."
+            }
+          ],
+          "lesson": "Break-even quantity = setup cost \u00f7 (price \u2212 cost per item), rounded up."
+        }
+      ]
+    },
+    {
+      "skill": "mathematics",
+      "engine": "numeric",
+      "framework": "numeric-decision",
+      "contexts": "any",
+      "requires": [
+        "supply",
+        "area"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}.",
+        "You are {role|a} at {workplace|a}."
+      ],
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario",
+          "numbers-oracle-verified"
+        ],
+        "notes": "Answers are calculated from generated numbers; distractors are named calculation misconceptions; policies (overtime, tip pool, reorder) are stated in the scenario. Verified by tests/compose-numeric-oracle.test.js."
+      },
+      "id": "mat-check-calcs",
+      "family": "mathematics.cx-checking-calculations",
+      "familyName": "Checking calculations in documents",
+      "concepts": [
+        "mathematics:basic-calculations",
+        "mathematics:job-task-math"
+      ],
+      "configs": [
+        {
+          "id": "invoice-line",
+          "level": "beginner",
+          "principle": "mat.doc-quantity-times-price",
+          "rule": "find-calculation-error",
+          "kind": "find",
+          "mode": [
+            "find"
+          ],
+          "facts": [
+            "{Lead|the} asks you to check this order summary before it is sent."
+          ],
+          "prompt": [
+            "Which line contains the calculation error?"
+          ],
+          "title": [
+            "Order summary"
+          ],
+          "docType": "note",
+          "vars": {
+            "q1": {
+              "type": "int",
+              "min": 3,
+              "max": 9,
+              "step": 1
+            },
+            "e1": {
+              "type": "choice",
+              "values": [
+                4,
+                6,
+                8
+              ]
+            },
+            "q2": {
+              "type": "int",
+              "min": 2,
+              "max": 6,
+              "step": 1
+            },
+            "e2": {
+              "type": "choice",
+              "values": [
+                5,
+                7,
+                9
+              ]
+            }
+          },
+          "derive": {
+            "t1": "q1*e1",
+            "t2": "q2*e2",
+            "bad": "q1+e1",
+            "tot": "q1*e1+q2*e2"
+          },
+          "constraints": [
+            "q1+e1 != q1*e1"
+          ],
+          "lines": [
+            {
+              "id": "h",
+              "text": "{supply.plural|cap}: order for the {area}",
+              "fine": "A heading, no calculation."
+            },
+            {
+              "id": "l1",
+              "text": "{q1|int} boxes at {e1|money0} each = {bad|money0}",
+              "bad": true,
+              "why": "{q1|int} \u00d7 {e1|money0} is {t1|money0}; the line adds instead of multiplying."
+            },
+            {
+              "id": "l2",
+              "text": "{q2|int} rolls at {e2|money0} each = {t2|money0}",
+              "fine": "{q2|int} \u00d7 {e2|money0} = {t2|money0} is correct."
+            },
+            {
+              "id": "to",
+              "text": "Deliver to: the {area}",
+              "fine": "Delivery information, no calculation."
+            }
+          ],
+          "lesson": "Check each line total: quantity \u00d7 price."
+        },
+        {
+          "id": "timesheet",
+          "level": "beginner",
+          "principle": "mat.doc-hours-sum",
+          "rule": "find-calculation-error",
+          "kind": "find",
+          "mode": [
+            "find"
+          ],
+          "facts": [
+            "Check your timesheet before you submit it."
+          ],
+          "prompt": [
+            "Which line contains the calculation error?"
+          ],
+          "title": [
+            "Weekly timesheet"
+          ],
+          "docType": "note",
+          "vars": {
+            "a": {
+              "type": "int",
+              "min": 4,
+              "max": 8,
+              "step": 1
+            },
+            "b": {
+              "type": "int",
+              "min": 4,
+              "max": 8,
+              "step": 1
+            },
+            "c": {
+              "type": "int",
+              "min": 4,
+              "max": 8,
+              "step": 1
+            },
+            "k": {
+              "type": "choice",
+              "values": [
+                1,
+                2
+              ]
+            }
+          },
+          "derive": {
+            "tot": "a+b+c",
+            "bad": "a+b+c+k"
+          },
+          "constraints": [],
+          "lines": [
+            {
+              "id": "mon",
+              "text": "Monday: {a|int} hours",
+              "fine": "A recorded day."
+            },
+            {
+              "id": "tue",
+              "text": "Tuesday: {b|int} hours",
+              "fine": "A recorded day."
+            },
+            {
+              "id": "wed",
+              "text": "Wednesday: {c|int} hours",
+              "fine": "A recorded day."
+            },
+            {
+              "id": "tot",
+              "text": "Total: {bad|int} hours",
+              "bad": true,
+              "why": "{a|int} + {b|int} + {c|int} = {tot|int}, not {bad|int}."
+            }
+          ],
+          "lesson": "Add every entry and check the total."
+        },
+        {
+          "id": "change-log",
+          "level": "beginner",
+          "principle": "mat.doc-change-subtraction",
+          "rule": "find-calculation-error",
+          "kind": "find",
+          "mode": [
+            "find"
+          ],
+          "facts": [
+            "Check the cash log before closing."
+          ],
+          "prompt": [
+            "Which line contains the calculation error?"
+          ],
+          "title": [
+            "Cash log"
+          ],
+          "docType": "note",
+          "vars": {
+            "t1": {
+              "type": "int",
+              "min": 11,
+              "max": 18,
+              "step": 1
+            },
+            "t2": {
+              "type": "int",
+              "min": 21,
+              "max": 38,
+              "step": 1
+            },
+            "k": {
+              "type": "choice",
+              "values": [
+                1,
+                2
+              ]
+            }
+          },
+          "derive": {
+            "c1": "20-t1",
+            "c2": "50-t2",
+            "bad": "50-t2+k"
+          },
+          "constraints": [],
+          "lines": [
+            {
+              "id": "r1",
+              "text": "Sale {t1|money0}, paid $20, change {c1|money0}",
+              "fine": "20 \u2212 {t1|int} = {c1|int}."
+            },
+            {
+              "id": "r2",
+              "text": "Sale {t2|money0}, paid $50, change {bad|money0}",
+              "bad": true,
+              "why": "50 \u2212 {t2|int} = {c2|int}, not {bad|int}."
+            },
+            {
+              "id": "note",
+              "text": "Drawer counted by two people.",
+              "fine": "A procedure note, no calculation."
+            }
+          ],
+          "lesson": "Check each subtraction when making change."
+        },
+        {
+          "id": "overtime-doc",
+          "level": "intermediate",
+          "principle": "mat.doc-overtime-rate",
+          "rule": "find-calculation-error",
+          "kind": "find",
+          "mode": [
+            "find"
+          ],
+          "facts": [
+            "Check this pay summary. The workplace pays 1.5 times the rate for hours over 40."
+          ],
+          "prompt": [
+            "Which line contains the calculation error?"
+          ],
+          "title": [
+            "Pay summary"
+          ],
+          "docType": "note",
+          "vars": {
+            "h": {
+              "type": "int",
+              "min": 42,
+              "max": 48,
+              "step": 1
+            },
+            "r": {
+              "type": "int",
+              "min": 14,
+              "max": 20,
+              "step": 1
+            }
+          },
+          "derive": {
+            "reg": "40*r",
+            "ot": "(h-40)*1.5*r",
+            "otb": "(h-40)*r",
+            "tot": "40*r+(h-40)*1.5*r",
+            "oth": "h-40"
+          },
+          "constraints": [],
+          "lines": [
+            {
+              "id": "hrs",
+              "text": "Hours worked: {h|int}",
+              "fine": "The recorded hours."
+            },
+            {
+              "id": "reg",
+              "text": "Regular pay: 40 \u00d7 {r|money0} = {reg|money0}",
+              "fine": "Correct."
+            },
+            {
+              "id": "ot",
+              "text": "Overtime pay: {oth|int} \u00d7 {r|money0} = {otb|money0}",
+              "bad": true,
+              "why": "Overtime is paid at 1.5 times the rate; it should be {ot|money}."
+            },
+            {
+              "id": "note",
+              "text": "Rate: {r|money0} an hour.",
+              "fine": "The stated rate."
+            }
+          ],
+          "lesson": "Overtime hours use 1.5 times the regular rate."
+        },
+        {
+          "id": "sale-tax-doc",
+          "level": "intermediate",
+          "principle": "mat.doc-tax-on-sale-price",
+          "rule": "find-calculation-error",
+          "kind": "find",
+          "mode": [
+            "find"
+          ],
+          "facts": [
+            "Check this receipt. Tax is added to the sale price."
+          ],
+          "prompt": [
+            "Which line contains the calculation error?"
+          ],
+          "title": [
+            "Receipt"
+          ],
+          "docType": "note",
+          "vars": {
+            "pr": {
+              "type": "int",
+              "min": 40,
+              "max": 120,
+              "step": 10
+            },
+            "d": {
+              "type": "choice",
+              "values": [
+                10,
+                20,
+                25
+              ]
+            },
+            "t": {
+              "type": "choice",
+              "values": [
+                5,
+                8
+              ]
+            }
+          },
+          "derive": {
+            "sale": "pr*(1-d/100)",
+            "tax": "round2(pr*(1-d/100)*t/100)",
+            "taxb": "round2(pr*t/100)"
+          },
+          "constraints": [
+            "round2(pr*t/100) != round2(pr*(1-d/100)*t/100)"
+          ],
+          "lines": [
+            {
+              "id": "orig",
+              "text": "Original price: {pr|money0}",
+              "fine": "Starting price."
+            },
+            {
+              "id": "disc",
+              "text": "{d|int} percent off: sale price {sale|money}",
+              "fine": "Correct sale price."
+            },
+            {
+              "id": "tax",
+              "text": "Tax at {t|int} percent: {taxb|money}",
+              "bad": true,
+              "why": "Tax should be on the sale price: {tax|money}. This taxes the original price."
+            },
+            {
+              "id": "thanks",
+              "text": "Thank you for shopping with us.",
+              "fine": "No calculation."
+            }
+          ],
+          "lesson": "Tax is calculated on the price actually paid."
+        },
+        {
+          "id": "waste-doc",
+          "level": "intermediate",
+          "principle": "mat.doc-waste-allowance",
+          "rule": "find-calculation-error",
+          "kind": "find",
+          "mode": [
+            "find"
+          ],
+          "facts": [
+            "Check this materials estimate."
+          ],
+          "prompt": [
+            "Which line contains the calculation error?"
+          ],
+          "title": [
+            "Materials estimate"
+          ],
+          "docType": "note",
+          "vars": {
+            "a": {
+              "type": "int",
+              "min": 100,
+              "max": 300,
+              "step": 10
+            },
+            "c": {
+              "type": "choice",
+              "values": [
+                20,
+                25
+              ]
+            }
+          },
+          "derive": {
+            "need": "a*1.1",
+            "bx": "ceil(a*1.1/c)",
+            "bxb": "ceil(a/c)"
+          },
+          "constraints": [
+            "ceil(a*1.1/c) != ceil(a/c)"
+          ],
+          "lines": [
+            {
+              "id": "area",
+              "text": "Floor area: {a|int} square feet",
+              "fine": "Given."
+            },
+            {
+              "id": "waste",
+              "text": "With 10 percent waste: {need|dec1} square feet",
+              "fine": "{a|int} \u00d7 1.1 is correct."
+            },
+            {
+              "id": "boxes",
+              "text": "Boxes at {c|int} square feet each: {bxb|int}",
+              "bad": true,
+              "why": "{need|dec1} \u00f7 {c|int}, rounded up, is {bx|int} boxes. This used the area without waste."
+            },
+            {
+              "id": "who",
+              "text": "Prepared for {lead|the}.",
+              "fine": "No calculation."
+            }
+          ],
+          "lesson": "Use the total with waste when counting boxes."
+        },
+        {
+          "id": "net-pay-doc",
+          "level": "advanced",
+          "principle": "mat.doc-percent-deduction",
+          "rule": "find-calculation-error",
+          "kind": "find",
+          "mode": [
+            "find"
+          ],
+          "facts": [
+            "Check this pay stub before you file it."
+          ],
+          "prompt": [
+            "Which line contains the calculation error?"
+          ],
+          "title": [
+            "Pay stub"
+          ],
+          "docType": "note",
+          "vars": {
+            "g": {
+              "type": "int",
+              "min": 500,
+              "max": 900,
+              "step": 20
+            },
+            "t": {
+              "type": "choice",
+              "values": [
+                10,
+                12,
+                15
+              ]
+            },
+            "f": {
+              "type": "choice",
+              "values": [
+                10,
+                20
+              ]
+            }
+          },
+          "derive": {
+            "tax": "g*t/100",
+            "taxb": "t*10",
+            "net": "g-g*t/100-f"
+          },
+          "constraints": [
+            "t*10 != g*t/100"
+          ],
+          "lines": [
+            {
+              "id": "gross",
+              "text": "Gross pay: {g|money0}",
+              "fine": "Given."
+            },
+            {
+              "id": "tax",
+              "text": "Tax withheld ({t|int} percent): {taxb|money0}",
+              "bad": true,
+              "why": "{t|int} percent of {g|money0} is {tax|money}."
+            },
+            {
+              "id": "park",
+              "text": "Parking: {f|money0}",
+              "fine": "A flat deduction."
+            },
+            {
+              "id": "rate",
+              "text": "Pay period: one week",
+              "fine": "No calculation."
+            }
+          ],
+          "lesson": "A percent deduction is the rate times the gross pay."
+        },
+        {
+          "id": "reorder-doc",
+          "level": "advanced",
+          "principle": "mat.doc-reorder-point",
+          "rule": "find-calculation-error",
+          "kind": "find",
+          "mode": [
+            "find"
+          ],
+          "facts": [
+            "Check this inventory note. Policy: reorder at daily use \u00d7 delivery days + safety stock."
+          ],
+          "prompt": [
+            "Which line contains the calculation error?"
+          ],
+          "title": [
+            "Inventory note"
+          ],
+          "docType": "note",
+          "vars": {
+            "u": {
+              "type": "int",
+              "min": 5,
+              "max": 15,
+              "step": 1
+            },
+            "L": {
+              "type": "int",
+              "min": 3,
+              "max": 6,
+              "step": 1
+            },
+            "s": {
+              "type": "int",
+              "min": 10,
+              "max": 30,
+              "step": 5
+            }
+          },
+          "derive": {
+            "ans": "u*L+s",
+            "bad": "u*L"
+          },
+          "constraints": [],
+          "lines": [
+            {
+              "id": "use",
+              "text": "Daily use: {u|int}",
+              "fine": "Given."
+            },
+            {
+              "id": "lead",
+              "text": "Delivery time: {L|int} days",
+              "fine": "Given."
+            },
+            {
+              "id": "safe",
+              "text": "Safety stock: {s|int}",
+              "fine": "Given."
+            },
+            {
+              "id": "rp",
+              "text": "Reorder point: {bad|int}",
+              "bad": true,
+              "why": "Policy adds the safety stock: {u|int} \u00d7 {L|int} + {s|int} = {ans|int}."
+            }
+          ],
+          "lesson": "Apply every part of a stated formula."
+        },
+        {
+          "id": "budget-summary",
+          "level": "advanced",
+          "principle": "mat.doc-percent-of-budget",
+          "rule": "find-calculation-error",
+          "kind": "find",
+          "mode": [
+            "find"
+          ],
+          "facts": [
+            "Check this budget summary before it goes to {lead|the}."
+          ],
+          "prompt": [
+            "Which line contains the calculation error?"
+          ],
+          "title": [
+            "Budget summary"
+          ],
+          "docType": "note",
+          "vars": {
+            "B": {
+              "type": "choice",
+              "values": [
+                500,
+                800,
+                1000
+              ]
+            },
+            "S": {
+              "type": "int",
+              "min": 100,
+              "max": 400,
+              "step": 20
+            }
+          },
+          "derive": {
+            "pct": "S*100/B",
+            "left": "B-S",
+            "badpct": "(B-S)*100/B"
+          },
+          "constraints": [
+            "(S*100) % B == 0",
+            "S*2 != B"
+          ],
+          "lines": [
+            {
+              "id": "bud",
+              "text": "Budget: {B|money0}",
+              "fine": "Given."
+            },
+            {
+              "id": "spent",
+              "text": "Spent: {S|money0}",
+              "fine": "Given."
+            },
+            {
+              "id": "left",
+              "text": "Remaining: {left|money0}",
+              "fine": "{B|int} \u2212 {S|int} is correct."
+            },
+            {
+              "id": "pct",
+              "text": "Percent spent: {badpct|pct}",
+              "bad": true,
+              "why": "{S|money0} \u00f7 {B|money0} is {pct|pct} spent; this is the percent remaining."
+            }
+          ],
+          "lesson": "Check that a percent describes the quantity its label names."
+        }
+      ]
+    }
+  ]
+}

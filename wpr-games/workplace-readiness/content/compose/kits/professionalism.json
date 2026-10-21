@@ -1,0 +1,570 @@
+{
+  "skill": "professionalism",
+  "kits": [
+    {
+      "id": "pro-client-meeting",
+      "skill": "professionalism",
+      "family": "professionalism.cx-client-meeting",
+      "familyName": "Getting ready to meet a client",
+      "framework": "competing-priorities",
+      "concepts": [
+        "professionalism:punctuality-attendance",
+        "professionalism:appearance",
+        "professionalism:etiquette",
+        "professionalism:self-representation"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. In fifteen minutes you are meeting a {client} for the first time.",
+        "As {role|a} at {workplace|a}, you have a first meeting with a new {client} at 10 a.m."
+      ],
+      "pressure": [
+        "{coworker3} says {client.plural} do not care about the small stuff.",
+        "You are already feeling rushed."
+      ],
+      "detail": [
+        "The meeting will be in the front office.",
+        "{Lead|the} will join for the last few minutes."
+      ],
+      "tiers": {
+        "1": "Letting someone know you will be late comes before anything else.",
+        "2": "Meeting the dress code shows respect for the {client} and the workplace.",
+        "3": "Preparation shows the {client} you take their time seriously.",
+        "4": "Your full attention belongs to the {client} during the meeting.",
+        "5": "Small courtesies matter once the basics are covered."
+      },
+      "issues": [
+        {
+          "id": "late",
+          "tier": 1,
+          "rule": "communicate-delay-early",
+          "principle": "pro.notify-before-being-late",
+          "fact": [
+            "You are running about ten minutes behind for the meeting."
+          ],
+          "clear": [
+            "You already messaged the {client} that you would be ten minutes late."
+          ],
+          "done": "the {client} already knows you will be late",
+          "short": "running ten minutes late",
+          "action": "Let the {client} know now that you are running ten minutes late.",
+          "brief": "tell the {client} you will be late",
+          "reason": "A quick heads-up respects the {client}'s time and keeps the first impression positive.",
+          "lesson": "If you will be late, let people know before the start time.",
+          "shortcut": [
+            {
+              "text": "Arrive when you can and apologize at the start.",
+              "brief": "apologize when you arrive",
+              "why": "An apology after the fact does not give the {client} the chance to plan.",
+              "mis": "Apologizing later is as good as warning ahead."
+            }
+          ]
+        },
+        {
+          "id": "dress",
+          "tier": 2,
+          "rule": "follow-dress-code",
+          "principle": "pro.meet-stated-dress-code",
+          "fact": [
+            "The workplace dress code calls for closed-toe shoes, and you are wearing sandals."
+          ],
+          "short": "the dress-code problem",
+          "action": "Change into the closed-toe shoes the dress code calls for.",
+          "brief": "change into closed-toe shoes",
+          "reason": "Following the dress code shows respect and represents the workplace well.",
+          "lesson": "Follow your workplace's dress code, especially when meeting others.",
+          "shortcut": [
+            {
+              "text": "Keep the sandals, since the {client} will not look at your feet.",
+              "brief": "keep the sandals",
+              "why": "The dress code applies whether or not anyone notices.",
+              "mis": "Rules only matter if someone notices."
+            }
+          ],
+          "clear": [
+            "You changed into closed-toe shoes before leaving home."
+          ],
+          "done": "you are already wearing closed-toe shoes"
+        },
+        {
+          "id": "prep",
+          "tier": 3,
+          "rule": "prepare-in-advance",
+          "principle": "pro.review-before-meeting",
+          "fact": [
+            "You have not looked at the {client}'s request since it arrived last week."
+          ],
+          "clear": [
+            "You reviewed the {client}'s request and made notes this morning."
+          ],
+          "done": "you already reviewed the request",
+          "short": "not having reviewed the request",
+          "action": "Spend a few minutes reviewing the {client}'s request before the meeting.",
+          "brief": "review the request",
+          "reason": "Knowing the request shows the {client} you are prepared and respect their time.",
+          "lesson": "Prepare before meetings so you can represent the workplace well.",
+          "shortcut": [
+            {
+              "text": "Ask the {client} to explain the request again from the start.",
+              "brief": "have the {client} explain it again",
+              "why": "Asking a {client} to repeat what they already sent suggests you did not prepare.",
+              "mis": "Clients expect to repeat themselves."
+            }
+          ]
+        },
+        {
+          "id": "phone",
+          "tier": 4,
+          "rule": "give-full-attention",
+          "principle": "pro.silence-phone-in-meeting",
+          "noProceed": true,
+          "fact": [
+            "Your phone keeps buzzing with personal texts."
+          ],
+          "short": "the buzzing phone",
+          "action": "Silence your phone and put it away for the meeting.",
+          "brief": "silence and put away your phone",
+          "reason": "Checking a phone in a meeting signals the {client} is not your priority.",
+          "lesson": "Give people your full attention by putting your phone away.",
+          "shortcut": [
+            {
+              "text": "Keep the phone on the table so you can glance at urgent texts.",
+              "brief": "keep the phone on the table",
+              "why": "Glancing at texts during a meeting is distracting and disrespectful.",
+              "mis": "Quick glances at a phone go unnoticed."
+            }
+          ]
+        },
+        {
+          "id": "name",
+          "tier": 5,
+          "rule": "show-courtesy",
+          "principle": "pro.ask-for-name-again",
+          "noProceed": true,
+          "fact": [
+            "You have forgotten the {client}'s name, though it is on the meeting invite."
+          ],
+          "short": "the forgotten name",
+          "action": "Check the meeting invite for the name before you go in.",
+          "brief": "check the invite for the name",
+          "reason": "Using someone's name correctly is a basic courtesy that makes a good impression.",
+          "lesson": "Small courtesies, like using names correctly, build professional relationships.",
+          "shortcut": [
+            {
+              "text": "Avoid using the {client}'s name during the meeting.",
+              "brief": "avoid using the name",
+              "why": "Avoiding the name can feel cold when the invite has it.",
+              "mis": "Avoiding a name is as good as remembering it."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Greet the {client} warmly and start the meeting on time.",
+        "why": "You are prepared, dressed appropriately and on time, so the meeting can start.",
+        "lesson": "Preparation and punctuality let you make a strong professional impression."
+      },
+      "generic": [
+        {
+          "text": "Ask {coworker} to take the meeting so you can relax.",
+          "why": "The meeting is yours. Handing it off without reason is unprofessional.",
+          "mis": "Avoiding pressure is a good reason to hand off work."
+        },
+        {
+          "text": "Start the meeting with a joke about how hectic your morning was.",
+          "why": "Opening with your own stress makes the meeting about you instead of the {client}.",
+          "mis": "Complaining about your day builds rapport."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to run the whole meeting instead of you.",
+          "why": "You are ready. Handing the meeting over is unnecessary.",
+          "mis": "Supervisors should run every client meeting."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You have a first meeting with a new {client} at {workplace|the} this morning."
+        ],
+        "because": {
+          "prep": [
+            "You have not looked at the {client}'s request yet."
+          ],
+          "dress": [
+            "Your shoes do not meet the dress code."
+          ]
+        },
+        "steps": [
+          {
+            "id": "review",
+            "text": "Review the request and make notes",
+            "issue": "prep"
+          },
+          {
+            "id": "shoes",
+            "text": "Change into closed-toe shoes",
+            "issue": "dress"
+          },
+          {
+            "id": "arrive",
+            "text": "Arrive at the meeting room a few minutes early",
+            "core": true
+          },
+          {
+            "id": "silence",
+            "text": "Silence your phone",
+            "core": true
+          },
+          {
+            "id": "greet",
+            "text": "Greet the {client} and start the meeting",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "review",
+            "arrive",
+            "Preparation comes before you go to the meeting."
+          ],
+          [
+            "shoes",
+            "arrive",
+            "You change before you go."
+          ],
+          [
+            "arrive",
+            "greet",
+            "You need to be there before you greet the {client}."
+          ],
+          [
+            "silence",
+            "greet",
+            "Silence your phone before the meeting starts."
+          ],
+          [
+            "review",
+            "greet",
+            "Your notes are for the meeting."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Prepare, meet the dress code, arrive early, silence distractions, then begin."
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Dress code stated as workplace policy."
+      }
+    },
+    {
+      "id": "pro-office-etiquette",
+      "skill": "professionalism",
+      "family": "professionalism.cx-everyday-etiquette",
+      "familyName": "Everyday workplace etiquette",
+      "framework": "communication-failure",
+      "concepts": [
+        "professionalism:etiquette",
+        "professionalism:self-representation"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}.",
+        "You are {role|a} at {workplace|a}, in the middle of a normal workday."
+      ],
+      "detail": [
+        "It is a busy afternoon.",
+        "Several coworkers are working nearby."
+      ],
+      "issues": [
+        {
+          "id": "replyall",
+          "tier": 1,
+          "rule": "communicate-professionally",
+          "principle": "pro.no-personal-reply-all",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You are about to reply-all to a message sent to the whole company with a personal joke."
+          ],
+          "short": "the reply-all joke",
+          "action": "Reply only to the person you meant, or skip the reply.",
+          "reason": "A reply-all joke fills everyone's inbox and may not land well with people who do not know you.",
+          "lesson": "Think about who will read a message before you send it.",
+          "shortcut": [
+            {
+              "text": "Send it to everyone, since a joke will lighten the day.",
+              "why": "Hundreds of people did not ask for the joke, and some may find it unprofessional.",
+              "mis": "Everyone appreciates humor at work."
+            }
+          ]
+        },
+        {
+          "id": "speaker",
+          "tier": 2,
+          "rule": "respect-shared-space",
+          "principle": "pro.no-speakerphone-in-shared-area",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You need to take a long personal call, and coworkers are working right next to you."
+          ],
+          "short": "the personal call in a shared area",
+          "action": "Step somewhere private to take the call.",
+          "reason": "A long personal call in a shared space distracts coworkers.",
+          "lesson": "Respect shared spaces by keeping personal calls private.",
+          "shortcut": [
+            {
+              "text": "Take the call on speaker so you can keep working.",
+              "why": "Speakerphone in a shared area disturbs everyone nearby.",
+              "mis": "Multitasking on a call is efficient."
+            }
+          ]
+        },
+        {
+          "id": "online",
+          "tier": 3,
+          "rule": "represent-workplace-well",
+          "principle": "pro.keep-complaints-off-social-media",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "After a frustrating day, you start writing a public post complaining about a {client} by name."
+          ],
+          "short": "the public complaint about a {client}",
+          "action": "Delete the post and talk the frustration over privately instead.",
+          "reason": "A public complaint about a named {client} reflects on you and your workplace, and it can hurt the {client}.",
+          "lesson": "What you post publicly represents you and your workplace.",
+          "shortcut": [
+            {
+              "text": "Post it, since it is your own account.",
+              "why": "Your own account is still public, and naming a {client} can harm them and your workplace.",
+              "mis": "Personal accounts have nothing to do with work."
+            }
+          ]
+        },
+        {
+          "id": "borrow",
+          "tier": 4,
+          "rule": "show-courtesy",
+          "principle": "pro.ask-before-borrowing",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You need a stapler, and the only one is on {coworker}'s desk while {coworker} is away."
+          ],
+          "short": "borrowing from an absent coworker",
+          "action": "Borrow it, then return it right away with a quick note saying thanks.",
+          "reason": "A short, open borrow with a note is courteous; keeping it or hiding the borrow is not.",
+          "lesson": "Treat coworkers' things with courtesy: ask or tell, and return them quickly.",
+          "shortcut": [
+            {
+              "text": "Take it to your desk and keep it for the week.",
+              "why": "Keeping a coworker's things without asking is inconsiderate.",
+              "mis": "Shared items belong to whoever needs them."
+            }
+          ]
+        },
+        {
+          "id": "gossip",
+          "tier": 5,
+          "rule": "avoid-gossip",
+          "principle": "pro.decline-gossip",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "{coworker2} starts gossiping about why another coworker was called into a meeting."
+          ],
+          "short": "the gossip",
+          "action": "Change the subject or say you would rather not guess about it.",
+          "reason": "Gossip spreads rumors and damages trust. Politely stepping away keeps you professional.",
+          "lesson": "Stay out of workplace gossip.",
+          "shortcut": [
+            {
+              "text": "Join in, since everyone is curious.",
+              "why": "Speculating about a coworker spreads rumors that can hurt them.",
+              "mis": "Gossip is harmless if everyone does it."
+            }
+          ]
+        },
+        {
+          "id": "meeting",
+          "tier": 6,
+          "rule": "respect-others-time",
+          "principle": "pro.join-meeting-on-time",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "A team meeting starts in two minutes, and you are about to start a long personal call."
+          ],
+          "short": "the meeting about to start",
+          "action": "Save the call for your break and go to the meeting on time.",
+          "reason": "Arriving late to meetings wastes others' time and looks unreliable.",
+          "lesson": "Be on time for meetings; personal business can wait for breaks.",
+          "shortcut": [
+            {
+              "text": "Make the call and slip into the meeting late.",
+              "why": "Arriving late interrupts the meeting and shows little respect for the team.",
+              "mis": "Being a few minutes late does not matter."
+            }
+          ]
+        },
+        {
+          "id": "dresscode",
+          "tier": 7,
+          "rule": "follow-dress-code",
+          "principle": "pro.follow-uniform-policy",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "The uniform policy says to wear your name badge, and you left yours in your car."
+          ],
+          "short": "the missing name badge",
+          "action": "Get your name badge from the car before your shift starts.",
+          "reason": "The badge is part of the uniform policy and helps people know who you are.",
+          "lesson": "Follow uniform and badge policies every shift.",
+          "shortcut": [
+            {
+              "text": "Work without it, since everyone knows who you are.",
+              "why": "The policy applies every shift, and {client.plural} do not know you.",
+              "mis": "Policies only matter for new people."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Go ahead, since nobody else will be bothered.",
+        "why": "In each case, other people are affected, so going ahead without thinking is not professional.",
+        "lesson": "Professional etiquette means considering how your actions affect others."
+      },
+      "generic": [
+        {
+          "text": "Ask {coworker3} whether it is okay and do whatever they say.",
+          "why": "A coworker's opinion does not replace your own judgment about etiquette.",
+          "mis": "If a coworker approves, it must be fine."
+        },
+        {
+          "text": "Complain to {lead|the} about how stressful the day has been.",
+          "why": "Venting to the lead does not address the situation in front of you.",
+          "mis": "Stress excuses unprofessional choices."
+        }
+      ],
+      "doc": {
+        "type": "email",
+        "title": [
+          "Your email to a new {client}"
+        ],
+        "intro": [
+          "You are about to email a new {client} for the first time. Check the message first."
+        ],
+        "lesson": "Professional emails are courteous, clear and represent the workplace well.",
+        "lines": [
+          {
+            "id": "greet",
+            "text": "Dear Ms. Alvarez,",
+            "fine": "A respectful greeting.",
+            "bad": [
+              {
+                "id": "greet-casual",
+                "level": "beginner",
+                "text": "Hey there buddy,",
+                "why": "A first message to a {client} should open respectfully.",
+                "principle": "pro.doc-casual-greeting"
+              }
+            ]
+          },
+          {
+            "id": "intro",
+            "text": "My name is {coworker}, and I will be your contact at {workplace|the}.",
+            "fine": "Introduces the writer clearly.",
+            "bad": [
+              {
+                "id": "intro-none",
+                "level": "beginner",
+                "text": "Anyway, here is the stuff you need.",
+                "why": "Skipping any introduction leaves the new {client} unsure who is writing.",
+                "principle": "pro.doc-no-introduction"
+              }
+            ]
+          },
+          {
+            "id": "meet",
+            "text": "Our meeting is confirmed for Tuesday at 10 a.m.",
+            "fine": "Confirms the details.",
+            "bad": [
+              {
+                "id": "meet-casual",
+                "level": "beginner",
+                "text": "hey, see u tues at like 10 or whatever",
+                "why": "Slang and missing capitalization are too casual for a first message to a {client}.",
+                "principle": "pro.doc-overly-casual"
+              }
+            ]
+          },
+          {
+            "id": "bring",
+            "text": "Please bring any photos of the work you would like done.",
+            "fine": "Clear, polite request.",
+            "bad": [
+              {
+                "id": "bring-demand",
+                "level": "beginner",
+                "text": "Bring photos, or do not bother coming.",
+                "why": "The line is rude and could drive the {client} away.",
+                "principle": "pro.doc-rude-demand"
+              }
+            ]
+          },
+          {
+            "id": "sign",
+            "text": "Best regards, {coworker}",
+            "fine": "A professional sign-off.",
+            "bad": [
+              {
+                "id": "sign-emoji",
+                "level": "intermediate",
+                "text": "Can't wait!!! \ud83c\udf89\ud83c\udf89 Love ya",
+                "why": "Overly familiar language is not appropriate for a first message to a {client}.",
+                "principle": "pro.doc-overly-familiar-close"
+              }
+            ]
+          },
+          {
+            "id": "complaint",
+            "text": "Feel free to call if anything changes.",
+            "fine": "Invites contact.",
+            "bad": [
+              {
+                "id": "complaint-vent",
+                "level": "advanced",
+                "needs": [
+                  "intro"
+                ],
+                "text": "Honestly, things here have been chaotic lately, so bear with us.",
+                "why": "Complaining about your workplace to a new {client} represents it poorly.",
+                "principle": "pro.doc-complains-about-workplace"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Etiquette situations are beginner-only single decisions."
+      }
+    }
+  ]
+}

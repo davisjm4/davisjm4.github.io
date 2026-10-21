@@ -1,0 +1,846 @@
+{
+  "skill": "integrity",
+  "kits": [
+    {
+      "id": "int-closing-count",
+      "skill": "integrity",
+      "family": "integrity.cx-closing-count",
+      "familyName": "An honest closing count",
+      "framework": "ethical-dilemma",
+      "concepts": [
+        "integrity:honesty-and-fairness",
+        "integrity:policies-and-procedures",
+        "integrity:importance-of-integrity"
+      ],
+      "contexts": "any",
+      "requires": [
+        "supply"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a} and are doing the closing count of {supply.plural}. Your count is 6 lower than the log shows.",
+        "As {role|a} at {workplace|a}, you are counting {supply.plural} at closing. You count 6 fewer than the log says there should be."
+      ],
+      "pressure": [
+        "{coworker3} says everyone wants to go home and you should just wrap it up.",
+        "It is already past closing time."
+      ],
+      "detail": [
+        "The {supply.plural} are stored on the top shelf.",
+        "The rest of the closing tasks are done."
+      ],
+      "tiers": {
+        "1": "A false record cannot be fixed later; honesty comes first.",
+        "2": "The procedure's check confirms the problem before it is reported.",
+        "3": "Your own part in the problem belongs in the report.",
+        "4": "The report has to reach the person the procedure names."
+      },
+      "issues": [
+        {
+          "id": "hide",
+          "tier": 1,
+          "rule": "refuse-to-falsify",
+          "principle": "int.no-falsified-count",
+          "fact": [
+            "{coworker} suggests changing the count sheet to match the log so nobody gets questioned."
+          ],
+          "short": "the suggestion to change the count",
+          "action": "Record the real count, and decline to change the numbers.",
+          "brief": "record the real count and decline to change it",
+          "reason": "A count sheet that hides a shortage is a false record. Accurate numbers are what let the team find the cause.",
+          "lesson": "Record what you actually find, even when the honest number leads to questions.",
+          "shortcut": [
+            {
+              "text": "Change the count to match the log, since a few items are not worth the trouble.",
+              "brief": "change the count to match the log",
+              "why": "Changing the numbers creates a false record and hides a real problem from the people who need to know.",
+              "mis": "Small differences are not worth reporting honestly."
+            }
+          ],
+          "noProceed": true
+        },
+        {
+          "id": "recount",
+          "tier": 2,
+          "rule": "follow-procedure-check",
+          "principle": "int.second-count-before-report",
+          "fact": [
+            "The posted closing procedure says a second person must recount any shortage."
+          ],
+          "clear": [
+            "{coworker2} already recounted, and the second count matched yours."
+          ],
+          "done": "the second count was already done",
+          "short": "the required second count",
+          "action": "Ask {coworker2} to do the second count that the procedure requires.",
+          "brief": "ask {coworker2} for the second count",
+          "reason": "The procedure's second count confirms the shortage is real before it is reported.",
+          "lesson": "Follow the procedure's check steps before reporting a problem.",
+          "shortcut": [
+            {
+              "text": "Skip the recount, since you are sure your own count is right.",
+              "brief": "skip the recount",
+              "why": "The procedure requires a second count. Skipping it breaks the procedure and leaves room for error.",
+              "mis": "Your own count is accurate enough to skip the procedure."
+            }
+          ]
+        },
+        {
+          "id": "owncause",
+          "tier": 3,
+          "rule": "disclose-own-role",
+          "principle": "int.disclose-own-unlogged-handouts",
+          "fact": [
+            "You remember handing out several {supply.plural} today without writing them in the log."
+          ],
+          "short": "the items you handed out without logging",
+          "action": "Include the items you handed out without logging when you report the count.",
+          "brief": "report the items you did not log",
+          "reason": "Your unlogged handouts may explain the shortage. Being open about your own slip helps solve it and keeps your word trustworthy.",
+          "lesson": "Be open about your own mistakes, especially when they may explain a problem.",
+          "shortcut": [
+            {
+              "text": "Leave out the unlogged items so the shortage does not look like your fault.",
+              "brief": "leave out your unlogged items",
+              "why": "Hiding your part leaves the team chasing the wrong cause and damages trust if it comes out later.",
+              "mis": "Admitting a mistake will only get you in trouble."
+            }
+          ]
+        },
+        {
+          "id": "oncall",
+          "tier": 4,
+          "rule": "report-to-designated-person",
+          "principle": "int.report-to-on-call-manager",
+          "fact": [
+            "{Lead|the} has gone home, and the posted procedure says the on-call manager handles shortages after hours."
+          ],
+          "short": "who should receive the report tonight",
+          "action": "Report the shortage to the manager on call, as the procedure says.",
+          "brief": "report it to the manager on call",
+          "reason": "The procedure names who receives shortage reports when the lead is out. Following it gets the report to someone who can act tonight.",
+          "lesson": "Send reports to the person the procedure names, even when it is not your usual supervisor.",
+          "shortcut": [
+            {
+              "text": "Leave a note for {lead|the} to read in the morning instead.",
+              "brief": "leave a note for the morning",
+              "why": "The procedure says the on-call manager handles shortages tonight. A morning note delays the report.",
+              "mis": "Your usual supervisor is always the right person to tell."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Report the real count, including the shortage, to {lead|the}.",
+        "why": "The count is confirmed and nothing else needs handling first, so the honest next step is to report it.",
+        "lesson": "Report accurate results to the person responsible, even when they show a problem."
+      },
+      "generic": [
+        {
+          "text": "Leave the count sheet blank and let the morning shift sort it out.",
+          "why": "An empty count sheet hides the problem and passes your job to someone else.",
+          "mis": "If a result is awkward, it is better not to record it."
+        },
+        {
+          "text": "Keep recounting until your number matches the log.",
+          "why": "Counting until you get the answer you want is not an honest count.",
+          "mis": "The log is always right, so the count must be wrong."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Hold the count sheet until {lead|the} can recount everything personally tomorrow.",
+          "why": "The count has already been checked. Holding it back delays a report the team expects tonight.",
+          "mis": "Only a supervisor's count can be trusted."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}, counting {supply.plural} at closing, and the count is lower than the log."
+        ],
+        "because": {
+          "recount": [
+            "The posted procedure requires a second person to recount shortages."
+          ],
+          "owncause": [
+            "You handed out some items today without logging them."
+          ],
+          "oncall": [
+            "{Lead|the} has left, and shortages go to whoever is on call."
+          ]
+        },
+        "steps": [
+          {
+            "id": "count",
+            "text": "Count every item on the shelf",
+            "core": true
+          },
+          {
+            "id": "second",
+            "text": "Have {coworker2} count them again",
+            "issue": "recount"
+          },
+          {
+            "id": "write",
+            "text": "Write the real number on the sheet",
+            "core": true
+          },
+          {
+            "id": "note",
+            "text": "Add a note about the unlogged handouts",
+            "issue": "owncause"
+          },
+          {
+            "id": "lookup",
+            "text": "Check who is on call tonight",
+            "issue": "oncall"
+          },
+          {
+            "id": "report",
+            "text": "Report the shortage",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "count",
+            "second",
+            "The recount checks a first count, so the first count comes first."
+          ],
+          [
+            "second",
+            "write",
+            "The confirmed number is what goes on the sheet."
+          ],
+          [
+            "count",
+            "write",
+            "You write down the number after counting."
+          ],
+          [
+            "write",
+            "note",
+            "The note explains the number on the sheet."
+          ],
+          [
+            "note",
+            "report",
+            "The report should include your note."
+          ],
+          [
+            "lookup",
+            "report",
+            "You need to know who to report to before reporting."
+          ],
+          [
+            "write",
+            "report",
+            "The report is based on the written count."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Count, confirm, record honestly, explain your part, then report to the right person."
+      },
+      "doc": {
+        "type": "note",
+        "title": [
+          "Closing count report: {supply.plural}"
+        ],
+        "intro": [
+          "You are checking this closing count report before it is filed."
+        ],
+        "lesson": "An honest report records what was found, follows the check steps and sticks to facts.",
+        "lines": [
+          {
+            "id": "count",
+            "text": "Closing count: 44.",
+            "fine": "The actual count is recorded."
+          },
+          {
+            "id": "log",
+            "text": "Log total: 50.",
+            "fine": "The log figure is recorded for comparison."
+          },
+          {
+            "id": "diff",
+            "text": "Difference: 6 short.",
+            "fine": "The difference is stated accurately.",
+            "bad": [
+              {
+                "id": "diff-none",
+                "level": "intermediate",
+                "needs": [
+                  "count",
+                  "log"
+                ],
+                "text": "Difference: none.",
+                "why": "The report shows 44 counted against 50 in the log. Saying there is no difference makes the record false.",
+                "principle": "int.doc-difference-misstated"
+              }
+            ]
+          },
+          {
+            "id": "second",
+            "text": "Second count by {coworker2}: 44, which matches.",
+            "fine": "The required second count is recorded.",
+            "bad": [
+              {
+                "id": "second-skip",
+                "level": "beginner",
+                "text": "Second count: skipped, since the first count was probably right.",
+                "why": "The procedure requires a second count for shortages. Skipping it breaks the procedure.",
+                "principle": "int.doc-skipped-second-count"
+              }
+            ]
+          },
+          {
+            "id": "note",
+            "text": "Note: I handed out 4 without logging them earlier today.",
+            "fine": "Honestly discloses a possible cause.",
+            "bad": [
+              {
+                "id": "note-blame",
+                "level": "advanced",
+                "text": "Note: the shortage was most likely caused by the new hire.",
+                "why": "Nothing in the report supports blaming a person. A report should state facts, not guesses about who is responsible.",
+                "principle": "int.doc-unsupported-blame"
+              }
+            ]
+          },
+          {
+            "id": "reported",
+            "text": "Reported to the manager on call at 9:15 p.m.",
+            "fine": "Records who received the report and when.",
+            "bad": [
+              {
+                "id": "reported-changed",
+                "level": "beginner",
+                "text": "Changed the count to 50 so it matches the log.",
+                "why": "Changing the count falsifies the record and hides the shortage.",
+                "principle": "int.doc-falsified-count"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Recount and on-call reporting are stated as posted procedures. No legal claims."
+      }
+    },
+    {
+      "id": "int-everyday-requests",
+      "skill": "integrity",
+      "family": "integrity.cx-everyday-requests",
+      "familyName": "Everyday requests that test integrity",
+      "framework": "ethical-dilemma",
+      "concepts": [
+        "integrity:policies-and-procedures",
+        "integrity:respect-for-property",
+        "integrity:honesty-and-fairness"
+      ],
+      "contexts": "any",
+      "requires": [
+        "supply"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}.",
+        "You are {role|a} at {workplace|a}, partway through a normal shift."
+      ],
+      "pressure": [
+        "Nobody else is around to see what you do."
+      ],
+      "detail": [
+        "It is a slow afternoon.",
+        "You have about an hour left in your shift."
+      ],
+      "issues": [
+        {
+          "id": "lookup",
+          "tier": 1,
+          "rule": "use-records-for-work-only",
+          "principle": "int.no-personal-record-lookups",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "A friend asks you to use {system|the} to look up a neighbor's contact details."
+          ],
+          "short": "the request to look up a neighbor",
+          "action": "Decline, and explain that work records are only used for work.",
+          "reason": "Looking up someone's details for personal reasons misuses access you were given for your job.",
+          "lesson": "Use access to records only for the work it was given for.",
+          "shortcut": [
+            {
+              "text": "Look it up quickly, since the friend will not share it with anyone.",
+              "why": "The access is for work only. Using it for a friend is a misuse, whatever happens next.",
+              "mis": "Access is fine to use as long as nothing bad happens."
+            }
+          ]
+        },
+        {
+          "id": "discount",
+          "tier": 2,
+          "rule": "follow-stated-policy",
+          "principle": "int.staff-discount-for-staff-only",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "A friend asks you for the staff discount, which the posted policy limits to employees."
+          ],
+          "short": "the request for the staff discount",
+          "action": "Politely explain that the staff discount is only for employees.",
+          "reason": "The policy is clear, and applying it the same way for everyone is fair. A polite explanation keeps the friendship and the rule intact.",
+          "lesson": "Apply workplace policies the same way for friends as for everyone else.",
+          "shortcut": [
+            {
+              "text": "Give the discount quietly, since it is only a few dollars.",
+              "why": "The amount does not change the policy. Bending rules for friends is unfair to others.",
+              "mis": "Small rule-breaking does not count."
+            }
+          ]
+        },
+        {
+          "id": "supplies",
+          "tier": 3,
+          "rule": "respect-property",
+          "principle": "int.supplies-stay-at-work",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "{coworker} suggests you both take home some {supply.plural}, since there are plenty."
+          ],
+          "short": "the suggestion to take supplies home",
+          "action": "Leave the supplies, and point out that they belong to the workplace.",
+          "reason": "Workplace supplies are not personal property, even when there are extras.",
+          "lesson": "Treat workplace property as belonging to the workplace, even when there is plenty.",
+          "shortcut": [
+            {
+              "text": "Take a few, since nobody will miss them.",
+              "why": "Whether anyone notices does not change who owns the supplies.",
+              "mis": "If nobody notices, it is not really taking."
+            }
+          ]
+        },
+        {
+          "id": "gift",
+          "tier": 4,
+          "rule": "follow-stated-policy",
+          "principle": "int.decline-cash-gift-per-handbook",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "A {client} offers you $20 in cash as thanks, and the handbook says staff may not accept cash gifts."
+          ],
+          "short": "the cash gift",
+          "action": "Thank the {client} warmly and politely decline the cash.",
+          "reason": "The handbook does not allow cash gifts. A warm thank-you honors the gesture while following the rule.",
+          "lesson": "Follow gift rules politely; you can accept thanks without accepting the gift.",
+          "shortcut": [
+            {
+              "text": "Accept the cash quietly so the {client} is not offended.",
+              "why": "The handbook rule applies even when declining feels awkward. A sincere thank-you avoids offense.",
+              "mis": "Refusing a gift is always rude."
+            }
+          ]
+        },
+        {
+          "id": "timesheet",
+          "tier": 5,
+          "rule": "keep-accurate-records",
+          "principle": "int.correct-own-time-record",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "Your time sheet shows 30 minutes you did not work, because you forgot to clock out yesterday."
+          ],
+          "short": "the extra 30 minutes on your time sheet",
+          "action": "Ask {lead|the} to correct your time sheet to the time you actually left.",
+          "reason": "Being paid for time you did not work is not fair to the employer. Fixing it yourself shows honesty.",
+          "lesson": "Correct records in your favor as readily as records against you.",
+          "shortcut": [
+            {
+              "text": "Leave the time sheet alone, since the clock made the mistake.",
+              "why": "You know the time is wrong. Keeping pay for time not worked is not honest, whoever made the error.",
+              "mis": "A mistake in your favor is not your responsibility."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Go along with it this once to keep things friendly.",
+        "why": "Going along with the request would only be fine if no rule or fairness issue were involved.",
+        "lesson": "Integrity means doing the right thing even when going along would be easier."
+      },
+      "generic": [
+        {
+          "text": "Ask {coworker3} what they usually do and copy that.",
+          "why": "A coworker's habit is not the rule. The stated policy and honesty decide.",
+          "mis": "Whatever coworkers do must be acceptable."
+        },
+        {
+          "text": "Say you will think about it and avoid the person for the rest of the day.",
+          "why": "Avoiding the question leaves it unresolved and is awkward for everyone. A clear, polite answer is better.",
+          "mis": "Avoiding a hard conversation makes it go away."
+        }
+      ],
+      "doc": {
+        "type": "chat",
+        "title": [
+          "Tips from {coworker3} for your first week"
+        ],
+        "intro": [
+          "{coworker3} sent you these first-week tips. One of them is bad advice."
+        ],
+        "prompt": [
+          "Which tip is the problem?",
+          "Which line gives bad advice?"
+        ],
+        "lesson": "Good workplace habits keep records accurate, property respected and rules applied fairly.",
+        "lines": [
+          {
+            "id": "hello",
+            "text": "Welcome to the team! Here are a few tips for your first week.",
+            "fine": "A friendly opening."
+          },
+          {
+            "id": "clock",
+            "text": "Clock in and out at the times you actually start and stop.",
+            "fine": "Accurate time records are basic honesty.",
+            "bad": [
+              {
+                "id": "clock-even",
+                "level": "beginner",
+                "text": "If you forget to clock out, just leave it; it all evens out.",
+                "why": "Time records must be accurate. Leaving a wrong time means being paid for time not worked.",
+                "principle": "int.doc-inaccurate-time-record"
+              }
+            ]
+          },
+          {
+            "id": "supplies",
+            "text": "Supplies stay here, even when there are extras.",
+            "fine": "Workplace property stays at work.",
+            "bad": [
+              {
+                "id": "supplies-take",
+                "level": "beginner",
+                "text": "Extra {supply.plural} are fair game to take home.",
+                "why": "Workplace supplies are not personal property, even extras.",
+                "principle": "int.doc-taking-supplies"
+              }
+            ]
+          },
+          {
+            "id": "records",
+            "text": "Only look up records you need for your own work.",
+            "fine": "Access is for work purposes only.",
+            "bad": [
+              {
+                "id": "records-curious",
+                "level": "intermediate",
+                "text": "You can look up anyone in {system|the} if you are curious, as long as you keep it to yourself.",
+                "why": "Looking at records without a work reason is a misuse of access, even if nothing is shared.",
+                "principle": "int.doc-curious-lookups"
+              }
+            ]
+          },
+          {
+            "id": "handbook",
+            "text": "The handbook in the break room says staff may not accept cash gifts.",
+            "fine": "Accurately points to the written rule."
+          },
+          {
+            "id": "gift",
+            "text": "If a {client} offers cash as thanks, thank them and politely decline.",
+            "fine": "Follows the handbook rule politely.",
+            "bad": [
+              {
+                "id": "gift-keep",
+                "level": "advanced",
+                "needs": [
+                  "handbook"
+                ],
+                "text": "If a {client} hands you cash as thanks, keep it quietly.",
+                "why": "This contradicts the handbook rule mentioned in the same message. Cash gifts must be declined.",
+                "principle": "int.doc-contradicts-gift-rule"
+              }
+            ]
+          },
+          {
+            "id": "ask",
+            "text": "Ask {lead|the} whenever a rule is unclear.",
+            "fine": "Encourages checking with the supervisor."
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Each rule (discount, gifts) is stated as workplace policy in the scenario. Issues are beginner-only because these requests would not naturally arrive together."
+      }
+    },
+    {
+      "id": "int-shared-report",
+      "skill": "integrity",
+      "family": "integrity.cx-shared-report",
+      "familyName": "Honesty and credit on a shared report",
+      "framework": "ethical-dilemma",
+      "concepts": [
+        "integrity:honesty-and-fairness",
+        "integrity:importance-of-integrity",
+        "integrity:respect-for-property"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. You and {coworker} prepared {document|a} that {lead|the} will review tomorrow.",
+        "As {role|a} at {workplace|a}, you are finishing {document|a} with {coworker} for {lead|the} to review tomorrow."
+      ],
+      "pressure": [
+        "{coworker3} says nobody checks these details anyway.",
+        "The review is first thing tomorrow morning."
+      ],
+      "detail": [
+        "The document is saved in the shared folder.",
+        "You worked on it for about a week."
+      ],
+      "tiers": {
+        "1": "Accurate information comes before everything else.",
+        "2": "Fair credit has to be set right before the review.",
+        "3": "Your own errors should be fixed and admitted.",
+        "4": "Borrowed wording needs credit.",
+        "5": "Being honest about what is unchecked comes once the content is right."
+      },
+      "issues": [
+        {
+          "id": "number",
+          "tier": 1,
+          "rule": "refuse-to-falsify",
+          "principle": "int.no-adjusted-results",
+          "fact": [
+            "{coworker2} suggests changing one number so the results look better."
+          ],
+          "short": "the suggestion to change a number",
+          "action": "Keep the real number and explain that the results must stay accurate.",
+          "brief": "keep the real number",
+          "reason": "Changed results mislead everyone who relies on the report.",
+          "lesson": "Report results as they are, even when they disappoint.",
+          "shortcut": [
+            {
+              "text": "Change the number slightly, since it is only one figure.",
+              "brief": "change the number slightly",
+              "why": "Changing even one number makes the report false.",
+              "mis": "Small changes to data are harmless."
+            }
+          ],
+          "noProceed": true
+        },
+        {
+          "id": "credit",
+          "tier": 2,
+          "rule": "give-credit",
+          "principle": "int.correct-credit",
+          "fact": [
+            "{Lead|the} has thanked only you, though {coworker} did half the work."
+          ],
+          "short": "the missing credit for {coworker}",
+          "action": "Tell {lead|the} that {coworker} did half the work.",
+          "brief": "credit {coworker} to {lead|the}",
+          "reason": "Letting someone else's work be credited to you is unfair and dishonest.",
+          "lesson": "Give credit where it is due, even when nobody would notice.",
+          "shortcut": [
+            {
+              "text": "Accept the thanks, since {coworker} did not mention it.",
+              "brief": "accept the thanks quietly",
+              "why": "Staying silent takes credit for work you did not do.",
+              "mis": "Credit belongs to whoever is thanked."
+            }
+          ],
+          "clear": [
+            "{Lead|the} already knows {coworker} did half the work."
+          ],
+          "done": "the lead already knows who did the work"
+        },
+        {
+          "id": "error",
+          "tier": 3,
+          "rule": "correct-own-error",
+          "principle": "int.fix-and-disclose-own-error",
+          "fact": [
+            "You find a mistake you made in your section."
+          ],
+          "short": "your mistake",
+          "action": "Fix the mistake and tell {coworker} what you changed.",
+          "brief": "fix it and tell {coworker}",
+          "reason": "Fixing it openly keeps the report accurate and keeps your partner informed.",
+          "lesson": "Correct your own mistakes openly.",
+          "shortcut": [
+            {
+              "text": "Fix it quietly so nobody knows there was a mistake.",
+              "brief": "fix it quietly",
+              "why": "Fixing it is good, but hiding the change leaves your partner unaware of what changed.",
+              "mis": "Mistakes are best hidden."
+            }
+          ]
+        },
+        {
+          "id": "copied",
+          "tier": 4,
+          "rule": "credit-sources",
+          "principle": "int.credit-borrowed-wording",
+          "fact": [
+            "Part of your section copies a supplier's wording without saying where it came from."
+          ],
+          "short": "the uncredited wording",
+          "action": "Credit the supplier's wording, or rewrite it in your own words.",
+          "brief": "credit or rewrite the wording",
+          "reason": "Presenting someone else's words as your own is dishonest, even in a work document.",
+          "lesson": "Credit wording you borrow.",
+          "shortcut": [
+            {
+              "text": "Leave it, since suppliers want their wording used.",
+              "brief": "leave the wording as is",
+              "why": "Even if allowed, the words should be credited, not presented as yours.",
+              "mis": "Borrowed wording does not need credit at work."
+            }
+          ],
+          "clear": [
+            "You already added a note crediting the supplier's wording."
+          ],
+          "done": "the wording is already credited"
+        },
+        {
+          "id": "unchecked",
+          "tier": 5,
+          "rule": "disclose-limits",
+          "principle": "int.disclose-unchecked-part",
+          "fact": [
+            "You will not finish checking the last section before the review."
+          ],
+          "short": "the unchecked section",
+          "action": "Tell {lead|the} which section has not been checked yet.",
+          "brief": "tell {lead|the} what is unchecked",
+          "reason": "Being upfront about what is unchecked lets the lead judge how much to rely on it.",
+          "lesson": "Be honest about the limits of your work.",
+          "shortcut": [
+            {
+              "text": "Say the whole report is checked, since it probably is fine.",
+              "brief": "say it is all checked",
+              "why": "Claiming checks you did not do is dishonest and risky.",
+              "mis": "Probably right is close enough to checked."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Send {document|the} to {lead|the} for tomorrow's review.",
+        "why": "The report is accurate, credited and checked, so it is ready to send.",
+        "lesson": "Send work forward once it is honest, accurate and fairly credited."
+      },
+      "generic": [
+        {
+          "text": "Ask {coworker3} to send it under their name instead.",
+          "why": "Changing who sends it does not fix any problem and misrepresents who did the work.",
+          "mis": "Whoever sends a document gets the credit."
+        },
+        {
+          "text": "Delay the review by saying the file was lost.",
+          "why": "Making up an excuse is dishonest.",
+          "mis": "A small lie is fine if it buys time."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to recheck every number before you send it.",
+          "why": "The report is already checked and accurate; a full recheck is unnecessary.",
+          "mis": "Nothing is honest until a supervisor checks it."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You and {coworker} are finishing {document|a} at {workplace|the} for a review tomorrow."
+        ],
+        "because": {
+          "error": [
+            "You spotted a mistake in your own section."
+          ],
+          "copied": [
+            "Some wording in your section came from a supplier."
+          ],
+          "unchecked": [
+            "You will not have time to check the last section."
+          ]
+        },
+        "steps": [
+          {
+            "id": "fix",
+            "text": "Correct your mistake",
+            "issue": "error"
+          },
+          {
+            "id": "cite",
+            "text": "Credit the supplier's wording",
+            "issue": "copied"
+          },
+          {
+            "id": "tellco",
+            "text": "Tell {coworker} what you changed",
+            "core": true
+          },
+          {
+            "id": "note",
+            "text": "Note which section is unchecked",
+            "issue": "unchecked"
+          },
+          {
+            "id": "send",
+            "text": "Send it to {lead|the}",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "fix",
+            "tellco",
+            "Tell your partner after you make the change."
+          ],
+          [
+            "cite",
+            "tellco",
+            "Your partner should know about the added credit."
+          ],
+          [
+            "tellco",
+            "send",
+            "Your partner should see the final version first."
+          ],
+          [
+            "note",
+            "send",
+            "The note goes in with the report."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Fix, credit, share changes, disclose limits, then send."
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "policyNotNeeded": true,
+        "notes": "Honesty and credit; no rules beyond general ethics are assumed."
+      }
+    }
+  ]
+}

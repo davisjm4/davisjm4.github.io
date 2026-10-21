@@ -56,6 +56,7 @@ const T = { timeout: 120000 };
 test('home: loads clean, Mixed practice is the default, Start practice is obvious', T, async () => {
   const p = await newPage();
   assert.deepEqual(p.__errors, []);
+  assert.equal(await p.$eval('#generator-warning', e => e.hidden), true, 'compositional generator initialized');
   assert.equal(await p.$eval('#opt-skill', e => e.value), 'mixed');
   assert.equal(await p.$eval('#opt-mode', e => e.value), 'mixed');
   assert.equal(await p.$eval('#opt-difficulty', e => e.value), 'mixed');
@@ -109,7 +110,11 @@ test('ordering: buttons, keyboard and pointer-drag all reorder; valid alternates
   await startWith(p, { skill: 'skill:workplace-safety', mode: 'order' });
   let c = await current(p);
   // keep going until we reach the 5-step hazard template with three valid orders
-  for (let i = 0; i < 40 && c.example.length !== 5; i++) { await p.click('#btn-check'); await p.waitForSelector('.feedback'); await next(p); c = await current(p); }
+  // keep going until a 5-step challenge with more than one valid order (authored or composed)
+  const altOf = () => p.evaluate(() => { const ch = WRG.app.state().current; const ids = ch.steps.map(s => s.id);
+    const valid = WRG.order.enumerateValid(ids, ch.key.precedence); const ex = ch.key.example.join('|');
+    const alt = valid.find(v => v.join('|') !== ex); return alt || null; });
+  for (let i = 0; i < 80 && !(c.example.length === 5 && await altOf()); i++) { await p.click('#btn-check'); await p.waitForSelector('.feedback'); await next(p); c = await current(p); }
   assert.equal(c.example.length, 5);
   const ids = () => p.$$eval('.step', els => els.map(e => e.dataset.id));
   const before = await ids();
@@ -123,8 +128,8 @@ test('ordering: buttons, keyboard and pointer-drag all reorder; valid alternates
   await p.mouse.move(box.x + 5, lastBox.y + lastBox.height - 4, { steps: 12 }); await p.mouse.up();
   const afterDrag = await ids(); assert.equal(afterDrag[4], afterKey[0], 'dragged item moved to the end');
   // now build an alternate valid order: any solution with warn anywhere before resume
-  const target = c.example.slice();
-  const alt = target.filter(x => x !== 'warn'); alt.splice(alt.indexOf('follow') + 1, 0, 'warn'); // stop, report, follow, warn, resume
+  const alt = await altOf(); // a valid order that differs from the key's example
+  assert.ok(alt && alt.join('|') !== c.example.join('|'));
   await arrange(p, alt);
   await p.click('#btn-check'); await p.waitForSelector('.feedback');
   assert.match(await p.$eval('#feedback-title', e => e.textContent), /^Correct/);
@@ -170,13 +175,15 @@ test('filters: skill, mode, difficulty and career setting are honoured in the br
   }
   await closePage(p);
 });
-test('filters: an impossible combination disables Start and explains why', T, async () => {
+test('filters: Mathematics Advanced has generated content and preserves its selected filters', T, async () => {
   const p = await newPage();
   await p.select('#opt-skill', 'skill:mathematics'); await p.select('#opt-difficulty', 'advanced');
-  assert.equal(await p.$eval('#btn-start', e => e.disabled), true);
-  assert.match(await p.$eval('#options-note', e => e.textContent), /No challenges match/);
-  await p.select('#opt-difficulty', 'mixed');
   assert.equal(await p.$eval('#btn-start', e => e.disabled), false);
+  assert.match(await p.$eval('#options-note', e => e.textContent), /distinct reasoning problems/);
+  await p.click('#btn-start'); await p.waitForSelector('#btn-check');
+  const c = await p.evaluate(() => WRG.app.state().current);
+  assert.equal(c.skill, 'mathematics');
+  assert.equal(c.difficulty, 'advanced');
   await closePage(p);
 });
 
@@ -230,7 +237,7 @@ test('persistence: reload then Continue practice resumes the same challenge stre
   const p = await newPage();
   await startWith(p, { mode: 'decision' });
   for (let i = 0; i < 3; i++) { await answer(p, i !== 1); await next(p); }
-  const expected = await p.evaluate(() => { const d = WRG.app.tracker.data; const g = WRG.generator.createSession(WRG.app.lib, { seed: d.seed, filters: d.filters }); let c; for (let i = 0; i <= d.index; i++) c = g.next(); return c.scenario + '|' + c.prompt; });
+  const expected = await p.evaluate(() => { const d = WRG.app.tracker.data; const g = WRG.app.hybrid ? WRG.selector.createSession(WRG.app.hybrid, { seed: d.seed, filters: d.filters }) : WRG.generator.createSession(WRG.app.lib, { seed: d.seed, filters: d.filters }); let c; for (let i = 0; i <= d.index; i++) c = g.next(); return c.scenario + '|' + c.prompt; });
   const shown = await p.evaluate(() => { const c = WRG.app.state().current; return c.scenario + '|' + c.prompt; });
   assert.equal(shown, expected, 'the displayed challenge is the stream position after 3 answers');
   await p.reload({ waitUntil: 'networkidle0' });

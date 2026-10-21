@@ -1,0 +1,571 @@
+{
+  "skill": "job-specific-tools-and-technologies",
+  "kits": [
+    {
+      "id": "jst-equipment-use",
+      "skill": "job-specific-tools-and-technologies",
+      "family": "job-specific-tools-and-technologies.cx-using-job-equipment",
+      "familyName": "Using the equipment the job calls for",
+      "framework": "safest-action",
+      "concepts": [
+        "job-specific-tools-and-technologies:safe-use",
+        "job-specific-tools-and-technologies:select-right-tool"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. Today's job calls for {equipment|the}.",
+        "As {role|a} at {workplace|a}, you are about to use {equipment|the} for the next job."
+      ],
+      "pressure": [
+        "{coworker3} says the job should have been done an hour ago.",
+        "{coworker3} says experienced workers skip the paperwork."
+      ],
+      "detail": [
+        "The job is routine.",
+        "You have about two hours left in your shift."
+      ],
+      "tiers": {
+        "1": "Damaged equipment comes out of use before anything else.",
+        "2": "The protective gear the instructions call for goes on before you start.",
+        "3": "Using equipment for a job it was not made for adds risk.",
+        "4": "Unfamiliar models need their instructions read first.",
+        "5": "Signing equipment out keeps track of who used what.",
+        "6": "Clean-up comes after the job, once everything else is in order."
+      },
+      "issues": [
+        {
+          "id": "damaged",
+          "tier": 1,
+          "rule": "control-hazard-first",
+          "principle": "jst.tag-out-damaged-equipment",
+          "fact": [
+            "A part of {equipment|the} is cracked, and someone has covered the crack with tape."
+          ],
+          "short": "the cracked, taped part",
+          "action": "Tag {equipment|the} out of service and report the cracked part to {lead|the}.",
+          "brief": "tag it out and report the crack",
+          "reason": "Tape hides damage without fixing it. Equipment with a cracked part can fail during use.",
+          "lesson": "Damaged equipment is taken out of service and reported, even if someone patched it.",
+          "shortcut": [
+            {
+              "text": "Use it carefully, since someone already taped the crack.",
+              "brief": "use it since it was taped",
+              "why": "Tape is not a repair. The cracked part can still fail.",
+              "mis": "A temporary patch makes equipment safe."
+            }
+          ]
+        },
+        {
+          "id": "gear",
+          "tier": 2,
+          "rule": "wear-required-gear",
+          "principle": "jst.wear-gear-instructions-require",
+          "fact": [
+            "The operating instructions call for gloves and eye protection, and you are not wearing either."
+          ],
+          "clear": [
+            "You are already wearing the gloves and eye protection the instructions call for."
+          ],
+          "done": "you are already wearing the required gear",
+          "short": "the missing gloves and eye protection",
+          "action": "Put on the gloves and eye protection the instructions call for.",
+          "brief": "put on the required gear",
+          "reason": "The instructions list protective gear because the equipment can cause injuries without it.",
+          "lesson": "Wear the protective gear the equipment instructions require.",
+          "shortcut": [
+            {
+              "text": "Skip the gear, since the job only takes a minute.",
+              "brief": "skip the gear for a quick job",
+              "why": "Injuries can happen in seconds. Quick jobs still need the gear.",
+              "mis": "Short jobs do not need protection."
+            }
+          ]
+        },
+        {
+          "id": "substitute",
+          "tier": 3,
+          "rule": "use-right-tool",
+          "principle": "jst.avoid-improvised-tool",
+          "fact": [
+            "{Equipment|the} is busy, so {coworker} suggests using a different machine that was not made for this job."
+          ],
+          "short": "the machine not made for this job",
+          "action": "Wait for {equipment|the}, or ask {lead|the} about an approved alternative.",
+          "brief": "wait or ask about an approved alternative",
+          "reason": "Equipment used for the wrong job can damage the work, the machine or you.",
+          "lesson": "Use the right tool for the job, even if it means waiting.",
+          "shortcut": [
+            {
+              "text": "Use the other machine, since it is close enough.",
+              "brief": "use the other machine",
+              "why": "Close enough is not the right tool. It may not be safe or accurate for this job.",
+              "mis": "Any similar tool will do the job."
+            }
+          ],
+          "ignore": "{Equipment|the} is busy right now, so starting the job on it is not an option yet."
+        },
+        {
+          "id": "model",
+          "tier": 4,
+          "rule": "read-instructions",
+          "principle": "jst.read-instructions-for-new-model",
+          "fact": [
+            "This is a newer model of {equipment} that you have not used before."
+          ],
+          "clear": [
+            "You used this exact model many times last month."
+          ],
+          "done": "you already know this model well",
+          "short": "the unfamiliar model",
+          "action": "Review the operating instructions for this model before using it.",
+          "brief": "review this model's instructions",
+          "reason": "Controls and limits can change between models. A quick review prevents mistakes.",
+          "lesson": "Learn a new model's instructions before using it.",
+          "shortcut": [
+            {
+              "text": "Use it like the old model, since they are probably the same.",
+              "brief": "use it like the old model",
+              "why": "Newer models often change controls or limits.",
+              "mis": "All models of a tool work the same way."
+            }
+          ]
+        },
+        {
+          "id": "signout",
+          "tier": 5,
+          "rule": "follow-tracking-procedure",
+          "principle": "jst.sign-out-equipment",
+          "fact": [
+            "The posted rule says equipment use must be signed for in {record|the}."
+          ],
+          "short": "the sign-out requirement",
+          "action": "Sign for {equipment|the} in {record|the} before you start.",
+          "brief": "sign for it before starting",
+          "reason": "Sign-out records show who used equipment and when, which matters if a problem turns up.",
+          "lesson": "Follow equipment tracking procedures every time.",
+          "shortcut": [
+            {
+              "text": "Sign for it at the end of the day with everything else.",
+              "brief": "sign at the end of the day",
+              "why": "Signing later breaks the posted rule and can leave the record wrong.",
+              "mis": "Paperwork can always wait until later."
+            }
+          ],
+          "clear": [
+            "You already signed for {equipment|the} in {record|the}."
+          ],
+          "done": "you already signed for it"
+        },
+        {
+          "id": "cleanup",
+          "tier": 6,
+          "rule": "care-for-equipment",
+          "principle": "jst.clean-and-return-equipment",
+          "noProceed": true,
+          "fact": [
+            "The posted rule says {equipment|the} must be cleaned and returned to its spot after use."
+          ],
+          "short": "the clean-and-return rule",
+          "action": "Plan to clean {equipment|the} and return it to its spot when you finish.",
+          "brief": "plan to clean and return it",
+          "reason": "Cleaning and returning equipment keeps it working and ready for the next person.",
+          "lesson": "Care for shared equipment so it is ready for the next person.",
+          "shortcut": [
+            {
+              "text": "Leave it out for whoever uses it next.",
+              "brief": "leave it out",
+              "why": "Leaving equipment dirty or out of place breaks the rule and slows the next person.",
+              "mis": "The next user can clean up."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Use {equipment|the} for the job, following its instructions.",
+        "why": "The equipment, gear and paperwork all check out, so the job can go ahead.",
+        "lesson": "When the right equipment is ready and checked, use it as instructed."
+      },
+      "generic": [
+        {
+          "text": "Ask {coworker2} to do the job instead, without telling {lead|the}.",
+          "why": "Passing the job on quietly confuses who is responsible for it.",
+          "mis": "Handing off a job avoids the problem."
+        },
+        {
+          "text": "Adjust the settings to their highest level to finish faster.",
+          "why": "Running above normal settings can damage the work or the equipment.",
+          "mis": "Higher settings always mean faster, better work."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Wait for {lead|the} to watch you use {equipment|the} the first time today.",
+          "why": "You know the model and are prepared. Waiting for supervision wastes time.",
+          "mis": "Every use needs supervision."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}, about to use {equipment|the} for a job."
+        ],
+        "because": {
+          "model": [
+            "The {equipment} here is a model you have not used before."
+          ],
+          "signout": [
+            "Equipment use must be signed for in {record|the}."
+          ]
+        },
+        "steps": [
+          {
+            "id": "sign",
+            "text": "Sign for it in the log",
+            "issue": "signout"
+          },
+          {
+            "id": "read",
+            "text": "Review the instructions for this model",
+            "issue": "model"
+          },
+          {
+            "id": "inspect",
+            "text": "Inspect it for damage",
+            "core": true
+          },
+          {
+            "id": "gear",
+            "text": "Put on the protective gear",
+            "core": true
+          },
+          {
+            "id": "use",
+            "text": "Do the job",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "read",
+            "inspect",
+            "The instructions tell you what to check on this model."
+          ],
+          [
+            "read",
+            "gear",
+            "The instructions list the gear you need."
+          ],
+          [
+            "inspect",
+            "use",
+            "Damage has to be found before use."
+          ],
+          [
+            "gear",
+            "use",
+            "Gear goes on before you start."
+          ],
+          [
+            "sign",
+            "use",
+            "The rule says to sign before using it."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Sign out, learn the model, inspect, gear up, then do the job."
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Sign-out rule stated as posted policy; gear requirement attributed to the equipment instructions."
+      }
+    },
+    {
+      "id": "jst-pick-the-tool",
+      "skill": "job-specific-tools-and-technologies",
+      "family": "job-specific-tools-and-technologies.cx-choosing-the-right-tool",
+      "familyName": "Choosing the right tool for the task",
+      "framework": "consequences",
+      "concepts": [
+        "job-specific-tools-and-technologies:select-right-tool"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}.",
+        "You are {role|a} at {workplace|a}, working on a task for {lead|the}."
+      ],
+      "detail": [
+        "It is a regular workday.",
+        "The task needs to be done by the end of the day."
+      ],
+      "issues": [
+        {
+          "id": "total",
+          "tier": 1,
+          "rule": "use-right-tool",
+          "principle": "jst.spreadsheet-for-totals",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You need to total 200 numbers from {record|the}, and you were about to add them by hand."
+          ],
+          "short": "adding 200 numbers by hand",
+          "action": "Put the numbers in a spreadsheet and let it calculate the total.",
+          "reason": "A spreadsheet is faster and far less error-prone than adding hundreds of numbers by hand.",
+          "lesson": "Choose tools that make the task faster and more accurate.",
+          "shortcut": [
+            {
+              "text": "Add them by hand twice to make sure the total is right.",
+              "why": "Doing it twice by hand doubles the time and still risks errors.",
+              "mis": "Doing it by hand is more reliable."
+            }
+          ]
+        },
+        {
+          "id": "measure",
+          "tier": 2,
+          "rule": "use-right-tool",
+          "principle": "jst.measure-instead-of-estimate",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "The job needs an exact measurement, and you were going to estimate it by eye."
+          ],
+          "short": "estimating by eye",
+          "action": "Use a proper measuring tool so the measurement is exact.",
+          "reason": "An estimate can be off enough to ruin the work. A measuring tool gives the exact number.",
+          "lesson": "Use measuring tools when a job needs exact numbers.",
+          "shortcut": [
+            {
+              "text": "Estimate carefully, since you have a good eye.",
+              "why": "Even a good eye is not exact. The job needs a real measurement.",
+              "mis": "Experience replaces measuring."
+            }
+          ]
+        },
+        {
+          "id": "calendar",
+          "tier": 3,
+          "rule": "use-right-tool",
+          "principle": "jst.shared-calendar-for-scheduling",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You need to find a meeting time for ten people, and you planned to message each one separately."
+          ],
+          "short": "scheduling ten people one message at a time",
+          "action": "Use the shared calendar to find a time that works for everyone.",
+          "reason": "The shared calendar shows everyone's availability at once and saves dozens of messages.",
+          "lesson": "Use shared tools for tasks that involve many people.",
+          "shortcut": [
+            {
+              "text": "Pick a time yourself and hope most people can come.",
+              "why": "Guessing a time may leave people out when the calendar could show what works.",
+              "mis": "Picking a time is faster than checking."
+            }
+          ]
+        },
+        {
+          "id": "template",
+          "tier": 4,
+          "rule": "use-right-tool",
+          "principle": "jst.use-existing-template",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You need to make {document|a}, and the shared folder already has an approved template for it."
+          ],
+          "short": "starting from a blank page",
+          "action": "Start from the approved template in the shared folder.",
+          "reason": "The template has the approved layout and required parts, which saves time and avoids missing pieces.",
+          "lesson": "Use approved templates instead of starting from scratch.",
+          "shortcut": [
+            {
+              "text": "Design a new layout from scratch so it looks fresh.",
+              "why": "A new layout may miss required parts and takes longer.",
+              "mis": "Original layouts are always better."
+            }
+          ]
+        },
+        {
+          "id": "scan",
+          "tier": 5,
+          "rule": "use-right-tool",
+          "principle": "jst.scanner-for-item-entry",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You need to enter 80 item codes, and {system|the} can read them with a scanner."
+          ],
+          "short": "typing 80 codes by hand",
+          "action": "Use the scanner to enter the item codes.",
+          "reason": "Scanning is faster and avoids typing errors.",
+          "lesson": "Use the technology built for the task.",
+          "shortcut": [
+            {
+              "text": "Type each code by hand, since you type quickly.",
+              "why": "Typing 80 codes is slow and invites mistakes the scanner would avoid.",
+              "mis": "Fast typing beats the right tool."
+            }
+          ]
+        },
+        {
+          "id": "label",
+          "tier": 6,
+          "rule": "use-right-tool",
+          "principle": "jst.label-printer-for-labels",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You need 50 matching labels, and you were about to write each one by hand."
+          ],
+          "short": "writing 50 labels by hand",
+          "action": "Use the label printer or a template to make all 50 labels.",
+          "reason": "A printer makes the labels faster, neater and identical.",
+          "lesson": "Use the tool built for repeated tasks.",
+          "shortcut": [
+            {
+              "text": "Write them by hand, since handwriting is more personal.",
+              "why": "Fifty handwritten labels take far longer and may be hard to read.",
+              "mis": "Doing it by hand is always better quality."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Do the task by hand the way you always have.",
+        "why": "A better tool for this task is available, so the old way wastes time.",
+        "lesson": "Picking the right tool is part of doing the job well."
+      },
+      "generic": [
+        {
+          "text": "Ask {coworker} to do it, since they like that kind of task.",
+          "why": "Handing off the task avoids learning the tool you need.",
+          "mis": "Someone else's preference is a reason to hand off work."
+        },
+        {
+          "text": "Skip the task and tell {lead|the} it was too slow to finish.",
+          "why": "The right tool makes the task manageable. Skipping it leaves the work undone.",
+          "mis": "Slow tasks can be skipped."
+        }
+      ],
+      "doc": {
+        "type": "procedure",
+        "title": [
+          "Tool tips for new staff"
+        ],
+        "intro": [
+          "You are checking these tool tips before they go into the new-staff packet."
+        ],
+        "prompt": [
+          "Which tip is the problem?",
+          "Which line gives bad advice?"
+        ],
+        "lesson": "Good tool guidance matches each task with the right, safe tool.",
+        "lines": [
+          {
+            "id": "spread",
+            "text": "Use the spreadsheet for totals and calculations.",
+            "fine": "Matches the task to the right tool.",
+            "bad": [
+              {
+                "id": "spread-hand",
+                "level": "beginner",
+                "text": "Add long lists of numbers by hand to avoid computer mistakes.",
+                "why": "Adding by hand is slower and more error-prone than a spreadsheet.",
+                "principle": "jst.doc-hand-totals"
+              }
+            ]
+          },
+          {
+            "id": "measure",
+            "text": "Measure with the proper tool; do not estimate by eye.",
+            "fine": "Exact measurement for exact jobs.",
+            "bad": [
+              {
+                "id": "measure-eye",
+                "level": "beginner",
+                "text": "Estimate measurements by eye; it is faster.",
+                "why": "Estimates can be off enough to ruin the job; measure instead.",
+                "principle": "jst.doc-estimate-by-eye"
+              }
+            ]
+          },
+          {
+            "id": "templates",
+            "text": "Start documents from the approved templates.",
+            "fine": "Uses approved tools.",
+            "bad": [
+              {
+                "id": "templates-blank",
+                "level": "beginner",
+                "text": "Start every document from a blank page.",
+                "why": "Approved templates contain required parts and save time.",
+                "principle": "jst.doc-ignores-templates"
+              }
+            ]
+          },
+          {
+            "id": "improvise",
+            "text": "If a tool is busy, wait or ask {lead|the} about an approved alternative.",
+            "fine": "Avoids improvised tools.",
+            "bad": [
+              {
+                "id": "improvise-any",
+                "level": "beginner",
+                "text": "If a tool is busy, use whatever is nearby that looks similar.",
+                "why": "Similar-looking tools may not be safe or accurate for the job.",
+                "principle": "jst.doc-improvised-tool"
+              }
+            ]
+          },
+          {
+            "id": "manual",
+            "text": "Read the instructions before using a model you do not know.",
+            "fine": "Learns new equipment safely.",
+            "bad": [
+              {
+                "id": "manual-skip",
+                "level": "intermediate",
+                "text": "All models work the same, so you can skip the instructions.",
+                "why": "Models differ in controls and limits; instructions should be read.",
+                "principle": "jst.doc-skip-instructions"
+              }
+            ]
+          },
+          {
+            "id": "damage",
+            "text": "Report damaged tools and tag them out of service.",
+            "fine": "Keeps damaged tools out of use.",
+            "bad": [
+              {
+                "id": "damage-tape",
+                "level": "advanced",
+                "needs": [
+                  "improvise"
+                ],
+                "text": "Tape over cracks on tools so they can keep being used.",
+                "why": "Taping a crack hides damage. The tool should be tagged out and reported.",
+                "principle": "jst.doc-tape-damaged-tool"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Tool-selection situations are beginner-only single decisions."
+      }
+    }
+  ]
+}

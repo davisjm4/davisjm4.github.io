@@ -1,0 +1,664 @@
+{
+  "skill": "creativity-and-innovation",
+  "kits": [
+    {
+      "id": "cre-process-idea",
+      "skill": "creativity-and-innovation",
+      "family": "creativity-and-innovation.cx-putting-an-idea-to-work",
+      "familyName": "Putting a process idea to work",
+      "framework": "consequences",
+      "concepts": [
+        "creativity-and-innovation:improve-processes",
+        "creativity-and-innovation:contribute-ideas"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. {Lead|the} asked you to find a faster way to handle {task|the}, and you have an idea.",
+        "As {role|a} at {workplace|a}, you were asked by {lead|the} to speed up {task|the}. You have come up with a new method."
+      ],
+      "pressure": [
+        "{coworker3} says you should just start the new method today and sort out details later."
+      ],
+      "detail": [
+        "The idea came to you while restocking the {area}.",
+        "You sketched the idea on a notepad during lunch."
+      ],
+      "tiers": {
+        "1": "A required quality check protects people, so it comes before speed.",
+        "2": "Knowing why the last attempt failed shapes everything else about the idea.",
+        "3": "The people whose work changes need a say before the change happens.",
+        "4": "A purchase request is stronger once the idea itself is settled."
+      },
+      "issues": [
+        {
+          "id": "quality",
+          "tier": 1,
+          "rule": "protect-requirements",
+          "principle": "cre.keep-required-checks",
+          "fact": [
+            "Your new method skips a quality check that {lead|the} requires on every {deliverable}."
+          ],
+          "clear": [
+            "{Lead|the} looked over your method and confirmed it keeps every required check."
+          ],
+          "done": "the method was already confirmed to keep the required checks",
+          "short": "the skipped quality check",
+          "action": "Rework the method so the required quality check stays in place.",
+          "brief": "rework the method to keep the quality check",
+          "reason": "A faster process that drops a required check trades reliability for speed. Keeping the check protects the people who depend on the work.",
+          "lesson": "Improve a process without removing the steps that protect quality and safety.",
+          "shortcut": [
+            {
+              "text": "Try the faster method on today's work and see whether anything goes wrong.",
+              "brief": "try it on today's work and see",
+              "why": "Testing on real work without the required check puts that work, and the people relying on it, at risk.",
+              "mis": "The only way to know if a shortcut is safe is to try it on real work."
+            }
+          ]
+        },
+        {
+          "id": "history",
+          "tier": 2,
+          "rule": "gather-missing-information",
+          "principle": "cre.learn-from-earlier-attempt",
+          "fact": [
+            "{coworker} mentions that a similar change was tried last year and dropped, but nobody remembers why."
+          ],
+          "clear": [
+            "{coworker} found the old notes: the earlier change was dropped only because a supplier closed."
+          ],
+          "done": "you already know why the earlier attempt was dropped",
+          "short": "the unexplained earlier attempt",
+          "action": "Find out why the earlier attempt was dropped before going further with yours.",
+          "brief": "find out why the earlier attempt was dropped",
+          "reason": "Learning why the last attempt was dropped lets you fix that problem in your version instead of repeating it.",
+          "lesson": "Learn from earlier attempts before pushing a similar change.",
+          "shortcut": [
+            {
+              "text": "Drop your idea, since something similar already failed once.",
+              "brief": "drop the idea because it failed before",
+              "why": "A past failure may have had a fixable cause. Dropping the idea without knowing why may waste a good improvement.",
+              "mis": "If something failed once, it will always fail."
+            }
+          ]
+        },
+        {
+          "id": "others",
+          "tier": 3,
+          "rule": "consult-affected-people",
+          "principle": "cre.involve-affected-coworkers",
+          "fact": [
+            "The change would also alter how {coworker2} prepares work for you each morning."
+          ],
+          "clear": [
+            "{coworker2} has already looked at your method and is glad to try it."
+          ],
+          "done": "{coworker2} has already agreed to the change",
+          "short": "the effect on {coworker2}'s work",
+          "action": "Talk with {coworker2} about how the change would affect that morning work.",
+          "brief": "talk it through with {coworker2}",
+          "reason": "People whose work changes can spot problems you cannot, and they deserve a say before their routine changes.",
+          "lesson": "Involve the people a change affects before you put it in place.",
+          "shortcut": [
+            {
+              "text": "Start the new method and let {coworker2} adjust as needed.",
+              "brief": "start it and let {coworker2} adjust",
+              "why": "Changing someone's routine without talking to them causes confusion and misses their useful input.",
+              "mis": "People will adapt to a better process without being asked."
+            }
+          ]
+        },
+        {
+          "id": "cost",
+          "tier": 4,
+          "rule": "seek-approval-with-case",
+          "principle": "cre.make-the-case-for-resources",
+          "fact": [
+            "The method needs a new storage rack, and purchases need approval from {lead|the}."
+          ],
+          "clear": [
+            "{Lead|the} has already approved buying the new storage rack."
+          ],
+          "done": "the purchase was already approved",
+          "short": "the unapproved purchase",
+          "action": "Give {lead|the} a short note on the rack's cost and the time it saves.",
+          "brief": "give {lead|the} a note on cost and time saved",
+          "reason": "Purchases need approval, and a clear cost-and-benefit note helps the lead decide quickly.",
+          "lesson": "Back an idea that needs resources with a short case for its cost and benefit.",
+          "shortcut": [
+            {
+              "text": "Buy the rack yourself and ask to be paid back later.",
+              "brief": "buy the rack yourself and ask for repayment",
+              "why": "Purchases need approval first. Buying it yourself skips that decision and may not be repaid.",
+              "mis": "Paying for something yourself means you do not need approval."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Put the new method into use and track how much time it saves.",
+        "why": "The lead asked for this improvement and nothing in the situation stands in the way. Tracking the time saved shows whether it works.",
+        "lesson": "Once an idea has been checked, shared and cleared, put it to work and measure the result."
+      },
+      "generic": [
+        {
+          "text": "Keep the idea to yourself until you are sure it is perfect.",
+          "why": "Waiting for a perfect idea delays the improvement the lead asked for. Ideas improve through sharing and testing.",
+          "mis": "An idea should be perfect before anyone hears it."
+        },
+        {
+          "text": "Ask {lead|the} to come up with a different idea instead.",
+          "why": "The lead asked you for an idea. Handing the task back without working through the issues wastes your idea.",
+          "mis": "Problems with an idea mean someone else should solve it."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Hold off until every coworker on every shift has reviewed the method.",
+          "why": "Nothing in the situation calls for more review, and waiting on everyone stalls an improvement that is ready.",
+          "mis": "More review always makes an idea safer."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}, and {lead|the} asked you to improve how {task|the} is done."
+        ],
+        "steps": [
+          {
+            "id": "observe",
+            "text": "Time how long the current process takes",
+            "core": true
+          },
+          {
+            "id": "history",
+            "text": "Ask why the earlier change was dropped",
+            "issue": "history"
+          },
+          {
+            "id": "consult",
+            "text": "Go over the plan with {coworker2}",
+            "issue": "others"
+          },
+          {
+            "id": "approve",
+            "text": "Get the rack purchase approved",
+            "issue": "cost"
+          },
+          {
+            "id": "trial",
+            "text": "Try the new method for one week",
+            "core": true
+          },
+          {
+            "id": "compare",
+            "text": "Compare the new times with the old ones",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "observe",
+            "trial",
+            "You need the starting time to measure any improvement."
+          ],
+          [
+            "history",
+            "trial",
+            "Fix the earlier problem before trying the method again."
+          ],
+          [
+            "consult",
+            "trial",
+            "Affected coworkers should agree before their routine changes."
+          ],
+          [
+            "approve",
+            "trial",
+            "The rack has to be approved before the method can run."
+          ],
+          [
+            "trial",
+            "compare",
+            "There is nothing to compare until the trial has run."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Measure first, clear the obstacles, test the idea, then compare results."
+      },
+      "doc": {
+        "type": "email",
+        "title": [
+          "Proposal: a faster way to handle {task|the}"
+        ],
+        "intro": [
+          "You drafted this proposal for {lead|the}. Read it once more before sending."
+        ],
+        "lesson": "A strong proposal states the problem, the evidence and the cost, and keeps the safeguards.",
+        "lines": [
+          {
+            "id": "problem",
+            "text": "Right now, {task|the} takes about 40 minutes each day.",
+            "fine": "Stating the current situation with a measurement sets up the comparison."
+          },
+          {
+            "id": "idea",
+            "text": "I suggest keeping the supplies for it together on one rack.",
+            "fine": "The idea is stated plainly."
+          },
+          {
+            "id": "trial",
+            "text": "In a one-week trial at my station, it took about 25 minutes a day.",
+            "fine": "A small trial with measured results is good evidence.",
+            "bad": [
+              {
+                "id": "trial-guess",
+                "level": "intermediate",
+                "text": "I have not tried it yet, but I am sure it will save at least an hour a day.",
+                "why": "The claim has no evidence behind it, and an hour is more than the whole task takes. Proposals should rest on measured results.",
+                "principle": "cre.doc-claim-without-evidence"
+              }
+            ]
+          },
+          {
+            "id": "check",
+            "text": "The required quality check stays in place at the end.",
+            "fine": "The proposal keeps the safeguard that protects the work.",
+            "bad": [
+              {
+                "id": "check-drop",
+                "level": "beginner",
+                "text": "To save time, we would stop doing the quality check at the end.",
+                "why": "Dropping a required check trades quality for speed. An improvement should keep the safeguards.",
+                "principle": "cre.doc-drops-safeguard"
+              }
+            ]
+          },
+          {
+            "id": "cost",
+            "text": "The rack costs about $60, which I would like your approval to buy.",
+            "fine": "The cost is stated and approval is requested before buying.",
+            "bad": [
+              {
+                "id": "cost-bought",
+                "level": "beginner",
+                "text": "I already bought the rack with the store account, so it is ready to go.",
+                "why": "Purchases need approval first. Spending without it bypasses the person responsible for the budget.",
+                "principle": "cre.doc-spent-without-approval"
+              }
+            ]
+          },
+          {
+            "id": "team",
+            "text": "{coworker2}, whose morning work this changes, helped plan it and supports it.",
+            "fine": "The proposal shows the affected coworker was involved.",
+            "bad": [
+              {
+                "id": "team-ignore",
+                "level": "advanced",
+                "needs": [
+                  "idea"
+                ],
+                "text": "{coworker2} will have to reorganize the morning prep, but I have not mentioned it yet.",
+                "why": "The change alters a coworker's routine without involving them. That person should be consulted before the proposal goes forward.",
+                "principle": "cre.doc-affected-person-not-consulted"
+              }
+            ]
+          },
+          {
+            "id": "ask",
+            "text": "Could we talk about it this week?",
+            "fine": "A clear, polite request for a next step."
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Approval requirement for purchases is stated in the scenario. Tiers: required check > learning from history > consulting affected people > purchase case."
+      },
+      "requires": [
+        "area"
+      ]
+    },
+    {
+      "id": "cre-team-brainstorm",
+      "skill": "creativity-and-innovation",
+      "family": "creativity-and-innovation.cx-team-brainstorm",
+      "familyName": "Contributing in a team brainstorm",
+      "framework": "competing-priorities",
+      "concepts": [
+        "creativity-and-innovation:contribute-ideas",
+        "creativity-and-innovation:value-of-creativity",
+        "creativity-and-innovation:allocate-resources"
+      ],
+      "contexts": "any",
+      "requires": [
+        "area"
+      ],
+      "setup": [
+        "Your team at {workplace|the} is meeting to brainstorm ways to reduce crowding in the {area}.",
+        "You are {role|a} at {workplace|a}, in a team meeting about how to make the {area} less crowded."
+      ],
+      "pressure": [
+        "{coworker3} says the meeting has to end in five minutes.",
+        "{coworker3} keeps saying the team should just pick something."
+      ],
+      "detail": [
+        "The meeting is being held in the break room.",
+        "Someone brought coffee for the group."
+      ],
+      "tiers": {
+        "1": "An idea that blocks an emergency exit cannot go forward in any form.",
+        "2": "The stated budget limit decides which ideas are even possible.",
+        "3": "Hearing every voice comes before choosing among ideas.",
+        "4": "Comparing options leads to a better choice than taking the first one.",
+        "5": "Giving credit matters, but it can wait until the ideas are settled."
+      },
+      "issues": [
+        {
+          "id": "exit",
+          "tier": 1,
+          "rule": "protect-safety",
+          "principle": "cre.reject-idea-blocking-exit",
+          "fact": [
+            "The most popular suggestion so far would put shelving in front of the emergency exit."
+          ],
+          "short": "the blocked exit",
+          "action": "Point out that the shelving would block the exit and suggest moving it elsewhere.",
+          "brief": "point out the blocked exit and suggest another spot",
+          "reason": "An emergency exit must stay clear. Raising the problem while suggesting an alternative keeps the idea alive without the danger.",
+          "lesson": "Creative ideas still have to keep people safe; adapt the idea rather than accept the risk.",
+          "shortcut": [
+            {
+              "text": "Go along with the shelving idea, since most of the team likes it.",
+              "brief": "go along with the popular shelving idea",
+              "why": "Popularity does not make a blocked exit safe. Someone needs to raise the problem now.",
+              "mis": "If most people like an idea, it must be fine."
+            }
+          ]
+        },
+        {
+          "id": "budget",
+          "tier": 2,
+          "rule": "work-within-constraints",
+          "principle": "cre.ideas-within-stated-budget",
+          "fact": [
+            "{Lead|the} has said the fix must use only furniture and supplies already on hand."
+          ],
+          "short": "the no-spending limit",
+          "action": "Suggest ideas that rearrange or reuse what the team already has.",
+          "brief": "suggest ideas that reuse what you already have",
+          "reason": "The lead set a clear limit. Ideas that fit it can actually happen, and creativity with existing resources is still creativity.",
+          "lesson": "Work within stated limits; constraints are a prompt for creative reuse.",
+          "shortcut": [
+            {
+              "text": "Push for new shelving units, since buying them would work best.",
+              "brief": "push for buying new shelving",
+              "why": "The lead ruled out new purchases. An idea that ignores the limit cannot be used.",
+              "mis": "The best idea is the one with the best result, whatever the limits."
+            }
+          ]
+        },
+        {
+          "id": "quiet",
+          "tier": 3,
+          "rule": "include-every-voice",
+          "principle": "cre.invite-quiet-contributor",
+          "fact": [
+            "{coworker} works in the {area} every day but has not had a chance to speak."
+          ],
+          "clear": [
+            "{coworker} has already shared an idea, and the group wrote it on the board."
+          ],
+          "done": "{coworker} has already had a turn to share",
+          "short": "the unheard coworker",
+          "action": "Invite {coworker} to share ideas before the group moves on.",
+          "brief": "invite {coworker} to share",
+          "reason": "The person who works in the space daily may know what causes the crowding. Inviting that input makes the solution better.",
+          "lesson": "Draw out ideas from everyone, especially the people closest to the problem.",
+          "shortcut": [
+            {
+              "text": "Assume {coworker} would have spoken up if there were a good idea.",
+              "brief": "assume {coworker} has nothing to add",
+              "why": "People stay quiet for many reasons. Missing the daily user's view can mean missing the real fix.",
+              "mis": "Quiet people have nothing to contribute."
+            }
+          ]
+        },
+        {
+          "id": "first",
+          "tier": 4,
+          "rule": "compare-alternatives",
+          "principle": "cre.compare-before-choosing",
+          "fact": [
+            "The group is about to adopt the first idea mentioned without hearing any others."
+          ],
+          "clear": [
+            "The group has already listed and compared five ideas on the board."
+          ],
+          "done": "the group already compared several ideas",
+          "short": "the rush to the first idea",
+          "action": "Suggest listing a few more ideas and comparing them before choosing.",
+          "brief": "suggest comparing a few more ideas",
+          "reason": "The first idea is rarely the best one. A few minutes of comparison often turns up a simpler or cheaper option.",
+          "lesson": "Generate several options and compare them before committing to one.",
+          "shortcut": [
+            {
+              "text": "Agree to the first idea so the meeting can end on time.",
+              "brief": "agree to the first idea to finish early",
+              "why": "Ending on time is nice, but choosing without comparing may lock in a weak solution.",
+              "mis": "The first workable idea is good enough."
+            }
+          ]
+        },
+        {
+          "id": "credit",
+          "tier": 5,
+          "rule": "give-credit",
+          "principle": "cre.credit-earlier-suggestion",
+          "fact": [
+            "The idea you plan to share builds on a suggestion {coworker2} made last month."
+          ],
+          "short": "credit for {coworker2}'s earlier suggestion",
+          "action": "Share your idea and mention that it builds on {coworker2}'s earlier suggestion.",
+          "brief": "share it and credit {coworker2}",
+          "reason": "Naming where an idea came from is honest and encourages others to keep contributing.",
+          "lesson": "Give credit for the ideas you build on; it keeps people contributing.",
+          "shortcut": [
+            {
+              "text": "Present the idea as entirely your own to make a strong impression.",
+              "brief": "present the idea as entirely yours",
+              "why": "Taking credit for a coworker's thinking is unfair and discourages future ideas.",
+              "mis": "Getting noticed matters more than giving credit."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Help the group choose an idea and agree on who will try it first.",
+        "why": "The ideas have been heard and compared, so the next useful step is a decision and a plan to act on it.",
+        "lesson": "Once ideas are heard and compared, move the group to a decision and next steps."
+      },
+      "generic": [
+        {
+          "text": "Stay quiet so the meeting does not get any longer.",
+          "why": "Holding back your input deprives the team of ideas and leaves problems unraised.",
+          "mis": "Speaking up only slows a meeting down."
+        },
+        {
+          "text": "Criticize each idea as soon as it is suggested.",
+          "why": "Shooting down ideas immediately makes people stop sharing. Evaluation works better after ideas are collected.",
+          "mis": "Finding flaws early saves time."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Suggest scheduling another meeting so everyone can think longer.",
+          "why": "The ideas are already heard and compared. Another meeting delays a decision the group is ready to make.",
+          "mis": "More time always produces better ideas."
+        }
+      ],
+      "process": {
+        "setup": [
+          "Your team at {workplace|the} is running a short brainstorm about crowding in the {area}."
+        ],
+        "steps": [
+          {
+            "id": "define",
+            "text": "Agree on the problem the group is solving",
+            "core": true
+          },
+          {
+            "id": "limits",
+            "text": "Review the no-spending limit",
+            "issue": "budget"
+          },
+          {
+            "id": "collect",
+            "text": "Collect ideas from every person",
+            "core": true
+          },
+          {
+            "id": "invite",
+            "text": "Ask {coworker} for ideas",
+            "issue": "quiet"
+          },
+          {
+            "id": "choose",
+            "text": "Compare the ideas and choose one",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "define",
+            "collect",
+            "People need to know the problem before suggesting fixes."
+          ],
+          [
+            "limits",
+            "collect",
+            "Knowing the limits keeps ideas realistic."
+          ],
+          [
+            "define",
+            "limits",
+            "The limit applies to a defined problem."
+          ],
+          [
+            "invite",
+            "choose",
+            "All ideas, including the quiet person's, come in before choosing."
+          ],
+          [
+            "define",
+            "invite",
+            "The invitation comes once the problem is clear."
+          ],
+          [
+            "collect",
+            "choose",
+            "You can only compare ideas once they are collected."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Define the problem and the limits, gather ideas from everyone, then compare and choose."
+      },
+      "doc": {
+        "type": "note",
+        "title": [
+          "Brainstorm notes: crowding in the {area}"
+        ],
+        "intro": [
+          "You took these notes at the team brainstorm. Check them before sharing with the group."
+        ],
+        "lesson": "Brainstorm notes should capture every idea fairly and record decisions that respect the limits.",
+        "lines": [
+          {
+            "id": "goal",
+            "text": "Goal: reduce crowding in the {area} during busy times.",
+            "fine": "A clear statement of the problem."
+          },
+          {
+            "id": "limit",
+            "text": "Limit: use only furniture and supplies already on hand.",
+            "fine": "The stated constraint is recorded."
+          },
+          {
+            "id": "ideas",
+            "text": "Ideas: stagger break times, move the supply cart, add a second entry lane.",
+            "fine": "Several options are recorded for comparison."
+          },
+          {
+            "id": "voices",
+            "text": "Ideas came from all five people at the meeting.",
+            "fine": "The notes show every voice was included.",
+            "bad": [
+              {
+                "id": "voices-skip",
+                "level": "intermediate",
+                "text": "Ideas came from the three most experienced people; the others did not need to add anything.",
+                "why": "Leaving out newer people's ideas wastes their view of the problem and discourages participation.",
+                "principle": "cre.doc-excluded-voices"
+              }
+            ]
+          },
+          {
+            "id": "exit",
+            "text": "Any change must keep the emergency exit clear.",
+            "fine": "Safety requirement recorded.",
+            "bad": [
+              {
+                "id": "exit-block",
+                "level": "beginner",
+                "text": "Decision: stack the extra boxes in front of the side exit door.",
+                "why": "Blocking an exit creates a serious danger in an emergency. No space-saving idea is worth that.",
+                "principle": "cre.doc-blocks-exit"
+              }
+            ]
+          },
+          {
+            "id": "decision",
+            "text": "Decision: stagger break times for two weeks, then review.",
+            "fine": "A decision with a trial period and review.",
+            "bad": [
+              {
+                "id": "decision-buy",
+                "level": "advanced",
+                "needs": [
+                  "limit"
+                ],
+                "text": "Decision: order two new storage cabinets this week.",
+                "why": "The notes already say only items on hand may be used. Ordering cabinets breaks the stated limit.",
+                "principle": "cre.doc-decision-breaks-limit"
+              }
+            ]
+          },
+          {
+            "id": "credit",
+            "text": "The staggered-break idea was first raised by {coworker2} last month.",
+            "fine": "Credit is given for the original idea.",
+            "bad": [
+              {
+                "id": "credit-steal",
+                "level": "beginner",
+                "text": "The staggered-break idea is credited only to the note taker.",
+                "why": "The idea came from a coworker. Notes should credit people fairly.",
+                "principle": "cre.doc-wrong-credit"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Budget limit stated by the lead; exit-safety tier is general practice, stated without legal claims."
+      }
+    }
+  ]
+}

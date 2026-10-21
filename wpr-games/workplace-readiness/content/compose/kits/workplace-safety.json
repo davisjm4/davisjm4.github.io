@@ -1,0 +1,767 @@
+{
+  "skill": "workplace-safety",
+  "kits": [
+    {
+      "id": "saf-powered-equipment",
+      "skill": "workplace-safety",
+      "family": "workplace-safety.cx-powered-equipment",
+      "familyName": "Before running powered equipment",
+      "framework": "safest-action",
+      "concepts": [
+        "workplace-safety:safety-guidelines",
+        "workplace-safety:identify-hazards"
+      ],
+      "contexts": "any",
+      "requires": [
+        "powered",
+        "area"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}. {Lead|the} asks you to use {powered|the} for the next job.",
+        "You are {role|a} at {workplace|a}, and your next job needs {powered|the}."
+      ],
+      "pressure": [
+        "{coworker} reminds you that {client.plural} are waiting on this job.",
+        "{coworker} says the job needs to be finished within the hour."
+      ],
+      "detail": [
+        "The {area} was swept at the start of the shift.",
+        "Most of the team is on break."
+      ],
+      "tiers": {
+        "1": "Anything that could shock or injure someone comes before other work.",
+        "2": "The posted rule has to be met before you operate the equipment.",
+        "3": "Running at a wrong setting can ruin the job or the equipment.",
+        "4": "Settling who uses shared equipment comes before workspace improvements."
+      },
+      "issues": [
+        {
+          "id": "cord",
+          "tier": 1,
+          "rule": "control-hazard-first",
+          "principle": "saf.damaged-electrical-equipment",
+          "fact": [
+            "The power cord on {powered|the} is frayed, and bare wire shows near the plug.",
+            "You notice bare wire showing through a frayed spot on the cord of {powered|the}."
+          ],
+          "clear": [
+            "{Lead|the} replaced the frayed cord on {powered|the} this morning and tested it."
+          ],
+          "done": "the cord was already replaced and tested",
+          "short": "the damaged cord",
+          "action": "Keep {powered|the} switched off, tag it out of service, and report the cord to {lead|the}.",
+          "reason": "Exposed wire can shock or burn someone. Taking the equipment out of service and reporting it controls the hazard before anyone uses it.",
+          "lesson": "Damaged electrical equipment comes out of service and gets reported before anyone uses it.",
+          "shortcut": [
+            {
+              "text": "Wrap the frayed spot with tape and use {powered|the} carefully for this one job.",
+              "why": "Tape is not an approved repair, and the damaged cord can still shock someone. Equipment with a damaged cord should not be used.",
+              "mis": "A quick patch makes damaged equipment safe enough for one job.",
+              "brief": "tape the frayed cord and use it carefully"
+            },
+            {
+              "text": "Use {powered|the} for now and mention the cord at the end of your shift.",
+              "why": "Using it now exposes you to the hazard, and waiting to report leaves it in use for others.",
+              "mis": "A hazard can wait to be reported if the job is urgent."
+            }
+          ],
+          "brief": "tag out {powered|the} and report the cord"
+        },
+        {
+          "id": "training",
+          "tier": 2,
+          "rule": "meet-stated-requirement",
+          "principle": "saf.trained-operators-only",
+          "fact": [
+            "You have not been trained on {powered|the}, and a posted rule says only trained staff may run it."
+          ],
+          "clear": [
+            "You completed the required training on {powered|the} last week."
+          ],
+          "done": "you have already completed the training",
+          "short": "the missing training",
+          "action": "Ask {lead|the} for training, or for a trained coworker to run the job, before starting.",
+          "reason": "The posted rule limits the equipment to trained staff. Getting training or a trained operator keeps you within the rule and avoids injuries from unfamiliar equipment.",
+          "lesson": "Operate equipment only after the training the workplace requires.",
+          "shortcut": [
+            {
+              "text": "Watch a short online video about {powered|the} and then run it yourself.",
+              "why": "A video is not the training the posted rule requires, and unfamiliar equipment is a common cause of injuries.",
+              "mis": "Watching someone else use equipment is the same as being trained.",
+              "brief": "watch a video and run it yourself"
+            }
+          ],
+          "brief": "ask {lead|the} for training or a trained operator"
+        },
+        {
+          "id": "setting",
+          "tier": 3,
+          "rule": "verify-before-acting",
+          "principle": "saf.confirm-conflicting-setting",
+          "fact": [
+            "The job sheet lists a setting higher than the maximum printed on {powered|the}."
+          ],
+          "clear": [
+            "{Lead|the} rechecked the job sheet setting this morning and confirmed it is within the limit."
+          ],
+          "done": "the setting was already confirmed",
+          "short": "the conflicting setting",
+          "action": "Check with {lead|the} which setting is correct before you begin.",
+          "reason": "The two numbers conflict, and running above the printed limit could damage the equipment or the work. Confirming the right setting first prevents that.",
+          "lesson": "When instructions and equipment limits disagree, confirm before you run anything.",
+          "shortcut": [
+            {
+              "text": "Use the higher setting from the job sheet, since it is the newest instruction.",
+              "why": "The equipment's printed maximum is a limit, not a suggestion. Going over it can cause damage or injury.",
+              "mis": "The newest instruction always overrides equipment limits.",
+              "brief": "use the higher job-sheet setting"
+            }
+          ],
+          "brief": "confirm the correct setting with {lead|the}"
+        },
+        {
+          "id": "shared",
+          "tier": 4,
+          "rule": "coordinate-shared-resource",
+          "principle": "saf.coordinate-shared-equipment",
+          "fact": [
+            "{coworker} also needs {powered|the} this afternoon for a rush job."
+          ],
+          "short": "the scheduling conflict with {coworker}",
+          "action": "Talk with {coworker} and {lead|the} to agree on who uses {powered|the} first.",
+          "reason": "Two people need the same equipment. Agreeing on the order with the lead avoids a rushed handoff and keeps the most urgent job moving.",
+          "lesson": "Settle conflicts over shared equipment by agreeing on the order, not by racing for it.",
+          "shortcut": [
+            {
+              "text": "Start using {powered|the} right away so you get it before {coworker} does.",
+              "why": "Racing for shared equipment leads to rushed work and friction, and it may delay the more urgent job.",
+              "mis": "Whoever starts first should get shared equipment.",
+              "brief": "start right away to beat {coworker} to it"
+            }
+          ],
+          "brief": "agree with {coworker} on who goes",
+          "clear": [
+            "{coworker} already agreed that you can use {powered|the} first today."
+          ],
+          "done": "the order of use was already agreed"
+        },
+        {
+          "id": "layout",
+          "tier": 5,
+          "rule": "suggest-improvement-after",
+          "principle": "saf.suggest-safer-layout",
+          "fact": [
+            "Getting ready for {powered|the} takes extra trips, because its supplies are stored across the {area}."
+          ],
+          "short": "the awkward supply layout",
+          "action": "Finish the job as usual, then suggest storing the supplies closer to {powered|the}.",
+          "reason": "The layout wastes time but does not stop safe work today. Suggesting the change afterward improves things without disrupting the job.",
+          "lesson": "Note small improvements and suggest them once the current work is done.",
+          "shortcut": [
+            {
+              "text": "Rearrange the whole {area} yourself before starting the job.",
+              "why": "Moving everything without asking delays today's job and may disrupt how others work. Suggest the change instead.",
+              "mis": "Fixing the workspace on your own is better than suggesting it.",
+              "brief": "rearrange the whole {area} yourself"
+            }
+          ],
+          "brief": "finish the job and suggest moving the supplies",
+          "noProceed": true
+        }
+      ],
+      "proceed": {
+        "text": "Start the job with {powered|the}, following the usual operating steps.",
+        "why": "Nothing in the situation blocks the work, and the required conditions are met. Starting now keeps the job on schedule.",
+        "lesson": "When the equipment, training and instructions all check out, go ahead and work as trained."
+      },
+      "generic": [
+        {
+          "text": "Leave the job for the next shift without telling {lead|the} why.",
+          "why": "Leaving work undone without an explanation hands the job, and any problem, to someone who does not know about it.",
+          "mis": "Work you are unsure about can be left for someone else."
+        },
+        {
+          "text": "Skip the pre-use check, since {powered|the} worked fine yesterday.",
+          "why": "Damage can happen at any time. The pre-use check is how you catch it before someone is hurt.",
+          "mis": "Equipment that worked yesterday is safe today."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Wait for {lead|the} to inspect {powered|the} personally before you touch it.",
+          "why": "Nothing in the situation calls for another inspection, so waiting only holds up work that is ready to go.",
+          "mis": "Waiting for a supervisor is always the safest choice."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}. {Lead|the} asks you to complete a job on {powered|the} today."
+        ],
+        "steps": [
+          {
+            "id": "inspect",
+            "text": "Check {powered|the} for damage"
+          },
+          {
+            "id": "train",
+            "text": "Complete training on {powered|the}",
+            "issue": "training"
+          },
+          {
+            "id": "confirm",
+            "text": "Confirm the correct setting with {lead|the}",
+            "issue": "setting"
+          },
+          {
+            "id": "agree",
+            "text": "Agree with {coworker} on who goes first",
+            "issue": "shared"
+          },
+          {
+            "id": "run",
+            "text": "Run the job",
+            "core": true
+          },
+          {
+            "id": "clean",
+            "text": "Switch off and clean up the work area",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "train",
+            "inspect",
+            "Training is where you learn what a proper check looks like."
+          ],
+          [
+            "inspect",
+            "run",
+            "Damage has to be found before the equipment is used, not after."
+          ],
+          [
+            "train",
+            "run",
+            "The posted rule requires training before anyone operates it."
+          ],
+          [
+            "confirm",
+            "run",
+            "The setting must be settled before the job starts."
+          ],
+          [
+            "agree",
+            "run",
+            "You need to know it is your turn before starting."
+          ],
+          [
+            "run",
+            "clean",
+            "Clean-up happens once the equipment is switched off after the job."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Get trained, checked and cleared before running equipment, and clean up after it is switched off."
+      },
+      "doc": {
+        "type": "procedure",
+        "title": [
+          "Posted rules for {powered|the}"
+        ],
+        "intro": [
+          "{Lead|the} asks you to review the posted rules for {powered|the} before they are reprinted."
+        ],
+        "lesson": "Equipment rules work only when every line keeps people away from live hazards.",
+        "lines": [
+          {
+            "id": "who",
+            "text": "Only staff who have been trained on {powered|the} may operate it.",
+            "fine": "Limiting equipment to trained staff is a standard safety rule.",
+            "bad": [
+              {
+                "id": "who-anyone",
+                "level": "intermediate",
+                "text": "Anyone who has seen {powered|the} used may operate it.",
+                "why": "Watching is not training; only trained staff should operate it.",
+                "principle": "saf.doc-untrained-operators"
+              }
+            ]
+          },
+          {
+            "id": "check",
+            "text": "Before each use, check the cord, plug and switches for damage.",
+            "fine": "A check before each use catches damage before it hurts someone.",
+            "bad": [
+              {
+                "id": "check-skip",
+                "level": "beginner",
+                "text": "Skip the damage check if {powered|the} was already used earlier today.",
+                "why": "Damage can happen during any use, so the check belongs before every use.",
+                "principle": "saf.doc-precheck-every-use"
+              }
+            ]
+          },
+          {
+            "id": "damage",
+            "text": "If you find damage, switch it off, tag it out of service, and tell {lead|the}.",
+            "fine": "Tagging out and reporting keeps damaged equipment from being used.",
+            "bad": [
+              {
+                "id": "damage-finish",
+                "level": "beginner",
+                "text": "If you find damage, finish your current job first, then tell {lead|the}.",
+                "why": "Using equipment you know is damaged puts you at risk. It comes out of service as soon as damage is found.",
+                "principle": "saf.doc-stop-on-damage"
+              }
+            ]
+          },
+          {
+            "id": "hands",
+            "text": "Keep hands clear of moving parts while it is running.",
+            "fine": "Distance from moving parts prevents caught or cut hands.",
+            "bad": [
+              {
+                "id": "hands-jam",
+                "level": "beginner",
+                "text": "Reach in to clear small jams while it is running to save time.",
+                "why": "Reaching into running equipment is how hands get caught. It must be stopped and unplugged first.",
+                "principle": "saf.doc-no-reaching-in"
+              }
+            ]
+          },
+          {
+            "id": "unplug",
+            "text": "Unplug it before cleaning it or clearing a jam.",
+            "fine": "Unplugging removes power completely while hands are near the parts.",
+            "bad": [
+              {
+                "id": "unplug-switch",
+                "level": "intermediate",
+                "text": "Turning the switch off is enough before cleaning; unplugging is optional.",
+                "why": "A switch can be bumped back on. Unplugging removes power completely while your hands are near the parts.",
+                "principle": "saf.doc-unplug-not-switch"
+              }
+            ]
+          },
+          {
+            "id": "spark",
+            "text": "Report any shock, spark or burning smell to {lead|the} right away.",
+            "fine": "Sparks and burning smells signal a fault that needs action now.",
+            "bad": [
+              {
+                "id": "spark-log",
+                "level": "intermediate",
+                "text": "Write down any sparks or burning smells in the log at the end of the shift.",
+                "why": "A spark or burning smell is an electrical fault happening now. Waiting until the end of the shift leaves it in use.",
+                "principle": "saf.doc-report-fault-now"
+              }
+            ]
+          },
+          {
+            "id": "new",
+            "text": "New staff watch a trained coworker complete a job before their own training session.",
+            "fine": "Watching first is a reasonable part of training, as long as the training itself is completed.",
+            "bad": [
+              {
+                "id": "new-alone",
+                "level": "advanced",
+                "needs": [
+                  "who"
+                ],
+                "text": "New staff may run it on their own after watching a coworker complete one job.",
+                "why": "This contradicts the rule that only trained staff may operate it. Watching one job is not training.",
+                "principle": "saf.doc-contradicts-training-rule"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario",
+          "safe-procedures-only"
+        ],
+        "notes": "Training requirement is stated as a posted workplace rule. Actions follow common tag-out-and-report practice; no regulatory claims."
+      }
+    },
+    {
+      "id": "saf-chemical-task",
+      "skill": "workplace-safety",
+      "family": "workplace-safety.cx-chemical-cleaning",
+      "familyName": "Cleaning with a workplace chemical",
+      "framework": "safest-action",
+      "concepts": [
+        "workplace-safety:safety-data-sheets",
+        "workplace-safety:ppe",
+        "workplace-safety:emergency-protocols",
+        "workplace-safety:universal-precautions"
+      ],
+      "contexts": "any",
+      "requires": [
+        "chemical",
+        "ppe",
+        "area"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}. {Lead|the} asks you to clean the {area} with {chemical|the}.",
+        "As {role|a} at {workplace|a}, your next task is cleaning the {area} with {chemical|the}."
+      ],
+      "pressure": [
+        "{coworker3} says the area has to be ready in ten minutes.",
+        "{coworker3} says everyone skips the gear for quick jobs."
+      ],
+      "detail": [
+        "The {area} is empty right now.",
+        "The cleaning cart is already stocked with rags."
+      ],
+      "tiers": {
+        "1": "Someone who has been exposed to a chemical needs help before anything else.",
+        "2": "The protective gear the label calls for goes on before the chemical is opened.",
+        "3": "You cannot use a product safely if you do not know what it is.",
+        "4": "Read the safety information for an unfamiliar chemical before using it.",
+        "5": "Running low on supplies can be reported once the job is done safely."
+      },
+      "issues": [
+        {
+          "id": "splash",
+          "tier": 1,
+          "rule": "emergency-response",
+          "principle": "saf.eyewash-and-alert",
+          "fact": [
+            "{coworker} just splashed {chemical|the} near the eyes and is rubbing them."
+          ],
+          "short": "{coworker}'s chemical splash",
+          "action": "Get {coworker} to the eyewash station and alert {lead|the} right away.",
+          "brief": "get {coworker} to the eyewash and alert {lead|the}",
+          "reason": "Chemical in the eyes needs flushing immediately. Getting help fast limits the injury.",
+          "lesson": "When someone is exposed to a chemical, start first aid and get help immediately.",
+          "shortcut": [
+            {
+              "text": "Hand {coworker} a dry towel and finish cleaning before checking in.",
+              "brief": "hand over a towel and keep cleaning",
+              "why": "A towel does not flush the chemical out, and waiting lets the injury get worse.",
+              "mis": "A minor splash can wait until the job is done."
+            }
+          ]
+        },
+        {
+          "id": "gear",
+          "tier": 2,
+          "rule": "wear-required-gear",
+          "principle": "saf.ppe-before-chemical",
+          "fact": [
+            "The label on {chemical|the} calls for {ppe}, and the supply bin for them is empty."
+          ],
+          "clear": [
+            "{Lead|the} restocked {ppe} in the supply bin this morning, and you have them on."
+          ],
+          "done": "you already have the required gear on",
+          "short": "the missing protective gear",
+          "action": "Get {ppe} from {lead|the} or the supply room before opening it.",
+          "brief": "get the protective gear",
+          "reason": "The label lists the gear because the chemical can harm skin or eyes. The gear goes on before the bottle is opened.",
+          "lesson": "Wear the protective gear a chemical's label calls for before you use it.",
+          "shortcut": [
+            {
+              "text": "Work quickly without the gear so your contact time is short.",
+              "brief": "work quickly without gear",
+              "why": "A short contact time does not prevent burns or splashes. The gear is required.",
+              "mis": "Working fast makes protection unnecessary."
+            }
+          ]
+        },
+        {
+          "id": "unlabeled",
+          "tier": 3,
+          "rule": "identify-before-use",
+          "principle": "saf.no-unlabeled-chemicals",
+          "fact": [
+            "The spray bottle you were handed has no label, and {coworker2} thinks it holds {chemical|the}."
+          ],
+          "clear": [
+            "{Lead|the} labeled the bottle and confirmed it holds {chemical|the}."
+          ],
+          "done": "the bottle was already labeled and confirmed",
+          "short": "the unlabeled bottle",
+          "action": "Set the unlabeled bottle aside and ask {lead|the} to identify it.",
+          "brief": "set it aside and have it identified",
+          "reason": "Without a label, you cannot know the contents or the right precautions. Using it on a guess risks the wrong protection or a dangerous mix.",
+          "lesson": "Never use a chemical from an unlabeled container.",
+          "shortcut": [
+            {
+              "text": "Smell the bottle to check whether it really is {chemical|the}.",
+              "brief": "smell it to check",
+              "why": "Smelling an unknown chemical can harm you and does not reliably identify it.",
+              "mis": "You can identify chemicals by their smell."
+            }
+          ]
+        },
+        {
+          "id": "sds",
+          "tier": 4,
+          "rule": "read-safety-information",
+          "principle": "saf.read-sds-before-first-use",
+          "fact": [
+            "You have never used {chemical|the} before and do not know its hazards."
+          ],
+          "clear": [
+            "You reviewed the safety data sheet for {chemical|the} during training last week."
+          ],
+          "done": "you already reviewed the safety data sheet",
+          "short": "not knowing the chemical's hazards",
+          "action": "Read the safety data sheet for {chemical|the} before you start.",
+          "brief": "read the safety data sheet",
+          "reason": "The safety data sheet explains the hazards, the protection needed and what to do in an emergency.",
+          "lesson": "Read the safety data sheet before using an unfamiliar chemical.",
+          "shortcut": [
+            {
+              "text": "Ask {coworker3} how they use it and skip the safety data sheet.",
+              "brief": "ask a coworker instead",
+              "why": "A coworker's habit may skip precautions. The safety data sheet is the reliable source.",
+              "mis": "Experience replaces the safety data sheet."
+            }
+          ]
+        },
+        {
+          "id": "low",
+          "tier": 5,
+          "rule": "report-after",
+          "principle": "saf.report-low-supply",
+          "noProceed": true,
+          "fact": [
+            "The bottle of {chemical|the} is almost empty, and there is no backup on the shelf."
+          ],
+          "short": "the nearly empty bottle",
+          "action": "Finish the job safely, then tell {lead|the} the chemical needs restocking.",
+          "brief": "finish safely, then report the low stock",
+          "reason": "Reporting low stock keeps the next person from running out. It does not need to interrupt safe work.",
+          "lesson": "Report low safety and cleaning supplies so they get restocked.",
+          "shortcut": [
+            {
+              "text": "Water down what is left so it lasts longer.",
+              "brief": "water it down to stretch it",
+              "why": "Changing the strength can make the chemical ineffective or unsafe; the label sets the mix.",
+              "mis": "Diluting a cleaner just makes it last longer."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Put on {ppe} and clean following the label directions.",
+        "why": "The chemical is identified, its hazards are known and the gear is ready, so the job can go ahead.",
+        "lesson": "Use chemicals only with the label's directions and the gear it calls for."
+      },
+      "generic": [
+        {
+          "text": "Mix {chemical|the} with another cleaner so it works faster.",
+          "why": "Mixing chemicals can create dangerous fumes. Never mix products unless the label says to.",
+          "mis": "Two cleaners together work better."
+        },
+        {
+          "text": "Leave the cleaning for the next shift without telling anyone.",
+          "why": "Leaving the job undone without telling anyone hands the problem to someone who does not know about it.",
+          "mis": "Unfinished work explains itself."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Wait for {lead|the} to watch you do the whole cleaning.",
+          "why": "Everything checks out, so waiting for supervision only delays a job you are ready to do.",
+          "mis": "Supervision makes every job safer."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}, about to clean the {area} with {chemical|the}."
+        ],
+        "because": {
+          "unlabeled": [
+            "The bottle you were given has no label."
+          ],
+          "sds": [
+            "This is the first time you will use this product."
+          ],
+          "gear": [
+            "The protective gear bin is empty."
+          ]
+        },
+        "steps": [
+          {
+            "id": "ident",
+            "text": "Have {lead|the} identify the bottle",
+            "issue": "unlabeled"
+          },
+          {
+            "id": "read",
+            "text": "Read the safety data sheet",
+            "issue": "sds"
+          },
+          {
+            "id": "get",
+            "text": "Collect the protective gear from the supply room",
+            "issue": "gear"
+          },
+          {
+            "id": "wear",
+            "text": "Put on {ppe}",
+            "core": true
+          },
+          {
+            "id": "clean",
+            "text": "Clean the surfaces as the label directs",
+            "core": true
+          },
+          {
+            "id": "store",
+            "text": "Close and store the bottle, then wash your hands",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "ident",
+            "read",
+            "You need to know the product before you can find its safety data sheet."
+          ],
+          [
+            "ident",
+            "clean",
+            "An unidentified product is never used."
+          ],
+          [
+            "read",
+            "wear",
+            "The safety data sheet tells you which gear to wear."
+          ],
+          [
+            "get",
+            "wear",
+            "You need the gear before putting it on."
+          ],
+          [
+            "wear",
+            "clean",
+            "Gear goes on before the chemical is used."
+          ],
+          [
+            "clean",
+            "store",
+            "Store and wash up after cleaning."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Identify, read, gear up, clean, then store and wash up."
+      },
+      "doc": {
+        "type": "procedure",
+        "title": [
+          "Chemical safety rules for the {area}"
+        ],
+        "intro": [
+          "You are reviewing these posted chemical rules before they are reprinted."
+        ],
+        "lesson": "Chemical rules protect people only when every line matches the label and safety data sheet.",
+        "lines": [
+          {
+            "id": "read",
+            "text": "Read the label and safety data sheet before using a new chemical.",
+            "fine": "Knowing the hazards comes first.",
+            "bad": [
+              {
+                "id": "read-spill",
+                "level": "beginner",
+                "text": "You only need the safety data sheet if a chemical spills.",
+                "why": "The safety data sheet is for before use, not just emergencies.",
+                "principle": "saf.doc-sds-only-for-spills"
+              }
+            ]
+          },
+          {
+            "id": "gear",
+            "text": "Wear {ppe} whenever you handle {chemical|the}.",
+            "fine": "Required gear stated plainly.",
+            "bad": [
+              {
+                "id": "gear-quick",
+                "level": "beginner",
+                "text": "Gear is optional for jobs that take under five minutes.",
+                "why": "Injuries can happen in seconds; the gear is always required.",
+                "principle": "saf.doc-gear-optional"
+              }
+            ]
+          },
+          {
+            "id": "mix",
+            "text": "Never mix {chemical|the} with other products.",
+            "fine": "Prevents dangerous reactions.",
+            "bad": [
+              {
+                "id": "mix-bleach",
+                "level": "beginner",
+                "text": "Mix {chemical|the} with bleach for tough stains.",
+                "why": "Mixing chemicals can release dangerous gases.",
+                "principle": "saf.doc-mix-chemicals"
+              }
+            ]
+          },
+          {
+            "id": "label",
+            "text": "Keep every container labeled with what is inside.",
+            "fine": "Labels prevent mix-ups.",
+            "bad": [
+              {
+                "id": "label-reuse",
+                "level": "intermediate",
+                "text": "Pour leftovers into any empty bottle to use later.",
+                "why": "Unlabeled or wrongly labeled containers lead to dangerous mistakes.",
+                "principle": "saf.doc-unlabeled-container"
+              }
+            ]
+          },
+          {
+            "id": "eyes",
+            "text": "If a chemical gets in someone's eyes, use the eyewash station and alert {lead|the}.",
+            "fine": "Correct first response.",
+            "bad": [
+              {
+                "id": "eyes-rest",
+                "level": "intermediate",
+                "text": "If a chemical gets in someone's eyes, have them rest until it stops stinging.",
+                "why": "Eyes need flushing right away; resting lets the chemical keep causing harm.",
+                "principle": "saf.doc-wrong-eye-first-aid"
+              }
+            ]
+          },
+          {
+            "id": "where",
+            "text": "Safety data sheets are kept in the binder by the door.",
+            "fine": "Tells workers where to find them.",
+            "bad": [
+              {
+                "id": "where-locked",
+                "level": "advanced",
+                "needs": [
+                  "read"
+                ],
+                "text": "Safety data sheets are kept locked in {lead|the}'s office.",
+                "why": "Workers must read the sheet before use, so it has to be where they can reach it.",
+                "principle": "saf.doc-sds-inaccessible"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario",
+          "safe-procedures-only"
+        ],
+        "notes": "Follows label and SDS guidance; no regulatory claims. Eyewash response stated as general first aid."
+      }
+    }
+  ]
+}

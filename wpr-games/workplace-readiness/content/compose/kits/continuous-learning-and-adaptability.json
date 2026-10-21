@@ -1,0 +1,528 @@
+{
+  "skill": "continuous-learning-and-adaptability",
+  "kits": [
+    {
+      "id": "cla-new-system",
+      "skill": "continuous-learning-and-adaptability",
+      "family": "continuous-learning-and-adaptability.cx-switching-systems",
+      "familyName": "Adapting to a new system",
+      "framework": "unexpected-change",
+      "concepts": [
+        "continuous-learning-and-adaptability:changing-requirements",
+        "continuous-learning-and-adaptability:learning-resources",
+        "continuous-learning-and-adaptability:acting-on-feedback"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. The team is switching from the old way of keeping {record|the} to a new version of {system|the}.",
+        "As {role|a} at {workplace|a}, you have to start using a new version of {system|the} for {record|the}."
+      ],
+      "pressure": [
+        "{coworker3} says nobody will check whether you actually use the new system.",
+        "The switch is happening during a busy week."
+      ],
+      "detail": [
+        "The new screens use a different color scheme.",
+        "Most of the team is new to it too."
+      ],
+      "tiers": {
+        "1": "A new requirement affects every entry, so it comes first.",
+        "2": "Feedback on errors you are making now should be acted on right away.",
+        "3": "A hard deadline for the change shapes your schedule.",
+        "4": "Using the available training makes practice count.",
+        "5": "Encouraging others matters once your own adjustment is on track."
+      },
+      "issues": [
+        {
+          "id": "field",
+          "tier": 1,
+          "rule": "meet-new-requirement",
+          "principle": "cla.learn-new-required-field",
+          "fact": [
+            "The new system requires an extra field on every entry that the old way never asked for."
+          ],
+          "short": "the new required field",
+          "action": "Find out what the new field needs, and fill it in on every entry.",
+          "brief": "learn the new field and fill it in",
+          "reason": "A changed requirement applies to every entry from now on. Learning it now prevents a pile of incomplete records.",
+          "lesson": "When requirements change, learn the new expectation and apply it consistently.",
+          "shortcut": [
+            {
+              "text": "Leave the new field blank until someone explains why it matters.",
+              "brief": "leave the field blank",
+              "why": "Blank required fields make records incomplete. You can find out what it needs now.",
+              "mis": "Requirements you do not understand can be ignored."
+            }
+          ]
+        },
+        {
+          "id": "errors",
+          "tier": 2,
+          "rule": "act-on-feedback",
+          "principle": "cla.correct-practice-after-feedback",
+          "fact": [
+            "{Lead|the} pointed out two errors you made in the new system yesterday."
+          ],
+          "clear": [
+            "{Lead|the} already walked you through the right steps after yesterday's errors."
+          ],
+          "done": "{lead|the} already showed you the correct steps",
+          "short": "yesterday's errors",
+          "action": "Ask {lead|the} to show you the correct steps, and practice them.",
+          "brief": "get shown the right steps and practice",
+          "reason": "Feedback only helps if you act on it. Learning the correct steps now stops the errors from repeating.",
+          "lesson": "Act on feedback quickly by learning and practicing the correction.",
+          "shortcut": [
+            {
+              "text": "Explain that the old way was easier and the errors were not your fault.",
+              "brief": "defend the old way",
+              "why": "Defending yourself does not prevent the errors from happening again.",
+              "mis": "Feedback is something to defend against."
+            }
+          ]
+        },
+        {
+          "id": "deadline",
+          "tier": 3,
+          "rule": "plan-for-change-deadline",
+          "principle": "cla.practice-before-cutover",
+          "fact": [
+            "The old way ends on Friday, and you have not tried the new version yet."
+          ],
+          "clear": [
+            "You practiced in the new version for an hour on Monday."
+          ],
+          "done": "you already practiced in the new version",
+          "short": "Friday's cutover",
+          "action": "Schedule time this week to practice in the new version before Friday.",
+          "brief": "schedule practice before Friday",
+          "reason": "Practicing before the cutover lets you learn without the pressure of real work.",
+          "lesson": "Prepare for a change before it arrives, not after.",
+          "shortcut": [
+            {
+              "text": "Wait until Friday and learn it as you go.",
+              "brief": "learn it on Friday",
+              "why": "Learning under deadline pressure leads to errors and stress.",
+              "mis": "You learn best under pressure."
+            }
+          ]
+        },
+        {
+          "id": "training",
+          "tier": 4,
+          "rule": "use-learning-resources",
+          "principle": "cla.use-posted-training",
+          "fact": [
+            "Training videos and a help guide are posted, but you have not opened them."
+          ],
+          "short": "the unused training",
+          "action": "Work through the posted training before asking others for help.",
+          "brief": "work through the posted training",
+          "reason": "The training answers most common questions. Using it first saves your coworkers' time.",
+          "lesson": "Use the learning resources available before relying on others.",
+          "shortcut": [
+            {
+              "text": "Ask {coworker} to walk you through everything from scratch.",
+              "brief": "have {coworker} teach you everything",
+              "why": "Asking for a full walkthrough ignores the training already posted and takes a coworker's time.",
+              "mis": "Asking someone is always faster than training materials."
+            }
+          ]
+        },
+        {
+          "id": "resist",
+          "tier": 5,
+          "rule": "model-adaptability",
+          "principle": "cla.support-change-with-coworkers",
+          "noProceed": true,
+          "fact": [
+            "{coworker3} plans to keep using paper notes instead of the new version."
+          ],
+          "short": "{coworker3}'s resistance",
+          "action": "Keep using the new version yourself and offer to share what you have learned.",
+          "brief": "keep using it and offer to share tips",
+          "reason": "Modeling the change and offering help supports a coworker without lecturing them.",
+          "lesson": "Adapt to change yourself and help others adapt.",
+          "shortcut": [
+            {
+              "text": "Join {coworker3} with paper notes until the new version improves.",
+              "brief": "join {coworker3} with paper",
+              "why": "Avoiding the new version leaves records incomplete and delays your own learning.",
+              "mis": "If others resist a change, it is fine to resist too."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Keep entering {record|the} in the new version and build your speed.",
+        "why": "You are prepared and on track, so regular use is the best way to become fluent.",
+        "lesson": "Once you are prepared, regular practice makes a new system second nature."
+      },
+      "generic": [
+        {
+          "text": "Complain to {lead|the} that the change was unnecessary.",
+          "why": "Complaining does not help you learn the system the team now uses.",
+          "mis": "Objecting to a change makes it go away."
+        },
+        {
+          "text": "Keep a private paper copy of everything just in case.",
+          "why": "A separate copy creates two sets of records that may not match.",
+          "mis": "Duplicating records is always safer."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to approve each entry you make in the new version.",
+          "why": "You are prepared and on track. Approving every entry would waste the lead's time.",
+          "mis": "New systems need supervisor approval for every step."
+        }
+      ],
+      "process": {
+        "setup": [
+          "{Workplace|the} is switching {record|the} over to an updated {system}."
+        ],
+        "because": {
+          "training": [
+            "Training videos for the new version are available."
+          ],
+          "errors": [
+            "You have already made a few errors in the new version."
+          ]
+        },
+        "steps": [
+          {
+            "id": "watch",
+            "text": "Watch the posted training videos",
+            "issue": "training"
+          },
+          {
+            "id": "practice",
+            "text": "Practice with sample entries",
+            "core": true
+          },
+          {
+            "id": "fix",
+            "text": "Review the errors {lead|the} pointed out",
+            "issue": "errors"
+          },
+          {
+            "id": "real",
+            "text": "Enter real records in the updated system",
+            "core": true
+          },
+          {
+            "id": "check",
+            "text": "Ask {lead|the} to spot-check your first entries",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "watch",
+            "practice",
+            "Training shows you what to practice."
+          ],
+          [
+            "practice",
+            "real",
+            "Practice comes before real records."
+          ],
+          [
+            "fix",
+            "real",
+            "Correct your errors before entering real records."
+          ],
+          [
+            "real",
+            "check",
+            "Spot-checks happen after real entries are made."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Learn from the training, practice, fix your errors, then work for real and get checked."
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Adapting to changed requirements."
+      }
+    },
+    {
+      "id": "cla-review-feedback",
+      "skill": "continuous-learning-and-adaptability",
+      "family": "continuous-learning-and-adaptability.cx-acting-on-review",
+      "familyName": "Acting on a performance review",
+      "framework": "critical-information",
+      "concepts": [
+        "continuous-learning-and-adaptability:acting-on-feedback",
+        "continuous-learning-and-adaptability:credentials",
+        "continuous-learning-and-adaptability:learning-resources"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a} and just had your yearly review with {lead|the}.",
+        "As {role|a} at {workplace|a}, you are thinking about what {lead|the} said in your review this week."
+      ],
+      "pressure": [
+        "{coworker3} says reviews are just paperwork.",
+        "You feel a little discouraged after the review."
+      ],
+      "detail": [
+        "Most of the review was positive.",
+        "The review took about half an hour."
+      ],
+      "tiers": {
+        "1": "A credential your job requires cannot be allowed to lapse.",
+        "2": "Understand feedback before deciding what to do about it.",
+        "3": "Specific feedback calls for a specific plan.",
+        "4": "A skill gap for upcoming work needs a learning plan.",
+        "5": "Checking your progress is useful once the work is underway."
+      },
+      "issues": [
+        {
+          "id": "credential",
+          "tier": 1,
+          "rule": "maintain-credential",
+          "principle": "cla.renew-required-credential",
+          "fact": [
+            "A certification your job requires expires next month, and renewal takes three weeks."
+          ],
+          "clear": [
+            "You already signed up for the renewal course that starts Monday."
+          ],
+          "done": "the renewal is already scheduled",
+          "short": "the expiring certification",
+          "action": "Sign up for the renewal course now so the certification does not lapse.",
+          "brief": "sign up for renewal now",
+          "reason": "If a required credential lapses, you may not be allowed to do your job. Renewal takes time, so it cannot wait.",
+          "lesson": "Keep required credentials current by renewing well before they expire.",
+          "shortcut": [
+            {
+              "text": "Renew it after it expires, since it is just paperwork.",
+              "brief": "renew it after it expires",
+              "why": "An expired required credential can keep you from working until it is renewed.",
+              "mis": "Credentials can be renewed whenever convenient."
+            }
+          ]
+        },
+        {
+          "id": "defensive",
+          "tier": 2,
+          "rule": "understand-feedback",
+          "principle": "cla.ask-questions-about-feedback",
+          "noProceed": true,
+          "fact": [
+            "Part of the feedback felt unfair, and you are not sure what {lead|the} meant by it."
+          ],
+          "short": "the feedback you are unsure about",
+          "action": "Ask {lead|the} questions to understand that feedback before deciding what to do.",
+          "brief": "ask questions about the feedback",
+          "reason": "Feedback that feels unfair often makes more sense with an example. Understanding it first lets you respond well.",
+          "lesson": "Seek to understand feedback before reacting to it.",
+          "shortcut": [
+            {
+              "text": "Ignore that part of the review, since it felt unfair.",
+              "brief": "ignore that part",
+              "why": "Ignoring feedback you do not like may leave a real issue unaddressed.",
+              "mis": "Feedback that feels unfair is not worth considering."
+            }
+          ]
+        },
+        {
+          "id": "summaries",
+          "tier": 3,
+          "rule": "act-on-feedback",
+          "principle": "cla.practice-specific-improvement",
+          "fact": [
+            "{Lead|the} said your written reports need clearer summaries."
+          ],
+          "short": "the feedback about summaries",
+          "action": "Ask for an example of a strong summary and practice that style.",
+          "brief": "get an example and practice",
+          "reason": "An example shows exactly what clear looks like, and practice turns feedback into a habit.",
+          "lesson": "Turn specific feedback into a specific practice plan.",
+          "shortcut": [
+            {
+              "text": "Make your reports longer so nothing is left out.",
+              "brief": "make reports longer",
+              "why": "Longer is not clearer. The feedback was about summaries, not length.",
+              "mis": "More detail always means better writing."
+            }
+          ]
+        },
+        {
+          "id": "gap",
+          "tier": 4,
+          "rule": "close-skill-gap",
+          "principle": "cla.learn-skill-for-new-task",
+          "fact": [
+            "Next month you will take on a task that needs spreadsheet skills you do not have."
+          ],
+          "short": "the spreadsheet skill gap",
+          "action": "Find a free online course or ask {coworker} to show you the basics before next month.",
+          "brief": "learn spreadsheet basics before next month",
+          "reason": "Learning before the task arrives lets you start strong instead of struggling.",
+          "lesson": "Identify the skills upcoming work requires and learn them ahead of time.",
+          "shortcut": [
+            {
+              "text": "Hope the task turns out simpler than expected.",
+              "brief": "hope it is simple",
+              "why": "Hoping does not build the skill. You know the gap now and can close it.",
+              "mis": "Skill gaps solve themselves on the job."
+            }
+          ],
+          "clear": [
+            "You finished a free spreadsheet course last month."
+          ],
+          "done": "you already learned the spreadsheet basics"
+        },
+        {
+          "id": "progress",
+          "tier": 5,
+          "rule": "check-progress",
+          "principle": "cla.ask-whether-improvement-shows",
+          "fact": [
+            "You have practiced a new skill for a month but have not checked whether it shows in your work."
+          ],
+          "short": "the unchecked progress",
+          "action": "Ask {lead|the} whether the change is showing in your work.",
+          "brief": "ask whether it shows",
+          "reason": "Checking in confirms you are improving in the way that matters and shows you took the feedback seriously.",
+          "lesson": "Close the loop on feedback by checking whether your improvement shows.",
+          "shortcut": [
+            {
+              "text": "Assume it is fine, since {lead|the} has not said anything.",
+              "brief": "assume it is fine",
+              "why": "Silence is not confirmation. A quick check gives you real information.",
+              "mis": "No news means good news."
+            }
+          ]
+        }
+      ],
+      "exclusive": [
+        [
+          "summaries",
+          "progress"
+        ],
+        [
+          "defensive",
+          "progress"
+        ]
+      ],
+      "proceed": {
+        "text": "Keep working on the goals from your review and note your progress.",
+        "why": "Nothing urgent needs handling, so steady work on the review goals is the right next step.",
+        "lesson": "Make growth a steady habit after every review."
+      },
+      "generic": [
+        {
+          "text": "Put the review in a drawer and forget about it until next year.",
+          "why": "A review only helps if you act on it during the year.",
+          "mis": "Reviews are a once-a-year event."
+        },
+        {
+          "text": "Ask {coworker2} to compare their review with yours.",
+          "why": "Comparing reviews does not help you act on your own feedback.",
+          "mis": "Your review only means something compared with others."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} for a second full review before doing anything.",
+          "why": "You already have clear feedback. A second review delays action.",
+          "mis": "More reviews give better direction."
+        }
+      ],
+      "doc": {
+        "type": "note",
+        "title": [
+          "Your learning plan after the review"
+        ],
+        "intro": [
+          "You wrote this learning plan after your review. Check it before sharing it with {lead|the}."
+        ],
+        "lesson": "A good learning plan responds to specific feedback with specific actions, resources and dates.",
+        "lines": [
+          {
+            "id": "feedback",
+            "text": "Feedback: my report summaries need to be clearer.",
+            "fine": "States the feedback accurately."
+          },
+          {
+            "id": "action",
+            "text": "Action: study two strong example summaries and rewrite mine in that style.",
+            "fine": "A specific action tied to the feedback.",
+            "bad": [
+              {
+                "id": "action-unrelated",
+                "level": "advanced",
+                "needs": [
+                  "feedback"
+                ],
+                "text": "Action: take a course on public speaking.",
+                "why": "The feedback was about written summaries. A speaking course does not address it.",
+                "principle": "cla.doc-action-misses-feedback"
+              }
+            ]
+          },
+          {
+            "id": "resource",
+            "text": "Resource: ask {coworker} for examples; use the posted writing guide.",
+            "fine": "Names available learning resources."
+          },
+          {
+            "id": "cert",
+            "text": "Certification renewal: course booked for next week, before it expires.",
+            "fine": "Keeps a required credential current.",
+            "bad": [
+              {
+                "id": "cert-late",
+                "level": "beginner",
+                "text": "Certification renewal: will deal with it after it expires.",
+                "why": "Letting a required credential lapse can stop you from working.",
+                "principle": "cla.doc-lets-credential-lapse"
+              }
+            ]
+          },
+          {
+            "id": "check",
+            "text": "Check-in: ask {lead|the} in six weeks whether summaries have improved.",
+            "fine": "Plans to check progress.",
+            "bad": [
+              {
+                "id": "check-never",
+                "level": "intermediate",
+                "text": "Check-in: none; I will assume it worked.",
+                "why": "Without checking, you cannot know whether the change is showing.",
+                "principle": "cla.doc-no-progress-check"
+              }
+            ]
+          },
+          {
+            "id": "attitude",
+            "text": "I am glad to get specific feedback I can act on.",
+            "fine": "A constructive attitude toward feedback.",
+            "bad": [
+              {
+                "id": "attitude-dismiss",
+                "level": "beginner",
+                "text": "I do not agree with the feedback, so this plan is mostly for show.",
+                "why": "A plan written only for show does not lead to improvement.",
+                "principle": "cla.doc-plan-for-show"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Credential timing is stated in the scenario; no claims about specific licensing rules."
+      }
+    }
+  ]
+}

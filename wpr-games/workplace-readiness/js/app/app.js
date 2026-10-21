@@ -6,6 +6,15 @@
   var lib = W.library.create(W.content);
   var libCheck = W.validator.validateLibrary(lib);
   if (!libCheck.ok && root.console) root.console.error('Content library has errors:', libCheck.errors.slice(0, 5));
+  // Compositional generator (js/compose/*): authored templates + composed reasoning configurations.
+  // Falls back to the authored-only generator if the compose scripts or bundle are not loaded.
+  var hyb = null;
+  var composeFailure = '';
+  if (W.selector && W.composeContent) {
+    try { hyb = W.selector.createHybrid(lib, W.composeContent); }
+    catch (e) { hyb = null; composeFailure = 'The compositional generator could not initialize. Authored practice is still available, but the expanded reasoning pool is unavailable. Reload later or contact your teacher.'; if (root.console) root.console.error('Compositional generator disabled:', e.message); }
+  } else composeFailure = 'The compositional generator assets did not load. Authored practice is still available, but the expanded reasoning pool is unavailable. Reload later or contact your teacher.';
+  var SRC = hyb ? W.selector : G, SRC_LIB = hyb || lib;
 
   var backend = null;
   try { backend = root.localStorage; } catch (e) { backend = null; }
@@ -27,7 +36,7 @@
     var d = tracker.data;
     var resume = !fresh && d.seed && sameFilters(d.filters, filters);
     var seed = resume ? d.seed : makeSeed();
-    gen = G.createSession(lib, { seed: seed, filters: filters });
+    gen = SRC.createSession(SRC_LIB, { seed: seed, filters: filters });
     var skip = resume ? d.index : 0;
     for (var i = 0; i < skip; i++) gen.next();
     d.seed = seed; d.filters = filters; d.index = skip;
@@ -82,10 +91,16 @@
     checkOptions();
   }
   function checkOptions() {
-    var f = UI.readOptions(), eligible = G.eligibleTemplates(lib, f), n = eligible.length;
+    var f = UI.readOptions(), eligible = hyb ? W.selector.eligibleUnits(hyb, f) : G.eligibleTemplates(lib, f), n = eligible.length;
     var note = doc.getElementById('options-note'), start = doc.getElementById('btn-start');
     if (!n) { note.textContent = 'No challenges match these choices. Try mixed modes or difficulty.'; start.disabled = true; }
-    else {
+    else if (hyb) {
+      var cap = W.selector.capacity(hyb, f);
+      note.textContent = cap.signatures < 20
+        ? cap.signatures + ' distinct reasoning problems match this selection. Underlying ideas will repeat during a 20-question session; broaden the skill, mode, difficulty, or setting filters for more variety.'
+        : cap.signatures + ' distinct reasoning problems match this selection. The generator avoids repeating any of them within 20 questions.';
+      start.disabled = false;
+    } else {
       var patterns = new Set(eligible.map(function (t) { return t.family + ':' + t.pattern; })).size;
       note.textContent = patterns < 20
         ? n + ' authored challenges across ' + patterns + ' distinct reasoning patterns. This selection will repeat underlying ideas during a 20-question session; broaden the skill, mode, difficulty, or setting filters for more variety.'
@@ -118,6 +133,11 @@
   }
 
   function init() {
+    if (composeFailure) {
+      var warning = doc.getElementById('generator-warning');
+      warning.textContent = composeFailure;
+      warning.hidden = false;
+    }
     UI.fillOptions(lib, tracker.data.filters);
     ['opt-skill', 'opt-mode', 'opt-difficulty', 'opt-context'].forEach(function (id) { doc.getElementById(id).addEventListener('change', checkOptions); });
     doc.getElementById('btn-start').addEventListener('click', function () {
@@ -139,6 +159,6 @@
     render();
   }
 
-  W.app = { lib: lib, tracker: tracker, store: store, startPractice: startPractice, state: function () { return { current: current, gen: gen, route: route }; } };
+  W.app = { lib: lib, hybrid: hyb, tracker: tracker, store: store, startPractice: startPractice, state: function () { return { current: current, gen: gen, route: route }; } };
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init); else init();
 }(typeof self !== 'undefined' ? self : this));

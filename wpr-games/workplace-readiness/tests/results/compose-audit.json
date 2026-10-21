@@ -1,0 +1,4195 @@
+{
+ "generatedAt": "2026-10-21T17:29:18.779Z",
+ "summary": {
+  "authoredTemplates": 140,
+  "authoredPatterns": 140,
+  "frameworks": 12,
+  "kits": 51,
+  "kitsByFramework": {
+   "consequences": 8,
+   "process-dependency": 3,
+   "competing-priorities": 8,
+   "communication-failure": 5,
+   "conflicting-instructions": 3,
+   "unexpected-change": 1,
+   "critical-information": 4,
+   "root-cause": 2,
+   "evidence-reliability": 4,
+   "ethical-dilemma": 4,
+   "safest-action": 4,
+   "numeric-decision": 5
+  },
+  "issueComponents": 230,
+  "numericConfigs": 56,
+  "composedFamilies": 51,
+  "composedUnits": 3117,
+  "composedConfigurations": 1731,
+  "configurationsByEngine": {
+   "state": 1386,
+   "process": 151,
+   "defect": 138,
+   "numeric": 56
+  },
+  "decisionRules": 188,
+  "stateShapes": {
+   "beginner:1active+0resolved": 230,
+   "beginner:0active+1resolved": 94,
+   "intermediate:2active+0resolved": 368,
+   "intermediate:1active+1resolved": 196,
+   "advanced:3active+0resolved": 338,
+   "advanced:2active+1resolved": 160
+  },
+  "totalSignatures": 1871,
+  "cellsAt20Before": 0,
+  "cellsAt20After": 66,
+  "filtersAt20Before": 29,
+  "filtersAt20After": 312,
+  "filterCount": 502,
+  "filtersEmptyAfter": 5,
+  "cellReasoningRepeats20Before": 1180,
+  "cellReasoningRepeats20After": 0,
+  "cellExactRepeats20After": 0,
+  "avgDistinctScenariosPerConfigurationIn8Renders": 7.7,
+  "distractorSources": {
+   "proceed": 911,
+   "acceptable (real but lower-priority issue)": 1986,
+   "sc": 1584,
+   "plan": 1862,
+   "generic": 907,
+   "redo": 693,
+   "over": 115,
+   "b": 8,
+   "c": 11,
+   "w3": 70,
+   "w1": 70,
+   "w2": 70,
+   "d": 6,
+   "a": 8
+  },
+  "distractorsWithMisconception": "8301 of 8301",
+  "difficultyMetrics": {
+   "beginner": {
+    "facts": 1,
+    "priorities": 0.71,
+    "orderSteps": 3,
+    "orderValidOrdersMax": 1
+   },
+   "intermediate": {
+    "facts": 2,
+    "priorities": 1.65,
+    "orderSteps": 4,
+    "orderValidOrdersMax": 6
+   },
+   "advanced": {
+    "facts": 3,
+    "priorities": 2.68,
+    "orderSteps": 5,
+    "orderValidOrdersMax": 8
+   }
+  },
+  "catalogBuildMs": 36,
+  "msPerChallenge": 0.36,
+  "bundleBytes": 486445
+ },
+ "cells": [
+  {
+   "skill": "creativity-and-innovation",
+   "name": "Creativity and Innovation",
+   "code": "CRE",
+   "number": 1,
+   "level": "beginner",
+   "before": 2,
+   "authored": 2,
+   "composed": 21,
+   "total": 23,
+   "modes": {
+    "decision": 16,
+    "nextstep": 15,
+    "order": 3,
+    "find": 4
+   }
+  },
+  {
+   "skill": "creativity-and-innovation",
+   "name": "Creativity and Innovation",
+   "code": "CRE",
+   "number": 1,
+   "level": "intermediate",
+   "before": 2,
+   "authored": 2,
+   "composed": 32,
+   "total": 34,
+   "modes": {
+    "decision": 25,
+    "nextstep": 26,
+    "order": 5,
+    "find": 3
+   }
+  },
+  {
+   "skill": "creativity-and-innovation",
+   "name": "Creativity and Innovation",
+   "code": "CRE",
+   "number": 1,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 25,
+   "total": 26,
+   "modes": {
+    "decision": 20,
+    "nextstep": 19,
+    "order": 4,
+    "find": 2
+   }
+  },
+  {
+   "skill": "critical-thinking-and-problem-solving",
+   "name": "Critical Thinking and Problem Solving",
+   "code": "CTP",
+   "number": 2,
+   "level": "beginner",
+   "before": 1,
+   "authored": 1,
+   "composed": 22,
+   "total": 23,
+   "modes": {
+    "decision": 16,
+    "nextstep": 16,
+    "order": 3,
+    "find": 4
+   }
+  },
+  {
+   "skill": "critical-thinking-and-problem-solving",
+   "name": "Critical Thinking and Problem Solving",
+   "code": "CTP",
+   "number": 2,
+   "level": "intermediate",
+   "before": 3,
+   "authored": 3,
+   "composed": 38,
+   "total": 41,
+   "modes": {
+    "decision": 31,
+    "nextstep": 31,
+    "order": 5,
+    "find": 4
+   }
+  },
+  {
+   "skill": "critical-thinking-and-problem-solving",
+   "name": "Critical Thinking and Problem Solving",
+   "code": "CTP",
+   "number": 2,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 27,
+   "total": 28,
+   "modes": {
+    "decision": 24,
+    "nextstep": 23,
+    "order": 2,
+    "find": 2
+   }
+  },
+  {
+   "skill": "initiative-and-self-direction",
+   "name": "Initiative and Self-Direction",
+   "code": "INI",
+   "number": 3,
+   "level": "beginner",
+   "before": 2,
+   "authored": 2,
+   "composed": 22,
+   "total": 24,
+   "modes": {
+    "decision": 16,
+    "nextstep": 15,
+    "order": 5,
+    "find": 3
+   }
+  },
+  {
+   "skill": "initiative-and-self-direction",
+   "name": "Initiative and Self-Direction",
+   "code": "INI",
+   "number": 3,
+   "level": "intermediate",
+   "before": 2,
+   "authored": 2,
+   "composed": 38,
+   "total": 40,
+   "modes": {
+    "decision": 31,
+    "nextstep": 32,
+    "order": 5,
+    "find": 3
+   }
+  },
+  {
+   "skill": "initiative-and-self-direction",
+   "name": "Initiative and Self-Direction",
+   "code": "INI",
+   "number": 3,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 35,
+   "total": 36,
+   "modes": {
+    "decision": 32,
+    "nextstep": 31,
+    "order": 2,
+    "find": 2
+   }
+  },
+  {
+   "skill": "integrity",
+   "name": "Integrity",
+   "code": "INT",
+   "number": 4,
+   "level": "beginner",
+   "before": 1,
+   "authored": 1,
+   "composed": 24,
+   "total": 25,
+   "modes": {
+    "decision": 18,
+    "nextstep": 17,
+    "order": 3,
+    "find": 4
+   }
+  },
+  {
+   "skill": "integrity",
+   "name": "Integrity",
+   "code": "INT",
+   "number": 4,
+   "level": "intermediate",
+   "before": 4,
+   "authored": 4,
+   "composed": 30,
+   "total": 34,
+   "modes": {
+    "decision": 23,
+    "nextstep": 23,
+    "order": 7,
+    "find": 3
+   }
+  },
+  {
+   "skill": "integrity",
+   "name": "Integrity",
+   "code": "INT",
+   "number": 4,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 24,
+   "total": 25,
+   "modes": {
+    "decision": 19,
+    "nextstep": 18,
+    "order": 4,
+    "find": 2
+   }
+  },
+  {
+   "skill": "work-ethic",
+   "name": "Work Ethic",
+   "code": "WET",
+   "number": 5,
+   "level": "beginner",
+   "before": 3,
+   "authored": 3,
+   "composed": 20,
+   "total": 23,
+   "modes": {
+    "decision": 15,
+    "nextstep": 14,
+    "order": 3,
+    "find": 5
+   }
+  },
+  {
+   "skill": "work-ethic",
+   "name": "Work Ethic",
+   "code": "WET",
+   "number": 5,
+   "level": "intermediate",
+   "before": 1,
+   "authored": 1,
+   "composed": 30,
+   "total": 31,
+   "modes": {
+    "decision": 23,
+    "nextstep": 24,
+    "order": 5,
+    "find": 2
+   }
+  },
+  {
+   "skill": "work-ethic",
+   "name": "Work Ethic",
+   "code": "WET",
+   "number": 5,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 24,
+   "total": 25,
+   "modes": {
+    "decision": 19,
+    "nextstep": 18,
+    "order": 4,
+    "find": 2
+   }
+  },
+  {
+   "skill": "conflict-resolution",
+   "name": "Conflict Resolution",
+   "code": "CON",
+   "number": 6,
+   "level": "beginner",
+   "before": 1,
+   "authored": 1,
+   "composed": 19,
+   "total": 20,
+   "modes": {
+    "decision": 13,
+    "nextstep": 13,
+    "order": 2,
+    "find": 5
+   }
+  },
+  {
+   "skill": "conflict-resolution",
+   "name": "Conflict Resolution",
+   "code": "CON",
+   "number": 6,
+   "level": "intermediate",
+   "before": 3,
+   "authored": 3,
+   "composed": 31,
+   "total": 34,
+   "modes": {
+    "decision": 27,
+    "nextstep": 25,
+    "order": 5,
+    "find": 2
+   }
+  },
+  {
+   "skill": "conflict-resolution",
+   "name": "Conflict Resolution",
+   "code": "CON",
+   "number": 6,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 19,
+   "total": 20,
+   "modes": {
+    "decision": 15,
+    "nextstep": 16,
+    "order": 2,
+    "find": 2
+   }
+  },
+  {
+   "skill": "listening-and-speaking",
+   "name": "Listening and Speaking",
+   "code": "LIS",
+   "number": 7,
+   "level": "beginner",
+   "before": 2,
+   "authored": 2,
+   "composed": 18,
+   "total": 20,
+   "modes": {
+    "decision": 16,
+    "nextstep": 15,
+    "order": 1,
+    "find": 3
+   }
+  },
+  {
+   "skill": "listening-and-speaking",
+   "name": "Listening and Speaking",
+   "code": "LIS",
+   "number": 7,
+   "level": "intermediate",
+   "before": 3,
+   "authored": 3,
+   "composed": 36,
+   "total": 39,
+   "modes": {
+    "decision": 34,
+    "nextstep": 34,
+    "order": 3,
+    "find": 1
+   }
+  },
+  {
+   "skill": "listening-and-speaking",
+   "name": "Listening and Speaking",
+   "code": "LIS",
+   "number": 7,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 36,
+   "total": 37,
+   "modes": {
+    "decision": 35,
+    "nextstep": 34,
+    "order": 1,
+    "find": 1
+   }
+  },
+  {
+   "skill": "respect-for-diversity",
+   "name": "Respect for Diversity",
+   "code": "DIV",
+   "number": 8,
+   "level": "beginner",
+   "before": 3,
+   "authored": 3,
+   "composed": 17,
+   "total": 20,
+   "modes": {
+    "decision": 14,
+    "nextstep": 13,
+    "order": 2,
+    "find": 4
+   }
+  },
+  {
+   "skill": "respect-for-diversity",
+   "name": "Respect for Diversity",
+   "code": "DIV",
+   "number": 8,
+   "level": "intermediate",
+   "before": 2,
+   "authored": 2,
+   "composed": 26,
+   "total": 28,
+   "modes": {
+    "decision": 24,
+    "nextstep": 24,
+    "order": 2,
+    "find": 1
+   }
+  },
+  {
+   "skill": "respect-for-diversity",
+   "name": "Respect for Diversity",
+   "code": "DIV",
+   "number": 8,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 21,
+   "total": 22,
+   "modes": {
+    "decision": 20,
+    "nextstep": 19,
+    "order": 1,
+    "find": 1
+   }
+  },
+  {
+   "skill": "customer-service-orientation",
+   "name": "Customer Service Orientation",
+   "code": "CUS",
+   "number": 9,
+   "level": "beginner",
+   "before": 4,
+   "authored": 4,
+   "composed": 19,
+   "total": 23,
+   "modes": {
+    "decision": 16,
+    "nextstep": 16,
+    "order": 2,
+    "find": 4
+   }
+  },
+  {
+   "skill": "customer-service-orientation",
+   "name": "Customer Service Orientation",
+   "code": "CUS",
+   "number": 9,
+   "level": "intermediate",
+   "before": 2,
+   "authored": 2,
+   "composed": 34,
+   "total": 36,
+   "modes": {
+    "decision": 31,
+    "nextstep": 31,
+    "order": 3,
+    "find": 1
+   }
+  },
+  {
+   "skill": "customer-service-orientation",
+   "name": "Customer Service Orientation",
+   "code": "CUS",
+   "number": 9,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 27,
+   "total": 28,
+   "modes": {
+    "decision": 25,
+    "nextstep": 24,
+    "order": 2,
+    "find": 1
+   }
+  },
+  {
+   "skill": "teamwork",
+   "name": "Teamwork",
+   "code": "TEA",
+   "number": 10,
+   "level": "beginner",
+   "before": 3,
+   "authored": 3,
+   "composed": 18,
+   "total": 21,
+   "modes": {
+    "decision": 15,
+    "nextstep": 14,
+    "order": 3,
+    "find": 3
+   }
+  },
+  {
+   "skill": "teamwork",
+   "name": "Teamwork",
+   "code": "TEA",
+   "number": 10,
+   "level": "intermediate",
+   "before": 1,
+   "authored": 1,
+   "composed": 37,
+   "total": 38,
+   "modes": {
+    "decision": 32,
+    "nextstep": 33,
+    "order": 4,
+    "find": 1
+   }
+  },
+  {
+   "skill": "teamwork",
+   "name": "Teamwork",
+   "code": "TEA",
+   "number": 10,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 36,
+   "total": 37,
+   "modes": {
+    "decision": 34,
+    "nextstep": 33,
+    "order": 2,
+    "find": 1
+   }
+  },
+  {
+   "skill": "big-picture-thinking",
+   "name": "Big-Picture Thinking",
+   "code": "BIG",
+   "number": 11,
+   "level": "beginner",
+   "before": 1,
+   "authored": 1,
+   "composed": 25,
+   "total": 26,
+   "modes": {
+    "decision": 20,
+    "nextstep": 19,
+    "order": 3,
+    "find": 3
+   }
+  },
+  {
+   "skill": "big-picture-thinking",
+   "name": "Big-Picture Thinking",
+   "code": "BIG",
+   "number": 11,
+   "level": "intermediate",
+   "before": 4,
+   "authored": 4,
+   "composed": 31,
+   "total": 35,
+   "modes": {
+    "decision": 26,
+    "nextstep": 26,
+    "order": 5,
+    "find": 3
+   }
+  },
+  {
+   "skill": "big-picture-thinking",
+   "name": "Big-Picture Thinking",
+   "code": "BIG",
+   "number": 11,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 23,
+   "total": 24,
+   "modes": {
+    "decision": 20,
+    "nextstep": 19,
+    "order": 2,
+    "find": 2
+   }
+  },
+  {
+   "skill": "career-and-life-management",
+   "name": "Career and Life Management",
+   "code": "CAR",
+   "number": 12,
+   "level": "beginner",
+   "before": 2,
+   "authored": 2,
+   "composed": 20,
+   "total": 22,
+   "modes": {
+    "decision": 18,
+    "nextstep": 17,
+    "order": 2,
+    "find": 2
+   }
+  },
+  {
+   "skill": "career-and-life-management",
+   "name": "Career and Life Management",
+   "code": "CAR",
+   "number": 12,
+   "level": "intermediate",
+   "before": 3,
+   "authored": 3,
+   "composed": 38,
+   "total": 41,
+   "modes": {
+    "decision": 36,
+    "nextstep": 36,
+    "order": 2,
+    "find": 2
+   }
+  },
+  {
+   "skill": "career-and-life-management",
+   "name": "Career and Life Management",
+   "code": "CAR",
+   "number": 12,
+   "level": "advanced",
+   "before": 4,
+   "authored": 4,
+   "composed": 37,
+   "total": 41,
+   "modes": {
+    "decision": 35,
+    "nextstep": 35,
+    "order": 3,
+    "find": 2
+   }
+  },
+  {
+   "skill": "continuous-learning-and-adaptability",
+   "name": "Continuous Learning and Adaptability",
+   "code": "CLA",
+   "number": 13,
+   "level": "beginner",
+   "before": 3,
+   "authored": 3,
+   "composed": 17,
+   "total": 20,
+   "modes": {
+    "decision": 15,
+    "nextstep": 14,
+    "order": 2,
+    "find": 3
+   }
+  },
+  {
+   "skill": "continuous-learning-and-adaptability",
+   "name": "Continuous Learning and Adaptability",
+   "code": "CLA",
+   "number": 13,
+   "level": "intermediate",
+   "before": 1,
+   "authored": 1,
+   "composed": 31,
+   "total": 32,
+   "modes": {
+    "decision": 28,
+    "nextstep": 29,
+    "order": 2,
+    "find": 1
+   }
+  },
+  {
+   "skill": "continuous-learning-and-adaptability",
+   "name": "Continuous Learning and Adaptability",
+   "code": "CLA",
+   "number": 13,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 25,
+   "total": 26,
+   "modes": {
+    "decision": 24,
+    "nextstep": 23,
+    "order": 1,
+    "find": 1
+   }
+  },
+  {
+   "skill": "efficiency-and-productivity",
+   "name": "Efficiency and Productivity",
+   "code": "EFF",
+   "number": 14,
+   "level": "beginner",
+   "before": 3,
+   "authored": 3,
+   "composed": 17,
+   "total": 20,
+   "modes": {
+    "decision": 14,
+    "nextstep": 14,
+    "order": 2,
+    "find": 3
+   }
+  },
+  {
+   "skill": "efficiency-and-productivity",
+   "name": "Efficiency and Productivity",
+   "code": "EFF",
+   "number": 14,
+   "level": "intermediate",
+   "before": 3,
+   "authored": 3,
+   "composed": 33,
+   "total": 36,
+   "modes": {
+    "decision": 30,
+    "nextstep": 30,
+    "order": 3,
+    "find": 2
+   }
+  },
+  {
+   "skill": "efficiency-and-productivity",
+   "name": "Efficiency and Productivity",
+   "code": "EFF",
+   "number": 14,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 34,
+   "total": 35,
+   "modes": {
+    "decision": 31,
+    "nextstep": 30,
+    "order": 3,
+    "find": 1
+   }
+  },
+  {
+   "skill": "information-literacy",
+   "name": "Information Literacy",
+   "code": "ILI",
+   "number": 15,
+   "level": "beginner",
+   "before": 2,
+   "authored": 2,
+   "composed": 26,
+   "total": 28,
+   "modes": {
+    "decision": 21,
+    "nextstep": 21,
+    "order": 2,
+    "find": 5
+   }
+  },
+  {
+   "skill": "information-literacy",
+   "name": "Information Literacy",
+   "code": "ILI",
+   "number": 15,
+   "level": "intermediate",
+   "before": 2,
+   "authored": 2,
+   "composed": 29,
+   "total": 31,
+   "modes": {
+    "decision": 25,
+    "nextstep": 25,
+    "order": 3,
+    "find": 2
+   }
+  },
+  {
+   "skill": "information-literacy",
+   "name": "Information Literacy",
+   "code": "ILI",
+   "number": 15,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 20,
+   "total": 21,
+   "modes": {
+    "decision": 18,
+    "nextstep": 17,
+    "order": 1,
+    "find": 2
+   }
+  },
+  {
+   "skill": "information-security",
+   "name": "Information Security",
+   "code": "ISE",
+   "number": 16,
+   "level": "beginner",
+   "before": 2,
+   "authored": 2,
+   "composed": 23,
+   "total": 25,
+   "modes": {
+    "decision": 19,
+    "nextstep": 18,
+    "order": 2,
+    "find": 4
+   }
+  },
+  {
+   "skill": "information-security",
+   "name": "Information Security",
+   "code": "ISE",
+   "number": 16,
+   "level": "intermediate",
+   "before": 4,
+   "authored": 4,
+   "composed": 32,
+   "total": 36,
+   "modes": {
+    "decision": 26,
+    "nextstep": 26,
+    "order": 6,
+    "find": 3
+   }
+  },
+  {
+   "skill": "information-security",
+   "name": "Information Security",
+   "code": "ISE",
+   "number": 16,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 26,
+   "total": 27,
+   "modes": {
+    "decision": 22,
+    "nextstep": 23,
+    "order": 2,
+    "find": 2
+   }
+  },
+  {
+   "skill": "information-technology",
+   "name": "Information Technology",
+   "code": "ITE",
+   "number": 17,
+   "level": "beginner",
+   "before": 3,
+   "authored": 3,
+   "composed": 17,
+   "total": 20,
+   "modes": {
+    "decision": 16,
+    "nextstep": 15,
+    "order": 1,
+    "find": 3
+   }
+  },
+  {
+   "skill": "information-technology",
+   "name": "Information Technology",
+   "code": "ITE",
+   "number": 17,
+   "level": "intermediate",
+   "before": 2,
+   "authored": 2,
+   "composed": 29,
+   "total": 31,
+   "modes": {
+    "decision": 28,
+    "nextstep": 28,
+    "order": 1,
+    "find": 1
+   }
+  },
+  {
+   "skill": "information-technology",
+   "name": "Information Technology",
+   "code": "ITE",
+   "number": 17,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 22,
+   "total": 23,
+   "modes": {
+    "decision": 21,
+    "nextstep": 20,
+    "order": 1,
+    "find": 1
+   }
+  },
+  {
+   "skill": "job-specific-tools-and-technologies",
+   "name": "Job-Specific Tools and Technologies",
+   "code": "JST",
+   "number": 18,
+   "level": "beginner",
+   "before": 2,
+   "authored": 2,
+   "composed": 19,
+   "total": 21,
+   "modes": {
+    "decision": 16,
+    "nextstep": 15,
+    "order": 0,
+    "find": 5
+   }
+  },
+  {
+   "skill": "job-specific-tools-and-technologies",
+   "name": "Job-Specific Tools and Technologies",
+   "code": "JST",
+   "number": 18,
+   "level": "intermediate",
+   "before": 3,
+   "authored": 3,
+   "composed": 25,
+   "total": 28,
+   "modes": {
+    "decision": 23,
+    "nextstep": 23,
+    "order": 3,
+    "find": 1
+   }
+  },
+  {
+   "skill": "job-specific-tools-and-technologies",
+   "name": "Job-Specific Tools and Technologies",
+   "code": "JST",
+   "number": 18,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 29,
+   "total": 30,
+   "modes": {
+    "decision": 28,
+    "nextstep": 27,
+    "order": 1,
+    "find": 1
+   }
+  },
+  {
+   "skill": "mathematics",
+   "name": "Mathematics",
+   "code": "MAT",
+   "number": 19,
+   "level": "beginner",
+   "before": 1,
+   "authored": 1,
+   "composed": 19,
+   "total": 20,
+   "modes": {
+    "decision": 16,
+    "nextstep": 0,
+    "order": 1,
+    "find": 3
+   }
+  },
+  {
+   "skill": "mathematics",
+   "name": "Mathematics",
+   "code": "MAT",
+   "number": 19,
+   "level": "intermediate",
+   "before": 5,
+   "authored": 5,
+   "composed": 18,
+   "total": 23,
+   "modes": {
+    "decision": 18,
+    "nextstep": 1,
+    "order": 0,
+    "find": 4
+   }
+  },
+  {
+   "skill": "mathematics",
+   "name": "Mathematics",
+   "code": "MAT",
+   "number": 19,
+   "level": "advanced",
+   "before": 4,
+   "authored": 4,
+   "composed": 19,
+   "total": 23,
+   "modes": {
+    "decision": 17,
+    "nextstep": 1,
+    "order": 1,
+    "find": 4
+   }
+  },
+  {
+   "skill": "professionalism",
+   "name": "Professionalism",
+   "code": "PRO",
+   "number": 20,
+   "level": "beginner",
+   "before": 1,
+   "authored": 1,
+   "composed": 19,
+   "total": 20,
+   "modes": {
+    "decision": 16,
+    "nextstep": 15,
+    "order": 0,
+    "find": 4
+   }
+  },
+  {
+   "skill": "professionalism",
+   "name": "Professionalism",
+   "code": "PRO",
+   "number": 20,
+   "level": "intermediate",
+   "before": 4,
+   "authored": 4,
+   "composed": 22,
+   "total": 26,
+   "modes": {
+    "decision": 20,
+    "nextstep": 20,
+    "order": 3,
+    "find": 2
+   }
+  },
+  {
+   "skill": "professionalism",
+   "name": "Professionalism",
+   "code": "PRO",
+   "number": 20,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 22,
+   "total": 23,
+   "modes": {
+    "decision": 21,
+    "nextstep": 20,
+    "order": 1,
+    "find": 1
+   }
+  },
+  {
+   "skill": "reading-and-writing",
+   "name": "Reading and Writing",
+   "code": "RAW",
+   "number": 21,
+   "level": "beginner",
+   "before": 3,
+   "authored": 3,
+   "composed": 17,
+   "total": 20,
+   "modes": {
+    "decision": 14,
+    "nextstep": 13,
+    "order": 1,
+    "find": 5
+   }
+  },
+  {
+   "skill": "reading-and-writing",
+   "name": "Reading and Writing",
+   "code": "RAW",
+   "number": 21,
+   "level": "intermediate",
+   "before": 2,
+   "authored": 2,
+   "composed": 22,
+   "total": 24,
+   "modes": {
+    "decision": 21,
+    "nextstep": 21,
+    "order": 0,
+    "find": 2
+   }
+  },
+  {
+   "skill": "reading-and-writing",
+   "name": "Reading and Writing",
+   "code": "RAW",
+   "number": 21,
+   "level": "advanced",
+   "before": 4,
+   "authored": 4,
+   "composed": 20,
+   "total": 24,
+   "modes": {
+    "decision": 19,
+    "nextstep": 19,
+    "order": 1,
+    "find": 3
+   }
+  },
+  {
+   "skill": "workplace-safety",
+   "name": "Workplace Safety",
+   "code": "SAF",
+   "number": 22,
+   "level": "beginner",
+   "before": 2,
+   "authored": 2,
+   "composed": 28,
+   "total": 30,
+   "modes": {
+    "decision": 18,
+    "nextstep": 18,
+    "order": 5,
+    "find": 6
+   }
+  },
+  {
+   "skill": "workplace-safety",
+   "name": "Workplace Safety",
+   "code": "SAF",
+   "number": 22,
+   "level": "intermediate",
+   "before": 6,
+   "authored": 6,
+   "composed": 49,
+   "total": 55,
+   "modes": {
+    "decision": 38,
+    "nextstep": 37,
+    "order": 10,
+    "find": 6
+   }
+  },
+  {
+   "skill": "workplace-safety",
+   "name": "Workplace Safety",
+   "code": "SAF",
+   "number": 22,
+   "level": "advanced",
+   "before": 1,
+   "authored": 1,
+   "composed": 42,
+   "total": 43,
+   "modes": {
+    "decision": 35,
+    "nextstep": 34,
+    "order": 6,
+    "find": 2
+   }
+  }
+ ],
+ "sessions": [
+  {
+   "label": "all-skills mixed",
+   "before": [
+    {
+     "n": 14,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 14,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 20,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 20,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 50,
+     "exactRepeats": 0,
+     "reasoningRepeats": 3.67,
+     "familyDistinct": 46.33,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 100,
+     "exactRepeats": 1,
+     "reasoningRepeats": 20.33,
+     "familyDistinct": 78.33,
+     "scenarioRepeats": 1.33
+    },
+    {
+     "n": 500,
+     "exactRepeats": 43.33,
+     "reasoningRepeats": 363.33,
+     "familyDistinct": 133.67,
+     "scenarioRepeats": 49
+    }
+   ],
+   "after": [
+    {
+     "n": 14,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 14,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 20,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 20,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 50,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 39.33,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 100,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 60.67,
+     "scenarioRepeats": 0.33
+    },
+    {
+     "n": 500,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 124,
+     "scenarioRepeats": 23
+    }
+   ]
+  },
+  {
+   "label": "one skill (Integrity), mixed difficulty",
+   "before": [
+    {
+     "n": 14,
+     "exactRepeats": 1,
+     "reasoningRepeats": 8,
+     "familyDistinct": 6,
+     "scenarioRepeats": 1
+    },
+    {
+     "n": 20,
+     "exactRepeats": 2,
+     "reasoningRepeats": 14,
+     "familyDistinct": 6,
+     "scenarioRepeats": 2
+    },
+    {
+     "n": 50,
+     "exactRepeats": 9.67,
+     "reasoningRepeats": 44,
+     "familyDistinct": 6,
+     "scenarioRepeats": 9.67
+    },
+    {
+     "n": 100,
+     "exactRepeats": 25.33,
+     "reasoningRepeats": 94,
+     "familyDistinct": 6,
+     "scenarioRepeats": 25.33
+    },
+    {
+     "n": 500,
+     "exactRepeats": 265.67,
+     "reasoningRepeats": 494,
+     "familyDistinct": 6,
+     "scenarioRepeats": 265.67
+    }
+   ],
+   "after": [
+    {
+     "n": 14,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 9,
+     "scenarioRepeats": 0.33
+    },
+    {
+     "n": 20,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 9,
+     "scenarioRepeats": 1
+    },
+    {
+     "n": 50,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 9,
+     "scenarioRepeats": 3.33
+    },
+    {
+     "n": 100,
+     "exactRepeats": 1,
+     "reasoningRepeats": 16,
+     "familyDistinct": 9,
+     "scenarioRepeats": 5.67
+    },
+    {
+     "n": 500,
+     "exactRepeats": 42.33,
+     "reasoningRepeats": 416,
+     "familyDistinct": 9,
+     "scenarioRepeats": 87.67
+    }
+   ]
+  },
+  {
+   "label": "one skill + Advanced (Mathematics)",
+   "before": [
+    {
+     "n": 14,
+     "exactRepeats": 10,
+     "reasoningRepeats": 10,
+     "familyDistinct": 4,
+     "scenarioRepeats": 10
+    },
+    {
+     "n": 20,
+     "exactRepeats": 16,
+     "reasoningRepeats": 16,
+     "familyDistinct": 4,
+     "scenarioRepeats": 16
+    },
+    {
+     "n": 50,
+     "exactRepeats": 46,
+     "reasoningRepeats": 46,
+     "familyDistinct": 4,
+     "scenarioRepeats": 46
+    },
+    {
+     "n": 100,
+     "exactRepeats": 96,
+     "reasoningRepeats": 96,
+     "familyDistinct": 4,
+     "scenarioRepeats": 96
+    },
+    {
+     "n": 500,
+     "exactRepeats": 496,
+     "reasoningRepeats": 496,
+     "familyDistinct": 4,
+     "scenarioRepeats": 496
+    }
+   ],
+   "after": [
+    {
+     "n": 14,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 6,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 20,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 6,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 50,
+     "exactRepeats": 8,
+     "reasoningRepeats": 27,
+     "familyDistinct": 6,
+     "scenarioRepeats": 9.33
+    },
+    {
+     "n": 100,
+     "exactRepeats": 16,
+     "reasoningRepeats": 77,
+     "familyDistinct": 6,
+     "scenarioRepeats": 19.67
+    },
+    {
+     "n": 500,
+     "exactRepeats": 93.33,
+     "reasoningRepeats": 477,
+     "familyDistinct": 6,
+     "scenarioRepeats": 176.67
+    }
+   ]
+  },
+  {
+   "label": "Advanced, Best Next Step",
+   "before": [
+    {
+     "n": 14,
+     "exactRepeats": 5.67,
+     "reasoningRepeats": 9,
+     "familyDistinct": 5,
+     "scenarioRepeats": 5.67
+    },
+    {
+     "n": 20,
+     "exactRepeats": 9,
+     "reasoningRepeats": 15,
+     "familyDistinct": 5,
+     "scenarioRepeats": 9
+    },
+    {
+     "n": 50,
+     "exactRepeats": 28,
+     "reasoningRepeats": 45,
+     "familyDistinct": 5,
+     "scenarioRepeats": 28
+    },
+    {
+     "n": 100,
+     "exactRepeats": 60.33,
+     "reasoningRepeats": 95,
+     "familyDistinct": 5,
+     "scenarioRepeats": 60.33
+    },
+    {
+     "n": 500,
+     "exactRepeats": 351,
+     "reasoningRepeats": 495,
+     "familyDistinct": 5,
+     "scenarioRepeats": 351
+    }
+   ],
+   "after": [
+    {
+     "n": 14,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 14,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 20,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 20,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 50,
+     "exactRepeats": 1,
+     "reasoningRepeats": 1,
+     "familyDistinct": 31,
+     "scenarioRepeats": 1
+    },
+    {
+     "n": 100,
+     "exactRepeats": 3,
+     "reasoningRepeats": 3,
+     "familyDistinct": 40.33,
+     "scenarioRepeats": 3
+    },
+    {
+     "n": 500,
+     "exactRepeats": 22.33,
+     "reasoningRepeats": 63.67,
+     "familyDistinct": 45,
+     "scenarioRepeats": 22.33
+    }
+   ]
+  },
+  {
+   "label": "Advanced, Put the Steps in Order",
+   "before": [
+    {
+     "n": 14,
+     "exactRepeats": 11,
+     "reasoningRepeats": 11,
+     "familyDistinct": 3,
+     "scenarioRepeats": 11
+    },
+    {
+     "n": 20,
+     "exactRepeats": 17,
+     "reasoningRepeats": 17,
+     "familyDistinct": 3,
+     "scenarioRepeats": 17
+    },
+    {
+     "n": 50,
+     "exactRepeats": 47,
+     "reasoningRepeats": 47,
+     "familyDistinct": 3,
+     "scenarioRepeats": 47
+    },
+    {
+     "n": 100,
+     "exactRepeats": 97,
+     "reasoningRepeats": 97,
+     "familyDistinct": 3,
+     "scenarioRepeats": 97
+    },
+    {
+     "n": 500,
+     "exactRepeats": 497,
+     "reasoningRepeats": 497,
+     "familyDistinct": 3,
+     "scenarioRepeats": 497
+    }
+   ],
+   "after": [
+    {
+     "n": 14,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 14,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 20,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 20,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 50,
+     "exactRepeats": 2.33,
+     "reasoningRepeats": 12,
+     "familyDistinct": 30.67,
+     "scenarioRepeats": 2.33
+    },
+    {
+     "n": 100,
+     "exactRepeats": 10,
+     "reasoningRepeats": 54.33,
+     "familyDistinct": 32,
+     "scenarioRepeats": 10.33
+    },
+    {
+     "n": 500,
+     "exactRepeats": 91.33,
+     "reasoningRepeats": 453,
+     "familyDistinct": 32,
+     "scenarioRepeats": 93.33
+    }
+   ]
+  },
+  {
+   "label": "Advanced, Find the Problem",
+   "before": [
+    {
+     "n": 14,
+     "exactRepeats": 11,
+     "reasoningRepeats": 11,
+     "familyDistinct": 3,
+     "scenarioRepeats": 11
+    },
+    {
+     "n": 20,
+     "exactRepeats": 17,
+     "reasoningRepeats": 17,
+     "familyDistinct": 3,
+     "scenarioRepeats": 17
+    },
+    {
+     "n": 50,
+     "exactRepeats": 47,
+     "reasoningRepeats": 47,
+     "familyDistinct": 3,
+     "scenarioRepeats": 47
+    },
+    {
+     "n": 100,
+     "exactRepeats": 97,
+     "reasoningRepeats": 97,
+     "familyDistinct": 3,
+     "scenarioRepeats": 97
+    },
+    {
+     "n": 500,
+     "exactRepeats": 497,
+     "reasoningRepeats": 497,
+     "familyDistinct": 3,
+     "scenarioRepeats": 497
+    }
+   ],
+   "after": [
+    {
+     "n": 14,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 14,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 20,
+     "exactRepeats": 0,
+     "reasoningRepeats": 0,
+     "familyDistinct": 20,
+     "scenarioRepeats": 0
+    },
+    {
+     "n": 50,
+     "exactRepeats": 1.33,
+     "reasoningRepeats": 14.33,
+     "familyDistinct": 35.67,
+     "scenarioRepeats": 9.33
+    },
+    {
+     "n": 100,
+     "exactRepeats": 9.33,
+     "reasoningRepeats": 62,
+     "familyDistinct": 36,
+     "scenarioRepeats": 36.33
+    },
+    {
+     "n": 500,
+     "exactRepeats": 92.33,
+     "reasoningRepeats": 462,
+     "familyDistinct": 36,
+     "scenarioRepeats": 303.33
+    }
+   ]
+  }
+ ],
+ "filters": [
+  {
+   "selection": "all-skills/mixed/mixed-difficulty/any-setting",
+   "before": 140,
+   "after": 1871
+  },
+  {
+   "selection": "all-skills/mixed/beginner/any-setting",
+   "before": 47,
+   "after": 494
+  },
+  {
+   "selection": "all-skills/mixed/intermediate/any-setting",
+   "before": 62,
+   "after": 753
+  },
+  {
+   "selection": "all-skills/mixed/advanced/any-setting",
+   "before": 31,
+   "after": 624
+  },
+  {
+   "selection": "all-skills/decision/beginner/any-setting",
+   "before": 18,
+   "after": 358
+  },
+  {
+   "selection": "all-skills/decision/intermediate/any-setting",
+   "before": 21,
+   "after": 600
+  },
+  {
+   "selection": "all-skills/decision/advanced/any-setting",
+   "before": 20,
+   "after": 534
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/any-setting",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/any-setting",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/any-setting",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/any-setting",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/any-setting",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/any-setting",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/any-setting",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/any-setting",
+   "before": 11,
+   "after": 50
+  },
+  {
+   "selection": "all-skills/find/advanced/any-setting",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/agriculture",
+   "before": 17,
+   "after": 357
+  },
+  {
+   "selection": "all-skills/decision/intermediate/agriculture",
+   "before": 21,
+   "after": 600
+  },
+  {
+   "selection": "all-skills/decision/advanced/agriculture",
+   "before": 18,
+   "after": 532
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/agriculture",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/agriculture",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/agriculture",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/agriculture",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/agriculture",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/agriculture",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/agriculture",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/agriculture",
+   "before": 11,
+   "after": 50
+  },
+  {
+   "selection": "all-skills/find/advanced/agriculture",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/automotive",
+   "before": 18,
+   "after": 358
+  },
+  {
+   "selection": "all-skills/decision/intermediate/automotive",
+   "before": 20,
+   "after": 599
+  },
+  {
+   "selection": "all-skills/decision/advanced/automotive",
+   "before": 20,
+   "after": 534
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/automotive",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/automotive",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/automotive",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/automotive",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/automotive",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/automotive",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/automotive",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/automotive",
+   "before": 10,
+   "after": 49
+  },
+  {
+   "selection": "all-skills/find/advanced/automotive",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/business",
+   "before": 16,
+   "after": 356
+  },
+  {
+   "selection": "all-skills/decision/intermediate/business",
+   "before": 20,
+   "after": 599
+  },
+  {
+   "selection": "all-skills/decision/advanced/business",
+   "before": 18,
+   "after": 532
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/business",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/business",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/business",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/business",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/business",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/business",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/business",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/business",
+   "before": 10,
+   "after": 49
+  },
+  {
+   "selection": "all-skills/find/advanced/business",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/construction",
+   "before": 18,
+   "after": 358
+  },
+  {
+   "selection": "all-skills/decision/intermediate/construction",
+   "before": 20,
+   "after": 599
+  },
+  {
+   "selection": "all-skills/decision/advanced/construction",
+   "before": 18,
+   "after": 532
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/construction",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/construction",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/construction",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/construction",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/construction",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/construction",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/construction",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/construction",
+   "before": 10,
+   "after": 49
+  },
+  {
+   "selection": "all-skills/find/advanced/construction",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/culinary",
+   "before": 17,
+   "after": 357
+  },
+  {
+   "selection": "all-skills/decision/intermediate/culinary",
+   "before": 21,
+   "after": 600
+  },
+  {
+   "selection": "all-skills/decision/advanced/culinary",
+   "before": 19,
+   "after": 533
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/culinary",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/culinary",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/culinary",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/culinary",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/culinary",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/culinary",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/culinary",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/culinary",
+   "before": 11,
+   "after": 50
+  },
+  {
+   "selection": "all-skills/find/advanced/culinary",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/education",
+   "before": 16,
+   "after": 356
+  },
+  {
+   "selection": "all-skills/decision/intermediate/education",
+   "before": 17,
+   "after": 596
+  },
+  {
+   "selection": "all-skills/decision/advanced/education",
+   "before": 19,
+   "after": 533
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/education",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/education",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/education",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/education",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/education",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/education",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/education",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/education",
+   "before": 10,
+   "after": 49
+  },
+  {
+   "selection": "all-skills/find/advanced/education",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/engineering",
+   "before": 18,
+   "after": 358
+  },
+  {
+   "selection": "all-skills/decision/intermediate/engineering",
+   "before": 19,
+   "after": 598
+  },
+  {
+   "selection": "all-skills/decision/advanced/engineering",
+   "before": 17,
+   "after": 531
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/engineering",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/engineering",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/engineering",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/engineering",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/engineering",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/engineering",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/engineering",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/engineering",
+   "before": 10,
+   "after": 49
+  },
+  {
+   "selection": "all-skills/find/advanced/engineering",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/healthcare",
+   "before": 17,
+   "after": 357
+  },
+  {
+   "selection": "all-skills/decision/intermediate/healthcare",
+   "before": 17,
+   "after": 596
+  },
+  {
+   "selection": "all-skills/decision/advanced/healthcare",
+   "before": 19,
+   "after": 533
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/healthcare",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/healthcare",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/healthcare",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/healthcare",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/healthcare",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/healthcare",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/healthcare",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/healthcare",
+   "before": 10,
+   "after": 49
+  },
+  {
+   "selection": "all-skills/find/advanced/healthcare",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/hospitality",
+   "before": 16,
+   "after": 356
+  },
+  {
+   "selection": "all-skills/decision/intermediate/hospitality",
+   "before": 20,
+   "after": 599
+  },
+  {
+   "selection": "all-skills/decision/advanced/hospitality",
+   "before": 19,
+   "after": 533
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/hospitality",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/hospitality",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/hospitality",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/hospitality",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/hospitality",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/hospitality",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/hospitality",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/hospitality",
+   "before": 10,
+   "after": 49
+  },
+  {
+   "selection": "all-skills/find/advanced/hospitality",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/it",
+   "before": 17,
+   "after": 357
+  },
+  {
+   "selection": "all-skills/decision/intermediate/it",
+   "before": 18,
+   "after": 597
+  },
+  {
+   "selection": "all-skills/decision/advanced/it",
+   "before": 18,
+   "after": 532
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/it",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/it",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/it",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/it",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/it",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/it",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/it",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/it",
+   "before": 10,
+   "after": 49
+  },
+  {
+   "selection": "all-skills/find/advanced/it",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/manufacturing",
+   "before": 18,
+   "after": 358
+  },
+  {
+   "selection": "all-skills/decision/intermediate/manufacturing",
+   "before": 20,
+   "after": 599
+  },
+  {
+   "selection": "all-skills/decision/advanced/manufacturing",
+   "before": 18,
+   "after": 532
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/manufacturing",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/manufacturing",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/manufacturing",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/manufacturing",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/manufacturing",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/manufacturing",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/manufacturing",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/manufacturing",
+   "before": 11,
+   "after": 50
+  },
+  {
+   "selection": "all-skills/find/advanced/manufacturing",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/media",
+   "before": 16,
+   "after": 356
+  },
+  {
+   "selection": "all-skills/decision/intermediate/media",
+   "before": 19,
+   "after": 598
+  },
+  {
+   "selection": "all-skills/decision/advanced/media",
+   "before": 17,
+   "after": 531
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/media",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/media",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/media",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/media",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/media",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/media",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/media",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/media",
+   "before": 10,
+   "after": 49
+  },
+  {
+   "selection": "all-skills/find/advanced/media",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "all-skills/decision/beginner/retail",
+   "before": 16,
+   "after": 356
+  },
+  {
+   "selection": "all-skills/decision/intermediate/retail",
+   "before": 21,
+   "after": 600
+  },
+  {
+   "selection": "all-skills/decision/advanced/retail",
+   "before": 19,
+   "after": 533
+  },
+  {
+   "selection": "all-skills/nextstep/beginner/retail",
+   "before": 3,
+   "after": 327
+  },
+  {
+   "selection": "all-skills/nextstep/intermediate/retail",
+   "before": 21,
+   "after": 585
+  },
+  {
+   "selection": "all-skills/nextstep/advanced/retail",
+   "before": 5,
+   "after": 503
+  },
+  {
+   "selection": "all-skills/order/beginner/retail",
+   "before": 14,
+   "after": 48
+  },
+  {
+   "selection": "all-skills/order/intermediate/retail",
+   "before": 9,
+   "after": 82
+  },
+  {
+   "selection": "all-skills/order/advanced/retail",
+   "before": 3,
+   "after": 47
+  },
+  {
+   "selection": "all-skills/find/beginner/retail",
+   "before": 12,
+   "after": 85
+  },
+  {
+   "selection": "all-skills/find/intermediate/retail",
+   "before": 11,
+   "after": 50
+  },
+  {
+   "selection": "all-skills/find/advanced/retail",
+   "before": 3,
+   "after": 38
+  },
+  {
+   "selection": "creativity-and-innovation/mixed/beginner/any-setting",
+   "before": 2,
+   "after": 23
+  },
+  {
+   "selection": "creativity-and-innovation/decision/beginner/any-setting",
+   "before": 1,
+   "after": 16
+  },
+  {
+   "selection": "creativity-and-innovation/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 15
+  },
+  {
+   "selection": "creativity-and-innovation/order/beginner/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "creativity-and-innovation/find/beginner/any-setting",
+   "before": 0,
+   "after": 4
+  },
+  {
+   "selection": "creativity-and-innovation/mixed/intermediate/any-setting",
+   "before": 2,
+   "after": 34
+  },
+  {
+   "selection": "creativity-and-innovation/decision/intermediate/any-setting",
+   "before": 0,
+   "after": 25
+  },
+  {
+   "selection": "creativity-and-innovation/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 26
+  },
+  {
+   "selection": "creativity-and-innovation/order/intermediate/any-setting",
+   "before": 0,
+   "after": 5
+  },
+  {
+   "selection": "creativity-and-innovation/find/intermediate/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "creativity-and-innovation/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 26
+  },
+  {
+   "selection": "creativity-and-innovation/decision/advanced/any-setting",
+   "before": 1,
+   "after": 20
+  },
+  {
+   "selection": "creativity-and-innovation/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 19
+  },
+  {
+   "selection": "creativity-and-innovation/order/advanced/any-setting",
+   "before": 0,
+   "after": 4
+  },
+  {
+   "selection": "creativity-and-innovation/find/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/mixed/beginner/any-setting",
+   "before": 1,
+   "after": 23
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/decision/beginner/any-setting",
+   "before": 0,
+   "after": 16
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 16
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/order/beginner/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/find/beginner/any-setting",
+   "before": 0,
+   "after": 4
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/mixed/intermediate/any-setting",
+   "before": 3,
+   "after": 41
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 31
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 31
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/order/intermediate/any-setting",
+   "before": 0,
+   "after": 5
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/find/intermediate/any-setting",
+   "before": 1,
+   "after": 4
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 28
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/decision/advanced/any-setting",
+   "before": 1,
+   "after": 24
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 23
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/order/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "critical-thinking-and-problem-solving/find/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "initiative-and-self-direction/mixed/beginner/any-setting",
+   "before": 2,
+   "after": 24
+  },
+  {
+   "selection": "initiative-and-self-direction/decision/beginner/any-setting",
+   "before": 1,
+   "after": 16
+  },
+  {
+   "selection": "initiative-and-self-direction/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 15
+  },
+  {
+   "selection": "initiative-and-self-direction/order/beginner/any-setting",
+   "before": 1,
+   "after": 5
+  },
+  {
+   "selection": "initiative-and-self-direction/find/beginner/any-setting",
+   "before": 0,
+   "after": 3
+  },
+  {
+   "selection": "initiative-and-self-direction/mixed/intermediate/any-setting",
+   "before": 2,
+   "after": 40
+  },
+  {
+   "selection": "initiative-and-self-direction/decision/intermediate/any-setting",
+   "before": 0,
+   "after": 31
+  },
+  {
+   "selection": "initiative-and-self-direction/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 32
+  },
+  {
+   "selection": "initiative-and-self-direction/order/intermediate/any-setting",
+   "before": 0,
+   "after": 5
+  },
+  {
+   "selection": "initiative-and-self-direction/find/intermediate/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "initiative-and-self-direction/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 36
+  },
+  {
+   "selection": "initiative-and-self-direction/decision/advanced/any-setting",
+   "before": 1,
+   "after": 32
+  },
+  {
+   "selection": "initiative-and-self-direction/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 31
+  },
+  {
+   "selection": "initiative-and-self-direction/order/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "initiative-and-self-direction/find/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "integrity/mixed/beginner/any-setting",
+   "before": 1,
+   "after": 25
+  },
+  {
+   "selection": "integrity/decision/beginner/any-setting",
+   "before": 1,
+   "after": 18
+  },
+  {
+   "selection": "integrity/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 17
+  },
+  {
+   "selection": "integrity/order/beginner/any-setting",
+   "before": 0,
+   "after": 3
+  },
+  {
+   "selection": "integrity/find/beginner/any-setting",
+   "before": 0,
+   "after": 4
+  },
+  {
+   "selection": "integrity/mixed/intermediate/any-setting",
+   "before": 4,
+   "after": 34
+  },
+  {
+   "selection": "integrity/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 23
+  },
+  {
+   "selection": "integrity/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 23
+  },
+  {
+   "selection": "integrity/order/intermediate/any-setting",
+   "before": 1,
+   "after": 7
+  },
+  {
+   "selection": "integrity/find/intermediate/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "integrity/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 25
+  },
+  {
+   "selection": "integrity/decision/advanced/any-setting",
+   "before": 1,
+   "after": 19
+  },
+  {
+   "selection": "integrity/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 18
+  },
+  {
+   "selection": "integrity/order/advanced/any-setting",
+   "before": 0,
+   "after": 4
+  },
+  {
+   "selection": "integrity/find/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "work-ethic/mixed/beginner/any-setting",
+   "before": 3,
+   "after": 23
+  },
+  {
+   "selection": "work-ethic/decision/beginner/any-setting",
+   "before": 1,
+   "after": 15
+  },
+  {
+   "selection": "work-ethic/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 14
+  },
+  {
+   "selection": "work-ethic/order/beginner/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "work-ethic/find/beginner/any-setting",
+   "before": 1,
+   "after": 5
+  },
+  {
+   "selection": "work-ethic/mixed/intermediate/any-setting",
+   "before": 1,
+   "after": 31
+  },
+  {
+   "selection": "work-ethic/decision/intermediate/any-setting",
+   "before": 0,
+   "after": 23
+  },
+  {
+   "selection": "work-ethic/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 24
+  },
+  {
+   "selection": "work-ethic/order/intermediate/any-setting",
+   "before": 0,
+   "after": 5
+  },
+  {
+   "selection": "work-ethic/find/intermediate/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "work-ethic/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 25
+  },
+  {
+   "selection": "work-ethic/decision/advanced/any-setting",
+   "before": 1,
+   "after": 19
+  },
+  {
+   "selection": "work-ethic/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 18
+  },
+  {
+   "selection": "work-ethic/order/advanced/any-setting",
+   "before": 0,
+   "after": 4
+  },
+  {
+   "selection": "work-ethic/find/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "conflict-resolution/mixed/beginner/any-setting",
+   "before": 1,
+   "after": 20
+  },
+  {
+   "selection": "conflict-resolution/decision/beginner/any-setting",
+   "before": 0,
+   "after": 13
+  },
+  {
+   "selection": "conflict-resolution/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 13
+  },
+  {
+   "selection": "conflict-resolution/order/beginner/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "conflict-resolution/find/beginner/any-setting",
+   "before": 1,
+   "after": 5
+  },
+  {
+   "selection": "conflict-resolution/mixed/intermediate/any-setting",
+   "before": 3,
+   "after": 34
+  },
+  {
+   "selection": "conflict-resolution/decision/intermediate/any-setting",
+   "before": 2,
+   "after": 27
+  },
+  {
+   "selection": "conflict-resolution/nextstep/intermediate/any-setting",
+   "before": 0,
+   "after": 25
+  },
+  {
+   "selection": "conflict-resolution/order/intermediate/any-setting",
+   "before": 1,
+   "after": 5
+  },
+  {
+   "selection": "conflict-resolution/find/intermediate/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "conflict-resolution/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 20
+  },
+  {
+   "selection": "conflict-resolution/decision/advanced/any-setting",
+   "before": 0,
+   "after": 15
+  },
+  {
+   "selection": "conflict-resolution/nextstep/advanced/any-setting",
+   "before": 1,
+   "after": 16
+  },
+  {
+   "selection": "conflict-resolution/order/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "conflict-resolution/find/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "listening-and-speaking/mixed/beginner/any-setting",
+   "before": 2,
+   "after": 20
+  },
+  {
+   "selection": "listening-and-speaking/decision/beginner/any-setting",
+   "before": 1,
+   "after": 16
+  },
+  {
+   "selection": "listening-and-speaking/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 15
+  },
+  {
+   "selection": "listening-and-speaking/order/beginner/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "listening-and-speaking/find/beginner/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "listening-and-speaking/mixed/intermediate/any-setting",
+   "before": 3,
+   "after": 39
+  },
+  {
+   "selection": "listening-and-speaking/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 34
+  },
+  {
+   "selection": "listening-and-speaking/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 34
+  },
+  {
+   "selection": "listening-and-speaking/order/intermediate/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "listening-and-speaking/find/intermediate/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "listening-and-speaking/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 37
+  },
+  {
+   "selection": "listening-and-speaking/decision/advanced/any-setting",
+   "before": 1,
+   "after": 35
+  },
+  {
+   "selection": "listening-and-speaking/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 34
+  },
+  {
+   "selection": "listening-and-speaking/order/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "listening-and-speaking/find/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "respect-for-diversity/mixed/beginner/any-setting",
+   "before": 3,
+   "after": 20
+  },
+  {
+   "selection": "respect-for-diversity/decision/beginner/any-setting",
+   "before": 1,
+   "after": 14
+  },
+  {
+   "selection": "respect-for-diversity/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 13
+  },
+  {
+   "selection": "respect-for-diversity/order/beginner/any-setting",
+   "before": 1,
+   "after": 2
+  },
+  {
+   "selection": "respect-for-diversity/find/beginner/any-setting",
+   "before": 1,
+   "after": 4
+  },
+  {
+   "selection": "respect-for-diversity/mixed/intermediate/any-setting",
+   "before": 2,
+   "after": 28
+  },
+  {
+   "selection": "respect-for-diversity/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 24
+  },
+  {
+   "selection": "respect-for-diversity/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 24
+  },
+  {
+   "selection": "respect-for-diversity/order/intermediate/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "respect-for-diversity/find/intermediate/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "respect-for-diversity/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 22
+  },
+  {
+   "selection": "respect-for-diversity/decision/advanced/any-setting",
+   "before": 1,
+   "after": 20
+  },
+  {
+   "selection": "respect-for-diversity/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 19
+  },
+  {
+   "selection": "respect-for-diversity/order/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "respect-for-diversity/find/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "customer-service-orientation/mixed/beginner/any-setting",
+   "before": 4,
+   "after": 23
+  },
+  {
+   "selection": "customer-service-orientation/decision/beginner/any-setting",
+   "before": 1,
+   "after": 16
+  },
+  {
+   "selection": "customer-service-orientation/nextstep/beginner/any-setting",
+   "before": 1,
+   "after": 16
+  },
+  {
+   "selection": "customer-service-orientation/order/beginner/any-setting",
+   "before": 1,
+   "after": 2
+  },
+  {
+   "selection": "customer-service-orientation/find/beginner/any-setting",
+   "before": 1,
+   "after": 4
+  },
+  {
+   "selection": "customer-service-orientation/mixed/intermediate/any-setting",
+   "before": 2,
+   "after": 36
+  },
+  {
+   "selection": "customer-service-orientation/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 31
+  },
+  {
+   "selection": "customer-service-orientation/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 31
+  },
+  {
+   "selection": "customer-service-orientation/order/intermediate/any-setting",
+   "before": 0,
+   "after": 3
+  },
+  {
+   "selection": "customer-service-orientation/find/intermediate/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "customer-service-orientation/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 28
+  },
+  {
+   "selection": "customer-service-orientation/decision/advanced/any-setting",
+   "before": 1,
+   "after": 25
+  },
+  {
+   "selection": "customer-service-orientation/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 24
+  },
+  {
+   "selection": "customer-service-orientation/order/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "customer-service-orientation/find/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "teamwork/mixed/beginner/any-setting",
+   "before": 3,
+   "after": 21
+  },
+  {
+   "selection": "teamwork/decision/beginner/any-setting",
+   "before": 1,
+   "after": 15
+  },
+  {
+   "selection": "teamwork/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 14
+  },
+  {
+   "selection": "teamwork/order/beginner/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "teamwork/find/beginner/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "teamwork/mixed/intermediate/any-setting",
+   "before": 1,
+   "after": 38
+  },
+  {
+   "selection": "teamwork/decision/intermediate/any-setting",
+   "before": 0,
+   "after": 32
+  },
+  {
+   "selection": "teamwork/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 33
+  },
+  {
+   "selection": "teamwork/order/intermediate/any-setting",
+   "before": 0,
+   "after": 4
+  },
+  {
+   "selection": "teamwork/find/intermediate/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "teamwork/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 37
+  },
+  {
+   "selection": "teamwork/decision/advanced/any-setting",
+   "before": 1,
+   "after": 34
+  },
+  {
+   "selection": "teamwork/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 33
+  },
+  {
+   "selection": "teamwork/order/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "teamwork/find/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "big-picture-thinking/mixed/beginner/any-setting",
+   "before": 1,
+   "after": 26
+  },
+  {
+   "selection": "big-picture-thinking/decision/beginner/any-setting",
+   "before": 1,
+   "after": 20
+  },
+  {
+   "selection": "big-picture-thinking/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 19
+  },
+  {
+   "selection": "big-picture-thinking/order/beginner/any-setting",
+   "before": 0,
+   "after": 3
+  },
+  {
+   "selection": "big-picture-thinking/find/beginner/any-setting",
+   "before": 0,
+   "after": 3
+  },
+  {
+   "selection": "big-picture-thinking/mixed/intermediate/any-setting",
+   "before": 4,
+   "after": 35
+  },
+  {
+   "selection": "big-picture-thinking/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 26
+  },
+  {
+   "selection": "big-picture-thinking/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 26
+  },
+  {
+   "selection": "big-picture-thinking/order/intermediate/any-setting",
+   "before": 1,
+   "after": 5
+  },
+  {
+   "selection": "big-picture-thinking/find/intermediate/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "big-picture-thinking/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 24
+  },
+  {
+   "selection": "big-picture-thinking/decision/advanced/any-setting",
+   "before": 1,
+   "after": 20
+  },
+  {
+   "selection": "big-picture-thinking/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 19
+  },
+  {
+   "selection": "big-picture-thinking/order/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "big-picture-thinking/find/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "career-and-life-management/mixed/beginner/any-setting",
+   "before": 2,
+   "after": 22
+  },
+  {
+   "selection": "career-and-life-management/decision/beginner/any-setting",
+   "before": 1,
+   "after": 18
+  },
+  {
+   "selection": "career-and-life-management/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 17
+  },
+  {
+   "selection": "career-and-life-management/order/beginner/any-setting",
+   "before": 1,
+   "after": 2
+  },
+  {
+   "selection": "career-and-life-management/find/beginner/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "career-and-life-management/mixed/intermediate/any-setting",
+   "before": 3,
+   "after": 41
+  },
+  {
+   "selection": "career-and-life-management/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 36
+  },
+  {
+   "selection": "career-and-life-management/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 36
+  },
+  {
+   "selection": "career-and-life-management/order/intermediate/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "career-and-life-management/find/intermediate/any-setting",
+   "before": 1,
+   "after": 2
+  },
+  {
+   "selection": "career-and-life-management/mixed/advanced/any-setting",
+   "before": 4,
+   "after": 41
+  },
+  {
+   "selection": "career-and-life-management/decision/advanced/any-setting",
+   "before": 1,
+   "after": 35
+  },
+  {
+   "selection": "career-and-life-management/nextstep/advanced/any-setting",
+   "before": 1,
+   "after": 35
+  },
+  {
+   "selection": "career-and-life-management/order/advanced/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "career-and-life-management/find/advanced/any-setting",
+   "before": 1,
+   "after": 2
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/mixed/beginner/any-setting",
+   "before": 3,
+   "after": 20
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/decision/beginner/any-setting",
+   "before": 1,
+   "after": 15
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 14
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/order/beginner/any-setting",
+   "before": 1,
+   "after": 2
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/find/beginner/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/mixed/intermediate/any-setting",
+   "before": 1,
+   "after": 32
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/decision/intermediate/any-setting",
+   "before": 0,
+   "after": 28
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 29
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/order/intermediate/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/find/intermediate/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 26
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/decision/advanced/any-setting",
+   "before": 1,
+   "after": 24
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 23
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/order/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "continuous-learning-and-adaptability/find/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "efficiency-and-productivity/mixed/beginner/any-setting",
+   "before": 3,
+   "after": 20
+  },
+  {
+   "selection": "efficiency-and-productivity/decision/beginner/any-setting",
+   "before": 1,
+   "after": 14
+  },
+  {
+   "selection": "efficiency-and-productivity/nextstep/beginner/any-setting",
+   "before": 1,
+   "after": 14
+  },
+  {
+   "selection": "efficiency-and-productivity/order/beginner/any-setting",
+   "before": 1,
+   "after": 2
+  },
+  {
+   "selection": "efficiency-and-productivity/find/beginner/any-setting",
+   "before": 0,
+   "after": 3
+  },
+  {
+   "selection": "efficiency-and-productivity/mixed/intermediate/any-setting",
+   "before": 3,
+   "after": 36
+  },
+  {
+   "selection": "efficiency-and-productivity/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 30
+  },
+  {
+   "selection": "efficiency-and-productivity/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 30
+  },
+  {
+   "selection": "efficiency-and-productivity/order/intermediate/any-setting",
+   "before": 0,
+   "after": 3
+  },
+  {
+   "selection": "efficiency-and-productivity/find/intermediate/any-setting",
+   "before": 1,
+   "after": 2
+  },
+  {
+   "selection": "efficiency-and-productivity/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 35
+  },
+  {
+   "selection": "efficiency-and-productivity/decision/advanced/any-setting",
+   "before": 1,
+   "after": 31
+  },
+  {
+   "selection": "efficiency-and-productivity/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 30
+  },
+  {
+   "selection": "efficiency-and-productivity/order/advanced/any-setting",
+   "before": 0,
+   "after": 3
+  },
+  {
+   "selection": "efficiency-and-productivity/find/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "information-literacy/mixed/beginner/any-setting",
+   "before": 2,
+   "after": 28
+  },
+  {
+   "selection": "information-literacy/decision/beginner/any-setting",
+   "before": 0,
+   "after": 21
+  },
+  {
+   "selection": "information-literacy/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 21
+  },
+  {
+   "selection": "information-literacy/order/beginner/any-setting",
+   "before": 1,
+   "after": 2
+  },
+  {
+   "selection": "information-literacy/find/beginner/any-setting",
+   "before": 1,
+   "after": 5
+  },
+  {
+   "selection": "information-literacy/mixed/intermediate/any-setting",
+   "before": 2,
+   "after": 31
+  },
+  {
+   "selection": "information-literacy/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 25
+  },
+  {
+   "selection": "information-literacy/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 25
+  },
+  {
+   "selection": "information-literacy/order/intermediate/any-setting",
+   "before": 0,
+   "after": 3
+  },
+  {
+   "selection": "information-literacy/find/intermediate/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "information-literacy/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 21
+  },
+  {
+   "selection": "information-literacy/decision/advanced/any-setting",
+   "before": 1,
+   "after": 18
+  },
+  {
+   "selection": "information-literacy/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 17
+  },
+  {
+   "selection": "information-literacy/order/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "information-literacy/find/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "information-security/mixed/beginner/any-setting",
+   "before": 2,
+   "after": 25
+  },
+  {
+   "selection": "information-security/decision/beginner/any-setting",
+   "before": 1,
+   "after": 19
+  },
+  {
+   "selection": "information-security/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 18
+  },
+  {
+   "selection": "information-security/order/beginner/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "information-security/find/beginner/any-setting",
+   "before": 1,
+   "after": 4
+  },
+  {
+   "selection": "information-security/mixed/intermediate/any-setting",
+   "before": 4,
+   "after": 36
+  },
+  {
+   "selection": "information-security/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 26
+  },
+  {
+   "selection": "information-security/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 26
+  },
+  {
+   "selection": "information-security/order/intermediate/any-setting",
+   "before": 1,
+   "after": 6
+  },
+  {
+   "selection": "information-security/find/intermediate/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "information-security/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 27
+  },
+  {
+   "selection": "information-security/decision/advanced/any-setting",
+   "before": 0,
+   "after": 22
+  },
+  {
+   "selection": "information-security/nextstep/advanced/any-setting",
+   "before": 1,
+   "after": 23
+  },
+  {
+   "selection": "information-security/order/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "information-security/find/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "information-technology/mixed/beginner/any-setting",
+   "before": 3,
+   "after": 20
+  },
+  {
+   "selection": "information-technology/decision/beginner/any-setting",
+   "before": 1,
+   "after": 16
+  },
+  {
+   "selection": "information-technology/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 15
+  },
+  {
+   "selection": "information-technology/order/beginner/any-setting",
+   "before": 1,
+   "after": 1
+  },
+  {
+   "selection": "information-technology/find/beginner/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "information-technology/mixed/intermediate/any-setting",
+   "before": 2,
+   "after": 31
+  },
+  {
+   "selection": "information-technology/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 28
+  },
+  {
+   "selection": "information-technology/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 28
+  },
+  {
+   "selection": "information-technology/order/intermediate/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "information-technology/find/intermediate/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "information-technology/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 23
+  },
+  {
+   "selection": "information-technology/decision/advanced/any-setting",
+   "before": 1,
+   "after": 21
+  },
+  {
+   "selection": "information-technology/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 20
+  },
+  {
+   "selection": "information-technology/order/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "information-technology/find/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/mixed/beginner/any-setting",
+   "before": 2,
+   "after": 21
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/decision/beginner/any-setting",
+   "before": 1,
+   "after": 16
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 15
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/order/beginner/any-setting",
+   "before": 0,
+   "after": 0
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/find/beginner/any-setting",
+   "before": 1,
+   "after": 5
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/mixed/intermediate/any-setting",
+   "before": 3,
+   "after": 28
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 23
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 23
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/order/intermediate/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/find/intermediate/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 30
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/decision/advanced/any-setting",
+   "before": 1,
+   "after": 28
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 27
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/order/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "job-specific-tools-and-technologies/find/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "mathematics/mixed/beginner/any-setting",
+   "before": 1,
+   "after": 20
+  },
+  {
+   "selection": "mathematics/decision/beginner/any-setting",
+   "before": 0,
+   "after": 16
+  },
+  {
+   "selection": "mathematics/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 0
+  },
+  {
+   "selection": "mathematics/order/beginner/any-setting",
+   "before": 1,
+   "after": 1
+  },
+  {
+   "selection": "mathematics/find/beginner/any-setting",
+   "before": 0,
+   "after": 3
+  },
+  {
+   "selection": "mathematics/mixed/intermediate/any-setting",
+   "before": 5,
+   "after": 23
+  },
+  {
+   "selection": "mathematics/decision/intermediate/any-setting",
+   "before": 3,
+   "after": 18
+  },
+  {
+   "selection": "mathematics/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 1
+  },
+  {
+   "selection": "mathematics/order/intermediate/any-setting",
+   "before": 0,
+   "after": 0
+  },
+  {
+   "selection": "mathematics/find/intermediate/any-setting",
+   "before": 1,
+   "after": 4
+  },
+  {
+   "selection": "mathematics/mixed/advanced/any-setting",
+   "before": 4,
+   "after": 23
+  },
+  {
+   "selection": "mathematics/decision/advanced/any-setting",
+   "before": 1,
+   "after": 17
+  },
+  {
+   "selection": "mathematics/nextstep/advanced/any-setting",
+   "before": 1,
+   "after": 1
+  },
+  {
+   "selection": "mathematics/order/advanced/any-setting",
+   "before": 1,
+   "after": 1
+  },
+  {
+   "selection": "mathematics/find/advanced/any-setting",
+   "before": 1,
+   "after": 4
+  },
+  {
+   "selection": "professionalism/mixed/beginner/any-setting",
+   "before": 1,
+   "after": 20
+  },
+  {
+   "selection": "professionalism/decision/beginner/any-setting",
+   "before": 1,
+   "after": 16
+  },
+  {
+   "selection": "professionalism/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 15
+  },
+  {
+   "selection": "professionalism/order/beginner/any-setting",
+   "before": 0,
+   "after": 0
+  },
+  {
+   "selection": "professionalism/find/beginner/any-setting",
+   "before": 0,
+   "after": 4
+  },
+  {
+   "selection": "professionalism/mixed/intermediate/any-setting",
+   "before": 4,
+   "after": 26
+  },
+  {
+   "selection": "professionalism/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 20
+  },
+  {
+   "selection": "professionalism/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 20
+  },
+  {
+   "selection": "professionalism/order/intermediate/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "professionalism/find/intermediate/any-setting",
+   "before": 1,
+   "after": 2
+  },
+  {
+   "selection": "professionalism/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 23
+  },
+  {
+   "selection": "professionalism/decision/advanced/any-setting",
+   "before": 1,
+   "after": 21
+  },
+  {
+   "selection": "professionalism/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 20
+  },
+  {
+   "selection": "professionalism/order/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "professionalism/find/advanced/any-setting",
+   "before": 0,
+   "after": 1
+  },
+  {
+   "selection": "reading-and-writing/mixed/beginner/any-setting",
+   "before": 3,
+   "after": 20
+  },
+  {
+   "selection": "reading-and-writing/decision/beginner/any-setting",
+   "before": 1,
+   "after": 14
+  },
+  {
+   "selection": "reading-and-writing/nextstep/beginner/any-setting",
+   "before": 0,
+   "after": 13
+  },
+  {
+   "selection": "reading-and-writing/order/beginner/any-setting",
+   "before": 1,
+   "after": 1
+  },
+  {
+   "selection": "reading-and-writing/find/beginner/any-setting",
+   "before": 1,
+   "after": 5
+  },
+  {
+   "selection": "reading-and-writing/mixed/intermediate/any-setting",
+   "before": 2,
+   "after": 24
+  },
+  {
+   "selection": "reading-and-writing/decision/intermediate/any-setting",
+   "before": 1,
+   "after": 21
+  },
+  {
+   "selection": "reading-and-writing/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 21
+  },
+  {
+   "selection": "reading-and-writing/order/intermediate/any-setting",
+   "before": 0,
+   "after": 0
+  },
+  {
+   "selection": "reading-and-writing/find/intermediate/any-setting",
+   "before": 0,
+   "after": 2
+  },
+  {
+   "selection": "reading-and-writing/mixed/advanced/any-setting",
+   "before": 4,
+   "after": 24
+  },
+  {
+   "selection": "reading-and-writing/decision/advanced/any-setting",
+   "before": 1,
+   "after": 19
+  },
+  {
+   "selection": "reading-and-writing/nextstep/advanced/any-setting",
+   "before": 1,
+   "after": 19
+  },
+  {
+   "selection": "reading-and-writing/order/advanced/any-setting",
+   "before": 1,
+   "after": 1
+  },
+  {
+   "selection": "reading-and-writing/find/advanced/any-setting",
+   "before": 1,
+   "after": 3
+  },
+  {
+   "selection": "workplace-safety/mixed/beginner/any-setting",
+   "before": 2,
+   "after": 30
+  },
+  {
+   "selection": "workplace-safety/decision/beginner/any-setting",
+   "before": 1,
+   "after": 18
+  },
+  {
+   "selection": "workplace-safety/nextstep/beginner/any-setting",
+   "before": 1,
+   "after": 18
+  },
+  {
+   "selection": "workplace-safety/order/beginner/any-setting",
+   "before": 0,
+   "after": 5
+  },
+  {
+   "selection": "workplace-safety/find/beginner/any-setting",
+   "before": 0,
+   "after": 6
+  },
+  {
+   "selection": "workplace-safety/mixed/intermediate/any-setting",
+   "before": 6,
+   "after": 55
+  },
+  {
+   "selection": "workplace-safety/decision/intermediate/any-setting",
+   "before": 2,
+   "after": 38
+  },
+  {
+   "selection": "workplace-safety/nextstep/intermediate/any-setting",
+   "before": 1,
+   "after": 37
+  },
+  {
+   "selection": "workplace-safety/order/intermediate/any-setting",
+   "before": 2,
+   "after": 10
+  },
+  {
+   "selection": "workplace-safety/find/intermediate/any-setting",
+   "before": 1,
+   "after": 6
+  },
+  {
+   "selection": "workplace-safety/mixed/advanced/any-setting",
+   "before": 1,
+   "after": 43
+  },
+  {
+   "selection": "workplace-safety/decision/advanced/any-setting",
+   "before": 1,
+   "after": 35
+  },
+  {
+   "selection": "workplace-safety/nextstep/advanced/any-setting",
+   "before": 0,
+   "after": 34
+  },
+  {
+   "selection": "workplace-safety/order/advanced/any-setting",
+   "before": 0,
+   "after": 6
+  },
+  {
+   "selection": "workplace-safety/find/advanced/any-setting",
+   "before": 0,
+   "after": 2
+  }
+ ],
+ "auditSeconds": 8
+}

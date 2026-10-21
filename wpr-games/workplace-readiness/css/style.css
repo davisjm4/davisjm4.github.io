@@ -156,3 +156,4 @@ details summary { cursor: pointer; color: var(--muted); min-height: 2.5rem; disp
 .platform-home{display:inline-block;margin:12px 20px 0;color:#b4c5d3;font-size:.9rem;text-decoration:none}
 .platform-home:hover{color:#62dbc5}
 .platform-home:focus-visible{outline:2px solid #62dbc5;outline-offset:3px}
+.site-header .platform-home{margin:0}

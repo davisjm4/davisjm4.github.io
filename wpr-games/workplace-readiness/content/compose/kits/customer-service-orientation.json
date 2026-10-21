@@ -1,0 +1,602 @@
+{
+  "skill": "customer-service-orientation",
+  "kits": [
+    {
+      "id": "cus-counter-request",
+      "skill": "customer-service-orientation",
+      "family": "customer-service-orientation.cx-counter-request",
+      "familyName": "Handling a request in person",
+      "framework": "competing-priorities",
+      "concepts": [
+        "customer-service-orientation:prioritize-service",
+        "customer-service-orientation:courteous-knowledgeable",
+        "customer-service-orientation:anticipate-needs"
+      ],
+      "contexts": "any",
+      "requires": [
+        "supply"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}. A {client} comes to you for help with {deliverable|the}.",
+        "As {role|a} at {workplace|a}, you are helping a {client} who has a question about {deliverable|the}."
+      ],
+      "pressure": [
+        "Two more {client.plural} are waiting behind this one.",
+        "{coworker3} says you are taking too long with each person."
+      ],
+      "detail": [
+        "It is the busiest hour of the day.",
+        "The {client} has been here before."
+      ],
+      "tiers": {
+        "1": "Keeping the {client} safe comes before the request.",
+        "2": "A frustrated {client} needs to feel heard before anything else lands.",
+        "3": "You can only promise what the policy and your authority allow.",
+        "4": "Give accurate answers, even if that means checking first.",
+        "5": "Pointing out a needed item helps the {client} more than a feedback question does.",
+        "6": "Inviting feedback is welcome once the request is handled."
+      },
+      "issues": [
+        {
+          "id": "hazard",
+          "tier": 1,
+          "rule": "control-hazard-first",
+          "principle": "cus.protect-client-from-hazard",
+          "fact": [
+            "You notice {hazard} right where the {client} is standing."
+          ],
+          "short": "the hazard by the {client}",
+          "action": "Guide the {client} away from the hazard, then make sure it gets marked and reported.",
+          "brief": "move the {client} away and report the hazard",
+          "reason": "Service starts with the {client}'s safety. Moving them away prevents an injury, and reporting gets the hazard fixed.",
+          "lesson": "Protect the people you serve from hazards before handling their request.",
+          "shortcut": [
+            {
+              "text": "Help the {client} quickly so they can move on before anything happens.",
+              "brief": "help quickly and hope nothing happens",
+              "why": "Hurrying does not remove the hazard. The {client} could be hurt while you help.",
+              "mis": "Fast service makes a hazard less dangerous."
+            }
+          ]
+        },
+        {
+          "id": "upset",
+          "tier": 2,
+          "rule": "acknowledge-feelings",
+          "principle": "cus.acknowledge-frustration-first",
+          "noProceed": true,
+          "fact": [
+            "The {client} is frustrated after waiting twenty minutes."
+          ],
+          "short": "the {client}'s frustration",
+          "action": "Apologize for the wait and acknowledge the frustration before you start helping.",
+          "brief": "apologize and acknowledge the frustration",
+          "reason": "A frustrated person listens better once they feel heard. A sincere apology sets up the rest of the conversation.",
+          "lesson": "Acknowledge a customer's frustration before solving the problem.",
+          "shortcut": [
+            {
+              "text": "Explain that the wait was not your fault and get straight to business.",
+              "brief": "say it was not your fault",
+              "why": "Deflecting blame makes the {client} feel dismissed, even if it is true.",
+              "mis": "Explaining whose fault it was calms people down."
+            }
+          ]
+        },
+        {
+          "id": "refund",
+          "tier": 3,
+          "rule": "stay-within-authority",
+          "principle": "cus.get-approval-for-refund",
+          "fact": [
+            "The {client} wants a refund, and the posted policy says refunds over $50 need approval from {lead|the}."
+          ],
+          "clear": [
+            "{Lead|the} already approved this refund by phone."
+          ],
+          "done": "the refund was already approved",
+          "short": "the refund that needs approval",
+          "action": "Explain the policy politely and ask {lead|the} to approve the refund.",
+          "brief": "ask {lead|the} to approve the refund",
+          "reason": "The policy sets who can approve larger refunds. Following it, politely, is fair to everyone.",
+          "lesson": "Serve customers within the limits of your authority, and explain those limits politely.",
+          "shortcut": [
+            {
+              "text": "Give the refund yourself, since the {client} is a regular.",
+              "brief": "give the refund yourself",
+              "why": "The policy requires approval for refunds over $50, whoever the {client} is.",
+              "mis": "Good customers can be treated as exceptions to policy."
+            }
+          ]
+        },
+        {
+          "id": "unknown",
+          "tier": 4,
+          "rule": "find-accurate-answer",
+          "principle": "cus.find-out-instead-of-guessing",
+          "fact": [
+            "The {client} asks a detailed question about {deliverable|the} that you cannot answer."
+          ],
+          "clear": [
+            "{coworker} already gave you the answer to the {client}'s question."
+          ],
+          "done": "you already have the answer from {coworker}",
+          "short": "the question you cannot answer",
+          "action": "Say you will find out, and check with {coworker}, who knows the answer.",
+          "brief": "find out from {coworker}",
+          "reason": "A wrong answer can cost the {client} time and money. Saying you will check is honest and professional.",
+          "lesson": "When you do not know, find out rather than guess.",
+          "shortcut": [
+            {
+              "text": "Give your best guess so the {client} is not kept waiting.",
+              "brief": "give your best guess",
+              "why": "A guess that turns out wrong damages trust more than a short wait.",
+              "mis": "Any answer is better than saying you need to check."
+            }
+          ]
+        },
+        {
+          "id": "extra",
+          "tier": 5,
+          "rule": "anticipate-needs",
+          "principle": "cus.mention-related-need",
+          "noProceed": true,
+          "fact": [
+            "From the request, you can tell the {client} will also need {supply.plural} to use it."
+          ],
+          "short": "the {supply.plural} the {client} will need",
+          "action": "Handle the request, and mention that they will likely need {supply.plural} too.",
+          "brief": "mention the {supply.plural} they will need",
+          "reason": "Pointing out a need before the {client} discovers it later saves them a second trip.",
+          "lesson": "Anticipate what customers will need next and tell them.",
+          "shortcut": [
+            {
+              "text": "Say nothing, since the {client} did not ask about {supply.plural}.",
+              "brief": "say nothing about it",
+              "why": "The {client} will likely have to come back. A quick mention prevents that.",
+              "mis": "Good service means answering only what was asked."
+            }
+          ]
+        },
+        {
+          "id": "feedback",
+          "tier": 6,
+          "rule": "invite-feedback",
+          "principle": "cus.share-feedback-channel",
+          "noProceed": true,
+          "fact": [
+            "The {client} asks how to give feedback about the visit."
+          ],
+          "short": "the request to give feedback",
+          "action": "Tell the {client} how to leave feedback, and thank them for asking.",
+          "brief": "explain how to leave feedback",
+          "reason": "Feedback helps the workplace improve. Making it easy shows you value the {client}'s view.",
+          "lesson": "Welcome customer feedback and make it easy to give.",
+          "shortcut": [
+            {
+              "text": "Say feedback is not really necessary.",
+              "brief": "say feedback is unnecessary",
+              "why": "Brushing off feedback suggests the {client}'s view does not matter.",
+              "mis": "Feedback only means complaints."
+            }
+          ]
+        }
+      ],
+      "exclusive": [
+        [
+          "refund",
+          "unknown"
+        ]
+      ],
+      "proceed": {
+        "text": "Help the {client} with the request promptly and politely.",
+        "why": "Nothing else needs handling first, so prompt, courteous help is exactly what the {client} needs.",
+        "lesson": "Courteous, prompt help is the core of good service."
+      },
+      "generic": [
+        {
+          "text": "Send the {client} to another location that might be less busy.",
+          "why": "Sending a {client} away without trying to help is poor service.",
+          "mis": "Passing someone along is the same as helping them."
+        },
+        {
+          "text": "Help the {client} while texting a friend under the counter.",
+          "why": "Divided attention feels disrespectful and leads to mistakes.",
+          "mis": "Customers do not notice when you are distracted."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to come and handle the {client} personally.",
+          "why": "Nothing in the situation is beyond your role. Calling the lead in delays service.",
+          "mis": "A supervisor always gives better service."
+        }
+      ],
+      "process": {
+        "setup": [
+          "A {client} at {workplace|the} needs help with {deliverable|the}."
+        ],
+        "because": {
+          "upset": [
+            "The {client} has been waiting a long time and is frustrated."
+          ],
+          "refund": [
+            "The {client} is asking for a refund that is larger than you can approve."
+          ],
+          "unknown": [
+            "The {client} has a question you cannot answer yourself."
+          ]
+        },
+        "steps": [
+          {
+            "id": "greet",
+            "text": "Greet the {client} by making eye contact",
+            "core": true
+          },
+          {
+            "id": "sorry",
+            "text": "Apologize for the long wait",
+            "issue": "upset"
+          },
+          {
+            "id": "listen",
+            "text": "Listen to the full request",
+            "core": true
+          },
+          {
+            "id": "approve",
+            "text": "Get approval from {lead|the}",
+            "issue": "refund"
+          },
+          {
+            "id": "check",
+            "text": "Check the answer with {coworker}",
+            "issue": "unknown"
+          },
+          {
+            "id": "resolve",
+            "text": "Complete the request and confirm it is right",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "greet",
+            "sorry",
+            "The apology comes as part of the greeting."
+          ],
+          [
+            "sorry",
+            "listen",
+            "Acknowledge the wait before asking them to explain."
+          ],
+          [
+            "greet",
+            "listen",
+            "Greet before getting into the request."
+          ],
+          [
+            "listen",
+            "approve",
+            "You need the details before asking for approval."
+          ],
+          [
+            "listen",
+            "check",
+            "You need to know the question before checking the answer."
+          ],
+          [
+            "approve",
+            "resolve",
+            "The refund can only be completed once approved."
+          ],
+          [
+            "check",
+            "resolve",
+            "You complete the request with the right answer."
+          ],
+          [
+            "listen",
+            "resolve",
+            "You resolve the request after hearing it."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Greet, acknowledge, listen, get what you need, then resolve and confirm."
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Refund limit stated as a posted policy. Refund and unknown-answer are exclusive because either order is reasonable."
+      }
+    },
+    {
+      "id": "cus-callback",
+      "skill": "customer-service-orientation",
+      "family": "customer-service-orientation.cx-callback",
+      "familyName": "Following through on a promised callback",
+      "framework": "communication-failure",
+      "concepts": [
+        "customer-service-orientation:internal-and-external",
+        "customer-service-orientation:prioritize-service",
+        "customer-service-orientation:courteous-knowledgeable"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. This morning you promised a {client} a call back by 3 p.m. about a problem with {deliverable|the}.",
+        "As {role|a} at {workplace|a}, you told a {client} you would call back by 3 p.m. with an answer about {deliverable|the}."
+      ],
+      "pressure": [
+        "It is already 2:45 p.m.",
+        "{coworker3} says {client.plural} never notice if a callback is a little late."
+      ],
+      "detail": [
+        "The {client} left a mobile number.",
+        "You wrote the promise on a sticky note."
+      ],
+      "tiers": {
+        "1": "Account details are shared only after identity is confirmed.",
+        "2": "A promise you cannot keep should be updated before it is broken.",
+        "3": "Getting the {client} to the right team beats a slow answer from the wrong one.",
+        "4": "Coworkers who serve the {client} deserve the same prompt help.",
+        "5": "Following up on a fix is valuable once nothing is pending."
+      },
+      "issues": [
+        {
+          "id": "identity",
+          "tier": 1,
+          "rule": "verify-identity",
+          "principle": "cus.confirm-identity-per-policy",
+          "fact": [
+            "The person who answers asks about the account but has not confirmed their identity, which the posted policy requires."
+          ],
+          "clear": [
+            "The person on the phone already confirmed their identity using the security questions."
+          ],
+          "done": "the caller's identity was already confirmed",
+          "short": "the unconfirmed identity",
+          "action": "Confirm the person's identity, as the policy requires, before sharing any details.",
+          "brief": "confirm their identity",
+          "reason": "The policy protects the {client}'s information. Confirming identity first keeps it from reaching the wrong person.",
+          "lesson": "Follow identity checks before sharing account information, even when you are in a hurry.",
+          "shortcut": [
+            {
+              "text": "Share the details, since the person sounds like the {client}.",
+              "brief": "share details because they sound right",
+              "why": "Sounding familiar is not confirmation. The policy exists to protect the {client}.",
+              "mis": "You can tell who someone is by their voice."
+            }
+          ]
+        },
+        {
+          "id": "late",
+          "tier": 2,
+          "rule": "communicate-delay-early",
+          "principle": "cus.update-before-missing-promise",
+          "fact": [
+            "You will not have the answer by 3 p.m. as you promised."
+          ],
+          "short": "the callback promise you cannot keep",
+          "action": "Call the {client} before 3 p.m. to explain and give a new time.",
+          "brief": "call before 3 to give a new time",
+          "reason": "A quick update keeps your word in spirit and shows the {client} you have not forgotten them.",
+          "lesson": "If you cannot keep a promise, update the customer before the deadline passes.",
+          "shortcut": [
+            {
+              "text": "Wait until you have the answer, even if that means calling tomorrow.",
+              "brief": "wait until you have the answer",
+              "why": "Silence after a promised call feels like being ignored. A short update prevents that.",
+              "mis": "Calling without an answer is pointless."
+            }
+          ]
+        },
+        {
+          "id": "wrongteam",
+          "tier": 3,
+          "rule": "route-to-right-team",
+          "principle": "cus.warm-handoff-to-right-team",
+          "fact": [
+            "You learn that the question really belongs to the billing team, not yours."
+          ],
+          "short": "the question belonging to billing",
+          "action": "Connect the {client} with billing and pass along what they already told you.",
+          "brief": "connect them to billing with the details",
+          "reason": "Passing along the details means the {client} does not have to explain everything again.",
+          "lesson": "When handing a customer to another team, pass along what you know.",
+          "shortcut": [
+            {
+              "text": "Give the {client} the billing number and let them start over.",
+              "brief": "give them the billing number",
+              "why": "Making the {client} repeat everything is frustrating and wastes their time.",
+              "mis": "Giving a phone number is the same as a handoff."
+            }
+          ]
+        },
+        {
+          "id": "internal",
+          "tier": 4,
+          "rule": "serve-internal-customer",
+          "principle": "cus.respond-to-internal-request",
+          "fact": [
+            "{coworker} in billing asks you for the order details so they can help the {client}."
+          ],
+          "short": "{coworker}'s request for the order details",
+          "action": "Send {coworker} the order details promptly, as you would for any {client}.",
+          "brief": "send {coworker} the details promptly",
+          "reason": "Coworkers who depend on you are internal customers. Helping them quickly helps the {client} too.",
+          "lesson": "Treat coworkers who need your help as customers too.",
+          "shortcut": [
+            {
+              "text": "Tell {coworker} you will get to it after your own callbacks.",
+              "brief": "make {coworker} wait",
+              "why": "Delaying the details delays the {client}'s answer.",
+              "mis": "Internal requests matter less than external ones."
+            }
+          ],
+          "clear": [
+            "You already sent {coworker} the order details this morning."
+          ],
+          "done": "the details were already sent to {coworker}"
+        },
+        {
+          "id": "follow",
+          "tier": 5,
+          "rule": "follow-up-on-fix",
+          "principle": "cus.confirm-fix-satisfied-client",
+          "noProceed": true,
+          "fact": [
+            "The problem was fixed yesterday, but nobody has checked whether the {client} is happy with the result."
+          ],
+          "short": "the unconfirmed fix",
+          "action": "Ask the {client} whether the fix worked and whether anything else is needed.",
+          "brief": "ask whether the fix worked",
+          "reason": "A short follow-up confirms the problem is really solved and shows you care about the result.",
+          "lesson": "Follow up to make sure a fix actually worked for the customer.",
+          "shortcut": [
+            {
+              "text": "Assume the {client} is happy, since nobody has complained.",
+              "brief": "assume they are happy",
+              "why": "Silence does not mean satisfaction. A short check catches problems early.",
+              "mis": "No complaint means a happy customer."
+            }
+          ]
+        }
+      ],
+      "exclusive": [
+        [
+          "late",
+          "follow"
+        ],
+        [
+          "wrongteam",
+          "follow"
+        ],
+        [
+          "wrongteam",
+          "internal"
+        ]
+      ],
+      "proceed": {
+        "text": "Call the {client} back at the promised time with the answer.",
+        "why": "You have the answer and nothing else needs handling, so keeping the promise is the right move.",
+        "lesson": "Keep your service promises on time."
+      },
+      "generic": [
+        {
+          "text": "Email the {client} a long explanation instead of calling as promised.",
+          "why": "You promised a call. Changing the format without asking can feel like avoidance.",
+          "mis": "Any form of contact keeps the promise."
+        },
+        {
+          "text": "Ask {coworker2} to make the call so you can leave early.",
+          "why": "The promise was yours. Handing it off to leave early is unreliable service.",
+          "mis": "Anyone can keep a promise you made."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Check with {lead|the} before making the call.",
+          "why": "You have everything needed. Checking with the lead first could make you late.",
+          "mis": "Every customer call needs supervisor approval."
+        }
+      ],
+      "doc": {
+        "type": "email",
+        "title": [
+          "Your follow-up email to the {client}"
+        ],
+        "intro": [
+          "You are about to email the {client} after this morning's call. Check the message first."
+        ],
+        "lesson": "Service messages should be courteous, accurate and clear about what happens next.",
+        "lines": [
+          {
+            "id": "thanks",
+            "text": "Thank you for your patience while we looked into the problem.",
+            "fine": "Courteous and acknowledges the wait."
+          },
+          {
+            "id": "status",
+            "text": "Our billing team has the details you gave me, so you will not need to repeat them.",
+            "fine": "Explains a warm handoff.",
+            "bad": [
+              {
+                "id": "status-repeat",
+                "level": "intermediate",
+                "text": "Please call billing and explain the whole problem to them from the beginning.",
+                "why": "Making the {client} repeat everything is frustrating. The details should be passed along.",
+                "principle": "cus.doc-cold-handoff"
+              }
+            ]
+          },
+          {
+            "id": "when",
+            "text": "You can expect a call from {coworker} in billing by noon tomorrow.",
+            "fine": "Gives a specific next step and time.",
+            "bad": [
+              {
+                "id": "when-vague",
+                "level": "beginner",
+                "text": "Someone will probably get back to you at some point.",
+                "why": "A vague promise leaves the {client} unsure what happens next.",
+                "principle": "cus.doc-vague-next-step"
+              }
+            ]
+          },
+          {
+            "id": "contact",
+            "text": "If you have questions before then, reply to this email.",
+            "fine": "Offers a way to follow up.",
+            "bad": [
+              {
+                "id": "contact-none",
+                "level": "beginner",
+                "text": "Please do not reply to this email.",
+                "why": "Cutting off replies leaves the {client} no way to ask questions.",
+                "principle": "cus.doc-blocks-replies"
+              }
+            ]
+          },
+          {
+            "id": "tone",
+            "text": "We are sorry for the trouble this caused.",
+            "fine": "A sincere apology.",
+            "bad": [
+              {
+                "id": "tone-blame",
+                "level": "beginner",
+                "text": "This would have been simpler if you had read the instructions.",
+                "why": "Blaming the {client} is discourteous and damages the relationship.",
+                "principle": "cus.doc-blames-client"
+              }
+            ]
+          },
+          {
+            "id": "account",
+            "text": "For your security, we will not include account numbers in email.",
+            "fine": "Protects the {client}'s information.",
+            "bad": [
+              {
+                "id": "account-sent",
+                "level": "advanced",
+                "text": "Your full account number and security answers are listed below for reference.",
+                "why": "Sending account numbers and security answers by email puts the {client}'s information at risk.",
+                "principle": "cus.doc-exposes-account-details"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Identity check stated as posted policy."
+      }
+    }
+  ]
+}

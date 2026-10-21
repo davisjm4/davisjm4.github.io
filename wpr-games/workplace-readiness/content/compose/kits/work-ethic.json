@@ -1,0 +1,689 @@
+{
+  "skill": "work-ethic",
+  "kits": [
+    {
+      "id": "wet-shift-commitments",
+      "skill": "work-ethic",
+      "family": "work-ethic.cx-shift-commitments",
+      "familyName": "Keeping commitments on a difficult morning",
+      "framework": "competing-priorities",
+      "concepts": [
+        "work-ethic:dependability",
+        "work-ethic:accountability",
+        "work-ethic:accepting-consequences"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}, and your shift starts at 8 a.m.",
+        "You are {role|a} at {workplace|a}. It is 7:30 a.m., and your shift starts at 8."
+      ],
+      "pressure": [
+        "{coworker3} texts that the morning is going to be busy.",
+        "You know the team is short-staffed today."
+      ],
+      "detail": [
+        "It is a Monday.",
+        "You packed your lunch the night before."
+      ],
+      "tiers": {
+        "1": "Your health and the health of others come first.",
+        "2": "The team needs to know about a delay before the shift starts.",
+        "3": "A missed commitment needs a new, realistic plan right away.",
+        "4": "Repairing trust with a coworker you affected comes before discussing your own consequence.",
+        "5": "Accepting a consequence well comes after the day's commitments are handled."
+      },
+      "issues": [
+        {
+          "id": "sick",
+          "tier": 1,
+          "rule": "follow-call-out-policy",
+          "principle": "wet.call-out-when-sick",
+          "onlyLevels": [
+            "beginner"
+          ],
+          "fact": [
+            "You woke up with a fever, and the call-out policy says to call {lead|the} at least an hour before your shift."
+          ],
+          "short": "your fever",
+          "action": "Call {lead|the} now, as the policy says, and stay home to recover.",
+          "reason": "Calling in early, as the policy asks, gives the lead time to find coverage, and staying home protects your coworkers.",
+          "lesson": "When you are sick, follow the call-out policy early so the team can plan.",
+          "shortcut": [
+            {
+              "text": "Come in anyway so nobody thinks you are unreliable.",
+              "why": "Working with a fever can spread illness and lower the quality of your work. Following the policy is the dependable choice.",
+              "mis": "Showing up no matter what is always the dependable choice."
+            }
+          ]
+        },
+        {
+          "id": "late",
+          "tier": 2,
+          "rule": "communicate-delay-early",
+          "principle": "wet.warn-before-being-late",
+          "fact": [
+            "A traffic jam means you will reach work about 20 minutes after your shift starts."
+          ],
+          "clear": [
+            "You already called {lead|the} to say you will be 20 minutes late."
+          ],
+          "done": "you already let {lead|the} know you will be late",
+          "short": "your late arrival",
+          "action": "Let {lead|the} know right away that you will be about 20 minutes late.",
+          "brief": "tell {lead|the} you will be 20 minutes late",
+          "reason": "A quick warning lets the lead cover your duties until you arrive. Dependable people communicate before a problem, not after.",
+          "lesson": "If you will be late, tell your supervisor before your shift starts.",
+          "shortcut": [
+            {
+              "text": "Drive faster and hope to arrive close to on time.",
+              "brief": "drive faster and hope",
+              "why": "Rushing adds risk and may still leave you late with no warning given.",
+              "mis": "Making up time is better than admitting you will be late."
+            }
+          ]
+        },
+        {
+          "id": "overdue",
+          "tier": 3,
+          "rule": "renew-missed-commitment",
+          "principle": "wet.own-overdue-task",
+          "fact": [
+            "The report you promised {lead|the} by yesterday afternoon is still not finished."
+          ],
+          "short": "the overdue report",
+          "action": "Tell {lead|the} the report is not done and give a realistic finish time.",
+          "brief": "tell {lead|the} it is late and give a finish time",
+          "reason": "Admitting the miss and giving a realistic new time lets the lead plan. Silence leaves them guessing.",
+          "lesson": "When you miss a commitment, say so and set a realistic new one.",
+          "shortcut": [
+            {
+              "text": "Wait until {lead|the} asks about the report before mentioning it.",
+              "brief": "wait until {lead|the} asks about it",
+              "why": "Waiting to be asked hides the problem and makes it look like you hoped nobody would notice.",
+              "mis": "If nobody asks, a missed deadline does not need mentioning."
+            }
+          ]
+        },
+        {
+          "id": "mistake",
+          "tier": 4,
+          "rule": "own-mistake",
+          "principle": "wet.own-error-that-affected-coworker",
+          "fact": [
+            "An error you made yesterday caused {coworker} an hour of extra work this morning."
+          ],
+          "clear": [
+            "You already apologized to {coworker} for yesterday's error."
+          ],
+          "done": "you already apologized to {coworker}",
+          "short": "your error that cost {coworker} time",
+          "action": "Own the error, apologize to {coworker}, and explain how you will prevent it.",
+          "brief": "own the error and apologize to {coworker}",
+          "reason": "Taking responsibility repairs trust, and a prevention plan shows the error will not repeat.",
+          "lesson": "Own your mistakes openly and show how you will prevent them.",
+          "shortcut": [
+            {
+              "text": "Say nothing, since {coworker} already fixed it.",
+              "brief": "say nothing about the error",
+              "why": "Staying quiet leaves your coworker feeling taken for granted and leaves the cause unaddressed.",
+              "mis": "Once a mistake is fixed, it is best not to bring it up."
+            }
+          ]
+        },
+        {
+          "id": "consequence",
+          "tier": 5,
+          "rule": "accept-consequence",
+          "principle": "wet.accept-consequence-constructively",
+          "noProceed": true,
+          "fact": [
+            "{Lead|the} told you that because of a late report last week, you will cover this Saturday's shift."
+          ],
+          "short": "the Saturday shift you were assigned",
+          "action": "Accept the Saturday shift and ask how to avoid the same problem in future.",
+          "brief": "accept Saturday and ask how to do better",
+          "reason": "Accepting a fair consequence without argument shows maturity, and asking how to improve turns it into progress.",
+          "lesson": "Accept fair consequences calmly and use them to improve.",
+          "shortcut": [
+            {
+              "text": "Argue that the late report was not really your fault.",
+              "brief": "argue it was not your fault",
+              "why": "Arguing about a consequence for a real lapse damages trust. Accepting it and improving builds it back.",
+              "mis": "Arguing a consequence shows you care about fairness."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Start your shift as planned and work through your task list.",
+        "why": "Nothing in the situation needs extra attention, so the dependable move is to start on time and get to work.",
+        "lesson": "Dependability is mostly showing up ready and doing the work as planned."
+      },
+      "generic": [
+        {
+          "text": "Blame the busy schedule when {lead|the} asks about any problems.",
+          "why": "Blaming circumstances avoids responsibility and does not fix anything.",
+          "mis": "Explaining a problem away is the same as dealing with it."
+        },
+        {
+          "text": "Take an extra-long break later to make up for the stressful morning.",
+          "why": "A stressful morning does not change your schedule. Extra break time leaves the team short.",
+          "mis": "A hard morning earns extra time off."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Call {lead|the} to confirm your schedule again before you leave home.",
+          "why": "Nothing in the situation calls for a check-in. Calling to confirm a known schedule takes the lead's time for no reason.",
+          "mis": "Checking in more always shows dependability."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}, getting ready for a shift that starts at 8 a.m."
+        ],
+        "because": {
+          "late": [
+            "You realize you will not make it in time for the start of your shift."
+          ],
+          "overdue": [
+            "A report you promised {lead|the} is past due."
+          ],
+          "mistake": [
+            "Your error yesterday made extra work for {coworker}."
+          ]
+        },
+        "steps": [
+          {
+            "id": "call",
+            "text": "Call {lead|the} about arriving late",
+            "issue": "late"
+          },
+          {
+            "id": "arrive",
+            "text": "Arrive and clock in",
+            "core": true
+          },
+          {
+            "id": "list",
+            "text": "Review today's task list",
+            "core": true
+          },
+          {
+            "id": "apologize",
+            "text": "Apologize to {coworker} in person",
+            "issue": "mistake"
+          },
+          {
+            "id": "renew",
+            "text": "Give {lead|the} a new report deadline",
+            "issue": "overdue"
+          },
+          {
+            "id": "start",
+            "text": "Start the first task",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "call",
+            "arrive",
+            "The warning only helps if it comes before you arrive late."
+          ],
+          [
+            "arrive",
+            "list",
+            "You review the list once you are at work."
+          ],
+          [
+            "arrive",
+            "apologize",
+            "An in-person apology happens once you are there."
+          ],
+          [
+            "list",
+            "renew",
+            "Looking at the day's tasks shows when the report can realistically be finished."
+          ],
+          [
+            "renew",
+            "start",
+            "The lead should know the new deadline before you dive into other work."
+          ],
+          [
+            "list",
+            "start",
+            "You need to know the day's tasks before starting them."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Communicate early, show up, plan the day, and repair any missed commitments."
+      },
+      "doc": {
+        "type": "email",
+        "title": [
+          "Your message to {lead|the}"
+        ],
+        "intro": [
+          "You are about to email {lead|the} about the overdue report. Check the message first."
+        ],
+        "lesson": "Accountable messages admit the problem, avoid excuses and blame, and give a realistic plan.",
+        "lines": [
+          {
+            "id": "admit",
+            "text": "I did not finish the report by yesterday afternoon as I promised.",
+            "fine": "Admits the missed commitment plainly.",
+            "bad": [
+              {
+                "id": "admit-blame",
+                "level": "beginner",
+                "text": "The report is late because {coworker} never sent me the numbers on time.",
+                "why": "Blaming a coworker avoids responsibility, especially when the commitment was yours.",
+                "principle": "wet.doc-blames-coworker"
+              }
+            ]
+          },
+          {
+            "id": "why",
+            "text": "I underestimated how long the second section would take.",
+            "fine": "Gives an honest reason without excuses."
+          },
+          {
+            "id": "plan",
+            "text": "I will have it to you by 2 p.m. today.",
+            "fine": "A specific, realistic new deadline.",
+            "bad": [
+              {
+                "id": "plan-vague",
+                "level": "intermediate",
+                "text": "I will try to get it to you sometime soon.",
+                "why": "A vague promise does not let the lead plan. A specific, realistic time is needed.",
+                "principle": "wet.doc-vague-new-deadline"
+              }
+            ]
+          },
+          {
+            "id": "hours",
+            "text": "I have two hours free this morning to work on it.",
+            "fine": "Shows the new deadline is realistic."
+          },
+          {
+            "id": "unrealistic",
+            "text": "That leaves time to check it before I send it.",
+            "fine": "Plans for quality, not just speed.",
+            "bad": [
+              {
+                "id": "unrealistic-rush",
+                "level": "advanced",
+                "needs": [
+                  "hours",
+                  "plan"
+                ],
+                "text": "I will finish all of it in the next 20 minutes, and you can have it by 8:30.",
+                "why": "The message says the work needs about two hours and promises 2 p.m. A 20-minute promise contradicts both and will likely be missed.",
+                "principle": "wet.doc-unrealistic-promise"
+              }
+            ]
+          },
+          {
+            "id": "prevent",
+            "text": "Next time I will check in with you as soon as I see a deadline slipping.",
+            "fine": "Explains how the problem will be prevented.",
+            "bad": [
+              {
+                "id": "prevent-none",
+                "level": "beginner",
+                "text": "These things happen, so I would not worry about it.",
+                "why": "Brushing off a missed commitment suggests it will happen again. A prevention plan shows accountability.",
+                "principle": "wet.doc-dismisses-problem"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Call-out timing is stated as workplace policy. Sick state is beginner-only because it replaces the rest of the day."
+      }
+    },
+    {
+      "id": "wet-quality-under-pressure",
+      "skill": "work-ethic",
+      "family": "work-ethic.cx-quality-under-pressure",
+      "familyName": "Keeping quality up on repetitive work",
+      "framework": "consequences",
+      "concepts": [
+        "work-ethic:diligence",
+        "work-ethic:accountability"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}, finishing a large batch of similar work today. Each piece needs a final check.",
+        "As {role|a} at {workplace|a}, you are working through a long, repetitive batch, and each piece must be checked before it moves on."
+      ],
+      "pressure": [
+        "{coworker3} says nobody ever looks closely at this work anyway.",
+        "The daily target is posted on the board."
+      ],
+      "detail": [
+        "You are about halfway through the batch.",
+        "The work area is quiet this afternoon."
+      ],
+      "tiers": {
+        "1": "A required check is part of the job, not an optional extra.",
+        "2": "Work you know is flawed must not move on.",
+        "3": "You cannot check against a standard you are unsure about.",
+        "4": "A missed target should be explained, not hidden by rushing.",
+        "5": "Managing your focus matters, but not ahead of real quality problems."
+      },
+      "issues": [
+        {
+          "id": "skip",
+          "tier": 1,
+          "rule": "keep-required-step",
+          "principle": "wet.keep-final-check",
+          "noProceed": true,
+          "fact": [
+            "{coworker} shows you how to skip the final check to finish the batch much faster."
+          ],
+          "short": "the shortcut that skips the final check",
+          "action": "Keep doing the final check on every piece, as the procedure requires.",
+          "brief": "keep checking every piece",
+          "reason": "The check is there because errors happen. Skipping it puts the quality of the whole batch at risk.",
+          "lesson": "Diligence means doing every required step, even when a shortcut is offered.",
+          "shortcut": [
+            {
+              "text": "Skip the check on the simple pieces to save time.",
+              "brief": "skip the check on simple pieces",
+              "why": "Simple pieces can still have errors. The procedure requires the check on every piece.",
+              "mis": "Easy work does not need checking."
+            }
+          ]
+        },
+        {
+          "id": "flaw",
+          "tier": 2,
+          "rule": "stop-wrong-work",
+          "principle": "wet.hold-flawed-work",
+          "fact": [
+            "You discover that several pieces you finished earlier all have the same flaw."
+          ],
+          "short": "the flawed pieces",
+          "action": "Set the flawed pieces aside, fix them, and tell {lead|the} what happened.",
+          "brief": "set aside and fix the flawed pieces",
+          "reason": "Holding back flawed work protects the next person in line, and telling the lead lets them check for a wider problem.",
+          "lesson": "When you find flaws in your own work, stop them, fix them and say so.",
+          "shortcut": [
+            {
+              "text": "Send the pieces along, since the next person will probably catch it.",
+              "brief": "send them along anyway",
+              "why": "Passing on work you know is flawed shifts your responsibility to someone else and risks it reaching a {client}.",
+              "mis": "Someone further along will catch the problem."
+            }
+          ]
+        },
+        {
+          "id": "standard",
+          "tier": 3,
+          "rule": "clarify-standard",
+          "principle": "wet.clarify-quality-standard",
+          "fact": [
+            "You are not sure whether a small scratch counts as a defect."
+          ],
+          "clear": [
+            "{Lead|the} showed you this morning exactly which scratches count as defects."
+          ],
+          "done": "you were already shown the standard for scratches",
+          "short": "the unclear scratch standard",
+          "action": "Ask {lead|the} what the standard is for small scratches.",
+          "brief": "ask {lead|the} about the scratch standard",
+          "reason": "You cannot check work properly against a standard you are unsure of. A quick question makes every check reliable.",
+          "lesson": "Know the quality standard before you judge your work against it.",
+          "shortcut": [
+            {
+              "text": "Decide for yourself that small scratches do not matter.",
+              "brief": "decide scratches do not matter",
+              "why": "Guessing at the standard may let defects through or waste good pieces. The lead can tell you.",
+              "mis": "Your own judgment is the standard."
+            }
+          ]
+        },
+        {
+          "id": "behind",
+          "tier": 4,
+          "rule": "communicate-delay-early",
+          "principle": "wet.explain-missed-target",
+          "fact": [
+            "You are behind the daily target because a tricky piece took extra care."
+          ],
+          "clear": [
+            "{Lead|the} already knows you are behind and said quality comes first."
+          ],
+          "done": "{lead|the} already knows you are behind",
+          "short": "being behind the target",
+          "action": "Tell {lead|the} you are behind and why, while keeping the quality up.",
+          "brief": "tell {lead|the} you are behind and why",
+          "reason": "The lead can adjust plans if they know. Rushing to hide the gap would trade quality for appearances.",
+          "lesson": "Explain a missed target honestly instead of rushing to hide it.",
+          "shortcut": [
+            {
+              "text": "Rush the rest so the count looks right by the end of the day.",
+              "brief": "rush the rest to hit the count",
+              "why": "Rushing invites errors in the remaining work. Explaining the delay is better than hiding it.",
+              "mis": "Hitting the number matters more than how the work is done."
+            }
+          ]
+        },
+        {
+          "id": "focus",
+          "tier": 5,
+          "rule": "manage-own-focus",
+          "principle": "wet.refocus-on-repetitive-work",
+          "noProceed": true,
+          "fact": [
+            "The work is repetitive, and you notice your attention starting to drift."
+          ],
+          "short": "your drifting attention",
+          "action": "Take your scheduled break now, then come back and refocus on each piece.",
+          "brief": "take your break and refocus",
+          "reason": "Drifting attention is when errors creep in. A scheduled break restores focus without skipping any work.",
+          "lesson": "Notice when your focus slips and use breaks to stay careful.",
+          "shortcut": [
+            {
+              "text": "Watch videos on your phone while you work to stay awake.",
+              "brief": "watch videos while you work",
+              "why": "Splitting attention makes errors more likely, not less.",
+              "mis": "Distractions help you get through boring work."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Keep working steadily through the batch, checking each piece.",
+        "why": "Nothing in the situation needs attention, so steady, careful work is what the job calls for.",
+        "lesson": "Diligent work is steady, careful and complete, even when it is repetitive."
+      },
+      "generic": [
+        {
+          "text": "Ask {coworker2} to check your pieces for you while you take a break.",
+          "why": "The checks are your responsibility. Handing them off adds to a coworker's load without reason.",
+          "mis": "Responsibility for quality can be passed to whoever is free."
+        },
+        {
+          "text": "Mark the batch as finished now and complete the last pieces tomorrow.",
+          "why": "Recording unfinished work as finished makes the record false.",
+          "mis": "It is fine to report work as done if you plan to finish it."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to inspect every piece before you continue.",
+          "why": "Nothing in the situation calls for an extra inspection. It would stall the batch and take the lead's time.",
+          "mis": "Supervisor checks are always better than your own."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}, working through a large batch where each piece is checked before it moves on."
+        ],
+        "because": {
+          "standard": [
+            "You are unsure what counts as a defect."
+          ],
+          "flaw": [
+            "Some pieces from earlier turned out to share a flaw."
+          ]
+        },
+        "steps": [
+          {
+            "id": "ask",
+            "text": "Ask {lead|the} which scratches count as defects",
+            "issue": "standard"
+          },
+          {
+            "id": "make",
+            "text": "Finish the next piece",
+            "core": true
+          },
+          {
+            "id": "inspect",
+            "text": "Inspect the piece against the standard",
+            "core": true
+          },
+          {
+            "id": "hold",
+            "text": "Pull aside any piece that fails",
+            "issue": "flaw"
+          },
+          {
+            "id": "log",
+            "text": "Record the piece in the batch count",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "ask",
+            "inspect",
+            "You need the standard before you can inspect against it."
+          ],
+          [
+            "make",
+            "inspect",
+            "A piece is inspected once it is finished."
+          ],
+          [
+            "inspect",
+            "hold",
+            "Only an inspection shows which pieces fail."
+          ],
+          [
+            "hold",
+            "log",
+            "Failed pieces are pulled before the count is recorded."
+          ],
+          [
+            "inspect",
+            "log",
+            "Only inspected pieces go into the count."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Know the standard, finish, inspect, hold back failures, then record the count."
+      },
+      "doc": {
+        "type": "note",
+        "title": [
+          "End-of-day batch report"
+        ],
+        "intro": [
+          "You are about to hand {lead|the} this batch report. Check it first."
+        ],
+        "lesson": "An accountable report is accurate about what was done, checked and held back.",
+        "lines": [
+          {
+            "id": "count",
+            "text": "Pieces finished: 120 of the 150 target.",
+            "fine": "States the result honestly against the target."
+          },
+          {
+            "id": "checked",
+            "text": "All 120 pieces received the final check.",
+            "fine": "Confirms the required step was done.",
+            "bad": [
+              {
+                "id": "checked-skip",
+                "level": "beginner",
+                "text": "I skipped the final check on the simple pieces to save time.",
+                "why": "The check is required on every piece. Skipping it puts quality at risk.",
+                "principle": "wet.doc-skipped-required-check"
+              }
+            ]
+          },
+          {
+            "id": "held",
+            "text": "Six pieces had the same flaw and are set aside for rework.",
+            "fine": "Reports flawed work held back.",
+            "bad": [
+              {
+                "id": "held-sent",
+                "level": "beginner",
+                "text": "Six pieces had a flaw, but I sent them on, since the next station usually catches problems.",
+                "why": "Known flaws should be held back, not passed on for someone else to catch.",
+                "principle": "wet.doc-passed-on-flaws"
+              }
+            ]
+          },
+          {
+            "id": "reason",
+            "text": "I fell behind because one piece needed extra care.",
+            "fine": "Explains the shortfall honestly."
+          },
+          {
+            "id": "total",
+            "text": "That leaves 114 good pieces ready to move on.",
+            "fine": "Correctly subtracts the held pieces.",
+            "bad": [
+              {
+                "id": "total-wrong",
+                "level": "advanced",
+                "needs": [
+                  "count",
+                  "held"
+                ],
+                "text": "That leaves all 120 pieces ready to move on.",
+                "why": "Six of the 120 were set aside for rework, so only 114 are ready. The total contradicts the report.",
+                "principle": "wet.doc-total-ignores-held-pieces"
+              }
+            ]
+          },
+          {
+            "id": "tomorrow",
+            "text": "I will finish the last 30 tomorrow morning.",
+            "fine": "Gives a plan for the remaining work.",
+            "bad": [
+              {
+                "id": "tomorrow-done",
+                "level": "intermediate",
+                "text": "I marked the batch finished so the board looks right; the last 30 can wait.",
+                "why": "Marking unfinished work as finished makes the record false.",
+                "principle": "wet.doc-false-finished"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Diligence and accountability; numbers in the report are internally consistent (120 - 6 = 114)."
+      }
+    }
+  ]
+}

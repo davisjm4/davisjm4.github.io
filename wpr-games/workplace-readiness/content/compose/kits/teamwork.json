@@ -1,0 +1,593 @@
+{
+  "skill": "teamwork",
+  "kits": [
+    {
+      "id": "tea-team-project",
+      "skill": "teamwork",
+      "family": "teamwork.cx-team-project-roles",
+      "familyName": "Getting a team project organized",
+      "framework": "process-dependency",
+      "concepts": [
+        "teamwork:expectations-roles-goals",
+        "teamwork:team-communication",
+        "teamwork:respect-contributions"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. You and three coworkers have two weeks to update {document|the} for the whole team.",
+        "As {role|a} at {workplace|a}, you are one of four people assigned to update {document|the} together."
+      ],
+      "pressure": [
+        "{coworker3} says it will be faster if everyone just starts on something.",
+        "The first week is almost over."
+      ],
+      "detail": [
+        "The team meets on Tuesdays.",
+        "The project has its own shared folder."
+      ],
+      "tiers": {
+        "1": "A team cannot work toward a goal it has not defined.",
+        "2": "Clear roles prevent wasted and missing work.",
+        "3": "Duplicate work should be sorted out as soon as it is found.",
+        "4": "A teammate falling behind needs a supportive check-in.",
+        "5": "Recognizing contributions keeps a team motivated."
+      },
+      "issues": [
+        {
+          "id": "goal",
+          "tier": 1,
+          "rule": "clarify-goal",
+          "principle": "tea.define-shared-goal",
+          "fact": [
+            "The team is not sure what the finished {document} needs to include."
+          ],
+          "clear": [
+            "{Lead|the} gave the team a written list of what the finished {document} must include."
+          ],
+          "done": "the team already has a written list of requirements",
+          "short": "the unclear goal",
+          "action": "Suggest asking {lead|the} for a clear list of what the finished work must include.",
+          "brief": "ask {lead|the} what the finished work must include",
+          "reason": "A team that is unsure of the goal may build the wrong thing. A clear list keeps everyone aimed at the same result.",
+          "lesson": "Make sure the team agrees on the goal before dividing up the work.",
+          "shortcut": [
+            {
+              "text": "Let each person decide what the {document} should include.",
+              "brief": "let each person decide",
+              "why": "Four separate ideas of the goal produce work that does not fit together.",
+              "mis": "Everyone will naturally aim for the same result."
+            }
+          ]
+        },
+        {
+          "id": "roles",
+          "tier": 2,
+          "rule": "agree-roles",
+          "principle": "tea.assign-clear-roles",
+          "fact": [
+            "Nobody has agreed who is doing which part."
+          ],
+          "clear": [
+            "The team already wrote down who is doing each part."
+          ],
+          "done": "roles were already written down",
+          "short": "the undecided roles",
+          "action": "Suggest the team agree on who does each part and write it down.",
+          "brief": "agree on and write down roles",
+          "reason": "Without agreed roles, some parts get done twice and others not at all.",
+          "lesson": "Agree on roles and write them down so every part has an owner.",
+          "shortcut": [
+            {
+              "text": "Start on whichever part looks most interesting to you.",
+              "brief": "start on the most interesting part",
+              "why": "Picking your favorite part without agreement risks duplicate or missing work.",
+              "mis": "Interest is a good way to split up work."
+            }
+          ]
+        },
+        {
+          "id": "overlap",
+          "tier": 3,
+          "rule": "communicate-overlap",
+          "principle": "tea.resolve-duplicate-work",
+          "fact": [
+            "You discover that {coworker} has been working on the same section as you."
+          ],
+          "short": "the duplicated section",
+          "action": "Tell {coworker} right away and agree on who keeps that section.",
+          "brief": "agree with {coworker} on who keeps it",
+          "reason": "Duplicate work wastes effort. Sorting it out quickly frees one of you for another part.",
+          "lesson": "Raise overlapping work right away so the team can rebalance.",
+          "shortcut": [
+            {
+              "text": "Keep going so your version is the better one.",
+              "brief": "race to finish your version",
+              "why": "Competing on the same section wastes both people's time and creates friction.",
+              "mis": "Competition produces the best work on a team."
+            }
+          ]
+        },
+        {
+          "id": "behind",
+          "tier": 4,
+          "rule": "support-teammate",
+          "principle": "tea.check-in-with-teammate",
+          "fact": [
+            "{coworker2} has not started a part that two other people are waiting on."
+          ],
+          "short": "{coworker2}'s unstarted part",
+          "action": "Check in with {coworker2} privately to ask how it is going and whether help is needed.",
+          "brief": "check in with {coworker2} and offer help",
+          "reason": "{coworker2} may be stuck or overloaded. A supportive check-in solves the problem without blame.",
+          "lesson": "When a teammate is behind, check in and offer help before assuming the worst.",
+          "shortcut": [
+            {
+              "text": "Complain to the rest of the team that {coworker2} is slowing everyone down.",
+              "brief": "complain about {coworker2}",
+              "why": "Complaining behind someone's back damages trust and does not get the part started.",
+              "mis": "Pointing out a slow teammate fixes the delay."
+            }
+          ]
+        },
+        {
+          "id": "credit",
+          "tier": 5,
+          "rule": "recognize-contribution",
+          "principle": "tea.recognize-teammate-idea",
+          "noProceed": true,
+          "fact": [
+            "{coworker3}'s suggestion is what made the plan work, but nobody has said so."
+          ],
+          "short": "{coworker3}'s unrecognized idea",
+          "action": "Point out {coworker3}'s contribution when the team next meets.",
+          "brief": "credit {coworker3} at the next meeting",
+          "reason": "Recognizing contributions shows respect and encourages people to keep offering ideas.",
+          "lesson": "Recognize teammates' contributions openly.",
+          "shortcut": [
+            {
+              "text": "Leave it unsaid, since good ideas are just part of the job.",
+              "brief": "leave it unsaid",
+              "why": "Unrecognized contributions discourage people from sharing ideas.",
+              "mis": "Recognition is unnecessary on a team."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Keep working on your part and share progress at the next team meeting.",
+        "why": "The goal and roles are clear, so steady work on your part and regular updates are what the team needs.",
+        "lesson": "Once goals and roles are clear, do your part and keep the team informed."
+      },
+      "generic": [
+        {
+          "text": "Do the whole project yourself to make sure it is done right.",
+          "why": "Taking over shuts teammates out and is not sustainable.",
+          "mis": "The best way to ensure quality is to do it all yourself."
+        },
+        {
+          "text": "Wait for {lead|the} to notice any problems with the team.",
+          "why": "Team members share responsibility for raising problems.",
+          "mis": "Only a supervisor should deal with team problems."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Call an extra meeting to review the roles again.",
+          "why": "The roles are already written down. Another meeting takes time from the work.",
+          "mis": "More meetings make a team work better."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are part of a four-person team at {workplace|the} updating {document|the}."
+        ],
+        "because": {
+          "goal": [
+            "The team is unsure what the finished work should contain."
+          ],
+          "behind": [
+            "One part that others depend on has not been started."
+          ]
+        },
+        "steps": [
+          {
+            "id": "goal",
+            "text": "Get a clear list of requirements from {lead|the}",
+            "issue": "goal"
+          },
+          {
+            "id": "roles",
+            "text": "Agree on who does each part",
+            "core": true
+          },
+          {
+            "id": "work",
+            "text": "Work on the parts",
+            "core": true
+          },
+          {
+            "id": "checkin",
+            "text": "Check in with anyone who is stuck",
+            "issue": "behind"
+          },
+          {
+            "id": "combine",
+            "text": "Combine the parts and review them together",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "goal",
+            "roles",
+            "You divide work once you know what the whole needs."
+          ],
+          [
+            "roles",
+            "work",
+            "Everyone needs a role before starting."
+          ],
+          [
+            "work",
+            "checkin",
+            "Check-ins happen while the work is in progress."
+          ],
+          [
+            "checkin",
+            "combine",
+            "Every part has to be done before combining."
+          ],
+          [
+            "work",
+            "combine",
+            "Parts are combined after they are done."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Define the goal, assign roles, support each other through the work, then combine."
+      },
+      "doc": {
+        "type": "chat",
+        "title": [
+          "Team chat: {document} project"
+        ],
+        "intro": [
+          "You are reviewing the team's planning chat before the next meeting."
+        ],
+        "lesson": "Good team communication sets clear roles and deadlines, and treats everyone's work with respect.",
+        "lines": [
+          {
+            "id": "goal",
+            "text": "{coworker}: Here is the list from {lead|the} of what the {document} must include.",
+            "fine": "Shares the goal with the team."
+          },
+          {
+            "id": "roles",
+            "text": "{coworker2}: I will take sections 1 and 2; you take 3, and {coworker3} takes 4.",
+            "fine": "Clear roles with an owner for each section.",
+            "bad": [
+              {
+                "id": "roles-vague",
+                "level": "beginner",
+                "text": "{coworker2}: Let us all just work on whatever and see how it turns out.",
+                "why": "Without roles, work gets duplicated or missed.",
+                "principle": "tea.doc-no-roles"
+              }
+            ]
+          },
+          {
+            "id": "due",
+            "text": "{coworker3}: Drafts due Thursday so we have Friday to combine.",
+            "fine": "A shared deadline with time to combine."
+          },
+          {
+            "id": "help",
+            "text": "{coworker}: If anyone gets stuck, post here and someone will help.",
+            "fine": "Invites people to ask for help.",
+            "bad": [
+              {
+                "id": "help-alone",
+                "level": "beginner",
+                "text": "{coworker}: If you get stuck, figure it out yourself.",
+                "why": "Discouraging requests for help leaves teammates stuck and slows the team.",
+                "principle": "tea.doc-discourages-help"
+              }
+            ]
+          },
+          {
+            "id": "feedback",
+            "text": "{coworker2}: Section 4 is solid; one table could use a heading.",
+            "fine": "Specific, respectful feedback.",
+            "bad": [
+              {
+                "id": "feedback-harsh",
+                "level": "intermediate",
+                "text": "{coworker2}: Section 4 is useless, so I am rewriting it myself.",
+                "why": "Dismissing a teammate's work and taking it over is disrespectful and damages the team.",
+                "principle": "tea.doc-dismisses-teammate-work"
+              }
+            ]
+          },
+          {
+            "id": "late",
+            "text": "{coworker3}: I will have section 4 done by Thursday as planned.",
+            "fine": "Confirms the agreed deadline.",
+            "bad": [
+              {
+                "id": "late-silent",
+                "level": "advanced",
+                "needs": [
+                  "due"
+                ],
+                "text": "{coworker3}: I will start section 4 sometime next week.",
+                "why": "Drafts are due Thursday. Starting next week breaks the team's plan without discussing it.",
+                "principle": "tea.doc-ignores-shared-deadline"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Team roles and communication."
+      }
+    },
+    {
+      "id": "tea-short-staffed",
+      "skill": "teamwork",
+      "family": "teamwork.cx-covering-for-absence",
+      "familyName": "Covering when the team is short-staffed",
+      "framework": "competing-priorities",
+      "concepts": [
+        "teamwork:share-responsibility",
+        "teamwork:team-communication",
+        "teamwork:respect-contributions"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. A coworker called out sick, and the team is covering the extra work.",
+        "As {role|a} at {workplace|a}, you are working a shift where the team is one person short."
+      ],
+      "pressure": [
+        "{coworker3} says everyone should just look after their own work today.",
+        "It is a busier day than usual."
+      ],
+      "detail": [
+        "The absent coworker usually works the morning shift.",
+        "{Lead|the} is in the office."
+      ],
+      "tiers": {
+        "1": "A task that needs two people for safety cannot be done alone.",
+        "2": "Work that nobody owns needs an owner right away.",
+        "3": "You need to know where the work stands before picking it up.",
+        "4": "Frustration about staffing is best channeled toward a fix.",
+        "5": "Thanking teammates matters once the work is covered."
+      },
+      "issues": [
+        {
+          "id": "twoperson",
+          "tier": 1,
+          "rule": "control-hazard-first",
+          "principle": "tea.no-solo-two-person-task",
+          "fact": [
+            "A task the posted procedure says needs two people is due, and only you are free."
+          ],
+          "short": "the two-person task",
+          "action": "Hold off on the two-person task until someone can help, and tell {lead|the}.",
+          "brief": "wait for a second person and tell {lead|the}",
+          "reason": "The procedure requires two people for safety. Telling the lead lets them find a second person.",
+          "lesson": "Never do a two-person task alone to cover a gap; get help instead.",
+          "shortcut": [
+            {
+              "text": "Do the two-person task alone, carefully, since everyone else is busy.",
+              "brief": "do it alone carefully",
+              "why": "Being careful does not replace the second person the procedure requires.",
+              "mis": "Being short-staffed justifies skipping safety rules."
+            }
+          ]
+        },
+        {
+          "id": "dropped",
+          "tier": 2,
+          "rule": "take-ownership",
+          "principle": "tea.claim-uncovered-task",
+          "fact": [
+            "Nobody has picked up {task|the}, which the absent coworker usually does."
+          ],
+          "clear": [
+            "{coworker} already took on {task|the} for today."
+          ],
+          "done": "{coworker} already took on the task",
+          "short": "the uncovered task",
+          "action": "Offer to take {task|the} and tell the team so nobody doubles up.",
+          "brief": "take on the task and tell the team",
+          "reason": "Shared responsibility means someone steps up. Telling the team prevents two people doing it.",
+          "lesson": "When work is left uncovered, offer to own it and tell the team.",
+          "shortcut": [
+            {
+              "text": "Assume someone else will notice it and pick it up.",
+              "brief": "assume someone else will do it",
+              "why": "When everyone assumes someone else will do it, nobody does.",
+              "mis": "Uncovered work will get picked up by someone."
+            }
+          ]
+        },
+        {
+          "id": "handoff",
+          "tier": 3,
+          "rule": "get-status-first",
+          "principle": "tea.check-where-work-stands",
+          "fact": [
+            "You do not know where the absent coworker left off on an open order."
+          ],
+          "clear": [
+            "The absent coworker left detailed handoff notes on the open order."
+          ],
+          "done": "the handoff notes already explain where things stand",
+          "short": "not knowing where the order stands",
+          "action": "Check the handoff log or ask {lead|the} where the order stands.",
+          "brief": "check where the order stands",
+          "reason": "Starting without knowing the status risks redoing or skipping steps.",
+          "lesson": "Find out where shared work stands before you pick it up.",
+          "shortcut": [
+            {
+              "text": "Start the order over from the beginning to be safe.",
+              "brief": "start the order over",
+              "why": "Restarting may duplicate finished steps and waste materials.",
+              "mis": "Starting over is always the safe choice."
+            }
+          ]
+        },
+        {
+          "id": "grumble",
+          "tier": 4,
+          "rule": "channel-frustration",
+          "principle": "tea.constructive-response-to-complaint",
+          "noProceed": true,
+          "fact": [
+            "{coworker2} complains loudly that the team always gets stuck covering."
+          ],
+          "short": "{coworker2}'s frustration",
+          "action": "Acknowledge the frustration and suggest raising staffing with {lead|the} later.",
+          "brief": "acknowledge it and suggest raising it later",
+          "reason": "The frustration may be fair. Pointing it toward a real conversation helps more than arguing or piling on.",
+          "lesson": "Respond to team frustration by acknowledging it and steering toward a fix.",
+          "shortcut": [
+            {
+              "text": "Join in the complaining so {coworker2} knows you agree.",
+              "brief": "join in the complaining",
+              "why": "Piling on lowers morale and does not change staffing.",
+              "mis": "Agreeing with complaints builds team spirit."
+            }
+          ]
+        },
+        {
+          "id": "thanks",
+          "tier": 5,
+          "rule": "recognize-contribution",
+          "principle": "tea.thank-teammate-who-covered",
+          "noProceed": true,
+          "fact": [
+            "{coworker3} stayed late yesterday so the team could finish."
+          ],
+          "short": "{coworker3}'s extra effort",
+          "action": "Thank {coworker3} for staying late to help the team.",
+          "brief": "thank {coworker3} for staying late",
+          "reason": "Thanking teammates for extra effort shows respect and keeps people willing to help.",
+          "lesson": "Notice and thank teammates who go beyond their share.",
+          "shortcut": [
+            {
+              "text": "Say nothing, since covering is just part of the job.",
+              "brief": "say nothing about it",
+              "why": "Unacknowledged extra effort can leave teammates feeling taken for granted.",
+              "mis": "Thanks are unnecessary for expected work."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Pitch in on the shared work and keep the team updated on what you are covering.",
+        "why": "The work is covered and nothing else needs handling, so pitching in and communicating is the teamwork the day needs.",
+        "lesson": "On short-staffed days, pitch in and keep everyone informed."
+      },
+      "generic": [
+        {
+          "text": "Do only your usual tasks, since the extra work is not your job.",
+          "why": "Team members share responsibility when someone is out.",
+          "mis": "You are only responsible for your own tasks."
+        },
+        {
+          "text": "Take a long break, since the day is already behind.",
+          "why": "Disappearing on a short-staffed day puts more on everyone else.",
+          "mis": "If the day is behind anyway, a long break does not matter."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Ask {lead|the} to assign every single task before you do anything.",
+          "why": "The work is already covered. Waiting for full assignments wastes time.",
+          "mis": "Nothing should be done without a supervisor's assignment."
+        }
+      ],
+      "process": {
+        "setup": [
+          "Your team at {workplace|the} is one person short today."
+        ],
+        "because": {
+          "dropped": [
+            "One of the absent coworker's tasks has no owner today."
+          ],
+          "handoff": [
+            "The absent coworker's open order is partly done."
+          ]
+        },
+        "steps": [
+          {
+            "id": "huddle",
+            "text": "Meet briefly with the team to split up the work",
+            "core": true
+          },
+          {
+            "id": "claim",
+            "text": "Claim the uncovered task",
+            "issue": "dropped"
+          },
+          {
+            "id": "status",
+            "text": "Find out where the open order stands",
+            "issue": "handoff"
+          },
+          {
+            "id": "work",
+            "text": "Work through your share",
+            "core": true
+          },
+          {
+            "id": "update",
+            "text": "Update the team at the end of the shift",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "huddle",
+            "claim",
+            "Claiming happens as the team splits the work."
+          ],
+          [
+            "claim",
+            "work",
+            "You claim the task before working on it."
+          ],
+          [
+            "status",
+            "work",
+            "You need the status before continuing the order."
+          ],
+          [
+            "huddle",
+            "work",
+            "The team splits work before starting."
+          ],
+          [
+            "work",
+            "update",
+            "The update reports what was done."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Split the work, claim what is uncovered, find where things stand, then update the team."
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Two-person requirement stated as a posted procedure."
+      }
+    }
+  ]
+}

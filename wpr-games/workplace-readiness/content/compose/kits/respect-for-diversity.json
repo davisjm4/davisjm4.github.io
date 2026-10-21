@@ -1,0 +1,528 @@
+{
+  "skill": "respect-for-diversity",
+  "kits": [
+    {
+      "id": "div-team-project",
+      "skill": "respect-for-diversity",
+      "family": "respect-for-diversity.cx-inclusive-team-project",
+      "familyName": "Planning an inclusive team project",
+      "framework": "consequences",
+      "concepts": [
+        "respect-for-diversity:individual-differences",
+        "respect-for-diversity:collaborating",
+        "respect-for-diversity:own-bias"
+      ],
+      "contexts": "any",
+      "setup": [
+        "You work as {role|a} at {workplace|a}. You are helping {lead|the} organize a team project day next month.",
+        "As {role|a} at {workplace|a}, you are planning a team project day with three coworkers."
+      ],
+      "pressure": [
+        "{coworker3} says it is too much work to plan around everyone.",
+        "{Lead|the} wants the plan by Friday."
+      ],
+      "detail": [
+        "The project day will include a working lunch.",
+        "The team has six members."
+      ],
+      "tiers": {
+        "1": "A remark that demeans a coworker needs a response in the moment.",
+        "2": "A plan that shuts someone out has to be fixed before anything else.",
+        "3": "Scheduling should let everyone take part.",
+        "4": "Assumptions about a person should be checked by asking them.",
+        "5": "Drawing out every voice improves the plan once access is settled."
+      },
+      "issues": [
+        {
+          "id": "joke",
+          "tier": 1,
+          "rule": "address-disrespect",
+          "principle": "div.respond-to-demeaning-joke",
+          "fact": [
+            "During the planning meeting, {coworker3} jokes about the way {coworker2} speaks."
+          ],
+          "short": "the demeaning joke",
+          "action": "Say calmly that the joke is not okay, and check in with {coworker2}.",
+          "brief": "say the joke is not okay and check on {coworker2}",
+          "reason": "Letting a demeaning joke pass tells the target it is acceptable. A calm response supports the coworker and sets a respectful norm.",
+          "lesson": "Respond calmly when a coworker is mocked; silence signals approval.",
+          "shortcut": [
+            {
+              "text": "Laugh along so the meeting does not get awkward.",
+              "brief": "laugh along to keep things light",
+              "why": "Laughing along joins in the disrespect and leaves the coworker unsupported.",
+              "mis": "Avoiding awkwardness is more important than addressing disrespect."
+            }
+          ]
+        },
+        {
+          "id": "access",
+          "tier": 2,
+          "rule": "remove-barrier",
+          "principle": "div.choose-accessible-location",
+          "fact": [
+            "{coworker} uses a wheelchair, and the planned meeting room is up a flight of stairs."
+          ],
+          "clear": [
+            "The project day was already moved to a ground-floor room."
+          ],
+          "done": "the project day was already moved to an accessible room",
+          "short": "the room {coworker} cannot reach",
+          "action": "Suggest moving the project day to a room everyone can reach.",
+          "brief": "suggest an accessible room",
+          "reason": "A plan that a teammate cannot physically join shuts them out. Choosing an accessible room includes everyone.",
+          "lesson": "Plan events so every team member can take part fully.",
+          "shortcut": [
+            {
+              "text": "Plan for {coworker} to join by video from downstairs.",
+              "brief": "have {coworker} join by video",
+              "why": "Video from another floor leaves {coworker} outside the group when an accessible room would include them.",
+              "mis": "Offering a lesser alternative is the same as including someone."
+            }
+          ]
+        },
+        {
+          "id": "date",
+          "tier": 3,
+          "rule": "check-schedule-with-team",
+          "principle": "div.check-date-against-observances",
+          "fact": [
+            "The planned date falls on a religious holiday that {coworker2} observes."
+          ],
+          "clear": [
+            "{coworker2} checked the calendar and confirmed the date works."
+          ],
+          "done": "the date was already checked with {coworker2}",
+          "short": "the date conflict with {coworker2}'s holiday",
+          "action": "Suggest checking possible dates with the whole team before choosing one.",
+          "brief": "check possible dates with the team",
+          "reason": "Picking a date some people cannot attend leaves them out. Checking dates is a simple way to respect everyone.",
+          "lesson": "Respect differences in how people observe holidays when scheduling team events.",
+          "shortcut": [
+            {
+              "text": "Keep the date and let {coworker2} decide whether to come.",
+              "brief": "keep the date anyway",
+              "why": "Keeping a date that conflicts with a coworker's observance puts them in an unfair position.",
+              "mis": "Team events should not change for one person."
+            }
+          ]
+        },
+        {
+          "id": "assume",
+          "tier": 4,
+          "rule": "ask-dont-assume",
+          "principle": "div.ask-instead-of-assuming",
+          "fact": [
+            "You realize you planned to give {coworker} only the note-taking without asking what they would prefer."
+          ],
+          "short": "your assumption about {coworker}'s role",
+          "action": "Ask {coworker} which part of the project they would like to take on.",
+          "brief": "ask {coworker} which part they want",
+          "reason": "Assigning roles based on assumptions can limit people unfairly. Asking respects their skills and choices.",
+          "lesson": "Notice your assumptions about people and check them by asking.",
+          "shortcut": [
+            {
+              "text": "Keep the plan, since note-taking is probably easiest for {coworker}.",
+              "brief": "keep the note-taking plan",
+              "why": "Deciding what is easiest for someone without asking is the assumption to avoid.",
+              "mis": "You know what suits others without asking."
+            }
+          ]
+        },
+        {
+          "id": "voice",
+          "tier": 5,
+          "rule": "invite-contribution",
+          "principle": "div.invite-stated-preference",
+          "fact": [
+            "{coworker} has mentioned preferring to be asked directly before sharing ideas in a group."
+          ],
+          "short": "{coworker}'s preference to be asked",
+          "action": "Invite {coworker} by name to share ideas for the project.",
+          "brief": "invite {coworker} by name to share ideas",
+          "reason": "People share ideas in different ways. Respecting a stated preference brings in ideas the team would otherwise miss.",
+          "lesson": "Adapt how you draw out ideas to the people on your team.",
+          "shortcut": [
+            {
+              "text": "Wait for {coworker} to speak up like everyone else.",
+              "brief": "wait for {coworker} to speak up",
+              "why": "{coworker} told the team what works for them. Ignoring it loses their ideas.",
+              "mis": "Everyone should contribute in the same way."
+            }
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Move ahead with the plan the team agreed on and share it with {lead|the}.",
+        "why": "The plan includes everyone and nothing else needs addressing, so it is ready to go to the lead.",
+        "lesson": "Once a plan works for everyone, move it forward."
+      },
+      "generic": [
+        {
+          "text": "Plan everything yourself to save the team the trouble of discussing it.",
+          "why": "Planning alone leaves out the perspectives that make a team plan work for everyone.",
+          "mis": "Collaboration slows things down."
+        },
+        {
+          "text": "Choose whatever the majority of the team wants and move on.",
+          "why": "Going with the majority without checking can leave some teammates unable to take part.",
+          "mis": "Majority rule is always fair."
+        }
+      ],
+      "overcaution": [
+        {
+          "text": "Survey every person at {workplace|the} before finalizing anything.",
+          "why": "The plan already works for the team. Surveying everyone delays it without need.",
+          "mis": "Asking more people always makes a plan more inclusive."
+        }
+      ],
+      "doc": {
+        "type": "email",
+        "title": [
+          "Draft invitation: team project day"
+        ],
+        "intro": [
+          "You drafted this invitation to the team. Check it before sending."
+        ],
+        "lesson": "Inclusive messages make it easy for everyone to take part and avoid assumptions.",
+        "lines": [
+          {
+            "id": "what",
+            "text": "We are planning a team project day to reorganize the work area.",
+            "fine": "Clear purpose."
+          },
+          {
+            "id": "where",
+            "text": "It will be in the ground-floor training room, which has step-free access.",
+            "fine": "Shares accessibility information up front.",
+            "bad": [
+              {
+                "id": "where-stairs",
+                "level": "intermediate",
+                "text": "It will be in the upstairs storage room; everyone can manage the stairs.",
+                "why": "Assuming everyone can use stairs excludes people with mobility needs.",
+                "principle": "div.doc-assumes-everyone-can-use-stairs"
+              }
+            ]
+          },
+          {
+            "id": "dates",
+            "text": "Please reply with any dates that do not work for you.",
+            "fine": "Invites schedule conflicts before choosing a date.",
+            "bad": [
+              {
+                "id": "dates-fixed",
+                "level": "beginner",
+                "text": "The date is set, so do not bother replying about conflicts.",
+                "why": "Refusing to hear about conflicts can exclude people who cannot attend.",
+                "principle": "div.doc-ignores-conflicts"
+              }
+            ]
+          },
+          {
+            "id": "food",
+            "text": "Lunch is provided; let me know about any food needs.",
+            "fine": "Invites people to share dietary needs.",
+            "bad": [
+              {
+                "id": "food-ignore",
+                "level": "beginner",
+                "text": "Lunch is pizza for everyone; no other options.",
+                "why": "Not asking about food needs can leave some teammates unable to eat.",
+                "principle": "div.doc-ignores-food-needs"
+              }
+            ]
+          },
+          {
+            "id": "roles",
+            "text": "Tell me which part of the project you would like to take on.",
+            "fine": "Lets people choose roles.",
+            "bad": [
+              {
+                "id": "roles-assigned",
+                "level": "advanced",
+                "needs": [
+                  "what"
+                ],
+                "text": "I have already given the heavy lifting to the guys and the decorating to everyone else.",
+                "why": "Assigning work by gender is a stereotype. People should choose roles based on their skills and preferences.",
+                "principle": "div.doc-gender-based-roles"
+              }
+            ]
+          },
+          {
+            "id": "tone",
+            "text": "Everyone's ideas are welcome.",
+            "fine": "A welcoming close.",
+            "bad": [
+              {
+                "id": "tone-normal",
+                "level": "beginner",
+                "text": "Please keep your ideas normal so we do not waste time.",
+                "why": "Calling some ideas not normal discourages people with different perspectives from speaking up.",
+                "principle": "div.doc-discourages-different-ideas"
+              }
+            ]
+          }
+        ]
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "no-stereotypes"
+        ],
+        "notes": "Defects name stereotyped behavior only so students can identify it; no group is characterized."
+      }
+    },
+    {
+      "id": "div-serving-everyone",
+      "skill": "respect-for-diversity",
+      "family": "respect-for-diversity.cx-serving-everyone",
+      "familyName": "Serving people with different needs",
+      "framework": "safest-action",
+      "concepts": [
+        "respect-for-diversity:individual-differences",
+        "respect-for-diversity:valuing-differences",
+        "respect-for-diversity:own-bias"
+      ],
+      "contexts": "any",
+      "requires": [
+        "area"
+      ],
+      "setup": [
+        "You work as {role|a} at {workplace|a}, and you are the first person {client.plural} see when they come in.",
+        "As {role|a} at {workplace|a}, you are helping {client.plural} at the front of the {area}."
+      ],
+      "pressure": [
+        "Several more {client.plural} are waiting.",
+        "{coworker3} says to keep things moving fast."
+      ],
+      "detail": [
+        "It is a busy morning.",
+        "The {area} was just cleaned."
+      ],
+      "tiers": {
+        "1": "A barrier that could hurt someone or keep them out comes first.",
+        "2": "Communication has to work before service can.",
+        "3": "Choices should be offered, not assumed.",
+        "4": "Small courtesies, like a name said right, follow the bigger needs.",
+        "5": "A disrespectful comment from a coworker can be addressed once the {client} is served."
+      },
+      "issues": [
+        {
+          "id": "ramp",
+          "tier": 1,
+          "rule": "remove-barrier",
+          "principle": "div.clear-access-route",
+          "fact": [
+            "A {client} who uses a cane is waiting outside because boxes are blocking the ramp."
+          ],
+          "short": "the blocked ramp",
+          "action": "Clear the boxes off the ramp right away and offer the {client} help coming in.",
+          "brief": "clear the ramp and offer help",
+          "reason": "A blocked ramp keeps the {client} out and could cause a fall. Clearing it fixes both problems.",
+          "lesson": "Keep access routes clear so everyone can get in safely.",
+          "shortcut": [
+            {
+              "text": "Tell the {client} to come in through the side door with the steps.",
+              "brief": "send the {client} to the stepped door",
+              "why": "Steps are harder for someone with a cane. The ramp exists so everyone has a safe way in.",
+              "mis": "Any entrance is as good as another."
+            }
+          ]
+        },
+        {
+          "id": "language",
+          "tier": 2,
+          "rule": "adapt-communication",
+          "principle": "div.use-interpretation-line",
+          "fact": [
+            "A {client} speaks limited English and looks confused, and {workplace|the} has a phone interpretation line."
+          ],
+          "short": "the language barrier",
+          "action": "Offer the phone interpretation line so the {client} can be served clearly.",
+          "brief": "offer the interpretation line",
+          "reason": "The interpretation line lets the {client} understand and be understood. Using it shows respect and prevents mistakes.",
+          "lesson": "Use the tools available to communicate clearly with people who speak other languages.",
+          "shortcut": [
+            {
+              "text": "Repeat your explanation more loudly and slowly.",
+              "brief": "repeat it louder and slower",
+              "why": "Volume does not overcome a language barrier and can feel disrespectful.",
+              "mis": "Speaking louder helps people understand another language."
+            }
+          ],
+          "clear": [
+            "The interpretation line is already connected, and the {client} is following along."
+          ],
+          "done": "the interpretation line is already connected"
+        },
+        {
+          "id": "assume",
+          "tier": 3,
+          "rule": "ask-dont-assume",
+          "principle": "div.offer-choice-not-assumption",
+          "fact": [
+            "You notice you were about to steer an older {client} away from the self-service screen without asking."
+          ],
+          "short": "your assumption about the {client}",
+          "action": "Offer both the screen and in-person help, and let the {client} choose.",
+          "brief": "offer both options and let them choose",
+          "reason": "Assuming what someone can do because of their age is a bias. Offering choices treats them as an individual.",
+          "lesson": "Offer choices instead of deciding for people based on assumptions.",
+          "shortcut": [
+            {
+              "text": "Handle everything for the {client}, since that is probably easier for them.",
+              "brief": "handle everything for them",
+              "why": "Deciding for someone based on age is the assumption to avoid.",
+              "mis": "Helping without asking is always kind."
+            }
+          ]
+        },
+        {
+          "id": "name",
+          "tier": 4,
+          "rule": "show-courtesy",
+          "principle": "div.ask-name-pronunciation",
+          "noProceed": true,
+          "fact": [
+            "You are not sure how to pronounce the {client}'s name on the paperwork."
+          ],
+          "short": "the name you are unsure how to say",
+          "action": "Politely ask the {client} how to say their name.",
+          "brief": "ask how to say the name",
+          "reason": "Asking shows respect. Guessing or avoiding the name can feel dismissive.",
+          "lesson": "When unsure how to say someone's name, ask politely.",
+          "shortcut": [
+            {
+              "text": "Avoid using the {client}'s name at all so you do not get it wrong.",
+              "brief": "avoid saying the name",
+              "why": "Avoiding someone's name can feel cold. A polite question solves the problem.",
+              "mis": "Avoiding a name is more respectful than asking."
+            }
+          ]
+        },
+        {
+          "id": "comment",
+          "tier": 5,
+          "rule": "address-disrespect",
+          "principle": "div.address-coworker-mockery",
+          "fact": [
+            "Once the {client} leaves, {coworker3} imitates the {client}'s accent."
+          ],
+          "short": "{coworker3}'s mocking comment",
+          "action": "Tell {coworker3} privately that mocking how someone speaks is not okay.",
+          "brief": "tell {coworker3} privately it is not okay",
+          "reason": "Mocking {client.plural} creates a disrespectful workplace even when they are not present. A private word addresses it directly.",
+          "lesson": "Speak up about disrespect toward the people you serve, even when they are not present.",
+          "shortcut": [
+            {
+              "text": "Ignore it, since the {client} did not hear the comment.",
+              "brief": "ignore it since the {client} left",
+              "why": "Disrespect is not acceptable just because the target cannot hear it. It shapes how the team treats people.",
+              "mis": "A comment is harmless if the person never hears it."
+            }
+          ],
+          "onlyLevels": [
+            "beginner"
+          ]
+        }
+      ],
+      "proceed": {
+        "text": "Help the {client} the way you would help anyone, and complete the visit.",
+        "why": "Nothing stands in the way of good service here, so helping the {client} as usual is right.",
+        "lesson": "Respect shows in consistent, attentive service for every person."
+      },
+      "generic": [
+        {
+          "text": "Ask {coworker2} to take over this {client} because the visit feels awkward.",
+          "why": "Handing off someone because of a difference in need or background treats them unequally.",
+          "mis": "Passing someone to a coworker avoids problems."
+        },
+        {
+          "text": "Rush through the visit so the waiting {client.plural} do not get upset.",
+          "why": "Rushing one person because others are waiting gives them worse service.",
+          "mis": "Speed matters more than each person's experience."
+        }
+      ],
+      "process": {
+        "setup": [
+          "You are {role|a} at {workplace|a}, helping a {client} at the front of the {area}."
+        ],
+        "because": {
+          "ramp": [
+            "Boxes have been left on the ramp to the entrance."
+          ],
+          "language": [
+            "The {client} you are helping speaks limited English."
+          ]
+        },
+        "steps": [
+          {
+            "id": "clear",
+            "text": "Move the boxes off the ramp",
+            "issue": "ramp"
+          },
+          {
+            "id": "greet",
+            "text": "Greet the {client} and ask how you can help",
+            "core": true
+          },
+          {
+            "id": "line",
+            "text": "Connect to the interpretation line",
+            "issue": "language"
+          },
+          {
+            "id": "help",
+            "text": "Help with the request",
+            "core": true
+          },
+          {
+            "id": "confirm",
+            "text": "Confirm the {client} has what they need",
+            "core": true
+          }
+        ],
+        "rel": [
+          [
+            "clear",
+            "greet",
+            "The {client} needs to be able to get in first."
+          ],
+          [
+            "greet",
+            "line",
+            "Greeting first shows you are there to help, then you bring in the interpreter."
+          ],
+          [
+            "line",
+            "help",
+            "The request has to be understood before you can help with it."
+          ],
+          [
+            "greet",
+            "help",
+            "You find out the request before helping."
+          ],
+          [
+            "help",
+            "confirm",
+            "You confirm after helping."
+          ]
+        ],
+        "alternatesReviewed": true,
+        "lesson": "Remove barriers, communicate in a way that works, help, and confirm."
+      },
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "no-stereotypes"
+        ],
+        "notes": "Interpretation line stated as a workplace resource. Age assumption is framed as the student's own bias to check."
+      }
+    }
+  ]
+}
