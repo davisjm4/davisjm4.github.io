@@ -1,0 +1,549 @@
+{
+ "topicId": "mars-rovers",
+ "design": {
+  "kind": "rover",
+  "kindPl": "rovers",
+  "member": "rover",
+  "memberPl": "rovers",
+  "names": [
+   "dustwalker",
+   "redcrest",
+   "pathlight",
+   "stoneseeker",
+   "rimrunner",
+   "duneglider",
+   "craterwren",
+   "sandquill"
+  ],
+  "descr": "robotic rover for exploring Mars",
+  "live": "explores",
+  "liveVerb": "works",
+  "home": "the surface of Mars",
+  "manyFmt": "Copies of {E} have explored many places on Mars, including {s}.",
+  "goal": "explore Mars and send back useful data",
+  "otherGoals": [
+   "take pictures of the night sky",
+   "carry a small helicopter"
+  ],
+  "myths": [
+   "breathe the thin air of Mars for power",
+   "talk to Earth without any antenna",
+   "fly over canyons when its wheels get tired"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many robots built to explore Mars.",
+   "{CapE} has wheels, cameras, and a robotic arm."
+  ],
+  "conds": {
+   "dust": {
+    "clause": "dust storms sweep across the area every few weeks",
+    "absent": "dust storms are rare",
+    "np": "frequent dust storms",
+    "tag": "the dust storms",
+    "risk": "dust that settles on solar panels blocks the sunlight that powers a rover"
+   },
+   "sand": {
+    "clause": "soft sand covers much of the ground",
+    "absent": "the ground is hard and rocky",
+    "np": "soft sand",
+    "tag": "the soft sand",
+    "risk": "a rover with narrow wheels can sink into soft sand and get stuck"
+   },
+   "polar": {
+    "clause": "nighttime temperatures fall extremely low, as they do near the poles",
+    "absent": "the nights are less extreme, as they are near the equator",
+    "np": "extremely cold nights",
+    "tag": "the extremely cold nights",
+    "risk": "batteries that freeze can crack and stop working"
+   },
+   "data": {
+    "clause": "there are many interesting rocks to photograph and measure",
+    "absent": "there are few interesting rocks to study",
+    "np": "huge amounts of data",
+    "tag": "the many rocks to study",
+    "risk": "a rover that collects more data than it can send must throw some of it away"
+   },
+   "shortday": {
+    "clause": "winter days are short and dim",
+    "absent": "the days are long and bright",
+    "np": "short winter days",
+    "tag": "the short winter days"
+   },
+   "sharp": {
+    "clause": "sharp, jagged rocks cover the ground",
+    "absent": "there are few sharp rocks",
+    "np": "sharp, jagged rocks",
+    "tag": "the jagged rocks"
+   }
+  },
+  "features": [
+   {
+    "id": "cleaner",
+    "np": "a cleaner that shakes dust off its solar panels",
+    "bare": "panel cleaners",
+    "the": "the panel cleaner",
+    "short": "cleaner",
+    "pl": false,
+    "mech": "shake settled dust off the solar panels",
+    "benefit": "keep making power after dust storms",
+    "cond": "dust",
+    "metric": {
+     "past": "kept",
+     "unit": "percent",
+     "what": "of their power after a dust storm",
+     "np": "power after a dust storm",
+     "cmp": "more power kept after a dust storm",
+     "better": "higher",
+     "lo": 30,
+     "hi": 95
+    },
+    "cost": {
+     "clause": "shaking the panels uses some stored power, which matters on short, dim winter days",
+     "cond": "shortday"
+    }
+   },
+   {
+    "id": "wheels",
+    "np": "six wide wheels with deep treads",
+    "bare": "wide treaded wheels",
+    "the": "the wide treaded wheels",
+    "short": "wheels",
+    "pl": true,
+    "mech": "spread the rover's weight and grip loose sand",
+    "benefit": "cross soft sand without getting stuck",
+    "cond": "sand",
+    "metric": {
+     "past": "got stuck",
+     "unit": "times",
+     "what": "per hundred kilometers",
+     "np": "times stuck per hundred kilometers",
+     "cmp": "fewer times stuck per hundred kilometers",
+     "better": "lower",
+     "lo": 1,
+     "hi": 12
+    },
+    "cost": {
+     "clause": "their soft treads wear down quickly where sharp, jagged rocks cover the ground",
+     "cond": "sharp"
+    }
+   },
+   {
+    "id": "heater",
+    "np": "a heater that warms its batteries",
+    "bare": "battery heaters",
+    "the": "the battery heater",
+    "short": "heater",
+    "pl": false,
+    "mech": "keep the batteries from freezing at night",
+    "benefit": "survive extremely cold Martian nights",
+    "cond": "polar",
+    "metric": {
+     "past": "had",
+     "unit": "battery failures",
+     "what": "per year",
+     "np": "battery failures per year",
+     "cmp": "fewer battery failures per year",
+     "better": "lower",
+     "lo": 1,
+     "hi": 10
+    }
+   },
+   {
+    "id": "antenna",
+    "np": "a large dish antenna",
+    "bare": "large dish antennas",
+    "the": "the dish antenna",
+    "short": "antenna",
+    "pl": false,
+    "mech": "send a strong, narrow signal toward Earth",
+    "benefit": "send back large amounts of data",
+    "cond": "data",
+    "metric": {
+     "past": "sent",
+     "unit": "megabytes",
+     "what": "of data per day",
+     "np": "data sent per day",
+     "cmp": "more data sent per day",
+     "better": "higher",
+     "lo": 20,
+     "hi": 200
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "crater",
+    "np": "a dusty crater floor",
+    "the": "the crater floor",
+    "at": "on the crater floor",
+    "has": [
+     "dust",
+     "sand"
+    ],
+    "lacks": [
+     "polar",
+     "data",
+     "shortday",
+     "sharp"
+    ]
+   },
+   {
+    "id": "polar",
+    "np": "an icy polar plain",
+    "the": "the polar plain",
+    "at": "on the polar plain",
+    "has": [
+     "polar",
+     "data",
+     "shortday"
+    ],
+    "lacks": [
+     "dust",
+     "sand",
+     "sharp"
+    ]
+   },
+   {
+    "id": "canyon",
+    "np": "a rocky canyon",
+    "the": "the rocky canyon",
+    "at": "in the rocky canyon",
+    "has": [
+     "data",
+     "dust",
+     "sharp"
+    ],
+    "lacks": [
+     "sand",
+     "polar",
+     "shortday"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "team",
+    "clause": "The {mPl} with {F} were also driven by a more experienced team",
+    "tag": "the experienced team",
+    "why": "experienced drivers avoid more problems with any rover",
+    "np": "the driving team",
+    "same": "team",
+    "alt": "a more experienced driving team",
+    "ruleOut": "The same driving team controlled both groups of rovers",
+    "ruleTag": "the shared driving team"
+   },
+   {
+    "id": "mild",
+    "clause": "The {mPl} with {F} were also tested in milder conditions",
+    "tag": "the milder conditions",
+    "why": "milder conditions make every part of a rover work better",
+    "np": "the milder conditions",
+    "same": "conditions",
+    "alt": "milder test conditions",
+    "ruleOut": "Both groups of rovers were tested side by side under the same conditions",
+    "ruleTag": "the shared test conditions"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} carries a small metal plate with the names of the students who designed it.",
+    "tag": "the plate of names",
+    "add": "{E} carries a plate with its designers' names",
+    "exp": "The plate honors the students who helped design the rover."
+   },
+   {
+    "text": "{CapE} is about the size of a small car.",
+    "tag": "the rover's size",
+    "add": "{E} is about the size of a small car",
+    "exp": "Comparing it to a car helps readers picture how big the rover is."
+   },
+   {
+    "text": "{CapE} was named by a student who won a naming contest.",
+    "tag": "the naming contest",
+    "add": "{E} was named in a contest",
+    "exp": "The contest let a student choose the rover's name."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "dustwalker",
+   "redcrest",
+   "pathlight",
+   "stoneseeker",
+   "rimrunner",
+   "duneglider"
+  ],
+  "nameFmt": "{name} rover",
+  "article": "the",
+  "descr": "robotic rover exploring Mars",
+  "at": "for {E}",
+  "outcome": "the science data sent back by {E}",
+  "background": [
+   "{CapE} landed on Mars several years ago.",
+   "Engineers on Earth guide {E} from a control room."
+  ],
+  "stages": [
+   {
+    "id": "plan",
+    "text": "Engineers on Earth plan the next drive for {E} and send the commands by radio.",
+    "tag": "the sending of commands",
+    "from": "a plan made by engineers",
+    "product": "commands sent to Mars",
+    "pl": true,
+    "less": "far fewer commands reaching Mars",
+    "does": "engineers plan a drive and send the commands by radio",
+    "why": "the commands tell the rover exactly where to go and what to study",
+    "needs": "link",
+    "needWhy": "radio commands can only reach the rover when the sun is not blocking the path between the planets",
+    "boost": {
+     "clause": "write longer lists of commands for each drive",
+     "np": "writing longer command lists"
+    },
+    "cause": "What allows commands from Earth to reach {E}?"
+   },
+   {
+    "id": "drive",
+    "text": "{CapE} receives the commands and drives to a new rock, using its cameras to avoid hazards.",
+    "tag": "the rover's drive",
+    "from": "commands sent to Mars",
+    "product": "completed drives",
+    "pl": true,
+    "less": "far fewer completed drives",
+    "does": "the rover follows the commands and drives to a new rock",
+    "why": "each drive brings the rover to a new rock worth studying",
+    "needs": "power",
+    "needWhy": "the rover can only drive when its solar panels supply enough power",
+    "boost": {
+     "clause": "plan longer drives across the plain",
+     "np": "planning longer drives"
+    },
+    "cause": "What allows {E} to drive to new rocks?"
+   },
+   {
+    "id": "study",
+    "text": "At each new rock, {E} drills a sample and sends its measurements back to Earth.",
+    "tag": "the study of new rocks",
+    "from": "completed drives",
+    "product": "new measurements",
+    "pl": true,
+    "less": "far fewer new measurements",
+    "does": "the rover drills samples and sends back measurements",
+    "why": "the measurements are the science data that scientists on Earth use",
+    "needs": "drill",
+    "needWhy": "the rover can only collect samples when its drill is working",
+    "cause": "What allows {E} to collect measurements from rocks?"
+   }
+  ],
+  "conds": {
+   "link": {
+    "clause": "Earth and Mars are positioned so that radio signals can pass between them",
+    "absent": "the sun sits directly between Earth and Mars and blocks radio signals",
+    "np": "a clear radio path",
+    "tag": "the clear radio path"
+   },
+   "power": {
+    "clause": "the solar panels on the rover produce plenty of power",
+    "absent": "thick dust coats the rover's solar panels",
+    "np": "solar power",
+    "tag": "the solar power"
+   },
+   "drill": {
+    "clause": "the rover's drill bit is sharp and working",
+    "absent": "the rover's drill bit breaks",
+    "np": "a working drill",
+    "tag": "the working drill"
+   }
+  },
+  "rates": [
+   {
+    "stage": "drive",
+    "factor": {
+     "np": "the hours of sunlight on the panels",
+     "short": "sunlight",
+     "lo": 3,
+     "hi": 11
+    },
+    "setup": "engineers compared days when {E} received different amounts of sunlight",
+    "result": {
+     "clause": "on a day with {x} hours of sunlight, the rover drove about {y} meters",
+     "lo": 10,
+     "hi": 120
+    },
+    "claim": "more sunlight lets {E} drive farther each day",
+    "why": "sunlight powers the panels, and more power lets the rover run its motors longer",
+    "confound": {
+     "text": "The sunnier day was also a day when the rover drove on smooth, flat ground.",
+     "tag": "the smooth, flat ground",
+     "why": "smooth, flat ground lets a rover drive farther on the same amount of power"
+    }
+   }
+  ],
+  "myths": [
+   "the rover pulls power from the red soil",
+   "messages to Mars arrive instantly no matter where the planets are",
+   "the rover drives itself back to Earth each night"
+  ],
+  "otherFocus": [
+   "how {E} was launched from Earth",
+   "why the soil of Mars looks red"
+  ],
+  "nonAnswers": [
+   "{CapE} is far away on Mars.",
+   "Engineers work on the mission of {E} every day."
+  ],
+  "off": [
+   {
+    "text": "{CapE} is about the size of a small car.",
+    "tag": "the rover's size",
+    "add": "{E} is about the size of a small car",
+    "exp": "Comparing it to a car helps readers picture how big the rover is."
+   },
+   {
+    "text": "{CapE} carries a small metal plate with the names of its designers.",
+    "tag": "the plate of names",
+    "add": "{E} carries a plate with its designers' names",
+    "exp": "The plate honors the people who designed the rover."
+   }
+  ],
+  "ref": "the rover"
+ },
+ "observation": {
+  "names": [
+   "Corvus Crater",
+   "Ares Ridge",
+   "Hollow Basin",
+   "Tarn Valley",
+   "Marigold Plain",
+   "Ember Mesa"
+  ],
+  "nameFmt": "{name}",
+  "descr": "region of Mars explored by a fictional rover",
+  "observers": [
+   "a team of mission engineers",
+   "two student interns at mission control",
+   "a group of rover scientists"
+  ],
+  "cases": [
+   {
+    "id": "power",
+    "numbers": [
+     [
+      8,
+      30
+     ],
+     [
+      85,
+      98
+     ]
+    ],
+    "event": "One season, the power produced by a fictional rover working at {E} dropped sharply.",
+    "q": "What most likely caused the rover's power at {E} to drop?",
+    "restate": [
+     "The rover's power at {E} dropped, and the question asks why.",
+     "Something caused the rover working at {E} to produce much less power."
+    ],
+    "answer": "Dust settling on the solar panels most likely caused the rover's power to drop, because the dust blocked sunlight from the panels.",
+    "sum": "the evidence points to dust on the solar panels as the reason the rover's power dropped.",
+    "myth": "The rover's power dropped because Mars moved farther from its moons.",
+    "mythClause": "the rover lost power only when it drove backward",
+    "cause": "dust on the solar panels",
+    "alt": "a failing battery",
+    "altText": "Some engineers suggested that the rover's battery was failing.",
+    "patternQ": "What pattern connects the dust and the rover's power at {E}?",
+    "patternA": "The power dropped when dust settled on the panels and rose again after wind swept the panels clean, so the power followed the dust.",
+    "patternSum": "the rover's power fell when dust settled on the panels and rose when the panels were swept clean.",
+    "prediction": {
+     "text": "Early that season, an engineer predicted that the rover would lose the most power at night.",
+     "claim": "the rover at {E} would lose the most power at night",
+     "whyNot": "the power drop appeared during the day, while the panels were charging"
+    },
+    "observerNote": "The engineers checked the rover's power reports every day.",
+    "obs": [
+     {
+      "id": "storm",
+      "role": "onset",
+      "text": "The drop in power began during a dust storm at {E} that lasted {n0} days.",
+      "tag": "the dust storm",
+      "exps": [
+       "the drop began during a dust storm, when dust would be settling on everything",
+       "the timing ties the lost power to the storm, not to the battery",
+       "a storm that long could leave a heavy coat of dust on the panels"
+      ]
+     },
+     {
+      "id": "photo",
+      "role": "mechanism",
+      "text": "Pictures from the rover's arm camera showed a thick layer of dust on its solar panels.",
+      "tag": "the dust on the panels",
+      "exps": [
+       "dust on the panels blocks sunlight, so the panels produce less power",
+       "this shows how the storm cut the power, since covered panels receive less light",
+       "a dusty layer explains the drop, because panels need light to make power"
+      ]
+     },
+     {
+      "id": "gust",
+      "role": "reverse",
+      "text": "When a gust of wind swept the panels clean, the power returned to about {n1} percent of normal within a day.",
+      "tag": "the power after the wind gust",
+      "exps": [
+       "the power came back once the dust was gone, which is what would happen if dust were the cause",
+       "cleaning the panels fixed the problem, so the two are linked",
+       "once the cause was swept away, the effect faded"
+      ]
+     },
+     {
+      "id": "battery",
+      "role": "against",
+      "text": "A battery test showed that the rover's batteries could still hold a full charge.",
+      "tag": "the battery test",
+      "exps": [
+       "a battery that holds a full charge is not failing, so it cannot explain the drop",
+       "this rules out the battery, because it tested as healthy",
+       "with a healthy battery, the battery explanation has nothing to stand on"
+      ]
+     },
+     {
+      "id": "daytime",
+      "role": "against",
+      "text": "The power drop at {E} appeared during the day, while the panels were charging, and not at night.",
+      "tag": "the timing of the power drop",
+      "exps": [
+       "a failing battery would show up at night, when the rover depends on it, but the drop came during charging",
+       "this rules out the battery, since the problem appeared while the panels were working",
+       "a daytime drop points to the panels, not the battery"
+      ],
+      "predExps": [
+       "this directly contradicts the prediction, since the power drop happened during the day",
+       "if the rover lost the most power at night, the nighttime readings would show it, but they did not",
+       "the prediction expected a nighttime loss that never appeared"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how scientists choose names for places on Mars like {E}",
+   "why {E} has so many craters"
+  ],
+  "nonAnswers": [
+   "{CapE} is a rocky region of Mars.",
+   "Many scientists study Mars."
+  ],
+  "off": [
+   {
+    "text": "{CapE} has red cliffs that rise higher than a city tower.",
+    "tag": "the tall red cliffs",
+    "add": "{E} has tall red cliffs",
+    "exp": "The tall cliffs make the region stand out in photographs."
+   },
+   {
+    "text": "Scientists named {E} after a constellation.",
+    "tag": "the region's name",
+    "add": "{E} was named after a constellation",
+    "exp": "The name connects the region to a pattern of stars."
+   }
+  ]
+ }
+}

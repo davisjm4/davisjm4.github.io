@@ -1,0 +1,536 @@
+{
+ "topicId": "honeybees",
+ "design": {
+  "kind": "bee",
+  "kindPl": "bees",
+  "member": "bee",
+  "memberPl": "bees",
+  "names": [
+   "amberwing",
+   "goldthread",
+   "hollowhum",
+   "sunback",
+   "clovercrest",
+   "mistwing",
+   "bramblefoot",
+   "dewstripe"
+  ],
+  "descr": "kind of honeybee",
+  "live": "lives in",
+  "home": "a valley full of wildflowers",
+  "goal": "gather food for its colony",
+  "otherGoals": [
+   "defend its hive from wasps",
+   "keep its hive cool on hot days"
+  ],
+  "myths": [
+   "make nectar inside its own body without visiting flowers",
+   "turn pollen into honey while it flies",
+   "see flowers through the walls of its hive"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many kinds of bees that live in colonies.",
+   "{CapE} has wings, legs, and antennae like other insects."
+  ],
+  "conds": {
+   "deep": {
+    "clause": "many flowers have deep, narrow tubes",
+    "absent": "almost all of the flowers are short and open",
+    "np": "deep, narrow flowers",
+    "tag": "the deep flowers",
+    "risk": "nectar at the bottom of a deep flower stays out of reach of a short tongue"
+   },
+   "cold": {
+    "clause": "mornings are cool even in summer",
+    "absent": "the mornings are warm",
+    "np": "cool mornings",
+    "tag": "the cool mornings",
+    "risk": "a bee with cold flight muscles cannot take off until the day warms up"
+   },
+   "far": {
+    "clause": "the best flower patches are far from the hive",
+    "absent": "flowers grow right next to the hive",
+    "np": "faraway flower patches",
+    "tag": "the faraway flower patches",
+    "risk": "bees that cannot learn where distant flowers are waste many trips searching"
+   },
+   "wind": {
+    "clause": "strong winds make every flight tiring",
+    "absent": "the air is usually still",
+    "np": "strong winds",
+    "tag": "the strong winds",
+    "risk": "every extra trip in strong wind uses up energy the bee could save"
+   },
+   "scarce": {
+    "clause": "only a few flowers bloom at a time",
+    "absent": "flowers bloom in huge numbers",
+    "np": "scarce flowers",
+    "tag": "the scarce flowers"
+   },
+   "open": {
+    "clause": "most of the flowers are wide and open",
+    "absent": "few of the flowers are wide and open",
+    "np": "wide, open flowers",
+    "tag": "the wide, open flowers"
+   }
+  },
+  "features": [
+   {
+    "id": "tongue",
+    "np": "an unusually long tongue",
+    "bare": "unusually long tongues",
+    "the": "the long tongue",
+    "short": "tongue",
+    "pl": false,
+    "mech": "reach nectar at the bottom of deep, narrow flowers",
+    "benefit": "drink nectar that other insects cannot reach",
+    "cond": "deep",
+    "metric": {
+     "past": "collected",
+     "unit": "milligrams",
+     "what": "of nectar per hour",
+     "np": "nectar collected per hour",
+     "cmp": "more nectar collected per hour",
+     "better": "higher",
+     "lo": 10,
+     "hi": 60
+    },
+    "cost": {
+     "clause": "a long tongue is slow to use on wide, open flowers, where a short tongue works faster",
+     "cond": "open"
+    }
+   },
+   {
+    "id": "muscles",
+    "np": "strong flight muscles that it can shiver to make heat",
+    "bare": "flight muscles that could shiver to make heat",
+    "the": "the shivering flight muscles",
+    "short": "muscles",
+    "pl": true,
+    "mech": "warm the bee's body before it takes off",
+    "benefit": "start flying early on chilly days",
+    "cond": "cold",
+    "metric": {
+     "past": "made",
+     "unit": "trips",
+     "what": "before noon on cool days",
+     "np": "trips made before noon",
+     "cmp": "more trips before noon",
+     "better": "higher",
+     "lo": 2,
+     "hi": 14
+    },
+    "cost": {
+     "clause": "shivering to make heat burns some of the food the bee has eaten, which is a problem when flowers are scarce",
+     "cond": "scarce"
+    }
+   },
+   {
+    "id": "dance",
+    "np": "a special dance that it performs inside the hive",
+    "bare": "a special dance",
+    "the": "the dance",
+    "short": "dance",
+    "pl": false,
+    "mech": "show other bees which direction to fly to find flowers",
+    "benefit": "lead other workers straight to distant flower patches",
+    "cond": "far",
+    "metric": {
+     "past": "found",
+     "unit": "new flower patches",
+     "what": "each week",
+     "np": "flower patches found each week",
+     "cmp": "more flower patches found each week",
+     "better": "higher",
+     "lo": 2,
+     "hi": 14
+    }
+   },
+   {
+    "id": "baskets",
+    "np": "a large pollen basket on each back leg",
+    "bare": "large pollen baskets",
+    "the": "the pollen baskets",
+    "short": "baskets",
+    "pl": true,
+    "mech": "hold a tightly packed load of pollen during flight",
+    "benefit": "bring home more pollen in fewer trips",
+    "cond": "wind",
+    "metric": {
+     "past": "carried",
+     "unit": "milligrams",
+     "what": "of pollen per trip",
+     "np": "pollen carried per trip",
+     "cmp": "more pollen carried per trip",
+     "better": "higher",
+     "lo": 4,
+     "hi": 20
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "meadow",
+    "np": "a cool mountain meadow",
+    "the": "the mountain meadow",
+    "at": "in the mountain meadow",
+    "has": [
+     "cold",
+     "deep"
+    ],
+    "lacks": [
+     "far",
+     "wind",
+     "scarce",
+     "open"
+    ]
+   },
+   {
+    "id": "orchard",
+    "np": "a windy hillside orchard",
+    "the": "the orchard",
+    "at": "in the orchard",
+    "has": [
+     "wind",
+     "far"
+    ],
+    "lacks": [
+     "cold",
+     "deep"
+    ]
+   },
+   {
+    "id": "river",
+    "np": "a sheltered river valley",
+    "the": "the river valley",
+    "at": "in the river valley",
+    "has": [
+     "deep",
+     "far"
+    ],
+    "lacks": [
+     "cold",
+     "wind",
+     "open"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "hive",
+    "clause": "The {mPl} with {F} also came from a larger, healthier hive",
+    "tag": "the larger hive",
+    "why": "bees from a large, healthy hive are often stronger foragers",
+    "np": "the size of the hive",
+    "same": "kind of hive",
+    "alt": "the size of the hive",
+    "ruleOut": "All of the bees in both groups came from the same hive",
+    "ruleTag": "the shared hive"
+   },
+   {
+    "id": "day",
+    "clause": "The {mPl} with {F} were also tested on a warmer, sunnier day",
+    "tag": "the sunnier test day",
+    "why": "bees forage more on warm, sunny days",
+    "np": "the weather on the test day",
+    "same": "weather",
+    "alt": "better weather",
+    "ruleOut": "Both groups were tested on the same day in the same weather",
+    "ruleTag": "the shared test day"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} was named for the color of the stripes on its body.",
+    "tag": "how the bee got its name",
+    "add": "{E} was named for the color of its stripes",
+    "exp": "Knowing where the name came from helps people remember what the bee looks like."
+   },
+   {
+    "text": "{CapE} is slightly smaller than a paper clip.",
+    "tag": "the bee's size",
+    "add": "{E} is slightly smaller than a paper clip",
+    "exp": "Comparing the bee to a paper clip helps readers picture how small it is."
+   },
+   {
+    "text": "Beekeepers sometimes place a tiny paint dot on {E} so they can track it.",
+    "tag": "the paint dots used for tracking",
+    "add": "beekeepers mark {E} with paint dots",
+    "exp": "Paint dots let beekeepers recognize individual bees when they return."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "amberwing",
+   "goldthread",
+   "hollowhum",
+   "sunback",
+   "clovercrest",
+   "mistwing"
+  ],
+  "nameFmt": "{name} bee colony",
+  "article": "the",
+  "descr": "honeybee colony",
+  "at": "in {E}",
+  "outcome": "the honey stored by {E}",
+  "stages": [
+   {
+    "id": "gather",
+    "text": "Forager bees from {E} sip nectar from flowers and carry it back to the hive.",
+    "tag": "nectar gathering",
+    "from": "nectar in flowers",
+    "product": "nectar in the hive",
+    "less": "much less nectar in the hive",
+    "does": "foragers carry nectar from flowers back to the hive",
+    "why": "nectar brought into the hive is the raw material that becomes honey",
+    "needs": "bloom",
+    "needWhy": "foragers can only gather nectar when flowers are blooming",
+    "boost": {
+     "clause": "plant extra flowers near the hive so that foragers bring back more nectar",
+     "np": "planting extra flowers near the hive"
+    }
+   },
+   {
+    "id": "dry",
+    "text": "Inside the hive, worker bees fan their wings over the nectar until most of its water evaporates.",
+    "tag": "drying of the nectar",
+    "from": "nectar in the hive",
+    "product": "thick honey",
+    "less": "much less thick honey",
+    "does": "worker bees fan the nectar until most of its water evaporates",
+    "why": "removing water turns thin nectar into thick honey that will keep",
+    "needs": "warm",
+    "needWhy": "water evaporates from the nectar quickly only when the air in the hive is warm",
+    "boost": {
+     "clause": "add more worker bees to fan the nectar",
+     "np": "adding more fanning bees"
+    },
+    "cause": "What causes the nectar in {E} to turn into thick honey?"
+   },
+   {
+    "id": "cap",
+    "text": "When the honey is thick enough, the bees of {E} seal each cell with a cap of wax.",
+    "tag": "sealing the honey with wax",
+    "from": "thick honey",
+    "product": "sealed honey",
+    "less": "much less sealed honey",
+    "does": "the bees seal each cell of thick honey with wax",
+    "why": "sealed honey is stored safely so the colony can eat it in winter",
+    "needs": "wax",
+    "needWhy": "the bees can only seal the honey once they have fresh wax for the caps",
+    "cause": "What allows the bees of {E} to seal their honey?"
+   }
+  ],
+  "conds": {
+   "bloom": {
+    "clause": "many flowers bloom near the hive",
+    "absent": "a late frost wipes out the flowers near the hive",
+    "np": "blooming flowers",
+    "tag": "the blooming flowers"
+   },
+   "warm": {
+    "clause": "the air inside the hive stays warm",
+    "absent": "the hive stays cold and damp",
+    "np": "warm air in the hive",
+    "tag": "the warm hive air"
+   },
+   "wax": {
+    "clause": "young bees make plenty of fresh wax",
+    "absent": "young bees cannot make enough wax",
+    "np": "fresh wax",
+    "tag": "the fresh wax"
+   }
+  },
+  "rates": [
+   {
+    "stage": "dry",
+    "factor": {
+     "np": "the temperature inside the hive",
+     "short": "warmth",
+     "lo": 20,
+     "hi": 36
+    },
+    "setup": "students kept two trays of nectar at different temperatures for a day",
+    "result": {
+     "clause": "the tray kept at {x} degrees Celsius lost about {y} percent of its water",
+     "lo": 5,
+     "hi": 40
+    },
+    "claim": "warmer air helps nectar in {E} dry into honey faster",
+    "why": "warm air speeds up evaporation, so water leaves the nectar faster",
+    "confound": {
+     "text": "The warmer tray was also placed in front of a small fan.",
+     "tag": "the fan",
+     "why": "moving air also carries water away from the nectar"
+    }
+   }
+  ],
+  "myths": [
+   "bees spin honey out of their own wings",
+   "the queen bee makes all of the honey by herself",
+   "honey falls into the hive with the rain"
+  ],
+  "otherFocus": [
+   "how the bees of {E} choose a new queen",
+   "why bees in {E} sting"
+  ],
+  "nonAnswers": [
+   "{CapE} has thousands of worker bees.",
+   "Honey is a sweet food that people also enjoy."
+  ],
+  "off": [
+   {
+    "text": "A colony like {E} can have one queen and thousands of workers.",
+    "tag": "the number of bees in the colony",
+    "add": "{E} can have thousands of workers",
+    "exp": "A large number of workers shows how big a single colony can be."
+   },
+   {
+    "text": "Beekeepers often wear light-colored clothing when they check {E}.",
+    "tag": "the beekeepers' clothing",
+    "add": "beekeepers wear light-colored clothing near {E}",
+    "exp": "Light clothing is a habit beekeepers follow when they visit the hive."
+   }
+  ],
+  "ref": "the colony"
+ },
+ "observation": {
+  "names": [
+   "Clover Hollow",
+   "Linden Rise",
+   "Thistle Bend",
+   "Marigold Flats",
+   "Hazel Fork",
+   "Bluebell Ridge"
+  ],
+  "nameFmt": "{name}",
+  "descr": "farming valley",
+  "observers": [
+   "a team of student beekeepers",
+   "two local beekeepers",
+   "a group of insect researchers"
+  ],
+  "cases": [
+   {
+    "id": "honeydrop",
+    "numbers": [
+     [
+      16,
+      22
+     ],
+     [
+      8,
+      14
+     ]
+    ],
+    "event": "One summer, the fictional beehives at {E} stored far less honey than usual.",
+    "q": "What most likely caused the beehives at {E} to store less honey?",
+    "restate": [
+     "The beehives at {E} stored less honey than usual, and the question asks why.",
+     "Something caused the beehives at {E} to store less honey one summer."
+    ],
+    "answer": "A cold, rainy June most likely caused the hives at {E} to store less honey, because the bees could not gather nectar in the rain.",
+    "sum": "the evidence points to the cold, rainy June as the reason the hives stored less honey.",
+    "myth": "The hives at {E} stored less honey because the bees forgot how to find their way home.",
+    "mythClause": "only the hives painted blue lost honey",
+    "cause": "the cold, rainy June",
+    "alt": "an outbreak of mites",
+    "altText": "Some visitors suggested that tiny mites had spread through the hives at {E}.",
+    "patternQ": "What pattern connects the weather and the honey stored at {E}?",
+    "patternA": "The hives stopped filling during the cold, rainy June and filled again after dry weather returned, so the honey supply followed the weather.",
+    "patternSum": "the honey supply rose and fell with the weather.",
+    "prediction": {
+     "text": "Early in the summer, a visitor predicted that the hives closest to the road would store the least honey.",
+     "claim": "the hives closest to the road at {E} would store the least honey",
+     "whyNot": "hives near the road and far from it stored about the same amount"
+    },
+    "observerNote": "The beekeepers weighed every hive once a week.",
+    "obs": [
+     {
+      "id": "rain",
+      "role": "onset",
+      "text": "Weather records showed {n0} rainy days in June at {E}, about twice the usual number.",
+      "tag": "the number of rainy days",
+      "exps": [
+       "that many rainy days left the bees very few chances to fly out for nectar",
+       "the drop in honey came during an unusually rainy month, which fits the weather explanation",
+       "with rain on most days, foraging would have been cut far below normal"
+      ]
+     },
+     {
+      "id": "inside",
+      "role": "mechanism",
+      "text": "On rainy days, the beekeepers saw the foragers stay inside the hives instead of flying to flowers.",
+      "tag": "the foragers staying inside",
+      "exps": [
+       "bees that stay inside cannot collect nectar, so less nectar could become honey",
+       "this shows how the rain cut the honey supply, since nectar has to be gathered first",
+       "the foragers' behavior connects the rain directly to the shortage"
+      ]
+     },
+     {
+      "id": "july",
+      "role": "reverse",
+      "text": "When dry weather returned in July, the hives began filling with honey again within about {n1} days.",
+      "tag": "the hives refilling in July",
+      "exps": [
+       "the honey supply recovered once the rain stopped, which is what would happen if the rain were the cause",
+       "the shortage ended when the weather changed, so the two are linked",
+       "once the cause went away, the effect faded too"
+      ]
+     },
+     {
+      "id": "mites",
+      "role": "against",
+      "text": "Inspectors checked every hive at {E} and found almost no mites.",
+      "tag": "the mite inspection",
+      "exps": [
+       "a mite outbreak cannot explain the shortage if there were almost no mites",
+       "this rules out mites, because the hives were nearly free of them",
+       "without mites present, the mite explanation has nothing to stand on"
+      ]
+     },
+     {
+      "id": "road",
+      "role": "against",
+      "text": "Hives near the road and hives far from it at {E} stored about the same amount of honey.",
+      "tag": "the hives near and far from the road",
+      "exps": [
+       "a problem that hit every hive equally fits the weather better than a local outbreak",
+       "mites usually spread from hive to hive, but this shortage was even everywhere",
+       "an even drop across all locations matches something that affected the whole valley at once"
+      ],
+      "predExps": [
+       "if the road were the problem, the nearby hives would have stored less, but they did not",
+       "this directly contradicts the prediction, since distance from the road made no difference",
+       "the prediction expected a difference that never appeared"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how the bees at {E} build their honeycomb",
+   "why farmers at {E} keep bees"
+  ],
+  "nonAnswers": [
+   "{CapE} has many beehives.",
+   "Beekeepers at {E} care for their hives all year."
+  ],
+  "off": [
+   {
+    "text": "Farmers at {E} grow apples, squash, and sunflowers.",
+    "tag": "the crops grown nearby",
+    "add": "farmers at {E} grow apples and squash",
+    "exp": "The list of crops shows what the farmers in the valley produce."
+   },
+   {
+    "text": "A small festival at {E} celebrates the honey harvest each fall.",
+    "tag": "the honey festival",
+    "add": "{E} holds a honey festival each fall",
+    "exp": "The festival shows how much the community values its honey."
+   }
+  ]
+ }
+}

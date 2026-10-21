@@ -133,8 +133,15 @@
     } else if (ch.mode === 'rearrange') {
       var ord = ch.items.map(function (i) { return i.id; });
       if (new Set(ord).size !== 7) bad('rearrange: items incomplete');
-      if (Rearrange.analyze(ord, info).valid) bad('rearrange: starts solved');
-      ch.solution.order && [ch.solution.order, ch.solution.alternate].forEach(function (o) { if (!Rearrange.analyze(o, info).valid) bad('rearrange: valid order rejected'); });
+      if (Rearrange.analyze(ord, info, ch.dependency || null).valid) bad('rearrange: starts solved');
+      ch.solution.order && [ch.solution.order, ch.solution.alternate].forEach(function (o) { if (o && !Rearrange.analyze(o, info, ch.dependency || null).valid) bad('rearrange: valid order rejected'); });
+      if (ch.dependency) {
+        // The swapped pair order must be rejected, and only because of the dependency.
+        var f = ch.dependency.first, sw = ['R', 'A', 'C' + (3 - f), 'E' + (3 - f), 'C' + f, 'E' + f, 'S'];
+        var an = Rearrange.analyze(sw, info, ch.dependency);
+        if (an.valid || an.primary.code !== 'dependency') bad('rearrange: dependent pair order not enforced');
+        if (ch.solution.alternate) bad('rearrange: dependent response must not offer an alternate order');
+      }
       var c = ch.solution.order;
       var swapEs = c.slice(); swapEs[3] = 'E2'; swapEs[5] = 'E1';
       if (Rearrange.analyze(swapEs, info).valid) bad('rearrange: mismatched explanations accepted');

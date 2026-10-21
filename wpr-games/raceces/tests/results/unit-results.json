@@ -1,0 +1,106 @@
+{
+  "generatedBy": "tests/run-all.js",
+  "totalChecks": 89032,
+  "failedChecks": 0,
+  "suites": [
+    {
+      "name": "content",
+      "checks": 323,
+      "failed": 0,
+      "ms": 18,
+      "sampleFailures": []
+    },
+    {
+      "name": "determinism",
+      "checks": 274,
+      "failed": 0,
+      "ms": 32,
+      "sampleFailures": []
+    },
+    {
+      "name": "source grounding",
+      "checks": 3150,
+      "failed": 0,
+      "ms": 4,
+      "sampleFailures": []
+    },
+    {
+      "name": "rearrange grader (exhaustive)",
+      "checks": 91,
+      "failed": 0,
+      "ms": 1251,
+      "sampleFailures": []
+    },
+    {
+      "name": "rearrange feedback",
+      "checks": 32,
+      "failed": 0,
+      "ms": 2,
+      "sampleFailures": []
+    },
+    {
+      "name": "identify rules",
+      "checks": 2610,
+      "failed": 0,
+      "ms": 26,
+      "sampleFailures": []
+    },
+    {
+      "name": "missing piece rules",
+      "checks": 15130,
+      "failed": 0,
+      "ms": 38,
+      "sampleFailures": []
+    },
+    {
+      "name": "rotation and repetition control",
+      "checks": 924,
+      "failed": 0,
+      "ms": 65,
+      "sampleFailures": []
+    },
+    {
+      "name": "level filters",
+      "checks": 461,
+      "failed": 0,
+      "ms": 16,
+      "sampleFailures": []
+    },
+    {
+      "name": "session tracking",
+      "checks": 23,
+      "failed": 0,
+      "ms": 529,
+      "sampleFailures": []
+    },
+    {
+      "name": "static safety checks",
+      "checks": 98,
+      "failed": 0,
+      "ms": 4,
+      "sampleFailures": []
+    },
+    {
+      "name": "color contrast (WCAG)",
+      "checks": 19,
+      "failed": 0,
+      "ms": 1,
+      "sampleFailures": []
+    },
+    {
+      "name": "generation sweep (all modes, difficulties, targets)",
+      "checks": 65843,
+      "failed": 0,
+      "ms": 364,
+      "sampleFailures": []
+    },
+    {
+      "name": "procedural diversity quality gates (1,000 per mode/difficulty)",
+      "checks": 54,
+      "failed": 0,
+      "ms": 723,
+      "sampleFailures": []
+    }
+  ],
+  "ranAt": "2026-10-21T06:05:23.328Z"
+}

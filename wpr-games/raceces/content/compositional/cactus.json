@@ -1,0 +1,553 @@
+{
+ "topicId": "cactus",
+ "design": {
+  "kind": "cactus",
+  "kindPl": "cacti",
+  "member": "plant",
+  "memberPl": "plants",
+  "names": [
+   "silverleaf",
+   "ridgeback",
+   "duskcrown",
+   "pebblecap",
+   "sandlantern",
+   "copperspine",
+   "glassrib",
+   "moonbarrel"
+  ],
+  "descr": "desert cactus",
+  "live": "grows in",
+  "home": "a hot, dry desert",
+  "goal": "survive in the desert",
+  "otherGoals": [
+   "attract the insects that pollinate its flowers",
+   "spread its seeds to new places"
+  ],
+  "myths": [
+   "pull water out of solid rock",
+   "store rainwater inside its spines",
+   "make rain fall from nearby clouds"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many kinds of cacti that grow in deserts.",
+   "{CapE} has a stem, roots, and flowers like many other plants."
+  ],
+  "conds": {
+   "wind": {
+    "clause": "hot, drying winds blow almost every afternoon",
+    "absent": "the air is usually calm",
+    "np": "hot afternoon winds",
+    "tag": "the afternoon winds",
+    "risk": "hot wind can pull water out of an unprotected plant very quickly"
+   },
+   "burst": {
+    "clause": "rain falls in short, heavy bursts",
+    "absent": "rain almost never falls",
+    "np": "short bursts of rain",
+    "tag": "the short bursts of rain",
+    "risk": "rain from a short burst soaks in and disappears within hours"
+   },
+   "deep": {
+    "clause": "water is stored deep below the ground",
+    "absent": "no water is stored deep below the ground",
+    "np": "water hidden deep underground",
+    "tag": "the deep underground water",
+    "risk": "water that stays deep underground is out of reach of short roots"
+   },
+   "graze": {
+    "clause": "hungry animals often feed on plants",
+    "absent": "few animals feed on plants",
+    "np": "hungry plant-eating animals",
+    "tag": "the plant-eating animals",
+    "risk": "a plant that is eaten loses the stem where it stores water"
+   },
+   "shade": {
+    "clause": "tall rocks shade the ground for much of the day",
+    "absent": "the ground gets bright sunlight all day",
+    "np": "shade from tall rocks",
+    "tag": "the shade"
+   },
+   "rocky": {
+    "clause": "the soil is thin and full of rocks",
+    "absent": "the soil is deep and soft",
+    "np": "thin, rocky soil",
+    "tag": "the rocky soil"
+   }
+  },
+  "features": [
+   {
+    "id": "coat",
+    "np": "a thick waxy coating on its stem",
+    "bare": "a thick waxy coating",
+    "the": "the waxy coating",
+    "short": "coating",
+    "pl": false,
+    "mech": "slow the loss of water through the stem's surface",
+    "benefit": "keep the water it has already stored",
+    "cond": "wind",
+    "metric": {
+     "past": "lost",
+     "unit": "grams",
+     "what": "of water each day",
+     "np": "daily water loss",
+     "better": "lower",
+     "lo": 12,
+     "hi": 60,
+     "cmp": "lower daily water loss"
+    },
+    "cost": {
+     "clause": "it blocks some sunlight from the green stem, so the plant makes food more slowly in shady places",
+     "cond": "shade"
+    }
+   },
+   {
+    "id": "shallow",
+    "np": "wide, shallow roots that spread just under the sand",
+    "bare": "wide, shallow roots",
+    "the": "the shallow roots",
+    "short": "roots",
+    "pl": true,
+    "mech": "soak up rainwater within minutes of a storm",
+    "benefit": "collect water before it drains away",
+    "cond": "burst",
+    "metric": {
+     "past": "absorbed",
+     "unit": "liters",
+     "what": "of water after one storm",
+     "np": "water absorbed after a storm",
+     "better": "higher",
+     "lo": 2,
+     "hi": 14,
+     "cmp": "more water absorbed after a storm"
+    }
+   },
+   {
+    "id": "tap",
+    "np": "a single long taproot that grows straight down",
+    "bare": "a long taproot",
+    "the": "the long taproot",
+    "short": "taproot",
+    "pl": false,
+    "mech": "reach moist soil far below the surface",
+    "benefit": "find water during long dry spells",
+    "cond": "deep",
+    "metric": {
+     "past": "kept",
+     "unit": "percent",
+     "what": "of their stems green after a dry month",
+     "np": "green stems after a dry month",
+     "better": "higher",
+     "lo": 25,
+     "hi": 95,
+     "avg": true,
+     "cmp": "more green stems after a dry month"
+    },
+    "cost": {
+     "clause": "growing such a long root takes a great deal of energy, and it is hard to push through rocky ground",
+     "cond": "rocky"
+    }
+   },
+   {
+    "id": "spines",
+    "np": "thousands of sharp spines",
+    "bare": "sharp spines",
+    "the": "the sharp spines",
+    "short": "spines",
+    "pl": true,
+    "mech": "make the stem painful for animals to bite",
+    "benefit": "keep its water-filled stem from being eaten",
+    "cond": "graze",
+    "metric": {
+     "past": "lost",
+     "unit": "percent",
+     "what": "of their stem to bites in a season",
+     "np": "stem damage from bites",
+     "better": "lower",
+     "lo": 3,
+     "hi": 40,
+     "cmp": "less stem damage from bites"
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "saltflat",
+    "np": "a windy salt flat",
+    "the": "the salt flat",
+    "has": [
+     "wind",
+     "deep"
+    ],
+    "lacks": [
+     "burst",
+     "graze",
+     "shade",
+     "rocky"
+    ],
+    "at": "in the salt flat"
+   },
+   {
+    "id": "hillside",
+    "np": "a rocky hillside",
+    "the": "the hillside",
+    "has": [
+     "burst",
+     "graze"
+    ],
+    "lacks": [
+     "wind",
+     "deep"
+    ],
+    "at": "on the hillside"
+   },
+   {
+    "id": "plain",
+    "np": "a sandy plain",
+    "the": "the sandy plain",
+    "has": [
+     "deep",
+     "burst"
+    ],
+    "lacks": [
+     "wind",
+     "graze",
+     "rocky"
+    ],
+    "at": "on the sandy plain"
+   }
+  ],
+  "confounds": [
+   {
+    "id": "water",
+    "clause": "During the test, the {mPl} with {F} were also given extra water",
+    "tag": "the extra water",
+    "why": "extra water can change how a plant grows in many ways",
+    "np": "the extra water",
+    "same": "amount of water",
+    "alt": "uneven watering",
+    "ruleOut": "Both groups in the test were given exactly the same amount of water",
+    "ruleTag": "the watering of both groups"
+   },
+   {
+    "id": "age",
+    "clause": "The {mPl} with {F} were also several years older than the others",
+    "tag": "the older plants",
+    "why": "older plants are larger and can be tougher than young ones",
+    "np": "the age of the plants",
+    "same": "age",
+    "alt": "the ages of the plants",
+    "ruleOut": "All of the plants in both groups were the same age",
+    "ruleTag": "the ages of the plants"
+   }
+  ],
+  "off": [
+   {
+    "text": "The flowers of {E} open at dusk and are visited by moths.",
+    "tag": "the flowers that open at dusk",
+    "add": "the flowers of {E} open at dusk",
+    "exp": "Flowers that open at dusk are easy for night-flying moths to find, which helps the plant make seeds."
+   },
+   {
+    "text": "{CapE} produces small red fruits that birds carry away.",
+    "tag": "the red fruits",
+    "add": "{E} produces small red fruits",
+    "exp": "Birds that eat the red fruits can carry seeds to new places."
+   },
+   {
+    "text": "{CapE} usually grows about as tall as a kitchen table.",
+    "tag": "the plant's height",
+    "add": "{E} grows about as tall as a kitchen table",
+    "exp": "Knowing the plant's height helps people recognize it in the desert."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "silverleaf",
+   "ridgeback",
+   "duskcrown",
+   "pebblecap",
+   "sandlantern",
+   "copperspine",
+   "glassrib",
+   "moonbarrel"
+  ],
+  "nameFmt": "{name} cactus",
+  "article": "the",
+  "descr": "desert cactus",
+  "outcome": "the growth of {E}",
+  "stages": [
+   {
+    "id": "absorb",
+    "text": "After a rain, the roots of {E} soak up water from the damp sand before the sun dries it out.",
+    "tag": "water absorption by the roots",
+    "from": "rainwater in the sand",
+    "product": "water in the roots",
+    "less": "much less water in the roots",
+    "does": "the roots soak up rainwater from the damp sand",
+    "why": "water that the roots take in can be carried into the rest of the plant",
+    "needs": "damp",
+    "needWhy": "the roots can only absorb water while the sand around them is damp",
+    "boost": {
+     "clause": "spread plant food around the cacti so the roots grow larger",
+     "np": "spreading plant food around the cacti"
+    }
+   },
+   {
+    "id": "store",
+    "text": "The water then moves up into the stem of {E}, where spongy tissue swells to hold it.",
+    "tag": "water storage in the stem",
+    "from": "water in the roots",
+    "product": "stored water in the stem",
+    "less": "far less stored water in the stem",
+    "does": "the water moves up into the spongy stem and is stored there",
+    "why": "stored water gives the plant a supply to draw on long after the rain is gone",
+    "boost": {
+     "clause": "water the cacti by hand every week so that their stems stay full",
+     "np": "watering the cacti by hand"
+    }
+   },
+   {
+    "id": "grow",
+    "text": "Over the following weeks, {E} uses its stored water and strong sunlight to make food and grow new stems.",
+    "tag": "the making of food and new stems",
+    "from": "stored water in the stem",
+    "product": "new stems",
+    "pl": true,
+    "less": "fewer new stems",
+    "does": "the plant uses the stored water and sunlight to make food and grow",
+    "why": "this step turns stored water into the food and growth the plant needs",
+    "needs": "sun",
+    "needWhy": "the plant needs strong sunlight to turn its stored water into food",
+    "cause": "What allows {E} to grow new stems?"
+   }
+  ],
+  "conds": {
+   "damp": {
+    "clause": "the top layer of sand stays damp for a few hours after each rain",
+    "absent": "the sand dries out within minutes of every rain",
+    "np": "damp sand",
+    "tag": "the damp sand"
+   },
+   "sun": {
+    "clause": "the plants get strong sunlight for most of the day",
+    "absent": "thick clouds hide the sun for weeks",
+    "np": "strong sunlight",
+    "tag": "the strong sunlight"
+   }
+  },
+  "rates": [
+   {
+    "stage": "absorb",
+    "factor": {
+     "np": "the amount of rain",
+     "short": "rain",
+     "lo": 5,
+     "hi": 30
+    },
+    "setup": "two patches of {E} plants received different amounts of rain",
+    "result": {
+     "clause": "after {x} millimeters of rain, the roots absorbed about {y} liters of water",
+     "lo": 1,
+     "hi": 12
+    },
+    "claim": "more rain lets the roots of {E} absorb more water",
+    "why": "the roots can only take in water that reaches the damp sand around them, so more rain gives them more to absorb",
+    "confound": {
+     "text": "The patch that received more rain also had softer, looser sand.",
+     "tag": "the softer sand",
+     "why": "loose sand lets water sink down to the roots more easily"
+    }
+   },
+   {
+    "stage": "grow",
+    "factor": {
+     "np": "the hours of sunlight",
+     "short": "sunlight",
+     "lo": 3,
+     "hi": 12
+    },
+    "setup": "two groups of {E} plants received different hours of sunlight each day",
+    "result": {
+     "clause": "with {x} hours of sunlight a day, the plants grew about {y} millimeters in a month",
+     "lo": 2,
+     "hi": 20
+    },
+    "claim": "more sunlight helps {E} grow faster",
+    "why": "sunlight is what lets the plant turn its stored water into food for new growth",
+    "confound": {
+     "text": "The group with more sunlight was also given extra water during the month.",
+     "tag": "the extra water",
+     "why": "extra water also gives a plant more to work with when it grows"
+    }
+   }
+  ],
+  "myths": [
+   "the spines pull rain down from the clouds",
+   "the stem makes its own water out of sand",
+   "the plant drinks water through its flowers"
+  ],
+  "otherFocus": [
+   "why the flowers of {E} open at dusk",
+   "how birds spread the seeds of {E}"
+  ],
+  "nonAnswers": [
+   "{CapE} is a plant that grows in the desert.",
+   "Rain does not fall often where {E} grows."
+  ],
+  "off": [
+   {
+    "text": "The flowers of {E} open at dusk and are visited by moths.",
+    "tag": "the flowers that open at dusk",
+    "add": "the flowers of {E} open at dusk",
+    "exp": "Flowers that open at dusk are easy for night-flying moths to find, which helps the plant make seeds."
+   },
+   {
+    "text": "Desert lizards sometimes rest in the shade of {E} during the hottest hours.",
+    "tag": "the resting lizards",
+    "add": "lizards rest in its shade",
+    "exp": "Shade from the plant gives lizards a cooler place to wait out the heat."
+   }
+  ],
+  "at": "in the patch of desert where {E} grows",
+  "ref": "the cactus"
+ },
+ "observation": {
+  "names": [
+   "Mesa Rojo",
+   "Sundial Wash",
+   "Pallid Flats",
+   "Coyote Bench",
+   "Saltbush Basin",
+   "Ochre Gulch"
+  ],
+  "nameFmt": "{name}",
+  "descr": "desert valley",
+  "observers": [
+   "a team of student scientists",
+   "two park rangers",
+   "a group of plant researchers"
+  ],
+  "cases": [
+   {
+    "id": "shrivel",
+    "numbers": [
+     [
+      30,
+      45
+     ],
+     [
+      4,
+      9
+     ]
+    ],
+    "event": "One spring, many of the fictional cacti in {E} began to shrivel and turn yellow.",
+    "q": "What most likely caused the cacti in {E} to shrivel?",
+    "restate": [
+     "The cacti in {E} began to shrivel, and the question asks why.",
+     "Something made the cacti in {E} shrivel and turn yellow."
+    ],
+    "answer": "A long stretch with no rain most likely caused the cacti in {E} to shrivel, because they used up the water stored in their stems.",
+    "sum": "the evidence points to the long dry stretch as the reason the cacti shriveled.",
+    "myth": "The cacti in {E} shriveled because the desert sand turned too cold for them to stand.",
+    "mythClause": "the cacti shriveled only where people walked",
+    "cause": "the long dry stretch",
+    "alt": "a plant disease",
+    "altText": "Some visitors suggested that a plant disease was spreading through {E}.",
+    "patternQ": "What pattern connects rainfall and the condition of the cacti in {E}?",
+    "patternA": "The cacti shriveled during a long period without rain and recovered after rain returned, so their condition followed the rainfall.",
+    "patternSum": "the condition of the cacti rose and fell with the rainfall.",
+    "prediction": {
+     "text": "Earlier that year, a visitor predicted that only the oldest cacti would shrivel during a dry stretch.",
+     "claim": "only the oldest cacti in {E} would shrivel",
+     "whyNot": "young and old cacti shriveled alike"
+    },
+    "observerNote": "The observers kept careful notes all spring.",
+    "obs": [
+     {
+      "id": "dry",
+      "role": "onset",
+      "text": "Records showed that no rain had fallen in {E} for {n0} days before the cacti began to shrivel.",
+      "tag": "the long stretch without rain",
+      "exps": [
+       "a stretch that long gives the cacti no chance to refill the water stored in their stems",
+       "the shriveling started only after a long time with no rain, which fits a water shortage",
+       "{n0} days without rain is long enough for a cactus to run low on water"
+      ]
+     },
+     {
+      "id": "thin",
+      "role": "mechanism",
+      "text": "When the researchers measured the shriveled stems, the stems held far less water than the stems of healthy cacti.",
+      "tag": "the water in the shriveled stems",
+      "exps": [
+       "stems with little water inside are what a cactus looks like after using up its stored supply",
+       "this shows the cacti were short of water, which is exactly what a long dry stretch would cause",
+       "the missing water explains the shriveling, since a cactus stem shrinks as its stored water runs out"
+      ]
+     },
+     {
+      "id": "recover",
+      "role": "reverse",
+      "text": "About {n1} days after a heavy rain finally fell, most of the shriveled cacti had swelled back up.",
+      "tag": "the cacti recovering after rain",
+      "exps": [
+       "the cacti recovered as soon as water returned, which is what would happen if lack of water were the cause",
+       "the problem went away when rain came back, so the rain and the shriveling are linked",
+       "once the cause was removed, the effect faded, which completes the pattern"
+      ]
+     },
+     {
+      "id": "mixed",
+      "role": "against",
+      "text": "Cacti growing right next to shriveled ones, but under a leaking water tank, stayed plump and green.",
+      "tag": "the cacti near the leaking tank",
+      "exps": [
+       "a disease would have spread to the neighboring plants too, so the plump cacti by the tank argue against disease",
+       "plants side by side ended up different only where water was available, which rules out a spreading disease",
+       "this rules out a plant disease, because the only difference between the healthy and sick plants was water"
+      ]
+     },
+     {
+      "id": "ages",
+      "role": "against",
+      "text": "Young cacti and old cacti in {E} shriveled at about the same rate.",
+      "tag": "the young and old cacti",
+      "exps": [
+       "a disease that spreads would not explain why every plant without water suffered equally while watered ones did not",
+       "this matches a shortage that affected the whole valley at once rather than a disease moving from plant to plant",
+       "the even pattern across all ages fits a shortage that reached every plant at the same time"
+      ],
+      "predExps": [
+       "if only the oldest cacti were at risk, the young ones would have stayed healthy, but they did not",
+       "this directly contradicts the prediction, since age made no difference",
+       "the prediction expected an age difference that never appeared"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how the cacti in {E} produce flowers",
+   "why lizards gather in {E}"
+  ],
+  "nonAnswers": [
+   "{CapE} is a dry valley with many cacti.",
+   "The observers watched the cacti for many weeks."
+  ],
+  "off": [
+   {
+    "text": "A small stream in {E} flows only during the rainy months.",
+    "tag": "the seasonal stream",
+    "add": "a stream in {E} flows only in the rainy months",
+    "exp": "A stream that flows only part of the year shows how water comes and goes in the valley."
+   },
+   {
+    "text": "Hikers often visit {E} to photograph its red cliffs.",
+    "tag": "the hikers and the cliffs",
+    "add": "hikers visit {E} to photograph its red cliffs",
+    "exp": "The red cliffs make the valley a popular place for photographs."
+   }
+  ]
+ }
+}

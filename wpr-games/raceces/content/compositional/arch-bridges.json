@@ -1,0 +1,527 @@
+{
+ "topicId": "arch-bridges",
+ "design": {
+  "kind": "footbridge",
+  "kindPl": "footbridges",
+  "member": "bridge",
+  "memberPl": "bridges",
+  "names": [
+   "stonelark",
+   "riverbend",
+   "graylock",
+   "millrace",
+   "hollowstone",
+   "copperline",
+   "wrenhaven",
+   "ashgrove"
+  ],
+  "descr": "stone arch footbridge",
+  "live": "stands over",
+  "liveVerb": "stands",
+  "home": "a narrow river",
+  "manyFmt": "Copies of {E} have been built in many places, including {s}.",
+  "goal": "carry people safely across the water",
+  "otherGoals": [
+   "look attractive to visitors",
+   "be built quickly"
+  ],
+  "myths": [
+   "float on the water like a raft",
+   "hold itself up with magnets hidden in the stone",
+   "lift itself out of the way when floods come"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many kinds of bridges.",
+   "{CapE} is made of stone and mortar."
+  ],
+  "conds": {
+   "crowd": {
+    "clause": "large crowds cross on market days",
+    "absent": "only a few people cross each day",
+    "np": "heavy crowds",
+    "tag": "the market-day crowds",
+    "risk": "a flat beam can sag in the middle under a heavy crowd"
+   },
+   "soft": {
+    "clause": "the riverbanks are made of soft, muddy soil",
+    "absent": "the riverbanks are solid rock",
+    "np": "soft riverbanks",
+    "tag": "the soft riverbanks",
+    "risk": "the ends of an arch can slide outward on soft ground"
+   },
+   "flood": {
+    "clause": "the river floods every spring",
+    "absent": "the water stays calm all year",
+    "np": "spring floods",
+    "tag": "the spring floods",
+    "risk": "floodwater and branches can batter a blunt pier until it cracks"
+   },
+   "rain": {
+    "clause": "heavy rain falls for weeks at a time",
+    "absent": "rain is light and brief",
+    "np": "long spells of heavy rain",
+    "tag": "the heavy rain",
+    "risk": "water trapped inside stonework pushes on the walls and wears away the mortar"
+   },
+   "haul": {
+    "clause": "stone must be hauled in from far away",
+    "absent": "good stone is cut from a quarry right beside the river",
+    "np": "long stone hauls",
+    "tag": "the long stone hauls"
+   },
+   "freeze": {
+    "clause": "water freezes inside the stonework every winter",
+    "absent": "winters are mild",
+    "np": "freezing winters",
+    "tag": "the freezing winters"
+   }
+  },
+  "features": [
+   {
+    "id": "arch",
+    "np": "a curved stone arch beneath its walkway",
+    "bare": "curved stone arches",
+    "the": "the stone arch",
+    "short": "arch",
+    "pl": false,
+    "mech": "push the weight of the walkway outward and down into the riverbanks",
+    "benefit": "hold up heavy crowds without bending",
+    "cond": "crowd",
+    "metric": {
+     "past": "sagged",
+     "unit": "millimeters",
+     "what": "under a test load",
+     "np": "sag under a test load",
+     "cmp": "less sag under a test load",
+     "better": "lower",
+     "lo": 2,
+     "hi": 30
+    }
+   },
+   {
+    "id": "abut",
+    "np": "thick stone abutments at each end",
+    "bare": "thick stone abutments",
+    "the": "the thick abutments",
+    "short": "abutments",
+    "pl": true,
+    "mech": "brace the ends of the arch so they cannot spread apart",
+    "benefit": "stay firm on soft riverbanks",
+    "cond": "soft",
+    "metric": {
+     "past": "shifted",
+     "unit": "millimeters",
+     "what": "at their ends after a year",
+     "np": "movement at the ends",
+     "cmp": "less movement at the ends",
+     "better": "lower",
+     "lo": 1,
+     "hi": 25
+    },
+    "cost": {
+     "clause": "they need a huge amount of stone, which is costly when stone must be hauled in from far away",
+     "cond": "haul"
+    }
+   },
+   {
+    "id": "cut",
+    "np": "pointed cutwaters on the upstream side of its pier",
+    "bare": "pointed cutwaters",
+    "the": "the pointed cutwaters",
+    "short": "cutwaters",
+    "pl": true,
+    "mech": "split fast-moving water and floating branches around the pier",
+    "benefit": "resist damage during floods",
+    "cond": "flood",
+    "metric": {
+     "past": "showed",
+     "unit": "cracks",
+     "what": "after the spring floods",
+     "np": "cracks after the spring floods",
+     "cmp": "fewer cracks after the spring floods",
+     "better": "lower",
+     "lo": 1,
+     "hi": 12
+    }
+   },
+   {
+    "id": "drains",
+    "np": "small drain holes through its walls",
+    "bare": "drain holes",
+    "the": "the drain holes",
+    "short": "holes",
+    "pl": true,
+    "mech": "let rainwater escape from inside the bridge",
+    "benefit": "avoid damage from trapped water",
+    "cond": "rain",
+    "metric": {
+     "past": "lost",
+     "unit": "kilograms",
+     "what": "of mortar in a rainy year",
+     "np": "mortar lost in a rainy year",
+     "cmp": "less mortar lost in a rainy year",
+     "better": "lower",
+     "lo": 2,
+     "hi": 20
+    },
+    "cost": {
+     "clause": "they let water seep into the stone, where it can freeze and crack the walls in cold winters",
+     "cond": "freeze"
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "gorge",
+    "np": "a mountain gorge",
+    "the": "the mountain gorge",
+    "at": "over the mountain gorge",
+    "has": [
+     "flood",
+     "rain",
+     "freeze"
+    ],
+    "lacks": [
+     "crowd",
+     "soft",
+     "haul"
+    ]
+   },
+   {
+    "id": "lowland",
+    "np": "a slow lowland river",
+    "the": "the lowland river",
+    "at": "over the lowland river",
+    "has": [
+     "soft",
+     "rain"
+    ],
+    "lacks": [
+     "crowd",
+     "flood",
+     "freeze"
+    ]
+   },
+   {
+    "id": "canal",
+    "np": "a busy town canal",
+    "the": "the town canal",
+    "at": "over the town canal",
+    "has": [
+     "crowd",
+     "soft"
+    ],
+    "lacks": [
+     "flood",
+     "rain",
+     "haul"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "stone",
+    "clause": "The {mPl} with {F} were also built from a stronger kind of stone",
+    "tag": "the stronger stone",
+    "why": "stronger stone can hold up better no matter how a bridge is shaped",
+    "np": "the stronger stone",
+    "same": "stone",
+    "alt": "stronger stone",
+    "ruleOut": "Every bridge in both groups was built from the same kind of stone",
+    "ruleTag": "the shared kind of stone"
+   },
+   {
+    "id": "age",
+    "clause": "The {mPl} with {F} were also built more recently than the others",
+    "tag": "the newer bridges",
+    "why": "newer bridges have had less time to wear down",
+    "np": "the age of the bridges",
+    "same": "age",
+    "alt": "the age of the bridges",
+    "ruleOut": "All of the bridges in both groups were built in the same year",
+    "ruleTag": "the bridges' age"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} has iron lamps along its railings.",
+    "tag": "the iron lamps",
+    "add": "{E} has iron lamps along its railings",
+    "exp": "The lamps make the bridge easier to cross after dark."
+   },
+   {
+    "text": "Artists often paint pictures of {E} at sunset.",
+    "tag": "the artists' paintings",
+    "add": "artists paint {E} at sunset",
+    "exp": "The paintings show that people find the bridge beautiful."
+   },
+   {
+    "text": "{CapE} was named after a bird that nests along the river.",
+    "tag": "the bridge's name",
+    "add": "{E} was named after a bird",
+    "exp": "The name connects the bridge to the wildlife along the river."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "stonelark",
+   "riverbend",
+   "graylock",
+   "millrace",
+   "hollowstone",
+   "copperline"
+  ],
+  "nameFmt": "{name} footbridge",
+  "article": "the",
+  "descr": "stone arch footbridge",
+  "at": "in {E}",
+  "outcome": "the weight that {E} can safely carry",
+  "stages": [
+   {
+    "id": "load",
+    "text": "When people cross {E}, their weight presses down on the curved stones of the arch.",
+    "tag": "the weight pressing on the arch",
+    "from": "the weight of the people crossing",
+    "product": "force on the arch stones",
+    "less": "less force reaching the arch",
+    "does": "the weight of the people presses down on the arch stones",
+    "why": "this is where the load first enters the structure of the bridge"
+   },
+   {
+    "id": "squeeze",
+    "text": "The wedge-shaped stones of {E} squeeze tightly against each other and pass the force along the curve of the arch.",
+    "tag": "the stones passing force along the arch",
+    "from": "force on the arch stones",
+    "product": "force carried along the arch",
+    "less": "far less force carried safely along the arch",
+    "does": "the wedge-shaped stones squeeze together and pass the force along the curve",
+    "why": "passing the force along the curve keeps any single stone from carrying the whole load",
+    "needs": "keystone",
+    "needWhy": "the stones can only pass force along the curve when the keystone holds them tightly together",
+    "cause": "What allows the arch of {E} to carry force along its curve?",
+    "boost": {
+     "clause": "replace the keystone with a larger one",
+     "np": "replacing the keystone with a larger one"
+    }
+   },
+   {
+    "id": "brace",
+    "text": "At each end of {E}, the force pushes into the abutments, which push back and keep the arch standing.",
+    "tag": "the abutments pushing back",
+    "from": "force carried along the arch",
+    "product": "a steady, balanced bridge",
+    "less": "a much less steady bridge",
+    "does": "the abutments push back against the force and keep the arch standing",
+    "why": "this final step balances the load so the bridge stays still",
+    "needs": "ground",
+    "needWhy": "the abutments can only push back if the ground beneath them stays firm",
+    "cause": "What keeps {E} standing steady?"
+   }
+  ],
+  "conds": {
+   "keystone": {
+    "clause": "the keystone at the top of the arch is locked tightly in place",
+    "absent": "the keystone at the top of the arch works loose",
+    "np": "a tightly locked keystone",
+    "tag": "the locked keystone"
+   },
+   "ground": {
+    "clause": "the abutments rest on firm, packed ground",
+    "absent": "floodwater washes the soil out from under the abutments",
+    "np": "firm ground under the abutments",
+    "tag": "the firm ground"
+   }
+  },
+  "rates": [
+   {
+    "stage": "brace",
+    "factor": {
+     "np": "the width of the abutments",
+     "short": "width",
+     "lo": 10,
+     "hi": 60
+    },
+    "setup": "engineers tested small models of {E} with abutments of different widths",
+    "result": {
+     "clause": "the model with abutments {x} centimeters wide held about {y} kilograms",
+     "lo": 20,
+     "hi": 120
+    },
+    "claim": "wider abutments let a model of {E} hold more weight",
+    "why": "wider abutments press on more ground, so they can push back harder against the arch",
+    "confound": {
+     "text": "The model with wider abutments was also built on a harder tabletop.",
+     "tag": "the harder tabletop",
+     "why": "a harder base keeps the ends of the arch from sliding"
+    }
+   }
+  ],
+  "myths": [
+   "the river pushes the bridge up from below",
+   "the railings hold up the whole arch",
+   "the bridge becomes lighter when people walk faster"
+  ],
+  "otherFocus": [
+   "why {E} has iron lamps",
+   "how artists choose where to paint {E}"
+  ],
+  "nonAnswers": [
+   "{CapE} is made of stone.",
+   "Many people cross {E} every day."
+  ],
+  "off": [
+   {
+    "text": "{CapE} has iron lamps along its railings.",
+    "tag": "the iron lamps",
+    "add": "{E} has iron lamps along its railings",
+    "exp": "The lamps make the bridge easier to cross after dark."
+   },
+   {
+    "text": "Artists often paint pictures of {E} at sunset.",
+    "tag": "the artists' paintings",
+    "add": "artists paint {E} at sunset",
+    "exp": "The paintings show that people find the bridge beautiful."
+   }
+  ],
+  "ref": "the bridge"
+ },
+ "observation": {
+  "names": [
+   "Millbrook",
+   "Stonehaven",
+   "Ferris Ford",
+   "Oakbridge",
+   "Tanner Crossing",
+   "Willow Ford"
+  ],
+  "nameFmt": "{name}",
+  "descr": "small river town",
+  "observers": [
+   "a team of student engineers",
+   "two bridge inspectors",
+   "a group of town engineers"
+  ],
+  "cases": [
+   {
+    "id": "crack",
+    "numbers": [
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      4
+     ]
+    ],
+    "event": "One spring, a long crack appeared in the fictional stone footbridge at {E}.",
+    "q": "What most likely caused the crack in the footbridge at {E}?",
+    "restate": [
+     "A crack appeared in the footbridge at {E}, and the question asks why.",
+     "Something caused the stone footbridge at {E} to crack one spring."
+    ],
+    "answer": "Soil washing out from under one abutment most likely caused the crack at {E}, because the arch lost the firm support it needs at that end.",
+    "sum": "the evidence points to the washed-out soil under the abutment as the cause of the crack.",
+    "myth": "The footbridge at {E} cracked because its stones grew tired of carrying people.",
+    "mythClause": "the crack appeared only on days when trucks crossed",
+    "cause": "the washed-out soil under the abutment",
+    "alt": "heavy trucks crossing the bridge",
+    "altText": "Some residents suggested that heavy trucks had been crossing the footbridge at {E}.",
+    "patternQ": "What pattern connects the support under the abutment and the crack at {E}?",
+    "patternA": "The crack appeared after soil washed out from under the abutment and stopped growing once the support was rebuilt, so the crack followed the support.",
+    "patternSum": "the crack appeared when the soil washed out and stopped growing once the support was rebuilt.",
+    "prediction": {
+     "text": "Years earlier, an engineer predicted that any crack in the footbridge at {E} would start in the middle of the arch.",
+     "claim": "a crack in the footbridge at {E} would start in the middle of the arch",
+     "whyNot": "the crack began near the west abutment, not in the middle"
+    },
+    "observerNote": "The inspectors measured the crack every week.",
+    "obs": [
+     {
+      "id": "flood",
+      "role": "onset",
+      "text": "The crack appeared just {n0} days after a spring flood swept past {E}.",
+      "tag": "the timing of the crack",
+      "exps": [
+       "a flood that strong can wash soil away from the base of a bridge, and the crack followed soon after",
+       "the crack showed up right after the flood, which points to damage at the base",
+       "the timing links the crack to the flood rather than to everyday traffic"
+      ]
+     },
+     {
+      "id": "hollow",
+      "role": "mechanism",
+      "text": "Engineers found a hollow space where soil had washed out from under the west abutment.",
+      "tag": "the washed-out soil",
+      "exps": [
+       "an abutment with nothing firm beneath it cannot push back against the arch, so the stones shift and crack",
+       "this shows how the bridge lost its support, since the soil under one end was gone",
+       "missing soil explains the crack, because an arch needs firm ground at both ends"
+      ]
+     },
+     {
+      "id": "fix",
+      "role": "reverse",
+      "text": "After workers packed new soil and stone under the abutment, the crack stopped growing within {n1} weeks.",
+      "tag": "the crack after the repair",
+      "exps": [
+       "the crack stopped growing once the support was restored, which is what would happen if missing soil were the cause",
+       "fixing the support fixed the problem, so the two are linked",
+       "once the cause was repaired, the effect stopped"
+      ]
+     },
+     {
+      "id": "cams",
+      "role": "against",
+      "text": "Signs at both ends of the footbridge at {E} block trucks, and the town's cameras showed no trucks crossing.",
+      "tag": "the camera records",
+      "exps": [
+       "trucks cannot have caused the crack if no trucks crossed the bridge",
+       "this rules out trucks, because the cameras recorded none on the bridge",
+       "with no trucks on the bridge, the truck explanation has nothing to stand on"
+      ]
+     },
+     {
+      "id": "shape",
+      "role": "against",
+      "text": "The crack was widest near the west abutment and narrowed toward the middle of the arch.",
+      "tag": "the shape of the crack",
+      "exps": [
+       "heavy loads would strain the middle of the arch, but the crack points to a problem at one end",
+       "a crack that starts at one end matches a failing support better than heavy traffic",
+       "the widest part of the crack marks where the trouble began, at the abutment"
+      ],
+      "predExps": [
+       "this directly contradicts the prediction, since the crack began at the end of the arch, not the middle",
+       "if the prediction were right, the crack would be widest in the middle, but it was not",
+       "the prediction expected a crack in the middle that never appeared"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how the people of {E} celebrate the river in summer",
+   "why {E} has a market by the bridge"
+  ],
+  "nonAnswers": [
+   "{CapE} has an old stone footbridge.",
+   "Many people in {E} walk to work."
+  ],
+  "off": [
+   {
+    "text": "A farmers market is held beside the footbridge at {E} every Saturday.",
+    "tag": "the farmers market",
+    "add": "a farmers market is held at {E}",
+    "exp": "The market brings many visitors to the river each week."
+   },
+   {
+    "text": "Ducks gather beneath the footbridge at {E} to rest in its shade.",
+    "tag": "the ducks under the bridge",
+    "add": "ducks rest beneath the bridge at {E}",
+    "exp": "The shade under the bridge gives ducks a cool place to rest."
+   }
+  ]
+ }
+}

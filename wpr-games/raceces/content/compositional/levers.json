@@ -1,0 +1,525 @@
+{
+ "topicId": "levers",
+ "design": {
+  "kind": "lifting bar",
+  "kindPl": "lifting bars",
+  "member": "bar",
+  "memberPl": "bars",
+  "names": [
+   "ironreach",
+   "stoutarm",
+   "quillbar",
+   "rockhand",
+   "steadyhand",
+   "longreach",
+   "oakpry",
+   "gripstone"
+  ],
+  "descr": "lever tool for lifting heavy loads",
+  "live": "is used at",
+  "liveVerb": "is used",
+  "home": "farms and building sites",
+  "manyFmt": "Copies of {E} are used in many places, including {s}.",
+  "goal": "lift heavy loads with little effort",
+  "otherGoals": [
+   "fit in the back of a small truck",
+   "last for many years without rusting"
+  ],
+  "myths": [
+   "make heavy loads weigh less by magic",
+   "lift loads by itself without anyone pushing",
+   "pull loads upward with magnets hidden in its handle"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many kinds of levers.",
+   "{CapE} is made of steel and rubber."
+  ],
+  "conds": {
+   "heavy": {
+    "clause": "workers must lift very heavy stones and crates",
+    "absent": "the loads are light",
+    "np": "very heavy loads",
+    "tag": "the heavy loads",
+    "risk": "a short lever needs a push too strong for most people to lift a very heavy load"
+   },
+   "mud": {
+    "clause": "the ground is soft and muddy",
+    "absent": "the ground is hard and dry",
+    "np": "soft, muddy ground",
+    "tag": "the muddy ground",
+    "risk": "a narrow pivot sinks into soft ground and lets the load drop"
+   },
+   "wet": {
+    "clause": "rain falls often during the workday",
+    "absent": "the weather is usually dry",
+    "np": "frequent rain",
+    "tag": "the frequent rain",
+    "risk": "a wet steel handle can slip out of a worker's hands"
+   },
+   "mixed": {
+    "clause": "the loads come in many different sizes and weights",
+    "absent": "every load is the same size",
+    "np": "loads of many sizes",
+    "tag": "the mix of load sizes",
+    "risk": "a fixed pivot works well for one size of load but poorly for others"
+   },
+   "tight": {
+    "clause": "workers must use their tools in narrow, crowded spaces",
+    "absent": "there is plenty of open space to work",
+    "np": "narrow, crowded work spaces",
+    "tag": "the crowded spaces"
+   },
+   "grit": {
+    "clause": "sand and grit blow across the work site",
+    "absent": "the work site is clean and paved",
+    "np": "blowing sand and grit",
+    "tag": "the blowing grit"
+   }
+  },
+  "features": [
+   {
+    "id": "handle",
+    "np": "an extra-long handle",
+    "bare": "extra-long handles",
+    "the": "the long handle",
+    "short": "handle",
+    "pl": false,
+    "mech": "put the worker's push far from the pivot point",
+    "benefit": "lift heavy loads with a small push",
+    "cond": "heavy",
+    "metric": {
+     "past": "needed",
+     "unit": "newtons",
+     "what": "of push to lift a test crate",
+     "np": "push needed to lift a test crate",
+     "cmp": "less push needed to lift a test crate",
+     "better": "lower",
+     "lo": 80,
+     "hi": 400
+    },
+    "cost": {
+     "clause": "it needs a lot of room to swing, which is a problem in narrow, crowded spaces",
+     "cond": "tight"
+    }
+   },
+   {
+    "id": "foot",
+    "np": "a wide steel foot that acts as its pivot",
+    "bare": "wide steel feet",
+    "the": "the wide pivot foot",
+    "short": "foot",
+    "pl": false,
+    "mech": "spread the load over a large patch of ground",
+    "benefit": "stay steady on soft ground",
+    "cond": "mud",
+    "metric": {
+     "past": "sank",
+     "unit": "millimeters",
+     "what": "into soft ground",
+     "np": "sinking into soft ground",
+     "cmp": "less sinking into soft ground",
+     "better": "lower",
+     "lo": 2,
+     "hi": 40
+    }
+   },
+   {
+    "id": "grip",
+    "np": "a rubber grip on its handle",
+    "bare": "rubber grips",
+    "the": "the rubber grip",
+    "short": "grip",
+    "pl": false,
+    "mech": "keep wet hands from slipping",
+    "benefit": "stay safe to use in the rain",
+    "cond": "wet",
+    "metric": {
+     "past": "had",
+     "unit": "slips",
+     "what": "per hundred lifts",
+     "np": "slips per hundred lifts",
+     "cmp": "fewer slips per hundred lifts",
+     "better": "lower",
+     "lo": 1,
+     "hi": 15
+    }
+   },
+   {
+    "id": "pivot",
+    "np": "a pivot that can slide along the bar",
+    "bare": "sliding pivots",
+    "the": "the sliding pivot",
+    "short": "pivot",
+    "pl": false,
+    "mech": "let the worker move the pivot closer to the load",
+    "benefit": "handle loads of many different sizes",
+    "cond": "mixed",
+    "metric": {
+     "past": "handled",
+     "unit": "kinds of loads",
+     "what": "without changing tools",
+     "np": "kinds of loads handled",
+     "cmp": "more kinds of loads handled",
+     "better": "higher",
+     "lo": 2,
+     "hi": 10
+    },
+    "cost": {
+     "clause": "its sliding parts clog when sand and grit blow across the work site",
+     "cond": "grit"
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "farm",
+    "np": "a muddy riverside farm",
+    "the": "the riverside farm",
+    "at": "on the riverside farm",
+    "has": [
+     "mud",
+     "wet"
+    ],
+    "lacks": [
+     "heavy",
+     "mixed",
+     "tight",
+     "grit"
+    ]
+   },
+   {
+    "id": "quarry",
+    "np": "a stone quarry",
+    "the": "the quarry",
+    "at": "at the quarry",
+    "has": [
+     "heavy",
+     "wet",
+     "grit"
+    ],
+    "lacks": [
+     "mud",
+     "mixed",
+     "tight"
+    ]
+   },
+   {
+    "id": "warehouse",
+    "np": "a city warehouse",
+    "the": "the warehouse",
+    "at": "in the warehouse",
+    "has": [
+     "heavy",
+     "mixed",
+     "tight"
+    ],
+    "lacks": [
+     "mud",
+     "wet",
+     "grit"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "strength",
+    "clause": "The {mPl} with {F} were also used by stronger workers",
+    "tag": "the stronger workers",
+    "why": "stronger workers can push harder with any tool",
+    "np": "the workers' strength",
+    "same": "workers",
+    "alt": "stronger workers",
+    "ruleOut": "The same workers took turns using both groups of bars",
+    "ruleTag": "the shared workers"
+   },
+   {
+    "id": "crates",
+    "clause": "The {mPl} with {F} were also tested with lighter crates",
+    "tag": "the lighter crates",
+    "why": "lighter crates are easier to lift with any tool",
+    "np": "the lighter crates",
+    "same": "crates",
+    "alt": "lighter crates",
+    "ruleOut": "Both groups were tested with crates of exactly the same weight",
+    "ruleTag": "the matched crates"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} is painted bright yellow so that it is easy to spot.",
+    "tag": "the yellow paint",
+    "add": "{E} is painted bright yellow",
+    "exp": "The bright paint makes the tool easy to find on a busy site."
+   },
+   {
+    "text": "{CapE} was invented by a farmer who needed to move boulders.",
+    "tag": "the tool's inventor",
+    "add": "{E} was invented by a farmer",
+    "exp": "The inventor's story shows the problem the tool was first meant to solve."
+   },
+   {
+    "text": "{CapE} hangs on a hook when it is not in use.",
+    "tag": "the storage hook",
+    "add": "{E} hangs on a hook when not in use",
+    "exp": "Hanging the tool keeps it out of the way."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "Orchard Hill",
+   "Bramble",
+   "Applegate",
+   "Harvest Lane",
+   "Russet",
+   "Pippin"
+  ],
+  "nameFmt": "{name} Cider Mill",
+  "article": "the",
+  "descr": "farm cider mill with a lever press",
+  "at": "at {E}",
+  "outcome": "the juice made each day at {E}",
+  "stages": [
+   {
+    "id": "push",
+    "text": "A worker at {E} pushes down on the long arm of a wooden lever.",
+    "tag": "the push on the long arm",
+    "from": "a worker's push",
+    "product": "a downward push on the long arm",
+    "less": "a much weaker push on the long arm",
+    "does": "a worker pushes down on the long arm of the lever",
+    "why": "the push is the effort that the lever will multiply"
+   },
+   {
+    "id": "pivot",
+    "text": "The lever at {E} turns on a sturdy pivot, so its short arm presses down hard on a board above the apples.",
+    "tag": "the lever turning on its pivot",
+    "from": "a downward push on the long arm",
+    "product": "a strong squeeze on the apples",
+    "less": "a much weaker squeeze on the apples",
+    "does": "the lever turns on its pivot and the short arm presses hard on the apples",
+    "why": "turning on the pivot turns a modest push into a strong squeeze",
+    "needs": "pivot",
+    "needWhy": "the lever can only multiply the worker's push if it turns freely on its pivot",
+    "cause": "What allows the press at {E} to squeeze the apples hard?"
+   },
+   {
+    "id": "juice",
+    "text": "Squeezed by the board, the apples at {E} release juice that runs down into a bucket.",
+    "tag": "the apples releasing juice",
+    "from": "a strong squeeze on the apples",
+    "product": "apple juice",
+    "less": "much less apple juice",
+    "does": "the squeezed apples release juice into a bucket",
+    "why": "this is the step that finally produces the juice",
+    "needs": "ripe",
+    "needWhy": "only ripe, soft apples give up their juice easily when they are squeezed",
+    "cause": "What allows the apples at {E} to give up their juice?"
+   }
+  ],
+  "conds": {
+   "pivot": {
+    "clause": "the pivot pin is greased and turns smoothly",
+    "absent": "the pivot pin is rusted and sticks",
+    "np": "a smoothly turning pivot",
+    "tag": "the greased pivot pin"
+   },
+   "ripe": {
+    "clause": "the apples are ripe and soft",
+    "absent": "the apples are picked long before they are ripe",
+    "np": "ripe, soft apples",
+    "tag": "the ripe apples"
+   }
+  },
+  "rates": [
+   {
+    "stage": "pivot",
+    "factor": {
+     "np": "the length of the lever's long arm",
+     "short": "length",
+     "lo": 50,
+     "hi": 200
+    },
+    "setup": "workers tested the press at {E} with long arms of different lengths",
+    "result": {
+     "clause": "with a long arm {x} centimeters long, the press squeezed out about {y} liters of juice per hour",
+     "lo": 5,
+     "hi": 30
+    },
+    "claim": "a longer lever arm lets the press at {E} squeeze out more juice",
+    "why": "a longer arm puts the push farther from the pivot, so the same push makes a stronger squeeze",
+    "confound": {
+     "text": "The trial with the longer arm also used riper, softer apples.",
+     "tag": "the riper apples",
+     "why": "riper apples give up their juice more easily"
+    }
+   }
+  ],
+  "myths": [
+   "the bucket pulls the juice out of the apples",
+   "the apples turn into juice when the lever creaks",
+   "the pivot creates juice by spinning"
+  ],
+  "otherFocus": [
+   "how {E} decides which apples to plant",
+   "why visitors tour {E} in the fall"
+  ],
+  "nonAnswers": [
+   "{CapE} has a wooden lever press.",
+   "Apples grow on many farms."
+  ],
+  "off": [
+   {
+    "text": "{CapE} sells apple pies on weekends.",
+    "tag": "the apple pies",
+    "add": "{E} sells apple pies",
+    "exp": "The pies give visitors another reason to stop at the mill."
+   },
+   {
+    "text": "A big red barn stands beside {E}.",
+    "tag": "the red barn",
+    "add": "a red barn stands beside {E}",
+    "exp": "The barn is a landmark that helps visitors find the mill."
+   }
+  ],
+  "ref": "the mill",
+  "background": [
+   "{CapE} has pressed apples into cider for more than a hundred years.",
+   "Visitors to {E} can watch the lever press work through a large window."
+  ]
+ },
+ "observation": {
+  "names": [
+   "Pippin Hollow",
+   "Russet Ridge",
+   "Orchard Bend",
+   "Bramley Farm",
+   "Cider Brook",
+   "Harvest Knoll"
+  ],
+  "nameFmt": "{name}",
+  "descr": "family cider mill",
+  "observers": [
+   "the mill workers",
+   "a team of student engineers",
+   "two farm mechanics"
+  ],
+  "cases": [
+   {
+    "id": "hard",
+    "numbers": [
+     [
+      10,
+      30
+     ]
+    ],
+    "event": "One week, workers at {E} found that their fictional lever press needed a much harder push than usual.",
+    "q": "What most likely made the lever press at {E} harder to push?",
+    "restate": [
+     "The lever press at {E} became harder to push, and the question asks why.",
+     "Something made the lever press at {E} need a harder push."
+    ],
+    "answer": "Moving the pivot closer to the handle most likely made the press harder to push, because it shortened the arm the workers push on.",
+    "sum": "the evidence points to moving the pivot as the reason the press was harder to push.",
+    "myth": "The press at {E} became harder to push because the lever grew heavier overnight.",
+    "mythClause": "the press was hard to push only when it rained",
+    "cause": "the moved pivot",
+    "alt": "harder, less ripe apples",
+    "altText": "Some workers suggested that the apples at {E} had become harder and less ripe.",
+    "patternQ": "What pattern connects the position of the pivot and the push needed at {E}?",
+    "patternA": "The press became hard to push after the pivot was moved and became easy again once the pivot was put back, so the push followed the position of the pivot.",
+    "patternSum": "the press was hard to push while the pivot was moved and easy to push once it was put back.",
+    "prediction": {
+     "text": "Early that week, a worker predicted that the press would become easy to push again once the apples ripened.",
+     "claim": "the press at {E} would become easy to push once the apples ripened",
+     "whyNot": "the press was hard to push even with no apples in it"
+    },
+    "observerNote": "The workers wrote down how the press felt after every batch.",
+    "obs": [
+     {
+      "id": "repair",
+      "role": "onset",
+      "text": "The extra effort began the day after a repair crew put the lever back on a new pivot pin.",
+      "tag": "the timing after the repair",
+      "exps": [
+       "the problem started right after the pivot was changed, which points to the repair",
+       "the timing ties the harder push to the repair, not to the apples",
+       "a change that appears the day after a repair suggests the repair caused it"
+      ]
+     },
+     {
+      "id": "measure",
+      "role": "mechanism",
+      "text": "Measurements showed that the pivot was now {n0} centimeters closer to the handle than before.",
+      "tag": "the new position of the pivot",
+      "exps": [
+       "a pivot closer to the handle shortens the arm the workers push on, so they need more force",
+       "this shows how the push got harder, since a shorter long arm multiplies the push less",
+       "moving the pivot toward the handle takes away the lever's advantage"
+      ]
+     },
+     {
+      "id": "back",
+      "role": "reverse",
+      "text": "When the crew moved the pivot back to its old spot, the press felt easy to push again within a day.",
+      "tag": "the press after the pivot was moved back",
+      "exps": [
+       "the press became easy again once the pivot was restored, which is what would happen if the pivot were the cause",
+       "fixing the pivot fixed the problem, so the two are linked",
+       "once the cause was undone, the effect disappeared"
+      ]
+     },
+     {
+      "id": "same",
+      "role": "against",
+      "text": "The apples came from the same trees and were just as ripe as the week before.",
+      "tag": "the ripeness of the apples",
+      "exps": [
+       "the apples did not change, so they cannot explain why the press changed",
+       "this rules out the apples, because they were just as ripe as before",
+       "with the apples unchanged, the apple explanation has nothing to stand on"
+      ]
+     },
+     {
+      "id": "empty",
+      "role": "against",
+      "text": "Pressing an empty board, with no apples at all, also took a harder push than before.",
+      "tag": "the test with no apples",
+      "exps": [
+       "if hard apples were the cause, the press would feel normal with no apples, but it did not",
+       "this rules out the apples, since the problem remained without them",
+       "a hard push with nothing in the press points to the lever itself"
+      ],
+      "predExps": [
+       "this directly contradicts the prediction, since the press was hard to push even with no apples",
+       "if riper apples would fix the problem, the press would be easy with no apples at all, but it was not",
+       "the prediction blamed the apples, but the problem stayed when the apples were gone"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how the workers at {E} store the finished juice",
+   "why {E} grows so many kinds of apples"
+  ],
+  "nonAnswers": [
+   "{CapE} makes apple cider every fall.",
+   "The workers at {E} are very busy in October."
+  ],
+  "off": [
+   {
+    "text": "{CapE} grows more than ten kinds of apples.",
+    "tag": "the kinds of apples",
+    "add": "{E} grows more than ten kinds of apples",
+    "exp": "The many kinds of apples give the cider different flavors."
+   },
+   {
+    "text": "Children at {E} can feed the goats in a small pen.",
+    "tag": "the goat pen",
+    "add": "children at {E} can feed the goats",
+    "exp": "The goat pen makes the mill a fun place for families to visit."
+   }
+  ]
+ }
+}

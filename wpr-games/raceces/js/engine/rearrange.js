@@ -11,7 +11,7 @@
        3. Summary is last.             4. Positions 3-4 and 5-6 are each (Cite Evidence, Explain Evidence)
                                           where the explanation belongs to that exact evidence.
      The two evidence/explanation pairs may appear in either order. */
-  function analyze(order, info) {
+  function analyze(order, info, dependency) {
     var i, seen = {};
     if (!Array.isArray(order) || order.length !== 7) return { valid: false, issues: [{ code: 'incomplete' }], primary: { code: 'incomplete' } };
     for (i = 0; i < 7; i++) {
@@ -28,7 +28,11 @@
       var ok = a.role === 'C' && b.role === 'E' && a.pair === b.pair;
       if (!ok) issues.push({ code: 'pairing', start: start, first: a, second: b });
     });
-    // If a dependency is declared in the challenge metadata, it is enforced by the caller (none are authored).
+    // A declared logical dependency (e.g. the second explanation builds on the first) fixes the
+    // pair order. Checked only once every other rule passes, so its feedback is specific.
+    if (!issues.length && dependency && info[order[2]].pair !== dependency.first) {
+      issues.push({ code: 'dependency', first: info['C' + dependency.first], found: info[order[2]] });
+    }
     return { valid: issues.length === 0, issues: issues, primary: issues[0] || null };
   }
 
@@ -67,6 +71,12 @@
     ch.items = order.map(function (s) { return { id: s, text: resp.sentences[s].text }; });
     ch.defaultPairOrder = [1, 2];
     ch.solution = { order: Model.orderFor([1, 2]), alternate: Model.orderFor([2, 1]) };
+    if (resp.dependency) {
+      // Only one evidence-pair order is valid when the second pair depends on the first.
+      ch.dependency = resp.dependency;
+      ch.defaultPairOrder = [resp.dependency.first, 3 - resp.dependency.first];
+      ch.solution = { order: Model.orderFor(ch.defaultPairOrder), alternate: null };
+    }
     ch.signature = 'rearrange|' + resp.modelId;
     ch.role = null;
     return ch;
@@ -74,7 +84,7 @@
 
   function grade(ch, answer) {
     var order = (answer && answer.order) || [];
-    var analysis = analyze(order, ch.info);
+    var analysis = analyze(order, ch.info, ch.dependency || null);
     var fb = Feedback.rearrange(ch, order, analysis);
     return { correct: analysis.valid, feedback: fb, role: fb.role || null, category: fb.category, analysis: analysis };
   }

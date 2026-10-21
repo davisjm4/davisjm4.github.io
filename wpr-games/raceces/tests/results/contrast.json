@@ -1,0 +1,116 @@
+[
+  {
+    "fg": "text",
+    "bg": "bg",
+    "ratio": 16.57,
+    "min": 4.5
+  },
+  {
+    "fg": "text",
+    "bg": "panel",
+    "ratio": 14.26,
+    "min": 4.5
+  },
+  {
+    "fg": "text",
+    "bg": "panel2",
+    "ratio": 12.37,
+    "min": 4.5
+  },
+  {
+    "fg": "text2",
+    "bg": "bg",
+    "ratio": 10.22,
+    "min": 4.5
+  },
+  {
+    "fg": "text2",
+    "bg": "panel",
+    "ratio": 8.79,
+    "min": 4.5
+  },
+  {
+    "fg": "text2",
+    "bg": "panel2",
+    "ratio": 7.63,
+    "min": 4.5
+  },
+  {
+    "fg": "gold",
+    "bg": "panel",
+    "ratio": 8.29,
+    "min": 4.5
+  },
+  {
+    "fg": "gold",
+    "bg": "bg",
+    "ratio": 9.63,
+    "min": 4.5
+  },
+  {
+    "fg": "teal",
+    "bg": "panel",
+    "ratio": 7.15,
+    "min": 3
+  },
+  {
+    "fg": "border",
+    "bg": "bg",
+    "ratio": 1.94,
+    "min": 1.5
+  },
+  {
+    "fg": "#05211e",
+    "bg": "teal",
+    "ratio": 7.77,
+    "min": 4.5
+  },
+  {
+    "fg": "#2b0e07",
+    "bg": "coral",
+    "ratio": 8.35,
+    "min": 4.5
+  },
+  {
+    "fg": "#1a1405",
+    "bg": "gold",
+    "ratio": 9.76,
+    "min": 4.5
+  },
+  {
+    "fg": "#07131c",
+    "bg": "r",
+    "ratio": 9.45,
+    "min": 4.5
+  },
+  {
+    "fg": "#07131c",
+    "bg": "a",
+    "ratio": 10,
+    "min": 4.5
+  },
+  {
+    "fg": "#07131c",
+    "bg": "c",
+    "ratio": 8.93,
+    "min": 4.5
+  },
+  {
+    "fg": "#07131c",
+    "bg": "e",
+    "ratio": 8.88,
+    "min": 4.5
+  },
+  {
+    "fg": "#07131c",
+    "bg": "s",
+    "ratio": 11.28,
+    "min": 4.5
+  },
+  {
+    "fg": "gold",
+    "bg": "panel2",
+    "ratio": 7.19,
+    "min": 3
+  }
+]

@@ -1,0 +1,531 @@
+{
+ "topicId": "water-cycle",
+ "design": {
+  "kind": "fog collector",
+  "kindPl": "fog collectors",
+  "member": "collector",
+  "memberPl": "collectors",
+  "names": [
+   "mistnet",
+   "cloudcatch",
+   "dewloom",
+   "greywing",
+   "seabreath",
+   "harborveil",
+   "silkfog",
+   "morningmesh"
+  ],
+  "descr": "water-collecting device",
+  "live": "stands on",
+  "home": "dry coastal hills",
+  "manyFmt": "Copies of {E} have been set up in many places, including {s}.",
+  "goal": "gather drinking water from the air",
+  "otherGoals": [
+   "stay standing in strong wind",
+   "be carried by two people"
+  ],
+  "myths": [
+   "pull water up from the sea through its legs",
+   "make rain clouds form overhead",
+   "turn sunlight directly into water"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of several kinds of water collectors.",
+   "{CapE} is made of metal, plastic, and rope."
+  ],
+  "conds": {
+   "fog": {
+    "clause": "thick fog drifts in from the sea most mornings",
+    "absent": "fog rarely forms",
+    "np": "drifting fog",
+    "tag": "the morning fog",
+    "risk": "tiny fog droplets pass straight through a coarse net"
+   },
+   "clear": {
+    "clause": "nights are clear and still",
+    "absent": "clouds cover the sky every night",
+    "np": "clear, still nights",
+    "tag": "the clear nights",
+    "risk": "on a clear night, water vapor in the air only condenses on a surface that is cold"
+   },
+   "sun": {
+    "clause": "the afternoon sun is hot and strong",
+    "absent": "the sun is weak and pale",
+    "np": "hot afternoon sun",
+    "tag": "the hot afternoon sun",
+    "risk": "water left in the open sun evaporates back into the air"
+   },
+   "high": {
+    "clause": "the fog drifts high above the bushes and rocks",
+    "absent": "the fog hugs the ground",
+    "np": "fog drifting high above the ground",
+    "tag": "the high fog",
+    "risk": "a low collector sits below most of the passing fog"
+   },
+   "storm": {
+    "clause": "strong storms blow through often",
+    "absent": "storms are rare",
+    "np": "frequent storms",
+    "tag": "the storms"
+   },
+   "rainy": {
+    "clause": "heavy rain falls during part of the year",
+    "absent": "it almost never rains",
+    "np": "heavy rain",
+    "tag": "the heavy rain"
+   }
+  },
+  "features": [
+   {
+    "id": "mesh",
+    "np": "a fine mesh made of thin plastic threads",
+    "bare": "a fine mesh",
+    "the": "the fine mesh",
+    "short": "mesh",
+    "pl": false,
+    "mech": "catch tiny fog droplets as wind pushes fog through it",
+    "benefit": "trap water from drifting fog",
+    "cond": "fog",
+    "metric": {
+     "past": "collected",
+     "unit": "liters",
+     "what": "of water per morning",
+     "np": "water collected per morning",
+     "cmp": "more water collected per morning",
+     "better": "higher",
+     "lo": 5,
+     "hi": 40
+    },
+    "cost": {
+     "clause": "very fine threads tear more easily when strong storms blow through",
+     "cond": "storm"
+    }
+   },
+   {
+    "id": "plate",
+    "np": "a metal plate that cools off quickly at night",
+    "bare": "fast-cooling metal plates",
+    "the": "the cooling plate",
+    "short": "plate",
+    "pl": false,
+    "mech": "chill the air touching it until water vapor condenses into dew",
+    "benefit": "collect dew on clear nights",
+    "cond": "clear",
+    "metric": {
+     "past": "gathered",
+     "unit": "liters",
+     "what": "of dew per night",
+     "np": "dew gathered per night",
+     "cmp": "more dew gathered per night",
+     "better": "higher",
+     "lo": 1,
+     "hi": 9
+    }
+   },
+   {
+    "id": "gutter",
+    "np": "a covered gutter along its bottom edge",
+    "bare": "covered gutters",
+    "the": "the covered gutter",
+    "short": "gutter",
+    "pl": false,
+    "mech": "carry collected water into a sealed tank",
+    "benefit": "keep its water from evaporating in the sun",
+    "cond": "sun",
+    "metric": {
+     "past": "lost",
+     "unit": "percent",
+     "what": "of their water to evaporation",
+     "np": "water lost to evaporation",
+     "cmp": "less water lost to evaporation",
+     "better": "lower",
+     "lo": 2,
+     "hi": 40
+    },
+    "cost": {
+     "clause": "its cover blocks rain from falling straight into the tank, which wastes water where heavy rain falls",
+     "cond": "rainy"
+    }
+   },
+   {
+    "id": "frame",
+    "np": "a tall frame that holds the mesh high above the ground",
+    "bare": "tall frames",
+    "the": "the tall frame",
+    "short": "frame",
+    "pl": false,
+    "mech": "lift the mesh into the thickest part of the fog",
+    "benefit": "reach the fog that drifts above the bushes",
+    "cond": "high",
+    "metric": {
+     "past": "collected",
+     "unit": "liters",
+     "what": "of water in a foggy week",
+     "np": "water collected in a foggy week",
+     "cmp": "more water collected in a foggy week",
+     "better": "higher",
+     "lo": 20,
+     "hi": 90
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "cliff",
+    "np": "a windy sea cliff",
+    "the": "the sea cliff",
+    "at": "on the sea cliff",
+    "has": [
+     "fog",
+     "high",
+     "storm"
+    ],
+    "lacks": [
+     "clear",
+     "sun"
+    ]
+   },
+   {
+    "id": "village",
+    "np": "a hilltop village",
+    "the": "the hilltop village",
+    "at": "in the hilltop village",
+    "has": [
+     "fog",
+     "sun"
+    ],
+    "lacks": [
+     "clear",
+     "high",
+     "storm",
+     "rainy"
+    ]
+   },
+   {
+    "id": "basin",
+    "np": "a rocky desert basin",
+    "the": "the desert basin",
+    "at": "in the desert basin",
+    "has": [
+     "clear",
+     "sun"
+    ],
+    "lacks": [
+     "fog",
+     "high",
+     "rainy",
+     "storm"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "wind",
+    "clause": "The {mPl} with {F} were also placed where the wind was stronger",
+    "tag": "the stronger wind",
+    "why": "stronger wind pushes more fog and moist air past a collector",
+    "np": "the stronger wind",
+    "same": "wind",
+    "alt": "the stronger wind",
+    "ruleOut": "Both groups of collectors stood side by side in the same wind",
+    "ruleTag": "the shared wind"
+   },
+   {
+    "id": "size",
+    "clause": "The {mPl} with {F} were also twice as large as the others",
+    "tag": "the larger collectors",
+    "why": "a larger collector has more surface for water to gather on",
+    "np": "the size of the collectors",
+    "same": "size",
+    "alt": "the larger size of the collectors",
+    "ruleOut": "All of the collectors in both groups were exactly the same size",
+    "ruleTag": "the collectors' size"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} was first built by a team of high school students.",
+    "tag": "the students who built it",
+    "add": "{E} was first built by students",
+    "exp": "Knowing who built it shows that students can design useful tools."
+   },
+   {
+    "text": "{CapE} is painted green so that it blends into the hillside.",
+    "tag": "the green paint",
+    "add": "{E} is painted green",
+    "exp": "The green paint helps the collector blend into its surroundings."
+   },
+   {
+    "text": "Goats sometimes rest in the shade beneath {E}.",
+    "tag": "the resting goats",
+    "add": "goats rest beneath {E}",
+    "exp": "The shade under the collector gives goats a cool place to rest."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "Brindle",
+   "Larkmoor",
+   "Fenwick",
+   "Ashcombe",
+   "Wrenfield",
+   "Harrowby"
+  ],
+  "nameFmt": "{name} Valley",
+  "descr": "mountain valley with a lake",
+  "at": "in {E}",
+  "outcome": "the rain that falls on {E}",
+  "stages": [
+   {
+    "id": "evap",
+    "text": "Strong sunlight warms the lake in {E}, and some of its water evaporates into invisible vapor.",
+    "tag": "evaporation from the lake",
+    "from": "water in the lake",
+    "product": "water vapor",
+    "less": "much less water vapor",
+    "does": "sunlight warms the lake and some of its water evaporates into vapor",
+    "why": "the vapor is light enough to rise into the sky, where clouds can form",
+    "needs": "open",
+    "needWhy": "water evaporates quickly only when sunlight warms the open surface of the lake",
+    "boost": {
+     "clause": "clear floating weeds from the surface of the lake",
+     "np": "clearing weeds from the lake"
+    },
+    "cause": "What causes water vapor to rise from the lake in {E}?"
+   },
+   {
+    "id": "cond",
+    "text": "As the vapor rises over {E}, it cools in the cold air near the mountaintops and condenses into tiny cloud droplets.",
+    "tag": "cloud formation",
+    "from": "water vapor",
+    "product": "cloud droplets",
+    "pl": true,
+    "less": "far fewer cloud droplets",
+    "does": "the rising vapor cools and condenses into cloud droplets",
+    "why": "cloud droplets hold the water that can later fall as rain",
+    "needs": "cold",
+    "needWhy": "vapor only condenses into droplets when it cools in cold air",
+    "boost": {
+     "clause": "spray lake water into the air with fountains",
+     "np": "spraying lake water into the air"
+    },
+    "cause": "What causes clouds to form over {E}?"
+   },
+   {
+    "id": "rain",
+    "text": "When cloud droplets over {E} bump together and grow heavy, they fall as rain.",
+    "tag": "rainfall",
+    "from": "cloud droplets",
+    "product": "rain",
+    "less": "much less rain",
+    "does": "the droplets join together until they are heavy enough to fall as rain",
+    "why": "this step returns the water to the ground and the lake"
+   }
+  ],
+  "conds": {
+   "open": {
+    "clause": "strong sunlight warms the open lake most days",
+    "absent": "thick ice covers the lake for months",
+    "np": "a sunlit, open lake",
+    "tag": "the sunlit lake"
+   },
+   "cold": {
+    "clause": "the air near the mountaintops is much colder than the air by the lake",
+    "absent": "a warm air mass settles over the whole valley",
+    "np": "cold air near the mountaintops",
+    "tag": "the cold mountain air"
+   }
+  },
+  "rates": [
+   {
+    "stage": "evap",
+    "factor": {
+     "np": "the water temperature",
+     "short": "warmth",
+     "lo": 10,
+     "hi": 35
+    },
+    "setup": "students left two pans of lake water from {E} outdoors for a day",
+    "result": {
+     "clause": "the pan at {x} degrees Celsius lost about {y} milliliters of water",
+     "lo": 20,
+     "hi": 200
+    },
+    "claim": "warmer water evaporates faster in {E}",
+    "why": "warm water molecules move faster, so more of them escape into the air as vapor",
+    "confound": {
+     "text": "The warmer pan was also placed in a windy spot.",
+     "tag": "the windy spot",
+     "why": "wind carries vapor away from the water and speeds up evaporation"
+    }
+   }
+  ],
+  "myths": [
+   "the mountains squeeze water out of their rocks",
+   "fish push water up into the clouds",
+   "the moon pulls the lake water into the sky"
+  ],
+  "otherFocus": [
+   "how fish survive in the lake at {E} during winter",
+   "why people visit {E} in the summer"
+  ],
+  "nonAnswers": [
+   "{CapE} has a lake and tall mountains.",
+   "Rain is common in many mountain valleys."
+  ],
+  "off": [
+   {
+    "text": "{CapE} has a small village with a stone bridge.",
+    "tag": "the village and its bridge",
+    "add": "{E} has a village with a stone bridge",
+    "exp": "The village shows that people live near the lake."
+   },
+   {
+    "text": "Hikers in {E} often spot deer near the shore of the lake.",
+    "tag": "the deer by the lake",
+    "add": "hikers spot deer in {E}",
+    "exp": "Seeing deer shows that the lake attracts wildlife."
+   }
+  ],
+  "ref": "the valley"
+ },
+ "observation": {
+  "names": [
+   "Otter Pond",
+   "Pebble Creek Pond",
+   "Silverrun Pond",
+   "Marsh Hollow Pond",
+   "Reedwater Pond",
+   "Cobble Pond"
+  ],
+  "nameFmt": "{name}",
+  "descr": "small country pond",
+  "observers": [
+   "a team of student scientists",
+   "two park rangers",
+   "a group of water researchers"
+  ],
+  "cases": [
+   {
+    "id": "shrink",
+    "numbers": [
+     [
+      6,
+      12
+     ],
+     [
+      32,
+      40
+     ]
+    ],
+    "event": "One summer, the water level at {E} dropped by almost a meter.",
+    "q": "What most likely caused the water level at {E} to drop?",
+    "restate": [
+     "The water level at {E} dropped, and the question asks why.",
+     "Something made the water level at {E} drop during one summer."
+    ],
+    "answer": "Strong evaporation during a heat wave most likely caused the water level at {E} to drop, because the heat turned more of the water into vapor.",
+    "sum": "the evidence points to strong evaporation during the heat wave as the reason the water level dropped.",
+    "myth": "The water level at {E} dropped because the fish drank most of the water.",
+    "mythClause": "the level dropped only on cloudy days",
+    "cause": "strong evaporation during the heat wave",
+    "alt": "a leak in the bottom of the pond",
+    "altText": "Some neighbors suggested that {E} had sprung a leak in its bottom.",
+    "patternQ": "What pattern connects the weather and the water level at {E}?",
+    "patternA": "The water level fell quickly during the heat wave and nearly stopped falling once cooler weather returned, so the water level followed the heat.",
+    "patternSum": "the water level fell during the heat wave and nearly stopped falling once cooler weather returned.",
+    "prediction": {
+     "text": "In the spring, a neighbor predicted that {E} would lose most of its water at night.",
+     "claim": "{E} would lose most of its water at night",
+     "whyNot": "most of the water was lost during hot afternoons"
+    },
+    "observerNote": "The observers measured the water level every morning and evening.",
+    "obs": [
+     {
+      "id": "heat",
+      "role": "onset",
+      "text": "For {n0} days in a row, afternoon temperatures at {E} climbed above {n1} degrees Celsius.",
+      "tag": "the heat wave",
+      "exps": [
+       "days that hot speed up evaporation, so the pond would lose water quickly",
+       "the water level dropped during a long stretch of extreme heat, which fits evaporation",
+       "a heat wave that long gives the sun plenty of time to turn pond water into vapor"
+      ]
+     },
+     {
+      "id": "pan",
+      "role": "mechanism",
+      "text": "A pan of pond water left in the sun beside {E} lost water at about the same rate as the pond.",
+      "tag": "the pan of pond water",
+      "exps": [
+       "a pan cannot leak through a pond bottom, so its matching loss shows evaporation alone can explain the drop",
+       "this shows the heat removed the water, since the pan lost water the same way",
+       "the matching rates tie the pond's loss to evaporation"
+      ]
+     },
+     {
+      "id": "cool",
+      "role": "reverse",
+      "text": "When cooler, cloudy weather arrived, the water level at {E} almost stopped falling.",
+      "tag": "the level after the weather cooled",
+      "exps": [
+       "the loss slowed as soon as the heat ended, which is what would happen if evaporation were the cause",
+       "the drop ended when the heat ended, so the two are linked",
+       "once the cause faded, the effect faded with it"
+      ]
+     },
+     {
+      "id": "divers",
+      "role": "against",
+      "text": "Divers checked the bottom of {E} and found no cracks or holes.",
+      "tag": "the divers' search",
+      "exps": [
+       "a leak needs a crack or hole, and the divers found none",
+       "this rules out a leak, because the bottom of the pond was solid",
+       "with no opening in the bottom, water had no way to drain out"
+      ]
+     },
+     {
+      "id": "timing",
+      "role": "against",
+      "text": "Most of each day's drop at {E} happened in the hot afternoon, not overnight.",
+      "tag": "the timing of the drop",
+      "exps": [
+       "a leak would drain water day and night at a steady rate, but the drop happened mostly in the afternoon",
+       "this rules out a leak, since the loss followed the heat of the day",
+       "water that disappears mainly in the afternoon points to the sun, not to a hole"
+      ],
+      "predExps": [
+       "this directly contradicts the prediction, since most of the water was lost in the afternoon",
+       "if the pond lost most of its water at night, the overnight drop would be larger, but it was smaller",
+       "the prediction expected a nighttime loss that never appeared"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how frogs at {E} spend the winter",
+   "why families picnic beside {E}"
+  ],
+  "nonAnswers": [
+   "{CapE} is a small pond in the countryside.",
+   "The observers visited {E} twice a day."
+  ],
+  "off": [
+   {
+    "text": "Families often picnic on the grassy bank beside {E}.",
+    "tag": "the picnics on the bank",
+    "add": "families picnic beside {E}",
+    "exp": "The picnics show that people enjoy spending time at the pond."
+   },
+   {
+    "text": "A wooden dock reaches out over the water at {E}.",
+    "tag": "the wooden dock",
+    "add": "a wooden dock reaches over {E}",
+    "exp": "The dock gives visitors a place to stand over the water."
+   }
+  ]
+ }
+}

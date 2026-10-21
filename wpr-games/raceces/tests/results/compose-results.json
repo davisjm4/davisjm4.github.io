@@ -1,0 +1,2137 @@
+{
+  "ranAt": "2026-10-21T06:05:23.532Z",
+  "configBuilds": {
+    "configurations": 1361,
+    "builds": 8166,
+    "firstTryRate": 0.940729855498408,
+    "maxTries": 7,
+    "byStructure": {
+      "design-function": 540,
+      "design-feature-need": 360,
+      "design-setting-fit": 270,
+      "design-test-result": 360,
+      "design-select-features": 270,
+      "design-removal": 360,
+      "design-two-tests": 360,
+      "design-benefit-drawback": 180,
+      "design-compare-settings": 708,
+      "design-priority": 1080,
+      "design-tradeoff": 228,
+      "design-unfair-test": 720,
+      "design-competing": 720,
+      "process-sequence": 186,
+      "process-requirements": 150,
+      "process-cause": 144,
+      "process-condition-loss": 144,
+      "process-rate": 96,
+      "process-chain": 144,
+      "process-bottleneck": 150,
+      "process-rate-confound": 96,
+      "observation-cause": 90,
+      "observation-pattern": 90,
+      "observation-prediction": 180,
+      "observation-competing": 540
+    }
+  },
+  "modeSweep": {
+    "total": 9000,
+    "correctLongest": 438,
+    "missingTotal": 3000,
+    "positions": {
+      "o2": 727,
+      "o4": 753,
+      "o3": 715,
+      "o1": 805
+    },
+    "kinds": {
+      "offExp": 1339,
+      "correct": 3000,
+      "summaryLike": 2132,
+      "unsupported": 2031,
+      "wrongFocus": 551,
+      "nonAnswer": 131,
+      "repeat": 852,
+      "offFact": 1711,
+      "crossExp": 253
+    },
+    "byModeLevel": {
+      "identify/beginner": {
+        "generated": 539,
+        "authored": 461,
+        "exactRepeatsGenerated": 0,
+        "exactRepeatsAuthored": 20
+      },
+      "identify/intermediate": {
+        "generated": 596,
+        "authored": 404,
+        "exactRepeatsGenerated": 0,
+        "exactRepeatsAuthored": 7
+      },
+      "identify/advanced": {
+        "generated": 735,
+        "authored": 265,
+        "exactRepeatsGenerated": 0,
+        "exactRepeatsAuthored": 3
+      },
+      "rearrange/beginner": {
+        "generated": 581,
+        "authored": 419,
+        "exactRepeatsGenerated": 0,
+        "exactRepeatsAuthored": 0
+      },
+      "rearrange/intermediate": {
+        "generated": 607,
+        "authored": 393,
+        "exactRepeatsGenerated": 0,
+        "exactRepeatsAuthored": 0
+      },
+      "rearrange/advanced": {
+        "generated": 746,
+        "authored": 254,
+        "exactRepeatsGenerated": 0,
+        "exactRepeatsAuthored": 0
+      },
+      "missing/beginner": {
+        "generated": 542,
+        "authored": 458,
+        "exactRepeatsGenerated": 0,
+        "exactRepeatsAuthored": 3
+      },
+      "missing/intermediate": {
+        "generated": 600,
+        "authored": 400,
+        "exactRepeatsGenerated": 0,
+        "exactRepeatsAuthored": 0
+      },
+      "missing/advanced": {
+        "generated": 736,
+        "authored": 264,
+        "exactRepeatsGenerated": 0,
+        "exactRepeatsAuthored": 1
+      }
+    },
+    "chi2": 6.384
+  },
+  "topicLevel": [
+    {
+      "topic": "honeybees",
+      "subject": "Biology",
+      "level": "beginner",
+      "generated": 25,
+      "authored": 2,
+      "total": 27,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "honeybees",
+      "subject": "Biology",
+      "level": "intermediate",
+      "generated": 27,
+      "authored": 2,
+      "total": 29,
+      "structures": 9,
+      "minStructuresIn20": 11,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "honeybees",
+      "subject": "Biology",
+      "level": "advanced",
+      "generated": 43,
+      "authored": 2,
+      "total": 45,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "solar-panels",
+      "subject": "Energy and technology",
+      "level": "beginner",
+      "generated": 25,
+      "authored": 2,
+      "total": 27,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "solar-panels",
+      "subject": "Energy and technology",
+      "level": "intermediate",
+      "generated": 27,
+      "authored": 2,
+      "total": 29,
+      "structures": 9,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "solar-panels",
+      "subject": "Energy and technology",
+      "level": "advanced",
+      "generated": 43,
+      "authored": 2,
+      "total": 45,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "water-cycle",
+      "subject": "Earth science",
+      "level": "beginner",
+      "generated": 22,
+      "authored": 2,
+      "total": 24,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "water-cycle",
+      "subject": "Earth science",
+      "level": "intermediate",
+      "generated": 27,
+      "authored": 2,
+      "total": 29,
+      "structures": 9,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "water-cycle",
+      "subject": "Earth science",
+      "level": "advanced",
+      "generated": 41,
+      "authored": 2,
+      "total": 43,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "arch-bridges",
+      "subject": "Engineering and architecture",
+      "level": "beginner",
+      "generated": 23,
+      "authored": 2,
+      "total": 25,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "arch-bridges",
+      "subject": "Engineering and architecture",
+      "level": "intermediate",
+      "generated": 26,
+      "authored": 2,
+      "total": 28,
+      "structures": 9,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "arch-bridges",
+      "subject": "Engineering and architecture",
+      "level": "advanced",
+      "generated": 39,
+      "authored": 2,
+      "total": 41,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "public-libraries",
+      "subject": "Libraries and education",
+      "level": "beginner",
+      "generated": 25,
+      "authored": 2,
+      "total": 27,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "public-libraries",
+      "subject": "Libraries and education",
+      "level": "intermediate",
+      "generated": 27,
+      "authored": 2,
+      "total": 29,
+      "structures": 9,
+      "minStructuresIn20": 11,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "public-libraries",
+      "subject": "Libraries and education",
+      "level": "advanced",
+      "generated": 42,
+      "authored": 2,
+      "total": 44,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "moon-phases",
+      "subject": "Astronomy",
+      "level": "beginner",
+      "generated": 22,
+      "authored": 2,
+      "total": 24,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "moon-phases",
+      "subject": "Astronomy",
+      "level": "intermediate",
+      "generated": 26,
+      "authored": 2,
+      "total": 28,
+      "structures": 9,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "moon-phases",
+      "subject": "Astronomy",
+      "level": "advanced",
+      "generated": 39,
+      "authored": 2,
+      "total": 41,
+      "structures": 7,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "cactus",
+      "subject": "Plants and animals",
+      "level": "beginner",
+      "generated": 22,
+      "authored": 2,
+      "total": 24,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "cactus",
+      "subject": "Plants and animals",
+      "level": "intermediate",
+      "generated": 27,
+      "authored": 2,
+      "total": 29,
+      "structures": 9,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "cactus",
+      "subject": "Plants and animals",
+      "level": "advanced",
+      "generated": 42,
+      "authored": 2,
+      "total": 44,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "levers",
+      "subject": "Physics",
+      "level": "beginner",
+      "generated": 23,
+      "authored": 2,
+      "total": 25,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "levers",
+      "subject": "Physics",
+      "level": "intermediate",
+      "generated": 26,
+      "authored": 2,
+      "total": 28,
+      "structures": 9,
+      "minStructuresIn20": 11,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "levers",
+      "subject": "Physics",
+      "level": "advanced",
+      "generated": 38,
+      "authored": 2,
+      "total": 40,
+      "structures": 7,
+      "minStructuresIn20": 8,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "bicycle-gears",
+      "subject": "Transportation",
+      "level": "beginner",
+      "generated": 23,
+      "authored": 2,
+      "total": 25,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "bicycle-gears",
+      "subject": "Transportation",
+      "level": "intermediate",
+      "generated": 26,
+      "authored": 2,
+      "total": 28,
+      "structures": 9,
+      "minStructuresIn20": 11,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "bicycle-gears",
+      "subject": "Transportation",
+      "level": "advanced",
+      "generated": 41,
+      "authored": 2,
+      "total": 43,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "rust",
+      "subject": "Chemistry",
+      "level": "beginner",
+      "generated": 22,
+      "authored": 2,
+      "total": 24,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "rust",
+      "subject": "Chemistry",
+      "level": "intermediate",
+      "generated": 27,
+      "authored": 2,
+      "total": 29,
+      "structures": 9,
+      "minStructuresIn20": 11,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "rust",
+      "subject": "Chemistry",
+      "level": "advanced",
+      "generated": 39,
+      "authored": 2,
+      "total": 41,
+      "structures": 7,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "mars-rovers",
+      "subject": "Space exploration",
+      "level": "beginner",
+      "generated": 25,
+      "authored": 2,
+      "total": 27,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "mars-rovers",
+      "subject": "Space exploration",
+      "level": "intermediate",
+      "generated": 27,
+      "authored": 2,
+      "total": 29,
+      "structures": 9,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "mars-rovers",
+      "subject": "Space exploration",
+      "level": "advanced",
+      "generated": 43,
+      "authored": 2,
+      "total": 45,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "printing-press",
+      "subject": "Inventions",
+      "level": "beginner",
+      "generated": 25,
+      "authored": 2,
+      "total": 27,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "printing-press",
+      "subject": "Inventions",
+      "level": "intermediate",
+      "generated": 27,
+      "authored": 2,
+      "total": 29,
+      "structures": 9,
+      "minStructuresIn20": 11,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "printing-press",
+      "subject": "Inventions",
+      "level": "advanced",
+      "generated": 43,
+      "authored": 2,
+      "total": 45,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "coral-reefs",
+      "subject": "Environmental science",
+      "level": "beginner",
+      "generated": 22,
+      "authored": 2,
+      "total": 24,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "coral-reefs",
+      "subject": "Environmental science",
+      "level": "intermediate",
+      "generated": 27,
+      "authored": 2,
+      "total": 29,
+      "structures": 9,
+      "minStructuresIn20": 11,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "coral-reefs",
+      "subject": "Environmental science",
+      "level": "advanced",
+      "generated": 40,
+      "authored": 2,
+      "total": 42,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "lightning",
+      "subject": "Weather and climate",
+      "level": "beginner",
+      "generated": 23,
+      "authored": 2,
+      "total": 25,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "lightning",
+      "subject": "Weather and climate",
+      "level": "intermediate",
+      "generated": 25,
+      "authored": 2,
+      "total": 27,
+      "structures": 9,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "lightning",
+      "subject": "Weather and climate",
+      "level": "advanced",
+      "generated": 39,
+      "authored": 2,
+      "total": 41,
+      "structures": 7,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "binary-numbers",
+      "subject": "Computer technology",
+      "level": "beginner",
+      "generated": 23,
+      "authored": 2,
+      "total": 25,
+      "structures": 8,
+      "minStructuresIn20": 10,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "binary-numbers",
+      "subject": "Computer technology",
+      "level": "intermediate",
+      "generated": 26,
+      "authored": 2,
+      "total": 28,
+      "structures": 9,
+      "minStructuresIn20": 11,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    },
+    {
+      "topic": "binary-numbers",
+      "subject": "Computer technology",
+      "level": "advanced",
+      "generated": 41,
+      "authored": 2,
+      "total": 43,
+      "structures": 8,
+      "minStructuresIn20": 9,
+      "exactRepeatsIn20": 0,
+      "configRepeatsIn20": 0
+    }
+  ],
+  "extended": [
+    {
+      "scope": "All topics",
+      "level": "all",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 500
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "All topics",
+      "level": "all",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 500
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "All topics",
+      "level": "all",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 500
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "All topics",
+      "level": "beginner",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 120,
+          "consec": 25,
+          "distinctConfigs": 380
+        }
+      },
+      "consecutiveSameStructure500": 25
+    },
+    {
+      "scope": "All topics",
+      "level": "beginner",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 120,
+          "consec": 25,
+          "distinctConfigs": 380
+        }
+      },
+      "consecutiveSameStructure500": 25
+    },
+    {
+      "scope": "All topics",
+      "level": "beginner",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 120,
+          "consec": 24,
+          "distinctConfigs": 380
+        }
+      },
+      "consecutiveSameStructure500": 24
+    },
+    {
+      "scope": "All topics",
+      "level": "advanced",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 500
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "All topics",
+      "level": "advanced",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 500
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "All topics",
+      "level": "advanced",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 500
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "Desert cacti",
+      "level": "all",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 13,
+          "consec": 1,
+          "distinctConfigs": 87
+        },
+        "500": {
+          "exact": 0,
+          "config": 403,
+          "consec": 1,
+          "distinctConfigs": 97
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Desert cacti",
+      "level": "all",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 14,
+          "consec": 1,
+          "distinctConfigs": 86
+        },
+        "500": {
+          "exact": 1,
+          "config": 403,
+          "consec": 3,
+          "distinctConfigs": 97
+        }
+      },
+      "consecutiveSameStructure500": 3
+    },
+    {
+      "scope": "Desert cacti",
+      "level": "all",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 14,
+          "consec": 0,
+          "distinctConfigs": 86
+        },
+        "500": {
+          "exact": 0,
+          "config": 403,
+          "consec": 2,
+          "distinctConfigs": 97
+        }
+      },
+      "consecutiveSameStructure500": 2
+    },
+    {
+      "scope": "Desert cacti",
+      "level": "beginner",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 26,
+          "consec": 1,
+          "distinctConfigs": 24
+        },
+        "100": {
+          "exact": 0,
+          "config": 76,
+          "consec": 1,
+          "distinctConfigs": 24
+        },
+        "500": {
+          "exact": 0,
+          "config": 476,
+          "consec": 1,
+          "distinctConfigs": 24
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Desert cacti",
+      "level": "beginner",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 26,
+          "consec": 1,
+          "distinctConfigs": 24
+        },
+        "100": {
+          "exact": 0,
+          "config": 76,
+          "consec": 1,
+          "distinctConfigs": 24
+        },
+        "500": {
+          "exact": 6,
+          "config": 476,
+          "consec": 1,
+          "distinctConfigs": 24
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Desert cacti",
+      "level": "beginner",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 26,
+          "consec": 1,
+          "distinctConfigs": 24
+        },
+        "100": {
+          "exact": 0,
+          "config": 76,
+          "consec": 1,
+          "distinctConfigs": 24
+        },
+        "500": {
+          "exact": 0,
+          "config": 476,
+          "consec": 1,
+          "distinctConfigs": 24
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Desert cacti",
+      "level": "advanced",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 6,
+          "consec": 1,
+          "distinctConfigs": 44
+        },
+        "100": {
+          "exact": 0,
+          "config": 56,
+          "consec": 1,
+          "distinctConfigs": 44
+        },
+        "500": {
+          "exact": 1,
+          "config": 456,
+          "consec": 1,
+          "distinctConfigs": 44
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Desert cacti",
+      "level": "advanced",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 6,
+          "consec": 1,
+          "distinctConfigs": 44
+        },
+        "100": {
+          "exact": 0,
+          "config": 56,
+          "consec": 1,
+          "distinctConfigs": 44
+        },
+        "500": {
+          "exact": 2,
+          "config": 456,
+          "consec": 1,
+          "distinctConfigs": 44
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Desert cacti",
+      "level": "advanced",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 6,
+          "consec": 2,
+          "distinctConfigs": 44
+        },
+        "100": {
+          "exact": 0,
+          "config": 56,
+          "consec": 2,
+          "distinctConfigs": 44
+        },
+        "500": {
+          "exact": 2,
+          "config": 456,
+          "consec": 2,
+          "distinctConfigs": 44
+        }
+      },
+      "consecutiveSameStructure500": 2
+    },
+    {
+      "scope": "Binary numbers",
+      "level": "all",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 13,
+          "consec": 0,
+          "distinctConfigs": 87
+        },
+        "500": {
+          "exact": 0,
+          "config": 404,
+          "consec": 0,
+          "distinctConfigs": 96
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "Binary numbers",
+      "level": "all",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 13,
+          "consec": 0,
+          "distinctConfigs": 87
+        },
+        "500": {
+          "exact": 1,
+          "config": 404,
+          "consec": 1,
+          "distinctConfigs": 96
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Binary numbers",
+      "level": "all",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 14,
+          "consec": 3,
+          "distinctConfigs": 86
+        },
+        "500": {
+          "exact": 0,
+          "config": 404,
+          "consec": 4,
+          "distinctConfigs": 96
+        }
+      },
+      "consecutiveSameStructure500": 4
+    },
+    {
+      "scope": "Binary numbers",
+      "level": "beginner",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 25,
+          "consec": 2,
+          "distinctConfigs": 25
+        },
+        "100": {
+          "exact": 0,
+          "config": 75,
+          "consec": 2,
+          "distinctConfigs": 25
+        },
+        "500": {
+          "exact": 2,
+          "config": 475,
+          "consec": 2,
+          "distinctConfigs": 25
+        }
+      },
+      "consecutiveSameStructure500": 2
+    },
+    {
+      "scope": "Binary numbers",
+      "level": "beginner",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 25,
+          "consec": 1,
+          "distinctConfigs": 25
+        },
+        "100": {
+          "exact": 0,
+          "config": 75,
+          "consec": 1,
+          "distinctConfigs": 25
+        },
+        "500": {
+          "exact": 2,
+          "config": 475,
+          "consec": 1,
+          "distinctConfigs": 25
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Binary numbers",
+      "level": "beginner",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 25,
+          "consec": 1,
+          "distinctConfigs": 25
+        },
+        "100": {
+          "exact": 0,
+          "config": 75,
+          "consec": 1,
+          "distinctConfigs": 25
+        },
+        "500": {
+          "exact": 2,
+          "config": 475,
+          "consec": 1,
+          "distinctConfigs": 25
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Binary numbers",
+      "level": "advanced",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 7,
+          "consec": 1,
+          "distinctConfigs": 43
+        },
+        "100": {
+          "exact": 0,
+          "config": 57,
+          "consec": 1,
+          "distinctConfigs": 43
+        },
+        "500": {
+          "exact": 2,
+          "config": 457,
+          "consec": 1,
+          "distinctConfigs": 43
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Binary numbers",
+      "level": "advanced",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 7,
+          "consec": 0,
+          "distinctConfigs": 43
+        },
+        "100": {
+          "exact": 0,
+          "config": 57,
+          "consec": 0,
+          "distinctConfigs": 43
+        },
+        "500": {
+          "exact": 0,
+          "config": 457,
+          "consec": 0,
+          "distinctConfigs": 43
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "Binary numbers",
+      "level": "advanced",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 7,
+          "consec": 1,
+          "distinctConfigs": 43
+        },
+        "100": {
+          "exact": 0,
+          "config": 57,
+          "consec": 1,
+          "distinctConfigs": 43
+        },
+        "500": {
+          "exact": 1,
+          "config": 457,
+          "consec": 1,
+          "distinctConfigs": 43
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Mars rovers",
+      "level": "all",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 12,
+          "consec": 0,
+          "distinctConfigs": 88
+        },
+        "500": {
+          "exact": 0,
+          "config": 399,
+          "consec": 2,
+          "distinctConfigs": 101
+        }
+      },
+      "consecutiveSameStructure500": 2
+    },
+    {
+      "scope": "Mars rovers",
+      "level": "all",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 12,
+          "consec": 0,
+          "distinctConfigs": 88
+        },
+        "500": {
+          "exact": 0,
+          "config": 399,
+          "consec": 2,
+          "distinctConfigs": 101
+        }
+      },
+      "consecutiveSameStructure500": 2
+    },
+    {
+      "scope": "Mars rovers",
+      "level": "all",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 9,
+          "consec": 1,
+          "distinctConfigs": 91
+        },
+        "500": {
+          "exact": 0,
+          "config": 399,
+          "consec": 2,
+          "distinctConfigs": 101
+        }
+      },
+      "consecutiveSameStructure500": 2
+    },
+    {
+      "scope": "Mars rovers",
+      "level": "beginner",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 23,
+          "consec": 2,
+          "distinctConfigs": 27
+        },
+        "100": {
+          "exact": 0,
+          "config": 73,
+          "consec": 2,
+          "distinctConfigs": 27
+        },
+        "500": {
+          "exact": 2,
+          "config": 473,
+          "consec": 2,
+          "distinctConfigs": 27
+        }
+      },
+      "consecutiveSameStructure500": 2
+    },
+    {
+      "scope": "Mars rovers",
+      "level": "beginner",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 23,
+          "consec": 2,
+          "distinctConfigs": 27
+        },
+        "100": {
+          "exact": 0,
+          "config": 73,
+          "consec": 2,
+          "distinctConfigs": 27
+        },
+        "500": {
+          "exact": 1,
+          "config": 473,
+          "consec": 2,
+          "distinctConfigs": 27
+        }
+      },
+      "consecutiveSameStructure500": 2
+    },
+    {
+      "scope": "Mars rovers",
+      "level": "beginner",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 23,
+          "consec": 2,
+          "distinctConfigs": 27
+        },
+        "100": {
+          "exact": 0,
+          "config": 73,
+          "consec": 2,
+          "distinctConfigs": 27
+        },
+        "500": {
+          "exact": 1,
+          "config": 473,
+          "consec": 2,
+          "distinctConfigs": 27
+        }
+      },
+      "consecutiveSameStructure500": 2
+    },
+    {
+      "scope": "Mars rovers",
+      "level": "advanced",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 5,
+          "consec": 1,
+          "distinctConfigs": 45
+        },
+        "100": {
+          "exact": 0,
+          "config": 55,
+          "consec": 1,
+          "distinctConfigs": 45
+        },
+        "500": {
+          "exact": 2,
+          "config": 455,
+          "consec": 1,
+          "distinctConfigs": 45
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Mars rovers",
+      "level": "advanced",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 5,
+          "consec": 1,
+          "distinctConfigs": 45
+        },
+        "100": {
+          "exact": 0,
+          "config": 55,
+          "consec": 1,
+          "distinctConfigs": 45
+        },
+        "500": {
+          "exact": 0,
+          "config": 455,
+          "consec": 1,
+          "distinctConfigs": 45
+        }
+      },
+      "consecutiveSameStructure500": 1
+    },
+    {
+      "scope": "Mars rovers",
+      "level": "advanced",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 5,
+          "consec": 1,
+          "distinctConfigs": 45
+        },
+        "100": {
+          "exact": 0,
+          "config": 55,
+          "consec": 1,
+          "distinctConfigs": 45
+        },
+        "500": {
+          "exact": 0,
+          "config": 455,
+          "consec": 1,
+          "distinctConfigs": 45
+        }
+      },
+      "consecutiveSameStructure500": 1
+    }
+  ],
+  "difficulty": {
+    "beginner": {
+      "sampled": 416,
+      "meanWords": 105.01923076923077,
+      "meanSentences": 6.3701923076923075,
+      "inferenceShare": 0,
+      "multiConditionShare": 0,
+      "qualifiedClaimShare": 0.019230769230769232
+    },
+    "intermediate": {
+      "sampled": 454,
+      "meanWords": 123.80837004405286,
+      "meanSentences": 7.455947136563877,
+      "inferenceShare": 0.8480176211453745,
+      "multiConditionShare": 0,
+      "qualifiedClaimShare": 0.4977973568281938
+    },
+    "advanced": {
+      "sampled": 570,
+      "meanWords": 144.81578947368422,
+      "meanSentences": 8.919298245614035,
+      "inferenceShare": 1,
+      "multiConditionShare": 1,
+      "qualifiedClaimShare": 0.8912280701754386
+    }
+  },
+  "summary": {
+    "generatedBy": "tests/run-all.js",
+    "totalChecks": 145076,
+    "failedChecks": 0,
+    "suites": [
+      {
+        "name": "grammar helpers",
+        "checks": 26,
+        "failed": 0,
+        "ms": 3,
+        "sampleFailures": []
+      },
+      {
+        "name": "every configuration builds and passes all checks (6 seeds each)",
+        "checks": 16332,
+        "failed": 0,
+        "ms": 9485,
+        "sampleFailures": []
+      },
+      {
+        "name": "9,000+ generated challenges through the real modes (1,000 per mode x difficulty)",
+        "checks": 77652,
+        "failed": 0,
+        "ms": 12257,
+        "sampleFailures": []
+      },
+      {
+        "name": "all 15 topics x 3 difficulties: 20-question topic sessions",
+        "checks": 4770,
+        "failed": 0,
+        "ms": 4372,
+        "sampleFailures": []
+      },
+      {
+        "name": "extended sessions (14, 20, 50, 100, 500) on single topics and All Topics",
+        "checks": 45333,
+        "failed": 0,
+        "ms": 15833,
+        "sampleFailures": []
+      },
+      {
+        "name": "determinism and surface variation",
+        "checks": 162,
+        "failed": 0,
+        "ms": 531,
+        "sampleFailures": []
+      },
+      {
+        "name": "order-dependent evidence (causal chain) is enforced in every mode",
+        "checks": 469,
+        "failed": 0,
+        "ms": 286,
+        "sampleFailures": []
+      },
+      {
+        "name": "difficulty progression",
+        "checks": 4,
+        "failed": 0,
+        "ms": 2244,
+        "sampleFailures": []
+      },
+      {
+        "name": "topic and subject filters with generated content",
+        "checks": 125,
+        "failed": 0,
+        "ms": 4955,
+        "sampleFailures": []
+      },
+      {
+        "name": "safety net: a configuration that cannot be built is quarantined, never shown as an error",
+        "checks": 202,
+        "failed": 0,
+        "ms": 132,
+        "sampleFailures": []
+      },
+      {
+        "name": "legacy generator output is byte-identical without the compositional library",
+        "checks": 1,
+        "failed": 0,
+        "ms": 173,
+        "sampleFailures": []
+      }
+    ]
+  }
+}

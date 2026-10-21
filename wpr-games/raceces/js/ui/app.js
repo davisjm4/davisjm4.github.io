@@ -4,13 +4,39 @@
   var R = root.RACECES, el = R.dom.el, announce = R.dom.announce, S = R.Structure;
   var PREF_KEY = 'raceces-writing-games:v2:settings';
 
+  // Hosted production must never look healthy while silently using the smaller authored
+  // catalogue. Local file-based development may still run the legacy authored-only build.
+  var hosted = root.location && (root.location.protocol === 'http:' || root.location.protocol === 'https:');
+  var composeReady = R.COMPOSE_LIBRARY && Array.isArray(R.COMPOSE_LIBRARY.kits) &&
+    R.Compose && typeof R.Compose.index === 'function' && R.Grammar && R.Phrases &&
+    R.ComposeCheck && R.StructuresDesign && R.StructuresProcess && R.StructuresObservation;
+  if (hosted && !composeReady) {
+    var main = document.getElementById('main');
+    var stage = document.getElementById('stage');
+    var toolbar = document.getElementById('toolbar');
+    if (toolbar) toolbar.hidden = true;
+    if (stage) {
+      stage.textContent = '';
+      var panel = document.createElement('section');
+      panel.className = 'panel empty-state';
+      var title = document.createElement('h2');
+      title.textContent = 'Writing practice could not start.';
+      var message = document.createElement('p');
+      message.setAttribute('role', 'alert');
+      message.textContent = 'The required compositional writing assets did not load. Refresh the page or try again later.';
+      panel.appendChild(title); panel.appendChild(message); stage.appendChild(panel);
+    }
+    if (main) main.setAttribute('aria-busy', 'false');
+    return;
+  }
+
   var store = null;
   try { store = root.localStorage; store.setItem('__t', '1'); store.removeItem('__t'); } catch (e) { store = null; }
 
   var session = new R.Session.Session(store);
   var params = new URLSearchParams(root.location.search);
   var seed = params.get('seed') || ('s' + session.data.started);
-  var gen = new R.Generator.Generator(R.CONTENT, seed);
+  var gen = new R.Generator.Generator(R.CONTENT, seed, { compose: R.COMPOSE_LIBRARY || null });
   gen.n = session.data.totals.done;
   gen.restore(session.getRecent(), session.getSeenModels());
   var timer = new R.Session.ActiveTimer();
@@ -73,11 +99,13 @@
       var selected = topicIds.indexOf(t.id) >= 0;
       var counts = gen.availability({ subject: t.subject, topics: [t.id] });
       var count = R.Structure.LEVELS.map(function (l) { return R.Structure.LEVEL_LABEL[l].charAt(0) + ':' + counts[l]; }).join(' / ');
-      var cb = el('input', { type: 'checkbox', value: t.id, checked: selected, 'aria-label': t.title + ', ' + count + ' writing models by level' });
+      var cb = el('input', { type: 'checkbox', value: t.id, checked: selected, 'aria-label': t.title + ', ' + count + ' distinct writing problems by level' });
       var label = el('label', { class: 'topic-option' }, [cb, el('span', { class: 'topic-name', text: t.title }), el('small', { class: 'topic-count', text: count })]);
       topicOptions.appendChild(label);
     });
-    focusStatus.textContent = focusLabel() + ' selected. ' + R.CONTENT.models.length + ' writing models in the library.';
+    var generatedCount = gen.catalog.length - R.CONTENT.models.length;
+    focusStatus.textContent = focusLabel() + ' selected. ' + R.CONTENT.models.length + ' authored writing models' +
+      (generatedCount > 0 ? ' and ' + generatedCount + ' generated writing problems' : '') + ' in the library.';
     subjectSelect.value = subject;
     var availableForSelection = gen.availability(currentSelection());
     if (level !== 'all' && !availableForSelection[level]) {
@@ -192,7 +220,7 @@
     var chips = el('div', { class: 'chips' }, [el('span', { text: S.MODE_LABEL[ch.mode] }), el('span', { text: S.LEVEL_LABEL[ch.level] }), el('span', { text: 'Content focus: ' + contentLabel }), el('span', { text: ch.title })]);
     var poolMessage = ch.pool && ch.pool.review
       ? 'Review practice: all ' + ch.pool.models + ' distinct writing problems in this selection have been used. You may continue reviewing or broaden the topic selection.'
-      : 'New writing problem from a pool of ' + (ch.pool ? ch.pool.models : '?') + ' distinct models in this selection.';
+      : 'New writing problem from a pool of ' + (ch.pool ? ch.pool.models : '?') + ' distinct writing problems in this selection.';
     var poolNote = el('p', { class: ch.pool && ch.pool.review ? 'pool-note review' : 'pool-note', text: poolMessage });
     if (ch.pool && ch.pool.review && (subject !== 'all' || topicIds.length)) {
       poolNote.appendChild(document.createTextNode(' '));

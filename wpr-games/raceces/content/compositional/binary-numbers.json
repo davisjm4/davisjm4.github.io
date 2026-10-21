@@ -1,0 +1,527 @@
+{
+ "topicId": "binary-numbers",
+ "design": {
+  "kind": "signal beacon",
+  "kindPl": "signal beacons",
+  "member": "beacon",
+  "memberPl": "beacons",
+  "names": [
+   "lumenhook",
+   "flickerpoint",
+   "beamward",
+   "glimmerton",
+   "rayhaven",
+   "sparkmoor",
+   "brightstem",
+   "wickhaven"
+  ],
+  "descr": "lighthouse beacon that sends binary messages",
+  "live": "stands on",
+  "liveVerb": "stands",
+  "home": "rocky coasts",
+  "manyFmt": "Copies of {E} stand in many places, including {s}.",
+  "goal": "send messages between lighthouses without mistakes",
+  "otherGoals": [
+   "guide fishing boats home at night",
+   "look good on postcards"
+  ],
+  "myths": [
+   "send messages faster than light itself",
+   "read the minds of the people on passing ships",
+   "turn every message into music"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many kinds of signal beacons.",
+   "{CapE} has a lamp, a lens, and a control box."
+  ],
+  "conds": {
+   "haze": {
+    "clause": "haze often hangs over the water",
+    "absent": "the air is usually perfectly clear",
+    "np": "frequent haze",
+    "tag": "the haze",
+    "risk": "signals with many brightness levels blur together in haze"
+   },
+   "flicker": {
+    "clause": "passing ships sometimes block the light for a moment",
+    "absent": "nothing ever blocks the light",
+    "np": "briefly blocked signals",
+    "tag": "the blocked signals",
+    "risk": "a single missed flash can change a 1 into a 0 without anyone noticing"
+   },
+   "symbols": {
+    "clause": "messages include letters, numbers, and punctuation marks",
+    "absent": "messages use only a few simple signals",
+    "np": "messages with many kinds of symbols",
+    "tag": "the many kinds of symbols",
+    "risk": "a code with too few digits per symbol runs out of patterns"
+   },
+   "long": {
+    "clause": "many messages are long and continue for minutes",
+    "absent": "messages are always short",
+    "np": "long messages",
+    "tag": "the long messages",
+    "risk": "a reader who loses track of where a message began reads every later digit in the wrong group"
+   },
+   "fast": {
+    "clause": "messages must be sent as quickly as possible",
+    "absent": "there is no rush to send messages",
+    "np": "rushed messages",
+    "tag": "the rushed messages"
+   }
+  },
+  "features": [
+   {
+    "id": "lamp",
+    "np": "a lamp that is either fully on or fully off",
+    "bare": "fully on-or-off lamps",
+    "the": "the on-off lamp",
+    "short": "lamp",
+    "pl": false,
+    "mech": "send each digit as one of only two clear signals",
+    "benefit": "be read correctly even through haze",
+    "cond": "haze",
+    "metric": {
+     "past": "had",
+     "unit": "reading errors",
+     "what": "per hundred messages",
+     "np": "reading errors per hundred messages",
+     "cmp": "fewer reading errors per hundred messages",
+     "better": "lower",
+     "lo": 1,
+     "hi": 25
+    }
+   },
+   {
+    "id": "check",
+    "np": "an extra check digit at the end of each message",
+    "bare": "extra check digits",
+    "the": "the check digit",
+    "short": "digit",
+    "pl": false,
+    "mech": "show whether the number of 1s in the message is even or odd",
+    "benefit": "catch messages that arrive with a flipped digit",
+    "cond": "flicker",
+    "metric": {
+     "past": "caught",
+     "unit": "percent",
+     "what": "of damaged messages",
+     "np": "damaged messages caught",
+     "cmp": "more damaged messages caught",
+     "better": "higher",
+     "lo": 10,
+     "hi": 95
+    },
+    "cost": {
+     "clause": "it makes every message one digit longer, which slows things down when messages must be sent as quickly as possible",
+     "cond": "fast"
+    }
+   },
+   {
+    "id": "groups",
+    "np": "eight-digit groups for every symbol",
+    "bare": "eight-digit groups",
+    "the": "the eight-digit groups",
+    "short": "groups",
+    "pl": true,
+    "mech": "allow up to 256 different patterns",
+    "benefit": "send letters, numbers, and punctuation",
+    "cond": "symbols",
+    "metric": {
+     "past": "needed",
+     "unit": "extra messages",
+     "what": "to spell out unusual words",
+     "np": "extra messages needed for unusual words",
+     "cmp": "fewer extra messages for unusual words",
+     "better": "lower",
+     "lo": 2,
+     "hi": 30
+    }
+   },
+   {
+    "id": "start",
+    "np": "a long start flash before each message",
+    "bare": "long start flashes",
+    "the": "the start flash",
+    "short": "flash",
+    "pl": false,
+    "mech": "mark exactly where each message begins",
+    "benefit": "keep long messages from getting out of step",
+    "cond": "long",
+    "metric": {
+     "past": "lost",
+     "unit": "messages",
+     "what": "out of step per day",
+     "np": "messages lost out of step",
+     "cmp": "fewer messages lost out of step",
+     "better": "lower",
+     "lo": 1,
+     "hi": 15
+    },
+    "cost": {
+     "clause": "it adds a pause before every message, which slows things down when messages must be sent as quickly as possible",
+     "cond": "fast"
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "harbor",
+    "np": "a foggy harbor entrance",
+    "the": "the harbor entrance",
+    "at": "at the harbor entrance",
+    "has": [
+     "haze",
+     "flicker"
+    ],
+    "lacks": [
+     "symbols",
+     "long",
+     "fast"
+    ]
+   },
+   {
+    "id": "lane",
+    "np": "a busy shipping lane",
+    "the": "the shipping lane",
+    "at": "beside the shipping lane",
+    "has": [
+     "flicker",
+     "symbols",
+     "fast"
+    ],
+    "lacks": [
+     "haze",
+     "long"
+    ]
+   },
+   {
+    "id": "island",
+    "np": "a remote island station",
+    "the": "the island station",
+    "at": "at the island station",
+    "has": [
+     "long",
+     "symbols"
+    ],
+    "lacks": [
+     "haze",
+     "flicker",
+     "fast"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "readers",
+    "clause": "The {mPl} with {F} were also read by more experienced signal readers",
+    "tag": "the experienced readers",
+    "why": "experienced readers make fewer mistakes with any signal",
+    "np": "the readers' experience",
+    "same": "readers",
+    "alt": "more experienced readers",
+    "ruleOut": "The same readers took turns reading both groups of beacons",
+    "ruleTag": "the shared readers"
+   },
+   {
+    "id": "nights",
+    "clause": "The {mPl} with {F} were also tested on clearer nights",
+    "tag": "the clearer nights",
+    "why": "clear air makes every signal easier to read",
+    "np": "the clearer nights",
+    "same": "nights",
+    "alt": "clearer nights",
+    "ruleOut": "Both groups of beacons were tested on the same nights",
+    "ruleTag": "the shared test nights"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} is painted with red and white stripes.",
+    "tag": "the red and white stripes",
+    "add": "{E} is painted with red and white stripes",
+    "exp": "The stripes make the beacon easy to see in daylight."
+   },
+   {
+    "text": "{CapE} was built on the ruins of an older lighthouse.",
+    "tag": "the older lighthouse",
+    "add": "{E} was built on the ruins of an older lighthouse",
+    "exp": "The ruins show that people have guided ships from this spot for a long time."
+   },
+   {
+    "text": "Seals often rest on the rocks below {E}.",
+    "tag": "the resting seals",
+    "add": "seals rest on the rocks below {E}",
+    "exp": "The rocks give seals a safe place to rest out of the water."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "Riverbend School",
+   "Northgate School",
+   "Fairview School",
+   "Oakwood School",
+   "Lakeside School",
+   "Hillcrest School"
+  ],
+  "nameFmt": "{name} Computer Lab",
+  "article": "the",
+  "descr": "school computer lab",
+  "at": "in {E}",
+  "outcome": "the number of messages received from {E}",
+  "background": [
+   "{CapE} is open to students after school.",
+   "Students in {E} use the computers to send weather data to a partner school."
+  ],
+  "stages": [
+   {
+    "id": "convert",
+    "text": "A program in {E} turns each number a student types into a pattern of 1s and 0s.",
+    "tag": "the conversion into 1s and 0s",
+    "from": "a typed number",
+    "product": "patterns of 1s and 0s",
+    "pl": true,
+    "less": "far fewer patterns of 1s and 0s",
+    "does": "a program turns the typed number into 1s and 0s",
+    "why": "computers can only store and send information as 1s and 0s",
+    "boost": {
+     "clause": "type the numbers into the program faster",
+     "np": "typing the numbers faster"
+    }
+   },
+   {
+    "id": "store",
+    "text": "Each 1 or 0 is stored in the memory chip of {E} as a tiny switch that is either on or off.",
+    "tag": "the storage of each pattern in memory",
+    "from": "patterns of 1s and 0s",
+    "product": "stored patterns",
+    "pl": true,
+    "less": "far fewer stored patterns",
+    "does": "each digit is stored as a tiny switch that is on or off",
+    "why": "stored patterns can be sent later without being typed again",
+    "needs": "power",
+    "needWhy": "the tiny switches can only hold their on or off states while the chip has power",
+    "boost": {
+     "clause": "buy a memory chip with more space",
+     "np": "buying a bigger memory chip"
+    },
+    "cause": "What allows the memory chip in {E} to store patterns?"
+   },
+   {
+    "id": "send",
+    "text": "The stored pattern travels through a cable from {E} to another school as pulses of electricity.",
+    "tag": "the sending of pulses through the cable",
+    "from": "stored patterns",
+    "product": "received messages",
+    "pl": true,
+    "less": "far fewer received messages",
+    "does": "the pattern travels through a cable as electrical pulses",
+    "why": "this is the step where the message actually reaches the other school",
+    "needs": "cable",
+    "needWhy": "pulses can only reach the other school while the cable connects the two computers",
+    "cause": "What allows messages from {E} to reach the other school?"
+   }
+  ],
+  "conds": {
+   "power": {
+    "clause": "the memory chip receives steady electric power",
+    "absent": "a power outage cuts the electricity to the memory chip",
+    "np": "steady electric power",
+    "tag": "the steady power"
+   },
+   "cable": {
+    "clause": "the cable between the computers is firmly connected",
+    "absent": "the cable between the computers is cut",
+    "np": "a connected cable",
+    "tag": "the connected cable"
+   }
+  },
+  "rates": [
+   {
+    "stage": "send",
+    "factor": {
+     "np": "the number of bits the cable carries each second",
+     "short": "bits each second",
+     "lo": 100,
+     "hi": 1000
+    },
+    "setup": "students sent the same kind of message from {E} at different connection speeds",
+    "result": {
+     "clause": "at {x} bits per second, about {y} short messages arrived each minute",
+     "lo": 2,
+     "hi": 40
+    },
+    "claim": "a faster connection lets more messages from {E} arrive each minute",
+    "why": "each message is made of a set number of bits, so sending more bits each second delivers more messages",
+    "confound": {
+     "text": "The faster test also used much shorter messages.",
+     "tag": "the shorter messages",
+     "why": "shorter messages contain fewer bits, so more of them can arrive in the same time"
+    }
+   }
+  ],
+  "myths": [
+   "the cable carries tiny written numbers inside it",
+   "the computer stores numbers as little pictures of digits",
+   "messages travel by being shouted between computers"
+  ],
+  "otherFocus": [
+   "how students in {E} learn to type",
+   "why {E} has blue chairs"
+  ],
+  "nonAnswers": [
+   "{CapE} has twenty computers.",
+   "Computers are used in many schools."
+  ],
+  "off": [
+   {
+    "text": "A poster in {E} shows the history of the first computers.",
+    "tag": "the history poster",
+    "add": "a poster in {E} shows the history of computers",
+    "exp": "The poster helps students learn how computers began."
+   },
+   {
+    "text": "{CapE} has a small robot that students program on Fridays.",
+    "tag": "the classroom robot",
+    "add": "{E} has a small robot",
+    "exp": "The robot gives students a fun way to practice programming."
+   }
+  ],
+  "ref": "the lab"
+ },
+ "observation": {
+  "names": [
+   "Willow",
+   "Bracken Point",
+   "Cinder Ridge",
+   "Sedge Meadow",
+   "Quarry Hill",
+   "Fox Run"
+  ],
+  "nameFmt": "{name} Field Station",
+  "descr": "small weather field station",
+  "observers": [
+   "a team of student programmers",
+   "two station technicians",
+   "a group of computer science students"
+  ],
+  "cases": [
+   {
+    "id": "errors",
+    "numbers": [
+     [
+      3,
+      10
+     ]
+    ],
+    "event": "One spring, messages sent from a weather sensor at the fictional {E} began arriving with wrong numbers.",
+    "q": "What most likely caused the messages from {E} to arrive with wrong numbers?",
+    "restate": [
+     "Messages from {E} began arriving with wrong numbers, and the question asks why.",
+     "Something made the messages from {E} arrive with mistakes."
+    ],
+    "answer": "Electrical interference from a new pump motor most likely caused the errors, because it flipped some of the 1s in the messages to 0s as they traveled through the cable.",
+    "sum": "the evidence points to interference from the pump motor as the reason the messages arrived with wrong numbers.",
+    "myth": "The messages from {E} arrived wrong because the numbers got tired during the trip.",
+    "mythClause": "errors appeared only in messages about rain",
+    "cause": "interference from the pump motor",
+    "alt": "a broken weather sensor",
+    "altText": "Some students suggested that the weather sensor at {E} was broken.",
+    "patternQ": "What pattern connects the pump motor and the message errors at {E}?",
+    "patternA": "Errors appeared after the motor was installed next to the cable and stopped once the cable was moved away, so the errors followed the motor.",
+    "patternSum": "the errors appeared after the motor was installed next to the cable and stopped once the cable was moved away.",
+    "prediction": {
+     "text": "When the errors began, a student predicted that they would happen at random times of day.",
+     "claim": "the errors at {E} would happen at random times of day",
+     "whyNot": "the errors appeared only during the hours when the motor was running"
+    },
+    "observerNote": "The technicians saved a copy of every message.",
+    "obs": [
+     {
+      "id": "install",
+      "role": "onset",
+      "text": "The errors began the same week a large water pump motor was installed beside the data cable at {E}.",
+      "tag": "the new pump motor",
+      "exps": [
+       "the errors started right when the motor arrived, which points to the motor as the cause",
+       "the timing ties the errors to the new motor, not to the sensor",
+       "a change that appears the week a motor is installed suggests the motor caused it"
+      ]
+     },
+     {
+      "id": "flip",
+      "role": "mechanism",
+      "text": "Tests showed that whenever the motor ran, some 1s in the messages from {E} arrived as 0s.",
+      "tag": "the flipped digits",
+      "exps": [
+       "a 1 that turns into a 0 changes the number the message stands for, which explains the wrong values",
+       "this shows how the motor caused the errors, since its electrical noise flipped digits in the cable",
+       "flipped digits are exactly the kind of damage interference would cause"
+      ]
+     },
+     {
+      "id": "move",
+      "role": "reverse",
+      "text": "When the cable was moved {n0} meters away from the motor, the errors stopped.",
+      "tag": "the cable after it was moved",
+      "exps": [
+       "the errors stopped once the cable was away from the motor, which is what would happen if the motor were the cause",
+       "separating the cable from the motor fixed the problem, so the two are linked",
+       "once the cause was moved away, the effect disappeared"
+      ]
+     },
+     {
+      "id": "screen",
+      "role": "against",
+      "text": "A technician checked the sensor's readings on its own screen at {E}, and they were correct.",
+      "tag": "the sensor's own readings",
+      "exps": [
+       "if the sensor itself were broken, its own screen would show wrong numbers too",
+       "this rules out a broken sensor, because its readings were correct before they were sent",
+       "with the sensor working, the broken-sensor explanation has nothing to stand on"
+      ]
+     },
+     {
+      "id": "hours",
+      "role": "against",
+      "text": "Errors appeared only during the hours when the motor at {E} was running.",
+      "tag": "the timing of the errors",
+      "exps": [
+       "a broken sensor would make mistakes all day, but the errors followed the motor's schedule",
+       "this rules out the sensor, since the errors matched the motor's hours",
+       "errors that start and stop with the motor point to the motor, not the sensor"
+      ],
+      "predExps": [
+       "this directly contradicts the prediction, since the errors followed the motor's schedule instead of happening at random",
+       "if the errors were random, they would appear at any hour, but they did not",
+       "the prediction expected a random pattern, and the observations show a clear schedule"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how {E} measures rainfall",
+   "why {E} was built near a pond"
+  ],
+  "nonAnswers": [
+   "{CapE} sends weather data every hour.",
+   "Weather sensors measure wind and rain."
+  ],
+  "off": [
+   {
+    "text": "A family of rabbits lives under the shed at {E}.",
+    "tag": "the rabbits",
+    "add": "rabbits live under the shed at {E}",
+    "exp": "The rabbits show that wildlife lives around the station."
+   },
+   {
+    "text": "{CapE} has a small solar panel on its roof.",
+    "tag": "the solar panel",
+    "add": "{E} has a solar panel on its roof",
+    "exp": "The solar panel provides power for the station."
+   }
+  ]
+ }
+}

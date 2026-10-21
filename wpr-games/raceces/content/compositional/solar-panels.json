@@ -1,0 +1,540 @@
+{
+ "topicId": "solar-panels",
+ "design": {
+  "kind": "solar charger",
+  "kindPl": "solar chargers",
+  "member": "charger",
+  "memberPl": "chargers",
+  "names": [
+   "brightfold",
+   "sunlatch",
+   "glowpack",
+   "raybrook",
+   "dawnclip",
+   "emberleaf",
+   "skyquill",
+   "lumenwell"
+  ],
+  "descr": "portable solar charger",
+  "live": "works in",
+  "home": "remote camps and field stations",
+  "manyFmt": "Copies of {E} are used in many places, including {s}.",
+  "goal": "keep devices charged far from power lines",
+  "otherGoals": [
+   "fit inside a small backpack",
+   "survive being dropped on rocks"
+  ],
+  "myths": [
+   "make electricity from moonlight as easily as from sunlight",
+   "charge devices without any light at all",
+   "pull electricity out of the wind through its case"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many kinds of portable chargers.",
+   "{CapE} has a panel, a case, and a charging cable."
+  ],
+  "conds": {
+   "lowsun": {
+    "clause": "the sun stays low in the sky for much of the day",
+    "absent": "the sun passes nearly straight overhead",
+    "np": "a low sun",
+    "tag": "the low sun",
+    "risk": "a flat panel catches only a weak, slanted share of light from a low sun"
+   },
+   "dust": {
+    "clause": "wind blows fine dust across the ground every day",
+    "absent": "the air is clean and free of dust",
+    "np": "blowing dust",
+    "tag": "the blowing dust",
+    "risk": "a layer of dust blocks light from reaching the solar cells"
+   },
+   "heat": {
+    "clause": "afternoon temperatures climb very high",
+    "absent": "the weather stays mild",
+    "np": "very hot afternoons",
+    "tag": "the hot afternoons",
+    "risk": "solar cells turn sunlight into electricity less efficiently when they get very hot"
+   },
+   "night": {
+    "clause": "nights are long, with many hours of darkness",
+    "absent": "the nights are short",
+    "np": "long nights",
+    "tag": "the long nights",
+    "risk": "a charger with no stored energy stops working as soon as the sun sets"
+   },
+   "hike": {
+    "clause": "people carry their gear on long hikes",
+    "absent": "the charger stays in one place",
+    "np": "long hikes",
+    "tag": "the long hikes"
+   },
+   "freeze": {
+    "clause": "temperatures drop below freezing at night",
+    "absent": "it never freezes",
+    "np": "freezing nights",
+    "tag": "the freezing nights"
+   }
+  },
+  "features": [
+   {
+    "id": "stand",
+    "np": "a folding stand that tilts its panel toward the sun",
+    "bare": "tilting stands",
+    "the": "the tilting stand",
+    "short": "stand",
+    "pl": false,
+    "mech": "aim the panel straight at the sun as it moves across the sky",
+    "benefit": "collect more sunlight each day",
+    "cond": "lowsun",
+    "metric": {
+     "past": "stored",
+     "unit": "watt-hours",
+     "what": "of energy per day",
+     "np": "energy stored per day",
+     "cmp": "more energy stored per day",
+     "better": "higher",
+     "lo": 20,
+     "hi": 90
+    },
+    "cost": {
+     "clause": "it adds weight, which matters when the charger has to be carried on long hikes",
+     "cond": "hike"
+    }
+   },
+   {
+    "id": "coating",
+    "np": "a dust-shedding coating on its glass",
+    "bare": "a dust-shedding coating",
+    "the": "the dust-shedding coating",
+    "short": "coating",
+    "pl": false,
+    "mech": "keep dust from sticking to the panel",
+    "benefit": "keep producing power on dusty days",
+    "cond": "dust",
+    "metric": {
+     "past": "produced",
+     "unit": "percent",
+     "what": "of their normal power after a dusty week",
+     "np": "power after a dusty week",
+     "cmp": "more of their normal power after a dusty week",
+     "better": "higher",
+     "lo": 30,
+     "hi": 95
+    }
+   },
+   {
+    "id": "fins",
+    "np": "metal cooling fins on its back",
+    "bare": "metal cooling fins",
+    "the": "the cooling fins",
+    "short": "fins",
+    "pl": true,
+    "mech": "carry heat away from the solar cells",
+    "benefit": "stay efficient on very hot afternoons",
+    "cond": "heat",
+    "metric": {
+     "past": "lost",
+     "unit": "percent",
+     "what": "of their power on the hottest afternoons",
+     "np": "power lost on hot afternoons",
+     "cmp": "less power lost on hot afternoons",
+     "better": "lower",
+     "lo": 3,
+     "hi": 30
+    },
+    "cost": {
+     "clause": "they collect frost and ice, which can crack the case on freezing nights",
+     "cond": "freeze"
+    }
+   },
+   {
+    "id": "battery",
+    "np": "a large built-in battery",
+    "bare": "large built-in batteries",
+    "the": "the large battery",
+    "short": "battery",
+    "pl": false,
+    "mech": "store extra energy for use after dark",
+    "benefit": "keep charging devices through the night",
+    "cond": "night",
+    "metric": {
+     "past": "charged",
+     "unit": "phones",
+     "what": "after sunset",
+     "np": "phones charged after sunset",
+     "cmp": "more phones charged after sunset",
+     "better": "higher",
+     "lo": 1,
+     "hi": 9
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "desert",
+    "np": "a dusty desert camp",
+    "the": "the desert camp",
+    "at": "at the desert camp",
+    "has": [
+     "dust",
+     "heat"
+    ],
+    "lacks": [
+     "lowsun",
+     "night",
+     "hike",
+     "freeze"
+    ]
+   },
+   {
+    "id": "north",
+    "np": "a northern research station",
+    "the": "the northern station",
+    "at": "at the northern station",
+    "has": [
+     "lowsun",
+     "night"
+    ],
+    "lacks": [
+     "dust",
+     "heat",
+     "hike"
+    ]
+   },
+   {
+    "id": "island",
+    "np": "a sunny island clinic",
+    "the": "the island clinic",
+    "at": "at the island clinic",
+    "has": [
+     "heat",
+     "night"
+    ],
+    "lacks": [
+     "lowsun",
+     "dust",
+     "hike",
+     "freeze"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "clean",
+    "clause": "The {mPl} with {F} were also wiped clean by hand every morning",
+    "tag": "the daily cleaning",
+    "why": "a clean panel lets more light reach its cells",
+    "np": "the daily cleaning",
+    "same": "care",
+    "alt": "the daily cleaning",
+    "ruleOut": "Both groups of chargers were wiped clean on exactly the same schedule",
+    "ruleTag": "the cleaning schedule"
+   },
+   {
+    "id": "spot",
+    "clause": "The {mPl} with {F} were also set up in a spot with no shade",
+    "tag": "the unshaded spot",
+    "why": "shade from trees or tents cuts the light a panel receives",
+    "np": "the sunnier spot",
+    "same": "location",
+    "alt": "the sunnier spot",
+    "ruleOut": "Both groups were set up side by side in the same open field",
+    "ruleTag": "the shared field"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} comes in a bright orange case.",
+    "tag": "the orange case",
+    "add": "{E} comes in a bright orange case",
+    "exp": "A bright case makes the charger easy to find in a pile of gear."
+   },
+   {
+    "text": "{CapE} weighs about as much as a large book.",
+    "tag": "the charger's weight",
+    "add": "{E} weighs about as much as a large book",
+    "exp": "Comparing it to a book helps readers picture how heavy the charger is."
+   },
+   {
+    "text": "The company that designed {E} also makes camping lanterns.",
+    "tag": "the company's lanterns",
+    "add": "the same company makes camping lanterns",
+    "exp": "The company's other products show what kind of gear it usually makes."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "Harbor Point",
+   "Juniper",
+   "Cedar Gap",
+   "Willowmere",
+   "Pinecrest",
+   "Stonebrook"
+  ],
+  "nameFmt": "{name} Ranger Station",
+  "article": "the",
+  "descr": "ranger station powered by the sun",
+  "at": "at {E}",
+  "outcome": "the power available at night at {E}",
+  "stages": [
+   {
+    "id": "light",
+    "text": "Sunlight strikes the solar panels on the roof of {E}, and the cells produce an electric current.",
+    "tag": "the making of current by the panels",
+    "from": "sunlight",
+    "product": "electric current",
+    "less": "much less electric current",
+    "does": "the solar cells turn sunlight into an electric current",
+    "why": "the current carries the energy that the station can store and use",
+    "needs": "sun",
+    "needWhy": "the cells only produce a strong current when direct light strikes them",
+    "boost": {
+     "clause": "add more solar panels to the roof",
+     "np": "adding more panels to the roof"
+    },
+    "cause": "What allows the panels at {E} to make electric current?"
+   },
+   {
+    "id": "charge",
+    "text": "The current flows through wires into a bank of batteries at {E}, where the energy is stored.",
+    "tag": "the charging of the batteries",
+    "from": "electric current",
+    "product": "stored energy",
+    "less": "much less stored energy",
+    "does": "the current flows into batteries and is stored",
+    "why": "stored energy can be used later, even when the sun is down",
+    "needs": "battery",
+    "needWhy": "energy can only be saved for later if the batteries can still hold a charge",
+    "boost": {
+     "clause": "run thicker wires from the panels to the batteries",
+     "np": "running thicker wires"
+    },
+    "cause": "What allows {E} to store energy for later?"
+   },
+   {
+    "id": "use",
+    "text": "After sunset, the stored energy powers the lights and radios at {E}.",
+    "tag": "the use of stored energy after dark",
+    "from": "stored energy",
+    "product": "light and power after dark",
+    "less": "much less power after dark",
+    "does": "the stored energy runs the lights and radios after dark",
+    "why": "this is the step where the rangers actually use the sunlight's energy",
+    "needs": "switch",
+    "needWhy": "the lights can only draw on the batteries when the switch connects them",
+    "cause": "What allows the lights at {E} to run after dark?"
+   }
+  ],
+  "conds": {
+   "sun": {
+    "clause": "the panels receive direct sunlight for most of the day",
+    "absent": "a thick haze hides the sun for days",
+    "np": "direct sunlight",
+    "tag": "the direct sunlight"
+   },
+   "battery": {
+    "clause": "the batteries are in good working order",
+    "absent": "the batteries are worn out and cannot hold a charge",
+    "np": "working batteries",
+    "tag": "the working batteries"
+   },
+   "switch": {
+    "clause": "a switch connects the lights to the batteries at sunset",
+    "absent": "the switch between the batteries and the lights is broken",
+    "np": "a working battery switch",
+    "tag": "the battery switch"
+   }
+  },
+  "rates": [
+   {
+    "stage": "light",
+    "factor": {
+     "np": "the hours of direct sunlight",
+     "short": "sunlight",
+     "lo": 2,
+     "hi": 10
+    },
+    "setup": "rangers recorded the output of the panels at {E} on days with different amounts of sun",
+    "result": {
+     "clause": "on a day with {x} hours of direct sunlight, the panels produced about {y} kilowatt-hours",
+     "lo": 3,
+     "hi": 25
+    },
+    "claim": "more hours of direct sunlight let the panels at {E} produce more energy",
+    "why": "the cells only make current while light strikes them, so more hours of light means more energy",
+    "confound": {
+     "text": "The sunnier day was also the day after the rangers washed the panels.",
+     "tag": "the freshly washed panels",
+     "why": "clean panels let more light reach the cells"
+    }
+   }
+  ],
+  "myths": [
+   "the panels collect electricity from passing clouds",
+   "the batteries make their own energy at night",
+   "the radios send power back up to the panels"
+  ],
+  "otherFocus": [
+   "how rangers at {E} track wildlife",
+   "why {E} was built near a lake"
+  ],
+  "nonAnswers": [
+   "{CapE} has solar panels on its roof.",
+   "Rangers at {E} often work long shifts."
+  ],
+  "off": [
+   {
+    "text": "{CapE} has a small kitchen and two bunk rooms.",
+    "tag": "the kitchen and bunk rooms",
+    "add": "{E} has two bunk rooms",
+    "exp": "The bunk rooms show that rangers can stay overnight at the station."
+   },
+   {
+    "text": "A hiking trail starts just behind {E}.",
+    "tag": "the hiking trail",
+    "add": "a hiking trail starts behind {E}",
+    "exp": "The trail makes the station a common starting point for hikers."
+   }
+  ],
+  "ref": "the station"
+ },
+ "observation": {
+  "names": [
+   "Larkspur Field",
+   "Copper Mill",
+   "Granite Hollow",
+   "Fernbrook",
+   "Ashford Commons",
+   "Tallow Creek"
+  ],
+  "nameFmt": "{name}",
+  "descr": "community solar farm",
+  "observers": [
+   "a team of student engineers",
+   "two solar technicians",
+   "a group of energy researchers"
+  ],
+  "cases": [
+   {
+    "id": "dim",
+    "numbers": [
+     [
+      20,
+      45
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "event": "One autumn, the fictional solar panels at {E} produced much less power than usual.",
+    "q": "What most likely caused the panels at {E} to produce less power?",
+    "restate": [
+     "The panels at {E} produced less power than usual, and the question asks why.",
+     "Something caused the solar panels at {E} to produce less power one autumn."
+    ],
+    "answer": "Dust from a nearby road project most likely caused the panels at {E} to produce less power, because it blocked sunlight from the cells.",
+    "sum": "the evidence points to the dust from the road project as the reason the panels produced less power.",
+    "myth": "The panels at {E} produced less power because autumn sunlight carries no energy at all.",
+    "mythClause": "only the panels painted with a logo lost power",
+    "cause": "dust from the road project",
+    "alt": "worn-out solar cells",
+    "altText": "Some visitors suggested that the solar cells at {E} had simply worn out.",
+    "patternQ": "What pattern connects the road project and the power produced at {E}?",
+    "patternA": "Power dropped while dust from the road project coated the panels and returned to normal after the panels were washed, so the power followed the dust.",
+    "patternSum": "the power output fell and rose with the amount of dust on the panels.",
+    "prediction": {
+     "text": "Before autumn, a visitor predicted that only the oldest panels at {E} would lose power.",
+     "claim": "only the oldest panels at {E} would lose power",
+     "whyNot": "new panels and old panels lost power by about the same amount"
+    },
+    "observerNote": "The technicians recorded the power output every afternoon.",
+    "obs": [
+     {
+      "id": "road",
+      "role": "onset",
+      "text": "A road crew began digging next to {E}, and power output dropped by about {n0} percent that same week.",
+      "tag": "the drop during the road work",
+      "exps": [
+       "the drop began exactly when the digging started, which points to the road project",
+       "a drop that sudden lines up with the start of the road work, not with slow aging",
+       "the timing ties the lost power to something new happening beside the farm"
+      ]
+     },
+     {
+      "id": "film",
+      "role": "mechanism",
+      "text": "Workers found a gray layer of dust covering the glass of the panels.",
+      "tag": "the dust on the glass",
+      "exps": [
+       "dust on the glass blocks sunlight, so less light reaches the cells to make power",
+       "this shows how the road project could cut the power, since covered panels receive less light",
+       "a dusty surface explains the drop, because panels need light to reach the cells"
+      ]
+     },
+     {
+      "id": "wash",
+      "role": "reverse",
+      "text": "Within {n1} days after the panels were washed, their power output returned to normal.",
+      "tag": "the power returning after washing",
+      "exps": [
+       "the power came back as soon as the dust was removed, which is what would happen if dust were the cause",
+       "removing the dust removed the problem, so the two are linked",
+       "once the cause was cleaned away, the effect disappeared"
+      ]
+     },
+     {
+      "id": "ages",
+      "role": "against",
+      "text": "Panels installed only last year lost just as much power as panels installed ten years ago.",
+      "tag": "the new and old panels",
+      "exps": [
+       "worn-out cells would affect old panels far more than new ones, but both lost the same amount",
+       "this rules out wear, because brand-new cells had no time to wear out",
+       "if aging were the cause, the newest panels would have held up better"
+      ],
+      "predExps": [
+       "if only the oldest panels were at risk, the new ones would have kept their power, but they did not",
+       "this directly contradicts the prediction, since age made no difference",
+       "the prediction expected an age difference that never appeared"
+      ]
+     },
+     {
+      "id": "test",
+      "role": "against",
+      "text": "When an electrician tested the solar cells, every cell was working normally.",
+      "tag": "the electrician's test",
+      "exps": [
+       "cells that test as normal cannot be worn out, so that explanation does not hold",
+       "this rules out worn-out cells, since the cells themselves were fine",
+       "the problem was not inside the cells, which leaves something blocking the light"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how the people of {E} share the farm's electricity",
+   "why {E} was built on an old pasture"
+  ],
+  "nonAnswers": [
+   "{CapE} has hundreds of solar panels.",
+   "Technicians visit {E} every week."
+  ],
+  "off": [
+   {
+    "text": "Sheep graze in the grass between the rows of panels at {E}.",
+    "tag": "the grazing sheep",
+    "add": "sheep graze between the panels at {E}",
+    "exp": "The sheep keep the grass short without any mowing."
+   },
+   {
+    "text": "A sign at the gate of {E} lists the families who share its power.",
+    "tag": "the sign at the gate",
+    "add": "a sign at {E} lists the families who share its power",
+    "exp": "The sign shows that the farm belongs to the community."
+   }
+  ]
+ }
+}

@@ -69,7 +69,9 @@
     if (analysis.valid) {
       var firstPair = ch.info[order[2]].pair;
       var notes = [];
-      if (firstPair !== ch.defaultPairOrder[0]) {
+      if (ch.dependency) {
+        notes.push('Each explanation follows the evidence it explains. In this response the order of the pairs also matters, because the explanation about ' + ch.info[order[4]].tag + ' builds on the evidence about ' + ch.info[order[2]].tag + '.');
+      } else if (firstPair !== ch.defaultPairOrder[0]) {
         notes.push('You placed ' + tagText(ch.info[order[2]].tag) + ' first. That works too: the two evidence and explanation pairs can go in either order as long as each explanation follows its own evidence.');
       } else {
         notes.push('Each explanation follows the evidence it explains, and the two pairs can also be swapped without changing the structure.');
@@ -104,6 +106,9 @@
         principleRole = 'E'; cat = 'wrong-pair';
         msg = 'The explanation about ' + b.tag + ' does not go with the evidence about ' + a.tag + '. Each explanation must come right after the evidence it explains.';
       }
+    } else if (p.code === 'dependency') {
+      principleRole = 'E'; cat = 'other';
+      msg = 'Each explanation follows its evidence, but in this response the order of the pairs matters: the explanation about ' + p.found.tag + ' builds on the evidence about ' + p.first.tag + ', so that evidence has to come first.';
     } else {
       principleRole = 'R'; msg = 'Use all seven sentences, each one exactly once.';
     }
@@ -131,6 +136,10 @@
       case 'wrongFocus':
         if (tr === 'R') return 'That sentence is about a different focus than the writing question. A restatement has to match the question that was asked.';
         return 'That sentence reads like a restatement of a different idea. It does not do the job of ' + L + ' here.';
+      case 'crossExp':
+        return 'That sentence explains a different piece of evidence in this response, not ' + tagText(tag) + '. An explanation has to connect to the evidence right before it.';
+      case 'nonAnswer':
+        return 'That sentence is true, but it does not answer the question. An answer has to make a clear claim that responds to what was asked.';
       default:
         return 'That sentence does not do the job this gap needs.';
     }
@@ -142,6 +151,8 @@
     if (opt.kind === 'summaryLike' && tr === 'S') return 'summary-vs-evidence';
     if (opt.kind === 'offExp' && tr === 'E') return 'wrong-pair';
     if (opt.kind === 'offFact' && tr === 'C') return 'relevance';
+    if (opt.kind === 'crossExp') return 'wrong-pair';
+    if (opt.kind === 'nonAnswer') return 'restate-vs-answer';
     return Structure.confusionCategory(tr, opt.plays) || 'other';
   }
 

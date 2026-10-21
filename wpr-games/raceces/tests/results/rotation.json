@@ -1,0 +1,35 @@
+{
+  "challenges": 900,
+  "modeCounts": {
+    "identify": 303,
+    "missing": 298,
+    "rearrange": 299
+  },
+  "levelCounts": {
+    "intermediate": 301,
+    "beginner": 299,
+    "advanced": 300
+  },
+  "roleCounts": {
+    "E": 185,
+    "A": 77,
+    "C": 186,
+    "R": 76,
+    "S": 77
+  },
+  "familyCounts": {
+    "cause-effect": 120,
+    "function": 122,
+    "process": 125,
+    "adaptation": 114,
+    "pattern": 95,
+    "scale": 111,
+    "tradeoff": 97,
+    "evaluation": 116
+  },
+  "minGap": 4,
+  "avgGap": 88.4,
+  "sameModelBack2": 0,
+  "sameSigIn30": 0,
+  "sameTopicBack1": 0
+}

@@ -1,0 +1,528 @@
+{
+ "topicId": "rust",
+ "design": {
+  "kind": "garden gate",
+  "kindPl": "garden gates",
+  "member": "gate",
+  "memberPl": "gates",
+  "names": [
+   "thornwick",
+   "fernlatch",
+   "oakhinge",
+   "wrenrail",
+   "stonewick",
+   "briarlock",
+   "elmspire",
+   "kestrelbar"
+  ],
+  "descr": "iron garden gate",
+  "live": "stands in",
+  "liveVerb": "stands",
+  "home": "gardens and parks",
+  "manyFmt": "Copies of {E} stand in many places, including {s}.",
+  "goal": "stay strong and free of rust for many years",
+  "otherGoals": [
+   "swing open without squeaking",
+   "look elegant in a garden"
+  ],
+  "myths": [
+   "turn its rust back into iron at night",
+   "push water away with a magnetic field",
+   "grow new iron to replace its rusted bars"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many kinds of iron gates.",
+   "{CapE} has bars, hinges, and a latch."
+  ],
+  "conds": {
+   "rain": {
+    "clause": "rain falls on most days of the year",
+    "absent": "rain is rare",
+    "np": "frequent rain",
+    "tag": "the frequent rain",
+    "risk": "iron that stays wet with rainwater rusts quickly"
+   },
+   "bump": {
+    "clause": "carts and bikes often bump and scratch the gates",
+    "absent": "the gates are rarely touched",
+    "np": "frequent scratches",
+    "tag": "the scratches",
+    "risk": "a scratch through the paint exposes bare iron that starts to rust"
+   },
+   "salt": {
+    "clause": "salty spray blows in from the sea",
+    "absent": "the air carries no sea salt",
+    "np": "salty sea spray",
+    "tag": "the salty spray",
+    "risk": "salt water speeds up rusting far more than fresh water does"
+   },
+   "pool": {
+    "clause": "water pools on the flat ground after storms",
+    "absent": "the ground drains quickly",
+    "np": "pooling water",
+    "tag": "the pooling water",
+    "risk": "iron that sits in a puddle for days rusts fastest of all"
+   },
+   "remote": {
+    "clause": "the gates stand far from any road",
+    "absent": "the gates are easy to reach",
+    "np": "gates far from any road",
+    "tag": "the faraway gates"
+   },
+   "hot": {
+    "clause": "summers are very hot",
+    "absent": "summers are cool",
+    "np": "very hot summers",
+    "tag": "the hot summers"
+   }
+  },
+  "features": [
+   {
+    "id": "paint",
+    "np": "a thick coat of oil-based paint",
+    "bare": "thick coats of paint",
+    "the": "the thick paint",
+    "short": "paint",
+    "pl": false,
+    "mech": "keep water and air from touching the iron",
+    "benefit": "stay dry underneath during rainy weather",
+    "cond": "rain",
+    "metric": {
+     "past": "showed",
+     "unit": "rust spots",
+     "what": "after two rainy years",
+     "np": "rust spots after two years",
+     "cmp": "fewer rust spots after two years",
+     "better": "lower",
+     "lo": 1,
+     "hi": 30
+    },
+    "cost": {
+     "clause": "it must be scraped off and repainted every few years, which is hard work when the gates stand far from any road",
+     "cond": "remote"
+    }
+   },
+   {
+    "id": "zinc",
+    "np": "a thin layer of zinc bonded to its surface",
+    "bare": "thin zinc layers",
+    "the": "the zinc layer",
+    "short": "layer",
+    "pl": false,
+    "mech": "corrode in place of the iron wherever the surface is scratched",
+    "benefit": "protect bare spots after it gets scratched",
+    "cond": "bump",
+    "metric": {
+     "past": "lost",
+     "unit": "grams",
+     "what": "of iron at scratched spots",
+     "np": "iron lost at scratched spots",
+     "cmp": "less iron lost at scratched spots",
+     "better": "lower",
+     "lo": 2,
+     "hi": 30
+    }
+   },
+   {
+    "id": "wax",
+    "np": "a layer of wax sealant",
+    "bare": "wax sealant",
+    "the": "the wax sealant",
+    "short": "sealant",
+    "pl": false,
+    "mech": "make salty spray bead up and roll off",
+    "benefit": "resist damage from sea air",
+    "cond": "salt",
+    "metric": {
+     "past": "showed",
+     "unit": "rust spots",
+     "what": "after one windy season",
+     "np": "rust spots after one season",
+     "cmp": "fewer rust spots after one season",
+     "better": "lower",
+     "lo": 2,
+     "hi": 25
+    },
+    "cost": {
+     "clause": "it turns soft and sticky and collects dirt during very hot summers",
+     "cond": "hot"
+    }
+   },
+   {
+    "id": "base",
+    "np": "a raised base with drain holes",
+    "bare": "raised bases",
+    "the": "the raised base",
+    "short": "base",
+    "pl": false,
+    "mech": "let rainwater run off instead of pooling around the iron",
+    "benefit": "keep its lowest bars out of puddles",
+    "cond": "pool",
+    "metric": {
+     "past": "showed",
+     "unit": "rust spots",
+     "what": "on their lowest bars",
+     "np": "rust spots on the lowest bars",
+     "cmp": "fewer rust spots on the lowest bars",
+     "better": "lower",
+     "lo": 1,
+     "hi": 20
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "seaside",
+    "np": "a seaside park",
+    "the": "the seaside park",
+    "at": "in the seaside park",
+    "has": [
+     "salt",
+     "rain"
+    ],
+    "lacks": [
+     "bump",
+     "pool",
+     "remote",
+     "hot"
+    ]
+   },
+   {
+    "id": "school",
+    "np": "a busy school courtyard",
+    "the": "the school courtyard",
+    "at": "in the school courtyard",
+    "has": [
+     "bump",
+     "pool"
+    ],
+    "lacks": [
+     "rain",
+     "salt",
+     "remote"
+    ]
+   },
+   {
+    "id": "vineyard",
+    "np": "a hillside vineyard",
+    "the": "the vineyard",
+    "at": "in the hillside vineyard",
+    "has": [
+     "rain",
+     "bump",
+     "remote",
+     "hot"
+    ],
+    "lacks": [
+     "salt",
+     "pool"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "roof",
+    "clause": "The {mPl} with {F} were also kept under a roof for half of the test",
+    "tag": "the time under a roof",
+    "why": "iron that stays dry under a roof rusts much more slowly",
+    "np": "the time under a roof",
+    "same": "shelter",
+    "alt": "the time spent under a roof",
+    "ruleOut": "Both groups of gates stood in the open for the whole test",
+    "ruleTag": "the open-air test"
+   },
+   {
+    "id": "iron",
+    "clause": "The {mPl} with {F} were also made of newer, purer iron",
+    "tag": "the purer iron",
+    "why": "purer iron can resist rust a little better",
+    "np": "the purer iron",
+    "same": "iron",
+    "alt": "newer, purer iron",
+    "ruleOut": "All of the gates in both groups were made from the same batch of iron",
+    "ruleTag": "the shared batch of iron"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} has a curl shaped like a fern leaf on top.",
+    "tag": "the fern-shaped curl",
+    "add": "{E} has a fern-shaped curl on top",
+    "exp": "The curl is a decoration that makes the gate look graceful."
+   },
+   {
+    "text": "{CapE} squeaks loudly when it swings open.",
+    "tag": "the squeaky hinge",
+    "add": "{E} squeaks when it swings open",
+    "exp": "The squeak lets people know when someone comes through the gate."
+   },
+   {
+    "text": "{CapE} was first made by a blacksmith in a small village.",
+    "tag": "the gate's maker",
+    "add": "{E} was first made by a village blacksmith",
+    "exp": "The maker's story tells where the design first came from."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "thornwick",
+   "fernlatch",
+   "oakhinge",
+   "wrenrail",
+   "stonewick",
+   "briarlock"
+  ],
+  "nameFmt": "{name} gate",
+  "article": "the",
+  "descr": "old iron garden gate",
+  "at": "on {E}",
+  "outcome": "the rust damage to {E}",
+  "background": [
+   "{CapE} has stood in the same garden for many years.",
+   "{CapE} has thin iron bars and a heavy latch."
+  ],
+  "stages": [
+   {
+    "id": "wet",
+    "text": "Rain and dew leave a thin film of water on the bare iron of {E}.",
+    "tag": "the forming of a water film",
+    "from": "rain and dew",
+    "product": "a film of water on the iron",
+    "less": "much less water on the iron",
+    "does": "rain and dew leave a thin film of water on the iron",
+    "why": "the water film is where the rusting reaction can take place",
+    "needs": "damp",
+    "needWhy": "a water film only forms and stays on the iron when the air is damp",
+    "cause": "What causes a film of water to form on {E}?"
+   },
+   {
+    "id": "react",
+    "text": "Where the water touches the iron of {E}, the iron reacts with oxygen from the air and slowly turns into reddish-brown rust.",
+    "tag": "the reaction of iron with oxygen",
+    "from": "a film of water on the iron",
+    "product": "rust",
+    "less": "much less rust",
+    "does": "the wet iron reacts with oxygen and turns into rust",
+    "why": "this reaction changes strong iron into weak, crumbly rust",
+    "needs": "air",
+    "needWhy": "iron only turns into rust when both water and oxygen from the air reach it",
+    "cause": "What causes rust to form on {E}?"
+   },
+   {
+    "id": "flake",
+    "text": "The rust on {E} flakes away and exposes fresh iron underneath, so the damage spreads deeper.",
+    "tag": "the flaking of the rust",
+    "from": "rust",
+    "product": "damage to the bars",
+    "less": "much less damage to the bars",
+    "does": "the rust flakes off and exposes more iron",
+    "why": "flaking lets rust eat deeper into the bars over time"
+   }
+  ],
+  "conds": {
+   "damp": {
+    "clause": "the air is damp for most of the year",
+    "absent": "a long drought keeps the air very dry",
+    "np": "damp air",
+    "tag": "the damp air"
+   },
+   "air": {
+    "clause": "fresh air reaches the surface of the iron",
+    "absent": "the iron is sealed inside an airtight case",
+    "np": "fresh air on the iron",
+    "tag": "the fresh air"
+   }
+  },
+  "rates": [
+   {
+    "stage": "react",
+    "factor": {
+     "np": "the amount of salt in the water",
+     "short": "salt",
+     "lo": 2,
+     "hi": 30
+    },
+    "setup": "students soaked iron nails cut from {E} in jars of water with different amounts of salt",
+    "result": {
+     "clause": "nails in water with {x} grams of salt per liter lost about {y} milligrams to rust in a week",
+     "lo": 5,
+     "hi": 60
+    },
+    "claim": "saltier water makes the iron of {E} rust faster",
+    "why": "salt helps electric charges move through the water, which speeds up the reaction between iron and oxygen",
+    "confound": {
+     "text": "The jar with saltier water was also kept on a warm, sunny windowsill.",
+     "tag": "the warm windowsill",
+     "why": "warmth speeds up most chemical reactions, including rusting"
+    }
+   }
+  ],
+  "myths": [
+   "rust grows from tiny seeds in the soil",
+   "moonlight turns iron red",
+   "the paint itself turns into rust"
+  ],
+  "otherFocus": [
+   "how blacksmiths shape the curls on {E}",
+   "why {E} squeaks when it opens"
+  ],
+  "nonAnswers": [
+   "{CapE} is made of iron.",
+   "Many gardens have iron gates."
+  ],
+  "off": [
+   {
+    "text": "{CapE} has a curl shaped like a fern leaf on top.",
+    "tag": "the fern-shaped curl",
+    "add": "{E} has a fern-shaped curl on top",
+    "exp": "The curl is a decoration that makes the gate look graceful."
+   },
+   {
+    "text": "Roses climb along the bars of {E} every summer.",
+    "tag": "the climbing roses",
+    "add": "roses climb along {E} every summer",
+    "exp": "The roses make the gate look beautiful in summer."
+   }
+  ],
+  "ref": "the gate"
+ },
+ "observation": {
+  "names": [
+   "Gull Harbor",
+   "Saltmarsh Point",
+   "Pebble Cove",
+   "Driftwood Bay",
+   "Foghorn Pier",
+   "Kelp Rock"
+  ],
+  "nameFmt": "{name}",
+  "descr": "seaside harbor town",
+  "observers": [
+   "a team of student chemists",
+   "two harbor workers",
+   "a group of town engineers"
+  ],
+  "cases": [
+   {
+    "id": "rails",
+    "numbers": [
+     [
+      20,
+      60
+     ],
+     [
+      3,
+      6
+     ]
+    ],
+    "event": "One year, the fictional iron railings along the harbor at {E} rusted much faster than the railings in a town farther inland.",
+    "q": "What most likely caused the railings at {E} to rust so quickly?",
+    "restate": [
+     "The railings at {E} rusted unusually fast, and the question asks why.",
+     "Something made the iron railings at {E} rust faster than inland railings."
+    ],
+    "answer": "Salty sea spray most likely caused the railings at {E} to rust so quickly, because salt water speeds up the rusting reaction.",
+    "sum": "the evidence points to the salty sea spray as the reason the railings rusted so quickly.",
+    "myth": "The railings at {E} rusted quickly because seagulls painted them red.",
+    "mythClause": "the railings rusted only on sunny days",
+    "cause": "the salty sea spray",
+    "alt": "a cheaper kind of iron",
+    "altText": "Some residents suggested that the railings at {E} had been made from a cheaper kind of iron.",
+    "patternQ": "What pattern connects the sea spray and the rust on the railings at {E}?",
+    "patternA": "The railings rusted fastest where the spray reached them and much more slowly once workers rinsed the salt away, so the rust followed the salt.",
+    "patternSum": "the railings rusted faster where the salt reached them and more slowly where it was rinsed away.",
+    "prediction": {
+     "text": "Before the year began, an engineer predicted that every railing in {E} would rust at the same rate.",
+     "claim": "every railing in {E} would rust at the same rate",
+     "whyNot": "railings sheltered from the spray rusted much more slowly"
+    },
+    "observerNote": "The workers photographed the railings every month.",
+    "obs": [
+     {
+      "id": "near",
+      "role": "onset",
+      "text": "Railings at {E} that stood within {n0} meters of the water rusted the fastest.",
+      "tag": "the railings closest to the water",
+      "exps": [
+       "the railings closest to the sea get the most spray, and they rusted the fastest",
+       "rust was worst exactly where the spray lands, which points to the salt",
+       "being close to the water made the difference, which fits sea spray as the cause"
+      ]
+     },
+     {
+      "id": "salt",
+      "role": "mechanism",
+      "text": "Tests of the rust on the railings at {E} found large amounts of salt mixed into it.",
+      "tag": "the salt in the rust",
+      "exps": [
+       "salt in the rust shows that salt water was part of the reaction that made it",
+       "this shows how the spray did its damage, since salt speeds up rusting",
+       "finding salt inside the rust ties the damage directly to the sea spray"
+      ]
+     },
+     {
+      "id": "rinse",
+      "role": "reverse",
+      "text": "Railings that workers rinsed with fresh water every week rusted far more slowly after about {n1} months.",
+      "tag": "the rinsed railings",
+      "exps": [
+       "rinsing away the salt slowed the rust, which is what would happen if salt were the cause",
+       "removing the salt reduced the damage, so the two are linked",
+       "once the cause was washed away, the effect faded"
+      ]
+     },
+     {
+      "id": "batch",
+      "role": "against",
+      "text": "Records showed that the railings at {E} and the inland railings came from the same factory and the same batch of iron.",
+      "tag": "the factory records",
+      "exps": [
+       "if both sets of railings used the same iron, the iron cannot explain why only one set rusted fast",
+       "this rules out cheap iron, because the iron was identical",
+       "with the same iron in both places, the iron explanation has nothing to stand on"
+      ]
+     },
+     {
+      "id": "shelter",
+      "role": "against",
+      "text": "Railings on the sheltered side of a building at {E}, away from the spray, rusted slowly like the inland ones.",
+      "tag": "the sheltered railings",
+      "exps": [
+       "railings made of the same iron rusted slowly when the spray could not reach them",
+       "this rules out cheap iron, since the same railings behaved differently depending on the spray",
+       "the only thing the sheltered railings lacked was the salty spray"
+      ],
+      "predExps": [
+       "this directly contradicts the prediction, since the sheltered railings rusted much more slowly",
+       "if every railing rusted at the same rate, the sheltered ones would look just as rusty, but they did not",
+       "the prediction expected no difference, and a clear difference appeared"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how fishing boats are repaired at {E}",
+   "why tourists visit {E} in summer"
+  ],
+  "nonAnswers": [
+   "{CapE} has a long harbor with iron railings.",
+   "Many towns are built beside the sea."
+  ],
+  "off": [
+   {
+    "text": "Fishing boats leave the harbor at {E} before sunrise every morning.",
+    "tag": "the fishing boats",
+    "add": "fishing boats leave {E} before sunrise",
+    "exp": "The early boats show that fishing is important to the town."
+   },
+   {
+    "text": "A red lighthouse stands at the end of the pier at {E}.",
+    "tag": "the red lighthouse",
+    "add": "a red lighthouse stands at {E}",
+    "exp": "The lighthouse helps boats find the harbor at night."
+   }
+  ]
+ }
+}

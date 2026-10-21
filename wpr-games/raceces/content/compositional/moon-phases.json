@@ -1,0 +1,527 @@
+{
+ "topicId": "moon-phases",
+ "design": {
+  "kind": "moon telescope",
+  "kindPl": "moon telescopes",
+  "member": "telescope",
+  "memberPl": "telescopes",
+  "names": [
+   "silverhorn",
+   "nightglass",
+   "tidewatch",
+   "moonlark",
+   "owlsight",
+   "quarterlight",
+   "starbrook",
+   "dimlantern"
+  ],
+  "descr": "student telescope for watching the moon",
+  "live": "is used in",
+  "liveVerb": "is used",
+  "home": "school astronomy clubs",
+  "manyFmt": "Copies of {E} are used in many places, including {s}.",
+  "goal": "show students the changing phases of the moon",
+  "otherGoals": [
+   "show distant planets",
+   "fit inside a school locker"
+  ],
+  "myths": [
+   "change the moon's phase by pointing at it",
+   "see straight through the moon to its far side",
+   "make the moon look full every night"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many kinds of telescopes.",
+   "{CapE} has a lens, a tube, and an eyepiece."
+  ],
+  "conds": {
+   "glare": {
+    "clause": "students often observe near the full moon, when it is brightest",
+    "absent": "students mostly observe thin crescents",
+    "np": "the glare of a bright moon",
+    "tag": "the bright full moon",
+    "risk": "glare from a nearly full moon washes out the details on its surface"
+   },
+   "zoom": {
+    "clause": "students use high magnification to study small craters",
+    "absent": "students only look at the whole moon at low magnification",
+    "np": "high magnification",
+    "tag": "the high magnification",
+    "risk": "at high magnification the moon drifts out of view in less than a minute"
+   },
+   "low": {
+    "clause": "students often watch thin crescent moons low in the western sky after sunset",
+    "absent": "students only observe the moon when it is high in the sky",
+    "np": "crescent moons low in the sky",
+    "tag": "the low crescent moons",
+    "risk": "a low crescent sinks behind fences and buildings within minutes"
+   },
+   "rare": {
+    "clause": "students can meet on only a few nights each month",
+    "absent": "students can observe every night",
+    "np": "only a few observing nights",
+    "tag": "the few observing nights",
+    "risk": "students who guess wrong waste their few nights looking for a moon that is not up"
+   },
+   "cold": {
+    "clause": "observing nights are bitterly cold",
+    "absent": "the nights are mild",
+    "np": "bitterly cold nights",
+    "tag": "the cold nights"
+   },
+   "wind": {
+    "clause": "strong winds blow across the observing area",
+    "absent": "the air is usually calm",
+    "np": "strong winds",
+    "tag": "the strong winds"
+   }
+  },
+  "features": [
+   {
+    "id": "filter",
+    "np": "a gray filter that dims bright light",
+    "bare": "gray filters",
+    "the": "the gray filter",
+    "short": "filter",
+    "pl": false,
+    "mech": "cut the glare of a bright, nearly full moon",
+    "benefit": "show surface details on bright nights",
+    "cond": "glare",
+    "metric": {
+     "past": "spotted",
+     "unit": "craters",
+     "what": "per session",
+     "np": "craters spotted per session",
+     "cmp": "more craters spotted per session",
+     "better": "higher",
+     "lo": 3,
+     "hi": 25
+    }
+   },
+   {
+    "id": "motor",
+    "np": "a small motor that turns the telescope slowly",
+    "bare": "small tracking motors",
+    "the": "the tracking motor",
+    "short": "motor",
+    "pl": false,
+    "mech": "keep the moon centered as Earth turns",
+    "benefit": "keep the moon in view without constant adjusting",
+    "cond": "zoom",
+    "metric": {
+     "past": "kept",
+     "unit": "minutes",
+     "what": "of steady viewing per session",
+     "np": "steady viewing time",
+     "cmp": "more minutes of steady viewing",
+     "better": "higher",
+     "lo": 4,
+     "hi": 30
+    },
+    "cost": {
+     "clause": "it runs on batteries that drain quickly on bitterly cold nights",
+     "cond": "cold"
+    }
+   },
+   {
+    "id": "tripod",
+    "np": "an extra-tall tripod",
+    "bare": "extra-tall tripods",
+    "the": "the tall tripod",
+    "short": "tripod",
+    "pl": false,
+    "mech": "raise the telescope above nearby walls and fences",
+    "benefit": "see a thin crescent low in the sky after sunset",
+    "cond": "low",
+    "metric": {
+     "past": "saw",
+     "unit": "crescent moons",
+     "what": "each season",
+     "np": "crescent moons seen each season",
+     "cmp": "more crescent moons seen each season",
+     "better": "higher",
+     "lo": 2,
+     "hi": 12
+    },
+    "cost": {
+     "clause": "it tips over more easily when strong winds blow",
+     "cond": "wind"
+    }
+   },
+   {
+    "id": "dial",
+    "np": "a printed phase dial on its side",
+    "bare": "printed phase dials",
+    "the": "the phase dial",
+    "short": "dial",
+    "pl": false,
+    "mech": "show which phase to expect on each night of the month",
+    "benefit": "plan observations for the right nights",
+    "cond": "rare",
+    "metric": {
+     "past": "planned",
+     "unit": "successful sessions",
+     "what": "each month",
+     "np": "successful sessions each month",
+     "cmp": "more successful sessions each month",
+     "better": "higher",
+     "lo": 1,
+     "hi": 8
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "rooftop",
+    "np": "a city rooftop",
+    "the": "the city rooftop",
+    "at": "on the city rooftop",
+    "has": [
+     "zoom",
+     "low"
+    ],
+    "lacks": [
+     "glare",
+     "rare",
+     "wind",
+     "cold"
+    ]
+   },
+   {
+    "id": "camp",
+    "np": "a mountain camp",
+    "the": "the mountain camp",
+    "at": "at the mountain camp",
+    "has": [
+     "rare",
+     "glare",
+     "cold",
+     "wind"
+    ],
+    "lacks": [
+     "zoom",
+     "low"
+    ]
+   },
+   {
+    "id": "field",
+    "np": "a schoolyard field",
+    "the": "the schoolyard field",
+    "at": "in the schoolyard field",
+    "has": [
+     "glare",
+     "zoom"
+    ],
+    "lacks": [
+     "low",
+     "rare",
+     "cold"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "skill",
+    "clause": "The {mPl} with {F} were also used by older, more experienced students",
+    "tag": "the more experienced students",
+    "why": "experienced observers know how to get more out of any telescope",
+    "np": "the students' experience",
+    "same": "students",
+    "alt": "the students' experience",
+    "ruleOut": "Students of the same age and experience used both groups of telescopes",
+    "ruleTag": "the matched students"
+   },
+   {
+    "id": "sky",
+    "clause": "The {mPl} with {F} were also used on clearer nights",
+    "tag": "the clearer nights",
+    "why": "clear skies make the moon easier to see with any telescope",
+    "np": "the clearer skies",
+    "same": "nights",
+    "alt": "clearer skies",
+    "ruleOut": "Both groups of telescopes were used side by side on the same nights",
+    "ruleTag": "the shared nights"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} comes with a star map printed on its case.",
+    "tag": "the star map on the case",
+    "add": "{E} comes with a star map on its case",
+    "exp": "A star map helps students find constellations."
+   },
+   {
+    "text": "{CapE} was designed by a retired science teacher.",
+    "tag": "the telescope's designer",
+    "add": "{E} was designed by a retired teacher",
+    "exp": "Knowing the designer shows that the telescope was made with students in mind."
+   },
+   {
+    "text": "{CapE} fits inside a large backpack.",
+    "tag": "the telescope's size",
+    "add": "{E} fits inside a large backpack",
+    "exp": "Its small size makes the telescope easy to carry."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "Thessa",
+   "Calyra",
+   "Oberra",
+   "Nivane",
+   "Lumira",
+   "Pellora"
+  ],
+  "nameFmt": "{name}",
+  "descr": "moon that circles a fictional planet",
+  "at": "around {E}",
+  "outcome": "the moonlight that reaches the ground from {E}",
+  "stages": [
+   {
+    "id": "light",
+    "text": "Sunlight shines on {E} and lights up the half of the moon that faces the sun.",
+    "tag": "the lighting of the moon by the sun",
+    "from": "light from the sun",
+    "product": "sunlight on the moon's surface",
+    "less": "much less sunlight on the moon's surface",
+    "does": "sunlight lights up the half of the moon that faces the sun",
+    "why": "the moon makes no light of its own, so all of its brightness starts here",
+    "needs": "noshadow",
+    "needWhy": "the moon's surface is only lit when the planet's shadow is not blocking the sunlight",
+    "cause": "What lights up the surface of {E}?"
+   },
+   {
+    "id": "reflect",
+    "text": "The sunlit part of {E} reflects some of that light back toward the planet.",
+    "tag": "the reflection of sunlight by the moon",
+    "from": "sunlight on the moon's surface",
+    "product": "reflected moonlight",
+    "less": "much less reflected moonlight",
+    "does": "the moon's sunlit surface reflects light toward the planet",
+    "why": "reflected light is what observers on the planet see as moonlight"
+   },
+   {
+    "id": "reach",
+    "text": "Reflected moonlight from {E} passes through the planet's air and reaches the ground.",
+    "tag": "moonlight reaching the ground",
+    "from": "reflected moonlight",
+    "product": "moonlight on the ground",
+    "less": "much less moonlight on the ground",
+    "does": "the reflected light travels through the air to the ground",
+    "why": "this is the step where observers can finally see the moonlight",
+    "needs": "clear",
+    "needWhy": "moonlight only reaches the ground fully when clouds are not blocking it",
+    "cause": "What allows moonlight from {E} to reach the ground?"
+   }
+  ],
+  "conds": {
+   "noshadow": {
+    "clause": "the planet's shadow does not fall across the moon",
+    "absent": "the moon passes through the planet's shadow",
+    "np": "a moon outside the planet's shadow",
+    "tag": "the moon's position outside the shadow"
+   },
+   "clear": {
+    "clause": "the sky above the observers is clear",
+    "absent": "thick clouds cover the sky for weeks",
+    "np": "a clear sky",
+    "tag": "the clear sky"
+   }
+  },
+  "rates": [
+   {
+    "stage": "reflect",
+    "factor": {
+     "np": "the number of days since the new moon",
+     "short": "days",
+     "lo": 2,
+     "hi": 13
+    },
+    "setup": "students photographed {E} on different nights after a new moon",
+    "result": {
+     "clause": "{x} days after the new moon, about {y} percent of the moon's face looked lit",
+     "lo": 5,
+     "hi": 95
+    },
+    "claim": "more of the face of {E} looks lit as more days pass after the new moon",
+    "why": "as the moon moves along its orbit, observers see more of its sunlit half each night until it is full",
+    "confound": {
+     "text": "The later photo was also taken with a much longer camera exposure.",
+     "tag": "the longer exposure",
+     "why": "a longer exposure makes dim parts of the moon look brighter in a photo"
+    }
+   }
+  ],
+  "myths": [
+   "the moon makes its own light like a lamp",
+   "the planet's oceans glow and light up the moon",
+   "the moon's craters store sunlight from the night before"
+  ],
+  "otherFocus": [
+   "how mountains formed on {E}",
+   "why {E} has so many craters"
+  ],
+  "nonAnswers": [
+   "{CapE} is a rocky moon.",
+   "Many planets have moons."
+  ],
+  "off": [
+   {
+    "text": "{CapE} has a large crater shaped like a horseshoe.",
+    "tag": "the horseshoe crater",
+    "add": "{E} has a crater shaped like a horseshoe",
+    "exp": "The crater's shape makes it easy to recognize."
+   },
+   {
+    "text": "Astronomers named {E} after a character in an old story.",
+    "tag": "the moon's name",
+    "add": "{E} was named after a character in an old story",
+    "exp": "The name connects the moon to a story people remember."
+   }
+  ],
+  "background": [
+   "{CapE} takes about a month to travel once around its planet.",
+   "{CapE} is covered in gray dust and rocks.",
+   "The planet that {E} circles has a thick layer of air."
+  ]
+ },
+ "observation": {
+  "names": [
+   "Larkhill Observatory",
+   "Pinecrest Observatory",
+   "Ridgeview Observatory",
+   "Owl Hollow Observatory",
+   "Cedar Peak Observatory",
+   "Brightwater Observatory"
+  ],
+  "nameFmt": "{name}",
+  "descr": "small hilltop observatory",
+  "observers": [
+   "a group of student astronomers",
+   "two amateur astronomers",
+   "a team of science club members"
+  ],
+  "cases": [
+   {
+    "id": "dim",
+    "numbers": [
+     [
+      60,
+      100
+     ],
+     [
+      50,
+      200
+     ]
+    ],
+    "event": "One night during a full moon, observers at {E} watched the moon grow dim and turn a dull reddish color.",
+    "q": "What most likely caused the full moon to grow dim as seen from {E}?",
+    "restate": [
+     "The full moon grew dim as seen from {E}, and the question asks why.",
+     "Something caused the full moon to look dim and reddish from {E}."
+    ],
+    "answer": "Earth's shadow falling across the moon most likely caused the dimming, because the shadow blocked sunlight from reaching the moon's surface.",
+    "sum": "the evidence points to Earth's shadow as the cause of the dim, reddish moon.",
+    "myth": "The moon grew dim because it ran low on its own stored light.",
+    "mythClause": "the moon dims whenever it gets tired",
+    "cause": "Earth's shadow falling across the moon",
+    "alt": "thin clouds drifting overhead",
+    "altText": "Some visitors suggested that thin clouds drifting over {E} had dimmed the moon.",
+    "patternQ": "What pattern connects the dark curved edge and the brightness of the moon seen from {E}?",
+    "patternA": "The moon dimmed as a curved shadow moved across it and grew bright again once the shadow moved off, so the brightness followed the shadow.",
+    "patternSum": "the moon's brightness fell and rose as the shadow moved across it and away.",
+    "prediction": {
+     "text": "Earlier that evening, a visitor predicted that the dimming would be seen only from {E}.",
+     "claim": "the dimming would be seen only from {E}",
+     "whyNot": "observers in a faraway town saw the same dimming at the same time"
+    },
+    "observerNote": "The observers took a photograph of the moon every five minutes.",
+    "obs": [
+     {
+      "id": "chart",
+      "role": "onset",
+      "text": "An astronomy chart showed that Earth's shadow would cross the moon that night, and the dimming began right on schedule.",
+      "tag": "the astronomy chart",
+      "exps": [
+       "the dimming began exactly when the shadow was expected, which points to the shadow as the cause",
+       "a prediction that matches the event this closely ties the dimming to Earth's shadow",
+       "the timing lines up with the shadow, not with the weather"
+      ]
+     },
+     {
+      "id": "edge",
+      "role": "mechanism",
+      "text": "A curved, dark edge slowly moved across the face of the moon during the dimming.",
+      "tag": "the curved dark edge",
+      "exps": [
+       "a curved edge is the shape a round planet's shadow would make, which shows the shadow at work",
+       "this shows how the moon lost its light, since a shadow was blocking the sunlight",
+       "the moving edge is the shadow itself sliding across the moon"
+      ]
+     },
+     {
+      "id": "after",
+      "role": "reverse",
+      "text": "After about {n0} minutes, the dark edge moved off the moon and it shone brightly again.",
+      "tag": "the moon brightening again",
+      "exps": [
+       "the moon brightened as soon as the shadow moved away, which is what would happen if the shadow were the cause",
+       "the dimming ended when the shadow ended, so the two are linked",
+       "once the cause moved on, the effect disappeared"
+      ]
+     },
+     {
+      "id": "clear",
+      "role": "against",
+      "text": "Weather records showed that the sky over {E} was completely clear all night.",
+      "tag": "the weather records",
+      "exps": [
+       "clouds cannot have dimmed the moon on a night with no clouds",
+       "this rules out clouds, because the sky was clear",
+       "with no clouds overhead, the cloud explanation has nothing to stand on"
+      ]
+     },
+     {
+      "id": "town",
+      "role": "against",
+      "text": "Observers in a town {n1} kilometers away saw the same dimming at the same time.",
+      "tag": "the faraway observers",
+      "exps": [
+       "clouds are local, so they could not dim the moon in the same way for two distant places",
+       "this rules out clouds, since a faraway town saw the identical change",
+       "a change seen from far apart places fits a shadow on the moon itself, not something in the local sky"
+      ],
+      "predExps": [
+       "this directly contradicts the prediction, since a faraway town saw the dimming too",
+       "if the dimming could be seen only from {E}, the distant observers would have seen nothing unusual, but they did",
+       "the prediction expected a local event, and the observations show a widespread one"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how the observers at {E} choose which stars to study",
+   "why {E} was built on a hilltop"
+  ],
+  "nonAnswers": [
+   "{CapE} has a large telescope.",
+   "Many people enjoy watching the moon."
+  ],
+  "off": [
+   {
+    "text": "{CapE} holds a stargazing night for families every summer.",
+    "tag": "the family stargazing night",
+    "add": "{E} holds a family stargazing night",
+    "exp": "The event invites families to learn about the night sky."
+   },
+   {
+    "text": "The dome of {E} is painted bright white.",
+    "tag": "the white dome",
+    "add": "the dome of {E} is painted white",
+    "exp": "The white paint helps keep the dome cool in the daytime."
+   }
+  ]
+ }
+}

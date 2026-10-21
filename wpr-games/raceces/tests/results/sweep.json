@@ -1,0 +1,107 @@
+{
+  "total": 13230,
+  "byMode": {
+    "identify": 4529,
+    "rearrange": 3179,
+    "missing": 5522
+  },
+  "byLevel": {
+    "beginner": 4412,
+    "intermediate": 4410,
+    "advanced": 4408
+  },
+  "byModeLevel": {
+    "identify/beginner": 1511,
+    "rearrange/beginner": 1060,
+    "missing/beginner": 1841,
+    "identify/intermediate": 1504,
+    "rearrange/intermediate": 1062,
+    "missing/intermediate": 1844,
+    "identify/advanced": 1514,
+    "rearrange/advanced": 1057,
+    "missing/advanced": 1837
+  },
+  "byRole": {
+    "R": 1292,
+    "A": 1294,
+    "S": 1294,
+    "C": 3084,
+    "E": 3087
+  },
+  "byFamily": {
+    "process": 2754,
+    "cause-effect": 2191,
+    "function": 2329,
+    "evaluation": 1905,
+    "pattern": 746,
+    "adaptation": 1344,
+    "tradeoff": 750,
+    "scale": 1211
+  },
+  "bySubject": {
+    "Biology": 878,
+    "Energy and technology": 870,
+    "Earth science": 879,
+    "Engineering and architecture": 871,
+    "Libraries and education": 868,
+    "Astronomy": 898,
+    "Plants and animals": 880,
+    "Physics": 880,
+    "Transportation": 883,
+    "Chemistry": 885,
+    "Space exploration": 870,
+    "Inventions": 897,
+    "Environmental science": 901,
+    "Weather and climate": 890,
+    "Computer technology": 880
+  },
+  "signatures": {
+    "size": 1530
+  },
+  "prompts": {
+    "size": 572
+  },
+  "excerpts": {
+    "size": 886
+  },
+  "optionSets": {
+    "size": 1886
+  },
+  "orders": {
+    "size": 2221
+  },
+  "missingCorrectLongest": 854,
+  "missingTotal": 5522,
+  "missingPos": {
+    "o2": 1357,
+    "o1": 1420,
+    "o4": 1417,
+    "o3": 1328
+  },
+  "missingByRole": {
+    "R": {
+      "n": 789,
+      "longest": 35
+    },
+    "A": {
+      "n": 791,
+      "longest": 306
+    },
+    "C": {
+      "n": 1575,
+      "longest": 176
+    },
+    "E": {
+      "n": 1578,
+      "longest": 320
+    },
+    "S": {
+      "n": 789,
+      "longest": 17
+    }
+  },
+  "wrongAnswersTested": 40719,
+  "validationErrors": 0,
+  "gameplayTotal": 1440,
+  "buildTotal": 11790
+}

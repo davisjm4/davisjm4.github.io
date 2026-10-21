@@ -1,0 +1,2341 @@
+{
+  "ranAt": "2026-10-21T06:07:03.670Z",
+  "rows": [
+    {
+      "subject": "Biology",
+      "topic": "honeybees",
+      "title": "Honeybees and pollen",
+      "level": "beginner",
+      "configurations": 27,
+      "generatedConfigurations": 25,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 24,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9.666666666666666
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 11,
+        "distinctStructures": 9.666666666666666
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 24,
+        "evidence": 27,
+        "distinctClaims": 26.666666666666668,
+        "distinctStructures": 9.666666666666666
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 74,
+        "evidence": 77,
+        "distinctClaims": 26.666666666666668,
+        "distinctSurface": 46.333333333333336,
+        "distinctPassages": 93.33333333333333
+      }
+    },
+    {
+      "subject": "Biology",
+      "topic": "honeybees",
+      "title": "Honeybees and pollen",
+      "level": "intermediate",
+      "configurations": 29,
+      "generatedConfigurations": 27,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 26,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 3,
+        "distinctStructures": 11
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 9,
+        "distinctStructures": 11
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 21,
+        "evidence": 24,
+        "distinctClaims": 29,
+        "distinctStructures": 11
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 71,
+        "evidence": 74,
+        "distinctClaims": 29,
+        "distinctSurface": 59.333333333333336,
+        "distinctPassages": 91.66666666666667
+      }
+    },
+    {
+      "subject": "Biology",
+      "topic": "honeybees",
+      "title": "Honeybees and pollen",
+      "level": "advanced",
+      "configurations": 45,
+      "generatedConfigurations": 43,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 32,
+      "scenarioCombinations": 34,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 5,
+        "evidence": 18,
+        "distinctClaims": 45,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 55,
+        "evidence": 68,
+        "distinctClaims": 45,
+        "distinctSurface": 61.333333333333336,
+        "distinctPassages": 91.66666666666667
+      }
+    },
+    {
+      "subject": "Energy and technology",
+      "topic": "solar-panels",
+      "title": "Solar panels",
+      "level": "beginner",
+      "configurations": 27,
+      "generatedConfigurations": 25,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 24,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 6,
+        "distinctStructures": 8.333333333333334
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 23,
+        "evidence": 26,
+        "distinctClaims": 27,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 73,
+        "evidence": 76,
+        "distinctClaims": 27,
+        "distinctSurface": 48.333333333333336,
+        "distinctPassages": 96
+      }
+    },
+    {
+      "subject": "Energy and technology",
+      "topic": "solar-panels",
+      "title": "Solar panels",
+      "level": "intermediate",
+      "configurations": 29,
+      "generatedConfigurations": 27,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 26,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9.333333333333334
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 21,
+        "evidence": 24,
+        "distinctClaims": 29,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 71,
+        "evidence": 74,
+        "distinctClaims": 29,
+        "distinctSurface": 58,
+        "distinctPassages": 96.66666666666667
+      }
+    },
+    {
+      "subject": "Energy and technology",
+      "topic": "solar-panels",
+      "title": "Solar panels",
+      "level": "advanced",
+      "configurations": 45,
+      "generatedConfigurations": 43,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 32,
+      "scenarioCombinations": 34,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9.333333333333334
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 3,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 5,
+        "evidence": 18,
+        "distinctClaims": 45,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 55,
+        "evidence": 68,
+        "distinctClaims": 45,
+        "distinctSurface": 61.666666666666664,
+        "distinctPassages": 94.66666666666667
+      }
+    },
+    {
+      "subject": "Earth science",
+      "topic": "water-cycle",
+      "title": "The water cycle",
+      "level": "beginner",
+      "configurations": 24,
+      "generatedConfigurations": 22,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 21,
+      "scenarioCombinations": 17,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 26,
+        "evidence": 29,
+        "distinctClaims": 24,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 2,
+        "exactGenerated": 0,
+        "claim": 76,
+        "evidence": 79,
+        "distinctClaims": 24,
+        "distinctSurface": 45.333333333333336,
+        "distinctPassages": 93.66666666666667
+      }
+    },
+    {
+      "subject": "Earth science",
+      "topic": "water-cycle",
+      "title": "The water cycle",
+      "level": "intermediate",
+      "configurations": 29,
+      "generatedConfigurations": 27,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 26,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 6,
+        "distinctStructures": 8.666666666666666
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 11,
+        "distinctStructures": 9.666666666666666
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 23,
+        "evidence": 26,
+        "distinctClaims": 28.333333333333332,
+        "distinctStructures": 9.666666666666666
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 73,
+        "evidence": 76,
+        "distinctClaims": 28.333333333333332,
+        "distinctSurface": 48.333333333333336,
+        "distinctPassages": 95.66666666666667
+      }
+    },
+    {
+      "subject": "Earth science",
+      "topic": "water-cycle",
+      "title": "The water cycle",
+      "level": "advanced",
+      "configurations": 43,
+      "generatedConfigurations": 41,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 31,
+      "scenarioCombinations": 32,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 4,
+        "distinctStructures": 10
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 20,
+        "distinctClaims": 42.666666666666664,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 58,
+        "evidence": 70,
+        "distinctClaims": 42.666666666666664,
+        "distinctSurface": 59,
+        "distinctPassages": 86.33333333333333
+      }
+    },
+    {
+      "subject": "Engineering and architecture",
+      "topic": "arch-bridges",
+      "title": "Arch bridges",
+      "level": "beginner",
+      "configurations": 25,
+      "generatedConfigurations": 23,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 22,
+      "scenarioCombinations": 18,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 25,
+        "evidence": 28,
+        "distinctClaims": 25,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 75,
+        "evidence": 78,
+        "distinctClaims": 25,
+        "distinctSurface": 50,
+        "distinctPassages": 95.66666666666667
+      }
+    },
+    {
+      "subject": "Engineering and architecture",
+      "topic": "arch-bridges",
+      "title": "Arch bridges",
+      "level": "intermediate",
+      "configurations": 28,
+      "generatedConfigurations": 26,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 25,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 22,
+        "evidence": 25,
+        "distinctClaims": 28,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 72,
+        "evidence": 75,
+        "distinctClaims": 28,
+        "distinctSurface": 56.333333333333336,
+        "distinctPassages": 96.33333333333333
+      }
+    },
+    {
+      "subject": "Engineering and architecture",
+      "topic": "arch-bridges",
+      "title": "Arch bridges",
+      "level": "advanced",
+      "configurations": 41,
+      "generatedConfigurations": 39,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 29,
+      "scenarioCombinations": 31,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 4,
+        "distinctStructures": 10
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 3,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 9,
+        "evidence": 21,
+        "distinctClaims": 41,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 59,
+        "evidence": 71,
+        "distinctClaims": 41,
+        "distinctSurface": 60.666666666666664,
+        "distinctPassages": 90.66666666666667
+      }
+    },
+    {
+      "subject": "Libraries and education",
+      "topic": "public-libraries",
+      "title": "Public libraries",
+      "level": "beginner",
+      "configurations": 27,
+      "generatedConfigurations": 25,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 24,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 23,
+        "evidence": 26,
+        "distinctClaims": 27,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 73,
+        "evidence": 76,
+        "distinctClaims": 27,
+        "distinctSurface": 48,
+        "distinctPassages": 95.33333333333333
+      }
+    },
+    {
+      "subject": "Libraries and education",
+      "topic": "public-libraries",
+      "title": "Public libraries",
+      "level": "intermediate",
+      "configurations": 29,
+      "generatedConfigurations": 27,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 26,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 10
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 9,
+        "distinctStructures": 11
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 21,
+        "evidence": 24,
+        "distinctClaims": 29,
+        "distinctStructures": 11
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 71,
+        "evidence": 74,
+        "distinctClaims": 29,
+        "distinctSurface": 60,
+        "distinctPassages": 93.33333333333333
+      }
+    },
+    {
+      "subject": "Libraries and education",
+      "topic": "public-libraries",
+      "title": "Public libraries",
+      "level": "advanced",
+      "configurations": 44,
+      "generatedConfigurations": 42,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 31,
+      "scenarioCombinations": 33,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 3,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 6,
+        "evidence": 19,
+        "distinctClaims": 44,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 56,
+        "evidence": 69,
+        "distinctClaims": 44,
+        "distinctSurface": 56.333333333333336,
+        "distinctPassages": 91
+      }
+    },
+    {
+      "subject": "Astronomy",
+      "topic": "moon-phases",
+      "title": "Phases of the Moon",
+      "level": "beginner",
+      "configurations": 24,
+      "generatedConfigurations": 22,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 21,
+      "scenarioCombinations": 18,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 6,
+        "distinctStructures": 8.666666666666666
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 26,
+        "evidence": 29,
+        "distinctClaims": 24,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 76,
+        "evidence": 79,
+        "distinctClaims": 24,
+        "distinctSurface": 45.333333333333336,
+        "distinctPassages": 95.33333333333333
+      }
+    },
+    {
+      "subject": "Astronomy",
+      "topic": "moon-phases",
+      "title": "Phases of the Moon",
+      "level": "intermediate",
+      "configurations": 28,
+      "generatedConfigurations": 26,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 25,
+      "scenarioCombinations": 19,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 22,
+        "evidence": 25,
+        "distinctClaims": 28,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 72,
+        "evidence": 75,
+        "distinctClaims": 28,
+        "distinctSurface": 54.333333333333336,
+        "distinctPassages": 96.33333333333333
+      }
+    },
+    {
+      "subject": "Astronomy",
+      "topic": "moon-phases",
+      "title": "Phases of the Moon",
+      "level": "advanced",
+      "configurations": 41,
+      "generatedConfigurations": 39,
+      "authoredModels": 2,
+      "structures": 7,
+      "evidenceRelationships": 29,
+      "scenarioCombinations": 30,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 9,
+        "evidence": 21,
+        "distinctClaims": 41,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 59,
+        "evidence": 71,
+        "distinctClaims": 41,
+        "distinctSurface": 68,
+        "distinctPassages": 91.33333333333333
+      }
+    },
+    {
+      "subject": "Plants and animals",
+      "topic": "cactus",
+      "title": "Desert cacti",
+      "level": "beginner",
+      "configurations": 24,
+      "generatedConfigurations": 22,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 21,
+      "scenarioCombinations": 18,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 26,
+        "evidence": 29,
+        "distinctClaims": 24,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 76,
+        "evidence": 79,
+        "distinctClaims": 24,
+        "distinctSurface": 50.666666666666664,
+        "distinctPassages": 94.33333333333333
+      }
+    },
+    {
+      "subject": "Plants and animals",
+      "topic": "cactus",
+      "title": "Desert cacti",
+      "level": "intermediate",
+      "configurations": 29,
+      "generatedConfigurations": 27,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 26,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 5,
+        "distinctStructures": 9.333333333333334
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 21,
+        "evidence": 24,
+        "distinctClaims": 29,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 71,
+        "evidence": 74,
+        "distinctClaims": 29,
+        "distinctSurface": 60.333333333333336,
+        "distinctPassages": 93.66666666666667
+      }
+    },
+    {
+      "subject": "Plants and animals",
+      "topic": "cactus",
+      "title": "Desert cacti",
+      "level": "advanced",
+      "configurations": 44,
+      "generatedConfigurations": 42,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 30,
+      "scenarioCombinations": 33,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9.666666666666666
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 4,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 1,
+        "claim": 6,
+        "evidence": 20,
+        "distinctClaims": 44,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 56,
+        "evidence": 70,
+        "distinctClaims": 44,
+        "distinctSurface": 64,
+        "distinctPassages": 95
+      }
+    },
+    {
+      "subject": "Physics",
+      "topic": "levers",
+      "title": "Levers",
+      "level": "beginner",
+      "configurations": 25,
+      "generatedConfigurations": 23,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 22,
+      "scenarioCombinations": 18,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 3,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 25,
+        "evidence": 28,
+        "distinctClaims": 25,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 75,
+        "evidence": 78,
+        "distinctClaims": 25,
+        "distinctSurface": 48.333333333333336,
+        "distinctPassages": 96.33333333333333
+      }
+    },
+    {
+      "subject": "Physics",
+      "topic": "levers",
+      "title": "Levers",
+      "level": "intermediate",
+      "configurations": 28,
+      "generatedConfigurations": 26,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 25,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 3,
+        "distinctStructures": 11
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 9,
+        "distinctStructures": 11
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 22,
+        "evidence": 25,
+        "distinctClaims": 28,
+        "distinctStructures": 11
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 72,
+        "evidence": 75,
+        "distinctClaims": 28,
+        "distinctSurface": 56.666666666666664,
+        "distinctPassages": 90
+      }
+    },
+    {
+      "subject": "Physics",
+      "topic": "levers",
+      "title": "Levers",
+      "level": "advanced",
+      "configurations": 40,
+      "generatedConfigurations": 38,
+      "authoredModels": 2,
+      "structures": 7,
+      "evidenceRelationships": 28,
+      "scenarioCombinations": 30,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 6,
+        "distinctStructures": 8
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 12,
+        "distinctStructures": 8
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 10,
+        "evidence": 22,
+        "distinctClaims": 40,
+        "distinctStructures": 8
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 60,
+        "evidence": 72,
+        "distinctClaims": 40,
+        "distinctSurface": 71,
+        "distinctPassages": 93.66666666666667
+      }
+    },
+    {
+      "subject": "Transportation",
+      "topic": "bicycle-gears",
+      "title": "Bicycle gears",
+      "level": "beginner",
+      "configurations": 25,
+      "generatedConfigurations": 23,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 22,
+      "scenarioCombinations": 18,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 6,
+        "distinctStructures": 8.666666666666666
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 25,
+        "evidence": 28,
+        "distinctClaims": 25,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 75,
+        "evidence": 78,
+        "distinctClaims": 25,
+        "distinctSurface": 48,
+        "distinctPassages": 96.66666666666667
+      }
+    },
+    {
+      "subject": "Transportation",
+      "topic": "bicycle-gears",
+      "title": "Bicycle gears",
+      "level": "intermediate",
+      "configurations": 28,
+      "generatedConfigurations": 26,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 25,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 3,
+        "distinctStructures": 11
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 9,
+        "distinctStructures": 11
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 22,
+        "evidence": 25,
+        "distinctClaims": 28,
+        "distinctStructures": 11
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 72,
+        "evidence": 75,
+        "distinctClaims": 28,
+        "distinctSurface": 57.666666666666664,
+        "distinctPassages": 89
+      }
+    },
+    {
+      "subject": "Transportation",
+      "topic": "bicycle-gears",
+      "title": "Bicycle gears",
+      "level": "advanced",
+      "configurations": 43,
+      "generatedConfigurations": 41,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 31,
+      "scenarioCombinations": 33,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 4,
+        "distinctStructures": 10
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 3,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 1,
+        "claim": 7,
+        "evidence": 19,
+        "distinctClaims": 43,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 2,
+        "exactGenerated": 0,
+        "claim": 57,
+        "evidence": 69,
+        "distinctClaims": 43,
+        "distinctSurface": 60.666666666666664,
+        "distinctPassages": 94.66666666666667
+      }
+    },
+    {
+      "subject": "Chemistry",
+      "topic": "rust",
+      "title": "Rust and iron",
+      "level": "beginner",
+      "configurations": 24,
+      "generatedConfigurations": 22,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 21,
+      "scenarioCombinations": 17,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 26,
+        "evidence": 29,
+        "distinctClaims": 24,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 76,
+        "evidence": 79,
+        "distinctClaims": 24,
+        "distinctSurface": 45.333333333333336,
+        "distinctPassages": 95.66666666666667
+      }
+    },
+    {
+      "subject": "Chemistry",
+      "topic": "rust",
+      "title": "Rust and iron",
+      "level": "intermediate",
+      "configurations": 29,
+      "generatedConfigurations": 27,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 26,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 4,
+        "distinctStructures": 10.666666666666666
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 9,
+        "distinctStructures": 11
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 21,
+        "evidence": 24,
+        "distinctClaims": 29,
+        "distinctStructures": 11
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 71,
+        "evidence": 74,
+        "distinctClaims": 29,
+        "distinctSurface": 58.666666666666664,
+        "distinctPassages": 92.33333333333333
+      }
+    },
+    {
+      "subject": "Chemistry",
+      "topic": "rust",
+      "title": "Rust and iron",
+      "level": "advanced",
+      "configurations": 41,
+      "generatedConfigurations": 39,
+      "authoredModels": 2,
+      "structures": 7,
+      "evidenceRelationships": 28,
+      "scenarioCombinations": 30,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 3,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 9,
+        "evidence": 22,
+        "distinctClaims": 41,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 59,
+        "evidence": 72,
+        "distinctClaims": 41,
+        "distinctSurface": 62.333333333333336,
+        "distinctPassages": 90
+      }
+    },
+    {
+      "subject": "Space exploration",
+      "topic": "mars-rovers",
+      "title": "Mars rovers",
+      "level": "beginner",
+      "configurations": 27,
+      "generatedConfigurations": 25,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 24,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9.666666666666666
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 23,
+        "evidence": 26,
+        "distinctClaims": 27,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 73,
+        "evidence": 76,
+        "distinctClaims": 27,
+        "distinctSurface": 49.666666666666664,
+        "distinctPassages": 94
+      }
+    },
+    {
+      "subject": "Space exploration",
+      "topic": "mars-rovers",
+      "title": "Mars rovers",
+      "level": "intermediate",
+      "configurations": 29,
+      "generatedConfigurations": 27,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 26,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 21,
+        "evidence": 24,
+        "distinctClaims": 29,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 71,
+        "evidence": 74,
+        "distinctClaims": 29,
+        "distinctSurface": 60.666666666666664,
+        "distinctPassages": 95
+      }
+    },
+    {
+      "subject": "Space exploration",
+      "topic": "mars-rovers",
+      "title": "Mars rovers",
+      "level": "advanced",
+      "configurations": 45,
+      "generatedConfigurations": 43,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 32,
+      "scenarioCombinations": 34,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 3,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 5,
+        "evidence": 18,
+        "distinctClaims": 45,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 55,
+        "evidence": 68,
+        "distinctClaims": 45,
+        "distinctSurface": 60.666666666666664,
+        "distinctPassages": 95
+      }
+    },
+    {
+      "subject": "Inventions",
+      "topic": "printing-press",
+      "title": "The printing press",
+      "level": "beginner",
+      "configurations": 27,
+      "generatedConfigurations": 25,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 24,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 23,
+        "evidence": 26,
+        "distinctClaims": 27,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 73,
+        "evidence": 76,
+        "distinctClaims": 27,
+        "distinctSurface": 49.333333333333336,
+        "distinctPassages": 97.33333333333333
+      }
+    },
+    {
+      "subject": "Inventions",
+      "topic": "printing-press",
+      "title": "The printing press",
+      "level": "intermediate",
+      "configurations": 29,
+      "generatedConfigurations": 27,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 26,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 4,
+        "distinctStructures": 10.666666666666666
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 9,
+        "distinctStructures": 11
+      },
+      "in50": {
+        "exact": 1,
+        "claim": 21,
+        "evidence": 24,
+        "distinctClaims": 29,
+        "distinctStructures": 11
+      },
+      "in100": {
+        "exact": 2,
+        "exactGenerated": 0,
+        "claim": 71,
+        "evidence": 74,
+        "distinctClaims": 29,
+        "distinctSurface": 59.666666666666664,
+        "distinctPassages": 91.33333333333333
+      }
+    },
+    {
+      "subject": "Inventions",
+      "topic": "printing-press",
+      "title": "The printing press",
+      "level": "advanced",
+      "configurations": 45,
+      "generatedConfigurations": 43,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 32,
+      "scenarioCombinations": 34,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 4,
+        "distinctStructures": 10
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 3,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 5,
+        "evidence": 18,
+        "distinctClaims": 45,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 55,
+        "evidence": 68,
+        "distinctClaims": 45,
+        "distinctSurface": 61.666666666666664,
+        "distinctPassages": 92.33333333333333
+      }
+    },
+    {
+      "subject": "Environmental science",
+      "topic": "coral-reefs",
+      "title": "Coral reefs",
+      "level": "beginner",
+      "configurations": 24,
+      "generatedConfigurations": 22,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 21,
+      "scenarioCombinations": 17,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 4,
+        "distinctStructures": 10
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 27,
+        "evidence": 30,
+        "distinctClaims": 23.666666666666668,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 77,
+        "evidence": 80,
+        "distinctClaims": 23.666666666666668,
+        "distinctSurface": 46.666666666666664,
+        "distinctPassages": 90
+      }
+    },
+    {
+      "subject": "Environmental science",
+      "topic": "coral-reefs",
+      "title": "Coral reefs",
+      "level": "intermediate",
+      "configurations": 29,
+      "generatedConfigurations": 27,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 26,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 10.333333333333334
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 10,
+        "distinctStructures": 10.666666666666666
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 22,
+        "evidence": 25,
+        "distinctClaims": 28.333333333333332,
+        "distinctStructures": 10.666666666666666
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 72,
+        "evidence": 75,
+        "distinctClaims": 28.333333333333332,
+        "distinctSurface": 54,
+        "distinctPassages": 90
+      }
+    },
+    {
+      "subject": "Environmental science",
+      "topic": "coral-reefs",
+      "title": "Coral reefs",
+      "level": "advanced",
+      "configurations": 42,
+      "generatedConfigurations": 40,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 30,
+      "scenarioCombinations": 31,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 6,
+        "distinctStructures": 8.333333333333334
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 20,
+        "distinctClaims": 42,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 58,
+        "evidence": 70,
+        "distinctClaims": 42,
+        "distinctSurface": 59,
+        "distinctPassages": 92.66666666666667
+      }
+    },
+    {
+      "subject": "Weather and climate",
+      "topic": "lightning",
+      "title": "Lightning and thunder",
+      "level": "beginner",
+      "configurations": 25,
+      "generatedConfigurations": 23,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 22,
+      "scenarioCombinations": 18,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 4,
+        "distinctStructures": 10
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 25,
+        "evidence": 28,
+        "distinctClaims": 25,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 75,
+        "evidence": 78,
+        "distinctClaims": 25,
+        "distinctSurface": 47.333333333333336,
+        "distinctPassages": 93.33333333333333
+      }
+    },
+    {
+      "subject": "Weather and climate",
+      "topic": "lightning",
+      "title": "Lightning and thunder",
+      "level": "intermediate",
+      "configurations": 27,
+      "generatedConfigurations": 25,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 24,
+      "scenarioCombinations": 18,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 4,
+        "distinctStructures": 10.333333333333334
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 9,
+        "distinctStructures": 11
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 23,
+        "evidence": 26,
+        "distinctClaims": 27,
+        "distinctStructures": 11
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 73,
+        "evidence": 76,
+        "distinctClaims": 27,
+        "distinctSurface": 54.666666666666664,
+        "distinctPassages": 89.66666666666667
+      }
+    },
+    {
+      "subject": "Weather and climate",
+      "topic": "lightning",
+      "title": "Lightning and thunder",
+      "level": "advanced",
+      "configurations": 41,
+      "generatedConfigurations": 39,
+      "authoredModels": 2,
+      "structures": 7,
+      "evidenceRelationships": 29,
+      "scenarioCombinations": 30,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 9,
+        "evidence": 21,
+        "distinctClaims": 41,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 59,
+        "evidence": 71,
+        "distinctClaims": 41,
+        "distinctSurface": 62.666666666666664,
+        "distinctPassages": 89.66666666666667
+      }
+    },
+    {
+      "subject": "Computer technology",
+      "topic": "binary-numbers",
+      "title": "Binary numbers",
+      "level": "beginner",
+      "configurations": 25,
+      "generatedConfigurations": 23,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 22,
+      "scenarioCombinations": 18,
+      "sharedEvidenceAcrossStructures": 3,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 1,
+        "structureRepeats": 4,
+        "distinctStructures": 10
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 10,
+        "distinctStructures": 10
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 25,
+        "evidence": 28,
+        "distinctClaims": 25,
+        "distinctStructures": 10
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 75,
+        "evidence": 78,
+        "distinctClaims": 25,
+        "distinctSurface": 49,
+        "distinctPassages": 91.33333333333333
+      }
+    },
+    {
+      "subject": "Computer technology",
+      "topic": "binary-numbers",
+      "title": "Binary numbers",
+      "level": "intermediate",
+      "configurations": 28,
+      "generatedConfigurations": 26,
+      "authoredModels": 2,
+      "structures": 9,
+      "evidenceRelationships": 25,
+      "scenarioCombinations": 20,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 3,
+        "distinctStructures": 11
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 2,
+        "structureRepeats": 9,
+        "distinctStructures": 11
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 22,
+        "evidence": 25,
+        "distinctClaims": 28,
+        "distinctStructures": 11
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 72,
+        "evidence": 75,
+        "distinctClaims": 28,
+        "distinctSurface": 59,
+        "distinctPassages": 91.33333333333333
+      }
+    },
+    {
+      "subject": "Computer technology",
+      "topic": "binary-numbers",
+      "title": "Binary numbers",
+      "level": "advanced",
+      "configurations": 43,
+      "generatedConfigurations": 41,
+      "authoredModels": 2,
+      "structures": 8,
+      "evidenceRelationships": 30,
+      "scenarioCombinations": 33,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 5,
+        "distinctStructures": 9
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 3,
+        "structureRepeats": 11,
+        "distinctStructures": 9
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 7,
+        "evidence": 20,
+        "distinctClaims": 43,
+        "distinctStructures": 9
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 57,
+        "evidence": 70,
+        "distinctClaims": 43,
+        "distinctSurface": 60.333333333333336,
+        "distinctPassages": 94.66666666666667
+      }
+    }
+  ],
+  "allTopics": [
+    {
+      "14": {
+        "exact": 14,
+        "passage": 14,
+        "surface": 14,
+        "scenario": 14,
+        "claim": 14,
+        "evidence": 14,
+        "structure": 12,
+        "modeTarget": 10
+      },
+      "20": {
+        "exact": 20,
+        "passage": 20,
+        "surface": 20,
+        "scenario": 20,
+        "claim": 20,
+        "evidence": 20,
+        "structure": 14,
+        "modeTarget": 15
+      },
+      "50": {
+        "exact": 50,
+        "passage": 50,
+        "surface": 50,
+        "scenario": 50,
+        "claim": 50,
+        "evidence": 50,
+        "structure": 14,
+        "modeTarget": 17
+      },
+      "100": {
+        "exact": 100,
+        "passage": 100,
+        "surface": 96,
+        "scenario": 95,
+        "claim": 100,
+        "evidence": 100,
+        "structure": 14,
+        "modeTarget": 17
+      },
+      "500": {
+        "exact": 496,
+        "passage": 481,
+        "surface": 347,
+        "scenario": 307,
+        "claim": 380,
+        "evidence": 335,
+        "structure": 14,
+        "modeTarget": 17
+      },
+      "level": "beginner"
+    },
+    {
+      "14": {
+        "exact": 14,
+        "passage": 14,
+        "surface": 14,
+        "scenario": 14,
+        "claim": 14,
+        "evidence": 14,
+        "structure": 14,
+        "modeTarget": 11
+      },
+      "20": {
+        "exact": 20,
+        "passage": 20,
+        "surface": 20,
+        "scenario": 20,
+        "claim": 20,
+        "evidence": 20,
+        "structure": 15,
+        "modeTarget": 15
+      },
+      "50": {
+        "exact": 50,
+        "passage": 50,
+        "surface": 50,
+        "scenario": 48,
+        "claim": 50,
+        "evidence": 50,
+        "structure": 17,
+        "modeTarget": 17
+      },
+      "100": {
+        "exact": 100,
+        "passage": 100,
+        "surface": 97,
+        "scenario": 90,
+        "claim": 100,
+        "evidence": 98,
+        "structure": 17,
+        "modeTarget": 17
+      },
+      "500": {
+        "exact": 500,
+        "passage": 496,
+        "surface": 346,
+        "scenario": 327,
+        "claim": 428,
+        "evidence": 383,
+        "structure": 17,
+        "modeTarget": 17
+      },
+      "level": "intermediate"
+    },
+    {
+      "14": {
+        "exact": 14,
+        "passage": 14,
+        "surface": 14,
+        "scenario": 14,
+        "claim": 14,
+        "evidence": 14,
+        "structure": 14,
+        "modeTarget": 10
+      },
+      "20": {
+        "exact": 20,
+        "passage": 20,
+        "surface": 20,
+        "scenario": 20,
+        "claim": 20,
+        "evidence": 20,
+        "structure": 15,
+        "modeTarget": 15
+      },
+      "50": {
+        "exact": 50,
+        "passage": 50,
+        "surface": 50,
+        "scenario": 50,
+        "claim": 50,
+        "evidence": 49,
+        "structure": 16,
+        "modeTarget": 17
+      },
+      "100": {
+        "exact": 100,
+        "passage": 100,
+        "surface": 94,
+        "scenario": 98,
+        "claim": 100,
+        "evidence": 95,
+        "structure": 16,
+        "modeTarget": 17
+      },
+      "500": {
+        "exact": 500,
+        "passage": 499,
+        "surface": 427,
+        "scenario": 424,
+        "claim": 500,
+        "evidence": 372,
+        "structure": 16,
+        "modeTarget": 17
+      },
+      "level": "advanced"
+    },
+    {
+      "14": {
+        "exact": 14,
+        "passage": 14,
+        "surface": 14,
+        "scenario": 14,
+        "claim": 14,
+        "evidence": 14,
+        "structure": 14,
+        "modeTarget": 10
+      },
+      "20": {
+        "exact": 20,
+        "passage": 20,
+        "surface": 20,
+        "scenario": 20,
+        "claim": 20,
+        "evidence": 20,
+        "structure": 19,
+        "modeTarget": 14
+      },
+      "50": {
+        "exact": 50,
+        "passage": 50,
+        "surface": 50,
+        "scenario": 49,
+        "claim": 50,
+        "evidence": 49,
+        "structure": 31,
+        "modeTarget": 17
+      },
+      "100": {
+        "exact": 100,
+        "passage": 97,
+        "surface": 96,
+        "scenario": 98,
+        "claim": 100,
+        "evidence": 97,
+        "structure": 33,
+        "modeTarget": 17
+      },
+      "500": {
+        "exact": 500,
+        "passage": 495,
+        "surface": 384,
+        "scenario": 391,
+        "claim": 500,
+        "evidence": 438,
+        "structure": 33,
+        "modeTarget": 17
+      },
+      "level": "all"
+    }
+  ],
+  "skeleton": {
+    "configurationsSampled": 195,
+    "identicalWordingAcrossSeeds": 0
+  },
+  "structureTotals": {
+    "design-function": {
+      "family": "function",
+      "levels": [
+        "beginner"
+      ],
+      "configurations": 90
+    },
+    "design-feature-need": {
+      "family": "cause-effect",
+      "levels": [
+        "beginner"
+      ],
+      "configurations": 60
+    },
+    "design-setting-fit": {
+      "family": "adaptation",
+      "levels": [
+        "beginner"
+      ],
+      "configurations": 45
+    },
+    "design-test-result": {
+      "family": "numeric",
+      "levels": [
+        "beginner"
+      ],
+      "configurations": 60
+    },
+    "design-select-features": {
+      "family": "evaluation",
+      "levels": [
+        "intermediate"
+      ],
+      "configurations": 45
+    },
+    "design-removal": {
+      "family": "consequence",
+      "levels": [
+        "intermediate"
+      ],
+      "configurations": 60
+    },
+    "design-two-tests": {
+      "family": "pattern",
+      "levels": [
+        "intermediate"
+      ],
+      "configurations": 60
+    },
+    "design-benefit-drawback": {
+      "family": "tradeoff",
+      "levels": [
+        "intermediate"
+      ],
+      "configurations": 30
+    },
+    "design-compare-settings": {
+      "family": "comparison",
+      "levels": [
+        "intermediate"
+      ],
+      "configurations": 118
+    },
+    "design-priority": {
+      "family": "comparison",
+      "levels": [
+        "advanced"
+      ],
+      "configurations": 180
+    },
+    "design-tradeoff": {
+      "family": "tradeoff",
+      "levels": [
+        "advanced"
+      ],
+      "configurations": 38
+    },
+    "design-unfair-test": {
+      "family": "evaluation",
+      "levels": [
+        "advanced"
+      ],
+      "configurations": 120
+    },
+    "design-competing": {
+      "family": "competing-explanations",
+      "levels": [
+        "advanced"
+      ],
+      "configurations": 120
+    },
+    "process-sequence": {
+      "family": "process",
+      "levels": [
+        "beginner"
+      ],
+      "configurations": 31
+    },
+    "process-requirements": {
+      "family": "function",
+      "levels": [
+        "beginner"
+      ],
+      "configurations": 25
+    },
+    "process-cause": {
+      "family": "cause-effect",
+      "levels": [
+        "beginner"
+      ],
+      "configurations": 24
+    },
+    "process-condition-loss": {
+      "family": "consequence",
+      "levels": [
+        "intermediate"
+      ],
+      "configurations": 24
+    },
+    "process-rate": {
+      "family": "numeric",
+      "levels": [
+        "intermediate"
+      ],
+      "configurations": 16
+    },
+    "process-chain": {
+      "family": "cause-effect",
+      "levels": [
+        "advanced"
+      ],
+      "configurations": 24
+    },
+    "process-bottleneck": {
+      "family": "problem-solution",
+      "levels": [
+        "advanced"
+      ],
+      "configurations": 25
+    },
+    "process-rate-confound": {
+      "family": "evaluation",
+      "levels": [
+        "advanced"
+      ],
+      "configurations": 16
+    },
+    "observation-cause": {
+      "family": "cause-effect",
+      "levels": [
+        "beginner"
+      ],
+      "configurations": 15
+    },
+    "observation-pattern": {
+      "family": "pattern",
+      "levels": [
+        "intermediate"
+      ],
+      "configurations": 15
+    },
+    "observation-prediction": {
+      "family": "evaluation",
+      "levels": [
+        "intermediate"
+      ],
+      "configurations": 30
+    },
+    "observation-competing": {
+      "family": "competing-explanations",
+      "levels": [
+        "advanced"
+      ],
+      "configurations": 90
+    }
+  },
+  "totals": {
+    "kits": 45,
+    "generatedConfigurations": 1361,
+    "authoredModels": 90,
+    "structures": 25
+  }
+}

@@ -1,0 +1,549 @@
+{
+ "topicId": "printing-press",
+ "design": {
+  "kind": "printing press",
+  "kindPl": "printing presses",
+  "member": "press",
+  "memberPl": "presses",
+  "names": [
+   "brassquill",
+   "lettermoor",
+   "pagehaven",
+   "inkridge",
+   "typewright",
+   "quillstone",
+   "wordforge",
+   "folioharp"
+  ],
+  "descr": "invented printing machine",
+  "live": "works in",
+  "liveVerb": "works",
+  "home": "busy print shops",
+  "manyFmt": "Copies of {E} have been built in many places, including {s}.",
+  "goal": "print many clear pages quickly",
+  "otherGoals": [
+   "look impressive in a shop window",
+   "be moved easily between rooms"
+  ],
+  "myths": [
+   "write new stories by itself",
+   "print pages without any ink",
+   "copy whole books just by being placed next to them"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many kinds of printing machines.",
+   "{CapE} is made of wood and metal."
+  ],
+  "conds": {
+   "varied": {
+    "clause": "customers order many different pages",
+    "absent": "customers order the same page over and over",
+    "np": "orders for many different pages",
+    "tag": "the many different orders",
+    "risk": "carving a new wooden block for every page takes days"
+   },
+   "rush": {
+    "clause": "large orders must be finished quickly",
+    "absent": "there is no hurry to finish orders",
+    "np": "rushed large orders",
+    "tag": "the rushed orders",
+    "risk": "inking letters by hand is far too slow for a large order"
+   },
+   "thick": {
+    "clause": "customers want posters on thick, heavy paper",
+    "absent": "customers use only thin paper",
+    "np": "thick, heavy paper",
+    "tag": "the thick paper",
+    "risk": "light pressure leaves pale, patchy letters on thick paper"
+   },
+   "damp": {
+    "clause": "the air is damp for much of the year",
+    "absent": "the air is dry",
+    "np": "damp air",
+    "tag": "the damp air",
+    "risk": "pages stacked while the ink is still wet smear into each other"
+   },
+   "single": {
+    "clause": "many orders are for a single short notice",
+    "absent": "most orders are for long books",
+    "np": "orders for single short notices",
+    "tag": "the single short notices"
+   },
+   "small": {
+    "clause": "the workshop is small and crowded",
+    "absent": "the workshop has plenty of floor space",
+    "np": "a small, crowded workshop",
+    "tag": "the crowded workshop"
+   }
+  },
+  "features": [
+   {
+    "id": "type",
+    "np": "a set of movable metal letters",
+    "bare": "sets of movable metal letters",
+    "the": "the movable letters",
+    "short": "letters",
+    "pl": true,
+    "mech": "be rearranged to spell any page of text",
+    "benefit": "print many different pages without carving new blocks",
+    "cond": "varied",
+    "metric": {
+     "past": "printed",
+     "unit": "different pages",
+     "what": "per week",
+     "np": "different pages printed per week",
+     "cmp": "more different pages printed per week",
+     "better": "higher",
+     "lo": 5,
+     "hi": 60
+    },
+    "cost": {
+     "clause": "setting up the small letters takes time, which is wasted when an order is for a single short notice",
+     "cond": "single"
+    }
+   },
+   {
+    "id": "roller",
+    "np": "a leather ink roller",
+    "bare": "leather ink rollers",
+    "the": "the ink roller",
+    "short": "roller",
+    "pl": false,
+    "mech": "spread an even layer of ink across the letters",
+    "benefit": "print clear pages at high speed",
+    "cond": "rush",
+    "metric": {
+     "past": "printed",
+     "unit": "pages",
+     "what": "per hour",
+     "np": "pages printed per hour",
+     "cmp": "more pages printed per hour",
+     "better": "higher",
+     "lo": 40,
+     "hi": 250
+    }
+   },
+   {
+    "id": "lever",
+    "np": "a long lever that presses the paper down",
+    "bare": "long pressing levers",
+    "the": "the pressing lever",
+    "short": "lever",
+    "pl": false,
+    "mech": "push the paper against the inked letters with strong, even force",
+    "benefit": "print sharp letters on thick paper",
+    "cond": "thick",
+    "metric": {
+     "past": "produced",
+     "unit": "smudged pages",
+     "what": "per hundred",
+     "np": "smudged pages per hundred",
+     "cmp": "fewer smudged pages per hundred",
+     "better": "lower",
+     "lo": 2,
+     "hi": 30
+    }
+   },
+   {
+    "id": "racks",
+    "np": "tall racks for drying printed pages",
+    "bare": "tall drying racks",
+    "the": "the drying racks",
+    "short": "racks",
+    "pl": true,
+    "mech": "hold wet pages apart so air can dry them",
+    "benefit": "keep fresh pages from smearing",
+    "cond": "damp",
+    "metric": {
+     "past": "lost",
+     "unit": "pages",
+     "what": "to smearing each week",
+     "np": "pages lost to smearing",
+     "cmp": "fewer pages lost to smearing",
+     "better": "lower",
+     "lo": 2,
+     "hi": 40
+    },
+    "cost": {
+     "clause": "they take up a great deal of floor space, which is a problem in a small, crowded workshop",
+     "cond": "small"
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "news",
+    "np": "a riverside newspaper office",
+    "the": "the newspaper office",
+    "at": "at the newspaper office",
+    "has": [
+     "rush",
+     "damp"
+    ],
+    "lacks": [
+     "varied",
+     "thick",
+     "single",
+     "small"
+    ]
+   },
+   {
+    "id": "poster",
+    "np": "a city poster shop",
+    "the": "the poster shop",
+    "at": "at the poster shop",
+    "has": [
+     "thick",
+     "rush",
+     "small",
+     "single"
+    ],
+    "lacks": [
+     "varied",
+     "damp"
+    ]
+   },
+   {
+    "id": "books",
+    "np": "a university book workshop",
+    "the": "the book workshop",
+    "at": "at the book workshop",
+    "has": [
+     "varied",
+     "damp"
+    ],
+    "lacks": [
+     "rush",
+     "thick",
+     "single",
+     "small"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "printers",
+    "clause": "The {mPl} with {F} were also run by printers with many years of experience",
+    "tag": "the experienced printers",
+    "why": "experienced printers make fewer mistakes on any machine",
+    "np": "the printers' experience",
+    "same": "printers",
+    "alt": "more experienced printers",
+    "ruleOut": "The same printers took turns running both groups of presses",
+    "ruleTag": "the shared printers"
+   },
+   {
+    "id": "paper",
+    "clause": "The {mPl} with {F} were also given better-quality paper",
+    "tag": "the better paper",
+    "why": "better paper takes ink more cleanly on any press",
+    "np": "the better paper",
+    "same": "paper",
+    "alt": "better paper",
+    "ruleOut": "Both groups of presses used paper from the same supply",
+    "ruleTag": "the shared paper supply"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} is decorated with carved wooden flowers.",
+    "tag": "the carved flowers",
+    "add": "{E} is decorated with carved flowers",
+    "exp": "The carvings make the machine look handsome in a shop."
+   },
+   {
+    "text": "{CapE} was named after the town where it was first built.",
+    "tag": "the machine's name",
+    "add": "{E} was named after its home town",
+    "exp": "The name records where the machine first came from."
+   },
+   {
+    "text": "{CapE} makes a loud thump each time it prints a page.",
+    "tag": "the loud thump",
+    "add": "{E} thumps loudly with each page",
+    "exp": "The thump lets everyone in the shop hear the press at work."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "Wren Lane",
+   "Copperplate",
+   "Old Mill",
+   "Inkwater",
+   "Bellstone",
+   "Parchment Row"
+  ],
+  "nameFmt": "{name} Print Shop",
+  "article": "the",
+  "descr": "print shop in an old town",
+  "at": "at {E}",
+  "outcome": "the number of books finished each week at {E}",
+  "background": [
+   "{CapE} has printed books for more than fifty years.",
+   "Three printers work at {E} each day."
+  ],
+  "stages": [
+   {
+    "id": "set",
+    "text": "A printer at {E} arranges small metal letters in a frame to spell out a page.",
+    "tag": "the setting of the letters",
+    "from": "a handwritten page",
+    "product": "frames of arranged letters",
+    "pl": true,
+    "less": "far fewer frames of arranged letters",
+    "does": "a printer arranges metal letters in a frame to spell the page",
+    "why": "the arranged letters are what the press will print",
+    "needs": "sorted",
+    "needWhy": "a printer can only set a page quickly when the letters are sorted and easy to find",
+    "boost": {
+     "clause": "hire more workers to arrange letters",
+     "np": "hiring more workers to arrange letters"
+    },
+    "cause": "What allows printers at {E} to set pages quickly?"
+   },
+   {
+    "id": "ink",
+    "text": "The printer rolls ink over the letters and presses a sheet of paper onto them.",
+    "tag": "the inking and pressing",
+    "from": "frames of arranged letters",
+    "product": "printed sheets",
+    "pl": true,
+    "less": "far fewer printed sheets",
+    "does": "the printer inks the letters and presses paper onto them",
+    "why": "pressing the inked letters onto paper creates the printed sheets",
+    "needs": "ink",
+    "needWhy": "the letters only leave a mark on the paper when there is ink on them",
+    "boost": {
+     "clause": "buy a second press to print more sheets",
+     "np": "buying a second press"
+    },
+    "cause": "What allows {E} to print sheets?"
+   },
+   {
+    "id": "dry",
+    "text": "The printed sheets hang on lines at {E} until the ink dries, and then they are bound into books.",
+    "tag": "the drying and binding",
+    "from": "printed sheets",
+    "product": "finished books",
+    "pl": true,
+    "less": "far fewer finished books",
+    "does": "the sheets dry on lines and are bound into books",
+    "why": "binding the dry sheets is the step that produces finished books",
+    "needs": "dryair",
+    "needWhy": "the sheets can only be bound once the ink has fully dried",
+    "cause": "What allows the printed sheets at {E} to be bound into books?"
+   }
+  ],
+  "conds": {
+   "sorted": {
+    "clause": "the letters are sorted into labeled trays",
+    "absent": "the letter trays spill and the letters get mixed together",
+    "np": "sorted letter trays",
+    "tag": "the sorted trays"
+   },
+   "ink": {
+    "clause": "the shop has a good supply of thick ink",
+    "absent": "the shop runs out of ink",
+    "np": "a supply of ink",
+    "tag": "the ink supply"
+   },
+   "dryair": {
+    "clause": "the air in the shop is warm and dry",
+    "absent": "the shop stays cold and damp for weeks",
+    "np": "warm, dry air",
+    "tag": "the warm, dry air"
+   }
+  },
+  "rates": [
+   {
+    "stage": "dry",
+    "factor": {
+     "np": "the air temperature in the drying room",
+     "short": "warmth",
+     "lo": 10,
+     "hi": 30
+    },
+    "setup": "printers at {E} hung freshly printed sheets in rooms kept at different temperatures",
+    "result": {
+     "clause": "at {x} degrees Celsius, about {y} sheets dried each hour",
+     "lo": 10,
+     "hi": 80
+    },
+    "claim": "warmer air helps printed sheets at {E} dry faster",
+    "why": "warm air makes the liquid in the ink evaporate more quickly",
+    "confound": {
+     "text": "The warmer room also had a fan blowing across the sheets.",
+     "tag": "the fan",
+     "why": "moving air carries away the evaporating liquid and speeds up drying"
+    }
+   }
+  ],
+  "myths": [
+   "the books bind themselves overnight",
+   "the ink flows out of the paper on its own",
+   "the letters arrange themselves while the shop is closed"
+  ],
+  "otherFocus": [
+   "how {E} chooses which books to print",
+   "why {E} sells postcards"
+  ],
+  "nonAnswers": [
+   "{CapE} prints books and posters.",
+   "Printing has been done for hundreds of years."
+  ],
+  "off": [
+   {
+    "text": "{CapE} has a brass bell that rings when customers walk in.",
+    "tag": "the brass bell",
+    "add": "{E} has a bell that rings for customers",
+    "exp": "The bell lets the printers know when a customer arrives."
+   },
+   {
+    "text": "A gray cat sleeps in the front window of {E}.",
+    "tag": "the cat in the window",
+    "add": "a cat sleeps in the window of {E}",
+    "exp": "The cat makes the shop a friendly place to visit."
+   }
+  ],
+  "ref": "the shop"
+ },
+ "observation": {
+  "names": [
+   "Lantern Street",
+   "Quillmore",
+   "Hatchford",
+   "Burrow Lane",
+   "Thimble Row",
+   "Copperfield"
+  ],
+  "nameFmt": "{name} Press",
+  "descr": "small print shop",
+  "observers": [
+   "the shop's printers",
+   "a team of student historians",
+   "two visiting printers"
+  ],
+  "cases": [
+   {
+    "id": "pale",
+    "numbers": [
+     [
+      2,
+      8
+     ],
+     [
+      1,
+      3
+     ]
+    ],
+    "event": "One winter, pages printed at the fictional shop {E} came out pale and patchy.",
+    "q": "What most likely caused the pages printed at {E} to come out pale?",
+    "restate": [
+     "Pages printed at {E} came out pale and patchy, and the question asks why.",
+     "Something made the pages printed at {E} come out pale."
+    ],
+    "answer": "Ink that had thickened in the cold most likely caused the pale pages at {E}, because stiff ink does not spread evenly over the letters.",
+    "sum": "the evidence points to the cold, thickened ink as the reason the pages came out pale.",
+    "myth": "The pages at {E} came out pale because the paper forgot what it was supposed to print.",
+    "mythClause": "only pages printed on Mondays came out pale",
+    "cause": "the cold, thickened ink",
+    "alt": "worn-out metal letters",
+    "altText": "Some printers suggested that the metal letters at {E} had worn out.",
+    "patternQ": "What pattern connects the temperature of the shop and the pages printed at {E}?",
+    "patternA": "Pages came out pale while the shop was cold and dark again once the ink warmed up, so the print quality followed the temperature.",
+    "patternSum": "the pages were pale while the shop was cold and dark once it warmed up.",
+    "prediction": {
+     "text": "At the start of winter, an apprentice predicted that only the oldest letters at {E} would print pale pages.",
+     "claim": "only the oldest letters at {E} would print pale pages",
+     "whyNot": "a brand-new set of letters printed pages that were just as pale"
+    },
+    "observerNote": "The printers kept a sample of every page they printed.",
+    "obs": [
+     {
+      "id": "cold",
+      "role": "onset",
+      "text": "The pale pages began in the week the shop's stove broke and the room fell to about {n0} degrees Celsius.",
+      "tag": "the cold week",
+      "exps": [
+       "the pale pages began when the shop turned cold, which points to the cold as the cause",
+       "the timing ties the problem to the broken stove, not to the letters",
+       "a sudden change in quality that matches a sudden change in temperature suggests a link"
+      ]
+     },
+     {
+      "id": "stiff",
+      "role": "mechanism",
+      "text": "The printer found that the ink in its pot had become stiff and lumpy.",
+      "tag": "the stiff ink",
+      "exps": [
+       "stiff, lumpy ink cannot spread evenly, so the letters pick up only patches of it",
+       "this shows how the cold caused pale pages, since thick ink does not coat the letters well",
+       "lumpy ink explains the patchy printing directly"
+      ]
+     },
+     {
+      "id": "warm",
+      "role": "reverse",
+      "text": "After the stove was fixed and the ink warmed up, the pages came out dark and clear again within {n1} days.",
+      "tag": "the pages after the shop warmed up",
+      "exps": [
+       "the pages improved once the ink warmed, which is what would happen if cold ink were the cause",
+       "warming the shop fixed the problem, so the two are linked",
+       "once the cause was removed, the effect faded"
+      ]
+     },
+     {
+      "id": "newset",
+      "role": "against",
+      "text": "A brand-new set of metal letters printed pages that were just as pale.",
+      "tag": "the new set of letters",
+      "exps": [
+       "new letters cannot be worn out, yet they printed pale pages too",
+       "this rules out worn letters, because new ones had the same problem",
+       "if worn letters were the cause, the new set would have printed clearly"
+      ],
+      "predExps": [
+       "this directly contradicts the prediction, since new letters printed pale pages too",
+       "if only the oldest letters were the problem, the new set would print dark pages, but it did not",
+       "the prediction blamed old letters, but the problem stayed with new ones"
+      ]
+     },
+     {
+      "id": "edges",
+      "role": "against",
+      "text": "Under a magnifying glass, the edges of the old letters were still sharp and unworn.",
+      "tag": "the sharp letter edges",
+      "exps": [
+       "sharp edges show the letters were not worn out",
+       "this rules out worn letters, because their edges were still crisp",
+       "with the letters in good shape, the worn-letter explanation has nothing to stand on"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how {E} chooses its paper",
+   "why {E} prints wedding invitations"
+  ],
+  "nonAnswers": [
+   "{CapE} is a small print shop.",
+   "Printers at {E} work long hours."
+  ],
+  "off": [
+   {
+    "text": "{CapE} sells postcards of the town's old buildings.",
+    "tag": "the postcards",
+    "add": "{E} sells postcards",
+    "exp": "The postcards give visitors a souvenir of the town."
+   },
+   {
+    "text": "A painted sign shaped like a feather pen hangs above the door of {E}.",
+    "tag": "the feather pen sign",
+    "add": "a feather pen sign hangs above {E}",
+    "exp": "The sign helps customers find the shop."
+   }
+  ]
+ }
+}

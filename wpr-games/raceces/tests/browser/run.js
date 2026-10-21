@@ -76,7 +76,7 @@ async function run() {
   await page.waitForSelector('.task');
 
   group('Page load and navigation');
-  await check('title and h1 present', async () => (await page.title()) === 'RACECES Writing Games' && (await page.textContent('h1')) === 'RACECES Writing Games');
+  await check('title and h1 present', async () => (await page.title()) === 'RACECES Writing | WPR Games' && (await page.textContent('h1')) === 'RACECES Writing Games');
   await check('five navigation links', async () => (await page.$$('#nav a')).length === 5);
   await check('Mixed Practice is current on load', async () => (await page.getAttribute('#nav a[data-route=mixed]', 'aria-current')) === 'page');
   await check('source excerpt and writing question displayed', async () => (await page.textContent('.passage')).length > 300 && (await page.textContent('.question')).endsWith('?'));
@@ -378,7 +378,10 @@ async function run() {
     await page.click('input[name=level][value=all]');
     return ok;
   });
-  await check('difficulty preference persists in local storage', async () => (await page.evaluate(() => localStorage.getItem('raceces-writing-games:v1:prefs'))).indexOf('all') >= 0);
+  await check('difficulty preference persists in local storage', async () => {
+    const saved = JSON.parse(await page.evaluate(() => localStorage.getItem('raceces-writing-games:v2:settings')));
+    return !!saved && saved.level === 'all';
+  });
 
   // ---------- Session summary and reset ----------
   group('Session Summary and Reset');

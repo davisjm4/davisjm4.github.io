@@ -1,0 +1,537 @@
+{
+ "topicId": "lightning",
+ "design": {
+  "kind": "weather station",
+  "kindPl": "weather stations",
+  "member": "station",
+  "memberPl": "stations",
+  "names": [
+   "stormwatch",
+   "cloudmere",
+   "skyrill",
+   "galeview",
+   "ridgehorn",
+   "windhollow",
+   "rainbeck",
+   "mistcrown"
+  ],
+  "descr": "automatic weather station",
+  "live": "stands in",
+  "liveVerb": "stands",
+  "home": "remote hills and valleys",
+  "manyFmt": "Copies of {E} stand in many places, including {s}.",
+  "goal": "record accurate weather data in every season",
+  "otherGoals": [
+   "attract birds to its railing",
+   "be put together in a single afternoon"
+  ],
+  "myths": [
+   "stop storms from forming",
+   "catch lightning in a battery to store its power",
+   "predict next year's weather on its own"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many kinds of weather stations.",
+   "{CapE} has sensors, a mast, and a solar panel."
+  ],
+  "conds": {
+   "storms": {
+    "clause": "thunderstorms roll over the area almost every summer afternoon",
+    "absent": "thunderstorms are rare",
+    "np": "frequent thunderstorms",
+    "tag": "the frequent thunderstorms",
+    "risk": "a lightning strike with no safe path to the ground can wreck equipment"
+   },
+   "ice": {
+    "clause": "freezing rain coats everything in ice each winter",
+    "absent": "it rarely freezes",
+    "np": "freezing rain",
+    "tag": "the freezing rain",
+    "risk": "ice on a wind sensor locks it in place and stops its readings"
+   },
+   "trees": {
+    "clause": "tall trees surround the station",
+    "absent": "the land around the station is open",
+    "np": "tall surrounding trees",
+    "tag": "the tall trees",
+    "risk": "nearby trees slow the wind and make readings too low"
+   },
+   "sun": {
+    "clause": "bright sun beats down for hours each day",
+    "absent": "the sky is usually gray",
+    "np": "bright sunshine",
+    "tag": "the bright sunshine",
+    "risk": "a thermometer in direct sun reads hotter than the air around it"
+   },
+   "cloudy": {
+    "clause": "the station runs on a small solar panel through long cloudy spells",
+    "absent": "the station is connected to a steady power line",
+    "np": "long cloudy spells",
+    "tag": "the cloudy spells"
+   },
+   "gusts": {
+    "clause": "fierce gusts sweep across the area",
+    "absent": "the wind is usually gentle",
+    "np": "fierce gusts",
+    "tag": "the fierce gusts"
+   }
+  },
+  "features": [
+   {
+    "id": "rod",
+    "np": "a pointed copper lightning rod on its roof",
+    "bare": "copper lightning rods",
+    "the": "the lightning rod",
+    "short": "rod",
+    "pl": false,
+    "mech": "give lightning a safe path down to the ground",
+    "benefit": "survive lightning strikes without damage",
+    "cond": "storms",
+    "metric": {
+     "past": "suffered",
+     "unit": "damaged instruments",
+     "what": "per summer",
+     "np": "damaged instruments per summer",
+     "cmp": "fewer damaged instruments per summer",
+     "better": "lower",
+     "lo": 1,
+     "hi": 12
+    }
+   },
+   {
+    "id": "heater",
+    "np": "a heated cover over its wind sensor",
+    "bare": "heated sensor covers",
+    "the": "the heated cover",
+    "short": "cover",
+    "pl": false,
+    "mech": "melt ice before it can build up on the sensor",
+    "benefit": "keep measuring wind during freezing storms",
+    "cond": "ice",
+    "metric": {
+     "past": "lost",
+     "unit": "hours",
+     "what": "of wind readings each winter",
+     "np": "wind readings lost each winter",
+     "cmp": "fewer hours of wind readings lost",
+     "better": "lower",
+     "lo": 5,
+     "hi": 80
+    },
+    "cost": {
+     "clause": "it uses a lot of electricity, which matters when the station runs on a small solar panel through long cloudy spells",
+     "cond": "cloudy"
+    }
+   },
+   {
+    "id": "mast",
+    "np": "a tall mast that holds its wind sensor high",
+    "bare": "tall masts",
+    "the": "the tall mast",
+    "short": "mast",
+    "pl": false,
+    "mech": "lift the wind sensor above trees and buildings",
+    "benefit": "measure wind that is not blocked by obstacles",
+    "cond": "trees",
+    "metric": {
+     "past": "measured",
+     "unit": "percent",
+     "what": "of the true wind speed",
+     "np": "share of the true wind speed measured",
+     "cmp": "more of the true wind speed measured",
+     "better": "higher",
+     "lo": 50,
+     "hi": 98
+    },
+    "cost": {
+     "clause": "it sways when fierce gusts sweep across the area, which shakes the sensor and blurs its readings",
+     "cond": "gusts"
+    }
+   },
+   {
+    "id": "box",
+    "np": "a white, slatted box that shades its thermometer",
+    "bare": "white, slatted boxes",
+    "the": "the slatted box",
+    "short": "box",
+    "pl": false,
+    "mech": "keep direct sunlight off the thermometer while letting air flow through",
+    "benefit": "record the true air temperature on sunny days",
+    "cond": "sun",
+    "metric": {
+     "past": "read",
+     "unit": "degrees",
+     "what": "too high on sunny afternoons",
+     "np": "errors on sunny afternoons",
+     "cmp": "smaller errors on sunny afternoons",
+     "better": "lower",
+     "lo": 1,
+     "hi": 9
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "ridge",
+    "np": "a stormy mountain ridge",
+    "the": "the mountain ridge",
+    "at": "on the mountain ridge",
+    "has": [
+     "storms",
+     "ice",
+     "gusts"
+    ],
+    "lacks": [
+     "trees",
+     "sun",
+     "cloudy"
+    ]
+   },
+   {
+    "id": "forest",
+    "np": "a forest clearing",
+    "the": "the forest clearing",
+    "at": "in the forest clearing",
+    "has": [
+     "trees",
+     "storms"
+    ],
+    "lacks": [
+     "ice",
+     "sun",
+     "gusts"
+    ]
+   },
+   {
+    "id": "desert",
+    "np": "a sunny desert valley",
+    "the": "the desert valley",
+    "at": "in the desert valley",
+    "has": [
+     "sun",
+     "storms"
+    ],
+    "lacks": [
+     "ice",
+     "trees",
+     "cloudy"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "checks",
+    "clause": "The {mPl} with {F} were also checked by technicians every week",
+    "tag": "the weekly checkups",
+    "why": "frequent checkups catch and fix problems on any station",
+    "np": "the weekly checkups",
+    "same": "care",
+    "alt": "the weekly checkups",
+    "ruleOut": "Both groups of stations were checked on exactly the same schedule",
+    "ruleTag": "the shared checkup schedule"
+   },
+   {
+    "id": "spot",
+    "clause": "The {mPl} with {F} were also placed in a more sheltered spot",
+    "tag": "the sheltered spot",
+    "why": "a sheltered spot protects every part of a station from bad weather",
+    "np": "the sheltered spot",
+    "same": "location",
+    "alt": "a more sheltered location",
+    "ruleOut": "Both groups of stations stood side by side in the same spot",
+    "ruleTag": "the shared spot"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} sends its readings to a website every ten minutes.",
+    "tag": "the website updates",
+    "add": "{E} sends readings to a website",
+    "exp": "The website lets anyone check the latest weather readings."
+   },
+   {
+    "text": "{CapE} is painted white with a blue stripe.",
+    "tag": "the paint colors",
+    "add": "{E} is painted white with a blue stripe",
+    "exp": "The colors make the station easy to spot from a distance."
+   },
+   {
+    "text": "Birds sometimes perch on the railing of {E}.",
+    "tag": "the perching birds",
+    "add": "birds perch on the railing of {E}",
+    "exp": "The railing gives birds a high place to rest."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "Cragmoor",
+   "Ashpine",
+   "Dunmore",
+   "Hawkridge",
+   "Silverfall",
+   "Tamsin"
+  ],
+  "nameFmt": "{name} Valley",
+  "descr": "valley with frequent summer storms",
+  "at": "over {E}",
+  "outcome": "the amount of thunder heard over {E}",
+  "background": [
+   "Farmers in {E} grow corn and wheat.",
+   "Summer afternoons in {E} are often hot and humid."
+  ],
+  "stages": [
+   {
+    "id": "rise",
+    "text": "Warm, moist air over {E} rises quickly and carries water droplets high into a storm cloud.",
+    "tag": "the rising of warm air",
+    "from": "warm, moist air",
+    "product": "water carried high into the cloud",
+    "less": "much less water carried high into the cloud",
+    "does": "warm, moist air rises and carries water high into the cloud",
+    "why": "this lifts water into the cold upper part of the cloud",
+    "needs": "warm",
+    "needWhy": "air only rises fast when the ground beneath it is strongly heated",
+    "cause": "What causes water to be carried high into storm clouds over {E}?"
+   },
+   {
+    "id": "charge",
+    "text": "Near the cold top of the cloud, the droplets freeze, and colliding ice particles build up separate electric charges.",
+    "tag": "the building of electric charges",
+    "from": "water carried high into the cloud",
+    "product": "separated electric charges",
+    "pl": true,
+    "less": "far weaker electric charges",
+    "does": "freezing droplets collide and build up separate electric charges",
+    "why": "the separated charges store the energy that lightning will release",
+    "needs": "cold",
+    "needWhy": "charges only build up when ice particles form and collide in freezing air",
+    "cause": "What causes electric charges to build up in the storm clouds over {E}?"
+   },
+   {
+    "id": "flash",
+    "text": "When the charges grow strong enough, lightning flashes between the cloud and the ground.",
+    "tag": "the lightning flash",
+    "from": "separated electric charges",
+    "product": "lightning",
+    "less": "much less lightning",
+    "does": "the strong charges release a lightning flash",
+    "why": "the flash releases the stored energy all at once"
+   },
+   {
+    "id": "boom",
+    "text": "The lightning heats the air around it so quickly that the air expands with a boom, which people in {E} hear as thunder.",
+    "tag": "the making of thunder",
+    "from": "lightning",
+    "product": "thunder",
+    "less": "much less thunder",
+    "does": "the lightning heats the air so fast that it expands with a boom",
+    "why": "this boom is the thunder people hear"
+   }
+  ],
+  "conds": {
+   "warm": {
+    "clause": "the ground heats up strongly on summer afternoons",
+    "absent": "a cool, cloudy spell keeps the ground from heating up",
+    "np": "strongly heated ground",
+    "tag": "the heated ground"
+   },
+   "cold": {
+    "clause": "the tops of the storm clouds reach air far below freezing",
+    "absent": "the clouds stay low and never reach freezing air",
+    "np": "freezing air at the cloud tops",
+    "tag": "the freezing cloud tops"
+   }
+  },
+  "rates": [
+   {
+    "stage": "rise",
+    "factor": {
+     "np": "the afternoon ground temperature",
+     "short": "heat",
+     "lo": 20,
+     "hi": 40
+    },
+    "setup": "weather scientists measured storm clouds over {E} on afternoons with different ground temperatures",
+    "result": {
+     "clause": "on an afternoon when the ground reached {x} degrees Celsius, the storm cloud grew about {y} kilometers tall",
+     "lo": 3,
+     "hi": 15
+    },
+    "claim": "hotter ground helps storm clouds over {E} grow taller",
+    "why": "hotter ground warms the air above it, and warmer air rises faster and higher",
+    "confound": {
+     "text": "The hotter afternoon was also much more humid.",
+     "tag": "the humid afternoon",
+     "why": "humid air carries more water, which also helps storm clouds grow"
+    }
+   }
+  ],
+  "myths": [
+   "thunder is the sound of clouds bumping into each other",
+   "lightning comes from sparks in the mountains",
+   "the moon fills the clouds with electricity"
+  ],
+  "otherFocus": [
+   "how farmers in {E} protect their crops from hail",
+   "why {E} has so many wildflowers"
+  ],
+  "nonAnswers": [
+   "{CapE} has many storms in summer.",
+   "Thunder can be very loud."
+  ],
+  "off": [
+   {
+    "text": "Farmers in {E} grow corn and wheat.",
+    "tag": "the farm crops",
+    "add": "farmers in {E} grow corn and wheat",
+    "exp": "The crops show that the valley is used for farming."
+   },
+   {
+    "text": "A narrow river winds through the middle of {E}.",
+    "tag": "the winding river",
+    "add": "a river winds through {E}",
+    "exp": "The river gives the valley a source of fresh water."
+   }
+  ],
+  "ref": "the valley"
+ },
+ "observation": {
+  "names": [
+   "Hawk Hill Park",
+   "Bramble Knob",
+   "Signal Rise",
+   "Eagle Crest",
+   "Cobalt Hill",
+   "Thistle Mound"
+  ],
+  "nameFmt": "{name}",
+  "descr": "hilltop park",
+  "observers": [
+   "a team of student weather watchers",
+   "two park rangers",
+   "a group of storm researchers"
+  ],
+  "cases": [
+   {
+    "id": "strikes",
+    "numbers": [
+     [
+      5,
+      12
+     ],
+     [
+      80,
+      200
+     ]
+    ],
+    "event": "Over many years, lightning struck the hilltop at the fictional park {E} far more often than the land around it.",
+    "q": "What most likely caused lightning to strike the hilltop at {E} so often?",
+    "restate": [
+     "Lightning struck the hilltop at {E} unusually often, and the question asks why.",
+     "Something made the hilltop at {E} a frequent target for lightning."
+    ],
+    "answer": "The hilltop's height most likely caused it to be struck so often, because lightning tends to strike the tallest point in an area.",
+    "sum": "the evidence points to the hilltop's height as the reason it was struck so often.",
+    "myth": "The hilltop at {E} was struck often because lightning enjoys the view from high places.",
+    "mythClause": "lightning struck only on days with a full moon",
+    "cause": "the hilltop's height",
+    "alt": "iron in the hilltop's rocks",
+    "altText": "Some visitors suggested that iron in the hilltop's rocks was drawing lightning to {E}.",
+    "patternQ": "What pattern connects height and lightning strikes at {E}?",
+    "patternA": "The hilltop was struck often while it was the tallest point and rarely after a taller tower was built nearby, so the strikes followed the height.",
+    "patternSum": "the hilltop was struck often only while it was the tallest point.",
+    "prediction": {
+     "text": "Years ago, a visitor predicted that the radio mast in the valley below {E} would rarely be struck because it stands on low ground.",
+     "claim": "the radio mast in the valley below {E} would rarely be struck",
+     "whyNot": "the tall radio mast in the valley was struck almost as often as the hilltop"
+    },
+    "observerNote": "The rangers recorded every lightning strike they saw.",
+    "obs": [
+     {
+      "id": "count",
+      "role": "onset",
+      "text": "Over {n0} years, the hilltop at {E} was struck about twice a year, while the fields below were rarely struck.",
+      "tag": "the count of strikes",
+      "exps": [
+       "the hilltop was struck again and again while the lower fields were not, which points to its height",
+       "the difference between the hilltop and the low fields fits height as the cause",
+       "being high above the fields made the hilltop a frequent target"
+      ]
+     },
+     {
+      "id": "tallest",
+      "role": "mechanism",
+      "text": "The hilltop at {E} rises about {n1} meters above the valley and is the highest point for many kilometers.",
+      "tag": "the height of the hilltop",
+      "exps": [
+       "lightning tends to strike the tallest object around, and the hilltop is the tallest point for kilometers",
+       "this shows why the hilltop was a target, since its height gives lightning the shortest path to the ground",
+       "being the highest point explains how the hilltop drew so many strikes"
+      ]
+     },
+     {
+      "id": "tower",
+      "role": "reverse",
+      "text": "After a taller tower with a lightning rod was built on a nearby hill, strikes on the hilltop at {E} became rare.",
+      "tag": "the strikes after the tower was built",
+      "exps": [
+       "once the hilltop was no longer the tallest point, it stopped being struck often, which is what height would predict",
+       "the strikes moved to the taller tower, so height and strikes are linked",
+       "once the cause changed, the effect changed with it"
+      ]
+     },
+     {
+      "id": "rocks",
+      "role": "against",
+      "text": "Rock samples showed that the hilltop at {E} contains no more iron than the rocks in the valley.",
+      "tag": "the rock samples",
+      "exps": [
+       "if the hilltop has no extra iron, iron cannot explain why it was struck more often",
+       "this rules out iron, because the rocks were the same as in the valley",
+       "with no extra iron present, the iron explanation has nothing to stand on"
+      ]
+     },
+     {
+      "id": "mast",
+      "role": "against",
+      "text": "A tall radio mast in the valley below {E} was struck almost as often as the hilltop.",
+      "tag": "the radio mast",
+      "exps": [
+       "the mast stands on ordinary valley rock, yet it was struck often because it is tall",
+       "this rules out iron, since a tall object without iron-rich rock was struck just as much",
+       "height, not the rock beneath, is what the mast and the hilltop have in common"
+      ],
+      "predExps": [
+       "this directly contradicts the prediction, since the mast was struck almost as often as the hilltop",
+       "if low ground protected the mast, it would rarely be struck, but it was struck often",
+       "the prediction expected few strikes on the mast, and the observations show many"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how families use the picnic tables at {E}",
+   "why wildflowers bloom on the slopes of {E}"
+  ],
+  "nonAnswers": [
+   "{CapE} is a popular hilltop park.",
+   "Lightning is common during summer storms."
+  ],
+  "off": [
+   {
+    "text": "Families often fly kites from the hilltop at {E} on windy days.",
+    "tag": "the kite flying",
+    "add": "families fly kites at {E}",
+    "exp": "The open hilltop makes a good place to fly kites."
+   },
+   {
+    "text": "A stone path winds from the parking lot to the top of {E}.",
+    "tag": "the stone path",
+    "add": "a stone path leads to the top of {E}",
+    "exp": "The path makes it easy for visitors to reach the hilltop."
+   }
+  ]
+ }
+}

@@ -20,12 +20,18 @@
       badRestate: { text: d.badRestate, kind: 'wrongFocus', plays: 'R' }
     };
     if (pair) P.rep.text = d.rep[pair - 1];
+    // Compositional responses carry two more misconceptions. Authored models do not have
+    // these fields, so their candidate pools (and seeded output) are unchanged.
+    var cross = pair && d.crossExp ? { text: d.crossExp[pair - 1], kind: 'crossExp', plays: 'E' } : null;
+    var nonAnswer = d.nonAnswer ? { text: d.nonAnswer, kind: 'nonAnswer', plays: 'R' } : null;
     var out;
     if (role === 'R') out = [P.badRestate, P.bad, P.offFact, P.sumNew];
     else if (role === 'A') out = [Object.assign({ keep: true }, P.bad), P.badRestate, P.offFact, P.sumNew];
     else if (role === 'C') out = [Object.assign({ keep: true }, P.offFact), P.bad, P.offExp, P.sumNew];
     else if (role === 'E') out = [Object.assign({ keep: true }, P.rep), P.offExp, P.bad, P.sumNew];
     else out = [Object.assign({ keep: true }, P.sumNew), P.bad, P.offFact, P.offExp];
+    if (role === 'E' && cross) out.splice(1, 0, cross);
+    if (role === 'A' && nonAnswer) out.splice(1, 0, nonAnswer);
     return out;
   }
 
@@ -61,11 +67,31 @@
       return chosenFor(om).filter(function (c) { return c.text.length > correctLen; }).length;
     }
     var order0 = rng.shuffle(optional), omit = order0[0], bestGap = Infinity;
-    order0.forEach(function (om) {
-      var gap = Math.abs(rankWith(om) - targetRank);
-      if (gap < bestGap) { bestGap = gap; omit = om; }
-    });
-    var chosen = chosenFor(omit);
+    var chosen;
+    if (pool.length <= 4) {
+      order0.forEach(function (om) {
+        var gap = Math.abs(rankWith(om) - targetRank);
+        if (gap < bestGap) { bestGap = gap; omit = om; }
+      });
+      chosen = chosenFor(omit);
+    } else {
+      // Larger pools (compositional responses): keep the tested misconception(s) and choose the
+      // three distractors whose length rank best matches the target, preferring distinct kinds.
+      var keeps = pool.filter(function (p) { return p.keep; });
+      var best = null; bestGap = Infinity;
+      var need = 3 - keeps.length;
+      (function combos(start, acc) {
+        if (acc.length === need) {
+          var set = keeps.concat(acc);
+          var rank = set.filter(function (c) { return c.text.length > correctLen; }).length;
+          var gap = Math.abs(rank - targetRank);
+          if (gap < bestGap) { bestGap = gap; best = set; }
+          return;
+        }
+        for (var i = start; i < order0.length; i++) combos(i + 1, acc.concat([order0[i]]));
+      })(0, []);
+      chosen = best;
+    }
 
     var opts4 = chosen.map(function (c) { return { text: c.text, kind: c.kind, plays: c.plays, correct: false }; });
     opts4.push({ text: correctText, kind: 'correct', plays: role, correct: true });

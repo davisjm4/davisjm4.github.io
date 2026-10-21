@@ -1,0 +1,531 @@
+{
+ "topicId": "coral-reefs",
+ "design": {
+  "kind": "reef module",
+  "kindPl": "reef modules",
+  "member": "module",
+  "memberPl": "modules",
+  "names": [
+   "tidehaven",
+   "kelpcrest",
+   "shellward",
+   "saltbloom",
+   "finrest",
+   "coralnest",
+   "wavecradle",
+   "pearlstep"
+  ],
+  "descr": "artificial reef structure",
+  "live": "rests in",
+  "liveVerb": "rests",
+  "home": "shallow tropical waters",
+  "manyFmt": "Copies of {E} have been placed in many places, including {s}.",
+  "goal": "give young corals and fish a safe place to grow",
+  "otherGoals": [
+   "look attractive to visiting divers",
+   "be built from recycled materials"
+  ],
+  "myths": [
+   "make its own sunlight for the corals",
+   "pull fish toward it with magnets",
+   "turn seawater into fresh water for the fish"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many kinds of artificial reefs.",
+   "{CapE} sits underwater on the sea floor."
+  ],
+  "conds": {
+   "predators": {
+    "clause": "many large predator fish hunt in the area",
+    "absent": "few predator fish live nearby",
+    "np": "hungry predator fish",
+    "tag": "the predator fish",
+    "risk": "young fish with nowhere to hide are quickly eaten"
+   },
+   "larvae": {
+    "clause": "baby corals drift past in the water each spring",
+    "absent": "few baby corals drift past",
+    "np": "drifting baby corals",
+    "tag": "the drifting baby corals",
+    "risk": "baby corals that cannot grip a surface simply drift away"
+   },
+   "storms": {
+    "clause": "strong storms stir up the water several times a year",
+    "absent": "the water stays calm all year",
+    "np": "strong storms",
+    "tag": "the strong storms",
+    "risk": "a light structure can be rolled over and broken by storm waves"
+   },
+   "warm": {
+    "clause": "the water grows very warm in late summer",
+    "absent": "the water stays cool all year",
+    "np": "very warm summer water",
+    "tag": "the warm summer water",
+    "risk": "corals stressed by warm water can lose the tiny algae that feed them"
+   },
+   "offshore": {
+    "clause": "the reef site is far from shore",
+    "absent": "the reef site is close to shore",
+    "np": "a reef site far from shore",
+    "tag": "the faraway site"
+   },
+   "murky": {
+    "clause": "the water is murky with mud",
+    "absent": "the water is clear",
+    "np": "murky water",
+    "tag": "the murky water"
+   }
+  },
+  "features": [
+   {
+    "id": "spaces",
+    "np": "many small holes and hiding spaces",
+    "bare": "many hiding spaces",
+    "the": "the hiding spaces",
+    "short": "spaces",
+    "pl": true,
+    "mech": "give young fish places to hide from predators",
+    "benefit": "shelter young fish from larger hunters",
+    "cond": "predators",
+    "metric": {
+     "past": "sheltered",
+     "unit": "young fish",
+     "what": "per square meter",
+     "np": "young fish sheltered per square meter",
+     "cmp": "more young fish sheltered per square meter",
+     "better": "higher",
+     "lo": 5,
+     "hi": 50
+    }
+   },
+   {
+    "id": "surface",
+    "np": "a rough, stony surface",
+    "bare": "rough, stony surfaces",
+    "the": "the rough surface",
+    "short": "surface",
+    "pl": false,
+    "mech": "give drifting baby corals something to grip",
+    "benefit": "help new corals settle and grow",
+    "cond": "larvae",
+    "metric": {
+     "past": "gained",
+     "unit": "new corals",
+     "what": "in a year",
+     "np": "new corals gained in a year",
+     "cmp": "more new corals gained in a year",
+     "better": "higher",
+     "lo": 3,
+     "hi": 40
+    }
+   },
+   {
+    "id": "base",
+    "np": "a heavy concrete base",
+    "bare": "heavy concrete bases",
+    "the": "the heavy base",
+    "short": "base",
+    "pl": false,
+    "mech": "anchor the module firmly to the sea floor",
+    "benefit": "stay in place during strong storms",
+    "cond": "storms",
+    "metric": {
+     "past": "moved",
+     "unit": "centimeters",
+     "what": "during a storm",
+     "np": "movement during a storm",
+     "cmp": "less movement during a storm",
+     "better": "lower",
+     "lo": 2,
+     "hi": 60
+    },
+    "cost": {
+     "clause": "it is costly to carry out to sea by boat, which matters when the reef site is far from shore",
+     "cond": "offshore"
+    }
+   },
+   {
+    "id": "shell",
+    "np": "a pale outer shell",
+    "bare": "pale outer shells",
+    "the": "the pale shell",
+    "short": "shell",
+    "pl": false,
+    "mech": "reflect sunlight instead of soaking up heat",
+    "benefit": "keep the water around it from heating up",
+    "cond": "warm",
+    "metric": {
+     "past": "showed",
+     "unit": "pale corals",
+     "what": "after the hottest month",
+     "np": "pale corals after the hottest month",
+     "cmp": "fewer pale corals after the hottest month",
+     "better": "lower",
+     "lo": 2,
+     "hi": 30
+    },
+    "cost": {
+     "clause": "it gets stained by mud and stops reflecting well when the water is murky",
+     "cond": "murky"
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "lagoon",
+    "np": "a sheltered lagoon",
+    "the": "the sheltered lagoon",
+    "at": "in the sheltered lagoon",
+    "has": [
+     "larvae",
+     "warm"
+    ],
+    "lacks": [
+     "predators",
+     "storms",
+     "offshore",
+     "murky"
+    ]
+   },
+   {
+    "id": "edge",
+    "np": "an open-ocean reef edge",
+    "the": "the reef edge",
+    "at": "at the reef edge",
+    "has": [
+     "predators",
+     "storms",
+     "offshore"
+    ],
+    "lacks": [
+     "larvae",
+     "warm"
+    ]
+   },
+   {
+    "id": "harbor",
+    "np": "a busy harbor mouth",
+    "the": "the harbor mouth",
+    "at": "at the harbor mouth",
+    "has": [
+     "storms",
+     "larvae",
+     "murky"
+    ],
+    "lacks": [
+     "predators",
+     "warm",
+     "offshore"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "clean",
+    "clause": "The {mPl} with {F} were also placed in cleaner water",
+    "tag": "the cleaner water",
+    "why": "clean water helps corals and fish thrive on any structure",
+    "np": "the cleaner water",
+    "same": "water",
+    "alt": "cleaner water",
+    "ruleOut": "Both groups of modules were placed side by side in the same water",
+    "ruleTag": "the shared water"
+   },
+   {
+    "id": "year",
+    "clause": "The {mPl} with {F} were also placed in the water a year earlier",
+    "tag": "the extra year in the water",
+    "why": "a module that has been in the water longer has had more time to collect life",
+    "np": "the extra year in the water",
+    "same": "time",
+    "alt": "the extra year in the water",
+    "ruleOut": "All of the modules in both groups were placed in the water on the same day",
+    "ruleTag": "the shared starting day"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} is shaped a little like a giant beehive.",
+    "tag": "the beehive shape",
+    "add": "{E} is shaped like a giant beehive",
+    "exp": "The beehive shape makes the module easy to recognize."
+   },
+   {
+    "text": "Divers can spot {E} easily because a yellow buoy floats above it.",
+    "tag": "the yellow buoy",
+    "add": "a yellow buoy floats above {E}",
+    "exp": "The buoy helps divers find the module from the surface."
+   },
+   {
+    "text": "{CapE} was designed by a team of marine science students.",
+    "tag": "the module's designers",
+    "add": "{E} was designed by students",
+    "exp": "The designers' story shows that students can help protect reefs."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "Turtle",
+   "Moonstone",
+   "Blue Hollow",
+   "Seastar",
+   "Coralbell",
+   "Sandpiper"
+  ],
+  "nameFmt": "{name} Reef",
+  "descr": "coral reef near a tropical island",
+  "at": "on {E}",
+  "outcome": "the growth of {E}",
+  "background": [
+   "{CapE} stretches for several kilometers along the shore.",
+   "Hundreds of kinds of fish live on {E}."
+  ],
+  "stages": [
+   {
+    "id": "sugar",
+    "text": "Tiny algae living inside the corals of {E} use sunlight to make sugar.",
+    "tag": "the making of sugar by the algae",
+    "from": "sunlight",
+    "product": "sugar made by the algae",
+    "less": "much less sugar made by the algae",
+    "does": "algae inside the corals use sunlight to make sugar",
+    "why": "the sugar is the main source of food that the reef runs on",
+    "needs": "clear",
+    "needWhy": "the algae can only make sugar when sunlight reaches them through clear water",
+    "boost": {
+     "clause": "clear away seaweed so the algae get more sunlight",
+     "np": "clearing away seaweed"
+    },
+    "cause": "What allows the algae on {E} to make sugar?"
+   },
+   {
+    "id": "share",
+    "text": "The algae share much of that sugar with the coral animals of {E} that they live inside.",
+    "tag": "the sharing of sugar with the corals",
+    "from": "sugar made by the algae",
+    "product": "food for the corals",
+    "less": "much less food for the corals",
+    "does": "the algae share sugar with the corals",
+    "why": "this shared sugar feeds the corals",
+    "needs": "cool",
+    "needWhy": "corals only keep their algae, and the food the algae share, while the water is not too hot",
+    "cause": "What allows the corals of {E} to receive food from their algae?"
+   },
+   {
+    "id": "build",
+    "text": "Using that food, the corals of {E} build hard, stony skeletons that slowly add to the reef.",
+    "tag": "the building of stony skeletons",
+    "from": "food for the corals",
+    "product": "new reef rock",
+    "less": "much less new reef rock",
+    "does": "the corals use the food to build stony skeletons",
+    "why": "the skeletons pile up over many years to form the reef itself"
+   }
+  ],
+  "conds": {
+   "clear": {
+    "clause": "the water above the reef is clear enough for sunlight to reach the corals",
+    "absent": "mud from a flooded river clouds the water for weeks",
+    "np": "clear water",
+    "tag": "the clear water"
+   },
+   "cool": {
+    "clause": "the water stays at a comfortable temperature for the corals",
+    "absent": "the water stays unusually hot for weeks",
+    "np": "comfortably cool water",
+    "tag": "the comfortable water temperature"
+   }
+  },
+  "rates": [
+   {
+    "stage": "sugar",
+    "factor": {
+     "np": "the amount of sunlight reaching the corals",
+     "short": "sunlight",
+     "lo": 20,
+     "hi": 90
+    },
+    "setup": "divers measured corals on {E} that received different amounts of sunlight",
+    "result": {
+     "clause": "corals receiving {x} percent of the sunlight at the surface grew about {y} millimeters in a year",
+     "lo": 2,
+     "hi": 20
+    },
+    "claim": "more sunlight helps the corals of {E} grow faster",
+    "why": "more light lets the algae make more sugar, which gives the corals more food for growing",
+    "confound": {
+     "text": "The sunnier corals also sat where stronger currents carried in extra food.",
+     "tag": "the stronger currents",
+     "why": "currents bring extra tiny food particles that corals can catch"
+    }
+   }
+  ],
+  "myths": [
+   "the corals grow by eating sand",
+   "fish build the reef out of their own scales",
+   "the moon pulls new rock up from the sea floor"
+  ],
+  "otherFocus": [
+   "how sea turtles find their way to {E}",
+   "why divers like to visit {E}"
+  ],
+  "nonAnswers": [
+   "{CapE} is home to many colorful fish.",
+   "Coral reefs are found in warm oceans."
+  ],
+  "off": [
+   {
+    "text": "{CapE} is a popular place for snorkeling tours.",
+    "tag": "the snorkeling tours",
+    "add": "snorkeling tours visit {E}",
+    "exp": "The tours show that people enjoy seeing the reef."
+   },
+   {
+    "text": "Parrotfish on {E} scrape algae off rocks with their beak-like teeth.",
+    "tag": "the parrotfish",
+    "add": "parrotfish scrape algae off rocks on {E}",
+    "exp": "The parrotfish's teeth help it feed on the algae that coat the rocks."
+   }
+  ],
+  "ref": "the reef"
+ },
+ "observation": {
+  "names": [
+   "Turtle Lagoon",
+   "Coral Cove",
+   "Starfish Bay",
+   "Mango Lagoon",
+   "Reefwater Bay",
+   "Conch Cove"
+  ],
+  "nameFmt": "{name}",
+  "descr": "tropical island lagoon",
+  "observers": [
+   "a team of student divers",
+   "two marine scientists",
+   "a group of reef volunteers"
+  ],
+  "cases": [
+   {
+    "id": "pale",
+    "numbers": [
+     [
+      2,
+      3
+     ],
+     [
+      5,
+      9
+     ]
+    ],
+    "event": "One summer, many of the fictional corals at {E} turned pale white.",
+    "q": "What most likely caused the corals at {E} to turn pale?",
+    "restate": [
+     "The corals at {E} turned pale, and the question asks why.",
+     "Something caused the corals at {E} to lose their color one summer."
+    ],
+    "answer": "Unusually warm water most likely caused the corals at {E} to turn pale, because the heat made them lose the algae that give them color.",
+    "sum": "the evidence points to the unusually warm water as the reason the corals turned pale.",
+    "myth": "The corals at {E} turned pale because the fish painted them white.",
+    "mythClause": "only the corals near boats turned pale",
+    "cause": "the unusually warm water",
+    "alt": "pollution from a nearby river",
+    "altText": "Some visitors suggested that pollution from a nearby river had damaged the corals at {E}.",
+    "patternQ": "What pattern connects the water temperature and the color of the corals at {E}?",
+    "patternA": "The corals turned pale while the water was unusually warm and regained their color after the water cooled, so their color followed the temperature.",
+    "patternSum": "the corals turned pale while the water was warm and regained their color after the water cooled.",
+    "prediction": {
+     "text": "At the start of summer, a visitor predicted that the corals closest to the river at {E} would turn pale first.",
+     "claim": "the corals closest to the river at {E} would turn pale first",
+     "whyNot": "corals near the river and far from it turned pale at the same rate"
+    },
+    "observerNote": "The divers photographed the same corals every week.",
+    "obs": [
+     {
+      "id": "temp",
+      "role": "onset",
+      "text": "Water temperatures at {E} stayed about {n0} degrees Celsius warmer than usual for six weeks.",
+      "tag": "the warmer water",
+      "exps": [
+       "water that stays warmer than usual for weeks can stress corals until they lose their algae",
+       "the corals turned pale during a long warm spell, which fits a heat explanation",
+       "six weeks of warmer water is long enough to stress the corals"
+      ]
+     },
+     {
+      "id": "algae",
+      "role": "mechanism",
+      "text": "Under a microscope, the pale corals had far fewer of the tiny algae that normally live inside them.",
+      "tag": "the missing algae",
+      "exps": [
+       "corals get their color from their algae, so losing the algae makes them pale",
+       "this shows how the heat turned the corals pale, since stressed corals lose their algae",
+       "the missing algae explain the pale color directly"
+      ]
+     },
+     {
+      "id": "cool",
+      "role": "reverse",
+      "text": "When the water cooled in the fall, many of the corals at {E} regained their color within about {n1} weeks.",
+      "tag": "the corals regaining color",
+      "exps": [
+       "the corals recovered once the water cooled, which is what would happen if heat were the cause",
+       "the color came back when the heat went away, so the two are linked",
+       "once the cause faded, the effect faded too"
+      ]
+     },
+     {
+      "id": "river",
+      "role": "against",
+      "text": "Corals near the river mouth and corals far from it turned pale at the same rate.",
+      "tag": "the corals near and far from the river",
+      "exps": [
+       "if river pollution were the cause, corals near the river would have been hit harder",
+       "this rules out the river, because distance from it made no difference",
+       "an even pattern across the lagoon fits warm water better than a pollution source in one spot"
+      ],
+      "predExps": [
+       "this directly contradicts the prediction, since the corals near the river were not the first to turn pale",
+       "if the corals closest to the river turned pale first, they would show more damage, but they did not",
+       "the prediction expected a difference by distance that never appeared"
+      ]
+     },
+     {
+      "id": "tests",
+      "role": "against",
+      "text": "Water tests at {E} found no more pollution than usual.",
+      "tag": "the water tests",
+      "exps": [
+       "pollution cannot explain the damage if there was no extra pollution in the water",
+       "this rules out pollution, because the tests found normal water",
+       "with normal water quality, the pollution explanation has nothing to stand on"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how sea turtles nest near {E}",
+   "why tour boats stop at {E}"
+  ],
+  "nonAnswers": [
+   "{CapE} is a lagoon with many corals.",
+   "Divers visit {E} every week."
+  ],
+  "off": [
+   {
+    "text": "Sea turtles often rest in the calm water at {E}.",
+    "tag": "the resting sea turtles",
+    "add": "sea turtles rest at {E}",
+    "exp": "The calm water gives turtles a safe place to rest."
+   },
+   {
+    "text": "A wooden dock at {E} is used by glass-bottom tour boats.",
+    "tag": "the glass-bottom boats",
+    "add": "glass-bottom boats use a dock at {E}",
+    "exp": "The boats let visitors see the lagoon without getting wet."
+   }
+  ]
+ }
+}

@@ -1,0 +1,533 @@
+{
+ "topicId": "bicycle-gears",
+ "design": {
+  "kind": "bicycle",
+  "kindPl": "bicycles",
+  "member": "bike",
+  "memberPl": "bikes",
+  "names": [
+   "swiftwren",
+   "trailfox",
+   "hillhawk",
+   "cobblejack",
+   "riverdash",
+   "dustrunner",
+   "peakfinch",
+   "larkwheel"
+  ],
+  "descr": "delivery bicycle",
+  "live": "is ridden in",
+  "liveVerb": "is ridden",
+  "home": "towns and countryside",
+  "manyFmt": "Copies of {E} are ridden in many places, including {s}.",
+  "goal": "carry deliveries quickly and safely",
+  "otherGoals": [
+   "fold up to fit in a closet",
+   "look stylish on city streets"
+  ],
+  "myths": [
+   "pedal itself when the rider gets tired",
+   "float over every pothole",
+   "turn rain into extra speed"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many kinds of bicycles.",
+   "{CapE} has two wheels, pedals, and handlebars."
+  ],
+  "conds": {
+   "hills": {
+    "clause": "the roads climb steep hills",
+    "absent": "the roads are flat",
+    "np": "steep hills",
+    "tag": "the steep hills",
+    "risk": "pedaling up a steep hill in a high gear wears a rider out quickly"
+   },
+   "gravel": {
+    "clause": "many roads are covered in loose gravel",
+    "absent": "the roads are smoothly paved",
+    "np": "loose gravel roads",
+    "tag": "the gravel roads",
+    "risk": "thin, smooth tires slide on loose gravel"
+   },
+   "dark": {
+    "clause": "many deliveries happen after dark",
+    "absent": "all deliveries happen in daylight",
+    "np": "deliveries after dark",
+    "tag": "the deliveries after dark",
+    "risk": "drivers may not notice an unlit bike at night"
+   },
+   "load": {
+    "clause": "many packages are large and heavy",
+    "absent": "the packages are small and light",
+    "np": "large, heavy packages",
+    "tag": "the heavy packages",
+    "risk": "a rider without a rack must make several trips for one large order"
+   },
+   "speed": {
+    "clause": "deliveries must be made quickly along long paved streets",
+    "absent": "deliveries do not need to be rushed",
+    "np": "rushed deliveries on paved streets",
+    "tag": "the rushed deliveries"
+   },
+   "stairs": {
+    "clause": "riders often carry their bikes up stairs",
+    "absent": "riders never need to carry their bikes",
+    "np": "carrying bikes up stairs",
+    "tag": "the stairs"
+   }
+  },
+  "features": [
+   {
+    "id": "low",
+    "np": "a very low gear for climbing",
+    "bare": "very low climbing gears",
+    "the": "the low climbing gear",
+    "short": "gear",
+    "pl": false,
+    "mech": "turn the back wheel slowly with each easy push of the pedals",
+    "benefit": "climb steep hills without tiring the rider",
+    "cond": "hills",
+    "metric": {
+     "past": "climbed",
+     "unit": "hills",
+     "what": "before the riders needed a rest",
+     "np": "hills climbed before resting",
+     "cmp": "more hills climbed before resting",
+     "better": "higher",
+     "lo": 2,
+     "hi": 12
+    }
+   },
+   {
+    "id": "tires",
+    "np": "wide, knobby tires",
+    "bare": "wide, knobby tires",
+    "the": "the knobby tires",
+    "short": "tires",
+    "pl": true,
+    "mech": "grip loose gravel and dirt",
+    "benefit": "stay steady on unpaved roads",
+    "cond": "gravel",
+    "metric": {
+     "past": "had",
+     "unit": "skids",
+     "what": "per week",
+     "np": "skids per week",
+     "cmp": "fewer skids per week",
+     "better": "lower",
+     "lo": 1,
+     "hi": 15
+    },
+    "cost": {
+     "clause": "they rub hard against the road, which slows the bike when deliveries must be rushed along paved streets",
+     "cond": "speed"
+    }
+   },
+   {
+    "id": "lights",
+    "np": "bright front and rear lights",
+    "bare": "bright lights",
+    "the": "the bright lights",
+    "short": "lights",
+    "pl": true,
+    "mech": "make the bike easy to see in the dark",
+    "benefit": "ride safely after sunset",
+    "cond": "dark",
+    "metric": {
+     "past": "reported",
+     "unit": "close calls",
+     "what": "with cars per month",
+     "np": "close calls with cars",
+     "cmp": "fewer close calls with cars",
+     "better": "lower",
+     "lo": 1,
+     "hi": 12
+    }
+   },
+   {
+    "id": "rack",
+    "np": "a strong rear cargo rack",
+    "bare": "strong cargo racks",
+    "the": "the cargo rack",
+    "short": "rack",
+    "pl": false,
+    "mech": "hold heavy packages over the back wheel",
+    "benefit": "carry large loads in one trip",
+    "cond": "load",
+    "metric": {
+     "past": "carried",
+     "unit": "kilograms",
+     "what": "of packages per trip",
+     "np": "weight carried per trip",
+     "cmp": "more weight carried per trip",
+     "better": "higher",
+     "lo": 5,
+     "hi": 40
+    },
+    "cost": {
+     "clause": "it adds weight that riders feel when they must carry their bikes up stairs",
+     "cond": "stairs"
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "village",
+    "np": "a hilly mountain village",
+    "the": "the mountain village",
+    "at": "in the mountain village",
+    "has": [
+     "hills",
+     "gravel"
+    ],
+    "lacks": [
+     "dark",
+     "load",
+     "speed",
+     "stairs"
+    ]
+   },
+   {
+    "id": "farms",
+    "np": "a flat farm district",
+    "the": "the farm district",
+    "at": "in the farm district",
+    "has": [
+     "gravel",
+     "load"
+    ],
+    "lacks": [
+     "hills",
+     "dark",
+     "speed",
+     "stairs"
+    ]
+   },
+   {
+    "id": "city",
+    "np": "a busy city center",
+    "the": "the city center",
+    "at": "in the city center",
+    "has": [
+     "dark",
+     "load",
+     "speed",
+     "stairs"
+    ],
+    "lacks": [
+     "hills",
+     "gravel"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "riders",
+    "clause": "The {mPl} with {F} were also ridden by more experienced riders",
+    "tag": "the experienced riders",
+    "why": "experienced riders handle any bike better",
+    "np": "the riders' experience",
+    "same": "riders",
+    "alt": "more experienced riders",
+    "ruleOut": "The same riders took turns on both groups of bikes",
+    "ruleTag": "the shared riders"
+   },
+   {
+    "id": "weather",
+    "clause": "The {mPl} with {F} were also tested during drier weather",
+    "tag": "the drier weather",
+    "why": "dry weather makes riding easier on any bike",
+    "np": "the drier weather",
+    "same": "weather",
+    "alt": "drier weather",
+    "ruleOut": "Both groups were tested on the same days in the same weather",
+    "ruleTag": "the shared weather"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} has a bell shaped like a small fish.",
+    "tag": "the fish-shaped bell",
+    "add": "{E} has a fish-shaped bell",
+    "exp": "The bell gives the bike a playful look."
+   },
+   {
+    "text": "{CapE} comes in red, blue, and green.",
+    "tag": "the bike's colors",
+    "add": "{E} comes in three colors",
+    "exp": "Having several colors lets riders pick the one they like."
+   },
+   {
+    "text": "The shop that builds {E} also repairs old bikes.",
+    "tag": "the repair shop",
+    "add": "the same shop repairs old bikes",
+    "exp": "The repair work shows what else the shop does."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "swiftwren",
+   "trailfox",
+   "hillhawk",
+   "cobblejack",
+   "riverdash",
+   "dustrunner"
+  ],
+  "nameFmt": "{name} bicycle",
+  "article": "the",
+  "descr": "delivery bicycle",
+  "at": "on {E}",
+  "outcome": "the speed of {E}",
+  "stages": [
+   {
+    "id": "pedal",
+    "text": "The rider of {E} pushes on the pedals, which turn the front gear.",
+    "tag": "the turning of the front gear",
+    "from": "pushing on the pedals",
+    "product": "a turning front gear",
+    "less": "a much slower front gear",
+    "does": "the rider pushes the pedals and turns the front gear",
+    "why": "the rider's effort enters the bike through the pedals",
+    "boost": {
+     "clause": "train the riders to pedal harder",
+     "np": "training the riders to pedal harder"
+    }
+   },
+   {
+    "id": "chain",
+    "text": "A chain on {E} carries the turning motion from the front gear to a gear on the back wheel.",
+    "tag": "the chain carrying motion to the back gear",
+    "from": "a turning front gear",
+    "product": "a turning back gear",
+    "less": "much less turning of the back gear",
+    "does": "the chain carries the motion from the front gear to the back gear",
+    "why": "the chain connects the rider's effort to the wheel",
+    "needs": "chain",
+    "needWhy": "motion only passes from gear to gear when the chain grips the teeth without slipping",
+    "cause": "What allows the back gear of {E} to turn?"
+   },
+   {
+    "id": "roll",
+    "text": "The back gear turns the back wheel of {E}, and the tire pushes against the road to move the bike forward.",
+    "tag": "the wheel pushing against the road",
+    "from": "a turning back gear",
+    "product": "forward motion",
+    "less": "much less forward motion",
+    "does": "the back wheel turns and the tire pushes the bike forward",
+    "why": "this step turns spinning gears into actual movement down the road",
+    "needs": "grip",
+    "needWhy": "the turning wheel only moves the bike forward when the tire can push against the road without spinning",
+    "cause": "What moves {E} forward?"
+   }
+  ],
+  "conds": {
+   "chain": {
+    "clause": "the chain is oiled and fits tightly on the gears",
+    "absent": "the chain is rusty and keeps slipping off the gears",
+    "np": "a well-oiled, tight chain",
+    "tag": "the oiled chain"
+   },
+   "grip": {
+    "clause": "the tires grip the road firmly",
+    "absent": "a layer of ice covers the roads",
+    "np": "tires that grip the road",
+    "tag": "the tires' grip"
+   }
+  },
+  "rates": [
+   {
+    "stage": "chain",
+    "factor": {
+     "np": "the number of teeth on the front gear",
+     "short": "teeth",
+     "lo": 24,
+     "hi": 52
+    },
+    "setup": "a rider pedaled {E} at the same steady rhythm with front gears of different sizes",
+    "result": {
+     "clause": "with {x} teeth on the front gear, the bike traveled about {y} meters per minute",
+     "lo": 150,
+     "hi": 450
+    },
+    "claim": "a bigger front gear makes {E} travel faster at the same pedaling rhythm",
+    "why": "a bigger front gear pulls more chain with each turn of the pedals, so the back wheel spins more times",
+    "confound": {
+     "text": "The trial with the bigger gear also took place on a gentle downhill slope.",
+     "tag": "the downhill slope",
+     "why": "riding downhill adds speed no matter which gear is used"
+    }
+   }
+  ],
+  "myths": [
+   "the bell makes the wheels spin faster",
+   "the handlebars push the bike forward",
+   "the seat stores energy from every bump"
+  ],
+  "otherFocus": [
+   "how riders choose a helmet to wear on {E}",
+   "why {E} is painted in bright colors"
+  ],
+  "nonAnswers": [
+   "{CapE} has gears and a chain.",
+   "Many people ride bicycles to work."
+  ],
+  "off": [
+   {
+    "text": "{CapE} has a bell shaped like a small fish.",
+    "tag": "the fish-shaped bell",
+    "add": "{E} has a fish-shaped bell",
+    "exp": "The bell gives the bike a playful look."
+   },
+   {
+    "text": "{CapE} comes in red, blue, and green.",
+    "tag": "the bike's colors",
+    "add": "{E} comes in three colors",
+    "exp": "Having several colors lets riders pick the one they like."
+   }
+  ],
+  "background": [
+   "{CapE} is used to carry food deliveries across town.",
+   "{CapE} has a steel frame and two thin wheels."
+  ],
+  "ref": "the bike"
+ },
+ "observation": {
+  "names": [
+   "Harbor Loop",
+   "Canal Street",
+   "Mill Square",
+   "Orchard Way",
+   "Stone Market",
+   "Bridge Row"
+  ],
+  "nameFmt": "{name} Station",
+  "descr": "bike-share station",
+  "observers": [
+   "the bike-share mechanics",
+   "a team of student volunteers",
+   "two city workers"
+  ],
+  "cases": [
+   {
+    "id": "slow",
+    "numbers": [
+     [
+      6,
+      10
+     ],
+     [
+      2,
+      4
+     ]
+    ],
+    "event": "One autumn, riders at {E} reported that many of the fictional shared bikes felt slow and hard to pedal.",
+    "q": "What most likely made the shared bikes at {E} hard to pedal?",
+    "restate": [
+     "Riders at {E} said the bikes felt slow and hard to pedal, and the question asks why.",
+     "Something made the shared bikes at {E} hard to pedal."
+    ],
+    "answer": "Dry, rusty chains most likely made the bikes at {E} hard to pedal, because a dry chain wastes much of the rider's effort.",
+    "sum": "the evidence points to the dry, rusty chains as the reason the bikes were hard to pedal.",
+    "myth": "The bikes at {E} were hard to pedal because the riders had grown too tall for them.",
+    "mythClause": "only the red bikes were hard to pedal",
+    "cause": "the dry, rusty chains",
+    "alt": "underfilled tires",
+    "altText": "Some riders suggested that the tires on the bikes at {E} were not filled with enough air.",
+    "patternQ": "What pattern connects chain oiling and how the bikes at {E} felt?",
+    "patternA": "The bikes became hard to pedal after weeks without chain oiling and felt normal again once the chains were oiled, so the problem followed the chains.",
+    "patternSum": "how the bikes felt changed with the condition of their chains.",
+    "prediction": {
+     "text": "Earlier that year, a mechanic predicted that the tires would be the first part of the bikes at {E} to cause trouble.",
+     "claim": "the tires would be the first part of the bikes at {E} to cause trouble",
+     "whyNot": "every tire was still filled to the correct pressure"
+    },
+    "observerNote": "The mechanics recorded every rider complaint.",
+    "obs": [
+     {
+      "id": "weeks",
+      "role": "onset",
+      "text": "The complaints at {E} began about {n0} weeks after the last time the chains were oiled.",
+      "tag": "the time since the last oiling",
+      "exps": [
+       "chains dry out over weeks without oil, and the complaints began after a long gap",
+       "the timing ties the slow bikes to the missed oiling",
+       "a problem that grows after weeks without care points to something that needed regular care"
+      ]
+     },
+     {
+      "id": "rust",
+      "role": "mechanism",
+      "text": "A mechanic found that the chains on the slow bikes were dry and rusty.",
+      "tag": "the dry, rusty chains",
+      "exps": [
+       "a dry, rusty chain drags against the gears and wastes the rider's effort",
+       "this shows why pedaling felt hard, since a rough chain resists every turn",
+       "the condition of the chains explains the problem directly"
+      ]
+     },
+     {
+      "id": "oiled",
+      "role": "reverse",
+      "text": "After the mechanics oiled every chain, complaints at {E} dropped to almost zero within {n1} days.",
+      "tag": "the complaints after oiling",
+      "exps": [
+       "the problem went away once the chains were oiled, which is what would happen if the chains were the cause",
+       "fixing the chains fixed the bikes, so the two are linked",
+       "once the cause was removed, the effect faded"
+      ]
+     },
+     {
+      "id": "air",
+      "role": "against",
+      "text": "When the mechanics checked the tires at {E}, every tire was filled to the correct pressure.",
+      "tag": "the tire check",
+      "exps": [
+       "tires with the correct pressure cannot be the reason the bikes felt slow",
+       "this rules out the tires, because they were properly filled",
+       "with the tires in good shape, the tire explanation has nothing to stand on"
+      ],
+      "predExps": [
+       "this contradicts the prediction, since the tires were still in good shape",
+       "if the tires were the first part to fail, they would have been low, but they were fine",
+       "the prediction expected tire trouble that never appeared"
+      ]
+     },
+     {
+      "id": "newtires",
+      "role": "against",
+      "text": "Bikes that had just been given new tires felt just as slow as the others.",
+      "tag": "the bikes with new tires",
+      "exps": [
+       "new tires did not help, so the tires were not what made the bikes slow",
+       "this rules out the tires, since changing them made no difference",
+       "if tires were the cause, the bikes with new tires would have felt better"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how riders pay for bikes at {E}",
+   "why {E} was placed near the river"
+  ],
+  "nonAnswers": [
+   "{CapE} has twenty shared bikes.",
+   "Many people in the city ride shared bikes."
+  ],
+  "off": [
+   {
+    "text": "{CapE} has a map of nearby bike paths painted on a wall.",
+    "tag": "the painted map",
+    "add": "{E} has a painted map of bike paths",
+    "exp": "The map helps riders plan their trips."
+   },
+   {
+    "text": "A food truck often parks beside {E} at lunchtime.",
+    "tag": "the food truck",
+    "add": "a food truck parks beside {E}",
+    "exp": "The food truck makes the station a busy place at lunchtime."
+   }
+  ]
+ }
+}

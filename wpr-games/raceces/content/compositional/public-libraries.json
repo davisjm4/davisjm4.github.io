@@ -1,0 +1,545 @@
+{
+ "topicId": "public-libraries",
+ "design": {
+  "kind": "bookmobile",
+  "kindPl": "bookmobiles",
+  "member": "bookmobile",
+  "memberPl": "bookmobiles",
+  "names": [
+   "wanderleaf",
+   "pagewell",
+   "storyloop",
+   "quillcart",
+   "readwell",
+   "brightpage",
+   "lanternbook",
+   "maplecover"
+  ],
+  "descr": "library on wheels",
+  "live": "travels to",
+  "liveVerb": "travels",
+  "home": "small towns and farms",
+  "manyFmt": "Copies of {E} travel to many places, including {s}.",
+  "goal": "bring library books to people who live far from a library",
+  "otherGoals": [
+   "park safely on steep streets",
+   "keep its books dry in the rain"
+  ],
+  "myths": [
+   "print brand-new books while it drives",
+   "make books appear on readers' shelves at home",
+   "read every book aloud by itself"
+  ],
+  "nonAnswers": [
+   "{CapE} is one of many library vans.",
+   "{CapE} has shelves, a desk, and a door."
+  ],
+  "conds": {
+   "access": {
+    "clause": "many readers use wheelchairs or walkers",
+    "absent": "few readers have trouble with steps",
+    "np": "readers who cannot climb steps",
+    "tag": "the readers who use wheelchairs",
+    "risk": "a reader who cannot climb the van's steps cannot reach the books"
+   },
+   "nonet": {
+    "clause": "many homes have no internet connection",
+    "absent": "almost every home has fast internet",
+    "np": "homes without internet",
+    "tag": "the homes without internet",
+    "risk": "students without internet at home struggle to finish online homework"
+   },
+   "winter": {
+    "clause": "winters are long and bitterly cold",
+    "absent": "winters are mild",
+    "np": "bitterly cold winters",
+    "tag": "the cold winters",
+    "risk": "readers will not stay to choose books in a freezing van"
+   },
+   "langs": {
+    "clause": "families in the area speak many different languages",
+    "absent": "nearly everyone speaks the same language",
+    "np": "families who speak many languages",
+    "tag": "the many languages spoken",
+    "risk": "a family that cannot read the books on board has little reason to visit"
+   },
+   "narrow": {
+    "clause": "the streets are narrow and crowded with parked cars",
+    "absent": "there is plenty of wide, flat space to park",
+    "np": "narrow, crowded streets",
+    "tag": "the narrow streets"
+   },
+   "longdrive": {
+    "clause": "the van must drive long distances between stops",
+    "absent": "the stops are close together",
+    "np": "long drives between stops",
+    "tag": "the long drives"
+   }
+  },
+  "features": [
+   {
+    "id": "lift",
+    "np": "a fold-out wheelchair lift",
+    "bare": "fold-out wheelchair lifts",
+    "the": "the wheelchair lift",
+    "short": "lift",
+    "pl": false,
+    "mech": "raise visitors who use wheelchairs up into the van",
+    "benefit": "serve readers who cannot climb steps",
+    "cond": "access",
+    "metric": {
+     "past": "served",
+     "unit": "readers who use wheelchairs",
+     "what": "each month",
+     "np": "wheelchair users served each month",
+     "cmp": "more wheelchair users served each month",
+     "better": "higher",
+     "lo": 2,
+     "hi": 20
+    },
+    "cost": {
+     "clause": "it needs a wide, flat space beside the van to unfold, which is hard to find on narrow, crowded streets",
+     "cond": "narrow"
+    }
+   },
+   {
+    "id": "hotspot",
+    "np": "a wireless internet hotspot",
+    "bare": "wireless internet hotspots",
+    "the": "the internet hotspot",
+    "short": "hotspot",
+    "pl": false,
+    "mech": "let visitors connect laptops and phones to the internet",
+    "benefit": "help students who have no internet at home",
+    "cond": "nonet",
+    "metric": {
+     "past": "helped",
+     "unit": "students",
+     "what": "with online homework each week",
+     "np": "students helped with online homework",
+     "cmp": "more students helped with online homework",
+     "better": "higher",
+     "lo": 3,
+     "hi": 30
+    }
+   },
+   {
+    "id": "heater",
+    "np": "a strong heater and thick insulated walls",
+    "bare": "strong heaters",
+    "the": "the heater",
+    "short": "heater",
+    "pl": false,
+    "mech": "keep the inside of the van warm",
+    "benefit": "stay open on freezing winter days",
+    "cond": "winter",
+    "metric": {
+     "past": "stayed open",
+     "unit": "days",
+     "what": "each winter",
+     "np": "days open each winter",
+     "cmp": "more days open each winter",
+     "better": "higher",
+     "lo": 10,
+     "hi": 60
+    },
+    "cost": {
+     "clause": "it burns a great deal of fuel, which becomes expensive on long drives between stops",
+     "cond": "longdrive"
+    }
+   },
+   {
+    "id": "shelves",
+    "np": "shelves of books in several languages",
+    "bare": "shelves of books in several languages",
+    "the": "the multilingual shelves",
+    "short": "shelves",
+    "pl": true,
+    "mech": "offer stories and guides in readers' home languages",
+    "benefit": "serve families who speak many languages",
+    "cond": "langs",
+    "metric": {
+     "past": "checked out",
+     "unit": "books",
+     "what": "per visit",
+     "np": "books checked out per visit",
+     "cmp": "more books checked out per visit",
+     "better": "higher",
+     "lo": 10,
+     "hi": 60
+    }
+   }
+  ],
+  "settings": [
+   {
+    "id": "mountain",
+    "np": "a mountain mining town",
+    "the": "the mining town",
+    "at": "in the mining town",
+    "has": [
+     "winter",
+     "nonet"
+    ],
+    "lacks": [
+     "access",
+     "langs",
+     "narrow",
+     "longdrive"
+    ]
+   },
+   {
+    "id": "city",
+    "np": "a busy city neighborhood",
+    "the": "the city neighborhood",
+    "at": "in the city neighborhood",
+    "has": [
+     "langs",
+     "access",
+     "narrow"
+    ],
+    "lacks": [
+     "winter",
+     "nonet",
+     "longdrive"
+    ]
+   },
+   {
+    "id": "county",
+    "np": "a quiet farming county",
+    "the": "the farming county",
+    "at": "in the farming county",
+    "has": [
+     "nonet",
+     "access",
+     "longdrive"
+    ],
+    "lacks": [
+     "winter",
+     "langs",
+     "narrow"
+    ]
+   }
+  ],
+  "confounds": [
+   {
+    "id": "stops",
+    "clause": "The {mPl} with {F} also made twice as many stops each month",
+    "tag": "the extra stops",
+    "why": "more stops give more people a chance to visit",
+    "np": "the extra stops",
+    "same": "stops",
+    "alt": "the extra stops",
+    "ruleOut": "Both groups of bookmobiles made exactly the same number of stops",
+    "ruleTag": "the number of stops"
+   },
+   {
+    "id": "ads",
+    "clause": "The {mPl} with {F} were also advertised on the local radio station",
+    "tag": "the radio ads",
+    "why": "advertising tells more people when the van is coming",
+    "np": "the radio ads",
+    "same": "advertising",
+    "alt": "the radio ads",
+    "ruleOut": "Neither group of bookmobiles was advertised anywhere",
+    "ruleTag": "the lack of advertising"
+   }
+  ],
+  "off": [
+   {
+    "text": "{CapE} is painted with pictures of characters from old folk tales.",
+    "tag": "the folk tale paintings",
+    "add": "{E} is painted with folk tale characters",
+    "exp": "The paintings make the van easy for children to recognize."
+   },
+   {
+    "text": "The driver of {E} also leads a short story time at some stops.",
+    "tag": "the story time",
+    "add": "the driver of {E} leads a story time",
+    "exp": "The story time gives young children a reason to visit the van."
+   },
+   {
+    "text": "{CapE} carries about three thousand books.",
+    "tag": "the number of books on board",
+    "add": "{E} carries about three thousand books",
+    "exp": "The number of books shows how much the van can hold."
+   }
+  ]
+ },
+ "process": {
+  "names": [
+   "Maple Grove",
+   "Riverside",
+   "Elm Hollow",
+   "Brookfield",
+   "Cedar Point",
+   "Ashby"
+  ],
+  "nameFmt": "{name} Public Library",
+  "article": "the",
+  "descr": "small town library",
+  "at": "at {E}",
+  "outcome": "the number of requested books that reach readers at {E}",
+  "stages": [
+   {
+    "id": "request",
+    "text": "A reader at {E} fills out an online request for a book that the library does not own.",
+    "tag": "the sending of book requests",
+    "from": "a reader's wish for a book",
+    "product": "book requests",
+    "pl": true,
+    "less": "far fewer book requests",
+    "does": "a reader fills out an online request for the book",
+    "why": "the request tells the librarians exactly which book to find",
+    "needs": "form",
+    "needWhy": "readers can only send requests while the online form is working",
+    "boost": {
+     "clause": "put up posters telling readers how to request books",
+     "np": "putting up posters about book requests"
+    },
+    "cause": "What allows readers at {E} to send book requests?"
+   },
+   {
+    "id": "search",
+    "text": "A librarian at {E} searches a shared catalog to find another library that owns the book.",
+    "tag": "the search for another copy",
+    "from": "book requests",
+    "product": "located copies",
+    "pl": true,
+    "less": "far fewer located copies",
+    "does": "a librarian finds another library that owns the book",
+    "why": "finding a copy is what makes it possible to borrow the book",
+    "needs": "catalog",
+    "needWhy": "the librarian can only find another copy while the shared catalog is available",
+    "boost": {
+     "clause": "hire an extra librarian to search for books",
+     "np": "hiring an extra librarian"
+    },
+    "cause": "What allows librarians at {E} to find copies of requested books?"
+   },
+   {
+    "id": "deliver",
+    "text": "A delivery van carries the borrowed book from the other library to {E}.",
+    "tag": "the delivery of borrowed books",
+    "from": "located copies",
+    "product": "delivered books",
+    "pl": true,
+    "less": "far fewer delivered books",
+    "does": "a van carries the borrowed book to the library",
+    "why": "the delivery is the step that finally puts the book in the reader's hands",
+    "needs": "van",
+    "needWhy": "borrowed books can only arrive while the delivery van is running",
+    "cause": "What allows borrowed books to arrive at {E}?"
+   }
+  ],
+  "conds": {
+   "form": {
+    "clause": "the online request form works smoothly",
+    "absent": "the online request form stops working",
+    "np": "a working request form",
+    "tag": "the request form"
+   },
+   "catalog": {
+    "clause": "a shared catalog lists the books of every library in the region",
+    "absent": "the shared catalog goes offline for a month",
+    "np": "a working shared catalog",
+    "tag": "the shared catalog"
+   },
+   "van": {
+    "clause": "a delivery van runs between the libraries twice a week",
+    "absent": "the delivery van breaks down for weeks",
+    "np": "a running delivery van",
+    "tag": "the delivery van"
+   }
+  },
+  "rates": [
+   {
+    "stage": "deliver",
+    "factor": {
+     "np": "the number of delivery trips each week",
+     "short": "trips",
+     "lo": 1,
+     "hi": 7
+    },
+    "setup": "librarians compared months when the delivery van made different numbers of trips to {E}",
+    "result": {
+     "clause": "in a month with {x} delivery trips a week, about {y} requested books arrived",
+     "lo": 10,
+     "hi": 60
+    },
+    "claim": "more delivery trips let more requested books reach {E}",
+    "why": "each trip can only bring the books that are ready, so more trips move more books",
+    "confound": {
+     "text": "The month with more trips was also the month the library added a second librarian to handle requests.",
+     "tag": "the second librarian",
+     "why": "an extra librarian can find and send out more requested books"
+    }
+   }
+  ],
+  "myths": [
+   "books travel between libraries on their own",
+   "the catalog prints a new copy of each book",
+   "readers' wishes reach the shelves without any request"
+  ],
+  "otherFocus": [
+   "how {E} chooses books for its story hour",
+   "why {E} stays open late on Thursdays"
+  ],
+  "nonAnswers": [
+   "{CapE} lends books, movies, and games.",
+   "Readers at {E} borrow many books each week."
+  ],
+  "off": [
+   {
+    "text": "{CapE} has a small reading garden behind the building.",
+    "tag": "the reading garden",
+    "add": "{E} has a reading garden",
+    "exp": "The garden gives readers a quiet place to read outdoors."
+   },
+   {
+    "text": "A painted mural of a whale covers one wall of {E}.",
+    "tag": "the whale mural",
+    "add": "a whale mural covers one wall of {E}",
+    "exp": "The mural makes the library a bright, welcoming place."
+   }
+  ],
+  "ref": "the library"
+ },
+ "observation": {
+  "names": [
+   "Fernwood",
+   "Highbury",
+   "Larchmont",
+   "Pinedale",
+   "Crestview",
+   "Hollins"
+  ],
+  "nameFmt": "{name} Library",
+  "descr": "neighborhood library",
+  "observers": [
+   "the library staff",
+   "a team of student volunteers",
+   "two librarians"
+  ],
+  "cases": [
+   {
+    "id": "teens",
+    "numbers": [
+     [
+      40,
+      80
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "event": "One fall, the number of teenagers visiting {E} after school nearly doubled.",
+    "q": "What most likely caused more teenagers to visit {E} after school?",
+    "restate": [
+     "More teenagers began visiting {E} after school, and the question asks why.",
+     "Something caused teen visits at {E} to rise one fall."
+    ],
+    "answer": "The new homework help program most likely brought more teenagers to {E}, because it gave them free help with schoolwork.",
+    "sum": "the evidence points to the homework help program as the reason more teenagers visited.",
+    "myth": "More teenagers visited {E} because the library began giving away free bicycles.",
+    "mythClause": "the teenagers came only on weekends",
+    "cause": "the homework help program",
+    "alt": "the new coffee shop next door",
+    "altText": "Some staff members suggested that a new coffee shop next door was drawing teenagers to {E}.",
+    "patternQ": "What pattern connects the homework help program and teen visits at {E}?",
+    "patternA": "Teen visits rose when the homework help program started and fell during the weeks it was paused, so the visits followed the program.",
+    "patternSum": "teen visits rose and fell with the homework help program.",
+    "prediction": {
+     "text": "Before the fall, a staff member predicted that most new teen visitors to {E} would come on weekends.",
+     "claim": "most new teen visitors to {E} would come on weekends",
+     "whyNot": "the new visitors came mostly on weekday afternoons"
+    },
+    "observerNote": "The staff counted visitors at the door every day.",
+    "obs": [
+     {
+      "id": "jump",
+      "role": "onset",
+      "text": "Teen visits at {E} rose by about {n0} percent in the first month of a free homework help program.",
+      "tag": "the rise in teen visits",
+      "exps": [
+       "the rise came in the very first month of the program, which points to the program as the cause",
+       "a jump that size lined up with the start of the program, not with some later change",
+       "the timing ties the extra visits to the new program"
+      ]
+     },
+     {
+      "id": "sheet",
+      "role": "mechanism",
+      "text": "A sign-in sheet showed that most new teen visitors went straight to the homework help tables.",
+      "tag": "the sign-in sheet",
+      "exps": [
+       "the new visitors were using the program, which shows why they came",
+       "this shows what drew the teenagers in, since they headed right for the homework help",
+       "teenagers who go straight to the tutors are coming for the program"
+      ]
+     },
+     {
+      "id": "pause",
+      "role": "reverse",
+      "text": "During the {n1} weeks the program paused for tutor training, teen visits fell back to their old level.",
+      "tag": "the visits during the pause",
+      "exps": [
+       "the visits dropped as soon as the program stopped, which is what would happen if the program were the cause",
+       "when the program paused, the extra visitors disappeared, so the two are linked",
+       "once the cause was removed, the effect faded with it"
+      ]
+     },
+     {
+      "id": "shop",
+      "role": "against",
+      "text": "The coffee shop next door to {E} opened three months before the rise in teen visits.",
+      "tag": "the coffee shop's opening date",
+      "exps": [
+       "if the coffee shop were the cause, visits would have risen when it opened, not three months later",
+       "this rules out the coffee shop, because the timing does not match",
+       "a cause has to come right before its effect, and the shop opened much too early"
+      ]
+     },
+     {
+      "id": "days",
+      "role": "against",
+      "text": "Most new teen visitors came on weekday afternoons, when the homework help tables were open.",
+      "tag": "the timing of the visits",
+      "exps": [
+       "the coffee shop is open every day, but the visits matched only the program's hours",
+       "this rules out the coffee shop, since the visits followed the program's schedule",
+       "visits that line up with the program's hours point to the program, not the shop"
+      ],
+      "predExps": [
+       "this directly contradicts the prediction, since the new visitors came on weekdays, not weekends",
+       "if most new visitors came on weekends, the weekend counts would have risen, but they did not",
+       "the prediction expected weekend visitors who never appeared"
+      ]
+     }
+    ]
+   }
+  ],
+  "otherFocus": [
+   "how {E} chooses which magazines to order",
+   "why {E} hosts a chess club"
+  ],
+  "nonAnswers": [
+   "{CapE} is a busy neighborhood library.",
+   "Teenagers often visit libraries."
+  ],
+  "off": [
+   {
+    "text": "{CapE} has a sunny reading room with large windows.",
+    "tag": "the sunny reading room",
+    "add": "{E} has a sunny reading room",
+    "exp": "Large windows make the reading room bright and pleasant."
+   },
+   {
+    "text": "A chess club meets at {E} every Saturday morning.",
+    "tag": "the chess club",
+    "add": "a chess club meets at {E}",
+    "exp": "The chess club gives players a regular place to meet."
+   }
+  ]
+ }
+}
