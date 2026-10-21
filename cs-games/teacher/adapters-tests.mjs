@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 // String Lab intentionally ships its public engine as ordered classic scripts.
 const root=fileURLToPath(new URL("../../java-games/string-lab/js/",import.meta.url));
-for(const file of ["rng.js","words.js","java-ast.js","evaluator.js","difficulty.js","distractors.js","gen-helpers.js","families-predict.js","families-trace.js","families-index.js","families-expression.js","families-practice.js","generator.js"])
+for(const file of ["rng.js","words.js","java-ast.js","evaluator.js","difficulty.js","distractors.js","gen-helpers.js","families-predict.js","families-trace.js","families-index.js","families-expression.js","families-practice.js","generator.js","feedback.js"])
   vm.runInThisContext(readFileSync(root+file,"utf8"),{filename:file});
 const {sources,generateAssessmentItem}=await import(new URL("./adapters.js?adapter-test",import.meta.url));
 const passed=[];
@@ -48,4 +48,5 @@ check(manifest.includes('href="assessment.xml"'),"Manifest must reference assess
 check(chosen.every(q=>xml.includes(`choice_${q.correctIndex}</varequal>`)),"QTI response mapping missing");
 const sample=chosen.find(q=>q.code.includes("\n"));
 if(sample){const html=formatQuestionHtml(sample);check(html.includes("<pre><code>"),"Java should use preformatted HTML");check(html.includes("\n"),"Code line breaks should survive");}
-console.log(`Passed ${tested} validated adapter samples across ${actual.size} source/mode/difficulty combinations; mixed QTI sample contains ${chosen.length} items.`);
+const distribution=Object.fromEntries(sources.map(s=>[s.id,chosen.filter(q=>q.sourceId===s.id).length]));
+console.log(`Passed ${tested} validated adapter samples across ${actual.size} source/mode/difficulty combinations; mixed QTI sample contains ${chosen.length} items (${JSON.stringify(distribution)}).`);
