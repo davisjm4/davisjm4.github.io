@@ -574,6 +574,263 @@
         "notes": "Natural chain.",
         "policyNotNeeded": true
       }
+    },
+    {
+      "id": "MAT-D-004",
+      "skill": "mathematics",
+      "family": "mathematics.material-cost-estimation",
+      "pattern": "include-contingency-round-packs-and-flag-budget-gap",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "mathematics:job-task-math",
+        "mathematics:basic-calculations"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "seven-kits-use-2-point-4-meters",
+        "eight-percent-contingency",
+        "five-meter-rolls",
+        "budget-covers-three-rolls"
+      ],
+      "scenario": "A team is making seven identical kits. Each kit uses 2.4 meters of cable. The project plan requires an 8% allowance for cutting waste, and cable is sold in 5-meter rolls. The budget covers no more than three rolls.",
+      "prompt": "What should you report before the purchase is approved?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Calculate 18.144 meters, round up to four rolls, and report that the three-roll budget is insufficient.",
+          "why": "Seven times 2.4 is 16.8 meters; adding 8% gives 18.144. Four 5-meter rolls are required, so the stated budget constraint must be resolved before ordering.",
+          "requires": [
+            "seven-kits-use-2-point-4-meters",
+            "eight-percent-contingency",
+            "five-meter-rolls"
+          ]
+        },
+        {
+          "id": "acceptable",
+          "role": "acceptable",
+          "text": "Calculate the 16.8-meter base amount and ask the lead how the stated waste allowance should be handled before ordering.",
+          "why": "This catches the need to check the allowance but the scenario already states it applies; package rounding and budget remain unchecked.",
+          "misconception": "A useful preliminary step is mistaken for a complete plan."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Order three rolls because 16.8 meters is close to the 15 meters they contain.",
+          "why": "Three rolls provide only 15 meters, less than the base amount before waste is included.",
+          "misconception": "Choose the affordable quantity even when it cannot meet demand."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Order four rolls and charge the extra roll to another project so this budget stays within its limit.",
+          "why": "The quantity is correct, but moving a cost to an unrelated project misstates spending and bypasses approval.",
+          "misconception": "A correct quantity permits hiding a budget overage."
+        }
+      ],
+      "principle": "Calculate full need including contingency, round package counts up, and resolve budget conflicts transparently.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "policyNotNeeded": true,
+        "notes": "All quantities, the required waste allowance, package size, and budget cap are stated; the calculation and budget implication were checked independently."
+      }
+    },
+    {
+      "id": "MAT-N-002",
+      "skill": "mathematics",
+      "family": "mathematics.invoice-reconciliation",
+      "pattern": "recompute-line-items-before-approving-invoice",
+      "mode": "nextstep",
+      "difficulty": "advanced",
+      "concepts": [
+        "mathematics:personal-finance",
+        "mathematics:basic-calculations"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "invoice-12-units-at-18",
+        "invoice-two-hours-at-42",
+        "time-record-one-point-five-hours",
+        "tax-eight-percent"
+      ],
+      "scenario": "An invoice lists 12 units at $18 each and two labor hours at $42 per hour. The attached time record lists 1.5 hours. Tax is 8%, applied after materials and labor are combined. The invoice total is $324, and your role is to check it before approval.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Recalculate labor from the time record, compare the invoice, and resolve the discrepancy with the vendor or lead before approval.",
+          "why": "The record supports $63 labor, not $84. With $216 materials the subtotal is $279 and tax is $22.32, for $301.32; the $324 invoice needs clarification.",
+          "requires": [
+            "invoice-12-units-at-18",
+            "time-record-one-point-five-hours",
+            "tax-eight-percent"
+          ]
+        },
+        {
+          "id": "acceptable",
+          "role": "acceptable",
+          "text": "Ask the lead which source record should control the labor amount before you approve the invoice.",
+          "why": "This appropriately pauses approval, but calculating the difference first would make the question precise.",
+          "misconception": "A useful preliminary step is mistaken for a complete plan."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Approve $324 because the invoice's two-hour figure is more authoritative than the attached time record.",
+          "why": "Nothing in the scenario establishes that the invoice overrides its supporting record, and the figures do not reconcile.",
+          "misconception": "A vendor invoice is automatically correct."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Change the time record to two hours so it matches the invoice and submit both together.",
+          "why": "Changing a source record to hide a mismatch makes the record inaccurate instead of resolving the discrepancy.",
+          "misconception": "Records should be edited until their totals agree."
+        }
+      ],
+      "principle": "Recompute figures from supporting records and resolve discrepancies before authorizing payment.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "policyNotNeeded": true,
+        "notes": "The source time is 1.5 hours; materials total $216, labor $63, and 8% tax is $22.32, so the supported total is $301.32."
+      },
+      "timing": "The discrepancy must be resolved before approval, not after payment."
+    },
+    {
+      "id": "MAT-O-002",
+      "skill": "mathematics",
+      "family": "mathematics.multi-stage-budget-check",
+      "pattern": "calculate-contingency-packaging-budget-and-approval",
+      "mode": "order",
+      "difficulty": "advanced",
+      "concepts": [
+        "mathematics:job-task-math",
+        "mathematics:basic-calculations"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-process-and-prerequisites"
+      ],
+      "scenario": "A team needs 72 components for six stations. The plan calls for 10% spare stock; components arrive in boxes of 16, and the budget has a fixed maximum. Arrange the checks before an order is submitted.",
+      "prompt": "Put the calculations and approval steps in a sound order.",
+      "steps": [
+        {
+          "id": "base",
+          "text": "Confirm the number of stations and components needed at each station"
+        },
+        {
+          "id": "spare",
+          "text": "Calculate the 10% spare allowance and add it to the base quantity"
+        },
+        {
+          "id": "boxes",
+          "text": "Round the total up to whole boxes of 16 components"
+        },
+        {
+          "id": "budget",
+          "text": "Compare the full-box cost with the stated budget and raise any overage"
+        },
+        {
+          "id": "submit",
+          "text": "Submit the order only after the quantity and funding are confirmed"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "base",
+          "after": "spare",
+          "why": "The spare allowance is calculated from the confirmed base quantity."
+        },
+        {
+          "before": "spare",
+          "after": "boxes",
+          "why": "The package count must include contingency stock."
+        },
+        {
+          "before": "boxes",
+          "after": "budget",
+          "why": "The budget check needs the whole-box purchase quantity."
+        },
+        {
+          "before": "budget",
+          "after": "submit",
+          "why": "An overage must be resolved before an order is submitted."
+        }
+      ],
+      "alternatesReviewed": false,
+      "principle": "Calculate demand and contingency before converting to package units, then confirm cost and approval.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "All package and budget constraints are stated, and the sequence is supported by those dependencies.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "MAT-F-002",
+      "skill": "mathematics",
+      "family": "mathematics.audit-workplace-calculation",
+      "pattern": "verify-multiplication-in-line-item-estimate",
+      "mode": "find",
+      "difficulty": "advanced",
+      "concepts": [
+        "mathematics:job-task-math",
+        "mathematics:basic-calculations"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "document-context-and-evidence-stated"
+      ],
+      "scenario": "A purchase estimate lists calculations for a work order. The listed quantities and unit prices are part of the approved request.",
+      "prompt": "Select the line with the calculation error.",
+      "docType": "note",
+      "docTitle": "Estimate review",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Materials: 12 units × $4.50 = $54.00.",
+          "whyFine": "12 × $4.50 equals $54.00."
+        },
+        {
+          "id": "b",
+          "text": "Labor: 3.5 hours × $28.00 = $108.00.",
+          "problem": true,
+          "why": "3.5 × $28.00 equals $98.00, not $108.00; the reported labor amount is incorrect."
+        },
+        {
+          "id": "c",
+          "text": "Delivery: one flat fee of $16.00 is added once, not once per unit.",
+          "whyFine": "The stated flat fee is applied once."
+        },
+        {
+          "id": "d",
+          "text": "Subtotal: $54.00 + $98.00 + $16.00 = $168.00.",
+          "whyFine": "The three listed amounts sum to $168.00."
+        }
+      ],
+      "principle": "Check each calculation independently and keep units and flat fees distinct.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "The displayed arithmetic confirms one multiplication error; the subtotal correctly uses the corrected labor value.",
+        "policyNotNeeded": true
+      }
     }
   ]
 }

@@ -1,6 +1,29 @@
 {
   "templates": [
     {
+      "id": "SAF-N-002",
+      "skill": "workplace-safety",
+      "family": "workplace-safety.stop-and-report-new-hazard",
+      "pattern": "pause-work-and-alert-supervisor",
+      "mode": "nextstep",
+      "difficulty": "beginner",
+      "concepts": ["workplace-safety:identify-hazards"],
+      "contexts": "any",
+      "slots": {"role": "role", "workplace": "workplace", "lead": "lead"},
+      "facts": ["new-hazard-found", "lead-can-secure-area"],
+      "scenario": "You work as {role|a} at {workplace|a}. Before starting a routine task, you notice a spill beside the walkway. No one has fallen, but people could step in it.",
+      "prompt": "What is the best next step?",
+      "options": [
+        {"id":"best","role":"best","text":"Pause nearby work and alert your {lead} to the spill.","why":"The spill is an immediate hazard. Pausing nearby work and alerting the responsible person helps prevent someone from slipping.","requires":["new-hazard-found"]},
+        {"id":"d1","role":"distractor","text":"Step over the spill and finish your task before mentioning it.","why":"People could still walk into the spill while you work, so delaying the warning leaves the hazard in place.","misconception":"A hazard can wait when no one has fallen yet."},
+        {"id":"d2","role":"distractor","text":"Ask a coworker to watch the spill while you continue working nearby.","why":"A warning from one coworker does not make the area safe for everyone who may pass through.","misconception":"One person's informal warning is enough to control a hazard."},
+        {"id":"d3","role":"distractor","text":"Clean it up immediately without checking the workplace procedure or asking for help.","why":"The spill's contents and the correct cleanup process are not stated. Follow the workplace procedure and involve the responsible person.","misconception":"Any spill is safe to clean without checking what it contains."}
+      ],
+      "principle":"Pause when you identify a hazard, protect people from exposure, and report it through the stated workplace process.",
+      "review":{"status":"approved","checks":["scenario-sufficient","distractors-plausible","no-jurisdiction-claims"],"policyNotNeeded":true,"notes":"The scenario does not identify the spill contents, so the best response is to prevent exposure and alert the lead rather than assume a cleanup method."},
+      "timing":"The hazard should be controlled before routine work continues."
+    },
+    {
       "id": "SAF-O-001",
       "skill": "workplace-safety",
       "family": "workplace-safety.reporting-hazards",

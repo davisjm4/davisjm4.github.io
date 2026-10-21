@@ -1,6 +1,29 @@
 {
   "templates": [
     {
+      "id": "EFF-N-002",
+      "skill": "efficiency-and-productivity",
+      "family": "efficiency-and-productivity.clarify-conflicting-priorities",
+      "pattern": "confirm-deadline-and-priority-before-switching",
+      "mode": "nextstep",
+      "difficulty": "beginner",
+      "concepts": ["efficiency-and-productivity:prioritize-tasks"],
+      "contexts": "any",
+      "slots": {"role":"role","workplace":"workplace","lead":"lead"},
+      "facts": ["two-tasks-conflict","lead-sets-priority"],
+      "scenario": "You work as {role|a} at {workplace|a}. Your {lead} asks you to begin a new task while you are finishing another task that is due soon. The two tasks cannot both be finished at the same time.",
+      "prompt": "What should you do first?",
+      "options": [
+        {"id":"best","role":"best","text":"Briefly explain the deadline conflict and ask your {lead} which task should take priority.","why":"The two requests compete for the same time. Your {lead} can clarify priority so you can make a realistic plan.","requires":["lead-sets-priority"]},
+        {"id":"d1","role":"distractor","text":"Try to complete both tasks at once without telling anyone about the conflict.","why":"Splitting attention may reduce quality and leaves the deadline conflict unresolved.","misconception":"Working on more things at once always saves time."},
+        {"id":"d2","role":"distractor","text":"Ignore the new request and finish the earlier task without responding.","why":"The new request may be more urgent, and not responding prevents your {lead} from helping set priorities.","misconception":"The first task mentioned always has priority."},
+        {"id":"d3","role":"distractor","text":"Choose the task you prefer and tell your {lead} after both deadlines pass.","why":"Waiting can create avoidable missed deadlines. Raise the conflict before choosing so expectations can be set.","misconception":"A worker should privately guess which request matters more."}
+      ],
+      "principle":"When tasks conflict, make the time constraint visible and clarify priority before the conflict causes missed work.",
+      "review":{"status":"approved","checks":["scenario-sufficient","distractors-plausible"],"notes":"The scenario explicitly establishes a schedule conflict and identifies the lead as the person to clarify priorities."},
+      "timing":"Clarify the conflict before switching tasks."
+    },
+    {
       "id": "EFF-O-001",
       "skill": "efficiency-and-productivity",
       "family": "efficiency-and-productivity.planning-work",

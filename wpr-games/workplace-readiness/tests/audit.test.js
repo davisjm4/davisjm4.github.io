@@ -8,8 +8,7 @@ const LIB = require('../js/core/library.js');
 const { base } = require('./helpers.js');
 
 const SKILLS = base.skillOrder, MODES = ['decision', 'nextstep', 'order', 'find'], DIFFS = ['beginner', 'intermediate', 'advanced'];
-// Pinned, documented gaps: Advanced templates do not yet exist for these skills (see STANDARDS_COVERAGE.md).
-const KNOWN_NO_ADVANCED = ['career-and-life-management', 'mathematics', 'reading-and-writing'];
+const KNOWN_NO_ADVANCED = [];
 
 let sample;
 test.before(() => {
@@ -38,9 +37,52 @@ test('coverage: all 94 standards concepts and all 22 skills x 4 modes are author
   assert.deepEqual(Object.keys(base.conceptIds).filter(c => !covered.has(c)), []);
   SKILLS.forEach(s => MODES.forEach(m => assert.ok(base.templatesBySkill[s].some(t => t.mode === m), s + ' lacks ' + m)));
 });
-test('coverage: documented Advanced gaps are exactly the ones the docs state', () => {
+test('coverage: all skills now have Advanced content, including the three former gaps', () => {
   const missing = SKILLS.filter(s => !base.templatesBySkill[s].some(t => t.difficulty === 'advanced'));
   assert.deepEqual(missing.sort(), KNOWN_NO_ADVANCED.slice().sort());
+  ['career-and-life-management', 'mathematics', 'reading-and-writing'].forEach(s => {
+    const advanced = base.templatesBySkill[s].filter(t => t.difficulty === 'advanced');
+    assert.ok(advanced.length >= 4, s + ' needs the new advanced decision, next-step, ordering, and problem-finding set');
+    ['decision', 'nextstep', 'order', 'find'].forEach(m => assert.ok(advanced.some(t => t.mode === m), s + ' lacks advanced ' + m));
+  });
+});
+test('advanced gap expansion covers all required modes and independently correct mathematics', () => {
+  const added = ['CAR-D-003','CAR-N-002','CAR-O-002','CAR-F-002','MAT-D-004','MAT-N-002','MAT-O-002','MAT-F-002','RAW-D-003','RAW-N-002','RAW-O-002','RAW-F-002'];
+  added.forEach(id => assert.ok(base.templatesById[id], 'missing authored template ' + id));
+  assert.equal(Math.ceil((7 * 2.4 * 1.08) / 5), 4, 'seven kits require four 5-meter rolls after the stated waste allowance');
+  const subtotal = 12 * 18 + 1.5 * 42;
+  assert.equal(subtotal, 279);
+  assert.equal(subtotal * 0.08, 22.32);
+  assert.equal(subtotal * 1.08, 301.32);
+  assert.equal(3.5 * 28, 98);
+});
+test('missing beginner next-step coverage is restored with three different reasoning families', () => {
+  ['SAF-N-002', 'EFF-N-002', 'CUS-N-002'].forEach(id => {
+    const template = base.templatesById[id];
+    assert.ok(template, 'missing ' + id);
+    assert.equal(template.difficulty, 'beginner');
+    assert.equal(template.mode, 'nextstep');
+  });
+  assert.equal(new Set(['SAF-N-002', 'EFF-N-002', 'CUS-N-002'].map(id => base.templatesById[id].family)).size, 3);
+});
+test('quality sample: 1,000 seeded challenges per mode and difficulty validate and grade correctly', () => {
+  MODES.forEach(mode => DIFFS.forEach(difficulty => {
+    const { challenges } = G.generateMany(base, 1000, {
+      seed: 'quality-' + mode + '-' + difficulty,
+      filters: { modes: [mode], difficulty }
+    });
+    assert.equal(challenges.length, 1000, mode + '/' + difficulty);
+    challenges.forEach(c => {
+      assert.equal(c.mode, mode);
+      assert.equal(c.difficulty, difficulty);
+      assert.deepEqual(V.validateChallenge(c, base).errors, [], c.id);
+      assert.ok(GR.grade(c, GR.solve(c)).ok && GR.grade(c, GR.solve(c)).correct, c.id);
+      if (mode !== 'order') GR.wrongResponses(c).forEach(response => {
+        const result = GR.grade(c, response);
+        assert.ok(result.ok && !result.correct, c.id + '/' + JSON.stringify(response));
+      });
+    });
+  }));
 });
 test('every skill x mode filter produces valid challenges (88 combinations)', () => {
   SKILLS.forEach(s => MODES.forEach(m => {
@@ -66,7 +108,7 @@ test('semantic repetition: the same reasoning pattern never recurs within 20 cha
 });
 test('surface wording is not counted as new reasoning: distinct problems = distinct reasoning patterns', () => {
   const patterns = new Set(sample.map(c => c.reasoning)), texts = new Set(sample.map(c => c.scenario + '|' + c.prompt));
-  assert.equal(patterns.size, 125);
+  assert.equal(patterns.size, new Set(base.templates.map(t => t.family + ':' + t.pattern)).size);
   assert.ok(texts.size > patterns.size, 'surface variety exists');
   assert.equal(new Set(base.templates.map(t => t.family + ':' + t.pattern)).size, base.templates.length, 'no two templates share a reasoning pattern');
 });

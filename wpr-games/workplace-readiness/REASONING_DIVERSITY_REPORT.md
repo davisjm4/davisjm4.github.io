@@ -11,9 +11,9 @@ A new name, setting, number or twist is **surface variation**. A question is onl
 | Measure | Value |
 |---|---:|
 | Skills | 22 |
-| Scenario templates | 125 |
-| Reasoning families | 122 |
-| Distinct reasoning patterns | 125 |
+| Scenario templates | 140 |
+| Reasoning families | 137 |
+| Distinct reasoning patterns | 140 |
 | Career contexts | 13 |
 | Coherent setting bundles | 26 |
 
@@ -21,8 +21,8 @@ A new name, setting, number or twist is **surface variation**. A question is onl
 
 | Measure | Value |
 |---|---:|
-| Reasoning families seen | 122 of 122 |
-| Reasoning patterns seen | 125 of 125 |
+| Reasoning families seen | 137 of 137 |
+| Reasoning patterns seen | 140 of 140 |
 | Skills seen | 22 of 22 |
 | Standards concepts assessed | 94 of 94 |
 | Rejected instances (invalid, never shown) | 0 |
@@ -36,36 +36,36 @@ Each skill received between 108 and 110 challenges (even share: 109).
 
 | Mode | Challenges | Share |
 |---|---:|---:|
-| Decisions | 798 | 33.3% |
-| Next Step | 603 | 25.1% |
-| Order | 546 | 22.8% |
-| Find Problem | 453 | 18.9% |
+| Decisions | 823 | 34.3% |
+| Next Step | 583 | 24.3% |
+| Order | 544 | 22.7% |
+| Find Problem | 450 | 18.8% |
 
 ### Difficulty distribution
 
 | Level | Challenges | Share |
 |---|---:|---:|
-| beginner | 823 | 34.3% |
-| intermediate | 1309 | 54.5% |
-| advanced | 268 | 11.2% |
+| beginner | 822 | 34.3% |
+| intermediate | 1147 | 47.8% |
+| advanced | 431 | 18.0% |
 
 ### Career-context distribution
 
 | Context | Challenges | Share |
 |---|---:|---:|
-| Healthcare | 184 | 7.7% |
-| Construction | 188 | 7.8% |
-| Hospitality | 190 | 7.9% |
-| Culinary Arts | 191 | 8.0% |
-| Business and Finance | 186 | 7.8% |
-| Retail | 192 | 8.0% |
+| Healthcare | 185 | 7.7% |
+| Construction | 191 | 8.0% |
+| Hospitality | 188 | 7.8% |
+| Culinary Arts | 189 | 7.9% |
+| Business and Finance | 178 | 7.4% |
+| Retail | 189 | 7.9% |
 | Education | 188 | 7.8% |
-| Automotive Technology | 201 | 8.4% |
-| Manufacturing | 182 | 7.6% |
-| Agriculture | 175 | 7.3% |
-| Engineering | 170 | 7.1% |
-| Information Technology | 173 | 7.2% |
-| Digital Media and Design | 180 | 7.5% |
+| Automotive Technology | 207 | 8.6% |
+| Manufacturing | 180 | 7.5% |
+| Agriculture | 174 | 7.3% |
+| Engineering | 175 | 7.3% |
+| Information Technology | 170 | 7.1% |
+| Digital Media and Design | 186 | 7.8% |
 
 ### Skill categories
 
@@ -81,30 +81,30 @@ The signature is the reasoning pattern, not the wording.
 
 | Measure | Value |
 |---|---:|
-| Minimum gap between the same reasoning pattern | 13 challenges |
-| Median gap | 63 |
-| 10th percentile gap | 22 |
+| Minimum gap between the same reasoning pattern | 21 challenges |
+| Median gap | 72 |
+| 10th percentile gap | 29 |
 | Repeats within 5 challenges | 0 |
 | Repeats within 12 challenges | 0 (0%) |
-| Average appearances of each pattern per 400-challenge session | 3.2 |
+| Average appearances of each pattern per 400-challenge session | 2.86 |
 
 ## Is surface variation masking repeated problems?
 
-Of 2,400 challenges, 1,841 had distinct rendered scenario text, but only **125 distinct reasoning problems** exist in the library. So **yes, to a degree**: a student who completes several hundred challenges will meet every reasoning problem several times, in a new setting each time. The settings, names and numbers are real variation, but the underlying problem repeats. Ordering and find-the-problem templates have the least surface variation, so a student can see the same sentence set again.
+Of 2,400 challenges, 1,782 had distinct rendered scenario text, but only **140 distinct reasoning problems** exist in the library. So **yes, to a degree**: a student who completes several hundred challenges will meet every reasoning problem several times, in a new setting each time. The settings, names and numbers are real variation, but the underlying problem repeats. Ordering and find-the-problem templates have the least surface variation, so a student can see the same sentence set again.
 
-Frequency of each pattern is uneven (between 6 and 35 appearances in this sample, against an even share of 19.2). Patterns in skills that have only one template of some mode or difficulty are chosen more often when a student filters to that mode or difficulty.
+Frequency of each pattern is uneven (between 6 and 35 appearances in this sample, against an even share of 17.1). Patterns in skills that have only one template of some mode or difficulty are chosen more often when a student filters to that mode or difficulty.
 
 ## Bias checks
 
 | Check | Result |
 |---|---|
-| Correct-answer position (choice questions) | A 357, B 354, C 348, D 342 |
-| Best answer is the unique longest option | 32.9% (a random guess would be 25%; the validator limit is 40%) |
+| Correct-answer position (choice questions) | A 349, B 349, C 344, D 364 |
+| Best answer is the unique longest option | 33.4% (a random guess would be 25%; the validator limit is 40%) |
 
 ## Honest limits
 
-1. **125 reasoning problems is a finite library.** The generator supports unlimited practice sessions, but not unlimited distinct problems. The fix is more templates per family, not more settings.
-2. **Advanced is thin** (11.2% of the sample) and three skills have none.
-3. **Best-answer length bias is reduced, not eliminated** (32.9% vs 25% by chance).
+1. **140 reasoning problems is a finite library.** The generator supports unlimited practice sessions, but not unlimited distinct problems. The fix is more templates per family, not more settings.
+2. **Advanced is thin** (18.0% of the sample) and three skills have none.
+3. **Best-answer length bias is reduced, not eliminated** (33.4% vs 25% by chance).
 4. The semantic-signature measure treats each template as one reasoning problem. Two templates could still feel similar to a student; only human review can judge that.
 5. Instructional quality was reviewed by the developer only (see GAME_DESIGN.md, *Instructional audit*). It has not had independent educator review.

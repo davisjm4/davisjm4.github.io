@@ -732,6 +732,96 @@
       "skill": "workplace-safety",
       "label": "Cleaning after a minor injury",
       "description": "Student uses trained precautions for blood."
+    },
+    {
+      "id": "career-and-life-management.development-tradeoffs",
+      "skill": "career-and-life-management",
+      "label": "Comparing development options against a career goal",
+      "description": "Weighs qualification requirements, finances, work duties, and support before committing to training."
+    },
+    {
+      "id": "career-and-life-management.career-transition-planning",
+      "skill": "career-and-life-management",
+      "label": "Planning a transition using verified requirements",
+      "description": "Checks transferable skills, gaps, finances, and timing before leaving a current role."
+    },
+    {
+      "id": "career-and-life-management.career-change-requirements",
+      "skill": "career-and-life-management",
+      "label": "Planning after career requirements change",
+      "description": "Revises a career plan when new role requirements invalidate an earlier assumption."
+    },
+    {
+      "id": "career-and-life-management.benefit-comparison",
+      "skill": "career-and-life-management",
+      "label": "Comparing employment benefits using total compensation",
+      "description": "Compares benefit details and personal needs without treating salary as the only employment factor."
+    },
+    {
+      "id": "mathematics.material-cost-estimation",
+      "skill": "mathematics",
+      "label": "Estimating material needs with contingency and package limits",
+      "description": "Calculates base demand, contingency, package rounding, and budget impact before ordering."
+    },
+    {
+      "id": "mathematics.invoice-reconciliation",
+      "skill": "mathematics",
+      "label": "Reconciling an invoice against its supporting time record",
+      "description": "Recomputes a multi-part invoice from source records and resolves a discrepancy before approval."
+    },
+    {
+      "id": "mathematics.multi-stage-budget-check",
+      "skill": "mathematics",
+      "label": "Order materials only after quantity and funding checks",
+      "description": "Sequences demand, contingency, package conversion, and budget checks before a purchase."
+    },
+    {
+      "id": "mathematics.audit-workplace-calculation",
+      "skill": "mathematics",
+      "label": "Find an arithmetic error in a multi-line estimate",
+      "description": "Independently checks multiplication and addition in a work estimate."
+    },
+    {
+      "id": "reading-and-writing.resolve-conflicting-directions",
+      "skill": "reading-and-writing",
+      "label": "Resolve competing written instructions before responding",
+      "description": "Identifies conflicting directions and asks the authorized person before sharing unverified information."
+    },
+    {
+      "id": "reading-and-writing.verify-missing-source-detail",
+      "skill": "reading-and-writing",
+      "label": "Verify missing source information before drafting",
+      "description": "Checks the source for a missing fact rather than filling a gap with an assumption."
+    },
+    {
+      "id": "reading-and-writing.source-grounded-update",
+      "skill": "reading-and-writing",
+      "label": "Prepare a written update from conflicting source records",
+      "description": "Resolves a factual conflict before drafting, reviewing, and sending a clear audience-appropriate message."
+    },
+    {
+      "id": "reading-and-writing.detect-ambiguous-handoff",
+      "skill": "reading-and-writing",
+      "label": "Find ambiguity that prevents a reliable handoff",
+      "description": "Identifies a message missing the person, action, or time needed to complete a work handoff."
+    },
+    {
+      "id": "workplace-safety.stop-and-report-new-hazard",
+      "skill": "workplace-safety",
+      "label": "Pause work and report a newly found hazard",
+      "description": "Protects people from an unknown spill and alerts the responsible lead before routine work continues."
+    },
+    {
+      "id": "efficiency-and-productivity.clarify-conflicting-priorities",
+      "skill": "efficiency-and-productivity",
+      "label": "Clarify priority when two tasks compete for the same time",
+      "description": "Makes an explicit deadline conflict visible and asks the lead to set a workable priority."
+    },
+    {
+      "id": "customer-service-orientation.verify-before-promising",
+      "skill": "customer-service-orientation",
+      "label": "Verify availability before making a customer commitment",
+      "description": "Checks current schedule information before promising a completion time."
     }
   ]
 }

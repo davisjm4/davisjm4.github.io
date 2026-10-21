@@ -1,5 +1,7 @@
 # Workplace Readiness Procedural Variety Audit and Correction
 
+> Historical baseline: this report documents the repeat-avoidance correction from commit `021975ff`; its post-change inventory is now superseded by [`CONTENT_EXPANSION_REPORT.md`](CONTENT_EXPANSION_REPORT.md), which records the later scenario expansion. The sample repetition measurements below describe the pre-expansion library and should not be read as current inventory.
+
 Audit date: 2026-10-21. The baseline and post-change audit use the same three fixed seeds, the same 502 filter configurations, and 500 challenges per eligible configuration (469,500 generated challenges per run). Counts describe authored reasoning patterns, not surface wording.
 
 ## Source inventory

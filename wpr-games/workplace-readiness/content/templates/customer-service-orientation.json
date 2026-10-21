@@ -1,6 +1,29 @@
 {
   "templates": [
     {
+      "id": "CUS-N-002",
+      "skill": "customer-service-orientation",
+      "family": "customer-service-orientation.verify-before-promising",
+      "pattern": "check-availability-before-confirming-request",
+      "mode": "nextstep",
+      "difficulty": "beginner",
+      "concepts": ["customer-service-orientation:courteous-knowledgeable"],
+      "contexts": "any",
+      "slots": {"role":"role","workplace":"workplace","lead":"lead"},
+      "facts": ["customer-request-not-verified","availability-record-required"],
+      "scenario": "You work as {role|a} at {workplace|a}. A customer asks whether an item can be ready today, but you have not checked the availability record. Your {lead} can help confirm the schedule.",
+      "prompt": "What is the best next step?",
+      "options": [
+        {"id":"best","role":"best","text":"Tell the customer you will check with your {lead} before confirming a time.","why":"Checking the schedule avoids making a promise the workplace may not be able to keep, while a clear update respects the customer's request.","requires":["availability-record-required"]},
+        {"id":"d1","role":"distractor","text":"Promise that it will be ready today so the customer can make plans.","why":"You have not verified availability, so the promise could be inaccurate and create a larger problem.","misconception":"A confident promise is good service even when the facts are unknown."},
+        {"id":"d2","role":"distractor","text":"Tell the customer to call again later without checking the schedule.","why":"This transfers the work to the customer and does not answer the request when you can seek the information.","misconception":"Delaying a response is the same as resolving a question."},
+        {"id":"d3","role":"distractor","text":"Guess based on how quickly similar requests were handled last week.","why":"Past timing does not confirm today's availability or schedule.","misconception":"A recent example is a reliable substitute for checking current information."}
+      ],
+      "principle":"Give courteous service while verifying facts before making commitments on behalf of the workplace.",
+      "review":{"status":"approved","checks":["scenario-sufficient","distractors-plausible"],"notes":"The scenario says the schedule is unverified and identifies a source to check; it does not imply a specific availability outcome."},
+      "timing":"Verify the schedule before promising a completion time."
+    },
+    {
       "id": "CUS-D-001",
       "skill": "customer-service-orientation",
       "family": "customer-service-orientation.handling-complaints",

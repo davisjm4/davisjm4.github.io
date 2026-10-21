@@ -20,28 +20,28 @@ Counts are authored templates. Every template can render in many settings, with 
 | 6 | Conflict Resolution | 5 | 5 | 2 | 1 | 1 | 1 | 1 | 3 | 1 | 5/5 |
 | 7 | Listening and Speaking | 6 | 6 | 3 | 1 | 1 | 1 | 2 | 3 | 1 | 4/4 |
 | 8 | Respect for Diversity | 6 | 6 | 3 | 1 | 1 | 1 | 3 | 2 | 1 | 4/4 |
-| 9 | Customer Service Orientation | 6 | 6 | 3 | 1 | 1 | 1 | 3 | 2 | 1 | 4/4 |
+| 9 | Customer Service Orientation | 7 | 7 | 3 | 2 | 1 | 1 | 4 | 2 | 1 | 4/4 |
 | 10 | Teamwork | 5 | 5 | 2 | 1 | 1 | 1 | 3 | 1 | 1 | 4/4 |
 | 11 | Big-Picture Thinking | 6 | 6 | 3 | 1 | 1 | 1 | 1 | 4 | 1 | 4/4 |
-| 12 | Career and Life Management | 5 | 5 | 2 | 1 | 1 | 1 | 2 | 3 | 0 | 4/4 |
+| 12 | Career and Life Management | 9 | 9 | 3 | 2 | 2 | 2 | 2 | 3 | 4 | 4/4 |
 | 13 | Continuous Learning and Adaptability | 5 | 5 | 2 | 1 | 1 | 1 | 3 | 1 | 1 | 4/4 |
-| 14 | Efficiency and Productivity | 6 | 6 | 3 | 1 | 1 | 1 | 2 | 3 | 1 | 6/6 |
+| 14 | Efficiency and Productivity | 7 | 7 | 3 | 2 | 1 | 1 | 3 | 3 | 1 | 6/6 |
 | 15 | Information Literacy | 5 | 5 | 2 | 1 | 1 | 1 | 2 | 2 | 1 | 4/4 |
 | 16 | Information Security | 7 | 6 | 2 | 2 | 1 | 2 | 2 | 4 | 1 | 6/6 |
 | 17 | Information Technology | 6 | 5 | 3 | 1 | 1 | 1 | 3 | 2 | 1 | 5/5 |
 | 18 | Job-Specific Tools and Technologies | 6 | 6 | 3 | 1 | 1 | 1 | 2 | 3 | 1 | 2/2 |
-| 19 | Mathematics | 6 | 6 | 3 | 1 | 1 | 1 | 1 | 5 | 0 | 3/3 |
+| 19 | Mathematics | 10 | 10 | 4 | 2 | 2 | 2 | 1 | 5 | 4 | 3/3 |
 | 20 | Professionalism | 6 | 6 | 3 | 1 | 1 | 1 | 1 | 4 | 1 | 4/4 |
-| 21 | Reading and Writing | 5 | 5 | 2 | 1 | 1 | 1 | 3 | 2 | 0 | 4/4 |
-| 22 | Workplace Safety | 8 | 8 | 4 | 1 | 2 | 1 | 1 | 6 | 1 | 6/6 |
-| | **All skills** | **125** | **122** | **56** | **23** | **23** | **23** | **44** | **62** | **19** | **94/94** |
+| 21 | Reading and Writing | 9 | 9 | 3 | 2 | 2 | 2 | 3 | 2 | 4 | 4/4 |
+| 22 | Workplace Safety | 9 | 9 | 4 | 2 | 2 | 1 | 2 | 6 | 1 | 6/6 |
+| | **All skills** | **140** | **137** | **59** | **29** | **26** | **26** | **47** | **62** | **31** | **94/94** |
 
 Uncovered concepts: none (all 94 concepts are assessed by at least one template).
 
 ## Known gaps
 
-- **No Advanced template yet** for: Career and Life Management, Mathematics, Reading and Writing. Choosing one of these skills with *Advanced* difficulty shows a "no challenges match" message instead of an empty or wrong game.
-- Advanced is 15% of templates, below Beginner (35%) and Intermediate (50%).
+- **No Advanced template yet** for: . Choosing one of these skills with *Advanced* difficulty shows a "no challenges match" message instead of an empty or wrong game.
+- Advanced is 22% of templates, below Beginner (34%) and Intermediate (44%).
 - Each reasoning family currently holds about one template, so each skill has 5 to 8 distinct reasoning patterns. See REASONING_DIVERSITY_REPORT.md.
 - Legal, financial and jurisdiction-specific content is deliberately limited. Where a rule decides the answer, the rule is stated inside the scenario; no template teaches a real tax rate, law or regulation as fact.
 
@@ -179,11 +179,11 @@ Source module: <https://wrs.ctecs.org/practice/customer-service-orientation/>
 | Serving both internal customers (coworkers) and external customers | CUS-N-001 |
 | Prioritizing service among competing demands | CUS-N-001, CUS-D-003 |
 | Anticipating the needs of customers and coworkers | CUS-D-002 |
-| Giving courteous, accurate, helpful service and handling complaints | CUS-D-001, CUS-D-002, CUS-F-001, CUS-O-001, CUS-D-003 |
+| Giving courteous, accurate, helpful service and handling complaints | CUS-N-002, CUS-D-001, CUS-D-002, CUS-F-001, CUS-O-001, CUS-D-003 |
 
 Not assessed directly (definitional): defining customer service; listing benefits of good service.
 
-Reasoning families: Responding to an upset customer; Serving a coworker while serving a customer; Easing a wait; Writing a helpful reply; Sequence for handling a complaint; Explaining a policy limit kindly.
+Reasoning families: Verify availability before making a customer commitment; Responding to an upset customer; Serving a coworker while serving a customer; Easing a wait; Writing a helpful reply; Sequence for handling a complaint; Explaining a policy limit kindly.
 
 ### 10. Teamwork
 
@@ -224,12 +224,12 @@ Source module: <https://wrs.ctecs.org/practice/career-and-life-management/>
 
 | Concept | Assessed by |
 |---|---|
-| Education, qualifications and advancement planning | CAR-O-001 |
-| Using benefits and professional resources (unions, associations, assistance programs, insurance, retirement) | CAR-D-002 |
-| Managing stress, self-care and personal finances | CAR-D-002, CAR-N-001, CAR-F-001 |
-| Setting specific, measurable, attainable, realistic, time-bound goals | CAR-D-001, CAR-F-001 |
+| Education, qualifications and advancement planning | CAR-O-001, CAR-D-003, CAR-N-002, CAR-O-002 |
+| Using benefits and professional resources (unions, associations, assistance programs, insurance, retirement) | CAR-D-002, CAR-F-002 |
+| Managing stress, self-care and personal finances | CAR-D-002, CAR-N-001, CAR-F-001, CAR-N-002, CAR-F-002 |
+| Setting specific, measurable, attainable, realistic, time-bound goals | CAR-D-001, CAR-F-001, CAR-D-003, CAR-O-002 |
 
-Reasoning families: Choosing a useful goal statement; Using an employee support resource; First paycheck is smaller than expected; Planning toward a new role; Spotting an unsustainable plan.
+Reasoning families: Choosing a useful goal statement; Using an employee support resource; First paycheck is smaller than expected; Planning toward a new role; Spotting an unsustainable plan; Comparing development options against a career goal; Planning a transition using verified requirements; Planning after career requirements change; Comparing employment benefits using total compensation.
 
 ### 13. Continuous Learning and Adaptability
 
@@ -255,7 +255,7 @@ Source module: <https://wrs.ctecs.org/practice/efficiency-and-productivity/>
 | Concept | Assessed by |
 |---|---|
 | Developing a plan of work | EFF-O-001, EFF-F-001 |
-| Telling high-priority from low-priority tasks | EFF-O-001, EFF-D-001, EFF-D-002, EFF-N-001, EFF-F-001 |
+| Telling high-priority from low-priority tasks | EFF-N-002, EFF-O-001, EFF-D-001, EFF-D-002, EFF-N-001, EFF-F-001 |
 | Adapting work goals to the time and resources available | EFF-D-001, EFF-N-001 |
 | Using people's strengths and respecting their goals | EFF-D-001 |
 | Maintaining equipment so it lasts and works efficiently | EFF-D-002 |
@@ -263,7 +263,7 @@ Source module: <https://wrs.ctecs.org/practice/efficiency-and-productivity/>
 
 Not assessed directly (definitional): defining efficiency and productivity.
 
-Reasoning families: Building a prioritized work plan; Two urgent demands, one person; Scheduled equipment upkeep on a busy day; Covering for a coworker mid-shift; Ordering a to-do list; Sorting waste using posted instructions.
+Reasoning families: Clarify priority when two tasks compete for the same time; Building a prioritized work plan; Two urgent demands, one person; Scheduled equipment upkeep on a busy day; Covering for a coworker mid-shift; Ordering a to-do list; Sorting waste using posted instructions.
 
 ### 15. Information Literacy
 
@@ -331,11 +331,11 @@ Source module: <https://wrs.ctecs.org/practice/mathematics/>
 
 | Concept | Assessed by |
 |---|---|
-| Percentages, fractions, averages, measurement, conversions and money transactions | MAT-D-001, MAT-D-002, MAT-D-003, MAT-F-001, MAT-N-001 |
-| Estimating supplies and completing expense or order calculations | MAT-D-002, MAT-F-001, MAT-O-001 |
-| Understanding wages, paycheck deductions, taxes and receipts | MAT-D-001, MAT-D-003, MAT-N-001 |
+| Percentages, fractions, averages, measurement, conversions and money transactions | MAT-D-001, MAT-D-002, MAT-D-003, MAT-F-001, MAT-N-001, MAT-D-004, MAT-N-002, MAT-O-002, MAT-F-002 |
+| Estimating supplies and completing expense or order calculations | MAT-D-002, MAT-F-001, MAT-O-001, MAT-D-004, MAT-O-002, MAT-F-002 |
+| Understanding wages, paycheck deductions, taxes and receipts | MAT-D-001, MAT-D-003, MAT-N-001, MAT-N-002 |
 
-Reasoning families: Computing take-home pay; Estimating how many packs to order; Applying a percentage discount; Checking an expense report total; Hours on the stub differ from your record; Sequence for estimating a cost.
+Reasoning families: Computing take-home pay; Estimating how many packs to order; Applying a percentage discount; Checking an expense report total; Hours on the stub differ from your record; Sequence for estimating a cost; Estimating material needs with contingency and package limits; Reconciling an invoice against its supporting time record; Order materials only after quantity and funding checks; Find an arithmetic error in a multi-line estimate.
 
 ### 20. Professionalism
 
@@ -360,12 +360,12 @@ Source module: <https://wrs.ctecs.org/practice/reading-and-writing/>
 
 | Concept | Assessed by |
 |---|---|
-| Reading and interpreting workplace documents | RAW-D-001, RAW-N-001 |
-| Writing messages that convey meaning clearly | RAW-D-002, RAW-F-001, RAW-O-001, RAW-N-001 |
-| Using a professional tone suited to the audience | RAW-D-002 |
-| Grammar, formatting and workplace conventions (such as email signatures) | RAW-O-001 |
+| Reading and interpreting workplace documents | RAW-D-001, RAW-N-001, RAW-D-003, RAW-N-002, RAW-O-002 |
+| Writing messages that convey meaning clearly | RAW-D-002, RAW-F-001, RAW-O-001, RAW-N-001, RAW-D-003, RAW-N-002, RAW-O-002, RAW-F-002 |
+| Using a professional tone suited to the audience | RAW-D-002, RAW-F-002 |
+| Grammar, formatting and workplace conventions (such as email signatures) | RAW-O-001, RAW-O-002 |
 
-Reasoning families: Following a work order and its limits; Pointing out errors to a coworker; Spotting a vague instruction; Sequence for writing a work email; Replying to a long upset email.
+Reasoning families: Following a work order and its limits; Pointing out errors to a coworker; Spotting a vague instruction; Sequence for writing a work email; Replying to a long upset email; Resolve competing written instructions before responding; Verify missing source information before drafting; Prepare a written update from conflicting source records; Find ambiguity that prevents a reliable handoff.
 
 ### 22. Workplace Safety
 
@@ -378,8 +378,8 @@ Source module: <https://wrs.ctecs.org/practice/workplace-safety/>
 | Using safety data sheets (SDS) when provided | SAF-D-003 |
 | Identifying and using personal protective equipment | SAF-D-002, SAF-D-004 |
 | Using universal precautions against bloodborne pathogens | SAF-D-004 |
-| Identifying and reporting risks and hazards | SAF-O-001, SAF-D-001, SAF-F-001 |
+| Identifying and reporting risks and hazards | SAF-N-002, SAF-O-001, SAF-D-001, SAF-F-001 |
 | Following emergency protocols such as evacuation routes | SAF-N-001, SAF-O-002 |
 
-Reasoning families: Sequence for handling a hazard; Refusing to sign off unperformed safety checks; Wearing required protective equipment; Responding to an alarm; Evacuation order; An unlabeled container; Reading a spill clean-up procedure; Cleaning after a minor injury.
+Reasoning families: Pause work and report a newly found hazard; Sequence for handling a hazard; Refusing to sign off unperformed safety checks; Wearing required protective equipment; Responding to an alarm; Evacuation order; An unlabeled container; Reading a spill clean-up procedure; Cleaning after a minor injury.
 

@@ -333,6 +333,261 @@
         "policyNotNeeded": true
       },
       "timing": "Reading and listing the asks comes before drafting."
+    },
+    {
+      "id": "RAW-D-003",
+      "skill": "reading-and-writing",
+      "family": "reading-and-writing.resolve-conflicting-directions",
+      "pattern": "clarify-conflict-before-sharing-unverified-date",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "reading-and-writing:interpret-documents",
+        "reading-and-writing:clarity"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "work-order-noon-update",
+        "new-note-withholds-date-until-inventory",
+        "lead-authorized-to-clarify"
+      ],
+      "scenario": "A work order says to email a customer a delivery estimate by noon. A newer note says not to share any date until inventory is confirmed; the system will update in an hour. Your lead is responsible for clarifying order instructions, and the customer has asked for an update.",
+      "prompt": "What is the clearest and most responsible response?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Tell your lead the directions conflict, ask which controls, then update the customer using verified details.",
+          "why": "This reports the conflict to the person authorized to resolve it and avoids sharing an unconfirmed date.",
+          "requires": [
+            "work-order-noon-update",
+            "new-note-withholds-date-until-inventory",
+            "lead-authorized-to-clarify"
+          ]
+        },
+        {
+          "id": "acceptable",
+          "role": "acceptable",
+          "text": "Tell the customer you are checking the order and will follow up when you have a confirmed update.",
+          "why": "This acknowledges the customer without guessing, but the conflict still needs to be raised with the lead.",
+          "misconception": "A useful preliminary step is mistaken for a complete plan."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Send the estimate by noon because the work order is the main document and gives a specific deadline.",
+          "why": "The newer note explicitly withholds a date until inventory is confirmed; choosing one direction without clarification risks misleading the customer.",
+          "misconception": "The most prominent instruction automatically overrides a conflicting note."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Wait silently for the system update, then send a date without telling anyone that the directions conflicted.",
+          "why": "This leaves the noon communication expectation unaddressed and does not resolve the conflict for future work.",
+          "misconception": "Avoiding the decision resolves it."
+        }
+      ],
+      "principle": "When instructions conflict, name the specific conflict, ask an authorized person to clarify, and communicate only verified information.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "policyNotNeeded": true,
+        "notes": "The two instructions conflict, inventory is unconfirmed, and the lead is explicitly authorized to clarify before the customer receives an estimate."
+      }
+    },
+    {
+      "id": "RAW-N-002",
+      "skill": "reading-and-writing",
+      "family": "reading-and-writing.verify-missing-source-detail",
+      "pattern": "verify-missing-date-before-writing-summary",
+      "mode": "nextstep",
+      "difficulty": "advanced",
+      "concepts": [
+        "reading-and-writing:interpret-documents",
+        "reading-and-writing:clarity"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "report-needs-date-and-quantity",
+        "source-has-quantity-no-date",
+        "supervisor-can-check-original-record"
+      ],
+      "scenario": "You are asked to write an update stating when and how many replacement parts were delivered. The shared log lists a quantity of 18 but has no date. The original receiving record may contain the date, and your supervisor can access it.",
+      "prompt": "What should you do first?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Check the original receiving record or ask your supervisor to confirm the date before writing the complete update.",
+          "why": "The shared log supports the quantity but not the date, so the missing fact must be verified before it is reported.",
+          "requires": [
+            "report-needs-date-and-quantity",
+            "source-has-quantity-no-date"
+          ]
+        },
+        {
+          "id": "acceptable",
+          "role": "acceptable",
+          "text": "Draft the update with the verified quantity and mark the delivery date as awaiting confirmation.",
+          "why": "This separates known from unknown information, but checking the available source first may let you provide the complete update.",
+          "misconception": "A useful preliminary step is mistaken for a complete plan."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Use the date from a similar delivery last week because the quantity and supplier are the same.",
+          "why": "A similar transaction does not establish the date of this delivery.",
+          "misconception": "A nearby example can replace the source record."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Guess a date based on when the parts were expected and send the update before the deadline.",
+          "why": "An expected date is not proof the delivery occurred then; this presents a guess as a fact.",
+          "misconception": "Meeting a deadline justifies filling a missing fact."
+        }
+      ],
+      "principle": "Separate verified facts from missing information and check the source before writing a factual update.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "policyNotNeeded": true,
+        "notes": "The log includes quantity but omits the date; the original receiving record is identified as a possible source and the supervisor can verify it."
+      },
+      "timing": "Verify the absent date before drafting it as a confirmed fact."
+    },
+    {
+      "id": "RAW-O-002",
+      "skill": "reading-and-writing",
+      "family": "reading-and-writing.source-grounded-update",
+      "pattern": "verify-source-draft-review-and-send-corrected-update",
+      "mode": "order",
+      "difficulty": "advanced",
+      "concepts": [
+        "reading-and-writing:interpret-documents",
+        "reading-and-writing:clarity",
+        "reading-and-writing:conventions"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-process-and-prerequisites"
+      ],
+      "scenario": "A purchaser expects an accurate answer about a shipment before close of business. Your group sends external notices, and the signed receipt is stored with the receiving team. Arrange the actions so the final response is dependable.",
+      "prompt": "Arrange the steps so the message is accurate and complete before it is sent.",
+      "steps": [
+        {
+          "id": "compare",
+          "text": "Read both records and identify exactly which quantity conflicts"
+        },
+        {
+          "id": "verify",
+          "text": "Check the original receiving record or ask the responsible lead to confirm the quantity"
+        },
+        {
+          "id": "draft",
+          "text": "Draft the update using only the confirmed quantity and other verified details"
+        },
+        {
+          "id": "review",
+          "text": "Proofread for accuracy, clarity, and the customer's actual question"
+        },
+        {
+          "id": "send",
+          "text": "Send the checked update through the approved customer channel"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "compare",
+          "after": "verify",
+          "why": "The conflicting value must be identified before it can be checked."
+        },
+        {
+          "before": "verify",
+          "after": "draft",
+          "why": "The message should use the confirmed value, not an unresolved figure."
+        },
+        {
+          "before": "draft",
+          "after": "review",
+          "why": "The draft must exist before its accuracy and clarity can be checked."
+        },
+        {
+          "before": "review",
+          "after": "send",
+          "why": "Proofreading and channel checks happen before sending."
+        }
+      ],
+      "alternatesReviewed": false,
+      "principle": "Resolve factual conflicts at their source, then draft, review, and send a clear response through the proper channel.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "The evidence conflict, verification source, audience, and sending channel are stated.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "RAW-F-002",
+      "skill": "reading-and-writing",
+      "family": "reading-and-writing.detect-ambiguous-handoff",
+      "pattern": "identify-handoff-without-owner-action-or-time",
+      "mode": "find",
+      "difficulty": "advanced",
+      "concepts": [
+        "reading-and-writing:clarity",
+        "reading-and-writing:tone-and-audience"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "document-context-and-evidence-stated"
+      ],
+      "scenario": "A team lead reviews four handoff notes before assigning work for the next shift.",
+      "prompt": "Select the note that is too ambiguous for a reliable handoff.",
+      "docType": "note",
+      "docTitle": "Shift handoff notes",
+      "segments": [
+        {
+          "id": "a",
+          "text": "The replacement filter is in cabinet 2; Maya will install it before the 3 p.m. equipment check.",
+          "whyFine": "It names the item, location, responsible person, and deadline."
+        },
+        {
+          "id": "b",
+          "text": "Two customer forms need a second review; send them to the quality desk before noon.",
+          "whyFine": "It states the task, destination, and time."
+        },
+        {
+          "id": "c",
+          "text": "The damaged cart is tagged by the loading door; do not use it until the lead checks it.",
+          "whyFine": "It identifies the hazard, location, and restriction."
+        },
+        {
+          "id": "d",
+          "text": "Take care of the other issue soon, and let everyone know when it is handled.",
+          "problem": true,
+          "why": "The note does not identify which issue, who should handle it, or what deadline applies, so the next shift cannot act reliably."
+        }
+      ],
+      "principle": "A useful handoff states the task, responsible person or channel, location, and timing needed for the next action.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Only one note lacks enough information to identify and complete its assigned action.",
+        "policyNotNeeded": true
+      }
     }
   ]
 }

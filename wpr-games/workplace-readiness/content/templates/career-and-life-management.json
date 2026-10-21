@@ -310,6 +310,259 @@
         "notes": "Single line trades health for a goal; no medical claims beyond sustainability.",
         "policyNotNeeded": true
       }
+    },
+    {
+      "id": "CAR-D-003",
+      "skill": "career-and-life-management",
+      "family": "career-and-life-management.development-tradeoffs",
+      "pattern": "compare-training-cost-schedule-and-role-requirements",
+      "mode": "decision",
+      "difficulty": "advanced",
+      "concepts": [
+        "career-and-life-management:qualifications-and-advancement",
+        "career-and-life-management:smart-goals"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "lead-role-requires-certificate",
+        "course-overlaps-shift",
+        "tuition-support-eligibility-unknown"
+      ],
+      "scenario": "You plan to apply for a lead role that opens in eight weeks. The posting requires a certificate you do not have. A course could finish before the deadline, but evening sessions overlap with a shift you are responsible for. Tuition support is available at your workplace, but its eligibility and schedule rules are not yet clear.",
+      "prompt": "Which plan best balances the opportunity with your current responsibilities?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Check certificate and tuition-support rules, then plan shift coverage with your lead before enrolling.",
+          "why": "This confirms the qualification matters, whether support applies, and how to handle the shift conflict before making a costly commitment.",
+          "requires": [
+            "lead-role-requires-certificate",
+            "course-overlaps-shift"
+          ]
+        },
+        {
+          "id": "acceptable",
+          "role": "acceptable",
+          "text": "Ask the tuition-support contact whether this course qualifies and whether another section fits your schedule.",
+          "why": "This checks important cost and schedule details, but still needs a plan for the shift and a deliberate application timeline.",
+          "misconception": "A useful preliminary step is mistaken for a complete plan."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Enroll now and miss the overlapping shifts because the lead role is more important than the current schedule.",
+          "why": "It assumes an absence is acceptable and commits money before checking support or arranging work coverage.",
+          "misconception": "A long-term goal excuses ignoring current duties."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Apply without the certificate and assume the employer will waive the stated requirement.",
+          "why": "The posting identifies a qualification; assuming an exception without asking does not address the gap.",
+          "misconception": "A stated qualification can be disregarded when the applicant is motivated."
+        }
+      ],
+      "principle": "Compare requirements, costs, support, and current responsibilities before committing to a career-development plan.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "The role qualification, schedule conflict, support uncertainty, and decision authority are explicit; one best response balances all constraints.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CAR-N-002",
+      "skill": "career-and-life-management",
+      "family": "career-and-life-management.career-transition-planning",
+      "pattern": "verify-transition-requirements-before-resigning",
+      "mode": "nextstep",
+      "difficulty": "advanced",
+      "concepts": [
+        "career-and-life-management:qualifications-and-advancement",
+        "career-and-life-management:wellness-and-finances"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "new-field-requires-license",
+        "license-path-not-confirmed",
+        "current-income-supports-household"
+      ],
+      "scenario": "You are considering moving from your current job into a different field. Several postings mention a license, but the training and eligibility requirements differ. Your savings cover about one month of expenses, and you have not confirmed which programs qualify you for the license.",
+      "prompt": "What should you do first before making a transition plan?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Verify license requirements with the credentialing source and confirm eligible training before changing your current work or income.",
+          "why": "A reliable transition plan depends on the actual qualification path and a realistic view of timing and income.",
+          "requires": [
+            "new-field-requires-license",
+            "license-path-not-confirmed"
+          ]
+        },
+        {
+          "id": "acceptable",
+          "role": "acceptable",
+          "text": "List the skills you already have and compare them with current postings before choosing which training to explore.",
+          "why": "This is useful research, but the licensing path still needs direct verification before you estimate a feasible transition.",
+          "misconception": "A useful preliminary step is mistaken for a complete plan."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Resign now so you can devote all your time to researching the new field.",
+          "why": "With limited savings and unverified requirements, resigning creates avoidable financial risk before a feasible plan exists.",
+          "misconception": "Commitment should come before confirming feasibility."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Pay for the first training program you find because it advertises career placement.",
+          "why": "The scenario does not establish that the program qualifies graduates for the license or fits your situation.",
+          "misconception": "A confident marketing claim proves credential eligibility."
+        }
+      ],
+      "principle": "Verify qualifications, costs, and timing before changing employment or committing limited resources.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "The licensing uncertainty, limited savings, and need to research before committing are all stated.",
+        "policyNotNeeded": true
+      },
+      "timing": "Confirming the credential path comes before spending money or leaving current income."
+    },
+    {
+      "id": "CAR-O-002",
+      "skill": "career-and-life-management",
+      "family": "career-and-life-management.career-change-requirements",
+      "pattern": "verify-compare-prioritize-plan-review-career-transition",
+      "mode": "order",
+      "difficulty": "advanced",
+      "concepts": [
+        "career-and-life-management:qualifications-and-advancement",
+        "career-and-life-management:smart-goals"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-process-and-prerequisites"
+      ],
+      "scenario": "A department plans to open a new position soon. Your old career notes use a posting from last year, and funds for courses are limited. Put the actions in order to make a sound updated plan.",
+      "prompt": "Put the review and planning steps in an order that avoids spending against outdated requirements.",
+      "steps": [
+        {
+          "id": "verify",
+          "text": "Confirm the current role requirements with the employer's published posting or contact"
+        },
+        {
+          "id": "compare",
+          "text": "Compare the current requirements with your skills and completed training"
+        },
+        {
+          "id": "priority",
+          "text": "Identify the most important skill gap and check which training is eligible for support"
+        },
+        {
+          "id": "plan",
+          "text": "Set a realistic schedule and budget for the chosen training"
+        },
+        {
+          "id": "review",
+          "text": "Review progress and revise the plan if the requirements change again"
+        }
+      ],
+      "precedence": [
+        {
+          "before": "verify",
+          "after": "compare",
+          "why": "The comparison must use current requirements rather than the outdated version."
+        },
+        {
+          "before": "compare",
+          "after": "priority",
+          "why": "Actual gaps must be identified before training is prioritized."
+        },
+        {
+          "before": "priority",
+          "after": "plan",
+          "why": "Schedule and budget depend on which training is needed and supported."
+        },
+        {
+          "before": "plan",
+          "after": "review",
+          "why": "Progress can be judged against the plan after it is set."
+        }
+      ],
+      "alternatesReviewed": false,
+      "principle": "Base career planning on current requirements, verified skill gaps, available support, and a realistic schedule.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "The five stated dependencies create one defensible sequence; each step follows from the changed requirements and limited budget.",
+        "policyNotNeeded": true
+      }
+    },
+    {
+      "id": "CAR-F-002",
+      "skill": "career-and-life-management",
+      "family": "career-and-life-management.benefit-comparison",
+      "pattern": "reject-total-compensation-assumption-from-hourly-rate",
+      "mode": "find",
+      "difficulty": "advanced",
+      "concepts": [
+        "career-and-life-management:benefits-and-resources",
+        "career-and-life-management:wellness-and-finances"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "document-context-and-evidence-stated"
+      ],
+      "scenario": "You are comparing two job offers and want to identify an unsupported assumption before making a budget.",
+      "prompt": "Select the line that contains the planning error.",
+      "docType": "note",
+      "docTitle": "Offer comparison notes",
+      "segments": [
+        {
+          "id": "a",
+          "text": "Offer A pays more per hour, but I will compare the stated schedules and expected weekly hours before estimating income.",
+          "whyFine": "It distinguishes an hourly rate from total weekly pay."
+        },
+        {
+          "id": "b",
+          "text": "Offer B lists health coverage after a waiting period, so I will check the exact start date and employee cost.",
+          "whyFine": "It identifies details that affect the value and timing of coverage."
+        },
+        {
+          "id": "c",
+          "text": "Offer A lists a retirement match up to 4%, so I will ask what contribution is required for the full match.",
+          "whyFine": "It checks the condition attached to a stated benefit."
+        },
+        {
+          "id": "d",
+          "text": "Offer A has the higher hourly rate, so it must provide the larger total compensation and be the better choice for my needs.",
+          "problem": true,
+          "why": "Hourly pay alone does not establish total compensation or fit. The comparison also needs hours, benefit costs, waiting periods, and personal priorities."
+        }
+      ],
+      "principle": "Compare verified pay, hours, benefit costs and timing, and personal priorities instead of assuming the highest rate is automatically best.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims"
+        ],
+        "notes": "Three sound comparison steps contrast with one unsupported conclusion.",
+        "policyNotNeeded": true
+      }
     }
   ]
 }
