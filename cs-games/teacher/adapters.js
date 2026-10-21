@@ -9,6 +9,16 @@ import { generate as genSearch, MODE_IDS as searchModeIds, MODES as searchModes,
 import { generateTraceChallenge, verifyChallengeModel } from "../../java-games/variable-lab/trace-generator/src/index.js";
 import { generateClassObject, classObjectGame, modeNames as classModes, seededRandom as classRng, assessClassObject } from "../../java-games/class-object-lab/class-engine.js";
 const stringLab = globalThis.StringLab;
+function supportsStringChoices(family, difficulty) {
+  for (let seed=1; seed<=8; seed++) {
+    try { const q=stringLab.PracticeFamilies.build(family,seed*173,difficulty); if(q.choices.length===4&&q.correctIndex>=0&&q.choices[q.correctIndex].text===q.answer&&new Set(q.choices.map(c=>c.text)).size===4)return true; }
+    catch { /* This generator family/level is not exportable. */ }
+  }
+  return false;
+}
+const stringFamilies=stringLab?.Generator&&stringLab?.PracticeFamilies
+  ? stringLab.Generator.families().map(f=>({...f,exportLevels:f.levels.filter(level=>supportsStringChoices(f.id,level))})).filter(f=>f.exportLevels.length)
+  : [];
 
 const normalize = (q, {sourceId, sourceName, modeId, modeName, difficulty, points, answer, choices, prompt, code, explanation, signature, family, verify}) => {
   const list = choices.map(x => typeof x === "string" ? x : String(x.text));
@@ -39,10 +49,11 @@ export const sources = [
     const q=genMath(m,shape,rng);
     return normalize(q,{sourceId:"math",sourceName:mathGame.name,modeId:mode,modeName:mathGame.modes[m],difficulty:"Mixed",points,answer:q.answer,choices:q.choices,prompt:q.prompt,code:q.code,explanation:q.explanation,signature:`${q.expression||q.choices.join("|")}|${q.prompt}`,family:shape,verify:()=>validateMath(q)&&assessMath(q,q.answer)});
   }),
-  ...(stringLab?.Generator && stringLab?.PracticeFamilies ? [src("string","String Lab",stringLab.Generator.families().map(f=>({id:f.id,name:f.label,difficulties:f.levels.map(x=>x[0].toUpperCase()+x.slice(1))})),(family,difficulty,seed,points)=>{
+  ...(stringFamilies.length ? [src("string","String Lab",stringFamilies.map(f=>({id:f.id,name:f.label,difficulties:f.exportLevels.map(x=>x[0].toUpperCase()+x.slice(1))})),(family,difficulty,seed,points)=>{
     const q=stringLab.PracticeFamilies.build(family,seed,difficulty.toLowerCase());
     if(q.choices.length!==4||q.correctIndex<0||q.choices[q.correctIndex].text!==q.answer)return null;
-    return normalize(q,{sourceId:"string",sourceName:"String Lab",modeId:family,modeName:q.mode+" · "+q.familyLabel,difficulty:q.difficulty,points,answer:q.answer,choices:q.choices,prompt:q.prompt,code:q.code,explanation:q.explanation,signature:`${q.signature.exact}|${q.code}`,family:q.family,verify:()=>q.choices.filter(c=>c.text===q.answer).length===1});
+    const explanation=q.explanation||stringLab.Feedback?.build(q,null).rule||"Trace each String operation in order and apply Java's String rules.";
+    return normalize(q,{sourceId:"string",sourceName:"String Lab",modeId:family,modeName:q.mode+" · "+q.familyLabel,difficulty:q.difficulty,points,answer:q.answer,choices:q.choices,prompt:q.prompt,code:q.code,explanation,signature:`${q.signature.exact}|${q.code}`,family:q.family,verify:()=>q.choices.filter(c=>c.text===q.answer).length===1});
   })] : []),
   src("loop","Loop Lab",Object.entries(loopModes).map(([id,name])=>({id,name,difficulties:["beginner","intermediate","advanced"]})),(mode,difficulty,seed,points)=>{
     const q=genLoop({mode,difficulty:difficulty.toLowerCase(),seed});
