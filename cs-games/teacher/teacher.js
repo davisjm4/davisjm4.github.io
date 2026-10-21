@@ -91,7 +91,7 @@ function render(){
 function generateQuiz(){config=makeConfig();const result=buildQuiz(config);quiz=result.items;$("status").textContent=result.error||"Quiz generated. Review every answer before downloading.";render()}
 function regenerateOne(index){
  if(!config||!quiz[index])return;const previous=quiz[index],excluded=new Set(quiz.filter((_,i)=>i!==index).flatMap(q=>[`config:${q.sourceId}:${q.configurationSignature||q.signature}`,...(q.reasoningSignature?[`reasoning:${q.sourceId}:${q.reasoningSignature}`]:[])]));
- const replacement=attemptItem({sourceId:previous.sourceId,modeId:previous.modeId},index+1,new Set(),excluded);
+ const replacement=attemptItem({sourceId:previous.sourceId,modeId:previous.modeId},index,new Set(),excluded);
  if(!replacement){$("status").textContent="No distinct validated replacement was available for that source and mode. Other questions were kept.";return}
  replacement.points=previous.points;quiz[index]=replacement;$("status").textContent=`Question ${index+1} regenerated.`;render();
 }
