@@ -45,7 +45,7 @@ function packageItem({ modeId, challenge, level, points, choices, correctIndex, 
   if (!choices || choices.length !== 4 || new Set(choices).size !== 4 || correctIndex < 0 || correctIndex >= choices.length || choices.filter(x => x === answer).length !== 1) return null;
   return {
     id: `raceces-${hash(signature)}`, sourceId: "raceces", source: SOURCE,
-    modeId, mode: MODES[modeId].name, difficulty: LEVELS[level], topic: challenge.title,
+    modeId, mode: MODES[modeId].name, difficulty: Object.entries(LEVELS).find(([, value]) => value === level)?.[0] || level, topic: challenge.title,
     topicId: challenge.topicId, family: challenge.family,
     reasoningSignature: `raceces-reasoning|${challenge.generated?.structure || challenge.family}|${challenge.modelId}`,
     passage: challenge.excerpt, questionContext: challenge.question,

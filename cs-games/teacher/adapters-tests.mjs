@@ -32,6 +32,7 @@ for(const source of sources){
         check(question.choices[question.correctIndex]===question.correctAnswer,`${source.id}/${mode.id}: keyed answer mismatch`);
         check(question.explanation.length>0&&(question.stem||question.prompt||question.questionContext)?.length>0,`${source.id}/${mode.id}: missing prompt/explanation`);
         check(question.points===2,`${source.id}/${mode.id}: point value`);
+        if(source.id==="raceces")check(question.difficulty===level,`${source.id}/${mode.id}: difficulty metadata must match the selected level`);
         check(!/^(A|B|C|D)\. \1\./.test(question.choices[question.correctIndex]),`${source.id}/${mode.id}: duplicated answer label`);
         actual.set(`${source.id}/${mode.id}`, (actual.get(`${source.id}/${mode.id}`)||0)+1);tested++;
       }

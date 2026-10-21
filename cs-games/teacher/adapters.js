@@ -7,7 +7,7 @@ import { generateArray, formatNames as arrayModes, solutionArray, assessArray } 
 import { generateRecursion, modeNames as recursionModes, assessRecursion } from "../../java-games/recursion-lab/engine.js";
 import { generate as genSearch, MODE_IDS as searchModeIds, MODES as searchModes, assess as assessSearch, exportQuestion as exportSearch } from "../../java-games/search-sort-lab/engine/generator.js";
 import { generateTraceChallenge, verifyChallengeModel } from "../../java-games/variable-lab/trace-generator/src/index.js";
-import { generateRacecesAssessmentItem } from "./raceces-adapter.js?v=20261021-raceces1";
+import { generateRacecesAssessmentItem } from "./raceces-adapter.js?v=20261022-raceces2";
 import { generateWorkplaceAssessmentItem } from "./workplace-adapter.js?v=20261022-workplace1";
 const stringLab = globalThis.StringLab;
 function supportsStringChoices(family, difficulty) {
