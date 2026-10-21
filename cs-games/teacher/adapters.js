@@ -7,7 +7,6 @@ import { generateArray, formatNames as arrayModes, solutionArray, assessArray } 
 import { generateRecursion, modeNames as recursionModes, assessRecursion } from "../../java-games/recursion-lab/engine.js";
 import { generate as genSearch, MODE_IDS as searchModeIds, MODES as searchModes, assess as assessSearch, exportQuestion as exportSearch } from "../../java-games/search-sort-lab/engine/generator.js";
 import { generateTraceChallenge, verifyChallengeModel } from "../../java-games/variable-lab/trace-generator/src/index.js";
-import { generateClassObject, classObjectGame, modeNames as classModes, seededRandom as classRng, assessClassObject } from "../../java-games/class-object-lab/class-engine.js";
 const stringLab = globalThis.StringLab;
 function supportsStringChoices(family, difficulty) {
   for (let seed=1; seed<=8; seed++) {
@@ -70,10 +69,6 @@ export const sources = [
   src("recursion","Recursion Lab",Object.entries(recursionModes).map(([id,name])=>({id,name,difficulties:["Beginner","Intermediate","Advanced"]})),(mode,difficulty,seed,points)=>{
     let state=seed>>>0; const rng=()=>((state=(1664525*state+1013904223)>>>0)/4294967296); const q=generateRecursion(mode,rng,difficulty);
     return normalize(q,{sourceId:"recursion",sourceName:"Recursion Lab",modeId:mode,modeName:q.topicTitle,difficulty:q.difficulty,points,answer:q.answer,choices:q.choices,prompt:q.prompt,code:q.code,explanation:q.explanation,signature:`${q.family}|${q.code}|${q.prompt}|${[...q.choices].sort().join("|")}`,family:q.family,verify:()=>assessRecursion(q,q.answer)});
-  }),
-  src("class-object",classObjectGame.name,Object.entries(classModes).map(([id,name])=>({id,name,difficultySupport:false})),(mode,difficulty,seed,points)=>{
-    const q=generateClassObject(mode,classRng(seed));
-    return normalize(q,{sourceId:"class-object",sourceName:classObjectGame.name,modeId:mode,modeName:classModes[mode],difficulty:"Mixed",points,answer:q.answer,choices:q.choices,prompt:q.prompt,code:q.code,explanation:q.explanation,signature:`${q.mode}|${q.variant}|${q.code}|${q.prompt}|${[...q.choices].sort().join("|")}`,family:q.variant,verify:()=>assessClassObject(q,q.answer)});
   }),
   src("search-sort","Search & Sort Lab",searchModeIds.map(id=>({id,name:searchModes[id].title,difficulties:["beginner","intermediate","advanced"]})),(mode,difficulty,seed,points)=>{
     const q=genSearch(mode,difficulty.toLowerCase(),seed); if(!q) return null; const out=exportSearch(q);
