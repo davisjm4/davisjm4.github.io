@@ -85,7 +85,8 @@ All-skills mixed practice had no exact or reasoning repeats in its first 20 ques
 - npm run validate: passed, zero errors and warnings.
 - Unit tests: 129 passed, 0 failed. The added sample generates 1,000 seeded questions for each of 12 mode/difficulty cells (12,000 total); validates each, grades the key correct, and tests each wrong selection as incorrect. Existing session, scoring, resume, ordering, and filter regressions pass.
 - Procedural audit: 502 filters, 559,500 instances, 140 authored patterns.
-- Browser suite could not run locally: no Chromium executable is installed. A live production browser smoke test remains necessary.
+- Browser suite could not run locally because no Chromium executable is installed. Live production smoke test passed: the published page reported 140 authored challenges/patterns; the Advanced Career and Life Management ordering challenge generated, rendered, accepted interaction, and returned dependency-specific feedback. The one-attempt result appeared in Session Summary as one completed/missed attempt with the matching skill and mode attribution. No game-page console errors were observed; the browser reported only unrelated extension metadata errors.
+- The first live check revealed a stale content-bundle cache. The bundle script URL now has a version query parameter; the second Pages deployment loaded the 140-pattern bundle.
 
 ## Milestone status
 
