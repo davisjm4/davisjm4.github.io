@@ -49,4 +49,13 @@ check(chosen.every(q=>xml.includes(`choice_${q.correctIndex}</varequal>`)),"QTI 
 const sample=chosen.find(q=>q.code.includes("\n"));
 if(sample){const html=formatQuestionHtml(sample);check(html.includes("<pre><code>"),"Java should use preformatted HTML");check(html.includes("\n"),"Code line breaks should survive");}
 const distribution=Object.fromEntries(sources.map(s=>[s.id,chosen.filter(q=>q.sourceId===s.id).length]));
-console.log(`Passed ${tested} validated adapter samples across ${actual.size} source/mode/difficulty combinations; mixed QTI sample contains ${chosen.length} items (${JSON.stringify(distribution)}).`);
+const large=[],largeSeen=new Set(),pairs=sources.map(s=>[s,s.modes[0]]);
+for(let i=0;i<50;i++){
+  const [source,mode]=pairs[i%pairs.length],levels=mode.difficulties||["Mixed"],level=levels[i%levels.length];let found=null;
+  for(let attempt=0;attempt<140&&!found;attempt++){const q=generateAssessmentItem(source.id,mode.id,level,900001+i*1009+attempt*7919,2);if(q&&!largeSeen.has(q.signature)){largeSeen.add(q.signature);q.id=`large-${i+1}`;found=q}}
+  check(!!found,`Could not generate 50 distinct mixed-source questions (stopped at ${i})`);large.push(found);
+}
+const largeXml=buildAssessmentXml({title:"Large adapter assessment",seed:900001},large);
+check((largeXml.match(/<item ident=/g)||[]).length===50,"50-question QTI item count");
+check(large.reduce((sum,q)=>sum+q.points,0)===100,"Large assessment point total");
+console.log(`Passed ${tested} validated adapter samples across ${actual.size} source/mode/difficulty combinations; balanced 24-item sample ${JSON.stringify(distribution)}; 50 distinct items export correctly.`);
