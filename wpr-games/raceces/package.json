@@ -10,7 +10,8 @@
     "test:unit": "node tests/run-all.js",
     "test:browser": "node tests/browser/run.js",
     "sweep": "node tests/sweep.js",
+    "audit:repetition": "node tools/repetition-audit.js",
     "docs": "node tools/gen-docs.js",
-    "test": "npm run build && npm run validate && npm run test:unit && npm run test:browser && npm run docs"
+    "test": "npm run build && npm run validate && npm run test:unit && npm run test:browser && npm run audit:repetition && npm run docs"
   }
 }

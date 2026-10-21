@@ -20,6 +20,52 @@ for (const f of files) {
   }
 }
 
+// Verified supplementary facts increase excerpt variety while keeping each generated passage
+// within one topic. Source URLs are retained in the data bundle for editorial traceability.
+const sourceFactGroups = JSON.parse(fs.readFileSync(path.join(root, 'content', 'source-facts.json'), 'utf8'));
+const sourceTopicById = Object.fromEntries(topics.map(t => [t.id, t]));
+for (const group of sourceFactGroups) {
+  const topic = sourceTopicById[group.topicId];
+  if (!topic) throw new Error(`Unknown source-fact topic: ${group.topicId}`);
+  for (const fact of group.facts) {
+    if (topic.facts.some(existing => existing.id === fact.id)) throw new Error(`${group.topicId}: duplicate source-fact id ${fact.id}`);
+    if (!fact.sourceUrl || !/^https:\/\//.test(fact.sourceUrl)) throw new Error(`${group.topicId}/${fact.id}: source URL required`);
+    topic.facts.push(fact);
+  }
+}
+
+// Additional reasoning cases are kept in a separate, editable content source. Each case still
+// points to two distinct, topic-grounded facts; the repeat and off-topic distractors are derived
+// from those cited facts so the source relationships remain inspectable.
+const expansions = JSON.parse(fs.readFileSync(path.join(root, 'content', 'model-expansions.json'), 'utf8'));
+const topicById = Object.fromEntries(topics.map(t => [t.id, t]));
+for (const group of expansions) {
+  const topic = topicById[group.topicId];
+  if (!topic) throw new Error(`Unknown expansion topic: ${group.topicId}`);
+  const factById = Object.fromEntries(topic.facts.map(f => [f.id, f]));
+  for (const c of group.models) {
+    const [one, two] = c.ev.map(id => factById[id]);
+    const off = factById[c.off];
+    if (!one || !two || !off || c.ev[0] === c.ev[1] || c.ev.includes(c.off)) throw new Error(`${c.id}: invalid evidence references`);
+    models.push({
+      id: c.id, family: c.family, level: c.level, q: c.q, restate: c.restate, answer: c.answer,
+      ev: c.ev, exp: c.exp,
+      // An Explain distractor must represent the misconception “repeat the evidence”
+      // without duplicating the visible Cite sentence verbatim.
+      rep: [one, two].map(function (fact) {
+        return 'This repeats the source detail about ' + fact.tag + ' without explaining its connection.';
+      }),
+      sum: c.sum,
+      sumNew: c.sum + ' The passage also mentions ' + off.tag + '.',
+      bad: c.bad,
+      badRestate: 'The passage also describes ' + off.tag + '.',
+      off: c.off,
+      offExp: 'This detail about ' + off.tag + ' is included in the reading, but it does not explain why the answer follows.',
+      topicId: group.topicId
+    });
+  }
+}
+
 const bundle = {
   schemaVersion: 1,
   topics,

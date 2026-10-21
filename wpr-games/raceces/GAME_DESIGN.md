@@ -30,13 +30,13 @@ Roles are hidden until submission. After submission, a circled letter (R, A, C, 
 |---|---|
 | Beginner | Cause-effect, function, process, and adaptation relationships; sentences clearly different in role; five facts in the excerpt |
 | Intermediate | Evaluation, scale, and cause-effect problems with similar wording across roles; seven facts |
-| Advanced | Tradeoffs, process inference, and pattern reasoning where the explanation interprets rather than restates; eight facts, closer distractors |
+| Advanced | Tradeoffs, process inference, and pattern reasoning where the explanation interprets rather than restates; seven facts, with one added when needed to meet the passage-length floor |
 
 Passage length differs by only a few sentences; difficulty is meant to come from the reasoning.
 
 ## Variation and repetition control
 
-The generator never stops, and varies subject, source facts in the excerpt, question, claim, evidence, explanation, targeted role or slot, distractor mix, displayed pair order, starting order, and level. Rotation (see CONTENT_AND_GENERATOR_SCHEMA.md) excludes recent writing models, penalizes repeating family or topic, favors least-used roles, and balances families. A different shuffle of the same seven sentences is never counted as a new reasoning problem. The library has 30 writing models, so long practice does recur; see REASONING_DIVERSITY_REPORT.md.
+The generator can continue without a session limit. It varies selected source facts, question, claim, evidence, explanation, target role or slot, distractor mix, displayed pair order, starting order, and level. Unused writing models are prioritized before review; a selected topic/difficulty pool visibly enters review when exhausted, and never borrows unrelated content. A different shuffle of the same seven sentences is not a new reasoning problem. The library now has 90 underlying writing models (30 per difficulty), but only two per topic/difficulty; see `REPETITION_AUDIT.md` for actual pool capacity and repeat measurements.
 
 ## Feedback principles
 

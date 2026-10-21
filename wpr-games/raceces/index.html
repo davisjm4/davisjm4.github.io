@@ -31,6 +31,19 @@
       <label><input type="radio" name="level" value="intermediate"> Intermediate</label>
       <label><input type="radio" name="level" value="advanced"> Advanced</label>
     </fieldset>
+    <fieldset class="content-focus" aria-describedby="focus-help">
+      <legend>Practice content</legend>
+      <label class="subject-label" for="subject-select">Subject area</label>
+      <select id="subject-select" aria-label="Subject area"></select>
+      <p id="focus-help" class="focus-help">Choose one subject, then select one or more topics. Leave topics unchecked to use every topic in that subject.</p>
+      <div class="topic-actions">
+        <button type="button" class="text-btn" id="all-topics">Reset to All Topics</button>
+      </div>
+      <div id="topic-options" class="topic-options" aria-label="Choose topics"></div>
+      <p id="focus-status" class="focus-status" role="status" aria-live="polite"></p>
+      <button type="button" class="btn secondary" id="share-focus">Copy activity link</button>
+      <span id="share-status" class="sr-only" role="status" aria-live="polite"></span>
+    </fieldset>
   </div>
   <div id="stage"></div>
 </main>

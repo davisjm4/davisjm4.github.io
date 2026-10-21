@@ -249,7 +249,7 @@ Grading is semantic (`js/engine/rearrange.js` → `analyze`): Restate first; Ans
 ## Generator behavior
 
 - `Generator.build(index, {mode, modelId, targetKey, seed})` is pure and deterministic; every test and the game use it.
-- `Generator.next({mode, level})` chooses mode (Mixed Practice picks the least-used recent mode), level (All picks the least-used recent level), then a writing model: models used in the last 8 challenges are excluded, then penalized for repeating the recent family (3 challenges) or topic (2), then least-used wins. Rearrange also avoids models seen in that mode in the last 30. The target role or slot is the least recently used, never repeating a recent signature.
-- History is bounded to 60 entries and restored from session storage.
-- Excerpt composition: intro + the two evidence facts + the off-topic fact + filler facts (5, 7, or 8 facts total by level), in a seeded order.
+- `Generator.next({mode, level, subject, topics})` chooses from the selected subject/topic pool, then a difficulty with eligible models. Unused writing models are exhausted before review begins. Recent topic/family balance is applied within the eligible pool; the history is bounded at 120 challenges. The target role or slot is least-recently-used and avoids a recent signature when possible.
+- History is bounded to 120 entries and restored from session storage.
+- Excerpt composition: intro + the two evidence facts + the off-topic fact + same-topic filler facts (5 or 7 facts by level; Advanced may add one fact to satisfy the passage-length floor). A seeded choice selects the facts, then the authored topic order is preserved. Verified supplementary facts carry source URLs in the bundled content.
 - Seeds: the browser seeds from the session start time (override with `?seed=abc` for reproducible play); tests use fixed seeds.

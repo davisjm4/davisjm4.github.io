@@ -12,7 +12,7 @@
 
   function blank() {
     return {
-      version: 1, started: 0, activeMs: 0, attempts: [], recent: [],
+      version: 1, started: 0, activeMs: 0, attempts: [], recent: [], seenModels: [],
       totals: { done: 0, correct: 0 },
       byMode: {}, byRole: {}, byLevel: {}, byErr: {}
     };
@@ -60,11 +60,13 @@
     this.save();
   };
 
-  Session.prototype.setRecent = function (history) {
+  Session.prototype.setRecent = function (history, seenModels) {
     this.data.recent = (history || []).slice(-MAX_RECENT);
+    this.data.seenModels = (seenModels || []).slice(-2000);
     this.save();
   };
   Session.prototype.getRecent = function () { return this.data.recent || []; };
+  Session.prototype.getSeenModels = function () { return this.data.seenModels || []; };
 
   Session.prototype.reset = function () {
     this.data = blank();

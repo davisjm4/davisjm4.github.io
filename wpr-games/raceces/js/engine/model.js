@@ -6,7 +6,9 @@
 })(typeof self !== 'undefined' ? self : this, function (RNG, Structure) {
   'use strict';
 
-  var FACT_COUNT = { beginner: 5, intermediate: 7, advanced: 8 };
+  // Leave room for real passage variation even at the highest level. Required evidence and
+  // off-topic distractor facts are always included; the remaining slots vary the source excerpt.
+  var FACT_COUNT = { beginner: 5, intermediate: 7, advanced: 7 };
 
   function indexBundle(bundle) {
     var topicsById = {}, modelsById = {}, modelsByLevel = { beginner: [], intermediate: [], advanced: [] };
@@ -32,9 +34,19 @@
     var total = FACT_COUNT[m.level] || 6;
     var fillers = rng.shuffle(topic.facts.map(function (f) { return f.id; }).filter(function (id) { return need.indexOf(id) < 0; }));
     var ids = need.concat(fillers.slice(0, Math.max(0, total - need.length)));
-    ids = rng.shuffle(ids);
+    // Select facts with the seed, but retain the topic author's source order so a generated
+    // excerpt does not read like an arbitrarily shuffled list of facts.
+    ids = topic.facts.map(function (f) { return f.id; }).filter(function (id) { return ids.indexOf(id) >= 0; });
     var excerptFacts = ids.map(function (id) { return { id: id, text: facts[id].text }; });
     var excerpt = topic.intro + ' ' + excerptFacts.map(function (f) { return f.text; }).join(' ');
+    // Some compact source sets need one more sentence to meet the established Advanced
+    // passage floor. Add an on-topic fact only when needed, preserving concise variation elsewhere.
+    if (m.level === 'advanced' && excerpt.trim().split(/\s+/).length < 110 && fillers.length > ids.length - need.length) {
+      ids.push(fillers[ids.length - need.length]);
+      ids = topic.facts.map(function (f) { return f.id; }).filter(function (id) { return ids.indexOf(id) >= 0; });
+      excerptFacts = ids.map(function (id) { return { id: id, text: facts[id].text }; });
+      excerpt = topic.intro + ' ' + excerptFacts.map(function (f) { return f.text; }).join(' ');
+    }
 
     function sent(slot, text, extra) {
       var o = { uid: modelId + '#' + slot, id: slot, slot: slot, role: Structure.roleOfSlot(slot), pair: Structure.pairOfSlot(slot), text: text };
@@ -53,6 +65,7 @@
     };
     return {
       modelId: m.id, topicId: topic.id, subject: topic.subject, title: topic.title,
+      passageId: topic.id + '|' + ids.slice().sort().join(','),
       family: m.family, level: m.level,
       question: m.q, excerpt: excerpt, excerptFacts: excerptFacts,
       sentences: sentences,
@@ -86,7 +99,7 @@
   function baseChallenge(resp, mode) {
     return {
       mode: mode, level: resp.level, modelId: resp.modelId, topicId: resp.topicId, subject: resp.subject,
-      family: resp.family, question: resp.question, excerpt: resp.excerpt, info: infoFor(resp)
+      family: resp.family, question: resp.question, excerpt: resp.excerpt, passageId: resp.passageId, info: infoFor(resp)
     };
   }
 
