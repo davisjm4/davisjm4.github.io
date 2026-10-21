@@ -7,16 +7,32 @@ function questionParts(question) {
   return {
     prompt: question.prompt ?? question.stem ?? question.question ?? "",
     context: question.context ?? "",
+    passage: question.passage ?? "",
+    questionContext: question.questionContext ?? "",
+    response: question.response ?? "",
     code: question.code ?? "",
     choices: question.choices ?? [],
   };
 }
 
+function textBlock(label, value) {
+  if (!value) return "";
+  const paragraphs = String(value).split(/\n\s*\n/).map(s => s.trim()).filter(Boolean);
+  return `${label ? `<p><strong>${escapeHtml(label)}</strong></p>` : ""}${paragraphs.map(p => `<p>${escapeHtml(p).replaceAll("\n", "<br>")}</p>`).join("")}`;
+}
+
 // Keep code in a preformatted element. Escape Java as HTML text, then escape the
 // complete fragment for XML when inserting it into QTI mattext.
 export function formatQuestionHtml(question) {
-  const { prompt, context, code } = questionParts(question);
-  return [prompt && `<p>${escapeHtml(prompt)}</p>`, context && `<p>${escapeHtml(context)}</p>`, code !== "" && `<pre><code>${escapeHtml(code)}</code></pre>`].filter(Boolean).join("");
+  const { prompt, context, passage, questionContext, response, code } = questionParts(question);
+  return [
+    passage && textBlock("Source passage", passage),
+    questionContext && textBlock("Writing question", questionContext),
+    context && textBlock("", context),
+    prompt && `<p>${escapeHtml(prompt)}</p>`,
+    response && textBlock("Student response", response),
+    code !== "" && `<pre><code>${escapeHtml(code)}</code></pre>`
+  ].filter(Boolean).join("");
 }
 
 export function formatChoiceHtml(choice) {

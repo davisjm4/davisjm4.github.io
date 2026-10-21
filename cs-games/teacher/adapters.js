@@ -7,6 +7,7 @@ import { generateArray, formatNames as arrayModes, solutionArray, assessArray } 
 import { generateRecursion, modeNames as recursionModes, assessRecursion } from "../../java-games/recursion-lab/engine.js";
 import { generate as genSearch, MODE_IDS as searchModeIds, MODES as searchModes, assess as assessSearch, exportQuestion as exportSearch } from "../../java-games/search-sort-lab/engine/generator.js";
 import { generateTraceChallenge, verifyChallengeModel } from "../../java-games/variable-lab/trace-generator/src/index.js";
+import { generateRacecesAssessmentItem } from "./raceces-adapter.js";
 const stringLab = globalThis.StringLab;
 function supportsStringChoices(family, difficulty) {
   for (let seed=1; seed<=8; seed++) {
@@ -33,6 +34,11 @@ function hash(s) { let h=2166136261; for (const c of String(s)) {h^=c.charCodeAt
 const src = (id,name,modes,generate) => ({id,name,modes,generate});
 
 export const sources = [
+  src("raceces","R-A-C-E-C-E-S Writing Games",[
+    {id:"identify",name:"Identify the Parts",difficulties:["Beginner","Intermediate","Advanced"]},
+    {id:"missing",name:"Choose the Missing Piece",difficulties:["Beginner","Intermediate","Advanced"]},
+    {id:"rearrange",name:"Rearrange the Response",difficulties:["Beginner","Intermediate","Advanced"]}
+  ],(mode,difficulty,seed,points,filters={})=>generateRacecesAssessmentItem(mode,difficulty,seed,points,filters)),
   src("boolean","Boolean & Conditional Lab",Object.entries(booleanGame.modes).filter(([id])=>["branch","conditions","equivalent","short","construct"].includes(id)).map(([id,name])=>({id,name,difficulties:["Beginner","Intermediate","Advanced"]})),(mode,difficulty,seed,points)=>{
     const q=genBoolean(mode,booleanRng(seed),difficulty);
     if(q.kind==="select") return null;
@@ -77,10 +83,10 @@ export const sources = [
 ];
 export const sourceById = Object.fromEntries(sources.map(s=>[s.id,s]));
 
-export function generateAssessmentItem(sourceId, modeId, difficulty, seed, points) {
+export function generateAssessmentItem(sourceId, modeId, difficulty, seed, points, options = {}) {
   const source=sourceById[sourceId], mode=source?.modes.find(m=>m.id===modeId);
   if(!source||!mode) return null;
   // Sources with no explicit difficulty interface are intentionally marked mixed.
   const level=mode.difficulties?.includes(difficulty)?difficulty:(mode.difficulties?.includes(difficulty.toLowerCase())?difficulty.toLowerCase():"Mixed");
-  try { return source.generate(modeId,level,seed,points); } catch { return null; }
+  try { return source.generate(modeId,level,seed,points,options); } catch { return null; }
 }

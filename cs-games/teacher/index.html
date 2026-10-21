@@ -28,7 +28,7 @@
       <h2>Quiz settings</h2>
       <div class="teacher-form">
         <label>Quiz title<input id="quiz-title" value="Java Programming Practice" maxlength="120"></label>
-        <label>Java game sources<select id="source" multiple size="7" aria-describedby="source-help"></select></label>
+        <label>Assessment sources<select id="source" multiple size="9" aria-describedby="source-help"></select></label>
         <label>Practice modes<select id="mode" multiple size="8" aria-describedby="mode-help"></select></label>
         <label>Difficulty<select id="difficulty"><option value="mixed">Mixed difficulty</option><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option></select></label>
         <label>Questions<input id="question-count" type="number" min="1" max="50" value="5"></label>
@@ -37,6 +37,12 @@
       </div>
       <p id="source-help" class="muted">Choose one or more games. Use Ctrl (Windows) or Command (Mac) to select multiple entries.</p>
       <p id="mode-help" class="muted">Modes are grouped by source. Visual, drag-and-drop, and non-four-choice activities are excluded.</p>
+      <fieldset id="raceces-filters" class="source-filters" hidden>
+        <legend>R-A-C-E-C-E-S writing filters</legend>
+        <label>Subject<select id="raceces-subject"><option value="all">All Topics (all subjects)</option></select></label>
+        <p class="muted">Choose one subject, then optionally select one or more topics. Leave all topic boxes unchecked to include every topic in the selected subject.</p>
+        <div id="raceces-topics" class="topic-options" aria-label="Writing topics"></div>
+      </fieldset>
       <p class="muted">For modes without difficulty controls, questions use the engine's native mixed level. If a mode offers only some levels, the nearest available level is used and shown in the preview. In Canvas, open Course Settings → Import Course Content, then import the downloaded QTI .zip and review the quiz.</p>
       <div class="actions">
         <button id="generate">Generate Quiz</button>
@@ -63,5 +69,23 @@
   <script src="../../java-games/string-lab/js/families-practice.js?v=string-lab-1.1.1"></script>
   <script src="../../java-games/string-lab/js/generator.js?v=string-lab-1.1.1"></script>
   <script src="../../java-games/string-lab/js/feedback.js?v=string-lab-1.1.1"></script>
+<script src="../../wpr-games/raceces/js/engine/rng.js"></script>
+<script src="../../wpr-games/raceces/js/engine/structure.js"></script>
+<script src="../../wpr-games/raceces/js/data/content-bundle.js?v=20261021a"></script>
+<script src="../../wpr-games/raceces/js/engine/model.js?v=20261021a"></script>
+<script src="../../wpr-games/raceces/js/engine/feedback.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/engine/identify.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/engine/rearrange.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/engine/missing.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/data/compose-bundle.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/compose/grammar.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/compose/phrases.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/compose/check.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/compose/structures-design.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/compose/structures-process.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/compose/structures-observation.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/compose/compose.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/engine/generator.js?v=20261020b"></script>
+<script src="../../wpr-games/raceces/js/engine/validator.js?v=20261020b"></script>
 </body>
 </html>
