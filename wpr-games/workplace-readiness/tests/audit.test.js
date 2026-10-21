@@ -59,9 +59,9 @@ test('every category and every career context works as a filter', () => {
   ['personal', 'interpersonal', 'professional'].forEach(k => G.generateMany(base, 30, { seed: 'k' + k, filters: { category: k } }).challenges.forEach(c => assert.equal(c.category, k)));
   base.contexts.forEach(ctx => G.generateMany(base, 60, { seed: 'c' + ctx.id, filters: { context: ctx.id } }).challenges.forEach(c => { assert.equal(c.context, ctx.id); assert.ok(V.validateChallenge(c, base).ok); }));
 });
-test('semantic repetition: the same reasoning pattern never recurs within 12 challenges in mixed practice', () => {
+test('semantic repetition: the same reasoning pattern never recurs within 20 challenges in mixed practice', () => {
   for (let s = 0; s < 6; s++) {
-    const last = {}; sample.slice(s * 400, (s + 1) * 400).forEach((c, i) => { if (last[c.reasoning] !== undefined) assert.ok(i - last[c.reasoning] > 12, c.reasoning + ' repeated after ' + (i - last[c.reasoning])); last[c.reasoning] = i; });
+    const last = {}; sample.slice(s * 400, (s + 1) * 400).forEach((c, i) => { if (last[c.reasoning] !== undefined) assert.ok(i - last[c.reasoning] > 19, c.reasoning + ' repeated after ' + (i - last[c.reasoning])); last[c.reasoning] = i; });
   }
 });
 test('surface wording is not counted as new reasoning: distinct problems = distinct reasoning patterns', () => {

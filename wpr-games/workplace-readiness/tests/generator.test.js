@@ -70,6 +70,26 @@ test('variety: reasoning patterns are spaced (min gap >= 3 with an 11-pattern li
   cs.forEach((c, i) => { if (last[c.reasoning] !== undefined) min = Math.min(min, i - last[c.reasoning]); last[c.reasoning] = i; });
   assert.ok(min >= 3, 'min gap ' + min);
 });
+test('variety: no reasoning pattern repeats in the first 20 challenges when at least 20 are eligible', () => {
+  const filters = {};
+  const available = G.eligibleTemplates(base, filters);
+  const n = new Set(available.map(t => t.family + ':' + t.pattern)).size;
+  if (n < 20) return; // The bundled fixture may be smaller than production.
+  const s = G.createSession(base, { seed: 'twenty-pattern-window', filters });
+  const first = Array.from({ length: 20 }, () => s.next());
+  assert.equal(new Set(first.map(c => c.reasoning)).size, 20);
+  assert.equal(s.eligiblePatternCount, n);
+  assert.ok(s.eligibleFamilyCount > 0);
+});
+test('variety: context-filtered pools still use unused patterns across skill-bag boundaries', () => {
+  const filters = { modes: ['decision'], difficulty: 'intermediate', context: 'manufacturing' };
+  const available = G.eligibleTemplates(base, filters);
+  const count = new Set(available.map(t => t.family + ':' + t.pattern)).size;
+  assert.ok(count >= 20);
+  const s = G.createSession(base, { seed: 'workplace-audit-a', filters });
+  const first = Array.from({ length: 20 }, () => s.next());
+  assert.equal(new Set(first.map(c => c.reasoning)).size, 20);
+});
 test('variety: context rotation uses every available setting', () => {
   const cs = gen(200, { seed: 'ctx' }).challenges;
   assert.equal(new Set(cs.map(c => c.context)).size, base.contexts.length);

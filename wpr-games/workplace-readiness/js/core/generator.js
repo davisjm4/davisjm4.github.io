@@ -203,13 +203,19 @@
     var skillsAvail = lib.skillOrder.filter(function (id) { return eligible.some(function (t) { return t.skill === id; }); });
     var patternsAvail = {}, familiesAvail = {};
     eligible.forEach(function (t) { patternsAvail[t.family + ':' + t.pattern] = 1; familiesAvail[t.family] = 1; });
-    var patternSpacing = Math.min(12, Object.keys(patternsAvail).length - 1);
+    // Keep a full twenty-question practice window free of an underlying
+    // reasoning repeat whenever the selected pool contains that much variety.
+    // Small filtered pools still fall back gracefully after every pattern has
+    // been seen; generation remains continuous for review practice.
+    var patternSpacing = Math.min(20, Object.keys(patternsAvail).length);
     var familySpacing = Math.min(5, Object.keys(familiesAvail).length - 1);
 
     var session = {
       seed: seed, filters: filters, index: 0, history: [], bag: [],
       stats: { generated: 0, rejected: 0, rejectionReasons: {} },
-      eligibleCount: eligible.length
+      eligibleCount: eligible.length,
+      eligiblePatternCount: Object.keys(patternsAvail).length,
+      eligibleFamilyCount: Object.keys(familiesAvail).length
     };
 
     function refillBag(rng) {
@@ -268,6 +274,18 @@
         var sid = session.bag[i];
         var fresh = eligible.some(function (t) { return t.skill === sid && !rejected[t.id] && recentPat.indexOf(t.family + ':' + t.pattern) === -1; });
         if (fresh) return i;
+      }
+      // A skill can be stranded in the current rotation even though a fresh
+      // pattern remains in another skill already drawn this round. Rebuild
+      // the bag from skills that still have an unseen pattern before allowing
+      // any pattern repeat. This makes the spacing guarantee apply across the
+      // whole filtered pool, not only to the remaining tail of the skill bag.
+      var freshSkills = skillsAvail.filter(function (sid) {
+        return eligible.some(function (t) { return t.skill === sid && !rejected[t.id] && recentPat.indexOf(t.family + ':' + t.pattern) === -1; });
+      });
+      if (freshSkills.length) {
+        session.bag = RNG.create(seed + '|fresh-skills|' + session.index).shuffle(freshSkills);
+        return session.bag.length - 1;
       }
       for (var j = session.bag.length - 1; j >= 0; j--) {
         var sid2 = session.bag[j];

@@ -82,10 +82,16 @@
     checkOptions();
   }
   function checkOptions() {
-    var f = UI.readOptions(), n = G.eligibleTemplates(lib, f).length;
+    var f = UI.readOptions(), eligible = G.eligibleTemplates(lib, f), n = eligible.length;
     var note = doc.getElementById('options-note'), start = doc.getElementById('btn-start');
     if (!n) { note.textContent = 'No challenges match these choices. Try mixed modes or difficulty.'; start.disabled = true; }
-    else { note.textContent = ''; start.disabled = false; }
+    else {
+      var patterns = new Set(eligible.map(function (t) { return t.family + ':' + t.pattern; })).size;
+      note.textContent = patterns < 20
+        ? n + ' authored challenges across ' + patterns + ' distinct reasoning patterns. This selection will repeat underlying ideas during a 20-question session; broaden the skill, mode, difficulty, or setting filters for more variety.'
+        : n + ' authored challenges across ' + patterns + ' distinct reasoning patterns. The generator spaces those patterns across the first 20 questions when possible.';
+      start.disabled = false;
+    }
     return n;
   }
 
