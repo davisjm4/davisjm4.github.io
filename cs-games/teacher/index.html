@@ -27,14 +27,17 @@
     <section class="panel">
       <h2>Quiz settings</h2>
       <div class="teacher-form">
-        <label>Quiz title<input id="quiz-title" value="Boolean &amp; Conditional Practice" maxlength="120"></label>
-        <label>Question source<select id="source"><option value="boolean">Boolean &amp; Conditional Lab</option></select></label>
-        <label>Practice mode<select id="mode"><option value="all">All supported modes</option><option value="branch">Follow the Branch</option><option value="conditions">Build Conditions</option><option value="equivalent">Equivalent Expressions</option><option value="short">Short-Circuit &amp; Strings</option><option value="construct">Construct a Condition</option></select></label>
-        <label>Questions<input id="question-count" type="number" min="1" max="20" value="5"></label>
+        <label>Quiz title<input id="quiz-title" value="Java Programming Practice" maxlength="120"></label>
+        <label>Java game sources<select id="source" multiple size="7" aria-describedby="source-help"></select></label>
+        <label>Practice modes<select id="mode" multiple size="8" aria-describedby="mode-help"></select></label>
+        <label>Difficulty<select id="difficulty"><option value="mixed">Mixed difficulty</option><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option></select></label>
+        <label>Questions<input id="question-count" type="number" min="1" max="50" value="5"></label>
         <label>Points per question<input id="points" type="number" min="1" max="100" value="1"></label>
         <label>Random seed (optional)<input id="seed" inputmode="numeric" placeholder="New seed each time"></label>
       </div>
-      <p class="muted">This first adapter supports conventional four-choice questions from Boolean &amp; Conditional Lab. It excludes visual-only activities and keeps each answer and explanation with its source question.</p>
+      <p id="source-help" class="muted">Choose one or more games. Use Ctrl (Windows) or Command (Mac) to select multiple entries.</p>
+      <p id="mode-help" class="muted">Modes are grouped by source. Visual, drag-and-drop, and non-four-choice activities are excluded.</p>
+      <p class="muted">For modes without difficulty controls, questions use the engine's native mixed level. If a mode offers only some levels, the nearest available level is used and shown in the preview. Canvas imports the downloaded QTI ZIP through the course import tool.</p>
       <div class="actions">
         <button id="generate">Generate Quiz</button>
         <button id="regenerate-quiz" class="secondary" disabled>Regenerate Quiz</button>
@@ -46,5 +49,18 @@
     <section id="preview" aria-live="polite"></section>
   </main>
   <footer class="footer"><div class="wrap">CS Games · Teacher Tools. Questions and files remain in this browser until downloaded.</div></footer>
+  <script src="../../java-games/string-lab/js/rng.js?v=string-lab-1.1.1"></script>
+  <script src="../../java-games/string-lab/js/words.js?v=string-lab-1.1.1"></script>
+  <script src="../../java-games/string-lab/js/java-ast.js?v=string-lab-1.1.1"></script>
+  <script src="../../java-games/string-lab/js/evaluator.js?v=string-lab-1.1.1"></script>
+  <script src="../../java-games/string-lab/js/difficulty.js?v=string-lab-1.1.1"></script>
+  <script src="../../java-games/string-lab/js/distractors.js?v=string-lab-1.1.1"></script>
+  <script src="../../java-games/string-lab/js/gen-helpers.js?v=string-lab-1.1.1"></script>
+  <script src="../../java-games/string-lab/js/families-predict.js?v=string-lab-1.1.1"></script>
+  <script src="../../java-games/string-lab/js/families-trace.js?v=string-lab-1.1.1"></script>
+  <script src="../../java-games/string-lab/js/families-index.js?v=string-lab-1.1.1"></script>
+  <script src="../../java-games/string-lab/js/families-expression.js?v=string-lab-1.1.1"></script>
+  <script src="../../java-games/string-lab/js/families-practice.js?v=string-lab-1.1.1"></script>
+  <script src="../../java-games/string-lab/js/generator.js?v=string-lab-1.1.1"></script>
 </body>
 </html>
