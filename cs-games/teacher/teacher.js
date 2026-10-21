@@ -1,6 +1,6 @@
-import { sources, sourceById, generateAssessmentItem } from "./adapters.js";
-import { racecesCatalog } from "./raceces-adapter.js";
-import { buildAssessmentXml, buildManifest, createZip, escapeHtml, formatChoiceHtml, formatQuestionHtml } from "./qti.js";
+import { sources, sourceById, generateAssessmentItem } from "./adapters.js?v=20261021-raceces1";
+import { racecesCatalog } from "./raceces-adapter.js?v=20261021-raceces1";
+import { buildAssessmentXml, buildManifest, createZip, escapeHtml, formatChoiceHtml, formatQuestionHtml } from "./qti.js?v=20261021-raceces1";
 const $ = id => document.getElementById(id);
 const hash = text => { let h=2166136261; for (const ch of text) { h ^= ch.charCodeAt(0); h=Math.imul(h,16777619); } return (h>>>0).toString(36); };
 let quiz=[], config=null;
