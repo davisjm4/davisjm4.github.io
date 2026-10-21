@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Teacher Tools for generating Canvas-ready Java programming and R-A-C-E-C-E-S writing assessments.">
+  <meta name="description" content="Teacher Tools for generating Canvas-ready Java programming, R-A-C-E-C-E-S writing, and Workplace Readiness assessments.">
   <title>Teacher Tools | CS Games</title>
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="./teacher.css">
-  <script type="module" src="./teacher.js?v=20261021-raceces1"></script>
+  <script type="module" src="./teacher.js?v=20261022-workplace1"></script>
 </head>
 <body>
   <header class="site-header">
@@ -42,6 +42,12 @@
         <label>Subject<select id="raceces-subject"><option value="all">All Topics (all subjects)</option></select></label>
         <p class="muted">Choose one subject, then optionally select one or more topics. Leave all topic boxes unchecked to include every topic in the selected subject.</p>
         <div id="raceces-topics" class="topic-options" aria-label="Writing topics"></div>
+      </fieldset>
+      <fieldset id="workplace-filters" class="source-filters" hidden>
+        <legend>Workplace Readiness filters</legend>
+        <label>Skills<select id="workplace-skills" multiple size="7" aria-describedby="workplace-help"></select></label>
+        <label>Career settings<select id="workplace-contexts" multiple size="6" aria-describedby="workplace-help"></select></label>
+        <p id="workplace-help" class="muted">Choose one or more skills and settings. Leave either list unselected to include all options.</p>
       </fieldset>
       <p class="muted">For modes without difficulty controls, questions use the engine's native mixed level. If a mode offers only some levels, the nearest available level is used and shown in the preview. In Canvas, open Course Settings → Import Course Content, then import the downloaded QTI .zip and review the quiz.</p>
       <div class="actions">
@@ -87,5 +93,20 @@
 <script src="../../wpr-games/raceces/js/compose/compose.js?v=20261020b"></script>
 <script src="../../wpr-games/raceces/js/engine/generator.js?v=20261020b"></script>
 <script src="../../wpr-games/raceces/js/engine/validator.js?v=20261020b"></script>
+<script src="../../wpr-games/workplace-readiness/js/data/schema.js?v=wr-teacher-20261022"></script>
+<script src="../../wpr-games/workplace-readiness/js/core/rng.js?v=wr-teacher-20261022"></script>
+<script src="../../wpr-games/workplace-readiness/js/core/expr.js?v=wr-teacher-20261022"></script>
+<script src="../../wpr-games/workplace-readiness/js/core/text.js?v=wr-teacher-20261022"></script>
+<script src="../../wpr-games/workplace-readiness/js/core/order.js?v=wr-teacher-20261022"></script>
+<script src="../../wpr-games/workplace-readiness/js/core/library.js?v=wr-teacher-20261022"></script>
+<script src="../../wpr-games/workplace-readiness/js/core/feedback.js?v=wr-teacher-20261022"></script>
+<script src="../../wpr-games/workplace-readiness/js/core/grader.js?v=wr-teacher-20261022"></script>
+<script src="../../wpr-games/workplace-readiness/js/core/validator.js?v=wr-teacher-20261022"></script>
+<script src="../../wpr-games/workplace-readiness/js/core/generator.js?v=wr-teacher-20261022"></script>
+<script src="../../wpr-games/workplace-readiness/js/data/content-bundle.js?v=wr-content-20261022-140"></script>
+<script src="../../wpr-games/workplace-readiness/js/compose/engine.js?v=wr-cx-20261022-1"></script>
+<script src="../../wpr-games/workplace-readiness/js/compose/check.js?v=wr-cx-20261022-1"></script>
+<script src="../../wpr-games/workplace-readiness/js/compose/selector.js?v=wr-cx-20261022-1"></script>
+<script src="../../wpr-games/workplace-readiness/js/data/compose-bundle.js?v=wr-cx-content-20261022-1"></script>
 </body>
 </html>

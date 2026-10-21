@@ -8,6 +8,7 @@ import { generateRecursion, modeNames as recursionModes, assessRecursion } from 
 import { generate as genSearch, MODE_IDS as searchModeIds, MODES as searchModes, assess as assessSearch, exportQuestion as exportSearch } from "../../java-games/search-sort-lab/engine/generator.js";
 import { generateTraceChallenge, verifyChallengeModel } from "../../java-games/variable-lab/trace-generator/src/index.js";
 import { generateRacecesAssessmentItem } from "./raceces-adapter.js?v=20261021-raceces1";
+import { generateWorkplaceAssessmentItem } from "./workplace-adapter.js?v=20261022-workplace1";
 const stringLab = globalThis.StringLab;
 function supportsStringChoices(family, difficulty) {
   for (let seed=1; seed<=8; seed++) {
@@ -34,6 +35,12 @@ function hash(s) { let h=2166136261; for (const c of String(s)) {h^=c.charCodeAt
 const src = (id,name,modes,generate) => ({id,name,modes,generate});
 
 export const sources = [
+  src("workplace-readiness","Workplace Readiness Games",[
+    {id:"decision",name:"Workplace Decisions",difficulties:["Beginner","Intermediate","Advanced"]},
+    {id:"nextstep",name:"Best Next Step",difficulties:["Beginner","Intermediate","Advanced"]},
+    {id:"order",name:"Put the Steps in Order",difficulties:["Beginner","Intermediate","Advanced"]},
+    {id:"find",name:"Find the Problem",difficulties:["Beginner","Intermediate","Advanced"]}
+  ],(mode,difficulty,seed,points,filters={})=>generateWorkplaceAssessmentItem(mode,difficulty,seed,points,filters.workplace||{})),
   src("raceces","R-A-C-E-C-E-S Writing Games",[
     {id:"identify",name:"Identify the Parts",difficulties:["Beginner","Intermediate","Advanced"]},
     {id:"missing",name:"Choose the Missing Piece",difficulties:["Beginner","Intermediate","Advanced"]},
