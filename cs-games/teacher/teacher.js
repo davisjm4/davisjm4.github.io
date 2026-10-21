@@ -60,10 +60,12 @@ function attemptItem(pair,index,used,excluded=new Set()){
    const filters=pair.sourceId==="raceces"?{...config.racecesFilters}:pair.sourceId==="workplace-readiness"?{workplace:config.workplaceFilters}:{};
    const item=generateAssessmentItem(pair.sourceId,pair.modeId,level,seed,config.points,filters);
    const uniqueSignature=item?.configurationSignature||item?.signature;
-   if(!item||used.has(uniqueSignature)||excluded.has(uniqueSignature))continue;
+   const configKey=`config:${item?.sourceId}:${uniqueSignature}`;
+   const reasoningKey=item?.reasoningSignature?`reasoning:${item.sourceId}:${item.reasoningSignature}`:"";
+   if(!item||used.has(configKey)||(reasoningKey&&used.has(reasoningKey))||excluded.has(configKey)||(reasoningKey&&excluded.has(reasoningKey)))continue;
    item.id=`${item.sourceId}-${hash(`${item.signature}|${seed}|${index}`)}`;
-   if(used.has(uniqueSignature))continue;
-   used.add(uniqueSignature);return item;
+   if(used.has(configKey)||(reasoningKey&&used.has(reasoningKey)))continue;
+   used.add(configKey);if(reasoningKey)used.add(reasoningKey);return item;
  }
  return null;
 }
@@ -88,7 +90,7 @@ function render(){
 }
 function generateQuiz(){config=makeConfig();const result=buildQuiz(config);quiz=result.items;$("status").textContent=result.error||"Quiz generated. Review every answer before downloading.";render()}
 function regenerateOne(index){
- if(!config||!quiz[index])return;const previous=quiz[index],excluded=new Set(quiz.filter((_,i)=>i!==index).map(q=>q.configurationSignature||q.signature));
+ if(!config||!quiz[index])return;const previous=quiz[index],excluded=new Set(quiz.filter((_,i)=>i!==index).flatMap(q=>[`config:${q.sourceId}:${q.configurationSignature||q.signature}`,...(q.reasoningSignature?[`reasoning:${q.sourceId}:${q.reasoningSignature}`]:[])]));
  const replacement=attemptItem({sourceId:previous.sourceId,modeId:previous.modeId},index+1,new Set(),excluded);
  if(!replacement){$("status").textContent="No distinct validated replacement was available for that source and mode. Other questions were kept.";return}
  replacement.points=previous.points;quiz[index]=replacement;$("status").textContent=`Question ${index+1} regenerated.`;render();

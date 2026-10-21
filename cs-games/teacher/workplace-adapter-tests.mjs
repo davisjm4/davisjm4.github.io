@@ -59,6 +59,13 @@ for (const skill of W.content.skills) for (const difficulty of ["Beginner", "Int
 }
 assert.ok(accepted > 500, `expected rich coverage; accepted ${accepted}/${attempted}`);
 assert.equal(skillLevels.size, 22 * 3, "all 66 skill/difficulty selections must produce questions");
+const hybrid = W.selector.createHybrid(W.library.create(W.content), W.composeContent);
+const unavailableCells = [];
+for (const skill of W.content.skills) for (const difficulty of ["Beginner", "Intermediate", "Advanced"]) for (const mode of source.modes)
+  if (!cells.has(`${skill.id}|${difficulty}|${mode.id}`)) {
+    const eligible = W.selector.eligibleUnits(hybrid, { skills: [skill.id], modes: [mode.id], difficulty: difficulty.toLowerCase() });
+    unavailableCells.push({ skill: skill.id, difficulty, mode: mode.id, eligibleUnits: eligible.length });
+  }
 for (const mode of source.modes) assert.ok(modeCounts.get(mode.id) > 0, `${mode.id} must generate items`);
 for (const mode of source.modes) for (const origin of ["authored", "composed"])
   assert.ok(origins.get(`${mode.id}|${origin}`) > 0, `${mode.id} must adapt ${origin} challenges`);
@@ -75,18 +82,19 @@ for (const mode of source.modes) {
 }
 
 for (const count of [10, 20, 50]) {
-  const used = new Set(), keys = new Set();
+  const used = new Set(), reasons = new Set(), keys = new Set();
   for (let index = 0; index < count; index++) {
     const mode = source.modes[index % source.modes.length];
     let item = null;
     for (let retry = 0; retry < 140 && !item; retry++) {
       const candidate = generateWorkplaceAssessmentItem(mode.id, ["Beginner", "Intermediate", "Advanced"][index % 3], 83001 + index * 1009 + retry * 7919, 2);
-      if (!candidate || used.has(candidate.configurationSignature)) continue;
+      if (!candidate || used.has(candidate.configurationSignature) || reasons.has(candidate.reasoningSignature)) continue;
       item = candidate;
     }
     assert.ok(item, `should fill ${count} questions without repeating a reasoning configuration; failed at ${index}`);
     assert.ok(!keys.has(item.signature), "exact displayed question should not repeat");
     used.add(item.configurationSignature); keys.add(item.signature);
+    reasons.add(item.reasoningSignature);
   }
 }
 
@@ -107,6 +115,6 @@ assert.ok(xml.includes("Sentence 1:"), "order items should preserve numbered sen
 assert.ok(xml.includes("choice_"));
 const stats = getWorkplaceAdapterDiagnostics();
 assert.equal(stats.attempted, stats.accepted + Object.values(stats.rejected).reduce((a, b) => a + b, 0));
-console.log(`Workplace adapter seeded matrix: ${accepted} accepted, ${rejected} rejected of ${attempted}; 66 skill/difficulty selections and all four modes yielded valid items; authored and compositional content covered; all displayed choices checked by source grader. Overall adapter diagnostics: ${JSON.stringify(stats)}. Deterministic generation, 10/20/50 unique quizzes, and QTI content passed.`);
+console.log(`Workplace adapter seeded matrix: ${accepted} accepted, ${rejected} rejected of ${attempted}; 66 skill/difficulty selections and all four modes yielded valid items; authored and compositional content covered; all displayed choices checked by source grader. Mode/filter gaps observed in 20 seeded draws: ${JSON.stringify(unavailableCells)}. Overall adapter diagnostics: ${JSON.stringify(stats)}. Deterministic generation, 10/20/50 unique quizzes, and QTI content passed.`);
 
 function challengeOrigin(item) { return item._auditChallenge.source; }
