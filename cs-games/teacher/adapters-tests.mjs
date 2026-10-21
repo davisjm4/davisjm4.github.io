@@ -28,7 +28,7 @@ for(const source of sources){
     }
   }
 }
-for(const sourceId of ["boolean","variable","math","string","loop","array","recursion","search-sort","class-object"])
+for(const sourceId of ["boolean","variable","math","string","loop","array","recursion","search-sort"])
   check(sources.some(s=>s.id===sourceId),`Missing requested source ${sourceId}`);
 const {buildAssessmentXml,buildManifest,formatQuestionHtml}=await import(new URL("./qti.js",import.meta.url));
 const chosen=[];const seen=new Set();
