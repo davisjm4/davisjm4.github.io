@@ -531,6 +531,7 @@ export function generateResponse(mode = "mixed", support = "full", forcedStructu
         : supportNames[support] || "Independent"
     }`,
     mode: requestedMode,
+    practiceMode: selectedMode,
     modeName: responseModes[selectedMode],
     support,
     supportName: supportNames[support] || "Independent",

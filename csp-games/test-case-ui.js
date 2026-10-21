@@ -7,7 +7,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=active-time-v1";
+} from "./session.js?v=per-mode-daily-v1";
 export function startTestCase() {
   const $ = (id) => document.getElementById(id),
     esc = (value) =>
@@ -38,7 +38,7 @@ export function startTestCase() {
       )}</select></label></div><section id="stage" class="panel"></section><p id="stats" class="muted"></p>`;
   addSessionNavigation("../");
   const stats = () =>
-      ($("stats").textContent = roundSummary("test-case-builder")),
+      ($("stats").textContent = roundSummary("test-case-builder", $("mode").value)),
     active = () => !closed && tracker.status(id) === "active";
   function finish(correct, details, revealed = false) {
     closed = true;
@@ -61,7 +61,8 @@ export function startTestCase() {
   function next() {
     if (id) tracker.skip(id);
     q = deck.next($("mode").value);
-    id = tracker.begin(q.game, q.title, q.topic, q.topicTitle);
+    const mode = $("mode").value === "mixed" ? q.topic.split(".").pop() : $("mode").value;
+    id = tracker.begin(q.game, q.title, q.topic, q.topicTitle, mode, q.topicTitle);
     selected = null;
     closed = false;
     $("stage").innerHTML =

@@ -98,7 +98,7 @@ export function mount({ root, tracker }) {
     state.samples = new Map([[state.challenge.sampleId, samples.get(state.challenge.sampleId)]]);
     for (const related of state.challenge.relatedSamples || []) state.samples.set(related.sampleId, samples.get(related.sampleId));
     state.selection = new Map(); state.expanded = new Map(); state.hints = []; state.attempts = 0; state.result = null; state.revealed = false; state.acceptedPaths = []; state.outcomes = []; state.misconceptionIds = [];
-    state.instance = tracker.begin("documentation-lab", "Documentation Lab", `response-explorer/${state.challenge.id}`, state.challenge.title);
+    state.instance = tracker.begin("documentation-lab", "Documentation Lab", `response-explorer/${state.challenge.id}`, state.challenge.title, "response-explorer", "API Response Explorer");
     render();
   };
   const render = () => {

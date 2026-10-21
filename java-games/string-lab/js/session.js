@@ -18,7 +18,8 @@
   var SCHEMA = 'java-games.string-lab.v1';
   var GAME_ID = 'string-lab';
 
-  function emptyBucket() { return { completed: 0, firstAttemptCorrect: 0, incorrect: 0, revealed: 0 }; }
+  function emptyBucket() { return { completed: 0, attempted: 0, firstAttemptCorrect: 0, incorrect: 0, revealed: 0, afterRetry: 0, submissions: 0 }; }
+  function dayKey(t) { var d = new Date(t); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
 
   function create(config) {
     config = config || {};
@@ -29,7 +30,7 @@
     var listeners = config.onEvent ? [config.onEvent] : [];
     var seq = 0;
     var sessionId = config.sessionId || ('sl-' + now().toString(36) + '-' + Math.floor(Math.random() * 1e6).toString(36));
-    var startedAt = now();
+    var startedAt = now(), sessionDate = dayKey(startedAt);
 
     var state = { activeMs: 0, skipped: 0, byDifficulty: {}, byMode: {}, bySkill: {}, byFamily: {}, total: emptyBucket() };
     skills.forEach(function (s) { state.bySkill[s] = emptyBucket(); });
@@ -63,6 +64,7 @@
 
     /** Called about once a second by the UI. Counts only visible time with recent interaction. */
     function heartbeat() {
+      ensureDay();
       var t = now(), dt = Math.min(Math.max(t - lastBeat, 0), 2500);
       lastBeat = t;
       if (visible && current && !current.done && t - lastActivity < idleCapMs) { current.activeMs += dt; state.activeMs += dt; }
@@ -72,18 +74,31 @@
     function setVisible(v) { heartbeat(); visible = !!v; lastBeat = now(); }
 
     function present(ch) {
+      ensureDay();
       if (current && !current.done) skip(); // replaced before being answered
       activity(); lastBeat = now();
       current = { instance: ++instanceCounter, ch: ch, done: false, activeMs: 0, presentedAt: now() };
       return emit({ type: 'challenge_presented', instance: current.instance, challenge: describe(ch) });
     }
 
+    function ensureDay() {
+      var today = dayKey(now());
+      if (today === sessionDate) return false;
+      if (current) current.done = true;
+      state = { activeMs: 0, skipped: 0, byDifficulty: {}, byMode: {}, bySkill: {}, byFamily: {}, total: emptyBucket() };
+      skills.forEach(function (s) { state.bySkill[s] = emptyBucket(); });
+      startedAt = now(); sessionDate = today; seq = 0;
+      sessionId = 'sl-' + startedAt.toString(36) + '-' + Math.floor(Math.random() * 1e6).toString(36);
+      return true;
+    }
     function record(outcome, selectedId) {
+      if (ensureDay() || !current || current.done) return null;
       heartbeat();
       current.done = true;
       var ch = current.ch, correct = outcome === 'correct';
       [state.total, bucket(state.byDifficulty, ch.difficulty), bucket(state.byMode, ch.mode), bucket(state.bySkill, ch.skill), bucket(state.byFamily, ch.family)].forEach(function (b) {
         b.completed++;
+        if (correct || outcome === 'incorrect') { b.attempted++; b.submissions++; }
         if (correct) b.firstAttemptCorrect++; else if (outcome === 'incorrect') b.incorrect++; else b.revealed++;
       });
       return emit({
@@ -103,6 +118,7 @@
       return record('revealed', null);
     }
     function skip() {
+      if (ensureDay()) return null;
       if (!current || current.done) return null;
       current.done = true; state.skipped++;
       return emit({ type: 'challenge_skipped', instance: current.instance, challenge: describe(current.ch), activeMs: Math.round(current.activeMs) });
@@ -115,10 +131,11 @@
     function summary() {
       var t = state.total;
       return {
-        schema: SCHEMA, sessionId: sessionId, startedAt: new Date(startedAt).toISOString(),
+        schema: SCHEMA, sessionId: sessionId, startedAt: new Date(startedAt).toISOString(), sessionDate: sessionDate,
         completed: t.completed, firstAttemptCorrect: t.firstAttemptCorrect, incorrect: t.incorrect, revealed: t.revealed,
+        attempted: t.attempted, submissions: t.submissions, afterRetry: t.afterRetry,
         skipped: state.skipped, activeMs: Math.round(state.activeMs),
-        accuracy: t.completed ? t.firstAttemptCorrect / t.completed : null,
+        accuracy: t.attempted ? t.firstAttemptCorrect / t.attempted : null,
         byDifficulty: JSON.parse(JSON.stringify(state.byDifficulty)), byMode: JSON.parse(JSON.stringify(state.byMode)),
         bySkill: JSON.parse(JSON.stringify(state.bySkill)), byFamily: JSON.parse(JSON.stringify(state.byFamily))
       };
@@ -129,7 +146,7 @@
 
     return {
       on: function (fn) { listeners.push(fn); return function () { listeners = listeners.filter(function (f) { return f !== fn; }); }; },
-      present: present, answer: answer, reveal: reveal, skip: skip, activity: activity, heartbeat: heartbeat, setVisible: setVisible,
+      present: present, answer: answer, reveal: reveal, skip: skip, activity: activity, heartbeat: heartbeat, setVisible: setVisible, ensureDay: ensureDay,
       summary: summary, end: end, id: sessionId, current: function () { return current; }
     };
   }

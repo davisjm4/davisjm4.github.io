@@ -7,7 +7,7 @@ Copy the folder contents to `java-games/search-sort-lab/`: `index.html`, `styles
 
 ## 2. Dependencies
 - Runtime: none. Native ES modules (uses top-level `await`; modern browsers/Chromebooks).
-- Shared assets, loaded if present (**VERIFY** paths and `?v=` tokens): `../style.css?v=java-quality-v3`, `../session.js?v=active-time-v1`. If `../session.js` fails to load, the page silently uses `engine/session-fallback.js` (nothing persisted, not visible in the shared Session Summary). In production confirm the shared tracker actually loads.
+- Shared assets, loaded if present (**VERIFY** paths and `?v=` tokens): `../style.css?v=java-quality-v3`, `../session.js?v=per-mode-daily-v1`. If `../session.js` fails to load, the page silently uses `engine/session-fallback.js` (nothing persisted, not visible in the shared Session Summary). In production confirm the shared tracker actually loads.
 - Tests only: `linkedom` (already a devDependency of `java-games`), `java` for `jvm.test.mjs`.
 
 ## 3. Existing code that must change (small, additive)

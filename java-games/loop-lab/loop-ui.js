@@ -1,5 +1,5 @@
 import { originalModeNames, newModeNames, DIFFICULTIES, DIFFICULTY_NAMES, createLoopSession, assessLoop, distractorFor } from "./loop-engine.js?v=loop-expansion-v2";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=java-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
@@ -26,7 +26,7 @@ export function startLoopLab() {
 <label>Difficulty <select id="difficulty">${DIFFICULTIES.map((d) => `<option value="${d}">${DIFFICULTY_NAMES[d]}</option>`).join("")}</select></label>
 <button id="new" class="secondary">New Challenge</button></div><section id="stage" class="panel"></section><p id="stats" class="stats"></p>`;
   addSessionNavigation("../");
-  const stats = () => ($("stats").textContent = roundSummary("loop-lab"));
+  const stats = () => ($("stats").textContent = roundSummary("loop-lab", $("mode").value));
   const setSelected = (btn) => {
     for (const x of $("choices").querySelectorAll("[role=radio]")) { const on = x === btn; x.classList.toggle("selected", on); x.setAttribute("aria-checked", String(on)); x.tabIndex = on ? 0 : -1; }
   };
@@ -34,12 +34,12 @@ export function startLoopLab() {
     const advancing = Boolean(instance);
     if (instance) tracker.skip(instance);
     q = practice.next({ mode: $("mode").value, difficulty: $("difficulty").value });
-    instance = tracker.begin(q.game, q.title, q.topic, q.topicTitle); selected = null; closed = false;
+    instance = tracker.begin(q.game, q.title, q.topic, q.topicTitle, q.mode, q.modeName); selected = null; closed = false;
     tracker.annotate(instance, { mode: q.mode, difficulty: q.difficulty, skill: q.concept, generatorFamily: q.reasoningFamily, seed: q.seed });
     const blockChoices = q.choiceFormat === "code" || q.choiceFormat === "block";
     $("stage").innerHTML = `<div class="challenge-meta">${esc(q.modeName)} · ${esc(q.variantName)} · ${esc(q.difficultyName)}</div><h2 id="prompt" tabindex="-1">${esc(q.prompt)}</h2>
 <pre class="snippet loop-snippet" tabindex="0" aria-label="Java code"><code>${esc(q.code)}</code></pre>${studentTraceHtml(q.studentTrace)}
-<div id="choices" class="loop-choices${blockChoices ? " block-choices" : ""}" role="radiogroup" aria-labelledby="prompt">${q.choices.map((c, i) => `<button type="button" class="secondary loop-choice${q.choiceFormat === "code" ? " code-choice" : ""}" role="radio" aria-checked="false" tabindex="${i === 0 ? 0 : -1}" data-index="${i}"><span class="choice-letter" aria-hidden="true">${String.fromCharCode(65 + i)}</span><span class="choice-text">${esc(c)}</span></button>`).join("")}</div>
+<div id="choices" class="loop-choices${blockChoices ? " block-choices" : ""}" role="radiogroup" aria-labelledby="prompt">${q.choices.map((c, i) => `<button type="button" class="secondary loop-choice${q.choiceFormat === "code" ? " code-choice" : ""}" role="radio" aria-checked="false" tabindex="${i === 0 ? 0 : -1}" data-index="${i}"><span class="choice-text">${esc(c)}</span></button>`).join("")}</div>
 <div class="actions"><button id="check" disabled>Check Answer</button><button id="next" class="secondary">Next Challenge</button></div><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div>`;
     const buttons = [...$("choices").querySelectorAll("[role=radio]")];
     buttons.forEach((b, i) => {

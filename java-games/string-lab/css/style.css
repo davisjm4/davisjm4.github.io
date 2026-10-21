@@ -162,3 +162,11 @@ table.skills td.n, table.skills th.n { text-align: right; }
 @media (hover: none) { .hint { display: none; } }
 @media (forced-colors: active) { .choice.is-correct, .choice.is-wrong, .choice.selected { border-width: 3px; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+.session-stats {
+  width: min(1100px, calc(100% - 2rem));
+  margin: .75rem auto 1.5rem;
+  color: var(--muted, #a9b4c4);
+  font-size: .92rem;
+  line-height: 1.5;
+}

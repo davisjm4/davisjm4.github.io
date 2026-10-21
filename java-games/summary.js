@@ -1,4 +1,4 @@
-import { sessionTracker, accuracy } from "./session.js?v=active-time-v1";
+import { sessionTracker, accuracy } from "./session.js?v=per-mode-daily-v1";
 const $ = (id) => document.getElementById(id),
   esc = (s) =>
     String(s).replace(
@@ -13,10 +13,17 @@ const $ = (id) => document.getElementById(id),
         })[c],
     );
 const tracker = sessionTracker(),
-  fmt = (m) => (accuracy(m) === null ? "N/A" : accuracy(m).toFixed(1) + "%"),
+  fmt = (m) => (accuracy(m) === null ? "—" : accuracy(m).toFixed(1) + "%"),
   time = (t) => new Date(t).toLocaleString();
-function table(items) {
-  return `<div class="table-wrap"><table class="report-table"><thead><tr><th>Game / topic</th><th>Attempted</th><th>First-try correct</th><th>First-try accuracy</th><th>Solved after retry</th><th>Submissions</th><th>Incorrect</th><th>Revealed</th><th>Skipped</th></tr></thead><tbody>${items.map((m) => `<tr><th scope="row">${esc(m.title)}</th><td data-label="Attempted">${m.attempted}</td><td data-label="First-try correct">${m.firstTry}</td><td data-label="First-try accuracy">${fmt(m)}</td><td data-label="Solved after retry">${m.afterRetry}</td><td data-label="Submissions">${m.submissions}</td><td data-label="Incorrect">${m.incorrect}</td><td data-label="Revealed">${m.revealed}</td><td data-label="Skipped">${m.skipped}</td></tr>`).join("")}</tbody></table></div>`;
+function table(items, firstColumn = "Game / topic") {
+  return `<div class="table-wrap"><table class="report-table"><thead><tr><th>${firstColumn}</th><th>Attempted</th><th>First-try correct</th><th>First-try accuracy</th><th>Solved after retry</th><th>Submissions</th><th>Incorrect</th><th>Revealed</th><th>Skipped</th></tr></thead><tbody>${items.map((m) => `<tr><th scope="row">${esc(m.title)}</th><td data-label="Attempted">${m.attempted}</td><td data-label="First-try correct">${m.firstTry}</td><td data-label="First-try accuracy">${fmt(m)}</td><td data-label="Solved after retry">${m.afterRetry}</td><td data-label="Submissions">${m.submissions}</td><td data-label="Incorrect">${m.incorrect}</td><td data-label="Revealed">${m.revealed}</td><td data-label="Skipped">${m.skipped}</td></tr>`).join("")}</tbody></table></div>`;
+}
+function modeTables(games) {
+  const sections = Object.values(games).map((g) => {
+    const modes = Object.values(g.modes || {});
+    return modes.length ? `<section class="topic-report"><h3>${esc(g.title)}</h3>${table(modes, "Practice mode")}</section>` : "";
+  }).filter(Boolean);
+  return sections.join("") || "<p>No mode results yet.</p>";
 }
 function apiProjectAttempts(records) {
   const projects = Object.values(records).filter((r) => r.game === "documentation-lab" && r.topic?.startsWith("api-project/"));
@@ -47,7 +54,7 @@ function render() {
   $("student-period").value = d.student.period;
   $("storage-warning").textContent = tracker.warning;
   $("report").innerHTML =
-    `<section class="panel report-identity"><h2>${esc(d.student.name || "Student name not provided")}</h2><p><strong>Class period:</strong> ${esc(d.student.period || "Not provided")}</p><p><strong>Session started:</strong> ${time(d.startedAt)}<br><strong>Most recent activity:</strong> ${time(d.lastActivityAt)}<br><strong>Active practice time:</strong> ${activeMinutes} minute${activeMinutes === 1 ? "" : "s"}<br><span class="muted">Inactive and away time are excluded.</span></p><p class="muted">Session ID: ${esc(d.id)}</p></section><section class="panel"><h2>Overall performance</h2><div class="summary-metrics">${[
+    `<section class="panel report-identity"><h2>${esc(d.student.name || "Student name not provided")}</h2><p><strong>Class period:</strong> ${esc(d.student.period || "Not provided")}</p><p><strong>Session date:</strong> ${esc(d.sessionDate || new Date(d.startedAt).toLocaleDateString())}<br><strong>Session started:</strong> ${time(d.startedAt)}<br><strong>Most recent activity:</strong> ${time(d.lastActivityAt)}<br><strong>Active practice time:</strong> ${activeMinutes} minute${activeMinutes === 1 ? "" : "s"}<br><span class="muted">Inactive and away time are excluded.</span></p><p class="muted">Session ID: ${esc(d.id)}</p></section><section class="panel"><h2>Overall performance</h2><div class="summary-metrics">${[
       ["First-try accuracy", fmt(m)],
       ["Challenges attempted", m.attempted],
       ["First-try correct", m.firstTry],
@@ -65,7 +72,7 @@ function render() {
       )
       .join(
         "",
-      )}</div><p class="muted">First-try accuracy = first-submission correct ÷ challenges with at least one answer submission. Revealing before submitting does not enter that denominator. Retrying keeps the same challenge ID; shown answers never count as independently solved. Skipped means an unfinished challenge was replaced or left.</p></section>${apiProjectAttempts(d.records)}${responseExplorerAttempts(d.records)}<section><h2>By game</h2>${Object.keys(d.games).length ? table(Object.values(d.games)) : "<p>No challenges generated in this session yet.</p>"}</section><section><h2>By topic / concept</h2>${
+      )}</div><p class="muted">First-try accuracy = first-submission correct ÷ challenges with at least one answer submission. Revealing before submitting does not enter that denominator. Retrying keeps the same challenge ID; shown answers never count as independently solved. Skipped means an unfinished challenge was replaced or left.</p></section>${apiProjectAttempts(d.records)}${responseExplorerAttempts(d.records)}<section><h2>By game</h2>${Object.keys(d.games).length ? table(Object.values(d.games)) : "<p>No challenges generated in this session yet.</p>"}</section><section><h2>By practice mode</h2>${modeTables(d.games)}</section><section><h2>By topic / concept</h2>${
       Object.values(d.games)
         .map(
           (g) =>

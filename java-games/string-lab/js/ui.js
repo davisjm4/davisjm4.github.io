@@ -33,9 +33,13 @@
     try { var a = new Uint32Array(1); root.crypto.getRandomValues(a); return (a[0] % 2147483646) + 1; } catch (e) { return Math.floor(Math.random() * 2147483645) + 1; }
   }
   var validModes = G.MODES.map(function (m) { return m.id; }).concat(['mixed']);
+  var validDifficulties = G.LEVELS;
+  var saved = null;
+  try { saved = JSON.parse(root.localStorage.getItem('stringLab.preferences.v1') || 'null'); } catch (e) {}
+  var requestedMode = params.get('mode');
   var settings = {
-    mode: validModes.indexOf(params.get('mode')) >= 0 ? params.get('mode') : 'predict',
-    difficulty: G.LEVELS.indexOf(params.get('difficulty')) >= 0 ? params.get('difficulty') : 'beginner'
+    mode: validModes.indexOf(requestedMode) >= 0 ? requestedMode : (saved && validModes.indexOf(saved.mode) >= 0 ? saved.mode : 'mixed'),
+    difficulty: validDifficulties.indexOf(params.get('difficulty')) >= 0 ? params.get('difficulty') : (saved && validDifficulties.indexOf(saved.difficulty) >= 0 ? saved.difficulty : 'beginner')
   };
   var seedParam = parseInt(params.get('seed'), 10);
   var seed = seedParam > 0 ? seedParam : randomSeed();
@@ -74,11 +78,12 @@
     el.choices.classList.remove('locked');
     el.choices.innerHTML = '<legend class="sr-only">Answer choices. Choose one, then check your answer.</legend>' + ch.choices.map(function (c, i) {
       return '<label class="choice" data-i="' + i + '"><input type="radio" name="answer" value="' + i + '" id="choice' + i + '">' +
-        '<span class="key" aria-hidden="true">' + 'ABCD'[i] + '</span><span class="ctext">' + esc(c.text) + '</span></label>';
+        '<span class="ctext">' + esc(c.text) + '</span></label>';
     }).join('');
     el.feedback.hidden = true; el.feedback.className = 'feedback'; el.feedback.innerHTML = '';
     el.check.disabled = true; el.actions.hidden = false;
     var hint = $('keyHint'); if (hint) hint.hidden = false;
+    renderStats();
   }
 
   function loadNext(userInitiated) {
@@ -147,22 +152,31 @@
     if (answered || selected === null) return;
     answered = true;
     tracker.answer(selected);
+    renderStats();
     showFeedback(selected);
   }
   function revealAnswer() {
     if (answered) return;
     answered = true;
     tracker.reveal();
+    renderStats();
     showFeedback(null);
   }
 
   // ---- summary dialog
   function fmtTime(ms) { var s = Math.round(ms / 1000), m = Math.floor(s / 60); return m + ':' + ('0' + (s % 60)).slice(-2); }
+  function renderStats() {
+    var shared = root.JavaGamesSessionBridge && root.JavaGamesSessionBridge.summary(settings.mode);
+    if (shared) { $('sessionStats').textContent = shared; return; }
+    var s = tracker.summary(), m = settings.mode === 'mixed' ? s : (s.byMode[settings.mode] || { attempted: 0, firstAttemptCorrect: 0, afterRetry: 0, revealed: 0, submissions: 0 });
+    var accuracy = m.attempted ? Math.round(100 * m.firstAttemptCorrect / m.attempted) + '%' : '—';
+    $('sessionStats').textContent = 'First-try accuracy: ' + accuracy + ' (' + m.firstAttemptCorrect + '/' + m.attempted + ')' + (m.attempted ? '' : ' · No attempts yet') + ' · Solved after retry: ' + m.afterRetry + ' · Revealed: ' + m.revealed + ' · Submissions: ' + m.submissions;
+  }
   function renderSummary() {
     tracker.heartbeat();
     var s = tracker.summary();
     var pct = s.accuracy === null ? '—' : Math.round(s.accuracy * 100) + '%';
-    var html = '<div class="stat-grid">' +
+    var html = '<p><strong>Session date:</strong> ' + esc(s.sessionDate) + '</p><div class="stat-grid">' +
       '<div class="stat"><b>' + s.completed + '</b><span>Challenges completed</span></div>' +
       '<div class="stat"><b>' + s.firstAttemptCorrect + '</b><span>Correct on first attempt (' + pct + ')</span></div>' +
       '<div class="stat"><b>' + s.incorrect + '</b><span>Incorrect answers</span></div>' +
@@ -175,7 +189,10 @@
     }
     var empty = { completed: 0, firstAttemptCorrect: 0 };
     html += table('By skill', G.SKILLS.map(function (k) { return [k, s.bySkill[k] || empty]; }), 'Skill');
-    html += table('By practice mode', G.MODES.map(function (m) { return [m.label, s.byMode[m.id] || empty]; }), 'Mode');
+    html += '<h3 style="margin:14px 0 4px;font-size:.95rem">By practice mode</h3><table class="skills"><thead><tr><th>Mode</th><th class="n">First-try correct</th><th class="n">Attempts</th><th class="n">Accuracy</th></tr></thead><tbody>' + G.MODES.map(function (mode) {
+      var m = s.byMode[mode.id] || empty, pct = m.attempted ? Math.round(100 * m.firstAttemptCorrect / m.attempted) + '%' : '—';
+      return '<tr><td>' + esc(mode.label) + '</td><td class="n">' + m.firstAttemptCorrect + '</td><td class="n">' + m.attempted + '</td><td class="n">' + pct + '</td></tr>';
+    }).join('') + '</tbody></table>';
     html += table('By difficulty', G.LEVELS.map(function (l) { return [cap(l), s.byDifficulty[l] || empty]; }), 'Difficulty');
     el.summaryBody.innerHTML = html;
   }
@@ -196,10 +213,10 @@
     Array.prototype.forEach.call(doc.querySelectorAll('input[name=difficulty]'), function (r) { r.checked = r.value === settings.difficulty; });
   }
   doc.querySelectorAll('input[name=mode]').forEach(function (r) {
-    r.addEventListener('change', function () { settings.mode = r.value; gen.setMode(r.value); loadNext(true); });
+    r.addEventListener('change', function () { settings.mode = r.value; try { root.localStorage.setItem('stringLab.preferences.v1', JSON.stringify(settings)); } catch (e) {} gen.setMode(r.value); loadNext(true); });
   });
   doc.querySelectorAll('input[name=difficulty]').forEach(function (r) {
-    r.addEventListener('change', function () { settings.difficulty = r.value; gen.setDifficulty(r.value); loadNext(true); });
+    r.addEventListener('change', function () { settings.difficulty = r.value; try { root.localStorage.setItem('stringLab.preferences.v1', JSON.stringify(settings)); } catch (e) {} gen.setDifficulty(r.value); loadNext(true); });
   });
   el.choices.addEventListener('change', function (e) { if (e.target && e.target.name === 'answer') select(parseInt(e.target.value, 10)); });
   el.form.addEventListener('submit', function (e) { e.preventDefault(); check(); });
@@ -221,6 +238,9 @@
   });
   ['pointerdown', 'touchstart', 'input'].forEach(function (evt) { doc.addEventListener(evt, function () { tracker.activity(); }, { passive: true }); });
   doc.addEventListener('visibilitychange', function () { tracker.setVisible(doc.visibilityState === 'visible'); });
+  root.addEventListener('pageshow', function () { tracker.ensureDay(); renderStats(); });
+  root.addEventListener('stringlab:session-ready', renderStats);
+  doc.addEventListener('visibilitychange', function () { if (doc.visibilityState === 'visible') { tracker.ensureDay(); renderStats(); } });
   root.addEventListener('pagehide', function () { tracker.end(); });
   setInterval(function () { tracker.heartbeat(); }, 1000);
 

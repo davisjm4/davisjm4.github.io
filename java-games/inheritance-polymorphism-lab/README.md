@@ -26,7 +26,7 @@ Students build class hierarchies, trace which method really runs, implement abst
 
 ## Scoring and sessions
 
-Uses the shared `javaGames.session.v1` tracker via `../session.js?v=active-time-v1`, one topic per mode. One scored submission per challenge; a wrong first answer is recorded and closed as revealed; Show Answer records a reveal without an attempt; Skip / New Challenge / leaving record a skip. `addSessionNavigation()` starts the shared active-practice timer, so the game keeps no timer of its own.
+Uses the shared `javaGames.session.v1` tracker via `../session.js?v=per-mode-daily-v1`, one topic per mode. One scored submission per challenge; a wrong first answer is recorded and closed as revealed; Show Answer records a reveal without an attempt; Skip / New Challenge / leaving record a skip. `addSessionNavigation()` starts the shared active-practice timer, so the game keeps no timer of its own.
 
 ## Tests (from this folder)
 

@@ -25,6 +25,7 @@ function launch(slug) {
       "utf8",
     ),
   );
+  if (!document.querySelector("main").id) document.querySelector("main").id = "main";
   // LinkeDOM omits browser select defaults. Supply standard select-value behavior for tests.
   Object.defineProperty(window.HTMLSelectElement.prototype, "value", {
     configurable: true,
@@ -448,7 +449,7 @@ assert.equal(home.document.querySelectorAll("a.button").length, 18);
 // All same-site links and assets have physical targets on Pages (no SPA fallback).
 for (let name of fs
   .readdirSync(new URL("./", import.meta.url), { withFileTypes: true })
-  .filter((x) => x.isDirectory())
+  .filter((x) => x.isDirectory() && x.name !== "node_modules")
   .map((x) => x.name))
   assert.ok(
     fs.existsSync(new URL("./" + name + "/index.html", import.meta.url)),

@@ -95,6 +95,8 @@ function launch(slug) {
     Math,
     Set,
     Date,
+    setInterval: () => 1,
+    clearInterval: () => {},
   };
   vm.createContext(ctx);
   vm.runInContext(sessionSource, ctx);
@@ -343,15 +345,20 @@ correct(t, "root-network");
 eq(t.tracker.snapshot().games["network-breaker"].firstTry, old + 1);
 // Summary reflects saved identity and report totals, and escapes optional names.
 t.tracker.student("<script>Alex</script>", "Period 4");
+const modeSample = t.tracker.begin("algorithm-race", "Algorithm Race", "race/linear", "Linear search", "linear", "Linear search");
+t.tracker.submit(modeSample, true);
 let summary = launch("summary");
 ok(summary.$("report").textContent.includes("<script>Alex</script>"));
 ok(!summary.$("report").querySelector("script"));
 ok(summary.$("report").textContent.includes("Period 4"));
-ok(summary.$("report").textContent.includes("not active practice time"));
+ok(summary.$("report").textContent.includes("Inactive and away time are excluded"));
 eq(
   summary.$("report").querySelectorAll("table").length,
-  Object.keys(summary.tracker.snapshot().games).length + 1,
+  Object.keys(summary.tracker.snapshot().games).length + 1 + Object.values(summary.tracker.snapshot().games).filter((g) => Object.keys(g.modes || {}).length).length,
 );
+ok(summary.$("report").textContent.includes("By practice mode"));
+ok(summary.$("report").textContent.includes("Session date"));
+ok(summary.$("report").textContent.includes("Linear search"));
 summary.click("print");
 eq(summary.captures.printed, 1);
 let snap = summary.tracker.snapshot();
@@ -365,7 +372,7 @@ summary.click("confirm-reset");
 ok(summary.tracker.snapshot().id !== snap.id);
 eq(summary.tracker.snapshot().totals.attempted, 0);
 eq(summary.tracker.snapshot().student, snap.student);
-ok(summary.$("report").textContent.includes("N/A"));
+ok(summary.$("report").textContent.includes("—"));
 ok(!summary.$("reset-dialog").hasAttribute("open"));
 console.log(
   `PASS: ${checks} cross-game/session/report DOM assertions: all 12 games plus legacy link, retries, persistence, reveals, print action, escaped identity, reset confirmation/cancel/confirm, and topic tables. Rendered print/device QA remains unavailable.`,

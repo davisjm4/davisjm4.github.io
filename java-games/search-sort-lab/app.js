@@ -7,7 +7,7 @@ import { makeRng } from "./engine/rng.js";
 
 let sessionApi;
 try {
-  sessionApi = await import("../session.js?v=active-time-v1");
+  sessionApi = await import("../session.js?v=per-mode-daily-v1");
 } catch {
   const f = await import("./engine/session-fallback.js");
   let t;
@@ -65,7 +65,7 @@ function newChallenge() {
   if (instance && tracker.status(instance) === "active") tracker.skip(instance);
   const mode = $("mode").value, difficulty = $("difficulty").value;
   ch = nextChallenge(mode, difficulty, rng, history);
-  instance = tracker.begin(GAME_ID, "Search & Sort Lab", mode, MODES[mode].title);
+  instance = tracker.begin(GAME_ID, "Search & Sort Lab", mode, MODES[mode].title, mode, MODES[mode].title);
   tracker.annotate?.(instance, { difficulty, skill: ch.skill, family: ch.family, seed: ch.seed });
   locked = false;
   selection = null;
@@ -82,7 +82,7 @@ function newChallenge() {
   $("code-label").textContent = ch.codeLabel || "Java";
   $("code").innerHTML = ch.code ? highlight(ch.code) : "";
   $("visuals").innerHTML = ch.visuals.map(visual).join("");
-  $("choices").innerHTML = ch.choices.map((c, i) => `<button type="button" class="ssl-choice" role="radio" aria-checked="false" data-choice="${i}" tabindex="${i === 0 ? 0 : -1}"><span class="ssl-letter" aria-hidden="true">${"ABCD"[i]}</span><span class="ssl-choice-body">${choiceHtml(c)}</span><span class="ssl-mark" aria-hidden="true"></span></button>`).join("");
+  $("choices").innerHTML = ch.choices.map((c, i) => `<button type="button" class="ssl-choice" role="radio" aria-checked="false" data-choice="${i}" tabindex="${i === 0 ? 0 : -1}"><span class="ssl-choice-body">${choiceHtml(c)}</span><span class="ssl-mark" aria-hidden="true"></span></button>`).join("");
   for (const b of $("choices").querySelectorAll("[data-choice]")) b.onclick = () => choose(Number(b.dataset.choice));
   $("feedback").hidden = true; $("feedback").className = "feedback ssl-feedback";
   $("reveal").hidden = true; $("reveal").innerHTML = "";
@@ -122,7 +122,7 @@ function finish(correct) {
   const fb = $("feedback");
   fb.hidden = false;
   fb.className = `feedback ssl-feedback ${correct ? "good" : "bad"}`;
-  fb.innerHTML = `<strong>${correct ? "✓ Correct!" : "✗ Not quite."}</strong> ${correct ? "" : `The correct answer is <strong>${"ABCD"[ch.answerIndex]}</strong>. `}${ch.explanation.map(esc).join(" ")}${why ? `<span class="ssl-why">About your choice: ${esc(why)}</span>` : ""}`;
+  fb.innerHTML = `<strong>${correct ? "✓ Correct!" : "✗ Not quite."}</strong> ${correct ? "" : `The correct answer is <strong>${choiceHtml(ch.choices[ch.answerIndex])}</strong>. `}${ch.explanation.map(esc).join(" ")}${why ? `<span class="ssl-why">About your choice: ${esc(why)}</span>` : ""}`;
   const parts = [];
   for (const v of ch.reveal || []) parts.push(visual(v));
   if (ch.trace?.length) parts.push(`<details><summary>Full trace (review only, not scored)</summary><ol>${ch.trace.map((t) => `<li>${esc(t)}</li>`).join("")}</ol></details>`);

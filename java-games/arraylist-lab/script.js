@@ -5,7 +5,7 @@
    per challenge: a wrong first answer is shown immediately and recorded as
    revealed (same convention as Method & Constructor Lab). */
 import * as E from "./engine.js?v=arraylist-v1";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) =>
@@ -118,7 +118,7 @@ function renderChoices() {
   const listy = ch.choices.some((c) => c.kind === "list");
   const wide = ch.choices.some((c) => c.kind === "code" && c.value.includes("\n"));
   $("interaction").innerHTML = `<div id="choices" class="al-choices${listy ? " is-lists" : ""}${wide ? " is-wide" : ""}" role="radiogroup" aria-labelledby="question">${ch.choices
-    .map((c, i) => `<button type="button" class="secondary al-choice" role="radio" aria-checked="false" data-choice="${i}"><span class="al-letter" aria-hidden="true">${"ABCD"[i]}</span><span class="al-choice-body">${choiceInner(c)}</span><span class="al-mark" aria-hidden="true"></span></button>`)
+    .map((c, i) => `<button type="button" class="secondary al-choice" role="radio" aria-checked="false" data-choice="${i}"><span class="al-choice-body">${choiceInner(c)}</span><span class="al-mark" aria-hidden="true"></span></button>`)
     .join("")}</div>`;
   for (const b of $("interaction").querySelectorAll("[data-choice]"))
     b.onclick = () => {
@@ -134,12 +134,12 @@ function renderChoices() {
     };
 }
 function stats() {
-  $("stats").textContent = roundSummary(E.GAME_ID);
+  $("stats").textContent = roundSummary(E.GAME_ID, $("mode").value);
 }
 function newChallenge() {
   if (instance && tracker.status(instance) === "active") tracker.skip(instance);
   ch = E.generate($("mode").value, rng, history);
-  instance = tracker.begin(E.GAME_ID, E.arrayListGame.name, ch.mode, E.MODES[ch.mode]);
+  instance = tracker.begin(E.GAME_ID, E.arrayListGame.name, ch.mode, E.MODES[ch.mode], ch.mode, E.MODES[ch.mode]);
   closed = false;
   selection = null;
   multi = new Set();

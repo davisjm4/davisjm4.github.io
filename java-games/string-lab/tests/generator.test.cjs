@@ -10,6 +10,13 @@ const root = path.resolve(__dirname, '..');
  'families-predict.js','families-trace.js','families-index.js','families-expression.js','families-practice.js',
  'generator.js','feedback.js','session.js'].forEach(f => require(path.join(root,'js',f)));
 const G = globalThis.StringLab.Generator;
+const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+const uiSource = fs.readFileSync(path.join(root, 'js/ui.js'), 'utf8');
+assert.match(html, /name="mode" value="mixed" checked/);
+assert.doesNotMatch(html, /name="mode" value="predict" checked/);
+assert.match(uiSource, /validModes\.indexOf\(requestedMode\) >= 0 \? requestedMode : \(saved && validModes\.indexOf\(saved\.mode\) >= 0 \? saved\.mode : 'mixed'\)/);
+assert.match(uiSource, /sessionStats/);
+assert.doesNotMatch(uiSource, /class="key" aria-hidden="true"/);
 const report = {};
 let tested = 0;
 let jvmPrograms = 0;

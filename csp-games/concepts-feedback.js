@@ -223,6 +223,8 @@ export function createConceptSession({ tracker } = {}) {
         "Code Concepts",
         question.category + "/" + question.variant,
         question.topicTitle || question.category + " — " + question.variant,
+        question.category,
+        question.category,
       ),
       status: "active",
       submissions: 0,

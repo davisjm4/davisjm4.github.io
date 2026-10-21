@@ -74,6 +74,7 @@ function evalClaim(c, q, R) {
     case "countDiffer": return all(c.a).filter(([k, o]) => R[c.b].get(k) !== o).length === c.n;
     case "sameAll": return all(c.a).every(([k, o]) => R[c.b].has(k) && R[c.b].get(k) === o);
     case "setEq": { const got = c.in.filter(inp => split(get(c.p, inp)).printed === c.is).map(inKey).sort(); return JSON.stringify(got) === JSON.stringify(c.set.map(inKey).sort()); }
+    case "countValue": return all(c.p).filter(([, output]) => split(output).printed === c.is).length === c.n;
     case "setWhere": { const got = all(c.p).filter(([, o]) => c.where.silent ? o === "" : o === c.where.is).map(([k]) => k).sort(); return JSON.stringify(got) === JSON.stringify(c.set.map(inKey).sort()); }
     case "neverPrints": return all(c.p).every(([, o]) => !o.split("\n").includes(c.mark) && o !== c.mark && !split(o).printed.includes(c.mark) || false);
     case "allPrint": return c.marks.every(mk => all(c.p).some(([, o]) => o.split("\n").includes(mk) || split(o).printed.includes(mk)));

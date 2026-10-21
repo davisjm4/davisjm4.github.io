@@ -1,5 +1,5 @@
 import * as E from "./engine.js?v=bool-v5";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=java-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#39;"}[c]));
@@ -9,7 +9,7 @@ let q, instance, selected = null, closed = false;
 // the generators themselves provide the variety.
 const practice = E.createPracticeSession({ historySize: 120 });
 
-function stats() { $("stats").textContent = roundSummary("boolean-conditional-lab"); }
+function stats() { $("stats").textContent = roundSummary("boolean-conditional-lab", $("mode").value); }
 function codeHtml() {
   if (q.kind !== "select") return `<pre class="snippet bool-code"><code>${esc(q.code)}</code></pre>`;
   return `<pre class="snippet bool-code">${q.tokens.map((t, i) => `<button type="button" class="bool-token" data-token="${i}" aria-pressed="false">${esc(t.text)}</button>`).join(" ")}</pre>`;
@@ -20,7 +20,7 @@ function tableHtml() {
   return `<div class="truth-wrap"><table class="truth-table"><caption>Truth table for <code>${esc(q.expression || q.expressions?.join(" ≡ ") || "the expression")}</code></caption><thead><tr>${vars.map(v=>`<th scope="col">${esc(v)}</th>`).join("")}<th scope="col">Result</th></tr></thead><tbody>${q.table.map((row,i)=>`<tr${i===q.highlightedRow?' class="focus-row"':''}>${vars.map(v=>`<td>${row[v]?"True":"False"}</td>`).join("")}<td>${row.result===null?'? <span class="sr-only">(missing result)</span>':row.result?"True":"False"}</td></tr>`).join("")}</tbody></table></div>`;
 }
 function render() {
-  const choiceHtml = q.kind === "select" ? `<p class="muted">Tap the complete operator or expression that answers the question.</p>` : `<div class="bool-choices" role="radiogroup" aria-label="Answer choices">${q.choices.map((c, i) => `<button type="button" class="secondary bool-choice" data-choice="${i}" role="radio" aria-checked="false"><span aria-hidden="true">${"ABCD"[i] || ""}</span> <code>${esc(c)}</code></button>`).join("")}</div>`;
+  const choiceHtml = q.kind === "select" ? `<p class="muted">Tap the complete operator or expression that answers the question.</p>` : `<div class="bool-choices" role="radiogroup" aria-label="Answer choices">${q.choices.map((c, i) => `<button type="button" class="secondary bool-choice" data-choice="${i}" role="radio" aria-checked="false"><code>${esc(c)}</code></button>`).join("")}</div>`;
   $("stage").innerHTML = `<div class="eyebrow">${esc(q.modeTitle)} · ${esc($("difficulty").value)}</div><h2>${esc(q.question)}</h2>${codeHtml()}${tableHtml()}${choiceHtml}<div class="actions"><button id="check" disabled>Check Answer</button><button id="skip" class="secondary">Skip</button><button id="next" class="secondary" hidden>Next Challenge →</button></div><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div>`;
   if (q.kind === "select") {
     for (const b of $("stage").querySelectorAll("[data-token]")) b.onclick = () => { if (closed) return; selected = Number(b.dataset.token); for (const x of $("stage").querySelectorAll("[data-token]")) { x.classList.toggle("selected", x === b); x.setAttribute("aria-pressed", String(x === b)); } $("check").disabled = false; };
@@ -35,7 +35,7 @@ function render() {
 function next() {
   if (instance && tracker.status(instance) === "active") tracker.skip(instance);
   q = practice.next($("mode").value, $("difficulty").value);
-  instance = tracker.begin("boolean-conditional-lab", E.booleanGame.name, q.topic, E.booleanGame.modes[q.topic]); closed = false; selected = null; render();
+  instance = tracker.begin("boolean-conditional-lab", E.booleanGame.name, q.topic, E.booleanGame.modes[q.topic], q.mode, E.booleanGame.modes[q.mode]); closed = false; selected = null; render();
 }
 function submit() {
   if (closed || selected === null || tracker.status(instance) !== "active") return;

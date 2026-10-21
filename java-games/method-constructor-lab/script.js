@@ -1,7 +1,7 @@
 /* Method & Constructor Lab UI. Results go to the shared Java Games session
    tracker (localStorage key javaGames.session.v1) used by Session Summary. */
 import * as E from "./engine.js?v=mcl-v1";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) =>
@@ -114,7 +114,7 @@ function renderChoices() {
   $("interaction").innerHTML = `<div id="choices" class="mcl-choices" role="radiogroup" aria-labelledby="question">${ch.choices
     .map(
       (c, i) =>
-        `<button type="button" class="secondary mcl-choice${ch.codeChoices ? " is-code" : ""}" role="radio" aria-checked="false" data-choice="${i}"><span class="mcl-letter" aria-hidden="true">${"ABCD"[i]}</span><span class="mcl-choice-text">${ch.codeChoices ? `<code>${codeHtml(c.text)}</code>` : esc(c.text)}</span><span class="mcl-mark" aria-hidden="true"></span></button>`,
+        `<button type="button" class="secondary mcl-choice${ch.codeChoices ? " is-code" : ""}" role="radio" aria-checked="false" data-choice="${i}"><span class="mcl-choice-text">${ch.codeChoices ? `<code>${codeHtml(c.text)}</code>` : esc(c.text)}</span><span class="mcl-mark" aria-hidden="true"></span></button>`,
     )
     .join("")}</div>`;
   for (const btn of $("interaction").querySelectorAll("[data-choice]"))
@@ -181,7 +181,7 @@ function drawOrder() {
 /* Lifecycle                                                     */
 /* ------------------------------------------------------------ */
 function stats() {
-  $("stats").textContent = roundSummary(E.GAME_ID);
+  $("stats").textContent = roundSummary(E.GAME_ID, $("mode").value);
 }
 function newChallenge() {
   if (instance && tracker.status(instance) === "active") tracker.skip(instance);
@@ -190,7 +190,7 @@ function newChallenge() {
   lastMode = ch.mode;
   recent.push(E.signature(ch));
   if (recent.length > 40) recent.shift();
-  instance = tracker.begin(E.GAME_ID, E.methodLabGame.name, ch.mode, E.MODES[ch.mode]);
+  instance = tracker.begin(E.GAME_ID, E.methodLabGame.name, ch.mode, E.MODES[ch.mode], ch.mode, E.MODES[ch.mode]);
   closed = false;
   selection = null;
   chosen = null;

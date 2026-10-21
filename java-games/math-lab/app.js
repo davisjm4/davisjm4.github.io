@@ -1,5 +1,5 @@
 import { mathGame, createDeck, assess } from "./engine.js?v=math-v1";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 import { EXPANSION_MODES, DIFFICULTIES, DIFFICULTY_TITLES, createExpansionDeck, assessExpansion } from "./expansion/generator.js?v=math-exp-v1";
 
 export function startMathLab() {
@@ -11,14 +11,14 @@ export function startMathLab() {
   $("main").innerHTML = `<div class="eyebrow">Java · Numbers & expressions</div><h1>Math Lab</h1><div class="toolbar"><label for="mode">Practice mode</label><select id="mode"><option value="mixed" selected>Mixed Practice</option>${Object.entries(mathGame.modes).map(([id, title]) => `<option value="${id}">${title}</option>`).join("")}<optgroup label="Java numeric reasoning">${Object.entries(EXPANSION_MODES).map(([id, title]) => `<option value="${id}">${esc(title)}</option>`).join("")}</optgroup></select><span id="difficulty-group" class="difficulty-group" hidden><label for="difficulty">Difficulty</label><select id="difficulty">${DIFFICULTIES.map((d, i) => `<option value="${d}"${i === 0 ? " selected" : ""}>${DIFFICULTY_TITLES[d]}</option>`).join("")}</select></span></div><section id="stage" class="panel"></section><p id="stats" class="stats"></p>`;
   addSessionNavigation("../");
   function active() { return !closed && tracker.status(instance) === "active"; }
-  function stats() { $("stats").textContent = roundSummary("math-lab"); }
+  function stats() { $("stats").textContent = roundSummary("math-lab", $("mode").value); }
   function next() {
     if (instance) tracker.skip(instance);
     const mode = $("mode").value, expansion = isExpansion(mode);
     $("difficulty-group").hidden = !expansion;
     q = expansion ? expansionDeck.next(mode, $("difficulty").value) : deck.next(mode);
     const title = expansion ? q.modeTitle : mathGame.modes[q.mode];
-    instance = tracker.begin("math-lab", "Math Lab", q.mode, title);
+    instance = tracker.begin("math-lab", "Math Lab", q.mode, title, q.mode, title);
     if (expansion) tracker.annotate(instance, { difficulty: q.difficulty, reasoningFamily: q.family, skill: q.skill, seed: q.seed });
     selected = null; closed = false;
     $("stage").innerHTML = `<div class="eyebrow">${esc(title)}${expansion ? " · " + esc(DIFFICULTY_TITLES[q.difficulty]) : ""}</div><h2 id="question">${esc(q.prompt)}</h2>${q.code ? `<pre id="math-code" class="snippet"><code>${esc(q.code)}</code></pre>` : ""}<div id="choices" role="group" aria-label="Answer choices">${q.choices.map((c, i) => `<button type="button" class="secondary choice${c.includes("\n") ? " multiline" : ""}" data-choice="${i}" aria-pressed="false"><code>${esc(c)}</code></button>`).join("")}</div><div class="actions"><button id="check" disabled>Check Answer</button><button id="next" class="secondary">Next Challenge</button></div><p id="feedback" class="feedback" role="status" tabindex="-1" hidden></p>`;

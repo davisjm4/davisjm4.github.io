@@ -12,8 +12,9 @@
   var TOPIC_PREFIX = 'class-object-lab/class-builder-rearrange/';   // + difficulty (bounded: 3 topics)
   var STORAGE_KEY = 'javaGames.classObjectLab.classBuilderRearrange.session.v1';
 
-  function blank() {
-    return { attempted: 0, firstAttemptCorrect: 0, correctAfterRetries: 0, revealed: 0, skipped: 0, checks: 0, hints: 0, activeMs: 0, topics: {} };
+  function localDate(ms) { var d = new Date(ms); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function blank(date) {
+    return { sessionDate: date || localDate(Date.now()), attempted: 0, firstAttemptCorrect: 0, correctAfterRetries: 0, revealed: 0, skipped: 0, checks: 0, hints: 0, activeMs: 0, topics: {} };
   }
   function topicBlank() { return { attempted: 0, firstAttemptCorrect: 0, correctAfterRetries: 0, revealed: 0, skipped: 0, checks: 0 }; }
 
@@ -36,13 +37,14 @@
   function safeStorage() { try { return typeof localStorage !== 'undefined' ? localStorage : null; } catch (e) { return null; } }
 
   Tracker.prototype._load = function () {
+    var today = localDate(this.now());
     try {
       if (this.storage) {
         var raw = this.storage.getItem(this.key);
-        if (raw) { var o = JSON.parse(raw); var b = blank(); for (var k in b) if (k in o) b[k] = o[k]; return b; }
+        if (raw) { var o = JSON.parse(raw); if (o.sessionDate && o.sessionDate !== today) return blank(today); var b = blank(today); for (var k in b) if (k in o && k !== 'sessionDate') b[k] = o[k]; return b; }
       }
     } catch (e) { /* ignore corrupt storage */ }
-    return blank();
+    return blank(today);
   };
   Tracker.prototype._save = function () {
     try { if (this.storage) this.storage.setItem(this.key, JSON.stringify(this.totals)); } catch (e) { /* quota/private mode */ }
@@ -51,6 +53,14 @@
   Tracker.prototype._topic = function () {
     var t = TOPIC_PREFIX + this.cur.difficulty;
     return this.totals.topics[t] || (this.totals.topics[t] = topicBlank());
+  };
+  Tracker.prototype._ensureDay = function () {
+    var today = localDate(this.now());
+    if (this.totals.sessionDate === today) return false;
+    this.totals = blank(today);
+    if (this.cur) this.cur.outcome = 'expired';
+    this._save();
+    return true;
   };
   Tracker.prototype._engage = function () {
     if (!this.cur.engaged) { this.cur.engaged = true; this.totals.attempted++; this._topic().attempted++; }
@@ -63,6 +73,7 @@
   };
 
   Tracker.prototype.beginChallenge = function (challenge) {
+    this._ensureDay();
     this.cur = { id: challenge.id, difficulty: challenge.difficulty, engaged: false, outcome: null, checks: 0, hints: 0 };
     if (this.adapter && this.adapter.onChallengeBegin) { try { this.adapter.onChallengeBegin({ id: challenge.id, difficulty: challenge.difficulty }); } catch (e) {} }
     this.touch();
@@ -71,6 +82,7 @@
 
   /** Called once a second (or on interaction): adds time only while the student is active. */
   Tracker.prototype.tick = function (visible) {
+    this._ensureDay();
     var t = this.now();
     if (this.lastTick !== null && visible !== false) {
       var dt = t - this.lastTick;
@@ -80,11 +92,13 @@
   };
 
   Tracker.prototype.recordHint = function () {
-    if (!this.cur) return; this.cur.hints++; this.totals.hints++; if (this.adapter && this.adapter.onHint) { try { this.adapter.onHint({ id: this.cur.id, difficulty: this.cur.difficulty, hints: this.cur.hints }); } catch (e) {} } this.touch(); this._save();
+    this._ensureDay();
+    if (!this.cur || this.cur.outcome) return; this.cur.hints++; this.totals.hints++; if (this.adapter && this.adapter.onHint) { try { this.adapter.onHint({ id: this.cur.id, difficulty: this.cur.difficulty, hints: this.cur.hints }); } catch (e) {} } this.touch(); this._save();
   };
 
   /** returns 'first' | 'retry' | 'incorrect' */
   Tracker.prototype.recordCheck = function (correct) {
+    this._ensureDay();
     if (!this.cur || this.cur.outcome) return null;
     this._engage();
     this.cur.checks++; this.totals.checks++; this._topic().checks++;
@@ -100,12 +114,14 @@
     return res;
   };
   Tracker.prototype.recordReveal = function () {
+    this._ensureDay();
     if (!this.cur || this.cur.outcome) return;
     this._engage(); this.totals.revealed++; this._topic().revealed++;
     if (this.adapter && this.adapter.onReveal) { try { this.adapter.onReveal({ id: this.cur.id, difficulty: this.cur.difficulty }); } catch (e) {} } this._finishOutcome('revealed'); this.touch(); this._save();
   };
   /** Next Challenge pressed before solving/revealing */
   Tracker.prototype.recordSkip = function () {
+    this._ensureDay();
     if (!this.cur || this.cur.outcome) return;
     this._engage(); this.totals.skipped++; this._topic().skipped++;
     if (this.adapter && this.adapter.onSkip) { try { this.adapter.onSkip({ id: this.cur.id, difficulty: this.cur.difficulty }); } catch (e) {} } this._finishOutcome('skipped'); this.touch(); this._save();
@@ -113,15 +129,16 @@
   Tracker.prototype.save = function () { this._save(); };
 
   Tracker.prototype.summary = function () {
+    this._ensureDay();
     var t = this.totals, topics = {};
     for (var k in t.topics) topics[k] = Object.assign({}, t.topics[k]);
     return {
-      mode: MODE_ID, attempted: t.attempted, firstAttemptCorrect: t.firstAttemptCorrect, correctAfterRetries: t.correctAfterRetries,
+      mode: MODE_ID, sessionDate: t.sessionDate, attempted: t.attempted, firstAttemptCorrect: t.firstAttemptCorrect, correctAfterRetries: t.correctAfterRetries,
       revealed: t.revealed, skipped: t.skipped, checks: t.checks, hints: t.hints,
       activeSeconds: Math.round(t.activeMs / 1000), topics: topics
     };
   };
-  Tracker.prototype.reset = function () { this.totals = blank(); this._save(); };
+  Tracker.prototype.reset = function () { this.totals = blank(localDate(this.now())); this._save(); };
 
   return { Tracker: Tracker, MODE_ID: MODE_ID, TOPIC_PREFIX: TOPIC_PREFIX, STORAGE_KEY: STORAGE_KEY };
 });

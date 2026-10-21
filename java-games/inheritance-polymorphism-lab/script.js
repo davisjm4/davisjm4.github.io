@@ -3,7 +3,7 @@
    practice mode. addSessionNavigation() also starts the shared active-time
    tracker, so this game needs no timer of its own. */
 import * as E from "./engine.js?v=iplab-v1";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -73,7 +73,7 @@ function radioGroup(items, { name, code = false, letters = false, cls = "" } = {
   return `<div class="ip-radios ${cls}" role="radiogroup" aria-label="${esc(name)}">${items
     .map(
       (t, i) =>
-        `<button type="button" class="secondary ip-radio" role="radio" aria-checked="false" tabindex="${i ? -1 : 0}" data-i="${i}">${letters ? `<span class="ip-letter" aria-hidden="true">${"ABCDEFG"[i]}</span>` : ""}<span class="ip-radio-text">${code ? multiCode(t) : esc(t)}</span><span class="ip-mark" aria-hidden="true"></span></button>`,
+        `<button type="button" class="secondary ip-radio" role="radio" aria-checked="false" tabindex="${i ? -1 : 0}" data-i="${i}"><span class="ip-radio-text">${code ? multiCode(t) : esc(t)}</span><span class="ip-mark" aria-hidden="true"></span></button>`,
     )
     .join("")}</div>`;
 }
@@ -565,7 +565,7 @@ function touch() {
   if (instance) tracker.interact(instance);
 }
 function stats() {
-  $("stats").textContent = roundSummary(E.GAME_ID);
+  $("stats").textContent = roundSummary(E.GAME_ID, $("mode").value);
 }
 function renderAll() {
   $("interaction").innerHTML = "";
@@ -577,7 +577,7 @@ function renderAll() {
 function newChallenge(item) {
   if (instance && tracker.status(instance) === "active") tracker.skip(instance);
   ch = item ? E.instantiate(item, rng) : E.generate($("mode").value, picker, rng);
-  instance = tracker.begin(E.GAME_ID, E.ipLabGame.name, ch.mode, E.MODES[ch.mode]);
+  instance = tracker.begin(E.GAME_ID, E.ipLabGame.name, ch.mode, E.MODES[ch.mode], ch.mode, E.MODES[ch.mode]);
   closed = false;
   outcome = null;
   resp = null;

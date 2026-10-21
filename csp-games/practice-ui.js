@@ -11,7 +11,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=active-time-v1";
+} from "./session.js?v=per-mode-daily-v1";
 const escape = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -41,7 +41,7 @@ export function startPractice(slug = document.body.dataset.game) {
       )}</select></label>${slug === "response-builder" ? '<label>Support level <select id="support"><option value="full" selected>Full Support</option><option value="partial">Partial Support</option><option value="minimal">Minimal Support</option></select></label>' : ""}<button id="new" class="secondary">New Challenge</button></div><section id="stage" class="panel"></section><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div><p id="stats" class="stats"></p>`;
   addSessionNavigation("../");
   const stats = () => {
-    $("stats").textContent = roundSummary(slug);
+    $("stats").textContent = roundSummary(slug, $("practice-mode").value);
   };
   const active = () => tracker.status(instance) === "active";
   function fields() {
@@ -67,7 +67,7 @@ export function startPractice(slug = document.body.dataset.game) {
             $("practice-mode").value,
             $("support")?.value || "full",
           );
-    instance = tracker.begin(slug, game.title, q.topic, game.modes[q.mode]);
+    instance = tracker.begin(slug, game.title, q.topic, game.modes[q.mode], q.mode, game.modes[q.mode]);
     wrong = 0;
     selected.clear();
     order = [];

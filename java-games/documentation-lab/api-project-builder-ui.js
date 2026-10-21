@@ -598,7 +598,7 @@ export function mount({ root, controls, tracker }) {
       const feedback = document.getElementById("feedback"); feedback.hidden = true; feedback.innerHTML = "";
       renderBrief(); renderDocs(); renderPlan(); controls.submit.hidden = true; controls.show.hidden = true; controls.skip.hidden = true; controls.nextButton.hidden = true; stat(); return;
     }
-    state.plan = []; state.lastAddedEndpoint = null; state.closed = false; state.attempts = 0; state.hintsShown = 0; state.hintIssueId = null; state.lastResult = null; state.instance = tracker.begin("documentation-lab", "Documentation Lab", `api-project/${state.scenario.id}`, state.scenario.title);
+    state.plan = []; state.lastAddedEndpoint = null; state.closed = false; state.attempts = 0; state.hintsShown = 0; state.hintIssueId = null; state.lastResult = null; state.instance = tracker.begin("documentation-lab", "Documentation Lab", `api-project/${state.scenario.id}`, state.scenario.title, "api-builder", "API Project Builder");
     document.getElementById("mode-label").textContent = ""; document.getElementById("family").textContent = "";
     document.getElementById("instructions").textContent = "Read the API documentation and select the requests your application needs.";
     document.getElementById("question").textContent = ""; document.getElementById("prompt").hidden = true;

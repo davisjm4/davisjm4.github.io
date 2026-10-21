@@ -28,6 +28,21 @@ for (const mode of modes) for (const L of levels) {
   ok(pos.size >= 2, `${mode}/${L} answer positions are predictable`);
   ok(sigs.size >= 100, `${mode}/${L} only ${sigs.size} distinct of 120`);
 }
+
+// Truth Table Builder always renders an actual Boolean table and keeps row work focused.
+for (const L of levels) {
+  const rng = makeRng(88000 + levels.indexOf(L));
+  for (let i = 0; i < 250; i++) {
+    const q = generate("truthTable", rng, L);
+    ok(Array.isArray(q.table) && q.table.length > 0, `truthTable/${L} displays a truth table`);
+    ok(!/^conditional-/.test(q.family), `truthTable/${L} excludes condition-flow activities`);
+    const vars = Object.keys(q.table[0]).filter(k => k !== "result");
+    ok(vars.length === 2 || (L !== "Beginner" && vars.length === 3), `truthTable/${L} variable count ${vars.length}`);
+    if (q.family === "find-error-row") ok(q.table.length === 4 || q.table.length === 8, "focused error check displays its table as context");
+    if (q.family === "count-true-rows") ok(q.table.length === 4 && q.table.every(r => r.result === null), "row-count task limits work to four missing cells");
+    if (q.family === "complete-missing") ok(q.table.filter(r => r.result === null).length <= 2, "missing-cell workload is at most two rows");
+  }
+}
 // 2. Teacher Tools contract: these modes always give 4-choice items by default
 for (const mode of ["branch", "conditions", "equivalent", "short", "construct"]) { const rng = makeRng(31); for (let i = 0; i < 60; i++) ok(generate(mode, rng).choices.length === 4, `${mode} must stay 4-choice for QTI`); }
 // 3. mixed practice reaches every mode; unknown difficulty falls back safely

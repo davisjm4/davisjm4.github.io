@@ -10,23 +10,24 @@ const NAME_SETS = [["a", "b", "c", "d"], ["p", "q", "r", "s"], ["x", "y", "z", "
 const NAMED_SETS = [["raining", "windy", "cold", "dark"], ["hasKey", "doorOpen", "alarmOn", "isAdmin"], ["paid", "shipped", "late", "returned"],
   ["online", "charging", "muted", "locked"], ["member", "coupon", "onSale", "giftCard"], ["ready", "waiting", "done", "failed"],
   ["isEven", "isPositive", "isLarge", "isPrime"], ["visible", "enabled", "focused", "selected"], ["home", "awake", "busy", "hungry"]];
+const VARIABLE_NAMES = ["hasBadge", "isReady", "doorOpen", "hasKey", "isActive", "isOnline", "hasAccess", "isComplete", "needsReview", "isSelected", "canEdit", "isLocked", "hasTicket", "isValid", "isEmpty", "isFull", "isPaused", "isVisible", "hasSignal", "isConnected", "isSafe", "isLate", "hasPermission", "isVerified", "isMember", "isPremium", "hasCoupon", "isAvailable", "isUrgent", "hasError", "isApproved", "isPublic", "hasUpdate", "isSignedIn", "isMuted", "isCharging", "hasBalance", "isWinner", "isBlocked", "isArchived", "canSubmit", "isEligible", "hasLicense", "isExpired", "isEnabled", "isFocused", "isRemote", "hasChanges", "isDirty", "canMove"];
 export const LEVELS = {
   Beginner: { vars: () => 2, leaves: [2, 4], negLeaf: 0.35, negGroup: 0.3, slack: 0, maxDepth: 2, mixed: false },
   Intermediate: { vars: rng => chance(0.75, rng) ? 3 : 2, leaves: [3, 5], negLeaf: 0.3, negGroup: 0.3, slack: 1, minDepth: 2, maxDepth: 3, mixed: true },
-  Advanced: { vars: rng => chance(0.5, rng) ? 3 : 4, leaves: [5, 8], negLeaf: 0.3, negGroup: 0.45, slack: 2, minDepth: 2, maxDepth: 4, mixed: true, advanced: true },
+  Advanced: { vars: () => 3, leaves: [5, 8], negLeaf: 0.3, negGroup: 0.45, slack: 2, minDepth: 2, maxDepth: 4, mixed: true, advanced: true },
 };
 export const ACTIVITIES = {
-  Beginner: ["eval-row", "complete-missing", "find-error-row", "inputs-make-true", "always-true", "always-false", "equivalence-check", "counterexample-row", "simplify", "conditional-predict"],
-  Intermediate: ["eval-row", "complete-missing", "find-error-row", "inputs-make-true", "always-true", "always-false", "equivalence-check", "counterexample-row", "simplify", "negate-effect", "grouping", "conditional-predict", "conditional-find-value"],
-  Advanced: ["eval-trace", "complete-missing", "find-error-row", "inputs-make-true", "always-true", "always-false", "equivalence-check", "counterexample-row", "simplify", "negate-effect", "grouping", "grouping-counterexample", "conditional-find-value"],
+  Beginner: ["eval-row", "complete-missing", "find-error-row", "inputs-make-true", "count-true-rows", "count-false-rows", "always-true", "always-false"],
+  Intermediate: ["eval-row", "eval-trace", "complete-missing", "find-error-row", "inputs-make-true", "count-true-rows", "count-false-rows", "always-true", "always-false"],
+  Advanced: ["eval-trace", "complete-missing", "find-error-row", "inputs-make-true", "count-true-rows", "count-false-rows", "always-true", "always-false"],
 };
-const WEIGHT = { "eval-row": 0, "eval-trace": 1.5, "complete-missing": 0.5, "find-error-row": 1.5, "inputs-make-true": 1, "always-true": 2.5, "always-false": 2.5, "equivalence-check": 2.5, "counterexample-row": 3, simplify: 3, "negate-effect": 3.5, grouping: 2, "grouping-counterexample": 3.5, "conditional-predict": 0.5, "conditional-find-value": 2 };
+const WEIGHT = { "eval-row": 0, "eval-trace": 1.5, "complete-missing": 0.5, "find-error-row": 1.5, "inputs-make-true": 1, "count-true-rows": 2, "count-false-rows": 2, "always-true": 2.5, "always-false": 2.5 };
 const SKILL = {
   "eval-row": "Evaluate a specified row", "eval-trace": "Evaluate a row through its subexpressions", "complete-missing": "Complete missing truth-table values",
   "find-error-row": "Identify an incorrectly evaluated row", "inputs-make-true": "Identify inputs that produce a given result", "always-true": "Decide whether an expression is always true",
-  "always-false": "Decide whether an expression is always false", "equivalence-check": "Determine whether two expressions are equivalent", "counterexample-row": "Find a row demonstrating nonequivalence",
+  "always-false": "Decide whether an expression is always false", "count-true-rows": "Count true results in a truth table", "count-false-rows": "Count false results in a truth table", "equivalence-check": "Determine whether two expressions are equivalent", "counterexample-row": "Find a row demonstrating nonequivalence",
   simplify: "Identify a meaningful simplification", "negate-effect": "Determine the effect of negating a subexpression", grouping: "Determine how Java groups mixed operators",
-  "grouping-counterexample": "Compare expressions with different grouping", "conditional-predict": "Analyze a compound condition inside an if statement", "conditional-find-value": "Find an input value that selects a branch",
+  "grouping-counterexample": "Compare expressions with different grouping",
 };
 
 // ---------------- expression generation ----------------
@@ -48,7 +49,7 @@ function genExpr(rng, L, names, opts = {}) {
     return { node: n, vars };
   }, 2000);
 }
-const names = rng => chance(0.5, rng) ? shuffle(pick(NAMED_SETS, rng), rng) : pick(NAME_SETS, rng);
+const names = rng => chance(0.45, rng) ? shuffle(pick(NAMED_SETS, rng), rng) : shuffle(VARIABLE_NAMES, rng).slice(0, 4);
 const T = b => String(b);
 const decls = (vars, env) => vars.map(v => `boolean ${v} = ${env[v]};`).join("\n");
 const tableRows = (node, vars) => B.rows(vars).map(e => ({ ...e, result: B.evaluate(node, e) }));
@@ -71,24 +72,27 @@ const base = (L, act, extra) => ({ mode: MODE, family: act, skill: SKILL[act], .
 // ---------------- activities ----------------
 const A = {};
 A["eval-row"] = (rng, L) => {
-  if (L !== "Advanced" && chance(0.4, rng)) return relationalEval(rng, L);
   const want = chance(0.5, rng); const nm = names(rng);
   const { node, vars } = genExpr(rng, L, nm);
   const envs = B.rows(vars).filter(e => B.evaluate(node, e) === want); if (!envs.length) reject("no row");
   const env = pick(envs, rng); const P = { e: boolProgram(vars, node) }, inp = rowInput(vars, env);
+  const all = tableRows(node, vars), rowIndex = all.findIndex(r => vars.every(v => r[v] === env[v]));
+  const shown = all.map((r, i) => i === rowIndex ? { ...r, result: null } : r);
   const swapped = B.MISTAKES["swap-and-or"](node);
   return challenge({ ...base(L, "eval-row"), rng, count: 2,
-    question: "What value is stored in result?",
+    question: `Complete the highlighted Result cell (${fmtRow(vars, env)}). What value belongs there?`,
     code: `${decls(vars, env)}\nboolean result = ${B.print(node)};`,
     correct: { text: T(want), tag: "correct", claim: { t: "out", p: "e", in: inp, is: T(want) } },
     wrong: [{ text: T(!want), tag: swapped && B.evaluate(swapped, env) !== want ? "treats-and-as-or" : "misapplied-operator", claim: { t: "out", p: "e", in: inp, is: T(!want) } }],
     explanation: explainRow(node, env), structure: `eval|${shape(node)}`, complexity: complexity(L, "eval-row", node, vars),
-    check: { programs: P, inputs: { e: [inp] } }, extra: { expression: B.print(node) } });
+    check: { programs: P, inputs: { e: all.map(r => rowInput(vars, r)) }, table: { p: "e", rows: shown.map(r => ({ in: rowInput(vars, r), shown: r.result })) } }, extra: { expression: B.print(node), table: shown, allRows: all, highlightedRow: rowIndex } });
 };
 A["eval-trace"] = (rng, L) => {
   const nm = names(rng); const { node, vars } = genExpr(rng, L, nm, { accept: n => B.isCompound(n) && n.xs.some(B.isCompound) });
   const sub = pick(node.xs.filter(x => B.isCompound(x) || (x.k === "not" && B.isCompound(x.a))), rng) || reject("no sub");
   const env = pick(B.rows(vars), rng); const sv = B.evaluate(sub, env), rv = B.evaluate(node, env);
+  const all = tableRows(node, vars), rowIndex = all.findIndex(r => vars.every(v => r[v] === env[v]));
+  const shown = all.map((r, i) => i === rowIndex ? { ...r, result: null } : r);
   const subT = B.print(sub), txt = (s, r) => `${subT} is ${s}; result is ${r}`;
   const P = { e: boolProgram(vars, node), s: boolProgram(vars, sub) }, inp = rowInput(vars, env);
   const claim = (s, r) => ({ t: "all", of: [{ t: "out", p: "s", in: inp, is: T(s) }, { t: "out", p: "e", in: inp, is: T(r) }] });
@@ -98,7 +102,7 @@ A["eval-trace"] = (rng, L) => {
     correct: { text: txt(sv, rv), tag: "correct", claim: claim(sv, rv) },
     wrong: [[!sv, rv, "subexpression-misevaluated"], [sv, !rv, "outer-operator-misapplied"], [!sv, !rv, "both-steps-wrong"]].map(([s, r, tag]) => ({ text: txt(s, r), tag, claim: claim(s, r) })),
     explanation: `${subT} evaluates to ${sv}. ${explainRow(node, env)}`, structure: `trace|${shape(node)}`, complexity: complexity(L, "eval-trace", node, vars),
-    check: { programs: P, inputs: { e: [inp], s: [inp] } }, extra: { expression: B.print(node) } });
+    check: { programs: P, inputs: { e: B.rows(vars).map(r => rowInput(vars, r)), s: [inp] }, table: { p: "e", rows: shown.map(r => ({ in: rowInput(vars, r), shown: r.result })) } }, extra: { expression: B.print(node), table: shown, allRows: all, highlightedRow: rowIndex } });
 };
 A["complete-missing"] = (rng, L) => {
   const nm = names(rng); const { node, vars } = genExpr(rng, L, nm);
@@ -129,21 +133,19 @@ A["complete-missing"] = (rng, L) => {
     extra: { table: shown, allRows: all, highlightedRow: idx[0], expression: B.print(node) } });
 };
 A["find-error-row"] = (rng, L) => {
-  const nm = names(rng); const { node, vars } = genExpr(rng, L, nm);
-  const all = tableRows(node, vars); const bad = int(0, all.length - 1, rng);
-  const shown = all.map((r, i) => i === bad ? { ...r, result: !r.result } : r);
-  const label = r => fmtRow(vars, r); const inp = r => rowInput(vars, r);
-  const others = shuffle(all.filter((_, i) => i !== bad), rng);
-  const near = others.filter(r => vars.filter(v => r[v] !== all[bad][v]).length === 1);
-  const wrongRows = [...near, ...others.filter(r => !near.includes(r))].slice(0, 3);
-  return challenge({ ...base(L, "find-error-row"), rng,
-    question: "Exactly one Result value in this truth table is wrong. Which input row contains the error?", code: `boolean result = ${B.print(node)};`,
-    correct: { text: label(all[bad]), tag: "correct", claim: { t: "tableWrong", p: "e", in: inp(all[bad]) } },
-    wrong: wrongRows.map(r => ({ text: label(r), tag: near.includes(r) ? "neighbouring-row" : "row-is-correct", claim: { t: "tableWrong", p: "e", in: inp(r) } })),
-    explanation: `For ${label(all[bad])}, the expression evaluates to ${all[bad].result}, but the table shows ${!all[bad].result}. ${explainRow(node, all[bad])}`,
-    structure: `error|${shape(node)}`, complexity: complexity(L, "find-error-row", node, vars),
-    check: { programs: { e: boolProgram(vars, node) }, inputs: { e: all.map(inp) }, table: { p: "e", rows: shown.map(r => ({ in: inp(r), shown: r.result })), expectWrong: 1 } },
-    extra: { table: shown, allRows: all, expression: B.print(node), incorrectRow: bad } });
+  const nm = names(rng), nv = L === "Beginner" ? 2 : L === "Intermediate" ? (chance(0.5, rng) ? 2 : 3) : 3;
+  const { node, vars } = genExpr(rng, L, nm, { vars: nv });
+  const all = tableRows(node, vars); const rowIndex = int(0, all.length - 1, rng);
+  const row = all[rowIndex], shownCorrectly = chance(0.5, rng), shown = all.map((r, i) => ({ ...r, result: i === rowIndex && !shownCorrectly ? !r.result : r.result }));
+  const label = fmtRow(vars, row), inp = rowInput(vars, row), shownValue = shown[rowIndex].result;
+  return challenge({ ...base(L, "find-error-row"), rng, count: 2,
+    question: `For the highlighted row (${label}), what value belongs in its Result cell?`, code: `boolean result = ${B.print(node)};`,
+    correct: { text: T(row.result), tag: "correct", claim: { t: "out", p: "e", in: inp, is: T(row.result) } },
+    wrong: [{ text: T(!row.result), tag: "row-misevaluated", claim: { t: "out", p: "e", in: inp, is: T(!row.result) } }],
+    explanation: `For ${label}, the expression evaluates to ${row.result}. The table shows ${shown[rowIndex].result}, so that cell is ${shownCorrectly ? "correct" : "incorrect"}. ${explainRow(node, row)}`,
+    structure: `error-focused|${shape(node)}`, complexity: complexity(L, "find-error-row", node, vars),
+    check: { programs: { e: boolProgram(vars, node) }, inputs: { e: [inp] }, table: { p: "e", rows: [{ in: inp, shown: shownValue }], expectWrong: shownCorrectly ? 0 : 1 } },
+    extra: { table: shown, allRows: all, expression: B.print(node), highlightedRow: rowIndex } });
 };
 A["inputs-make-true"] = (rng, L) => {
   const want = chance(0.5, rng); const nm = names(rng);
@@ -153,12 +155,33 @@ A["inputs-make-true"] = (rng, L) => {
   const tagged = shuffle(bad, rng).map(e => ({ e, tag: swapped && B.evaluate(swapped, e) === want ? "treats-and-as-or" : "operator-misapplied" })).sort((a, b) => (a.tag === "treats-and-as-or" ? -1 : 1) - (b.tag === "treats-and-as-or" ? -1 : 1)).slice(0, 3);
   const P = { e: boolProgram(vars, node) };
   return challenge({ ...base(L, "inputs-make-true"), rng,
-    question: `Which input combination makes result ${want}?`, code: `boolean result = ${B.print(node)};`,
+    question: `Use the truth table to select an input combination where result is ${want}.`, code: `boolean result = ${B.print(node)};`,
     correct: { text: fmtRow(vars, ans), tag: "correct", claim: { t: "out", p: "e", in: rowInput(vars, ans), is: T(want) } },
     wrong: tagged.map(({ e, tag }) => ({ text: fmtRow(vars, e), tag, claim: { t: "out", p: "e", in: rowInput(vars, e), is: T(want) } })),
     explanation: explainRow(node, ans), structure: `inputs-${want}|${shape(node)}`, complexity: complexity(L, "inputs-make-true", node, vars),
-    check: { programs: P, inputs: { e: all.map(e => rowInput(vars, e)) } }, extra: { expression: B.print(node) } });
+    check: { programs: P, inputs: { e: all.map(e => rowInput(vars, e)) }, table: { p: "e", rows: all.map(e => ({ in: rowInput(vars, e), shown: B.evaluate(node, e) })) } }, extra: { expression: B.print(node), table: all, allRows: all } });
 };
+function countRows(rng, L, want) {
+  const activity = want ? "count-true-rows" : "count-false-rows";
+  const nm = names(rng), { node, vars } = genExpr(rng, L, nm, { vars: L === "Advanced" ? 3 : 2 });
+  const all = tableRows(node, vars), focus = vars.length > 2 ? sample(all, 4, rng) : all;
+  const trueCount = focus.filter(r => r.result === want).length;
+  const shown = focus.map(r => ({ ...r, result: null }));
+  const options = [0, 1, 2, 3, 4].map(n => ({
+    text: `${n} ${n === 1 ? "row" : "rows"}`,
+    tag: n === trueCount ? "correct" : "miscounted-results",
+    claim: { t: "countValue", p: "e", is: T(want), n },
+  }));
+  const correct = options[trueCount], wrong = options.filter(o => o !== correct);
+  return challenge({ ...base(L, activity), rng, question: `How many of these four truth-table rows evaluate to ${want}?`,
+    code: `boolean result = ${B.print(node)};`, correct, wrong,
+    explanation: `The four input rows produce ${trueCount} ${want ? "true" : "false"} result${trueCount === 1 ? "" : "s"}. Evaluate the expression once for each Result cell.`,
+    structure: `${activity}|${shape(node)}`, complexity: complexity(L, activity, node, vars),
+    check: { programs: { e: boolProgram(vars, node) }, inputs: { e: focus.map(r => rowInput(vars, r)) } },
+    extra: { expression: B.print(node), table: shown, allRows: all } });
+}
+A["count-true-rows"] = (rng, L) => countRows(rng, L, true);
+A["count-false-rows"] = (rng, L) => countRows(rng, L, false);
 // Build an intentionally constant expression f OP g with g a rewritten form of !f;
 // half the time the rewrite contains a modeled mistake so the result is NOT constant.
 function constantCandidate(rng, L, nm, wantTrue) {
@@ -197,9 +220,9 @@ function constantActivity(act, wantTrue) {
     else { if (agree.length < 2) reject("need two agreeing rows"); correct = rowOpt(pick(counter, rng), "correct"); wrong = [yes, ...sample(agree, 2, rng).map(e => rowOpt(e, "misevaluated-row"))]; }
     const expl = constant ? `The second part is a rewritten form of the negation of the first part, so ${wantTrue ? "one side is always true" : "the two sides can never both be true"}. Every row of the truth table is ${word}.`
       : `The second part is not an exact negation of the first part, so the result is not constant. For ${fmtRow(vars, counter[0])} the expression is ${other}.`;
-    return challenge({ ...base(L, act), rng, question: `Is this expression ${word} for every possible combination of inputs?`, code: `boolean result = ${B.print(node)};`, correct, wrong,
+    return challenge({ ...base(L, act), rng, question: `Read the truth table. Is this expression ${word} for every possible combination of inputs?`, code: `boolean result = ${B.print(node)};`, correct, wrong,
       explanation: expl, structure: `${act}-${constant}|${shape(node)}`, complexity: complexity(L, act, node, vars),
-      check: { programs: { e: boolProgram(vars, node) }, inputs: { e: all.map(e => rowInput(vars, e)) } }, extra: { expression: B.print(node) } });
+      check: { programs: { e: boolProgram(vars, node) }, inputs: { e: all.map(e => rowInput(vars, e)) }, table: { p: "e", rows: all.map(e => ({ in: rowInput(vars, e), shown: B.evaluate(node, e) })) } }, extra: { expression: B.print(node), table: tableRows(node, vars), allRows: tableRows(node, vars) } });
   };
 }
 A["always-true"] = constantActivity("always-true", true);

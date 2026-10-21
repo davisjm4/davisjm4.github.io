@@ -15,7 +15,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=active-time-v1";
+} from "./session.js?v=per-mode-daily-v1";
 const esc = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -89,7 +89,7 @@ function startGame() {
   syncTraceControls();
   const active = () => tracker.status(instance) === "active",
     stats = () => {
-      $("stats").textContent = roundSummary(slug);
+      $("stats").textContent = roundSummary(slug, $("mode").value);
     };
   function renderNode(n) {
     if (typeof n === "string") return esc(n);
@@ -112,6 +112,8 @@ function startGame() {
       game.name,
       q.topic,
       q.topicTitle || q.topic.replaceAll("-", " "),
+      q.mode,
+      game.modes[q.mode] || q.topicTitle || q.mode,
     );
     if (q.mode === "trace")
       tracker.annotate(instance, { mode: "trace", difficulty: q.difficulty, family: q.traceFamily, format: q.format });

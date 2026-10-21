@@ -2,7 +2,7 @@
    (localStorage key javaGames.session.v1) so results appear in the
    existing Session Summary. */
 import * as E from "./engine.js?v=robot-v3";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 
 const GAME = "robot-algorithms";
 const TITLE = "Robot Algorithms";
@@ -255,7 +255,7 @@ function bindPlayback() {
 /* Challenge lifecycle                                           */
 /* ------------------------------------------------------------ */
 function stats() {
-  $("stats").textContent = roundSummary(GAME);
+  $("stats").textContent = roundSummary(GAME, $("mode").value);
 }
 function newChallenge() {
   stopAnim();
@@ -266,7 +266,7 @@ function newChallenge() {
   lastMode = ch.mode;
   recent.push(E.signature(ch));
   if (recent.length > 40) recent.shift();
-  instance = tracker.begin(GAME, TITLE, ch.mode, E.MODES[ch.mode]);
+  instance = tracker.begin(GAME, TITLE, ch.mode, E.MODES[ch.mode], ch.mode, E.MODES[ch.mode]);
   selected = null;
   submitted = false;
   render();
@@ -444,7 +444,7 @@ function renderChoices() {
   $("choices").innerHTML = ch.choices
     .map(
       (c, i) =>
-        `<button type="button" class="secondary ra-choice" role="radio" aria-checked="false" data-choice="${i}"><span class="ra-letter" aria-hidden="true">${"ABCD"[i]}</span><span class="ra-choice-text">${formatChoice(c.text)}</span><span class="ra-mark" aria-hidden="true"></span></button>`,
+        `<button type="button" class="secondary ra-choice" role="radio" aria-checked="false" data-choice="${i}"><span class="ra-choice-text">${formatChoice(c.text)}</span><span class="ra-mark" aria-hidden="true"></span></button>`,
     )
     .join("");
   for (const b of $("choices").querySelectorAll("[data-choice]")) b.onclick = () => choose(Number(b.dataset.choice));

@@ -8,7 +8,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=active-time-v1";
+} from "./session.js?v=per-mode-daily-v1";
 
 export function startResponse() {
   const $ = (id) => document.getElementById(id);
@@ -43,7 +43,7 @@ export function startResponse() {
 
   addSessionNavigation("../");
   const active = () => !closed && tracker.status(instanceId) === "active";
-  const updateStats = () => { $("stats").textContent = roundSummary("response-builder"); };
+  const updateStats = () => { $("stats").textContent = roundSummary("response-builder", $("mode").value); };
 
   function showFeedback(good, text) {
     $("feedback").hidden = false;
@@ -78,7 +78,7 @@ export function startResponse() {
   function next() {
     if (instanceId) tracker.skip(instanceId);
     question = generateResponse($("mode").value, $("support").value);
-    instanceId = tracker.begin(question.game, question.title, question.topic, question.topicTitle);
+    instanceId = tracker.begin(question.game, question.title, question.topic, question.topicTitle, question.practiceMode || question.mode, question.modeName || question.topicTitle);
     selectedId = null;
     closed = false;
     $("feedback").hidden = true;
@@ -88,7 +88,7 @@ export function startResponse() {
       <pre class="snippet">${esc(question.code)}</pre>
       <h2>${esc(question.prompt)}</h2>
       <div id="choices" class="choice-grid" role="group" aria-label="Answer choices">
-        ${question.choices.map((choice, index) => `<button class="secondary choice" data-choice="${choice.id}" aria-pressed="false"><span class="choice-letter">${String.fromCharCode(65 + index)}</span>${esc(choice.text)}</button>`).join("")}
+        ${question.choices.map((choice) => `<button class="secondary choice" data-choice="${choice.id}" aria-pressed="false">${esc(choice.text)}</button>`).join("")}
       </div>
       <div class="actions">
         <button id="submit" disabled>Submit Answer</button>

@@ -4,7 +4,7 @@
 import * as E from "./engine.js?v=doclab-v1";
 import * as API from "./api-project-builder-ui.js?v=api-builder-v38-step6";
 import * as RX from "./response-explorer-ui.js?v=rx-fd-v3";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=active-time-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) =>
@@ -143,7 +143,7 @@ function radioGroup(items, { name, code = false, letters = true, comment = false
   return `<div class="dl-choices" role="radiogroup" aria-label="${esc(name)}">${items
     .map(
       (text, i) =>
-        `<button type="button" class="secondary dl-choice${code ? " is-code" : ""}" role="radio" aria-checked="false" tabindex="${i === 0 ? 0 : -1}" data-i="${i}">${letters ? `<span class="dl-letter" aria-hidden="true">${"ABCDEFG"[i]}</span>` : ""}<span class="dl-choice-text">${comment ? commentText(text) : code && !isProse(text) ? multiCode(text) : esc(text)}</span><span class="dl-mark" aria-hidden="true"></span></button>`,
+        `<button type="button" class="secondary dl-choice${code ? " is-code" : ""}" role="radio" aria-checked="false" tabindex="${i === 0 ? 0 : -1}" data-i="${i}"><span class="dl-choice-text">${comment ? commentText(text) : code && !isProse(text) ? multiCode(text) : esc(text)}</span><span class="dl-mark" aria-hidden="true"></span></button>`,
     )
     .join("")}</div>`;
 }
@@ -457,7 +457,7 @@ function touch() {
   if (instance) tracker.interact(instance);
 }
 function stats() {
-  $("stats").textContent = roundSummary(E.GAME_ID);
+  $("stats").textContent = roundSummary(E.GAME_ID, $("mode").value);
 }
 
 function newChallenge() {
@@ -480,7 +480,7 @@ function newChallenge() {
       dev: new URLSearchParams(globalThis.location?.search || "").get("apiDev") === "1",
       controls: {
         submit: $("submit"), show: $("show"), skip: $("skip"), nextButton: $("next"),
-        roundSummary: () => roundSummary(E.GAME_ID),
+        roundSummary: () => roundSummary(E.GAME_ID, $("mode").value),
         next: newChallenge,
       },
     });
@@ -491,7 +491,7 @@ function newChallenge() {
     return;
   }
   ch = E.generate(selectedMode, picker, rng);
-  instance = tracker.begin(E.GAME_ID, E.docLabGame.name, ch.mode, E.MODES[ch.mode]);
+  instance = tracker.begin(E.GAME_ID, E.docLabGame.name, ch.mode, E.MODES[ch.mode], ch.mode, E.MODES[ch.mode]);
   closed = false;
   outcome = null;
   resp = null;

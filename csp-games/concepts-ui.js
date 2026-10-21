@@ -1,7 +1,7 @@
 import {
   sessionTracker,
   roundSummary,
-} from "./session.js?v=active-time-v1";
+} from "./session.js?v=per-mode-daily-v1";
 import { createConceptSession } from "./concepts-feedback.js?v=platform-expansion-v2";
 import {
   generateConcept,
@@ -32,7 +32,7 @@ export function startCodeConcepts() {
       .map(([v, label]) => `<option value="${v}">${escape(label)}</option>`)
       .join("")}</select></label>`;
   $("new").textContent = "Next Challenge";
-  const stats = () => ($("stats").textContent = roundSummary("code-concepts"));
+  const stats = () => ($("stats").textContent = roundSummary("code-concepts", $("concept-mode").value));
   function renderNode(n) {
     if (typeof n === "string") return escape(n);
     if (n.id === "snippet") return n.children.map(renderNode).join("");

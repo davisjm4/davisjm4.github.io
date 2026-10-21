@@ -25,14 +25,14 @@
     <fieldset class="seg" id="modeSet">
       <legend>Practice mode</legend>
       <div class="seg-row">
-        <label><input type="radio" name="mode" value="predict" checked><span>Predict the Output</span></label>
+        <label><input type="radio" name="mode" value="predict"  ><span>Predict the Output</span></label>
         <label><input type="radio" name="mode" value="index"><span>Find the Index</span></label>
         <label><input type="radio" name="mode" value="expr"><span>Complete the Expression</span></label>
         <label><input type="radio" name="mode" value="trace"><span>Trace String Operations</span></label>
         <label><input type="radio" name="mode" value="algorithms"><span>Trace String Algorithms</span></label>
         <label><input type="radio" name="mode" value="compare"><span>Compare Strings</span></label>
         <label><input type="radio" name="mode" value="loop"><span>Complete the String Loop</span></label>
-        <label><input type="radio" name="mode" value="mixed"><span>Mixed Practice</span></label>
+        <label><input type="radio" name="mode" value="mixed" checked><span>Mixed Practice</span></label>
       </div>
     </fieldset>
     <div class="controls-row">
@@ -69,6 +69,7 @@
 
     <section id="feedback" class="feedback" hidden aria-live="polite"></section>
   </main>
+  <p id="sessionStats" class="session-stats" role="status" aria-live="polite"></p>
 
   <dialog id="summaryDlg" aria-labelledby="summaryTitle">
     <form method="dialog" class="dlg-inner">
@@ -99,7 +100,7 @@
   <script src="js/generator.js?v=string-lab-1.1.1"></script>
   <script src="js/feedback.js?v=string-lab-1.1.1"></script>
   <script src="js/shared-session-bridge.js?v=bridge-v3"></script>
-  <script src="js/session.js?v=string-lab-1.1.1"></script>
+  <script src="js/session.js?v=string-lab-daily-v1"></script>
   <script src="js/ui.js?v=string-lab-1.1.1"></script>
 </body>
 </html>

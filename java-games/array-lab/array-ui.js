@@ -8,7 +8,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "../session.js?v=active-time-v1";
+} from "../session.js?v=per-mode-daily-v1";
 
 const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -45,7 +45,7 @@ export function startArrayLab() {
 
   addSessionNavigation("../");
   const active = () => !closed && tracker.status(instanceId) === "active";
-  const stats = () => { $("stats").textContent = roundSummary("array-lab"); };
+  const stats = () => { $("stats").textContent = roundSummary("array-lab", $("mode").value); };
 
   function renderOneDimensional() {
     const values = question.kind === "apply" || question.kind === "swap"
@@ -75,7 +75,7 @@ export function startArrayLab() {
   function renderInteraction() {
     if (question.kind === "choice")
       return `<div id="choices" class="array-choice-grid" role="group" aria-label="Answer choices">
-        ${question.choices.map((choice, index) => `<button class="secondary array-choice" data-answer="${esc(choice)}" aria-pressed="false"><span class="choice-letter">${String.fromCharCode(65 + index)}</span><code>${esc(choice)}</code></button>`).join("")}
+        ${question.choices.map((choice, index) => `<button class="secondary array-choice" data-answer="${esc(choice)}" aria-pressed="false"><code>${esc(choice)}</code></button>`).join("")}
       </div>`;
     if (question.kind === "cell") return renderOneDimensional();
     if (question.kind === "cell-2d") return renderGrid();
@@ -187,7 +187,7 @@ export function startArrayLab() {
       history: recent,
     });
     while (recent.size > 240) recent.delete(recent.values().next().value);
-    instanceId = tracker.begin(question.game, question.title, question.topic, question.topicTitle);
+    instanceId = tracker.begin(question.game, question.title, question.topic, question.topicTitle, question.format, formatNames[question.format]);
     tracker.annotate(instanceId, {
       mode: question.formatName,
       difficulty: question.difficulty || null,

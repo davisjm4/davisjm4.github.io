@@ -8,7 +8,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=active-time-v1";
+} from "./session.js?v=per-mode-daily-v1";
 export function startArchitect() {
   const $ = (id) => document.getElementById(id),
     esc = (v) =>
@@ -40,7 +40,7 @@ export function startArchitect() {
       )}</select></label><button id="new" class="secondary">New Challenge</button></div><section id="stage" class="panel"></section><section id="feedback" class="feedback" role="status" tabindex="-1" hidden></section><p id="stats"></p>`;
   addSessionNavigation("../");
   const stats = () =>
-      ($("stats").textContent = roundSummary("algorithm-architect")),
+      ($("stats").textContent = roundSummary("algorithm-architect", $("mode").value)),
     active = () => !closed && tracker.status(id) === "active";
   function message(good, text) {
     $("feedback").hidden = false;
@@ -99,7 +99,7 @@ export function startArchitect() {
   function next() {
     if (id) tracker.skip(id);
     q = generateArchitect($("mode").value);
-    id = tracker.begin(q.game, q.title, q.topic, q.topicTitle);
+    id = tracker.begin(q.game, q.title, q.topic, q.topicTitle, q.mode, q.modeName || q.topicTitle);
     order = [];
     selectedChoice = null;
     closed = false;

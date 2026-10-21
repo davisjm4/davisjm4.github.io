@@ -11,7 +11,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "../session.js?v=active-time-v1";
+} from "../session.js?v=per-mode-daily-v1";
 
 const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -45,7 +45,7 @@ export function startDebuggerLab() {
 
   addSessionNavigation("../");
   const active = () => !closed && tracker.status(instanceId) === "active";
-  const updateStats = () => { $("stats").textContent = roundSummary("debugger-lab"); };
+  const updateStats = () => { $("stats").textContent = roundSummary("debugger-lab", $("mode").value); };
 
   function interaction() {
     if (question.kind === "line") return `
@@ -53,7 +53,7 @@ export function startDebuggerLab() {
         ${question.lines.map((line, index) => `<button class="code-line" data-line="${index + 1}" aria-pressed="false"><span class="line-number">${index + 1}</span><code>${esc(line) || " "}</code></button>`).join("")}
       </div>`;
     return `<div id="choices" class="debug-choice-grid" role="group" aria-label="Answer choices">
-      ${question.choices.map((choice, index) => `<button class="secondary debug-choice" data-answer="${esc(choice)}" aria-pressed="false"><span class="choice-letter">${String.fromCharCode(65 + index)}</span><span>${esc(choice)}</span></button>`).join("")}
+      ${question.choices.map((choice, index) => `<button class="secondary debug-choice" data-answer="${esc(choice)}" aria-pressed="false"><span>${esc(choice)}</span></button>`).join("")}
     </div>`;
   }
 
@@ -103,7 +103,7 @@ export function startDebuggerLab() {
   function next() {
     if (instanceId) tracker.skip(instanceId);
     question = practice.next({mode:$("mode").value,difficulty:$("difficulty").value});
-    instanceId = tracker.begin(question.game, question.title, question.topic, question.topicTitle);
+    instanceId = tracker.begin(question.game, question.title, question.topic, question.topicTitle, question.format, question.formatName);
     tracker.annotate(instanceId,{mode:question.format,difficulty:question.difficulty,skill:question.skill,generatorFamily:question.familyId,seed:question.seed,errorCategory:question.errorCategory});
     selected = null;
     closed = false;

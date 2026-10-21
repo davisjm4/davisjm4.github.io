@@ -4,7 +4,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=active-time-v1";
+} from "./session.js?v=per-mode-daily-v1";
 import * as E from "./engine.js?v=platform-expansion-v2";
 import { startCodeConcepts } from "./concepts-ui.js?v=platform-expansion-v2";
 const $ = (id) => document.getElementById(id),
@@ -192,6 +192,8 @@ function beginRound(topic = roundTopic || slug) {
     game[1],
     topic,
     topic.replaceAll("-", " "),
+    topic,
+    topic.replaceAll("-", " "),
   );
 }
 function feedback(ok, message, score = inCheck) {
@@ -222,7 +224,7 @@ function feedback(ok, message, score = inCheck) {
   $("feedback").className = "feedback " + (ok ? "good" : "bad");
   $("feedback").textContent = (ok ? "✓ " : "↻ ") + message;
   $("feedback").hidden = false;
-  $("stats").textContent = roundSummary(slug);
+  $("stats").textContent = roundSummary(slug, roundTopic || slug);
   $("feedback").focus();
 }
 if (typeof window !== "undefined")
