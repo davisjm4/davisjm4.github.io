@@ -1,5 +1,6 @@
 import * as E from "./engine.js?v=bool-v5";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
+import { mountRangeExplorer } from "./range-explorer.js?v=range-explorer-v1";
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#39;"}[c]));
@@ -44,7 +45,11 @@ function submit() {
   $("check").disabled = true; $("skip").hidden = true; $("next").hidden = false; const fb = $("feedback"); fb.hidden = false; fb.className = `feedback ${correct ? "good" : "bad"}`; fb.innerHTML = `<strong>${correct ? "✓ Correct!" : "✗ Not quite."}</strong>${correct ? "" : `<br>Correct answer: <code>${esc(q.answerText)}</code>`}<br>${esc(q.explanation)}<br><span class="muted">${correct ? "First-try correct recorded." : "First attempt recorded."}</span>`; fb.focus(); stats();
 }
 function init() {
-  $("main").innerHTML = `<div class="eyebrow">Java · Boolean logic · Conditions</div><h1>Boolean &amp; Conditional Lab</h1><p class="intro">Evaluate expressions, follow branches, and choose conditions that match Java requirements.</p><div class="toolbar"><label>Practice mode <select id="mode"><option value="mixed" selected>Mixed Practice</option>${Object.entries(E.booleanGame.modes).map(([id, title]) => `<option value="${id}">${title}</option>`).join("")}</select></label><label>Difficulty <select id="difficulty"><option>Beginner</option><option selected>Intermediate</option><option>Advanced</option></select></label><button id="new" class="secondary">New Challenge</button></div><section id="stage" class="panel"></section><p id="stats" class="stats"></p>`;
-  addSessionNavigation("../"); $("mode").onchange = next; $("difficulty").onchange = next; $("new").onclick = next; globalThis.addEventListener?.("pagehide", () => { if (instance && tracker.status(instance) === "active") tracker.skip(instance); }); next();
+  $("main").innerHTML = `<div class="eyebrow">Java · Boolean logic · Conditions</div><h1>Boolean &amp; Conditional Lab</h1><p class="intro">Evaluate expressions, follow branches, and choose conditions that match Java requirements.</p><nav class="activity-switch" aria-label="Lab activity"><button id="practice-view" aria-pressed="true">Practice</button><button id="range-view" class="secondary" aria-pressed="false">Range Explorer</button></nav><section id="practice-app"><div class="toolbar"><label>Practice mode <select id="mode"><option value="mixed" selected>Mixed Practice</option>${Object.entries(E.booleanGame.modes).map(([id, title]) => `<option value="${id}">${title}</option>`).join("")}</select></label><label>Difficulty <select id="difficulty"><option>Beginner</option><option selected>Intermediate</option><option>Advanced</option></select></label><button id="new" class="secondary">New Challenge</button></div><section id="stage" class="panel"></section><p id="stats" class="stats"></p></section><section id="range-app" hidden></section>`;
+  addSessionNavigation("../"); $("mode").onchange = next; $("difficulty").onchange = next; $("new").onclick = next;
+  const show = range => { $("practice-app").hidden = range; $("range-app").hidden = !range; $("practice-view").setAttribute("aria-pressed", String(!range)); $("range-view").setAttribute("aria-pressed", String(range)); $("practice-view").classList.toggle("secondary", range); $("range-view").classList.toggle("secondary", !range); if (range) globalThis.location.hash = "range-explorer"; else if (globalThis.location.hash === "#range-explorer") globalThis.history.replaceState(null, "", globalThis.location.pathname + globalThis.location.search); };
+  $("practice-view").onclick = () => show(false); $("range-view").onclick = () => show(true);
+  mountRangeExplorer($("range-app")); if (globalThis.location.hash === "#range-explorer") show(true);
+  globalThis.addEventListener?.("pagehide", () => { if (instance && tracker.status(instance) === "active") tracker.skip(instance); }); next();
 }
 init();
