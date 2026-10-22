@@ -17,7 +17,7 @@ Students evaluate, repair, write, and interpret Java comments, Javadoc, and offi
 
 98 hand-authored challenges in 34 reasoning families (6–7 per mode). Mixed Practice draws every mode once per round of five; within a mode it rotates families and avoids repeats until the pool is used.
 
-API Response Explorer is a separate Phase 2 practice mode with 24 authored challenges (8 per activity) across six API providers. Activity, provider, and difficulty filters combine; each eligible challenge is visited before the queue repeats. Its examples are simulations and do not call live APIs.
+API Response Explorer is a separate Phase 2 practice mode with 159 validated challenges (53 per activity) across six API providers. Each activity has 15 reasoning models, instantiated in bounded variations over the existing response samples. Activity, provider, and difficulty filters combine; eligible challenges are shuffled without repeats, and adjacent reasoning models are avoided when alternatives exist. Its examples are simulations and do not call live APIs.
 
 ## Files
 
@@ -25,7 +25,7 @@ API Response Explorer is a separate Phase 2 practice mode with 24 authored chall
 - `engine.js` — selection, shuffling, assessment, Javadoc assembly, call evaluator. No DOM.
 - `bank.js` — authored challenge content (kept apart from logic so it can be reviewed and extended).
 - `docs.js` — Java API reference panels, adapted from the Java SE 17 API specification.
-- `response-explorer-engine.js`, `response-explorer-ui.js`, `response-explorer-data-v1.json`, and `response-explorer-samples-v1.json` — API Response Explorer logic, authored challenges, and illustrative response samples.
+- `response-explorer-engine.js`, `response-explorer-ui.js`, `response-explorer-expansion.js`, `response-explorer-data-v1.json`, and the API Project runtime sample library — API Response Explorer logic and its bounded, validated challenge set. The current library contains 159 challenges (53 per activity) across Find the Data, Understand the Structure, and Select What the App Needs.
 - `tests/` — development-only tests (not loaded by students).
 
 ## Scoring
