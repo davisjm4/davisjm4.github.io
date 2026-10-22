@@ -3,6 +3,8 @@
 
 export const RESPONSE_EXPLORER_MODE = "response-explorer";
 export const FIND_DATA_FORMAT = "find-data";
+export const UNDERSTAND_STRUCTURE_FORMAT = "understand-structure";
+export const SELECT_NEEDS_FORMAT = "select-needs";
 
 const ARRAY = "[]";
 const DEFAULT_DISPLAY = {
@@ -184,6 +186,131 @@ export function providerName(library, id) {
 
 export function findDataChallenges(data) {
   return (data.challenges || []).filter((challenge) => challenge.format === FIND_DATA_FORMAT);
+}
+
+export function challengesForFormat(data, format = "mixed") {
+  return (data.challenges || []).filter((challenge) => format === "mixed" || challenge.format === format);
+}
+
+export function shuffleChallenges(pool, previousId = "", random = Math.random) {
+  const queue = [...pool];
+  for (let i = queue.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [queue[i], queue[j]] = [queue[j], queue[i]];
+  }
+  if (queue.length > 1 && queue[0].id === previousId) {
+    const swap = 1 + Math.floor(random() * (queue.length - 1));
+    [queue[0], queue[swap]] = [queue[swap], queue[0]];
+  }
+  return queue;
+}
+
+export function matchingChallenges(data, { format = "mixed", provider = "all", difficulty = "all" } = {}) {
+  return challengesForFormat(data, format).filter((challenge) =>
+    (provider === "all" || challenge.providerId === provider) &&
+    (difficulty === "all" || challenge.difficulty === difficulty));
+}
+
+function normalizeSelection(path) {
+  try { return structuralOf(path); } catch { return null; }
+}
+
+function relationToAccepted(path, accepted) {
+  if (!path) return "empty";
+  if (accepted.some((item) => item.path === path)) return "accepted";
+  if (accepted.some((item) => isAncestor(path, item.path))) return "too-broad";
+  if (accepted.some((item) => isAncestor(item.path, path))) return "too-specific";
+  if (accepted.some((item) => parentOf(item.path) === parentOf(path))) return "sibling";
+  return "unrelated";
+}
+
+function gradeOnePath(spec, concretePath, templates = {}) {
+  if (!concretePath) return { correct: false, outcome: "empty", misconceptionId: null, feedback: "Select a node in the response first." };
+  const structural = normalizeSelection(concretePath);
+  const accepted = spec.accepted || [];
+  const exact = accepted.find((item) => item.path === structural);
+  if (exact) return { correct: true, outcome: exact.kind === "alternative" ? "alternative" : "accepted", structural, accepted: exact, misconceptionId: null, feedback: null };
+  if (spec.parentAcceptable && accepted.some((item) => isAncestor(structural, item.path) && structural !== "$")) return { correct: true, outcome: "parent-accepted", structural, misconceptionId: null, feedback: null };
+  const rejected = (spec.rejected || []).find((item) => item.path === structural);
+  if (rejected) return { correct: false, outcome: "rejected-rule", structural, misconceptionId: rejected.misconceptionId, feedback: rejected.feedback };
+  const relation = relationToAccepted(structural, accepted);
+  const key = { "too-broad": "tooBroad", "too-specific": "tooSpecific", sibling: "sibling", unrelated: "unrelated" }[relation];
+  return { correct: false, outcome: relation, structural, misconceptionId: `auto-${relation}`, feedback: renderTemplate(spec.classFeedback?.[relation] || templates[key] || "That node does not provide the information this goal needs. Review the surrounding structure and try again.", { label: spec.targetConcept || "this information" }) };
+}
+
+export function gradeStructureSingle(challenge, concretePath, templates = {}) {
+  return gradeOnePath(challenge.grading, concretePath, templates);
+}
+
+export function gradeStructureSlots(challenge, selections, templates = {}) {
+  const seen = new Set();
+  const slots = (challenge.grading.slots || []).map((slot) => {
+    const concrete = selections?.[slot.id] || "";
+    const structural = normalizeSelection(concrete);
+    if (!concrete) return { slotId: slot.id, correct: false, outcome: "empty", misconceptionId: null, feedback: `Choose a response node for “${slot.label}.”` };
+    if (seen.has(structural)) return { slotId: slot.id, correct: false, outcome: "duplicate-node", misconceptionId: "duplicate-node", feedback: "Use a different response node for each part; these two slots need different pieces of the structure." };
+    seen.add(structural);
+    const result = gradeOnePath(slot, concrete, templates);
+    return { slotId: slot.id, ...result };
+  });
+  const errors = slots.filter((slot) => !slot.correct);
+  return { correct: errors.length === 0, outcome: errors.length ? "needs-revision" : "accepted", slots, feedback: errors.slice(0, 2).map((slot) => slot.feedback).join(" ") || null };
+}
+
+export function gradeStructureClassification(challenge, choices) {
+  const assignments = challenge.grading.assignments || [];
+  const results = assignments.map((item) => {
+    const chosen = choices?.[item.item];
+    if (!chosen) return { itemId: item.item, correct: false, outcome: "empty", feedback: `Choose what “${item.item.toUpperCase()}” describes.` };
+    if (chosen === item.correct) return { itemId: item.item, correct: true, outcome: "accepted", feedback: null };
+    return { itemId: item.item, correct: false, outcome: "misclassified", misconceptionId: item.misconceptionId, feedback: item.wrong?.[chosen] || "Reconsider which part of the response this value describes." };
+  });
+  const errors = results.filter((item) => !item.correct);
+  return { correct: errors.length === 0, outcome: errors.length ? "needs-revision" : "accepted", items: results, feedback: errors.slice(0, 2).map((item) => `${item.itemId.toUpperCase()}: ${item.feedback}`).join(" ") || null };
+}
+
+export function gradeSelectNeeds(challenge, concretePaths, templates = {}) {
+  const spec = challenge.grading;
+  const policy = challenge.answer || {};
+  const selected = [...new Set((concretePaths || []).map(normalizeSelection).filter(Boolean))];
+  const requirements = spec.requirements || [];
+  const matched = new Set();
+  const required = requirements.map((requirement) => {
+    const match = selected.find((path) => (requirement.accepted || []).some((accepted) => accepted.path === path));
+    if (match) matched.add(match);
+    return { id: requirement.id, label: requirement.label, correct: Boolean(match), selectedPath: match || null };
+  });
+  const optional = new Map((spec.optionalAllowed || []).map((item) => [item.path, item]));
+  const distractors = new Map((spec.distractors || []).map((item) => [item.path, item]));
+  const extras = selected.filter((path) => !matched.has(path) && !optional.has(path)).map((path) => {
+    if (distractors.has(path)) {
+      const item = distractors.get(path);
+      const acceptedExtra = policy.extrasPolicy !== "minimal";
+      return { path, role: item.class || "plausible-unnecessary", correct: acceptedExtra, misconceptionId: item.misconceptionId, feedback: item.feedback };
+    }
+    return { path, role: "unrelated", correct: false, feedback: "This response value is not needed for the feature described." };
+  });
+  const missing = required.filter((item) => !item.correct);
+  const disallowedExtras = extras.filter((item) => !item.correct);
+  const maxExtras = policy.extrasPolicy === "minimal" ? (policy.minimal?.maxExtras ?? 0) : Infinity;
+  const correct = missing.length === 0 && disallowedExtras.length === 0 && extras.length <= maxExtras;
+  const feedbackParts = [];
+  for (const item of missing.slice(0, 2)) feedbackParts.push(`The feature still needs ${item.label.toLowerCase()}. Look for the value that supplies that information.`);
+  if (feedbackParts.length < 2) for (const item of disallowedExtras.slice(0, 2 - feedbackParts.length)) feedbackParts.push(item.feedback);
+  return { correct, outcome: correct ? "accepted" : "needs-revision", requirements: required, missing, extras, feedback: feedbackParts.join(" ") || null };
+}
+
+export function concreteForPath(path, body) {
+  const found = resolve(path, body)[0];
+  return found ? formatConcrete(found.tokens) : null;
+}
+
+export function readablePath(path) {
+  return String(path).replace(/^\$\.?/, "").replace(/\.\[\]/g, "[]").replace(/\[\]/g, " › each item").replace(/\[(\d+)\]/g, " › item $1").replace(/\./g, " › ") || "response";
+}
+
+export function responseExplorerFormatName(format) {
+  return ({ "find-data": "Find the Data", "understand-structure": "Understand the Structure", "select-needs": "Select What the App Needs" })[format] || format;
 }
 
 export function firstConcrete(structural, body) {

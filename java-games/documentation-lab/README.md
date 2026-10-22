@@ -13,8 +13,11 @@ Students evaluate, repair, write, and interpret Java comments, Javadoc, and offi
 | Javadoc Builder | Build a method's Javadoc row by row, including deciding which tags to leave out | per-tag choice with live Javadoc preview |
 | Read the Docs | Answer from a Java SE 17 API panel | predict a result · classify "guaranteed / not guaranteed" · click the doc line that answers |
 | API Detective | Pick or build the call that meets a requirement | choose a call · assemble method + ordered arguments |
+| API Response Explorer | Explore simulated API responses through Find the Data, Understand the Structure, and Select What the App Needs | inspect a response tree · classify structure · connect feature needs to response paths |
 
 98 hand-authored challenges in 34 reasoning families (6–7 per mode). Mixed Practice draws every mode once per round of five; within a mode it rotates families and avoids repeats until the pool is used.
+
+API Response Explorer is a separate Phase 2 practice mode with 24 authored challenges (8 per activity) across six API providers. Activity, provider, and difficulty filters combine; each eligible challenge is visited before the queue repeats. Its examples are simulations and do not call live APIs.
 
 ## Files
 
@@ -22,6 +25,7 @@ Students evaluate, repair, write, and interpret Java comments, Javadoc, and offi
 - `engine.js` — selection, shuffling, assessment, Javadoc assembly, call evaluator. No DOM.
 - `bank.js` — authored challenge content (kept apart from logic so it can be reviewed and extended).
 - `docs.js` — Java API reference panels, adapted from the Java SE 17 API specification.
+- `response-explorer-engine.js`, `response-explorer-ui.js`, `response-explorer-data-v1.json`, and `response-explorer-samples-v1.json` — API Response Explorer logic, authored challenges, and illustrative response samples.
 - `tests/` — development-only tests (not loaded by students).
 
 ## Scoring
@@ -35,6 +39,7 @@ From `java-games/documentation-lab/`:
 - `node tests/doclab-tests.mjs` — content quality and generator tests (no dependencies).
 - `node tests/doclab-jvm-tests.mjs` — needs a JDK 17+. Compiles every snippet with `--release 17`, runs doclint on every correct Javadoc, checks that decoy tags fail doclint, runs every API fact on the JVM, checks every API Detective option, and compares the in-browser call evaluator against the JVM for every possible assembled call.
 - `node tests/doclab-browser-tests.mjs` — optional; needs Playwright + Chromium and a local server at the repo root (`python3 -m http.server 8765`).
+- `node tests/response-explorer-tests.mjs` — response-tree, grading, feedback, queue, and sample-vector tests for all three Response Explorer activities.
 
 
 ## API Project Builder (Stage 1 foundation)
@@ -56,4 +61,4 @@ Files:
 
 Claude's production file should preserve `schemaVersion: 1` and all required field names from the assignment contract. Replace the fixture at the same path, retain `developmentOnly: false` or omit it, and set `published: true` only after the official URLs, verification dates, endpoint parameters, response fields, accepted plans, response samples, and model targets have been reviewed. The engine accepts multiple `acceptedPlans`; use `efficiency: "smallest-sufficient"` for the intended minimum and `efficiency: "valid-less-efficient"` for a valid but unnecessary-request alternative. The optional `providedIdentifiers` list supplies student-facing values for the project brief, and `providedParameters` maps endpoint IDs to values that should be prefilled when a request is added. No UI or engine rewrite should be necessary.
 
-Stage 2 response exploration and Stage 3 visual Java modeling are intentionally not implemented or exposed.
+Visual Java modeling remains a later learning activity.
