@@ -21,17 +21,17 @@ for (const mode of all) for (const difficulty of difficulties) {
         const actual=q.code.match(/if \(([^)]+)\)/)[1], vector=expr=>Array.from({length:16},(_,j)=>j-3).map(n=>{const [,op,num]=expr.match(/^n (<=|<|==|>=|>) (\d+)$/);return op==="<="?n<=+num:op==="<"?n<+num:op==="=="?n===+num:op===">="?n>=+num:n>+num}).join("");
         ok(q.answer===actual && new Set(q.choices.map(vector)).size===4,"base-case answer has one semantically unique condition");
       }
-      if (mode === "arrays") {
+      if (mode === "arrays" && q.generator === "legacy") { // legacy-structure oracle; compositional questions are verified by compose/tests
         const a=q.data.array,t=q.data.target,i=q.data.index,k=q.data.operation;
         const expected=[a.reduce((x,y)=>x+y,0),a.filter(x=>x===t).length,a.indexOf(t),a.reduce((x,y)=>x+y,0),String(a.some(x=>x%2===0)),Math.max(...a.slice(i)),a.reduce((s,x,j)=>s+(j%2===0?x:-x),0),a.slice().reverse().join(" ")][k];
         ok(String(expected)===q.answer,"array result agrees with independent direct execution");
       }
-      if (mode === "output") {
+      if (mode === "output" && q.generator === "legacy") { // legacy-structure oracle; compositional questions are verified by compose/tests
         const s=q.data.text,k=q.data.operation;
         const expected=k===1||k===3?[...s].reverse().join(""):k<3?s:k===4?[...s].filter(c=>c===s[0]).join(""):k===5?[...s].filter((_,j)=>j%2===0).join(""):k===6?s.slice(0,Math.ceil(s.length/2)):s.slice(Math.floor(s.length/2));
         ok(expected===q.answer,"String recursive result agrees with independent transformation");
       }
-      if (mode === "searchsort") {
+      if (mode === "searchsort" && q.generator === "legacy") { // legacy-structure oracle; compositional questions are verified by compose/tests
         const a=q.data.array,k=q.data.operation;
         if(q.data.algorithm==="binarySearch") { const sim=simulateBinarySearch(a,q.data.target), first=sim.trace.find(x=>!x.base); const expected=k===0?(first.value===q.data.target?`return ${first.mid}`:first.value<q.data.target?`low = ${first.mid+1}`:`high = ${first.mid-1}`):k===2?first.mid:k===4?sim.calls:sim.result;ok(String(expected)===q.answer,"binary-search answer matches independent simulator"); }
         else { const sim=simulateMergeSort(a), mid=Math.floor((a.length-1)/2), expected=k===1?"low >= high":k===3?`0..${mid} and ${mid+1}..${a.length-1}`:k===5?sim.calls:sim.result.join(", ");ok(String(expected)===q.answer,"merge-sort answer matches independent simulator"); }

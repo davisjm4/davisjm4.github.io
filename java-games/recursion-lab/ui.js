@@ -1,4 +1,4 @@
-import { modeNames, difficulties, createRecursionGenerator, assessRecursion } from "./engine.js?v=recursion-v4";
+import { modeNames, difficulties, createRecursionGenerator, assessRecursion } from "./engine.js?v=recursion-v5";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 export function startRecursionLab() {
@@ -13,7 +13,7 @@ export function startRecursionLab() {
     instance = tracker.begin(question.game, question.title, question.topic, question.topicTitle, question.mode, question.topicTitle);
     tracker.annotate(instance, { mode: question.topicTitle, difficulty: question.difficulty, skill: question.skill, generatorFamily: question.family, seed: question.seed });
     selected = null; closed = false;
-    $("stage").innerHTML = `<div class="challenge-meta">${esc(question.topicTitle)} · ${esc(question.difficulty)} · ${esc(question.family.replaceAll("-", " "))}</div><pre class="snippet recursion-code"><code>${esc(question.code)}</code></pre><h2>${esc(question.prompt)}</h2><div id="choices" class="choices" role="radiogroup" aria-label="Answer choices">${question.choices.map((c,i)=>`<button type="button" class="secondary choice" data-answer="${esc(c)}" aria-pressed="false"><span>${esc(c)}</span></button>`).join("")}</div><div class="actions"><button id="check" disabled>Check Answer</button><button id="next" class="secondary">Next Challenge</button></div><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div>`;
+    $("stage").innerHTML = `<div class="challenge-meta">${esc(question.topicTitle)} · ${esc(question.difficulty)} · ${esc((question.displayFamily || question.family).replaceAll("-", " "))}</div><pre class="snippet recursion-code"><code>${esc(question.code)}</code></pre><h2>${esc(question.prompt)}</h2><div id="choices" class="choices" role="radiogroup" aria-label="Answer choices">${question.choices.map((c,i)=>`<button type="button" class="secondary choice" data-answer="${esc(c)}" aria-pressed="false"><span>${esc(c)}</span></button>`).join("")}</div><div class="actions"><button id="check" disabled>Check Answer</button><button id="next" class="secondary">Next Challenge</button></div><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div>`;
     for (const b of $("choices").querySelectorAll("button")) b.onclick = () => { if (closed) return; selected = b.dataset.answer; for (const x of $("choices").querySelectorAll("button")) { x.classList.toggle("selected", x === b); x.setAttribute("aria-pressed", String(x === b)); } $("check").disabled = false; };
     $("check").onclick = () => {
       if (closed || selected === null) return;
@@ -23,7 +23,7 @@ export function startRecursionLab() {
       for (const b of $("stage").querySelectorAll("button")) if (b.id !== "next") b.disabled = true;
       for (const b of $("choices").querySelectorAll("button")) { b.classList.toggle("correct-answer", b.dataset.answer === question.answer); b.classList.toggle("incorrect-answer", b.dataset.answer === selected && selected !== question.answer); }
       const trace = question.trace?.length ? `<details class="trace"><summary>Show call-stack trace</summary><pre>${esc(question.trace.join("\n"))}</pre></details>` : "";
-      const f = $("feedback"); f.hidden = false; f.className = `feedback ${correct ? "good" : "bad"}`; f.innerHTML = `<strong>${correct ? "Correct." : "Not quite."}</strong> Correct answer: ${esc(question.correctAnswer)}<br>${esc(question.explanation)}<br><small>Calls: ${question.callCount} · Maximum depth: ${question.callDepth}</small>${trace}`; f.focus(); stats();
+      const f = $("feedback"); f.hidden = false; f.className = `feedback ${correct ? "good" : "bad"}`; f.innerHTML = `<strong>${correct ? "Correct." : "Not quite."}</strong> Correct answer: ${esc(question.correctAnswer)}<br>${esc(question.explanation)}${!correct && question.choiceFeedback?.[selected] ? `<p class="choice-feedback"><strong>About your choice:</strong> ${esc(question.choiceFeedback[selected])}</p>` : ""}<br><small>${question.diverges ? "This call never reaches a base case (StackOverflowError)." : `Calls: ${question.callCount} · Maximum depth: ${question.callDepth}`}</small>${trace}`; f.focus(); stats();
     };
     $("next").onclick = next; stats();
   }
