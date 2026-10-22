@@ -2,7 +2,7 @@ import {
   buildView, gradeFindData, gradeStructureSingle, gradeStructureSlots,
   gradeStructureClassification, gradeSelectNeeds, renderExplanation,
   structuralPathLabel, typeLabel, concreteForPath,
-  readablePath, matchingChallenges, shuffleChallenges, responseExplorerFormatName,
+  readablePath, matchingChallenges, shuffleChallenges, responseExplorerFormatName, sourceSamples,
 } from "./response-explorer-engine.js?v=rx-activities-v1";
 
 const esc = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -73,7 +73,10 @@ export function mount({ root, tracker }) {
   let activeState = null;
   const start = async () => {
     const data = await (await fetch("./response-explorer-data-v1.json")).json();
-    const samplesData = await (await fetch("./response-explorer-samples-v1.json")).json();
+    const runtimeIndex = await (await fetch("./api-project-data-v1-runtime-index.json")).json();
+    const runtimeParts = await Promise.all(runtimeIndex.runtimeParts.map(async (path) => await (await fetch(path)).json()));
+    const sampleLibrary = { scenarios: runtimeParts.flatMap((part) => part.scenarios || []) };
+    const samplesData = sourceSamples(sampleLibrary);
     if (stopped) return;
     if (!data || data.schemaVersion !== 1) throw new Error("This challenge set needs a newer version of the explorer.");
     const state = {
@@ -85,8 +88,8 @@ export function mount({ root, tracker }) {
     activeState = state;
     const pool = () => matchingChallenges(data, state);
     const resetChallenge = () => {
-      state.samples = new Map([[state.challenge.sampleId, samplesData[state.challenge.sampleId]]]);
-      for (const related of state.challenge.relatedSamples || []) state.samples.set(related.sampleId, samplesData[related.sampleId]);
+      state.samples = new Map([[state.challenge.sampleId, samplesData.get(state.challenge.sampleId)]]);
+      for (const related of state.challenge.relatedSamples || []) state.samples.set(related.sampleId, samplesData.get(related.sampleId));
       state.activeSample = state.challenge.sampleId;
       state.selection = new Map(); state.expanded = new Map(); state.selectedFields = [];
       state.slotSelections = {}; state.classifications = {}; state.hints = []; state.attempts = 0;
