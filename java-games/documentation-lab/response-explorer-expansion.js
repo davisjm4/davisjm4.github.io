@@ -324,6 +324,7 @@ function generateStructure(model, variant, owner, index) {
 function generateNeeds(model, variant, owner, index) {
   const paths = [...variant.needs.map(([, path]) => path), ...variant.distractors];
   const ch = common(model, { ...variant, paths }, owner, "select-needs", index);
+  ch.instruction = variant.prompt || model.instruction || "Select the response values this application feature needs.";
   ch.answer = { mode: "set", extrasPolicy: "minimal", minimal: { maxExtras: 0 } };
   ch.grading = {
     targetConcept: variant.targetConcept || model.title.toLowerCase(),
