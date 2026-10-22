@@ -134,6 +134,7 @@ function allConcretePaths(value, path = "$") {
   return result;
 }
 for (const challenge of generated) {
+  assert.ok(challenge.instruction?.trim() && !challenge.instruction.includes("undefined"), `${challenge.id} shows a complete student instruction`);
   const body = samples.get(challenge.sampleId);
   assert.ok(body, `${challenge.id} sample is loaded`);
   assert.doesNotThrow(() => JSON.parse(JSON.stringify(body)), `${challenge.id} response is serializable JSON`);
