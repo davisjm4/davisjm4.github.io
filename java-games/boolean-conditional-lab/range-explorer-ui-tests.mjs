@@ -23,6 +23,7 @@ root.querySelector('[data-mode="fixed"]').onclick();root.querySelector('[data-se
 const preset=root.querySelector('[data-preset]');preset.querySelector('option[value="overlap"]').selected=true;preset.onchange({target:preset});assert.equal(root.querySelectorAll('[data-range]').length,2);
 for(const [x,result] of [[45,'TRUE'],[60,'TRUE'],[75,'FALSE']]){setX(x);assert.equal(root.querySelector('[data-status="primary"] strong').textContent,result);}
 assert.match(root.querySelector('.rx-line').getAttribute('aria-label'),/green shows values where the displayed expression is true/i);
+setX(45);const precise=root.querySelector('[data-value]');precise.value='75';precise.oninput();assert.equal(root.querySelector('[data-value]').value,'75');assert.equal(root.querySelector('[data-status="primary"] strong').textContent,'FALSE');
 const rangeInput=root.querySelector('[data-field="lo"]');rangeInput.value='80';rangeInput.onchange();assert.match(root.querySelector('[role="alert"]').textContent,/lower boundary must be less than the upper boundary/i);assert.equal(root.querySelector('[data-primary-code]'),null);
 rangeInput.value='20';rangeInput.onchange();assert.ok(root.querySelector('[data-primary-code]'));
 root.querySelector('[data-action="reset"]').onclick();assert.equal(root.querySelector('[data-primary-code]').textContent,'x >= 70 && x <= 90');assert.equal(root.querySelector('[data-value]').value,'80');
