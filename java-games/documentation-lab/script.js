@@ -3,7 +3,7 @@
    one topic per practice mode, one scored submission per challenge. */
 import * as E from "./engine.js?v=doclab-v1";
 import * as API from "./api-project-builder-ui.js?v=api-builder-v38-step6";
-import * as RX from "./response-explorer-ui.js?v=rx-activities-v2";
+import * as RX from "./response-explorer-ui.js?v=rx-activities-v3";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 
 const $ = (id) => document.getElementById(id);
