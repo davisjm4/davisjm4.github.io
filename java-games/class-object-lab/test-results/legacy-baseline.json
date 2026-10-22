@@ -1,0 +1,184 @@
+{
+ "structure": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 6,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   228,
+   248,
+   261,
+   263
+  ],
+  "repeatsIn14": 9,
+  "repeatsIn20": 15,
+  "difficultyLevels": "none (single level)"
+ },
+ "defaults": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 4,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   241,
+   250,
+   242,
+   267
+  ],
+  "repeatsIn14": 10,
+  "repeatsIn20": 16,
+  "difficultyLevels": "none (single level)"
+ },
+ "constructors": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 4,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   241,
+   250,
+   242,
+   267
+  ],
+  "repeatsIn14": 10,
+  "repeatsIn20": 16,
+  "difficultyLevels": "none (single level)"
+ },
+ "getters": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 4,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   241,
+   250,
+   242,
+   267
+  ],
+  "repeatsIn14": 10,
+  "repeatsIn20": 16,
+  "difficultyLevels": "none (single level)"
+ },
+ "setters": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 4,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   241,
+   250,
+   242,
+   267
+  ],
+  "repeatsIn14": 10,
+  "repeatsIn20": 16,
+  "difficultyLevels": "none (single level)"
+ },
+ "this": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 4,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   241,
+   250,
+   242,
+   267
+  ],
+  "repeatsIn14": 10,
+  "repeatsIn20": 16,
+  "difficultyLevels": "none (single level)"
+ },
+ "independent": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 4,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   241,
+   250,
+   242,
+   267
+  ],
+  "repeatsIn14": 10,
+  "repeatsIn20": 16,
+  "difficultyLevels": "none (single level)"
+ },
+ "aliases": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 4,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   241,
+   250,
+   242,
+   267
+  ],
+  "repeatsIn14": 10,
+  "repeatsIn20": 16,
+  "difficultyLevels": "none (single level)"
+ },
+ "equality": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 4,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   241,
+   250,
+   242,
+   267
+  ],
+  "repeatsIn14": 10,
+  "repeatsIn20": 16,
+  "difficultyLevels": "none (single level)"
+ },
+ "parameters": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 4,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   241,
+   250,
+   242,
+   267
+  ],
+  "repeatsIn14": 10,
+  "repeatsIn20": 16,
+  "difficultyLevels": "none (single level)"
+ },
+ "static": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 4,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   241,
+   250,
+   242,
+   267
+  ],
+  "repeatsIn14": 10,
+  "repeatsIn20": 16,
+  "difficultyLevels": "none (single level)"
+ },
+ "tostring": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 4,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   241,
+   250,
+   242,
+   267
+  ],
+  "repeatsIn14": 10,
+  "repeatsIn20": 16,
+  "difficultyLevels": "none (single level)"
+ },
+ "reverse": {
+  "authoredTemplates": 4,
+  "exactDisplayedQuestions": 4,
+  "reportedSignatures": 1000,
+  "answerPositions": [
+   241,
+   250,
+   242,
+   267
+  ],
+  "repeatsIn14": 10,
+  "repeatsIn20": 16,
+  "difficultyLevels": "none (single level)"
+ }
+}

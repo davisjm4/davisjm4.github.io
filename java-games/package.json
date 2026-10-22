@@ -26,7 +26,10 @@
     "test:arraylist": "node ../tests/arraylist-lab.test.js",
     "test:arraylist-jvm": "node ../tests/arraylist-lab-jvm.test.js",
     "test:array-lab": "node array-lab/array-redesign-tests.mjs && node array-lab/advanced-tests.mjs",
-    "test:catalog": "node ../cs-games/catalog-tests.mjs"
+    "test:catalog": "node ../cs-games/catalog-tests.mjs",
+    "test:class-object-compose": "node class-object-lab/tests/compose.test.mjs --part all --per 120 --quick",
+    "test:class-object-jvm": "node class-object-lab/tests/jvm.test.mjs --per 30",
+    "test:class-object-browser": "python3 class-object-lab/tests/class-object-browser.py 2"
   },
   "devDependencies": {
     "linkedom": "^0.18.12"

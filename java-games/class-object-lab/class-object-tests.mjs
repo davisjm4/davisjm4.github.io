@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { modeNames, generateClassObject, createClassObjectGenerator, seededRandom, assessClassObject } from "./class-engine.js";
+import { modeNames, generateClassObject, createClassObjectGenerator, seededRandom, assessClassObject } from "./class-engine-legacy.js"; // original 52-template engine, preserved verbatim; the new engine is tested in tests/
 import { formatJavaCode } from "./java-format.js";
 let checks=0;const ok=(v,m)=>{assert.ok(v,m);checks++};const modes=Object.keys(modeNames);
 for(const mode of modes){const variants=new Set(),signatures=new Set(),positions=new Set();for(let i=0;i<1000;i++){const q=generateClassObject(mode,seededRandom(1000+i));variants.add(q.variant);signatures.add(q.signature);positions.add(q.choices.indexOf(q.answer));ok(q.mode===mode&&q.code.length>20&&q.prompt.length>10);ok(q.choices.length===4&&new Set(q.choices).size===4&&q.choices.includes(q.answer));ok(assessClassObject(q,{answer:q.answer})&&!assessClassObject(q,{answer:"__wrong__"}));ok(!q.code.includes("//")&&!q.code.includes("eval("))}assert.equal(variants.size,4,`${mode} needs four templates`);checks++;ok(signatures.size>=150,`${mode} should produce 150 instances`);ok(positions.size===4,`${mode} answers use all positions`)}

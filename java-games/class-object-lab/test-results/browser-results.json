@@ -1,0 +1,14 @@
+{
+ "checks": 1195,
+ "failures": [],
+ "viewports": {
+  "1366x768": "ok",
+  "390x844": "ok",
+  "360x740": "ok"
+ },
+ "cells": 102,
+ "correct": 29,
+ "incorrect": 73,
+ "skips": 3,
+ "browser": "Chromium (Playwright, headless)"
+}
