@@ -4,7 +4,7 @@ import {
   structuralPathLabel, typeLabel, concreteForPath,
   readablePath, matchingChallenges, shuffleChallenges, unseenChallenges, responseExplorerFormatName, sourceSamples, sourceSampleOwners,
 } from "./response-explorer-engine.js?v=rx-expansion-v1";
-import { generateResponseExplorerExpansion } from "./response-explorer-expansion.js?v=rx-expansion-v1";
+import { generateResponseExplorerExpansion } from "./response-explorer-expansion.js?v=rx-expansion-v2";
 
 const esc = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const formatValue = (row) => {
