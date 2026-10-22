@@ -155,7 +155,8 @@ export function gradeFindData(challenge, concretePath, templates) {
   const spec = challenge.grading;
   const structural = structuralOf(concretePath);
   const accepted = spec.accepted || [];
-  const exact = accepted.find((item) => item.path === structural);
+  const concrete = formatConcrete(parsePath(concretePath));
+  const exact = accepted.find((item) => item.match === "concrete" ? item.concretePath === concrete : item.path === structural);
   if (exact) return { correct: true, outcome: exact.kind === "alternative" ? "alternative" : "accepted", structural, accepted: exact, misconceptionId: null, feedback: null };
   if (spec.parentAcceptable && accepted.some((item) => isAncestor(structural, item.path) && structural !== "$")) return { correct: true, outcome: "parent-accepted", structural, misconceptionId: null, feedback: null };
   const rejected = (spec.rejected || []).find((item) => item.path === structural);
@@ -180,6 +181,12 @@ export function sourceSamples(library) {
   return result;
 }
 
+export function sourceSampleOwners(library) {
+  const result = new Map();
+  for (const scenario of library.scenarios || []) for (const sample of scenario.responseSamples || []) result.set(sample.id, scenario);
+  return result;
+}
+
 export function providerName(library, id) {
   return library.providers?.find((provider) => provider.id === id)?.name || id;
 }
@@ -192,17 +199,28 @@ export function challengesForFormat(data, format = "mixed") {
   return (data.challenges || []).filter((challenge) => format === "mixed" || challenge.format === format);
 }
 
-export function shuffleChallenges(pool, previousId = "", random = Math.random) {
+export function shuffleChallenges(pool, previousId = "", random = Math.random, previousModelId = "") {
   const queue = [...pool];
   for (let i = queue.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
     [queue[i], queue[j]] = [queue[j], queue[i]];
   }
-  if (queue.length > 1 && queue[0].id === previousId) {
-    const swap = 1 + Math.floor(random() * (queue.length - 1));
-    [queue[0], queue[swap]] = [queue[swap], queue[0]];
+  const modelId = (challenge) => challenge.reasoningModelId || challenge.reasoningFamily || "";
+  if (queue.length > 1 && (queue[0].id === previousId || (previousModelId && modelId(queue[0]) === previousModelId))) {
+    const swap = queue.findIndex((challenge, index) => index > 0 && challenge.id !== previousId && (!previousModelId || modelId(challenge) !== previousModelId));
+    if (swap > 0) [queue[0], queue[swap]] = [queue[swap], queue[0]];
+  }
+  for (let i = 1; i < queue.length; i++) {
+    if (modelId(queue[i]) && modelId(queue[i]) === modelId(queue[i - 1])) {
+      const swap = queue.findIndex((challenge, index) => index > i && modelId(challenge) !== modelId(queue[i - 1]));
+      if (swap > i) [queue[i], queue[swap]] = [queue[swap], queue[i]];
+    }
   }
   return queue;
+}
+
+export function unseenChallenges(pool, seenIds) {
+  return (pool || []).filter((challenge) => !seenIds?.has(challenge.id));
 }
 
 export function matchingChallenges(data, { format = "mixed", provider = "all", difficulty = "all" } = {}) {
@@ -228,7 +246,7 @@ function gradeOnePath(spec, concretePath, templates = {}) {
   if (!concretePath) return { correct: false, outcome: "empty", misconceptionId: null, feedback: "Select a node in the response first." };
   const structural = normalizeSelection(concretePath);
   const accepted = spec.accepted || [];
-  const exact = accepted.find((item) => item.path === structural);
+  const exact = accepted.find((item) => item.path === structural && (item.match !== "concrete" || item.concretePath === concretePath));
   if (exact) return { correct: true, outcome: exact.kind === "alternative" ? "alternative" : "accepted", structural, accepted: exact, misconceptionId: null, feedback: null };
   if (spec.parentAcceptable && accepted.some((item) => isAncestor(structural, item.path) && structural !== "$")) return { correct: true, outcome: "parent-accepted", structural, misconceptionId: null, feedback: null };
   const rejected = (spec.rejected || []).find((item) => item.path === structural);
