@@ -212,4 +212,1406 @@ public static void trace(int n) {
 // each answer choice is a different first call to trace
 ```
 
-**Exactly one 
+**Exactly one of these calls finishes normally. Which one?**
+
+- **✓** trace(18)
+- trace(8) — _trace(8) never reaches the base case. Only multiples of 3 reach exactly 0 when subtracting 3._
+- trace(17) — _trace(17) never reaches the base case. Only multiples of 3 reach exactly 0 when subtracting 3._
+- trace(16) — _trace(16) never reaches the base case. Only multiples of 3 reach exactly 0 when subtracting 3._
+
+> Only multiples of 3 reach exactly 0 when subtracting 3. trace(18) reaches the base case; the others recurse until the call stack overflows.
+
+### conditional-progression — Intermediate (`conditional-progression:three-third-else-minus:elseCount`)
+
+```java
+public static void step(int n) {
+    if (n < 3) {
+        return;
+    }
+    if (n % 3 == 0) {
+        step(n / 3);
+    } else {
+        step(n - 1);
+    }
+}
+// call: step(13)
+```
+
+**During step(13), how many recursive calls are made from the else-branch?**
+
+- 3 — _The base-case call returns before reaching either branch._
+- 4 — _Only calls made when the condition is false come from the else-branch._
+- 1 — _Check the first argument too._
+- **✓** 2
+
+> Arguments 13, 12, 4, 3, 1. The else-branch runs for 13, 4: 2 calls.
+
+### conditional-progression — Advanced (`conditional-progression:even-half-odd-plus:sequence`)
+
+```java
+public static void step(int n) {
+    if (n <= 2) {
+        return;
+    }
+    if (n % 2 == 0) {
+        step(n / 2);
+    } else {
+        step(n + 1);
+    }
+}
+// call: step(120)
+```
+
+**Which arguments does step receive, in order, for step(120)?**
+
+- 120, 60, 30, 15, 7, 3, 1 — _Values that fail the condition take the else-branch call._
+- 120, 121, 60, 61, 30, 31, 15, 7, 3, 1 — _Check the condition for each value: the if-branch and else-branch apply to different cases._
+- 120, 60, 30, 15, 16, 8, 4 — _The call with 2 still happens; it is where n <= 2 stops the recursion._
+- **✓** 120, 60, 30, 15, 16, 8, 4, 2
+
+> Each call checks the base case, then chooses a branch: 120, 60, 30, 15, 16, 8, 4, 2.
+
+### branching-tree — Intermediate (`branching-tree:halves:specific`)
+
+```java
+public static void count(int n) {
+    if (n <= 1) {
+        return;
+    }
+    count(n / 2);
+    count(n / 2);
+}
+// call: count(7)
+```
+
+**During count(7), how many times is count(1) called?**
+
+- 8 — _Each call is counted once, when it begins._
+- 2 — _Each non-base call makes 2 calls; count every branch that reaches 1._
+- 1 — _Branching recursion repeats the same subproblem in different branches._
+- **✓** 4
+
+> count(1) appears 4 times in the call tree because several branches reach it.
+
+### branching-tree — Advanced (`branching-tree:halves:specific`)
+
+```java
+public static void count(int n) {
+    if (n <= 1) {
+        return;
+    }
+    count(n / 2);
+    count(n / 2);
+}
+// call: count(14)
+```
+
+**During count(14), how many times is count(3) called?**
+
+- 1 — _Branching recursion repeats the same subproblem in different branches._
+- **✓** 4
+- 2 — _Each non-base call makes 2 calls; count every branch that reaches 3._
+- 8 — _Each call is counted once, when it begins._
+
+> count(3) appears 4 times in the call tree because several branches reach it.
+
+## Return Values
+
+### digit-recursion — Beginner (`digit-recursion:digit-count:value`)
+
+```java
+public static int build(int n) {
+    if (n < 10) {
+        return 1;
+    }
+    return 1 + build(n / 10);
+}
+// call: build(452)
+```
+
+**What does build(452) return?**
+
+- 46 — _n / 10 removes the last digit; it does not subtract 10._
+- **✓** 3
+- 4 — _Recompute each level's return value carefully._
+- 2 — _The base case returns n itself (the leading digit), not 0._
+
+> Each call peels off n % 10 and recurses on n / 10. Returns while unwinding: build(4) = 1, build(45) = 2, build(452) = 3.
+
+### digit-recursion — Advanced (`digit-recursion:digit-sum:returnOrder`)
+
+```java
+public static int measure(int n) {
+    if (n < 10) {
+        return n;
+    }
+    return n % 10 + measure(n / 10);
+}
+// call: measure(9888665)
+```
+
+**List the values returned by the calls, in the order the calls finish.**
+
+- **✓** 9, 17, 25, 33, 39, 45, 50
+- 17, 25, 33, 39, 45, 50 — _The base-case call also returns a value and finishes first._
+- 50, 45, 39, 33, 25, 17, 9 — _The first call made is the last to finish; returns happen in reverse call order._
+- 9888665, 988866, 98886, 9888, 988, 98, 9 — _Those are the arguments passed to each call, not the returned values._
+
+> The deepest call (measure(9)) finishes first, then each caller: 9, 17, 25, 33, 39, 45, 50.
+
+### two-parameter — Beginner (`two-parameter:power:value`)
+
+```java
+public static int measure(int a, int b) {
+    if (b == 0) {
+        return 1;
+    }
+    return a * measure(a, b - 1);
+}
+// call: measure(3, 2)
+```
+
+**What does measure(3, 2) return?**
+
+- **✓** 9
+- 27 — _When b is 0 the method returns 1, not a._
+- 3 — _That is what the second call returns; the first call still applies its own step._
+- 7 — _Each level multiplies by a._
+
+> Calls: measure(3, 2), measure(3, 1), measure(3, 0). Returns from the base up: 1, 3, 9.
+
+### two-parameter — Advanced (`two-parameter:gcd:baseArgs`)
+
+```java
+public static int fold(int a, int b) {
+    if (b == 0) {
+        return a;
+    }
+    return fold(b, a % b);
+}
+// call: fold(15, 33)
+```
+
+**What are the arguments of the call that reaches the base case, starting from fold(15, 33)?**
+
+- fold(0, 33) — _Check which parameter the recursive call changes._
+- fold(15, 3) — _That call still recurses; the base condition is false there._
+- fold(15, 0) — _Track how each argument changes in every call._
+- **✓** fold(3, 0)
+
+> Calls: fold(15, 33), fold(33, 15), fold(15, 3), fold(3, 0).
+
+### conditional-return — Beginner (`conditional-return:sum-of-evens:inner`)
+
+```java
+public static int measure(int n) {
+    if (n == 0) {
+        return 0;
+    }
+    if (n % 2 == 0) {
+        return n + measure(n - 1);
+    }
+    return measure(n - 1);
+}
+// call: measure(7)
+```
+
+**While measure(7) is evaluated, what does the call measure(5) return?**
+
+- 0 — _That is measure(0)._
+- **✓** 6
+- 2 — _That is measure(2)._
+- 12 — _That is the final result of the first call._
+
+> measure(5) only depends on values 5 down to 0: it returns 6.
+
+### conditional-return — Advanced (`conditional-return:sum-of-evens:value`)
+
+```java
+public static int evaluate(int n) {
+    if (n == 0) {
+        return 1;
+    }
+    if (n % 2 == 0) {
+        return n + evaluate(n - 1);
+    }
+    return evaluate(n - 1);
+}
+// call: evaluate(6)
+```
+
+**What does evaluate(6) return?**
+
+- 10 — _Re-check which values make the condition true._
+- 22 — _Only values that satisfy the if-condition take the first return._
+- 12 — _The base case returns 1._
+- **✓** 13
+
+> Working up from evaluate(0) = 1: evaluate(0) = 1, evaluate(1) = 1, evaluate(2) = 3, evaluate(3) = 3, evaluate(4) = 7, evaluate(5) = 7, evaluate(6) = 13.
+
+### nested-return — Intermediate (`nested-return:double-plus-one:value`)
+
+```java
+public static int compute(int n) {
+    if (n == 0) {
+        return 0;
+    }
+    return 2 * compute(n - 1) + 1;
+}
+// call: compute(5)
+```
+
+**What does compute(5) return?**
+
+- 1 — _The recursive call returns a value that must itself be computed, level by level._
+- **✓** 31
+- 62 — _Apply operator precedence: multiplication before addition/subtraction, using the returned value._
+- 63 — _The base case returns 0._
+
+> Start at compute(0) = 0 and apply the expression on the way back: compute(0) = 0, compute(1) = 1, compute(2) = 3, compute(3) = 7, compute(4) = 15, compute(5) = 31.
+
+### nested-return — Advanced (`nested-return:triple-minus-n:value`)
+
+```java
+public static int accumulate(int n) {
+    if (n == 0) {
+        return 1;
+    }
+    return 3 * accumulate(n - 1) - n;
+}
+// call: accumulate(8)
+```
+
+**What does accumulate(8) return?**
+
+- 8206 — _The base case returns 1._
+- **✓** 1645
+- -5 — _The recursive call returns a value that must itself be computed, level by level._
+- -8187 — _Apply operator precedence: multiplication before addition/subtraction, using the returned value._
+
+> Start at accumulate(0) = 1 and apply the expression on the way back: accumulate(0) = 1, accumulate(1) = 2, accumulate(2) = 4, accumulate(3) = 9, accumulate(4) = 23, accumulate(5) = 64, accumulate(6) = 186, accumulate(7) = 551, accumulate(8) = 1645.
+
+### work-around-call — Intermediate (`work-around-call:post-result:output`)
+
+```java
+public static int score(int n) {
+    if (n == 0) {
+        return 1;
+    }
+    int r = score(n - 1) + n;
+    System.out.print(r + " ");
+    return r;
+}
+// call: score(4)
+```
+
+**What is printed by score(4)?**
+
+- 2 4 7 — _The first call score(4) prints too._
+- 4 3 2 1 — _Look at whether each print is above or below the recursive call._
+- 11 7 4 2 — _Statements before the call run on the way down; statements after the call run on the way back up._
+- **✓** 2 4 7 11
+
+> Each call prints r after its recursive call returns, so the deepest call prints first: 2 4 7 11.
+
+### work-around-call — Advanced (`work-around-call:pre-arg:value`)
+
+```java
+public static int combine(int n) {
+    if (n == 0) {
+        return 1;
+    }
+    System.out.print(n + " ");
+    int r = combine(n - 1) + n;
+    return r;
+}
+// call: combine(3)
+```
+
+**What value does combine(3) return? (Ignore what it prints.)**
+
+- **✓** 7
+- 1 — _Printing and returning are different; look at the return statement._
+- 4 — _That is the value from combine(2)._
+- 6 — _The base case returns 1, which is included in every r._
+
+> r = combine(n − 1) + n, starting from 1: 1, 2, 4, 7.
+
+### multi-call-return — Intermediate (`multi-call-return:fib-zero-one:value`)
+
+```java
+public static int fold(int n) {
+    if (n == 0) {
+        return 0;
+    }
+    if (n == 1) {
+        return 1;
+    }
+    return fold(n - 1) + fold(n - 2);
+}
+// call: fold(4)
+```
+
+**What does fold(4) return?**
+
+- 9 — _That is the number of calls, not the returned value._
+- 2 — _fold(0) returns 0 and fold(1) returns 1._
+- **✓** 3
+- 4 — _fold(n − 2) is a full recursive call too._
+
+> Build the values bottom-up: fold(0) = 0, fold(1) = 1, fold(2) = 1, fold(3) = 2, fold(4) = 3.
+
+### multi-call-return — Advanced (`multi-call-return:difference:value`)
+
+```java
+public static int fold(int n) {
+    if (n == 0) {
+        return 1;
+    }
+    if (n == 1) {
+        return 3;
+    }
+    return fold(n - 1) - fold(n - 2);
+}
+// call: fold(6)
+```
+
+**What does fold(6) return?**
+
+- 3 — _fold(0) returns 1 and fold(1) returns 3._
+- **✓** 1
+- -2 — _That is fold(5)._
+- -12 — _fold(n − 2) is a full recursive call too._
+
+> Build the values bottom-up: fold(0) = 1, fold(1) = 3, fold(2) = 2, fold(3) = -1, fold(4) = -3, fold(5) = -2, fold(6) = 1.
+
+### accumulator-parameter — Beginner (`accumulator-parameter:sum-acc:accAt`)
+
+```java
+public static int accumulate(int n, int acc) {
+    if (n == 0) {
+        return acc;
+    }
+    return accumulate(n - 1, acc + n);
+}
+// call: accumulate(4, 0)
+```
+
+**In accumulate(4, 0), what is acc in call number 3 (the first call is call 1)?**
+
+- 9 — _That is acc in call 4._
+- 10 — _acc grows call by call; it only reaches the final value at the base case._
+- 4 — _acc is updated in the argument list before the next call starts._
+- **✓** 7
+
+> acc per call: 0, 4, 7, 9, 10.
+
+### accumulator-parameter — Advanced (`accumulator-parameter:digits-reversed-acc:value`)
+
+```java
+public static int compute(int n, int acc) {
+    if (n == 0) {
+        return acc;
+    }
+    return compute(n / 10, acc * 10 + n % 10);
+}
+// call: compute(74644, 0)
+```
+
+**What does compute(74644, 0) return?**
+
+- **✓** 44647
+- 0 — _Each call passes an updated acc to the next call._
+- 4464 — _The last update happens in the call just before the base case and is passed down._
+- 44648 — _acc starts at 0._
+
+> acc takes the values 0, 4, 44, 446, 4464, 44647; the base case returns the final acc, and every caller passes it straight back up.
+
+## Output & Strings
+
+### print-around-call — Beginner (`print-around-call:post:output`)
+
+```java
+public static void trace(int n) {
+    if (n <= 0) {
+        return;
+    }
+    trace(n - 1);
+    System.out.print(n + " ");
+}
+// call: trace(4)
+```
+
+**What is printed by trace(4)?**
+
+- 4 3 2 1 — _A print below the recursive call runs only after the deeper calls finish, on the way back up._
+- **✓** 1 2 3 4
+- 0 1 2 3 4 — _The base-case call returns before reaching any print of n._
+- 1 2 3 — _Every pending print still runs as the calls return._
+
+> A print below the recursive call runs only after the deeper calls finish, on the way back up.: 1 2 3 4.
+
+### print-around-call — Advanced (`print-around-call:pre:output`)
+
+```java
+public static void trace(int n) {
+    if (n <= 0) {
+        return;
+    }
+    System.out.print(n + " ");
+    trace(n - 2);
+}
+// call: trace(3)
+```
+
+**What is printed by trace(3)?**
+
+- 3 — _Every pending print still runs as the calls return._
+- 1 3 — _A print above the recursive call runs on the way down, before deeper calls._
+- 3 1 -1 — _The base-case call returns before reaching any print of n._
+- **✓** 3 1
+
+> A print above the recursive call runs on the way down, before deeper calls.: 3 1.
+
+### branching-output — Intermediate (`branching-output:post:1:output`)
+
+```java
+public static void walk(int n) {
+    if (n <= 0) {
+        return;
+    }
+    walk(n - 1);
+    walk(n - 1);
+    System.out.print(n + " ");
+}
+// call: walk(3)
+```
+
+**What is printed by walk(3)?**
+
+- 3 2 1 1 2 1 1 — _Look at where the print sits relative to the two recursive calls._
+- **✓** 1 1 2 1 1 2 3
+- 1 2 1 3 1 2 1 — _Look at where the print sits relative to the two recursive calls._
+- 1 2 3 — _Both recursive calls run; each one prints its own values._
+
+> Each call runs both recursive calls, then prints n: 1 1 2 1 1 2 3.
+
+### branching-output — Advanced (`branching-output:split:1:output`)
+
+```java
+public static void follow(int n) {
+    if (n <= 0) {
+        return;
+    }
+    System.out.print(n + "(");
+    follow(n - 1);
+    System.out.print(") ");
+    follow(n - 1);
+}
+// call: follow(4)
+```
+
+**What is printed by follow(4)?**
+
+- **✓** 4(3(2(1() ) 1() ) 2(1() ) 1() ) 3(2(1() ) 1() ) 2(1() ) 1()
+- 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 — _Look at where the print sits relative to the two recursive calls._
+- 1 1 2 1 1 2 3 1 1 2 1 1 2 3 4 — _Look at where the print sits relative to the two recursive calls._
+- 4 3 2 1 1 2 1 1 3 2 1 1 2 1 1 — _Look at where the print sits relative to the two recursive calls._
+
+> Each call prints n and "(", runs the first call, prints ")", then runs the second call: 4(3(2(1() ) 1() ) 2(1() ) 1() ) 3(2(1() ) 1() ) 2(1() ) 1().
+
+### string-builder — Beginner (`string-builder:separators:value`)
+
+```java
+public static String spell(String s) {
+    if (s.length() <= 1) {
+        return s;
+    }
+    return s.substring(0, 1) + "-" + spell(s.substring(1));
+}
+// call: spell("TREE")
+```
+
+**What does spell("TREE") return?**
+
+- "TREE" — _Each call builds a new string; the input is not returned unchanged._
+- "R-E-E" — _That is the result of the second call; the first call still adds its part._
+- "E-E-R-T" — _String + is not commutative: the left operand appears first._
+- **✓** "T-R-E-E"
+
+> Each call handles part of the string and concatenates it with the recursive result. Returns from the base case up: "E", "E-E", "R-E-E", "T-R-E-E".
+
+### string-builder — Advanced (`string-builder:mirror:argAt`)
+
+```java
+public static String spell(String s) {
+    if (s.length() == 0) {
+        return "";
+    }
+    return s.substring(0, 1) + spell(s.substring(1)) + s.substring(0, 1);
+}
+// call: spell("MISSISSIPPI")
+```
+
+**What is s in call number 4 of spell("MISSISSIPPI")? (The first call is call 1.)**
+
+- "ISSIPPI" — _Count calls from 1._
+- **✓** "SISSIPPI"
+- "SSISSIPPI" — _Call 1 receives the original string._
+- "MISSISSI" — _s.substring(1) removes the first character._
+
+> Arguments by call: "MISSISSIPPI", "ISSISSIPPI", "SSISSIPPI", "SISSIPPI", "ISSIPPI", "SSIPPI", "SIPPI", "IPPI", "PPI", "PI", "I", "".
+
+### palindrome — Intermediate (`palindrome:true:lastArg`)
+
+```java
+public static boolean readsSame(String s) {
+    if (s.length() <= 1) {
+        return true;
+    }
+    if (!s.substring(0, 1).equals(s.substring(s.length() - 1))) {
+        return false;
+    }
+    return readsSame(s.substring(1, s.length() - 1));
+}
+// call: readsSame("STATS")
+```
+
+**What string is passed to the last call made by readsSame("STATS")?**
+
+- "" — _Odd-length strings stop at one character._
+- "TATS" — _substring(1, s.length() - 1) removes both ends._
+- **✓** "A"
+- "TAT" — _That call still recurses._
+
+> Arguments: "STATS", "TAT", "A".
+
+### palindrome — Advanced (`palindrome:false:result-and-calls`)
+
+```java
+public static boolean isPalindrome(String s) {
+    if (s.length() <= 1) {
+        return true;
+    }
+    if (!s.substring(0, 1).equals(s.substring(s.length() - 1))) {
+        return false;
+    }
+    return isPalindrome(s.substring(1, s.length() - 1));
+}
+// call: isPalindrome("RECORDER")
+```
+
+**What does isPalindrome("RECORDER") return, and how many calls are made in total?**
+
+- true after 3 calls — _A mismatch between the first and last characters returns false immediately; otherwise the middle is checked._
+- true after 5 calls — _When characters differ the method returns false without recursing further._
+- false after 4 calls — _The call that finds the mismatch returns false without another recursive call._
+- **✓** false after 3 calls
+
+> 3 calls: "RECORDER", "ECORDE", "CORD". A pair of characters did not match, so false is returned and passed back up.
+
+### count-char — Beginner (`count-char:ternary:present`)
+
+```java
+public static int countLetter(String s) {
+    if (s.length() == 0) {
+        return 0;
+    }
+    int here = s.substring(0, 1).equals("M") ? 1 : 0;
+    return here + countLetter(s.substring(1));
+}
+// call: countLetter("MOON")
+```
+
+**What does countLetter("MOON") return?**
+
+- 0 — _The first call checks a character too._
+- **✓** 1
+- 2 — _The empty string contributes 0._
+- 3 — _Only characters equal to "M" add 1._
+
+> Each call checks the first character and recurses on the rest; "M" occurs 1 time in "MOON".
+
+### count-char — Advanced (`count-char:ternary:present`)
+
+```java
+public static int matches(String s) {
+    if (s.length() == 0) {
+        return 0;
+    }
+    int here = s.substring(0, 1).equals("M") ? 1 : 0;
+    return here + matches(s.substring(1));
+}
+// call: matches("COMMITTEE")
+```
+
+**What does matches("COMMITTEE") return?**
+
+- 7 — _Only characters equal to "M" add 1._
+- 1 — _The first call checks a character too._
+- 3 — _The empty string contributes 0._
+- **✓** 2
+
+> Each call checks the first character and recurses on the rest; "M" occurs 2 times in "COMMITTEE".
+
+### string-print-around — Beginner (`string-print-around:last-before:output`)
+
+```java
+public static void relay(String s) {
+    if (s.length() == 0) {
+        return;
+    }
+    System.out.print(s.substring(s.length() - 1));
+    relay(s.substring(0, s.length() - 1));
+}
+// call: relay("FROG")
+```
+
+**What is printed by relay("FROG")?**
+
+- GGGG — _Check which end of the string the recursive call's substring removes._
+- **✓** GORF
+- GOR — _The first call's final print runs last._
+- FROG — _Statements above the recursive call run on the way down; statements below run on the way back up._
+
+> Arguments: "FROG", "FRO", "FR", "F", "". Output: GORF.
+
+### string-print-around — Advanced (`string-print-around:last-after:output`)
+
+```java
+public static void spell(String s) {
+    if (s.length() == 0) {
+        return;
+    }
+    spell(s.substring(0, s.length() - 1));
+    System.out.print(s.substring(s.length() - 1));
+}
+// call: spell("TOMATO")
+```
+
+**What is printed by spell("TOMATO")?**
+
+- TOMAT — _The first call's final print runs last._
+- OOOOOO — _Check which end of the string the recursive call's substring removes._
+- OTAMOT — _Follow the order statements execute._
+- **✓** TOMATO
+
+> Arguments: "TOMATO", "TOMAT", "TOMA", "TOM", "TO", "T", "". Output: TOMATO.
+
+## Arrays & Parameters
+
+### segment-recursion — Intermediate (`segment-recursion:sum:ranges`)
+
+```java
+public static int combine(int[] a, int lo, int hi) {
+    if (lo == hi) {
+        return a[lo];
+    }
+    int mid = (lo + hi) / 2;
+    return combine(a, lo, mid) + combine(a, mid + 1, hi);
+}
+// int[] a = {5, 7, -1, 4, 7, 7};  call: combine(a, 0, 5)
+```
+
+**Which index ranges (lo..hi) do the two calls made directly by combine(a, 0, 5) receive?**
+
+- **✓** 0..2 and 3..5
+- 0..1 and 2..5 — _The left half is lo..mid, including mid._
+- 0..3 and 4..5 — _(lo + hi) / 2 uses integer division, which truncates._
+- 0..2 and 2..5 — _The right half starts at mid + 1._
+
+> mid = (0 + 5) / 2 = 2, so the calls receive 0..2 and 3..5.
+
+### segment-recursion — Advanced (`segment-recursion:max:value`)
+
+```java
+public static int survey(int[] a, int lo, int hi) {
+    if (lo == hi) {
+        return a[lo];
+    }
+    int mid = (lo + hi) / 2;
+    return Math.max(survey(a, lo, mid), survey(a, mid + 1, hi));
+}
+// int[] a = {-3, 6, -4, 6, 6, 7, 7, -4};  call: survey(a, 0, 7)
+```
+
+**What does survey(a, 0, 7) return?**
+
+- 21 — _Look at how the two results are combined._
+- 6 — _Both halves are processed and their results combined._
+- -3 — _The ranges cover every index from lo to hi._
+- **✓** 7
+
+> The range splits in half until single elements remain (8 of them), and results are combined on the way back: 7.
+
+### two-ended — Beginner (`two-ended:pair-sums:value:even`)
+
+```java
+public static int survey(int[] a, int lo, int hi) {
+    if (lo > hi) {
+        return 0;
+    }
+    if (lo == hi) {
+        return a[lo];
+    }
+    return a[lo] + a[hi] + survey(a, lo + 1, hi - 1);
+}
+// int[] a = {8, 1, 6, 3, 9, 0};  call: survey(a, 0, 5)
+```
+
+**What does survey(a, 0, 5) return?**
+
+- 19 — _The first call handles a[0] and the last element itself._
+- **✓** 27
+- 35 — _Each index is used once._
+- 28 — _Retrace each pair._
+
+> Pairs (lo, hi): (0, 5), (1, 4), (2, 3), (3, 2). Returns: 0, 9, 19, 27.
+
+### two-ended — Advanced (`two-ended:outer-minus-inner:calls:odd`)
+
+```java
+public static int combine(int[] a, int lo, int hi) {
+    if (lo >= hi) {
+        return 0;
+    }
+    return a[hi] - a[lo] - combine(a, lo + 1, hi - 1);
+}
+// int[] a = {1, 6, 7, 3, 9, 9, 6, 9, 8};  call: combine(a, 0, 8)
+```
+
+**How many calls to combine are made by combine(a, 0, 8), including the first?**
+
+- 4 — _The base-case call counts too._
+- 6 — _Nothing is called after the base case._
+- 9 — _Each call handles two elements._
+- **✓** 5
+
+> Calls (lo, hi): (0, 8), (1, 7), (2, 6), (3, 5), (4, 4).
+
+### stride-recursion — Beginner (`stride-recursion:2:value`)
+
+```java
+public static int scan(int[] a, int i) {
+    if (i >= a.length) {
+        return 0;
+    }
+    return a[i] + scan(a, i + 2);
+}
+// int[] a = {1, 6, -2, 1, -1, 2};  call: scan(a, 0)
+```
+
+**What does scan(a, 0) return?**
+
+- -3 — _The first call adds a[0]._
+- **✓** -2
+- 7 — _i increases by 2, skipping elements._
+- 9 — _The first index used is 0._
+
+> Indexes 0, 2, 4 are added: 1 + -2 + -1 = -2.
+
+### stride-recursion — Intermediate (`stride-recursion:2:calls`)
+
+```java
+public static int check(int[] a, int i) {
+    if (i >= a.length) {
+        return 0;
+    }
+    return a[i] + check(a, i + 2);
+}
+// int[] a = {3, 9, 1, 6, -1, 6};  call: check(a, 0)
+```
+
+**How many calls to check are made by check(a, 0), including the first?**
+
+- 7 — _i increases by 2._
+- 3 — _The call with i past the end counts too._
+- **✓** 4
+- 6 — _i jumps by 2._
+
+> i takes 0, 2, 4, 6: 4 calls.
+
+### in-place-mutation — Beginner (`in-place-mutation:add-index:order-irrelevant:element`)
+
+```java
+public static void check(int[] a, int i) {
+    if (i >= a.length) {
+        return;
+    }
+    a[i] = a[i] + i;
+    check(a, i + 1);
+}
+// int[] a = {8, 3, 3, 4, 6};  call: check(a, 0)
+```
+
+**What is a[3] after check(a, 0)?**
+
+- 4 — _Changes made through the parameter change the caller's array._
+- 8 — _Each element gets its own index added; indexes start at 0._
+- **✓** 7
+- 5 — _Check index 3._
+
+> Each call changes only its own index, so the order of updates does not matter here. a becomes {8, 4, 5, 7, 10}, so a[3] = 7.
+
+### in-place-mutation — Advanced (`in-place-mutation:copy-previous-doubled:update-before-call:array`)
+
+```java
+public static void gather(int[] a, int i) {
+    if (i >= a.length) {
+        return;
+    }
+    a[i] = a[i - 1] * 2;
+    gather(a, i + 1);
+}
+// int[] a = {8, 6, 3, 2, 2, 7};  call: gather(a, 1)
+```
+
+**What are the contents of a after gather(a, 1)?**
+
+- **✓** {8, 16, 32, 64, 128, 256}
+- {8, 6, 3, 2, 2, 7} — _The method receives a reference to the same array, so its changes are visible to the caller._
+- {8, 16, 3, 2, 2, 7} — _Every recursive call updates its own index._
+- {8, 16, 12, 6, 4, 4} — _The update runs before the recursive call, so index 1 is updated first. Each a[i] reads a[i - 1], which has already been updated, so the changes accumulate._
+
+> The update runs before the recursive call, so index 1 is updated first. Each a[i] reads a[i - 1], which has already been updated, so the changes accumulate. Result: {8, 16, 32, 64, 128, 256}.
+
+### in-place-reverse — Intermediate (`in-place-reverse:full:array`)
+
+```java
+public static void mirror(int[] a, int lo, int hi) {
+    if (lo >= hi) {
+        return;
+    }
+    int t = a[lo];
+    a[lo] = a[hi];
+    a[hi] = t;
+    mirror(a, lo + 1, hi - 1);
+}
+// int[] a = {9, 7, 9, 8, 1, 4};  call: mirror(a, 0, 5)
+```
+
+**What are the contents of a after mirror(a, 0, 5)?**
+
+- {9, 7, 9, 8, 1, 4} — _Swaps through the parameter change the caller's array._
+- {4, 7, 9, 8, 1, 9} — _Each recursive call swaps another pair._
+- **✓** {4, 1, 8, 9, 7, 9}
+- {4, 1, 8, 8, 1, 4} — _The temporary t keeps the old a[lo], so both values survive the swap._
+
+> Pairs swapped: (0, 5), (1, 4), (2, 3). Result: {4, 1, 8, 9, 7, 9}.
+
+### in-place-reverse — Advanced (`in-place-reverse:full:array`)
+
+```java
+public static void swapEnds(int[] a, int lo, int hi) {
+    if (lo >= hi) {
+        return;
+    }
+    int t = a[lo];
+    a[lo] = a[hi];
+    a[hi] = t;
+    swapEnds(a, lo + 1, hi - 1);
+}
+// int[] a = {6, 9, 1, 7, 9};  call: swapEnds(a, 0, 4)
+```
+
+**What are the contents of a after swapEnds(a, 0, 4)?**
+
+- **✓** {9, 7, 1, 9, 6}
+- {9, 9, 1, 7, 6} — _Each recursive call swaps another pair._
+- {6, 9, 1, 7, 9} — _Swaps through the parameter change the caller's array._
+- {9, 7, 1, 7, 9} — _The temporary t keeps the old a[lo], so both values survive the swap._
+
+> Pairs swapped: (0, 4), (1, 3). Result: {9, 7, 1, 9, 6}.
+
+### mutation-vs-return — Intermediate (`mutation-vs-return:increment-then-sum`)
+
+```java
+public static int probe(int[] a, int i) {
+    if (i == a.length) {
+        return 0;
+    }
+    a[i] = a[i] + 3;
+    return a[i] + probe(a, i + 1);
+}
+// int[] a = {9, 3, 2, 9};  call: probe(a, 0)
+```
+
+**What does probe(a, 0) return, and what does a contain afterwards?**
+
+- returns 23; a = {9, 3, 2, 9} — _Both the update and the return value matter._
+- returns 35; a = {9, 3, 2, 9} — _a[i] = … changes the caller's array._
+- **✓** returns 35; a = {12, 6, 5, 12}
+- returns 23; a = {12, 6, 5, 12} — _a[i] is read after it was increased._
+
+> Each a[i] increases by 3. The sum uses the new values: returns 35; a = {12, 6, 5, 12}.
+
+### mutation-vs-return — Advanced (`mutation-vs-return:increment-then-sum`)
+
+```java
+public static int combine(int[] a, int i) {
+    if (i == a.length) {
+        return 0;
+    }
+    a[i] = a[i] + 1;
+    return a[i] + combine(a, i + 1);
+}
+// int[] a = {4, 9, 5};  call: combine(a, 0)
+```
+
+**What does combine(a, 0) return, and what does a contain afterwards?**
+
+- returns 18; a = {4, 9, 5} — _Both the update and the return value matter._
+- **✓** returns 21; a = {5, 10, 6}
+- returns 21; a = {4, 9, 5} — _a[i] = … changes the caller's array._
+- returns 18; a = {5, 10, 6} — _a[i] is read after it was increased._
+
+> Each a[i] increases by 1. The sum uses the new values: returns 21; a = {5, 10, 6}.
+
+### conditional-aggregate — Beginner (`conditional-aggregate:last-match-backward:present`)
+
+```java
+public static int scan(int[] a, int i) {
+    if (i < 0) {
+        return -1;
+    }
+    if (a[i] == 2) {
+        return i;
+    }
+    return scan(a, i - 1);
+}
+// int[] a = {9, 2, 0, -3, 5, 3};  call: scan(a, 5)
+```
+
+**What does scan(a, 5) return when the target is 2?**
+
+- -1 — _2 occurs in a._
+- **✓** 1
+- 0 — _Return the index where a[i] == target._
+- 2 — _The method returns an index, not the value._
+
+> Searching from index 5 down, the first match is at index 1.
+
+### conditional-aggregate — Advanced (`conditional-aggregate:sum-of-negatives`)
+
+```java
+public static int probe(int[] a, int i) {
+    if (i == a.length) {
+        return 0;
+    }
+    int rest = probe(a, i + 1);
+    if (a[i] < 0) {
+        return a[i] + rest;
+    }
+    return rest;
+}
+// int[] a = {8, 4, -2, 7, 6, 0, 0, 8};  call: probe(a, 0)
+```
+
+**What does probe(a, 0) return?**
+
+- **✓** -2
+- -3 — _The condition is a[i] < 0._
+- 31 — _Only negative values are added._
+- 2 — _Negative values sum to a negative result._
+
+> Each call decides whether a[i] contributes: -2.
+
+## Recursive Debugging
+
+### knob-bug — Beginner (`knob-bug:count-digits:arg:line`)
+
+```java
+public static int countDigits(int n) {
+    if (n < 10) {
+        return 1;
+    }
+    return 1 + countDigits(n - 10);
+}
+// Intended: countDigits returns how many digits n has (n ≥ 0).
+// call: countDigits(76564)
+```
+
+**countDigits(76564) gives the wrong result. Which line contains the error?**
+
+- public static int countDigits(int n) { — _That line is correct for the intended behaviour._
+- if (n < 10) { — _That line is correct for the intended behaviour._
+- return 1; — _That line is correct for the intended behaviour._
+- **✓** return 1 + countDigits(n - 10);
+
+> countDigits(76564) throws StackOverflowError. The faulty line is return 1 + countDigits(n - 10);; it should be return 1 + countDigits(n / 10);.
+
+### knob-bug — Advanced (`knob-bug:count-letter:val:symptom`)
+
+```java
+public static int countA(String s) {
+    if (s.length() == 0) {
+        return 1;
+    }
+    return s.substring(0, 1).equals("A") ? 1 + countA(s.substring(1)) : countA(s.substring(1));
+}
+// Intended: countA returns how many times "A" appears in s.
+// call: countA("SALAD")
+```
+
+**What actually happens when countA("SALAD") runs?**
+
+- Returns 2 — _That is the intended result; trace the code as written._
+- **✓** Returns 3
+- Throws StringIndexOutOfBoundsException — _That would happen with different code; re-read the base condition._
+- Throws StackOverflowError — _That would happen with different code; re-read the recursive argument._
+
+> Tracing the code as written gives 3; the intended result is 2.
+
+## Recursive Search & Sort
+
+### linear-search — Beginner (`linear-search:first:absent`)
+
+```java
+public static int search(int[] a, int i, int t) {
+    if (i >= a.length) {
+        return -1;
+    }
+    if (a[i] == t) {
+        return i;
+    }
+    return search(a, i + 1, t);
+}
+// int[] a = {0, 8, 7, 4, 3, 7};  call: search(a, 0, 12)
+```
+
+**What does search(a, 0, 12) return?**
+
+- 12 — _The method returns an index, not the value._
+- 6 — _The base case returns -1._
+- 0 — _Indexes start at 0._
+- **✓** -1
+
+> 12 does not appear, so the recursion reaches the base case and returns -1.
+
+### linear-search — Advanced (`linear-search:first:present`)
+
+```java
+public static int search(int[] a, int i, int t) {
+    if (i >= a.length) {
+        return -1;
+    }
+    if (a[i] == t) {
+        return i;
+    }
+    return search(a, i + 1, t);
+}
+// int[] a = {4, 5, 2, 5, 4};  call: search(a, 0, 2)
+```
+
+**What does search(a, 0, 2) return?**
+
+- 3 — _Indexes start at 0._
+- **✓** 2
+- -1 — _2 is in the array._
+- 1 — _Return the index where a[i] == t._
+
+> Checking from index 0 upward, the first match is at index 2.
+
+### binary-search-trace — Beginner (`binary-search-trace:down:mids:present`)
+
+```java
+public static int binarySearch(int[] a, int low, int high, int t) {
+    if (low > high) {
+        return -1;
+    }
+    int mid = (low + high) / 2;
+    if (a[mid] == t) {
+        return mid;
+    }
+    if (t < a[mid]) {
+        return binarySearch(a, low, mid - 1, t);
+    }
+    return binarySearch(a, mid + 1, high, t);
+}
+// int[] a = {8, 9, 11, 15, 20, 21, 23};  call: binarySearch(a, 0, 6, 9)
+```
+
+**Which indexes are used as mid, in order, by binarySearch(a, 0, 6, 9)?**
+
+- 3 — _The last range is checked too._
+- 15, 9 — _The question asks for indexes, not the values stored there._
+- **✓** 3, 1
+- 0, 1 — _Binary search jumps to the middle of the remaining range._
+
+> Ranges: 0..6, 0..2; mids 3, 1. a[1] = 9.
+
+### binary-search-trace — Advanced (`binary-search-trace:down:calls:present`)
+
+```java
+public static int binarySearch(int[] a, int low, int high, int t) {
+    if (low > high) {
+        return -1;
+    }
+    int mid = (low + high) / 2;
+    if (a[mid] == t) {
+        return mid;
+    }
+    if (t < a[mid]) {
+        return binarySearch(a, low, mid - 1, t);
+    }
+    return binarySearch(a, mid + 1, high, t);
+}
+// int[] a = {4, 9, 13, 16, 17, 19, 20, 21, 22, 25, 29, 32};  call: binarySearch(a, 0, 11, 16)
+```
+
+**How many calls to binarySearch are made by binarySearch(a, 0, 11, 16), including the first?**
+
+- 4 — _Nothing is called after a return._
+- 12 — _Each call discards about half the range._
+- **✓** 3
+- 2 — _Count the first call._
+
+> Ranges: 0..11, 0..4, 3..4 — 3 calls.
+
+### merge-sort-trace — Beginner (`merge-sort-trace:merges`)
+
+```java
+public static void mergeSort(int[] a, int low, int high) {
+    if (low >= high) {
+        return;
+    }
+    int mid = (low + high) / 2;
+    mergeSort(a, low, mid);
+    mergeSort(a, mid + 1, high);
+    merge(a, low, mid, high);
+}
+private static void merge(int[] a, int low, int mid, int high) {
+    int[] temp = new int[high - low + 1];
+    int i = low, j = mid + 1, k = 0;
+    while (i <= mid && j <= high) {
+        if (a[i] <= a[j]) temp[k++] = a[i++];
+        else temp[k++] = a[j++];
+    }
+    while (i <= mid) temp[k++] = a[i++];
+    while (j <= high) temp[k++] = a[j++];
+    for (int x = 0; x < temp.length; x++) a[low + x] = temp[x];
+}
+// int[] a = {16, 1, 7, 4};  call: mergeSort(a, 0, 3)
+```
+
+**How many times is merge called during mergeSort(a, 0, 3)?**
+
+- 4 — _Combining 4 single elements into one array takes 3 merges._
+- 7 — _Base-case calls (one element) return without merging._
+- **✓** 3
+- 2 — _Each level can have several merges._
+
+> Every mergeSort call with low < high merges once: 3 merges for 4 elements.
+
+### merge-sort-trace — Advanced (`merge-sort-trace:merges`)
+
+```java
+public static void mergeSort(int[] a, int low, int high) {
+    if (low >= high) {
+        return;
+    }
+    int mid = (low + high) / 2;
+    mergeSort(a, low, mid);
+    mergeSort(a, mid + 1, high);
+    merge(a, low, mid, high);
+}
+private static void merge(int[] a, int low, int mid, int high) {
+    int[] temp = new int[high - low + 1];
+    int i = low, j = mid + 1, k = 0;
+    while (i <= mid && j <= high) {
+        if (a[i] <= a[j]) temp[k++] = a[i++];
+        else temp[k++] = a[j++];
+    }
+    while (i <= mid) temp[k++] = a[i++];
+    while (j <= high) temp[k++] = a[j++];
+    for (int x = 0; x < temp.length; x++) a[low + x] = temp[x];
+}
+// int[] a = {8, 2, 15, 1, 20, 16, 3, 5, 6, 11};  call: mergeSort(a, 0, 9)
+```
+
+**How many times is merge called during mergeSort(a, 0, 9)?**
+
+- 5 — _Count merges across the whole call tree, not its height._
+- **✓** 9
+- 10 — _Combining 10 single elements into one array takes 9 merges._
+- 19 — _Base-case calls (one element) return without merging._
+
+> Every mergeSort call with low < high merges once: 9 merges for 10 elements.
+
+### quicksort-partition — Intermediate (`quicksort-partition:calls`)
+
+```java
+public static void quickSort(int[] a, int low, int high) {
+    if (low >= high) {
+        return;
+    }
+    int p = partition(a, low, high);
+    quickSort(a, low, p - 1);
+    quickSort(a, p + 1, high);
+}
+private static int partition(int[] a, int low, int high) {
+    int pivot = a[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (a[j] <= pivot) {
+            i++;
+            int t = a[i]; a[i] = a[j]; a[j] = t;
+        }
+    }
+    int t = a[i + 1]; a[i + 1] = a[high]; a[high] = t;
+    return i + 1;
+}
+// int[] a = {2, 1, 35, 38, 34, 29, 16};  call: quickSort(a, 0, 6)
+```
+
+**How many calls to quickSort are made by quickSort(a, 0, 6), including the first?**
+
+- 7 — _Trace the actual calls._
+- **✓** 9
+- 13 — _Quicksort's tree depends on where the pivots land._
+- 4 — _Calls with low >= high also count, even though they do not partition._
+
+> 4 calls partition a range; 5 calls hit the base case: 9 in total.
+
+### quicksort-partition — Advanced (`quicksort-partition:calls:duplicates`)
+
+```java
+public static void quickSort(int[] a, int low, int high) {
+    if (low >= high) {
+        return;
+    }
+    int p = partition(a, low, high);
+    quickSort(a, low, p - 1);
+    quickSort(a, p + 1, high);
+}
+private static int partition(int[] a, int low, int high) {
+    int pivot = a[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (a[j] <= pivot) {
+            i++;
+            int t = a[i]; a[i] = a[j]; a[j] = t;
+        }
+    }
+    int t = a[i + 1]; a[i + 1] = a[high]; a[high] = t;
+    return i + 1;
+}
+// int[] a = {11, 9, 2, 5, 10, 10, 10, 7};  call: quickSort(a, 0, 7)
+```
+
+**How many calls to quickSort are made by quickSort(a, 0, 7), including the first?**
+
+- 15 — _Quicksort's tree depends on where the pivots land._
+- **✓** 13
+- 8 — _Trace the actual calls._
+- 6 — _Calls with low >= high also count, even though they do not partition._
+
+> 6 calls partition a range; 7 calls hit the base case: 13 in total.
+
+### recursive-selection-sort — Intermediate (`recursive-selection-sort:after-passes`)
+
+```java
+public static void sort(int[] a, int n) {
+    if (n <= 1) {
+        return;
+    }
+    int m = maxIndex(a, n - 1);
+    int tmp = a[m];
+    a[m] = a[n - 1];
+    a[n - 1] = tmp;
+    sort(a, n - 1);
+}
+private static int maxIndex(int[] a, int k) {
+    if (k == 0) {
+        return 0;
+    }
+    int m = maxIndex(a, k - 1);
+    return a[k] > a[m] ? k : m;
+}
+// int[] a = {16, 28, 21, 15, 11, 18};  call: sort(a, 6)
+```
+
+**In sort(a, 6), what does a contain when sort(a, 3) begins?**
+
+- **✓** {16, 15, 11, 18, 21, 28}
+- {11, 15, 16, 28, 21, 18} — _This version moves the maximum to the end of the unsorted part._
+- {16, 18, 11, 15, 21, 28} — _sort(a, 3) starts after 3 swaps._
+- {11, 15, 16, 18, 21, 28} — _That is the state when sort(a, 2) begins._
+
+> Each call swaps the largest of a[0..n−1] into index n − 1 and recurses on n − 1: {16, 28, 21, 15, 11, 18} → {16, 18, 21, 15, 11, 28} → {16, 18, 11, 15, 21, 28} → {16, 15, 11, 18, 21, 28} → {11, 15, 16, 18, 21, 28} → {11, 15, 16, 18, 21, 28}.
+
+### recursive-selection-sort — Advanced (`recursive-selection-sort:after-passes:duplicates`)
+
+```java
+public static void sort(int[] a, int n) {
+    if (n <= 1) {
+        return;
+    }
+    int m = maxIndex(a, n - 1);
+    int tmp = a[m];
+    a[m] = a[n - 1];
+    a[n - 1] = tmp;
+    sort(a, n - 1);
+}
+private static int maxIndex(int[] a, int k) {
+    if (k == 0) {
+        return 0;
+    }
+    int m = maxIndex(a, k - 1);
+    return a[k] > a[m] ? k : m;
+}
+// int[] a = {3, 2, 2, 8, 9, 1, 2};  call: sort(a, 7)
+```
+
+**In sort(a, 7), what does a contain when sort(a, 4) begins?**
+
+- {3, 2, 2, 1, 2, 8, 9} — _sort(a, 4) starts after 3 swaps._
+- **✓** {2, 2, 2, 1, 3, 8, 9}
+- {1, 2, 2, 8, 9, 3, 2} — _This version moves the maximum to the end of the unsorted part._
+- {1, 2, 2, 2, 3, 8, 9} — _That is the state when sort(a, 3) begins._
+
+> Each call swaps the largest of a[0..n−1] into index n − 1 and recurses on n − 1: {3, 2, 2, 8, 9, 1, 2} → {3, 2, 2, 8, 2, 1, 9} → {3, 2, 2, 1, 2, 8, 9} → {2, 2, 2, 1, 3, 8, 9} → {1, 2, 2, 2, 3, 8, 9} → {1, 2, 2, 2, 3, 8, 9} → {1, 2, 2, 2, 3, 8, 9}.
+
+### recursive-vs-iterative — Beginner (`recursive-vs-iterative:forward`)
+
+```java
+public static void visit(int[] a, int i) {
+    if (i >= a.length) {
+        return;
+    }
+    System.out.print(a[i] + " ");
+    visit(a, i + 1);
+}
+// called as visit(a, 0)
+```
+
+**Which loop header, with System.out.print(a[i] + " ") as its body, prints the same values in the same order as visit(a, 0) for any array a?**
+
+- for (int i = 1; i < a.length; i += 2) — _That loop visits indexes 1, 3 for a 5-element array; the recursion visits 0, 1, 2, 3, 4._
+- **✓** for (int i = 0; i < a.length; i++)
+- for (int i = 0; i < a.length; i += 2) — _That loop visits indexes 0, 2, 4 for a 5-element array; the recursion visits 0, 1, 2, 3, 4._
+- for (int i = a.length - 1; i >= 0; i--) — _That loop visits indexes 4, 3, 2, 1, 0 for a 5-element array; the recursion visits 0, 1, 2, 3, 4._
+
+> Each call prints a[i] and moves i: for a 5-element array the indexes are 0, 1, 2, 3, 4, exactly the order produced by for (int i = 0; i < a.length; i++).
+
+### recursive-vs-iterative — Advanced (`recursive-vs-iterative:odd`)
+
+```java
+public static void show(int[] a, int i) {
+    if (i >= a.length) {
+        return;
+    }
+    System.out.print(a[i] + " ");
+    show(a, i + 2);
+}
+// called as show(a, 1)
+```
+
+**Which loop header, with System.out.print(a[i] + " ") as its body, prints the same values in the same order as show(a, 1) for any array a?**
+
+- for (int i = a.length - 1; i >= 0; i--) — _That loop visits indexes 6, 5, 4, 3, 2, 1, 0 for a 7-element array; the recursion visits 1, 3, 5._
+- for (int i = a.length - 1; i > 0; i--) — _That loop visits indexes 6, 5, 4, 3, 2, 1 for a 7-element array; the recursion visits 1, 3, 5._
+- **✓** for (int i = 1; i < a.length; i += 2)
+- for (int i = a.length - 2; i >= 0; i--) — _That loop visits indexes 5, 4, 3, 2, 1, 0 for a 7-element array; the recursion visits 1, 3, 5._
+
+> Each call prints a[i] and moves i: for a 7-element array the indexes are 1, 3, 5, exactly the order produced by for (int i = 1; i < a.length; i += 2).

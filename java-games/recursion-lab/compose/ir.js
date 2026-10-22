@@ -94,4 +94,65 @@ export function run(prog, entry, args, { maxDepth = 800, maxSteps = 200000, onEv
           case "/": if (b === 0) throw new JavaError("ArithmeticException"); return chk(Math.trunc(a / b));
           case "%": if (b === 0) throw new JavaError("ArithmeticException"); return a % b === 0 ? 0 : a % b;
           case "<": return a < b; case "<=": return a <= b; case ">": return a > b; case ">=": return a >= b;
-          case "
+          case "==": return a === b; case "!=": return a !== b;
+        }
+        throw Error(`op ${e.op}`);
+      }
+      case "tern": return ev(e.c, env) ? ev(e.a, env) : ev(e.b, env);
+      case "len": return ev(e.s, env).length;
+      case "sub": { const s = ev(e.s, env), a = ev(e.a, env), b = e.b ? ev(e.b, env) : s.length;
+        if (a < 0 || b > s.length || a > b) throw new JavaError("StringIndexOutOfBoundsException"); return s.slice(a, b); }
+      case "eq": return ev(e.a, env) === ev(e.b, env);
+      case "idx": { const a = ev(e.arr, env), i = ev(e.i, env); if (i < 0 || i >= a.length) throw new JavaError("ArrayIndexOutOfBoundsException"); return a[i]; }
+      case "alen": return ev(e.arr, env).length;
+      case "math": { const a = ev(e.a, env), b = ev(e.b, env); return e.fn === "max" ? Math.max(a, b) : Math.min(a, b); }
+      case "call": return invoke(e.name, e.args.map(x => ev(x, env)));
+    }
+    throw Error(`eval ${e.k}`);
+  }
+  function exec(list, env) {
+    for (const s of list) {
+      if (++st.steps > maxSteps) throw new JavaError("Timeout");
+      switch (s.k) {
+        case "if": { const r = ev(s.c, env) ? exec(s.then, env) : s.els ? exec(s.els, env) : undefined; if (r && r.t === RETURN) return r; break; }
+        case "ret": return { t: RETURN, v: s.e ? ev(s.e, env) : undefined };
+        case "print": { const x = jstr(ev(s.e, env)) + (s.ln ? "\n" : ""); st.out += x; onEvent?.({ type: "print", text: x, depth: st.depth }); break; }
+        case "decl": case "assign": env[s.name] = ev(s.e, env); break;
+        case "aset": { const a = ev(s.arr, env), i = ev(s.i, env), x = ev(s.e, env); if (i < 0 || i >= a.length) throw new JavaError("ArrayIndexOutOfBoundsException"); a[i] = x; onEvent?.({ type: "aset", index: i, value: x, depth: st.depth }); break; }
+        case "expr": ev(s.e, env); break;
+        default: throw Error(`exec ${s.k}`);
+      }
+    }
+  }
+  function invoke(name, vals) {
+    const m = table[name]; if (!m) throw Error(`no method ${name}`);
+    st.depth++; if (st.depth > maxDepth) throw new JavaError("StackOverflowError");
+    st.maxDepth = Math.max(st.maxDepth, st.depth); st.calls[name] = (st.calls[name] || 0) + 1;
+    const env = {}; m.params.forEach((p, i) => { env[p.name] = vals[i]; });
+    const entryIdx = st.log.length;
+    if (name === entry || m.traced) st.log.push({ name, depth: st.depth, args: vals.map(x => Array.isArray(x) ? "arr" : x) });
+    onEvent?.({ type: "call", name, depth: st.depth, args: vals });
+    const r = exec(m.body, env);
+    const value = r ? r.v : undefined;
+    if (m.ret !== "void" && (!r || value === undefined)) throw Error(`missing return in ${name}`);
+    if (name === entry || m.traced) { st.returns.push({ name, depth: st.depth, args: st.log[entryIdx].args, value }); st.log[entryIdx].ret = value; }
+    onEvent?.({ type: "return", name, depth: st.depth, value });
+    st.depth--; return value;
+  }
+  let value, error = null;
+  try { value = invoke(entry, args); } catch (e) { if (e instanceof JavaError) error = e.javaType; else if (e instanceof RangeError) error = "StackOverflowError"; else throw e; }
+  return { value, error, out: st.out, calls: st.calls[entry] || 0, allCalls: st.calls, maxDepth: st.maxDepth, log: st.log, returns: st.returns, steps: st.steps };
+}
+export function jstr(x) { return typeof x === "boolean" ? String(x) : String(x); }
+
+// ---------- transforms ----------
+export const clone = x => structuredClone(x);
+/** Visit every statement list in a method (pre-order). fn(list, index, stmt) may mutate. */
+export function eachStmt(stmts, fn) { for (let i = 0; i < stmts.length; i++) { const s = stmts[i]; fn(stmts, i, s); if (s.k === "if") { eachStmt(s.then, fn); if (s.els) eachStmt(s.els, fn); } } }
+export function eachExpr(node, fn) {
+  if (!node || typeof node !== "object") return;
+  if (Array.isArray(node)) { node.forEach(n => eachExpr(n, fn)); return; }
+  if (node.k && ["num","str","bool","var","bin","not","neg","call","len","sub","eq","idx","alen","math","tern"].includes(node.k)) fn(node);
+  for (const key of Object.keys(node)) if (key !== "k" && typeof node[key] === "object") eachExpr(node[key], fn);
+}
+export function findCalls(prog, name) { const out = []; for (const m of prog.methods) eachExpr(m.body, e => { if (e.k === "call" && e.name === name) out.push(e); }); return out; }

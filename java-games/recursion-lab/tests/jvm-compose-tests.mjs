@@ -77,4 +77,46 @@ for (const P of plan) {
       case "countArg": truth = String(L.filter(e => argsOf(e)[0] === j.arg).length); break;
       case "elseCount": { const seq = L.map(e => +argsOf(e)[0]); const pred = { "even-half-odd-minus": x => x % 2 !== 0, "even-half-odd-plus": x => x % 2 !== 0, "three-third-else-minus": x => x % 3 !== 0, "big-minus-small-half": x => !(x > 10) }[j.cond]; truth = String(seq.slice(0, -1).filter(pred).length); break; }
       case "baseChoice": truth = o.exc === "StackOverflowError" ? j.divergeChoice : j.valueToChoice[o.ret]; break;
-      case "retOf": truth = pairs(o
+      case "retOf": truth = pairs(o).find(p => p.args === j.arg)?.value; break;
+      case "returnOrder": truth = o.rets.map(x => x.value).join(", "); break;
+      case "lastCall": truth = `${j.name}(${argsOf(L.at(-1)).join(", ")})`; break;
+      case "argAt": truth = argsOf(L[j.call_index])[j.param]; break;
+      case "outToken": truth = o.out.trim().split(" ")[j.index]; break;
+      case "outCount": truth = String(o.out.trim().split(" ").filter(x => x === j.token).length); break;
+      case "retAndCalls": truth = `${o.ret} after ${o.calls} call${o.calls === 1 ? "" : "s"}`; break;
+      case "lastArgQuoted": truth = argsOf(L.at(-1))[0]; break;
+      case "childRanges": truth = L.filter(e => e.depth === 2).map(e => argsOf(e).slice(0, 2).join("..")).join(" and "); break;
+      case "lastArgs": { const names = (q.code.match(/\(int\[\] a, int (\w+), int (\w+)/) || []).slice(1); const v = argsOf(L.at(-1)); truth = `${names[0]} = ${v[0]}, ${names[1]} = ${v[1]}`; break; }
+      case "argList": { const v = L.map(e => argsOf(e)[0]); truth = (j.dropLast ? v.slice(0, -1) : v).join(", "); break; }
+      case "arrayAfter": truth = brace(o.after[0]); break;
+      case "arrayElement": truth = String(JSON.parse(o.after[0])[j.index]); break;
+      case "retAndArray": truth = `returns ${o.ret}; a = ${brace(o.after[0])}`; break;
+      case "bsMids": { const mids = []; for (let k = 0; k < L.length; k++) { const [lo, hi] = argsOf(L[k]).slice(0, 2).map(Number); if (lo > hi) continue; const nx = L[k + 1]; if (!nx) { mids.push(Number(o.ret)); continue; } const [lo2, hi2] = argsOf(nx).slice(0, 2).map(Number); mids.push(lo2 !== lo ? lo2 - 1 : hi2 + 1); } truth = mids.join(", "); break; }
+      case "secondChildEntryArray": truth = brace(o.arrays.filter(x => x.depth === 2)[1].value); break;
+      case "firstChildEntryArray": truth = brace(o.arrays.filter(x => x.depth === 2)[0].value); break;
+      case "lastMergeHalves": { const arr = JSON.parse(o.arrays.at(-1).value), [lo, mid, hi] = argsOf(L.at(-1)).map(Number); truth = `${listFmt(arr.slice(lo, mid + 1))} and ${listFmt(arr.slice(mid + 1, hi + 1))}`; break; }
+      case "arrayAfterNthCall": truth = brace(o.arrays[j.n + 1].value); break;
+      case "firstReturn": truth = o.rets[0].value; break;
+      case "entryArrayAt": truth = brace(o.arrays[j.index].value); break;
+      case "stopSet": { const stops = Object.entries(P.runs).filter(([, nm]) => obs(nm).calls === 1).map(([x]) => x).sort((x, y) => x - y).join(","); const m = Object.entries(j.choiceSets).filter(([t, set]) => set === stops && q.choices.includes(t)); truth = m.length === 1 ? m[0][0] : `AMBIGUOUS(${m.length})`; break; }
+      case "terminationChoice": { const m = Object.entries(P.runs).filter(([, nm]) => (obs(nm).exc === "StackOverflowError") === j.wantOverflow).map(([k]) => k); truth = m.length === 1 ? m[0] : `AMBIGUOUS(${m.length})`; break; }
+      case "loopEquivalence": { const m = Object.keys(j.loops).filter(h => j.sampleSizes.every(nsz => obs(P.runs[`${h}|${nsz}`]).out === obs(P.runs[`rec|${nsz}`]).out)); truth = m.length === 1 ? m[0] : `AMBIGUOUS(${m.length})`; break; }
+      case "fixChoice": { const m = Object.keys(j.candidates).filter(txt => P.tests.every((args, ti) => refOk(j.programId, args, obs(P.runs[`${txt}|${ti}`])))); truth = m.length === 1 ? m[0] : `AMBIGUOUS(${m.length})`; break; }
+      case "symptom": { const b = obs(P.runs.main), isStr = /static String /.test(j.buggy); truth = b.exc ? `Throws ${b.exc}` : j.out ? (b.out === "" ? "Prints nothing" : `Prints ${b.out.trim()}`) : `Returns ${isStr ? JSON.stringify(b.ret) : b.ret}`; if (refOk(j.programId, j.setupArgs, b)) truth = "BUG-NOT-SHOWN"; break; }
+      case "faultyLine": { const A = j.buggy.split("\n"), B = j.good.split("\n"), diff = A.map((l, k) => l !== B[k] ? l.trim() : null).filter(Boolean);
+        const goodOk = P.tests.every((args, ti) => refOk(j.programId, args, obs(P.runs[`good|${ti}`]))), badFails = P.tests.some((args, ti) => !refOk(j.programId, args, obs(P.runs[`bad|${ti}`])));
+        truth = goodOk && badFails && diff.length === 1 && A.length === B.length ? diff[0] : `INVALID(goodOk=${goodOk},badFails=${badFails},diff=${diff.length})`; break; }
+      case "revealChoice": { const m = Object.entries(j.candidates).filter(([k, args]) => refOk(j.programId, args, obs(P.runs[k])) === j.wantCorrect).map(([k]) => k); truth = m.length === 1 ? m[0] : `AMBIGUOUS(${m.length})`; break; }
+      default: truth = `UNHANDLED ${j.observe}`;
+    }
+  } catch (e) { truth = `ERROR ${e.message.slice(0, 300)}`; }
+  if (String(truth) === q.answer) T.agree++; else failures.push({ key, family: q.family, observe: j.observe, prompt: q.prompt, answer: q.answer, jvm: truth, code: q.code });
+  if (q.choices.some(c => c !== q.answer && c === String(truth))) { T.distractorEqualsTruth++; failures.push({ key, family: q.family, why: "a distractor equals the JVM truth", prompt: q.prompt }); }
+}
+let tq = 0, ta = 0; for (const v of Object.values(tally)) { tq += v.questions; ta += v.agree; }
+const summary = { perCell: per, seed, questions: tq, agree: ta, programsRun: programs.length, seconds: Math.round((Date.now() - t0) / 1000), failures: failures.length, tally };
+mkdirSync(new URL("../test-results/", import.meta.url), { recursive: true });
+writeFileSync(new URL(`../test-results/jvm-compose-${seed}.json`, import.meta.url), JSON.stringify({ ...summary, failures }, null, 2));
+console.log(JSON.stringify({ questions: tq, agree: ta, programsRun: programs.length, seconds: summary.seconds, failures: failures.length }));
+for (const f of failures.slice(0, 6)) console.log(JSON.stringify(f).slice(0, 900));
+if (failures.length) process.exit(1);

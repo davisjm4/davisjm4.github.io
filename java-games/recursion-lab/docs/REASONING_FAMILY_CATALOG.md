@@ -66,4 +66,4 @@ Declared reasoning ids have the form `family:structural-variant:question-type`. 
 | `merge-sort-trace` | BIA | Merge sort on unsorted input: array after the left half, number of merges, the final merge's halves, state after the k-th merge. | 3 / 4 / 4 | 13 |
 | `quicksort-partition` | IA | Lomuto partition: array after the first partition, pivot index, total quickSort calls (incl. duplicates at Advanced). | — / 3 / 3 | 14 |
 | `recursive-selection-sort` | IA | Recursive selection sort with a recursive maxIndex: array at the start of a later call, maxIndex with ties. | — / 2 / 3 | 9 |
-| `recursive-vs-iterative` | BIA | Match a recursive traversal (forward, backward, stride 2, p
+| `recursive-vs-iterative` | BIA | Match a recursive traversal (forward, backward, stride 2, print-after-call) with the equivalent for-loop header. | 2 / 3 / 5 | 1 |

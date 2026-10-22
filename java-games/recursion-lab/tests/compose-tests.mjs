@@ -65,4 +65,13 @@ for (const mode of Object.keys(modeNames)) {
 for (const mode of Object.keys(modeNames)) for (const d of difficulties) for (const s of [7, 8, 9]) {
   const g = createRecursionGenerator(s * 1009), seen = new Set(), seenR = new Set(); let prev = null, exactRep = 0, consecutive = 0;
   for (let i = 0; i < 100; i++) { const q = g.next(mode, d), e = exactKey(q), k = reasoningKey(q); if (seen.has(e)) exactRep++; if (k === prev) consecutive++; seen.add(e); seenR.add(k); prev = k; }
-  ok(exactRep <= 1, `${mode}/${d}: at most one exact repeat in 100 (${exactRep})`); ok(consecutive === 0, `${mode}/${d}: 
+  ok(exactRep <= 1, `${mode}/${d}: at most one exact repeat in 100 (${exactRep})`); ok(consecutive === 0, `${mode}/${d}: never the same reasoning twice in a row`);
+  (report.sessions[`${mode}/${d}`] ??= []).push({ exactRepeats: exactRep, consecutiveSameReasoning: consecutive, distinctReasoning: seenR.size });
+}
+// 6) Determinism and mixed rotation
+const g1 = createRecursionGenerator(145), g2 = createRecursionGenerator(145);
+for (let i = 0; i < 300; i++) ok(g1.next("mixed", difficulties[i % 3]).signature === g2.next("mixed", difficulties[i % 3]).signature, "same seed reproduces the mixed sequence");
+const rot = createRecursionGenerator(3), seenModes = new Set(); for (let i = 0; i < 12; i++) seenModes.add(rot.next("mixed").mode); ok(seenModes.size === 6, "mixed practice rotates through all six modes");
+mkdirSync(new URL("../test-results/", import.meta.url), { recursive: true });
+writeFileSync(new URL("../test-results/compose-tests.json", import.meta.url), JSON.stringify({ checks, perFamily, perCell, ...report }, null, 2));
+console.log(JSON.stringify({ checks, families: Object.keys(report.families).length, cellsAtLeast20: Object.values(report.cells).filter(c => c.reasoningPatterns >= 20).length }));

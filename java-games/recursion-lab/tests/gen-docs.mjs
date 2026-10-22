@@ -50,4 +50,10 @@ for (const [mode, fams] of Object.entries(FAMILIES)) {
     const counts = [], mis = new Set();
     for (const L of [0, 1, 2]) { if (!f.levels.includes(L)) { counts.push("—"); continue; } const ids = new Set(); for (let i = 0; i < 600; i++) { const q = composeQuestion(f, difficulties[L], r); if (q) { ids.add(q.reasoning); q.misconceptions.forEach(m => mis.add(m)); } } counts.push(ids.size); }
     cat += `| \`${f.id}\` | ${f.levels.map(l => LV[l]).join("")} | ${DESC[f.id] || ""} | ${counts.join(" / ")} | ${mis.size} |\n`;
-    for (const L of [...new Set([Math.min(...f.levels), Math.max(...f.levels)])]) { const q = composeQuestion(f, difficulties
+    for (const L of [...new Set([Math.min(...f.levels), Math.max(...f.levels)])]) { const q = composeQuestion(f, difficulties[L], r);
+      reps += `### ${f.id} — ${difficulties[L]} (\`${q.reasoning}\`)\n\n\`\`\`java\n${q.code}\n\`\`\`\n\n**${q.prompt}**\n\n${q.choices.map(c => `- ${c === q.answer ? "**✓** " : ""}${c}${c !== q.answer ? ` — _${q.choiceFeedback[c]}_` : ""}`).join("\n")}\n\n> ${q.explanation}\n\n`; }
+  }
+  cat += "\n";
+}
+writeFileSync(new URL("REASONING_FAMILY_CATALOG.md", out), cat); writeFileSync(new URL("REPRESENTATIVE_QUESTIONS.md", out), reps);
+console.log("docs written");
