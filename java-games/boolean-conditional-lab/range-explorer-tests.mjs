@@ -28,6 +28,11 @@ for(const rs of groups) for(const sense of ['inside','outside']) for(const x of 
   assert.equal(evaluateJavaExpression(e,x),expected,`${e} at ${x}`);assert.equal(evaluateJavaExpression(buildRangeExpression(rs,sense,true),x),expected);checks+=2;
 }
 for(const rs of groups) {
+  const compact=buildRangeExpression(rs,'inside');const deMorgan=`!(${buildRangeExpression(rs,'outside',true)})`;
+  assert.notEqual(compact,deMorgan);
+  for(const x of sampleValues(rs)) {const expected=evaluateExpression(rs,x,'inside').result;assert.equal(evaluateJavaExpression(compact,x),expected);assert.equal(evaluateJavaExpression(deMorgan,x),expected);checks+=2;}
+}
+for(const rs of groups) {
   const boundaries=[...new Set(rs.flatMap(r=>[r.lo,r.hi]))].sort((a,b)=>a-b);
   const values=[...boundaries,...boundaries.slice(0,-1).map((v,i)=>(v+boundaries[i+1])/2),boundaries[0]-100,boundaries.at(-1)+100];
   for(const x of values) for(const target of [true,false]) {
