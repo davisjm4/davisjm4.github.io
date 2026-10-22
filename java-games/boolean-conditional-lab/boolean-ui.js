@@ -1,6 +1,6 @@
 import * as E from "./engine.js?v=bool-v5";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
-import { mountRangeExplorer } from "./range-explorer.js?v=range-explorer-v2";
+import { mountRangeExplorer } from "./range-explorer.js?v=range-explorer-v3";
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#39;"}[c]));

@@ -24,7 +24,8 @@ const preset=root.querySelector('[data-preset]');preset.querySelector('option[va
 for(const [x,result] of [[45,'TRUE'],[60,'TRUE'],[75,'FALSE']]){setX(x);assert.equal(root.querySelector('[data-status="primary"] strong').textContent,result);}
 assert.match(root.querySelector('.rx-line').getAttribute('aria-label'),/green shows values where the displayed expression is true/i);
 setX(45);const precise=root.querySelector('[data-value]');precise.value='75';precise.oninput();assert.equal(root.querySelector('[data-value]').value,'75');assert.equal(root.querySelector('[data-status="primary"] strong').textContent,'FALSE');
-const rangeInput=root.querySelector('[data-field="lo"]');rangeInput.value='80';rangeInput.onchange();assert.match(root.querySelector('[role="alert"]').textContent,/lower boundary must be less than the upper boundary/i);assert.equal(root.querySelector('[data-primary-code]'),null);
+root.querySelector('[data-action="reset"]').onclick();const slider=root.querySelector('.rx-slider');const keyEvent={key:'ArrowRight',preventDefault(){this.defaultPrevented=true;}};slider.onkeydown(keyEvent);assert.equal(root.querySelector('[data-value]').value,'81');assert.equal(keyEvent.defaultPrevented,true);
+const rangeInput=root.querySelector('[data-field="lo"]');rangeInput.value='91';rangeInput.onchange();assert.match(root.querySelector('[role="alert"]').textContent,/lower boundary must be less than the upper boundary/i);assert.equal(root.querySelector('[data-primary-code]'),null);
 rangeInput.value='20';rangeInput.onchange();assert.ok(root.querySelector('[data-primary-code]'));
 root.querySelector('[data-action="reset"]').onclick();assert.equal(root.querySelector('[data-primary-code]').textContent,'x >= 70 && x <= 90');assert.equal(root.querySelector('[data-value]').value,'80');
 console.log('Range Explorer UI checks passed: default, fixed boundaries, outside complement, adaptive targets, multi-range overlap, validation, and reset.');
