@@ -1,5 +1,5 @@
-import { num, v, bin, call, If, Ret, Do, method, program, run, renderJava, renderValue, clone } from "./ir.js?v=compositional-v1";
-import { makeQuestion, reject, int, pick, LEVEL, NAMES, fmtList, exec, traceLines, traceWithError } from "./core.js?v=compositional-v1";
+import { num, v, bin, call, If, Ret, Do, method, program, run, renderJava, renderValue, clone } from "./ir.js?v=compositional-v2";
+import { makeQuestion, reject, int, pick, LEVEL, NAMES, fmtList, exec, traceLines, traceWithError } from "./core.js?v=compositional-v2";
 const MODE = "base", TITLE = "Base Cases & Calls";
 const n = v("n");
 const Q = (o) => makeQuestion({ mode: MODE, modeTitle: TITLE, ...o });

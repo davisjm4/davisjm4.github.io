@@ -1,5 +1,5 @@
-import { num, v, bin, call, If, Ret, Do, Decl, ASet, method, program, run, idx, alen, tern, renderJava } from "./ir.js?v=compositional-v1";
-import { makeQuestion, reject, int, pick, LEVEL, fmtList, exec, traceLines, shuffle } from "./core.js?v=compositional-v1";
+import { num, v, bin, call, If, Ret, Do, Decl, ASet, method, program, run, idx, alen, tern, renderJava } from "./ir.js?v=compositional-v2";
+import { makeQuestion, reject, int, pick, LEVEL, fmtList, exec, traceLines, shuffle } from "./core.js?v=compositional-v2";
 const MODE = "searchsort", TITLE = "Recursive Search & Sort";
 const a = v("a"), i = v("i"), t = v("t"), lo = v("low"), hi = v("high"), mid = v("mid"), n = v("n"), k = v("k"), m = v("m");
 const Q = o => makeQuestion({ mode: MODE, modeTitle: TITLE, ...o });

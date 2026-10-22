@@ -1,4 +1,4 @@
-import { renderJava, run, renderValue } from "./ir.js?v=compositional-v1";
+import { renderJava, run, renderValue } from "./ir.js?v=compositional-v2";
 export class Reject extends Error {}
 export const reject = why => { throw new Reject(why); };
 export const int = (lo, hi, r) => lo + Math.floor(r() * (hi - lo + 1));

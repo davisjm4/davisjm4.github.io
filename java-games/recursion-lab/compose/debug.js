@@ -1,5 +1,5 @@
-import { num, str, bool, v, bin, call, If, Ret, Do, Print, Decl, method, program, run, len, sub, eq, idx, alen, mmax, not, renderJava, renderValue } from "./ir.js?v=compositional-v1";
-import { makeQuestion, reject, int, pick, LEVEL, WORDS, quote, shuffle, traceWithError } from "./core.js?v=compositional-v1";
+import { num, str, bool, v, bin, call, If, Ret, Do, Print, Decl, method, program, run, len, sub, eq, idx, alen, mmax, not, renderJava, renderValue } from "./ir.js?v=compositional-v2";
+import { makeQuestion, reject, int, pick, LEVEL, WORDS, quote, shuffle, traceWithError } from "./core.js?v=compositional-v2";
 const MODE = "debug", TITLE = "Recursive Debugging";
 const n = v("n"), s = v("s"), a = v("a"), i = v("i"), b = v("b"), e = v("e"), lo = v("lo"), hi = v("hi"), t = v("t"), mid = v("mid");
 const Q = o => makeQuestion({ mode: MODE, modeTitle: TITLE, ...o });

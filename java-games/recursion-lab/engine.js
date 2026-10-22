@@ -3,7 +3,7 @@
  * computed by bounded simulators; displayed Java is emitted from the same
  * challenge parameters (we never execute arbitrary source in the browser).
  */
-import { entriesFor, composeQuestion } from "./compose/index.js?v=compositional-v1";
+import { entriesFor, composeQuestion } from "./compose/index.js?v=compositional-v2";
 export const modeNames = {
   base: "Base Cases & Calls",
   returns: "Return Values",

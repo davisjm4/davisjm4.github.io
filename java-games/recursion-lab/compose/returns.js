@@ -1,5 +1,5 @@
-import { num, str, v, bin, call, If, Ret, Do, Print, Decl, method, program, run, mmax, clone } from "./ir.js?v=compositional-v1";
-import { makeQuestion, reject, int, pick, LEVEL, NAMES, fmtList, exec, traceLines } from "./core.js?v=compositional-v1";
+import { num, str, v, bin, call, If, Ret, Do, Print, Decl, method, program, run, mmax, clone } from "./ir.js?v=compositional-v2";
+import { makeQuestion, reject, int, pick, LEVEL, NAMES, fmtList, exec, traceLines } from "./core.js?v=compositional-v2";
 const MODE = "returns", TITLE = "Return Values";
 const n = v("n"), Q = o => makeQuestion({ mode: MODE, modeTitle: TITLE, ...o });
 const ok = res => !res.error && res.value !== undefined;

@@ -1,5 +1,5 @@
-import { num, v, bin, call, If, Ret, Do, Decl, ASet, method, program, run, idx, alen, mmax, tern, not, renderValue } from "./ir.js?v=compositional-v1";
-import { makeQuestion, reject, int, pick, LEVEL, NAMES, fmtList, exec, traceLines } from "./core.js?v=compositional-v1";
+import { num, v, bin, call, If, Ret, Do, Decl, ASet, method, program, run, idx, alen, mmax, tern, not, renderValue } from "./ir.js?v=compositional-v2";
+import { makeQuestion, reject, int, pick, LEVEL, NAMES, fmtList, exec, traceLines } from "./core.js?v=compositional-v2";
 const MODE = "arrays", TITLE = "Arrays & Parameters";
 const a = v("a"), i = v("i"), lo = v("lo"), hi = v("hi"), Q = o => makeQuestion({ mode: MODE, modeTitle: TITLE, ...o });
 const arr = xs => `{${xs.join(", ")}}`, ok = res => !res.error;

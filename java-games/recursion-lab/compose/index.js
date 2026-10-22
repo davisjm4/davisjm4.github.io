@@ -1,11 +1,11 @@
 /* Registry of compositional families, by mode. Weights are relative to the legacy generator (weight LEGACY_WEIGHT[mode]). */
-import base from "./base.js?v=compositional-v1";
-import returns from "./returns.js?v=compositional-v1";
-import output from "./output.js?v=compositional-v1";
-import arrays from "./arrays.js?v=compositional-v1";
-import debug from "./debug.js?v=compositional-v1";
-import searchsort from "./searchsort.js?v=compositional-v1";
-import { Reject, LEVEL } from "./core.js?v=compositional-v1";
+import base from "./base.js?v=compositional-v2";
+import returns from "./returns.js?v=compositional-v2";
+import output from "./output.js?v=compositional-v2";
+import arrays from "./arrays.js?v=compositional-v2";
+import debug from "./debug.js?v=compositional-v2";
+import searchsort from "./searchsort.js?v=compositional-v2";
+import { Reject, LEVEL } from "./core.js?v=compositional-v2";
 export { Reject };
 export const FAMILIES = { base, returns, output, arrays, debug, searchsort };
 /** Legacy share per mode: the legacy generator is one entry with this weight; every new family has weight 1 (debug's single generator covers four question types, weight 4). */
