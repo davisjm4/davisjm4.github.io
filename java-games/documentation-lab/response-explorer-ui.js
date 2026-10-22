@@ -2,8 +2,9 @@ import {
   buildView, gradeFindData, gradeStructureSingle, gradeStructureSlots,
   gradeStructureClassification, gradeSelectNeeds, renderExplanation,
   structuralPathLabel, typeLabel, concreteForPath,
-  readablePath, matchingChallenges, shuffleChallenges, responseExplorerFormatName, sourceSamples,
-} from "./response-explorer-engine.js?v=rx-activities-v1";
+  readablePath, matchingChallenges, shuffleChallenges, unseenChallenges, responseExplorerFormatName, sourceSamples, sourceSampleOwners,
+} from "./response-explorer-engine.js?v=rx-expansion-v1";
+import { generateResponseExplorerExpansion } from "./response-explorer-expansion.js?v=rx-expansion-v1";
 
 const esc = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const formatValue = (row) => {
@@ -56,11 +57,14 @@ function feedbackHtml(state, result) {
   return `<p class="muted">Explore the response, make your choices, then check your answer.</p>`;
 }
 
-function challengePaths(challenge, body) {
+export function challengePaths(challenge, body) {
   const result = [];
-  for (const item of challenge.grading?.accepted || []) { const path = concreteForPath(item.path, body); if (path) result.push(path); }
+  for (const item of challenge.grading?.accepted || []) { const path = item.concretePath || concreteForPath(item.path, body); if (path) result.push(path); }
   for (const slot of challenge.grading?.slots || []) for (const item of slot.accepted || []) { const path = concreteForPath(item.path, body); if (path) result.push(path); }
-  for (const item of challenge.grading?.assignments || []) { const path = concreteForPath(item.path, body); if (path) result.push(path); }
+  for (const item of challenge.grading?.assignments || []) {
+    const authored = item.path || challenge.answer?.items?.find((entry) => entry.id === item.item)?.path;
+    if (typeof authored === "string") { const path = concreteForPath(authored, body); if (path) result.push(path); }
+  }
   for (const requirement of challenge.grading?.requirements || []) for (const item of requirement.accepted || []) { const path = concreteForPath(item.path, body); if (path) result.push(path); }
   return [...new Set(result)];
 }
@@ -72,18 +76,21 @@ export function mount({ root, tracker }) {
   let stopped = false;
   let activeState = null;
   const start = async () => {
-    const data = await (await fetch("./response-explorer-data-v1.json")).json();
+    const baseData = await (await fetch("./response-explorer-data-v1.json")).json();
     const runtimeIndex = await (await fetch("./api-project-data-v1-runtime-index.json")).json();
     const runtimeParts = await Promise.all(runtimeIndex.runtimeParts.map(async (path) => await (await fetch(path)).json()));
     const sampleLibrary = { scenarios: runtimeParts.flatMap((part) => part.scenarios || []) };
     const samplesData = sourceSamples(sampleLibrary);
+    const ownerBySample = sourceSampleOwners(sampleLibrary);
+    const expanded = generateResponseExplorerExpansion({ sampleMap: samplesData, ownerBySample });
+    const data = { ...baseData, challenges: [...baseData.challenges, ...expanded] };
     if (stopped) return;
     if (!data || data.schemaVersion !== 1) throw new Error("This challenge set needs a newer version of the explorer.");
     const state = {
       data, allSamples: samplesData, format: "mixed", provider: "all", difficulty: "all", challenge: null,
       samples: new Map(), activeSample: "", selection: new Map(), expanded: new Map(), selectedFields: [],
       slotSelections: {}, classifications: {}, hints: [], attempts: 0, result: null, revealed: false,
-      acceptedPaths: [], instance: null, previousId: "", queue: [], outcomes: [], misconceptionIds: [],
+      acceptedPaths: [], instance: null, previousId: "", previousModelId: "", queue: [], seenIds: new Set(), outcomes: [], misconceptionIds: [],
     };
     activeState = state;
     const pool = () => matchingChallenges(data, state);
@@ -98,20 +105,28 @@ export function mount({ root, tracker }) {
     };
     const nextChallenge = () => {
       if (state.instance && tracker.status(state.instance) === "active") tracker.skip(state.instance);
-      if (!state.queue.length) state.queue = shuffleChallenges(pool(), state.previousId);
+      if (!state.queue.length) {
+        let candidates = unseenChallenges(pool(), state.seenIds);
+        if (!candidates.length) { state.seenIds.clear(); candidates = pool(); }
+        state.queue = shuffleChallenges(candidates, state.previousId, Math.random, state.previousModelId);
+      }
       state.challenge = state.queue.shift() || null;
       if (!state.challenge) { render(); return; }
+      state.seenIds.add(state.challenge.id);
       state.previousId = state.challenge.id;
+      state.previousModelId = state.challenge.reasoningModelId || state.challenge.reasoningFamily || "";
       resetChallenge(); render();
     };
     const changeFilters = () => {
       if (state.instance && tracker.status(state.instance) === "active") tracker.skip(state.instance);
       state.queue = [];
-      const candidates = pool();
+      let candidates = unseenChallenges(pool(), state.seenIds);
+      if (!candidates.length && pool().length) { state.seenIds.clear(); candidates = pool(); }
       if (!candidates.length) { state.challenge = null; render(); return; }
-      state.challenge = shuffleChallenges(candidates, state.previousId).shift();
-      state.queue = shuffleChallenges(candidates.filter((challenge) => challenge.id !== state.challenge.id), state.challenge.id);
-      state.previousId = state.challenge.id; resetChallenge(); render();
+      state.challenge = shuffleChallenges(candidates, state.previousId, Math.random, state.previousModelId).shift();
+      state.queue = shuffleChallenges(candidates.filter((challenge) => challenge.id !== state.challenge.id), state.challenge.id, Math.random, state.challenge.reasoningModelId || state.challenge.reasoningFamily || "");
+      state.seenIds.add(state.challenge.id);
+      state.previousId = state.challenge.id; state.previousModelId = state.challenge.reasoningModelId || state.challenge.reasoningFamily || ""; resetChallenge(); render();
     };
     const renderTree = () => {
       const challenge = state.challenge;
