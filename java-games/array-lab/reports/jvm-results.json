@@ -1,0 +1,8 @@
+{
+  "compiled": 8753,
+  "outputsCompared": 8753,
+  "statesCompared": 8742,
+  "exceptionsVerified": 11,
+  "mismatches": 0,
+  "status": "historical development run before the stricter Beginner gate and latest data-distribution changes; not current acceptance evidence"
+}

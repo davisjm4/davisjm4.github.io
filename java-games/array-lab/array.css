@@ -43,10 +43,11 @@
 }
 .array-cell-wrap:last-child .array-cell { border-right-width: 1px; }
 .array-grid {
-  display: grid;
+  display: block;
   grid-template-columns: repeat(var(--columns), minmax(3.25rem, 4.5rem));
   width: max-content;
 }
+.array-grid-row { display:grid; grid-template-columns:repeat(var(--columns), minmax(3.25rem,4.5rem)); }
 .array-grid .array-cell { width: 100%; border-right-width: 1px; }
 .array-choice-grid {
   display: grid;

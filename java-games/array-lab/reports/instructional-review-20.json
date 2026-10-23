@@ -1,0 +1,222 @@
+[
+  {
+    "galleryId": 0,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "changed-index",
+    "seed": 2654445761,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Update index, derive an offset-based selected index, then mirror it. Several dependent index calculations are required.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 1,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "arithmetic-index",
+    "seed": 2654445762,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Calculate an arithmetic index, then use the selected array value to calculate another index.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 2,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "literal-index",
+    "seed": 2654445763,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Combine length-relative indexing, an array value, and modular arithmetic.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 3,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "chained-index",
+    "seed": 2654445764,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Follow two chained lookup reads, an offset, and a second data-dependent lookup.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 4,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "value-index",
+    "seed": 2654445765,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Read a separate lookup array, add an offset, then transform the resulting index.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 5,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "stored-index",
+    "seed": 2654445766,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Track an index variable, a calculated offset, and a data-dependent final index.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 6,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "bounds-check",
+    "seed": 2654445767,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Derive an index from length and offset, then reflect it relative to the last index.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 7,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "end-relative",
+    "seed": 2654445768,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Compute distance from an array value, subtract from length, then reflect the selected index.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 8,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "conditional-index",
+    "seed": 2654445769,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Follow conditional index selection, an offset calculation, and a subsequent indexed lookup.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 9,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "last-index",
+    "seed": 2654445770,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Compute a last-relative index, add an array value, and wrap it with modulus.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 10,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "changed-index",
+    "seed": 2654445771,
+    "provisionalReview": "Simplify",
+    "minimumSolutionPathAndFinding": "The two mirror operations cancel. The shortest solution uses the original changed index. Extra code must not count as difficulty or a new reasoning structure.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 11,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "arithmetic-index",
+    "seed": 2654445772,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Compute an offset, use arithmetic indexing, then use a stored array value as another index.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 12,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "literal-index",
+    "seed": 2654445773,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Use an array value to select an index, then calculate a multiplied and wrapped target.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 13,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "chained-index",
+    "seed": 2654445774,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Evaluate nested lookup indexing, an offset, and another index transformation.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 14,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "value-index",
+    "seed": 2654445775,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Combine a lookup result, a length-relative reflection, and modular indexing.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 15,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "stored-index",
+    "seed": 2654445776,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Track a stored index through reflection and then use its selected array value as a new index.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 16,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "bounds-check",
+    "seed": 2654445777,
+    "provisionalReview": "Simplify",
+    "minimumSolutionPathAndFinding": "The expression collapses to index zero using length % length and a multiple of length. This is artificial complexity and must be simplified or rejected.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 17,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "end-relative",
+    "seed": 2654445778,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Derive distance from array data, reflect the resulting index, and follow another data-dependent index.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 18,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "conditional-index",
+    "seed": 2654445779,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Combine conditional index selection with calculated offset and reflection.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  },
+  {
+    "galleryId": 19,
+    "mode": "element",
+    "assignedDifficulty": "Beginner",
+    "model": "last-index",
+    "seed": 2654445780,
+    "provisionalReview": "Intermediate",
+    "minimumSolutionPathAndFinding": "Follow a last-relative arithmetic index and a subsequent data-dependent index.",
+    "decision": "reject for redesign; not certified",
+    "reviewer": "assistant instructional inspection, not independent human sign-off"
+  }
+]

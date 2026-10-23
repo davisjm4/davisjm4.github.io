@@ -1,0 +1,290 @@
+[
+  {
+    "mode": "element",
+    "difficulty": "Beginner",
+    "automaticallyEligibleStructures": 7,
+    "modelsWithSixOwnedStructures": 0,
+    "rejectedCandidates": 684,
+    "minimumGatePassed": false
+  },
+  {
+    "mode": "element",
+    "difficulty": "Intermediate",
+    "automaticallyEligibleStructures": 240,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "element",
+    "difficulty": "Advanced",
+    "automaticallyEligibleStructures": 336,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "predict-update",
+    "difficulty": "Beginner",
+    "automaticallyEligibleStructures": 186,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "predict-update",
+    "difficulty": "Intermediate",
+    "automaticallyEligibleStructures": 196,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "predict-update",
+    "difficulty": "Advanced",
+    "automaticallyEligibleStructures": 210,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "perform-update",
+    "difficulty": "Beginner",
+    "automaticallyEligibleStructures": 6,
+    "modelsWithSixOwnedStructures": 0,
+    "rejectedCandidates": 702,
+    "minimumGatePassed": false
+  },
+  {
+    "mode": "perform-update",
+    "difficulty": "Intermediate",
+    "automaticallyEligibleStructures": 240,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "perform-update",
+    "difficulty": "Advanced",
+    "automaticallyEligibleStructures": 336,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "search",
+    "difficulty": "Beginner",
+    "automaticallyEligibleStructures": 624,
+    "modelsWithSixOwnedStructures": 12,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "search",
+    "difficulty": "Intermediate",
+    "automaticallyEligibleStructures": 588,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "search",
+    "difficulty": "Advanced",
+    "automaticallyEligibleStructures": 588,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "traversal",
+    "difficulty": "Beginner",
+    "automaticallyEligibleStructures": 402,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 47,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "traversal",
+    "difficulty": "Intermediate",
+    "automaticallyEligibleStructures": 449,
+    "modelsWithSixOwnedStructures": 11,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "traversal",
+    "difficulty": "Advanced",
+    "automaticallyEligibleStructures": 449,
+    "modelsWithSixOwnedStructures": 11,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "access-2d",
+    "difficulty": "Beginner",
+    "automaticallyEligibleStructures": 5,
+    "modelsWithSixOwnedStructures": 0,
+    "rejectedCandidates": 1320,
+    "minimumGatePassed": false
+  },
+  {
+    "mode": "access-2d",
+    "difficulty": "Intermediate",
+    "automaticallyEligibleStructures": 110,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "access-2d",
+    "difficulty": "Advanced",
+    "automaticallyEligibleStructures": 132,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "update-2d",
+    "difficulty": "Beginner",
+    "automaticallyEligibleStructures": 10,
+    "modelsWithSixOwnedStructures": 1,
+    "rejectedCandidates": 1440,
+    "minimumGatePassed": false
+  },
+  {
+    "mode": "update-2d",
+    "difficulty": "Intermediate",
+    "automaticallyEligibleStructures": 133,
+    "modelsWithSixOwnedStructures": 11,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "update-2d",
+    "difficulty": "Advanced",
+    "automaticallyEligibleStructures": 123,
+    "modelsWithSixOwnedStructures": 11,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "nested",
+    "difficulty": "Beginner",
+    "automaticallyEligibleStructures": 282,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "nested",
+    "difficulty": "Intermediate",
+    "automaticallyEligibleStructures": 289,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 11,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "nested",
+    "difficulty": "Advanced",
+    "automaticallyEligibleStructures": 266,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 52,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "reverse",
+    "difficulty": "Beginner",
+    "automaticallyEligibleStructures": 98,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 2,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "reverse",
+    "difficulty": "Intermediate",
+    "automaticallyEligibleStructures": 78,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "reverse",
+    "difficulty": "Advanced",
+    "automaticallyEligibleStructures": 83,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 8,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "create-references",
+    "difficulty": "Beginner",
+    "automaticallyEligibleStructures": 139,
+    "modelsWithSixOwnedStructures": 11,
+    "rejectedCandidates": 36,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "create-references",
+    "difficulty": "Intermediate",
+    "automaticallyEligibleStructures": 152,
+    "modelsWithSixOwnedStructures": 11,
+    "rejectedCandidates": 24,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "create-references",
+    "difficulty": "Advanced",
+    "automaticallyEligibleStructures": 168,
+    "modelsWithSixOwnedStructures": 11,
+    "rejectedCandidates": 36,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "in-place",
+    "difficulty": "Beginner",
+    "automaticallyEligibleStructures": 66,
+    "modelsWithSixOwnedStructures": 11,
+    "rejectedCandidates": 390,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "in-place",
+    "difficulty": "Intermediate",
+    "automaticallyEligibleStructures": 127,
+    "modelsWithSixOwnedStructures": 11,
+    "rejectedCandidates": 24,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "in-place",
+    "difficulty": "Advanced",
+    "automaticallyEligibleStructures": 132,
+    "modelsWithSixOwnedStructures": 11,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "trace-2d",
+    "difficulty": "Beginner",
+    "automaticallyEligibleStructures": 330,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "trace-2d",
+    "difficulty": "Intermediate",
+    "automaticallyEligibleStructures": 328,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 0,
+    "minimumGatePassed": true
+  },
+  {
+    "mode": "trace-2d",
+    "difficulty": "Advanced",
+    "automaticallyEligibleStructures": 314,
+    "modelsWithSixOwnedStructures": 10,
+    "rejectedCandidates": 48,
+    "minimumGatePassed": true
+  }
+]

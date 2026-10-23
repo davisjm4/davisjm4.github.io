@@ -1,5 +1,7 @@
 import { int, pick, shuffle } from "../../csp-games/engine.js?v=platform-expansion-v2";
 import { advancedFormatFamilies, generateAdvancedArray } from "./advanced-families.js?v=array-modes-v2";
+import {generateCompositionalArray} from './compose/engine.js';
+export {createArrayHistory} from './compose/engine.js';
 
 export const formatNames = {
   element: "Select an Array Element",
@@ -431,6 +433,9 @@ const generators = {
 };
 
 export function generateArray(format = "mixed", forcedVariant, options = {}) {
+  if(!forcedVariant && options.difficulty && !options.legacy){
+    const q=generateCompositionalArray(format,options);q.formatName=formatNames[q.format];q.topicTitle=q.formatName;return q;
+  }
   const selected = format === "mixed" ? pick(Object.keys(formatNames)) : format;
   if (!generators[selected] && !advancedFormatFamilies[selected]) throw Error("Unknown Array Lab format");
   if (advancedFormatFamilies[selected]) {
@@ -452,9 +457,14 @@ export function generateArray(format = "mixed", forcedVariant, options = {}) {
   return question;
 }
 
+// Historical family fixtures remain testable without constraining the new registry.
+export function generateLegacyArray(format,forcedVariant,options={}) { return generateArray(format,forcedVariant,{...options,legacy:true}); }
+
 export function assessArray(question, response) {
   if (question.kind === "choice") return response.answer === question.answer;
   if (question.kind === "cell" || question.kind === "cell-2d") return response.cell === question.correctCell;
+  if (question.kind === "apply" && response.cell!=null) return question.correctCells.includes(response.cell);
+  if (question.kind === "swap" && response.cells) return response.cells.length===2&&new Set(response.cells).size===2&&response.cells.every(c=>question.correctCells.includes(c));
   if (question.kind === "apply" || question.kind === "swap")
     return JSON.stringify(response.state) === JSON.stringify(question.answerState);
   return false;
@@ -473,6 +483,9 @@ export function exportArrayQuestion(question) {
     difficulty: question.difficulty || null,
     skill: question.skill || question.topic,
     family: question.family || question.variant,
+    reasoningModel: question.reasoningModel || question.family || question.variant,
+    structuralVariant: question.structuralVariant ?? null,
+    semanticFingerprint: question.repetitionKey || null,
     seed: question.seed ?? null,
     question: question.prompt,
     code: question.code,

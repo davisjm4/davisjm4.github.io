@@ -1,0 +1,368 @@
+{
+  "perCell": [
+    {
+      "mode": "element",
+      "difficulty": "Beginner",
+      "tested": 10000,
+      "poolStructures": 235,
+      "observedStructures": 234,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 2286
+    },
+    {
+      "mode": "element",
+      "difficulty": "Intermediate",
+      "tested": 10000,
+      "poolStructures": 240,
+      "observedStructures": 239,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 2854
+    },
+    {
+      "mode": "element",
+      "difficulty": "Advanced",
+      "tested": 10000,
+      "poolStructures": 294,
+      "observedStructures": 448,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 4417
+    },
+    {
+      "mode": "predict-update",
+      "difficulty": "Beginner",
+      "tested": 10000,
+      "poolStructures": 186,
+      "observedStructures": 402,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 3424
+    },
+    {
+      "mode": "predict-update",
+      "difficulty": "Intermediate",
+      "tested": 10000,
+      "poolStructures": 192,
+      "observedStructures": 424,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 5601
+    },
+    {
+      "mode": "predict-update",
+      "difficulty": "Advanced",
+      "tested": 10000,
+      "poolStructures": 210,
+      "observedStructures": 423,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 6389
+    },
+    {
+      "mode": "perform-update",
+      "difficulty": "Beginner",
+      "tested": 10000,
+      "poolStructures": 240,
+      "observedStructures": 481,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 2939
+    },
+    {
+      "mode": "perform-update",
+      "difficulty": "Intermediate",
+      "tested": 10000,
+      "poolStructures": 240,
+      "observedStructures": 345,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 3753
+    },
+    {
+      "mode": "perform-update",
+      "difficulty": "Advanced",
+      "tested": 10000,
+      "poolStructures": 294,
+      "observedStructures": 448,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 5242
+    },
+    {
+      "mode": "search",
+      "difficulty": "Beginner",
+      "tested": 10000,
+      "poolStructures": 654,
+      "observedStructures": 2259,
+      "observedModels": 12,
+      "rolling50Violations": 0,
+      "milliseconds": 6017
+    },
+    {
+      "mode": "search",
+      "difficulty": "Intermediate",
+      "tested": 10000,
+      "poolStructures": 588,
+      "observedStructures": 2036,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 7503
+    },
+    {
+      "mode": "search",
+      "difficulty": "Advanced",
+      "tested": 10000,
+      "poolStructures": 588,
+      "observedStructures": 2103,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 9397
+    },
+    {
+      "mode": "traversal",
+      "difficulty": "Beginner",
+      "tested": 10000,
+      "poolStructures": 402,
+      "observedStructures": 1951,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 6106
+    },
+    {
+      "mode": "traversal",
+      "difficulty": "Intermediate",
+      "tested": 10000,
+      "poolStructures": 428,
+      "observedStructures": 1461,
+      "observedModels": 11,
+      "rolling50Violations": 0,
+      "milliseconds": 6915
+    },
+    {
+      "mode": "traversal",
+      "difficulty": "Advanced",
+      "tested": 10000,
+      "poolStructures": 428,
+      "observedStructures": 1534,
+      "observedModels": 11,
+      "rolling50Violations": 0,
+      "milliseconds": 8416
+    },
+    {
+      "mode": "access-2d",
+      "difficulty": "Beginner",
+      "tested": 10000,
+      "poolStructures": 105,
+      "observedStructures": 116,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 3039
+    },
+    {
+      "mode": "access-2d",
+      "difficulty": "Intermediate",
+      "tested": 10000,
+      "poolStructures": 110,
+      "observedStructures": 121,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 3331
+    },
+    {
+      "mode": "access-2d",
+      "difficulty": "Advanced",
+      "tested": 10000,
+      "poolStructures": 132,
+      "observedStructures": 230,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 6027
+    },
+    {
+      "mode": "update-2d",
+      "difficulty": "Beginner",
+      "tested": 10000,
+      "poolStructures": 117,
+      "observedStructures": 128,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 4053
+    },
+    {
+      "mode": "update-2d",
+      "difficulty": "Intermediate",
+      "tested": 10000,
+      "poolStructures": 133,
+      "observedStructures": 188,
+      "observedModels": 11,
+      "rolling50Violations": 0,
+      "milliseconds": 5636
+    },
+    {
+      "mode": "update-2d",
+      "difficulty": "Advanced",
+      "tested": 10000,
+      "poolStructures": 123,
+      "observedStructures": 140,
+      "observedModels": 11,
+      "rolling50Violations": 0,
+      "milliseconds": 6310
+    },
+    {
+      "mode": "nested",
+      "difficulty": "Beginner",
+      "tested": 10000,
+      "poolStructures": 282,
+      "observedStructures": 1301,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 8695
+    },
+    {
+      "mode": "nested",
+      "difficulty": "Intermediate",
+      "tested": 10000,
+      "poolStructures": 289,
+      "observedStructures": 1130,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 10790
+    },
+    {
+      "mode": "nested",
+      "difficulty": "Advanced",
+      "tested": 10000,
+      "poolStructures": 266,
+      "observedStructures": 1533,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 11957
+    },
+    {
+      "mode": "reverse",
+      "difficulty": "Beginner",
+      "tested": 10000,
+      "poolStructures": 94,
+      "observedStructures": 104,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 5990
+    },
+    {
+      "mode": "reverse",
+      "difficulty": "Intermediate",
+      "tested": 10000,
+      "poolStructures": 67,
+      "observedStructures": 79,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 8570
+    },
+    {
+      "mode": "reverse",
+      "difficulty": "Advanced",
+      "tested": 10000,
+      "poolStructures": 81,
+      "observedStructures": 85,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 16429
+    },
+    {
+      "mode": "create-references",
+      "difficulty": "Beginner",
+      "tested": 10000,
+      "poolStructures": 139,
+      "observedStructures": 139,
+      "observedModels": 11,
+      "rolling50Violations": 0,
+      "milliseconds": 2333
+    },
+    {
+      "mode": "create-references",
+      "difficulty": "Intermediate",
+      "tested": 10000,
+      "poolStructures": 146,
+      "observedStructures": 146,
+      "observedModels": 11,
+      "rolling50Violations": 0,
+      "milliseconds": 3081
+    },
+    {
+      "mode": "create-references",
+      "difficulty": "Advanced",
+      "tested": 10000,
+      "poolStructures": 156,
+      "observedStructures": 156,
+      "observedModels": 11,
+      "rolling50Violations": 0,
+      "milliseconds": 4681
+    },
+    {
+      "mode": "in-place",
+      "difficulty": "Beginner",
+      "tested": 10000,
+      "poolStructures": 67,
+      "observedStructures": 241,
+      "observedModels": 11,
+      "rolling50Violations": 0,
+      "milliseconds": 4158
+    },
+    {
+      "mode": "in-place",
+      "difficulty": "Intermediate",
+      "tested": 10000,
+      "poolStructures": 123,
+      "observedStructures": 429,
+      "observedModels": 11,
+      "rolling50Violations": 0,
+      "milliseconds": 4464
+    },
+    {
+      "mode": "in-place",
+      "difficulty": "Advanced",
+      "tested": 10000,
+      "poolStructures": 132,
+      "observedStructures": 2003,
+      "observedModels": 11,
+      "rolling50Violations": 0,
+      "milliseconds": 9008
+    },
+    {
+      "mode": "trace-2d",
+      "difficulty": "Beginner",
+      "tested": 10000,
+      "poolStructures": 330,
+      "observedStructures": 1276,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 8515
+    },
+    {
+      "mode": "trace-2d",
+      "difficulty": "Intermediate",
+      "tested": 10000,
+      "poolStructures": 328,
+      "observedStructures": 2023,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 11518
+    },
+    {
+      "mode": "trace-2d",
+      "difficulty": "Advanced",
+      "tested": 10000,
+      "poolStructures": 314,
+      "observedStructures": 1106,
+      "observedModels": 10,
+      "rolling50Violations": 0,
+      "milliseconds": 12376
+    }
+  ],
+  "mixed": 20000,
+  "switching": 10000,
+  "repeatViolations": 0,
+  "status": "historical development run before the stricter Beginner gate and latest data-distribution changes; not current acceptance evidence"
+}

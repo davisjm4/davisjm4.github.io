@@ -3,6 +3,7 @@ import {
   generateArray,
   assessArray,
   solutionArray,
+  createArrayHistory,
 } from "./array-engine.js?v=array-modes-v2";
 import {
   sessionTracker,
@@ -17,9 +18,13 @@ const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({
 export function startArrayLab() {
   const $ = (id) => document.getElementById(id);
   const tracker = sessionTracker();
+  const preferenceKey='javaArray.preferences.v1';
+  let preferences={};try{preferences=JSON.parse(globalThis.localStorage?.getItem(preferenceKey)||'{}');}catch{}
+  const params=typeof URLSearchParams==='function'?new URLSearchParams(window.location?.search||''):null;
+  let challengeNumber=0;
   let question, instanceId, selectedAnswer = null, selectedCell = null;
   let selectedCells = [], workingState = [], closed = false;
-  const recent = new Set();
+  const recent = createArrayHistory();
 
   $("main").innerHTML = `
     <div class="eyebrow">Java · Arrays · Traversal · 2D Arrays</div>
@@ -32,7 +37,7 @@ export function startArrayLab() {
           ${Object.entries(formatNames).map(([value, label]) => `<option value="${value}">${label}</option>`).join("")}
         </select>
       </label>
-      <label>Difficulty for new modes
+      <label>Difficulty
         <select id="difficulty" aria-label="Challenge difficulty">
           <option>Beginner</option><option selected>Intermediate</option><option>Advanced</option>
         </select>
@@ -44,6 +49,11 @@ export function startArrayLab() {
     <p id="stats" class="stats"></p>`;
 
   addSessionNavigation("../");
+  const requestedMode=params?.get('mode')||params?.get('format')||preferences.mode;
+  const requestedDifficulty=params?.get('difficulty')||preferences.difficulty;
+  if(requestedMode==='mixed'||Object.hasOwn(formatNames,requestedMode))$("mode").value=requestedMode;
+  const level=['Beginner','Intermediate','Advanced'].find(d=>d.toLowerCase()===String(requestedDifficulty).toLowerCase());if(level)$("difficulty").value=level;
+  const savePreferences=()=>{try{globalThis.localStorage?.setItem(preferenceKey,JSON.stringify({mode:$("mode").value,difficulty:$("difficulty").value}));}catch{}};
   const active = () => !closed && tracker.status(instanceId) === "active";
   const stats = () => { $("stats").textContent = roundSummary("array-lab", $("mode").value); };
 
@@ -51,7 +61,7 @@ export function startArrayLab() {
     const values = question.kind === "apply" || question.kind === "swap"
       ? workingState
       : question.values;
-    return `<div class="array-visual" aria-label="Java array">
+    return `<div class="array-visual" aria-label="Initial Java array"><p data-array-caption>Initial array values</p>
       <div class="array-strip">${values.map((value, index) => `
         <div class="array-cell-wrap">
           <small class="index-label" data-index-label hidden>index ${index}</small>
@@ -63,11 +73,11 @@ export function startArrayLab() {
   function renderGrid() {
     return `<div class="array-visual grid-scroll" aria-label="Two-dimensional Java array">
       <div class="array-grid" style="--columns:${question.columns}">
-        ${question.grid.flatMap((row, rowIndex) => row.map((value, colIndex) => `
+        ${question.grid.map((row, rowIndex) => `<div class="array-grid-row">${row.map((value, colIndex) => `
           <div class="array-cell-wrap">
             <small class="index-label" data-index-label hidden>[${rowIndex}][${colIndex}]</small>
             <button class="array-cell secondary" data-cell="${rowIndex},${colIndex}" aria-pressed="false" aria-label="Grid cell containing ${esc(value)}">${esc(value)}</button>
-          </div>`)).join("")}
+          </div>`).join("")}${Array.from({length:question.columns-row.length},()=>'<span aria-hidden="true"></span>').join('')}</div>`).join("")}
       </div>
     </div>`;
   }
@@ -109,8 +119,6 @@ export function startArrayLab() {
     if (!active()) return;
     if (question.kind === "apply") {
       selectedCell = cell;
-      workingState = [...question.values];
-      workingState[Number(cell)] = question.applyValue;
     } else if (question.kind === "swap") {
       if (selectedCells.length === 2 || selectedCells.includes(cell)) {
         selectedCells = [cell];
@@ -118,8 +126,7 @@ export function startArrayLab() {
       } else {
         selectedCells.push(cell);
         if (selectedCells.length === 2) {
-          const [a, b] = selectedCells.map(Number);
-          [workingState[a], workingState[b]] = [workingState[b], workingState[a]];
+          // Cell selection is a proposal; Java's final state is revealed on submit.
         }
       }
     } else selectedCell = cell;
@@ -138,10 +145,13 @@ export function startArrayLab() {
   function response() {
     if (question.kind === "choice") return {answer: selectedAnswer};
     if (question.kind === "cell" || question.kind === "cell-2d") return {cell: selectedCell};
-    return {state: workingState};
+    return {cell:selectedCell,cells:[...selectedCells],state: workingState};
   }
 
   function revealAnswer() {
+    if(question.kind==='cell'&&question.answerState){for(const button of $("stage").querySelectorAll('[data-cell]')){const i=Number(button.dataset.cell);button.textContent=question.answerState[i];button.setAttribute('aria-label',`Final array cell containing ${question.answerState[i]}`);}}
+    const caption=$("stage").querySelector('[data-array-caption]');if(caption&&question.answerState)caption.textContent='Final array values';
+    if(question.kind==='cell-2d'&&question.format==='update-2d'&&question.answerState){for(const button of $("stage").querySelectorAll('[data-cell]')){const [r,c]=button.dataset.cell.split(',').map(Number);button.textContent=question.answerState[r][c];}}
     for (const label of $("stage").querySelectorAll("[data-index-label]")) label.hidden = false;
     if (question.kind === "choice") {
       for (const button of $("choices").querySelectorAll("button")) {
@@ -185,8 +195,8 @@ export function startArrayLab() {
     question = generateArray($("mode").value, undefined, {
       difficulty: $("difficulty").value,
       history: recent,
+      ...(params?.has('seed')?{seed:(Number(params.get('seed'))+challengeNumber++)>>>0}:{}),
     });
-    while (recent.size > 240) recent.delete(recent.values().next().value);
     instanceId = tracker.begin(question.game, question.title, question.topic, question.topicTitle, question.format, formatNames[question.format]);
     tracker.annotate(instanceId, {
       mode: question.formatName,
@@ -202,7 +212,7 @@ export function startArrayLab() {
     closed = false;
     $("feedback").hidden = true;
     $("stage").innerHTML = `
-      <div class="challenge-meta">${esc(question.formatName)} · ${esc(question.difficulty || "All levels")}${question.family ? ` · ${esc(question.family)}` : ""}</div>
+      <div class="challenge-meta">${esc(question.formatName)} · ${esc(question.difficulty || "All levels")}</div>
       <h2>${esc(question.prompt)}</h2>
       <pre class="snippet array-code"><code>${esc(question.code)}</code></pre>
       ${renderInteraction()}
@@ -243,9 +253,10 @@ export function startArrayLab() {
     stats();
   }
 
-  $("mode").onchange = next;
-  $("difficulty").onchange = next;
+  $("mode").onchange = () => {savePreferences();next();};
+  $("difficulty").onchange = () => {savePreferences();next();};
   $("new").onclick = next;
+  window.addEventListener('keydown',event=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;if(event.key==='Enter'&&!$("submit").disabled){event.preventDefault();$("submit").click();return;}const controls=[...$("stage").querySelectorAll(question.kind==='choice'?'[data-answer]':'[data-cell]')];if(/^[1-4]$/.test(event.key)&&question.kind==='choice'){controls[Number(event.key)-1]?.click();return;}if(['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(event.key)&&controls.length){event.preventDefault();const current=controls.indexOf(document.activeElement),direction=['ArrowRight','ArrowDown'].includes(event.key)?1:-1;controls[(current+direction+controls.length)%controls.length].focus();}});
   window.addEventListener("pagehide", () => { if (instanceId) tracker.skip(instanceId); });
   next();
 }
