@@ -26,12 +26,14 @@ Buildless HTML, CSS, and native JavaScript modules. Each game folder has an inde
 - Computing Impact Lab: supported claim/evidence/explanation construction across innovations, privacy/consent, bias, access, crowdsourcing, rights, and trade-offs. Randomized slots maintain logical consistency; policy reflections are unscored.
 - Simulation Lab: seeded independent-trial model with adjustable probability/trial count/seed, running-proportion graph, expected/observed distinctions, model comparisons, and limitations. Running an experiment is not a scored submission.
 - Mixed AP Exam Practice: original single/select-two questions across all five Big Ideas, with shared code/data follow-ups. Questions are not official College Board items. Topic breakdown distinguishes question concepts.
+- Trivial or Non-Trivial?: classify, compare, and explain whether AP CSP pseudocode constructs do meaningful work for a stated task; four categories, three activities, Beginner/Intermediate/Advanced, filtered Mixed Practice, shareable seeded links, and local Session Summary scoring. “Trivial” and “non-trivial” are instructional descriptions, not College Board scoring categories.
 
 ## Tests
 
 From this folder: `npm install`, then `npm test`. The DOM dependency is for tests only and is not loaded by students.
 
 Pure tests cross-check binary conversions, solvable Boolean expressions, list operations, binary search, lossless encodings, packet routes, schedules, and preserved Network Breaker minimum cuts against independent exhaustive calculations. DOM tests exercise all new game modes, correct/incorrect submissions, retries, new challenges, controls, and navigation. DOM simulation does not verify visual rendering, touch hit areas, or CSS layouts on real devices.
+Trivial or Non-Trivial? adds 80 authored models (20 per category), 208 behavior-distinct configurations from 240 bounded candidates, 80 independent output oracles, and DOM coverage for all three activity modes, local scoring, share links, reset, and Mixed Practice. Its evaluator verifies a supported pseudocode subset; finite representative-input checks do not prove universal equivalence.
 
 No supported rendered-browser preview was available in the build environment. A final Chromebook/mobile visual check is recommended before assigning. Responsive layouts, keyboard controls, accessible assignment menus, and reduced-motion alternatives are included.
 
@@ -53,7 +55,7 @@ Feedback/scoring regression tests: `node concepts-feedback-tests.mjs`, plus per-
 
 Session Summary: /csp-games/session-summary/. Schema version 1 uses one ID per generated challenge, compact aggregate statistics, and a bounded 256-record retry/deduplication ledger. Refreshing or switching games preserves results. Unfinished challenges replaced or left via pagehide are counted as skipped. Results are local formative evidence, not tamper-proof assessment data. Private browsing or clearing browser data can remove them. Storage failures show a warning and use temporary memory. Unsupported/corrupted data starts a fresh session with a warning.
 
-Reset requires the Cancel/Reset confirmation dialog. It preserves optional identity and clears all performance, with a new session ID and start time. Print uses the browser, with print-specific layout and repeating table headings. Rendered-device and physical print/PDF QA were not available. All 18 games plus the legacy Network Breaker URL report to this same session.
+Reset requires the Cancel/Reset confirmation dialog. It preserves optional identity and clears all performance, with a new session ID and start time. Print uses the browser, with print-specific layout and repeating table headings. Rendered-device and physical print/PDF QA were not available. All 19 games plus the legacy Network Breaker URL report to this same session.
 
 Curriculum matrix: /csp-games/coverage.html, CURRICULUM_COVERAGE.md, and coverage.json. All 35 topics have introductory or applied practice, with 29 classified Practiced and 6 Introduced. These classifications describe bounded modes, not comprehensive mastery of every objective. See the matrix for specific gaps.
 

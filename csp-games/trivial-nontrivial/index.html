@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Trace AP CSP pseudocode and decide whether selection, iteration, procedures, and algorithms do meaningful work for a stated task." />
+    <meta name="theme-color" content="#0c1722" />
+    <title>Trivial or Non-Trivial? | CSP Games</title>
+    <link rel="stylesheet" href="../redesign.css?v=trivial-nontrivial-v1" />
+    <link rel="stylesheet" href="./game.css?v=trivial-nontrivial-v1" />
+    <script type="module" src="./app.js?v=trivial-nontrivial-v1"></script>
+  </head>
+  <body data-game="trivial-nontrivial">
+    <header>
+      <a href="../">← CSP Games</a>
+      <small>DevCat Studios · Build your understanding</small>
+    </header>
+    <main id="main">
+      <section class="tn-intro" aria-labelledby="page-title">
+        <p class="eyebrow">AP Computer Science Principles · Code Analysis</p>
+        <h1 id="page-title">Trivial or Non-Trivial?</h1>
+        <p class="intro">Trace what the pseudocode actually does. Decide whether a construct contributes meaningful work to the stated task.</p>
+        <p class="muted">Challenges use AP CSP Exam Reference Sheet notation and a bounded pseudocode subset for execution traces.</p>
+        <div class="tn-definitions">
+          <p><strong>Meaningful / non-trivial in this game:</strong> the construct contributes task-relevant behavior, such as a decision, state change, repetition, output, or abstraction with a stated role.</p>
+          <p><strong>Superficial / trivial in this game:</strong> the construct appears in the code but has no task-relevant effect under the full assumptions, even if it changes unobserved state.</p>
+        </div>
+        <p class="tn-disclaimer">These are instructional descriptions, not official College Board scoring categories. Behavioral change, useful work, task correctness, and meeting a specific AP Create requirement are separate judgments. Code can be meaningful and still be incorrect or miss a separate requirement.</p>
+      </section>
+
+      <section class="panel tn-controls" aria-label="Practice settings">
+        <div class="tn-control-grid">
+          <label>Category
+            <select id="category">
+              <option value="mixed">Mixed Practice</option>
+              <option value="selection">Selection</option>
+              <option value="iteration">Iteration</option>
+              <option value="procedures">Procedures and Abstraction</option>
+              <option value="algorithms">Complete Algorithms and Comparisons</option>
+            </select>
+          </label>
+          <label>Activity
+            <select id="activity">
+              <option value="all">Mixed Activities</option>
+              <option value="classify">Classify the Code</option>
+              <option value="compare">Compare Two Implementations</option>
+              <option value="explain">Explain the Difference</option>
+            </select>
+          </label>
+          <label>Difficulty
+            <select id="difficulty">
+              <option value="">All levels</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </label>
+          <label>Seed
+            <input id="seed" type="number" inputmode="numeric" step="1" aria-describedby="seed-help" />
+          </label>
+        </div>
+        <p id="seed-help" class="muted">A seed reproduces a practice sequence. Share links include the exact challenge.</p>
+        <fieldset id="category-filters" class="category-filters" hidden>
+          <legend>Mixed Practice categories</legend>
+          <label><input type="checkbox" value="selection" checked /> Selection</label>
+          <label><input type="checkbox" value="iteration" checked /> Iteration</label>
+          <label><input type="checkbox" value="procedures" checked /> Procedures and Abstraction</label>
+          <label><input type="checkbox" value="algorithms" checked /> Complete Algorithms</label>
+        </fieldset>
+      </section>
+
+      <section id="challenge" class="panel challenge-panel" aria-labelledby="challenge-title">
+        <div class="challenge-head">
+          <div>
+            <p id="challenge-meta" class="challenge-meta"></p>
+            <h2 id="challenge-title">Loading challenge…</h2>
+          </div>
+          <a class="summary-button" href="../session-summary/" data-session-link>Session Summary</a>
+        </div>
+        <div class="task-box">
+          <h3>Task</h3>
+          <p id="task"></p>
+          <p id="construct-focus" class="muted"></p>
+          <p id="assumptions" class="muted"></p>
+          <p id="given-inputs" class="input-summary"></p>
+        </div>
+
+        <section id="single-code" aria-label="Pseudocode">
+          <h3 class="muted">AP CSP pseudocode</h3>
+          <pre class="snippet" id="code-a" tabindex="0"></pre>
+        </section>
+        <section id="compare-code" hidden aria-label="Implementation comparison">
+          <div class="compare-grid">
+            <article>
+              <h3>Implementation A <span class="muted">· AP CSP pseudocode</span></h3>
+              <pre class="snippet" id="compare-a" tabindex="0"></pre>
+            </article>
+            <article>
+              <h3>Implementation B <span class="muted">· AP CSP pseudocode</span></h3>
+              <pre class="snippet" id="compare-b" tabindex="0"></pre>
+            </article>
+          </div>
+        </section>
+
+        <section id="classify-controls" class="answer-panel">
+          <fieldset class="choice-set">
+            <legend id="classify-question">For the stated task and full input assumptions, does the focus shown above contribute meaningful work?</legend>
+            <label class="choice"><input type="radio" name="classification" value="meaningful" /><span>Meaningful / non-trivial</span></label>
+            <label class="choice"><input type="radio" name="classification" value="superficial" /><span>Superficial / trivial</span></label>
+          </fieldset>
+        </section>
+
+        <section id="compare-controls" class="answer-panel" hidden>
+          <fieldset class="choice-set">
+            <legend id="compare-classify-question">Does the focus shown above contribute meaningful work in each implementation?</legend>
+            <label class="compare-answer">Implementation A
+              <select id="compare-class-a" aria-label="Implementation A classification">
+                <option value="">Choose…</option>
+                <option value="meaningful">Meaningful / non-trivial</option>
+                <option value="superficial">Superficial / trivial</option>
+              </select>
+            </label>
+            <label class="compare-answer">Implementation B
+              <select id="compare-class-b" aria-label="Implementation B classification">
+                <option value="">Choose…</option>
+                <option value="meaningful">Meaningful / non-trivial</option>
+                <option value="superficial">Superficial / trivial</option>
+              </select>
+            </label>
+          </fieldset>
+          <fieldset class="choice-set">
+            <legend>For the displayed inputs, do they produce the same task-relevant result?</legend>
+            <label class="choice"><input type="radio" name="equivalence" value="same" /><span>Yes, the shown results are the same</span></label>
+            <label class="choice"><input type="radio" name="equivalence" value="different" /><span>No, the shown results differ</span></label>
+          </fieldset>
+        </section>
+
+        <section id="explain-controls" class="answer-panel" hidden>
+          <fieldset class="choice-set">
+            <legend id="explain-question">Choose the best explanation.</legend>
+            <div id="explanation-choices" class="explanation-choices"></div>
+          </fieldset>
+        </section>
+
+        <div class="actions">
+          <button id="submit-answer" type="button">Check Answer</button>
+          <button id="next-challenge" type="button" class="secondary">Next Challenge</button>
+          <button id="share-link" type="button" class="secondary">Copy Shareable Link</button>
+        </div>
+        <p id="action-status" class="muted" role="status" aria-live="polite"></p>
+        <section id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true" hidden></section>
+        <details id="trace-details" class="trace-details" hidden>
+          <summary>Show execution trace for the displayed input(s)</summary>
+          <pre id="trace-output"></pre>
+        </details>
+      </section>
+
+      <section class="panel session-panel">
+        <h2>Session</h2>
+        <p id="session-score" class="muted">One scored attempt per challenge. Results are saved locally in this browser.</p>
+        <div class="actions">
+          <button id="reset-session" class="secondary" type="button">Reset Session</button>
+          <a class="button secondary" href="../session-summary/">Open Session Summary</a>
+        </div>
+      </section>
+    </main>
+    <noscript><p>Enable JavaScript to play these interactive challenges.</p></noscript>
+    <footer>
+      Practice freely. No accounts or data uploads. Results are stored locally in this browser.
+      Independent practice tools; not affiliated with College Board.
+      <a href="https://apcentral.collegeboard.org/media/pdf/ap-computer-science-principles-exam-reference-sheet.pdf">AP CSP Exam Reference Sheet</a>
+    </footer>
+  </body>
+</html>
