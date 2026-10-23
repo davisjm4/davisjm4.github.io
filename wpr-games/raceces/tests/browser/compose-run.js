@@ -50,10 +50,10 @@ async function solve(p, ch, wrong) {
   const { page } = await newPage({ viewport: { width: 1366, height: 768 } });
   await page.goto(url + '?seed=compose-browser'); await page.waitForSelector('.task');
   await check('compositional library loaded in the page', async () => page.evaluate(() => window.RACECES.app.generator.catalog.length > 1400));
-  await check('status line reports authored and generated problems honestly', async () => /90 authored writing models and \d+ generated writing problems/.test(await page.textContent('#focus-status')));
-  await check('every topic shows at least 20 problems at every level', async () => {
+  await check('status line reports authored and generated problems honestly', async () => /234 authored writing models and \d+ generated writing problems/.test(await page.textContent('#focus-status')));
+  await check('all topics show their available problems at every level', async () => {
     const counts = await page.$$eval('#topic-options .topic-count', els => els.map(e => e.textContent));
-    return counts.length === 15 && counts.every(t => t.match(/\d+/g).map(Number).every(n => n >= 20));
+    return counts.length === 23 && counts.every((t, i) => t.match(/\d+/g).map(Number).every(n => n >= (i >= 15 ? 6 : 20)));
   });
 
   group = 'Topic-specific generated practice through the UI';

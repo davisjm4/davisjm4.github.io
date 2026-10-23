@@ -1,107 +1,126 @@
 {
-  "total": 13230,
+  "total": 32094,
   "byMode": {
-    "identify": 4529,
-    "rearrange": 3179,
-    "missing": 5522
+    "identify": 11009,
+    "rearrange": 7499,
+    "missing": 13586
   },
   "byLevel": {
-    "beginner": 4412,
-    "intermediate": 4410,
-    "advanced": 4408
+    "beginner": 10700,
+    "intermediate": 10698,
+    "advanced": 10696
   },
   "byModeLevel": {
-    "identify/beginner": 1511,
-    "rearrange/beginner": 1060,
-    "missing/beginner": 1841,
-    "identify/intermediate": 1504,
-    "rearrange/intermediate": 1062,
-    "missing/intermediate": 1844,
-    "identify/advanced": 1514,
-    "rearrange/advanced": 1057,
-    "missing/advanced": 1837
+    "identify/beginner": 3671,
+    "rearrange/beginner": 2500,
+    "missing/beginner": 4529,
+    "identify/intermediate": 3664,
+    "rearrange/intermediate": 2502,
+    "missing/intermediate": 4532,
+    "identify/advanced": 3674,
+    "rearrange/advanced": 2497,
+    "missing/advanced": 4525
   },
   "byRole": {
-    "R": 1292,
-    "A": 1294,
-    "S": 1294,
-    "C": 3084,
-    "E": 3087
+    "R": 3164,
+    "A": 3164,
+    "S": 3166,
+    "C": 7553,
+    "E": 7548
   },
   "byFamily": {
-    "process": 2754,
-    "cause-effect": 2191,
-    "function": 2329,
-    "evaluation": 1905,
-    "pattern": 746,
-    "adaptation": 1344,
-    "tradeoff": 750,
-    "scale": 1211
+    "process": 2672,
+    "cause-effect": 2113,
+    "function": 2261,
+    "evaluation": 1840,
+    "pattern": 706,
+    "adaptation": 1280,
+    "tradeoff": 718,
+    "scale": 1143,
+    "definition": 1075,
+    "definition-in-context": 1077,
+    "interpretation": 1076,
+    "classification": 1075,
+    "evidence-link": 1078,
+    "vocabulary-in-context": 1076,
+    "comparison": 1077,
+    "representation": 1074,
+    "true-claim": 1077,
+    "misconception-check": 1078,
+    "reasoning-step": 1075,
+    "relevance": 1077,
+    "conditions": 1075,
+    "validity": 1074,
+    "counterexample": 1075,
+    "application": 1074,
+    "evidence-evaluation": 1075,
+    "synthesis": 1073
   },
   "bySubject": {
-    "Biology": 878,
-    "Energy and technology": 870,
-    "Earth science": 879,
-    "Engineering and architecture": 871,
-    "Libraries and education": 868,
-    "Astronomy": 898,
-    "Plants and animals": 880,
-    "Physics": 880,
-    "Transportation": 883,
-    "Chemistry": 885,
-    "Space exploration": 870,
-    "Inventions": 897,
-    "Environmental science": 901,
-    "Weather and climate": 890,
-    "Computer technology": 880
+    "Biology": 845,
+    "Energy and technology": 850,
+    "Earth science": 848,
+    "Engineering and architecture": 850,
+    "Libraries and education": 848,
+    "Astronomy": 849,
+    "Plants and animals": 850,
+    "Physics": 852,
+    "Transportation": 849,
+    "Chemistry": 849,
+    "Space exploration": 849,
+    "Inventions": 848,
+    "Environmental science": 849,
+    "Weather and climate": 851,
+    "Computer technology": 846,
+    "Mathematics": 19361
   },
   "signatures": {
-    "size": 1530
+    "size": 3978
   },
   "prompts": {
-    "size": 572
+    "size": 1942
   },
   "excerpts": {
-    "size": 886
+    "size": 19671
   },
   "optionSets": {
-    "size": 1886
+    "size": 4859
   },
   "orders": {
-    "size": 2221
+    "size": 3504
   },
-  "missingCorrectLongest": 854,
-  "missingTotal": 5522,
+  "missingCorrectLongest": 2375,
+  "missingTotal": 13586,
   "missingPos": {
-    "o2": 1357,
-    "o1": 1420,
-    "o4": 1417,
-    "o3": 1328
+    "o2": 3372,
+    "o1": 3394,
+    "o4": 3450,
+    "o3": 3370
   },
   "missingByRole": {
     "R": {
-      "n": 789,
-      "longest": 35
+      "n": 1942,
+      "longest": 334
     },
     "A": {
-      "n": 791,
-      "longest": 306
+      "n": 1939,
+      "longest": 1328
     },
     "C": {
-      "n": 1575,
-      "longest": 176
+      "n": 3881,
+      "longest": 252
     },
     "E": {
-      "n": 1578,
-      "longest": 320
+      "n": 3882,
+      "longest": 444
     },
     "S": {
-      "n": 789,
+      "n": 1942,
       "longest": 17
     }
   },
-  "wrongAnswersTested": 40719,
+  "wrongAnswersTested": 99474,
   "validationErrors": 0,
   "gameplayTotal": 1440,
-  "buildTotal": 11790
+  "buildTotal": 30654
 }

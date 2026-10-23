@@ -1,0 +1,1277 @@
+[
+  {
+    "id": "math-statistics-probability-01",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Populations, samples, and variables",
+    "term": "Population",
+    "definition": "The entire group a statistical study aims to describe.",
+    "example": "All students at a school are the population in a schoolwide survey.",
+    "correctAnswer": "The entire group a statistical study aims to describe.",
+    "supportingEvidence": "All students at a school are the population in a schoolwide survey.",
+    "explanation": "The example illustrates population because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name population without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-02",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Populations, samples, and variables",
+    "term": "Sample",
+    "definition": "A subset of a population selected for observation or measurement.",
+    "example": "Surveying 80 of 1,000 students uses a sample of 80.",
+    "correctAnswer": "A subset of a population selected for observation or measurement.",
+    "supportingEvidence": "Surveying 80 of 1,000 students uses a sample of 80.",
+    "explanation": "The example illustrates sample because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name sample without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-03",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Populations, samples, and variables",
+    "term": "Census",
+    "definition": "A data collection that attempts to measure every member of a population.",
+    "example": "Asking every student at a school is a census of that school.",
+    "correctAnswer": "A data collection that attempts to measure every member of a population.",
+    "supportingEvidence": "Asking every student at a school is a census of that school.",
+    "explanation": "The example illustrates census because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name census without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-04",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Populations, samples, and variables",
+    "term": "Parameter",
+    "definition": "A numerical summary describing an entire population.",
+    "example": "The true mean height of all students is a population parameter.",
+    "correctAnswer": "A numerical summary describing an entire population.",
+    "supportingEvidence": "The true mean height of all students is a population parameter.",
+    "explanation": "The example illustrates parameter because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name parameter without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-05",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Populations, samples, and variables",
+    "term": "Statistic",
+    "definition": "A numerical summary calculated from sample data.",
+    "example": "The mean height of 80 surveyed students is a statistic.",
+    "correctAnswer": "A numerical summary calculated from sample data.",
+    "supportingEvidence": "The mean height of 80 surveyed students is a statistic.",
+    "explanation": "The example illustrates statistic because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name statistic without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-06",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Populations, samples, and variables",
+    "term": "Variable in statistics",
+    "definition": "A characteristic recorded for each observational unit.",
+    "example": "A survey may record each student's commute time.",
+    "correctAnswer": "A characteristic recorded for each observational unit.",
+    "supportingEvidence": "A survey may record each student's commute time.",
+    "explanation": "The example illustrates variable in statistics because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name variable in statistics without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-07",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Populations, samples, and variables",
+    "term": "Categorical variable",
+    "definition": "A variable recording group labels rather than numerical measurements.",
+    "example": "Favorite school subject is categorical.",
+    "correctAnswer": "A variable recording group labels rather than numerical measurements.",
+    "supportingEvidence": "Favorite school subject is categorical.",
+    "explanation": "The example illustrates categorical variable because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name categorical variable without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-08",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Populations, samples, and variables",
+    "term": "Quantitative variable",
+    "definition": "A variable recording numerical values for which arithmetic differences are meaningful.",
+    "example": "Minutes spent reading is quantitative.",
+    "correctAnswer": "A variable recording numerical values for which arithmetic differences are meaningful.",
+    "supportingEvidence": "Minutes spent reading is quantitative.",
+    "explanation": "The example illustrates quantitative variable because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quantitative variable without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-09",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Populations, samples, and variables",
+    "term": "Discrete variable",
+    "definition": "A quantitative variable with countable possible values, often whole-number counts.",
+    "example": "Number of books borrowed is discrete.",
+    "correctAnswer": "A quantitative variable with countable possible values, often whole-number counts.",
+    "supportingEvidence": "Number of books borrowed is discrete.",
+    "explanation": "The example illustrates discrete variable because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name discrete variable without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-10",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Populations, samples, and variables",
+    "term": "Continuous variable",
+    "definition": "A quantitative variable that can take any value within an interval of measurement.",
+    "example": "A measured time may be 12.4 seconds or 12.43 seconds.",
+    "correctAnswer": "A quantitative variable that can take any value within an interval of measurement.",
+    "supportingEvidence": "A measured time may be 12.4 seconds or 12.43 seconds.",
+    "explanation": "The example illustrates continuous variable because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name continuous variable without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-11",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Populations, samples, and variables",
+    "term": "Mean",
+    "definition": "The arithmetic average: sum of data values divided by the number of values.",
+    "example": "The mean of 2, 4, and 9 is 5.",
+    "correctAnswer": "The arithmetic average: sum of data values divided by the number of values.",
+    "supportingEvidence": "The mean of 2, 4, and 9 is 5.",
+    "explanation": "The example illustrates mean because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name mean without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-12",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Summaries and distributions",
+    "term": "Median",
+    "definition": "The middle value after data are ordered, or the average of the two middle values when count is even.",
+    "example": "The median of 1, 5, 8 is 5.",
+    "correctAnswer": "The middle value after data are ordered, or the average of the two middle values when count is even.",
+    "supportingEvidence": "The median of 1, 5, 8 is 5.",
+    "explanation": "The example illustrates median because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name median without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-13",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Summaries and distributions",
+    "term": "Mode",
+    "definition": "The value or category occurring most often; a data set may have multiple modes or none.",
+    "example": "In 2, 2, 4, 7, the mode is 2.",
+    "correctAnswer": "The value or category occurring most often; a data set may have multiple modes or none.",
+    "supportingEvidence": "In 2, 2, 4, 7, the mode is 2.",
+    "explanation": "The example illustrates mode because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name mode without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-14",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Summaries and distributions",
+    "term": "Range",
+    "definition": "The maximum data value minus the minimum data value.",
+    "example": "For 3, 6, and 11, the range is 8.",
+    "correctAnswer": "The maximum data value minus the minimum data value.",
+    "supportingEvidence": "For 3, 6, and 11, the range is 8.",
+    "explanation": "The example illustrates range because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name range without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-15",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Summaries and distributions",
+    "term": "Quartile",
+    "definition": "A value dividing ordered data into four parts; quartiles are based on medians of portions of the data.",
+    "example": "The first quartile marks the lower-quarter boundary under the selected convention.",
+    "correctAnswer": "A value dividing ordered data into four parts; quartiles are based on medians of portions of the data.",
+    "supportingEvidence": "The first quartile marks the lower-quarter boundary under the selected convention.",
+    "explanation": "The example illustrates quartile because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quartile without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-16",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Summaries and distributions",
+    "term": "Interquartile range",
+    "definition": "The third quartile minus the first quartile, measuring the spread of the middle half.",
+    "example": "If Q1=4 and Q3=10, IQR=6.",
+    "correctAnswer": "The third quartile minus the first quartile, measuring the spread of the middle half.",
+    "supportingEvidence": "If Q1=4 and Q3=10, IQR=6.",
+    "explanation": "The example illustrates interquartile range because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name interquartile range without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-17",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Summaries and distributions",
+    "term": "Outlier",
+    "definition": "A value unusually far from the rest of a distribution under a stated rule or context.",
+    "example": "A value beyond 1.5 IQR from a box-plot quartile is flagged by a common rule.",
+    "correctAnswer": "A value unusually far from the rest of a distribution under a stated rule or context.",
+    "supportingEvidence": "A value beyond 1.5 IQR from a box-plot quartile is flagged by a common rule.",
+    "explanation": "The example illustrates outlier because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name outlier without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-18",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Summaries and distributions",
+    "term": "Distribution",
+    "definition": "The pattern of values in data, including shape, center, spread, and unusual features.",
+    "example": "A histogram can show whether values cluster or form a long tail.",
+    "correctAnswer": "The pattern of values in data, including shape, center, spread, and unusual features.",
+    "supportingEvidence": "A histogram can show whether values cluster or form a long tail.",
+    "explanation": "The example illustrates distribution because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name distribution without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-19",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Summaries and distributions",
+    "term": "Frequency",
+    "definition": "The number of observations in a category or interval.",
+    "example": "If 12 students choose robotics, that category has frequency 12.",
+    "correctAnswer": "The number of observations in a category or interval.",
+    "supportingEvidence": "If 12 students choose robotics, that category has frequency 12.",
+    "explanation": "The example illustrates frequency because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name frequency without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-20",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Summaries and distributions",
+    "term": "Relative frequency",
+    "definition": "A category's frequency divided by the total number of observations.",
+    "example": "12 of 60 responses gives relative frequency 0.20, or 20%.",
+    "correctAnswer": "A category's frequency divided by the total number of observations.",
+    "supportingEvidence": "12 of 60 responses gives relative frequency 0.20, or 20%.",
+    "explanation": "The example illustrates relative frequency because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name relative frequency without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-21",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Summaries and distributions",
+    "term": "Histogram",
+    "definition": "A graph grouping quantitative data into adjacent intervals and showing their frequencies.",
+    "example": "Touching bars in a histogram represent neighboring number intervals.",
+    "correctAnswer": "A graph grouping quantitative data into adjacent intervals and showing their frequencies.",
+    "supportingEvidence": "Touching bars in a histogram represent neighboring number intervals.",
+    "explanation": "The example illustrates histogram because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name histogram without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-22",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Data displays and association",
+    "term": "Bar graph",
+    "definition": "A graph comparing counts or values for separate categories using separated bars.",
+    "example": "Separate bars can compare counts by favorite subject.",
+    "correctAnswer": "A graph comparing counts or values for separate categories using separated bars.",
+    "supportingEvidence": "Separate bars can compare counts by favorite subject.",
+    "explanation": "The example illustrates bar graph because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name bar graph without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-23",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Data displays and association",
+    "term": "Dot plot",
+    "definition": "A display marking each observation above its value on a number line.",
+    "example": "Repeated dots above 5 show several observations equal 5.",
+    "correctAnswer": "A display marking each observation above its value on a number line.",
+    "supportingEvidence": "Repeated dots above 5 show several observations equal 5.",
+    "explanation": "The example illustrates dot plot because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name dot plot without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-24",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Data displays and association",
+    "term": "Box plot",
+    "definition": "A display summarizing a distribution with its median, quartiles, and often whiskers.",
+    "example": "The box spans Q1 to Q3 and contains the middle half of the data.",
+    "correctAnswer": "A display summarizing a distribution with its median, quartiles, and often whiskers.",
+    "supportingEvidence": "The box spans Q1 to Q3 and contains the middle half of the data.",
+    "explanation": "The example illustrates box plot because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name box plot without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-25",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Data displays and association",
+    "term": "Scatterplot",
+    "definition": "A graph of paired quantitative observations used to examine association.",
+    "example": "Each point may represent a student's study time and quiz score.",
+    "correctAnswer": "A graph of paired quantitative observations used to examine association.",
+    "supportingEvidence": "Each point may represent a student's study time and quiz score.",
+    "explanation": "The example illustrates scatterplot because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name scatterplot without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-26",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Data displays and association",
+    "term": "Standard deviation",
+    "definition": "A measure of spread based on typical distance from the mean, in the data's units.",
+    "example": "A larger standard deviation indicates more spread around the mean.",
+    "correctAnswer": "A measure of spread based on typical distance from the mean, in the data's units.",
+    "supportingEvidence": "A larger standard deviation indicates more spread around the mean.",
+    "explanation": "The example illustrates standard deviation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name standard deviation without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-27",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Data displays and association",
+    "term": "Variance",
+    "definition": "The average squared deviation from the mean for a population, or a sample-based estimate for a sample.",
+    "example": "Variance is expressed in squared units, unlike standard deviation.",
+    "correctAnswer": "The average squared deviation from the mean for a population, or a sample-based estimate for a sample.",
+    "supportingEvidence": "Variance is expressed in squared units, unlike standard deviation.",
+    "explanation": "The example illustrates variance because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name variance without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-28",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Data displays and association",
+    "term": "Skewed distribution",
+    "definition": "A distribution with a longer tail on one side than on the other.",
+    "example": "A few very large incomes can create a right-skewed distribution.",
+    "correctAnswer": "A distribution with a longer tail on one side than on the other.",
+    "supportingEvidence": "A few very large incomes can create a right-skewed distribution.",
+    "explanation": "The example illustrates skewed distribution because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name skewed distribution without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-29",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Data displays and association",
+    "term": "Symmetric distribution",
+    "definition": "A distribution whose two sides are approximately mirror-shaped around its center.",
+    "example": "A balanced bell-shaped distribution is approximately symmetric.",
+    "correctAnswer": "A distribution whose two sides are approximately mirror-shaped around its center.",
+    "supportingEvidence": "A balanced bell-shaped distribution is approximately symmetric.",
+    "explanation": "The example illustrates symmetric distribution because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name symmetric distribution without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-30",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Data displays and association",
+    "term": "Sampling bias",
+    "definition": "A systematic feature of a sampling process that makes some population members less likely to be represented.",
+    "example": "Polling only morning visitors may miss people who arrive later.",
+    "correctAnswer": "A systematic feature of a sampling process that makes some population members less likely to be represented.",
+    "supportingEvidence": "Polling only morning visitors may miss people who arrive later.",
+    "explanation": "The example illustrates sampling bias because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name sampling bias without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-31",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Data displays and association",
+    "term": "Random sample",
+    "definition": "A sample selected by a chance process so each population member has a known selection chance.",
+    "example": "Randomly selecting student ID numbers can reduce selection bias.",
+    "correctAnswer": "A sample selected by a chance process so each population member has a known selection chance.",
+    "supportingEvidence": "Randomly selecting student ID numbers can reduce selection bias.",
+    "explanation": "The example illustrates random sample because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name random sample without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-32",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Sampling and study design",
+    "term": "Convenience sample",
+    "definition": "A sample chosen because members are easy to reach, which may not represent the population.",
+    "example": "Surveying only friends in one class is a convenience sample.",
+    "correctAnswer": "A sample chosen because members are easy to reach, which may not represent the population.",
+    "supportingEvidence": "Surveying only friends in one class is a convenience sample.",
+    "explanation": "The example illustrates convenience sample because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name convenience sample without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-33",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Sampling and study design",
+    "term": "Representative sample",
+    "definition": "A sample whose relevant characteristics reflect those of the target population.",
+    "example": "A schoolwide sample should include students from different grade levels.",
+    "correctAnswer": "A sample whose relevant characteristics reflect those of the target population.",
+    "supportingEvidence": "A schoolwide sample should include students from different grade levels.",
+    "explanation": "The example illustrates representative sample because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name representative sample without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-34",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Sampling and study design",
+    "term": "Random assignment",
+    "definition": "Using chance to place study participants into treatment groups.",
+    "example": "A random process assigns volunteers to either of two study conditions.",
+    "correctAnswer": "Using chance to place study participants into treatment groups.",
+    "supportingEvidence": "A random process assigns volunteers to either of two study conditions.",
+    "explanation": "The example illustrates random assignment because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name random assignment without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-35",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Sampling and study design",
+    "term": "Observational study",
+    "definition": "A study observing subjects without assigning an intervention to them.",
+    "example": "Recording exercise habits and sleep without changing either is observational.",
+    "correctAnswer": "A study observing subjects without assigning an intervention to them.",
+    "supportingEvidence": "Recording exercise habits and sleep without changing either is observational.",
+    "explanation": "The example illustrates observational study because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name observational study without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-36",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Sampling and study design",
+    "term": "Experiment",
+    "definition": "A study in which researchers impose treatments to investigate their effects.",
+    "example": "Randomly assigning two practice methods creates an experiment.",
+    "correctAnswer": "A study in which researchers impose treatments to investigate their effects.",
+    "supportingEvidence": "Randomly assigning two practice methods creates an experiment.",
+    "explanation": "The example illustrates experiment because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name experiment without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-37",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Sampling and study design",
+    "term": "Correlation",
+    "definition": "A measure or description of association between variables; it does not by itself establish causation.",
+    "example": "Ice-cream sales and swimming may rise together without one causing the other.",
+    "correctAnswer": "A measure or description of association between variables; it does not by itself establish causation.",
+    "supportingEvidence": "Ice-cream sales and swimming may rise together without one causing the other.",
+    "explanation": "The example illustrates correlation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name correlation without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-38",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Sampling and study design",
+    "term": "Positive association",
+    "definition": "An association where larger values of one variable tend to pair with larger values of another.",
+    "example": "More practice time may be associated with higher scores.",
+    "correctAnswer": "An association where larger values of one variable tend to pair with larger values of another.",
+    "supportingEvidence": "More practice time may be associated with higher scores.",
+    "explanation": "The example illustrates positive association because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name positive association without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-39",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Sampling and study design",
+    "term": "Negative association",
+    "definition": "An association where larger values of one variable tend to pair with smaller values of another.",
+    "example": "Greater distance remaining tends to pair with less fuel in a fixed trip model.",
+    "correctAnswer": "An association where larger values of one variable tend to pair with smaller values of another.",
+    "supportingEvidence": "Greater distance remaining tends to pair with less fuel in a fixed trip model.",
+    "explanation": "The example illustrates negative association because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name negative association without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-40",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Sampling and study design",
+    "term": "No apparent association",
+    "definition": "A pattern in which paired values show no clear increasing or decreasing trend.",
+    "example": "Shoe size may show no clear relationship with quiz score in a class.",
+    "correctAnswer": "A pattern in which paired values show no clear increasing or decreasing trend.",
+    "supportingEvidence": "Shoe size may show no clear relationship with quiz score in a class.",
+    "explanation": "The example illustrates no apparent association because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name no apparent association without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-41",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Sampling and study design",
+    "term": "Probability",
+    "definition": "A numerical measure from zero to one of the likelihood of an event in a probability model.",
+    "example": "A fair coin has probability 1/2 of landing heads.",
+    "correctAnswer": "A numerical measure from zero to one of the likelihood of an event in a probability model.",
+    "supportingEvidence": "A fair coin has probability 1/2 of landing heads.",
+    "explanation": "The example illustrates probability because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name probability without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-42",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Probability and random variables",
+    "term": "Sample space",
+    "definition": "The set of all possible outcomes in a probability experiment.",
+    "example": "A coin toss has sample space {heads, tails}.",
+    "correctAnswer": "The set of all possible outcomes in a probability experiment.",
+    "supportingEvidence": "A coin toss has sample space {heads, tails}.",
+    "explanation": "The example illustrates sample space because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name sample space without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-43",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Probability and random variables",
+    "term": "Event",
+    "definition": "A set of outcomes of a probability experiment.",
+    "example": "Rolling an even number on a standard die is event {2,4,6}.",
+    "correctAnswer": "A set of outcomes of a probability experiment.",
+    "supportingEvidence": "Rolling an even number on a standard die is event {2,4,6}.",
+    "explanation": "The example illustrates event because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name event without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-44",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Probability and random variables",
+    "term": "Complementary event",
+    "definition": "The event consisting of outcomes not in a given event; its probability is one minus that event's probability.",
+    "example": "If P(rain)=0.3, P(no rain)=0.7 in the model.",
+    "correctAnswer": "The event consisting of outcomes not in a given event; its probability is one minus that event's probability.",
+    "supportingEvidence": "If P(rain)=0.3, P(no rain)=0.7 in the model.",
+    "explanation": "The example illustrates complementary event because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name complementary event without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-45",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Probability and random variables",
+    "term": "Independent events",
+    "definition": "Events for which occurrence of one does not change the probability of the other.",
+    "example": "Two fair coin tosses are independent.",
+    "correctAnswer": "Events for which occurrence of one does not change the probability of the other.",
+    "supportingEvidence": "Two fair coin tosses are independent.",
+    "explanation": "The example illustrates independent events because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name independent events without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-46",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Probability and random variables",
+    "term": "Dependent events",
+    "definition": "Events where one outcome changes the probability of another.",
+    "example": "Drawing two cards without replacement creates dependent draws.",
+    "correctAnswer": "Events where one outcome changes the probability of another.",
+    "supportingEvidence": "Drawing two cards without replacement creates dependent draws.",
+    "explanation": "The example illustrates dependent events because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name dependent events without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-47",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Probability and random variables",
+    "term": "Addition rule for disjoint events",
+    "definition": "For mutually exclusive events A and B, P(A or B)=P(A)+P(B).",
+    "example": "On one die roll, P(1 or 2)=1/6+1/6=1/3.",
+    "correctAnswer": "For mutually exclusive events A and B, P(A or B)=P(A)+P(B).",
+    "supportingEvidence": "On one die roll, P(1 or 2)=1/6+1/6=1/3.",
+    "explanation": "The example illustrates addition rule for disjoint events because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name addition rule for disjoint events without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-48",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Probability and random variables",
+    "term": "Multiplication rule for independent events",
+    "definition": "For independent events A and B, P(A and B)=P(A)P(B).",
+    "example": "Two heads in two fair tosses has probability 1/2·1/2=1/4.",
+    "correctAnswer": "For independent events A and B, P(A and B)=P(A)P(B).",
+    "supportingEvidence": "Two heads in two fair tosses has probability 1/2·1/2=1/4.",
+    "explanation": "The example illustrates multiplication rule for independent events because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name multiplication rule for independent events without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-49",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Probability and random variables",
+    "term": "Conditional probability",
+    "definition": "The probability of event A given B, computed as P(A and B)/P(B) when P(B)>0.",
+    "example": "Among 20 students in a group, 8 who ride a bus gives conditional proportion 8/20.",
+    "correctAnswer": "The probability of event A given B, computed as P(A and B)/P(B) when P(B)>0.",
+    "supportingEvidence": "Among 20 students in a group, 8 who ride a bus gives conditional proportion 8/20.",
+    "explanation": "The example illustrates conditional probability because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name conditional probability without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-50",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Probability and random variables",
+    "term": "Expected value",
+    "definition": "The probability-weighted average outcome of a random variable.",
+    "example": "A fair die's expected value is (1+2+3+4+5+6)/6=3.5.",
+    "correctAnswer": "The probability-weighted average outcome of a random variable.",
+    "supportingEvidence": "A fair die's expected value is (1+2+3+4+5+6)/6=3.5.",
+    "explanation": "The example illustrates expected value because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name expected value without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  },
+  {
+    "id": "math-statistics-probability-51",
+    "topicId": "math-statistics-probability",
+    "subtopic": "Probability and random variables",
+    "term": "Margin of error",
+    "definition": "An interval estimate's stated allowance for sampling variability under its assumptions.",
+    "example": "An estimate of 52% with a 3-point margin gives an interval from 49% to 55%.",
+    "correctAnswer": "An interval estimate's stated allowance for sampling variability under its assumptions.",
+    "supportingEvidence": "An estimate of 52% with a 3-point margin gives an interval from 49% to 55%.",
+    "explanation": "The example illustrates margin of error because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name margin of error without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Introductory Statistics, Chapters 1–4",
+      "referenceUrl": "https://openstax.org/books/introductory-statistics/pages/1-1-definitions-of-statistics-probability-and-key-terms"
+    }
+  }
+]

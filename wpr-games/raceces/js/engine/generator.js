@@ -152,9 +152,14 @@
     }
     var seenModels = this.seenModels;
     var unseen = all.filter(function (m) { return seenModels.indexOf(m.id) < 0; });
-    // Visit every eligible underlying problem before entering review. A filtered pool never
-    // borrows a passage from an unrelated topic to hide exhaustion.
+    // Visit every eligible underlying problem in the selected topic before that topic
+    // enters review. A filtered pool never borrows a passage from an unrelated topic.
     var cands = unseen.length ? unseen : all;
+    if (mode === 'rearrange') {
+      var recentRearrange = new Set(h.slice(-30).filter(function (e) { return e.mode === 'rearrange'; }).map(function (e) { return e.modelId; }));
+      var freshSignatures = cands.filter(function (m) { return !recentRearrange.has(m.id); });
+      if (freshSignatures.length) cands = freshSignatures;
+    }
     if (!unseen.length && mode === 'rearrange') {
       // Rearrange has one signature per writing model, so avoid models seen in this mode within the last 30 challenges.
       var seenRe = h.slice(-30).filter(function (e) { return e.mode === 'rearrange'; }).map(function (e) { return e.modelId; });
@@ -172,6 +177,25 @@
       if (pool2.length) cands = pool2;
       var pool3 = cands.filter(function (m) { return structKey(m) !== lastKey; });
       if (pool3.length) cands = pool3;
+    }
+    // Choose among eligible topics before choosing a writing model. This keeps
+    // topic frequency balanced when a subject contributes different numbers of
+    // authored models per topic (as the mathematics library does).
+    var topicPool = all;
+    var topicIds = Array.from(new Set(topicPool.map(function (m) { return m.topicId; })));
+    if (topicIds.length > 1) {
+      var recentTopics = h.slice(-topicIds.length);
+      var topicId = this._pickLeast(topicIds, function (id) {
+        return countIn(recentTopics, function (e) { return e.topicId === id; });
+      }, rng);
+      var topicCands = cands.filter(function (m) { return m.topicId === topicId; });
+      // A topic enters review independently after its own unseen models are used.
+      if (!topicCands.length) topicCands = all.filter(function (m) { return m.topicId === topicId; });
+      if (mode === 'rearrange' && topicCands.length) {
+        var topicFresh = topicCands.filter(function (m) { return !recentRearrange.has(m.id); });
+        if (topicFresh.length) topicCands = topicFresh;
+      }
+      if (topicCands.length) cands = topicCands;
     }
     var last3 = h.slice(-3), last2 = h.slice(-2), last5 = h.slice(-5);
     var model = this._pickLeast(cands, function (m) {
@@ -221,7 +245,13 @@
       try { return this.next(opts); } finally { this._retries = 0; }
     }
     var wasUsed = seenModels.indexOf(model.id) >= 0;
-    ch.pool = { models: all.length, unseenBefore: unseen.length, review: wasUsed, label: wasUsed ? 'Review practice' : 'New writing problem' };
+    ch.pool = {
+      models: all.length,
+      topicModels: all.filter(function (m) { return m.topicId === model.topicId; }).length,
+      unseenBefore: unseen.length,
+      review: wasUsed,
+      label: wasUsed ? 'Review practice' : 'New writing problem'
+    };
     if (!wasUsed) this.seenModels.push(model.id);
     var entry = { mode: mode, level: level, modelId: model.id, topicId: model.topicId, passageId: ch.passageId, family: model.family, key: key, role: ch.role, signature: ch.signature };
     if (model.structure) { entry.structure = model.structure; entry.kitId = model.kitId; }

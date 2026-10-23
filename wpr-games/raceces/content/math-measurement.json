@@ -1,0 +1,1277 @@
+[
+  {
+    "id": "math-measurement-01",
+    "topicId": "math-measurement",
+    "subtopic": "Length, perimeter, and area",
+    "term": "Perimeter",
+    "definition": "The total distance around a two-dimensional figure.",
+    "example": "A rectangle 4 cm by 7 cm has perimeter 22 cm.",
+    "correctAnswer": "The total distance around a two-dimensional figure.",
+    "supportingEvidence": "A rectangle 4 cm by 7 cm has perimeter 22 cm.",
+    "explanation": "The example illustrates perimeter because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name perimeter without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-02",
+    "topicId": "math-measurement",
+    "subtopic": "Length, perimeter, and area",
+    "term": "Area",
+    "definition": "The measure of the amount of two-dimensional surface enclosed by a boundary.",
+    "example": "A 4 cm by 7 cm rectangle has area 28 square centimeters.",
+    "correctAnswer": "The measure of the amount of two-dimensional surface enclosed by a boundary.",
+    "supportingEvidence": "A 4 cm by 7 cm rectangle has area 28 square centimeters.",
+    "explanation": "The example illustrates area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name area without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-03",
+    "topicId": "math-measurement",
+    "subtopic": "Length, perimeter, and area",
+    "term": "Square unit",
+    "definition": "A unit measuring area, formed by a square with one-unit side lengths.",
+    "example": "A 3-by-5 grid contains 15 square units.",
+    "correctAnswer": "A unit measuring area, formed by a square with one-unit side lengths.",
+    "supportingEvidence": "A 3-by-5 grid contains 15 square units.",
+    "explanation": "The example illustrates square unit because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name square unit without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-04",
+    "topicId": "math-measurement",
+    "subtopic": "Length, perimeter, and area",
+    "term": "Linear unit",
+    "definition": "A unit measuring one-dimensional length.",
+    "example": "A side length may be measured in centimeters.",
+    "correctAnswer": "A unit measuring one-dimensional length.",
+    "supportingEvidence": "A side length may be measured in centimeters.",
+    "explanation": "The example illustrates linear unit because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name linear unit without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-05",
+    "topicId": "math-measurement",
+    "subtopic": "Length, perimeter, and area",
+    "term": "Volume",
+    "definition": "The amount of three-dimensional space occupied by a solid.",
+    "example": "A 2-by-3-by-4 prism has volume 24 cubic units.",
+    "correctAnswer": "The amount of three-dimensional space occupied by a solid.",
+    "supportingEvidence": "A 2-by-3-by-4 prism has volume 24 cubic units.",
+    "explanation": "The example illustrates volume because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name volume without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-06",
+    "topicId": "math-measurement",
+    "subtopic": "Length, perimeter, and area",
+    "term": "Cubic unit",
+    "definition": "A unit of volume represented by a cube with one-unit edges.",
+    "example": "A box measuring 2 by 3 by 4 units holds 24 cubic units.",
+    "correctAnswer": "A unit of volume represented by a cube with one-unit edges.",
+    "supportingEvidence": "A box measuring 2 by 3 by 4 units holds 24 cubic units.",
+    "explanation": "The example illustrates cubic unit because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name cubic unit without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-07",
+    "topicId": "math-measurement",
+    "subtopic": "Length, perimeter, and area",
+    "term": "Surface area",
+    "definition": "The sum of the areas of all exposed faces of a three-dimensional solid.",
+    "example": "A cube with side length 2 has surface area 24 square units.",
+    "correctAnswer": "The sum of the areas of all exposed faces of a three-dimensional solid.",
+    "supportingEvidence": "A cube with side length 2 has surface area 24 square units.",
+    "explanation": "The example illustrates surface area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name surface area without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-08",
+    "topicId": "math-measurement",
+    "subtopic": "Length, perimeter, and area",
+    "term": "Rectangle area",
+    "definition": "The area of a rectangle is the product of its length and width.",
+    "example": "A rectangle 8 units by 3 units has area 24 square units.",
+    "correctAnswer": "The area of a rectangle is the product of its length and width.",
+    "supportingEvidence": "A rectangle 8 units by 3 units has area 24 square units.",
+    "explanation": "The example illustrates rectangle area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name rectangle area without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-09",
+    "topicId": "math-measurement",
+    "subtopic": "Length, perimeter, and area",
+    "term": "Rectangle perimeter",
+    "definition": "A rectangle's perimeter is twice the sum of its length and width.",
+    "example": "A rectangle 8 units by 3 units has perimeter 22 units.",
+    "correctAnswer": "A rectangle's perimeter is twice the sum of its length and width.",
+    "supportingEvidence": "A rectangle 8 units by 3 units has perimeter 22 units.",
+    "explanation": "The example illustrates rectangle perimeter because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name rectangle perimeter without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-10",
+    "topicId": "math-measurement",
+    "subtopic": "Length, perimeter, and area",
+    "term": "Square area",
+    "definition": "A square's area is the square of its side length.",
+    "example": "A square with side 5 meters has area 25 square meters.",
+    "correctAnswer": "A square's area is the square of its side length.",
+    "supportingEvidence": "A square with side 5 meters has area 25 square meters.",
+    "explanation": "The example illustrates square area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name square area without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-11",
+    "topicId": "math-measurement",
+    "subtopic": "Length, perimeter, and area",
+    "term": "Square perimeter",
+    "definition": "A square's perimeter is four times its side length.",
+    "example": "A square with side 5 meters has perimeter 20 meters.",
+    "correctAnswer": "A square's perimeter is four times its side length.",
+    "supportingEvidence": "A square with side 5 meters has perimeter 20 meters.",
+    "explanation": "The example illustrates square perimeter because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name square perimeter without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-12",
+    "topicId": "math-measurement",
+    "subtopic": "Circle and composite-area formulas",
+    "term": "Triangle area",
+    "definition": "A triangle's area is half the product of a base and its corresponding height.",
+    "example": "Base 10 and perpendicular height 6 give area 30 square units.",
+    "correctAnswer": "A triangle's area is half the product of a base and its corresponding height.",
+    "supportingEvidence": "Base 10 and perpendicular height 6 give area 30 square units.",
+    "explanation": "The example illustrates triangle area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name triangle area without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-13",
+    "topicId": "math-measurement",
+    "subtopic": "Circle and composite-area formulas",
+    "term": "Parallelogram area",
+    "definition": "A parallelogram's area equals a base times its perpendicular height.",
+    "example": "Base 9 and height 4 give area 36 square units.",
+    "correctAnswer": "A parallelogram's area equals a base times its perpendicular height.",
+    "supportingEvidence": "Base 9 and height 4 give area 36 square units.",
+    "explanation": "The example illustrates parallelogram area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name parallelogram area without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-14",
+    "topicId": "math-measurement",
+    "subtopic": "Circle and composite-area formulas",
+    "term": "Trapezoid area",
+    "definition": "A trapezoid's area is half the sum of its parallel bases times its height.",
+    "example": "Bases 6 and 10 with height 4 give area 32 square units.",
+    "correctAnswer": "A trapezoid's area is half the sum of its parallel bases times its height.",
+    "supportingEvidence": "Bases 6 and 10 with height 4 give area 32 square units.",
+    "explanation": "The example illustrates trapezoid area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name trapezoid area without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-15",
+    "topicId": "math-measurement",
+    "subtopic": "Circle and composite-area formulas",
+    "term": "Circle circumference",
+    "definition": "The distance around a circle, equal to 2πr or πd.",
+    "example": "A circle with radius 3 has circumference 6π units.",
+    "correctAnswer": "The distance around a circle, equal to 2πr or πd.",
+    "supportingEvidence": "A circle with radius 3 has circumference 6π units.",
+    "explanation": "The example illustrates circle circumference because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name circle circumference without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-16",
+    "topicId": "math-measurement",
+    "subtopic": "Circle and composite-area formulas",
+    "term": "Circle area",
+    "definition": "The area of a circle is π times the square of its radius.",
+    "example": "A circle with radius 3 has area 9π square units.",
+    "correctAnswer": "The area of a circle is π times the square of its radius.",
+    "supportingEvidence": "A circle with radius 3 has area 9π square units.",
+    "explanation": "The example illustrates circle area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name circle area without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-17",
+    "topicId": "math-measurement",
+    "subtopic": "Circle and composite-area formulas",
+    "term": "Radius",
+    "definition": "A segment from a circle's center to a point on the circle.",
+    "example": "A circle with diameter 12 has radius 6.",
+    "correctAnswer": "A segment from a circle's center to a point on the circle.",
+    "supportingEvidence": "A circle with diameter 12 has radius 6.",
+    "explanation": "The example illustrates radius because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name radius without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-18",
+    "topicId": "math-measurement",
+    "subtopic": "Circle and composite-area formulas",
+    "term": "Diameter",
+    "definition": "A chord passing through the center of a circle; its length is twice the radius.",
+    "example": "A radius of 6 corresponds to diameter 12.",
+    "correctAnswer": "A chord passing through the center of a circle; its length is twice the radius.",
+    "supportingEvidence": "A radius of 6 corresponds to diameter 12.",
+    "explanation": "The example illustrates diameter because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name diameter without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-19",
+    "topicId": "math-measurement",
+    "subtopic": "Circle and composite-area formulas",
+    "term": "Circumference-to-diameter ratio",
+    "definition": "For every circle, circumference divided by diameter equals π.",
+    "example": "A circle with diameter 8 has circumference 8π.",
+    "correctAnswer": "For every circle, circumference divided by diameter equals π.",
+    "supportingEvidence": "A circle with diameter 8 has circumference 8π.",
+    "explanation": "The example illustrates circumference-to-diameter ratio because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name circumference-to-diameter ratio without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-20",
+    "topicId": "math-measurement",
+    "subtopic": "Circle and composite-area formulas",
+    "term": "Prism volume",
+    "definition": "A prism's volume equals the area of its base times its perpendicular height.",
+    "example": "Base area 12 and height 5 give volume 60 cubic units.",
+    "correctAnswer": "A prism's volume equals the area of its base times its perpendicular height.",
+    "supportingEvidence": "Base area 12 and height 5 give volume 60 cubic units.",
+    "explanation": "The example illustrates prism volume because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name prism volume without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-21",
+    "topicId": "math-measurement",
+    "subtopic": "Circle and composite-area formulas",
+    "term": "Rectangular prism volume",
+    "definition": "The volume of a rectangular prism is length times width times height.",
+    "example": "Dimensions 2, 3, and 5 give volume 30 cubic units.",
+    "correctAnswer": "The volume of a rectangular prism is length times width times height.",
+    "supportingEvidence": "Dimensions 2, 3, and 5 give volume 30 cubic units.",
+    "explanation": "The example illustrates rectangular prism volume because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name rectangular prism volume without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-22",
+    "topicId": "math-measurement",
+    "subtopic": "Surface area and solid volume",
+    "term": "Prism surface area",
+    "definition": "The surface area of a prism is the sum of its base areas and lateral face areas.",
+    "example": "A rectangular prism's six face areas are added.",
+    "correctAnswer": "The surface area of a prism is the sum of its base areas and lateral face areas.",
+    "supportingEvidence": "A rectangular prism's six face areas are added.",
+    "explanation": "The example illustrates prism surface area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name prism surface area without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-23",
+    "topicId": "math-measurement",
+    "subtopic": "Surface area and solid volume",
+    "term": "Cylinder volume",
+    "definition": "A cylinder's volume equals the area of its circular base times its height.",
+    "example": "Radius 2 and height 5 give volume 20π cubic units.",
+    "correctAnswer": "A cylinder's volume equals the area of its circular base times its height.",
+    "supportingEvidence": "Radius 2 and height 5 give volume 20π cubic units.",
+    "explanation": "The example illustrates cylinder volume because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name cylinder volume without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-24",
+    "topicId": "math-measurement",
+    "subtopic": "Surface area and solid volume",
+    "term": "Cylinder surface area",
+    "definition": "A closed cylinder's surface area is two circular bases plus its curved lateral area.",
+    "example": "For radius r and height h, the total is 2πr² + 2πrh.",
+    "correctAnswer": "A closed cylinder's surface area is two circular bases plus its curved lateral area.",
+    "supportingEvidence": "For radius r and height h, the total is 2πr² + 2πrh.",
+    "explanation": "The example illustrates cylinder surface area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name cylinder surface area without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-25",
+    "topicId": "math-measurement",
+    "subtopic": "Surface area and solid volume",
+    "term": "Pyramid volume",
+    "definition": "A pyramid's volume is one-third the product of its base area and perpendicular height.",
+    "example": "Base area 27 and height 6 give volume 54 cubic units.",
+    "correctAnswer": "A pyramid's volume is one-third the product of its base area and perpendicular height.",
+    "supportingEvidence": "Base area 27 and height 6 give volume 54 cubic units.",
+    "explanation": "The example illustrates pyramid volume because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name pyramid volume without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-26",
+    "topicId": "math-measurement",
+    "subtopic": "Surface area and solid volume",
+    "term": "Cone volume",
+    "definition": "A cone's volume is one-third the product of its circular base area and height.",
+    "example": "Radius 3 and height 4 give volume 12π cubic units.",
+    "correctAnswer": "A cone's volume is one-third the product of its circular base area and height.",
+    "supportingEvidence": "Radius 3 and height 4 give volume 12π cubic units.",
+    "explanation": "The example illustrates cone volume because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name cone volume without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-27",
+    "topicId": "math-measurement",
+    "subtopic": "Surface area and solid volume",
+    "term": "Cone surface area",
+    "definition": "A cone's total surface area is its circular base area plus its lateral area.",
+    "example": "For radius r and slant height ℓ, total area is πr² + πrℓ.",
+    "correctAnswer": "A cone's total surface area is its circular base area plus its lateral area.",
+    "supportingEvidence": "For radius r and slant height ℓ, total area is πr² + πrℓ.",
+    "explanation": "The example illustrates cone surface area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name cone surface area without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-28",
+    "topicId": "math-measurement",
+    "subtopic": "Surface area and solid volume",
+    "term": "Sphere volume",
+    "definition": "A sphere's volume is four-thirds times π times the cube of its radius.",
+    "example": "Radius 3 gives volume 36π cubic units.",
+    "correctAnswer": "A sphere's volume is four-thirds times π times the cube of its radius.",
+    "supportingEvidence": "Radius 3 gives volume 36π cubic units.",
+    "explanation": "The example illustrates sphere volume because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name sphere volume without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-29",
+    "topicId": "math-measurement",
+    "subtopic": "Surface area and solid volume",
+    "term": "Sphere surface area",
+    "definition": "A sphere's surface area is four times π times the square of its radius.",
+    "example": "Radius 3 gives surface area 36π square units.",
+    "correctAnswer": "A sphere's surface area is four times π times the square of its radius.",
+    "supportingEvidence": "Radius 3 gives surface area 36π square units.",
+    "explanation": "The example illustrates sphere surface area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name sphere surface area without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-30",
+    "topicId": "math-measurement",
+    "subtopic": "Surface area and solid volume",
+    "term": "Slant height",
+    "definition": "The length along a cone's or pyramid's lateral face from apex toward the base edge.",
+    "example": "A cone's slant height is not its perpendicular vertical height.",
+    "correctAnswer": "The length along a cone's or pyramid's lateral face from apex toward the base edge.",
+    "supportingEvidence": "A cone's slant height is not its perpendicular vertical height.",
+    "explanation": "The example illustrates slant height because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name slant height without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-31",
+    "topicId": "math-measurement",
+    "subtopic": "Surface area and solid volume",
+    "term": "Composite figure",
+    "definition": "A shape formed by combining or removing simpler geometric figures.",
+    "example": "An L-shaped region can be split into two rectangles to find its area.",
+    "correctAnswer": "A shape formed by combining or removing simpler geometric figures.",
+    "supportingEvidence": "An L-shaped region can be split into two rectangles to find its area.",
+    "explanation": "The example illustrates composite figure because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name composite figure without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-32",
+    "topicId": "math-measurement",
+    "subtopic": "Scale and dimensional reasoning",
+    "term": "Decomposition for area",
+    "definition": "Finding a composite region's area by splitting it into nonoverlapping familiar shapes.",
+    "example": "Add the areas of two rectangles that form an L shape.",
+    "correctAnswer": "Finding a composite region's area by splitting it into nonoverlapping familiar shapes.",
+    "supportingEvidence": "Add the areas of two rectangles that form an L shape.",
+    "explanation": "The example illustrates decomposition for area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name decomposition for area without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-33",
+    "topicId": "math-measurement",
+    "subtopic": "Scale and dimensional reasoning",
+    "term": "Difference method for area",
+    "definition": "Finding a region's area by subtracting an excluded part from a larger shape.",
+    "example": "Subtract a rectangular cutout's area from the area of its outer rectangle.",
+    "correctAnswer": "Finding a region's area by subtracting an excluded part from a larger shape.",
+    "supportingEvidence": "Subtract a rectangular cutout's area from the area of its outer rectangle.",
+    "explanation": "The example illustrates difference method for area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name difference method for area without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-34",
+    "topicId": "math-measurement",
+    "subtopic": "Scale and dimensional reasoning",
+    "term": "Unit conversion",
+    "definition": "Changing a measurement to an equivalent amount expressed in another unit.",
+    "example": "1 meter equals 100 centimeters, so 2 meters equals 200 centimeters.",
+    "correctAnswer": "Changing a measurement to an equivalent amount expressed in another unit.",
+    "supportingEvidence": "1 meter equals 100 centimeters, so 2 meters equals 200 centimeters.",
+    "explanation": "The example illustrates unit conversion because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name unit conversion without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-35",
+    "topicId": "math-measurement",
+    "subtopic": "Scale and dimensional reasoning",
+    "term": "Dimensional analysis",
+    "definition": "Using units as factors to check or perform conversions and calculations.",
+    "example": "Multiplying 3 hours by 60 minutes per hour yields 180 minutes.",
+    "correctAnswer": "Using units as factors to check or perform conversions and calculations.",
+    "supportingEvidence": "Multiplying 3 hours by 60 minutes per hour yields 180 minutes.",
+    "explanation": "The example illustrates dimensional analysis because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name dimensional analysis without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-36",
+    "topicId": "math-measurement",
+    "subtopic": "Scale and dimensional reasoning",
+    "term": "Scale drawing",
+    "definition": "A drawing in which every represented length is proportional to the actual length by one scale ratio.",
+    "example": "At a scale of 1 centimeter to 5 kilometers, 3 centimeters represent 15 kilometers.",
+    "correctAnswer": "A drawing in which every represented length is proportional to the actual length by one scale ratio.",
+    "supportingEvidence": "At a scale of 1 centimeter to 5 kilometers, 3 centimeters represent 15 kilometers.",
+    "explanation": "The example illustrates scale factor in length because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name scale factor in length without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-37",
+    "topicId": "math-measurement",
+    "subtopic": "Scale and dimensional reasoning",
+    "term": "Area scaling",
+    "definition": "When lengths scale by k, corresponding areas scale by k².",
+    "example": "Doubling side lengths multiplies area by 4.",
+    "correctAnswer": "When lengths scale by k, corresponding areas scale by k².",
+    "supportingEvidence": "Doubling side lengths multiplies area by 4.",
+    "explanation": "The example illustrates area scaling because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name area scaling without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-38",
+    "topicId": "math-measurement",
+    "subtopic": "Scale and dimensional reasoning",
+    "term": "Volume scaling",
+    "definition": "When lengths scale by k, corresponding volumes scale by k³.",
+    "example": "Doubling all dimensions multiplies volume by 8.",
+    "correctAnswer": "When lengths scale by k, corresponding volumes scale by k³.",
+    "supportingEvidence": "Doubling all dimensions multiplies volume by 8.",
+    "explanation": "The example illustrates volume scaling because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name volume scaling without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-39",
+    "topicId": "math-measurement",
+    "subtopic": "Scale and dimensional reasoning",
+    "term": "Perimeter and scale",
+    "definition": "Similar figures' perimeters scale by the same factor as corresponding lengths.",
+    "example": "Tripling each side triples the perimeter.",
+    "correctAnswer": "Similar figures' perimeters scale by the same factor as corresponding lengths.",
+    "supportingEvidence": "Tripling each side triples the perimeter.",
+    "explanation": "The example illustrates perimeter and scale because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name perimeter and scale without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-40",
+    "topicId": "math-measurement",
+    "subtopic": "Scale and dimensional reasoning",
+    "term": "Missing dimension from area",
+    "definition": "An unknown side can be found by rearranging the relevant area formula.",
+    "example": "Area 30 and width 5 for a rectangle imply length 6.",
+    "correctAnswer": "An unknown side can be found by rearranging the relevant area formula.",
+    "supportingEvidence": "Area 30 and width 5 for a rectangle imply length 6.",
+    "explanation": "The example illustrates missing dimension from area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name missing dimension from area without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-41",
+    "topicId": "math-measurement",
+    "subtopic": "Scale and dimensional reasoning",
+    "term": "Missing dimension from volume",
+    "definition": "An unknown solid dimension can be found by solving the volume relationship.",
+    "example": "Volume 60, base area 12 imply prism height 5.",
+    "correctAnswer": "An unknown solid dimension can be found by solving the volume relationship.",
+    "supportingEvidence": "Volume 60, base area 12 imply prism height 5.",
+    "explanation": "The example illustrates missing dimension from volume because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name missing dimension from volume without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-42",
+    "topicId": "math-measurement",
+    "subtopic": "Units, rates, and measurement limits",
+    "term": "Area of a sector",
+    "definition": "A sector's area is the same fraction of a circle's area as its central angle is of a full turn.",
+    "example": "A 90-degree sector is one quarter of its circle's area.",
+    "correctAnswer": "A sector's area is the same fraction of a circle's area as its central angle is of a full turn.",
+    "supportingEvidence": "A 90-degree sector is one quarter of its circle's area.",
+    "explanation": "The example illustrates area of a sector because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name area of a sector without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-43",
+    "topicId": "math-measurement",
+    "subtopic": "Units, rates, and measurement limits",
+    "term": "Arc length",
+    "definition": "The length of part of a circle's circumference corresponding to a central angle.",
+    "example": "A 90-degree arc is one quarter of the full circumference.",
+    "correctAnswer": "The length of part of a circle's circumference corresponding to a central angle.",
+    "supportingEvidence": "A 90-degree arc is one quarter of the full circumference.",
+    "explanation": "The example illustrates arc length because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name arc length without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-44",
+    "topicId": "math-measurement",
+    "subtopic": "Units, rates, and measurement limits",
+    "term": "Semicircle area",
+    "definition": "A semicircle has half the area of its complete circle.",
+    "example": "A radius 4 semicircle has area 8π square units.",
+    "correctAnswer": "A semicircle has half the area of its complete circle.",
+    "supportingEvidence": "A radius 4 semicircle has area 8π square units.",
+    "explanation": "The example illustrates semicircle area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name semicircle area without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-45",
+    "topicId": "math-measurement",
+    "subtopic": "Units, rates, and measurement limits",
+    "term": "Lateral area",
+    "definition": "The area of a solid's side faces, excluding its base or bases.",
+    "example": "A cylinder's lateral area is 2πrh.",
+    "correctAnswer": "The area of a solid's side faces, excluding its base or bases.",
+    "supportingEvidence": "A cylinder's lateral area is 2πrh.",
+    "explanation": "The example illustrates lateral area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name lateral area without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-46",
+    "topicId": "math-measurement",
+    "subtopic": "Units, rates, and measurement limits",
+    "term": "Base area",
+    "definition": "The area of the repeated cross-section or designated base of a solid.",
+    "example": "A triangular prism's base area is the area of its triangular end.",
+    "correctAnswer": "The area of the repeated cross-section or designated base of a solid.",
+    "supportingEvidence": "A triangular prism's base area is the area of its triangular end.",
+    "explanation": "The example illustrates base area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name base area without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-47",
+    "topicId": "math-measurement",
+    "subtopic": "Units, rates, and measurement limits",
+    "term": "Prism cross-section",
+    "definition": "A slice parallel to a prism's bases has the same shape and area as each base.",
+    "example": "A prism with triangular bases has congruent triangular parallel sections.",
+    "correctAnswer": "A slice parallel to a prism's bases has the same shape and area as each base.",
+    "supportingEvidence": "A prism with triangular bases has congruent triangular parallel sections.",
+    "explanation": "The example illustrates prism cross-section because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name prism cross-section without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-48",
+    "topicId": "math-measurement",
+    "subtopic": "Units, rates, and measurement limits",
+    "term": "Density as a ratio",
+    "definition": "Density is mass divided by volume, with units such as grams per cubic centimeter.",
+    "example": "A 12-gram object occupying 3 cubic centimeters has density 4 g/cm³.",
+    "correctAnswer": "Density is mass divided by volume, with units such as grams per cubic centimeter.",
+    "supportingEvidence": "A 12-gram object occupying 3 cubic centimeters has density 4 g/cm³.",
+    "explanation": "The example illustrates density as a ratio because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name density as a ratio without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-49",
+    "topicId": "math-measurement",
+    "subtopic": "Units, rates, and measurement limits",
+    "term": "Rate per unit area",
+    "definition": "A quantity per square unit, such as people per square kilometer.",
+    "example": "60 plants across 12 square meters gives 5 plants per square meter.",
+    "correctAnswer": "A quantity per square unit, such as people per square kilometer.",
+    "supportingEvidence": "60 plants across 12 square meters gives 5 plants per square meter.",
+    "explanation": "The example illustrates rate per unit area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name rate per unit area without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-50",
+    "topicId": "math-measurement",
+    "subtopic": "Units, rates, and measurement limits",
+    "term": "Precision of measurement",
+    "definition": "A measured value is limited by the scale and resolution of the measuring tool.",
+    "example": "A ruler marked every centimeter does not justify reporting length to a tenth of a millimeter.",
+    "correctAnswer": "A measured value is limited by the scale and resolution of the measuring tool.",
+    "supportingEvidence": "A ruler marked every centimeter does not justify reporting length to a tenth of a millimeter.",
+    "explanation": "The example illustrates precision of measurement because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name precision of measurement without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  },
+  {
+    "id": "math-measurement-51",
+    "topicId": "math-measurement",
+    "subtopic": "Units, rates, and measurement limits",
+    "term": "Perimeter versus area",
+    "definition": "Perimeter measures boundary length, whereas area measures enclosed two-dimensional space.",
+    "example": "A 4-by-7 rectangle has perimeter 22 units and area 28 square units.",
+    "correctAnswer": "Perimeter measures boundary length, whereas area measures enclosed two-dimensional space.",
+    "supportingEvidence": "A 4-by-7 rectangle has perimeter 22 units and area 28 square units.",
+    "explanation": "The example illustrates perimeter versus area because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name perimeter versus area without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Prealgebra 2e, Measurement and Geometry",
+      "referenceUrl": "https://openstax.org/details/books/prealgebra-2e"
+    }
+  }
+]

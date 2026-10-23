@@ -249,7 +249,7 @@ Grading is semantic (`js/engine/rearrange.js` → `analyze`): Restate first; Ans
 ## Generator behavior
 
 - `Generator.build(index, {mode, modelId, targetKey, seed})` is pure and deterministic; every test and the game use it.
-- `Generator.next({mode, level, subject, topics})` chooses from the selected subject/topic pool, then a difficulty with eligible models. Unused writing models are exhausted before review begins. Recent topic/family balance is applied within the eligible pool; the history is bounded at 120 challenges. The target role or slot is least-recently-used and avoids a recent signature when possible.
+- `Generator.next({mode, level, subject, topics})` balances eligible topics, then chooses an unseen model for the selected topic or enters topic-specific review after that topic is exhausted. It does not borrow from an unrelated topic. Recent family balance is applied within the eligible pool; the history is bounded at 120 challenges. The target role or slot is least-recently-used and avoids a recent signature when possible.
 - History is bounded to 120 entries and restored from session storage.
 - Excerpt composition: intro + the two evidence facts + the off-topic fact + same-topic filler facts (5 or 7 facts by level; Advanced may add one fact to satisfy the passage-length floor). A seeded choice selects the facts, then the authored topic order is preserved. Verified supplementary facts carry source URLs in the bundled content.
 - Seeds: the browser seeds from the session start time (override with `?seed=abc` for reproducible play); tests use fixed seeds.

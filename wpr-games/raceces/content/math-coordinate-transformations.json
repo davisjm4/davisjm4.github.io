@@ -1,0 +1,1277 @@
+[
+  {
+    "id": "math-coordinate-transformations-01",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Coordinate plane and ordered pairs",
+    "term": "Ordered pair",
+    "definition": "A pair of coordinates written (x,y) that locates a point in the plane.",
+    "example": "(3,-2) means 3 units right and 2 units down from the origin.",
+    "correctAnswer": "A pair of coordinates written (x,y) that locates a point in the plane.",
+    "supportingEvidence": "(3,-2) means 3 units right and 2 units down from the origin.",
+    "explanation": "The example illustrates ordered pair because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name ordered pair without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-02",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Coordinate plane and ordered pairs",
+    "term": "Abscissa",
+    "definition": "The x-coordinate of a point in the coordinate plane.",
+    "example": "The abscissa of (-4,7) is -4.",
+    "correctAnswer": "The x-coordinate of a point in the coordinate plane.",
+    "supportingEvidence": "The abscissa of (-4,7) is -4.",
+    "explanation": "The example illustrates abscissa because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name abscissa without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-03",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Coordinate plane and ordered pairs",
+    "term": "Ordinate",
+    "definition": "The y-coordinate of a point in the coordinate plane.",
+    "example": "The ordinate of (-4,7) is 7.",
+    "correctAnswer": "The y-coordinate of a point in the coordinate plane.",
+    "supportingEvidence": "The ordinate of (-4,7) is 7.",
+    "explanation": "The example illustrates ordinate because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name ordinate without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-04",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Coordinate plane and ordered pairs",
+    "term": "Coordinate axes",
+    "definition": "The perpendicular horizontal x-axis and vertical y-axis.",
+    "example": "Their intersection is the origin (0,0).",
+    "correctAnswer": "The perpendicular horizontal x-axis and vertical y-axis.",
+    "supportingEvidence": "Their intersection is the origin (0,0).",
+    "explanation": "The example illustrates coordinate axes because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name coordinate axes without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-05",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Coordinate plane and ordered pairs",
+    "term": "Quadrant I",
+    "definition": "The region where x and y are both positive.",
+    "example": "(2,5) lies in Quadrant I.",
+    "correctAnswer": "The region where x and y are both positive.",
+    "supportingEvidence": "(2,5) lies in Quadrant I.",
+    "explanation": "The example illustrates quadrant i because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quadrant i without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-06",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Coordinate plane and ordered pairs",
+    "term": "Quadrant II",
+    "definition": "The region where x is negative and y is positive.",
+    "example": "(-2,5) lies in Quadrant II.",
+    "correctAnswer": "The region where x is negative and y is positive.",
+    "supportingEvidence": "(-2,5) lies in Quadrant II.",
+    "explanation": "The example illustrates quadrant ii because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quadrant ii without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-07",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Coordinate plane and ordered pairs",
+    "term": "Quadrant III",
+    "definition": "The region where both x and y are negative.",
+    "example": "(-2,-5) lies in Quadrant III.",
+    "correctAnswer": "The region where both x and y are negative.",
+    "supportingEvidence": "(-2,-5) lies in Quadrant III.",
+    "explanation": "The example illustrates quadrant iii because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quadrant iii without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-08",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Coordinate plane and ordered pairs",
+    "term": "Quadrant IV",
+    "definition": "The region where x is positive and y is negative.",
+    "example": "(2,-5) lies in Quadrant IV.",
+    "correctAnswer": "The region where x is positive and y is negative.",
+    "supportingEvidence": "(2,-5) lies in Quadrant IV.",
+    "explanation": "The example illustrates quadrant iv because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quadrant iv without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-09",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Coordinate plane and ordered pairs",
+    "term": "Horizontal distance",
+    "definition": "The absolute difference between two points' x-coordinates.",
+    "example": "Points with x-coordinates -2 and 5 are 7 units apart horizontally.",
+    "correctAnswer": "The absolute difference between two points' x-coordinates.",
+    "supportingEvidence": "Points with x-coordinates -2 and 5 are 7 units apart horizontally.",
+    "explanation": "The example illustrates horizontal distance because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name horizontal distance without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-10",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Coordinate plane and ordered pairs",
+    "term": "Vertical distance",
+    "definition": "The absolute difference between two points' y-coordinates.",
+    "example": "Points with y-coordinates 3 and 9 are 6 units apart vertically.",
+    "correctAnswer": "The absolute difference between two points' y-coordinates.",
+    "supportingEvidence": "Points with y-coordinates 3 and 9 are 6 units apart vertically.",
+    "explanation": "The example illustrates vertical distance because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name vertical distance without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-11",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Coordinate plane and ordered pairs",
+    "term": "Distance formula",
+    "definition": "The distance between (x₁,y₁) and (x₂,y₂) is √((x₂-x₁)²+(y₂-y₁)²).",
+    "example": "The distance from (0,0) to (3,4) is 5.",
+    "correctAnswer": "The distance between (x₁,y₁) and (x₂,y₂) is √((x₂-x₁)²+(y₂-y₁)²).",
+    "supportingEvidence": "The distance from (0,0) to (3,4) is 5.",
+    "explanation": "The example illustrates distance formula because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name distance formula without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-12",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Distance, midpoint, and slope",
+    "term": "Midpoint formula",
+    "definition": "The midpoint of two points is ((x₁+x₂)/2,(y₁+y₂)/2).",
+    "example": "The midpoint of (2,4) and (6,8) is (4,6).",
+    "correctAnswer": "The midpoint of two points is ((x₁+x₂)/2,(y₁+y₂)/2).",
+    "supportingEvidence": "The midpoint of (2,4) and (6,8) is (4,6).",
+    "explanation": "The example illustrates midpoint formula because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name midpoint formula without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-13",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Distance, midpoint, and slope",
+    "term": "Slope formula",
+    "definition": "The slope through two points is (y₂-y₁)/(x₂-x₁), when x₂ differs from x₁.",
+    "example": "Between (1,2) and (4,8), slope is 2.",
+    "correctAnswer": "The slope through two points is (y₂-y₁)/(x₂-x₁), when x₂ differs from x₁.",
+    "supportingEvidence": "Between (1,2) and (4,8), slope is 2.",
+    "explanation": "The example illustrates slope formula because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name slope formula without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-14",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Distance, midpoint, and slope",
+    "term": "Horizontal line slope",
+    "definition": "A horizontal line has zero slope because its y-coordinate does not change.",
+    "example": "The line through (1,4) and (8,4) has slope 0.",
+    "correctAnswer": "A horizontal line has zero slope because its y-coordinate does not change.",
+    "supportingEvidence": "The line through (1,4) and (8,4) has slope 0.",
+    "explanation": "The example illustrates horizontal line slope because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name horizontal line slope without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-15",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Distance, midpoint, and slope",
+    "term": "Vertical line slope",
+    "definition": "A vertical line has undefined slope because its x-coordinate does not change.",
+    "example": "The line through (3,1) and (3,9) has undefined slope.",
+    "correctAnswer": "A vertical line has undefined slope because its x-coordinate does not change.",
+    "supportingEvidence": "The line through (3,1) and (3,9) has undefined slope.",
+    "explanation": "The example illustrates vertical line slope because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name vertical line slope without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-16",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Distance, midpoint, and slope",
+    "term": "Parallel line slopes",
+    "definition": "Distinct nonvertical parallel lines have equal slopes.",
+    "example": "Lines with slopes 2 and 2 are parallel if they have different intercepts.",
+    "correctAnswer": "Distinct nonvertical parallel lines have equal slopes.",
+    "supportingEvidence": "Lines with slopes 2 and 2 are parallel if they have different intercepts.",
+    "explanation": "The example illustrates parallel line slopes because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name parallel line slopes without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-17",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Distance, midpoint, and slope",
+    "term": "Perpendicular line slopes",
+    "definition": "For nonvertical perpendicular lines, slopes are negative reciprocals.",
+    "example": "A line of slope 2 is perpendicular to a line of slope -1/2.",
+    "correctAnswer": "For nonvertical perpendicular lines, slopes are negative reciprocals.",
+    "supportingEvidence": "A line of slope 2 is perpendicular to a line of slope -1/2.",
+    "explanation": "The example illustrates perpendicular line slopes because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name perpendicular line slopes without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-18",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Distance, midpoint, and slope",
+    "term": "Reflection across the x-axis",
+    "definition": "A reflection across the x-axis maps (x,y) to (x,-y).",
+    "example": "(3,4) reflects to (3,-4).",
+    "correctAnswer": "A reflection across the x-axis maps (x,y) to (x,-y).",
+    "supportingEvidence": "(3,4) reflects to (3,-4).",
+    "explanation": "The example illustrates reflection across the x-axis because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name reflection across the x-axis without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-19",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Distance, midpoint, and slope",
+    "term": "Reflection across the y-axis",
+    "definition": "A reflection across the y-axis maps (x,y) to (-x,y).",
+    "example": "(3,4) reflects to (-3,4).",
+    "correctAnswer": "A reflection across the y-axis maps (x,y) to (-x,y).",
+    "supportingEvidence": "(3,4) reflects to (-3,4).",
+    "explanation": "The example illustrates reflection across the y-axis because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name reflection across the y-axis without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-20",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Distance, midpoint, and slope",
+    "term": "Reflection across the origin",
+    "definition": "A half-turn about the origin maps (x,y) to (-x,-y).",
+    "example": "(3,4) maps to (-3,-4).",
+    "correctAnswer": "A half-turn about the origin maps (x,y) to (-x,-y).",
+    "supportingEvidence": "(3,4) maps to (-3,-4).",
+    "explanation": "The example illustrates reflection across the origin because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name reflection across the origin without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-21",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Distance, midpoint, and slope",
+    "term": "Reflection across y=x",
+    "definition": "Reflecting across y=x switches the coordinates, mapping (x,y) to (y,x).",
+    "example": "(2,5) reflects to (5,2).",
+    "correctAnswer": "Reflecting across y=x switches the coordinates, mapping (x,y) to (y,x).",
+    "supportingEvidence": "(2,5) reflects to (5,2).",
+    "explanation": "The example illustrates reflection across y=x because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name reflection across y=x without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-22",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Rigid motions and coordinate rules",
+    "term": "Translation",
+    "definition": "A rigid motion sliding every point by the same vector.",
+    "example": "Translating by (3,-2) maps (x,y) to (x+3,y-2).",
+    "correctAnswer": "A rigid motion sliding every point by the same vector.",
+    "supportingEvidence": "Translating by (3,-2) maps (x,y) to (x+3,y-2).",
+    "explanation": "The example illustrates translation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name translation without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-23",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Rigid motions and coordinate rules",
+    "term": "Translation vector",
+    "definition": "An ordered pair giving the horizontal and vertical displacement of a translation.",
+    "example": "Vector (-4,1) moves points 4 left and 1 up.",
+    "correctAnswer": "An ordered pair giving the horizontal and vertical displacement of a translation.",
+    "supportingEvidence": "Vector (-4,1) moves points 4 left and 1 up.",
+    "explanation": "The example illustrates translation vector because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name translation vector without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-24",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Rigid motions and coordinate rules",
+    "term": "Rotation",
+    "definition": "A rigid motion turning a figure around a fixed center by a specified angle and direction.",
+    "example": "A 90-degree rotation about the origin maps (x,y) to (-y,x) counterclockwise.",
+    "correctAnswer": "A rigid motion turning a figure around a fixed center by a specified angle and direction.",
+    "supportingEvidence": "A 90-degree rotation about the origin maps (x,y) to (-y,x) counterclockwise.",
+    "explanation": "The example illustrates rotation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name rotation without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-25",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Rigid motions and coordinate rules",
+    "term": "Quarter-turn counterclockwise",
+    "definition": "A 90-degree counterclockwise rotation about the origin maps (x,y) to (-y,x).",
+    "example": "(2,5) maps to (-5,2).",
+    "correctAnswer": "A 90-degree counterclockwise rotation about the origin maps (x,y) to (-y,x).",
+    "supportingEvidence": "(2,5) maps to (-5,2).",
+    "explanation": "The example illustrates quarter-turn counterclockwise because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quarter-turn counterclockwise without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-26",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Rigid motions and coordinate rules",
+    "term": "Reflection across y = -x",
+    "definition": "Reflecting across the line y=-x maps (x,y) to (-y,-x).",
+    "example": "Point (2,5) reflects across y=-x to (-5,-2).",
+    "correctAnswer": "Reflecting across the line y=-x maps (x,y) to (-y,-x).",
+    "supportingEvidence": "Point (2,5) reflects across y=-x to (-5,-2).",
+    "explanation": "The example illustrates reflection across y = -x because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name reflection across y = -x without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-27",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Rigid motions and coordinate rules",
+    "term": "Quarter-turn clockwise",
+    "definition": "A 90-degree clockwise rotation about the origin maps (x,y) to (y,-x).",
+    "example": "(2,5) maps to (5,-2).",
+    "correctAnswer": "A 90-degree clockwise rotation about the origin maps (x,y) to (y,-x).",
+    "supportingEvidence": "(2,5) maps to (5,-2).",
+    "explanation": "The example illustrates quarter-turn clockwise because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quarter-turn clockwise without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-28",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Rigid motions and coordinate rules",
+    "term": "Dilation",
+    "definition": "A transformation scaling distances from a center by a common scale factor.",
+    "example": "A scale factor of 2 about the origin maps (3,4) to (6,8).",
+    "correctAnswer": "A transformation scaling distances from a center by a common scale factor.",
+    "supportingEvidence": "A scale factor of 2 about the origin maps (3,4) to (6,8).",
+    "explanation": "The example illustrates dilation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name dilation without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-29",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Rigid motions and coordinate rules",
+    "term": "Scale factor greater than one",
+    "definition": "A dilation factor greater than one enlarges distances from the center.",
+    "example": "Factor 3 sends a point 2 units from the center to 6 units away.",
+    "correctAnswer": "A dilation factor greater than one enlarges distances from the center.",
+    "supportingEvidence": "Factor 3 sends a point 2 units from the center to 6 units away.",
+    "explanation": "The example illustrates scale factor greater than one because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name scale factor greater than one without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-30",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Rigid motions and coordinate rules",
+    "term": "Scale factor between zero and one",
+    "definition": "A positive dilation factor below one reduces distances from the center.",
+    "example": "Factor 1/2 sends a point 8 units from the center to 4 units away.",
+    "correctAnswer": "A positive dilation factor below one reduces distances from the center.",
+    "supportingEvidence": "Factor 1/2 sends a point 8 units from the center to 4 units away.",
+    "explanation": "The example illustrates scale factor between zero and one because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name scale factor between zero and one without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-31",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Rigid motions and coordinate rules",
+    "term": "Rigid transformation",
+    "definition": "A transformation preserving distances and angle measures.",
+    "example": "Translations, rotations, and reflections are rigid transformations.",
+    "correctAnswer": "A transformation preserving distances and angle measures.",
+    "supportingEvidence": "Translations, rotations, and reflections are rigid transformations.",
+    "explanation": "The example illustrates rigid transformation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name rigid transformation without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-32",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Dilations and similarity",
+    "term": "Nonrigid transformation",
+    "definition": "A transformation that can change lengths while preserving some other structure.",
+    "example": "A dilation with factor 2 doubles every length.",
+    "correctAnswer": "A transformation that can change lengths while preserving some other structure.",
+    "supportingEvidence": "A dilation with factor 2 doubles every length.",
+    "explanation": "The example illustrates nonrigid transformation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name nonrigid transformation without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-33",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Dilations and similarity",
+    "term": "Image",
+    "definition": "The figure produced by applying a transformation to an original figure.",
+    "example": "If A maps to A′, A′ is the image of A.",
+    "correctAnswer": "The figure produced by applying a transformation to an original figure.",
+    "supportingEvidence": "If A maps to A′, A′ is the image of A.",
+    "explanation": "The example illustrates image because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name image without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-34",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Dilations and similarity",
+    "term": "Preimage",
+    "definition": "The original point or figure before a transformation is applied.",
+    "example": "Point A is the preimage when its image is A′.",
+    "correctAnswer": "The original point or figure before a transformation is applied.",
+    "supportingEvidence": "Point A is the preimage when its image is A′.",
+    "explanation": "The example illustrates preimage because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name preimage without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-35",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Dilations and similarity",
+    "term": "Prime notation",
+    "definition": "A mark such as A′ naming the image of a point after a transformation.",
+    "example": "A maps to A′ under a reflection.",
+    "correctAnswer": "A mark such as A′ naming the image of a point after a transformation.",
+    "supportingEvidence": "A maps to A′ under a reflection.",
+    "explanation": "The example illustrates prime notation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name prime notation without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-36",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Dilations and similarity",
+    "term": "Congruence transformation",
+    "definition": "A rigid transformation mapping one figure onto a congruent figure.",
+    "example": "A rotation can map one triangle onto a congruent copy.",
+    "correctAnswer": "A rigid transformation mapping one figure onto a congruent figure.",
+    "supportingEvidence": "A rotation can map one triangle onto a congruent copy.",
+    "explanation": "The example illustrates congruence transformation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name congruence transformation without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-37",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Dilations and similarity",
+    "term": "Similarity transformation",
+    "definition": "A sequence of rigid motions and a dilation mapping one figure to a similar figure.",
+    "example": "A dilation followed by a translation preserves angle measures and scales sides.",
+    "correctAnswer": "A sequence of rigid motions and a dilation mapping one figure to a similar figure.",
+    "supportingEvidence": "A dilation followed by a translation preserves angle measures and scales sides.",
+    "explanation": "The example illustrates similarity transformation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name similarity transformation without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-38",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Dilations and similarity",
+    "term": "Composition of transformations",
+    "definition": "A sequence applying one transformation after another.",
+    "example": "Reflecting then translating may produce a different image than translating then reflecting.",
+    "correctAnswer": "A sequence applying one transformation after another.",
+    "supportingEvidence": "Reflecting then translating may produce a different image than translating then reflecting.",
+    "explanation": "The example illustrates composition of transformations because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name composition of transformations without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-39",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Dilations and similarity",
+    "term": "Transformation order",
+    "definition": "The order of transformations in a composition can affect the final image.",
+    "example": "A reflection followed by a translation need not match the reverse sequence.",
+    "correctAnswer": "The order of transformations in a composition can affect the final image.",
+    "supportingEvidence": "A reflection followed by a translation need not match the reverse sequence.",
+    "explanation": "The example illustrates transformation order because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name transformation order without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-40",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Dilations and similarity",
+    "term": "Invariant",
+    "definition": "A property that remains unchanged under a specified transformation.",
+    "example": "Distance is invariant under rotations and reflections.",
+    "correctAnswer": "A property that remains unchanged under a specified transformation.",
+    "supportingEvidence": "Distance is invariant under rotations and reflections.",
+    "explanation": "The example illustrates invariant because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name invariant without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-41",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Dilations and similarity",
+    "term": "Orientation",
+    "definition": "The clockwise or counterclockwise order of a figure's vertices.",
+    "example": "A reflection reverses orientation, while a translation preserves it.",
+    "correctAnswer": "The clockwise or counterclockwise order of a figure's vertices.",
+    "supportingEvidence": "A reflection reverses orientation, while a translation preserves it.",
+    "explanation": "The example illustrates orientation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name orientation without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-42",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Invariants and coordinate proofs",
+    "term": "Coordinate rule",
+    "definition": "A mapping formula describing how each point's coordinates change.",
+    "example": "(x,y)→(x+2,y-1) is a translation rule.",
+    "correctAnswer": "A mapping formula describing how each point's coordinates change.",
+    "supportingEvidence": "(x,y)→(x+2,y-1) is a translation rule.",
+    "explanation": "The example illustrates coordinate rule because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name coordinate rule without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-43",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Invariants and coordinate proofs",
+    "term": "Image coordinates",
+    "definition": "The coordinates after applying a transformation rule to a point.",
+    "example": "Under (x,y)→(-x,y), point (4,3) has image (-4,3).",
+    "correctAnswer": "The coordinates after applying a transformation rule to a point.",
+    "supportingEvidence": "Under (x,y)→(-x,y), point (4,3) has image (-4,3).",
+    "explanation": "The example illustrates image coordinates because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name image coordinates without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-44",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Invariants and coordinate proofs",
+    "term": "Preimage coordinates",
+    "definition": "The original coordinates before a transformation is applied.",
+    "example": "For image (-4,3) under x-axis reflection, the preimage is (-4,-3).",
+    "correctAnswer": "The original coordinates before a transformation is applied.",
+    "supportingEvidence": "For image (-4,3) under x-axis reflection, the preimage is (-4,-3).",
+    "explanation": "The example illustrates preimage coordinates because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name preimage coordinates without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-45",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Invariants and coordinate proofs",
+    "term": "Distance from the origin",
+    "definition": "The distance of (x,y) from (0,0), equal to √(x²+y²).",
+    "example": "Point (3,4) is 5 units from the origin.",
+    "correctAnswer": "The distance of (x,y) from (0,0), equal to √(x²+y²).",
+    "supportingEvidence": "Point (3,4) is 5 units from the origin.",
+    "explanation": "The example illustrates distance from the origin because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name distance from the origin without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-46",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Invariants and coordinate proofs",
+    "term": "Collinear coordinate points",
+    "definition": "Coordinate points are collinear when one straight line contains them all.",
+    "example": "Three points with the same slope between each pair are collinear.",
+    "correctAnswer": "Coordinate points are collinear when one straight line contains them all.",
+    "supportingEvidence": "Three points with the same slope between each pair are collinear.",
+    "explanation": "The example illustrates collinear coordinate points because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name collinear coordinate points without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-47",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Invariants and coordinate proofs",
+    "term": "Slope as a rate",
+    "definition": "Slope describes the signed vertical change for each unit of horizontal change.",
+    "example": "Slope -2 means y falls 2 units for each 1-unit increase in x.",
+    "correctAnswer": "Slope describes the signed vertical change for each unit of horizontal change.",
+    "supportingEvidence": "Slope -2 means y falls 2 units for each 1-unit increase in x.",
+    "explanation": "The example illustrates slope as a rate because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name slope as a rate without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-48",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Invariants and coordinate proofs",
+    "term": "Coordinate proof",
+    "definition": "A geometric proof using coordinates and algebra to verify a relationship.",
+    "example": "The distance formula can show that two segments have equal lengths.",
+    "correctAnswer": "A geometric proof using coordinates and algebra to verify a relationship.",
+    "supportingEvidence": "The distance formula can show that two segments have equal lengths.",
+    "explanation": "The example illustrates coordinate proof because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name coordinate proof without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-49",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Invariants and coordinate proofs",
+    "term": "Midpoint test for a parallelogram",
+    "definition": "If a quadrilateral's diagonals bisect each other, it is a parallelogram.",
+    "example": "Matching diagonal midpoints provide a coordinate test for this condition.",
+    "correctAnswer": "If a quadrilateral's diagonals bisect each other, it is a parallelogram.",
+    "supportingEvidence": "Matching diagonal midpoints provide a coordinate test for this condition.",
+    "explanation": "The example illustrates midpoint test for a parallelogram because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name midpoint test for a parallelogram without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-50",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Invariants and coordinate proofs",
+    "term": "Distance test for congruence",
+    "definition": "Corresponding pairwise distances can establish that finite point sets have the same size and shape.",
+    "example": "Equal corresponding side lengths and diagonals can support a coordinate congruence proof.",
+    "correctAnswer": "Corresponding pairwise distances can establish that finite point sets have the same size and shape.",
+    "supportingEvidence": "Equal corresponding side lengths and diagonals can support a coordinate congruence proof.",
+    "explanation": "The example illustrates distance test for congruence because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name distance test for congruence without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-coordinate-transformations-51",
+    "topicId": "math-coordinate-transformations",
+    "subtopic": "Invariants and coordinate proofs",
+    "term": "Coordinate geometry",
+    "definition": "The use of coordinates and algebra to describe and reason about geometric figures.",
+    "example": "Coordinates can be used to verify a midpoint or slope relationship.",
+    "correctAnswer": "The use of coordinates and algebra to describe and reason about geometric figures.",
+    "supportingEvidence": "Coordinates can be used to verify a midpoint or slope relationship.",
+    "explanation": "The example illustrates coordinate geometry because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name coordinate geometry without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  }
+]

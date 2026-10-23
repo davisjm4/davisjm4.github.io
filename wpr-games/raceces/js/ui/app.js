@@ -219,7 +219,7 @@
     var contentLabel = (subject === 'all' ? '' : subject + ' · ') + focusLabel();
     var chips = el('div', { class: 'chips' }, [el('span', { text: S.MODE_LABEL[ch.mode] }), el('span', { text: S.LEVEL_LABEL[ch.level] }), el('span', { text: 'Content focus: ' + contentLabel }), el('span', { text: ch.title })]);
     var poolMessage = ch.pool && ch.pool.review
-      ? 'Review practice: all ' + ch.pool.models + ' distinct writing problems in this selection have been used. You may continue reviewing or broaden the topic selection.'
+      ? 'Review practice: all ' + ch.pool.topicModels + ' distinct writing problems for this topic and difficulty have been used. This challenge revisits one.'
       : 'New writing problem from a pool of ' + (ch.pool ? ch.pool.models : '?') + ' distinct writing problems in this selection.';
     var poolNote = el('p', { class: ch.pool && ch.pool.review ? 'pool-note review' : 'pool-note', text: poolMessage });
     if (ch.pool && ch.pool.review && (subject !== 'all' || topicIds.length)) {

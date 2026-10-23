@@ -45,7 +45,8 @@ function run() {
       distinctModels: models.size, modelRepeats, distinctStructures: structures.size,
       familyCount: Object.keys(families).length, familyCounts: families, semanticRepeatsWithin30: semanticRepeats30 };
     report.push(item);
-    T.ok(models.size === 30, mode + '/' + level + ': all 30 authored models reached');
+    const expectedModels = bundle.models.filter(m => m.level === level).length;
+    T.ok(models.size === expectedModels, mode + '/' + level + ': all ' + expectedModels + ' authored models reached');
     T.ok(exactRate < minExactLimit[level], mode + '/' + level + ': exact duplicate rate ' + (100 * exactRate).toFixed(1) + '% under ' + (100 * minExactLimit[level]) + '% quality gate');
     T.ok(repeatsFirst50 === 0, mode + '/' + level + ': no exact challenge repeated within the first 50');
     T.ok(repeatsFirst100 === 0, mode + '/' + level + ': no exact challenge repeated within the first 100');

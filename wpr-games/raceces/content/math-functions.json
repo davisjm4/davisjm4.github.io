@@ -1,0 +1,1277 @@
+[
+  {
+    "id": "math-functions-01",
+    "topicId": "math-functions",
+    "subtopic": "Relations and function notation",
+    "term": "Relation",
+    "definition": "A set of ordered pairs connecting inputs with outputs.",
+    "example": "{(1,2),(2,4)} is a relation.",
+    "correctAnswer": "A set of ordered pairs connecting inputs with outputs.",
+    "supportingEvidence": "{(1,2),(2,4)} is a relation.",
+    "explanation": "The example illustrates relation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name relation without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-02",
+    "topicId": "math-functions",
+    "subtopic": "Relations and function notation",
+    "term": "Function",
+    "definition": "A relation assigning exactly one output to each input in its domain.",
+    "example": "{(1,2),(2,4)} is a function; {(1,2),(1,3)} is not.",
+    "correctAnswer": "A relation assigning exactly one output to each input in its domain.",
+    "supportingEvidence": "{(1,2),(2,4)} is a function; {(1,2),(1,3)} is not.",
+    "explanation": "The example illustrates function because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name function without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-03",
+    "topicId": "math-functions",
+    "subtopic": "Relations and function notation",
+    "term": "Input",
+    "definition": "A value supplied to a function or rule.",
+    "example": "For f(x)=2x+1, 3 is an input when evaluating f(3).",
+    "correctAnswer": "A value supplied to a function or rule.",
+    "supportingEvidence": "For f(x)=2x+1, 3 is an input when evaluating f(3).",
+    "explanation": "The example illustrates input because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name input without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-04",
+    "topicId": "math-functions",
+    "subtopic": "Relations and function notation",
+    "term": "Output",
+    "definition": "The value produced by applying a function to an input.",
+    "example": "For f(x)=2x+1, the output for input 3 is 7.",
+    "correctAnswer": "The value produced by applying a function to an input.",
+    "supportingEvidence": "For f(x)=2x+1, the output for input 3 is 7.",
+    "explanation": "The example illustrates output because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name output without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-05",
+    "topicId": "math-functions",
+    "subtopic": "Relations and function notation",
+    "term": "Independent variable",
+    "definition": "A variable whose value is chosen or controlled in a relationship.",
+    "example": "In a distance model d=5t, time t is the input variable.",
+    "correctAnswer": "A variable whose value is chosen or controlled in a relationship.",
+    "supportingEvidence": "In a distance model d=5t, time t is the input variable.",
+    "explanation": "The example illustrates independent variable because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name independent variable without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-06",
+    "topicId": "math-functions",
+    "subtopic": "Relations and function notation",
+    "term": "Dependent variable",
+    "definition": "A variable whose value depends on another variable.",
+    "example": "In d=5t, distance d depends on time t.",
+    "correctAnswer": "A variable whose value depends on another variable.",
+    "supportingEvidence": "In d=5t, distance d depends on time t.",
+    "explanation": "The example illustrates dependent variable because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name dependent variable without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-07",
+    "topicId": "math-functions",
+    "subtopic": "Relations and function notation",
+    "term": "Domain",
+    "definition": "The set of allowed inputs for a relation or function.",
+    "example": "For f(x)=1/x, the real domain excludes x=0.",
+    "correctAnswer": "The set of allowed inputs for a relation or function.",
+    "supportingEvidence": "For f(x)=1/x, the real domain excludes x=0.",
+    "explanation": "The example illustrates domain because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name domain without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-08",
+    "topicId": "math-functions",
+    "subtopic": "Relations and function notation",
+    "term": "Range",
+    "definition": "The set of outputs produced by the inputs in the domain.",
+    "example": "For f(x)=x² over the real numbers, the range is y≥0.",
+    "correctAnswer": "The set of outputs produced by the inputs in the domain.",
+    "supportingEvidence": "For f(x)=x² over the real numbers, the range is y≥0.",
+    "explanation": "The example illustrates range because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name range without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-09",
+    "topicId": "math-functions",
+    "subtopic": "Relations and function notation",
+    "term": "Function notation",
+    "definition": "A symbolic way to name and evaluate a function at an input.",
+    "example": "If f(x)=x+4, then f(2)=6.",
+    "correctAnswer": "A symbolic way to name and evaluate a function at an input.",
+    "supportingEvidence": "If f(x)=x+4, then f(2)=6.",
+    "explanation": "The example illustrates function notation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name function notation without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-10",
+    "topicId": "math-functions",
+    "subtopic": "Relations and function notation",
+    "term": "Vertical line test",
+    "definition": "A graph represents a function of x if every vertical line intersects it at most once.",
+    "example": "A circle fails because some vertical lines cross it twice.",
+    "correctAnswer": "A graph represents a function of x if every vertical line intersects it at most once.",
+    "supportingEvidence": "A circle fails because some vertical lines cross it twice.",
+    "explanation": "The example illustrates vertical line test because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name vertical line test without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-11",
+    "topicId": "math-functions",
+    "subtopic": "Relations and function notation",
+    "term": "Discrete function",
+    "definition": "A function defined for separate input values rather than a continuous interval.",
+    "example": "A table giving a price for each whole number of tickets is discrete.",
+    "correctAnswer": "A function defined for separate input values rather than a continuous interval.",
+    "supportingEvidence": "A table giving a price for each whole number of tickets is discrete.",
+    "explanation": "The example illustrates discrete function because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name discrete function without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-12",
+    "topicId": "math-functions",
+    "subtopic": "Domain, range, and representations",
+    "term": "Continuous function",
+    "definition": "A function whose graph has no breaks over its specified interval.",
+    "example": "Distance traveled at constant speed changes continuously with time.",
+    "correctAnswer": "A function whose graph has no breaks over its specified interval.",
+    "supportingEvidence": "Distance traveled at constant speed changes continuously with time.",
+    "explanation": "The example illustrates continuous function because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name continuous function without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-13",
+    "topicId": "math-functions",
+    "subtopic": "Domain, range, and representations",
+    "term": "Linear function",
+    "definition": "A function with a constant rate of change and a straight-line graph.",
+    "example": "f(x)=3x-2 is linear with slope 3.",
+    "correctAnswer": "A function with a constant rate of change and a straight-line graph.",
+    "supportingEvidence": "f(x)=3x-2 is linear with slope 3.",
+    "explanation": "The example illustrates linear function because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name linear function without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-14",
+    "topicId": "math-functions",
+    "subtopic": "Domain, range, and representations",
+    "term": "Slope",
+    "definition": "The ratio of vertical change to horizontal change between points on a line.",
+    "example": "From (1,2) to (4,8), slope is (8-2)/(4-1)=2.",
+    "correctAnswer": "The ratio of vertical change to horizontal change between points on a line.",
+    "supportingEvidence": "From (1,2) to (4,8), slope is (8-2)/(4-1)=2.",
+    "explanation": "The example illustrates slope because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name slope without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-15",
+    "topicId": "math-functions",
+    "subtopic": "Domain, range, and representations",
+    "term": "Rise",
+    "definition": "The vertical change between two points, computed as the change in y-values.",
+    "example": "From y=2 to y=8, the rise is 6.",
+    "correctAnswer": "The vertical change between two points, computed as the change in y-values.",
+    "supportingEvidence": "From y=2 to y=8, the rise is 6.",
+    "explanation": "The example illustrates rise because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name rise without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-16",
+    "topicId": "math-functions",
+    "subtopic": "Domain, range, and representations",
+    "term": "Run",
+    "definition": "The horizontal change between two points, computed as the change in x-values.",
+    "example": "From x=1 to x=4, the run is 3.",
+    "correctAnswer": "The horizontal change between two points, computed as the change in x-values.",
+    "supportingEvidence": "From x=1 to x=4, the run is 3.",
+    "explanation": "The example illustrates run because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name run without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-17",
+    "topicId": "math-functions",
+    "subtopic": "Domain, range, and representations",
+    "term": "Positive slope",
+    "definition": "A line rises from left to right because its y-values increase as x increases.",
+    "example": "The line y=2x has positive slope 2.",
+    "correctAnswer": "A line rises from left to right because its y-values increase as x increases.",
+    "supportingEvidence": "The line y=2x has positive slope 2.",
+    "explanation": "The example illustrates positive slope because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name positive slope without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-18",
+    "topicId": "math-functions",
+    "subtopic": "Domain, range, and representations",
+    "term": "Negative slope",
+    "definition": "A line falls from left to right because its y-values decrease as x increases.",
+    "example": "The line y=-3x+1 has negative slope -3.",
+    "correctAnswer": "A line falls from left to right because its y-values decrease as x increases.",
+    "supportingEvidence": "The line y=-3x+1 has negative slope -3.",
+    "explanation": "The example illustrates negative slope because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name negative slope without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-19",
+    "topicId": "math-functions",
+    "subtopic": "Domain, range, and representations",
+    "term": "Zero slope",
+    "definition": "A horizontal line's y-value stays constant as x changes.",
+    "example": "y=4 has slope 0.",
+    "correctAnswer": "A horizontal line's y-value stays constant as x changes.",
+    "supportingEvidence": "y=4 has slope 0.",
+    "explanation": "The example illustrates zero slope because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name zero slope without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-20",
+    "topicId": "math-functions",
+    "subtopic": "Domain, range, and representations",
+    "term": "Undefined slope",
+    "definition": "A vertical line has zero horizontal change, so its slope ratio would divide by zero.",
+    "example": "The line x=3 has undefined slope.",
+    "correctAnswer": "A vertical line has zero horizontal change, so its slope ratio would divide by zero.",
+    "supportingEvidence": "The line x=3 has undefined slope.",
+    "explanation": "The example illustrates undefined slope because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name undefined slope without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-21",
+    "topicId": "math-functions",
+    "subtopic": "Domain, range, and representations",
+    "term": "Slope-intercept form",
+    "definition": "The linear equation form y=mx+b, where m is slope and b is the y-intercept.",
+    "example": "y=2x+5 has slope 2 and y-intercept 5.",
+    "correctAnswer": "The linear equation form y=mx+b, where m is slope and b is the y-intercept.",
+    "supportingEvidence": "y=2x+5 has slope 2 and y-intercept 5.",
+    "explanation": "The example illustrates slope-intercept form because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name slope-intercept form without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-22",
+    "topicId": "math-functions",
+    "subtopic": "Linear functions and slope",
+    "term": "Point-slope form",
+    "definition": "The line form y-y₁=m(x-x₁), using slope m and a point on the line.",
+    "example": "Through (2,3) with slope 4: y-3=4(x-2).",
+    "correctAnswer": "The line form y-y₁=m(x-x₁), using slope m and a point on the line.",
+    "supportingEvidence": "Through (2,3) with slope 4: y-3=4(x-2).",
+    "explanation": "The example illustrates point-slope form because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name point-slope form without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-23",
+    "topicId": "math-functions",
+    "subtopic": "Linear functions and slope",
+    "term": "Standard form of a line",
+    "definition": "A linear equation written Ax+By=C, commonly with integer coefficients.",
+    "example": "2x+3y=6 is in standard form.",
+    "correctAnswer": "A linear equation written Ax+By=C, commonly with integer coefficients.",
+    "supportingEvidence": "2x+3y=6 is in standard form.",
+    "explanation": "The example illustrates standard form of a line because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name standard form of a line without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-24",
+    "topicId": "math-functions",
+    "subtopic": "Linear functions and slope",
+    "term": "Y-intercept",
+    "definition": "The point where a graph crosses the y-axis, where x=0.",
+    "example": "For y=2x+5, the y-intercept is (0,5).",
+    "correctAnswer": "The point where a graph crosses the y-axis, where x=0.",
+    "supportingEvidence": "For y=2x+5, the y-intercept is (0,5).",
+    "explanation": "The example illustrates y-intercept because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name y-intercept without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-25",
+    "topicId": "math-functions",
+    "subtopic": "Linear functions and slope",
+    "term": "X-intercept",
+    "definition": "A point where a graph crosses the x-axis, where y=0.",
+    "example": "For y=2x-6, the x-intercept is (3,0).",
+    "correctAnswer": "A point where a graph crosses the x-axis, where y=0.",
+    "supportingEvidence": "For y=2x-6, the x-intercept is (3,0).",
+    "explanation": "The example illustrates x-intercept because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name x-intercept without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-26",
+    "topicId": "math-functions",
+    "subtopic": "Linear functions and slope",
+    "term": "Rate of change",
+    "definition": "The change in output divided by the corresponding change in input.",
+    "example": "A fee rising $12 over 3 hours changes at $4 per hour.",
+    "correctAnswer": "The change in output divided by the corresponding change in input.",
+    "supportingEvidence": "A fee rising $12 over 3 hours changes at $4 per hour.",
+    "explanation": "The example illustrates rate of change because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name rate of change without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-27",
+    "topicId": "math-functions",
+    "subtopic": "Linear functions and slope",
+    "term": "Initial value",
+    "definition": "The output at input zero in a model where zero is allowed.",
+    "example": "In y=4x+7, the initial value is 7.",
+    "correctAnswer": "The output at input zero in a model where zero is allowed.",
+    "supportingEvidence": "In y=4x+7, the initial value is 7.",
+    "explanation": "The example illustrates initial value because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name initial value without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-28",
+    "topicId": "math-functions",
+    "subtopic": "Linear functions and slope",
+    "term": "Proportional relationship",
+    "definition": "A relationship of the form y=kx with a constant ratio y/x and a graph through the origin.",
+    "example": "y=5x is proportional; y=5x+2 is not.",
+    "correctAnswer": "A relationship of the form y=kx with a constant ratio y/x and a graph through the origin.",
+    "supportingEvidence": "y=5x is proportional; y=5x+2 is not.",
+    "explanation": "The example illustrates proportional relationship because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name proportional relationship without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-29",
+    "topicId": "math-functions",
+    "subtopic": "Linear functions and slope",
+    "term": "Constant of proportionality",
+    "definition": "The fixed ratio between corresponding outputs and inputs in a proportional relationship.",
+    "example": "In y=5x, y/x=5 for every nonzero x.",
+    "correctAnswer": "The fixed ratio between corresponding outputs and inputs in a proportional relationship.",
+    "supportingEvidence": "In y=5x, y/x=5 for every nonzero x.",
+    "explanation": "The example illustrates constant of proportionality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name constant of proportionality without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-30",
+    "topicId": "math-functions",
+    "subtopic": "Linear functions and slope",
+    "term": "Direct variation",
+    "definition": "A proportional relationship in which one variable equals a constant times the other.",
+    "example": "If cost c varies directly with items n at $3 each, c=3n.",
+    "correctAnswer": "A proportional relationship in which one variable equals a constant times the other.",
+    "supportingEvidence": "If cost c varies directly with items n at $3 each, c=3n.",
+    "explanation": "The example illustrates direct variation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name direct variation without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-31",
+    "topicId": "math-functions",
+    "subtopic": "Linear functions and slope",
+    "term": "Function table",
+    "definition": "A table pairing inputs with the outputs assigned by a rule.",
+    "example": "For f(x)=x+1, inputs 0,1 give outputs 1,2.",
+    "correctAnswer": "A table pairing inputs with the outputs assigned by a rule.",
+    "supportingEvidence": "For f(x)=x+1, inputs 0,1 give outputs 1,2.",
+    "explanation": "The example illustrates function table because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name function table without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-32",
+    "topicId": "math-functions",
+    "subtopic": "Intercepts and proportional relationships",
+    "term": "Mapping diagram",
+    "definition": "A diagram using arrows to show which outputs are assigned to inputs.",
+    "example": "If input 2 has arrows to both 5 and 6, the relation is not a function.",
+    "correctAnswer": "A diagram using arrows to show which outputs are assigned to inputs.",
+    "supportingEvidence": "If input 2 has arrows to both 5 and 6, the relation is not a function.",
+    "explanation": "The example illustrates mapping diagram because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name mapping diagram without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-33",
+    "topicId": "math-functions",
+    "subtopic": "Intercepts and proportional relationships",
+    "term": "Graph of a function",
+    "definition": "A set of plotted input-output points or a curve showing the function's relationship.",
+    "example": "The graph of y=x² contains (2,4).",
+    "correctAnswer": "A set of plotted input-output points or a curve showing the function's relationship.",
+    "supportingEvidence": "The graph of y=x² contains (2,4).",
+    "explanation": "The example illustrates graph of a function because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name graph of a function without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-34",
+    "topicId": "math-functions",
+    "subtopic": "Intercepts and proportional relationships",
+    "term": "Zero of a function",
+    "definition": "An input value for which the function's output equals zero.",
+    "example": "For f(x)=x-4, x=4 is a zero.",
+    "correctAnswer": "An input value for which the function's output equals zero.",
+    "supportingEvidence": "For f(x)=x-4, x=4 is a zero.",
+    "explanation": "The example illustrates zero of a function because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name zero of a function without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-35",
+    "topicId": "math-functions",
+    "subtopic": "Intercepts and proportional relationships",
+    "term": "Vertex of a quadratic function",
+    "definition": "The turning point of a parabola; it is a maximum or minimum depending on its opening direction.",
+    "example": "The vertex of y=(x-2)²+1 is (2,1), its minimum point.",
+    "correctAnswer": "The turning point of a parabola; it is a maximum or minimum depending on its opening direction.",
+    "supportingEvidence": "The vertex of y=(x-2)²+1 is (2,1), its minimum point.",
+    "explanation": "The example illustrates vertex of a quadratic function because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name vertex of a quadratic function without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-36",
+    "topicId": "math-functions",
+    "subtopic": "Intercepts and proportional relationships",
+    "term": "Increasing interval",
+    "definition": "An interval over which function outputs increase as inputs increase.",
+    "example": "y=x increases over all real x.",
+    "correctAnswer": "An interval over which function outputs increase as inputs increase.",
+    "supportingEvidence": "y=x increases over all real x.",
+    "explanation": "The example illustrates increasing interval because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name increasing interval without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-37",
+    "topicId": "math-functions",
+    "subtopic": "Intercepts and proportional relationships",
+    "term": "Decreasing interval",
+    "definition": "An interval over which function outputs decrease as inputs increase.",
+    "example": "y=-x decreases over all real x.",
+    "correctAnswer": "An interval over which function outputs decrease as inputs increase.",
+    "supportingEvidence": "y=-x decreases over all real x.",
+    "explanation": "The example illustrates decreasing interval because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name decreasing interval without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-38",
+    "topicId": "math-functions",
+    "subtopic": "Intercepts and proportional relationships",
+    "term": "Maximum value",
+    "definition": "The greatest output attained by a function on its domain or specified interval.",
+    "example": "For y=-(x-2)²+5, the maximum output is 5.",
+    "correctAnswer": "The greatest output attained by a function on its domain or specified interval.",
+    "supportingEvidence": "For y=-(x-2)²+5, the maximum output is 5.",
+    "explanation": "The example illustrates maximum value because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name maximum value without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-39",
+    "topicId": "math-functions",
+    "subtopic": "Intercepts and proportional relationships",
+    "term": "Minimum value",
+    "definition": "The least output attained by a function on its domain or specified interval.",
+    "example": "For y=(x-1)², the minimum output is 0.",
+    "correctAnswer": "The least output attained by a function on its domain or specified interval.",
+    "supportingEvidence": "For y=(x-1)², the minimum output is 0.",
+    "explanation": "The example illustrates minimum value because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name minimum value without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-40",
+    "topicId": "math-functions",
+    "subtopic": "Intercepts and proportional relationships",
+    "term": "Piecewise function",
+    "definition": "A function defined by different rules on different parts of its domain.",
+    "example": "A fee may be 0 for the first item and $2 for each additional item.",
+    "correctAnswer": "A function defined by different rules on different parts of its domain.",
+    "supportingEvidence": "A fee may be 0 for the first item and $2 for each additional item.",
+    "explanation": "The example illustrates piecewise function because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name piecewise function without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-41",
+    "topicId": "math-functions",
+    "subtopic": "Intercepts and proportional relationships",
+    "term": "Absolute value function",
+    "definition": "A function involving distance from zero, typically forming a V-shaped graph.",
+    "example": "f(x)=|x| has vertex (0,0) and nonnegative outputs.",
+    "correctAnswer": "A function involving distance from zero, typically forming a V-shaped graph.",
+    "supportingEvidence": "f(x)=|x| has vertex (0,0) and nonnegative outputs.",
+    "explanation": "The example illustrates absolute value function because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name absolute value function without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-42",
+    "topicId": "math-functions",
+    "subtopic": "Nonlinear and combined functions",
+    "term": "Quadratic function",
+    "definition": "A function with a degree-two polynomial rule and a parabolic graph.",
+    "example": "f(x)=x²-4x+3 is quadratic.",
+    "correctAnswer": "A function with a degree-two polynomial rule and a parabolic graph.",
+    "supportingEvidence": "f(x)=x²-4x+3 is quadratic.",
+    "explanation": "The example illustrates quadratic function because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quadratic function without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-43",
+    "topicId": "math-functions",
+    "subtopic": "Nonlinear and combined functions",
+    "term": "Parabola",
+    "definition": "The U-shaped or inverted-U graph of a quadratic function.",
+    "example": "y=x² opens upward and has vertex (0,0).",
+    "correctAnswer": "The U-shaped or inverted-U graph of a quadratic function.",
+    "supportingEvidence": "y=x² opens upward and has vertex (0,0).",
+    "explanation": "The example illustrates parabola because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name parabola without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-44",
+    "topicId": "math-functions",
+    "subtopic": "Nonlinear and combined functions",
+    "term": "Vertex",
+    "definition": "The turning point of a parabola, giving its maximum or minimum output.",
+    "example": "y=(x-2)²+1 has vertex (2,1).",
+    "correctAnswer": "The turning point of a parabola, giving its maximum or minimum output.",
+    "supportingEvidence": "y=(x-2)²+1 has vertex (2,1).",
+    "explanation": "The example illustrates vertex because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name vertex without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-45",
+    "topicId": "math-functions",
+    "subtopic": "Nonlinear and combined functions",
+    "term": "Axis of symmetry",
+    "definition": "A line dividing a symmetric graph into mirror-image halves.",
+    "example": "For y=(x-2)², the axis is x=2.",
+    "correctAnswer": "A line dividing a symmetric graph into mirror-image halves.",
+    "supportingEvidence": "For y=(x-2)², the axis is x=2.",
+    "explanation": "The example illustrates axis of symmetry because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name axis of symmetry without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-46",
+    "topicId": "math-functions",
+    "subtopic": "Nonlinear and combined functions",
+    "term": "Exponential function",
+    "definition": "A function in which the input appears in the exponent, commonly f(x)=a·bˣ.",
+    "example": "f(x)=3·2ˣ doubles for each increase of 1 in x.",
+    "correctAnswer": "A function in which the input appears in the exponent, commonly f(x)=a·bˣ.",
+    "supportingEvidence": "f(x)=3·2ˣ doubles for each increase of 1 in x.",
+    "explanation": "The example illustrates exponential function because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name exponential function without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-47",
+    "topicId": "math-functions",
+    "subtopic": "Nonlinear and combined functions",
+    "term": "Exponential growth",
+    "definition": "An exponential pattern with a positive growth factor greater than one.",
+    "example": "A quantity multiplied by 1.1 each period grows by 10% per period.",
+    "correctAnswer": "An exponential pattern with a positive growth factor greater than one.",
+    "supportingEvidence": "A quantity multiplied by 1.1 each period grows by 10% per period.",
+    "explanation": "The example illustrates exponential growth because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name exponential growth without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-48",
+    "topicId": "math-functions",
+    "subtopic": "Nonlinear and combined functions",
+    "term": "Exponential decay",
+    "definition": "An exponential pattern with a factor between zero and one applied repeatedly.",
+    "example": "Multiplying by 0.8 each period retains 80% and decreases the quantity.",
+    "correctAnswer": "An exponential pattern with a factor between zero and one applied repeatedly.",
+    "supportingEvidence": "Multiplying by 0.8 each period retains 80% and decreases the quantity.",
+    "explanation": "The example illustrates exponential decay because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name exponential decay without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-49",
+    "topicId": "math-functions",
+    "subtopic": "Nonlinear and combined functions",
+    "term": "Composition of functions",
+    "definition": "Applying one function to an input and then applying another function to that output.",
+    "example": "If f(x)=x+1 and g(x)=2x, then g(f(3))=8.",
+    "correctAnswer": "Applying one function to an input and then applying another function to that output.",
+    "supportingEvidence": "If f(x)=x+1 and g(x)=2x, then g(f(3))=8.",
+    "explanation": "The example illustrates composition of functions because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name composition of functions without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-50",
+    "topicId": "math-functions",
+    "subtopic": "Nonlinear and combined functions",
+    "term": "Inverse function",
+    "definition": "A function that reverses another function's input-output mapping on an appropriate domain.",
+    "example": "For f(x)=x+5, the inverse is f⁻¹(x)=x-5.",
+    "correctAnswer": "A function that reverses another function's input-output mapping on an appropriate domain.",
+    "supportingEvidence": "For f(x)=x+5, the inverse is f⁻¹(x)=x-5.",
+    "explanation": "The example illustrates inverse function because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name inverse function without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  },
+  {
+    "id": "math-functions-51",
+    "topicId": "math-functions",
+    "subtopic": "Nonlinear and combined functions",
+    "term": "Average rate of change",
+    "definition": "The change in function output divided by the change in input over an interval.",
+    "example": "For f(1)=3 and f(4)=12, the average rate is (12-3)/(4-1)=3.",
+    "correctAnswer": "The change in function output divided by the change in input over an interval.",
+    "supportingEvidence": "For f(1)=3 and f(4)=12, the average rate is (12-3)/(4-1)=3.",
+    "explanation": "The example illustrates average rate of change because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name average rate of change without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Sections 3.1 and 4.1",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/4-1-linear-functions"
+    }
+  }
+]

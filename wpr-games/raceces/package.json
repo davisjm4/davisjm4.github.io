@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "node tools/build.js && node tools/build-compose.js",
-    "validate": "node tools/validate-content.js && node tools/validate-compose.js",
+    "validate": "node tools/validate-content.js && node tools/validate-compose.js && node tools/math-audit.js",
     "test:unit": "node tests/run-all.js",
     "test:browser": "node tests/browser/run.js && node tests/browser/compose-run.js",
     "sweep": "node tests/sweep.js",

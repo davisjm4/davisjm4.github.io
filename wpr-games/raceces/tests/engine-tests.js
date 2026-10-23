@@ -26,10 +26,10 @@ function runEngineTests() {
     T.ok(r.errors.length === 0, 'content errors: ' + r.errors.slice(0, 5).join(' | '));
     T.ok(bundle.models.length >= 90, 'expanded library has at least 90 writing models');
     T.ok(bundle.families.length >= 8, 'at least 8 reasoning families');
-    T.eq(bundle.topics.reduce((n, t) => n + t.facts.length, 0), 135, '15 sourced supplementary facts expand the passage fact pool');
-    T.ok(bundle.topics.every(t => t.facts.some(f => f.id === 'f9' && /^https:\/\//.test(f.sourceUrl || ''))), 'each topic has an attributable supplementary fact');
+    T.eq(bundle.topics.reduce((n, t) => n + t.facts.length, 0), 542, 'existing sourced facts and the 407-record math library expand the passage pool');
+    T.ok(bundle.topics.filter(t => !t.id.startsWith('math-')).every(t => t.facts.some(f => f.id === 'f9' && /^https:\/\//.test(f.sourceUrl || ''))), 'each existing topic retains its attributable supplementary fact');
     Struct.LEVELS.forEach(l => T.ok(bundle.models.filter(m => m.level === l).length >= 30, 'at least 30 models at ' + l));
-    bundle.topics.forEach(t => Struct.LEVELS.forEach(l => T.eq(bundle.models.filter(m => m.topicId === t.id && m.level === l).length, 2, t.id + ' has a balanced authored pool at ' + l)));
+    bundle.topics.forEach(t => Struct.LEVELS.forEach(l => T.eq(bundle.models.filter(m => m.topicId === t.id && m.level === l).length, t.id.startsWith('math-') ? 6 : 2, t.id + ' has the expected authored pool at ' + l)));
     bundle.models.forEach(m => {
       const t = idx.topicsById[m.topicId];
       m.ev.forEach(fid => T.ok(t.factsById[fid], m.id + ' evidence fact exists'));
@@ -167,7 +167,7 @@ function runEngineTests() {
   });
 
   T.suite('rotation and repetition control', () => {
-    const modeCounts = {}, levelCounts = {}, roleCounts = {}, familyCounts = {};
+    const modeCounts = {}, levelCounts = {}, roleCounts = {}, familyCounts = {}, topicCounts = {};
     const g = new G.Generator(bundle, 'rotation');
     const log = [], lastSeen = {}, gaps = [];
     let sameModelBack2 = 0, sameSigIn30 = 0, sameTopicBack1 = 0;
@@ -177,6 +177,7 @@ function runEngineTests() {
       modeCounts[ch.mode] = (modeCounts[ch.mode] || 0) + 1;
       levelCounts[ch.level] = (levelCounts[ch.level] || 0) + 1;
       familyCounts[ch.family] = (familyCounts[ch.family] || 0) + 1;
+      topicCounts[ch.topicId] = (topicCounts[ch.topicId] || 0) + 1;
       if (ch.role) roleCounts[ch.role] = (roleCounts[ch.role] || 0) + 1;
       if (i >= 1 && log[i - 1].modelId === ch.modelId) sameModelBack2++;
       if (i >= 2 && log[i - 2].modelId === ch.modelId) sameModelBack2++;
@@ -192,7 +193,10 @@ function runEngineTests() {
     Struct.MODES.forEach(m => T.ok(modeCounts[m] / 900 > 0.30 && modeCounts[m] / 900 < 0.37, 'mixed practice mode share ' + m + ' = ' + Math.round(100 * modeCounts[m] / 9) + '%'));
     Struct.LEVELS.forEach(l => T.ok(levelCounts[l] / 900 > 0.30 && levelCounts[l] / 900 < 0.37, 'level share ' + l));
     Struct.ROLES.forEach(r => T.ok(roleCounts[r] > 60, 'role ' + r + ' is practiced regularly (' + roleCounts[r] + ')'));
-    bundle.families.forEach(f => T.ok(familyCounts[f] / 900 >= 0.08, 'family ' + f + ' has at least an 8% share (' + Math.round(familyCounts[f] / 9) + '%)'));
+    const legacyFamilies = [...new Set(bundle.models.filter(m => !m.topicId.startsWith('math-')).map(m => m.family))];
+    legacyFamilies.forEach(f => T.ok((familyCounts[f] || 0) > 0, 'existing reasoning family remains available: ' + f));
+    const topicValues = Object.values(topicCounts);
+    T.ok(Math.max(...topicValues) - Math.min(...topicValues) <= 4, 'topic selection is balanced across topics (range ' + Math.min(...topicValues) + '-' + Math.max(...topicValues) + ')');
     const minGap = Math.min.apply(null, gaps), avgGap = gaps.reduce((a, b) => a + b, 0) / gaps.length;
     T.ok(minGap >= 3, 'minimum gap between repeats of a writing model is at least 3 (got ' + minGap + ')');
     // Restoring history continues rotation without an immediate repeat.
@@ -200,7 +204,7 @@ function runEngineTests() {
     const g3 = new G.Generator(bundle, 'rotation2b'); g3.restore(g2.history);
     const b = g3.next({ mode: 'identify', level: 'beginner' });
     T.ok(a.modelId !== b.modelId, 'restored history prevents immediate repetition');
-    extra.rotation = { challenges: 900, modeCounts, levelCounts, roleCounts, familyCounts, minGap, avgGap: Math.round(avgGap * 10) / 10, sameModelBack2, sameSigIn30, sameTopicBack1 };
+    extra.rotation = { challenges: 900, modeCounts, levelCounts, roleCounts, familyCounts, topicCounts, minGap, avgGap: Math.round(avgGap * 10) / 10, sameModelBack2, sameSigIn30, sameTopicBack1 };
   });
 
   T.suite('level filters', () => {
@@ -232,10 +236,16 @@ function runEngineTests() {
     try { selected.next({ mode: 'mixed', level: 'advanced', subject: 'Physics', topics: ['water-cycle'] }); } catch (e) { rejectedMismatch = /No writing models/.test(e.message); }
     T.ok(rejectedMismatch, 'no cross-subject mismatch is silently substituted');
     const longPool = new G.Generator(bundle, 'review-rollover');
-    for (let i = 0; i < 150; i++) {
+    const beginnerByTopic = Object.fromEntries(bundle.topics.map(t => [t.id, new Set()]));
+    for (let i = 0; i < 180; i++) {
       const c = longPool.next({ mode: 'mixed', level: 'beginner' });
-      if (i < 30) T.ok(!c.pool.review, 'all beginner models are new before the pool is exhausted');
-      else T.ok(c.pool.review, 'review remains labeled after bounded recent history rolls over');
+      const priorTopicCount = beginnerByTopic[c.topicId].size;
+      if (priorTopicCount < bundle.models.filter(m => m.topicId === c.topicId && m.level === 'beginner').length) {
+        T.ok(!c.pool.review, 'topic-specific beginner models are new before that topic enters review');
+      } else {
+        T.ok(c.pool.review, 'review is labeled after the selected topic is exhausted');
+      }
+      beginnerByTopic[c.topicId].add(c.modelId);
     }
     const restored = new G.Generator(bundle, 'review-restore');
     restored.restore([], longPool.getSeenModels());

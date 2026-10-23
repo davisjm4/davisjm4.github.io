@@ -1,0 +1,1277 @@
+[
+  {
+    "id": "math-triangles-polygons-01",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle classification and theorems",
+    "term": "Triangle",
+    "definition": "A polygon with three sides and three interior angles.",
+    "example": "Every triangle's interior angles sum to 180 degrees.",
+    "correctAnswer": "A polygon with three sides and three interior angles.",
+    "supportingEvidence": "Every triangle's interior angles sum to 180 degrees.",
+    "explanation": "The example illustrates triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name triangle without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-02",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle classification and theorems",
+    "term": "Scalene triangle",
+    "definition": "A triangle with no congruent sides.",
+    "example": "Side lengths 4, 5, and 6 form a scalene triangle.",
+    "correctAnswer": "A triangle with no congruent sides.",
+    "supportingEvidence": "Side lengths 4, 5, and 6 form a scalene triangle.",
+    "explanation": "The example illustrates scalene triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name scalene triangle without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-03",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle classification and theorems",
+    "term": "Isosceles triangle",
+    "definition": "A triangle with at least two congruent sides; its base angles are congruent.",
+    "example": "An isosceles triangle with equal legs has equal angles opposite those legs.",
+    "correctAnswer": "A triangle with at least two congruent sides; its base angles are congruent.",
+    "supportingEvidence": "An isosceles triangle with equal legs has equal angles opposite those legs.",
+    "explanation": "The example illustrates isosceles triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name isosceles triangle without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-04",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle classification and theorems",
+    "term": "Equilateral triangle",
+    "definition": "A triangle with three congruent sides; each angle measures 60 degrees.",
+    "example": "Three 5-centimeter sides form an equilateral triangle.",
+    "correctAnswer": "A triangle with three congruent sides; each angle measures 60 degrees.",
+    "supportingEvidence": "Three 5-centimeter sides form an equilateral triangle.",
+    "explanation": "The example illustrates equilateral triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name equilateral triangle without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-05",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle classification and theorems",
+    "term": "Acute triangle",
+    "definition": "A triangle whose three interior angles are acute.",
+    "example": "Angles 50, 60, and 70 degrees form an acute triangle.",
+    "correctAnswer": "A triangle whose three interior angles are acute.",
+    "supportingEvidence": "Angles 50, 60, and 70 degrees form an acute triangle.",
+    "explanation": "The example illustrates acute triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name acute triangle without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-06",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle classification and theorems",
+    "term": "Right triangle",
+    "definition": "A triangle with one 90-degree angle.",
+    "example": "A 3-4-5 triangle is a right triangle.",
+    "correctAnswer": "A triangle with one 90-degree angle.",
+    "supportingEvidence": "A 3-4-5 triangle is a right triangle.",
+    "explanation": "The example illustrates right triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name right triangle without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-07",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle classification and theorems",
+    "term": "Obtuse triangle",
+    "definition": "A triangle with one angle greater than 90 degrees.",
+    "example": "Angles 30, 40, and 110 degrees form an obtuse triangle.",
+    "correctAnswer": "A triangle with one angle greater than 90 degrees.",
+    "supportingEvidence": "Angles 30, 40, and 110 degrees form an obtuse triangle.",
+    "explanation": "The example illustrates obtuse triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name obtuse triangle without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-08",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle classification and theorems",
+    "term": "Triangle inequality",
+    "definition": "The sum of any two side lengths of a triangle must exceed the third side length.",
+    "example": "Lengths 2, 3, and 6 cannot form a triangle because 2+3 is not greater than 6.",
+    "correctAnswer": "The sum of any two side lengths of a triangle must exceed the third side length.",
+    "supportingEvidence": "Lengths 2, 3, and 6 cannot form a triangle because 2+3 is not greater than 6.",
+    "explanation": "The example illustrates triangle inequality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name triangle inequality without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-09",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle classification and theorems",
+    "term": "Interior angle sum of a triangle",
+    "definition": "The measures of the three interior angles of a Euclidean triangle total 180 degrees.",
+    "example": "If two angles are 45 and 65 degrees, the third is 70 degrees.",
+    "correctAnswer": "The measures of the three interior angles of a Euclidean triangle total 180 degrees.",
+    "supportingEvidence": "If two angles are 45 and 65 degrees, the third is 70 degrees.",
+    "explanation": "The example illustrates interior angle sum of a triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name interior angle sum of a triangle without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-10",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle classification and theorems",
+    "term": "Exterior angle of a triangle",
+    "definition": "An angle formed by extending one side; its measure equals the sum of the two remote interior angles.",
+    "example": "Remote angles 40 and 55 degrees give an exterior angle of 95 degrees.",
+    "correctAnswer": "An angle formed by extending one side; its measure equals the sum of the two remote interior angles.",
+    "supportingEvidence": "Remote angles 40 and 55 degrees give an exterior angle of 95 degrees.",
+    "explanation": "The example illustrates exterior angle of a triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name exterior angle of a triangle without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-11",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle classification and theorems",
+    "term": "Remote interior angles",
+    "definition": "The two interior angles of a triangle not adjacent to a chosen exterior angle.",
+    "example": "For an exterior angle at vertex C, the interior angles at A and B are remote.",
+    "correctAnswer": "The two interior angles of a triangle not adjacent to a chosen exterior angle.",
+    "supportingEvidence": "For an exterior angle at vertex C, the interior angles at A and B are remote.",
+    "explanation": "The example illustrates remote interior angles because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name remote interior angles without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-12",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Right triangles and congruence",
+    "term": "Hypotenuse",
+    "definition": "The side opposite the right angle in a right triangle; it is the longest side.",
+    "example": "In a 3-4-5 right triangle, the side of length 5 is the hypotenuse.",
+    "correctAnswer": "The side opposite the right angle in a right triangle; it is the longest side.",
+    "supportingEvidence": "In a 3-4-5 right triangle, the side of length 5 is the hypotenuse.",
+    "explanation": "The example illustrates hypotenuse because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name hypotenuse without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-13",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Right triangles and congruence",
+    "term": "Leg of a right triangle",
+    "definition": "Either of the two sides that form the right angle.",
+    "example": "The lengths 3 and 4 are legs in a 3-4-5 triangle.",
+    "correctAnswer": "Either of the two sides that form the right angle.",
+    "supportingEvidence": "The lengths 3 and 4 are legs in a 3-4-5 triangle.",
+    "explanation": "The example illustrates leg of a right triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name leg of a right triangle without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-14",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Right triangles and congruence",
+    "term": "Pythagorean theorem",
+    "definition": "For a right triangle with legs a and b and hypotenuse c, a²+b²=c².",
+    "example": "3²+4²=5² verifies the side lengths of a 3-4-5 triangle.",
+    "correctAnswer": "For a right triangle with legs a and b and hypotenuse c, a²+b²=c².",
+    "supportingEvidence": "3²+4²=5² verifies the side lengths of a 3-4-5 triangle.",
+    "explanation": "The example illustrates pythagorean theorem because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name pythagorean theorem without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-15",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Right triangles and congruence",
+    "term": "Converse of the Pythagorean theorem",
+    "definition": "If positive side lengths satisfy a²+b²=c² with c largest, they form a right triangle.",
+    "example": "5²+12²=13², so those lengths form a right triangle.",
+    "correctAnswer": "If positive side lengths satisfy a²+b²=c² with c largest, they form a right triangle.",
+    "supportingEvidence": "5²+12²=13², so those lengths form a right triangle.",
+    "explanation": "The example illustrates converse of the pythagorean theorem because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name converse of the pythagorean theorem without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-16",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Right triangles and congruence",
+    "term": "Pythagorean triple",
+    "definition": "Three positive integers that can be side lengths of a right triangle.",
+    "example": "5, 12, and 13 form a Pythagorean triple.",
+    "correctAnswer": "Three positive integers that can be side lengths of a right triangle.",
+    "supportingEvidence": "5, 12, and 13 form a Pythagorean triple.",
+    "explanation": "The example illustrates pythagorean triple because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name pythagorean triple without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-17",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Right triangles and congruence",
+    "term": "Congruent figures",
+    "definition": "Figures with the same size and shape, so corresponding sides and angles are congruent.",
+    "example": "A translation of a triangle produces a congruent image.",
+    "correctAnswer": "Figures with the same size and shape, so corresponding sides and angles are congruent.",
+    "supportingEvidence": "A translation of a triangle produces a congruent image.",
+    "explanation": "The example illustrates congruent figures because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name congruent figures without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-18",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Right triangles and congruence",
+    "term": "SSS congruence",
+    "definition": "Two triangles are congruent when all three pairs of corresponding sides are equal.",
+    "example": "Side lengths 3, 4, 5 in both triangles prove SSS congruence.",
+    "correctAnswer": "Two triangles are congruent when all three pairs of corresponding sides are equal.",
+    "supportingEvidence": "Side lengths 3, 4, 5 in both triangles prove SSS congruence.",
+    "explanation": "The example illustrates sss congruence because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name sss congruence without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-19",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Right triangles and congruence",
+    "term": "SAS congruence",
+    "definition": "Two triangles are congruent when two corresponding sides and their included angle are equal.",
+    "example": "Two sides of 5 and 7 with the included 60-degree angle establish SAS.",
+    "correctAnswer": "Two triangles are congruent when two corresponding sides and their included angle are equal.",
+    "supportingEvidence": "Two sides of 5 and 7 with the included 60-degree angle establish SAS.",
+    "explanation": "The example illustrates sas congruence because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name sas congruence without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-20",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Right triangles and congruence",
+    "term": "ASA congruence",
+    "definition": "Two triangles are congruent when two corresponding angles and their included side are equal.",
+    "example": "Equal 40- and 70-degree angles with the side between them establish ASA.",
+    "correctAnswer": "Two triangles are congruent when two corresponding angles and their included side are equal.",
+    "supportingEvidence": "Equal 40- and 70-degree angles with the side between them establish ASA.",
+    "explanation": "The example illustrates asa congruence because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name asa congruence without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-21",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Right triangles and congruence",
+    "term": "AAS congruence",
+    "definition": "Two triangles are congruent when two corresponding angles and a non-included side are equal.",
+    "example": "Two equal angle pairs and one corresponding side not between them establish AAS.",
+    "correctAnswer": "Two triangles are congruent when two corresponding angles and a non-included side are equal.",
+    "supportingEvidence": "Two equal angle pairs and one corresponding side not between them establish AAS.",
+    "explanation": "The example illustrates aas congruence because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name aas congruence without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-22",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Similarity and proportionality",
+    "term": "HL congruence",
+    "definition": "Right triangles are congruent when their hypotenuses and one pair of legs are congruent.",
+    "example": "Right triangles with hypotenuse 10 and one leg 6 satisfy HL if both pairs match.",
+    "correctAnswer": "Right triangles are congruent when their hypotenuses and one pair of legs are congruent.",
+    "supportingEvidence": "Right triangles with hypotenuse 10 and one leg 6 satisfy HL if both pairs match.",
+    "explanation": "The example illustrates hl congruence because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name hl congruence without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-23",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Similarity and proportionality",
+    "term": "SSA ambiguity",
+    "definition": "Two sides and a nonincluded angle generally do not guarantee triangle congruence.",
+    "example": "SSA information may allow two different triangles, so it is not a general congruence test.",
+    "correctAnswer": "Two sides and a nonincluded angle generally do not guarantee triangle congruence.",
+    "supportingEvidence": "SSA information may allow two different triangles, so it is not a general congruence test.",
+    "explanation": "The example illustrates ssa ambiguity because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name ssa ambiguity without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-24",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Similarity and proportionality",
+    "term": "AAA similarity",
+    "definition": "Equal corresponding angles establish triangle similarity, but not congruence.",
+    "example": "Triangles with angles 30, 60, and 90 degrees may have different side lengths.",
+    "correctAnswer": "Equal corresponding angles establish triangle similarity, but not congruence.",
+    "supportingEvidence": "Triangles with angles 30, 60, and 90 degrees may have different side lengths.",
+    "explanation": "The example illustrates aaa similarity because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name aaa similarity without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-25",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Similarity and proportionality",
+    "term": "Similar figures",
+    "definition": "Figures with equal corresponding angles and proportional corresponding side lengths.",
+    "example": "A scale enlargement of a triangle is similar to the original.",
+    "correctAnswer": "Figures with equal corresponding angles and proportional corresponding side lengths.",
+    "supportingEvidence": "A scale enlargement of a triangle is similar to the original.",
+    "explanation": "The example illustrates similar figures because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name similar figures without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-26",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Similarity and proportionality",
+    "term": "Scale factor",
+    "definition": "The ratio of corresponding lengths in similar figures.",
+    "example": "Sides 4 and 10 correspond with scale factor 2.5 from smaller to larger.",
+    "correctAnswer": "The ratio of corresponding lengths in similar figures.",
+    "supportingEvidence": "Sides 4 and 10 correspond with scale factor 2.5 from smaller to larger.",
+    "explanation": "The example illustrates scale factor because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name scale factor without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-27",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Similarity and proportionality",
+    "term": "Corresponding sides",
+    "definition": "Sides occupying matching positions in two figures being compared.",
+    "example": "If vertices A↔D and B↔E, side AB corresponds to DE.",
+    "correctAnswer": "Sides occupying matching positions in two figures being compared.",
+    "supportingEvidence": "If vertices A↔D and B↔E, side AB corresponds to DE.",
+    "explanation": "The example illustrates corresponding sides because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name corresponding sides without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-28",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Similarity and proportionality",
+    "term": "Corresponding angles",
+    "definition": "Angles occupying matching positions in figures being compared.",
+    "example": "In similar triangles, each pair of corresponding angles has equal measure.",
+    "correctAnswer": "Angles occupying matching positions in figures being compared.",
+    "supportingEvidence": "In similar triangles, each pair of corresponding angles has equal measure.",
+    "explanation": "The example illustrates corresponding angles because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name corresponding angles without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-29",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Similarity and proportionality",
+    "term": "Proportional sides",
+    "definition": "Corresponding side lengths that share a common ratio.",
+    "example": "Side pairs 3 and 6, 4 and 8, and 5 and 10 have common ratio 2.",
+    "correctAnswer": "Corresponding side lengths that share a common ratio.",
+    "supportingEvidence": "Side pairs 3 and 6, 4 and 8, and 5 and 10 have common ratio 2.",
+    "explanation": "The example illustrates proportional sides because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name proportional sides without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-30",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Similarity and proportionality",
+    "term": "Triangle midsegment",
+    "definition": "A segment joining midpoints of two sides; it is parallel to the third side and half its length.",
+    "example": "If the third side is 12 units, the midsegment is 6 units.",
+    "correctAnswer": "A segment joining midpoints of two sides; it is parallel to the third side and half its length.",
+    "supportingEvidence": "If the third side is 12 units, the midsegment is 6 units.",
+    "explanation": "The example illustrates triangle midsegment because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name triangle midsegment without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-31",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Similarity and proportionality",
+    "term": "Median of a triangle",
+    "definition": "A segment from a vertex to the midpoint of the opposite side.",
+    "example": "A median divides the opposite side into two equal segments.",
+    "correctAnswer": "A segment from a vertex to the midpoint of the opposite side.",
+    "supportingEvidence": "A median divides the opposite side into two equal segments.",
+    "explanation": "The example illustrates median of a triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name median of a triangle without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-32",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle centers and segments",
+    "term": "Altitude of a triangle",
+    "definition": "A perpendicular segment from a vertex to the line containing the opposite side.",
+    "example": "An altitude forms a right angle with its base line.",
+    "correctAnswer": "A perpendicular segment from a vertex to the line containing the opposite side.",
+    "supportingEvidence": "An altitude forms a right angle with its base line.",
+    "explanation": "The example illustrates altitude of a triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name altitude of a triangle without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-33",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle centers and segments",
+    "term": "Angle bisector of a triangle",
+    "definition": "A segment or ray dividing a triangle's vertex angle into two equal angles.",
+    "example": "A 50-degree vertex angle is split into two 25-degree angles.",
+    "correctAnswer": "A segment or ray dividing a triangle's vertex angle into two equal angles.",
+    "supportingEvidence": "A 50-degree vertex angle is split into two 25-degree angles.",
+    "explanation": "The example illustrates angle bisector of a triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name angle bisector of a triangle without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-34",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle centers and segments",
+    "term": "Perpendicular bisector in a triangle",
+    "definition": "A line perpendicular to a side through its midpoint; a point on it is equidistant from that side's endpoints.",
+    "example": "The perpendicular bisectors meet at the circumcenter.",
+    "correctAnswer": "A line perpendicular to a side through its midpoint; a point on it is equidistant from that side's endpoints.",
+    "supportingEvidence": "The perpendicular bisectors meet at the circumcenter.",
+    "explanation": "The example illustrates perpendicular bisector in a triangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name perpendicular bisector in a triangle without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-35",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle centers and segments",
+    "term": "Circumcenter",
+    "definition": "The point where a triangle's perpendicular bisectors meet; it is equidistant from all vertices.",
+    "example": "The circumcenter is the center of the circle through a triangle's vertices.",
+    "correctAnswer": "The point where a triangle's perpendicular bisectors meet; it is equidistant from all vertices.",
+    "supportingEvidence": "The circumcenter is the center of the circle through a triangle's vertices.",
+    "explanation": "The example illustrates circumcenter because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name circumcenter without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-36",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle centers and segments",
+    "term": "Incenter",
+    "definition": "The point where a triangle's angle bisectors meet; it is equidistant from its sides.",
+    "example": "The incenter is the center of the circle tangent to all three sides.",
+    "correctAnswer": "The point where a triangle's angle bisectors meet; it is equidistant from its sides.",
+    "supportingEvidence": "The incenter is the center of the circle tangent to all three sides.",
+    "explanation": "The example illustrates incenter because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name incenter without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-37",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle centers and segments",
+    "term": "Centroid",
+    "definition": "The point where a triangle's medians meet; it divides each median in a 2:1 ratio from the vertex.",
+    "example": "The centroid lies two-thirds of the way from a vertex to the opposite midpoint.",
+    "correctAnswer": "The point where a triangle's medians meet; it divides each median in a 2:1 ratio from the vertex.",
+    "supportingEvidence": "The centroid lies two-thirds of the way from a vertex to the opposite midpoint.",
+    "explanation": "The example illustrates centroid because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name centroid without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-38",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle centers and segments",
+    "term": "Orthocenter",
+    "definition": "The point where a triangle's three altitudes or their extensions meet.",
+    "example": "In an acute triangle, all three altitudes meet inside the triangle.",
+    "correctAnswer": "The point where a triangle's three altitudes or their extensions meet.",
+    "supportingEvidence": "In an acute triangle, all three altitudes meet inside the triangle.",
+    "explanation": "The example illustrates orthocenter because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name orthocenter without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-39",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle centers and segments",
+    "term": "Quadrilateral",
+    "definition": "A polygon with four sides and four interior angles.",
+    "example": "A rectangle is a quadrilateral.",
+    "correctAnswer": "A polygon with four sides and four interior angles.",
+    "supportingEvidence": "A rectangle is a quadrilateral.",
+    "explanation": "The example illustrates quadrilateral because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quadrilateral without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-40",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle centers and segments",
+    "term": "Interior angle sum of a quadrilateral",
+    "definition": "The interior angles of a simple quadrilateral total 360 degrees.",
+    "example": "Three angles totaling 250 degrees leave 110 degrees for the fourth.",
+    "correctAnswer": "The interior angles of a simple quadrilateral total 360 degrees.",
+    "supportingEvidence": "Three angles totaling 250 degrees leave 110 degrees for the fourth.",
+    "explanation": "The example illustrates interior angle sum of a quadrilateral because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name interior angle sum of a quadrilateral without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-41",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Triangle centers and segments",
+    "term": "Parallelogram",
+    "definition": "A quadrilateral with both pairs of opposite sides parallel; opposite sides and angles are congruent.",
+    "example": "A rectangle is a parallelogram with right angles.",
+    "correctAnswer": "A quadrilateral with both pairs of opposite sides parallel; opposite sides and angles are congruent.",
+    "supportingEvidence": "A rectangle is a parallelogram with right angles.",
+    "explanation": "The example illustrates parallelogram because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name parallelogram without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-42",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Quadrilaterals and polygon properties",
+    "term": "Rectangle",
+    "definition": "A quadrilateral with four right angles; opposite sides are congruent and parallel.",
+    "example": "A 4-by-7 rectangle has four 90-degree angles.",
+    "correctAnswer": "A quadrilateral with four right angles; opposite sides are congruent and parallel.",
+    "supportingEvidence": "A 4-by-7 rectangle has four 90-degree angles.",
+    "explanation": "The example illustrates rectangle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name rectangle without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-43",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Quadrilaterals and polygon properties",
+    "term": "Rhombus",
+    "definition": "A quadrilateral with four congruent sides; opposite angles are congruent.",
+    "example": "A square is both a rhombus and a rectangle.",
+    "correctAnswer": "A quadrilateral with four congruent sides; opposite angles are congruent.",
+    "supportingEvidence": "A square is both a rhombus and a rectangle.",
+    "explanation": "The example illustrates rhombus because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name rhombus without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-44",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Quadrilaterals and polygon properties",
+    "term": "Square",
+    "definition": "A quadrilateral with four congruent sides and four right angles.",
+    "example": "Every square is a rectangle and a rhombus.",
+    "correctAnswer": "A quadrilateral with four congruent sides and four right angles.",
+    "supportingEvidence": "Every square is a rectangle and a rhombus.",
+    "explanation": "The example illustrates square because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name square without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-45",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Quadrilaterals and polygon properties",
+    "term": "Trapezoid",
+    "definition": "A quadrilateral with at least one pair of parallel sides under the inclusive definition.",
+    "example": "A parallelogram also meets the inclusive definition of a trapezoid.",
+    "correctAnswer": "A quadrilateral with at least one pair of parallel sides under the inclusive definition.",
+    "supportingEvidence": "A parallelogram also meets the inclusive definition of a trapezoid.",
+    "explanation": "The example illustrates trapezoid because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name trapezoid without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-46",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Quadrilaterals and polygon properties",
+    "term": "Kite",
+    "definition": "A quadrilateral with two distinct pairs of adjacent congruent sides.",
+    "example": "A kite can have one pair of opposite angles congruent.",
+    "correctAnswer": "A quadrilateral with two distinct pairs of adjacent congruent sides.",
+    "supportingEvidence": "A kite can have one pair of opposite angles congruent.",
+    "explanation": "The example illustrates kite because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name kite without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-47",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Quadrilaterals and polygon properties",
+    "term": "Regular polygon",
+    "definition": "A polygon with all sides congruent and all interior angles congruent.",
+    "example": "An equilateral triangle is a regular polygon.",
+    "correctAnswer": "A polygon with all sides congruent and all interior angles congruent.",
+    "supportingEvidence": "An equilateral triangle is a regular polygon.",
+    "explanation": "The example illustrates regular polygon because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name regular polygon without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-48",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Quadrilaterals and polygon properties",
+    "term": "Interior angle sum of an n-gon",
+    "definition": "For a simple n-sided polygon, the interior angle sum is (n-2)·180 degrees.",
+    "example": "A pentagon's interior angles sum to 540 degrees.",
+    "correctAnswer": "For a simple n-sided polygon, the interior angle sum is (n-2)·180 degrees.",
+    "supportingEvidence": "A pentagon's interior angles sum to 540 degrees.",
+    "explanation": "The example illustrates interior angle sum of an n-gon because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name interior angle sum of an n-gon without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-49",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Quadrilaterals and polygon properties",
+    "term": "Exterior angle sum of a polygon",
+    "definition": "One exterior angle at each vertex, taken in the same direction, sums to 360 degrees.",
+    "example": "A regular hexagon has exterior angles of 60 degrees each.",
+    "correctAnswer": "One exterior angle at each vertex, taken in the same direction, sums to 360 degrees.",
+    "supportingEvidence": "A regular hexagon has exterior angles of 60 degrees each.",
+    "explanation": "The example illustrates exterior angle sum of a polygon because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name exterior angle sum of a polygon without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-50",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Quadrilaterals and polygon properties",
+    "term": "Diagonal of a polygon",
+    "definition": "A segment joining two nonadjacent vertices.",
+    "example": "A quadrilateral has two diagonals.",
+    "correctAnswer": "A segment joining two nonadjacent vertices.",
+    "supportingEvidence": "A quadrilateral has two diagonals.",
+    "explanation": "The example illustrates diagonal of a polygon because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name diagonal of a polygon without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-triangles-polygons-51",
+    "topicId": "math-triangles-polygons",
+    "subtopic": "Quadrilaterals and polygon properties",
+    "term": "Triangle congruence versus similarity",
+    "definition": "Congruence preserves lengths and angles; similarity preserves angles and side ratios.",
+    "example": "A scaled copy is similar, but it is congruent only if the scale factor is 1.",
+    "correctAnswer": "Congruence preserves lengths and angles; similarity preserves angles and side ratios.",
+    "supportingEvidence": "A scaled copy is similar, but it is congruent only if the scale factor is 1.",
+    "explanation": "The example illustrates triangle congruence versus similarity because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name triangle congruence versus similarity without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  }
+]

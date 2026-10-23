@@ -1,0 +1,1277 @@
+[
+  {
+    "id": "math-equations-inequalities-01",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Solutions and equality properties",
+    "term": "Solution of an equation",
+    "definition": "A value making an equation true after substitution.",
+    "example": "x=4 solves 2x=8.",
+    "correctAnswer": "A value making an equation true after substitution.",
+    "supportingEvidence": "x=4 solves 2x=8.",
+    "explanation": "The example illustrates solution of an equation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name solution of an equation without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-02",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Solutions and equality properties",
+    "term": "Solution set",
+    "definition": "All values satisfying an equation or inequality.",
+    "example": "The solutions of x²=9 are {-3,3}.",
+    "correctAnswer": "All values satisfying an equation or inequality.",
+    "supportingEvidence": "The solutions of x²=9 are {-3,3}.",
+    "explanation": "The example illustrates solution set because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name solution set without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-03",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Solutions and equality properties",
+    "term": "Equivalent equations",
+    "definition": "Equations with identical solution sets.",
+    "example": "x+5=9 and x=4 are equivalent.",
+    "correctAnswer": "Equations with identical solution sets.",
+    "supportingEvidence": "x+5=9 and x=4 are equivalent.",
+    "explanation": "The example illustrates equivalent equations because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name equivalent equations without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-04",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Solutions and equality properties",
+    "term": "Inverse operation",
+    "definition": "An operation that undoes another operation.",
+    "example": "Subtraction undoes addition in x+6=10.",
+    "correctAnswer": "An operation that undoes another operation.",
+    "supportingEvidence": "Subtraction undoes addition in x+6=10.",
+    "explanation": "The example illustrates inverse operation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name inverse operation without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-05",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Solutions and equality properties",
+    "term": "Addition property of equality",
+    "definition": "Adding the same value to both equation sides preserves equality.",
+    "example": "x-3=8 becomes x=11 after adding 3 to both sides.",
+    "correctAnswer": "Adding the same value to both equation sides preserves equality.",
+    "supportingEvidence": "x-3=8 becomes x=11 after adding 3 to both sides.",
+    "explanation": "The example illustrates addition property of equality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name addition property of equality without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-06",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Solutions and equality properties",
+    "term": "Subtraction property of equality",
+    "definition": "Subtracting the same value from both sides preserves equality.",
+    "example": "x+5=12 becomes x=7 after subtracting 5.",
+    "correctAnswer": "Subtracting the same value from both sides preserves equality.",
+    "supportingEvidence": "x+5=12 becomes x=7 after subtracting 5.",
+    "explanation": "The example illustrates subtraction property of equality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name subtraction property of equality without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-07",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Solutions and equality properties",
+    "term": "Multiplication property of equality",
+    "definition": "Multiplying both sides by the same value preserves equality.",
+    "example": "x/4=3 becomes x=12 after multiplying by 4.",
+    "correctAnswer": "Multiplying both sides by the same value preserves equality.",
+    "supportingEvidence": "x/4=3 becomes x=12 after multiplying by 4.",
+    "explanation": "The example illustrates multiplication property of equality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name multiplication property of equality without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-08",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Solutions and equality properties",
+    "term": "Division property of equality",
+    "definition": "Dividing both sides by the same nonzero value preserves equality.",
+    "example": "5x=20 becomes x=4 after dividing by 5.",
+    "correctAnswer": "Dividing both sides by the same nonzero value preserves equality.",
+    "supportingEvidence": "5x=20 becomes x=4 after dividing by 5.",
+    "explanation": "The example illustrates division property of equality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name division property of equality without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-09",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Solutions and equality properties",
+    "term": "One-step equation",
+    "definition": "An equation solved by undoing one operation on the variable.",
+    "example": "x-7=2 has solution x=9.",
+    "correctAnswer": "An equation solved by undoing one operation on the variable.",
+    "supportingEvidence": "x-7=2 has solution x=9.",
+    "explanation": "The example illustrates one-step equation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name one-step equation without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-10",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Solutions and equality properties",
+    "term": "Multi-step equation",
+    "definition": "An equation requiring several equivalent transformations to isolate a variable.",
+    "example": "2x+3=11 leads to 2x=8 and x=4.",
+    "correctAnswer": "An equation requiring several equivalent transformations to isolate a variable.",
+    "supportingEvidence": "2x+3=11 leads to 2x=8 and x=4.",
+    "explanation": "The example illustrates multi-step equation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name multi-step equation without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-11",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Solutions and equality properties",
+    "term": "Distributive step",
+    "definition": "Multiplying each term inside parentheses by an outside factor.",
+    "example": "4(x-2)=4x-8.",
+    "correctAnswer": "Multiplying each term inside parentheses by an outside factor.",
+    "supportingEvidence": "4(x-2)=4x-8.",
+    "explanation": "The example illustrates distributive step because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name distributive step without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-12",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Linear equations and inequalities",
+    "term": "Combining like terms",
+    "definition": "Adding or subtracting coefficients of terms with identical variable parts.",
+    "example": "5x-2x+1=3x+1.",
+    "correctAnswer": "Adding or subtracting coefficients of terms with identical variable parts.",
+    "supportingEvidence": "5x-2x+1=3x+1.",
+    "explanation": "The example illustrates combining like terms because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name combining like terms without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-13",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Linear equations and inequalities",
+    "term": "Variable on both sides",
+    "definition": "An equation with variable terms on each side.",
+    "example": "3x+1=x+9 has solution x=4.",
+    "correctAnswer": "An equation with variable terms on each side.",
+    "supportingEvidence": "3x+1=x+9 has solution x=4.",
+    "explanation": "The example illustrates variable on both sides because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name variable on both sides without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-14",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Linear equations and inequalities",
+    "term": "Identity equation",
+    "definition": "An equation true for every value in its domain.",
+    "example": "2(x+1)=2x+2 is true for all real x.",
+    "correctAnswer": "An equation true for every value in its domain.",
+    "supportingEvidence": "2(x+1)=2x+2 is true for all real x.",
+    "explanation": "The example illustrates identity equation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name identity equation without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-15",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Linear equations and inequalities",
+    "term": "Contradiction",
+    "definition": "An equation simplifying to a false statement, so it has no solutions.",
+    "example": "x+2=x+5 reduces to 2=5.",
+    "correctAnswer": "An equation simplifying to a false statement, so it has no solutions.",
+    "supportingEvidence": "x+2=x+5 reduces to 2=5.",
+    "explanation": "The example illustrates contradiction because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name contradiction without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-16",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Linear equations and inequalities",
+    "term": "Inequality",
+    "definition": "A comparison using <, >, ≤, or ≥.",
+    "example": "x+2<7 is equivalent to x<5.",
+    "correctAnswer": "A comparison using <, >, ≤, or ≥.",
+    "supportingEvidence": "x+2<7 is equivalent to x<5.",
+    "explanation": "The example illustrates inequality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name inequality without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-17",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Linear equations and inequalities",
+    "term": "Strict inequality",
+    "definition": "An inequality using < or > that excludes equality at the boundary.",
+    "example": "x<3 does not include 3.",
+    "correctAnswer": "An inequality using < or > that excludes equality at the boundary.",
+    "supportingEvidence": "x<3 does not include 3.",
+    "explanation": "The example illustrates strict inequality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name strict inequality without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-18",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Linear equations and inequalities",
+    "term": "Inclusive inequality",
+    "definition": "An inequality using ≤ or ≥ that includes its boundary.",
+    "example": "x≥2 includes 2.",
+    "correctAnswer": "An inequality using ≤ or ≥ that includes its boundary.",
+    "supportingEvidence": "x≥2 includes 2.",
+    "explanation": "The example illustrates inclusive inequality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name inclusive inequality without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-19",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Linear equations and inequalities",
+    "term": "Reverse inequality rule",
+    "definition": "Multiplying or dividing both sides by a negative number reverses the inequality sign.",
+    "example": "-2x<6 becomes x>-3.",
+    "correctAnswer": "Multiplying or dividing both sides by a negative number reverses the inequality sign.",
+    "supportingEvidence": "-2x<6 becomes x>-3.",
+    "explanation": "The example illustrates reverse inequality rule because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name reverse inequality rule without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-20",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Linear equations and inequalities",
+    "term": "Compound inequality",
+    "definition": "Two inequalities joined to describe values meeting both conditions or either condition.",
+    "example": "1<x≤5 describes values above 1 and at most 5.",
+    "correctAnswer": "Two inequalities joined to describe values meeting both conditions or either condition.",
+    "supportingEvidence": "1<x≤5 describes values above 1 and at most 5.",
+    "explanation": "The example illustrates compound inequality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name compound inequality without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-21",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Linear equations and inequalities",
+    "term": "And compound inequality",
+    "definition": "A compound inequality requiring both conditions; its solution is an intersection.",
+    "example": "x>2 and x<6 gives 2<x<6.",
+    "correctAnswer": "A compound inequality requiring both conditions; its solution is an intersection.",
+    "supportingEvidence": "x>2 and x<6 gives 2<x<6.",
+    "explanation": "The example illustrates and compound inequality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name and compound inequality without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-22",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Compound and absolute-value inequalities",
+    "term": "Or compound inequality",
+    "definition": "A compound inequality requiring at least one condition; its solution is a union.",
+    "example": "x<-1 or x>3 describes two outer intervals.",
+    "correctAnswer": "A compound inequality requiring at least one condition; its solution is a union.",
+    "supportingEvidence": "x<-1 or x>3 describes two outer intervals.",
+    "explanation": "The example illustrates or compound inequality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name or compound inequality without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-23",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Compound and absolute-value inequalities",
+    "term": "Interval notation",
+    "definition": "A notation for real intervals using parentheses for excluded endpoints and brackets for included endpoints.",
+    "example": "2≤x<5 is [2,5).",
+    "correctAnswer": "A notation for real intervals using parentheses for excluded endpoints and brackets for included endpoints.",
+    "supportingEvidence": "2≤x<5 is [2,5).",
+    "explanation": "The example illustrates interval notation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name interval notation without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-24",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Compound and absolute-value inequalities",
+    "term": "Open interval",
+    "definition": "An interval excluding both endpoints.",
+    "example": "(1,4) represents 1<x<4.",
+    "correctAnswer": "An interval excluding both endpoints.",
+    "supportingEvidence": "(1,4) represents 1<x<4.",
+    "explanation": "The example illustrates open interval because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name open interval without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-25",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Compound and absolute-value inequalities",
+    "term": "Closed interval",
+    "definition": "An interval including both endpoints.",
+    "example": "[1,4] represents 1≤x≤4.",
+    "correctAnswer": "An interval including both endpoints.",
+    "supportingEvidence": "[1,4] represents 1≤x≤4.",
+    "explanation": "The example illustrates closed interval because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name closed interval without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-26",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Compound and absolute-value inequalities",
+    "term": "Absolute value equation",
+    "definition": "An equation involving distance from zero that may yield two cases.",
+    "example": "|x|=5 has solutions x=-5 and x=5.",
+    "correctAnswer": "An equation involving distance from zero that may yield two cases.",
+    "supportingEvidence": "|x|=5 has solutions x=-5 and x=5.",
+    "explanation": "The example illustrates absolute value equation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name absolute value equation without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-27",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Compound and absolute-value inequalities",
+    "term": "Absolute value less-than inequality",
+    "definition": "A bound |x-a|<r describes values within distance r of a.",
+    "example": "|x|<3 means -3<x<3.",
+    "correctAnswer": "A bound |x-a|<r describes values within distance r of a.",
+    "supportingEvidence": "|x|<3 means -3<x<3.",
+    "explanation": "The example illustrates absolute value less-than inequality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name absolute value less-than inequality without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-28",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Compound and absolute-value inequalities",
+    "term": "Absolute value greater-than inequality",
+    "definition": "A bound |x-a|>r describes values more than distance r from a.",
+    "example": "|x|>3 means x<-3 or x>3.",
+    "correctAnswer": "A bound |x-a|>r describes values more than distance r from a.",
+    "supportingEvidence": "|x|>3 means x<-3 or x>3.",
+    "explanation": "The example illustrates absolute value greater-than inequality because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name absolute value greater-than inequality without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-29",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Compound and absolute-value inequalities",
+    "term": "Extraneous solution",
+    "definition": "A candidate that appears during solving but fails the original equation.",
+    "example": "Squaring both sides may create a value that does not satisfy the original radical equation.",
+    "correctAnswer": "A candidate that appears during solving but fails the original equation.",
+    "supportingEvidence": "Squaring both sides may create a value that does not satisfy the original radical equation.",
+    "explanation": "The example illustrates extraneous solution because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name extraneous solution without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-30",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Compound and absolute-value inequalities",
+    "term": "Literal equation",
+    "definition": "An equation with multiple variables that can be solved for one variable in terms of others.",
+    "example": "A=lw can be rearranged to w=A/l when l≠0.",
+    "correctAnswer": "An equation with multiple variables that can be solved for one variable in terms of others.",
+    "supportingEvidence": "A=lw can be rearranged to w=A/l when l≠0.",
+    "explanation": "The example illustrates literal equation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name literal equation without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-31",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Compound and absolute-value inequalities",
+    "term": "Formula rearrangement",
+    "definition": "Solving a formula for a different variable while preserving equivalence.",
+    "example": "d=rt gives r=d/t when t≠0.",
+    "correctAnswer": "Solving a formula for a different variable while preserving equivalence.",
+    "supportingEvidence": "d=rt gives r=d/t when t≠0.",
+    "explanation": "The example illustrates formula rearrangement because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name formula rearrangement without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-32",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Systems of equations",
+    "term": "Proportion",
+    "definition": "An equation stating that two ratios are equal.",
+    "example": "2/3=8/12 is a true proportion.",
+    "correctAnswer": "An equation stating that two ratios are equal.",
+    "supportingEvidence": "2/3=8/12 is a true proportion.",
+    "explanation": "The example illustrates proportion because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name proportion without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-33",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Systems of equations",
+    "term": "Cross products",
+    "definition": "Equal ratios a/b=c/d with nonzero denominators imply ad=bc.",
+    "example": "x/5=3/10 gives 10x=15.",
+    "correctAnswer": "Equal ratios a/b=c/d with nonzero denominators imply ad=bc.",
+    "supportingEvidence": "x/5=3/10 gives 10x=15.",
+    "explanation": "The example illustrates cross products because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name cross products without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-34",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Systems of equations",
+    "term": "System of equations",
+    "definition": "A set of equations whose solution must satisfy every equation simultaneously.",
+    "example": "The intersection of y=x and y=4 is (4,4).",
+    "correctAnswer": "A set of equations whose solution must satisfy every equation simultaneously.",
+    "supportingEvidence": "The intersection of y=x and y=4 is (4,4).",
+    "explanation": "The example illustrates system of equations because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name system of equations without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-35",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Systems of equations",
+    "term": "Substitution method",
+    "definition": "Solving a system by replacing one variable with an equal expression.",
+    "example": "Replacing y by x+1 in y=5 gives x+1=5.",
+    "correctAnswer": "Solving a system by replacing one variable with an equal expression.",
+    "supportingEvidence": "Replacing y by x+1 in y=5 gives x+1=5.",
+    "explanation": "The example illustrates substitution method because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name substitution method without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-36",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Systems of equations",
+    "term": "Elimination method",
+    "definition": "Solving a system by combining equations to remove a variable.",
+    "example": "Adding x+y=7 and x-y=1 gives 2x=8.",
+    "correctAnswer": "Solving a system by combining equations to remove a variable.",
+    "supportingEvidence": "Adding x+y=7 and x-y=1 gives 2x=8.",
+    "explanation": "The example illustrates elimination method because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name elimination method without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-37",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Systems of equations",
+    "term": "Intersection solution",
+    "definition": "An ordered pair satisfying every equation in a system.",
+    "example": "(4,4) satisfies both y=x and y=4.",
+    "correctAnswer": "An ordered pair satisfying every equation in a system.",
+    "supportingEvidence": "(4,4) satisfies both y=x and y=4.",
+    "explanation": "The example illustrates intersection solution because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name intersection solution without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-38",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Systems of equations",
+    "term": "Consistent system",
+    "definition": "A system with at least one solution.",
+    "example": "Two intersecting lines form a consistent system.",
+    "correctAnswer": "A system with at least one solution.",
+    "supportingEvidence": "Two intersecting lines form a consistent system.",
+    "explanation": "The example illustrates consistent system because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name consistent system without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-39",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Systems of equations",
+    "term": "Inconsistent system",
+    "definition": "A system with no common solution.",
+    "example": "Distinct parallel lines do not intersect.",
+    "correctAnswer": "A system with no common solution.",
+    "supportingEvidence": "Distinct parallel lines do not intersect.",
+    "explanation": "The example illustrates inconsistent system because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name inconsistent system without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-40",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Systems of equations",
+    "term": "Dependent system",
+    "definition": "A system whose equations describe the same line and has infinitely many solutions.",
+    "example": "2x+2y=8 and x+y=4 are dependent.",
+    "correctAnswer": "A system whose equations describe the same line and has infinitely many solutions.",
+    "supportingEvidence": "2x+2y=8 and x+y=4 are dependent.",
+    "explanation": "The example illustrates dependent system because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name dependent system without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-41",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Systems of equations",
+    "term": "Independent system",
+    "definition": "A system with exactly one solution.",
+    "example": "Two nonparallel lines in a plane intersect once.",
+    "correctAnswer": "A system with exactly one solution.",
+    "supportingEvidence": "Two nonparallel lines in a plane intersect once.",
+    "explanation": "The example illustrates independent system because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name independent system without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-42",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Quadratic equations and solution checks",
+    "term": "Linear equation",
+    "definition": "An equation with variable terms of degree one after simplification.",
+    "example": "2x+3=9 is linear.",
+    "correctAnswer": "An equation with variable terms of degree one after simplification.",
+    "supportingEvidence": "2x+3=9 is linear.",
+    "explanation": "The example illustrates linear equation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name linear equation without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-43",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Quadratic equations and solution checks",
+    "term": "Quadratic equation",
+    "definition": "An equation whose highest variable exponent is two after simplification.",
+    "example": "x²-5x+6=0 is quadratic.",
+    "correctAnswer": "An equation whose highest variable exponent is two after simplification.",
+    "supportingEvidence": "x²-5x+6=0 is quadratic.",
+    "explanation": "The example illustrates quadratic equation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quadratic equation without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-44",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Quadratic equations and solution checks",
+    "term": "Zero-product property",
+    "definition": "If a product equals zero, at least one factor equals zero.",
+    "example": "(x-2)(x+3)=0 gives x=2 or x=-3.",
+    "correctAnswer": "If a product equals zero, at least one factor equals zero.",
+    "supportingEvidence": "(x-2)(x+3)=0 gives x=2 or x=-3.",
+    "explanation": "The example illustrates zero-product property because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name zero-product property without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-45",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Quadratic equations and solution checks",
+    "term": "Completing the square",
+    "definition": "Rewriting a quadratic as a perfect-square expression plus or minus a constant.",
+    "example": "x²+6x+9=(x+3)².",
+    "correctAnswer": "Rewriting a quadratic as a perfect-square expression plus or minus a constant.",
+    "supportingEvidence": "x²+6x+9=(x+3)².",
+    "explanation": "The example illustrates completing the square because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name completing the square without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-46",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Quadratic equations and solution checks",
+    "term": "Quadratic formula",
+    "definition": "A formula solving ax²+bx+c=0 when a≠0.",
+    "example": "x=(-b±√(b²-4ac))/(2a).",
+    "correctAnswer": "A formula solving ax²+bx+c=0 when a≠0.",
+    "supportingEvidence": "x=(-b±√(b²-4ac))/(2a).",
+    "explanation": "The example illustrates quadratic formula because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quadratic formula without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-47",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Quadratic equations and solution checks",
+    "term": "Discriminant",
+    "definition": "The expression b²-4ac indicating the number and type of real quadratic roots.",
+    "example": "A positive discriminant gives two distinct real roots.",
+    "correctAnswer": "The expression b²-4ac indicating the number and type of real quadratic roots.",
+    "supportingEvidence": "A positive discriminant gives two distinct real roots.",
+    "explanation": "The example illustrates discriminant because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name discriminant without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-48",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Quadratic equations and solution checks",
+    "term": "Root",
+    "definition": "A value making a function or polynomial equal zero.",
+    "example": "The roots of x²-9 are -3 and 3.",
+    "correctAnswer": "A value making a function or polynomial equal zero.",
+    "supportingEvidence": "The roots of x²-9 are -3 and 3.",
+    "explanation": "The example illustrates root because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name root without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-49",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Quadratic equations and solution checks",
+    "term": "Inequality graph",
+    "definition": "A number-line display using endpoint marks and shading to show a solution set.",
+    "example": "x≥2 uses a closed point at 2 and shading to the right.",
+    "correctAnswer": "A number-line display using endpoint marks and shading to show a solution set.",
+    "supportingEvidence": "x≥2 uses a closed point at 2 and shading to the right.",
+    "explanation": "The example illustrates inequality graph because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name inequality graph without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-50",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Quadratic equations and solution checks",
+    "term": "Constraint",
+    "definition": "A condition limiting allowed values in a problem.",
+    "example": "For 1/x, the constraint x≠0 excludes zero.",
+    "correctAnswer": "A condition limiting allowed values in a problem.",
+    "supportingEvidence": "For 1/x, the constraint x≠0 excludes zero.",
+    "explanation": "The example illustrates constraint because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name constraint without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  },
+  {
+    "id": "math-equations-inequalities-51",
+    "topicId": "math-equations-inequalities",
+    "subtopic": "Quadratic equations and solution checks",
+    "term": "Check a solution",
+    "definition": "Substitute a candidate into the original statement to verify it is true.",
+    "example": "For x=4, both sides of 2x+1=9 equal 9.",
+    "correctAnswer": "Substitute a candidate into the original statement to verify it is true.",
+    "supportingEvidence": "For x=4, both sides of 2x+1=9 equal 9.",
+    "explanation": "The example illustrates check a solution because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name check a solution without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax College Algebra, Chapter 2",
+      "referenceUrl": "https://openstax.org/books/college-algebra/pages/2-key-concepts"
+    }
+  }
+]

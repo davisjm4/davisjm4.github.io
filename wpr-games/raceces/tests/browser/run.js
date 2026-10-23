@@ -81,7 +81,7 @@ async function run() {
   await check('Mixed Practice is current on load', async () => (await page.getAttribute('#nav a[data-route=mixed]', 'aria-current')) === 'page');
   await check('source excerpt and writing question displayed', async () => (await page.textContent('.passage')).length > 300 && (await page.textContent('.question')).endsWith('?'));
   await check('difficulty filter has four options', async () => (await page.$$('input[name=level]')).length === 4);
-  await check('subject and topic controls are available', async () => (await page.$$('#subject-select option')).length === 16 && (await page.$$('#topic-options input[type=checkbox]')).length === 15);
+  await check('subject and topic controls are available', async () => (await page.$$('#subject-select option')).length === 17 && (await page.$$('#topic-options input[type=checkbox]')).length === 23);
   await check('topic selection limits generated content and can be reset', async () => {
     await page.selectOption('#subject-select', 'Earth science');
     await page.waitForFunction(() => window.RACECES.app.current().topicId === 'water-cycle');
@@ -89,7 +89,7 @@ async function run() {
     const challenge = await cur(page);
     const good = visible.length === 1 && visible[0] === 'water-cycle' && challenge.topicId === 'water-cycle' && (await page.textContent('.chips')).includes('Earth science');
     await page.click('#all-topics');
-    return good && (await page.$$('#topic-options input[type=checkbox]')).length === 15;
+    return good && (await page.$$('#topic-options input[type=checkbox]')).length === 23;
   });
   await check('shareable link applies subject, topics, and difficulty settings', async () => {
     const fp = await dctx.newPage();
@@ -99,6 +99,41 @@ async function run() {
     await fp.close();
     return settings.subject === 'all' && settings.topics.join(',') === 'lightning,water-cycle' && settings.level === 'intermediate' && ['lightning', 'water-cycle'].includes(settings.topic);
   });
+  // Mathematics uses the same modes, filters, feedback, and session tracking on mobile.
+  group('Mathematics topic and mode integration (mobile)');
+  const { ctx: mathCtx, page: mathPage } = await newPage({ viewport: { width: 390, height: 844 } });
+  await mathPage.goto(url + '?subject=Mathematics&topics=math-algebraic-expressions,math-equations-inequalities&level=beginner&seed=math-browser#/mixed');
+  await mathPage.waitForSelector('.task');
+  await check('Mathematics exposes all eight topics and supports multiple-topic filtering', async () => {
+    const visible = await mathPage.$$eval('#topic-options input[type=checkbox]', xs => xs.map(x => x.value));
+    const selected = await mathPage.$$eval('#topic-options input[type=checkbox]:checked', xs => xs.map(x => x.value).sort());
+    const c = await cur(mathPage);
+    return visible.length === 8 && selected.join(',') === 'math-algebraic-expressions,math-equations-inequalities' &&
+      ['math-algebraic-expressions','math-equations-inequalities'].includes(c.topicId) && c.subject === 'Mathematics';
+  });
+  await check('mathematical symbols render as readable text on mobile', async () => {
+    const text = await mathPage.textContent('.passage');
+    return text.length > 60 && !text.includes('�') && /[=+0-9x]/i.test(text);
+  });
+  for (const route of ['identify', 'rearrange', 'missing']) {
+    await go(mathPage, route);
+    await check('mathematics works in ' + route, async () => {
+      const c = await cur(mathPage);
+      if (c.subject !== 'Mathematics' || !['math-algebraic-expressions','math-equations-inequalities'].includes(c.topicId)) return false;
+      await solveViaUI(mathPage, c, false);
+      return /Correct/.test(await feedbackText(mathPage));
+    });
+    await nextChallenge(mathPage);
+  }
+  await check('mathematics challenges advance and enter Session Summary', async () => {
+    const c = await cur(mathPage);
+    const inMath = c.subject === 'Mathematics';
+    await solveViaUI(mathPage, c, false);
+    await go(mathPage, 'summary');
+    const stats = await sessionStats(mathPage);
+    return inMath && stats.done === 4 && (await mathPage.textContent('#summary-root')).includes('4');
+  });
+  await mathCtx.close();
   await check('topic, subject, and difficulty preferences restore after refresh', async () => {
     await page.selectOption('#subject-select', 'Physics');
     await page.check('#topic-options input[value=levers]');

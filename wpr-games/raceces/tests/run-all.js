@@ -3,8 +3,10 @@ const T = require('./lib.js');
 const { runEngineTests } = require('./engine-tests.js');
 const sweep = require('./sweep.js');
 const repetitionQuality = require('./repetition-quality.js');
+const mathLibraryTests = require('./math-library-tests.js');
 
 const extra = runEngineTests();
+mathLibraryTests.run();
 let stats;
 T.suite('generation sweep (' + 'all modes, difficulties, targets)', () => { stats = sweep.run(); });
 let qualityReport = [];

@@ -31,7 +31,7 @@
     var topic = index.topicsById[m.topicId];
     var facts = topic.factsById;
     var need = [m.ev[0], m.ev[1], m.off];
-    var total = FACT_COUNT[m.level] || 6;
+    var total = m.factCount || FACT_COUNT[m.level] || 6;
     var fillers = rng.shuffle(topic.facts.map(function (f) { return f.id; }).filter(function (id) { return need.indexOf(id) < 0; }));
     var ids = need.concat(fillers.slice(0, Math.max(0, total - need.length)));
     // Select facts with the seed, but retain the topic author's source order so a generated

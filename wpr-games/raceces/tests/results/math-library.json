@@ -1,0 +1,179 @@
+{
+  "ranAt": "2026-10-23T01:54:10.532Z",
+  "topics": [
+    {
+      "topicId": "math-algebraic-expressions",
+      "records": 50,
+      "uniqueTerms": 50,
+      "models": 18,
+      "modelsByDifficulty": {
+        "beginner": 6,
+        "intermediate": 6,
+        "advanced": 6
+      },
+      "uniqueFamilies": 18,
+      "questionTypes": [
+        "define",
+        "compare",
+        "verify",
+        "apply"
+      ],
+      "seedSampledExcerptVariants": 60,
+      "recordIdsUsedAsEvidence": 36
+    },
+    {
+      "topicId": "math-coordinate-transformations",
+      "records": 51,
+      "uniqueTerms": 51,
+      "models": 18,
+      "modelsByDifficulty": {
+        "beginner": 6,
+        "intermediate": 6,
+        "advanced": 6
+      },
+      "uniqueFamilies": 18,
+      "questionTypes": [
+        "define",
+        "compare",
+        "verify",
+        "apply"
+      ],
+      "seedSampledExcerptVariants": 60,
+      "recordIdsUsedAsEvidence": 36
+    },
+    {
+      "topicId": "math-equations-inequalities",
+      "records": 51,
+      "uniqueTerms": 51,
+      "models": 18,
+      "modelsByDifficulty": {
+        "beginner": 6,
+        "intermediate": 6,
+        "advanced": 6
+      },
+      "uniqueFamilies": 18,
+      "questionTypes": [
+        "define",
+        "compare",
+        "verify",
+        "apply"
+      ],
+      "seedSampledExcerptVariants": 60,
+      "recordIdsUsedAsEvidence": 36
+    },
+    {
+      "topicId": "math-functions",
+      "records": 51,
+      "uniqueTerms": 51,
+      "models": 18,
+      "modelsByDifficulty": {
+        "beginner": 6,
+        "intermediate": 6,
+        "advanced": 6
+      },
+      "uniqueFamilies": 18,
+      "questionTypes": [
+        "define",
+        "compare",
+        "verify",
+        "apply"
+      ],
+      "seedSampledExcerptVariants": 59,
+      "recordIdsUsedAsEvidence": 36
+    },
+    {
+      "topicId": "math-geometry",
+      "records": 51,
+      "uniqueTerms": 51,
+      "models": 18,
+      "modelsByDifficulty": {
+        "beginner": 6,
+        "intermediate": 6,
+        "advanced": 6
+      },
+      "uniqueFamilies": 18,
+      "questionTypes": [
+        "define",
+        "compare",
+        "verify",
+        "apply"
+      ],
+      "seedSampledExcerptVariants": 59,
+      "recordIdsUsedAsEvidence": 36
+    },
+    {
+      "topicId": "math-measurement",
+      "records": 51,
+      "uniqueTerms": 51,
+      "models": 18,
+      "modelsByDifficulty": {
+        "beginner": 6,
+        "intermediate": 6,
+        "advanced": 6
+      },
+      "uniqueFamilies": 18,
+      "questionTypes": [
+        "define",
+        "compare",
+        "verify",
+        "apply"
+      ],
+      "seedSampledExcerptVariants": 60,
+      "recordIdsUsedAsEvidence": 36
+    },
+    {
+      "topicId": "math-statistics-probability",
+      "records": 51,
+      "uniqueTerms": 51,
+      "models": 18,
+      "modelsByDifficulty": {
+        "beginner": 6,
+        "intermediate": 6,
+        "advanced": 6
+      },
+      "uniqueFamilies": 18,
+      "questionTypes": [
+        "define",
+        "compare",
+        "verify",
+        "apply"
+      ],
+      "seedSampledExcerptVariants": 59,
+      "recordIdsUsedAsEvidence": 36
+    },
+    {
+      "topicId": "math-triangles-polygons",
+      "records": 51,
+      "uniqueTerms": 51,
+      "models": 18,
+      "modelsByDifficulty": {
+        "beginner": 6,
+        "intermediate": 6,
+        "advanced": 6
+      },
+      "uniqueFamilies": 18,
+      "questionTypes": [
+        "define",
+        "compare",
+        "verify",
+        "apply"
+      ],
+      "seedSampledExcerptVariants": 60,
+      "recordIdsUsedAsEvidence": 36
+    }
+  ],
+  "totals": {
+    "topics": 8,
+    "authoredRecords": 407,
+    "distinctTermDefinitionConcepts": 407,
+    "topicModels": 144,
+    "reasoningFamilies": 18,
+    "questionTypeCounts": {
+      "define": 48,
+      "compare": 48,
+      "verify": 24,
+      "apply": 24
+    },
+    "duplicateTermDefinitionRecords": 0
+  }
+}

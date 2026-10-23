@@ -10,52 +10,52 @@ A **writing model** is one underlying reasoning problem: a question, a claim, tw
 
 | Measure | Value |
 |---|---|
-| Source topics | 15 |
-| Distinct subject areas | 15 |
-| Reasoning families | 8 |
-| Distinct writing models (underlying reasoning problems) | 90 |
-| Semantic task signatures: Identify the Parts | 810 (9 targets × 90 models) |
-| Semantic task signatures: Rearrange the Response | 90 |
-| Semantic task signatures: Choose the Missing Piece | 630 (7 slots × 90 models) |
-| Total semantic task signatures | 1530 |
+| Source topics | 23 |
+| Distinct subject areas | 16 |
+| Reasoning families | 26 |
+| Distinct writing models (underlying reasoning problems) | 234 |
+| Semantic task signatures: Identify the Parts | 2106 (9 targets × 234 models) |
+| Semantic task signatures: Rearrange the Response | 234 |
+| Semantic task signatures: Choose the Missing Piece | 1638 (7 slots × 234 models) |
+| Total semantic task signatures | 3978 |
 
 ## Generated sample used for this audit
 
-Challenges generated, validated, and graded: **13230** (11790 from an exhaustive build sweep over every writing model, mode, and target with several seeds; 1440 through the real rotating generator for each difficulty filter and mode). Wrong-answer rejections tested: **40719**. Validation errors: **0**.
+Challenges generated, validated, and graded: **32094** (30654 from an exhaustive build sweep over every writing model, mode, and target with several seeds; 1440 through the real rotating generator for each difficulty filter and mode). Wrong-answer rejections tested: **99474**. Validation errors: **0**.
 
 ### Mode distribution
 
 | Mode | Challenges | Share |
 |---|---|---|
-| Identify the Parts | 4529 | 34.2% |
-| Rearrange the Response | 3179 | 24.0% |
-| Choose the Missing Piece | 5522 | 41.7% |
+| Identify the Parts | 11009 | 34.3% |
+| Rearrange the Response | 7499 | 23.4% |
+| Choose the Missing Piece | 13586 | 42.3% |
 
 ### Difficulty distribution
 
 | Level | Challenges | Share |
 |---|---|---|
-| Beginner | 4412 | 33.3% |
-| Intermediate | 4410 | 33.3% |
-| Advanced | 4408 | 33.3% |
+| Beginner | 10700 | 33.3% |
+| Intermediate | 10698 | 33.3% |
+| Advanced | 10696 | 33.3% |
 
 ### Mode × difficulty
 
 | Mode | Beginner | Intermediate | Advanced |
 |---|---|---|---|
-| Identify the Parts | 1511 | 1504 | 1514 |
-| Rearrange the Response | 1060 | 1062 | 1057 |
-| Choose the Missing Piece | 1841 | 1844 | 1837 |
+| Identify the Parts | 3671 | 3664 | 3674 |
+| Rearrange the Response | 2500 | 2502 | 2497 |
+| Choose the Missing Piece | 4529 | 4532 | 4525 |
 
 ### RACECES-role distribution (Identify and Missing challenges)
 
 | Role | Challenges | Share |
 |---|---|---|
-| Restate (R) | 1292 | 12.9% |
-| Answer (A) | 1294 | 12.9% |
-| Cite Evidence (C) | 3084 | 30.7% |
-| Explain Evidence (E) | 3087 | 30.7% |
-| Summarize (S) | 1294 | 12.9% |
+| Restate (R) | 3164 | 12.9% |
+| Answer (A) | 3164 | 12.9% |
+| Cite Evidence (C) | 7553 | 30.7% |
+| Explain Evidence (E) | 7548 | 30.7% |
+| Summarize (S) | 3166 | 12.9% |
 
 The build sweep deliberately visits every target, so Cite Evidence and Explain Evidence appear more often than the others (each has two instances and a "select every" form). Rotation-controlled gameplay is more even; see below.
 
@@ -63,45 +63,64 @@ The build sweep deliberately visits every target, so Cite Evidence and Explain E
 
 | Family | Challenges | Share |
 |---|---|---|
-| adaptation | 1344 | 10.2% |
-| cause-effect | 2191 | 16.6% |
-| evaluation | 1905 | 14.4% |
-| function | 2329 | 17.6% |
-| pattern | 746 | 5.6% |
-| process | 2754 | 20.8% |
-| scale | 1211 | 9.2% |
-| tradeoff | 750 | 5.7% |
+| adaptation | 1280 | 4.0% |
+| application | 1074 | 3.3% |
+| cause-effect | 2113 | 6.6% |
+| classification | 1075 | 3.3% |
+| comparison | 1077 | 3.4% |
+| conditions | 1075 | 3.3% |
+| counterexample | 1075 | 3.3% |
+| definition | 1075 | 3.3% |
+| definition-in-context | 1077 | 3.4% |
+| evaluation | 1840 | 5.7% |
+| evidence-evaluation | 1075 | 3.3% |
+| evidence-link | 1078 | 3.4% |
+| function | 2261 | 7.0% |
+| interpretation | 1076 | 3.4% |
+| misconception-check | 1078 | 3.4% |
+| pattern | 706 | 2.2% |
+| process | 2672 | 8.3% |
+| reasoning-step | 1075 | 3.3% |
+| relevance | 1077 | 3.4% |
+| representation | 1074 | 3.3% |
+| scale | 1143 | 3.6% |
+| synthesis | 1073 | 3.3% |
+| tradeoff | 718 | 2.2% |
+| true-claim | 1077 | 3.4% |
+| validity | 1074 | 3.3% |
+| vocabulary-in-context | 1076 | 3.4% |
 
 ### Subject distribution
 
 | Subject | Challenges | Share |
 |---|---|---|
-| Environmental science | 901 | 6.8% |
-| Astronomy | 898 | 6.8% |
-| Inventions | 897 | 6.8% |
-| Weather and climate | 890 | 6.7% |
-| Chemistry | 885 | 6.7% |
-| Transportation | 883 | 6.7% |
-| Plants and animals | 880 | 6.7% |
-| Physics | 880 | 6.7% |
-| Computer technology | 880 | 6.7% |
-| Earth science | 879 | 6.6% |
-| Biology | 878 | 6.6% |
-| Engineering and architecture | 871 | 6.6% |
-| Energy and technology | 870 | 6.6% |
-| Space exploration | 870 | 6.6% |
-| Libraries and education | 868 | 6.6% |
+| Mathematics | 19361 | 60.3% |
+| Physics | 852 | 2.7% |
+| Weather and climate | 851 | 2.7% |
+| Energy and technology | 850 | 2.6% |
+| Engineering and architecture | 850 | 2.6% |
+| Plants and animals | 850 | 2.6% |
+| Astronomy | 849 | 2.6% |
+| Transportation | 849 | 2.6% |
+| Chemistry | 849 | 2.6% |
+| Space exploration | 849 | 2.6% |
+| Environmental science | 849 | 2.6% |
+| Earth science | 848 | 2.6% |
+| Libraries and education | 848 | 2.6% |
+| Inventions | 848 | 2.6% |
+| Computer technology | 846 | 2.6% |
+| Biology | 845 | 2.6% |
 
 ## Generated question variation
 
 | Measure | Value |
 |---|---|
-| Distinct Identify/Missing/Rearrange prompts | 572 |
-| Distinct source excerpts (seeded source-fact subsets; authored fact order preserved) | 886 |
-| Distinct four-option sets in Choose the Missing Piece | 1886 |
-| Distinct starting orders in Rearrange the Response | 2221 |
-| Distinct semantic signatures reached | 1530 of 1530 |
-| Challenges that repeat a signature already in the sample (expected: several seeds per signature) | 11700 |
+| Distinct Identify/Missing/Rearrange prompts | 1942 |
+| Distinct source excerpts (seeded source-fact subsets; authored fact order preserved) | 19671 |
+| Distinct four-option sets in Choose the Missing Piece | 4859 |
+| Distinct starting orders in Rearrange the Response | 3504 |
+| Distinct semantic signatures reached | 3978 of 3978 |
+| Challenges that repeat a signature already in the sample (expected: several seeds per signature) | 28116 |
 
 Same-signature repeats in this sample come from deliberately re-seeding every combination. Repetition during real rotation is reported next.
 
@@ -109,15 +128,15 @@ Same-signature repeats in this sample come from deliberately re-seeding every co
 
 | Mode | Difficulty | Tested | Exact repeats | Distinct models | Structural patterns | Families | Unique models in first 20 | Exact repeats in first 100 | Semantic repeats in rolling 30 |
 |---|---|---|---|---|---|---|---|---|---|
-| Identify the Parts | Beginner | 1000 | 56 (5.6%) | 30 | 54 | 6 | 20 | 0 | 0 |
-| Identify the Parts | Intermediate | 1000 | 31 (3.1%) | 30 | 72 | 8 | 20 | 0 | 0 |
-| Identify the Parts | Advanced | 1000 | 46 (4.6%) | 30 | 72 | 8 | 20 | 0 | 0 |
-| Rearrange the Response | Beginner | 1000 | 0 (0.0%) | 30 | 6 | 6 | 20 | 0 | 68 |
-| Rearrange the Response | Intermediate | 1000 | 0 (0.0%) | 30 | 8 | 8 | 20 | 0 | 80 |
-| Rearrange the Response | Advanced | 1000 | 0 (0.0%) | 30 | 8 | 8 | 20 | 0 | 65 |
-| Choose the Missing Piece | Beginner | 1000 | 8 (0.8%) | 30 | 42 | 6 | 20 | 0 | 0 |
-| Choose the Missing Piece | Intermediate | 1000 | 15 (1.5%) | 30 | 56 | 8 | 20 | 0 | 0 |
-| Choose the Missing Piece | Advanced | 1000 | 13 (1.3%) | 30 | 56 | 8 | 20 | 0 | 0 |
+| Identify the Parts | Beginner | 1000 | 32 (3.2%) | 78 | 104 | 12 | 20 | 0 | 0 |
+| Identify the Parts | Intermediate | 1000 | 32 (3.2%) | 78 | 124 | 14 | 20 | 0 | 0 |
+| Identify the Parts | Advanced | 1000 | 25 (2.5%) | 78 | 123 | 14 | 20 | 0 | 0 |
+| Rearrange the Response | Beginner | 1000 | 1 (0.1%) | 78 | 12 | 12 | 20 | 0 | 23 |
+| Rearrange the Response | Intermediate | 1000 | 1 (0.1%) | 78 | 14 | 14 | 20 | 0 | 23 |
+| Rearrange the Response | Advanced | 1000 | 0 (0.0%) | 78 | 14 | 14 | 20 | 0 | 20 |
+| Choose the Missing Piece | Beginner | 1000 | 5 (0.5%) | 78 | 84 | 12 | 20 | 0 | 0 |
+| Choose the Missing Piece | Intermediate | 1000 | 3 (0.3%) | 78 | 98 | 14 | 20 | 0 | 0 |
+| Choose the Missing Piece | Advanced | 1000 | 9 (0.9%) | 78 | 96 | 14 | 20 | 0 | 0 |
 
 Quality gates require 30 available models per difficulty, 20 distinct models before review begins, no exact challenge repeat in the first 100, exact-repeat rates under 10% for Beginner and under 5% for Intermediate/Advanced, and family coverage across each difficulty. Semantic-task repeats within a rolling 30 are measured and shown separately; model reuse after the pool is exhausted is also reported, not hidden by task shuffles.
 
@@ -127,9 +146,9 @@ Quality gates require 30 available models per difficulty, 20 distinct models bef
 |---|---|
 | Same writing model within the previous two challenges | 0 |
 | Identical semantic signature within the previous 30 challenges | 0 |
-| Same topic back-to-back | 0 (0.0%) |
-| Smallest gap before a writing model recurs | 4 challenges |
-| Average gap before a writing model recurs | 88.4 challenges |
+| Same topic back-to-back | 3 (0.3%) |
+| Smallest gap before a writing model recurs | 3 challenges |
+| Average gap before a writing model recurs | 169.7 challenges |
 | Recent-history entries kept (bounded) | 120 |
 
 | Mode | Share |
@@ -148,39 +167,39 @@ Quality gates require 30 available models per difficulty, 20 distinct models bef
 |---|---|
 | Restate | 76 |
 | Answer | 77 |
-| Cite Evidence | 186 |
+| Cite Evidence | 187 |
 | Explain Evidence | 185 |
-| Summarize | 77 |
+| Summarize | 76 |
 
 ## Distractor design
 
 | Distractor type | Meaning | Times used in test sample |
 |---|---|---|
-| repeat | Repeats the evidence without explaining it | 1080 |
-| offExp | Explains a different detail from the source | 1789 |
-| offFact | A real source detail that does not support this claim | 2220 |
-| unsupported | A claim the source does not support | 2671 |
-| summaryLike | A summary that adds new information (wrong role or new facts) | 2853 |
-| wrongFocus | A restatement of a different focus than the question | 727 |
+| repeat | Repeats the evidence without explaining it | 2808 |
+| offExp | Explains a different detail from the source | 4543 |
+| offFact | A real source detail that does not support this claim | 5768 |
+| unsupported | A claim the source does not support | 7033 |
+| summaryLike | A summary that adds new information (wrong role or new facts) | 7391 |
+| wrongFocus | A restatement of a different focus than the question | 1941 |
 
-## Answer-position and length bias (Choose the Missing Piece, 5522 challenges)
+## Answer-position and length bias (Choose the Missing Piece, 13586 challenges)
 
-Correct-option position: o1 25.7%, o2 24.6%, o3 24.0%, o4 25.7%.
+Correct-option position: o1 25.0%, o2 24.8%, o3 24.8%, o4 25.4%.
 
-The correct option is the longest of the four in **15.5%** of challenges (25% would be ideal). By missing role:
+The correct option is the longest of the four in **17.5%** of challenges (25% would be ideal). By missing role:
 
 | Missing role | Challenges | Correct option is longest |
 |---|---|---|
-| Answer (A) | 791 | 38.7% |
-| Cite Evidence (C) | 1575 | 11.2% |
-| Explain Evidence (E) | 1578 | 20.3% |
-| Restate (R) | 789 | 4.4% |
-| Summarize (S) | 789 | 2.2% |
+| Answer (A) | 1939 | 68.5% |
+| Cite Evidence (C) | 3881 | 6.5% |
+| Explain Evidence (E) | 3882 | 11.4% |
+| Restate (R) | 1942 | 17.2% |
+| Summarize (S) | 1942 | 0.9% |
 
 Before length-balancing steering the correct option was the longest in 7.3% of challenges (a "pick the shorter one" shortcut). Steering lifted that to the figure above. Restate and Summary roles still show a bias; this is a known limitation (see CONTENT_COVERAGE.md).
 
 ## Honest limits
 
-- The library has **90 distinct reasoning problems**. A student who practices for a long time will see each problem again (with a different task target, a different shuffle, a different displayed evidence-pair order, and different distractors), but not a new problem. Rotation keeps repeats at least 4 challenges apart.
+- The library has **234 distinct reasoning problems**. A student who practices for a long time will see each problem again (with a different task target, a different shuffle, a different displayed evidence-pair order, and different distractors), but not a new problem. Rotation keeps repeats at least 3 challenges apart.
 - Each topic has two underlying models per difficulty. Students who choose one topic and one difficulty will see explicit Review practice after both have been used; no topic/difficulty selection can yet supply 20 distinct underlying writing problems.
 - Practice can continue without a fixed session limit, but review does not create new content. Add validated source facts and writing models to `/content` to expand a narrow selection.

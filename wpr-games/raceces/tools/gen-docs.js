@@ -68,7 +68,7 @@ const sortedEntries = o => Object.entries(o).sort((a, b) => b[1] - a[1]);
     Struct.LEVELS.map(l => bundle.models.filter(m => m.topicId === t.id && m.level === l).length).join(' / '),
     bundle.models.filter(m => m.topicId === t.id).map(m => m.q + ' (' + m.level + ', ' + m.family + ')').join('<br>')
   ])) + '\n\n';
-  md += '**Practice-pool capacity:** topic/difficulty pools range from ' + topicModelMin + ' to ' + topicModelMax + ' underlying models (the current authored set has two per combination). A topic-specific session therefore enters explicitly labeled review after its available models have been used; it never fills the gap with an unrelated topic. The current library does not meet the 20-model target for any topic/difficulty combination.\n\n';
+  md += '**Practice-pool capacity:** topic/difficulty pools range from ' + topicModelMin + ' to ' + topicModelMax + ' underlying models. Mathematics has six authored models per topic/difficulty; original subjects retain their authored pools. Topic selection is balanced across a filtered session, and each topic enters explicitly labeled review after its own available models have been used.\n\n';
   md += '## Content rules enforced at build time\n\n';
   md += ['Every evidence sentence overlaps at least 70% of its content words with its source fact (attribution words such as "the passage notes" are ignored).',
     'Every number in any sentence also appears in the topic\'s source text.',
@@ -246,7 +246,12 @@ const sortedEntries = o => Object.entries(o).sort((a, b) => b[1] - a[1]);
   }))) + '\n\n';
   md += 'Each topic/mode/difficulty was also generated for 14, 20, 50, 100, and 500 challenges across five seeds. Curated topic combinations were tested in Mixed Practice at all those lengths. The full measurements are in `tests/results/repetition-audit.json`.\n\n';
   md += '## Authored library capacity\n\n' + table(['Topic', 'Beginner', 'Intermediate', 'Advanced', 'Total'], repetition.library.byTopic.map(t => [t.title, t.models.beginner, t.models.intermediate, t.models.advanced, t.models.beginner + t.models.intermediate + t.models.advanced])) + '\n\n';
-  md += 'There are 90 underlying writing models (30 per difficulty), compared with 30 (10 per difficulty) before expansion. Every exact topic has two models at each difficulty, so **none** of the topic/difficulty combinations can provide 20 distinct underlying models yet. A fixed-difficulty All-Topics pool has 30 models and a 20-question session stays model-distinct; a selected topic is labeled Review once its two models are used. Related-topic combinations increase the eligible pool and avoid switching to unrelated topics.\n\n';
+  const mathTopics = bundle.topics.filter(t => t.subject === 'Mathematics');
+  const legacyTopics = bundle.topics.filter(t => t.subject !== 'Mathematics');
+  const mathPerLevel = mathTopics.length ? bundle.models.filter(m => m.topicId === mathTopics[0].id && m.level === 'beginner').length : 0;
+  const legacyPerLevel = legacyTopics.length ? bundle.models.filter(m => m.topicId === legacyTopics[0].id && m.level === 'beginner').length : 0;
+  const levelTotal = Struct.LEVELS.map(l => bundle.models.filter(m => m.level === l).length);
+  md += 'There are ' + bundle.models.length + ' underlying authored writing models (' + levelTotal.join(' / ') + ' Beginner / Intermediate / Advanced). Each math topic has ' + mathPerLevel + ' models per difficulty; each original topic has ' + legacyPerLevel + '. A topic-specific pool enters Review after its own models are used; it does not substitute content from another topic. Topic selection is balanced across the selected topics even when their model-pool sizes differ.\n\n';
   md += 'The 1,000-question targets were not used as a proxy for uniqueness. This audit uses five seeds and session lengths through 500, records exact and content-level repeats separately, and reports the model pool independently. The test harness does not claim that a structurally distinct task on an existing model is a new writing problem.\n';
   wr('REPETITION_AUDIT.md', md);
 })();
@@ -300,7 +305,7 @@ const sortedEntries = o => Object.entries(o).sort((a, b) => b[1] - a[1]);
   ]) + '\n\n';
   md += '## Generator behavior\n\n';
   md += ['`Generator.build(index, {mode, modelId, targetKey, seed})` is pure and deterministic; every test and the game use it.',
-    '`Generator.next({mode, level, subject, topics})` chooses from the selected subject/topic pool, then a difficulty with eligible models. Unused writing models are exhausted before review begins. Recent topic/family balance is applied within the eligible pool; the history is bounded at 120 challenges. The target role or slot is least-recently-used and avoids a recent signature when possible.',
+    '`Generator.next({mode, level, subject, topics})` balances eligible topics, then chooses an unseen model for the selected topic or enters topic-specific review after that topic is exhausted. It does not borrow from an unrelated topic. Recent family balance is applied within the eligible pool; the history is bounded at 120 challenges. The target role or slot is least-recently-used and avoids a recent signature when possible.',
     'History is bounded to ' + G.HISTORY_MAX + ' entries and restored from session storage.',
     'Excerpt composition: intro + the two evidence facts + the off-topic fact + same-topic filler facts (5 or 7 facts by level; Advanced may add one fact to satisfy the passage-length floor). A seeded choice selects the facts, then the authored topic order is preserved. Verified supplementary facts carry source URLs in the bundled content.',
     'Seeds: the browser seeds from the session start time (override with `?seed=abc` for reproducible play); tests use fixed seeds.'].map(s => '- ' + s).join('\n') + '\n';

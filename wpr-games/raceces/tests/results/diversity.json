@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-21T06:07:03.670Z",
+  "ranAt": "2026-10-23T01:58:15.353Z",
   "rows": [
     {
       "subject": "Biology",
@@ -1935,6 +1935,1038 @@
         "distinctSurface": 60.333333333333336,
         "distinctPassages": 94.66666666666667
       }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-algebraic-expressions",
+      "title": "Algebraic Expressions and Vocabulary",
+      "level": "beginner",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 99.33333333333333,
+        "distinctPassages": 99.33333333333333
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-algebraic-expressions",
+      "title": "Algebraic Expressions and Vocabulary",
+      "level": "intermediate",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-algebraic-expressions",
+      "title": "Algebraic Expressions and Vocabulary",
+      "level": "advanced",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-coordinate-transformations",
+      "title": "Coordinate Geometry and Transformations",
+      "level": "beginner",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 99.33333333333333,
+        "distinctPassages": 99.33333333333333
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-coordinate-transformations",
+      "title": "Coordinate Geometry and Transformations",
+      "level": "intermediate",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-coordinate-transformations",
+      "title": "Coordinate Geometry and Transformations",
+      "level": "advanced",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 99.66666666666667,
+        "distinctPassages": 99.66666666666667
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-equations-inequalities",
+      "title": "Equations, Inequalities, and Solving",
+      "level": "beginner",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 99.66666666666667,
+        "distinctPassages": 99.66666666666667
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-equations-inequalities",
+      "title": "Equations, Inequalities, and Solving",
+      "level": "intermediate",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-equations-inequalities",
+      "title": "Equations, Inequalities, and Solving",
+      "level": "advanced",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-functions",
+      "title": "Functions, Graphs, and Linear Relationships",
+      "level": "beginner",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 99.66666666666667,
+        "distinctPassages": 99.66666666666667
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-functions",
+      "title": "Functions, Graphs, and Linear Relationships",
+      "level": "intermediate",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-functions",
+      "title": "Functions, Graphs, and Linear Relationships",
+      "level": "advanced",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-geometry",
+      "title": "Geometry Fundamentals, Angles, and Lines",
+      "level": "beginner",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 99.33333333333333,
+        "distinctPassages": 99.33333333333333
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-geometry",
+      "title": "Geometry Fundamentals, Angles, and Lines",
+      "level": "intermediate",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-geometry",
+      "title": "Geometry Fundamentals, Angles, and Lines",
+      "level": "advanced",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-measurement",
+      "title": "Area, Perimeter, Surface Area, and Volume",
+      "level": "beginner",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 99.66666666666667,
+        "distinctPassages": 99.66666666666667
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-measurement",
+      "title": "Area, Perimeter, Surface Area, and Volume",
+      "level": "intermediate",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-measurement",
+      "title": "Area, Perimeter, Surface Area, and Volume",
+      "level": "advanced",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-statistics-probability",
+      "title": "Statistics, Probability, and Data Interpretation",
+      "level": "beginner",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 1,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 2,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 96,
+        "distinctPassages": 96
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-statistics-probability",
+      "title": "Statistics, Probability, and Data Interpretation",
+      "level": "intermediate",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-statistics-probability",
+      "title": "Statistics, Probability, and Data Interpretation",
+      "level": "advanced",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-triangles-polygons",
+      "title": "Triangles, Polygons, and Similarity",
+      "level": "beginner",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 1,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 2,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 94.33333333333333,
+        "distinctPassages": 94.33333333333333
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-triangles-polygons",
+      "title": "Triangles, Polygons, and Similarity",
+      "level": "intermediate",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-triangles-polygons",
+      "title": "Triangles, Polygons, and Similarity",
+      "level": "advanced",
+      "configurations": 6,
+      "generatedConfigurations": 0,
+      "authoredModels": 6,
+      "structures": 0,
+      "evidenceRelationships": 6,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 8,
+        "evidence": 8,
+        "structureRepeats": 8,
+        "distinctStructures": 6
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 14,
+        "evidence": 14,
+        "structureRepeats": 14,
+        "distinctStructures": 6
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 44,
+        "evidence": 44,
+        "distinctClaims": 6,
+        "distinctStructures": 6
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 94,
+        "evidence": 94,
+        "distinctClaims": 6,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
     }
   ],
   "allTopics": [
@@ -1946,7 +2978,7 @@
         "scenario": 14,
         "claim": 14,
         "evidence": 14,
-        "structure": 12,
+        "structure": 14,
         "modeTarget": 10
       },
       "20": {
@@ -1956,7 +2988,7 @@
         "scenario": 20,
         "claim": 20,
         "evidence": 20,
-        "structure": 14,
+        "structure": 18,
         "modeTarget": 15
       },
       "50": {
@@ -1966,27 +2998,27 @@
         "scenario": 50,
         "claim": 50,
         "evidence": 50,
-        "structure": 14,
+        "structure": 20,
         "modeTarget": 17
       },
       "100": {
         "exact": 100,
         "passage": 100,
-        "surface": 96,
-        "scenario": 95,
+        "surface": 100,
+        "scenario": 100,
         "claim": 100,
         "evidence": 100,
-        "structure": 14,
+        "structure": 20,
         "modeTarget": 17
       },
       "500": {
-        "exact": 496,
-        "passage": 481,
-        "surface": 347,
-        "scenario": 307,
-        "claim": 380,
-        "evidence": 335,
-        "structure": 14,
+        "exact": 500,
+        "passage": 499,
+        "surface": 421,
+        "scenario": 315,
+        "claim": 370,
+        "evidence": 342,
+        "structure": 20,
         "modeTarget": 17
       },
       "level": "beginner"
@@ -2009,37 +3041,37 @@
         "scenario": 20,
         "claim": 20,
         "evidence": 20,
-        "structure": 15,
+        "structure": 18,
         "modeTarget": 15
       },
       "50": {
         "exact": 50,
         "passage": 50,
         "surface": 50,
-        "scenario": 48,
+        "scenario": 49,
         "claim": 50,
         "evidence": 50,
-        "structure": 17,
+        "structure": 23,
         "modeTarget": 17
       },
       "100": {
         "exact": 100,
         "passage": 100,
-        "surface": 97,
-        "scenario": 90,
+        "surface": 98,
+        "scenario": 97,
         "claim": 100,
-        "evidence": 98,
-        "structure": 17,
+        "evidence": 100,
+        "structure": 23,
         "modeTarget": 17
       },
       "500": {
         "exact": 500,
-        "passage": 496,
-        "surface": 346,
-        "scenario": 327,
-        "claim": 428,
-        "evidence": 383,
-        "structure": 17,
+        "passage": 500,
+        "surface": 420,
+        "scenario": 302,
+        "claim": 375,
+        "evidence": 343,
+        "structure": 23,
         "modeTarget": 17
       },
       "level": "intermediate"
@@ -2062,7 +3094,7 @@
         "scenario": 20,
         "claim": 20,
         "evidence": 20,
-        "structure": 15,
+        "structure": 18,
         "modeTarget": 15
       },
       "50": {
@@ -2071,28 +3103,28 @@
         "surface": 50,
         "scenario": 50,
         "claim": 50,
-        "evidence": 49,
-        "structure": 16,
+        "evidence": 50,
+        "structure": 22,
         "modeTarget": 17
       },
       "100": {
         "exact": 100,
         "passage": 100,
-        "surface": 94,
-        "scenario": 98,
+        "surface": 99,
+        "scenario": 100,
         "claim": 100,
-        "evidence": 95,
-        "structure": 16,
+        "evidence": 98,
+        "structure": 22,
         "modeTarget": 17
       },
       "500": {
         "exact": 500,
-        "passage": 499,
-        "surface": 427,
-        "scenario": 424,
-        "claim": 500,
-        "evidence": 372,
-        "structure": 16,
+        "passage": 500,
+        "surface": 458,
+        "scenario": 344,
+        "claim": 373,
+        "evidence": 322,
+        "structure": 22,
         "modeTarget": 17
       },
       "level": "advanced"
@@ -2115,37 +3147,37 @@
         "scenario": 20,
         "claim": 20,
         "evidence": 20,
-        "structure": 19,
+        "structure": 20,
         "modeTarget": 14
       },
       "50": {
         "exact": 50,
         "passage": 50,
         "surface": 50,
-        "scenario": 49,
+        "scenario": 50,
         "claim": 50,
-        "evidence": 49,
-        "structure": 31,
+        "evidence": 50,
+        "structure": 41,
         "modeTarget": 17
       },
       "100": {
         "exact": 100,
-        "passage": 97,
-        "surface": 96,
-        "scenario": 98,
+        "passage": 100,
+        "surface": 99,
+        "scenario": 97,
         "claim": 100,
-        "evidence": 97,
-        "structure": 33,
+        "evidence": 99,
+        "structure": 50,
         "modeTarget": 17
       },
       "500": {
         "exact": 500,
-        "passage": 495,
-        "surface": 384,
-        "scenario": 391,
-        "claim": 500,
-        "evidence": 438,
-        "structure": 33,
+        "passage": 499,
+        "surface": 456,
+        "scenario": 410,
+        "claim": 459,
+        "evidence": 445,
+        "structure": 51,
         "modeTarget": 17
       },
       "level": "all"
@@ -2335,7 +3367,7 @@
   "totals": {
     "kits": 45,
     "generatedConfigurations": 1361,
-    "authoredModels": 90,
+    "authoredModels": 234,
     "structures": 25
   }
 }

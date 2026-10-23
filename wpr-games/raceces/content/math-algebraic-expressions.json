@@ -1,0 +1,1252 @@
+[
+  {
+    "id": "math-algebraic-expressions-01",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Algebraic language and operations",
+    "term": "Variable",
+    "definition": "A symbol representing an unknown or varying number.",
+    "example": "In x+4=9, x is the unknown 5.",
+    "correctAnswer": "A symbol representing an unknown or varying number.",
+    "supportingEvidence": "In x+4=9, x is the unknown 5.",
+    "explanation": "The example illustrates variable because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name variable without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-02",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Algebraic language and operations",
+    "term": "Constant",
+    "definition": "A fixed numerical value in an expression.",
+    "example": "In 3x+7, 7 is the constant term.",
+    "correctAnswer": "A fixed numerical value in an expression.",
+    "supportingEvidence": "In 3x+7, 7 is the constant term.",
+    "explanation": "The example illustrates constant because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name constant without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-03",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Algebraic language and operations",
+    "term": "Coefficient",
+    "definition": "The numerical factor multiplying a variable in a term.",
+    "example": "In 6y, the coefficient of y is 6.",
+    "correctAnswer": "The numerical factor multiplying a variable in a term.",
+    "supportingEvidence": "In 6y, the coefficient of y is 6.",
+    "explanation": "The example illustrates coefficient because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name coefficient without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-04",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Algebraic language and operations",
+    "term": "Term",
+    "definition": "A number, variable, or product separated from others by addition or subtraction.",
+    "example": "The terms of 4x-2 are 4x and -2.",
+    "correctAnswer": "A number, variable, or product separated from others by addition or subtraction.",
+    "supportingEvidence": "The terms of 4x-2 are 4x and -2.",
+    "explanation": "The example illustrates term because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name term without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-05",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Algebraic language and operations",
+    "term": "Expression",
+    "definition": "A mathematical phrase of numbers, variables, and operations without an equality sign.",
+    "example": "2x+5 is an expression.",
+    "correctAnswer": "A mathematical phrase of numbers, variables, and operations without an equality sign.",
+    "supportingEvidence": "2x+5 is an expression.",
+    "explanation": "The example illustrates expression because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name expression without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-06",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Algebraic language and operations",
+    "term": "Equation",
+    "definition": "A statement that two expressions are equal.",
+    "example": "x+3=8 is true when x=5.",
+    "correctAnswer": "A statement that two expressions are equal.",
+    "supportingEvidence": "x+3=8 is true when x=5.",
+    "explanation": "The example illustrates equation because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name equation without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-07",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Algebraic language and operations",
+    "term": "Factor",
+    "definition": "A quantity multiplied by another to form a product.",
+    "example": "The factors of 6x include 6 and x.",
+    "correctAnswer": "A quantity multiplied by another to form a product.",
+    "supportingEvidence": "The factors of 6x include 6 and x.",
+    "explanation": "The example illustrates factor because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name factor without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-08",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Algebraic language and operations",
+    "term": "Product",
+    "definition": "The result of multiplication.",
+    "example": "The product of 4 and x is 4x.",
+    "correctAnswer": "The result of multiplication.",
+    "supportingEvidence": "The product of 4 and x is 4x.",
+    "explanation": "The example illustrates product because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name product without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-09",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Algebraic language and operations",
+    "term": "Sum",
+    "definition": "The result of addition.",
+    "example": "The sum of x and 9 is x+9.",
+    "correctAnswer": "The result of addition.",
+    "supportingEvidence": "The sum of x and 9 is x+9.",
+    "explanation": "The example illustrates sum because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name sum without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-10",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Algebraic language and operations",
+    "term": "Difference",
+    "definition": "The result of subtracting one quantity from another.",
+    "example": "The difference of 12 and y is 12-y.",
+    "correctAnswer": "The result of subtracting one quantity from another.",
+    "supportingEvidence": "The difference of 12 and y is 12-y.",
+    "explanation": "The example illustrates difference because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name difference without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-11",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Equivalent expressions and properties",
+    "term": "Quotient",
+    "definition": "The result of dividing one quantity by a nonzero quantity.",
+    "example": "The quotient of x and 3 is x/3.",
+    "correctAnswer": "The result of dividing one quantity by a nonzero quantity.",
+    "supportingEvidence": "The quotient of x and 3 is x/3.",
+    "explanation": "The example illustrates quotient because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quotient without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-12",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Equivalent expressions and properties",
+    "term": "Like terms",
+    "definition": "Terms with identical variable factors and exponents.",
+    "example": "3x² and -5x² are like terms; 3x² and 3x are not.",
+    "correctAnswer": "Terms with identical variable factors and exponents.",
+    "supportingEvidence": "3x² and -5x² are like terms; 3x² and 3x are not.",
+    "explanation": "The example illustrates like terms because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name like terms without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-13",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Equivalent expressions and properties",
+    "term": "Simplify",
+    "definition": "Rewrite an expression in an equivalent, more useful form.",
+    "example": "2x+5x simplifies to 7x.",
+    "correctAnswer": "Rewrite an expression in an equivalent, more useful form.",
+    "supportingEvidence": "2x+5x simplifies to 7x.",
+    "explanation": "The example illustrates simplify because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name simplify without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-14",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Equivalent expressions and properties",
+    "term": "Equivalent expressions",
+    "definition": "Expressions having the same value for all allowed variable values.",
+    "example": "2(x+3) and 2x+6 are equivalent.",
+    "correctAnswer": "Expressions having the same value for all allowed variable values.",
+    "supportingEvidence": "2(x+3) and 2x+6 are equivalent.",
+    "explanation": "The example illustrates equivalent expressions because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name equivalent expressions without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-15",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Equivalent expressions and properties",
+    "term": "Distributive property",
+    "definition": "Multiplication distributes across addition or subtraction in parentheses.",
+    "example": "3(x+4)=3x+12.",
+    "correctAnswer": "Multiplication distributes across addition or subtraction in parentheses.",
+    "supportingEvidence": "3(x+4)=3x+12.",
+    "explanation": "The example illustrates distributive property because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name distributive property without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-16",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Equivalent expressions and properties",
+    "term": "Commutative property",
+    "definition": "Changing the order of addends or factors does not change their sum or product.",
+    "example": "a+b=b+a and ab=ba.",
+    "correctAnswer": "Changing the order of addends or factors does not change their sum or product.",
+    "supportingEvidence": "a+b=b+a and ab=ba.",
+    "explanation": "The example illustrates commutative property because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name commutative property without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-17",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Equivalent expressions and properties",
+    "term": "Associative property",
+    "definition": "Changing the grouping of addends or factors does not change their sum or product.",
+    "example": "(a+b)+c=a+(b+c).",
+    "correctAnswer": "Changing the grouping of addends or factors does not change their sum or product.",
+    "supportingEvidence": "(a+b)+c=a+(b+c).",
+    "explanation": "The example illustrates associative property because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name associative property without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-18",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Equivalent expressions and properties",
+    "term": "Additive identity",
+    "definition": "Zero is the additive identity because adding it leaves a number unchanged.",
+    "example": "x+0=x.",
+    "correctAnswer": "Zero is the additive identity because adding it leaves a number unchanged.",
+    "supportingEvidence": "x+0=x.",
+    "explanation": "The example illustrates additive identity because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name additive identity without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-19",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Equivalent expressions and properties",
+    "term": "Multiplicative identity",
+    "definition": "One is the multiplicative identity because multiplying by it leaves a number unchanged.",
+    "example": "x·1=x.",
+    "correctAnswer": "One is the multiplicative identity because multiplying by it leaves a number unchanged.",
+    "supportingEvidence": "x·1=x.",
+    "explanation": "The example illustrates multiplicative identity because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name multiplicative identity without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-20",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Equivalent expressions and properties",
+    "term": "Additive inverse",
+    "definition": "The opposite of a number; adding a number and its opposite gives zero.",
+    "example": "x+(-x)=0.",
+    "correctAnswer": "The opposite of a number; adding a number and its opposite gives zero.",
+    "supportingEvidence": "x+(-x)=0.",
+    "explanation": "The example illustrates additive inverse because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name additive inverse without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-21",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Exponents, radicals, and number systems",
+    "term": "Multiplicative inverse",
+    "definition": "The reciprocal of a nonzero number; their product is one.",
+    "example": "x·(1/x)=1 when x≠0.",
+    "correctAnswer": "The reciprocal of a nonzero number; their product is one.",
+    "supportingEvidence": "x·(1/x)=1 when x≠0.",
+    "explanation": "The example illustrates multiplicative inverse because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name multiplicative inverse without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-22",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Exponents, radicals, and number systems",
+    "term": "Exponent",
+    "definition": "A notation indicating repeated multiplication of a base by itself.",
+    "example": "x³ means x·x·x.",
+    "correctAnswer": "A notation indicating repeated multiplication of a base by itself.",
+    "supportingEvidence": "x³ means x·x·x.",
+    "explanation": "The example illustrates exponent because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name exponent without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-23",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Exponents, radicals, and number systems",
+    "term": "Base of a power",
+    "definition": "The quantity raised to an exponent.",
+    "example": "The base of 4³ is 4.",
+    "correctAnswer": "The quantity raised to an exponent.",
+    "supportingEvidence": "The base of 4³ is 4.",
+    "explanation": "The example illustrates base of a power because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name base of a power without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-24",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Exponents, radicals, and number systems",
+    "term": "Power",
+    "definition": "An expression consisting of a base raised to an exponent.",
+    "example": "2⁵ is a power with value 32.",
+    "correctAnswer": "An expression consisting of a base raised to an exponent.",
+    "supportingEvidence": "2⁵ is a power with value 32.",
+    "explanation": "The example illustrates power because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name power without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-25",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Exponents, radicals, and number systems",
+    "term": "Zero exponent rule",
+    "definition": "A nonzero base raised to zero equals one.",
+    "example": "7⁰=1; zero is excluded as a base in this rule.",
+    "correctAnswer": "A nonzero base raised to zero equals one.",
+    "supportingEvidence": "7⁰=1; zero is excluded as a base in this rule.",
+    "explanation": "The example illustrates zero exponent rule because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name zero exponent rule without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-26",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Exponents, radicals, and number systems",
+    "term": "Negative exponent",
+    "definition": "A negative exponent denotes the reciprocal of the corresponding positive power.",
+    "example": "x⁻²=1/x² for x≠0.",
+    "correctAnswer": "A negative exponent denotes the reciprocal of the corresponding positive power.",
+    "supportingEvidence": "x⁻²=1/x² for x≠0.",
+    "explanation": "The example illustrates negative exponent because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name negative exponent without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-27",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Exponents, radicals, and number systems",
+    "term": "Radical",
+    "definition": "A symbol or expression denoting a root.",
+    "example": "√49=7 is the principal square root.",
+    "correctAnswer": "A symbol or expression denoting a root.",
+    "supportingEvidence": "√49=7 is the principal square root.",
+    "explanation": "The example illustrates radical because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name radical without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-28",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Exponents, radicals, and number systems",
+    "term": "Radicand",
+    "definition": "The expression beneath a radical sign.",
+    "example": "In √(x+1), x+1 is the radicand.",
+    "correctAnswer": "The expression beneath a radical sign.",
+    "supportingEvidence": "In √(x+1), x+1 is the radicand.",
+    "explanation": "The example illustrates radicand because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name radicand without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-29",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Exponents, radicals, and number systems",
+    "term": "Absolute value",
+    "definition": "The nonnegative distance of a real number from zero.",
+    "example": "|-6|=6.",
+    "correctAnswer": "The nonnegative distance of a real number from zero.",
+    "supportingEvidence": "|-6|=6.",
+    "explanation": "The example illustrates absolute value because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name absolute value without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-30",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Exponents, radicals, and number systems",
+    "term": "Polynomial",
+    "definition": "A finite sum of terms with nonnegative integer variable exponents.",
+    "example": "3x²-2x+1 is a polynomial.",
+    "correctAnswer": "A finite sum of terms with nonnegative integer variable exponents.",
+    "supportingEvidence": "3x²-2x+1 is a polynomial.",
+    "explanation": "The example illustrates polynomial because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name polynomial without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-31",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Polynomials and factoring",
+    "term": "Monomial",
+    "definition": "A polynomial consisting of one term.",
+    "example": "-4x³ is a monomial.",
+    "correctAnswer": "A polynomial consisting of one term.",
+    "supportingEvidence": "-4x³ is a monomial.",
+    "explanation": "The example illustrates monomial because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name monomial without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-32",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Polynomials and factoring",
+    "term": "Binomial",
+    "definition": "A polynomial consisting of two unlike terms.",
+    "example": "x+5 is a binomial.",
+    "correctAnswer": "A polynomial consisting of two unlike terms.",
+    "supportingEvidence": "x+5 is a binomial.",
+    "explanation": "The example illustrates binomial because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name binomial without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-33",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Polynomials and factoring",
+    "term": "Trinomial",
+    "definition": "A polynomial consisting of three unlike terms.",
+    "example": "x²+3x+2 is a trinomial.",
+    "correctAnswer": "A polynomial consisting of three unlike terms.",
+    "supportingEvidence": "x²+3x+2 is a trinomial.",
+    "explanation": "The example illustrates trinomial because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name trinomial without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-34",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Polynomials and factoring",
+    "term": "Degree of a term",
+    "definition": "The sum of variable exponents in a term.",
+    "example": "4x²y³ has degree 5.",
+    "correctAnswer": "The sum of variable exponents in a term.",
+    "supportingEvidence": "4x²y³ has degree 5.",
+    "explanation": "The example illustrates degree of a term because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name degree of a term without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-35",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Polynomials and factoring",
+    "term": "Degree of a polynomial",
+    "definition": "The greatest degree of its nonzero terms after simplification.",
+    "example": "2x⁴+x²-1 has degree 4.",
+    "correctAnswer": "The greatest degree of its nonzero terms after simplification.",
+    "supportingEvidence": "2x⁴+x²-1 has degree 4.",
+    "explanation": "The example illustrates degree of a polynomial because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name degree of a polynomial without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-36",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Polynomials and factoring",
+    "term": "Factoring",
+    "definition": "Rewriting an expression as a product of simpler expressions.",
+    "example": "x²-9=(x-3)(x+3).",
+    "correctAnswer": "Rewriting an expression as a product of simpler expressions.",
+    "supportingEvidence": "x²-9=(x-3)(x+3).",
+    "explanation": "The example illustrates factoring because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name factoring without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-37",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Polynomials and factoring",
+    "term": "Greatest common factor",
+    "definition": "The greatest factor shared by every term in an expression.",
+    "example": "The greatest common factor of 12x and 18 is 6.",
+    "correctAnswer": "The greatest factor shared by every term in an expression.",
+    "supportingEvidence": "The greatest common factor of 12x and 18 is 6.",
+    "explanation": "The example illustrates greatest common factor because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name greatest common factor without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-38",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Polynomials and factoring",
+    "term": "Difference of squares",
+    "definition": "A binomial a²-b² factoring as (a-b)(a+b).",
+    "example": "x²-25=(x-5)(x+5).",
+    "correctAnswer": "A binomial a²-b² factoring as (a-b)(a+b).",
+    "supportingEvidence": "x²-25=(x-5)(x+5).",
+    "explanation": "The example illustrates difference of squares because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name difference of squares without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-39",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Polynomials and factoring",
+    "term": "Perfect-square trinomial",
+    "definition": "A trinomial equal to the square of a binomial.",
+    "example": "x²+8x+16=(x+4)².",
+    "correctAnswer": "A trinomial equal to the square of a binomial.",
+    "supportingEvidence": "x²+8x+16=(x+4)².",
+    "explanation": "The example illustrates perfect-square trinomial because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name perfect-square trinomial without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-40",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Polynomials and factoring",
+    "term": "Rational expression",
+    "definition": "A quotient of polynomials with a nonzero denominator.",
+    "example": "(x+1)/(x-2) is undefined at x=2.",
+    "correctAnswer": "A quotient of polynomials with a nonzero denominator.",
+    "supportingEvidence": "(x+1)/(x-2) is undefined at x=2.",
+    "explanation": "The example illustrates rational expression because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name rational expression without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-41",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Substitution and evaluation",
+    "term": "Domain restriction",
+    "definition": "A value excluded because it makes an expression or operation undefined.",
+    "example": "For 1/(x-4), x cannot equal 4.",
+    "correctAnswer": "A value excluded because it makes an expression or operation undefined.",
+    "supportingEvidence": "For 1/(x-4), x cannot equal 4.",
+    "explanation": "The example illustrates domain restriction because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name domain restriction without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-42",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Substitution and evaluation",
+    "term": "Terminating decimal",
+    "definition": "A decimal representation with finitely many digits after the decimal point.",
+    "example": "3/8=0.375.",
+    "correctAnswer": "A decimal representation with finitely many digits after the decimal point.",
+    "supportingEvidence": "3/8=0.375.",
+    "explanation": "The example illustrates terminating decimal because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name terminating decimal without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-43",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Substitution and evaluation",
+    "term": "Repeating decimal",
+    "definition": "A decimal representation with a digit or block repeating indefinitely.",
+    "example": "1/3=0.333… .",
+    "correctAnswer": "A decimal representation with a digit or block repeating indefinitely.",
+    "supportingEvidence": "1/3=0.333… .",
+    "explanation": "The example illustrates repeating decimal because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name repeating decimal without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-44",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Substitution and evaluation",
+    "term": "Rational number",
+    "definition": "A number expressible as a ratio of integers with nonzero denominator.",
+    "example": "-7/4 and 2=2/1 are rational.",
+    "correctAnswer": "A number expressible as a ratio of integers with nonzero denominator.",
+    "supportingEvidence": "-7/4 and 2=2/1 are rational.",
+    "explanation": "The example illustrates rational number because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name rational number without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-45",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Substitution and evaluation",
+    "term": "Irrational number",
+    "definition": "A real number not expressible as a ratio of integers.",
+    "example": "√2 is irrational.",
+    "correctAnswer": "A real number not expressible as a ratio of integers.",
+    "supportingEvidence": "√2 is irrational.",
+    "explanation": "The example illustrates irrational number because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name irrational number without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-46",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Substitution and evaluation",
+    "term": "Real number",
+    "definition": "A number on the continuous number line, rational or irrational.",
+    "example": "-3, 1/2, and √5 are real numbers.",
+    "correctAnswer": "A number on the continuous number line, rational or irrational.",
+    "supportingEvidence": "-3, 1/2, and √5 are real numbers.",
+    "explanation": "The example illustrates real number because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name real number without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-47",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Substitution and evaluation",
+    "term": "Like radical terms",
+    "definition": "Radical terms with the same index and radicand that can be combined.",
+    "example": "2√3+5√3=7√3.",
+    "correctAnswer": "Radical terms with the same index and radicand that can be combined.",
+    "supportingEvidence": "2√3+5√3=7√3.",
+    "explanation": "The example illustrates like radical terms because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name like radical terms without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-48",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Substitution and evaluation",
+    "term": "Conjugates",
+    "definition": "Binomials with matching terms and opposite signs between them.",
+    "example": "(x+2)(x-2)=x²-4.",
+    "correctAnswer": "Binomials with matching terms and opposite signs between them.",
+    "supportingEvidence": "(x+2)(x-2)=x²-4.",
+    "explanation": "The example illustrates conjugates because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name conjugates without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-49",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Substitution and evaluation",
+    "term": "Substitution",
+    "definition": "Replacing a variable with a specified value.",
+    "example": "Substituting x=2 into 3x+1 gives 7.",
+    "correctAnswer": "Replacing a variable with a specified value.",
+    "supportingEvidence": "Substituting x=2 into 3x+1 gives 7.",
+    "explanation": "The example illustrates substitution because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name substitution without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  },
+  {
+    "id": "math-algebraic-expressions-50",
+    "topicId": "math-algebraic-expressions",
+    "subtopic": "Substitution and evaluation",
+    "term": "Order of operations",
+    "definition": "A convention for evaluating grouped expressions, powers, multiplication/division, then addition/subtraction.",
+    "example": "2+3·4=14 because multiplication precedes addition.",
+    "correctAnswer": "A convention for evaluating grouped expressions, powers, multiplication/division, then addition/subtraction.",
+    "supportingEvidence": "2+3·4=14 because multiplication precedes addition.",
+    "explanation": "The example illustrates order of operations because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name order of operations without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "OpenStax Elementary Algebra 2e",
+      "referenceUrl": "https://openstax.org/books/elementary-algebra-2e/pages/1-introduction"
+    }
+  }
+]

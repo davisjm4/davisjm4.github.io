@@ -1,0 +1,1277 @@
+[
+  {
+    "id": "math-geometry-01",
+    "topicId": "math-geometry",
+    "subtopic": "Undefined terms and basic objects",
+    "term": "Point",
+    "definition": "An exact location with no length, width, or thickness.",
+    "example": "Point A marks one location in a plane.",
+    "correctAnswer": "An exact location with no length, width, or thickness.",
+    "supportingEvidence": "Point A marks one location in a plane.",
+    "explanation": "The example illustrates point because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name point without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-02",
+    "topicId": "math-geometry",
+    "subtopic": "Undefined terms and basic objects",
+    "term": "Line",
+    "definition": "A straight path extending without end in both directions.",
+    "example": "Line AB continues past both A and B.",
+    "correctAnswer": "A straight path extending without end in both directions.",
+    "supportingEvidence": "Line AB continues past both A and B.",
+    "explanation": "The example illustrates line because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name line without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-03",
+    "topicId": "math-geometry",
+    "subtopic": "Undefined terms and basic objects",
+    "term": "Line segment",
+    "definition": "A part of a line bounded by two endpoints.",
+    "example": "Segment AB contains every point from A through B.",
+    "correctAnswer": "A part of a line bounded by two endpoints.",
+    "supportingEvidence": "Segment AB contains every point from A through B.",
+    "explanation": "The example illustrates line segment because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name line segment without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-04",
+    "topicId": "math-geometry",
+    "subtopic": "Undefined terms and basic objects",
+    "term": "Ray",
+    "definition": "A part of a line with one endpoint extending infinitely in one direction.",
+    "example": "Ray AB begins at A and passes through B.",
+    "correctAnswer": "A part of a line with one endpoint extending infinitely in one direction.",
+    "supportingEvidence": "Ray AB begins at A and passes through B.",
+    "explanation": "The example illustrates ray because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name ray without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-05",
+    "topicId": "math-geometry",
+    "subtopic": "Undefined terms and basic objects",
+    "term": "Plane",
+    "definition": "A flat two-dimensional surface extending without end.",
+    "example": "A sheet of paper models part of a plane.",
+    "correctAnswer": "A flat two-dimensional surface extending without end.",
+    "supportingEvidence": "A sheet of paper models part of a plane.",
+    "explanation": "The example illustrates plane because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name plane without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-06",
+    "topicId": "math-geometry",
+    "subtopic": "Undefined terms and basic objects",
+    "term": "Collinear points",
+    "definition": "Points that lie on the same line.",
+    "example": "A, B, and C are collinear when one line passes through all three.",
+    "correctAnswer": "Points that lie on the same line.",
+    "supportingEvidence": "A, B, and C are collinear when one line passes through all three.",
+    "explanation": "The example illustrates collinear points because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name collinear points without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-07",
+    "topicId": "math-geometry",
+    "subtopic": "Undefined terms and basic objects",
+    "term": "Coplanar points",
+    "definition": "Points that lie in the same plane.",
+    "example": "Four corners of a flat tabletop are coplanar.",
+    "correctAnswer": "Points that lie in the same plane.",
+    "supportingEvidence": "Four corners of a flat tabletop are coplanar.",
+    "explanation": "The example illustrates coplanar points because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name coplanar points without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-08",
+    "topicId": "math-geometry",
+    "subtopic": "Undefined terms and basic objects",
+    "term": "Intersection",
+    "definition": "A point or set of points shared by two or more geometric figures.",
+    "example": "Two distinct lines in a plane may intersect at one point.",
+    "correctAnswer": "A point or set of points shared by two or more geometric figures.",
+    "supportingEvidence": "Two distinct lines in a plane may intersect at one point.",
+    "explanation": "The example illustrates intersection because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name intersection without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-09",
+    "topicId": "math-geometry",
+    "subtopic": "Undefined terms and basic objects",
+    "term": "Angle",
+    "definition": "A figure formed by two rays with a common endpoint.",
+    "example": "Rays BA and BC form angle ABC with vertex B.",
+    "correctAnswer": "A figure formed by two rays with a common endpoint.",
+    "supportingEvidence": "Rays BA and BC form angle ABC with vertex B.",
+    "explanation": "The example illustrates angle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name angle without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-10",
+    "topicId": "math-geometry",
+    "subtopic": "Undefined terms and basic objects",
+    "term": "Vertex of an angle",
+    "definition": "The common endpoint of the two rays that form an angle.",
+    "example": "B is the vertex of angle ABC.",
+    "correctAnswer": "The common endpoint of the two rays that form an angle.",
+    "supportingEvidence": "B is the vertex of angle ABC.",
+    "explanation": "The example illustrates vertex of an angle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name vertex of an angle without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-11",
+    "topicId": "math-geometry",
+    "subtopic": "Undefined terms and basic objects",
+    "term": "Angle measure",
+    "definition": "The amount of rotation between the sides of an angle, measured in degrees or radians.",
+    "example": "A quarter turn measures 90 degrees.",
+    "correctAnswer": "The amount of rotation between the sides of an angle, measured in degrees or radians.",
+    "supportingEvidence": "A quarter turn measures 90 degrees.",
+    "explanation": "The example illustrates angle measure because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name angle measure without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-12",
+    "topicId": "math-geometry",
+    "subtopic": "Segments, rays, and angle vocabulary",
+    "term": "Acute angle",
+    "definition": "An angle with measure greater than zero and less than 90 degrees.",
+    "example": "A 35-degree angle is acute.",
+    "correctAnswer": "An angle with measure greater than zero and less than 90 degrees.",
+    "supportingEvidence": "A 35-degree angle is acute.",
+    "explanation": "The example illustrates acute angle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name acute angle without checking the defining condition in the example.",
+    "difficulty": "beginner",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-13",
+    "topicId": "math-geometry",
+    "subtopic": "Segments, rays, and angle vocabulary",
+    "term": "Right angle",
+    "definition": "An angle measuring exactly 90 degrees.",
+    "example": "Perpendicular rays form a right angle.",
+    "correctAnswer": "An angle measuring exactly 90 degrees.",
+    "supportingEvidence": "Perpendicular rays form a right angle.",
+    "explanation": "The example illustrates right angle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name right angle without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-14",
+    "topicId": "math-geometry",
+    "subtopic": "Segments, rays, and angle vocabulary",
+    "term": "Obtuse angle",
+    "definition": "An angle with measure greater than 90 and less than 180 degrees.",
+    "example": "A 125-degree angle is obtuse.",
+    "correctAnswer": "An angle with measure greater than 90 and less than 180 degrees.",
+    "supportingEvidence": "A 125-degree angle is obtuse.",
+    "explanation": "The example illustrates obtuse angle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name obtuse angle without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-15",
+    "topicId": "math-geometry",
+    "subtopic": "Segments, rays, and angle vocabulary",
+    "term": "Straight angle",
+    "definition": "An angle measuring 180 degrees whose sides form opposite rays.",
+    "example": "Adjacent 70-degree and 110-degree angles form a straight angle.",
+    "correctAnswer": "An angle measuring 180 degrees whose sides form opposite rays.",
+    "supportingEvidence": "Adjacent 70-degree and 110-degree angles form a straight angle.",
+    "explanation": "The example illustrates straight angle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name straight angle without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-16",
+    "topicId": "math-geometry",
+    "subtopic": "Segments, rays, and angle vocabulary",
+    "term": "Reflex angle",
+    "definition": "An angle measuring more than 180 degrees and less than 360 degrees.",
+    "example": "A 240-degree turn is reflex.",
+    "correctAnswer": "An angle measuring more than 180 degrees and less than 360 degrees.",
+    "supportingEvidence": "A 240-degree turn is reflex.",
+    "explanation": "The example illustrates reflex angle because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name reflex angle without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-17",
+    "topicId": "math-geometry",
+    "subtopic": "Segments, rays, and angle vocabulary",
+    "term": "Adjacent angles",
+    "definition": "Angles sharing a vertex and a side without overlapping interiors.",
+    "example": "Angles ABD and DBC are adjacent when they share ray BD.",
+    "correctAnswer": "Angles sharing a vertex and a side without overlapping interiors.",
+    "supportingEvidence": "Angles ABD and DBC are adjacent when they share ray BD.",
+    "explanation": "The example illustrates adjacent angles because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name adjacent angles without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-18",
+    "topicId": "math-geometry",
+    "subtopic": "Segments, rays, and angle vocabulary",
+    "term": "Vertical angles",
+    "definition": "Opposite angles formed by two intersecting lines; each pair has equal measures.",
+    "example": "If one angle is 48 degrees, its vertical angle is also 48 degrees.",
+    "correctAnswer": "Opposite angles formed by two intersecting lines; each pair has equal measures.",
+    "supportingEvidence": "If one angle is 48 degrees, its vertical angle is also 48 degrees.",
+    "explanation": "The example illustrates vertical angles because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name vertical angles without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-19",
+    "topicId": "math-geometry",
+    "subtopic": "Segments, rays, and angle vocabulary",
+    "term": "Linear pair",
+    "definition": "Adjacent angles whose noncommon sides are opposite rays; their measures sum to 180 degrees.",
+    "example": "A 65-degree angle and its linear-pair neighbor measure 115 degrees.",
+    "correctAnswer": "Adjacent angles whose noncommon sides are opposite rays; their measures sum to 180 degrees.",
+    "supportingEvidence": "A 65-degree angle and its linear-pair neighbor measure 115 degrees.",
+    "explanation": "The example illustrates linear pair because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name linear pair without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-20",
+    "topicId": "math-geometry",
+    "subtopic": "Segments, rays, and angle vocabulary",
+    "term": "Complementary angles",
+    "definition": "Two angles whose measures sum to 90 degrees.",
+    "example": "32 degrees and 58 degrees are complementary.",
+    "correctAnswer": "Two angles whose measures sum to 90 degrees.",
+    "supportingEvidence": "32 degrees and 58 degrees are complementary.",
+    "explanation": "The example illustrates complementary angles because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name complementary angles without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-21",
+    "topicId": "math-geometry",
+    "subtopic": "Segments, rays, and angle vocabulary",
+    "term": "Supplementary angles",
+    "definition": "Two angles whose measures sum to 180 degrees.",
+    "example": "104 degrees and 76 degrees are supplementary.",
+    "correctAnswer": "Two angles whose measures sum to 180 degrees.",
+    "supportingEvidence": "104 degrees and 76 degrees are supplementary.",
+    "explanation": "The example illustrates supplementary angles because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name supplementary angles without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-22",
+    "topicId": "math-geometry",
+    "subtopic": "Angle pairs and measures",
+    "term": "Perpendicular lines",
+    "definition": "Lines that intersect to form right angles.",
+    "example": "The coordinate axes are perpendicular.",
+    "correctAnswer": "Lines that intersect to form right angles.",
+    "supportingEvidence": "The coordinate axes are perpendicular.",
+    "explanation": "The example illustrates perpendicular lines because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name perpendicular lines without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-23",
+    "topicId": "math-geometry",
+    "subtopic": "Angle pairs and measures",
+    "term": "Parallel lines",
+    "definition": "Coplanar lines that never intersect and remain the same distance apart.",
+    "example": "The lines y=2 and y=5 are parallel horizontal lines.",
+    "correctAnswer": "Coplanar lines that never intersect and remain the same distance apart.",
+    "supportingEvidence": "The lines y=2 and y=5 are parallel horizontal lines.",
+    "explanation": "The example illustrates parallel lines because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name parallel lines without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-24",
+    "topicId": "math-geometry",
+    "subtopic": "Angle pairs and measures",
+    "term": "Transversal",
+    "definition": "A line that intersects two or more other lines at distinct points.",
+    "example": "A diagonal crossing two parallel streets acts as a transversal.",
+    "correctAnswer": "A line that intersects two or more other lines at distinct points.",
+    "supportingEvidence": "A diagonal crossing two parallel streets acts as a transversal.",
+    "explanation": "The example illustrates transversal because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name transversal without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-25",
+    "topicId": "math-geometry",
+    "subtopic": "Angle pairs and measures",
+    "term": "Corresponding angle congruence theorem",
+    "definition": "When parallel lines are cut by a transversal, corresponding angles are congruent.",
+    "example": "For parallel lines, corresponding angles measuring 72 degrees and 72 degrees satisfy the theorem.",
+    "correctAnswer": "When parallel lines are cut by a transversal, corresponding angles are congruent.",
+    "supportingEvidence": "For parallel lines, corresponding angles measuring 72 degrees and 72 degrees satisfy the theorem.",
+    "explanation": "The example illustrates corresponding angles because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name corresponding angles without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-26",
+    "topicId": "math-geometry",
+    "subtopic": "Angle pairs and measures",
+    "term": "Alternate interior angles",
+    "definition": "Interior angles on opposite sides of a transversal; they are congruent when the lines are parallel.",
+    "example": "A pair measuring 72 degrees and 72 degrees can be alternate interior angles for parallel lines.",
+    "correctAnswer": "Interior angles on opposite sides of a transversal; they are congruent when the lines are parallel.",
+    "supportingEvidence": "A pair measuring 72 degrees and 72 degrees can be alternate interior angles for parallel lines.",
+    "explanation": "The example illustrates alternate interior angles because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name alternate interior angles without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-27",
+    "topicId": "math-geometry",
+    "subtopic": "Angle pairs and measures",
+    "term": "Alternate exterior angles",
+    "definition": "Exterior angles on opposite sides of a transversal; they are congruent when the lines are parallel.",
+    "example": "With parallel lines, alternate exterior angles have equal measures.",
+    "correctAnswer": "Exterior angles on opposite sides of a transversal; they are congruent when the lines are parallel.",
+    "supportingEvidence": "With parallel lines, alternate exterior angles have equal measures.",
+    "explanation": "The example illustrates alternate exterior angles because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name alternate exterior angles without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-28",
+    "topicId": "math-geometry",
+    "subtopic": "Angle pairs and measures",
+    "term": "Same-side interior angles",
+    "definition": "Interior angles on the same side of a transversal; they are supplementary when the lines are parallel.",
+    "example": "A same-side interior pair may measure 110 degrees and 70 degrees.",
+    "correctAnswer": "Interior angles on the same side of a transversal; they are supplementary when the lines are parallel.",
+    "supportingEvidence": "A same-side interior pair may measure 110 degrees and 70 degrees.",
+    "explanation": "The example illustrates same-side interior angles because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name same-side interior angles without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-29",
+    "topicId": "math-geometry",
+    "subtopic": "Angle pairs and measures",
+    "term": "Distance between points",
+    "definition": "The length of the shortest segment connecting two points.",
+    "example": "On a number line, the distance between -2 and 5 is 7 units.",
+    "correctAnswer": "The length of the shortest segment connecting two points.",
+    "supportingEvidence": "On a number line, the distance between -2 and 5 is 7 units.",
+    "explanation": "The example illustrates distance between points because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name distance between points without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-30",
+    "topicId": "math-geometry",
+    "subtopic": "Angle pairs and measures",
+    "term": "Congruent segments",
+    "definition": "Segments with equal lengths.",
+    "example": "Segments AB and CD are congruent if both measure 6 centimeters.",
+    "correctAnswer": "Segments with equal lengths.",
+    "supportingEvidence": "Segments AB and CD are congruent if both measure 6 centimeters.",
+    "explanation": "The example illustrates congruent segments because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name congruent segments without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-31",
+    "topicId": "math-geometry",
+    "subtopic": "Angle pairs and measures",
+    "term": "Congruent angles",
+    "definition": "Angles with equal measures.",
+    "example": "Two 45-degree angles are congruent even if their sides differ in length.",
+    "correctAnswer": "Angles with equal measures.",
+    "supportingEvidence": "Two 45-degree angles are congruent even if their sides differ in length.",
+    "explanation": "The example illustrates congruent angles because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name congruent angles without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-32",
+    "topicId": "math-geometry",
+    "subtopic": "Parallel lines and transversals",
+    "term": "Midpoint",
+    "definition": "The point on a segment that divides it into two equal-length segments.",
+    "example": "The midpoint of endpoints 2 and 10 on a number line is 6.",
+    "correctAnswer": "The point on a segment that divides it into two equal-length segments.",
+    "supportingEvidence": "The midpoint of endpoints 2 and 10 on a number line is 6.",
+    "explanation": "The example illustrates midpoint because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name midpoint without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-33",
+    "topicId": "math-geometry",
+    "subtopic": "Parallel lines and transversals",
+    "term": "Segment bisector",
+    "definition": "A line, ray, segment, or plane that passes through a segment's midpoint.",
+    "example": "A line through the midpoint of AB bisects segment AB.",
+    "correctAnswer": "A line, ray, segment, or plane that passes through a segment's midpoint.",
+    "supportingEvidence": "A line through the midpoint of AB bisects segment AB.",
+    "explanation": "The example illustrates segment bisector because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name segment bisector without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-34",
+    "topicId": "math-geometry",
+    "subtopic": "Parallel lines and transversals",
+    "term": "Angle bisector",
+    "definition": "A ray dividing an angle into two congruent angles.",
+    "example": "A 60-degree angle bisected creates two 30-degree angles.",
+    "correctAnswer": "A ray dividing an angle into two congruent angles.",
+    "supportingEvidence": "A 60-degree angle bisected creates two 30-degree angles.",
+    "explanation": "The example illustrates angle bisector because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name angle bisector without checking the defining condition in the example.",
+    "difficulty": "intermediate",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-35",
+    "topicId": "math-geometry",
+    "subtopic": "Parallel lines and transversals",
+    "term": "Segment addition postulate",
+    "definition": "If B lies between A and C, then AB + BC = AC.",
+    "example": "If AB is 4 and BC is 7, AC is 11.",
+    "correctAnswer": "If B lies between A and C, then AB + BC = AC.",
+    "supportingEvidence": "If AB is 4 and BC is 7, AC is 11.",
+    "explanation": "The example illustrates segment addition postulate because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name segment addition postulate without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-36",
+    "topicId": "math-geometry",
+    "subtopic": "Parallel lines and transversals",
+    "term": "Angle addition postulate",
+    "definition": "If a ray lies inside an angle, the two smaller angle measures sum to the whole angle.",
+    "example": "A 25-degree part and a 40-degree part form a 65-degree angle.",
+    "correctAnswer": "If a ray lies inside an angle, the two smaller angle measures sum to the whole angle.",
+    "supportingEvidence": "A 25-degree part and a 40-degree part form a 65-degree angle.",
+    "explanation": "The example illustrates angle addition postulate because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name angle addition postulate without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-37",
+    "topicId": "math-geometry",
+    "subtopic": "Parallel lines and transversals",
+    "term": "Distance postulate",
+    "definition": "A segment's length is the nonnegative distance between its endpoints.",
+    "example": "The length from coordinate 1 to coordinate 8 is 7 units.",
+    "correctAnswer": "A segment's length is the nonnegative distance between its endpoints.",
+    "supportingEvidence": "The length from coordinate 1 to coordinate 8 is 7 units.",
+    "explanation": "The example illustrates distance postulate because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name distance postulate without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-38",
+    "topicId": "math-geometry",
+    "subtopic": "Parallel lines and transversals",
+    "term": "Midpoint of a segment",
+    "definition": "The point on a segment that divides it into two congruent subsegments.",
+    "example": "If M is the midpoint of AB, then AM and MB have equal lengths.",
+    "correctAnswer": "The point on a segment that divides it into two congruent subsegments.",
+    "supportingEvidence": "If M is the midpoint of AB, then AM and MB have equal lengths.",
+    "explanation": "The example illustrates midpoint formula because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name midpoint formula without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-39",
+    "topicId": "math-geometry",
+    "subtopic": "Parallel lines and transversals",
+    "term": "Coordinate plane",
+    "definition": "A plane organized by perpendicular number lines called the x-axis and y-axis.",
+    "example": "The point (3,-2) is plotted three right and two down from the origin.",
+    "correctAnswer": "A plane organized by perpendicular number lines called the x-axis and y-axis.",
+    "supportingEvidence": "The point (3,-2) is plotted three right and two down from the origin.",
+    "explanation": "The example illustrates coordinate plane because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name coordinate plane without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-40",
+    "topicId": "math-geometry",
+    "subtopic": "Parallel lines and transversals",
+    "term": "Origin",
+    "definition": "The point where the coordinate axes intersect, represented by (0,0).",
+    "example": "Both coordinates of the origin are zero.",
+    "correctAnswer": "The point where the coordinate axes intersect, represented by (0,0).",
+    "supportingEvidence": "Both coordinates of the origin are zero.",
+    "explanation": "The example illustrates origin because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name origin without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-41",
+    "topicId": "math-geometry",
+    "subtopic": "Parallel lines and transversals",
+    "term": "Quadrant",
+    "definition": "One of four regions formed by the coordinate axes, excluding points on the axes.",
+    "example": "The point (-2,3) lies in Quadrant II.",
+    "correctAnswer": "One of four regions formed by the coordinate axes, excluding points on the axes.",
+    "supportingEvidence": "The point (-2,3) lies in Quadrant II.",
+    "explanation": "The example illustrates quadrant because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name quadrant without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-42",
+    "topicId": "math-geometry",
+    "subtopic": "Reasoning and geometric constructions",
+    "term": "Geometric construction",
+    "definition": "A precise figure made using specified geometric tools and steps.",
+    "example": "A perpendicular bisector can be constructed with equal-radius arcs from both endpoints.",
+    "correctAnswer": "A precise figure made using specified geometric tools and steps.",
+    "supportingEvidence": "A perpendicular bisector can be constructed with equal-radius arcs from both endpoints.",
+    "explanation": "The example illustrates geometric construction because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name geometric construction without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-43",
+    "topicId": "math-geometry",
+    "subtopic": "Reasoning and geometric constructions",
+    "term": "Conjecture",
+    "definition": "A mathematical statement believed to be true based on observed patterns but not yet proved.",
+    "example": "Several measured examples may suggest a theorem, but do not alone prove it.",
+    "correctAnswer": "A mathematical statement believed to be true based on observed patterns but not yet proved.",
+    "supportingEvidence": "Several measured examples may suggest a theorem, but do not alone prove it.",
+    "explanation": "The example illustrates conjecture because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name conjecture without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-44",
+    "topicId": "math-geometry",
+    "subtopic": "Reasoning and geometric constructions",
+    "term": "Postulate",
+    "definition": "A foundational statement accepted without proof within a mathematical system.",
+    "example": "A postulate may specify that exactly one line passes through two distinct points.",
+    "correctAnswer": "A foundational statement accepted without proof within a mathematical system.",
+    "supportingEvidence": "A postulate may specify that exactly one line passes through two distinct points.",
+    "explanation": "The example illustrates postulate because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name postulate without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-45",
+    "topicId": "math-geometry",
+    "subtopic": "Reasoning and geometric constructions",
+    "term": "Theorem",
+    "definition": "A mathematical statement established by logical proof from definitions, postulates, and prior results.",
+    "example": "The vertical angles theorem follows from linear-pair relationships.",
+    "correctAnswer": "A mathematical statement established by logical proof from definitions, postulates, and prior results.",
+    "supportingEvidence": "The vertical angles theorem follows from linear-pair relationships.",
+    "explanation": "The example illustrates theorem because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name theorem without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-46",
+    "topicId": "math-geometry",
+    "subtopic": "Reasoning and geometric constructions",
+    "term": "Proof",
+    "definition": "A logical sequence of justified statements showing that a conclusion follows from assumptions.",
+    "example": "A proof may use definitions and previously established theorems.",
+    "correctAnswer": "A logical sequence of justified statements showing that a conclusion follows from assumptions.",
+    "supportingEvidence": "A proof may use definitions and previously established theorems.",
+    "explanation": "The example illustrates proof because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name proof without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-47",
+    "topicId": "math-geometry",
+    "subtopic": "Reasoning and geometric constructions",
+    "term": "Converse statement",
+    "definition": "A statement formed by exchanging the hypothesis and conclusion of a conditional.",
+    "example": "The converse of 'if two angles are vertical, they are congruent' reverses those conditions.",
+    "correctAnswer": "A statement formed by exchanging the hypothesis and conclusion of a conditional.",
+    "supportingEvidence": "The converse of 'if two angles are vertical, they are congruent' reverses those conditions.",
+    "explanation": "The example illustrates converse statement because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name converse statement without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-48",
+    "topicId": "math-geometry",
+    "subtopic": "Reasoning and geometric constructions",
+    "term": "Counterexample",
+    "definition": "A single valid example showing that a universal mathematical claim is false.",
+    "example": "The number 2 disproves the claim that every prime number is odd.",
+    "correctAnswer": "A single valid example showing that a universal mathematical claim is false.",
+    "supportingEvidence": "The number 2 disproves the claim that every prime number is odd.",
+    "explanation": "The example illustrates counterexample because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name counterexample without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-49",
+    "topicId": "math-geometry",
+    "subtopic": "Reasoning and geometric constructions",
+    "term": "Perpendicular bisector",
+    "definition": "A line perpendicular to a segment through its midpoint; points on it are equidistant from the endpoints.",
+    "example": "A point on the perpendicular bisector of AB has equal distances to A and B.",
+    "correctAnswer": "A line perpendicular to a segment through its midpoint; points on it are equidistant from the endpoints.",
+    "supportingEvidence": "A point on the perpendicular bisector of AB has equal distances to A and B.",
+    "explanation": "The example illustrates perpendicular bisector because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name perpendicular bisector without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-50",
+    "topicId": "math-geometry",
+    "subtopic": "Reasoning and geometric constructions",
+    "term": "Locus",
+    "definition": "The set of all points satisfying a stated geometric condition.",
+    "example": "Points a fixed distance from one point form a circle.",
+    "correctAnswer": "The set of all points satisfying a stated geometric condition.",
+    "supportingEvidence": "Points a fixed distance from one point form a circle.",
+    "explanation": "The example illustrates locus because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name locus without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  },
+  {
+    "id": "math-geometry-51",
+    "topicId": "math-geometry",
+    "subtopic": "Reasoning and geometric constructions",
+    "term": "Euclidean plane",
+    "definition": "The flat geometric setting in which familiar parallel-line and distance rules apply.",
+    "example": "The high-school coordinate plane is modeled as a Euclidean plane.",
+    "correctAnswer": "The flat geometric setting in which familiar parallel-line and distance rules apply.",
+    "supportingEvidence": "The high-school coordinate plane is modeled as a Euclidean plane.",
+    "explanation": "The example illustrates euclidean plane because its stated features match the definition.",
+    "compatibleQuestionTypes": [
+      "define",
+      "compare",
+      "verify",
+      "apply"
+    ],
+    "misconception": "A frequent error is to name euclidean plane without checking the defining condition in the example.",
+    "difficulty": "advanced",
+    "validation": {
+      "status": "reviewed",
+      "method": "Editorial definition/example audit; exact numerical examples checked where applicable; scope and conditions cross-checked against the listed reference.",
+      "referenceTitle": "Common Core State Standards for Mathematics, Geometry",
+      "referenceUrl": "https://corestandards.org/wp-content/uploads/2023/09/ADA-Compliant-Math-Standards.pdf"
+    }
+  }
+]

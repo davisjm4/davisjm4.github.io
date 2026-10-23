@@ -2,7 +2,9 @@
 
 A standalone practice site for high school students (grades 9–12). Students learn the structure of an evidence-based written response by working with short generated excerpts. They never write paragraphs, and the site needs no accounts, no backend, no network, and no AI at run time.
 
-Future URL: `https://davisjm4.github.io/raceces-games/`
+Live URL: `https://davisjm4.github.io/wpr-games/raceces/`
+
+Mathematics is available as a subject with eight topics and 407 authored concept records. The existing modes, difficulty levels, filters, share links, scoring, and session summary are used for both math and other subjects.
 
 ## The three practice modes
 
@@ -51,8 +53,8 @@ tests/  tools/        Node tests, browser tests, build and doc generators
 
 ## Documentation
 
-`GAME_DESIGN.md`, `RACECES_STRUCTURE.md`, `CONTENT_AND_GENERATOR_SCHEMA.md`, `CONTENT_COVERAGE.md`, `REASONING_DIVERSITY_REPORT.md`, `TEST_RESULTS.md`, `WORK_INTEGRATION_GUIDE.md`.
+`GAME_DESIGN.md`, `RACECES_STRUCTURE.md`, `CONTENT_AND_GENERATOR_SCHEMA.md`, `CONTENT_COVERAGE.md`, `REASONING_DIVERSITY_REPORT.md`, `MATHEMATICS_LIBRARY.md`, `MATHEMATICS_DIVERSITY_REPORT.md`, `TEST_RESULTS.md`, `WORK_INTEGRATION_GUIDE.md`.
 
 ## Adding content
 
-Add a topic (with at least 8 self-contained facts) and its writing models to a file in `content/topics/`, run `npm run build && npm run validate`, then `npm test`. See `CONTENT_AND_GENERATOR_SCHEMA.md` for every field.
+For original subjects, add topics and models under `content/topics/`. For mathematics, follow `MATHEMATICS_LIBRARY.md` and add stable concept records under `content/math-*.json`; add compatible bounded model definitions in `tools/build.js`. Run `npm run build && npm run validate`, then `npm test`. See `CONTENT_AND_GENERATOR_SCHEMA.md` and `MATHEMATICS_LIBRARY.md` for the schemas.

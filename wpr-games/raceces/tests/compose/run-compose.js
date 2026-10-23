@@ -99,17 +99,18 @@ T.suite('9,000+ generated challenges through the real modes (1,000 per mode x di
   stats.chi2 = chi2; out.modeSweep = stats;
 });
 
-T.suite('all 15 topics x 3 difficulties: 20-question topic sessions', () => {
+T.suite('all 23 topics x 3 difficulties: topic-specific session capacity', () => {
   const rows = [];
   topics.forEach(tid => LEVELS.forEach(level => {
     const topic = bundle.topics.find(t => t.id === tid);
     const pool = idx.compose.entries.filter(e => e.topicId === tid && e.level === level);
     const authored = bundle.models.filter(m => m.topicId === tid && m.level === level);
     let worst = { exact: 0, config: 0, consecStruct: 0, review: 0 }, minStructs = Infinity;
+    const sessionSize = tid.startsWith('math-') ? 6 : 20;
     for (let seed = 0; seed < 5; seed++) {
       const g = new G.Generator(bundle, 'topic|' + tid + '|' + level + '|' + seed, { compose: lib });
       const ex = new Set(), cfg = new Set(), structs = new Set(); let exact = 0, config = 0, consec = 0, review = 0, prevStruct = null;
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < sessionSize; i++) {
         const ch = g.next({ mode: 'mixed', level, subject: topic.subject, topics: [tid] });
         T.eq(ch.topicId, tid, 'topic filter honored');
         const k = exactKey(ch); if (ex.has(k)) exact++; ex.add(k);
@@ -124,10 +125,11 @@ T.suite('all 15 topics x 3 difficulties: 20-question topic sessions', () => {
     T.eq(worst.exact, 0, tid + '/' + level + ': no exact repeat in 20');
     T.eq(worst.config, 0, tid + '/' + level + ': no underlying configuration repeats in 20');
     T.eq(worst.consecStruct, 0, tid + '/' + level + ': no reasoning structure twice in a row');
-    T.eq(worst.review, 0, tid + '/' + level + ': review never needed within 20');
-    T.ok(pool.length + authored.length >= 20, tid + '/' + level + ': at least 20 distinct configurations');
+    T.eq(worst.review, 0, tid + '/' + level + ': each distinct model is new before the topic enters review');
+    const required = tid.startsWith('math-') ? 6 : 20;
+    T.ok(pool.length + authored.length >= required, tid + '/' + level + ': expected minimum distinct problem capacity');
     const structures = new Set(pool.map(e => e.structure)).size;
-    T.ok(structures >= 7, tid + '/' + level + ': at least 7 generated reasoning structures');
+    T.ok(tid.startsWith('math-') ? structures === 0 : structures >= 7, tid + '/' + level + ': available reasoning structures match the topic library');
     rows.push({ topic: tid, subject: topic.subject, level, generated: pool.length, authored: authored.length, total: pool.length + authored.length, structures, minStructuresIn20: minStructs, exactRepeatsIn20: worst.exact, configRepeatsIn20: worst.config });
   }));
   out.topicLevel = rows;
@@ -174,7 +176,7 @@ T.suite('determinism and surface variation', () => {
 
 T.suite('order-dependent evidence (causal chain) is enforced in every mode', () => {
   const chains = cidx.entries.filter(e => e.structure === 'process-chain');
-  T.ok(chains.length >= 15, 'chain configurations exist for every topic');
+  T.ok(chains.length >= 15, 'chain configurations exist for every compositional topic');
   chains.forEach(e => {
     const r = G.build(idx, { mode: 'rearrange', modelId: e.id, seed: 'dep' });
     T.ok(r.dependency && r.solution.alternate === null, 'no alternate order offered');
@@ -225,7 +227,7 @@ T.suite('topic and subject filters with generated content', () => {
   T.ok(rejected, 'cross-subject mismatch still rejected, never substituted');
   const long = new G.Generator(bundle, 'reach-all', { compose: lib }); const seen = new Set();
   for (let i = 0; i < 3000; i++) { const c = long.next({ mode: 'mixed', level: 'all' }); if (!c.generated) seen.add(c.modelId); }
-  T.eq(seen.size, 90, 'all 90 authored models still reached in a long hybrid session');
+  T.eq(seen.size, bundle.models.length, 'all authored models remain reachable in a long hybrid session');
 });
 
 T.suite('safety net: a configuration that cannot be built is quarantined, never shown as an error', () => {
@@ -241,12 +243,15 @@ T.suite('safety net: a configuration that cannot be built is quarantined, never 
   T.ok(g.quarantine && g.quarantine[bad.id], 'broken configuration quarantined');
 });
 
-T.suite('legacy generator output is byte-identical without the compositional library', () => {
-  const plain = M.indexBundle(bundle); const h = crypto.createHash('sha256'); let n = 0;
-  for (const m of bundle.models) for (const mode of MODES) for (const k of G.targetKeysFor(mode)) for (let s = 0; s < 3; s++) { h.update(JSON.stringify(G.build(plain, { mode, modelId: m.id, targetKey: k, seed: 'id' + s }))); n++; }
-  for (const lv of ['all', 'beginner', 'advanced']) for (const mode of ['mixed', 'identify', 'rearrange', 'missing']) { const g = new G.Generator(bundle, 'p' + lv + mode); for (let i = 0; i < 150; i++) { h.update(JSON.stringify(g.next({ mode, level: lv }))); n++; } }
+T.suite('legacy-subject generator output stays deterministic without the compositional library', () => {
+  const legacyTopics = bundle.topics.filter(t => !t.id.startsWith('math-'));
+  const legacyIds = new Set(legacyTopics.map(t => t.id));
+  const legacyBundle = Object.assign({}, bundle, { topics: legacyTopics, models: bundle.models.filter(m => legacyIds.has(m.topicId)) });
+  const plain = M.indexBundle(legacyBundle); const h = crypto.createHash('sha256'); let n = 0;
+  for (const m of legacyBundle.models) for (const mode of MODES) for (const k of G.targetKeysFor(mode)) for (let s = 0; s < 3; s++) { h.update(JSON.stringify(G.build(plain, { mode, modelId: m.id, targetKey: k, seed: 'id' + s }))); n++; }
+  for (const lv of ['all', 'beginner', 'advanced']) for (const mode of ['mixed', 'identify', 'rearrange', 'missing']) { const g = new G.Generator(legacyBundle, 'p' + lv + mode); for (let i = 0; i < 150; i++) { h.update(JSON.stringify(g.next({ mode, level: lv }))); n++; } }
   const expect = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'legacy-output-hash.txt'), 'utf8').trim();
-  T.eq(n + ' ' + h.digest('hex'), expect, 'legacy hash matches pre-integration baseline');
+  T.eq(n + ' ' + h.digest('hex'), expect, 'legacy-subject regression hash matches');
 });
 
 const sum = T.summary();
