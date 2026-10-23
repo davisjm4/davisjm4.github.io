@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-23T01:54:16.837Z",
+  "ranAt": "2026-10-23T02:06:44.801Z",
   "configBuilds": {
     "configurations": 1361,
     "builds": 8166,
@@ -35,7 +35,7 @@
   },
   "modeSweep": {
     "total": 9000,
-    "correctLongest": 490,
+    "correctLongest": 491,
     "missingTotal": 3000,
     "positions": {
       "o3": 763,
@@ -44,13 +44,13 @@
       "o4": 747
     },
     "kinds": {
-      "unsupported": 2065,
+      "unsupported": 2063,
       "summaryLike": 2175,
       "correct": 3000,
-      "offFact": 1701,
+      "offFact": 1702,
       "crossExp": 224,
       "repeat": 858,
-      "offExp": 1317,
+      "offExp": 1318,
       "wrongFocus": 548,
       "nonAnswer": 112
     },
@@ -2354,70 +2354,70 @@
         "name": "every configuration builds and passes all checks (6 seeds each)",
         "checks": 16332,
         "failed": 0,
-        "ms": 9348,
+        "ms": 9117,
         "sampleFailures": []
       },
       {
         "name": "9,000+ generated challenges through the real modes (1,000 per mode x difficulty)",
         "checks": 77658,
         "failed": 0,
-        "ms": 8274,
+        "ms": 8624,
         "sampleFailures": []
       },
       {
         "name": "all 23 topics x 3 difficulties: topic-specific session capacity",
         "checks": 5634,
         "failed": 0,
-        "ms": 4678,
+        "ms": 4849,
         "sampleFailures": []
       },
       {
         "name": "extended sessions (14, 20, 50, 100, 500) on single topics and All Topics",
         "checks": 45335,
         "failed": 0,
-        "ms": 13847,
+        "ms": 14298,
         "sampleFailures": []
       },
       {
         "name": "determinism and surface variation",
         "checks": 162,
         "failed": 0,
-        "ms": 537,
+        "ms": 553,
         "sampleFailures": []
       },
       {
         "name": "order-dependent evidence (causal chain) is enforced in every mode",
         "checks": 469,
         "failed": 0,
-        "ms": 302,
+        "ms": 333,
         "sampleFailures": []
       },
       {
         "name": "difficulty progression",
         "checks": 4,
         "failed": 0,
-        "ms": 1408,
+        "ms": 1534,
         "sampleFailures": []
       },
       {
         "name": "topic and subject filters with generated content",
         "checks": 125,
         "failed": 0,
-        "ms": 3454,
+        "ms": 3690,
         "sampleFailures": []
       },
       {
         "name": "safety net: a configuration that cannot be built is quarantined, never shown as an error",
         "checks": 202,
         "failed": 0,
-        "ms": 122,
+        "ms": 128,
         "sampleFailures": []
       },
       {
         "name": "legacy-subject generator output stays deterministic without the compositional library",
         "checks": 1,
         "failed": 0,
-        "ms": 152,
+        "ms": 150,
         "sampleFailures": []
       }
     ]

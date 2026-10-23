@@ -36,6 +36,7 @@ function run() {
       const topic = bundle.topics.find(t => t.id === topicId);
       T.ok(topic, topicId + ' is in the student content bundle');
       T.ok(records.every(r => topic.facts.some(f => f.id === r.id)), topicId + ' loads every authored record as a source fact');
+      T.ok(records.every(r => topic.facts.find(f => f.id === r.id).text === `${r.term} means ${r.definition[0].toLowerCase()}${r.definition.slice(1).replace(/[.;,:]+$/, '')}.`), topicId + ' renders definitions as grammatical source evidence');
       topics.add(topicId);
       const models = bundle.models.filter(m => m.topicId === topicId);
       T.eq(models.length, 18, topicId + ' has 18 authored reasoning models');
@@ -44,6 +45,7 @@ function run() {
       T.eq(models.filter(m => m.level === 'intermediate').length, 6, topicId + ' has six intermediate models');
       T.eq(models.filter(m => m.level === 'advanced').length, 6, topicId + ' has six advanced models');
       for (const m of models) {
+        T.ok(!/means\s+[A-Z]/.test(m.answer), m.id + ' does not duplicate the definition opener');
         T.ok(m.ev.length === 2 && m.ev[0] !== m.ev[1] && m.off !== m.ev[0] && m.off !== m.ev[1], m.id + ' cites two distinct records and a separate distractor record');
         T.ok(m.ev.every(id => records.some(r => r.id === id)) && records.some(r => r.id === m.off), m.id + ' references real concept records');
         T.ok(m.compatibleQuestionTypes.includes(m.questionType) && m.ev.every(id => records.find(r => r.id === id).compatibleQuestionTypes.includes(m.questionType)), m.id + ' model type is compatible with both evidence records');

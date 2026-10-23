@@ -176,11 +176,11 @@ Quality gates require 30 available models per difficulty, 20 distinct models bef
 | Distractor type | Meaning | Times used in test sample |
 |---|---|---|
 | repeat | Repeats the evidence without explaining it | 2808 |
-| offExp | Explains a different detail from the source | 4543 |
-| offFact | A real source detail that does not support this claim | 5768 |
-| unsupported | A claim the source does not support | 7033 |
-| summaryLike | A summary that adds new information (wrong role or new facts) | 7391 |
-| wrongFocus | A restatement of a different focus than the question | 1941 |
+| offExp | Explains a different detail from the source | 4545 |
+| offFact | A real source detail that does not support this claim | 5773 |
+| unsupported | A claim the source does not support | 7026 |
+| summaryLike | A summary that adds new information (wrong role or new facts) | 7392 |
+| wrongFocus | A restatement of a different focus than the question | 1940 |
 
 ## Answer-position and length bias (Choose the Missing Piece, 13586 challenges)
 
@@ -191,9 +191,9 @@ The correct option is the longest of the four in **17.5%** of challenges (25% wo
 | Missing role | Challenges | Correct option is longest |
 |---|---|---|
 | Answer (A) | 1939 | 68.5% |
-| Cite Evidence (C) | 3881 | 6.5% |
+| Cite Evidence (C) | 3881 | 6.6% |
 | Explain Evidence (E) | 3882 | 11.4% |
-| Restate (R) | 1942 | 17.2% |
+| Restate (R) | 1942 | 17.1% |
 | Summarize (S) | 1942 | 0.9% |
 
 Before length-balancing steering the correct option was the longest in 7.3% of challenges (a "pick the shorter one" shortcut). Steering lifted that to the figure above. Restate and Summary roles still show a bias; this is a known limitation (see CONTENT_COVERAGE.md).

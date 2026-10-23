@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-23T01:57:16.308Z",
+  "generatedAt": "2026-10-23T02:08:15.478Z",
   "definitions": {
     "exact": "same mode, model, question, prompt, excerpt, response sentences, options, and item set after whitespace/punctuation normalization",
     "passage": "same topic and selected source-fact set, regardless of fact display order",

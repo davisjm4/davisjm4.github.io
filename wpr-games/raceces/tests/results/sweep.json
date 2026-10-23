@@ -89,7 +89,7 @@
   "orders": {
     "size": 3504
   },
-  "missingCorrectLongest": 2375,
+  "missingCorrectLongest": 2378,
   "missingTotal": 13586,
   "missingPos": {
     "o2": 3372,
@@ -100,7 +100,7 @@
   "missingByRole": {
     "R": {
       "n": 1942,
-      "longest": 334
+      "longest": 332
     },
     "A": {
       "n": 1939,
@@ -108,7 +108,7 @@
     },
     "C": {
       "n": 3881,
-      "longest": 252
+      "longest": 257
     },
     "E": {
       "n": 3882,
