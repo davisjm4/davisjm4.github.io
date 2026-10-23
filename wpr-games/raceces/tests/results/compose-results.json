@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-23T03:19:57.891Z",
+  "ranAt": "2026-10-23T03:37:37.316Z",
   "configBuilds": {
     "configurations": 1361,
     "builds": 8166,
@@ -35,7 +35,7 @@
   },
   "modeSweep": {
     "total": 9000,
-    "correctLongest": 585,
+    "correctLongest": 580,
     "missingTotal": 3000,
     "positions": {
       "o3": 712,
@@ -45,12 +45,12 @@
     },
     "kinds": {
       "offExp": 1353,
-      "offFact": 1695,
+      "offFact": 1689,
       "correct": 3000,
-      "summaryLike": 2141,
+      "summaryLike": 2146,
       "crossExp": 215,
       "repeat": 858,
-      "unsupported": 2082,
+      "unsupported": 2083,
       "wrongFocus": 550,
       "nonAnswer": 106
     },
@@ -59,7 +59,7 @@
         "generated": 484,
         "authored": 516,
         "exactRepeatsGenerated": 0,
-        "exactRepeatsAuthored": 4
+        "exactRepeatsAuthored": 5
       },
       "identify/intermediate": {
         "generated": 484,
@@ -3031,77 +3031,77 @@
         "name": "grammar helpers",
         "checks": 26,
         "failed": 0,
-        "ms": 3,
+        "ms": 2,
         "sampleFailures": []
       },
       {
         "name": "every configuration builds and passes all checks (6 seeds each)",
         "checks": 16332,
         "failed": 0,
-        "ms": 9506,
+        "ms": 9178,
         "sampleFailures": []
       },
       {
         "name": "9,000+ generated challenges through the real modes (1,000 per mode x difficulty)",
         "checks": 77659,
         "failed": 0,
-        "ms": 9496,
+        "ms": 9433,
         "sampleFailures": []
       },
       {
         "name": "all 23 topics x 3 difficulties: topic-specific session capacity",
         "checks": 7314,
         "failed": 0,
-        "ms": 5041,
+        "ms": 5276,
         "sampleFailures": []
       },
       {
         "name": "extended sessions (14, 20, 50, 100, 500) on single topics and All Topics",
         "checks": 68038,
         "failed": 0,
-        "ms": 16372,
+        "ms": 18415,
         "sampleFailures": []
       },
       {
         "name": "determinism and surface variation",
         "checks": 162,
         "failed": 0,
-        "ms": 565,
+        "ms": 785,
         "sampleFailures": []
       },
       {
         "name": "order-dependent evidence (causal chain) is enforced in every mode",
         "checks": 469,
         "failed": 0,
-        "ms": 313,
+        "ms": 311,
         "sampleFailures": []
       },
       {
         "name": "difficulty progression",
         "checks": 4,
         "failed": 0,
-        "ms": 1652,
+        "ms": 1848,
         "sampleFailures": []
       },
       {
         "name": "topic and subject filters with generated content",
         "checks": 125,
         "failed": 0,
-        "ms": 4123,
+        "ms": 4384,
         "sampleFailures": []
       },
       {
         "name": "safety net: a configuration that cannot be built is quarantined, never shown as an error",
         "checks": 202,
         "failed": 0,
-        "ms": 124,
+        "ms": 134,
         "sampleFailures": []
       },
       {
         "name": "legacy-subject generator output stays deterministic without the compositional library",
         "checks": 1,
         "failed": 0,
-        "ms": 192,
+        "ms": 201,
         "sampleFailures": []
       }
     ]

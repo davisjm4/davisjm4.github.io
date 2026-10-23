@@ -9,11 +9,11 @@ Total: **407 records**, **407 distinct term-definition concepts**, **480 questio
 | math-algebraic-expressions | 50 | 50 | 60 | 20 / 20 / 20 | 7 | 60 |
 | math-coordinate-transformations | 51 | 51 | 60 | 20 / 20 / 20 | 7 | 60 |
 | math-equations-inequalities | 51 | 51 | 60 | 20 / 20 / 20 | 7 | 60 |
-| math-functions | 51 | 51 | 60 | 20 / 20 / 20 | 7 | 59 |
+| math-functions | 51 | 51 | 60 | 20 / 20 / 20 | 7 | 55 |
 | math-geometry | 51 | 51 | 60 | 20 / 20 / 20 | 7 | 59 |
-| math-measurement | 51 | 51 | 60 | 20 / 20 / 20 | 7 | 60 |
+| math-measurement | 51 | 51 | 60 | 20 / 20 / 20 | 7 | 51 |
 | math-statistics-probability | 51 | 51 | 60 | 20 / 20 / 20 | 7 | 59 |
-| math-triangles-polygons | 51 | 51 | 60 | 20 / 20 / 20 | 7 | 60 |
+| math-triangles-polygons | 51 | 51 | 60 | 20 / 20 / 20 | 7 | 57 |
 
 *Seeded excerpt variation sample: 20 seeds across three models per topic. This measures varied source passages, not new concept records or independently authored reasoning problems.*
 
@@ -49,19 +49,19 @@ The evidence for each cited concept combines its concise definition with its aut
 - **example-interpretation** (beginner, define): What does the example for perfect-square trinomial show, and what does the example for rational expression show?
 - **comparison** (intermediate, compare): How do the defined meanings of domain restriction and terminating decimal differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating repeating decimal and rational number as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, irrational number and real number, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms irrational number and real number describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if like radical terms and conjugates meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish substitution from order of operations?
 - **misconception-analysis** (intermediate, compare): Which misconception about variable and constant do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of coefficient and term differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating expression and equation as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, factor and product, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms factor and product describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if sum and difference meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish quotient from like terms?
 - **misconception-analysis** (intermediate, compare): Which misconception about simplify and equivalent expressions do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of distributive property and commutative property differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating associative property and additive identity as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, multiplicative identity and additive inverse, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms multiplicative identity and additive inverse describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if multiplicative inverse and exponent meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish base of a power from power?
 - **misconception-analysis** (intermediate, compare): Which misconception about zero exponent rule and negative exponent do their definitions correct?
@@ -112,19 +112,19 @@ The evidence for each cited concept combines its concise definition with its aut
 - **example-interpretation** (beginner, define): What does the example for transformation order show, and what does the example for invariant show?
 - **comparison** (intermediate, compare): How do the defined meanings of orientation and coordinate rule differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating image coordinates and preimage coordinates as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, distance from the origin and collinear coordinate points, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms distance from the origin and collinear coordinate points describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if slope as a rate and coordinate proof meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish midpoint test for a parallelogram from distance test for congruence?
 - **misconception-analysis** (intermediate, compare): Which misconception about coordinate geometry and ordered pair do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of abscissa and ordinate differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating coordinate axes and quadrant i as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, quadrant ii and quadrant iii, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms quadrant ii and quadrant iii describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if quadrant iv and horizontal distance meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish vertical distance from distance formula?
 - **misconception-analysis** (intermediate, compare): Which misconception about midpoint formula and slope formula do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of horizontal line slope and vertical line slope differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating parallel line slopes and perpendicular line slopes as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, reflection across the x-axis and reflection across the y-axis, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms reflection across the x-axis and reflection across the y-axis describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if reflection across the origin and reflection across y=x meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish translation from translation vector?
 - **misconception-analysis** (intermediate, compare): Which misconception about rotation and quarter-turn counterclockwise do their definitions correct?
@@ -175,19 +175,19 @@ The evidence for each cited concept combines its concise definition with its aut
 - **example-interpretation** (beginner, define): What does the example for inconsistent system show, and what does the example for dependent system show?
 - **comparison** (intermediate, compare): How do the defined meanings of independent system and linear equation differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating quadratic equation and zero-product property as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, completing the square and quadratic formula, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms completing the square and quadratic formula describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if discriminant and root meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish inequality graph from constraint?
 - **misconception-analysis** (intermediate, compare): Which misconception about check a solution and solution of an equation do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of solution set and equivalent equations differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating inverse operation and addition property of equality as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, subtraction property of equality and multiplication property of equality, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms subtraction property of equality and multiplication property of equality describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if division property of equality and one-step equation meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish multi-step equation from distributive step?
 - **misconception-analysis** (intermediate, compare): Which misconception about combining like terms and variable on both sides do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of identity equation and contradiction differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating inequality and strict inequality as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, inclusive inequality and reverse inequality rule, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms inclusive inequality and reverse inequality rule describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if compound inequality and and compound inequality meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish or compound inequality from interval notation?
 - **misconception-analysis** (intermediate, compare): Which misconception about open interval and closed interval do their definitions correct?
@@ -238,19 +238,19 @@ The evidence for each cited concept combines its concise definition with its aut
 - **example-interpretation** (beginner, define): What does the example for minimum value show, and what does the example for piecewise function show?
 - **comparison** (intermediate, compare): How do the defined meanings of absolute value function and quadratic function differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating parabola and vertex as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, axis of symmetry and exponential function, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms axis of symmetry and exponential function describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if exponential growth and exponential decay meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish composition of functions from inverse function?
 - **misconception-analysis** (intermediate, compare): Which misconception about average rate of change and relation do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of function and input differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating output and independent variable as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, dependent variable and domain, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms dependent variable and domain describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if range and function notation meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish vertical line test from discrete function?
 - **misconception-analysis** (intermediate, compare): Which misconception about continuous function and linear function do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of slope and rise differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating run and positive slope as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, negative slope and zero slope, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms negative slope and zero slope describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if undefined slope and slope-intercept form meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish point-slope form from standard form of a line?
 - **misconception-analysis** (intermediate, compare): Which misconception about y-intercept and x-intercept do their definitions correct?
@@ -301,19 +301,19 @@ The evidence for each cited concept combines its concise definition with its aut
 - **example-interpretation** (beginner, define): What does the example for coordinate plane show, and what does the example for origin show?
 - **comparison** (intermediate, compare): How do the defined meanings of quadrant and geometric construction differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating conjecture and postulate as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, theorem and proof, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms theorem and proof describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if converse statement and counterexample meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish perpendicular bisector from locus?
 - **misconception-analysis** (intermediate, compare): Which misconception about euclidean plane and point do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of line and line segment differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating ray and plane as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, collinear points and coplanar points, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms collinear points and coplanar points describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if intersection and angle meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish vertex of an angle from angle measure?
 - **misconception-analysis** (intermediate, compare): Which misconception about acute angle and right angle do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of obtuse angle and straight angle differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating reflex angle and adjacent angles as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, vertical angles and linear pair, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms vertical angles and linear pair describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if complementary angles and supplementary angles meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish perpendicular lines from parallel lines?
 - **misconception-analysis** (intermediate, compare): Which misconception about transversal and corresponding angle congruence theorem do their definitions correct?
@@ -364,19 +364,19 @@ The evidence for each cited concept combines its concise definition with its aut
 - **example-interpretation** (beginner, define): What does the example for perimeter and scale show, and what does the example for missing dimension from area show?
 - **comparison** (intermediate, compare): How do the defined meanings of missing dimension from volume and area of a sector differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating arc length and semicircle area as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, lateral area and base area, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms lateral area and base area describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if prism cross-section and density as a ratio meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish rate per unit area from precision of measurement?
 - **misconception-analysis** (intermediate, compare): Which misconception about perimeter versus area and perimeter do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of area and square unit differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating linear unit and volume as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, cubic unit and surface area, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms cubic unit and surface area describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if rectangle area and rectangle perimeter meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish square area from square perimeter?
 - **misconception-analysis** (intermediate, compare): Which misconception about triangle area and parallelogram area do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of trapezoid area and circle circumference differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating circle area and radius as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, diameter and circumference-to-diameter ratio, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms diameter and circumference-to-diameter ratio describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if prism volume and rectangular prism volume meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish prism surface area from cylinder volume?
 - **misconception-analysis** (intermediate, compare): Which misconception about cylinder surface area and pyramid volume do their definitions correct?
@@ -427,19 +427,19 @@ The evidence for each cited concept combines its concise definition with its aut
 - **example-interpretation** (beginner, define): What does the example for negative association show, and what does the example for no apparent association show?
 - **comparison** (intermediate, compare): How do the defined meanings of probability and sample space differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating event and complementary event as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, independent events and dependent events, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms independent events and dependent events describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if addition rule for disjoint events and multiplication rule for independent events meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish conditional probability from expected value?
 - **misconception-analysis** (intermediate, compare): Which misconception about margin of error and population do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of sample and census differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating parameter and statistic as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, variable in statistics and categorical variable, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms variable in statistics and categorical variable describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if quantitative variable and discrete variable meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish continuous variable from mean?
 - **misconception-analysis** (intermediate, compare): Which misconception about median and mode do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of range and quartile differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating interquartile range and outlier as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, distribution and frequency, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms distribution and frequency describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if relative frequency and histogram meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish bar graph from dot plot?
 - **misconception-analysis** (intermediate, compare): Which misconception about box plot and scatterplot do their definitions correct?
@@ -490,19 +490,19 @@ The evidence for each cited concept combines its concise definition with its aut
 - **example-interpretation** (beginner, define): What does the example for quadrilateral show, and what does the example for interior angle sum of a quadrilateral show?
 - **comparison** (intermediate, compare): How do the defined meanings of parallelogram and rectangle differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating rhombus and square as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, trapezoid and kite, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms trapezoid and kite describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if regular polygon and interior angle sum of an n-gon meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish exterior angle sum of a polygon from diagonal of a polygon?
 - **misconception-analysis** (intermediate, compare): Which misconception about triangle congruence versus similarity and triangle do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of scalene triangle and isosceles triangle differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating equilateral triangle and acute triangle as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, right triangle and obtuse triangle, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms right triangle and obtuse triangle describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if triangle inequality and interior angle sum of a triangle meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish exterior angle of a triangle from remote interior angles?
 - **misconception-analysis** (intermediate, compare): Which misconception about hypotenuse and leg of a right triangle do their definitions correct?
 - **comparison** (intermediate, compare): How do the defined meanings of pythagorean theorem and converse of the pythagorean theorem differ?
 - **misconception-analysis** (intermediate, compare): What mistake would a student make by treating pythagorean triple and congruent figures as interchangeable?
-- **comparison** (intermediate, compare): What distinct role does each term, sss congruence and sas congruence, describe?
+- **comparison** (intermediate, compare): Which distinct roles do the terms sss congruence and sas congruence describe?
 - **misconception-analysis** (intermediate, compare): What distinction would be lost if asa congruence and aas congruence meant the same thing?
 - **comparison** (intermediate, compare): Which defining features distinguish hl congruence from ssa ambiguity?
 - **misconception-analysis** (intermediate, compare): Which misconception about aaa similarity and similar figures do their definitions correct?

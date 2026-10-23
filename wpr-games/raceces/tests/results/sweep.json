@@ -70,15 +70,15 @@
     "size": 2940
   },
   "excerpts": {
-    "size": 62733
+    "size": 56295
   },
   "optionSets": {
-    "size": 11213
+    "size": 11230
   },
   "orders": {
     "size": 4166
   },
-  "missingCorrectLongest": 8527,
+  "missingCorrectLongest": 8553,
   "missingTotal": 32402,
   "missingPos": {
     "o2": 8052,
@@ -89,19 +89,19 @@
   "missingByRole": {
     "R": {
       "n": 4630,
-      "longest": 239
+      "longest": 116
     },
     "A": {
       "n": 4629,
-      "longest": 1693
+      "longest": 1700
     },
     "C": {
       "n": 9258,
-      "longest": 2071
+      "longest": 2218
     },
     "E": {
       "n": 9255,
-      "longest": 4508
+      "longest": 4503
     },
     "S": {
       "n": 4630,

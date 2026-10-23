@@ -9,14 +9,21 @@ const byTopic = new Map(files.map(f => [f.slice(0, -5), JSON.parse(fs.readFileSy
 const byTerm = (topic, term) => byTopic.get(topic).find(r => r.term === term);
 const definitionStatement = r => {
   const definition = r.definition.trim().replace(/[.;,:]+$/, '');
-  if (/^(if|when)\b/i.test(definition)) return `The ${r.term.toLowerCase()} states that ${definition[0].toLowerCase()}${definition.slice(1)}.`;
-  return `${r.term} means ${definition[0].toLowerCase()}${definition.slice(1)}.`;
+  return `The term “${r.term.toLowerCase()}” is defined this way: ${definition[0].toLowerCase()}${definition.slice(1)}.`;
 };
 const definitionEvidence = r => definitionStatement(r).replace(/[.]$/, '') + '; for example, ' + r.example.trim().replace(/[.;]+$/, '').replace(/^./, c => c.toLowerCase()) + '.';
 
 function run() {
   T.suite('mathematics library records, model compatibility, and numerical fixtures', () => {
     T.eq(files.length, 8, 'all eight mathematics topics have source files');
+    const pluralConcept = byTerm('math-geometry', 'Adjacent angles');
+    T.ok(definitionStatement(pluralConcept).startsWith('The term “adjacent angles” is defined this way:'), 'plural concept definition uses a singular grammatical subject');
+    const pluralModel = bundle.models.find(m => m.topicId === 'math-geometry' && m.family === 'example-verification' && m.answer.includes('adjacent angles'));
+    T.ok(pluralModel, 'plural geometry example-verification model exists');
+    if (pluralModel) {
+      T.ok(!/(?:^|[.;:])\s*(?:adjacent angles|vertical angles) (?:means|involves)\b/i.test(pluralModel.answer), 'plural concept is not used with singular verb agreement');
+      T.ok(pluralModel.q.startsWith('Do the examples meet the definitions'), 'verification question uses natural plural agreement');
+    }
     const ids = new Set(), topics = new Set(), distinctConcepts = new Set();
     let recordCount = 0;
     for (const [topicId, records] of byTopic) {

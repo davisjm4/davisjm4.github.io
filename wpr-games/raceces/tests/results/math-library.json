@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-23T03:17:49.917Z",
+  "ranAt": "2026-10-23T03:36:54.869Z",
   "topics": [
     {
       "topicId": "math-algebraic-expressions",
@@ -74,7 +74,7 @@
         "compare",
         "verify"
       ],
-      "seedSampledExcerptVariants": 59,
+      "seedSampledExcerptVariants": 55,
       "recordIdsUsedAsEvidence": 51
     },
     {
@@ -112,7 +112,7 @@
         "compare",
         "verify"
       ],
-      "seedSampledExcerptVariants": 60,
+      "seedSampledExcerptVariants": 51,
       "recordIdsUsedAsEvidence": 51
     },
     {
@@ -150,7 +150,7 @@
         "compare",
         "verify"
       ],
-      "seedSampledExcerptVariants": 60,
+      "seedSampledExcerptVariants": 57,
       "recordIdsUsedAsEvidence": 51
     }
   ],

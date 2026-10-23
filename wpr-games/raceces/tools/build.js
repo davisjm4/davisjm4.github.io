@@ -45,7 +45,7 @@ const mathModelTemplates = [
   {family:'example-interpretation', type:'define', level:'beginner', q:(a,b)=>`How do the two worked examples illustrate ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
   {family:'example-interpretation', type:'define', level:'beginner', q:(a,b)=>`Which mathematical idea does each example demonstrate: ${a.term.toLowerCase()} or ${b.term.toLowerCase()}?`},
   {family:'comparison', type:'compare', level:'intermediate', q:(a,b)=>`How do the defined meanings of ${a.term.toLowerCase()} and ${b.term.toLowerCase()} differ?`},
-  {family:'comparison', type:'compare', level:'intermediate', q:(a,b)=>`What distinct role does each term, ${a.term.toLowerCase()} and ${b.term.toLowerCase()}, describe?`},
+  {family:'comparison', type:'compare', level:'intermediate', q:(a,b)=>`Which distinct roles do the terms ${a.term.toLowerCase()} and ${b.term.toLowerCase()} describe?`},
   {family:'comparison', type:'compare', level:'intermediate', q:(a,b)=>`Which defining features distinguish ${a.term.toLowerCase()} from ${b.term.toLowerCase()}?`},
   {family:'misconception-analysis', type:'compare', level:'intermediate', q:(a,b)=>`What mistake would a student make by treating ${a.term.toLowerCase()} and ${b.term.toLowerCase()} as interchangeable?`},
   {family:'misconception-analysis', type:'compare', level:'intermediate', q:(a,b)=>`What distinction would be lost if ${a.term.toLowerCase()} and ${b.term.toLowerCase()} meant the same thing?`},
@@ -76,8 +76,7 @@ const sentence = s => s.trim().replace(/[.;,:]+$/, '');
 const lowerFirst = s => s.length ? s[0].toLowerCase() + s.slice(1) : s;
 const definitionStatement = r => {
   const definition = sentence(r.definition);
-  if (/^(if|when)\b/i.test(definition)) return `The ${r.term.toLowerCase()} states that ${lowerFirst(definition)}.`;
-  return `${r.term} means ${lowerFirst(definition)}.`;
+  return `The term “${r.term.toLowerCase()}” is defined this way: ${lowerFirst(definition)}.`;
 };
 const definitionEvidence = r => {
   const example = r.example.trim().replace(/[.;]+$/, '');
@@ -109,21 +108,21 @@ for (const file of mathFiles) {
     const answer = model.family === 'example-interpretation'
       ? `The first example illustrates ${a.term.toLowerCase()}, while the second illustrates ${b.term.toLowerCase()}.`
       : model.family === 'misconception-analysis'
-        ? `They are not interchangeable: ${a.term.toLowerCase()} means ${aMeaning}, whereas ${b.term.toLowerCase()} means ${bMeaning}.`
+        ? `They are not interchangeable: the definition of ${a.term.toLowerCase()} involves ${aMeaning}, whereas the definition of ${b.term.toLowerCase()} involves ${bMeaning}.`
         : model.family === 'example-verification'
-          ? `Both examples fit their definitions: ${a.term.toLowerCase()} involves ${aMeaning}, and ${b.term.toLowerCase()} involves ${bMeaning}.`
+          ? `Both examples fit their definitions: the definition of ${a.term.toLowerCase()} involves ${aMeaning}, and the definition of ${b.term.toLowerCase()} involves ${bMeaning}.`
           : model.family === 'evidence-limits'
-            ? `Each example illustrates one case: ${a.term.toLowerCase()} involves ${aMeaning}, and ${b.term.toLowerCase()} involves ${bMeaning}. The definitions state the general criteria; these examples alone do not prove every case.`
-            : `${a.term} means ${aMeaning}; by contrast, ${b.term.toLowerCase()} means ${bMeaning}.`;
+            ? `Each example illustrates one case: the definition of ${a.term.toLowerCase()} involves ${aMeaning}, and the definition of ${b.term.toLowerCase()} involves ${bMeaning}. The definitions state the general criteria; these examples alone do not prove every case.`
+            : `The definition of ${a.term.toLowerCase()} is ${aMeaning}; by contrast, the definition of ${b.term.toLowerCase()} is ${bMeaning}.`;
     const sum = model.family === 'example-interpretation'
       ? `The first example illustrates ${a.term.toLowerCase()}, and the second illustrates ${b.term.toLowerCase()}.`
       : model.family === 'misconception-analysis'
-        ? `The terms are distinct: ${a.term.toLowerCase()} means ${aMeaning}, while ${b.term.toLowerCase()} means ${bMeaning}.`
+        ? `The terms are distinct: the definition of ${a.term.toLowerCase()} involves ${aMeaning}, while the definition of ${b.term.toLowerCase()} involves ${bMeaning}.`
         : model.family === 'example-verification'
           ? `Together, the examples satisfy two different defining criteria.`
           : model.family === 'evidence-limits'
             ? `The examples illustrate individual cases; the definitions describe the broader rules.`
-            : `The examples distinguish the terms: ${a.term.toLowerCase()} means ${aMeaning}, whereas ${b.term.toLowerCase()} means ${bMeaning}.`;
+            : `The examples distinguish the terms: the definition of ${a.term.toLowerCase()} is ${aMeaning}, whereas the definition of ${b.term.toLowerCase()} is ${bMeaning}.`;
     models.push({ id:idModel, topicId:id, family:model.family, level:model.level,
       questionType:model.type, compatibleQuestionTypes:[model.type],
       q:model.q(a,b), restate:`The response distinguishes ${a.term.toLowerCase()} from ${b.term.toLowerCase()} using their definitions and worked examples.`,

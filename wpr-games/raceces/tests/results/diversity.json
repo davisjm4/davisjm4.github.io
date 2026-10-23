@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-23T03:23:37.462Z",
+  "ranAt": "2026-10-23T03:38:45.134Z",
   "rows": [
     {
       "subject": "Biology",
@@ -2104,8 +2104,8 @@
         "claim": 80,
         "evidence": 80,
         "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
+        "distinctSurface": 98,
+        "distinctPassages": 98
       }
     },
     {
@@ -2233,8 +2233,8 @@
         "claim": 80,
         "evidence": 80,
         "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
+        "distinctSurface": 99.33333333333333,
+        "distinctPassages": 99.33333333333333
       }
     },
     {
@@ -2328,6 +2328,565 @@
       "topic": "math-functions",
       "title": "Functions, Graphs, and Linear Relationships",
       "level": "beginner",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 12,
+        "distinctStructures": 2
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 18,
+        "distinctStructures": 2
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 2
+      },
+      "in100": {
+        "exact": 2,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 96.33333333333333,
+        "distinctPassages": 96.33333333333333
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-functions",
+      "title": "Functions, Graphs, and Linear Relationships",
+      "level": "intermediate",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 12,
+        "distinctStructures": 2
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 18,
+        "distinctStructures": 2
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 2
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-functions",
+      "title": "Functions, Graphs, and Linear Relationships",
+      "level": "advanced",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 11,
+        "distinctStructures": 3
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 17,
+        "distinctStructures": 3
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 3
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-geometry",
+      "title": "Geometry Fundamentals, Angles, and Lines",
+      "level": "beginner",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 12,
+        "distinctStructures": 2
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 18,
+        "distinctStructures": 2
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 2
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 95.66666666666667,
+        "distinctPassages": 95.66666666666667
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-geometry",
+      "title": "Geometry Fundamentals, Angles, and Lines",
+      "level": "intermediate",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 12,
+        "distinctStructures": 2
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 18,
+        "distinctStructures": 2
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 2
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-geometry",
+      "title": "Geometry Fundamentals, Angles, and Lines",
+      "level": "advanced",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 11,
+        "distinctStructures": 3
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 17,
+        "distinctStructures": 3
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 3
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-measurement",
+      "title": "Area, Perimeter, Surface Area, and Volume",
+      "level": "beginner",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 12,
+        "distinctStructures": 2
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 18,
+        "distinctStructures": 2
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 2
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 96.66666666666667,
+        "distinctPassages": 96.66666666666667
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-measurement",
+      "title": "Area, Perimeter, Surface Area, and Volume",
+      "level": "intermediate",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 12,
+        "distinctStructures": 2
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 18,
+        "distinctStructures": 2
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 2
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-measurement",
+      "title": "Area, Perimeter, Surface Area, and Volume",
+      "level": "advanced",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 11,
+        "distinctStructures": 3
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 17,
+        "distinctStructures": 3
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 3
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-statistics-probability",
+      "title": "Statistics, Probability, and Data Interpretation",
+      "level": "beginner",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 12,
+        "distinctStructures": 2
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 18,
+        "distinctStructures": 2
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 2
+      },
+      "in100": {
+        "exact": 1,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 97.66666666666667,
+        "distinctPassages": 97.66666666666667
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-statistics-probability",
+      "title": "Statistics, Probability, and Data Interpretation",
+      "level": "intermediate",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 12,
+        "distinctStructures": 2
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 18,
+        "distinctStructures": 2
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 2
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-statistics-probability",
+      "title": "Statistics, Probability, and Data Interpretation",
+      "level": "advanced",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 11,
+        "distinctStructures": 3
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 17,
+        "distinctStructures": 3
+      },
+      "in50": {
+        "exact": 0,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 3
+      },
+      "in100": {
+        "exact": 0,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 100,
+        "distinctPassages": 100
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-triangles-polygons",
+      "title": "Triangles, Polygons, and Similarity",
+      "level": "beginner",
+      "configurations": 20,
+      "generatedConfigurations": 0,
+      "authoredModels": 20,
+      "structures": 0,
+      "evidenceRelationships": 20,
+      "scenarioCombinations": 0,
+      "sharedEvidenceAcrossStructures": 0,
+      "in14": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 12,
+        "distinctStructures": 2
+      },
+      "in20": {
+        "exact": 0,
+        "claim": 0,
+        "evidence": 0,
+        "structureRepeats": 18,
+        "distinctStructures": 2
+      },
+      "in50": {
+        "exact": 1,
+        "claim": 30,
+        "evidence": 30,
+        "distinctClaims": 20,
+        "distinctStructures": 2
+      },
+      "in100": {
+        "exact": 5,
+        "exactGenerated": 0,
+        "claim": 80,
+        "evidence": 80,
+        "distinctClaims": 20,
+        "distinctSurface": 86,
+        "distinctPassages": 86
+      }
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "math-triangles-polygons",
+      "title": "Triangles, Polygons, and Similarity",
+      "level": "intermediate",
       "configurations": 20,
       "generatedConfigurations": 0,
       "authoredModels": 20,
@@ -2364,565 +2923,6 @@
         "distinctClaims": 20,
         "distinctSurface": 99.66666666666667,
         "distinctPassages": 99.66666666666667
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-functions",
-      "title": "Functions, Graphs, and Linear Relationships",
-      "level": "intermediate",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 12,
-        "distinctStructures": 2
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 18,
-        "distinctStructures": 2
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 2
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-functions",
-      "title": "Functions, Graphs, and Linear Relationships",
-      "level": "advanced",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 11,
-        "distinctStructures": 3
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 17,
-        "distinctStructures": 3
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 3
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-geometry",
-      "title": "Geometry Fundamentals, Angles, and Lines",
-      "level": "beginner",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 12,
-        "distinctStructures": 2
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 18,
-        "distinctStructures": 2
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 2
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-geometry",
-      "title": "Geometry Fundamentals, Angles, and Lines",
-      "level": "intermediate",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 12,
-        "distinctStructures": 2
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 18,
-        "distinctStructures": 2
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 2
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-geometry",
-      "title": "Geometry Fundamentals, Angles, and Lines",
-      "level": "advanced",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 11,
-        "distinctStructures": 3
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 17,
-        "distinctStructures": 3
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 3
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-measurement",
-      "title": "Area, Perimeter, Surface Area, and Volume",
-      "level": "beginner",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 12,
-        "distinctStructures": 2
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 18,
-        "distinctStructures": 2
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 2
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-measurement",
-      "title": "Area, Perimeter, Surface Area, and Volume",
-      "level": "intermediate",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 12,
-        "distinctStructures": 2
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 18,
-        "distinctStructures": 2
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 2
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-measurement",
-      "title": "Area, Perimeter, Surface Area, and Volume",
-      "level": "advanced",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 11,
-        "distinctStructures": 3
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 17,
-        "distinctStructures": 3
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 3
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-statistics-probability",
-      "title": "Statistics, Probability, and Data Interpretation",
-      "level": "beginner",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 12,
-        "distinctStructures": 2
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 18,
-        "distinctStructures": 2
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 2
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 99.66666666666667,
-        "distinctPassages": 99.66666666666667
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-statistics-probability",
-      "title": "Statistics, Probability, and Data Interpretation",
-      "level": "intermediate",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 12,
-        "distinctStructures": 2
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 18,
-        "distinctStructures": 2
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 2
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-statistics-probability",
-      "title": "Statistics, Probability, and Data Interpretation",
-      "level": "advanced",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 11,
-        "distinctStructures": 3
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 17,
-        "distinctStructures": 3
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 3
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-triangles-polygons",
-      "title": "Triangles, Polygons, and Similarity",
-      "level": "beginner",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 12,
-        "distinctStructures": 2
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 18,
-        "distinctStructures": 2
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 2
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 99.66666666666667,
-        "distinctPassages": 99.66666666666667
-      }
-    },
-    {
-      "subject": "Mathematics",
-      "topic": "math-triangles-polygons",
-      "title": "Triangles, Polygons, and Similarity",
-      "level": "intermediate",
-      "configurations": 20,
-      "generatedConfigurations": 0,
-      "authoredModels": 20,
-      "structures": 0,
-      "evidenceRelationships": 20,
-      "scenarioCombinations": 0,
-      "sharedEvidenceAcrossStructures": 0,
-      "in14": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 12,
-        "distinctStructures": 2
-      },
-      "in20": {
-        "exact": 0,
-        "claim": 0,
-        "evidence": 0,
-        "structureRepeats": 18,
-        "distinctStructures": 2
-      },
-      "in50": {
-        "exact": 0,
-        "claim": 30,
-        "evidence": 30,
-        "distinctClaims": 20,
-        "distinctStructures": 2
-      },
-      "in100": {
-        "exact": 0,
-        "exactGenerated": 0,
-        "claim": 80,
-        "evidence": 80,
-        "distinctClaims": 20,
-        "distinctSurface": 100,
-        "distinctPassages": 100
       }
     },
     {

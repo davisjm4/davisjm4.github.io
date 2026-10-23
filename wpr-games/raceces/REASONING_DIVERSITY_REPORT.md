@@ -105,8 +105,8 @@ The build sweep deliberately visits every target, so Cite Evidence and Explain E
 | Measure | Value |
 |---|---|
 | Distinct Identify/Missing/Rearrange prompts | 2940 |
-| Distinct source excerpts (seeded source-fact subsets; authored fact order preserved) | 62733 |
-| Distinct four-option sets in Choose the Missing Piece | 11213 |
+| Distinct source excerpts (seeded source-fact subsets; authored fact order preserved) | 56295 |
+| Distinct four-option sets in Choose the Missing Piece | 11230 |
 | Distinct starting orders in Rearrange the Response | 4166 |
 | Distinct semantic signatures reached | 9690 of 9690 |
 | Challenges that repeat a signature already in the sample (expected: several seeds per signature) | 66420 |
@@ -117,7 +117,7 @@ Same-signature repeats in this sample come from deliberately re-seeding every co
 
 | Mode | Difficulty | Tested | Exact repeats | Distinct models | Structural patterns | Families | Unique models in first 20 | Exact repeats in first 100 | Semantic repeats in rolling 30 |
 |---|---|---|---|---|---|---|---|---|---|
-| Identify the Parts | Beginner | 1000 | 32 (3.2%) | 190 | 69 | 8 | 20 | 0 | 0 |
+| Identify the Parts | Beginner | 1000 | 33 (3.3%) | 190 | 69 | 8 | 20 | 0 | 0 |
 | Identify the Parts | Intermediate | 1000 | 22 (2.2%) | 190 | 88 | 10 | 20 | 0 | 0 |
 | Identify the Parts | Advanced | 1000 | 31 (3.1%) | 190 | 96 | 11 | 20 | 1 | 0 |
 | Rearrange the Response | Beginner | 1000 | 1 (0.1%) | 190 | 8 | 8 | 20 | 0 | 23 |
@@ -165,24 +165,24 @@ Quality gates require 30 available models per difficulty, 20 distinct models bef
 | Distractor type | Meaning | Times used in test sample |
 |---|---|---|
 | repeat | Repeats the evidence without explaining it | 6840 |
-| offExp | Explains a different detail from the source | 11477 |
-| offFact | A real source detail that does not support this claim | 13842 |
-| unsupported | A claim the source does not support | 17148 |
-| summaryLike | A summary that adds new information (wrong role or new facts) | 17705 |
-| wrongFocus | A restatement of a different focus than the question | 4808 |
+| offExp | Explains a different detail from the source | 11467 |
+| offFact | A real source detail that does not support this claim | 13840 |
+| unsupported | A claim the source does not support | 17151 |
+| summaryLike | A summary that adds new information (wrong role or new facts) | 17703 |
+| wrongFocus | A restatement of a different focus than the question | 4819 |
 
 ## Answer-position and length bias (Choose the Missing Piece, 32402 challenges)
 
 Correct-option position: o1 24.9%, o2 24.9%, o3 24.9%, o4 25.4%.
 
-The correct option is the longest of the four in **26.3%** of challenges (25% would be ideal). By missing role:
+The correct option is the longest of the four in **26.4%** of challenges (25% would be ideal). By missing role:
 
 | Missing role | Challenges | Correct option is longest |
 |---|---|---|
-| Answer (A) | 4629 | 36.6% |
-| Cite Evidence (C) | 9258 | 22.4% |
+| Answer (A) | 4629 | 36.7% |
+| Cite Evidence (C) | 9258 | 24.0% |
 | Explain Evidence (E) | 9255 | 48.7% |
-| Restate (R) | 4630 | 5.2% |
+| Restate (R) | 4630 | 2.5% |
 | Summarize (S) | 4630 | 0.3% |
 
 Before length-balancing steering the correct option was the longest in 7.3% of challenges (a "pick the shorter one" shortcut). Steering lifted that to the figure above. Restate and Summary roles still show a bias; this is a known limitation (see CONTENT_COVERAGE.md).
