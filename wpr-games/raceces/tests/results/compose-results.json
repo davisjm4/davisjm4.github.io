@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-10-23T02:18:29.260Z",
+  "ranAt": "2026-10-23T03:19:57.891Z",
   "configBuilds": {
     "configurations": 1361,
     "builds": 8166,
@@ -35,82 +35,82 @@
   },
   "modeSweep": {
     "total": 9000,
-    "correctLongest": 491,
+    "correctLongest": 585,
     "missingTotal": 3000,
     "positions": {
-      "o3": 763,
-      "o1": 712,
-      "o2": 778,
-      "o4": 747
+      "o3": 712,
+      "o1": 792,
+      "o2": 754,
+      "o4": 742
     },
     "kinds": {
-      "unsupported": 2062,
-      "summaryLike": 2175,
+      "offExp": 1353,
+      "offFact": 1695,
       "correct": 3000,
-      "offFact": 1702,
-      "crossExp": 224,
+      "summaryLike": 2141,
+      "crossExp": 215,
       "repeat": 858,
-      "offExp": 1319,
-      "wrongFocus": 548,
-      "nonAnswer": 112
+      "unsupported": 2082,
+      "wrongFocus": 550,
+      "nonAnswer": 106
     },
     "byModeLevel": {
       "identify/beginner": {
-        "generated": 485,
-        "authored": 515,
+        "generated": 484,
+        "authored": 516,
         "exactRepeatsGenerated": 0,
-        "exactRepeatsAuthored": 6
+        "exactRepeatsAuthored": 4
       },
       "identify/intermediate": {
-        "generated": 492,
-        "authored": 508,
+        "generated": 484,
+        "authored": 516,
         "exactRepeatsGenerated": 0,
-        "exactRepeatsAuthored": 0
+        "exactRepeatsAuthored": 2
       },
       "identify/advanced": {
-        "generated": 608,
-        "authored": 392,
+        "generated": 612,
+        "authored": 388,
         "exactRepeatsGenerated": 0,
         "exactRepeatsAuthored": 0
       },
       "rearrange/beginner": {
-        "generated": 483,
-        "authored": 517,
+        "generated": 477,
+        "authored": 523,
         "exactRepeatsGenerated": 0,
         "exactRepeatsAuthored": 0
       },
       "rearrange/intermediate": {
-        "generated": 493,
-        "authored": 507,
+        "generated": 489,
+        "authored": 511,
         "exactRepeatsGenerated": 0,
         "exactRepeatsAuthored": 0
       },
       "rearrange/advanced": {
-        "generated": 603,
-        "authored": 397,
+        "generated": 610,
+        "authored": 390,
         "exactRepeatsGenerated": 0,
         "exactRepeatsAuthored": 0
       },
       "missing/beginner": {
-        "generated": 482,
-        "authored": 518,
+        "generated": 491,
+        "authored": 509,
         "exactRepeatsGenerated": 0,
         "exactRepeatsAuthored": 0
       },
       "missing/intermediate": {
-        "generated": 490,
-        "authored": 510,
+        "generated": 486,
+        "authored": 514,
         "exactRepeatsGenerated": 0,
         "exactRepeatsAuthored": 0
       },
       "missing/advanced": {
-        "generated": 606,
-        "authored": 394,
+        "generated": 613,
+        "authored": 387,
         "exactRepeatsGenerated": 0,
         "exactRepeatsAuthored": 0
       }
     },
-    "chi2": 3.2079999999999997
+    "chi2": 4.384
   },
   "topicLevel": [
     {
@@ -658,10 +658,10 @@
       "subject": "Mathematics",
       "level": "beginner",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -670,10 +670,10 @@
       "subject": "Mathematics",
       "level": "intermediate",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -682,10 +682,10 @@
       "subject": "Mathematics",
       "level": "advanced",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 3,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -694,10 +694,10 @@
       "subject": "Mathematics",
       "level": "beginner",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -706,10 +706,10 @@
       "subject": "Mathematics",
       "level": "intermediate",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -718,10 +718,10 @@
       "subject": "Mathematics",
       "level": "advanced",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 3,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -730,10 +730,10 @@
       "subject": "Mathematics",
       "level": "beginner",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -742,10 +742,10 @@
       "subject": "Mathematics",
       "level": "intermediate",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -754,10 +754,10 @@
       "subject": "Mathematics",
       "level": "advanced",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 3,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -766,10 +766,10 @@
       "subject": "Mathematics",
       "level": "beginner",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -778,10 +778,10 @@
       "subject": "Mathematics",
       "level": "intermediate",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -790,10 +790,10 @@
       "subject": "Mathematics",
       "level": "advanced",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 3,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -802,10 +802,10 @@
       "subject": "Mathematics",
       "level": "beginner",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -814,10 +814,10 @@
       "subject": "Mathematics",
       "level": "intermediate",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -826,10 +826,10 @@
       "subject": "Mathematics",
       "level": "advanced",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 3,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -838,10 +838,10 @@
       "subject": "Mathematics",
       "level": "beginner",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -850,10 +850,10 @@
       "subject": "Mathematics",
       "level": "intermediate",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -862,10 +862,10 @@
       "subject": "Mathematics",
       "level": "advanced",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 3,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -874,10 +874,10 @@
       "subject": "Mathematics",
       "level": "beginner",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -886,10 +886,10 @@
       "subject": "Mathematics",
       "level": "intermediate",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -898,10 +898,10 @@
       "subject": "Mathematics",
       "level": "advanced",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 3,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -910,10 +910,10 @@
       "subject": "Mathematics",
       "level": "beginner",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -922,10 +922,10 @@
       "subject": "Mathematics",
       "level": "intermediate",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 2,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     },
@@ -934,10 +934,10 @@
       "subject": "Mathematics",
       "level": "advanced",
       "generated": 0,
-      "authored": 6,
-      "total": 6,
+      "authored": 20,
+      "total": 20,
       "structures": 0,
-      "minStructuresIn20": 6,
+      "minStructuresIn20": 3,
       "exactRepeatsIn20": 0,
       "configRepeatsIn20": 0
     }
@@ -974,9 +974,9 @@
         },
         "500": {
           "exact": 0,
-          "config": 44,
+          "config": 0,
           "consec": 0,
-          "distinctConfigs": 456
+          "distinctConfigs": 500
         }
       },
       "consecutiveSameStructure500": 0
@@ -1012,9 +1012,9 @@
         },
         "500": {
           "exact": 0,
-          "config": 35,
+          "config": 0,
           "consec": 0,
-          "distinctConfigs": 465
+          "distinctConfigs": 500
         }
       },
       "consecutiveSameStructure500": 0
@@ -1050,9 +1050,9 @@
         },
         "500": {
           "exact": 0,
-          "config": 35,
+          "config": 0,
           "consec": 0,
-          "distinctConfigs": 465
+          "distinctConfigs": 500
         }
       },
       "consecutiveSameStructure500": 0
@@ -1088,9 +1088,9 @@
         },
         "500": {
           "exact": 0,
-          "config": 127,
+          "config": 15,
           "consec": 0,
-          "distinctConfigs": 373
+          "distinctConfigs": 485
         }
       },
       "consecutiveSameStructure500": 0
@@ -1126,12 +1126,12 @@
         },
         "500": {
           "exact": 0,
-          "config": 128,
-          "consec": 0,
-          "distinctConfigs": 372
+          "config": 15,
+          "consec": 11,
+          "distinctConfigs": 485
         }
       },
-      "consecutiveSameStructure500": 0
+      "consecutiveSameStructure500": 11
     },
     {
       "scope": "All topics",
@@ -1164,12 +1164,12 @@
         },
         "500": {
           "exact": 0,
-          "config": 127,
-          "consec": 0,
-          "distinctConfigs": 373
+          "config": 13,
+          "consec": 3,
+          "distinctConfigs": 487
         }
       },
-      "consecutiveSameStructure500": 0
+      "consecutiveSameStructure500": 3
     },
     {
       "scope": "All topics",
@@ -1202,12 +1202,12 @@
         },
         "500": {
           "exact": 0,
-          "config": 125,
-          "consec": 0,
-          "distinctConfigs": 375
+          "config": 13,
+          "consec": 3,
+          "distinctConfigs": 487
         }
       },
-      "consecutiveSameStructure500": 0
+      "consecutiveSameStructure500": 3
     },
     {
       "scope": "All topics",
@@ -1240,12 +1240,12 @@
         },
         "500": {
           "exact": 0,
-          "config": 128,
-          "consec": 0,
-          "distinctConfigs": 372
+          "config": 16,
+          "consec": 4,
+          "distinctConfigs": 484
         }
       },
-      "consecutiveSameStructure500": 0
+      "consecutiveSameStructure500": 4
     },
     {
       "scope": "All topics",
@@ -1278,9 +1278,693 @@
         },
         "500": {
           "exact": 0,
-          "config": 127,
+          "config": 15,
+          "consec": 3,
+          "distinctConfigs": 485
+        }
+      },
+      "consecutiveSameStructure500": 3
+    },
+    {
+      "scope": "Mathematics all topics",
+      "level": "all",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
           "consec": 0,
-          "distinctConfigs": 373
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 39,
+          "consec": 6,
+          "distinctConfigs": 461
+        }
+      },
+      "consecutiveSameStructure500": 6
+    },
+    {
+      "scope": "Mathematics all topics",
+      "level": "all",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 45,
+          "consec": 10,
+          "distinctConfigs": 455
+        }
+      },
+      "consecutiveSameStructure500": 10
+    },
+    {
+      "scope": "Mathematics all topics",
+      "level": "all",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 31,
+          "consec": 7,
+          "distinctConfigs": 469
+        }
+      },
+      "consecutiveSameStructure500": 7
+    },
+    {
+      "scope": "Mathematics all topics",
+      "level": "beginner",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 340,
+          "consec": 13,
+          "distinctConfigs": 160
+        }
+      },
+      "consecutiveSameStructure500": 13
+    },
+    {
+      "scope": "Mathematics all topics",
+      "level": "beginner",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 340,
+          "consec": 6,
+          "distinctConfigs": 160
+        }
+      },
+      "consecutiveSameStructure500": 6
+    },
+    {
+      "scope": "Mathematics all topics",
+      "level": "beginner",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 340,
+          "consec": 9,
+          "distinctConfigs": 160
+        }
+      },
+      "consecutiveSameStructure500": 9
+    },
+    {
+      "scope": "Mathematics all topics",
+      "level": "advanced",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 340,
+          "consec": 6,
+          "distinctConfigs": 160
+        }
+      },
+      "consecutiveSameStructure500": 6
+    },
+    {
+      "scope": "Mathematics all topics",
+      "level": "advanced",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 340,
+          "consec": 6,
+          "distinctConfigs": 160
+        }
+      },
+      "consecutiveSameStructure500": 6
+    },
+    {
+      "scope": "Mathematics all topics",
+      "level": "advanced",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 100
+        },
+        "500": {
+          "exact": 0,
+          "config": 340,
+          "consec": 10,
+          "distinctConfigs": 160
+        }
+      },
+      "consecutiveSameStructure500": 10
+    },
+    {
+      "scope": "Mathematics: Algebra",
+      "level": "all",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 40,
+          "consec": 0,
+          "distinctConfigs": 60
+        },
+        "500": {
+          "exact": 0,
+          "config": 440,
+          "consec": 0,
+          "distinctConfigs": 60
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "Mathematics: Algebra",
+      "level": "all",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 40,
+          "consec": 0,
+          "distinctConfigs": 60
+        },
+        "500": {
+          "exact": 0,
+          "config": 440,
+          "consec": 0,
+          "distinctConfigs": 60
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "Mathematics: Algebra",
+      "level": "all",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 50
+        },
+        "100": {
+          "exact": 0,
+          "config": 40,
+          "consec": 0,
+          "distinctConfigs": 60
+        },
+        "500": {
+          "exact": 0,
+          "config": 440,
+          "consec": 0,
+          "distinctConfigs": 60
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "Mathematics: Algebra",
+      "level": "beginner",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 30,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "100": {
+          "exact": 0,
+          "config": 80,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "500": {
+          "exact": 0,
+          "config": 480,
+          "consec": 0,
+          "distinctConfigs": 20
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "Mathematics: Algebra",
+      "level": "beginner",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 30,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "100": {
+          "exact": 0,
+          "config": 80,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "500": {
+          "exact": 0,
+          "config": 480,
+          "consec": 0,
+          "distinctConfigs": 20
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "Mathematics: Algebra",
+      "level": "beginner",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 30,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "100": {
+          "exact": 0,
+          "config": 80,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "500": {
+          "exact": 0,
+          "config": 480,
+          "consec": 0,
+          "distinctConfigs": 20
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "Mathematics: Algebra",
+      "level": "advanced",
+      "seed": 0,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 30,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "100": {
+          "exact": 0,
+          "config": 80,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "500": {
+          "exact": 0,
+          "config": 480,
+          "consec": 0,
+          "distinctConfigs": 20
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "Mathematics: Algebra",
+      "level": "advanced",
+      "seed": 1,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 30,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "100": {
+          "exact": 0,
+          "config": 80,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "500": {
+          "exact": 0,
+          "config": 480,
+          "consec": 0,
+          "distinctConfigs": 20
+        }
+      },
+      "consecutiveSameStructure500": 0
+    },
+    {
+      "scope": "Mathematics: Algebra",
+      "level": "advanced",
+      "seed": 2,
+      "marks": {
+        "14": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 14
+        },
+        "20": {
+          "exact": 0,
+          "config": 0,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "50": {
+          "exact": 0,
+          "config": 30,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "100": {
+          "exact": 0,
+          "config": 80,
+          "consec": 0,
+          "distinctConfigs": 20
+        },
+        "500": {
+          "exact": 0,
+          "config": 480,
+          "consec": 0,
+          "distinctConfigs": 20
         }
       },
       "consecutiveSameStructure500": 0
@@ -2314,25 +2998,25 @@
   ],
   "difficulty": {
     "beginner": {
-      "sampled": 352,
-      "meanWords": 104.06818181818181,
-      "meanSentences": 6.323863636363637,
+      "sampled": 356,
+      "meanWords": 104.31460674157303,
+      "meanSentences": 6.317415730337078,
       "inferenceShare": 0,
       "multiConditionShare": 0,
-      "qualifiedClaimShare": 0.019886363636363636
+      "qualifiedClaimShare": 0.019662921348314606
     },
     "intermediate": {
-      "sampled": 359,
-      "meanWords": 126.23955431754875,
-      "meanSentences": 7.50974930362117,
-      "inferenceShare": 0.8635097493036211,
+      "sampled": 362,
+      "meanWords": 126.01381215469613,
+      "meanSentences": 7.511049723756906,
+      "inferenceShare": 0.8729281767955801,
       "multiConditionShare": 0,
-      "qualifiedClaimShare": 0.4763231197771588
+      "qualifiedClaimShare": 0.48342541436464087
     },
     "advanced": {
       "sampled": 362,
-      "meanWords": 144.27900552486187,
-      "meanSentences": 8.87292817679558,
+      "meanWords": 144.17127071823205,
+      "meanSentences": 8.875690607734807,
       "inferenceShare": 1,
       "multiConditionShare": 1,
       "qualifiedClaimShare": 0.8287292817679558
@@ -2340,84 +3024,84 @@
   },
   "summary": {
     "generatedBy": "tests/run-all.js",
-    "totalChecks": 145948,
+    "totalChecks": 170332,
     "failedChecks": 0,
     "suites": [
       {
         "name": "grammar helpers",
         "checks": 26,
         "failed": 0,
-        "ms": 2,
+        "ms": 3,
         "sampleFailures": []
       },
       {
         "name": "every configuration builds and passes all checks (6 seeds each)",
         "checks": 16332,
         "failed": 0,
-        "ms": 9162,
+        "ms": 9506,
         "sampleFailures": []
       },
       {
         "name": "9,000+ generated challenges through the real modes (1,000 per mode x difficulty)",
-        "checks": 77658,
+        "checks": 77659,
         "failed": 0,
-        "ms": 8377,
+        "ms": 9496,
         "sampleFailures": []
       },
       {
         "name": "all 23 topics x 3 difficulties: topic-specific session capacity",
-        "checks": 5634,
+        "checks": 7314,
         "failed": 0,
-        "ms": 4603,
+        "ms": 5041,
         "sampleFailures": []
       },
       {
         "name": "extended sessions (14, 20, 50, 100, 500) on single topics and All Topics",
-        "checks": 45335,
+        "checks": 68038,
         "failed": 0,
-        "ms": 13322,
+        "ms": 16372,
         "sampleFailures": []
       },
       {
         "name": "determinism and surface variation",
         "checks": 162,
         "failed": 0,
-        "ms": 554,
+        "ms": 565,
         "sampleFailures": []
       },
       {
         "name": "order-dependent evidence (causal chain) is enforced in every mode",
         "checks": 469,
         "failed": 0,
-        "ms": 314,
+        "ms": 313,
         "sampleFailures": []
       },
       {
         "name": "difficulty progression",
         "checks": 4,
         "failed": 0,
-        "ms": 1630,
+        "ms": 1652,
         "sampleFailures": []
       },
       {
         "name": "topic and subject filters with generated content",
         "checks": 125,
         "failed": 0,
-        "ms": 3698,
+        "ms": 4123,
         "sampleFailures": []
       },
       {
         "name": "safety net: a configuration that cannot be built is quarantined, never shown as an error",
         "checks": 202,
         "failed": 0,
-        "ms": 165,
+        "ms": 124,
         "sampleFailures": []
       },
       {
         "name": "legacy-subject generator output stays deterministic without the compositional library",
         "checks": 1,
         "failed": 0,
-        "ms": 173,
+        "ms": 192,
         "sampleFailures": []
       }
     ]

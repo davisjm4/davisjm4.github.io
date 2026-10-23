@@ -189,8 +189,13 @@
         return countIn(recentTopics, function (e) { return e.topicId === id; });
       }, rng);
       var topicCands = cands.filter(function (m) { return m.topicId === topicId; });
-      // A topic enters review independently after its own unseen models are used.
-      if (!topicCands.length) topicCands = all.filter(function (m) { return m.topicId === topicId; });
+      // Keep an unseen configuration when a topic's remaining candidates were
+      // removed by a family/diversity filter. A topic enters review only after
+      // its own unseen models have actually been used.
+      if (!topicCands.length) {
+        var topicUnseen = all.filter(function (m) { return m.topicId === topicId && seenModels.indexOf(m.id) < 0; });
+        topicCands = topicUnseen.length ? topicUnseen : all.filter(function (m) { return m.topicId === topicId; });
+      }
       if (mode === 'rearrange' && topicCands.length) {
         var topicFresh = topicCands.filter(function (m) { return !recentRearrange.has(m.id); });
         if (topicFresh.length) topicCands = topicFresh;

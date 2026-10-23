@@ -36,7 +36,7 @@ Passage length differs by only a few sentences; difficulty is meant to come from
 
 ## Variation and repetition control
 
-The generator can continue without a session limit. It varies selected source facts, question, claim, evidence, explanation, target role or slot, distractor mix, displayed pair order, starting order, and level. Each topic enters review after its own unseen models are used; it never borrows unrelated content. Topic selection is balanced when selected topics have different model-pool sizes. A different shuffle of the same seven sentences is not a new reasoning problem. The library has 234 authored models (78 per difficulty); math topics have six models per difficulty and original topics have two. See `REPETITION_AUDIT.md` for actual pool capacity and repeat measurements, and `MATHEMATICS_DIVERSITY_REPORT.md` for the mathematics inventory.
+The generator can continue without a session limit. It varies selected source facts, question, claim, evidence, explanation, target role or slot, distractor mix, displayed pair order, starting order, and level. Each topic enters review after its own unseen models are used; it never borrows unrelated content. Topic selection is balanced when selected topics have different model-pool sizes. A different shuffle of the same seven sentences is not a new reasoning problem. The library has 234 authored models (78 per difficulty); math topics have 20 bounded concept-pair assignments per difficulty and original topics have two. See `REPETITION_AUDIT.md` for actual pool capacity and repeat measurements, and `MATHEMATICS_DIVERSITY_REPORT.md` for the mathematics inventory.
 
 ## Feedback principles
 

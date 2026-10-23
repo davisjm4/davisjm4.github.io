@@ -68,7 +68,7 @@ const sortedEntries = o => Object.entries(o).sort((a, b) => b[1] - a[1]);
     Struct.LEVELS.map(l => bundle.models.filter(m => m.topicId === t.id && m.level === l).length).join(' / '),
     bundle.models.filter(m => m.topicId === t.id).map(m => m.q + ' (' + m.level + ', ' + m.family + ')').join('<br>')
   ])) + '\n\n';
-  md += '**Practice-pool capacity:** topic/difficulty pools range from ' + topicModelMin + ' to ' + topicModelMax + ' underlying models. Mathematics has six authored models per topic/difficulty; original subjects retain their authored pools. Topic selection is balanced across a filtered session, and each topic enters explicitly labeled review after its own available models have been used.\n\n';
+  md += '**Practice-pool capacity:** topic/difficulty pools range from ' + topicModelMin + ' to ' + topicModelMax + ' underlying models. Mathematics has 20 bounded concept-pair problems per topic/difficulty; original subjects retain their authored pools. Topic selection is balanced across a filtered session, and each topic enters explicitly labeled review after its own available models have been used.\n\n';
   md += '## Content rules enforced at build time\n\n';
   md += ['Every evidence sentence overlaps at least 70% of its content words with its source fact (attribution words such as "the passage notes" are ignored).',
     'Every number in any sentence also appears in the topic\'s source text.',

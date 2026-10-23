@@ -1105,9 +1105,9 @@
     "subtopic": "Probability and random variables",
     "term": "Independent events",
     "definition": "Events for which occurrence of one does not change the probability of the other.",
-    "example": "Two fair coin tosses are independent.",
+    "example": "On two fair coin tosses, the event that the first is heads is independent of the event that the second is heads.",
     "correctAnswer": "Events for which occurrence of one does not change the probability of the other.",
-    "supportingEvidence": "Two fair coin tosses are independent.",
+    "supportingEvidence": "On two fair coin tosses, the event that the first is heads is independent of the event that the second is heads.",
     "explanation": "The example illustrates independent events because its stated features match the definition.",
     "compatibleQuestionTypes": [
       "define",
@@ -1205,9 +1205,9 @@
     "subtopic": "Probability and random variables",
     "term": "Conditional probability",
     "definition": "The probability of event A given B, computed as P(A and B)/P(B) when P(B)>0.",
-    "example": "Among 20 students in a group, 8 who ride a bus gives conditional proportion 8/20.",
+    "example": "If 8 of 20 students who ride a bus also walk to school, the proportion who walk given that they ride a bus is 8/20.",
     "correctAnswer": "The probability of event A given B, computed as P(A and B)/P(B) when P(B)>0.",
-    "supportingEvidence": "Among 20 students in a group, 8 who ride a bus gives conditional proportion 8/20.",
+    "supportingEvidence": "If 8 of 20 students who ride a bus also walk to school, the proportion who walk given that they ride a bus is 8/20.",
     "explanation": "The example illustrates conditional probability because its stated features match the definition.",
     "compatibleQuestionTypes": [
       "define",

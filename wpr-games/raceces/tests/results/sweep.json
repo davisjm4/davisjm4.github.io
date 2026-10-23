@@ -1,32 +1,32 @@
 {
-  "total": 32094,
+  "total": 76110,
   "byMode": {
-    "identify": 11009,
-    "rearrange": 7499,
-    "missing": 13586
+    "identify": 26129,
+    "rearrange": 17579,
+    "missing": 32402
   },
   "byLevel": {
-    "beginner": 10700,
-    "intermediate": 10698,
-    "advanced": 10696
+    "beginner": 25372,
+    "intermediate": 25370,
+    "advanced": 25368
   },
   "byModeLevel": {
-    "identify/beginner": 3671,
-    "rearrange/beginner": 2500,
-    "missing/beginner": 4529,
-    "identify/intermediate": 3664,
-    "rearrange/intermediate": 2502,
-    "missing/intermediate": 4532,
-    "identify/advanced": 3674,
-    "rearrange/advanced": 2497,
-    "missing/advanced": 4525
+    "identify/beginner": 8711,
+    "rearrange/beginner": 5860,
+    "missing/beginner": 10801,
+    "identify/intermediate": 8704,
+    "rearrange/intermediate": 5862,
+    "missing/intermediate": 10804,
+    "identify/advanced": 8714,
+    "rearrange/advanced": 5857,
+    "missing/advanced": 10797
   },
   "byRole": {
-    "R": 3164,
-    "A": 3164,
-    "S": 3166,
-    "C": 7553,
-    "E": 7548
+    "R": 7533,
+    "A": 7532,
+    "S": 7534,
+    "C": 17968,
+    "E": 17964
   },
   "byFamily": {
     "process": 2672,
@@ -37,24 +37,13 @@
     "adaptation": 1280,
     "tradeoff": 718,
     "scale": 1143,
-    "definition": 1075,
-    "definition-in-context": 1077,
-    "interpretation": 1076,
-    "classification": 1075,
-    "evidence-link": 1078,
-    "vocabulary-in-context": 1076,
-    "comparison": 1077,
-    "representation": 1074,
-    "true-claim": 1077,
-    "misconception-check": 1078,
-    "reasoning-step": 1075,
-    "relevance": 1077,
-    "conditions": 1075,
-    "validity": 1074,
-    "counterexample": 1075,
-    "application": 1074,
-    "evidence-evaluation": 1075,
-    "synthesis": 1073
+    "definition": 10565,
+    "example-interpretation": 10564,
+    "comparison": 10565,
+    "misconception-analysis": 10565,
+    "criteria": 7391,
+    "example-verification": 7387,
+    "evidence-limits": 6340
   },
   "bySubject": {
     "Biology": 845,
@@ -72,55 +61,55 @@
     "Environmental science": 849,
     "Weather and climate": 851,
     "Computer technology": 846,
-    "Mathematics": 19361
+    "Mathematics": 63377
   },
   "signatures": {
-    "size": 3978
+    "size": 9690
   },
   "prompts": {
-    "size": 1942
+    "size": 2940
   },
   "excerpts": {
-    "size": 19671
+    "size": 62733
   },
   "optionSets": {
-    "size": 4860
+    "size": 11213
   },
   "orders": {
-    "size": 3504
+    "size": 4166
   },
-  "missingCorrectLongest": 2379,
-  "missingTotal": 13586,
+  "missingCorrectLongest": 8527,
+  "missingTotal": 32402,
   "missingPos": {
-    "o2": 3372,
-    "o1": 3394,
-    "o4": 3450,
-    "o3": 3370
+    "o2": 8052,
+    "o1": 8069,
+    "o4": 8220,
+    "o3": 8061
   },
   "missingByRole": {
     "R": {
-      "n": 1942,
-      "longest": 330
+      "n": 4630,
+      "longest": 239
     },
     "A": {
-      "n": 1939,
-      "longest": 1328
+      "n": 4629,
+      "longest": 1693
     },
     "C": {
-      "n": 3881,
-      "longest": 260
+      "n": 9258,
+      "longest": 2071
     },
     "E": {
-      "n": 3882,
-      "longest": 444
+      "n": 9255,
+      "longest": 4508
     },
     "S": {
-      "n": 1942,
-      "longest": 17
+      "n": 4630,
+      "longest": 16
     }
   },
-  "wrongAnswersTested": 99474,
+  "wrongAnswersTested": 236565,
   "validationErrors": 0,
   "gameplayTotal": 1440,
-  "buildTotal": 30654
+  "buildTotal": 74670
 }

@@ -14,8 +14,8 @@
     "A": 77,
     "C": 187,
     "E": 185,
-    "R": 76,
-    "S": 76
+    "S": 76,
+    "R": 76
   },
   "familyCounts": {
     "scale": 69,
@@ -23,27 +23,16 @@
     "process": 105,
     "pattern": 39,
     "evaluation": 80,
-    "synthesis": 17,
-    "classification": 18,
-    "relevance": 18,
-    "interpretation": 18,
+    "criteria": 35,
+    "definition": 53,
+    "comparison": 53,
+    "example-interpretation": 54,
     "cause-effect": 97,
     "tradeoff": 46,
-    "counterexample": 15,
-    "application": 18,
-    "evidence-evaluation": 18,
+    "evidence-limits": 34,
+    "example-verification": 34,
     "adaptation": 59,
-    "representation": 19,
-    "conditions": 18,
-    "validity": 17,
-    "definition": 18,
-    "comparison": 16,
-    "true-claim": 18,
-    "misconception-check": 18,
-    "definition-in-context": 17,
-    "vocabulary-in-context": 17,
-    "evidence-link": 19,
-    "reasoning-step": 17
+    "misconception-analysis": 53
   },
   "topicCounts": {
     "coral-reefs": 40,
@@ -71,7 +60,7 @@
     "honeybees": 41
   },
   "minGap": 3,
-  "avgGap": 169.7,
+  "avgGap": 121.1,
   "sameModelBack2": 0,
   "sameSigIn30": 0,
   "sameTopicBack1": 3

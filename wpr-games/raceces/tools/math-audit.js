@@ -31,8 +31,8 @@ for (const f of files) {
     recordIdsUsedAsEvidence: new Set(models.flatMap(m => m.ev)).size
   });
   assert(records.length >= 50, topicId + ': fewer than 50 authored records');
-  assert(models.length === 18, topicId + ': expected 18 models');
-  assert(Object.values(byLevel).every(n => n === 6), topicId + ': expected six models per difficulty');
+  assert(models.length === 60, topicId + ': expected 60 bounded concept-pair assignments');
+  assert(Object.values(byLevel).every(n => n === 20), topicId + ': expected 20 distinct concept-pair assignments per difficulty');
 }
 const normalizedConcept = r => r.term.toLowerCase().replace(/[^a-z0-9]/g,'') + '|' + r.definition.toLowerCase().replace(/[^a-z0-9]/g,'');
 const uniqueConcepts = new Set(all.map(normalizedConcept));
@@ -60,7 +60,11 @@ const lines = [
 ];
 for (const t of report.topics) lines.push('| ' + t.topicId + ' | ' + t.records + ' | ' + t.uniqueTerms + ' | ' + t.models + ' | ' + t.modelsByDifficulty.beginner + ' / ' + t.modelsByDifficulty.intermediate + ' / ' + t.modelsByDifficulty.advanced + ' | ' + t.uniqueFamilies + ' | ' + t.seedSampledExcerptVariants + ' |');
 lines.push('', '*Seeded excerpt variation sample: 20 seeds across three models per topic. This measures varied source passages, not new concept records or independently authored reasoning problems.*', '',
-  'The model library uses four compatibility types (define, compare, verify, apply) and 18 fixed pair-specific model records per topic. Difficulty is balanced at six models per level. The game adds its existing mode/target, evidence-pair, passage-fact, and shuffle variation.',
+  '## What the model count means',
+  '',
+  'Each topic has 60 bounded model assignments: 20 concept-pair tasks per difficulty. These are **not 60 distinct reasoning families**. Beginner uses definition retrieval and example interpretation; Intermediate uses comparison and misconception analysis; Advanced uses criteria reasoning, example verification, and evidence-limit reasoning. Across the full math library there are **seven genuine model families**, with a third family at Advanced to support consecutive-session variety. Each difficulty has 20 concept pairs; the pairs provide fresh mathematical objects while remaining within these seven reasoning families.',
+  '',
+  'The evidence for each cited concept combines its concise definition with its authored example. Explanations connect that example to the definition. The 20-problem pool is bounded and supports one no-repeat pass per selected difficulty; longer sessions enter review.',
   '',
   '## Reasoning family inventory');
 for (const t of report.topics) {

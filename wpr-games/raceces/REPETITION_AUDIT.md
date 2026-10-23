@@ -18,42 +18,42 @@ The baseline used the pre-expansion code and five seeded runs for each row. Its 
 
 | Challenges | Exact repeats | Passages repeated | Models repeated | Semantic tasks repeated | Structural patterns |
 |---|---|---|---|---|---|
-| 14 | 0 | 0 | 0 | 0 | 13.8 |
-| 20 | 0 | 0 | 0 | 0 | 19.8 |
-| 50 | 0 | 0.4 | 0 | 0 | 46.4 |
-| 100 | 0 | 2 | 7 | 0.8 | 85.8 |
-| 500 | 0 | 60 | 274.4 | 57.4 | 256.8 |
+| 14 | 0 | 0 | 0 | 0 | 13.6 |
+| 20 | 0 | 0 | 0 | 0 | 19.4 |
+| 50 | 0 | 0.2 | 0 | 0 | 44.4 |
+| 100 | 0 | 1.6 | 7 | 0.8 | 79.2 |
+| 500 | 0.4 | 63 | 236.4 | 52.2 | 220.8 |
 
 ## Same difficulty across all topics
 
 | Difficulty | Challenges | Exact repeats | Passages repeated | Models repeated | Semantic tasks repeated | Structural patterns |
 |---|---|---|---|---|---|---|
-| Beginner | 14 | 0 | 0 | 0 | 0 | 13.4 |
-| Beginner | 20 | 0 | 0 | 0 | 0 | 18.6 |
-| Beginner | 50 | 0 | 0.8 | 2 | 0.2 | 37.4 |
-| Beginner | 100 | 0 | 4.2 | 34.6 | 3.8 | 60.2 |
-| Beginner | 500 | 1.2 | 106 | 422 | 142 | 133.2 |
-| Intermediate | 14 | 0 | 0 | 0 | 0 | 13.6 |
-| Intermediate | 20 | 0 | 0 | 0 | 0 | 18.4 |
-| Intermediate | 50 | 0 | 0.2 | 2 | 0.2 | 39.8 |
-| Intermediate | 100 | 0 | 5.8 | 34.6 | 3 | 66.6 |
-| Intermediate | 500 | 0.8 | 115.8 | 422 | 142.4 | 151.2 |
+| Beginner | 14 | 0 | 0 | 0 | 0 | 13.2 |
+| Beginner | 20 | 0 | 0 | 0 | 0 | 18.2 |
+| Beginner | 50 | 0 | 0.8 | 2 | 0 | 33.4 |
+| Beginner | 100 | 0 | 4.8 | 34.6 | 3.6 | 52.4 |
+| Beginner | 500 | 0.8 | 107.8 | 310 | 116.4 | 95 |
+| Intermediate | 14 | 0 | 0 | 0 | 0 | 13.4 |
+| Intermediate | 20 | 0 | 0 | 0 | 0 | 18 |
+| Intermediate | 50 | 0 | 0.2 | 2 | 0 | 36.2 |
+| Intermediate | 100 | 0 | 5.2 | 34.6 | 2.8 | 59.4 |
+| Intermediate | 500 | 0.6 | 121 | 310 | 115.8 | 116.4 |
 | Advanced | 14 | 0 | 0 | 0 | 0 | 13.4 |
 | Advanced | 20 | 0 | 0 | 0 | 0 | 18.2 |
-| Advanced | 50 | 0 | 0.6 | 2 | 0.2 | 39.4 |
-| Advanced | 100 | 0 | 4.2 | 34.6 | 4 | 63.2 |
-| Advanced | 500 | 0.4 | 129 | 422 | 141 | 144 |
+| Advanced | 50 | 0 | 0.4 | 2 | 0 | 38.2 |
+| Advanced | 100 | 0 | 5 | 34.6 | 3.6 | 61.2 |
+| Advanced | 500 | 0.4 | 125 | 310 | 115 | 120.6 |
 
 ## Baseline versus expanded library
 
 | Selection | Difficulty | N | Baseline passage repeats | Current passage repeats | Baseline model repeats | Current model repeats | Baseline structures | Current structures |
 |---|---|---|---|---|---|---|---|---|
-| All topics | Beginner | 20 | 1.4 | 0 | 10 | 0 | 16 | 18.6 |
-| All topics | Beginner | 50 | 9.4 | 0.8 | 40 | 2 | 31 | 37.4 |
-| All topics | Intermediate | 20 | 1 | 0 | 10 | 0 | 17 | 18.4 |
-| All topics | Intermediate | 50 | 17 | 0.2 | 40 | 2 | 36 | 39.8 |
+| All topics | Beginner | 20 | 1.4 | 0 | 10 | 0 | 16 | 18.2 |
+| All topics | Beginner | 50 | 9.4 | 0.8 | 40 | 2 | 31 | 33.4 |
+| All topics | Intermediate | 20 | 1 | 0 | 10 | 0 | 17 | 18 |
+| All topics | Intermediate | 50 | 17 | 0.2 | 40 | 2 | 36 | 36.2 |
 | All topics | Advanced | 20 | 10 | 0 | 10 | 0 | 17 | 18.2 |
-| All topics | Advanced | 50 | 40 | 0.6 | 40 | 2 | 34 | 39.4 |
+| All topics | Advanced | 50 | 40 | 0.4 | 40 | 2 | 34 | 38.2 |
 | Water cycle | All levels | 14 | 3.8 | 2 | 12 | 8 | 11 | 12.2 |
 | Water cycle | All levels | 20 | 8.6 | 4.2 | 18 | 14 | 13 | 15.8 |
 | Water cycle | All levels | 50 | 35.4 | 19.4 | 48 | 44 | 21 | 30 |
@@ -109,30 +109,30 @@ The baseline used the pre-expansion code and five seeded runs for each row. Its 
 | Binary numbers | Beginner | 12 | 18 | 6.2 | 2 |
 | Binary numbers | Intermediate | 12 | 18 | 6 | 2 |
 | Binary numbers | Advanced | 12 | 18 | 7.4 | 2 |
-| Algebraic Expressions and Vocabulary | Beginner | — | — | — | 6 |
-| Algebraic Expressions and Vocabulary | Intermediate | — | — | — | 6 |
-| Algebraic Expressions and Vocabulary | Advanced | — | — | — | 6 |
-| Coordinate Geometry and Transformations | Beginner | — | — | — | 6 |
-| Coordinate Geometry and Transformations | Intermediate | — | — | — | 6 |
-| Coordinate Geometry and Transformations | Advanced | — | — | — | 6 |
-| Equations, Inequalities, and Solving | Beginner | — | — | — | 6 |
-| Equations, Inequalities, and Solving | Intermediate | — | — | — | 6 |
-| Equations, Inequalities, and Solving | Advanced | — | — | — | 6 |
-| Functions, Graphs, and Linear Relationships | Beginner | — | — | — | 6 |
-| Functions, Graphs, and Linear Relationships | Intermediate | — | — | — | 6 |
-| Functions, Graphs, and Linear Relationships | Advanced | — | — | — | 6 |
-| Geometry Fundamentals, Angles, and Lines | Beginner | — | — | — | 6 |
-| Geometry Fundamentals, Angles, and Lines | Intermediate | — | — | — | 6 |
-| Geometry Fundamentals, Angles, and Lines | Advanced | — | — | — | 6 |
-| Area, Perimeter, Surface Area, and Volume | Beginner | — | — | — | 6 |
-| Area, Perimeter, Surface Area, and Volume | Intermediate | — | — | — | 6 |
-| Area, Perimeter, Surface Area, and Volume | Advanced | — | — | — | 6 |
-| Statistics, Probability, and Data Interpretation | Beginner | — | — | — | 6 |
-| Statistics, Probability, and Data Interpretation | Intermediate | — | — | — | 6 |
-| Statistics, Probability, and Data Interpretation | Advanced | — | — | — | 6 |
-| Triangles, Polygons, and Similarity | Beginner | — | — | — | 6 |
-| Triangles, Polygons, and Similarity | Intermediate | — | — | — | 6 |
-| Triangles, Polygons, and Similarity | Advanced | — | — | — | 6 |
+| Algebraic Expressions and Vocabulary | Beginner | — | — | — | 20 |
+| Algebraic Expressions and Vocabulary | Intermediate | — | — | — | 20 |
+| Algebraic Expressions and Vocabulary | Advanced | — | — | — | 20 |
+| Coordinate Geometry and Transformations | Beginner | — | — | — | 20 |
+| Coordinate Geometry and Transformations | Intermediate | — | — | — | 20 |
+| Coordinate Geometry and Transformations | Advanced | — | — | — | 20 |
+| Equations, Inequalities, and Solving | Beginner | — | — | — | 20 |
+| Equations, Inequalities, and Solving | Intermediate | — | — | — | 20 |
+| Equations, Inequalities, and Solving | Advanced | — | — | — | 20 |
+| Functions, Graphs, and Linear Relationships | Beginner | — | — | — | 20 |
+| Functions, Graphs, and Linear Relationships | Intermediate | — | — | — | 20 |
+| Functions, Graphs, and Linear Relationships | Advanced | — | — | — | 20 |
+| Geometry Fundamentals, Angles, and Lines | Beginner | — | — | — | 20 |
+| Geometry Fundamentals, Angles, and Lines | Intermediate | — | — | — | 20 |
+| Geometry Fundamentals, Angles, and Lines | Advanced | — | — | — | 20 |
+| Area, Perimeter, Surface Area, and Volume | Beginner | — | — | — | 20 |
+| Area, Perimeter, Surface Area, and Volume | Intermediate | — | — | — | 20 |
+| Area, Perimeter, Surface Area, and Volume | Advanced | — | — | — | 20 |
+| Statistics, Probability, and Data Interpretation | Beginner | — | — | — | 20 |
+| Statistics, Probability, and Data Interpretation | Intermediate | — | — | — | 20 |
+| Statistics, Probability, and Data Interpretation | Advanced | — | — | — | 20 |
+| Triangles, Polygons, and Similarity | Beginner | — | — | — | 20 |
+| Triangles, Polygons, and Similarity | Intermediate | — | — | — | 20 |
+| Triangles, Polygons, and Similarity | Advanced | — | — | — | 20 |
 
 Each topic/mode/difficulty was also generated for 14, 20, 50, 100, and 500 challenges across five seeds. Curated topic combinations were tested in Mixed Practice at all those lengths. The full measurements are in `tests/results/repetition-audit.json`.
 
@@ -155,15 +155,15 @@ Each topic/mode/difficulty was also generated for 14, 20, 50, 100, and 500 chall
 | Coral reefs | 2 | 2 | 2 | 6 |
 | Lightning and thunder | 2 | 2 | 2 | 6 |
 | Binary numbers | 2 | 2 | 2 | 6 |
-| Algebraic Expressions and Vocabulary | 6 | 6 | 6 | 18 |
-| Coordinate Geometry and Transformations | 6 | 6 | 6 | 18 |
-| Equations, Inequalities, and Solving | 6 | 6 | 6 | 18 |
-| Functions, Graphs, and Linear Relationships | 6 | 6 | 6 | 18 |
-| Geometry Fundamentals, Angles, and Lines | 6 | 6 | 6 | 18 |
-| Area, Perimeter, Surface Area, and Volume | 6 | 6 | 6 | 18 |
-| Statistics, Probability, and Data Interpretation | 6 | 6 | 6 | 18 |
-| Triangles, Polygons, and Similarity | 6 | 6 | 6 | 18 |
+| Algebraic Expressions and Vocabulary | 20 | 20 | 20 | 60 |
+| Coordinate Geometry and Transformations | 20 | 20 | 20 | 60 |
+| Equations, Inequalities, and Solving | 20 | 20 | 20 | 60 |
+| Functions, Graphs, and Linear Relationships | 20 | 20 | 20 | 60 |
+| Geometry Fundamentals, Angles, and Lines | 20 | 20 | 20 | 60 |
+| Area, Perimeter, Surface Area, and Volume | 20 | 20 | 20 | 60 |
+| Statistics, Probability, and Data Interpretation | 20 | 20 | 20 | 60 |
+| Triangles, Polygons, and Similarity | 20 | 20 | 20 | 60 |
 
-There are 234 underlying authored writing models (78 / 78 / 78 Beginner / Intermediate / Advanced). Each math topic has 6 models per difficulty; each original topic has 2. A topic-specific pool enters Review after its own models are used; it does not substitute content from another topic. Topic selection is balanced across the selected topics even when their model-pool sizes differ.
+There are 570 underlying authored writing models (190 / 190 / 190 Beginner / Intermediate / Advanced). Each math topic has 20 models per difficulty; each original topic has 2. A topic-specific pool enters Review after its own models are used; it does not substitute content from another topic. Topic selection is balanced across the selected topics even when their model-pool sizes differ.
 
 The 1,000-question targets were not used as a proxy for uniqueness. This audit uses five seeds and session lengths through 500, records exact and content-level repeats separately, and reports the model pool independently. The test harness does not claim that a structurally distinct task on an existing model is a new writing problem.

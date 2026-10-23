@@ -114,11 +114,11 @@ const report = { ranAt: new Date().toISOString(), rows, allTopics, skeleton: { c
   totals: { kits: lib.kits.length, generatedConfigurations: cidx.entries.length, authoredModels: bundle.models.length, structures: Object.keys(structureTotals).length } };
 fs.writeFileSync(path.join(__dirname, '..', 'tests', 'results', 'diversity.json'), JSON.stringify(report, null, 2));
 const fails = rows.filter(r => r.subject === 'Mathematics'
-  ? r.configurations < 6 || r.in20.exact
+  ? r.configurations < 20 || r.in20.exact
   : r.configurations < 20 || r.in20.exact || r.in20.claim);
 const legacyPass = rows.filter(r => r.subject !== 'Mathematics' && r.configurations >= 20 && !r.in20.exact && !r.in20.claim).length;
-const mathPass = rows.filter(r => r.subject === 'Mathematics' && r.configurations >= 6 && !r.in20.exact).length;
-console.log('Diversity audit: ' + rows.length + ' topic/difficulty combinations; ' + legacyPass + ' original pools meet the 20-problem gate; ' + mathPass + ' math pools provide six authored models with no exact repeat in 20 (review begins at pool exhaustion).');
+const mathPass = rows.filter(r => r.subject === 'Mathematics' && r.configurations >= 20 && !r.in20.exact).length;
+console.log('Diversity audit: ' + rows.length + ' topic/difficulty combinations; ' + legacyPass + ' original pools meet the 20-problem gate; ' + mathPass + ' math pools provide 20 concept-pair problems per topic/difficulty with no repeat in 20.');
 console.log('Worst evidence-relationship repeats in 20: ' + Math.max(...rows.map(r => r.in20.evidence)) + '; worst in 100 (configuration): ' + Math.max(...rows.map(r => r.in100.claim)));
 console.log('Skeletons identical across 4 seeds: ' + skeletonSame + '/' + skeletonTotal);
 process.exit(fails.length ? 1 : 0);

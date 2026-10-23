@@ -154,9 +154,9 @@
     "topicId": "math-measurement",
     "subtopic": "Length, perimeter, and area",
     "term": "Surface area",
-    "definition": "The sum of the areas of all exposed faces of a three-dimensional solid.",
+    "definition": "The total area of the outer surface of a three-dimensional solid.",
     "example": "A cube with side length 2 has surface area 24 square units.",
-    "correctAnswer": "The sum of the areas of all exposed faces of a three-dimensional solid.",
+    "correctAnswer": "The total area of the outer surface of a three-dimensional solid.",
     "supportingEvidence": "A cube with side length 2 has surface area 24 square units.",
     "explanation": "The example illustrates surface area because its stated features match the definition.",
     "compatibleQuestionTypes": [
@@ -1104,9 +1104,9 @@
     "topicId": "math-measurement",
     "subtopic": "Units, rates, and measurement limits",
     "term": "Lateral area",
-    "definition": "The area of a solid's side faces, excluding its base or bases.",
+    "definition": "The area of a solid's side surface, excluding its base or bases.",
     "example": "A cylinder's lateral area is 2πrh.",
-    "correctAnswer": "The area of a solid's side faces, excluding its base or bases.",
+    "correctAnswer": "The area of a solid's side surface, excluding its base or bases.",
     "supportingEvidence": "A cylinder's lateral area is 2πrh.",
     "explanation": "The example illustrates lateral area because its stated features match the definition.",
     "compatibleQuestionTypes": [

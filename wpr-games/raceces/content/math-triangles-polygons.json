@@ -830,10 +830,10 @@
     "subtopic": "Triangle centers and segments",
     "term": "Perpendicular bisector in a triangle",
     "definition": "A line perpendicular to a side through its midpoint; a point on it is equidistant from that side's endpoints.",
-    "example": "The perpendicular bisectors meet at the circumcenter.",
+    "example": "For segment AB, any point P on its perpendicular bisector is equidistant from A and B: PA=PB.",
     "correctAnswer": "A line perpendicular to a side through its midpoint; a point on it is equidistant from that side's endpoints.",
-    "supportingEvidence": "The perpendicular bisectors meet at the circumcenter.",
-    "explanation": "The example illustrates perpendicular bisector in a triangle because its stated features match the definition.",
+    "supportingEvidence": "For segment AB, any point P on its perpendicular bisector is equidistant from A and B: PA=PB.",
+    "explanation": "The point lies on the perpendicular bisector, so its distances to the segment endpoints are equal.",
     "compatibleQuestionTypes": [
       "define",
       "compare",

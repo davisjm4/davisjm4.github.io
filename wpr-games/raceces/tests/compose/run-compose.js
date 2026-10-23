@@ -106,7 +106,7 @@ T.suite('all 23 topics x 3 difficulties: topic-specific session capacity', () =>
     const pool = idx.compose.entries.filter(e => e.topicId === tid && e.level === level);
     const authored = bundle.models.filter(m => m.topicId === tid && m.level === level);
     let worst = { exact: 0, config: 0, consecStruct: 0, review: 0 }, minStructs = Infinity;
-    const sessionSize = tid.startsWith('math-') ? 6 : 20;
+    const sessionSize = 20;
     for (let seed = 0; seed < 5; seed++) {
       const g = new G.Generator(bundle, 'topic|' + tid + '|' + level + '|' + seed, { compose: lib });
       const ex = new Set(), cfg = new Set(), structs = new Set(); let exact = 0, config = 0, consec = 0, review = 0, prevStruct = null;
@@ -126,7 +126,7 @@ T.suite('all 23 topics x 3 difficulties: topic-specific session capacity', () =>
     T.eq(worst.config, 0, tid + '/' + level + ': no underlying configuration repeats in 20');
     T.eq(worst.consecStruct, 0, tid + '/' + level + ': no reasoning structure twice in a row');
     T.eq(worst.review, 0, tid + '/' + level + ': each distinct model is new before the topic enters review');
-    const required = tid.startsWith('math-') ? 6 : 20;
+    const required = 20;
     T.ok(pool.length + authored.length >= required, tid + '/' + level + ': expected minimum distinct problem capacity');
     const structures = new Set(pool.map(e => e.structure)).size;
     T.ok(tid.startsWith('math-') ? structures === 0 : structures >= 7, tid + '/' + level + ': available reasoning structures match the topic library');
@@ -137,7 +137,7 @@ T.suite('all 23 topics x 3 difficulties: topic-specific session capacity', () =>
 
 T.suite('extended sessions (14, 20, 50, 100, 500) on single topics and All Topics', () => {
   const lengths = [14, 20, 50, 100, 500], res = [];
-  const scopes = [{ name: 'All topics', sel: {} }, { name: 'Desert cacti', sel: { subject: 'Plants and animals', topics: ['cactus'] } }, { name: 'Binary numbers', sel: { subject: 'Computer technology', topics: ['binary-numbers'] } }, { name: 'Mars rovers', sel: { subject: 'Space exploration', topics: ['mars-rovers'] } }];
+  const scopes = [{ name: 'All topics', sel: {} }, { name: 'Mathematics all topics', sel: { subject: 'Mathematics' } }, { name: 'Mathematics: Algebra', sel: { subject: 'Mathematics', topics: ['math-algebraic-expressions'] } }, { name: 'Desert cacti', sel: { subject: 'Plants and animals', topics: ['cactus'] } }, { name: 'Binary numbers', sel: { subject: 'Computer technology', topics: ['binary-numbers'] } }, { name: 'Mars rovers', sel: { subject: 'Space exploration', topics: ['mars-rovers'] } }];
   scopes.forEach(sc => ['all', 'beginner', 'advanced'].forEach(level => {
     for (let seed = 0; seed < 3; seed++) {
       const g = new G.Generator(bundle, 'ext|' + sc.name + '|' + level + '|' + seed, { compose: lib });

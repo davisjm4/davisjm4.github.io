@@ -1,178 +1,169 @@
 {
-  "ranAt": "2026-10-23T02:18:22.342Z",
+  "ranAt": "2026-10-23T03:17:49.917Z",
   "topics": [
     {
       "topicId": "math-algebraic-expressions",
       "records": 50,
       "uniqueTerms": 50,
-      "models": 18,
+      "models": 60,
       "modelsByDifficulty": {
-        "beginner": 6,
-        "intermediate": 6,
-        "advanced": 6
+        "beginner": 20,
+        "intermediate": 20,
+        "advanced": 20
       },
-      "uniqueFamilies": 18,
+      "uniqueFamilies": 7,
       "questionTypes": [
         "define",
         "compare",
-        "verify",
-        "apply"
+        "verify"
       ],
       "seedSampledExcerptVariants": 60,
-      "recordIdsUsedAsEvidence": 36
+      "recordIdsUsedAsEvidence": 50
     },
     {
       "topicId": "math-coordinate-transformations",
       "records": 51,
       "uniqueTerms": 51,
-      "models": 18,
+      "models": 60,
       "modelsByDifficulty": {
-        "beginner": 6,
-        "intermediate": 6,
-        "advanced": 6
+        "beginner": 20,
+        "intermediate": 20,
+        "advanced": 20
       },
-      "uniqueFamilies": 18,
+      "uniqueFamilies": 7,
       "questionTypes": [
         "define",
         "compare",
-        "verify",
-        "apply"
+        "verify"
       ],
       "seedSampledExcerptVariants": 60,
-      "recordIdsUsedAsEvidence": 36
+      "recordIdsUsedAsEvidence": 51
     },
     {
       "topicId": "math-equations-inequalities",
       "records": 51,
       "uniqueTerms": 51,
-      "models": 18,
+      "models": 60,
       "modelsByDifficulty": {
-        "beginner": 6,
-        "intermediate": 6,
-        "advanced": 6
+        "beginner": 20,
+        "intermediate": 20,
+        "advanced": 20
       },
-      "uniqueFamilies": 18,
+      "uniqueFamilies": 7,
       "questionTypes": [
         "define",
         "compare",
-        "verify",
-        "apply"
+        "verify"
       ],
       "seedSampledExcerptVariants": 60,
-      "recordIdsUsedAsEvidence": 36
+      "recordIdsUsedAsEvidence": 51
     },
     {
       "topicId": "math-functions",
       "records": 51,
       "uniqueTerms": 51,
-      "models": 18,
+      "models": 60,
       "modelsByDifficulty": {
-        "beginner": 6,
-        "intermediate": 6,
-        "advanced": 6
+        "beginner": 20,
+        "intermediate": 20,
+        "advanced": 20
       },
-      "uniqueFamilies": 18,
+      "uniqueFamilies": 7,
       "questionTypes": [
         "define",
         "compare",
-        "verify",
-        "apply"
+        "verify"
       ],
       "seedSampledExcerptVariants": 59,
-      "recordIdsUsedAsEvidence": 36
+      "recordIdsUsedAsEvidence": 51
     },
     {
       "topicId": "math-geometry",
       "records": 51,
       "uniqueTerms": 51,
-      "models": 18,
+      "models": 60,
       "modelsByDifficulty": {
-        "beginner": 6,
-        "intermediate": 6,
-        "advanced": 6
+        "beginner": 20,
+        "intermediate": 20,
+        "advanced": 20
       },
-      "uniqueFamilies": 18,
+      "uniqueFamilies": 7,
       "questionTypes": [
         "define",
         "compare",
-        "verify",
-        "apply"
+        "verify"
       ],
       "seedSampledExcerptVariants": 59,
-      "recordIdsUsedAsEvidence": 36
+      "recordIdsUsedAsEvidence": 51
     },
     {
       "topicId": "math-measurement",
       "records": 51,
       "uniqueTerms": 51,
-      "models": 18,
+      "models": 60,
       "modelsByDifficulty": {
-        "beginner": 6,
-        "intermediate": 6,
-        "advanced": 6
+        "beginner": 20,
+        "intermediate": 20,
+        "advanced": 20
       },
-      "uniqueFamilies": 18,
+      "uniqueFamilies": 7,
       "questionTypes": [
         "define",
         "compare",
-        "verify",
-        "apply"
+        "verify"
       ],
       "seedSampledExcerptVariants": 60,
-      "recordIdsUsedAsEvidence": 36
+      "recordIdsUsedAsEvidence": 51
     },
     {
       "topicId": "math-statistics-probability",
       "records": 51,
       "uniqueTerms": 51,
-      "models": 18,
+      "models": 60,
       "modelsByDifficulty": {
-        "beginner": 6,
-        "intermediate": 6,
-        "advanced": 6
+        "beginner": 20,
+        "intermediate": 20,
+        "advanced": 20
       },
-      "uniqueFamilies": 18,
+      "uniqueFamilies": 7,
       "questionTypes": [
         "define",
         "compare",
-        "verify",
-        "apply"
+        "verify"
       ],
       "seedSampledExcerptVariants": 59,
-      "recordIdsUsedAsEvidence": 36
+      "recordIdsUsedAsEvidence": 51
     },
     {
       "topicId": "math-triangles-polygons",
       "records": 51,
       "uniqueTerms": 51,
-      "models": 18,
+      "models": 60,
       "modelsByDifficulty": {
-        "beginner": 6,
-        "intermediate": 6,
-        "advanced": 6
+        "beginner": 20,
+        "intermediate": 20,
+        "advanced": 20
       },
-      "uniqueFamilies": 18,
+      "uniqueFamilies": 7,
       "questionTypes": [
         "define",
         "compare",
-        "verify",
-        "apply"
+        "verify"
       ],
       "seedSampledExcerptVariants": 60,
-      "recordIdsUsedAsEvidence": 36
+      "recordIdsUsedAsEvidence": 51
     }
   ],
   "totals": {
     "topics": 8,
     "authoredRecords": 407,
     "distinctTermDefinitionConcepts": 407,
-    "topicModels": 144,
-    "reasoningFamilies": 18,
+    "topicModels": 480,
+    "reasoningFamilies": 7,
     "questionTypeCounts": {
-      "define": 48,
-      "compare": 48,
-      "verify": 24,
-      "apply": 24
+      "define": 160,
+      "compare": 160,
+      "verify": 160
     },
     "duplicateTermDefinitionRecords": 0
   }

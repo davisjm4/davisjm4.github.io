@@ -29,7 +29,7 @@ function runEngineTests() {
     T.eq(bundle.topics.reduce((n, t) => n + t.facts.length, 0), 542, 'existing sourced facts and the 407-record math library expand the passage pool');
     T.ok(bundle.topics.filter(t => !t.id.startsWith('math-')).every(t => t.facts.some(f => f.id === 'f9' && /^https:\/\//.test(f.sourceUrl || ''))), 'each existing topic retains its attributable supplementary fact');
     Struct.LEVELS.forEach(l => T.ok(bundle.models.filter(m => m.level === l).length >= 30, 'at least 30 models at ' + l));
-    bundle.topics.forEach(t => Struct.LEVELS.forEach(l => T.eq(bundle.models.filter(m => m.topicId === t.id && m.level === l).length, t.id.startsWith('math-') ? 6 : 2, t.id + ' has the expected authored pool at ' + l)));
+    bundle.topics.forEach(t => Struct.LEVELS.forEach(l => T.eq(bundle.models.filter(m => m.topicId === t.id && m.level === l).length, t.id.startsWith('math-') ? 20 : 2, t.id + ' has the expected authored pool at ' + l)));
     bundle.models.forEach(m => {
       const t = idx.topicsById[m.topicId];
       m.ev.forEach(fid => T.ok(t.factsById[fid], m.id + ' evidence fact exists'));

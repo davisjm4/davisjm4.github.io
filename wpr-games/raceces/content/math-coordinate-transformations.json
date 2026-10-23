@@ -304,9 +304,9 @@
     "topicId": "math-coordinate-transformations",
     "subtopic": "Distance, midpoint, and slope",
     "term": "Slope formula",
-    "definition": "The slope through two points is (y₂-y₁)/(x₂-x₁), when x₂ differs from x₁.",
+    "definition": "When x₂ differs from x₁, the slope through two points is (y₂-y₁)/(x₂-x₁).",
     "example": "Between (1,2) and (4,8), slope is 2.",
-    "correctAnswer": "The slope through two points is (y₂-y₁)/(x₂-x₁), when x₂ differs from x₁.",
+    "correctAnswer": "When x₂ differs from x₁, the slope through two points is (y₂-y₁)/(x₂-x₁).",
     "supportingEvidence": "Between (1,2) and (4,8), slope is 2.",
     "explanation": "The example illustrates slope formula because its stated features match the definition.",
     "compatibleQuestionTypes": [

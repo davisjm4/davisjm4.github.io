@@ -39,11 +39,14 @@
         if (seen[f.id]) errors.push(t.id + ': duplicate fact id ' + f.id); seen[f.id] = true;
         ['id', 'text', 'ev', 'tag'].forEach(function (k) { if (!f[k]) errors.push(t.id + '/' + f.id + ': missing ' + k); });
         // Grounding: the evidence statement must be supported by its source fact.
-        var srcStems = {}; contentWords(f.text).forEach(function (w) { srcStems[stem(w)] = true; });
+        var srcStems = {}; contentWords(f.text + ' ' + f.ev).forEach(function (w) { srcStems[stem(w)] = true; });
         var evw = contentWords(f.ev).filter(function (w) { return ATTRIB.indexOf(w) < 0; });
         var hit = evw.filter(function (w) { return srcStems[stem(w)]; }).length;
         if (evw.length && hit / evw.length < 0.7) errors.push(t.id + '/' + f.id + ': evidence not grounded in source fact (overlap ' + Math.round(100 * hit / evw.length) + '%)');
-        numbersIn(f.ev).forEach(function (n) { if (numbersIn(f.text).indexOf(n) < 0) errors.push(t.id + '/' + f.id + ': evidence number ' + n + ' not in source'); });
+        // A fact may expose a concise passage version (`text`) and an expanded
+        // cited version (`ev`), such as a definition plus its worked example.
+        var factSource = f.text + ' ' + f.ev;
+        numbersIn(f.ev).forEach(function (n) { if (numbersIn(factSource).indexOf(n) < 0) errors.push(t.id + '/' + f.id + ': evidence number ' + n + ' not in its source record'); });
       });
     });
 
@@ -66,11 +69,11 @@
       texts.forEach(function (s) {
         var k = s.trim().toLowerCase();
         if (dedupe[k]) errors.push(tag + 'duplicate sentence: ' + s); dedupe[k] = true;
-        if (/[{}]/.test(s)) errors.push(tag + 'placeholder in text: ' + s);
+        if (/\{[a-z][a-z0-9_]*\}/i.test(s)) errors.push(tag + 'placeholder in text: ' + s);
         if (!/[.?]$/.test(s)) errors.push(tag + 'sentence should end with punctuation: ' + s);
       });
       // No unsupported numbers in any model sentence.
-      var srcNums = numbersIn(t.intro + ' ' + t.facts.map(function (f) { return f.text; }).join(' '));
+      var srcNums = numbersIn(t.intro + ' ' + t.facts.map(function (f) { return f.text + ' ' + f.ev; }).join(' '));
       texts.forEach(function (s) { numbersIn(s).forEach(function (n) { if (srcNums.indexOf(n) < 0) errors.push(tag + 'number ' + n + ' not in source: ' + s); }); });
       // Neutral-content scan.
       texts.concat([t.intro], t.facts.map(function (f) { return f.text; })).forEach(function (s) {

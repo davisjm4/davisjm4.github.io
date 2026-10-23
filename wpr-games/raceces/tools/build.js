@@ -25,44 +25,63 @@ for (const f of files) {
 // reasoning models per topic and sends them through the same response builder and graders.
 const mathFiles = fs.readdirSync(path.join(root, 'content')).filter(f => /^math-[a-z0-9-]+\.json$/.test(f)).sort();
 const mathTitles = {
-  'math-algebraic-expressions': ['Algebraic Expressions and Vocabulary', 'Algebra uses symbols to describe quantities, relationships, and operations. Definitions and worked examples make those relationships precise and support clear written mathematical reasoning.'],
-  'math-equations-inequalities': ['Equations, Inequalities, and Solving', 'Solving means finding values that make a statement true while preserving its solution set. Definitions and worked examples make those relationships precise and support clear written mathematical reasoning.'],
-  'math-functions': ['Functions, Graphs, and Linear Relationships', 'Functions connect inputs to outputs, and representations reveal how those quantities are related. Definitions and worked examples make those relationships precise and support clear written mathematical reasoning.'],
-  'math-geometry': ['Geometry Fundamentals, Angles, and Lines', 'Geometry describes figures, their measurements, and the relationships that can be justified from definitions and theorems. Definitions and worked examples make those relationships precise and support clear written mathematical reasoning.'],
-  'math-triangles-polygons': ['Triangles, Polygons, and Similarity', 'Polygon properties and triangle relationships support precise geometric arguments. Definitions and worked examples make those relationships precise and support clear written mathematical reasoning.'],
-  'math-measurement': ['Area, Perimeter, Surface Area, and Volume', 'Measurement uses formulas and units to describe lengths, boundaries, surfaces, and three-dimensional space. Definitions and worked examples make those relationships precise and support clear written mathematical reasoning.'],
-  'math-coordinate-transformations': ['Coordinate Geometry and Transformations', 'Coordinates and transformation rules connect algebraic representations to geometric movement and shape. Definitions and worked examples make those relationships precise and support clear written mathematical reasoning.'],
-  'math-statistics-probability': ['Statistics, Probability, and Data Interpretation', 'Statistics summarizes data, while probability describes uncertainty using a mathematical model. Definitions and worked examples make those relationships precise and support clear written mathematical reasoning.']
+  'math-algebraic-expressions': ['Algebraic Expressions and Vocabulary', 'Algebra uses symbols to express quantities and relationships.'],
+  'math-equations-inequalities': ['Equations, Inequalities, and Solving', 'Solving preserves the values that make equations and inequalities true.'],
+  'math-functions': ['Functions, Graphs, and Linear Relationships', 'Functions assign outputs to inputs and have multiple representations.'],
+  'math-geometry': ['Geometry Fundamentals, Angles, and Lines', 'Geometry studies figures, measurements, and relationships justified by definitions and theorems.'],
+  'math-triangles-polygons': ['Triangles, Polygons, and Similarity', 'Polygon properties and triangle relationships support geometric arguments.'],
+  'math-measurement': ['Area, Perimeter, Surface Area, and Volume', 'Measurement uses formulas and units for lengths, areas, and solids.'],
+  'math-coordinate-transformations': ['Coordinate Geometry and Transformations', 'Coordinates connect algebraic rules to geometric locations and movement.'],
+  'math-statistics-probability': ['Statistics, Probability, and Data Interpretation', 'Statistics summarizes data; probability models uncertain outcomes.']
 };
-// Eighteen bounded model slots per topic: six direct-definition applications,
-// six comparison/interpretation tasks, and six advanced validity/condition tasks.
-// The subject-specific records determine the actual mathematical content.
-const mathModels = [
+// Bounded concept-pair assignments: 20 per topic and difficulty. These reuse
+// a small set of explicit reasoning families but pair them with distinct audited
+// concepts and worked examples. A model assignment is not a new reasoning family.
+const mathModelTemplates = [
   {family:'definition', type:'define', level:'beginner', q:(a,b)=>`What do ${a.term.toLowerCase()} and ${b.term.toLowerCase()} mean?`},
-  {family:'definition-in-context', type:'define', level:'beginner', q:(a,b)=>`What does each definition say about ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
-  {family:'interpretation', type:'define', level:'beginner', q:(a,b)=>`What two mathematical ideas are described by ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
-  {family:'classification', type:'define', level:'beginner', q:(a,b)=>`How can the definitions distinguish ${a.term.toLowerCase()} from ${b.term.toLowerCase()}?`},
-  {family:'evidence-link', type:'define', level:'beginner', q:(a,b)=>`What evidence supports the meanings of ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
-  {family:'vocabulary-in-context', type:'define', level:'beginner', q:(a,b)=>`What does each mathematical term ${a.term.toLowerCase()} and ${b.term.toLowerCase()} describe?`},
-  {family:'comparison', type:'compare', level:'intermediate', q:(a,b)=>`How are ${a.term.toLowerCase()} and ${b.term.toLowerCase()} different, based on their definitions?`},
-  {family:'representation', type:'compare', level:'intermediate', q:(a,b)=>`What does each written definition reveal about ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
-  {family:'true-claim', type:'compare', level:'intermediate', q:(a,b)=>`Which conclusion about ${a.term.toLowerCase()} and ${b.term.toLowerCase()} follows from their definitions?`},
-  {family:'misconception-check', type:'compare', level:'intermediate', q:(a,b)=>`Why should ${a.term.toLowerCase()} and ${b.term.toLowerCase()} not be treated as interchangeable?`},
-  {family:'reasoning-step', type:'compare', level:'intermediate', q:(a,b)=>`How do the definitions help a student distinguish ${a.term.toLowerCase()} from ${b.term.toLowerCase()}?`},
-  {family:'relevance', type:'compare', level:'intermediate', q:(a,b)=>`Which parts of the definitions are relevant to explaining ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
-  {family:'conditions', type:'verify', level:'advanced', q:(a,b)=>`What conditions in the definitions matter when applying ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
-  {family:'validity', type:'verify', level:'advanced', q:(a,b)=>`How can each definition be checked for its required features when reasoning about ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
-  {family:'counterexample', type:'verify', level:'advanced', q:(a,b)=>`What does the difference between ${a.term.toLowerCase()} and ${b.term.toLowerCase()} reveal about confusing their meanings?`},
-  {family:'application', type:'apply', level:'advanced', q:(a,b)=>`How would knowing the meanings of ${a.term.toLowerCase()} and ${b.term.toLowerCase()} help interpret a new case?`},
-  {family:'evidence-evaluation', type:'apply', level:'advanced', q:(a,b)=>`Why are the supplied definitions relevant evidence for explaining ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
-  {family:'synthesis', type:'apply', level:'advanced', q:(a,b)=>`What broader conclusion about precise mathematical reasoning follows from ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`}
+  {family:'definition', type:'define', level:'beginner', q:(a,b)=>`What defining features does the passage give for ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
+  {family:'definition', type:'define', level:'beginner', q:(a,b)=>`What does each term ${a.term.toLowerCase()} and ${b.term.toLowerCase()} name?`},
+  {family:'example-interpretation', type:'define', level:'beginner', q:(a,b)=>`What does the example for ${a.term.toLowerCase()} show, and what does the example for ${b.term.toLowerCase()} show?`},
+  {family:'example-interpretation', type:'define', level:'beginner', q:(a,b)=>`How do the two worked examples illustrate ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
+  {family:'example-interpretation', type:'define', level:'beginner', q:(a,b)=>`Which mathematical idea does each example demonstrate: ${a.term.toLowerCase()} or ${b.term.toLowerCase()}?`},
+  {family:'comparison', type:'compare', level:'intermediate', q:(a,b)=>`How do the defined meanings of ${a.term.toLowerCase()} and ${b.term.toLowerCase()} differ?`},
+  {family:'comparison', type:'compare', level:'intermediate', q:(a,b)=>`What distinct role does each term, ${a.term.toLowerCase()} and ${b.term.toLowerCase()}, describe?`},
+  {family:'comparison', type:'compare', level:'intermediate', q:(a,b)=>`Which defining features distinguish ${a.term.toLowerCase()} from ${b.term.toLowerCase()}?`},
+  {family:'misconception-analysis', type:'compare', level:'intermediate', q:(a,b)=>`What mistake would a student make by treating ${a.term.toLowerCase()} and ${b.term.toLowerCase()} as interchangeable?`},
+  {family:'misconception-analysis', type:'compare', level:'intermediate', q:(a,b)=>`What distinction would be lost if ${a.term.toLowerCase()} and ${b.term.toLowerCase()} meant the same thing?`},
+  {family:'misconception-analysis', type:'compare', level:'intermediate', q:(a,b)=>`Which misconception about ${a.term.toLowerCase()} and ${b.term.toLowerCase()} do their definitions correct?`},
+  {family:'criteria', type:'verify', level:'advanced', q:(a,b)=>`Which defining criteria identify ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
+  {family:'criteria', type:'verify', level:'advanced', q:(a,b)=>`What defining criteria would you check to decide whether a case is ${a.term.toLowerCase()} or ${b.term.toLowerCase()}?`},
+  {family:'example-verification', type:'verify', level:'advanced', q:(a,b)=>`Do the examples meet the definitions of ${a.term.toLowerCase()} and ${b.term.toLowerCase()}? What conditions support each?`},
+  {family:'example-verification', type:'verify', level:'advanced', q:(a,b)=>`How can each worked example be checked against the defining conditions of ${a.term.toLowerCase()} and ${b.term.toLowerCase()}?`},
+  {family:'evidence-limits', type:'verify', level:'advanced', q:(a,b)=>`What do the two examples establish about ${a.term.toLowerCase()} and ${b.term.toLowerCase()}, and what would require more than these examples?`},
+  {family:'evidence-limits', type:'verify', level:'advanced', q:(a,b)=>`How do the examples illustrate ${a.term.toLowerCase()} and ${b.term.toLowerCase()} without proving every possible case?`}
 ];
+const mathModels = [];
+for (const level of ['beginner','intermediate','advanced']) {
+  const familyPlan = level === 'beginner' ? ['definition','example-interpretation']
+    : level === 'intermediate' ? ['comparison','misconception-analysis']
+      : ['criteria','example-verification','evidence-limits'];
+  const variants = Object.fromEntries(familyPlan.map(f => [f, mathModelTemplates.filter(m => m.family === f)]));
+  const used = Object.fromEntries(familyPlan.map(f => [f, 0]));
+  for (let slot = 0; slot < 20; slot++) {
+    const family = familyPlan[slot % familyPlan.length];
+    const options = variants[family];
+    const template = options[used[family] % options.length];
+    mathModels.push(Object.assign({}, template, { level }));
+    used[family]++;
+  }
+}
 const sentence = s => s.trim().replace(/[.;,:]+$/, '');
 const lowerFirst = s => s.length ? s[0].toLowerCase() + s.slice(1) : s;
 const definitionStatement = r => {
   const definition = sentence(r.definition);
   if (/^(if|when)\b/i.test(definition)) return `The ${r.term.toLowerCase()} states that ${lowerFirst(definition)}.`;
   return `${r.term} means ${lowerFirst(definition)}.`;
+};
+const definitionEvidence = r => {
+  const example = r.example.trim().replace(/[.;]+$/, '');
+  return definitionStatement(r).replace(/[.]$/, '') + '; for example, ' + lowerFirst(example) + '.';
 };
 for (const file of mathFiles) {
   const id = file.slice(0, -5), meta = mathTitles[id];
@@ -76,24 +95,44 @@ for (const file of mathFiles) {
     if (terms.has(normalized)) throw new Error(`${file}: duplicate concept ${r.term}`);
     terms.add(normalized);
     const full = definitionStatement(r);
-    return { id:r.id, text:full, ev:full, tag:r.term.toLowerCase() };
+    return { id:r.id, text:full, ev:definitionEvidence(r), tag:r.term.toLowerCase() };
   });
-  const topic = { id, subject:'Mathematics', title:meta[0], intro:`${meta[1]} Accurate evidence and explanations show why these mathematical ideas apply.`, facts, source:file };
+  const topic = { id, subject:'Mathematics', title:meta[0], intro:meta[1], facts, source:file };
   topics.push(topic);
   for (let i = 0; i < mathModels.length; i++) {
     const ai = (i * 2) % records.length, bi = (i * 2 + 1) % records.length, oi = (i * 2 + 2) % records.length;
     const a = records[ai], b = records[bi], off = records[oi], model = mathModels[i];
     const idModel = `${id}-model-${String(i+1).padStart(2,'0')}`;
     if (!a.compatibleQuestionTypes.includes(model.type) || !b.compatibleQuestionTypes.includes(model.type)) throw new Error(`${idModel}: incompatible question type ${model.type}`);
+    const aMeaning = lowerFirst(sentence(a.definition));
+    const bMeaning = lowerFirst(sentence(b.definition));
+    const answer = model.family === 'example-interpretation'
+      ? `The first example illustrates ${a.term.toLowerCase()}, while the second illustrates ${b.term.toLowerCase()}.`
+      : model.family === 'misconception-analysis'
+        ? `They are not interchangeable: ${a.term.toLowerCase()} means ${aMeaning}, whereas ${b.term.toLowerCase()} means ${bMeaning}.`
+        : model.family === 'example-verification'
+          ? `Both examples fit their definitions: ${a.term.toLowerCase()} involves ${aMeaning}, and ${b.term.toLowerCase()} involves ${bMeaning}.`
+          : model.family === 'evidence-limits'
+            ? `Each example illustrates one case: ${a.term.toLowerCase()} involves ${aMeaning}, and ${b.term.toLowerCase()} involves ${bMeaning}. The definitions state the general criteria; these examples alone do not prove every case.`
+            : `${a.term} means ${aMeaning}; by contrast, ${b.term.toLowerCase()} means ${bMeaning}.`;
+    const sum = model.family === 'example-interpretation'
+      ? `The first example illustrates ${a.term.toLowerCase()}, and the second illustrates ${b.term.toLowerCase()}.`
+      : model.family === 'misconception-analysis'
+        ? `The terms are distinct: ${a.term.toLowerCase()} means ${aMeaning}, while ${b.term.toLowerCase()} means ${bMeaning}.`
+        : model.family === 'example-verification'
+          ? `Together, the examples satisfy two different defining criteria.`
+          : model.family === 'evidence-limits'
+            ? `The examples illustrate individual cases; the definitions describe the broader rules.`
+            : `The examples distinguish the terms: ${a.term.toLowerCase()} means ${aMeaning}, whereas ${b.term.toLowerCase()} means ${bMeaning}.`;
     models.push({ id:idModel, topicId:id, family:model.family, level:model.level,
       questionType:model.type, compatibleQuestionTypes:[model.type],
-      q:model.q(a,b), restate:`The response explains what ${a.term.toLowerCase()} and ${b.term.toLowerCase()} mean and how their definitions support those meanings.`,
-      answer:`${definitionStatement(a)} ${definitionStatement(b)}`,
+      q:model.q(a,b), restate:`The response distinguishes ${a.term.toLowerCase()} from ${b.term.toLowerCase()} using their definitions and worked examples.`,
+      answer,
       ev:[a.id,b.id],
-      exp:[`This evidence names the defining idea of ${a.term.toLowerCase()}, which is exactly what the answer describes.`,
-        `This second definition supports the distinct meaning of ${b.term.toLowerCase()} and adds a separate reason.`],
-      sum:`Together, the definitions show why precise mathematical meanings help students explain their reasoning.`,
-      sumNew:`Together, the definitions show why precise mathematical meanings help students explain their reasoning. The reading also defines ${off.term.toLowerCase()}.`,
+      exp:[`The example “${a.example.trim().replace(/[.;]+$/, '')}” fits ${a.term.toLowerCase()} because it shows this defining feature: ${lowerFirst(sentence(a.definition))}.`,
+        `The separate example “${b.example.trim().replace(/[.;]+$/, '')}” fits ${b.term.toLowerCase()} because it shows this defining feature: ${lowerFirst(sentence(b.definition))}.`],
+      sum,
+      sumNew:`${sum.slice(0, -1)}. The passage also defines ${off.term.toLowerCase()}.`,
       rep:[`This repeats the source detail about ${a.term.toLowerCase()} without explaining its connection.`,`This repeats the source detail about ${b.term.toLowerCase()} without explaining its connection.`],
       bad:`${a.term} and ${b.term} always have exactly the same meaning in every mathematical situation.`,
       badRestate:`The reading also defines ${off.term.toLowerCase()}.`, off:off.id,

@@ -1,34 +1,34 @@
 {
   "generatedBy": "tests/run-all.js",
-  "totalChecks": 222197,
+  "totalChecks": 524795,
   "failedChecks": 0,
   "suites": [
     {
       "name": "content",
-      "checks": 779,
+      "checks": 1787,
       "failed": 0,
-      "ms": 72,
+      "ms": 182,
       "sampleFailures": []
     },
     {
       "name": "determinism",
-      "checks": 706,
+      "checks": 1714,
       "failed": 0,
-      "ms": 63,
+      "ms": 215,
       "sampleFailures": []
     },
     {
       "name": "source grounding",
-      "checks": 8190,
+      "checks": 19950,
       "failed": 0,
-      "ms": 14,
+      "ms": 70,
       "sampleFailures": []
     },
     {
       "name": "rearrange grader (exhaustive)",
-      "checks": 235,
+      "checks": 571,
       "failed": 0,
-      "ms": 3381,
+      "ms": 8408,
       "sampleFailures": []
     },
     {
@@ -40,44 +40,44 @@
     },
     {
       "name": "identify rules",
-      "checks": 6786,
+      "checks": 16530,
       "failed": 0,
-      "ms": 79,
+      "ms": 274,
       "sampleFailures": []
     },
     {
       "name": "missing piece rules",
-      "checks": 39322,
+      "checks": 95770,
       "failed": 0,
-      "ms": 119,
+      "ms": 438,
       "sampleFailures": []
     },
     {
       "name": "rotation and repetition control",
       "checks": 925,
       "failed": 0,
-      "ms": 101,
+      "ms": 307,
       "sampleFailures": []
     },
     {
       "name": "level filters",
       "checks": 491,
       "failed": 0,
-      "ms": 40,
+      "ms": 80,
       "sampleFailures": []
     },
     {
       "name": "session tracking",
       "checks": 23,
       "failed": 0,
-      "ms": 488,
+      "ms": 472,
       "sampleFailures": []
     },
     {
       "name": "static safety checks",
       "checks": 98,
       "failed": 0,
-      "ms": 4,
+      "ms": 7,
       "sampleFailures": []
     },
     {
@@ -89,25 +89,25 @@
     },
     {
       "name": "mathematics library records, model compatibility, and numerical fixtures",
-      "checks": 4516,
+      "checks": 7064,
       "failed": 0,
-      "ms": 7,
+      "ms": 11,
       "sampleFailures": []
     },
     {
       "name": "generation sweep (all modes, difficulties, targets)",
-      "checks": 160021,
+      "checks": 379767,
       "failed": 0,
-      "ms": 1104,
+      "ms": 2629,
       "sampleFailures": []
     },
     {
       "name": "procedural diversity quality gates (1,000 per mode/difficulty)",
       "checks": 54,
       "failed": 0,
-      "ms": 977,
+      "ms": 1986,
       "sampleFailures": []
     }
   ],
-  "ranAt": "2026-10-23T02:18:29.040Z"
+  "ranAt": "2026-10-23T03:16:49.837Z"
 }

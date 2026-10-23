@@ -34,22 +34,17 @@ The build adapter maps each record into a source fact with that stable record ID
 
 ## Model and compatibility design
 
-Each topic has 18 fixed, bounded model records: six Beginner, six Intermediate, and six Advanced. The models draw from four compatible question types:
+Each topic has 60 bounded concept-pair assignments: 20 Beginner, 20 Intermediate, and 20 Advanced. Beginner uses definition retrieval and example interpretation; Intermediate uses comparison and misconception analysis; Advanced uses criteria reasoning, example verification, and evidence-limit reasoning. This adds a third Advanced family to improve consecutive-session variety. Twenty different concept pairs per level provide one full no-repeat session, but stems within a family are not counted as distinct reasoning tasks. The earlier claim of 18 reasoning families per topic overstated diversity.
 
-- **Define:** establish precise meanings.
-- **Compare:** distinguish related terms using their definitions.
-- **Verify:** check whether defining conditions are met.
-- **Apply:** use precise meanings to interpret a new case.
-
-The 18 models per topic use different concept pairs and reasoning families. The authored mathematical examples remain in the concept library; the response challenge cites concise definitions in its source passage. Existing RACECES code adds passage-fact, response-target, mode, and ordering variation. It does not invent arbitrary numeric substitutions.
+For math challenges, each cited source fact pairs a definition with its authored example. Explanations connect the worked example to the defining condition. Excerpt context is trimmed or expanded to stay within the established difficulty word band. Mode, target role, and sentence ordering continue to vary through the existing RACECES generator.
 
 The three response modes use the same shared response builder and graders as the existing subjects. Topic and difficulty filters and teacher-shareable links use the existing settings pipeline.
 
 ## Difficulty
 
 - **Beginner:** direct meanings and identifying what a definition describes.
-- **Intermediate:** compare related definitions and explain relevant distinctions.
-- **Advanced:** verify defining conditions, apply terms to a new case, or synthesize why precision matters.
+- **Intermediate:** compare related definitions and state the distinction between them.
+- **Advanced:** use the definition and worked example to identify criteria and check how a concept applies.
 
 ## Mathematical validation
 

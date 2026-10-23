@@ -31,22 +31,35 @@
     var topic = index.topicsById[m.topicId];
     var facts = topic.factsById;
     var need = [m.ev[0], m.ev[1], m.off];
+    var evidenceIds = [m.ev[0], m.ev[1]];
     var total = m.factCount || FACT_COUNT[m.level] || 6;
     var fillers = rng.shuffle(topic.facts.map(function (f) { return f.id; }).filter(function (id) { return need.indexOf(id) < 0; }));
-    var ids = need.concat(fillers.slice(0, Math.max(0, total - need.length)));
-    // Select facts with the seed, but retain the topic author's source order so a generated
-    // excerpt does not read like an arbitrarily shuffled list of facts.
-    ids = topic.facts.map(function (f) { return f.id; }).filter(function (id) { return ids.indexOf(id) >= 0; });
-    var excerptFacts = ids.map(function (id) { return { id: id, text: facts[id].text }; });
-    var excerpt = topic.intro + ' ' + excerptFacts.map(function (f) { return f.text; }).join(' ');
-    // Some compact source sets need one more sentence to meet the established Advanced
-    // passage floor. Add an on-topic fact only when needed, preserving concise variation elsewhere.
-    if (m.level === 'advanced' && excerpt.trim().split(/\s+/).length < 110 && fillers.length > ids.length - need.length) {
-      ids.push(fillers[ids.length - need.length]);
-      ids = topic.facts.map(function (f) { return f.id; }).filter(function (id) { return ids.indexOf(id) >= 0; });
-      excerptFacts = ids.map(function (id) { return { id: id, text: facts[id].text }; });
-      excerpt = topic.intro + ' ' + excerptFacts.map(function (f) { return f.text; }).join(' ');
+    var selected = need.concat(fillers.slice(0, Math.max(0, total - need.length)));
+    function ordered(list) {
+      return topic.facts.map(function (f) { return f.id; }).filter(function (id) { return list.indexOf(id) >= 0; });
     }
+    function passage(list) {
+      var rows = ordered(list).map(function (id) {
+        var item = facts[id];
+        return { id: id, text: topic.subject === 'Mathematics' && evidenceIds.indexOf(id) >= 0 && item.ev ? item.ev : item.text };
+      });
+      return { rows: rows, excerpt: topic.intro + ' ' + rows.map(function (f) { return f.text; }).join(' ') };
+    }
+    // Worked examples expand the two cited mathematics facts. Adjust only optional
+    // context facts to keep each passage inside the established difficulty band.
+    var limits = { beginner: [70, 130], intermediate: [90, 170], advanced: [110, 195] };
+    var limit = limits[m.level] || [70, 195];
+    function wordCount(text) { return (text.toLowerCase().match(/[a-z0-9]+/g) || []).length; }
+    var assembled = passage(selected);
+    while (wordCount(assembled.excerpt) > limit[1] && selected.length > need.length) {
+      selected.pop(); assembled = passage(selected);
+    }
+    while (wordCount(assembled.excerpt) < limit[0] && selected.length < need.length + fillers.length) {
+      selected.push(fillers[selected.length - need.length]); assembled = passage(selected);
+    }
+    var ids = ordered(selected);
+    var excerptFacts = assembled.rows;
+    var excerpt = assembled.excerpt;
 
     function sent(slot, text, extra) {
       var o = { uid: modelId + '#' + slot, id: slot, slot: slot, role: Structure.roleOfSlot(slot), pair: Structure.pairOfSlot(slot), text: text };
@@ -57,9 +70,9 @@
     var sentences = {
       R: sent('R', m.restate, {}),
       A: sent('A', m.answer, {}),
-      C1: sent('C1', f1.ev, { factId: f1.id, tag: f1.tag, source: f1.text }),
+      C1: sent('C1', f1.ev, { factId: f1.id, tag: f1.tag, source: topic.subject === 'Mathematics' && f1.ev ? f1.ev : f1.text }),
       E1: sent('E1', m.exp[0], { explains: 'C1', tag: f1.tag }),
-      C2: sent('C2', f2.ev, { factId: f2.id, tag: f2.tag, source: f2.text }),
+      C2: sent('C2', f2.ev, { factId: f2.id, tag: f2.tag, source: topic.subject === 'Mathematics' && f2.ev ? f2.ev : f2.text }),
       E2: sent('E2', m.exp[1], { explains: 'C2', tag: f2.tag }),
       S: sent('S', m.sum, {})
     };
