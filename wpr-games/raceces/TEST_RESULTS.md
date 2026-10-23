@@ -57,9 +57,11 @@ Unit/sweep run: 2026-10-23T02:06:38.080Z. Browser run: not run — Chromium exec
 
 **Browser suite not run:** Playwright Chromium is not installed or could not be downloaded in this environment.
 
+**Separate live-page smoke test:** Connected Chrome opened the published game on desktop and verified the mathematics subject and all eight topics, a two-topic filter, Advanced difficulty, Identify the Parts, Rearrange the Response, Choose the Missing Piece, Mixed Practice, right and wrong feedback, Next Challenge, Session Summary, and a Biology regression. This manual check does not replace the unrun Playwright suite; Chromebook and mobile viewports were not verified.
+
 ## What was NOT tested
 
-- No real browser session was available; responsive behavior, touch interaction, and keyboard operation beyond automated source checks remain unverified.
+- Automated browser tests did not run because the local Chromium executable was unavailable. The manual production check was desktop-only; Chromebook and mobile viewports, touch behavior, and full keyboard interaction remain unverified.
 - No educator review has been completed.
 
 ## Screenshots
