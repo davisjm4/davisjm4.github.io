@@ -59,6 +59,11 @@ const mathModels = [
 ];
 const sentence = s => s.trim().replace(/[.;,:]+$/, '');
 const lowerFirst = s => s.length ? s[0].toLowerCase() + s.slice(1) : s;
+const definitionStatement = r => {
+  const definition = sentence(r.definition);
+  if (/^(if|when)\b/i.test(definition)) return `The ${r.term.toLowerCase()} states that ${lowerFirst(definition)}.`;
+  return `${r.term} means ${lowerFirst(definition)}.`;
+};
 for (const file of mathFiles) {
   const id = file.slice(0, -5), meta = mathTitles[id];
   if (!meta) throw new Error(`${file}: missing topic metadata`);
@@ -70,7 +75,7 @@ for (const file of mathFiles) {
     const normalized = r.term.toLowerCase().replace(/[^a-z0-9=+-]/g, '');
     if (terms.has(normalized)) throw new Error(`${file}: duplicate concept ${r.term}`);
     terms.add(normalized);
-    const full = `${r.term} means ${lowerFirst(sentence(r.definition))}.`;
+    const full = definitionStatement(r);
     return { id:r.id, text:full, ev:full, tag:r.term.toLowerCase() };
   });
   const topic = { id, subject:'Mathematics', title:meta[0], intro:`${meta[1]} Accurate evidence and explanations show why these mathematical ideas apply.`, facts, source:file };
@@ -83,7 +88,7 @@ for (const file of mathFiles) {
     models.push({ id:idModel, topicId:id, family:model.family, level:model.level,
       questionType:model.type, compatibleQuestionTypes:[model.type],
       q:model.q(a,b), restate:`The response explains what ${a.term.toLowerCase()} and ${b.term.toLowerCase()} mean and how their definitions support those meanings.`,
-      answer:`${a.term} means ${lowerFirst(sentence(a.definition))}. ${b.term} means ${lowerFirst(sentence(b.definition))}.`,
+      answer:`${definitionStatement(a)} ${definitionStatement(b)}`,
       ev:[a.id,b.id],
       exp:[`This evidence names the defining idea of ${a.term.toLowerCase()}, which is exactly what the answer describes.`,
         `This second definition supports the distinct meaning of ${b.term.toLowerCase()} and adds a separate reason.`],

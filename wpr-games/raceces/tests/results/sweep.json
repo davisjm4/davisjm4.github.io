@@ -84,12 +84,12 @@
     "size": 19671
   },
   "optionSets": {
-    "size": 4859
+    "size": 4860
   },
   "orders": {
     "size": 3504
   },
-  "missingCorrectLongest": 2378,
+  "missingCorrectLongest": 2379,
   "missingTotal": 13586,
   "missingPos": {
     "o2": 3372,
@@ -100,7 +100,7 @@
   "missingByRole": {
     "R": {
       "n": 1942,
-      "longest": 332
+      "longest": 330
     },
     "A": {
       "n": 1939,
@@ -108,7 +108,7 @@
     },
     "C": {
       "n": 3881,
-      "longest": 257
+      "longest": 260
     },
     "E": {
       "n": 3882,

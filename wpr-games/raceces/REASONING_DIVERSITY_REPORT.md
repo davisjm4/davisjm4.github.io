@@ -117,7 +117,7 @@ The build sweep deliberately visits every target, so Cite Evidence and Explain E
 |---|---|
 | Distinct Identify/Missing/Rearrange prompts | 1942 |
 | Distinct source excerpts (seeded source-fact subsets; authored fact order preserved) | 19671 |
-| Distinct four-option sets in Choose the Missing Piece | 4859 |
+| Distinct four-option sets in Choose the Missing Piece | 4860 |
 | Distinct starting orders in Rearrange the Response | 3504 |
 | Distinct semantic signatures reached | 3978 of 3978 |
 | Challenges that repeat a signature already in the sample (expected: several seeds per signature) | 28116 |
@@ -176,11 +176,11 @@ Quality gates require 30 available models per difficulty, 20 distinct models bef
 | Distractor type | Meaning | Times used in test sample |
 |---|---|---|
 | repeat | Repeats the evidence without explaining it | 2808 |
-| offExp | Explains a different detail from the source | 4545 |
-| offFact | A real source detail that does not support this claim | 5773 |
-| unsupported | A claim the source does not support | 7026 |
-| summaryLike | A summary that adds new information (wrong role or new facts) | 7392 |
-| wrongFocus | A restatement of a different focus than the question | 1940 |
+| offExp | Explains a different detail from the source | 4547 |
+| offFact | A real source detail that does not support this claim | 5771 |
+| unsupported | A claim the source does not support | 7022 |
+| summaryLike | A summary that adds new information (wrong role or new facts) | 7395 |
+| wrongFocus | A restatement of a different focus than the question | 1941 |
 
 ## Answer-position and length bias (Choose the Missing Piece, 13586 challenges)
 
@@ -191,9 +191,9 @@ The correct option is the longest of the four in **17.5%** of challenges (25% wo
 | Missing role | Challenges | Correct option is longest |
 |---|---|---|
 | Answer (A) | 1939 | 68.5% |
-| Cite Evidence (C) | 3881 | 6.6% |
+| Cite Evidence (C) | 3881 | 6.7% |
 | Explain Evidence (E) | 3882 | 11.4% |
-| Restate (R) | 1942 | 17.1% |
+| Restate (R) | 1942 | 17.0% |
 | Summarize (S) | 1942 | 0.9% |
 
 Before length-balancing steering the correct option was the longest in 7.3% of challenges (a "pick the shorter one" shortcut). Steering lifted that to the figure above. Restate and Summary roles still show a bias; this is a known limitation (see CONTENT_COVERAGE.md).
