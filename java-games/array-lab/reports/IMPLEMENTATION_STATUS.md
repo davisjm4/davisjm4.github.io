@@ -1,61 +1,62 @@
-# Array Lab implementation checkpoint — not ready for publication
+# Array Lab implementation and validation report
 
-The assignment is incomplete. The new generator has not been pushed to main or published. The latest minimum-difficulty gate rejects four Beginner pools, and the required 720-sample instructional review is not complete.
+The compositional engine is implemented and its automated checks pass. Production publication and actual browser verification are pending in this commit. Independent human instructional sign-off remains outstanding; the 720-sample review is explicitly assistant review.
 
-## Implemented in the work branch
+## Implementation
 
-* Controlled Java syntax-tree interpreter and renderer; reference aliasing, parameter copying/reassignment, returned references, ragged rows, loops, conditions, and 32-bit integer arithmetic. No dynamic source evaluation.
-* Structural fingerprints normalize literal data and names and remove dynamically irrelevant statements. Early termination and meaningful boundary roles are retained. A separate persisted 50-key history spans modes, levels, reloads, and days.
-* Diversity-aware bounded scheduling, runtime candidate checks, independent JVM harness, coverage/stress scripts, and a reproducible sample gallery.
-* Selection-only updates and swaps, final-state reveal, hidden family labels, difficulty options in all modes, saved preferences, teacher-link parameters, keyboard controls, ragged-grid alignment, and teacher-export adaptations for all twelve modes.
-* Legacy generation API and its fixtures remain available for regression testing.
+All twelve practice modes now use difficulty-aware compositional generation in student practice and teacher exports. Each challenge carries its reasoning model, structural variant, reproducible seed and structured difficulty evidence. Beginner foundations have dedicated recipes; Intermediate requires dependent reasoning; Advanced requires interacting states or algorithm stages. Full classification rules and examples are in [the engine documentation](../compose/README.md).
 
-## Current automatic gate results
+Selection-only updates and swaps keep array contents stable until submission. The final state and indices appear after answering. Ordinary choices have no A/B/C/D prefix. Keyboard selection/submission, responsive grids, teacher links, QTI, saved preferences and the existing shared daily/per-mode scoring remain supported. Mixed Practice respects the selected difficulty and attributes each result to its underlying mode.
 
-These are automatically eligible syntax/dataflow keys, not independently human-certified reasoning models. A numeric capacity pass cannot establish instructional validity. Each cell below is model owners with at least six keys / total eligible keys.
+The persisted semantic cooldown spans all modes, Mixed, difficulty changes, reloads and days. Shared/equivalent structures have one key. Values, names, array lengths, model/difficulty labels and branch outcomes cannot manufacture a new key. Generation does not silently repeat or lower difficulty when a pool is exhausted.
 
-| Mode | Beginner models / keys | Intermediate models / keys | Advanced models / keys | Review |
+## Mode/difficulty coverage
+
+Each cell is distinct instructional model sets / unique certified structures. Every registered model has at least six eligible structures; every cell has at least ten distinct model sets and sixty unique structures. Counts are unions, not double-counted model ownerships. Beginner first-match and missing-target share one scan structure set; twelve registered Search models represent eleven distinct sets at that level. The detailed per-model counts are in [difficulty-gate-results.json](difficulty-gate-results.json).
+
+| Practice mode | Beginner models / variants | Intermediate models / variants | Advanced models / variants | Difficulty audit |
 |---|---:|---:|---:|---|
-| element | 0 / 7 | 10 / 240 | 10 / 336 | FAIL: Beginner capacity |
-| predict-update | 10 / 186 | 10 / 196 | 10 / 210 | Provisional automatic pass; instructional review incomplete |
-| perform-update | 0 / 6 | 10 / 240 | 10 / 336 | FAIL: Beginner capacity |
-| search | 12 / 624 | 10 / 588 | 10 / 588 | Provisional automatic pass; instructional review incomplete |
-| traversal | 10 / 402 | 11 / 449 | 11 / 449 | Provisional automatic pass; instructional review incomplete |
-| access-2d | 0 / 5 | 10 / 110 | 10 / 132 | FAIL: Beginner capacity |
-| update-2d | 1 / 10 | 11 / 133 | 11 / 123 | FAIL: Beginner capacity |
-| nested | 10 / 282 | 10 / 289 | 10 / 266 | Provisional automatic pass; instructional review incomplete |
-| reverse | 10 / 98 | 10 / 78 | 10 / 83 | Provisional automatic pass; instructional review incomplete |
-| create-references | 11 / 139 | 11 / 152 | 11 / 168 | Provisional automatic pass; instructional review incomplete |
-| in-place | 11 / 66 | 11 / 127 | 11 / 132 | Provisional automatic pass; instructional review incomplete |
-| trace-2d | 10 / 330 | 10 / 328 | 10 / 314 | Provisional automatic pass; instructional review incomplete |
+| Select an Array Element | 10 / 81 | 10 / 222 | 10 / 222 | Assistant pass; human pending |
+| Predict an Array Update | 10 / 60 | 10 / 216 | 10 / 234 | Assistant pass; human pending |
+| Perform an Array Update | 10 / 90 | 10 / 222 | 10 / 222 | Assistant pass; human pending |
+| Trace an Array Search | 11 / 66 | 12 / 720 | 12 / 589 | Assistant pass; human pending |
+| Trace an Array Traversal | 11 / 62 | 11 / 474 | 11 / 414 | Assistant pass; human pending |
+| Access a 2D Array | 10 / 90 | 10 / 247 | 10 / 253 | Assistant pass; human pending |
+| Update a 2D Array | 11 / 100 | 11 / 193 | 11 / 205 | Assistant pass; human pending |
+| Nested Loops and 2D Traversal | 10 / 60 | 10 / 282 | 10 / 268 | Assistant pass; human pending |
+| Choose the Java Statement | 10 / 60 | 10 / 67 | 10 / 74 | Assistant pass; human pending |
+| Create Arrays & Trace References | 11 / 85 | 11 / 247 | 11 / 280 | Assistant pass; human pending |
+| In-Place Array Algorithms | 11 / 308 | 11 / 76 | 11 / 131 | Assistant pass; human pending |
+| Trace 2D Array Algorithms | 10 / 60 | 10 / 306 | 10 / 266 | Assistant pass; human pending |
 
-## Instructional findings and remaining work
+All twelve modes were modified through the shared engine/UI. No other game's generator or scoring utility was replaced. Teacher adapter changes are limited to Array Lab's newly supported modes/difficulties and cache versions. Recent main was checked before integration; unrelated generators remain intact.
 
-Twenty Beginner element-selection samples were individually inspected. Eighteen were provisionally judged too complex for Beginner. Two had algebraic shortcuts or cancelling transformations that made their apparent complexity misleading. All twenty were rejected for redesign. These judgments are assistant inspection, not an independent human review. Seven hundred required samples remain unreviewed. No count of “720 reviewed” is claimed.
+## Instructional validation
 
-The stricter gate now leaves only 7 eligible element structures, 6 perform-update structures, 5 2D-access structures, and 10 2D-update structures at Beginner. Those pools need genuinely foundational replacements; lowering the gate or relabeling models would violate the assignment.
+The initial documented twenty-sample assistant review rejected eighteen Beginner difficulty assignments and two algebraic/shortcut defects. All twenty were replaced through model redesign. Later source/sample inspection repaired constant reference-equality answers, cancelling carry logic, output wrappers masking an irrelevant algorithm, decisive first-comparison shortcuts, unused Advanced writes, untouched Beginner observations, unhelpful replacement-array options, ragged-row preservation and excessive 2D evaluation workload. A question-count estimate for all initial model-wide defects is not asserted.
 
-Fingerprint analysis still needs symbolic minimum-path checks for cancelling arithmetic. The earlier zero-repeat key tests do not prove that all keys represent distinct reasoning experiences. The two reviewed shortcut examples demonstrate this limitation.
+The final [720-sample review](instructional-review.html) contains twenty samples per mode and difficulty. Every record includes code, choices, answer, seed, concept, minimum path and an explicit hash-bound assistant assessment. All 720 were inspected through generator source and per-sample goals, answers and concrete dependency paths, including repaired replacement samples. Zero unresolved classifications were identified in those samples. This is **assistant source/dataflow review, not an independent human audit**. It does not establish empirical classroom difficulty or prove the absence of every possible shortcut. The user's separate human-review acceptance requirement remains pending. Complete machine-readable evidence is in [instructional-review-720.json.gz](instructional-review-720.json.gz).
 
-Additional work: finish the 720-sample review; verify difficulty across all modes; ensure every original specialized topic remains reachable in ordinary student practice; complete final regression, browser, mobile and production checks; update the project tracker after there is a publishable result.
+The historical twenty-sample rejection record, development gallery and diagnostic JVM report are retained as historical evidence. They are not the current acceptance results.
 
-## Verification status
+## Automated results
 
-* Earlier development stress: 360,000 per-cell questions, 20,000 Mixed, and 10,000 switching questions completed with no repeated stored key inside 50. These results predate the current stricter gate and are not current acceptance proof.
-* Earlier expanded JVM run: 8,753 programs compiled, 8,753 outputs and 8,742 array/reference states compared, 11 intentional bounds exceptions, zero mismatches. The current diagnostic run compiled 8,222 admitted programs, compared 8,222 outputs and 8,212 array/reference states, verified 10 intentional bounds exceptions, and found zero mismatches. Its source digest is in jvm-diagnostic-results.json. This does not certify the missing Beginner pools.
-* Legacy Array Lab redesign tests passed: 3,480 generated challenges, 17,486 assertions, 52 compiled snippets. Legacy advanced fixtures remain intact.
-* New DOM suite passed before the strict gate: all 12 modes × 3 levels, selection-only updates/swaps, submission locks, links, session persistence and daily reset. It cannot currently pass against the underfilled Beginner pools.
-* The broad repository run also reached an unrelated existing RACECES adapter assertion: 23 authored topic IDs versus an expected 15. Those RACECES files were not changed in this work.
-* Actual browser verification is incomplete. The connected browser could not reach the workspace development server (connection refused). No production deployment of this branch has occurred.
+* 390,000 stress challenges passed: 10,000 in each of 36 mode/difficulty cells, 20,000 Mixed and 10,000 switching/reload cases. Zero rolling-50 violations. All registered models were exercised. Mixed covered all 36 cells.
+* 8,491 Java programs compiled and their outputs matched the independent JVM. 8,459 complete array/reference states matched. Thirty-two intentional runtime exceptions and two intentional uninitialized-local compile failures were verified. All 720 instructional samples were included. Zero mismatches.
+* Difficulty adversarial tests passed, including 4,534 cross-seed structure pairs, the rubric's alias/reassignment examples, irrelevant-code and array-length invariance, neutral/cancelling arithmetic, short-circuit evaluation, row identity, error dependencies, Boolean-result shortcuts and reproducibility.
+* DOM interaction/session tests passed for all twelve modes × three levels, target-only updates/swaps, submission locks, selected-mode/Mixed statistics, teacher parameters, 1–4/Enter/arrows, prefix-free choices and unavailable storage. Controlled local-midnight tests pass in UTC and America/Los_Angeles: same-day reload persists; overnight submissions expire; focus detects expiration; preferences and independent repetition history survive.
+* Existing Array Lab fixtures passed: 3,480 redesign samples / 17,486 assertions / 52 compiled snippets, plus 9,000 advanced legacy samples and their JVM fixtures. Explicit legacy APIs remain for these fixtures; student practice uses the compositional engine.
+* Shared session tests and QTI formatting/integrity checks passed. Teacher adapter regression passed 852 validated samples across 136 source/mode/difficulty combinations and a fifty-item unique export.
+* The broad repository suite previously passed its affected Array, Boolean, Range Explorer, session and teacher checks, then stopped at an unchanged RACECES adapter assertion: 23 authored topics versus the fixture's expected 15. The final broad rerun reached this same unchanged RACECES failure after all affected checks passed. Remaining unrelated recursion/JVM, ArrayList, String and Search/Sort suites passed separately during this work. The unrelated RACECES fixture was not weakened.
 
-## Reproduction
+Current runtime SHA-256: `fe5c7085c1a7dc315be091ea125ac17334d300791aa629177148bb489f03839b`. Smoke, stress, coverage, JVM and completed review records all carry this same digest. Detailed counts and distributions are in the JSON reports beside this document.
 
-```sh
-cd java-games
-npm install --ignore-scripts --no-package-lock
-npm run test:array-compose
-npm run test:array-compose-stress
-node array-lab/compose/jvm-tests.mjs --diagnostic
-```
+## Browser/publication status
 
-The first two acceptance commands are expected to fail at the current Beginner capacity gate. Diagnostic JVM success would establish Java execution agreement for admitted candidates, not completion of instructional validation. The compressed gallery is a development snapshot used to document the findings; it is not a reviewed or certified question bank.
+The cloud browser opened the existing production game to establish its current baseline. It cannot reach the workspace's local development server; actual updated desktop/mobile workflows will be verified after publication. The responsive verification page provides 390, 768 and 1120 px game frames for browser checks. Controlled-clock day transitions are automated DOM tests, not an actual overnight browser wait.
+
+Draft integration PR: https://github.com/davisjm4/davisjm4.github.io/pull/12 . No production success is claimed in this pre-publication report. Commit/deployment and actual browser results will be recorded after the update is live.
+
+## Remaining limitations
+
+Independent human instructional review is still required for literal completion of that acceptance item. Classification is deterministic and aggressively checked, but not a general formal Java dataflow prover. Large deterministic samples and JVM agreement do not prove every possible generated program. The unrelated RACECES adapter fixture mismatch remains outside this assignment. No student records are transmitted or committed.

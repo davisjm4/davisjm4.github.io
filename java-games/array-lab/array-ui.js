@@ -4,7 +4,7 @@ import {
   assessArray,
   solutionArray,
   createArrayHistory,
-} from "./array-engine.js?v=array-modes-v2";
+} from "./array-engine.js?v=array-composition-20261023";
 import {
   sessionTracker,
   addSessionNavigation,
@@ -19,12 +19,13 @@ export function startArrayLab() {
   const $ = (id) => document.getElementById(id);
   const tracker = sessionTracker();
   const preferenceKey='javaArray.preferences.v1';
-  let preferences={};try{preferences=JSON.parse(globalThis.localStorage?.getItem(preferenceKey)||'{}');}catch{}
+  let preferenceStorage;try{preferenceStorage=globalThis.localStorage;}catch{}
+  let preferences={};try{preferences=JSON.parse(preferenceStorage?.getItem(preferenceKey)||'{}');}catch{}
   const params=typeof URLSearchParams==='function'?new URLSearchParams(window.location?.search||''):null;
   let challengeNumber=0;
   let question, instanceId, selectedAnswer = null, selectedCell = null;
-  let selectedCells = [], workingState = [], closed = false;
-  const recent = createArrayHistory();
+  let selectedCells = [], workingState = [], closed = false, expiredNotice = false;
+  const recent = createArrayHistory(preferenceStorage||null);
 
   $("main").innerHTML = `
     <div class="eyebrow">Java · Arrays · Traversal · 2D Arrays</div>
@@ -53,9 +54,16 @@ export function startArrayLab() {
   const requestedDifficulty=params?.get('difficulty')||preferences.difficulty;
   if(requestedMode==='mixed'||Object.hasOwn(formatNames,requestedMode))$("mode").value=requestedMode;
   const level=['Beginner','Intermediate','Advanced'].find(d=>d.toLowerCase()===String(requestedDifficulty).toLowerCase());if(level)$("difficulty").value=level;
-  const savePreferences=()=>{try{globalThis.localStorage?.setItem(preferenceKey,JSON.stringify({mode:$("mode").value,difficulty:$("difficulty").value}));}catch{}};
-  const active = () => !closed && tracker.status(instanceId) === "active";
+  const savePreferences=()=>{try{preferenceStorage?.setItem(preferenceKey,JSON.stringify({mode:$("mode").value,difficulty:$("difficulty").value}));}catch{}};
+  const active = () => {if(closed)return false;if(tracker.status(instanceId)==='active')return true;expireChallenge();return false;};
   const stats = () => { $("stats").textContent = roundSummary("array-lab", $("mode").value); };
+  function expireChallenge(){
+    if(expiredNotice)return;expiredNotice=true;closed=true;
+    for(const control of $("stage").querySelectorAll('button,select,input'))control.disabled=true;
+    $("next").disabled=false;$("feedback").hidden=false;$("feedback").className='feedback';
+    $("feedback").textContent='This challenge belongs to a previous session. Select New Challenge to practice in the current session.';stats();
+  }
+  const checkSession=()=>{if(instanceId&&tracker.status(instanceId)==='expired')expireChallenge();stats();};
 
   function renderOneDimensional() {
     const values = question.kind === "apply" || question.kind === "swap"
@@ -210,6 +218,7 @@ export function startArrayLab() {
     selectedCells = [];
     workingState = question.values ? [...question.values] : [];
     closed = false;
+    expiredNotice = false;
     $("feedback").hidden = true;
     $("stage").innerHTML = `
       <div class="challenge-meta">${esc(question.formatName)} · ${esc(question.difficulty || "All levels")}</div>
@@ -256,8 +265,18 @@ export function startArrayLab() {
   $("mode").onchange = () => {savePreferences();next();};
   $("difficulty").onchange = () => {savePreferences();next();};
   $("new").onclick = next;
-  window.addEventListener('keydown',event=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;if(event.key==='Enter'&&!$("submit").disabled){event.preventDefault();$("submit").click();return;}const controls=[...$("stage").querySelectorAll(question.kind==='choice'?'[data-answer]':'[data-cell]')];if(/^[1-4]$/.test(event.key)&&question.kind==='choice'){controls[Number(event.key)-1]?.click();return;}if(['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(event.key)&&controls.length){event.preventDefault();const current=controls.indexOf(document.activeElement),direction=['ArrowRight','ArrowDown'].includes(event.key)?1:-1;controls[(current+direction+controls.length)%controls.length].focus();}});
+  window.addEventListener('keydown',event=>{
+    const focused=document.activeElement;
+    if(['INPUT','SELECT','TEXTAREA'].includes(focused?.tagName))return;
+    const answerFocus=focused?.matches?.('[data-answer],[data-cell]');
+    if(event.key==='Enter'&&!$("submit").disabled&&(!focused||focused.tagName==='BODY'||focused===$("submit")||answerFocus&&focused.getAttribute('aria-pressed')==='true')){event.preventDefault();$("submit").click();return;}
+    const controls=[...$("stage").querySelectorAll(question.kind==='choice'?'[data-answer]':'[data-cell]')];
+    if(/^[1-4]$/.test(event.key)&&question.kind==='choice'){const button=controls[Number(event.key)-1];button?.click();button?.focus();return;}
+    if(['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(event.key)&&controls.length){event.preventDefault();const current=controls.indexOf(focused),direction=['ArrowRight','ArrowDown'].includes(event.key)?1:-1;controls[current<0?(direction>0?0:controls.length-1):(current+direction+controls.length)%controls.length].focus();}
+  });
   window.addEventListener("pagehide", () => { if (instanceId) tracker.skip(instanceId); });
+  window.addEventListener('focus',checkSession);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='hidden')checkSession();});
   next();
 }
 

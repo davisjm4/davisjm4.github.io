@@ -1,4 +1,4 @@
-import { sources, sourceById, generateAssessmentItem } from "./adapters.js?v=20261022-workplace2";
+import { sources, sourceById, generateAssessmentItem } from "./adapters.js?v=array-composition-20261023";
 import { racecesCatalog } from "./raceces-adapter.js?v=20261021-raceces1";
 import { workplaceCatalog } from "./workplace-adapter.js?v=20261022-workplace1";
 import { distributePairs } from "./quiz-distribution.js?v=20261022-workplace1";

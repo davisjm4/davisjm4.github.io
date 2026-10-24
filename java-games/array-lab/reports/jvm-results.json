@@ -1,8 +1,11 @@
 {
-  "compiled": 8753,
-  "outputsCompared": 8753,
-  "statesCompared": 8742,
-  "exceptionsVerified": 11,
-  "mismatches": 0,
-  "status": "historical development run before the stricter Beginner gate and latest data-distribution changes; not current acceptance evidence"
+  "diagnostic": false,
+  "sourceDigest": "fe5c7085c1a7dc315be091ea125ac17334d300791aa629177148bb489f03839b",
+  "galleryCompared": 720,
+  "compiled": 8491,
+  "expectedCompilationErrors": 2,
+  "outputsCompared": 8491,
+  "statesCompared": 8459,
+  "exceptionsVerified": 32,
+  "mismatches": 0
 }
