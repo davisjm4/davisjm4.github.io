@@ -34,7 +34,17 @@ The cloud browser disables WebGL. The same Three.js mesh rig therefore rendered 
 
 Target: https://davisjm4.github.io/csp-games/algorithm-dance-lab/
 
-Production verification will be recorded after GitHub Pages deployment; a successful commit alone does not establish a working deployment.
+Implementation commit: [8a2be5dcbcb867997761e062a829f591856535c9](https://github.com/davisjm4/davisjm4.github.io/commit/8a2be5dcbcb867997761e062a829f591856535c9). The remote Git tree was verified identical to the tested local tree (f894032efa7e481d987c7d4064e55747b925adda).
+
+- Pages deployment [40136591449](https://github.com/davisjm4/davisjm4.github.io/actions/runs/40136591449): success.
+- Algorithm Dance Lab CI [40136592508](https://github.com/davisjm4/davisjm4.github.io/actions/runs/40136592508): success.
+- Existing Create Task and RGB CI workflows (40136592360 and 40136592380): success.
+- Published application independently opened in Chrome. Local Three.js asset and the original 3D robot loaded; target playback, lesson Check Algorithm, and student execution worked.
+- Imported a complete parameterized routine through the Studio UI, saved it, cleared the workspace, reloaded it, and played it continuously through the final 50/50 turn. The runtime reported routine completion without manual advancement. This used the actual imported AST and calls.
+- Both live CSP index and consolidated CS Games launch routes verified. Published 390px responsive frame verified (375px content/scroll width, no horizontal overflow).
+- Browser console errors observed were extension metadata errors; no application errors were observed. WebGL remains disabled in the cloud browser, so native GPU rendering and physical-device performance remain unverified. Software playback was functional but had low animation cadence in this cloud environment.
+
+Tracker G-119 was updated and read back in Master Inventory A57:L57, with status **Published — verified integration**, classroom review pending. Release History A10:G10 records the release, commit, tests, deployment and verification caveats.
 
 ## Remaining review and expansion
 
