@@ -21,6 +21,7 @@ const $ = (id) => document.getElementById(id),
         })[c],
     );
 export const catalog = [
+  ["rgb-color-builder", "RGB Color Code Builder", "2 · Data", "2.1", "RGB", "Build a target color by toggling RGB bits or changing hexadecimal digits, with live color feedback."],
   ...Object.entries(practiceGames).map(([slug, g]) => [
     slug,
     g.title,

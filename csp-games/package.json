@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests.mjs && node ui-tests.mjs && node trivial-nontrivial/tests.mjs && node trivial-nontrivial/ui-tests.mjs && node concepts-tests.mjs && node concepts-ui-tests.mjs && node concepts-feedback-tests.mjs && node session-tests.mjs && node daily-session-tests.mjs && node session-ui-tests.mjs && node expanded-tests.mjs && node practice-tests.mjs && node practice-ui-tests.mjs && node collection-tests.mjs && node test-case-redesign-tests.mjs && node architect-redesign-tests.mjs && node response-redesign-tests.mjs && node create-task-lab/tests.mjs && node create-task-lab/ui-tests.mjs && node create-task-lab/family-repeat-tests.mjs"
+    "test": "node tests.mjs && node ui-tests.mjs && node trivial-nontrivial/tests.mjs && node trivial-nontrivial/ui-tests.mjs && node concepts-tests.mjs && node concepts-ui-tests.mjs && node concepts-feedback-tests.mjs && node session-tests.mjs && node daily-session-tests.mjs && node session-ui-tests.mjs && node expanded-tests.mjs && node practice-tests.mjs && node practice-ui-tests.mjs && node collection-tests.mjs && node test-case-redesign-tests.mjs && node architect-redesign-tests.mjs && node response-redesign-tests.mjs && node create-task-lab/tests.mjs && node create-task-lab/ui-tests.mjs && node create-task-lab/family-repeat-tests.mjs && node rgb-color-builder/tests.mjs && node rgb-color-builder/ui-tests.mjs"
   },
   "devDependencies": {
     "linkedom": "^0.18.12"

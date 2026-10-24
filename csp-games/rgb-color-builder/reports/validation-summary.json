@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-24",
+  "numericalGeneratorSessionAssertions": 22279,
+  "domAssertions": 415,
+  "fullCspNpmTest": "passed",
+  "schoolTimezoneDailySessionTests": "passed",
+  "consolidatedCatalogTests": "passed",
+  "browser": "Chrome via supported cloud browser",
+  "previewFlows": ["Binary wrong check then exact correction, original first try preserved", "Hex wrong check then accepted #A8A8A8 for #AAAAAA (deltaE00 0.58)", "Reset, New Color, Mixed representation transitions", "Shared Session Summary shows game, Binary, Hex, active time"],
+  "responsiveViewports": [
+    {"iframeWidth":320,"contentWidth":305,"scrollWidth":305,"minBitWidth":55.25,"minBitHeight":46},
+    {"iframeWidth":390,"contentWidth":375,"scrollWidth":375,"minBitWidth":72.75,"minBitHeight":46},
+    {"iframeWidth":768,"contentWidth":753,"scrollWidth":753,"minBitWidth":72.625,"minBitHeight":48},
+    {"iframeWidth":1024,"contentWidth":1009,"scrollWidth":1009,"minBitWidth":104.625,"minBitHeight":48},
+    {"iframeWidth":1280,"contentWidth":1265,"scrollWidth":1265,"minBitWidth":113.5,"minBitHeight":48}
+  ],
+  "limitations": ["Responsive Chrome viewports, not physical mobile/Chromebook devices", "Pointer interaction with touch-sized targets; no touch hardware emulation", "No screen-reader or calibrated-display study", "Tolerance numerically validated; classroom perceptual feedback remains useful"],
+  "publication": "Recorded separately in tracker and final handoff after live verification"
+}

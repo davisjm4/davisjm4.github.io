@@ -1,0 +1,33 @@
+name: RGB Color Code Builder Verification
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'csp-games/rgb-color-builder/**'
+      - 'csp-games/session.js'
+      - 'csp-games/package.json'
+      - 'cs-games/catalog.js'
+      - '.github/workflows/rgb-color-builder-check.yml'
+  pull_request:
+    paths:
+      - 'csp-games/rgb-color-builder/**'
+      - 'csp-games/session.js'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix csp-games
+      - run: npm test --prefix csp-games
+      - run: TZ=America/Los_Angeles node csp-games/daily-session-tests.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rgb-color-builder-review
+          path: csp-games/rgb-color-builder/reports/

@@ -1,0 +1,177 @@
+{
+  "rounds": 20000,
+  "seeds": 20,
+  "exactRepeatsWithin50": 0,
+  "adjacentNearDuplicates": 0,
+  "consecutiveFamilies": 0,
+  "fallbacks": 0,
+  "minAdjacentDistance": 18.0065834149901,
+  "maximumMixedStreak": 2,
+  "distribution": {
+    "red": 2500,
+    "green": 2500,
+    "blue": 2500,
+    "secondary": 2500,
+    "mixed": 2500,
+    "grayscale": 2500,
+    "bright": 2500,
+    "dark": 2500
+  },
+  "modes": {
+    "binary": 9994,
+    "hex": 10006
+  },
+  "poolSizes": {
+    "red": 640,
+    "green": 640,
+    "blue": 640,
+    "secondary": 630,
+    "mixed": 1110,
+    "grayscale": 16,
+    "bright": 210,
+    "dark": 210
+  },
+  "toleranceExamples": [
+    {
+      "target": [
+        255,
+        0,
+        0
+      ],
+      "student": [
+        245,
+        10,
+        10
+      ],
+      "distance": 2.1182250410547283,
+      "accepted": true
+    },
+    {
+      "target": [
+        0,
+        255,
+        0
+      ],
+      "student": [
+        10,
+        245,
+        10
+      ],
+      "distance": 2.1051112800546763,
+      "accepted": true
+    },
+    {
+      "target": [
+        0,
+        0,
+        255
+      ],
+      "student": [
+        10,
+        10,
+        245
+      ],
+      "distance": 1.031095645654066,
+      "accepted": true
+    },
+    {
+      "target": [
+        128,
+        128,
+        128
+      ],
+      "student": [
+        144,
+        144,
+        144
+      ],
+      "distance": 5.726268490543411,
+      "accepted": true
+    },
+    {
+      "target": [
+        128,
+        128,
+        128
+      ],
+      "student": [
+        146,
+        146,
+        146
+      ],
+      "distance": 6.396774333549921,
+      "accepted": false
+    },
+    {
+      "target": [
+        0,
+        0,
+        0
+      ],
+      "student": [
+        255,
+        255,
+        255
+      ],
+      "distance": 100.00000386666865,
+      "accepted": false
+    },
+    {
+      "target": [
+        255,
+        0,
+        0
+      ],
+      "student": [
+        0,
+        255,
+        0
+      ],
+      "distance": 86.60823745353731,
+      "accepted": false
+    },
+    {
+      "target": [
+        0,
+        0,
+        255
+      ],
+      "student": [
+        255,
+        0,
+        0
+      ],
+      "distance": 52.88136803127369,
+      "accepted": false
+    },
+    {
+      "target": [
+        34,
+        34,
+        34
+      ],
+      "student": [
+        85,
+        85,
+        85
+      ],
+      "distance": 16.680862721519052,
+      "accepted": false
+    },
+    {
+      "target": [
+        255,
+        255,
+        0
+      ],
+      "student": [
+        255,
+        0,
+        255
+      ],
+      "distance": 92.80852476105393,
+      "accepted": false
+    }
+  ],
+  "checks": 22279
+}
