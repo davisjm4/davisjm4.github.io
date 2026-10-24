@@ -1,6 +1,6 @@
 # Array Lab implementation and validation report
 
-The compositional engine, optimized catalog and responsive layout are published and verified. All automated generator/difficulty/JVM checks pass. Actual browser verification completed fifty Mixed rounds, all 36 mode/difficulty views, selection-only updates/swaps, keyboard controls, scoped statistics, teacher links, same-day persistence and phone/tablet layout checks. This feedback-only follow-up adds explicit inline calculations and condition results; its targeted production check follows deployment. Independent human instructional sign-off remains outstanding; the 720-sample audit is explicitly assistant review.
+The compositional engine, optimized catalog and responsive layout are published and verified. All automated generator/difficulty/JVM checks pass. Actual browser verification completed fifty Mixed rounds, all 36 mode/difficulty views, selection-only updates/swaps, keyboard controls, scoped statistics, teacher links, same-day persistence and phone/tablet layout checks. The final feedback release adds explicit inline calculations and condition results and passed targeted verification on the published site. Independent human instructional sign-off remains outstanding; the 720-sample audit is explicitly assistant review.
 
 ## Implementation
 
@@ -55,6 +55,8 @@ Current runtime SHA-256: `69ddf1ed8c9123eadc59572b15042abd09954c98e7a94d5360319e
 
 ## Browser/publication status
 
+Current game release: **f95ab988bb3575b3e061f8533550e91e90299885**. [GitHub Pages deployment 40081903158](https://github.com/davisjm4/davisjm4.github.io/actions/runs/40081903158), [Array Lab verification 40081903215](https://github.com/davisjm4/davisjm4.github.io/actions/runs/40081903215), and [trace verification 40081903245](https://github.com/davisjm4/davisjm4.github.io/actions/runs/40081903245) all succeeded. The published `array-feedback-20261024` bundle was opened and its new inline explanation was checked directly: a length-six array evaluates `(values.length + 1) / 2` to index 3, and the feedback correctly states that calculation. [Final feedback screenshot](production-feedback-20261024.jpg).
+
 * Optimized engine: `d77f6a408810357c0b8eb77f5b5a12a02712f123`. Pages run [40068978200](https://github.com/davisjm4/davisjm4.github.io/actions/runs/40068978200), Array Lab verification [40068978734](https://github.com/davisjm4/davisjm4.github.io/actions/runs/40068978734), and trace verification all succeeded.
 * Responsive layout fix: `6d9d94277f00f87b6c8e0f4bdf34a0fb5c095ba4`. Pages run [40080217579](https://github.com/davisjm4/davisjm4.github.io/actions/runs/40080217579), Array Lab and trace verification succeeded. Stacked phone controls removed a measured five-pixel page overflow.
 * Fifty live Intermediate Mixed rounds exercised all twelve modes. Five same-day attempts already existed; the run ended at exactly 13/55 with 55 submissions and 42 reveals. Two additional correctly solved update/swap checks ended at 15/57. No attempt inflation occurred. Recorded Next actions averaged 948 ms, maximum 987 ms in this cloud browser; this is an observation, not a device benchmark.
@@ -66,8 +68,12 @@ Current runtime SHA-256: `69ddf1ed8c9123eadc59572b15042abd09954c98e7a94d5360319e
 
 [Desktop evidence](production-desktop-20261024.jpg) · [Phone-width evidence](production-phone-20261024.jpg) · [Machine-readable browser record](browser-verification.json). All screenshots/results are synthetic QA, not student records. The cloud browser could not reach the local workspace server, so actual interaction verification used the published site. Overnight boundaries use controllable-clock DOM tests in UTC/Pacific; no same-profile overnight wait is claimed.
 
-Integration PR: https://github.com/davisjm4/davisjm4.github.io/pull/12 . Targeted live verification of this final feedback wording is pending publication; its question logic, scoring and structural catalog entries are unchanged.
+Integration PR: https://github.com/davisjm4/davisjm4.github.io/pull/12 . Targeted live verification of the final feedback wording passed. Its question logic, scoring and structural catalog entries are unchanged from the fifty-round optimized-generator workflow.
 
 ## Remaining limitations
 
 Independent human instructional review is still required for literal completion of that acceptance item. Classification is deterministic and aggressively checked, but not a general formal Java dataflow prover. Large deterministic samples and JVM agreement do not prove every possible generated program. The unrelated RACECES adapter fixture mismatch remains outside this assignment. No student records are transmitted or committed.
+
+## Tracker update
+
+Master Project Tracker → Master Inventory, row 20 was updated to “Published — follow-up issue”, recording the release, measured tests and outstanding independent educator review. Connector reads confirmed the content and preservation of the existing game link and priority. Automatic approval review rejected opening the private Google Sheets origin for native visual verification, citing unclear authorization; that browser-only check remains blocked. No alternate visual extraction or browser retry was attempted after the rejection.

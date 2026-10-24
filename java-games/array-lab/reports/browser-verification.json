@@ -24,7 +24,7 @@
   "modeScopeAssertions": "All twelve individual mode numerators/denominators matched recorded answers at Beginner, Intermediate and Advanced; returning to Mixed restored 13/55 without new attempts.",
   "unattemptedMode": {
     "mode": "Trace an Array Traversal",
-    "accuracyText": "— (0/0) · No attempts yet"
+    "accuracyText": "\u2014 (0/0) \u00b7 No attempts yet"
   },
   "interactions": {
     "keyboardNumberSelectionAndEnter": true,
@@ -38,8 +38,18 @@
     "teacherLinkDoesNotOverwriteSavedPreferences": true
   },
   "responsiveChecks": [
-    {"frameWidth": 390, "contentClientWidth": 375, "contentScrollWidth": 375, "horizontalPageOverflow": false},
-    {"frameWidth": 768, "contentClientWidth": 753, "contentScrollWidth": 753, "horizontalPageOverflow": false}
+    {
+      "frameWidth": 390,
+      "contentClientWidth": 375,
+      "contentScrollWidth": 375,
+      "horizontalPageOverflow": false
+    },
+    {
+      "frameWidth": 768,
+      "contentClientWidth": 753,
+      "contentScrollWidth": 753,
+      "horizontalPageOverflow": false
+    }
   ],
   "responsiveNote": "The browser reserves 15 pixels for the frame's vertical scrollbar. Code and arrays may scroll inside their own bounded containers.",
   "summaryCheckInSeparateEphemeralQaProfile": {
@@ -47,18 +57,45 @@
     "attempted": 3,
     "firstTryCorrect": 3,
     "submissions": 3,
-    "answeredModes": ["Select an Array Element", "Predict an Array Update", "Access a 2D Array"],
+    "answeredModes": [
+      "Select an Array Element",
+      "Predict an Array Update",
+      "Access a 2D Array"
+    ],
     "modeTotalsSumToOverall": true,
     "mixedIsNotAnExtraCountedRow": true,
     "printAndResetControlsPresent": true,
     "laterAdvancedTeacherLinkAnswer": "Correct; Mixed subsequently displayed 4/4"
   },
-  "screenshots": ["production-desktop-20261024.jpg", "production-phone-20261024.jpg"],
+  "screenshots": [
+    "production-desktop-20261024.jpg",
+    "production-phone-20261024.jpg",
+    "production-feedback-20261024.jpg"
+  ],
   "limitations": [
     "Responsive checks used actual browser frames, not physical phones or Chromebooks.",
     "Overnight transitions were tested with controllable-clock DOM tests in UTC and America/Los_Angeles, not an actual same-profile overnight browser wait.",
-    "The 50-round run preceded the feedback-only wording follow-up; that follow-up receives targeted live feedback checks.",
+    "The 50-round run preceded the feedback-only wording follow-up; that follow-up passed targeted live feedback checks.",
     "Viewport screenshots were captured; full-page and clipped captures timed out in the browser tool.",
     "Independent human instructional sign-off remains outstanding."
-  ]
+  ],
+  "finalFeedbackCommit": "f95ab988bb3575b3e061f8533550e91e90299885",
+  "finalFeedbackCheck": {
+    "status": "passed in published browser",
+    "expression": "((values.length + 1) / 2)",
+    "arrayLength": 6,
+    "selectedIndex": 3,
+    "value": 6,
+    "feedback": "values.length is 6; ((values.length + 1) / 2) selects index 3",
+    "noEmptyTracePunctuation": true
+  },
+  "gameConsoleErrorsObserved": [],
+  "browserExtensionMetadataMessagesExcluded": true,
+  "tracker": {
+    "sheet": "Master Inventory",
+    "row": 20,
+    "status": "Published \u2014 follow-up issue",
+    "contentVerifiedThroughConnector": true,
+    "nativeVisualCheck": "Blocked by automatic approval review: unclear authorization to open the private Google Sheets origin. No browser retry or alternate visual extraction was attempted."
+  }
 }
