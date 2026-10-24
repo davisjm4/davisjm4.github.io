@@ -1,0 +1,39 @@
+name: Create Task Lab Verification
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'csp-games/create-task-lab/**'
+      - 'csp-games/session.js'
+      - 'csp-games/package.json'
+      - 'csp-games/package-lock.json'
+      - 'cs-games/catalog.js'
+      - '.github/workflows/create-task-lab-check.yml'
+  pull_request:
+    paths:
+      - 'csp-games/create-task-lab/**'
+      - 'csp-games/session.js'
+      - 'cs-games/catalog.js'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare CSP test dependencies
+        run: npm ci --ignore-scripts --prefix csp-games
+      - name: Full CSP regression and instructional validation
+        run: npm test --prefix csp-games
+      - name: Daily reset in school timezone
+        run: TZ=America/Los_Angeles node csp-games/daily-session-tests.mjs
+      - name: Preserve review artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: create-task-lab-review
+          path: csp-games/create-task-lab/reports/

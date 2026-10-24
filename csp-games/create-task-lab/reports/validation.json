@@ -1,0 +1,322 @@
+{
+  "date": "2026-10-24",
+  "families": 131,
+  "counts": {
+    "missing": {
+      "procedures": 10,
+      "parameters": 9,
+      "selection": 10,
+      "iteration": 9,
+      "lists": 10,
+      "io": 9,
+      "behavior": 6
+    },
+    "identify": {
+      "procedures": 13,
+      "parameters": 9,
+      "selection": 10,
+      "iteration": 10,
+      "lists": 10,
+      "io": 12,
+      "behavior": 4
+    }
+  },
+  "corpus": 389,
+  "exactCorpusUnique": 389,
+  "codeStructuralSignatures": 171,
+  "structurallyDistinctFormsPerFamily": "2–3 (4 mutations erase the third caller form)",
+  "scenarios": 20,
+  "scenariosAvailable": 20,
+  "mutations": 63,
+  "selectionKinds": [
+    "identifier",
+    "header",
+    "block",
+    "body",
+    "call",
+    "statement",
+    "expression",
+    "value"
+  ],
+  "sweep": 15720,
+  "sampled": 7200,
+  "executions": 32226,
+  "counterfactuals": 62238,
+  "validControlRate": 0.16666666666666666,
+  "repeatsInLast50": 0,
+  "assertions": 25457,
+  "sampling": [
+    {
+      "mode": "mixed",
+      "topic": "all",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "behavior": 42,
+        "iteration": 44,
+        "procedures": 43,
+        "io": 42,
+        "selection": 43,
+        "parameters": 44,
+        "lists": 42
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "procedures",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "procedures": 300
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "parameters",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "parameters": 300
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "selection",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "selection": 300
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "iteration",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "iteration": 300
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "lists",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "lists": 300
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "io",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "io": 300
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "behavior",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "behavior": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "all",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "behavior": 43,
+        "procedures": 43,
+        "iteration": 43,
+        "io": 43,
+        "selection": 43,
+        "lists": 42,
+        "parameters": 43
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "procedures",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "procedures": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "parameters",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "parameters": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "selection",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "selection": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "iteration",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "iteration": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "lists",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "lists": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "io",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "io": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "behavior",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "behavior": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "all",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "behavior": 43,
+        "iteration": 43,
+        "procedures": 43,
+        "io": 42,
+        "selection": 43,
+        "lists": 43,
+        "parameters": 43
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "procedures",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "procedures": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "parameters",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "parameters": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "selection",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "selection": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "iteration",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "iteration": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "lists",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "lists": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "io",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "io": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "behavior",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "behavior": 300
+      }
+    }
+  ],
+  "limitations": [
+    "Behavioral verification executes the bounded structured model rendered as pseudocode; it does not compile arbitrary external pseudocode.",
+    "Counterfactual probes are finite; they do not establish universal equivalence.",
+    "Original examples focus on specific components, not entire scored submissions.",
+    "No external educator or separate agent has certified the corpus."
+  ]
+}
