@@ -91,6 +91,8 @@
 .compact { margin-top: 0.35rem; }
 
 @media (max-width: 600px) {
+  .toolbar label { flex-direction: column; align-items: stretch; min-width: 0; }
+  .toolbar select { width: 100%; min-width: 0; }
   .array-choice-grid { grid-template-columns: minmax(0, 1fr); }
   .array-cell { min-width: 3rem; min-height: 3rem; }
   .array-grid { grid-template-columns: repeat(var(--columns), 3.25rem); }
