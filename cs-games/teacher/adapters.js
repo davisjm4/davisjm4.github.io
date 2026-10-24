@@ -3,7 +3,7 @@
 import { booleanGame, generate as genBoolean, makeRng as booleanRng, assess as assessBoolean, signature as booleanSignature } from "../../java-games/boolean-conditional-lab/engine.js";
 import { mathGame, structures as mathStructures, generate as genMath, validateQuestion as validateMath, assess as assessMath } from "../../java-games/math-lab/engine.js";
 import { generateChallenge as genLoop, familyNames as loopModes, validateChallenge as validateLoop } from "../../java-games/loop-lab/loop-engine.js";
-import { generateArray, formatNames as arrayModes, solutionArray, assessArray } from "../../java-games/array-lab/array-engine.js?v=array-composition-20261024";
+import { generateArray, formatNames as arrayModes, solutionArray, assessArray } from "../../java-games/array-lab/array-engine.js?v=array-feedback-20261024";
 import { generateRecursion, modeNames as recursionModes, assessRecursion } from "../../java-games/recursion-lab/engine.js";
 import { generate as genSearch, MODE_IDS as searchModeIds, MODES as searchModes, assess as assessSearch, exportQuestion as exportSearch } from "../../java-games/search-sort-lab/engine/generator.js";
 import { generateTraceChallenge, verifyChallengeModel } from "../../java-games/variable-lab/trace-generator/src/index.js";

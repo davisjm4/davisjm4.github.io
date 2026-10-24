@@ -1,6 +1,6 @@
 import {certifiedPools} from './catalog.js?v=array-catalog-20261024';
-import {MODEL_NAMES,LEVELS,buildModel,rng} from './models.js';
-import {validateCandidate} from './quality.js';
+import {MODEL_NAMES,LEVELS,buildModel,rng} from './models.js?v=array-feedback-20261024';
+import {validateCandidate} from './quality.js?v=array-feedback-20261024';
 
 export const HISTORY_KEY='javaArray.semanticHistory.v1';
 export const signatureKey=text=>{let a=2166136261,b=0x9e3779b9;for(let i=0;i<text.length;i++){const c=text.charCodeAt(i);a=Math.imul(a^c,16777619)>>>0;b=Math.imul(b^c,2246822519)>>>0;}return a.toString(16).padStart(8,'0')+b.toString(16).padStart(8,'0');};

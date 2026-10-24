@@ -1,5 +1,5 @@
 {
-  "sourceDigest": "5f09b6d22d1ba284b56e63e7e52a2bf3246d2c4e1aa3b05336b212ec3ac6ffe2",
+  "sourceDigest": "69ddf1ed8c9123eadc59572b15042abd09954c98e7a94d5360319e041e00398f",
   "classification": "Documented structural/minimum-path gates plus assistant source/dataflow assessment; not independent human certification",
   "cells": [
     {

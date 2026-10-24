@@ -1,6 +1,6 @@
 # Array Lab implementation and validation report
 
-The compositional engine is implemented and its automated checks pass. The first release (412fcb9) deployed successfully. Live browser testing found slow first-use pool certification; this follow-up moves certification into a generated catalog while retaining validation of every live candidate. Repeat production verification of the optimized release is pending in this commit. Independent human instructional sign-off remains outstanding; the 720-sample review is explicitly assistant review.
+The compositional engine, optimized catalog and responsive layout are published and verified. All automated generator/difficulty/JVM checks pass. Actual browser verification completed fifty Mixed rounds, all 36 mode/difficulty views, selection-only updates/swaps, keyboard controls, scoped statistics, teacher links, same-day persistence and phone/tablet layout checks. This feedback-only follow-up adds explicit inline calculations and condition results; its targeted production check follows deployment. Independent human instructional sign-off remains outstanding; the 720-sample audit is explicitly assistant review.
 
 ## Implementation
 
@@ -51,15 +51,22 @@ The generated catalog exactly matches independent exhaustive certification of al
 * Shared session tests and QTI formatting/integrity checks passed. Teacher adapter regression passed 852 validated samples across 136 source/mode/difficulty combinations and a fifty-item unique export.
 * The broad repository suite previously passed its affected Array, Boolean, Range Explorer, session and teacher checks, then stopped at an unchanged RACECES adapter assertion: 23 authored topics versus the fixture's expected 15. The final broad rerun reached this same unchanged RACECES failure after all affected checks passed. Remaining unrelated recursion/JVM, ArrayList, String and Search/Sort suites passed separately during this work. The unrelated RACECES fixture was not weakened.
 
-Current runtime SHA-256: `5f09b6d22d1ba284b56e63e7e52a2bf3246d2c4e1aa3b05336b212ec3ac6ffe2`. Smoke, stress, coverage, JVM and completed review records all carry this same digest. Detailed counts and distributions are in the JSON reports beside this document.
+Current runtime SHA-256: `69ddf1ed8c9123eadc59572b15042abd09954c98e7a94d5360319e041e00398f`. Smoke, stress, coverage, JVM and completed review records all carry this same digest. Detailed counts and distributions are in the JSON reports beside this document.
 
 ## Browser/publication status
 
-GitHub Pages run 40068143266 successfully deployed commit 412fcb93c56318796552b51dff8cc79a39592cd0. The browser confirmed the updated interface, a correct keyboard submission and scoring, and five completed Mixed rounds. A subsequent first-use challenge transition exposed a long synchronous certification pause. This follow-up ships the pre-certified catalog so browsers only inflate the requested descriptors; full online candidate checks remain active.
+* Optimized engine: `d77f6a408810357c0b8eb77f5b5a12a02712f123`. Pages run [40068978200](https://github.com/davisjm4/davisjm4.github.io/actions/runs/40068978200), Array Lab verification [40068978734](https://github.com/davisjm4/davisjm4.github.io/actions/runs/40068978734), and trace verification all succeeded.
+* Responsive layout fix: `6d9d94277f00f87b6c8e0f4bdf34a0fb5c095ba4`. Pages run [40080217579](https://github.com/davisjm4/davisjm4.github.io/actions/runs/40080217579), Array Lab and trace verification succeeded. Stacked phone controls removed a measured five-pixel page overflow.
+* Fifty live Intermediate Mixed rounds exercised all twelve modes. Five same-day attempts already existed; the run ended at exactly 13/55 with 55 submissions and 42 reveals. Two additional correctly solved update/swap checks ended at 15/57. No attempt inflation occurred. Recorded Next actions averaged 948 ms, maximum 987 ms in this cloud browser; this is an observation, not a device benchmark.
+* Every individual mode showed its own recorded numerator/denominator at all three difficulties (36 views). Switching back to Mixed restored 13/55. An unattempted mode showed “— (0/0) · No attempts yet”.
+* Keyboard 1–4/Enter and cell-arrow focus/Enter worked. Update/swap proposals left values unchanged; Reset cleared proposals; correct submissions revealed the final state and locked scoring.
+* A separate ephemeral QA browser profile completed three correct answers across Element, Predict Update and 2D Access. Mixed displayed 3/3 across a same-day reload. Session Summary displayed local date 2026-10-24, 3 attempts, 3 correct, 3 submissions, and matching per-mode totals without an additional Mixed row. A later correctly solved Advanced teacher-link question produced 4/4 overall. Teacher parameters overrode saved settings without overwriting the saved Beginner/Element preference.
+* Actual browser frames at 390 and 768 px stayed within the page after the responsive fix. Their content widths were 375 and 753 px because Chrome reserves 15 px for vertical scrollbars. Both scroll widths equaled the client width. Code/array containers may scroll internally. No physical phone or Chromebook was tested.
+* No game-origin console errors/warnings were observed in the later QA profile. Browser-extension metadata messages were excluded. Full-page/clipped screenshot calls timed out; successful viewport captures are available below.
 
-The cloud browser cannot reach the workspace development server. Repeat fifty-round desktop, mode/statistics, keyboard, teacher-link, same-day reload, Session Summary and 390/768 px checks will follow this optimized deployment. Controlled-clock midnight boundaries are tested in the DOM suite, not by waiting overnight in the actual browser.
+[Desktop evidence](production-desktop-20261024.jpg) · [Phone-width evidence](production-phone-20261024.jpg) · [Machine-readable browser record](browser-verification.json). All screenshots/results are synthetic QA, not student records. The cloud browser could not reach the local workspace server, so actual interaction verification used the published site. Overnight boundaries use controllable-clock DOM tests in UTC/Pacific; no same-profile overnight wait is claimed.
 
-Integration PR: https://github.com/davisjm4/davisjm4.github.io/pull/12 . The initial deployment is verified; no optimized-production verification is claimed yet.
+Integration PR: https://github.com/davisjm4/davisjm4.github.io/pull/12 . Targeted live verification of this final feedback wording is pending publication; its question logic, scoring and structural catalog entries are unchanged.
 
 ## Remaining limitations
 

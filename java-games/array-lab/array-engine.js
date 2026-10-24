@@ -1,7 +1,7 @@
 import { int, pick, shuffle } from "../../csp-games/engine.js?v=platform-expansion-v2";
 import { advancedFormatFamilies, generateAdvancedArray } from "./advanced-families.js?v=array-modes-v2";
-import {generateCompositionalArray} from './compose/engine.js?v=array-catalog-20261024';
-export {createArrayHistory} from './compose/engine.js?v=array-catalog-20261024';
+import {generateCompositionalArray} from './compose/engine.js?v=array-feedback-20261024';
+export {createArrayHistory} from './compose/engine.js?v=array-feedback-20261024';
 
 export const formatNames = {
   element: "Select an Array Element",

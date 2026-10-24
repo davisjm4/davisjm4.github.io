@@ -75,3 +75,5 @@ For faster stress execution, run `tests.mjs --stress --group=0`, `--group=1` and
 The DOM suite covers all 36 cells, target-only proposals, submission locks, mode/Mixed statistics, teacher links, keyboard interaction, storage failures, same-day reload and local-midnight expiration with a controllable clock. Actual browser checks supplement these tests. Daily scoring uses the existing shared session utility, separate from repetition history.
 
 The Array Lab Verification GitHub Actions workflow runs catalog/rubric/smoke/UI, JVM, legacy/session and teacher-export checks for relevant changes. Its manual stress option runs the full 390,000-question suite.
+
+After-answer feedback includes actual condition outcomes. Inline observations without mutation events explain the evaluated index/comparison and relevant array lengths instead of showing an empty trace. These facts never appear before submission.

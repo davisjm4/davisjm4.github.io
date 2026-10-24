@@ -1,0 +1,64 @@
+{
+  "verificationType": "Actual Chrome UI workflows with synthetic QA data, not student records",
+  "optimizedGeneratorCommit": "d77f6a408810357c0b8eb77f5b5a12a02712f123",
+  "responsiveLayoutCommit": "6d9d94277f00f87b6c8e0f4bdf34a0fb5c095ba4",
+  "mixedRun": {
+    "completedRounds": 50,
+    "difficulty": "Intermediate",
+    "underlyingModesObserved": 12,
+    "baselineFirstTryCorrect": 3,
+    "baselineAttempts": 5,
+    "endingFirstTryCorrect": 13,
+    "endingAttempts": 55,
+    "endingReveals": 42,
+    "endingSubmissions": 55,
+    "additionalCorrectUpdateAndSwapChecks": 2,
+    "attemptsAfterThoseChecks": 57,
+    "correctAfterThoseChecks": 15,
+    "submissionLocksVerified": true,
+    "nextActionObservedMeanMilliseconds": 948,
+    "nextActionObservedMaximumMilliseconds": 987,
+    "timingScope": "Observed cloud-browser input action duration, not a general device benchmark"
+  },
+  "modeDifficultyViewsChecked": 36,
+  "modeScopeAssertions": "All twelve individual mode numerators/denominators matched recorded answers at Beginner, Intermediate and Advanced; returning to Mixed restored 13/55 without new attempts.",
+  "unattemptedMode": {
+    "mode": "Trace an Array Traversal",
+    "accuracyText": "— (0/0) · No attempts yet"
+  },
+  "interactions": {
+    "keyboardNumberSelectionAndEnter": true,
+    "cellArrowFocusAndEnter": true,
+    "updateProposalLeavesValuesUnchanged": true,
+    "swapProposalLeavesValuesUnchanged": true,
+    "resetClearsProposal": true,
+    "correctSubmissionRevealsFinalState": true,
+    "sameDayReloadPreservesTotals": true,
+    "teacherModeDifficultyOverridesSavedPreferences": true,
+    "teacherLinkDoesNotOverwriteSavedPreferences": true
+  },
+  "responsiveChecks": [
+    {"frameWidth": 390, "contentClientWidth": 375, "contentScrollWidth": 375, "horizontalPageOverflow": false},
+    {"frameWidth": 768, "contentClientWidth": 753, "contentScrollWidth": 753, "horizontalPageOverflow": false}
+  ],
+  "responsiveNote": "The browser reserves 15 pixels for the frame's vertical scrollbar. Code and arrays may scroll inside their own bounded containers.",
+  "summaryCheckInSeparateEphemeralQaProfile": {
+    "sessionDateDisplayed": "2026-10-24",
+    "attempted": 3,
+    "firstTryCorrect": 3,
+    "submissions": 3,
+    "answeredModes": ["Select an Array Element", "Predict an Array Update", "Access a 2D Array"],
+    "modeTotalsSumToOverall": true,
+    "mixedIsNotAnExtraCountedRow": true,
+    "printAndResetControlsPresent": true,
+    "laterAdvancedTeacherLinkAnswer": "Correct; Mixed subsequently displayed 4/4"
+  },
+  "screenshots": ["production-desktop-20261024.jpg", "production-phone-20261024.jpg"],
+  "limitations": [
+    "Responsive checks used actual browser frames, not physical phones or Chromebooks.",
+    "Overnight transitions were tested with controllable-clock DOM tests in UTC and America/Los_Angeles, not an actual same-profile overnight browser wait.",
+    "The 50-round run preceded the feedback-only wording follow-up; that follow-up receives targeted live feedback checks.",
+    "Viewport screenshots were captured; full-page and clipped captures timed out in the browser tool.",
+    "Independent human instructional sign-off remains outstanding."
+  ]
+}

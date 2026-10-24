@@ -1,5 +1,5 @@
 import {execute,canonical} from './ir.js';
-import {MODEL_NAMES,LEVELS} from './models.js';
+import {MODEL_NAMES,LEVELS} from './models.js?v=array-feedback-20261024';
 import {redundantArithmetic} from './minimum-path.js';
 
 export function analyzeDifficulty(program){
