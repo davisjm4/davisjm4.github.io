@@ -1,0 +1,9 @@
+{
+  "diagnostic": true,
+  "sourceDigest": "f76d64cf204e884bc9ba35d40959214d0cbbf744cd405864ff48111b0696b6ec",
+  "compiled": 8222,
+  "outputsCompared": 8222,
+  "statesCompared": 8212,
+  "exceptionsVerified": 10,
+  "mismatches": 0
+}

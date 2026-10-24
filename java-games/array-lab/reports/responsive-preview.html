@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Array Lab responsive verification</title>
+<style>body{margin:1rem;background:#0c1722;color:#eff6fb;font:16px system-ui}iframe{display:block;width:390px;max-width:100%;height:1100px;border:2px solid #79ddc6}label{display:block;margin-bottom:1rem}select{padding:.5rem;font:inherit}</style>
+<h1>Array Lab responsive verification</h1><p>This test frame uses the published game with a selectable viewport width.</p>
+<label>Viewport width <select id="width"><option value="390">Phone — 390 px</option><option value="768">Tablet — 768 px</option><option value="1120">Desktop — 1120 px</option></select></label>
+<iframe id="preview" title="Array Lab practice viewport" src="../"></iframe>
+<script>document.getElementById('width').addEventListener('change',event=>document.getElementById('preview').style.width=event.target.value+'px');</script></html>

@@ -1,0 +1,11 @@
+{
+  "diagnostic": false,
+  "sourceDigest": "fe5c7085c1a7dc315be091ea125ac17334d300791aa629177148bb489f03839b",
+  "galleryCompared": 720,
+  "compiled": 8491,
+  "expectedCompilationErrors": 2,
+  "outputsCompared": 8491,
+  "statesCompared": 8459,
+  "exceptionsVerified": 32,
+  "mismatches": 0
+}

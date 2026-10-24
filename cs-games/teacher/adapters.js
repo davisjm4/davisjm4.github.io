@@ -3,7 +3,7 @@
 import { booleanGame, generate as genBoolean, makeRng as booleanRng, assess as assessBoolean, signature as booleanSignature } from "../../java-games/boolean-conditional-lab/engine.js";
 import { mathGame, structures as mathStructures, generate as genMath, validateQuestion as validateMath, assess as assessMath } from "../../java-games/math-lab/engine.js";
 import { generateChallenge as genLoop, familyNames as loopModes, validateChallenge as validateLoop } from "../../java-games/loop-lab/loop-engine.js";
-import { generateArray, formatNames as arrayModes, solutionArray, assessArray } from "../../java-games/array-lab/array-engine.js";
+import { generateArray, formatNames as arrayModes, solutionArray, assessArray } from "../../java-games/array-lab/array-engine.js?v=array-composition-20261023";
 import { generateRecursion, modeNames as recursionModes, assessRecursion } from "../../java-games/recursion-lab/engine.js";
 import { generate as genSearch, MODE_IDS as searchModeIds, MODES as searchModes, assess as assessSearch, exportQuestion as exportSearch } from "../../java-games/search-sort-lab/engine/generator.js";
 import { generateTraceChallenge, verifyChallengeModel } from "../../java-games/variable-lab/trace-generator/src/index.js";
@@ -71,13 +71,15 @@ export const sources = [
     const q=genLoop({mode,difficulty:difficulty.toLowerCase(),seed});
     return normalize(q,{sourceId:"loop",sourceName:"Loop Lab",modeId:mode,modeName:q.modeName,difficulty:q.difficultyName,points,answer:q.answer,choices:q.choices,prompt:q.prompt,code:q.code,explanation:q.explanation,signature:`${q.signature.exact}`,family:q.reasoningFamily,verify:()=>validateLoop(q)&&q.choices.filter(c=>c===q.answer).length===1});
   }),
-  src("array","Array Lab",Object.entries(arrayModes).filter(([id])=>["predict-update","search","traversal","update-2d","nested","reverse","create-references","in-place","trace-2d"].includes(id)).map(([id,name])=>({id,name,difficultySupport:false})),(mode,difficulty,seed,points)=>{
-    // Legacy formats use ambient randomness and have no difficulty API. Restrict
-    // this adapter to its supported MC formats, while preserving native validation.
-    let state=seed>>>0; const old=Math.random; Math.random=()=>((state=(1664525*state+1013904223)>>>0)/4294967296);
-    try { const q=generateArray(mode); if(q.kind!=="choice") return null; const solution=solutionArray(q);
-      return normalize(q,{sourceId:"array",sourceName:"Array Lab",modeId:mode,modeName:arrayModes[mode],difficulty:"Mixed",points,answer:solution.answer,choices:q.choices,prompt:q.prompt,code:q.code,explanation:q.explanation,signature:`${q.code}|${q.prompt}|${[...q.choices].sort().join("|")}`,family:q.variant,verify:()=>assessArray(q,{answer:solution.answer})});
-    } finally { Math.random=old; }
+  src("array","Array Lab",Object.entries(arrayModes).map(([id,name])=>({id,name,difficulties:["Beginner","Intermediate","Advanced"]})),(mode,difficulty,seed,points)=>{
+    const q=generateArray(mode,undefined,{difficulty,seed});let answer=q.answer,choices=q.choices,response={answer};
+    if(q.kind==='cell'||q.kind==='apply'){const cells=q.values.map((_,i)=>String(i));answer=`index ${q.correctCell}`;choices=[q.correctCell,...cells.filter(c=>c!==q.correctCell).slice(0,3)].map(c=>`index ${c}`);response={cell:q.correctCell};}
+    if(q.kind==='cell-2d'){const cells=q.grid.flatMap((row,r)=>row.map((_,c)=>`${r},${c}`));answer=`[${q.correctCell.replace(',','][')}]`;choices=[q.correctCell,...cells.filter(c=>c!==q.correctCell).slice(0,3)].map(c=>`[${c.replace(',','][')}]`);response={cell:q.correctCell};}
+    if(q.kind==='swap'){const pairs=[];for(let a=0;a<q.values.length;a++)for(let b=a+1;b<q.values.length;b++)pairs.push([String(a),String(b)].join(' and '));answer=[...q.correctCells].sort((a,b)=>a-b).join(' and ');choices=[answer,...pairs.filter(p=>p!==answer).slice(0,3)];response={cells:q.correctCells};}
+    // Seeded rotation keeps interactive adaptations from always placing the answer first.
+    const rotation=(seed>>>0)%4;choices=choices.slice(rotation).concat(choices.slice(0,rotation));
+    const out=normalize(q,{sourceId:"array",sourceName:"Array Lab",modeId:mode,modeName:arrayModes[mode],difficulty,points,answer,choices,prompt:q.prompt.replace('Select the cell','Choose the index of the cell').replace('Select the two cells','Choose the two indices'),code:q.code,explanation:q.explanation,signature:q.repetitionKey,family:q.reasoningModel,verify:()=>assessArray(q,response)});
+    return out?{...out,reasoningModel:q.reasoningModel,structuralVariant:q.structuralVariant,seed:q.seed}:null;
   }),
   src("recursion","Recursion Lab",Object.entries(recursionModes).map(([id,name])=>({id,name,difficulties:["Beginner","Intermediate","Advanced"]})),(mode,difficulty,seed,points)=>{
     let state=seed>>>0; const rng=()=>((state=(1664525*state+1013904223)>>>0)/4294967296); const q=generateRecursion(mode,rng,difficulty);

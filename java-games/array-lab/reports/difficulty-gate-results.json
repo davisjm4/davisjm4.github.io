@@ -1,0 +1,1807 @@
+{
+  "sourceDigest": "fe5c7085c1a7dc315be091ea125ac17334d300791aa629177148bb489f03839b",
+  "classification": "Documented structural/minimum-path gates plus assistant source/dataflow assessment; not independent human certification",
+  "cells": [
+    {
+      "mode": "element",
+      "difficulty": "Beginner",
+      "models": [
+        {
+          "name": "literal-index",
+          "structures": 6
+        },
+        {
+          "name": "arithmetic-index",
+          "structures": 12
+        },
+        {
+          "name": "last-index",
+          "structures": 6
+        },
+        {
+          "name": "end-relative",
+          "structures": 12
+        },
+        {
+          "name": "stored-index",
+          "structures": 6
+        },
+        {
+          "name": "changed-index",
+          "structures": 6
+        },
+        {
+          "name": "conditional-index",
+          "structures": 6
+        },
+        {
+          "name": "chained-index",
+          "structures": 12
+        },
+        {
+          "name": "value-index",
+          "structures": 11
+        },
+        {
+          "name": "bounds-check",
+          "structures": 6
+        }
+      ],
+      "uniqueStructures": 81,
+      "pass": true
+    },
+    {
+      "mode": "element",
+      "difficulty": "Intermediate",
+      "models": [
+        {
+          "name": "literal-index",
+          "structures": 42
+        },
+        {
+          "name": "arithmetic-index",
+          "structures": 48
+        },
+        {
+          "name": "last-index",
+          "structures": 12
+        },
+        {
+          "name": "end-relative",
+          "structures": 24
+        },
+        {
+          "name": "stored-index",
+          "structures": 24
+        },
+        {
+          "name": "changed-index",
+          "structures": 12
+        },
+        {
+          "name": "conditional-index",
+          "structures": 12
+        },
+        {
+          "name": "chained-index",
+          "structures": 24
+        },
+        {
+          "name": "value-index",
+          "structures": 24
+        },
+        {
+          "name": "bounds-check",
+          "structures": 24
+        }
+      ],
+      "uniqueStructures": 222,
+      "pass": true
+    },
+    {
+      "mode": "element",
+      "difficulty": "Advanced",
+      "models": [
+        {
+          "name": "literal-index",
+          "structures": 42
+        },
+        {
+          "name": "arithmetic-index",
+          "structures": 48
+        },
+        {
+          "name": "last-index",
+          "structures": 12
+        },
+        {
+          "name": "end-relative",
+          "structures": 24
+        },
+        {
+          "name": "stored-index",
+          "structures": 24
+        },
+        {
+          "name": "changed-index",
+          "structures": 12
+        },
+        {
+          "name": "conditional-index",
+          "structures": 12
+        },
+        {
+          "name": "chained-index",
+          "structures": 24
+        },
+        {
+          "name": "value-index",
+          "structures": 24
+        },
+        {
+          "name": "bounds-check",
+          "structures": 24
+        }
+      ],
+      "uniqueStructures": 222,
+      "pass": true
+    },
+    {
+      "mode": "predict-update",
+      "difficulty": "Beginner",
+      "models": [
+        {
+          "name": "dependent-value",
+          "structures": 6
+        },
+        {
+          "name": "compound-update",
+          "structures": 6
+        },
+        {
+          "name": "increment-decrement",
+          "structures": 6
+        },
+        {
+          "name": "target-index",
+          "structures": 6
+        },
+        {
+          "name": "source-index",
+          "structures": 6
+        },
+        {
+          "name": "sequential-update",
+          "structures": 6
+        },
+        {
+          "name": "temporary-swap",
+          "structures": 6
+        },
+        {
+          "name": "conditional-update",
+          "structures": 6
+        },
+        {
+          "name": "loop-update",
+          "structures": 6
+        },
+        {
+          "name": "alias-update",
+          "structures": 6
+        }
+      ],
+      "uniqueStructures": 60,
+      "pass": true
+    },
+    {
+      "mode": "predict-update",
+      "difficulty": "Intermediate",
+      "models": [
+        {
+          "name": "dependent-value",
+          "structures": 16
+        },
+        {
+          "name": "compound-update",
+          "structures": 16
+        },
+        {
+          "name": "increment-decrement",
+          "structures": 32
+        },
+        {
+          "name": "target-index",
+          "structures": 18
+        },
+        {
+          "name": "source-index",
+          "structures": 16
+        },
+        {
+          "name": "sequential-update",
+          "structures": 18
+        },
+        {
+          "name": "temporary-swap",
+          "structures": 16
+        },
+        {
+          "name": "conditional-update",
+          "structures": 16
+        },
+        {
+          "name": "loop-update",
+          "structures": 68
+        },
+        {
+          "name": "alias-update",
+          "structures": 16
+        }
+      ],
+      "uniqueStructures": 216,
+      "pass": true
+    },
+    {
+      "mode": "predict-update",
+      "difficulty": "Advanced",
+      "models": [
+        {
+          "name": "dependent-value",
+          "structures": 18
+        },
+        {
+          "name": "compound-update",
+          "structures": 18
+        },
+        {
+          "name": "increment-decrement",
+          "structures": 36
+        },
+        {
+          "name": "target-index",
+          "structures": 18
+        },
+        {
+          "name": "source-index",
+          "structures": 18
+        },
+        {
+          "name": "sequential-update",
+          "structures": 18
+        },
+        {
+          "name": "temporary-swap",
+          "structures": 18
+        },
+        {
+          "name": "conditional-update",
+          "structures": 18
+        },
+        {
+          "name": "loop-update",
+          "structures": 72
+        },
+        {
+          "name": "alias-update",
+          "structures": 18
+        }
+      ],
+      "uniqueStructures": 234,
+      "pass": true
+    },
+    {
+      "mode": "perform-update",
+      "difficulty": "Beginner",
+      "models": [
+        {
+          "name": "computed-target",
+          "structures": 12
+        },
+        {
+          "name": "last-target",
+          "structures": 6
+        },
+        {
+          "name": "middle-target",
+          "structures": 6
+        },
+        {
+          "name": "copy-target",
+          "structures": 12
+        },
+        {
+          "name": "compound-target",
+          "structures": 6
+        },
+        {
+          "name": "increment-target",
+          "structures": 6
+        },
+        {
+          "name": "swap-targets",
+          "structures": 12
+        },
+        {
+          "name": "conditional-target",
+          "structures": 6
+        },
+        {
+          "name": "loop-target",
+          "structures": 12
+        },
+        {
+          "name": "dependent-target",
+          "structures": 12
+        }
+      ],
+      "uniqueStructures": 90,
+      "pass": true
+    },
+    {
+      "mode": "perform-update",
+      "difficulty": "Intermediate",
+      "models": [
+        {
+          "name": "computed-target",
+          "structures": 42
+        },
+        {
+          "name": "last-target",
+          "structures": 48
+        },
+        {
+          "name": "middle-target",
+          "structures": 12
+        },
+        {
+          "name": "copy-target",
+          "structures": 24
+        },
+        {
+          "name": "compound-target",
+          "structures": 24
+        },
+        {
+          "name": "increment-target",
+          "structures": 12
+        },
+        {
+          "name": "swap-targets",
+          "structures": 12
+        },
+        {
+          "name": "conditional-target",
+          "structures": 24
+        },
+        {
+          "name": "loop-target",
+          "structures": 24
+        },
+        {
+          "name": "dependent-target",
+          "structures": 24
+        }
+      ],
+      "uniqueStructures": 222,
+      "pass": true
+    },
+    {
+      "mode": "perform-update",
+      "difficulty": "Advanced",
+      "models": [
+        {
+          "name": "computed-target",
+          "structures": 42
+        },
+        {
+          "name": "last-target",
+          "structures": 48
+        },
+        {
+          "name": "middle-target",
+          "structures": 12
+        },
+        {
+          "name": "copy-target",
+          "structures": 24
+        },
+        {
+          "name": "compound-target",
+          "structures": 24
+        },
+        {
+          "name": "increment-target",
+          "structures": 12
+        },
+        {
+          "name": "swap-targets",
+          "structures": 12
+        },
+        {
+          "name": "conditional-target",
+          "structures": 24
+        },
+        {
+          "name": "loop-target",
+          "structures": 24
+        },
+        {
+          "name": "dependent-target",
+          "structures": 24
+        }
+      ],
+      "uniqueStructures": 222,
+      "pass": true
+    },
+    {
+      "mode": "search",
+      "difficulty": "Beginner",
+      "models": [
+        {
+          "name": "first-match",
+          "structures": 6
+        },
+        {
+          "name": "last-match",
+          "structures": 6
+        },
+        {
+          "name": "existence",
+          "structures": 6
+        },
+        {
+          "name": "match-count",
+          "structures": 6
+        },
+        {
+          "name": "missing-target",
+          "structures": 6
+        },
+        {
+          "name": "early-stop",
+          "structures": 6
+        },
+        {
+          "name": "reverse-search",
+          "structures": 6
+        },
+        {
+          "name": "conditional-search",
+          "structures": 6
+        },
+        {
+          "name": "minimum-search",
+          "structures": 6
+        },
+        {
+          "name": "changing-search",
+          "structures": 6
+        },
+        {
+          "name": "maximum-search",
+          "structures": 6
+        },
+        {
+          "name": "all-match",
+          "structures": 6
+        }
+      ],
+      "uniqueStructures": 66,
+      "pass": true
+    },
+    {
+      "mode": "search",
+      "difficulty": "Intermediate",
+      "models": [
+        {
+          "name": "first-match",
+          "structures": 6
+        },
+        {
+          "name": "last-match",
+          "structures": 72
+        },
+        {
+          "name": "existence",
+          "structures": 72
+        },
+        {
+          "name": "match-count",
+          "structures": 72
+        },
+        {
+          "name": "missing-target",
+          "structures": 72
+        },
+        {
+          "name": "early-stop",
+          "structures": 72
+        },
+        {
+          "name": "reverse-search",
+          "structures": 6
+        },
+        {
+          "name": "conditional-search",
+          "structures": 72
+        },
+        {
+          "name": "minimum-search",
+          "structures": 72
+        },
+        {
+          "name": "changing-search",
+          "structures": 72
+        },
+        {
+          "name": "maximum-search",
+          "structures": 72
+        },
+        {
+          "name": "all-match",
+          "structures": 72
+        }
+      ],
+      "uniqueStructures": 720,
+      "pass": true
+    },
+    {
+      "mode": "search",
+      "difficulty": "Advanced",
+      "models": [
+        {
+          "name": "first-match",
+          "structures": 6
+        },
+        {
+          "name": "last-match",
+          "structures": 60
+        },
+        {
+          "name": "existence",
+          "structures": 60
+        },
+        {
+          "name": "match-count",
+          "structures": 60
+        },
+        {
+          "name": "missing-target",
+          "structures": 60
+        },
+        {
+          "name": "early-stop",
+          "structures": 72
+        },
+        {
+          "name": "reverse-search",
+          "structures": 6
+        },
+        {
+          "name": "conditional-search",
+          "structures": 30
+        },
+        {
+          "name": "minimum-search",
+          "structures": 60
+        },
+        {
+          "name": "changing-search",
+          "structures": 72
+        },
+        {
+          "name": "maximum-search",
+          "structures": 60
+        },
+        {
+          "name": "all-match",
+          "structures": 55
+        }
+      ],
+      "uniqueStructures": 589,
+      "pass": true
+    },
+    {
+      "mode": "traversal",
+      "difficulty": "Beginner",
+      "models": [
+        {
+          "name": "full-sum",
+          "structures": 6
+        },
+        {
+          "name": "selected-sum",
+          "structures": 6
+        },
+        {
+          "name": "qualifying-count",
+          "structures": 6
+        },
+        {
+          "name": "extreme-value",
+          "structures": 6
+        },
+        {
+          "name": "forward-fold",
+          "structures": 6
+        },
+        {
+          "name": "reverse-fold",
+          "structures": 6
+        },
+        {
+          "name": "boundary-traversal",
+          "structures": 6
+        },
+        {
+          "name": "alternating-traversal",
+          "structures": 6
+        },
+        {
+          "name": "mutating-traversal",
+          "structures": 6
+        },
+        {
+          "name": "dependent-fold",
+          "structures": 6
+        },
+        {
+          "name": "weighted-sum",
+          "structures": 6
+        }
+      ],
+      "uniqueStructures": 62,
+      "pass": true
+    },
+    {
+      "mode": "traversal",
+      "difficulty": "Intermediate",
+      "models": [
+        {
+          "name": "full-sum",
+          "structures": 6
+        },
+        {
+          "name": "selected-sum",
+          "structures": 72
+        },
+        {
+          "name": "qualifying-count",
+          "structures": 72
+        },
+        {
+          "name": "extreme-value",
+          "structures": 72
+        },
+        {
+          "name": "forward-fold",
+          "structures": 6
+        },
+        {
+          "name": "reverse-fold",
+          "structures": 6
+        },
+        {
+          "name": "boundary-traversal",
+          "structures": 12
+        },
+        {
+          "name": "alternating-traversal",
+          "structures": 12
+        },
+        {
+          "name": "mutating-traversal",
+          "structures": 72
+        },
+        {
+          "name": "dependent-fold",
+          "structures": 72
+        },
+        {
+          "name": "weighted-sum",
+          "structures": 72
+        }
+      ],
+      "uniqueStructures": 474,
+      "pass": true
+    },
+    {
+      "mode": "traversal",
+      "difficulty": "Advanced",
+      "models": [
+        {
+          "name": "full-sum",
+          "structures": 6
+        },
+        {
+          "name": "selected-sum",
+          "structures": 60
+        },
+        {
+          "name": "qualifying-count",
+          "structures": 60
+        },
+        {
+          "name": "extreme-value",
+          "structures": 60
+        },
+        {
+          "name": "forward-fold",
+          "structures": 6
+        },
+        {
+          "name": "reverse-fold",
+          "structures": 6
+        },
+        {
+          "name": "boundary-traversal",
+          "structures": 12
+        },
+        {
+          "name": "alternating-traversal",
+          "structures": 12
+        },
+        {
+          "name": "mutating-traversal",
+          "structures": 60
+        },
+        {
+          "name": "dependent-fold",
+          "structures": 60
+        },
+        {
+          "name": "weighted-sum",
+          "structures": 72
+        }
+      ],
+      "uniqueStructures": 414,
+      "pass": true
+    },
+    {
+      "mode": "access-2d",
+      "difficulty": "Beginner",
+      "models": [
+        {
+          "name": "direct-cell",
+          "structures": 12
+        },
+        {
+          "name": "computed-row",
+          "structures": 6
+        },
+        {
+          "name": "computed-column",
+          "structures": 6
+        },
+        {
+          "name": "last-row",
+          "structures": 12
+        },
+        {
+          "name": "row-last-element",
+          "structures": 12
+        },
+        {
+          "name": "ragged-cell",
+          "structures": 12
+        },
+        {
+          "name": "row-selection",
+          "structures": 10
+        },
+        {
+          "name": "conditional-cell",
+          "structures": 6
+        },
+        {
+          "name": "value-selected-cell",
+          "structures": 11
+        },
+        {
+          "name": "invalid-cell",
+          "structures": 6
+        }
+      ],
+      "uniqueStructures": 90,
+      "pass": true
+    },
+    {
+      "mode": "access-2d",
+      "difficulty": "Intermediate",
+      "models": [
+        {
+          "name": "direct-cell",
+          "structures": 41
+        },
+        {
+          "name": "computed-row",
+          "structures": 43
+        },
+        {
+          "name": "computed-column",
+          "structures": 44
+        },
+        {
+          "name": "last-row",
+          "structures": 21
+        },
+        {
+          "name": "row-last-element",
+          "structures": 22
+        },
+        {
+          "name": "ragged-cell",
+          "structures": 11
+        },
+        {
+          "name": "row-selection",
+          "structures": 22
+        },
+        {
+          "name": "conditional-cell",
+          "structures": 22
+        },
+        {
+          "name": "value-selected-cell",
+          "structures": 21
+        },
+        {
+          "name": "invalid-cell",
+          "structures": 21
+        }
+      ],
+      "uniqueStructures": 247,
+      "pass": true
+    },
+    {
+      "mode": "access-2d",
+      "difficulty": "Advanced",
+      "models": [
+        {
+          "name": "direct-cell",
+          "structures": 44
+        },
+        {
+          "name": "computed-row",
+          "structures": 44
+        },
+        {
+          "name": "computed-column",
+          "structures": 44
+        },
+        {
+          "name": "last-row",
+          "structures": 22
+        },
+        {
+          "name": "row-last-element",
+          "structures": 22
+        },
+        {
+          "name": "ragged-cell",
+          "structures": 11
+        },
+        {
+          "name": "row-selection",
+          "structures": 22
+        },
+        {
+          "name": "conditional-cell",
+          "structures": 22
+        },
+        {
+          "name": "value-selected-cell",
+          "structures": 22
+        },
+        {
+          "name": "invalid-cell",
+          "structures": 22
+        }
+      ],
+      "uniqueStructures": 253,
+      "pass": true
+    },
+    {
+      "mode": "update-2d",
+      "difficulty": "Beginner",
+      "models": [
+        {
+          "name": "direct-update",
+          "structures": 12
+        },
+        {
+          "name": "computed-update",
+          "structures": 6
+        },
+        {
+          "name": "copy-cell",
+          "structures": 6
+        },
+        {
+          "name": "compound-cell",
+          "structures": 12
+        },
+        {
+          "name": "row-condition",
+          "structures": 12
+        },
+        {
+          "name": "column-condition",
+          "structures": 12
+        },
+        {
+          "name": "swap-cells",
+          "structures": 6
+        },
+        {
+          "name": "row-update",
+          "structures": 6
+        },
+        {
+          "name": "nested-update",
+          "structures": 6
+        },
+        {
+          "name": "ragged-update",
+          "structures": 12
+        },
+        {
+          "name": "row-alias-target",
+          "structures": 10
+        }
+      ],
+      "uniqueStructures": 100,
+      "pass": true
+    },
+    {
+      "mode": "update-2d",
+      "difficulty": "Intermediate",
+      "models": [
+        {
+          "name": "direct-update",
+          "structures": 10
+        },
+        {
+          "name": "computed-update",
+          "structures": 11
+        },
+        {
+          "name": "copy-cell",
+          "structures": 11
+        },
+        {
+          "name": "compound-cell",
+          "structures": 66
+        },
+        {
+          "name": "row-condition",
+          "structures": 11
+        },
+        {
+          "name": "column-condition",
+          "structures": 33
+        },
+        {
+          "name": "swap-cells",
+          "structures": 6
+        },
+        {
+          "name": "row-update",
+          "structures": 6
+        },
+        {
+          "name": "nested-update",
+          "structures": 6
+        },
+        {
+          "name": "ragged-update",
+          "structures": 11
+        },
+        {
+          "name": "row-alias-target",
+          "structures": 22
+        }
+      ],
+      "uniqueStructures": 193,
+      "pass": true
+    },
+    {
+      "mode": "update-2d",
+      "difficulty": "Advanced",
+      "models": [
+        {
+          "name": "direct-update",
+          "structures": 11
+        },
+        {
+          "name": "computed-update",
+          "structures": 11
+        },
+        {
+          "name": "copy-cell",
+          "structures": 11
+        },
+        {
+          "name": "compound-cell",
+          "structures": 66
+        },
+        {
+          "name": "row-condition",
+          "structures": 11
+        },
+        {
+          "name": "column-condition",
+          "structures": 33
+        },
+        {
+          "name": "swap-cells",
+          "structures": 6
+        },
+        {
+          "name": "row-update",
+          "structures": 6
+        },
+        {
+          "name": "nested-update",
+          "structures": 17
+        },
+        {
+          "name": "ragged-update",
+          "structures": 11
+        },
+        {
+          "name": "row-alias-target",
+          "structures": 22
+        }
+      ],
+      "uniqueStructures": 205,
+      "pass": true
+    },
+    {
+      "mode": "nested",
+      "difficulty": "Beginner",
+      "models": [
+        {
+          "name": "full-grid",
+          "structures": 6
+        },
+        {
+          "name": "traversal-order",
+          "structures": 6
+        },
+        {
+          "name": "visited-count",
+          "structures": 6
+        },
+        {
+          "name": "conditional-count",
+          "structures": 6
+        },
+        {
+          "name": "grid-sum",
+          "structures": 6
+        },
+        {
+          "name": "skip-boundary",
+          "structures": 6
+        },
+        {
+          "name": "early-inner-stop",
+          "structures": 6
+        },
+        {
+          "name": "ragged-traversal",
+          "structures": 6
+        },
+        {
+          "name": "cell-mutation",
+          "structures": 6
+        },
+        {
+          "name": "loop-dependency",
+          "structures": 6
+        }
+      ],
+      "uniqueStructures": 60,
+      "pass": true
+    },
+    {
+      "mode": "nested",
+      "difficulty": "Intermediate",
+      "models": [
+        {
+          "name": "full-grid",
+          "structures": 6
+        },
+        {
+          "name": "traversal-order",
+          "structures": 36
+        },
+        {
+          "name": "visited-count",
+          "structures": 36
+        },
+        {
+          "name": "conditional-count",
+          "structures": 36
+        },
+        {
+          "name": "grid-sum",
+          "structures": 36
+        },
+        {
+          "name": "skip-boundary",
+          "structures": 36
+        },
+        {
+          "name": "early-inner-stop",
+          "structures": 36
+        },
+        {
+          "name": "ragged-traversal",
+          "structures": 6
+        },
+        {
+          "name": "cell-mutation",
+          "structures": 18
+        },
+        {
+          "name": "loop-dependency",
+          "structures": 36
+        }
+      ],
+      "uniqueStructures": 282,
+      "pass": true
+    },
+    {
+      "mode": "nested",
+      "difficulty": "Advanced",
+      "models": [
+        {
+          "name": "full-grid",
+          "structures": 6
+        },
+        {
+          "name": "traversal-order",
+          "structures": 35
+        },
+        {
+          "name": "visited-count",
+          "structures": 18
+        },
+        {
+          "name": "conditional-count",
+          "structures": 36
+        },
+        {
+          "name": "grid-sum",
+          "structures": 36
+        },
+        {
+          "name": "skip-boundary",
+          "structures": 11
+        },
+        {
+          "name": "early-inner-stop",
+          "structures": 36
+        },
+        {
+          "name": "ragged-traversal",
+          "structures": 18
+        },
+        {
+          "name": "cell-mutation",
+          "structures": 36
+        },
+        {
+          "name": "loop-dependency",
+          "structures": 36
+        }
+      ],
+      "uniqueStructures": 268,
+      "pass": true
+    },
+    {
+      "mode": "reverse",
+      "difficulty": "Beginner",
+      "models": [
+        {
+          "name": "indexed-assignment",
+          "structures": 6
+        },
+        {
+          "name": "off-by-one",
+          "structures": 6
+        },
+        {
+          "name": "last-update",
+          "structures": 6
+        },
+        {
+          "name": "copy-element",
+          "structures": 6
+        },
+        {
+          "name": "swap-save",
+          "structures": 6
+        },
+        {
+          "name": "compound-statement",
+          "structures": 6
+        },
+        {
+          "name": "grid-statement",
+          "structures": 6
+        },
+        {
+          "name": "allocate-array",
+          "structures": 6
+        },
+        {
+          "name": "assignment-statement",
+          "structures": 6
+        },
+        {
+          "name": "conditional-statement",
+          "structures": 6
+        }
+      ],
+      "uniqueStructures": 60,
+      "pass": true
+    },
+    {
+      "mode": "reverse",
+      "difficulty": "Intermediate",
+      "models": [
+        {
+          "name": "indexed-assignment",
+          "structures": 6
+        },
+        {
+          "name": "off-by-one",
+          "structures": 6
+        },
+        {
+          "name": "last-update",
+          "structures": 8
+        },
+        {
+          "name": "copy-element",
+          "structures": 6
+        },
+        {
+          "name": "swap-save",
+          "structures": 6
+        },
+        {
+          "name": "compound-statement",
+          "structures": 6
+        },
+        {
+          "name": "grid-statement",
+          "structures": 11
+        },
+        {
+          "name": "allocate-array",
+          "structures": 6
+        },
+        {
+          "name": "assignment-statement",
+          "structures": 6
+        },
+        {
+          "name": "conditional-statement",
+          "structures": 6
+        }
+      ],
+      "uniqueStructures": 67,
+      "pass": true
+    },
+    {
+      "mode": "reverse",
+      "difficulty": "Advanced",
+      "models": [
+        {
+          "name": "indexed-assignment",
+          "structures": 6
+        },
+        {
+          "name": "off-by-one",
+          "structures": 6
+        },
+        {
+          "name": "last-update",
+          "structures": 8
+        },
+        {
+          "name": "copy-element",
+          "structures": 6
+        },
+        {
+          "name": "swap-save",
+          "structures": 6
+        },
+        {
+          "name": "compound-statement",
+          "structures": 6
+        },
+        {
+          "name": "grid-statement",
+          "structures": 18
+        },
+        {
+          "name": "allocate-array",
+          "structures": 6
+        },
+        {
+          "name": "assignment-statement",
+          "structures": 6
+        },
+        {
+          "name": "conditional-statement",
+          "structures": 6
+        }
+      ],
+      "uniqueStructures": 74,
+      "pass": true
+    },
+    {
+      "mode": "create-references",
+      "difficulty": "Beginner",
+      "models": [
+        {
+          "name": "independent-allocations",
+          "structures": 6
+        },
+        {
+          "name": "shared-reference",
+          "structures": 6
+        },
+        {
+          "name": "reference-reassignment",
+          "structures": 6
+        },
+        {
+          "name": "alias-mutation",
+          "structures": 6
+        },
+        {
+          "name": "method-mutation",
+          "structures": 6
+        },
+        {
+          "name": "parameter-reassignment",
+          "structures": 6
+        },
+        {
+          "name": "returned-reference",
+          "structures": 6
+        },
+        {
+          "name": "chained-references",
+          "structures": 6
+        },
+        {
+          "name": "default-state",
+          "structures": 34
+        },
+        {
+          "name": "reference-boundary",
+          "structures": 6
+        },
+        {
+          "name": "reference-equality",
+          "structures": 6
+        }
+      ],
+      "uniqueStructures": 85,
+      "pass": true
+    },
+    {
+      "mode": "create-references",
+      "difficulty": "Intermediate",
+      "models": [
+        {
+          "name": "independent-allocations",
+          "structures": 18
+        },
+        {
+          "name": "shared-reference",
+          "structures": 22
+        },
+        {
+          "name": "reference-reassignment",
+          "structures": 24
+        },
+        {
+          "name": "alias-mutation",
+          "structures": 18
+        },
+        {
+          "name": "method-mutation",
+          "structures": 18
+        },
+        {
+          "name": "parameter-reassignment",
+          "structures": 17
+        },
+        {
+          "name": "returned-reference",
+          "structures": 36
+        },
+        {
+          "name": "chained-references",
+          "structures": 18
+        },
+        {
+          "name": "default-state",
+          "structures": 24
+        },
+        {
+          "name": "reference-boundary",
+          "structures": 18
+        },
+        {
+          "name": "reference-equality",
+          "structures": 34
+        }
+      ],
+      "uniqueStructures": 247,
+      "pass": true
+    },
+    {
+      "mode": "create-references",
+      "difficulty": "Advanced",
+      "models": [
+        {
+          "name": "independent-allocations",
+          "structures": 18
+        },
+        {
+          "name": "shared-reference",
+          "structures": 22
+        },
+        {
+          "name": "reference-reassignment",
+          "structures": 18
+        },
+        {
+          "name": "alias-mutation",
+          "structures": 18
+        },
+        {
+          "name": "method-mutation",
+          "structures": 18
+        },
+        {
+          "name": "parameter-reassignment",
+          "structures": 18
+        },
+        {
+          "name": "returned-reference",
+          "structures": 36
+        },
+        {
+          "name": "chained-references",
+          "structures": 18
+        },
+        {
+          "name": "default-state",
+          "structures": 24
+        },
+        {
+          "name": "reference-boundary",
+          "structures": 18
+        },
+        {
+          "name": "reference-equality",
+          "structures": 72
+        }
+      ],
+      "uniqueStructures": 280,
+      "pass": true
+    },
+    {
+      "mode": "in-place",
+      "difficulty": "Beginner",
+      "models": [
+        {
+          "name": "shift-left",
+          "structures": 8
+        },
+        {
+          "name": "shift-right",
+          "structures": 8
+        },
+        {
+          "name": "rotate-left",
+          "structures": 44
+        },
+        {
+          "name": "rotate-right",
+          "structures": 34
+        },
+        {
+          "name": "reverse-all",
+          "structures": 44
+        },
+        {
+          "name": "reverse-section",
+          "structures": 48
+        },
+        {
+          "name": "swap-transform",
+          "structures": 8
+        },
+        {
+          "name": "conditional-transform",
+          "structures": 12
+        },
+        {
+          "name": "compact-values",
+          "structures": 6
+        },
+        {
+          "name": "staged-transform",
+          "structures": 48
+        },
+        {
+          "name": "adjacent-differences",
+          "structures": 48
+        }
+      ],
+      "uniqueStructures": 308,
+      "pass": true
+    },
+    {
+      "mode": "in-place",
+      "difficulty": "Intermediate",
+      "models": [
+        {
+          "name": "shift-left",
+          "structures": 7
+        },
+        {
+          "name": "shift-right",
+          "structures": 7
+        },
+        {
+          "name": "rotate-left",
+          "structures": 7
+        },
+        {
+          "name": "rotate-right",
+          "structures": 7
+        },
+        {
+          "name": "reverse-all",
+          "structures": 7
+        },
+        {
+          "name": "reverse-section",
+          "structures": 7
+        },
+        {
+          "name": "swap-transform",
+          "structures": 7
+        },
+        {
+          "name": "conditional-transform",
+          "structures": 7
+        },
+        {
+          "name": "compact-values",
+          "structures": 6
+        },
+        {
+          "name": "staged-transform",
+          "structures": 7
+        },
+        {
+          "name": "adjacent-differences",
+          "structures": 7
+        }
+      ],
+      "uniqueStructures": 76,
+      "pass": true
+    },
+    {
+      "mode": "in-place",
+      "difficulty": "Advanced",
+      "models": [
+        {
+          "name": "shift-left",
+          "structures": 12
+        },
+        {
+          "name": "shift-right",
+          "structures": 12
+        },
+        {
+          "name": "rotate-left",
+          "structures": 12
+        },
+        {
+          "name": "rotate-right",
+          "structures": 12
+        },
+        {
+          "name": "reverse-all",
+          "structures": 12
+        },
+        {
+          "name": "reverse-section",
+          "structures": 12
+        },
+        {
+          "name": "swap-transform",
+          "structures": 11
+        },
+        {
+          "name": "conditional-transform",
+          "structures": 12
+        },
+        {
+          "name": "compact-values",
+          "structures": 12
+        },
+        {
+          "name": "staged-transform",
+          "structures": 12
+        },
+        {
+          "name": "adjacent-differences",
+          "structures": 12
+        }
+      ],
+      "uniqueStructures": 131,
+      "pass": true
+    },
+    {
+      "mode": "trace-2d",
+      "difficulty": "Beginner",
+      "models": [
+        {
+          "name": "row-sum",
+          "structures": 6
+        },
+        {
+          "name": "column-sum",
+          "structures": 6
+        },
+        {
+          "name": "maximum-row",
+          "structures": 6
+        },
+        {
+          "name": "minimum-column",
+          "structures": 6
+        },
+        {
+          "name": "grid-search",
+          "structures": 6
+        },
+        {
+          "name": "conditional-total",
+          "structures": 6
+        },
+        {
+          "name": "diagonal-total",
+          "structures": 6
+        },
+        {
+          "name": "neighbor-total",
+          "structures": 6
+        },
+        {
+          "name": "row-transform",
+          "structures": 6
+        },
+        {
+          "name": "conditional-transform",
+          "structures": 6
+        }
+      ],
+      "uniqueStructures": 60,
+      "pass": true
+    },
+    {
+      "mode": "trace-2d",
+      "difficulty": "Intermediate",
+      "models": [
+        {
+          "name": "row-sum",
+          "structures": 36
+        },
+        {
+          "name": "column-sum",
+          "structures": 36
+        },
+        {
+          "name": "maximum-row",
+          "structures": 36
+        },
+        {
+          "name": "minimum-column",
+          "structures": 12
+        },
+        {
+          "name": "grid-search",
+          "structures": 36
+        },
+        {
+          "name": "conditional-total",
+          "structures": 36
+        },
+        {
+          "name": "diagonal-total",
+          "structures": 36
+        },
+        {
+          "name": "neighbor-total",
+          "structures": 36
+        },
+        {
+          "name": "row-transform",
+          "structures": 6
+        },
+        {
+          "name": "conditional-transform",
+          "structures": 36
+        }
+      ],
+      "uniqueStructures": 306,
+      "pass": true
+    },
+    {
+      "mode": "trace-2d",
+      "difficulty": "Advanced",
+      "models": [
+        {
+          "name": "row-sum",
+          "structures": 36
+        },
+        {
+          "name": "column-sum",
+          "structures": 18
+        },
+        {
+          "name": "maximum-row",
+          "structures": 32
+        },
+        {
+          "name": "minimum-column",
+          "structures": 12
+        },
+        {
+          "name": "grid-search",
+          "structures": 36
+        },
+        {
+          "name": "conditional-total",
+          "structures": 36
+        },
+        {
+          "name": "diagonal-total",
+          "structures": 18
+        },
+        {
+          "name": "neighbor-total",
+          "structures": 36
+        },
+        {
+          "name": "row-transform",
+          "structures": 6
+        },
+        {
+          "name": "conditional-transform",
+          "structures": 36
+        }
+      ],
+      "uniqueStructures": 266,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

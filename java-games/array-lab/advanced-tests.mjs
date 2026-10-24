@@ -3,7 +3,7 @@ import {mkdtempSync, writeFileSync, rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
 import {spawnSync} from "node:child_process";
-import {formatFamilies, generateArray, assessArray, solutionArray} from "./array-engine.js";
+import {formatFamilies, generateLegacyArray as generateArray, assessArray, solutionArray} from "./array-engine.js";
 
 const modes = ["create-references", "in-place", "trace-2d"];
 const levels = ["Beginner", "Intermediate", "Advanced"];

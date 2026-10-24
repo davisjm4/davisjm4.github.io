@@ -1,0 +1,6 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+const parts=[0,1,2].map(i=>JSON.parse(fs.readFileSync(new URL(`../reports/stress-part-${i}-results.json`,import.meta.url))));
+assert.equal(new Set(parts.map(p=>p.sourceDigest)).size,1,'all partitions must test the same runtime');
+const report={sourceDigest:parts[0].sourceDigest,verifiedAt:new Date().toISOString(),perCell:parts.flatMap(p=>p.perCell),mixed:parts.reduce((n,p)=>n+p.mixed,0),switching:parts.reduce((n,p)=>n+p.switching,0),mixedDistribution:parts[0].mixedDistribution,switchingDistribution:parts[0].switchingDistribution,repeatViolations:parts.reduce((n,p)=>n+p.repeatViolations,0)};
+assert.equal(report.perCell.length,36);assert.equal(new Set(report.perCell.map(c=>c.mode+'/'+c.difficulty)).size,36);assert.ok(report.perCell.every(c=>c.tested===10000&&c.rolling50Violations===0&&c.modelsWithSixVariants===c.registeredModels));assert.equal(report.mixed,20000);assert.equal(report.switching,10000);assert.equal(report.repeatViolations,0);
+fs.writeFileSync(new URL('../reports/stress-results.json',import.meta.url),JSON.stringify(report,null,2));console.log('390,000 stress challenges passed across all 36 cells, Mixed and switching/reload sequences. Zero rolling-50 violations.');
