@@ -1,4 +1,4 @@
-import {TOPICS,MODES,families,buildChallenge,createSampler,assess,validate} from './engine.js?v=create-task-v1';
+import {TOPICS,MODES,families,buildChallenge,createSampler,assess,validate} from './engine.js?v=family-history-v1';
 import {sessionTracker,addSessionNavigation,startActivePractice} from '../session.js?v=per-mode-daily-v1';
 const $=id=>document.getElementById(id),tracker=sessionTracker(),game='create-task-lab';
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -38,14 +38,15 @@ function highlight(){
 }
 function choose(value){if(scored)return;chosen=value;tracker.interact(record);$('submit').disabled=false;$('selected').textContent=current.mode==='identify'?'Your selection:\n'+current.regions.find(r=>r.id===value).text:'Your choice: '+value;highlight();}
 function beginRecord(){record=tracker.begin(game,'Create Performance Task Lab',current.topic,TOPICS[current.topic],current.mode,MODES[current.mode]);tracker.annotate(record,{familyId:current.familyId,scenarioId:current.scenarioId,seed:current.seed,variant:current.variant,validControl:current.valid,phrasing:current.phrasing});}
-function render(q){
+function render(q,remember=true){
+  if(remember)sampler.remember(q);try{localStorage.setItem(historyKey,JSON.stringify(sampler.history()));}catch{}
   current=q;chosen=null;scored=false;beginRecord();
   $('meta').textContent=MODES[q.mode]+' · '+TOPICS[q.topic];$('scenario').textContent=q.scenario;$('requirement').textContent=q.requirement;$('requirement').hidden=!q.requirement;$('question').textContent=q.prompt;$('selection-help').hidden=q.mode!=='identify';
   renderCode($('code'),q.code,q.candidates);$('selected').textContent='';$('choices').replaceChildren();$('choices').hidden=q.mode!=='missing';
   for(const choice of q.choices){const b=document.createElement('button');b.type='button';b.className='choice';b.dataset.answer=choice;b.setAttribute('aria-pressed','false');b.textContent=choice;b.addEventListener('click',()=>choose(choice));$('choices').append(b);}
   $('submit').disabled=true;$('feedback').hidden=true;$('correction').hidden=true;$('status').textContent='';stats();
 }
-export function next(){if(record&&!scored)tracker.skip(record);try{const q=sampler.next({mode:$('mode').value,topic:$('topic').value});render(q);try{localStorage.setItem(historyKey,JSON.stringify(sampler.history()));}catch{}}catch(e){$('status').textContent='This practice item could not be loaded. Please choose another topic or reload.';console.error(e);}}
+export function next(){if(record&&!scored)tracker.skip(record);try{const q=sampler.next({mode:$('mode').value,topic:$('topic').value});render(q,false);try{localStorage.setItem(historyKey,JSON.stringify(sampler.history()));}catch{}}catch(e){$('status').textContent='This practice item could not be loaded. Please choose another topic or reload.';console.error(e);}}
 export function submit(){
   if(scored||chosen===null)return;
   tracker.ensureCurrentDay();if(tracker.status(record)==='expired')beginRecord();

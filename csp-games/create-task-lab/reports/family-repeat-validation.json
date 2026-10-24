@@ -1,0 +1,151 @@
+{
+  "rounds": 14112,
+  "families": 131,
+  "violations": 0,
+  "results": [
+    {
+      "mode": "mixed",
+      "topic": "all",
+      "min": 2,
+      "max": 9
+    },
+    {
+      "mode": "mixed",
+      "topic": "procedures",
+      "min": 19,
+      "max": 25
+    },
+    {
+      "mode": "mixed",
+      "topic": "parameters",
+      "min": 27,
+      "max": 28
+    },
+    {
+      "mode": "mixed",
+      "topic": "selection",
+      "min": 25,
+      "max": 25
+    },
+    {
+      "mode": "mixed",
+      "topic": "iteration",
+      "min": 25,
+      "max": 28
+    },
+    {
+      "mode": "mixed",
+      "topic": "lists",
+      "min": 25,
+      "max": 25
+    },
+    {
+      "mode": "mixed",
+      "topic": "io",
+      "min": 20,
+      "max": 28
+    },
+    {
+      "mode": "mixed",
+      "topic": "behavior",
+      "min": 41,
+      "max": 63
+    },
+    {
+      "mode": "missing",
+      "topic": "all",
+      "min": 7,
+      "max": 12
+    },
+    {
+      "mode": "missing",
+      "topic": "procedures",
+      "min": 50,
+      "max": 50
+    },
+    {
+      "mode": "missing",
+      "topic": "parameters",
+      "min": 55,
+      "max": 56
+    },
+    {
+      "mode": "missing",
+      "topic": "selection",
+      "min": 49,
+      "max": 51
+    },
+    {
+      "mode": "missing",
+      "topic": "iteration",
+      "min": 55,
+      "max": 56
+    },
+    {
+      "mode": "missing",
+      "topic": "lists",
+      "min": 50,
+      "max": 50
+    },
+    {
+      "mode": "missing",
+      "topic": "io",
+      "min": 55,
+      "max": 56
+    },
+    {
+      "mode": "missing",
+      "topic": "behavior",
+      "min": 83,
+      "max": 84
+    },
+    {
+      "mode": "identify",
+      "topic": "all",
+      "min": 5,
+      "max": 18
+    },
+    {
+      "mode": "identify",
+      "topic": "procedures",
+      "min": 30,
+      "max": 40
+    },
+    {
+      "mode": "identify",
+      "topic": "parameters",
+      "min": 55,
+      "max": 56
+    },
+    {
+      "mode": "identify",
+      "topic": "selection",
+      "min": 30,
+      "max": 64
+    },
+    {
+      "mode": "identify",
+      "topic": "iteration",
+      "min": 50,
+      "max": 50
+    },
+    {
+      "mode": "identify",
+      "topic": "lists",
+      "min": 50,
+      "max": 50
+    },
+    {
+      "mode": "identify",
+      "topic": "io",
+      "min": 30,
+      "max": 48
+    },
+    {
+      "mode": "identify",
+      "topic": "behavior",
+      "min": 125,
+      "max": 125
+    }
+  ]
+}

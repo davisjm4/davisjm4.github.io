@@ -42,7 +42,8 @@ export function buildChallenge(familyId,variant=0,seed=1,{valid=false,phrasing=0
   }
   const prompt=family.mode==='identify'?family.prompts[phrasing%family.prompts.length]:['Which component is missing, incorrect, or ineffective for the stated task?','Which statement accurately evaluates the program for the stated behavior and focus?'][phrasing%2];
   const explanation=family.mode==='identify'?family.explanation:valid?'No component is missing for the stated task and focus. '+(family.requirement||'The program implements the stated behavior. This does not claim that this short example satisfies every Create requirement.'):family.explanation;
-  return {version:VERSION,id:`${family.id}:${variant}:${seed}:${valid?1:0}:${phrasing%2}`,familyId:family.id,scenarioId:s.id,mode:family.mode,topic:family.topic,variant,seed,phrasing:phrasing%2,valid:family.mode==='missing'&&valid,mutation,prompt,scenario:s.description+(s.id==='input'?' The supplied user response for this run is '+s.sample+'.':s.id==='event'?'':' The intended argument for this task is '+JSON.stringify(s.originalValue)+'.'),requirement:family.requirement,program,baseline,code:displayed.code,regions:displayed.regions,correctedCode:corrected.code,correctedRegions:corrected.regions,target,candidates,choices,correct,explanation,structuralSignature:shape(program),repeatSignature:normal({family:family.id,code:displayed.code,valid:!!valid}),semanticMetadata:{inputInstructions:displayed.regions.filter(r=>r.id==='input-statement'||r.id==='event-header'),outputInstructions:displayed.regions.filter(r=>r.id==='output'),parameters:displayed.regions.filter(r=>r.id==='parameter'),arguments:displayed.regions.filter(r=>r.id==='argument')},probes:s.probes};
+  const scenarioText=s.description+(s.id==='input'?' The supplied user response for this run is '+s.sample+'.':s.id==='event'?'':' The intended argument for this task is '+JSON.stringify(s.originalValue)+'.');
+  return {version:VERSION,id:`${family.id}:${variant}:${seed}:${valid?1:0}:${phrasing%2}`,familyId:family.id,scenarioId:s.id,mode:family.mode,topic:family.topic,variant,seed,phrasing:phrasing%2,valid:family.mode==='missing'&&valid,mutation,prompt,scenario:scenarioText,requirement:family.requirement,program,baseline,code:displayed.code,regions:displayed.regions,correctedCode:corrected.code,correctedRegions:corrected.regions,target,candidates,choices,correct,explanation,structuralSignature:shape(program),repeatSignature:normal({family:family.id,code:displayed.code,context:scenarioText,valid:!!valid}),semanticMetadata:{inputInstructions:displayed.regions.filter(r=>r.id==='input-statement'||r.id==='event-header'),outputInstructions:displayed.regions.filter(r=>r.id==='output'),parameters:displayed.regions.filter(r=>r.id==='parameter'),arguments:displayed.regions.filter(r=>r.id==='argument')},probes:s.probes};
 }
 export function assess(q,answer){return answer===q.correct;}
 export function validate(q) {
@@ -94,13 +95,22 @@ export function validate(q) {
   return {ok:!errors.length,errors,baselineExecuted:true,behaviorChanged,structuralDefect,counterfactuals,baselineOutput:base.outputs,actualOutput:actual.outputs,actualError:actual.error};
 }
 // Balanced per-mode/topic/family deck. Exact code cannot recur in the last 50
-// rounds, including after filter changes. Families may recur in narrow filters.
-export function createSampler(seed=1,{history=[]}={}) {
+// rounds, including after filter changes. The previous three family IDs are excluded before balancing; narrow filters use at most N−1 recent rounds.
+export function createSampler(seed=1,{history=[],familyPool=families}={}) {
   const rng=random(seed),seen=[...history].slice(-50),counts=new Map(),groupCounts=new Map();let turn=0,missingTurns=0;
-  return {next({mode='mixed',topic='all'}={}){
-    const modes=mode==='mixed'?['missing','identify']:[mode];
+  const recentFamilies=history.flatMap(signature=>{try{const id=JSON.parse(signature).family;return typeof id==='string'?[id]:[];}catch{return [];}}).slice(-3);
+  const remember=challenge=>{
+    seen.push(challenge.repeatSignature);while(seen.length>50)seen.shift();
+    recentFamilies.push(challenge.familyId);while(recentFamilies.length>3)recentFamilies.shift();
+  };
+  return {remember,familyHistory:()=>[...recentFamilies],next({mode='mixed',topic='all'}={}){
+    const active=familyPool.filter(f=>(mode==='mixed'||f.mode===mode)&&(topic==='all'||f.topic===topic));
+    if(!active.length)throw Error('No matching families');
+    let window=Math.min(3,new Set(active.map(f=>f.id)).size-1),allowed;
+    do{const excluded=new Set(window?recentFamilies.slice(-window):[]);allowed=active.filter(f=>!excluded.has(f.id));if(allowed.length)break;window--;}while(window>=0);
+    const modes=[...new Set(allowed.map(f=>f.mode))];
     const selectedMode=modes.sort((a,b)=>(groupCounts.get(a)||0)-(groupCounts.get(b)||0)||rng()-.5)[0];
-    const eligible=families.filter(f=>f.mode===selectedMode&&(topic==='all'||f.topic===topic));if(!eligible.length)throw Error('No matching families');
+    const eligible=allowed.filter(f=>f.mode===selectedMode);if(!eligible.length)throw Error('No matching families');
     const topics=[...new Set(eligible.map(f=>f.topic))];
     const selectedTopic=topics.sort((a,b)=>(groupCounts.get(selectedMode+':'+a)||0)-(groupCounts.get(selectedMode+':'+b)||0)||rng()-.5)[0];
     const pool=eligible.filter(f=>f.topic===selectedTopic);
@@ -112,13 +122,13 @@ export function createSampler(seed=1,{history=[]}={}) {
       for(let attempt=0;attempt<100;attempt++){
         const v=Math.floor(rng()*3),s=Math.floor(rng()*1000000000)+1;
         const built=buildChallenge(family.id,v,s,{valid,phrasing:Math.floor(rng()*2)});
-        if(!seen.includes(built.repeatSignature)){challenge=built;available=true;break;}
+        if(!seen.some(signature=>{if(signature===built.repeatSignature)return true;try{const old=JSON.parse(signature);if(!('context' in old)){const next=JSON.parse(built.repeatSignature);delete next.context;return normal(old)===normal(next);}}catch{}return false;})){challenge=built;available=true;break;}
       }
       if(available)break;
     }
     if(!available)throw Error('Repeat avoidance exhausted for the selected topic');
     const check=validate(challenge);if(!check.ok)throw Error(challenge.id+' '+check.errors.join('; '));
-    seen.push(challenge.repeatSignature);while(seen.length>50)seen.shift();
+    remember(challenge);
     counts.set(family.id,(counts.get(family.id)||0)+1);groupCounts.set(selectedMode,(groupCounts.get(selectedMode)||0)+1);groupCounts.set(selectedMode+':'+selectedTopic,(groupCounts.get(selectedMode+':'+selectedTopic)||0)+1);if(selectedMode==='missing')missingTurns++;turn++;
     return challenge;
   },history:()=>[...seen],get turns(){return turn;}};

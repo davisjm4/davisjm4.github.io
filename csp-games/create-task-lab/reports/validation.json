@@ -55,12 +55,12 @@
       },
       "byTopic": {
         "behavior": 42,
-        "iteration": 44,
+        "iteration": 43,
         "procedures": 43,
-        "io": 42,
+        "io": 43,
         "selection": 43,
-        "parameters": 44,
-        "lists": 42
+        "parameters": 43,
+        "lists": 43
       }
     },
     {
@@ -233,10 +233,10 @@
         "identify": 300
       },
       "byTopic": {
-        "behavior": 43,
+        "behavior": 42,
         "iteration": 43,
         "procedures": 43,
-        "io": 42,
+        "io": 43,
         "selection": 43,
         "lists": 43,
         "parameters": 43
