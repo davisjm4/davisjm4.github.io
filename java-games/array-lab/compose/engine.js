@@ -1,3 +1,4 @@
+import {certifiedPools} from './catalog.js?v=array-catalog-20261024';
 import {MODEL_NAMES,LEVELS,buildModel,rng} from './models.js';
 import {validateCandidate} from './quality.js';
 
@@ -11,8 +12,15 @@ export function createArrayHistory(storage=globalThis.localStorage){
 const pools=new Map();
 const groupedPools=new WeakMap();
 export function variantCapacity(mode){return ['access-2d','update-2d'].includes(mode)?144:72;}
-export function structurePool(mode,difficulty){
- const key=mode+'/'+difficulty;if(pools.has(key))return pools.get(key);
+export function structurePool(mode,difficulty,options={}){
+ const key=mode+'/'+difficulty;if(!options.rebuild&&pools.has(key))return pools.get(key);
+ // Certification is performed offline. Inflate only the requested pool so a
+ // new practice mode never blocks the classroom UI with exhaustive generation.
+ if(!options.rebuild&&certifiedPools[key]){
+   const pool=certifiedPools[key].map(([key,...owners])=>{const alternatives=owners.map(([model,variant,certificationSeed])=>({model,variant,certificationSeed}));return {...alternatives[0],key,alternatives};});
+   if(pool.length<60||new Set(pool.map(p=>p.key)).size!==pool.length)throw Error('Invalid certified Array Lab pool');
+   pools.set(key,pool);return pool;
+ }
  const pool=[],seen=new Map();for(let m=0;m<MODEL_NAMES[mode].length;m++)for(let v=0;v<variantCapacity(mode);v++){
    for(let trial=0;trial<24;trial++){
      const certificationSeed=(123+Math.imul(trial,2654435761))>>>0;

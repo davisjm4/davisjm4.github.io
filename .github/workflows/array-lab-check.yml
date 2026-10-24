@@ -1,0 +1,60 @@
+name: Array Lab Verification
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'java-games/array-lab/**'
+      - '!java-games/array-lab/reports/**'
+      - '!java-games/array-lab/**/*.md'
+      - 'java-games/session.js'
+      - 'java-games/package.json'
+      - 'cs-games/teacher/adapters.js'
+      - '.github/workflows/array-lab-check.yml'
+  pull_request:
+    paths:
+      - 'java-games/array-lab/**'
+      - '!java-games/array-lab/reports/**'
+      - '!java-games/array-lab/**/*.md'
+      - 'java-games/session.js'
+      - 'java-games/package.json'
+      - 'cs-games/teacher/adapters.js'
+      - '.github/workflows/array-lab-check.yml'
+  workflow_dispatch:
+    inputs:
+      stress:
+        description: Run the full 390,000-question stress sample
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: java-games
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Prepare test dependencies
+        run: npm install --ignore-scripts --no-package-lock
+      - name: Catalog, rubric, generator and interaction checks
+        run: npm run test:array-compose
+      - name: Local-midnight checks in Pacific time
+        run: TZ=America/Los_Angeles node array-lab/compose/ui-tests.mjs
+      - name: Independent Java validation including the 720-sample gallery
+        run: npm run test:array-compose-jvm
+      - name: Existing Array Lab and shared-session regressions
+        run: npm run test:array-lab && node session-tests.mjs
+      - name: Teacher export regressions
+        run: node ../cs-games/teacher/qti-tests.mjs && node ../cs-games/teacher/adapters-tests.mjs
+      - name: Full stress sample when requested
+        if: ${{ inputs.stress == true }}
+        run: npm run test:array-compose-stress

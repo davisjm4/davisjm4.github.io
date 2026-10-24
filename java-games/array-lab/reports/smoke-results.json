@@ -1,6 +1,6 @@
 {
-  "sourceDigest": "fe5c7085c1a7dc315be091ea125ac17334d300791aa629177148bb489f03839b",
-  "verifiedAt": "2026-10-24T05:50:17.867Z",
+  "sourceDigest": "5f09b6d22d1ba284b56e63e7e52a2bf3246d2c4e1aa3b05336b212ec3ac6ffe2",
+  "verifiedAt": "2026-10-24T06:01:01.737Z",
   "group": null,
   "perCell": [
     {
@@ -14,7 +14,7 @@
       "observedStructures": 75,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 17
+      "milliseconds": 22
     },
     {
       "mode": "element",
@@ -27,7 +27,7 @@
       "observedStructures": 98,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 30
+      "milliseconds": 39
     },
     {
       "mode": "element",
@@ -40,7 +40,7 @@
       "observedStructures": 98,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 63
+      "milliseconds": 95
     },
     {
       "mode": "predict-update",
@@ -53,7 +53,7 @@
       "observedStructures": 60,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 27
+      "milliseconds": 34
     },
     {
       "mode": "predict-update",
@@ -66,7 +66,7 @@
       "observedStructures": 98,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 33
+      "milliseconds": 50
     },
     {
       "mode": "predict-update",
@@ -79,7 +79,7 @@
       "observedStructures": 98,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 63
+      "milliseconds": 78
     },
     {
       "mode": "perform-update",
@@ -92,7 +92,7 @@
       "observedStructures": 80,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 20
+      "milliseconds": 23
     },
     {
       "mode": "perform-update",
@@ -105,7 +105,7 @@
       "observedStructures": 98,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 36
+      "milliseconds": 46
     },
     {
       "mode": "perform-update",
@@ -118,7 +118,7 @@
       "observedStructures": 98,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 77
+      "milliseconds": 91
     },
     {
       "mode": "search",
@@ -131,7 +131,7 @@
       "observedStructures": 66,
       "observedModels": 12,
       "rolling50Violations": 0,
-      "milliseconds": 38
+      "milliseconds": 50
     },
     {
       "mode": "search",
@@ -144,7 +144,7 @@
       "observedStructures": 95,
       "observedModels": 12,
       "rolling50Violations": 0,
-      "milliseconds": 61
+      "milliseconds": 75
     },
     {
       "mode": "search",
@@ -157,7 +157,7 @@
       "observedStructures": 93,
       "observedModels": 12,
       "rolling50Violations": 0,
-      "milliseconds": 368
+      "milliseconds": 442
     },
     {
       "mode": "traversal",
@@ -170,7 +170,7 @@
       "observedStructures": 62,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 31
+      "milliseconds": 37
     },
     {
       "mode": "traversal",
@@ -183,7 +183,7 @@
       "observedStructures": 85,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 58
+      "milliseconds": 65
     },
     {
       "mode": "traversal",
@@ -196,7 +196,7 @@
       "observedStructures": 85,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 331
+      "milliseconds": 325
     },
     {
       "mode": "access-2d",
@@ -209,7 +209,7 @@
       "observedStructures": 81,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 22
+      "milliseconds": 24
     },
     {
       "mode": "access-2d",
@@ -222,7 +222,7 @@
       "observedStructures": 99,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 27
+      "milliseconds": 37
     },
     {
       "mode": "access-2d",
@@ -235,7 +235,7 @@
       "observedStructures": 99,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 75
+      "milliseconds": 90
     },
     {
       "mode": "update-2d",
@@ -248,7 +248,7 @@
       "observedStructures": 68,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 25
+      "milliseconds": 34
     },
     {
       "mode": "update-2d",
@@ -261,7 +261,7 @@
       "observedStructures": 71,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 45
+      "milliseconds": 52
     },
     {
       "mode": "update-2d",
@@ -274,7 +274,7 @@
       "observedStructures": 75,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 86
+      "milliseconds": 104
     },
     {
       "mode": "nested",
@@ -287,7 +287,7 @@
       "observedStructures": 60,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 46
+      "milliseconds": 53
     },
     {
       "mode": "nested",
@@ -300,7 +300,7 @@
       "observedStructures": 92,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 106
+      "milliseconds": 117
     },
     {
       "mode": "nested",
@@ -313,7 +313,7 @@
       "observedStructures": 96,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 168
+      "milliseconds": 175
     },
     {
       "mode": "reverse",
@@ -326,7 +326,7 @@
       "observedStructures": 60,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 28
+      "milliseconds": 30
     },
     {
       "mode": "reverse",
@@ -339,7 +339,7 @@
       "observedStructures": 66,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 55
+      "milliseconds": 53
     },
     {
       "mode": "reverse",
@@ -352,7 +352,7 @@
       "observedStructures": 66,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 117
+      "milliseconds": 122
     },
     {
       "mode": "create-references",
@@ -365,7 +365,7 @@
       "observedStructures": 61,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 15
+      "milliseconds": 19
     },
     {
       "mode": "create-references",
@@ -378,7 +378,7 @@
       "observedStructures": 82,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 28
+      "milliseconds": 35
     },
     {
       "mode": "create-references",
@@ -391,7 +391,7 @@
       "observedStructures": 80,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 59
+      "milliseconds": 65
     },
     {
       "mode": "in-place",
@@ -404,7 +404,7 @@
       "observedStructures": 86,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 109
+      "milliseconds": 128
     },
     {
       "mode": "in-place",
@@ -417,7 +417,7 @@
       "observedStructures": 66,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 58
+      "milliseconds": 63
     },
     {
       "mode": "in-place",
@@ -430,7 +430,7 @@
       "observedStructures": 69,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 135
+      "milliseconds": 141
     },
     {
       "mode": "trace-2d",
@@ -443,7 +443,7 @@
       "observedStructures": 60,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 47
+      "milliseconds": 30
     },
     {
       "mode": "trace-2d",
@@ -456,7 +456,7 @@
       "observedStructures": 96,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 128
+      "milliseconds": 130
     },
     {
       "mode": "trace-2d",
@@ -469,7 +469,7 @@
       "observedStructures": 96,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 286
+      "milliseconds": 293
     }
   ],
   "mixed": 240,

@@ -1,6 +1,6 @@
 # Array Lab implementation and validation report
 
-The compositional engine is implemented and its automated checks pass. Production publication and actual browser verification are pending in this commit. Independent human instructional sign-off remains outstanding; the 720-sample review is explicitly assistant review.
+The compositional engine is implemented and its automated checks pass. The first release (412fcb9) deployed successfully. Live browser testing found slow first-use pool certification; this follow-up moves certification into a generated catalog while retaining validation of every live candidate. Repeat production verification of the optimized release is pending in this commit. Independent human instructional sign-off remains outstanding; the 720-sample review is explicitly assistant review.
 
 ## Implementation
 
@@ -41,6 +41,8 @@ The historical twenty-sample rejection record, development gallery and diagnosti
 
 ## Automated results
 
+The generated catalog exactly matches independent exhaustive certification of all 36 pools / 7,552 unique per-cell structures. A source-digest gate prevents stale catalogs. The optimized engine repeated the full stress, JVM, rubric, DOM/session (UTC and Pacific) and teacher-export checks below successfully. A targeted GitHub Actions workflow now runs the permanent checks on relevant changes.
+
 * 390,000 stress challenges passed: 10,000 in each of 36 mode/difficulty cells, 20,000 Mixed and 10,000 switching/reload cases. Zero rolling-50 violations. All registered models were exercised. Mixed covered all 36 cells.
 * 8,491 Java programs compiled and their outputs matched the independent JVM. 8,459 complete array/reference states matched. Thirty-two intentional runtime exceptions and two intentional uninitialized-local compile failures were verified. All 720 instructional samples were included. Zero mismatches.
 * Difficulty adversarial tests passed, including 4,534 cross-seed structure pairs, the rubric's alias/reassignment examples, irrelevant-code and array-length invariance, neutral/cancelling arithmetic, short-circuit evaluation, row identity, error dependencies, Boolean-result shortcuts and reproducibility.
@@ -49,13 +51,15 @@ The historical twenty-sample rejection record, development gallery and diagnosti
 * Shared session tests and QTI formatting/integrity checks passed. Teacher adapter regression passed 852 validated samples across 136 source/mode/difficulty combinations and a fifty-item unique export.
 * The broad repository suite previously passed its affected Array, Boolean, Range Explorer, session and teacher checks, then stopped at an unchanged RACECES adapter assertion: 23 authored topics versus the fixture's expected 15. The final broad rerun reached this same unchanged RACECES failure after all affected checks passed. Remaining unrelated recursion/JVM, ArrayList, String and Search/Sort suites passed separately during this work. The unrelated RACECES fixture was not weakened.
 
-Current runtime SHA-256: `fe5c7085c1a7dc315be091ea125ac17334d300791aa629177148bb489f03839b`. Smoke, stress, coverage, JVM and completed review records all carry this same digest. Detailed counts and distributions are in the JSON reports beside this document.
+Current runtime SHA-256: `5f09b6d22d1ba284b56e63e7e52a2bf3246d2c4e1aa3b05336b212ec3ac6ffe2`. Smoke, stress, coverage, JVM and completed review records all carry this same digest. Detailed counts and distributions are in the JSON reports beside this document.
 
 ## Browser/publication status
 
-The cloud browser opened the existing production game to establish its current baseline. It cannot reach the workspace's local development server; actual updated desktop/mobile workflows will be verified after publication. The responsive verification page provides 390, 768 and 1120 px game frames for browser checks. Controlled-clock day transitions are automated DOM tests, not an actual overnight browser wait.
+GitHub Pages run 40068143266 successfully deployed commit 412fcb93c56318796552b51dff8cc79a39592cd0. The browser confirmed the updated interface, a correct keyboard submission and scoring, and five completed Mixed rounds. A subsequent first-use challenge transition exposed a long synchronous certification pause. This follow-up ships the pre-certified catalog so browsers only inflate the requested descriptors; full online candidate checks remain active.
 
-Draft integration PR: https://github.com/davisjm4/davisjm4.github.io/pull/12 . No production success is claimed in this pre-publication report. Commit/deployment and actual browser results will be recorded after the update is live.
+The cloud browser cannot reach the workspace development server. Repeat fifty-round desktop, mode/statistics, keyboard, teacher-link, same-day reload, Session Summary and 390/768 px checks will follow this optimized deployment. Controlled-clock midnight boundaries are tested in the DOM suite, not by waiting overnight in the actual browser.
+
+Integration PR: https://github.com/davisjm4/davisjm4.github.io/pull/12 . The initial deployment is verified; no optimized-production verification is claimed yet.
 
 ## Remaining limitations
 

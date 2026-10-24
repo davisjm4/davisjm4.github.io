@@ -27,7 +27,7 @@ Every mode/difficulty has at least ten instructional model sets and sixty unique
 
 Variants change required index operations, scan direction/stride, boundaries, conditions, reference relationships, observation dependencies, or algorithm stages. Numeric values, array length, names, difficulty labels, model names and branch outcomes do not create new keys. Signatures retain necessary index equality relationships, reference topology, operators and control flow. Generation uses a bounded, least-recent-mode/model scheduler. The last fifty keys persist in `javaArray.semanticHistory.v1`, including skipped challenges, across Mixed, individual modes, levels, reloads and daily session resets. No duplicate or easier fallback is allowed.
 
-Pools certify each descriptor using bounded deterministic numeric seeds. Every live challenge is independently checked again. `certificationSeed` records a reproducible admitted example for the JVM harness; it is not a source of extra structural diversity.
+Pools certify each descriptor offline using bounded deterministic numeric seeds. `build-catalog.mjs` writes a compact descriptor catalog, so classroom browsers do not repeat exhaustive certification when a mode first opens. The permanent catalog test independently rebuilds all 36 pools and checks exact agreement plus a source digest; rebuild the catalog after changing runtime JavaScript. Every live challenge is independently checked again. `certificationSeed` records a reproducible admitted example for the JVM harness; it is not a source of extra structural diversity.
 
 ## Examples of reference progression
 
@@ -60,6 +60,7 @@ The Advanced observation needs the old and new objects. The first update to `b[1
 ```sh
 cd java-games
 npm install --ignore-scripts --no-package-lock
+node array-lab/compose/build-catalog.mjs # after changing runtime source
 npm run test:array-compose
 npm run test:array-compose-stress
 npm run test:array-compose-jvm
@@ -72,3 +73,5 @@ For faster stress execution, run `tests.mjs --stress --group=0`, `--group=1` and
 `review-bundle.mjs` records the original code, options, answer, seed, independent dependency evidence and a content hash. Completion requires explicit hash-bound assistant decisions. The compressed completed review is labeled assistant source/dataflow review; it must never be described as an independent human audit. The original rejected twenty-sample review and historical development artifacts are retained as historical evidence.
 
 The DOM suite covers all 36 cells, target-only proposals, submission locks, mode/Mixed statistics, teacher links, keyboard interaction, storage failures, same-day reload and local-midnight expiration with a controllable clock. Actual browser checks supplement these tests. Daily scoring uses the existing shared session utility, separate from repetition history.
+
+The Array Lab Verification GitHub Actions workflow runs catalog/rubric/smoke/UI, JVM, legacy/session and teacher-export checks for relevant changes. Its manual stress option runs the full 390,000-question suite.

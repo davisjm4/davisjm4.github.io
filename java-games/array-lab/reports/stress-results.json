@@ -1,6 +1,6 @@
 {
-  "sourceDigest": "fe5c7085c1a7dc315be091ea125ac17334d300791aa629177148bb489f03839b",
-  "verifiedAt": "2026-10-24T05:49:00.673Z",
+  "sourceDigest": "5f09b6d22d1ba284b56e63e7e52a2bf3246d2c4e1aa3b05336b212ec3ac6ffe2",
+  "verifiedAt": "2026-10-24T06:04:59.386Z",
   "perCell": [
     {
       "mode": "element",
@@ -13,7 +13,7 @@
       "observedStructures": 81,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 1415
+      "milliseconds": 1686
     },
     {
       "mode": "element",
@@ -26,7 +26,7 @@
       "observedStructures": 222,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 3105
+      "milliseconds": 3136
     },
     {
       "mode": "element",
@@ -39,7 +39,7 @@
       "observedStructures": 222,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 8094
+      "milliseconds": 8253
     },
     {
       "mode": "search",
@@ -52,7 +52,7 @@
       "observedStructures": 66,
       "observedModels": 12,
       "rolling50Violations": 0,
-      "milliseconds": 3165
+      "milliseconds": 3798
     },
     {
       "mode": "search",
@@ -65,7 +65,7 @@
       "observedStructures": 720,
       "observedModels": 12,
       "rolling50Violations": 0,
-      "milliseconds": 6371
+      "milliseconds": 6096
     },
     {
       "mode": "search",
@@ -78,7 +78,7 @@
       "observedStructures": 589,
       "observedModels": 12,
       "rolling50Violations": 0,
-      "milliseconds": 35285
+      "milliseconds": 34850
     },
     {
       "mode": "update-2d",
@@ -91,7 +91,7 @@
       "observedStructures": 100,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 2501
+      "milliseconds": 2585
     },
     {
       "mode": "update-2d",
@@ -104,7 +104,7 @@
       "observedStructures": 193,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 3930
+      "milliseconds": 3849
     },
     {
       "mode": "update-2d",
@@ -117,7 +117,7 @@
       "observedStructures": 205,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 8065
+      "milliseconds": 7812
     },
     {
       "mode": "create-references",
@@ -130,7 +130,7 @@
       "observedStructures": 85,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 1320
+      "milliseconds": 1464
     },
     {
       "mode": "create-references",
@@ -143,7 +143,7 @@
       "observedStructures": 247,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 2849
+      "milliseconds": 2703
     },
     {
       "mode": "create-references",
@@ -156,7 +156,7 @@
       "observedStructures": 280,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 6109
+      "milliseconds": 5589
     },
     {
       "mode": "predict-update",
@@ -169,7 +169,7 @@
       "observedStructures": 60,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 2097
+      "milliseconds": 2564
     },
     {
       "mode": "predict-update",
@@ -182,7 +182,7 @@
       "observedStructures": 216,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 4417
+      "milliseconds": 3886
     },
     {
       "mode": "predict-update",
@@ -195,7 +195,7 @@
       "observedStructures": 234,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 7623
+      "milliseconds": 7836
     },
     {
       "mode": "traversal",
@@ -208,7 +208,7 @@
       "observedStructures": 62,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 3029
+      "milliseconds": 3258
     },
     {
       "mode": "traversal",
@@ -221,7 +221,7 @@
       "observedStructures": 474,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 6465
+      "milliseconds": 5931
     },
     {
       "mode": "traversal",
@@ -234,7 +234,7 @@
       "observedStructures": 414,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 27345
+      "milliseconds": 26487
     },
     {
       "mode": "nested",
@@ -247,7 +247,7 @@
       "observedStructures": 60,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 4495
+      "milliseconds": 4223
     },
     {
       "mode": "nested",
@@ -260,7 +260,7 @@
       "observedStructures": 282,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 10418
+      "milliseconds": 10459
     },
     {
       "mode": "nested",
@@ -273,7 +273,7 @@
       "observedStructures": 266,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 16375
+      "milliseconds": 15942
     },
     {
       "mode": "in-place",
@@ -286,7 +286,7 @@
       "observedStructures": 308,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 12732
+      "milliseconds": 10141
     },
     {
       "mode": "in-place",
@@ -299,7 +299,7 @@
       "observedStructures": 76,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 6460
+      "milliseconds": 7590
     },
     {
       "mode": "in-place",
@@ -312,7 +312,7 @@
       "observedStructures": 131,
       "observedModels": 11,
       "rolling50Violations": 0,
-      "milliseconds": 13202
+      "milliseconds": 13084
     },
     {
       "mode": "perform-update",
@@ -325,7 +325,7 @@
       "observedStructures": 90,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 2051
+      "milliseconds": 2253
     },
     {
       "mode": "perform-update",
@@ -338,7 +338,7 @@
       "observedStructures": 222,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 4741
+      "milliseconds": 3970
     },
     {
       "mode": "perform-update",
@@ -351,7 +351,7 @@
       "observedStructures": 222,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 8179
+      "milliseconds": 9938
     },
     {
       "mode": "access-2d",
@@ -364,7 +364,7 @@
       "observedStructures": 90,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 1555
+      "milliseconds": 1615
     },
     {
       "mode": "access-2d",
@@ -377,7 +377,7 @@
       "observedStructures": 247,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 2687
+      "milliseconds": 2615
     },
     {
       "mode": "access-2d",
@@ -390,7 +390,7 @@
       "observedStructures": 253,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 7499
+      "milliseconds": 7574
     },
     {
       "mode": "reverse",
@@ -403,7 +403,7 @@
       "observedStructures": 60,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 2677
+      "milliseconds": 2454
     },
     {
       "mode": "reverse",
@@ -416,7 +416,7 @@
       "observedStructures": 67,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 5120
+      "milliseconds": 4862
     },
     {
       "mode": "reverse",
@@ -429,7 +429,7 @@
       "observedStructures": 74,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 12528
+      "milliseconds": 12127
     },
     {
       "mode": "trace-2d",
@@ -442,7 +442,7 @@
       "observedStructures": 60,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 2891
+      "milliseconds": 2607
     },
     {
       "mode": "trace-2d",
@@ -455,7 +455,7 @@
       "observedStructures": 306,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 12248
+      "milliseconds": 12380
     },
     {
       "mode": "trace-2d",
@@ -468,7 +468,7 @@
       "observedStructures": 266,
       "observedModels": 10,
       "rolling50Violations": 0,
-      "milliseconds": 31785
+      "milliseconds": 28381
     }
   ],
   "mixed": 20000,
