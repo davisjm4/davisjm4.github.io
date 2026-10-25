@@ -1,0 +1,200 @@
+{
+  "rounds": 15000,
+  "exactViolations": 0,
+  "familyViolations": 0,
+  "mixedSemanticRepeats": 0,
+  "answers": {
+    "Lossless": 7500,
+    "Lossy": 7500
+  },
+  "maxAnswerStreak": 2,
+  "settings": [
+    {
+      "seed": 7,
+      "topic": "mixed",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 60,
+      "instances": 348
+    },
+    {
+      "seed": 7,
+      "topic": "records",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 15,
+      "instances": 90
+    },
+    {
+      "seed": 7,
+      "topic": "images",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 15,
+      "instances": 90
+    },
+    {
+      "seed": 7,
+      "topic": "media",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 15,
+      "instances": 90
+    },
+    {
+      "seed": 7,
+      "topic": "delivery",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 15,
+      "instances": 90
+    },
+    {
+      "seed": 818,
+      "topic": "mixed",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 60,
+      "instances": 341
+    },
+    {
+      "seed": 818,
+      "topic": "records",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 15,
+      "instances": 90
+    },
+    {
+      "seed": 818,
+      "topic": "images",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 15,
+      "instances": 90
+    },
+    {
+      "seed": 818,
+      "topic": "media",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 15,
+      "instances": 90
+    },
+    {
+      "seed": 818,
+      "topic": "delivery",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 15,
+      "instances": 90
+    },
+    {
+      "seed": 9301,
+      "topic": "mixed",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 60,
+      "instances": 341
+    },
+    {
+      "seed": 9301,
+      "topic": "records",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 15,
+      "instances": 90
+    },
+    {
+      "seed": 9301,
+      "topic": "images",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 15,
+      "instances": 90
+    },
+    {
+      "seed": 9301,
+      "topic": "media",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 15,
+      "instances": 90
+    },
+    {
+      "seed": 9301,
+      "topic": "delivery",
+      "rounds": 1000,
+      "answers": {
+        "Lossless": 500,
+        "Lossy": 500
+      },
+      "families": 15,
+      "instances": 90
+    }
+  ],
+  "wordLengthShortcut": {
+    "bestCorrect": 203,
+    "total": 360
+  },
+  "reloadSwitch": {
+    "rounds": 3000,
+    "answers": {
+      "Lossless": 1496,
+      "Lossy": 1504
+    },
+    "exactViolations": 0,
+    "familyViolations": 0,
+    "maxAnswerStreak": 2
+  },
+  "coverageRounds": 6000,
+  "instancesCovered": 360,
+  "checks": 41685,
+  "limitations": [
+    "60 authored contrasts with 120 fidelity cases × 3 independent resource profiles = 360 scenario compositions, not 360 independently authored stories.",
+    "Constraints are hypothetical test results for the named item, not codec benchmarks or universal compression ratios.",
+    "Authoring/model validation and counterexamples do not prove universal natural-language unambiguity. Educator review remains pending."
+  ]
+}

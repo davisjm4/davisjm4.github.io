@@ -1,0 +1,24 @@
+name: Lossless vs. Lossy Compression Lab Verification
+on:
+  push:
+    branches: [main]
+    paths: ['csp-games/lossless-lossy-lab/**', 'csp-games/session.js', 'csp-games/package.json', 'cs-games/catalog.js', '.github/workflows/lossless-lossy-lab-check.yml']
+  pull_request:
+    paths: ['csp-games/lossless-lossy-lab/**', 'csp-games/session.js']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix csp-games
+      - run: npm test --prefix csp-games
+      - run: TZ=America/Los_Angeles node csp-games/lossless-lossy-lab/ui-tests.mjs
+      - run: ln -s ../csp-games/node_modules java-games/node_modules
+      - run: node cs-games/catalog-tests.mjs
