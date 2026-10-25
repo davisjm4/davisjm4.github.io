@@ -1,0 +1,144 @@
+{
+  "rounds": 22000,
+  "exactRepeatViolations": 0,
+  "familyCooldownViolations": 0,
+  "mixedSemanticRepeats": 0,
+  "answers": {
+    "Analog": 11000,
+    "Digital": 11000
+  },
+  "settings": {
+    "mixed": {
+      "rounds": 10000,
+      "analog": 5000,
+      "digital": 5000,
+      "families": 60,
+      "cases": 120,
+      "renderings": 720,
+      "cooldownRelaxations": 0
+    },
+    "audio": {
+      "rounds": 1000,
+      "analog": 500,
+      "digital": 500,
+      "families": 5,
+      "cases": 10,
+      "renderings": 60,
+      "cooldownRelaxations": 0
+    },
+    "images": {
+      "rounds": 1000,
+      "analog": 500,
+      "digital": 500,
+      "families": 5,
+      "cases": 10,
+      "renderings": 60,
+      "cooldownRelaxations": 0
+    },
+    "environment": {
+      "rounds": 1000,
+      "analog": 500,
+      "digital": 500,
+      "families": 5,
+      "cases": 10,
+      "renderings": 60,
+      "cooldownRelaxations": 0
+    },
+    "time": {
+      "rounds": 1000,
+      "analog": 500,
+      "digital": 500,
+      "families": 5,
+      "cases": 10,
+      "renderings": 60,
+      "cooldownRelaxations": 0
+    },
+    "motion": {
+      "rounds": 1000,
+      "analog": 500,
+      "digital": 500,
+      "families": 5,
+      "cases": 10,
+      "renderings": 60,
+      "cooldownRelaxations": 0
+    },
+    "electrical": {
+      "rounds": 1000,
+      "analog": 500,
+      "digital": 500,
+      "families": 5,
+      "cases": 10,
+      "renderings": 60,
+      "cooldownRelaxations": 0
+    },
+    "sensors": {
+      "rounds": 1000,
+      "analog": 500,
+      "digital": 500,
+      "families": 5,
+      "cases": 10,
+      "renderings": 60,
+      "cooldownRelaxations": 0
+    },
+    "storage": {
+      "rounds": 1000,
+      "analog": 500,
+      "digital": 500,
+      "families": 5,
+      "cases": 10,
+      "renderings": 60,
+      "cooldownRelaxations": 0
+    },
+    "sampling": {
+      "rounds": 1000,
+      "analog": 500,
+      "digital": 500,
+      "families": 5,
+      "cases": 10,
+      "renderings": 60,
+      "cooldownRelaxations": 0
+    },
+    "adc": {
+      "rounds": 1000,
+      "analog": 500,
+      "digital": 500,
+      "families": 5,
+      "cases": 10,
+      "renderings": 60,
+      "cooldownRelaxations": 0
+    },
+    "dac": {
+      "rounds": 1000,
+      "analog": 500,
+      "digital": 500,
+      "families": 5,
+      "cases": 10,
+      "renderings": 60,
+      "cooldownRelaxations": 0
+    },
+    "phenomena": {
+      "rounds": 1000,
+      "analog": 500,
+      "digital": 500,
+      "families": 5,
+      "cases": 10,
+      "renderings": 60,
+      "cooldownRelaxations": 0
+    }
+  },
+  "reloadSwitch": {
+    "rounds": 3000,
+    "answers": {
+      "Analog": 1499,
+      "Digital": 1501
+    },
+    "exactViolations": 0,
+    "familyViolations": 0
+  },
+  "checks": 75685,
+  "limitations": [
+    "120 authored semantic cases; six prompt renderings per case are not separate reasoning families.",
+    "Automated checks enforce authored domain/focus constraints and finite counterexamples, not a proof of natural-language ambiguity absence.",
+    "Classroom/independent educator review remains pending."
+  ]
+}

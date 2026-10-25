@@ -21,6 +21,7 @@ const $ = (id) => document.getElementById(id),
         })[c],
     );
 export const catalog = [
+  ["analog-digital-lab", "Analog vs. Digital Lab", "2 · Data", "2.1", "SIGNALS", "Classify continuous quantities and discrete representations in quick two-choice rounds."],
   ["ascii-binary-builder", "ASCII Binary Name Builder", "2 · Data", "2.1", "ASCII", "Build characters and text with eight-bit binary and live ASCII decoding."],
   ["rgb-color-builder", "RGB Color Code Builder", "2 · Data", "2.1", "RGB", "Build a target color by toggling RGB bits or changing hexadecimal digits, with live color feedback."],
   ...Object.entries(practiceGames).map(([slug, g]) => [
