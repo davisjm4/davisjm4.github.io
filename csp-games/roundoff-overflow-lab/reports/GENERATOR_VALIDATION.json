@@ -9,8 +9,8 @@
   "coreRounds": 14400,
   "answers": {
     "Overflow": 4200,
-    "Roundoff": 4200,
-    "Neither": 6000
+    "Roundoff": 4198,
+    "Neither": 6002
   },
   "exactViolations": 0,
   "familyViolations": 0,
@@ -20,12 +20,13 @@
       "seed": 4,
       "topic": "mixed",
       "families": 60,
-      "instances": 353,
+      "instances": 349,
       "answers": {
         "Overflow": 400,
-        "Roundoff": 400,
-        "Neither": 400
-      }
+        "Roundoff": 399,
+        "Neither": 401
+      },
+      "completeTriplesOf400": 114
     },
     {
       "seed": 4,
@@ -36,7 +37,8 @@
         "Overflow": 600,
         "Roundoff": 0,
         "Neither": 600
-      }
+      },
+      "completeTriplesOf400": 0
     },
     {
       "seed": 4,
@@ -47,7 +49,8 @@
         "Overflow": 0,
         "Roundoff": 600,
         "Neither": 600
-      }
+      },
+      "completeTriplesOf400": 0
     },
     {
       "seed": 4,
@@ -56,20 +59,22 @@
       "instances": 120,
       "answers": {
         "Overflow": 400,
-        "Roundoff": 400,
-        "Neither": 400
-      }
+        "Roundoff": 399,
+        "Neither": 401
+      },
+      "completeTriplesOf400": 114
     },
     {
       "seed": 93,
       "topic": "mixed",
       "families": 60,
-      "instances": 350,
+      "instances": 352,
       "answers": {
         "Overflow": 400,
         "Roundoff": 400,
         "Neither": 400
-      }
+      },
+      "completeTriplesOf400": 133
     },
     {
       "seed": 93,
@@ -80,7 +85,8 @@
         "Overflow": 600,
         "Roundoff": 0,
         "Neither": 600
-      }
+      },
+      "completeTriplesOf400": 0
     },
     {
       "seed": 93,
@@ -91,7 +97,8 @@
         "Overflow": 0,
         "Roundoff": 600,
         "Neither": 600
-      }
+      },
+      "completeTriplesOf400": 0
     },
     {
       "seed": 93,
@@ -102,18 +109,20 @@
         "Overflow": 400,
         "Roundoff": 400,
         "Neither": 400
-      }
+      },
+      "completeTriplesOf400": 133
     },
     {
       "seed": 1025,
       "topic": "mixed",
       "families": 60,
-      "instances": 354,
+      "instances": 349,
       "answers": {
         "Overflow": 400,
         "Roundoff": 400,
         "Neither": 400
-      }
+      },
+      "completeTriplesOf400": 138
     },
     {
       "seed": 1025,
@@ -124,7 +133,8 @@
         "Overflow": 600,
         "Roundoff": 0,
         "Neither": 600
-      }
+      },
+      "completeTriplesOf400": 0
     },
     {
       "seed": 1025,
@@ -135,7 +145,8 @@
         "Overflow": 0,
         "Roundoff": 600,
         "Neither": 600
-      }
+      },
+      "completeTriplesOf400": 0
     },
     {
       "seed": 1025,
@@ -146,22 +157,23 @@
         "Overflow": 400,
         "Roundoff": 400,
         "Neither": 400
-      }
+      },
+      "completeTriplesOf400": 138
     }
   ],
   "switched": {
     "rounds": 3000,
     "answers": {
-      "Overflow": 983,
-      "Roundoff": 993,
-      "Neither": 1024
+      "Overflow": 957,
+      "Roundoff": 968,
+      "Neither": 1075
     },
     "exactViolations": 0,
     "familyViolations": 0
   },
   "coverageRounds": 6000,
   "covered": 360,
-  "assertions": 36864,
+  "assertions": 36870,
   "limits": [
     "Integer Range uses Overflow/Neither and Precision uses Roundoff/Neither; all three choices remain available. Mixed and Applications balance all three categories.",
     "60 authored numerical focuses and six bounded parameter variants each; finite corpus, not unlimited stories.",
