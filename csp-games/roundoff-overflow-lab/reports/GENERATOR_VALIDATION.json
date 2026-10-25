@@ -1,0 +1,170 @@
+{
+  "families": 60,
+  "instances": 360,
+  "corpus": {
+    "Overflow": 112,
+    "Roundoff": 116,
+    "Neither": 132
+  },
+  "coreRounds": 14400,
+  "answers": {
+    "Overflow": 4200,
+    "Roundoff": 4200,
+    "Neither": 6000
+  },
+  "exactViolations": 0,
+  "familyViolations": 0,
+  "maxStreak": 2,
+  "settings": [
+    {
+      "seed": 4,
+      "topic": "mixed",
+      "families": 60,
+      "instances": 353,
+      "answers": {
+        "Overflow": 400,
+        "Roundoff": 400,
+        "Neither": 400
+      }
+    },
+    {
+      "seed": 4,
+      "topic": "integer",
+      "families": 20,
+      "instances": 120,
+      "answers": {
+        "Overflow": 600,
+        "Roundoff": 0,
+        "Neither": 600
+      }
+    },
+    {
+      "seed": 4,
+      "topic": "precision",
+      "families": 20,
+      "instances": 120,
+      "answers": {
+        "Overflow": 0,
+        "Roundoff": 600,
+        "Neither": 600
+      }
+    },
+    {
+      "seed": 4,
+      "topic": "applications",
+      "families": 20,
+      "instances": 120,
+      "answers": {
+        "Overflow": 400,
+        "Roundoff": 400,
+        "Neither": 400
+      }
+    },
+    {
+      "seed": 93,
+      "topic": "mixed",
+      "families": 60,
+      "instances": 350,
+      "answers": {
+        "Overflow": 400,
+        "Roundoff": 400,
+        "Neither": 400
+      }
+    },
+    {
+      "seed": 93,
+      "topic": "integer",
+      "families": 20,
+      "instances": 120,
+      "answers": {
+        "Overflow": 600,
+        "Roundoff": 0,
+        "Neither": 600
+      }
+    },
+    {
+      "seed": 93,
+      "topic": "precision",
+      "families": 20,
+      "instances": 120,
+      "answers": {
+        "Overflow": 0,
+        "Roundoff": 600,
+        "Neither": 600
+      }
+    },
+    {
+      "seed": 93,
+      "topic": "applications",
+      "families": 20,
+      "instances": 120,
+      "answers": {
+        "Overflow": 400,
+        "Roundoff": 400,
+        "Neither": 400
+      }
+    },
+    {
+      "seed": 1025,
+      "topic": "mixed",
+      "families": 60,
+      "instances": 354,
+      "answers": {
+        "Overflow": 400,
+        "Roundoff": 400,
+        "Neither": 400
+      }
+    },
+    {
+      "seed": 1025,
+      "topic": "integer",
+      "families": 20,
+      "instances": 120,
+      "answers": {
+        "Overflow": 600,
+        "Roundoff": 0,
+        "Neither": 600
+      }
+    },
+    {
+      "seed": 1025,
+      "topic": "precision",
+      "families": 20,
+      "instances": 120,
+      "answers": {
+        "Overflow": 0,
+        "Roundoff": 600,
+        "Neither": 600
+      }
+    },
+    {
+      "seed": 1025,
+      "topic": "applications",
+      "families": 20,
+      "instances": 120,
+      "answers": {
+        "Overflow": 400,
+        "Roundoff": 400,
+        "Neither": 400
+      }
+    }
+  ],
+  "switched": {
+    "rounds": 3000,
+    "answers": {
+      "Overflow": 983,
+      "Roundoff": 993,
+      "Neither": 1024
+    },
+    "exactViolations": 0,
+    "familyViolations": 0
+  },
+  "coverageRounds": 6000,
+  "covered": 360,
+  "assertions": 36864,
+  "limits": [
+    "Integer Range uses Overflow/Neither and Precision uses Roundoff/Neither; all three choices remain available. Mixed and Applications balance all three categories.",
+    "60 authored numerical focuses and six bounded parameter variants each; finite corpus, not unlimited stories.",
+    "Enumeration validates the specified teaching formats, not real IEEE implementations or natural-language universal unambiguity."
+  ]
+}

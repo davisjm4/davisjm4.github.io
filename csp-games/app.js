@@ -21,6 +21,7 @@ const $ = (id) => document.getElementById(id),
         })[c],
     );
 export const catalog = [
+  ["roundoff-overflow-lab", "Roundoff vs. Overflow Lab", "2 · Data", "2.1", "RANGE", "Distinguish insufficient range, insufficient precision and exact numerical representation."],
   ["lossless-lossy-lab", "Lossless vs. Lossy Compression Lab", "2 · Data", "2.2", "COMPRESSION", "Choose compression from exact-restoration and fidelity requirements."],
   ["analog-digital-lab", "Analog vs. Digital Lab", "2 · Data", "2.1", "SIGNALS", "Classify continuous quantities and discrete representations in quick two-choice rounds."],
   ["ascii-binary-builder", "ASCII Binary Name Builder", "2 · Data", "2.1", "ASCII", "Build characters and text with eight-bit binary and live ASCII decoding."],
