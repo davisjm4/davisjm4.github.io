@@ -21,6 +21,7 @@ const $ = (id) => document.getElementById(id),
         })[c],
     );
 export const catalog = [
+  ["digital-divide-lab", "Digital Divide Scenario Lab", "5 · Impact of Computing", "Digital access", "ACCESS", "Diagnose access barriers, choose feasible interventions and interpret fictional data."],
   ["ai-ethics-lab", "AI Ethics Scenario Lab", "5 · Impact of Computing", "5.1–5.5", "AI", "Evaluate evidence, responses, tradeoffs and consequences in realistic AI scenarios."],
   ["internet-layers-lab", "Internet Layers & Protocol Roles Lab", "4 · Networks", "4.1–4.3", "NET", "Reason about protocol roles, communication steps and resilient packet paths."],
   ["vocabulary-fill-in-lab", "AP CSP Vocabulary Fill-in Lab", "All five Big Ideas", "1–5", "WORDS", "Complete contextual vocabulary statements with a plausible word bank and immediate explanation."],

@@ -106,3 +106,13 @@ console.log(`PASS: ${games.length} playable Java games, ${advanced.filter(g=>g.s
  filter.value='4.1 Network Communication';vm.runInContext('render()',ui);assert.equal(links().length,0);
  console.log('PASS: AI Ethics renders exactly once under Big Idea 5 and each of its five topic filters.');
 }
+// Digital Divide adds applied access practice without replacing impact or AI labs.
+{
+ const {window,document}=parseHTML(read('cs-games/csp/index.html'));window.CSGamesCatalog=catalog;
+ const filter=document.getElementById('topic-filter');Object.defineProperty(filter,'value',{writable:true,value:''});
+ document.getElementById('game-search').value='Digital Divide';const ui={window,document};vm.createContext(ui);vm.runInContext(read('cs-games/course-page.js'),ui);
+ const links=()=>[...document.querySelectorAll('a.launch')].filter(a=>a.getAttribute('href')==='../../csp-games/digital-divide-lab/');assert.equal(links().length,1);assert.ok(document.getElementById('results').textContent.includes('Impact of Computing'));
+ for(const topic of catalog.find(g=>g.id==='digital-divide-lab').topics){filter.value=topic;vm.runInContext('render()',ui);assert.equal(links().length,1);}
+ for(const id of ['computing-impact-lab','ai-ethics-lab','vocabulary-fill-in-lab'])assert.equal(catalog.filter(g=>g.course==='csp'&&g.id===id).length,1);
+ console.log('PASS: Digital Divide launches once under Big Idea 5 and its topic filters; existing impact/AI/vocabulary entries preserved.');
+}

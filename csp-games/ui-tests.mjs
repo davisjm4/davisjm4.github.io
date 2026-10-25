@@ -444,8 +444,8 @@ for (let repetition = 0; repetition < 25; repetition++) {
   d.good();
 }
 let home = launch("");
-assert.equal(home.document.querySelectorAll(".card").length, 27);
-assert.equal(home.document.querySelectorAll("a.button").length, 27);
+assert.equal(home.document.querySelectorAll(".card").length, 28);
+assert.equal(home.document.querySelectorAll("a.button").length, 28);
 // All same-site links and assets have physical targets on Pages (no SPA fallback).
 for (let name of fs
   .readdirSync(new URL("./", import.meta.url), { withFileTypes: true })

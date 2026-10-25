@@ -1,0 +1,7 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:divide
+> node digital-divide-lab/tests.mjs && node digital-divide-lab/ui-tests.mjs
+
+Digital Divide engine/content: 31059 assertions passed. {"rounds":22200,"exactViolations":0,"familyViolations":0,"barrierViolations":0,"actualExactRepeats":5725,"actualFamilyRepeats":6252,"consecutiveBarriers":12,"positions":[5531,5633,5496,5540],"longest":100,"shortest":105}
+Digital Divide DOM/session: 2682 assertions passed; 444 scored rounds; all 36 selections, terminal scoring, metadata, cumulative summary beyond 256 records, daily and manual reset.

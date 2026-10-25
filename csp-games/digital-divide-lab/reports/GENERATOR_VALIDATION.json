@@ -1,0 +1,604 @@
+{
+  "families": 80,
+  "instances": 400,
+  "contexts": 20,
+  "barriers": 12,
+  "solutionCategories": 12,
+  "rounds": 22200,
+  "exactViolations": 0,
+  "familyViolations": 0,
+  "barrierViolations": 0,
+  "actualExactRepeats": 5725,
+  "actualFamilyRepeats": 6252,
+  "consecutiveBarriers": 12,
+  "exactRelaxations": 5725,
+  "familyRelaxations": 6252,
+  "familiesReached": 80,
+  "instancesReached": 400,
+  "answerPositions": [
+    5531,
+    5633,
+    5496,
+    5540
+  ],
+  "modeCounts": {
+    "evidence": 4424,
+    "barrier": 4441,
+    "impact": 4445,
+    "solution": 4443,
+    "tradeoff": 4447
+  },
+  "topicCounts": {
+    "solutions": 4428,
+    "impacts": 4437,
+    "skills": 4425,
+    "devices": 4442,
+    "access": 4468
+  },
+  "barrierCounts": {
+    "physical": 1903,
+    "affordability": 2088,
+    "language": 1651,
+    "suitability": 1715,
+    "availability": 1892,
+    "service": 1762,
+    "reliability": 1869,
+    "support": 1945,
+    "infrastructure": 2075,
+    "accessibility": 1733,
+    "bandwidth": 1923,
+    "literacy": 1644
+  },
+  "lengthHeuristic": {
+    "longest": 100,
+    "shortest": 105,
+    "includesTies": true
+  },
+  "dataCasesIndependentlyChecked": 80,
+  "reviewFixtures": 16,
+  "runs": [
+    {
+      "label": "Mixed",
+      "seed": 41,
+      "rounds": 5000,
+      "modes": {
+        "evidence": 1001,
+        "barrier": 999,
+        "impact": 1002,
+        "solution": 999,
+        "tradeoff": 999
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Mixed",
+      "seed": 932,
+      "rounds": 5000,
+      "modes": {
+        "solution": 1000,
+        "evidence": 999,
+        "barrier": 1001,
+        "tradeoff": 1000,
+        "impact": 1000
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Cross-mode and topic",
+      "seed": 2026,
+      "rounds": 5000,
+      "modes": {
+        "solution": 1005,
+        "impact": 1004,
+        "evidence": 982,
+        "tradeoff": 1005,
+        "barrier": 1004
+      },
+      "actualExactRepeats": 1125,
+      "actualFamilyRepeats": 2312,
+      "consecutiveBarriers": 12,
+      "exactRelaxations": 1125,
+      "familyRelaxations": 2312
+    },
+    {
+      "label": "Selection mixed/mixed",
+      "seed": 300,
+      "rounds": 200,
+      "modes": {
+        "evidence": 42,
+        "impact": 39,
+        "solution": 39,
+        "barrier": 39,
+        "tradeoff": 41
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection mixed/access",
+      "seed": 301,
+      "rounds": 200,
+      "modes": {
+        "solution": 40,
+        "impact": 39,
+        "evidence": 41,
+        "tradeoff": 40,
+        "barrier": 40
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection mixed/devices",
+      "seed": 302,
+      "rounds": 200,
+      "modes": {
+        "evidence": 38,
+        "solution": 39,
+        "tradeoff": 41,
+        "impact": 42,
+        "barrier": 40
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection mixed/skills",
+      "seed": 303,
+      "rounds": 200,
+      "modes": {
+        "evidence": 41,
+        "barrier": 39,
+        "impact": 39,
+        "tradeoff": 41,
+        "solution": 40
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection mixed/impacts",
+      "seed": 304,
+      "rounds": 200,
+      "modes": {
+        "solution": 39,
+        "barrier": 41,
+        "impact": 39,
+        "evidence": 41,
+        "tradeoff": 40
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection mixed/solutions",
+      "seed": 305,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 40,
+        "barrier": 38,
+        "evidence": 39,
+        "solution": 42,
+        "impact": 41
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection barrier/mixed",
+      "seed": 310,
+      "rounds": 200,
+      "modes": {
+        "barrier": 200
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection barrier/access",
+      "seed": 311,
+      "rounds": 200,
+      "modes": {
+        "barrier": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection barrier/devices",
+      "seed": 312,
+      "rounds": 200,
+      "modes": {
+        "barrier": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection barrier/skills",
+      "seed": 313,
+      "rounds": 200,
+      "modes": {
+        "barrier": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection barrier/impacts",
+      "seed": 314,
+      "rounds": 200,
+      "modes": {
+        "barrier": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection barrier/solutions",
+      "seed": 315,
+      "rounds": 200,
+      "modes": {
+        "barrier": 200
+      },
+      "actualExactRepeats": 180,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 180,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection impact/mixed",
+      "seed": 320,
+      "rounds": 200,
+      "modes": {
+        "impact": 200
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection impact/access",
+      "seed": 321,
+      "rounds": 200,
+      "modes": {
+        "impact": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection impact/devices",
+      "seed": 322,
+      "rounds": 200,
+      "modes": {
+        "impact": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection impact/skills",
+      "seed": 323,
+      "rounds": 200,
+      "modes": {
+        "impact": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection impact/impacts",
+      "seed": 324,
+      "rounds": 200,
+      "modes": {
+        "impact": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection impact/solutions",
+      "seed": 325,
+      "rounds": 200,
+      "modes": {
+        "impact": 200
+      },
+      "actualExactRepeats": 180,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 180,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection solution/mixed",
+      "seed": 330,
+      "rounds": 200,
+      "modes": {
+        "solution": 200
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection solution/access",
+      "seed": 331,
+      "rounds": 200,
+      "modes": {
+        "solution": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection solution/devices",
+      "seed": 332,
+      "rounds": 200,
+      "modes": {
+        "solution": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection solution/skills",
+      "seed": 333,
+      "rounds": 200,
+      "modes": {
+        "solution": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection solution/impacts",
+      "seed": 334,
+      "rounds": 200,
+      "modes": {
+        "solution": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection solution/solutions",
+      "seed": 335,
+      "rounds": 200,
+      "modes": {
+        "solution": 200
+      },
+      "actualExactRepeats": 180,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 180,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection tradeoff/mixed",
+      "seed": 340,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 200
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection tradeoff/access",
+      "seed": 341,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection tradeoff/devices",
+      "seed": 342,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection tradeoff/skills",
+      "seed": 343,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection tradeoff/impacts",
+      "seed": 344,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection tradeoff/solutions",
+      "seed": 345,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 200
+      },
+      "actualExactRepeats": 180,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 180,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection evidence/mixed",
+      "seed": 350,
+      "rounds": 200,
+      "modes": {
+        "evidence": 200
+      },
+      "actualExactRepeats": 0,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 0,
+      "familyRelaxations": 0
+    },
+    {
+      "label": "Selection evidence/access",
+      "seed": 351,
+      "rounds": 200,
+      "modes": {
+        "evidence": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection evidence/devices",
+      "seed": 352,
+      "rounds": 200,
+      "modes": {
+        "evidence": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection evidence/skills",
+      "seed": 353,
+      "rounds": 200,
+      "modes": {
+        "evidence": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection evidence/impacts",
+      "seed": 354,
+      "rounds": 200,
+      "modes": {
+        "evidence": 200
+      },
+      "actualExactRepeats": 185,
+      "actualFamilyRepeats": 197,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 185,
+      "familyRelaxations": 197
+    },
+    {
+      "label": "Selection evidence/solutions",
+      "seed": 355,
+      "rounds": 200,
+      "modes": {
+        "evidence": 200
+      },
+      "actualExactRepeats": 180,
+      "actualFamilyRepeats": 0,
+      "consecutiveBarriers": 0,
+      "exactRelaxations": 180,
+      "familyRelaxations": 0
+    }
+  ]
+}
