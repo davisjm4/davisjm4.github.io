@@ -105,6 +105,10 @@ Each row is a different authored task; five variants provide context, node label
 | diagram-switch-job | Read the Network | Local switching | Local forwarding is not remote application processing. |
 | diagram-local-technology | Read the Network | Layer responsibilities | Link technology supports adjacent-device communication. |
 
+## Distractor review
+
+A final browser review replaced unrelated password/cable distractors with incorrect naming, forwarding, stream reconstruction and trust responsibilities. Automated checks reject those removed unrelated word patterns. Choices remain authored role confusions; schema and wording checks do not certify semantic plausibility.
+
 ## Review limits
 
 All 400 instances pass structural contracts; independent graph/table/address checks validate the diagram mathematics and the role catalog checks validate protocol/layer mappings. Choice length and position distributions are reported, not used as proof of semantic correctness. False claims appear only as explicitly quoted misconceptions to evaluate. Initial review found two usable first hops in one cross-linked topology; that family now uses a diamond without the cross-link and the independent oracle requires exactly one defensible listed first hop.

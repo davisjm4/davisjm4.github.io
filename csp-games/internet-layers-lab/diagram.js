@@ -1,4 +1,4 @@
-import {diagramDescription} from './engine.js?v=internet-v1';import {edgeKey} from './model.js?v=internet-v1';
+import {diagramDescription} from './engine.js?v=internet-v2';import {edgeKey} from './model.js?v=internet-v2';
 const ns='http://www.w3.org/2000/svg';
 export function renderDiagram(container,q,reveal=false){container.replaceChildren();if(!q.diagram){container.hidden=true;return;}container.hidden=false;const doc=container.ownerDocument,d=q.diagram,caption=doc.createElement('p');caption.className='diagram-text';caption.textContent=diagramDescription(q);const svg=doc.createElementNS(ns,'svg');svg.setAttribute('role','img');svg.setAttribute('aria-label',caption.textContent);svg.setAttribute('viewBox',d.kind==='graph'?'0 0 330 200':d.kind==='stack'?'0 0 500 240':'0 0 420 140');
  const el=(tag,attrs,text)=>{const x=doc.createElementNS(ns,tag);for(const [k,v]of Object.entries(attrs))x.setAttribute(k,String(v));if(text!==undefined)x.textContent=text;svg.append(x);return x;};

@@ -1,7 +1,7 @@
 {
   "lengthHeuristics": {
-    "longest": 137,
-    "shortest": 173
+    "longest": 120,
+    "shortest": 178
   },
   "concepts": 16,
   "rounds": 39000,
@@ -40,7 +40,7 @@
     "role": 1999,
     "missing": 2000
   },
-  "assertions": 47689,
+  "assertions": 48089,
   "additionalMixedBalanceRounds": 10000,
   "familyCount": 80,
   "instanceCount": 400
