@@ -1,0 +1,9 @@
+// Concise original crosswalk labels; the linked CED supplies the full objectives.
+export const OBJECTIVES={
+'CRD-1.A':'Collaboration improves computing innovations','CRD-1.C':'Effective collaboration skills',
+'CRD-2.A':'Purpose of a computing innovation','CRD-2.B':'Program and code behavior','CRD-2.C':'Program inputs','CRD-2.D':'Program outputs','CRD-2.E':'Development processes','CRD-2.F':'Program and interface design','CRD-2.G':'Documentation','CRD-2.I':'Identify and correct errors','CRD-2.J':'Inputs and expected results for testing',
+'DAT-1.A':'Representing data with bits','DAT-1.B':'Consequences of finite representations','DAT-1.C':'Binary and decimal notation','DAT-1.D':'Compression tradeoffs','DAT-2.A':'Information extracted from data','DAT-2.B':'Information from metadata','DAT-2.D':'Processing data with programs','DAT-2.E':'Insights from data processing',
+'AAP-1.A':'Represent values with variables','AAP-1.B':'Values after assignment','AAP-1.C':'Lists and strings','AAP-2.A':'Algorithms using sequencing','AAP-2.E':'Relational expressions','AAP-2.G':'Algorithms using selection','AAP-2.H':'Conditional statements','AAP-2.J':'Algorithms using iteration','AAP-2.N':'List operations','AAP-2.O':'Iteration over lists','AAP-3.A':'Calls and procedure interfaces','AAP-3.B':'Managing complexity with procedures','AAP-3.E':'Generating random values','AAP-3.F':'Computational simulations','AAP-4.A':'Algorithm efficiency',
+'CSN-1.A':'Communication in networks','CSN-1.B':'Internet operation and growth','CSN-1.C':'Internet packets and protocols','CSN-1.D':'Internet and web roles','CSN-1.E':'Fault-tolerant systems',
+'IOC-1.A':'Effects of computing innovations','IOC-1.B':'Effects beyond intended purposes','IOC-1.C':'Digital divide','IOC-1.D':'Computing bias','IOC-1.E':'Participation at scale','IOC-1.F':'Legal and ethical concerns','IOC-2.A':'Personal-data privacy risks','IOC-2.B':'Protecting computing resources'
+};

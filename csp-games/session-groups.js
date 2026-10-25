@@ -1,0 +1,3 @@
+// Derive grouped metrics from disjoint topic buckets, preserving session schema.
+const labels=['','Creative Development','Data','Algorithms and Programming','Computer Systems and Networks','Impact of Computing'];
+export function bigIdeaMetrics(topics={}){const groups={};for(const [key,m] of Object.entries(topics)){const match=/^bi([1-5]):/.exec(key);if(!match)continue;const b=match[1];groups[b]??={title:`Big Idea ${b} · ${labels[b]}`};for(const [field,value] of Object.entries(m))if(Number.isSafeInteger(value)&&value>=0)groups[b][field]=(groups[b][field]||0)+value;}return Object.keys(groups).sort().map(k=>groups[k]);}

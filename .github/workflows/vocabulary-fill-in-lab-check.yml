@@ -1,0 +1,24 @@
+name: Vocabulary Fill-in Lab Verification
+on:
+  push:
+    branches: [main]
+    paths: ['csp-games/vocabulary-fill-in-lab/**', 'csp-games/session.js', 'csp-games/summary.js', 'csp-games/session-groups.js', 'csp-games/package.json', 'cs-games/catalog.js', '.github/workflows/vocabulary-fill-in-lab-check.yml']
+  pull_request:
+    paths: ['csp-games/vocabulary-fill-in-lab/**', 'csp-games/session.js']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix csp-games
+      - run: npm test --prefix csp-games
+      - run: TZ=America/Los_Angeles node csp-games/vocabulary-fill-in-lab/ui-tests.mjs
+      - run: ln -s ../csp-games/node_modules java-games/node_modules
+      - run: node cs-games/catalog-tests.mjs

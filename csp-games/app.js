@@ -21,6 +21,7 @@ const $ = (id) => document.getElementById(id),
         })[c],
     );
 export const catalog = [
+  ["vocabulary-fill-in-lab", "AP CSP Vocabulary Fill-in Lab", "All five Big Ideas", "1–5", "WORDS", "Complete contextual vocabulary statements with a plausible word bank and immediate explanation."],
   ["roundoff-overflow-lab", "Roundoff vs. Overflow Lab", "2 · Data", "2.1", "RANGE", "Distinguish insufficient range, insufficient precision and exact numerical representation."],
   ["lossless-lossy-lab", "Lossless vs. Lossy Compression Lab", "2 · Data", "2.2", "COMPRESSION", "Choose compression from exact-restoration and fidelity requirements."],
   ["analog-digital-lab", "Analog vs. Digital Lab", "2 · Data", "2.1", "SIGNALS", "Classify continuous quantities and discrete representations in quick two-choice rounds."],

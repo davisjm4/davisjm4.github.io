@@ -1,0 +1,258 @@
+{
+  "families": 150,
+  "instances": 600,
+  "terms": 107,
+  "topicCount": 16,
+  "coreRounds": 18000,
+  "exactViolations": 0,
+  "familyViolations": 0,
+  "termViolations": 0,
+  "choicePositions": [
+    4530,
+    4278,
+    4602,
+    4590
+  ],
+  "bigs": {
+    "1": 3598,
+    "2": 3602,
+    "3": 3602,
+    "4": 3599,
+    "5": 3599
+  },
+  "settings": [
+    {
+      "seed": 17,
+      "big": "mixed",
+      "rounds": 1000,
+      "families": 150,
+      "terms": 107,
+      "bigs": {
+        "1": 199,
+        "2": 203,
+        "3": 200,
+        "4": 199,
+        "5": 199
+      }
+    },
+    {
+      "seed": 17,
+      "big": "1",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 17,
+      "bigs": {
+        "1": 1000
+      }
+    },
+    {
+      "seed": 17,
+      "big": "2",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 22,
+      "bigs": {
+        "2": 1000
+      }
+    },
+    {
+      "seed": 17,
+      "big": "3",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 24,
+      "bigs": {
+        "3": 1000
+      }
+    },
+    {
+      "seed": 17,
+      "big": "4",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 24,
+      "bigs": {
+        "4": 1000
+      }
+    },
+    {
+      "seed": 17,
+      "big": "5",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 22,
+      "bigs": {
+        "5": 1000
+      }
+    },
+    {
+      "seed": 308,
+      "big": "mixed",
+      "rounds": 1000,
+      "families": 150,
+      "terms": 107,
+      "bigs": {
+        "1": 200,
+        "2": 199,
+        "3": 201,
+        "4": 200,
+        "5": 200
+      }
+    },
+    {
+      "seed": 308,
+      "big": "1",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 17,
+      "bigs": {
+        "1": 1000
+      }
+    },
+    {
+      "seed": 308,
+      "big": "2",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 22,
+      "bigs": {
+        "2": 1000
+      }
+    },
+    {
+      "seed": 308,
+      "big": "3",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 24,
+      "bigs": {
+        "3": 1000
+      }
+    },
+    {
+      "seed": 308,
+      "big": "4",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 24,
+      "bigs": {
+        "4": 1000
+      }
+    },
+    {
+      "seed": 308,
+      "big": "5",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 22,
+      "bigs": {
+        "5": 1000
+      }
+    },
+    {
+      "seed": 9201,
+      "big": "mixed",
+      "rounds": 1000,
+      "families": 150,
+      "terms": 107,
+      "bigs": {
+        "1": 199,
+        "2": 200,
+        "3": 201,
+        "4": 200,
+        "5": 200
+      }
+    },
+    {
+      "seed": 9201,
+      "big": "1",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 17,
+      "bigs": {
+        "1": 1000
+      }
+    },
+    {
+      "seed": 9201,
+      "big": "2",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 22,
+      "bigs": {
+        "2": 1000
+      }
+    },
+    {
+      "seed": 9201,
+      "big": "3",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 24,
+      "bigs": {
+        "3": 1000
+      }
+    },
+    {
+      "seed": 9201,
+      "big": "4",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 24,
+      "bigs": {
+        "4": 1000
+      }
+    },
+    {
+      "seed": 9201,
+      "big": "5",
+      "rounds": 1000,
+      "families": 30,
+      "terms": 22,
+      "bigs": {
+        "5": 1000
+      }
+    }
+  ],
+  "distractorChecks": 21600,
+  "distractorValidationFailures": 0,
+  "ambiguityRejections": 9,
+  "shortcuts": {
+    "longest": 0.28074074074074057,
+    "shortest": 0.20037037037037095
+  },
+  "switched": {
+    "rounds": 6000,
+    "exactViolationsWhenFeasible": 0,
+    "familyViolationsWhenFeasible": 0,
+    "exactFallbacks": 2088,
+    "familyFallbacks": 125,
+    "topics": {
+      "representation": 377,
+      "analysis": 388,
+      "resilience": 389,
+      "participation": 319,
+      "design": 380,
+      "testing": 384,
+      "protection": 387,
+      "algorithms": 380,
+      "compression": 382,
+      "networks": 387,
+      "responsibility": 325,
+      "procedures": 382,
+      "purpose": 387,
+      "collections": 376,
+      "impacts": 383,
+      "control": 374
+    }
+  },
+  "coverageRounds": 12000,
+  "instancesCovered": 600,
+  "termsCovered": 107,
+  "assertions": 167614,
+  "limits": [
+    "600 authored contextual instances, not unlimited independent questions. Word-bank combinations and order vary separately.",
+    "Semantic contract checks cannot certify every possible natural-language interpretation; classroom review remains pending.",
+    "Narrow topics disclose their finite pools; they never silently broaden the selected topic."
+  ]
+}

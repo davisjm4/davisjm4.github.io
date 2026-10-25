@@ -1,0 +1,27 @@
+import {TERMS,TOPICS,BIG_IDEAS,SOURCE} from './catalog.js?v=vocab-v1';
+import {FAMILIES} from './families.js?v=vocab-v1';
+export {TERMS,TOPICS,BIG_IDEAS,SOURCE,FAMILIES};
+export const BLANK='____';
+export const AMBIGUOUS_PAIRS=[['condition','boolean'],['privacy','data-privacy'],['security','cybersecurity'],['abstraction','procedural-abstraction'],['bias','algorithmic-bias'],['parameter','variable'],['return','output'],['iteration','traversal'],['citizen-science','crowdsourcing']];
+const forbidden=(a,b)=>AMBIGUOUS_PAIRS.some(pair=>pair.includes(a)&&pair.includes(b));
+const escape=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+export function validateFamily(f){if(!TERMS[f.term]||!TOPICS[f.topic]||f.big!==TOPICS[f.topic].big||!/^([A-Z]{3})-\d\.[A-Z]$/.test(f.objective)||!f.id||!['A','B','C','D','E','F','G','H'].includes(f.structure)||f.cases.length!==4||new Set(f.distractors).size!==f.distractors.length||f.distractors.length<3||f.distractors.some(id=>!TERMS[id]||id===f.term||forbidden(id,f.term))||!f.why||f.why.length<40)throw Error('Invalid or ambiguous family: '+f.id);return f;}
+export function validateQuestion(q){const all=[q.term,...q.pool];if(q.scene.split(BLANK).length!==2||q.code.includes(BLANK)||/\b(?:a|an) ____/.test(q.scene)||all.some(id=>!TERMS[id])||new Set(all).size!==all.length||q.pool.length<3||q.pool.some(id=>forbidden(id,q.term)))throw Error('Reject missing blank, duplicate choices or ambiguous contrast: '+q.id);const visible=q.scene+'\n'+q.code;const name=TERMS[q.term].term;if(new RegExp('\\b'+escape(name)+'\\b','i').test(visible))throw Error('Reject answer repeated in prompt: '+q.id);return q;}
+FAMILIES.forEach(validateFamily);
+export const QUESTIONS=FAMILIES.flatMap(f=>f.cases.map((c,i)=>validateQuestion({id:`${f.id}:${i}`,family:f.id,term:f.term,big:f.big,topic:f.topic,objective:f.objective,tier:TERMS[f.term].tier,structure:f.structure,scene:`${typeof c==='string'?c:c.scene}\n${f.tail}`,code:typeof c==='string'?'':c.code,why:f.why,pool:f.distractors})));
+export function random(seed){let s=Number(seed)>>>0;return()=>{s+=0x6D2B79F5;let t=s;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;};}
+function shuffle(values,rng){const a=[...values];for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+export function withChoices(q,rng){const peers=[q.pool[0],...shuffle(q.pool.slice(1),rng).slice(0,2)];return {...q,choices:shuffle([q.term,...peers],rng)};}
+export function filterBank(bank,big='mixed',topic='mixed'){if(big!=='mixed'&&!BIG_IDEAS[big])throw Error('Unknown Big Idea');if(topic!=='mixed'&&(!TOPICS[topic]||(big!=='mixed'&&TOPICS[topic].big!==Number(big))))throw Error('Topic does not belong to selected Big Idea');const pool=bank.filter(q=>(big==='mixed'||q.big===Number(big))&&(topic==='mixed'||q.topic===topic));if(!pool.length)throw Error('Empty selected topic');return pool;}
+export function createGenerator({seed=Date.now(),history=[],bank=QUESTIONS}={}){if(!bank.length)throw Error('Empty bank');const rng=random(seed),byId=new Map(bank.map(q=>[q.id,q])),recent=history.map(h=>byId.get(typeof h==='string'?h:h?.id)).filter(Boolean).slice(-50),bigs={},topics={},families={},terms={};return {next(big='mixed',topic='mixed'){
+ const pool=filterBank(bank,big,topic);let candidates=pool.filter(q=>!recent.some(r=>r.id===q.id)),exactRelaxed=false,familyRelaxed=false,termRelaxed=false;
+ // Never broaden the selected filter. A tiny exhausted bank drops oldest exact
+ // restrictions only after family cooldown has already been allowed to relax.
+ if(!candidates.length){exactRelaxed=true;for(let n=recent.length-1;n>=0;n--){const tail=n?recent.slice(-n):[];candidates=pool.filter(q=>!tail.some(r=>r.id===q.id));if(candidates.length)break;}}
+ const fresh=candidates.filter(q=>!recent.slice(-3).some(r=>r.family===q.family));if(fresh.length)candidates=fresh;else familyRelaxed=true;
+ const newTerms=candidates.filter(q=>!recent.slice(-3).some(r=>r.term===q.term));if(newTerms.length)candidates=newTerms;else termRelaxed=true;
+ // Soft weights encourage coverage without deterministic topic/answer cycles.
+ const narrow=(key,counts)=>{const keys=[...new Set(candidates.map(q=>q[key]))],minimum=Math.min(...keys.map(k=>counts[k]||0)),weights=keys.map(k=>1/(1+(counts[k]||0)-minimum));let ticket=rng()*weights.reduce((a,b)=>a+b,0),chosen=keys.at(-1);for(let i=0;i<keys.length;i++){ticket-=weights[i];if(ticket<0){chosen=keys[i];break;}}candidates=candidates.filter(q=>q[key]===chosen);};
+ narrow('big',bigs);narrow('topic',topics);narrow('term',terms);narrow('family',families);const q=candidates[Math.floor(rng()*candidates.length)];
+ bigs[q.big]=(bigs[q.big]||0)+1;topics[q.topic]=(topics[q.topic]||0)+1;families[q.family]=(families[q.family]||0)+1;terms[q.term]=(terms[q.term]||0)+1;recent.push(q);if(recent.length>50)recent.shift();return {...withChoices(q,rng),exactRelaxed,familyRelaxed,termRelaxed};},history:()=>recent.map(q=>q.id),metrics:()=>({bigs:{...bigs},topics:{...topics},families:{...families},terms:{...terms}})};}
+export function feedback(q,selected){if(!q.choices.includes(selected))throw Error('Select a term from this word bank.');const contrast=selected===q.term?q.pool[0]:selected;return {correct:selected===q.term,text:`${selected===q.term?'Correct':'Incorrect'} — ${TERMS[q.term].term}\n${q.why}\n${TERMS[contrast].term}: ${TERMS[contrast].definition}`};}

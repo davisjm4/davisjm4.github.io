@@ -1,3 +1,4 @@
+import {bigIdeaMetrics} from './session-groups.js?v=vocab-v1';
 import { sessionTracker, accuracy } from "./session.js?v=per-mode-daily-v1";
 const $ = (id) => document.getElementById(id),
   esc = (s) =>
@@ -24,6 +25,13 @@ function modeTables(games) {
     return modes.length ? `<section class="topic-report"><h3>${esc(g.title)}</h3>${table(modes, "Practice mode")}</section>` : "";
   }).filter(Boolean);
   return sections.join("") || "<p>No mode results yet.</p>";
+}
+function bigIdeaTables(games) {
+  const sections = Object.values(games).map(g => {
+    const rows=bigIdeaMetrics(g.topics);
+    return rows.length ? '<section class="topic-report"><h3>'+esc(g.title)+'</h3>'+table(rows, 'Big Idea')+'</section>' : '';
+  }).filter(Boolean);
+  return sections.length ? '<section><h2>By Big Idea</h2>'+sections.join('')+'</section>' : '';
 }
 function render() {
   const d = tracker.snapshot(),
@@ -58,7 +66,7 @@ function render() {
             `<section class="topic-report"><h3>${esc(g.title)}</h3>${table(Object.values(g.topics))}</section>`,
         )
       .join("") || "<p>Topic results appear as you practice.</p>"
-    }</section><section><h2>By practice mode</h2>${modeTables(d.games)}</section><p class="print-note">Locally stored formative practice evidence. This report is not tamper-proof. Inactive and away time are excluded from active practice time.</p>`;
+    }</section><section><h2>By practice mode</h2>${modeTables(d.games)}</section>${bigIdeaTables(d.games)}<p class="print-note">Locally stored formative practice evidence. This report is not tamper-proof. Inactive and away time are excluded from active practice time.</p>`;
 }
 for (let field of ["student-name", "student-period"])
   $(field).addEventListener("change", () => {
