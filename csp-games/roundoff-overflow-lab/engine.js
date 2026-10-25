@@ -1,5 +1,5 @@
-import {FAMILIES,TOPICS} from './content.js?v=number-v2';
-import {R,add,sub,mul,div,cmp,pow,text,integer,fixed,binaryFixed,significant,represent} from './math.js?v=number-v2';
+import {FAMILIES,TOPICS} from './content.js?v=number-v3';
+import {R,add,sub,mul,div,cmp,pow,text,integer,fixed,binaryFixed,significant,represent} from './math.js?v=number-v3';
 export {FAMILIES,TOPICS};export const ANSWERS=['Overflow','Roundoff','Neither'];
 export const SKILLS=['binary-representation','numerical-range','numerical-precision','overflow','roundoff'];
 export function calculate(op,a,b){if(op==='store')return a;if(op==='add')return add(a,b);if(op==='subtract')return sub(a,b);if(op==='multiply')return mul(a,b);if(op==='divide')return div(a,b);throw Error('Unknown operation');}
@@ -86,10 +86,12 @@ export function buildQuestion(f,j){const m=f.topic==='integer'?integerCase(f.kin
  return {id:`${f.id}:${j}`,family:f.id,topic:f.topic,objective:f.objective,scene,focus,prompt:'What happens when this result is represented in the destination?',model:m,...result,evidence};}
 export const QUESTIONS=FAMILIES.flatMap(f=>Array.from({length:6},(_,j)=>buildQuestion(f,j)));
 export function feedback(q,selection){if(!ANSWERS.includes(selection))throw Error('Choose Overflow, Roundoff or Neither.');return {correct:selection===q.answer,text:`${selection===q.answer?'Correct':'Incorrect'} — ${q.answer}\n${q.evidence}`};}
+export function numericSignature(q){const f=q.model.format;return [text(q.model.value),text(f.min),text(f.max),f.kind,f.step?text(f.step):`${f.base}:${f.digits}`].join('|');}
 function random(seed){let s=Number(seed)>>>0;return()=>{s+=0x6D2B79F5;let t=s;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;};}
 export function createGenerator({seed=Date.now(),history=[],bank=QUESTIONS}={}){if(!bank.length)throw Error('Empty bank');const rng=random(seed),byId=new Map(bank.map(q=>[q.id,q])),recent=history.map(h=>byId.get(typeof h==='string'?h:h?.id)).filter(Boolean).slice(-50),counts=Object.fromEntries(ANSWERS.map(a=>[a,0])),families={};let last=recent.at(-1)?.answer,streak=0;for(let i=recent.length-1;i>=0&&recent[i].answer===last;i--)streak++;
  return {next(topic='mixed'){const pool=topic==='mixed'?bank:bank.filter(q=>q.topic===topic);if(!pool.length)throw Error('Unknown filter');let candidates=pool.filter(q=>!recent.some(r=>r.id===q.id)),exactRelaxed=false,cooldownRelaxed=false;if(!candidates.length){exactRelaxed=true;for(let n=recent.length-1;n>=0;n--){const tail=n?recent.slice(-n):[];candidates=pool.filter(q=>!tail.some(r=>r.id===q.id));if(candidates.length)break;}}
  const fresh=candidates.filter(q=>!recent.slice(-3).some(r=>r.family===q.family));if(fresh.length)candidates=fresh;else cooldownRelaxed=true;
+ const recentNumbers=new Set(recent.slice(-3).map(numericSignature)),newNumbers=candidates.filter(q=>!recentNumbers.has(numericSignature(q)));if(newNumbers.length)candidates=newNumbers;
  const available=ANSWERS.filter(a=>candidates.some(q=>q.answer===a)&&(streak<2||a!==last)),choices=available.length?available:ANSWERS.filter(a=>candidates.some(q=>q.answer===a)),min=Math.min(...choices.map(a=>counts[a])),weights=choices.map(a=>1/(1+counts[a]-min));let ticket=rng()*weights.reduce((sum,w)=>sum+w,0),desired=choices.at(-1);for(let i=0;i<choices.length;i++){ticket-=weights[i];if(ticket<0){desired=choices[i];break;}}candidates=candidates.filter(q=>q.answer===desired);
  const least=Math.min(...candidates.map(q=>families[q.family]||0));candidates=candidates.filter(q=>(families[q.family]||0)===least);const q=candidates[Math.floor(rng()*candidates.length)];counts[q.answer]++;families[q.family]=(families[q.family]||0)+1;streak=q.answer===last?streak+1:1;last=q.answer;recent.push(q);if(recent.length>50)recent.shift();return {...q,exactRelaxed,cooldownRelaxed};},history:()=>recent.map(q=>q.id),metrics:()=>({answers:{...counts},families:{...families}})};
 }

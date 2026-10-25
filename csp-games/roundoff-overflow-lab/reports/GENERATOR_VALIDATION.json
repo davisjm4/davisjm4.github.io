@@ -14,13 +14,14 @@
   },
   "exactViolations": 0,
   "familyViolations": 0,
+  "numericViolations": 0,
   "maxStreak": 2,
   "settings": [
     {
       "seed": 4,
       "topic": "mixed",
       "families": 60,
-      "instances": 349,
+      "instances": 348,
       "answers": {
         "Overflow": 400,
         "Roundoff": 399,
@@ -68,7 +69,7 @@
       "seed": 93,
       "topic": "mixed",
       "families": 60,
-      "instances": 352,
+      "instances": 355,
       "answers": {
         "Overflow": 400,
         "Roundoff": 400,
@@ -116,7 +117,7 @@
       "seed": 1025,
       "topic": "mixed",
       "families": 60,
-      "instances": 349,
+      "instances": 357,
       "answers": {
         "Overflow": 400,
         "Roundoff": 400,
@@ -173,7 +174,7 @@
   },
   "coverageRounds": 6000,
   "covered": 360,
-  "assertions": 36870,
+  "assertions": 36871,
   "limits": [
     "Integer Range uses Overflow/Neither and Precision uses Roundoff/Neither; all three choices remain available. Mixed and Applications balance all three categories.",
     "60 authored numerical focuses and six bounded parameter variants each; finite corpus, not unlimited stories.",
