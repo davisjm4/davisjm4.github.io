@@ -1,53 +1,63 @@
 # Algorithm Dance Lab
 
-A buildless GitHub Pages game. Open `index.html` through an HTTP server; ES modules do not run directly from file://. No runtime CDN, backend, account, API key, telemetry, or music dependency.
+Static GitHub Pages visual programming game. No backend, accounts, runtime CDN, telemetry, API keys, or model downloads. Serve over HTTP to use ES modules. The original low-poly robot and game source are MIT licensed; bundled Three.js r170 and fflate 0.8.2 retain their MIT notices.
 
-## Modules
+## Architecture
 
-| File | Responsibility |
+| Module | Responsibility |
 | --- | --- |
-| engine.js | Validated AST; bounded interpreter; parameter binding; source-mapped movement trace; AP CSP pseudocode; portable JSON |
-| editor.js | Accessible palette, insertion destinations, reorder/remove/configure controls, nested repeats and procedure bodies |
-| lessons.js | Five authored Hokey Pokey stages, reference choreography, behavior and abstraction rules; song registration interface |
-| motion.js | Pure absolute joint poses and animation keyframes for each movement |
-| player.js | Deterministic pause/resume/step/reset/replay clock, independent of rendering |
-| renderer.js | Original articulated Three.js robot, local assets, responsive stage, context handling, resource disposal |
-| software-renderer.js | Canvas2D projection of the **same 3D mesh rig** when WebGL2 is disabled |
-| session.js | Daily stage checks, first-check success, active time, completion, shared CSP assessment integration |
-| app.js / main.js | Lesson and Studio orchestration, highlights, progress, save/export/import, presentation |
+| engine.js / expressions.js | One validated AST; bounded interpreter, scopes, parameters, input values, expressions, lists, source-mapped timed commands and AP CSP pseudocode |
+| editor.js | Tap/keyboard palette, parameter/value builders, nested bodies, reorder/remove/relocate and synchronized code |
+| lessons.js / expansion-lessons.js | Authored reference choreography, stage scaffolds, behavioral and structural validation |
+| motion.js | Pure absolute poses; analytic arm reach for touch targets; orientation-relative translations |
+| renderer.js / software-renderer.js | Original articulated Three.js mesh rig, local assets, GPU rendering or Canvas2D projection of the same rig, final SVG/text fallback |
+| player.js | Absolute beat transport, independent of rendered frame cadence; pause/resume/step/reset/replay |
+| audio.js | Optional browser synthesis, metronome, local recording playback; shared audio/media clock |
+| project.js | Versioned project envelope, legacy migration/backups, bounded JSON/ZIP, IndexedDB recording store |
+| studio-app.js / main.js | Current lesson/Studio controller, runtime inputs, composer, capture views, files and transport |
+| session.js | Anonymous daily progress, first checks, attempts, successful programs, active time; shared CSP session integration |
+| app.js | Retained original-controller compatibility coverage using tests/legacy-ui.html |
 
-The AST is the only program source. Pseudocode and execution derive from it. The renderer consumes commands and poses, never scoring decisions. Wrong movements and arguments are executed unchanged. Source IDs and call/loop stacks highlight the movement and its enclosing constructs.
+Pseudocode and execution derive from the same AST. The renderer never scores the program. Incorrect instructions execute unchanged. Imported text is parsed as data, never evaluated as JavaScript. The editor provides values, references, inputs, operators and list expressions without requiring typed program syntax.
 
-The robot uses a transform hierarchy (head, torso, paired shoulders, elbows, hands, hips, knees, feet). Each movement has distinct joint targets. Three.js r170 is bundled as a 692 KB minified ES module under its MIT license; no 3D model downloads or textures. Original robot/game source is MIT licensed. Low polygon geometry, shared materials, no shadows, no post-processing, capped device pixel ratio, event-driven static rendering, and paused hidden-tab playback keep the scene light. The software path is an accessibility fallback; WebGL2 remains the preferred renderer.
+Variables use assignment; procedures have up to six student-named parameters and local scalar scope. Lists are one-based, reference-valued, and support APPEND/INSERT/REMOVE/index assignment, LENGTH, index reads and FOR EACH. Mutating a list while it is traversed is rejected, including nested traversals. Parallel tracks cannot mutate shared input lists. IF/ELSE requires Boolean expressions. Runtime inputs are captured at compilation; choosing a Song input does not generate choreography or decisions.
 
-## Lesson
+## Activities and movement
 
-1. Construct the five right-foot moves without a revealed solution.
-2. Add the left-foot verse and compare the two student sequences.
-3. Build `dance(part, side)` for in/out/in, plus `hokey_pokey()` for shake/turn. Definitions begin empty. `shake()` uses the most recently moved limb; explicit `shake(part, side)` is also available.
-4. Supply all ten ordered pairs using calls to the two procedures. Validate all 50 observable moves and the abstractions. Unlock a continuous, previously validated full performance.
-5. Compare conceptual worksheet line counts (50 / 74 / 29), retain the split abstraction or combine all five moves into one parameterized procedure. Optional iteration experiment leads into Studio.
+- **Hokey Pokey:** original five stages and ten ordered part/side verses. Students first build in/out/in and a separate shake/turn helper, then generalize. Behavioral equivalence and relevant structure both matter. Worksheet counts remain 50 / 74 / 29 conceptual lines, explicitly distinguished from displayed headers/braces and executed movement counts.
+- **Head, Shoulders, Knees & Toes:** four stages: sequence, repeat, list traversal, and a student-built list/count-parameter procedure. The final target is the four touches twice (eight beats).
+- **Cha-Cha Movement Lab:** one hop, repeated two hops, count-parameter claps, and an original authored 32-beat practice arrangement. This is not a commercial song recording or a claim to reproduce its complete choreography.
+- **Original Project:** empty creative workspace using the same editor/interpreter/robot. Student-created input handling, selection, procedures, loops, lists, original music and choreography. No automatic Create task solution, AP scoring, evidence selection or submission certification.
 
-Headers/braces in the displayed pseudocode are **not** claimed to match the worksheet conceptual counts. The separate-function worksheet count is 10×5 definition lines + 10 calls + 4 helper definition lines + 10 helper calls = 74. The parameterized count is 5 + 10 + 4 + 10 = 29. All versions still execute 50 movement commands.
+Movement library: original in/out/shake for FOOT/HAND/KNEE/ELBOW/HIP/SHOULDER and HEAD/CENTER, turnAround, clap, bow, nod, wait; new touch(HEAD/SHOULDERS/KNEES/TOES), hop (jump alias), stomp(LEFT/RIGHT), slide(LEFT/RIGHT), directional quarter-turns, crissCross, chaCha(LEFT/RIGHT), charlieBrown. Left/right follow the robot's orientation. Turns preserve world position. Shoulders use opposite-hand reaches; knee/toe touches crouch. Stylized complex dance steps have consistent distinct poses.
 
-Paired limbs use LEFT / RIGHT; HEAD uses CENTER. Parts include FOOT, HAND, KNEE, ELBOW, HIP, SHOULDER and HEAD. Additional Studio motions are clap, bow, nod, jump and wait. Hips/shoulders use consistent stylized tilts. Body orientation returns after a full 360° turn; limbs reset on each turn. Text labels and execution trace accompany motion. Reduced motion replaces continuous movement with discrete key poses. The release is silent (optional music was not required).
+The robot has head, waist, pelvis, shoulders/elbows/hands, hips/knees/feet. Geometry is low polygon, materials shared, no textures/shadows/postprocessing, capped pixel ratio, hidden-page pause and resource disposal. Reduced motion samples key poses. The cloud QA environment disables WebGL; physical Chromebook/GPU performance needs classroom review.
 
-## Tests
+## Beat and music behavior
 
-From the repository root:
+BPM 40–200 (default 120); one beat = 60 / BPM seconds. Pause to change tempo, preserving the beat position. Dance and optional Music tracks start together; the longer track determines performance duration. Single-step advances to the next command endpoint silently and preserves the concurrent dance pose. Animation samples absolute audio/media/monotonic time; dropped frames do not slow the program clock. Blocking instructions run in sequence within each track. Music tracks accept notes/rests/control logic and wait, not robot movements.
+
+Sound is off until explicitly enabled and Run/Preview is pressed. Original composer: C3–C6 including sharps, rest, durations 0.25/0.5/1/2/4 beats, sine/triangle/filtered square, volume, piano buttons, 16-beat grid, editable/reorderable event list. Music blocks and composer are the same AST track. Programmed music logic is preserved unless explicitly replaced with an empty melody.
+
+Local MP3/WAV/OGG support depends on browser codecs. Maximum 25 MiB / five minutes. Files are decoded and retained locally, never uploaded. Set the recording's BPM and start offset manually. Recordings play at their original rate; no automatic beat detection, time stretching or pitch adjustment. Short files produce a clear error instead of silently looping. Optional metronome shares the transport. Scheduling diagnostics measure scheduling lateness, not physical speaker/display latency.
+
+JSON stores code, notes, inputs, settings and recording metadata; reselect a recording on another device. App-exported ZIP optionally embeds the recording after explicit selection. For bounded safe import, ZIPs must use the application's stored/uncompressed project.json and optional audio.bin format; encrypted/compressed/ZIP64/path-traversal/extra-file archives are rejected. Local saves migrate legacy workspaces with backups. Storage/decode/import failures preserve the current program and report an error.
+
+## Limits and verification
+
+400 blocks, nesting 12, call depth 16, 800 timed events, 6,000 work units, repeats 0–32, list length 128, expressions depth 12, 128 music events per track, 250 KB project JSON, performance at most five minutes. Loops and procedures are bounded even when they emit no movement.
+
+Run from repository root:
 
 ```
 npm ci --ignore-scripts --prefix csp-games
 npm run test:dance --prefix csp-games
 npm test --prefix csp-games
+node cs-games/catalog-tests.mjs
 ```
 
-The four new suites cover independent choreography oracles, abstraction counterexamples, bounded empty loops and recursion, source synchronization, all part/side poses, repeated playback/reset, assessment, the complete lesson and Studio controls. They do not certify physical hardware performance or GPU context restoration. `tests/browser-harness.html` embeds the real application in a 390px-wide frame for responsive QA; it is not physical touchscreen testing.
+Eight Dance Lab suites contain 1,821 assertions (486 interpreter/original lesson, 584 legacy joint/player, 26 session, 69 legacy UI, 231 expansion language/lesson, 296 mesh/contact/timing, 64 project/audio, 65 expanded UI). Independent tests vary list lengths, arguments, input choices and BPM; verify all 13 stages, an exact 32-beat oracle, actual Three.js forward-kinematics hand contacts, dropped frames, repeated resets, concurrent stepping, migration and archive rejection. tests/audio-browser.html exercises real browser PCM synthesis and a generated original WAV. tests/browser-harness.html embeds the real app at 390px; it does not simulate physical touch hardware.
 
-Runtime limits: 400 blocks, nesting depth 12, call depth 16, 800 emitted movements, 6,000 evaluated/loop work units, repeat counts 0–32, 100 KB import. No evaluation of imported source text.
+## Extension contract
 
-## Expansion contract
-
-Register a song with title, supportedMovements, referenceChoreography, stages, learningObjectives, validationRules and completionCriteria. Add lesson-specific structural rules and independent reference oracles. The current release registers only Hokey Pokey. No incomplete future songs appear in student navigation.
-
-Recommended order: Head/Shoulders/Knees/Toes (add touch-part actions); YMCA (add named pose commands); Cha Cha Slide (add directional translation); Freeze Dance/Simon Says (add Boolean/selection AST blocks, renderer-independent semantics, editor and validator tests). No unlimited challenge generator is included.
+LESSONS registers title, supportedMovements, referenceChoreography, stages, learningObjectives, validationRules and completionCriteria. Add authored stages and independent behavioral/structure tests without duplicating the interpreter/editor/renderer. Recommended next activities: YMCA (named pose blocks) and Freeze Dance/Simon Says (use existing selection/Boolean support with new authored rules). No unlimited compositional challenge generator is included.

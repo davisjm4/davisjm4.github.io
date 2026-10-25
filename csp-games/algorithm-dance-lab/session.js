@@ -8,8 +8,8 @@ export function createLessonSession({storage,shared,now=()=>Date.now(),onWarning
  function ensure(){const snap=shared.snapshot();if(data.date!==day(now())||sharedSession!==snap.id){data=fresh();sharedSession=snap.id;save();return true;}return false;}
  function stage(index){ensure();return data.stages[index]||=( {attempts:0,completed:false,firstCheck:false,record:null,lastChecked:''});}
  load();
- return {ensure,signal(){interaction=now();},tick(visible=true){ensure();const t=now(),delta=Math.max(0,Math.min(10000,t-last));if(visible&&t-interaction<60000)data.activeMs+=delta;last=t;save();},check(index,ok,signature){const s=stage(index);if(s.lastChecked===signature)return {duplicate:true,...s};s.lastChecked=signature;
-  if(!s.record||!shared.snapshot().records[s.record])s.record=shared.begin('algorithm-dance-lab','Algorithm Dance Lab',`stage-${index+1}`,`Hokey Pokey · Stage ${index+1}`,'lesson','Hokey Pokey');
+ return {ensure,signal(){interaction=now();},tick(visible=true){ensure();const t=now(),delta=Math.max(0,Math.min(10000,t-last));if(visible&&t-interaction<60000)data.activeMs+=delta;last=t;save();},check(index,ok,signature,metadata={}){const s=stage(index);if(s.lastChecked===signature)return {duplicate:true,...s};s.lastChecked=signature;
+  if(!s.record||!shared.snapshot().records[s.record])s.record=shared.begin('algorithm-dance-lab','Algorithm Dance Lab',metadata.topic||`stage-${index+1}`,metadata.title||`Hokey Pokey · Stage ${index+1}`,metadata.mode||'lesson',metadata.lesson||'Hokey Pokey');
   s.attempts++;if(s.attempts===1)s.firstCheck=ok;shared.submit(s.record,ok);if(ok){s.completed=true;const key=`${index}:${signature}`;if(!data.successes.includes(key))data.successes.push(key);data.successes=data.successes.slice(-100);}
   shared.annotate(s.record,{stage:index+1,validationAttempts:s.attempts,completed:s.completed});save();return {...s};},stage,counts(values){ensure();if(values){data.counts=values;save();}return {...data.counts};},snapshot(){ensure();return JSON.parse(JSON.stringify(data));}};
 }

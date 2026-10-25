@@ -52,3 +52,47 @@ Tracker G-119 was updated and read back in Master Inventory A57:L57, with status
 - Physical Chromebook and touchscreen checks; native WebGL2 and context-loss/restoration testing.
 - Optional original instrumental rhythm remains outside the silent first release.
 - Only Hokey Pokey is registered/playable. Head/Shoulders/Knees/Toes needs touch-part commands; YMCA needs pose commands; Cha Cha Slide needs translations; Freeze Dance/Simon Says needs Boolean/selection AST, editor, interpreter and validation support. Existing song registration metadata allows expansion without duplicating the programming system.
+
+---
+
+## Beat, music and programming expansion — 2026-10-24
+
+This section supersedes the silent-release/future-song limitations above. Implementation complete; classroom review pending.
+
+### Implemented
+
+- Original articulated robot retained; new analytic head/shoulder/knee/toe reaches, orientation-relative slides, left/right stomps and quarter turns, hop/jump, criss-cross, cha-cha and Charlie Brown. All are driven by the student's executed commands, including wrong commands.
+- One AST expanded with assignment, runtime inputs, strict Boolean selection/operators, named procedure parameters, dynamic repeats, one-based lists, list mutation and FOR EACH. Bounds and nested-list traversal locks prevent runaway execution. No generated student Create task solution or AP certification.
+- All five Hokey stages preserved. Added four Head/Shoulders stages and four Cha-Cha stages, including list/count abstractions, argument counterexamples and an independently specified 32-beat final arrangement.
+- BPM 40–200; absolute shared beat transport; concurrent Dance/Music tracks; audio/media clock when sound is enabled, monotonic clock when silent. Pause/change BPM/resume, endpoint step, reset and replay. Dropped frames catch up instead of extending beat durations.
+- Original note composer (C3–C6, sharps/rests, five note lengths, three synthesized instruments), local recording attachment with BPM/offset and original-rate playback, muted-by-default sound, metronome, scheduling diagnostics. No commercial recordings bundled.
+- Version 2 project JSON, local save/migration/backups, IndexedDB media, optional audio-inclusive portable ZIP, safe bounded import, text/block capture views. Student code and attribution remain independently authored.
+- CSP index and consolidated CSP catalog updated. Versioned module URLs prevent old/new playback modules from mixing in returning browsers.
+
+### Validation
+
+| Suite | Passing assertions |
+| --- | ---: |
+| Original interpreter/lesson | 486 |
+| Original motion/player | 584 |
+| Daily session | 26 |
+| Original-controller compatibility UI | 69 |
+| New language/authored lessons | 231 |
+| New Three.js mesh contact/direction/absolute timing | 296 |
+| Project migration/archive/audio scheduler | 64 |
+| Expanded controller/editor/composer/all 13 stages | 65 |
+| **Total** | **1,821** |
+
+Full CSP `npm test` passed. Consolidated catalog and America/Los_Angeles session checks passed. No physical Chromebook, touchscreen, native GPU or speaker-latency certification is claimed.
+
+Local real-browser QA built and checked the first Head/Shoulders sequence; built one-hop and repeated two-hop stages; imported and checked a student procedure for count-based claps; checked and ran all 18 events in the complete 32-beat Cha arrangement continuously. The final UI read Beat 32, routine finished, 32 scheduled metronome clicks, maximum scheduling lateness 2.00 ms, and zero final translation/yaw. That lateness is not physical audio/output latency.
+
+Real browser OfflineAudioContext rendered production scheduler output: A4 ~440 Hz, C5 ~524 Hz (zero-crossing measurement), nonzero note RMS and zero RMS during the rest; scheduled onset errors 2 ms and 0 ms. Production local-audio decoding accepted a generated original 10-second WAV (160,044 bytes); the actual root file picker attached it locally. Root recording playback was initiated but its final completion was not captured before the browser session ended; automated media clock/seek/pause/error tests passed. MP3/OGG and physical speaker quality remain browser/device review items.
+
+Responsive browser frame: 390px outer / 375px content width, advanced assignment block plus parallel A4 composer event, document scroll width 375px (no page-wide overflow). WebGL-disabled cloud browser displayed the same mesh robot through software rendering. Hardware cadence and context restoration remain unverified.
+
+### Release and remaining review
+
+Expansion commit/deployment and independent live checks are recorded in the release record and tracker after publication. The source report accompanies that commit; no successful local test alone is treated as deployment proof.
+
+Classroom review: lesson clarity, stylized contact/dance readability, original-project guidance, physical Chromebook/touch use, native WebGL/context restoration, school-browser audio codecs and audio/display latency. No automatic music beat detection/time stretching, microphone recorder, polyphonic score editor or AP submission certification is included. Future YMCA needs named poses; Freeze/Simon can reuse existing Boolean/selection blocks plus authored challenges. Full commercial-song choreography is outside the authored practice arrangements.
