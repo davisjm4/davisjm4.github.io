@@ -1,5 +1,5 @@
-import * as E from './engine.js?v=beats-v2';
-import {STAGES as HOKEY,starter as hokeyStarter,choreography,validate as validateHokey,hint as hokeyHint} from './lessons.js?v=beats-v2';
+import * as E from './engine.js?v=usability-v3';
+import {STAGES as HOKEY,starter as hokeyStarter,choreography,validate as validateHokey,hint as hokeyHint} from './lessons.js?v=usability-v3';
 export const BODY_PARTS=['HEAD','SHOULDERS','KNEES','TOES'];
 export const headReference=n=>Array.from({length:n},(_,i)=>({op:'touch',part:BODY_PARTS[i%4],beats:1}));
 export const CHA_REFERENCE=[

@@ -1,6 +1,6 @@
 /* The only program model. Versions 1 and 2 share this interpreter and renderer. */
-import {checkExpression,evaluate,expressionText,validName} from './expressions.js?v=beats-v2';
-export {ref,list,input,operation} from './expressions.js?v=beats-v2';
+import {checkExpression,evaluate,expressionText,validName} from './expressions.js?v=usability-v3';
+export {ref,list,input,operation} from './expressions.js?v=usability-v3';
 export const PARTS=['FOOT','HAND','KNEE','ELBOW','HIP','SHOULDER','HEAD'];
 export const TOUCH_PARTS=['HEAD','SHOULDERS','KNEES','TOES'];
 export const SIDES=['RIGHT','LEFT','CENTER'];

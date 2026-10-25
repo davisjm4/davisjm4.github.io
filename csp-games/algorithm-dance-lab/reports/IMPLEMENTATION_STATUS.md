@@ -96,3 +96,13 @@ Responsive browser frame: 390px outer / 375px content width, advanced assignment
 Expansion commit/deployment and independent live checks are recorded in the release record and tracker after publication. The source report accompanies that commit; no successful local test alone is treated as deployment proof.
 
 Classroom review: lesson clarity, stylized contact/dance readability, original-project guidance, physical Chromebook/touch use, native WebGL/context restoration, school-browser audio codecs and audio/display latency. No automatic music beat detection/time stretching, microphone recorder, polyphonic score editor or AP submission certification is included. Future YMCA needs named poses; Freeze/Simon can reuse existing Boolean/selection blocks plus authored challenges. Full commercial-song choreography is outside the authored practice arrangements.
+
+## Usability restructuring and Live mode — 2026-10-24
+
+- Unlocked all lesson stages and independent Next navigation. Daily completion statistics no longer control access.
+- Learn/Create/Live shell; categorized palette; Build/Controls/Music/Code views alongside persistent stage; project/progress drawer; mobile stacked stage and active tool.
+- Input cards with type shortcuts and Use in program (actual readInput assignment). Editable student values remain authoritative.
+- New movement blocks default to one beat, with advanced timing hidden until requested. Authored references and existing saved program timings are retained.
+- Piano audition directly creates/resumes audio from the key gesture; Preview explicitly enables sound. Test sound and actionable failure feedback are available.
+- Live executes the student's same AST on selected note/release/beat inputs. Touch/keyboard instrument, known composer-note input, manual-BPM recording beat clock, Tap tempo, immediate/next-beat response and newest-only pending buffer. No automatic music beat detector. No generated student response algorithm. Each event reinitializes variables; 32-beat response limit and five-minute session limit.
+- Existing 1,821 assertions plus 30 new navigation/input/timing/live-runner/workspace assertions pass (1,851 total). Browser-local piano audition returned Sound ready, touch-pad C4 produced a Note input and highlighted the actual student block. Browser software 3D rendering used; physical audio output/hardware certification remains pending.

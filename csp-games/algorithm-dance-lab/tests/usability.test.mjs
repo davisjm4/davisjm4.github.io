@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {LiveRunner,createWorkspace} from '../workspace.js';
+import * as E from '../engine.js';
+import {setup} from './studio-setup.mjs';
+let n=0;const eq=(a,b)=>{assert.deepEqual(a,b);n++;};
+let clock=0,seen=[],results=[];const p=E.blank(2);p.body=[E.assign('note',E.input('Note')),{...E.selection(E.operation('=','$note','C4')),body:[E.move('hop')],elseBody:[E.move('clap')]}];
+const live=new LiveRunner({now:()=>clock,bpm:120,execute:inputs=>{seen.push(inputs);return E.execute(p,{inputs});},onResult:r=>results.push(r)});
+live.start();live.input('C4');eq(results[0].trace[0].op,'jump');live.input('D4');live.input('E4');eq(seen.length,1);clock=500;live.tick();eq(seen.length,2);eq(seen[1].Note,'E4');eq(results[1].trace[0].op,'clap');live.stop();live.input('C4');eq(seen.length,2);clock=1000;live.start();live.input('C4','note',true);eq(seen.length,2);clock=1499;live.tick();eq(seen.length,2);clock=1500;live.tick();eq(seen.length,3);eq(seen[2].Beat,1);live.stop();eq(live.pending,null);
+let errors=[];const bad=new LiveRunner({now:()=>0,execute:()=>{throw Error('Undefined procedure');},onResult:(r,e)=>errors.push(e.message)});bad.start();bad.input('C4');eq(errors,['Undefined procedure']);
+const ui=await setup();const {$,app,document,choose}=ui;
+choose($('stage-select'),4);eq(app.state().stage,4);eq(app.state().session.stage(0).completed,false);eq([...$('stage-select').querySelectorAll('option')].some(x=>x.disabled),false);
+choose($('activity'),'studio');document.querySelector('[aria-label="Add chaCha block"]').click();eq(app.state().program.body[0].beats,1);eq(document.querySelector('[aria-label="Block 1 in main beats"]'),null);app.state().editor.setTiming(true);eq(!!document.querySelector('[aria-label="Block 1 in main beats"]'),true);
+const input=document.querySelector('#runtime-inputs button');input.click();eq(app.state().program.body.at(-1).type,'assign');eq(app.state().program.body.at(-1).value.kind,'input');app.addControl('number');eq(app.state().project.inputs.at(-1).value,2);app.addControl('choice');eq(app.state().project.inputs.at(-1).options,['Choice 1','Choice 2']);
+globalThis.MutationObserver=ui.window.MutationObserver;globalThis.requestAnimationFrame=()=>0;globalThis.cancelAnimationFrame=()=>{};
+const shell=createWorkspace(app);eq(document.body.dataset.view,'learn');document.querySelector('button[data-view="create"]').click();eq(document.body.dataset.view,'create');document.querySelector('button[data-tool="music"]').click();eq(document.body.dataset.tool,'music');eq($('music-panel').parentElement.className,'lab-layout');document.querySelector('button[data-view="live"]').click();eq($('live-panel').hidden,false);eq(app.state().project.inputs.some(i=>i.name==='Note'),true);document.querySelector('button[data-view="learn"]').click();eq(document.body.dataset.tool,'editor');eq(document.body.hasAttribute('aria-pressed'),false);shell.destroy();
+await ui.close();console.log(`Usability / unlocked navigation / live input execution: ${n} assertions passed.`);

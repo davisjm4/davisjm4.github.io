@@ -1,5 +1,5 @@
-import {neutral,motionClip,poseAt,clone} from './motion.js?v=beats-v2';
-import {DEFAULT_BEATS} from './engine.js?v=beats-v2';
+import {neutral,motionClip,poseAt,clone} from './motion.js?v=usability-v3';
+import {DEFAULT_BEATS} from './engine.js?v=usability-v3';
 // Beat transport: a rendered frame samples an absolute point, never advances the clock.
 export class Player{
  constructor({onPose=()=>{},onCommand=()=>{},onState=()=>{},clock=()=>performance.now()}={}){Object.assign(this,{onPose,onCommand,onState,clock});this.bpm=120;this.speed=1;this.reduced=false;this.trace=[];this.load([]);}

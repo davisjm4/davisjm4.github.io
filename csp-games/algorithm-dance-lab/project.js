@@ -1,5 +1,5 @@
-import * as E from './engine.js?v=beats-v2';
-import {zipSync,unzipSync,strToU8,strFromU8} from './vendor/fflate.js?v=beats-v2';
+import * as E from './engine.js?v=usability-v3';
+import {zipSync,unzipSync,strToU8,strFromU8} from './vendor/fflate.js?v=usability-v3';
 export const PROJECT_KEY='algorithmDance.projects.v2',MAX_AUDIO=25*1024*1024,MAX_JSON=250000;
 export const defaultInputs=()=>[{name:'Song',type:'choice',options:['Hokey Pokey','Head & Shoulders','Cha-Cha','Original'],value:'Original'},{name:'Repetitions',type:'number',value:2},{name:'Tempo',type:'number',value:120}];
 export const createProject=(program=E.blank(2))=>({format:'AlgorithmDanceProject',version:2,title:'My original project',program:structuredClone(program),bpm:120,musicSource:'silent',instrument:'sine',volume:.35,metronome:false,inputs:defaultInputs(),credits:'',media:null});

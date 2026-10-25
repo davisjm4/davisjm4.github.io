@@ -1,4 +1,4 @@
-import {blank,move,call,procedure,execute,observable,traceDifference,walk} from './engine.js?v=beats-v2';
+import {blank,move,call,procedure,execute,observable,traceDifference,walk} from './engine.js?v=usability-v3';
 export const COMBINATIONS=['FOOT','HAND','KNEE','ELBOW','HIP'].flatMap(part=>['RIGHT','LEFT'].map(side=>({part,side})));
 export const verse=({part,side})=>['moveIn','moveOut','moveIn','shake'].map(op=>({op,part,side})).concat({op:'turnAround'});
 export const choreography=(count=10)=>COMBINATIONS.slice(0,count).flatMap(verse);

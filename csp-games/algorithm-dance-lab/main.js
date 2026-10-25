@@ -1,3 +1,4 @@
-import {createStudioApp} from './studio-app.js?v=beats-v2';
+import {createStudioApp} from './studio-app.js?v=usability-v3';
+import {createWorkspace} from './workspace.js?v=usability-v3';
 import {startActivePractice} from '../session.js';
-createStudioApp();startActivePractice();
+const app=createStudioApp();createWorkspace(app);startActivePractice();

@@ -1,5 +1,5 @@
-import {neutral} from './motion.js?v=beats-v2';
-import {softwareRenderer} from './software-renderer.js?v=beats-v2';
+import {neutral} from './motion.js?v=usability-v3';
+import {softwareRenderer} from './software-renderer.js?v=usability-v3';
 // Original procedural humanoid: shared low-poly meshes and joint pivots, no downloaded model.
 export async function createStage(host,{onStatus=()=>{},onLost=()=>{}}={}){
  let renderer,scene,camera,rig,root,last=neutral(),lost=false,disposed=false,observer;const joints={};

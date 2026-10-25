@@ -1,9 +1,9 @@
-import * as E from './engine.js?v=beats-v2';
-import {STAGES,starter,choreography,validate,hint} from './lessons.js?v=beats-v2';
-import {createEditor,escape} from './editor.js?v=beats-v2';
-import {Player} from './player.js?v=beats-v2';
-import {createStage} from './renderer.js?v=beats-v2';
-import {createLessonSession} from './session.js?v=beats-v2';
+import * as E from './engine.js?v=usability-v3';
+import {STAGES,starter,choreography,validate,hint} from './lessons.js?v=usability-v3';
+import {createEditor,escape} from './editor.js?v=usability-v3';
+import {Player} from './player.js?v=usability-v3';
+import {createStage} from './renderer.js?v=usability-v3';
+import {createLessonSession} from './session.js?v=usability-v3';
 import {sessionTracker,startActivePractice} from '../session.js';
 export function createApp({stageFactory=createStage,shared=sessionTracker(),storage,now=()=>Date.now(),raf=cb=>requestAnimationFrame(cb),cancel=id=>cancelAnimationFrame(id)}={}){
  const $=id=>document.getElementById(id);if(!storage)try{storage=localStorage;}catch{}

@@ -61,3 +61,11 @@ Eight Dance Lab suites contain 1,821 assertions (486 interpreter/original lesson
 ## Extension contract
 
 LESSONS registers title, supportedMovements, referenceChoreography, stages, learningObjectives, validationRules and completionCriteria. Add authored stages and independent behavioral/structure tests without duplicating the interpreter/editor/renderer. Recommended next activities: YMCA (named pose blocks) and Freeze Dance/Simon Says (use existing selection/Boolean support with new authored rules). No unlimited compositional challenge generator is included.
+
+## Focused workspaces and Live mode (usability-v3)
+
+Learn/Create/Live navigation now separates tasks. All lesson stages can be selected freely; progress still records successful checks. Build/Controls/Music/Code tools occupy the same workspace beside the stage. Project files and progress use a separate drawer. Blocks are categorized. New advanced-activity movements default to one beat; advanced timing is opt-in. Existing saved durations and authored reference routines are preserved. Piano key clicks audition a short note immediately; melody preview explicitly enables sound and reports unavailable audio.
+
+Controls provide choice/number/switch/text creation, value editing, naming and a Use in program action that inserts a real readInput assignment into the same AST. Live adds Note, Beat and Event controls without generating response logic. Students construct their own main routine with decisions, procedures, lists and iteration.
+
+Live inputs: on-screen touch pads or A/S/D/F/G/H/J/K keys play C4/D4/E4/F4/G4/A4/B4/C5. Note press, note release, or each beat can run the student's main routine. Optional next-beat timing; a bounded newest-pending-event buffer prevents long backlogs. Each response executes afresh with captured inputs; scalar variables do not persist between events. Responses are bounded to 32 beats, sessions to five minutes, with stop on blur/hidden. Keyboard shortcuts ignore editing fields and key repeat. The composer can feed known note events; local recordings use manually set BPM/offset and Tap tempo, not automatic onset detection. Physical audio/display latency and physical mobile multitouch remain classroom review items.
