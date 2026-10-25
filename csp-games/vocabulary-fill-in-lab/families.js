@@ -1,4 +1,4 @@
-import {TERMS,TOPICS} from './catalog.js?v=vocab-v1';
+import {TERMS,TOPICS} from './catalog.js?v=vocab-v2';
 export const FAMILIES=[];
 function f(term,id,structure,tail,cases,why,distractors,topic=TERMS[term].topic){FAMILIES.push({id,term,structure,tail,cases,why,distractors:distractors.split(' '),topic,big:TOPICS[topic].big,objective:TERMS[term].objective});}
 const code=(scene,source)=>({scene,code:source});
@@ -841,13 +841,13 @@ f('automation','fixed-task-with-less-human-action','G','Having technology perfor
 'A fixed rule sends a reminder at a chosen time without a staff member sending it manually.',
 'A machine follows a fixed repeating process with less direct human operation and no learning component.'
 ],'A task can be automated without learning a model or displaying advanced intelligent behavior.','ml ai simulation crowdsourcing');
-f('ethical','responsibility-beyond-legality','C','The questions about responsible and fair use beyond legal permission are ____.',[
+f('ethical','responsibility-beyond-legality','C','The term for these concerns about responsible and fair use beyond legal permission is ____.',[
 'A team asks whether a permitted data use would treat affected people fairly.',
 'A designer asks whether an allowed feature respects the users it affects.',
 'A group considers possible responsibilities even after confirming that an action is legally permitted.',
 'A developer asks whether a lawful design could still cause unfair or avoidable harm.'
 ],'Legal permission does not settle every question about responsibility or fairness; no contested policy verdict is imposed here.','legal copyright consent security');
-f('legal','law-and-license-obligations','C','The questions about applicable laws and license obligations are ____.',[
+f('legal','law-and-license-obligations','C','The term for these concerns about applicable laws and license obligations is ____.',[
 'A team checks what a license legally permits before redistributing a program.',
 'A developer examines whether copying an original work is permitted under applicable law.',
 'A service checks which legal duties govern its handling of records.',

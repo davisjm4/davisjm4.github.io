@@ -79,3 +79,15 @@ for(const topic of new Set(advanced.flatMap(g=>g.topics))){
 filter.value='';document.getElementById('game-search').value='String Lab';vm.runInContext('render()',ui);
 assert.deepEqual(launches(),advanced.filter(g=>g.id==='string-lab').map(g=>g.url));
 console.log(`PASS: ${games.length} playable Java games, ${advanced.filter(g=>g.source==='java').length} Java catalog entries; catalog routes, unique cards, all topic filters, search, homepage redirect, nested routes, return links, summary, CSP/Teacher navigation.`);
+// A cross-curriculum activity must actually render in the five CSP groups,
+// not disappear because a descriptive tag alone matches none of the groups.
+{
+  const {window,document}=parseHTML(read('cs-games/csp/index.html'));window.CSGamesCatalog=catalog;
+  const filter=document.getElementById('topic-filter');Object.defineProperty(filter,'value',{writable:true,value:''});
+  document.getElementById('game-search').value='Vocabulary';const cspUI={window,document};vm.createContext(cspUI);vm.runInContext(read('cs-games/course-page.js'),cspUI);
+  const links=()=>[...document.querySelectorAll('a.launch')].filter(a=>a.getAttribute('href')==='../../csp-games/vocabulary-fill-in-lab/');
+  assert.equal(links().length,5,'Vocabulary launch must be available in all five Big Idea groups.');
+  filter.value='All five Big Ideas';vm.runInContext('render()',cspUI);assert.equal(links().length,5);
+  for(const topic of ['1.2 Program Purpose','2.1 Binary Representation','3.1 Program Components','4.1 Network Communication','5.1 Computing Innovations']){filter.value=topic;vm.runInContext('render()',cspUI);assert.equal(links().length,5,topic);}
+  console.log('PASS: Vocabulary catalog launches in all five CSP groups and filters.');
+}

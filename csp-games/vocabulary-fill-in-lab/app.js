@@ -1,6 +1,6 @@
-import * as E from './engine.js?v=vocab-v1';
+import * as E from './engine.js?v=vocab-v2';
 import {sessionTracker,addSessionNavigation} from '../session.js?v=per-mode-daily-v1';
-import {bigIdeaMetrics} from '../session-groups.js?v=vocab-v1';
+import {bigIdeaMetrics} from '../session-groups.js?v=vocab-v2';
 const $=id=>document.getElementById(id),tracker=sessionTracker(),slug='vocabulary-fill-in-lab',title='AP CSP Vocabulary Fill-in Lab',key='cspGames.vocabulary.history.v1';addSessionNavigation('../');
 let sessionId,generator,current,recordId=null,answered=false,referencePage=0;const seed=new URL(location.href).searchParams.get('seed');
 function ensure(){const id=tracker.snapshot().id;if(id===sessionId)return false;sessionId=id;let history=[];try{const saved=JSON.parse(localStorage.getItem(key));if(saved?.sessionId===id&&Array.isArray(saved.history))history=saved.history;}catch{}generator=E.createGenerator({seed:seed===null?Date.now():Number(seed),history});return true;}
