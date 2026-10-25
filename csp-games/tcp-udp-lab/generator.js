@@ -1,4 +1,4 @@
-import { TOPICS, COVERAGE, PROTOCOLS, CONDITIONS, CED, FAMILIES } from './content.js?v=tcpudp-v2';
+import { TOPICS, COVERAGE, PROTOCOLS, CONDITIONS, CED, FAMILIES } from './content.js?v=tcpudp-v3';
 export { TOPICS, COVERAGE, PROTOCOLS, CONDITIONS, CED, FAMILIES };
 
 export const ANSWERS = ['TCP', 'UDP'];

@@ -13,7 +13,7 @@ PASS: 17844 Code Concepts interaction assertions covering spoiler-free errors, p
 PASS: 62000 hint and scoring-state assertions across every Code Concepts variant.
 PASS: 59 shared-session assertions: deduplication, first-try formula, retries, reveal/skip exclusion, cross-page persistence, reset, corrupt/older data, unavailable storage, and bounded 5,000-round history.
 Session daily-boundary, legacy migration, and per-mode summary tests passed.
-PASS: 154 cross-game/session/report DOM assertions: all 12 games plus legacy link, retries, persistence, reveals, print action, escaped identity, reset confirmation/cancel/confirm, and topic tables. Rendered print/device QA remains unavailable.
+PASS: 152 cross-game/session/report DOM assertions: all 12 games plus legacy link, retries, persistence, reveals, print action, escaped identity, reset confirmation/cancel/confirm, and topic tables. Rendered print/device QA remains unavailable.
 Expanded concepts: 16,000 valid challenges; 7369 reverse / 8631 forward; all eight categories, retries and reveal verified.
 Practice engine: 5760 seeded challenges passed; all modes, models, valid alternatives, edge cases, and incorrect responses verified.
 Existing-game expansion: 4,000 randomized overflow, pixel, and cleaning challenges verified.
@@ -566,3 +566,4 @@ TCP/UDP generator: 15284 assertions passed. 15000 core + 3000 switching + 2000 r
 TCP/UDP session: 49 assertions passed (local stub tracker and real shared CSP tracker; one scored attempt, metadata, topic/protocol accuracy, reload persistence, daily reset, storage failure).
 TCP/UDP DOM: 73 assertions passed (two choices, single scored attempt, feedback, skips, all filters, topic/protocol accuracy, Learn, keyboard, persistence, daily reset).
 TCP/UDP integration review: 75 assertions passed; transport-policy, execution-confirmation, TLS/QUIC, DNS and nonblocking qualifications.
+TCP/UDP two-copy synchronization: 10 assertions passed; newer counters survive history saves, refresh and reset.

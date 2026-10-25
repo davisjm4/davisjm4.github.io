@@ -4,7 +4,8 @@ npm warn Unknown env config "http-proxy". This will stop working in the next maj
 > node tcp-udp-lab/tests/validation.test.mjs && node tcp-udp-lab/tests/generator.test.mjs && node tcp-udp-lab/tests/session.test.mjs && node tcp-udp-lab/tests/ui.test.mjs && node tcp-udp-lab/tests/integration.test.mjs
 
 TCP/UDP validation: 29279 assertions passed. 60 families, 360 instances; best length shortcut 54.7%, best word shortcut “order” 65.6%.
-TCP/UDP generator: 15284 assertions passed. 15000 core + 3000 switching + 3000 reload + 20000 long-run + 6000 coverage rounds; 0 exact-50 / 0 family-3 violations; long-run TCP 50.0%, best pattern guess 54.2%; min situation gap mixed 51, narrow 20.
+TCP/UDP generator: 15284 assertions passed. 15000 core + 3000 switching + 2000 reload + 20000 long-run + 6000 coverage rounds; 0 exact-50 / 0 family-3 violations; long-run TCP 50.0%, best pattern guess 54.2%; min situation gap mixed 51, narrow 20.
 TCP/UDP session: 49 assertions passed (local stub tracker and real shared CSP tracker; one scored attempt, metadata, topic/protocol accuracy, reload persistence, daily reset, storage failure).
 TCP/UDP DOM: 73 assertions passed (two choices, single scored attempt, feedback, skips, all filters, topic/protocol accuracy, Learn, keyboard, persistence, daily reset).
 TCP/UDP integration review: 75 assertions passed; transport-policy, execution-confirmation, TLS/QUIC, DNS and nonblocking qualifications.
+TCP/UDP two-copy synchronization: 10 assertions passed; newer counters survive history saves, refresh and reset.

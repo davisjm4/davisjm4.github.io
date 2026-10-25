@@ -1,5 +1,7 @@
 # Integration verification — G-114 — 2026-10-25
 
+Initial integration commit: `f97190e29fa52eb4ed52c9d3127562ea8bd03aaa`; follow-up session-counter fix is identified by the final release commit in tracker G-114.
+
 ## Provenance and reconciliation
 
 Supplied ZIP: `tcp-udp-lab-claude-implementation.zip`, SHA-256 `1550a05cc7ce66cfb6ef2958fd262d09ad446366176596183d7b2f295c37d18a`.
@@ -19,6 +21,7 @@ Claude’s 60 families, 180 situations, 360 instances, facts classifier, finite 
 - Nonblocking telemetry states its application queue/drop policy; UDP alone does not make sends nonblocking. Some immediate/latest-delivery wording was qualified, and multicast copies may still be lost.
 - Cross-client quiz/edit ordering is identified as application coordination rather than a transport-wide ordering guarantee.
 - T/U/N shortcuts are opt-in, off by default. Tab, Enter and Space remain available. Learn link opens the collapsed reference directly.
+- A reproduced two-copy bug showed a history-only save could overwrite newer per-protocol counters (shared Summary totals stayed correct). The adapter now refreshes protocol counters before history saves, scoring and display. A ten-assertion regression covers two copies, refresh and shared manual reset. Shared runtime and generator remain unchanged.
 - Fixed a reporting typo: the two 1,000-round reload runs total 2,000, not 3,000. Generator behavior is unchanged.
 
 ## Curriculum and primary sources
@@ -39,7 +42,7 @@ This is implementation/source review, not independent educator or networking-exp
 
 ## Independent automated evidence
 
-Dependency setup: `npm ci --ignore-scripts --prefix csp-games` completed. The four supplied non-browser suites were rerun before and after review, then included in the complete current CSP regression run. Added 75 integration-review assertions. Final lab suite counts: 29,279 validation +15,284 generator +49 session +73 DOM +75 review = **44,760 assertions**. Daily reset, local storage corruption/failure, filter persistence, one scored selection, no-score skips/help and protocol/history lifecycle were tested with the real shared tracker. Los Angeles timezone run passed.
+Dependency setup: `npm ci --ignore-scripts --prefix csp-games` completed. The four supplied non-browser suites were rerun before and after review, then included in the complete current CSP regression run. Added 85 integration-review assertions, including a reproduced two-copy counter-overwrite regression. Final lab suite counts: 29,279 validation +15,284 generator +49 session +73 DOM +85 review = **44,770 assertions**. Daily reset, local storage corruption/failure, filter persistence, one scored selection, no-score skips/help and protocol/history lifecycle were tested with the real shared tracker. Los Angeles timezone run passed.
 
 Generator tests execute 15,000 core +3,000 switching +2,000 reload +20,000 long-run +6,000 coverage rounds = **46,000 measured rounds**, in addition to deterministic, narrow-pool and topic-coverage checks. Core TCP/UDP: **7,482/7,518 (49.88% TCP)**. Long run: **10,003/9,997**. Zero exact50 and previous-three-family violations; all360 instances reached. Revised scenario length shortcut:54.7%; best single-word cue (“order”):65.6%; long-run answer-pattern predictor54.2%. These metrics are not proof of natural-language ambiguity absence.
 

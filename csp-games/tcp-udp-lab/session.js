@@ -31,6 +31,19 @@ export function createLabSession({ tracker, storage = globalThis.localStorage, t
       }
     } else state = { history: [], protocols: emptyProtocols() };
   }
+  // Another open copy can score while this one is idle. History saves must not
+  // replace its newer protocol counters with this tab's stale in-memory copy.
+  function syncProtocols() {
+    try {
+      const saved = JSON.parse(storage?.getItem(STORAGE_KEY) || 'null');
+      if (!saved || saved.sessionId !== sessionId) return;
+      for (const a of ['TCP', 'UDP']) {
+        const attempted = Number(saved.protocols?.[a]?.attempted);
+        const firstTry = Number(saved.protocols?.[a]?.firstTry);
+        if (Number.isSafeInteger(attempted) && attempted >= 0 && Number.isSafeInteger(firstTry) && firstTry >= 0 && firstTry <= attempted) state.protocols[a] = { attempted, firstTry };
+      }
+    } catch { /* retain working in-memory counts when storage is unavailable */ }
+  }
   function save() {
     try { storage?.setItem(STORAGE_KEY, JSON.stringify({ sessionId, history: state.history, protocols: state.protocols })); } catch { /* storage unavailable: keep in memory */ }
   }
@@ -43,9 +56,10 @@ export function createLabSession({ tracker, storage = globalThis.localStorage, t
     },
     get sessionId() { return sessionId; },
     history: () => [...state.history],
-    rememberHistory(ids) { state.history = ids.slice(-50); save(); },
+    rememberHistory(ids) { syncProtocols(); state.history = ids.slice(-50); save(); },
     // Records exactly one scored attempt for question q.
     record(q, selected, filter) {
+      syncProtocols();
       const correct = selected === q.answer;
       const filterTitle = filter === 'mixed' ? 'Mixed' : topics[filter] || filter;
       const id = tracker.begin(SLUG, TITLE, q.topic, topics[q.topic] || q.topic, filter, filterTitle);
@@ -64,6 +78,7 @@ export function createLabSession({ tracker, storage = globalThis.localStorage, t
       return { accepted: true, correct, recordId: id };
     },
     stats() {
+      syncProtocols();
       const s = tracker.snapshot(), g = s.games?.[SLUG];
       return {
         attempted: g?.attempted || 0, firstTry: g?.firstTry || 0,
