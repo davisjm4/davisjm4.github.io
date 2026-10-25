@@ -1,0 +1,1 @@
+TCP/UDP generator: 15284 assertions passed. 15000 core + 3000 switching + 3000 reload + 20000 long-run + 6000 coverage rounds; 0 exact-50 / 0 family-3 violations; long-run TCP 50.0%, best pattern guess 54.2%; min situation gap mixed 51, narrow 20.

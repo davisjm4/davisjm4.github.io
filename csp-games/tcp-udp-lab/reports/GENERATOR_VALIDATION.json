@@ -1,0 +1,844 @@
+{
+  "generatedFrom": "tools/build-reports.mjs (same harness as tests/generator.test.mjs)",
+  "content": {
+    "families": 60,
+    "familiesTCP": 30,
+    "familiesUDP": 30,
+    "situations": 180,
+    "instances": 360,
+    "instancesTCP": 180,
+    "instancesUDP": 180,
+    "byTopic": {
+      "reliability": {
+        "families": 12,
+        "instances": 72,
+        "TCP": 36
+      },
+      "realtime": {
+        "families": 12,
+        "instances": 72,
+        "TCP": 36
+      },
+      "streaming": {
+        "families": 10,
+        "instances": 60,
+        "TCP": 30
+      },
+      "overhead": {
+        "families": 12,
+        "instances": 72,
+        "TCP": 36
+      },
+      "protocols": {
+        "families": 14,
+        "instances": 84,
+        "TCP": 42
+      }
+    },
+    "protocolBoundFamilies": 14,
+    "coverageTags": {
+      "ordered-stream": [
+        "rel-legacy-stream",
+        "rel-ordered-records",
+        "rel-framing",
+        "rt-ordered-operations",
+        "rt-orders-vs-quotes",
+        "st-manifest",
+        "ov-orderly-close",
+        "pr-http11",
+        "pr-ssh",
+        "pr-tls"
+      ],
+      "reliable": [
+        "rel-legacy-stream",
+        "rel-complete-file",
+        "rel-ordered-records",
+        "rel-connection-failure",
+        "rt-critical-command",
+        "st-flow-control",
+        "ov-bulk-congestion",
+        "ov-large-messages",
+        "ov-orderly-close",
+        "pr-tls",
+        "pr-dns-zone"
+      ],
+      "retransmission": [
+        "rel-complete-file",
+        "rt-critical-command",
+        "st-on-demand"
+      ],
+      "lost-packets": [
+        "rel-complete-file",
+        "rel-speed-lure",
+        "rel-hol",
+        "rel-repair-packets"
+      ],
+      "out-of-order": [
+        "rel-ordered-records",
+        "rel-hol",
+        "rel-timestamps",
+        "rt-ordered-operations"
+      ],
+      "time-sensitive": [
+        "rel-repair-packets",
+        "rt-voice-live",
+        "rt-multiplayer",
+        "rt-deadline-commands",
+        "rt-interactive-complete",
+        "st-live-interactive",
+        "st-cloud-gaming",
+        "st-music-jam"
+      ],
+      "obsolete-data": [
+        "rel-obsolete-status",
+        "rt-multiplayer",
+        "rt-deadline-commands",
+        "st-cloud-gaming",
+        "st-music-jam"
+      ],
+      "multiplayer": [
+        "rt-multiplayer",
+        "rt-game-transactions"
+      ],
+      "voice": [
+        "rt-voice-live",
+        "rt-adaptive-rate",
+        "rt-recorded-not-live",
+        "st-music-jam",
+        "pr-dtls"
+      ],
+      "video": [
+        "rt-video-refresh",
+        "rt-multicast-live",
+        "rt-adaptive-rate",
+        "rt-recorded-not-live",
+        "st-on-demand",
+        "st-live-delay-budget",
+        "st-manifest",
+        "st-udp-blocked",
+        "st-live-interactive",
+        "st-cloud-gaming",
+        "st-quality-layers",
+        "pr-http2",
+        "pr-dtls"
+      ],
+      "custom-reliability": [
+        "rel-selective-acks",
+        "rel-reliable-over-udp",
+        "st-quality-layers",
+        "pr-quic",
+        "pr-tftp"
+      ],
+      "overhead": [
+        "ov-amortized-overhead",
+        "ov-tiny-must-arrive",
+        "ov-sensor-tiny",
+        "ov-request-response",
+        "ov-server-state",
+        "pr-dns-ordinary",
+        "pr-ntp",
+        "pr-dhcp"
+      ],
+      "datagram-boundaries": [
+        "rel-framing",
+        "rel-timestamps",
+        "ov-large-messages",
+        "ov-discovery"
+      ],
+      "connection-oriented": [
+        "rel-legacy-stream",
+        "rel-connection-failure",
+        "rt-critical-command",
+        "st-udp-blocked",
+        "ov-amortized-overhead",
+        "ov-connection-setup",
+        "ov-orderly-close",
+        "pr-ssh",
+        "pr-ftp"
+      ],
+      "connectionless": [
+        "rt-multicast-live",
+        "ov-sensor-tiny",
+        "ov-discovery",
+        "ov-request-response",
+        "ov-roaming",
+        "ov-server-state",
+        "pr-ntp",
+        "pr-dhcp"
+      ],
+      "quic": [
+        "pr-quic",
+        "pr-http3"
+      ],
+      "http3": [
+        "st-udp-blocked",
+        "pr-http3"
+      ],
+      "http1": [
+        "pr-http11"
+      ],
+      "http2": [
+        "pr-http2"
+      ],
+      "dns": [
+        "pr-dns-large",
+        "pr-dns-zone",
+        "pr-dns-ordinary"
+      ],
+      "file-transfer": [
+        "rel-complete-file",
+        "rel-reliable-over-udp",
+        "ov-bulk-congestion",
+        "pr-ftp",
+        "pr-tftp"
+      ],
+      "remote-terminal": [
+        "ov-roaming",
+        "pr-ssh"
+      ],
+      "sensor": [
+        "rel-timestamps",
+        "st-live-telemetry",
+        "ov-tiny-must-arrive",
+        "ov-sensor-tiny"
+      ],
+      "telemetry": [
+        "st-live-telemetry",
+        "ov-no-backpressure"
+      ],
+      "live-status": [
+        "rel-obsolete-status",
+        "rt-multicast-live",
+        "st-live-telemetry"
+      ],
+      "app-retransmission": [
+        "rel-selective-acks",
+        "rel-reliable-over-udp",
+        "rt-video-refresh",
+        "st-quality-layers",
+        "ov-request-response",
+        "ov-server-state",
+        "pr-dns-ordinary",
+        "pr-tftp"
+      ],
+      "flow-control": [
+        "st-flow-control",
+        "ov-no-backpressure"
+      ],
+      "congestion-control": [
+        "rt-adaptive-rate",
+        "ov-bulk-congestion"
+      ],
+      "reliability-vs-timeliness": [
+        "rel-speed-lure",
+        "rel-obsolete-status",
+        "rel-repair-packets",
+        "rt-voice-live",
+        "rt-interactive-complete",
+        "rt-orders-vs-quotes",
+        "st-live-delay-budget",
+        "st-live-interactive"
+      ],
+      "misconceptions": [
+        "rel-framing",
+        "rel-speed-lure",
+        "rel-connection-failure",
+        "rel-hol",
+        "rel-reliable-over-udp",
+        "rt-interactive-complete",
+        "rt-recorded-not-live",
+        "rt-orders-vs-quotes",
+        "rt-game-transactions",
+        "st-on-demand",
+        "st-live-delay-budget",
+        "st-manifest",
+        "st-udp-blocked",
+        "ov-amortized-overhead",
+        "ov-connection-setup",
+        "ov-tiny-must-arrive",
+        "ov-roaming",
+        "ov-no-backpressure",
+        "pr-http2",
+        "pr-tls",
+        "pr-dns-large",
+        "pr-quic",
+        "pr-http3",
+        "pr-dtls"
+      ]
+    }
+  },
+  "simulation": {
+    "coreRounds": 15000,
+    "coreTCPShare": 0.4988,
+    "exactRepeatViolations": 0,
+    "familyCooldownViolations": 0,
+    "relaxationsInPublishedPools": 0,
+    "byFilter": {
+      "mixed": {
+        "pool": 360,
+        "situations": 180,
+        "families": 60,
+        "rounds": 2500,
+        "tcpShare": 0.4992,
+        "exactViolations": 0,
+        "familyViolations": 0,
+        "maxStreak": 4,
+        "minSituationGap": 51,
+        "situationRepeatsWithin50": 0,
+        "worstPatternGuess": 0.5791583166332666
+      },
+      "reliability": {
+        "pool": 72,
+        "situations": 36,
+        "families": 12,
+        "rounds": 2500,
+        "tcpShare": 0.4992,
+        "exactViolations": 0,
+        "familyViolations": 0,
+        "maxStreak": 4,
+        "minSituationGap": 24,
+        "situationRepeatsWithin50": 2320,
+        "worstPatternGuess": 0.5791583166332666
+      },
+      "realtime": {
+        "pool": 72,
+        "situations": 36,
+        "families": 12,
+        "rounds": 2500,
+        "tcpShare": 0.4992,
+        "exactViolations": 0,
+        "familyViolations": 0,
+        "maxStreak": 4,
+        "minSituationGap": 24,
+        "situationRepeatsWithin50": 2320,
+        "worstPatternGuess": 0.5791583166332666
+      },
+      "streaming": {
+        "pool": 60,
+        "situations": 30,
+        "families": 10,
+        "rounds": 2500,
+        "tcpShare": 0.4968,
+        "exactViolations": 0,
+        "familyViolations": 0,
+        "maxStreak": 4,
+        "minSituationGap": 20,
+        "situationRepeatsWithin50": 2350,
+        "worstPatternGuess": 0.5831663326653307
+      },
+      "overhead": {
+        "pool": 72,
+        "situations": 36,
+        "families": 12,
+        "rounds": 2500,
+        "tcpShare": 0.4992,
+        "exactViolations": 0,
+        "familyViolations": 0,
+        "maxStreak": 4,
+        "minSituationGap": 24,
+        "situationRepeatsWithin50": 2320,
+        "worstPatternGuess": 0.5791583166332666
+      },
+      "protocols": {
+        "pool": 84,
+        "situations": 42,
+        "families": 14,
+        "rounds": 2500,
+        "tcpShare": 0.4992,
+        "exactViolations": 0,
+        "familyViolations": 0,
+        "maxStreak": 4,
+        "minSituationGap": 30,
+        "situationRepeatsWithin50": 2228,
+        "worstPatternGuess": 0.5791583166332666
+      }
+    },
+    "switching": [
+      {
+        "seed": 11,
+        "rounds": 1000,
+        "exactViolations": 0,
+        "familyViolations": 0,
+        "tcpShare": 0.499,
+        "maxStreak": 4
+      },
+      {
+        "seed": 22,
+        "rounds": 1000,
+        "exactViolations": 0,
+        "familyViolations": 0,
+        "tcpShare": 0.502,
+        "maxStreak": 4
+      },
+      {
+        "seed": 33,
+        "rounds": 1000,
+        "exactViolations": 0,
+        "familyViolations": 0,
+        "tcpShare": 0.498,
+        "maxStreak": 4
+      }
+    ],
+    "reloads": [
+      {
+        "seed": 7,
+        "rounds": 1000,
+        "exactViolations": 0,
+        "familyViolations": 0
+      },
+      {
+        "seed": 8,
+        "rounds": 1000,
+        "exactViolations": 0,
+        "familyViolations": 0
+      }
+    ],
+    "longRun": {
+      "rounds": 20000,
+      "tcpShare": 0.50015,
+      "maxStreak": 4,
+      "patternGuess": {
+        "best": "alternate",
+        "accuracy": 0.5418270913545677,
+        "all": {
+          "repeat-last": 0.45817290864543225,
+          "alternate": 0.5418270913545677,
+          "switch-after-2": 0.5392269613480674,
+          "switch-after-3": 0.5351267563378169,
+          "switch-after-4": 0.5139756987849392,
+          "fewer-so-far": 0.5339266963348167
+        }
+      }
+    },
+    "coverage6000": {
+      "reached": 360,
+      "of": 360
+    }
+  },
+  "shortcuts": {
+    "length": {
+      "acc": 0.5472222222222223,
+      "yes": "UDP",
+      "threshold": 63
+    },
+    "topWords": [
+      {
+        "word": "order",
+        "n": 180,
+        "TCP": 118,
+        "UDP": 62,
+        "purity": 0.6555555555555556,
+        "major": "TCP",
+        "stumpAcc": 0.6555555555555556
+      },
+      {
+        "word": "arrive",
+        "n": 169,
+        "TCP": 110,
+        "UDP": 59,
+        "purity": 0.650887573964497,
+        "major": "TCP",
+        "stumpAcc": 0.6416666666666667
+      },
+      {
+        "word": "complete",
+        "n": 88,
+        "TCP": 66,
+        "UDP": 22,
+        "purity": 0.75,
+        "major": "TCP",
+        "stumpAcc": 0.6222222222222222
+      },
+      {
+        "word": "server",
+        "n": 106,
+        "TCP": 72,
+        "UDP": 34,
+        "purity": 0.6792452830188679,
+        "major": "TCP",
+        "stumpAcc": 0.6055555555555555
+      },
+      {
+        "word": "relies",
+        "n": 42,
+        "TCP": 40,
+        "UDP": 2,
+        "purity": 0.9523809523809523,
+        "major": "TCP",
+        "stumpAcc": 0.6055555555555555
+      },
+      {
+        "word": "transport",
+        "n": 62,
+        "TCP": 50,
+        "UDP": 12,
+        "purity": 0.8064516129032258,
+        "major": "TCP",
+        "stumpAcc": 0.6055555555555555
+      },
+      {
+        "word": "late",
+        "n": 34,
+        "TCP": 0,
+        "UDP": 34,
+        "purity": 1,
+        "major": "UDP",
+        "stumpAcc": 0.5944444444444444
+      },
+      {
+        "word": "resends",
+        "n": 32,
+        "TCP": 0,
+        "UDP": 32,
+        "purity": 1,
+        "major": "UDP",
+        "stumpAcc": 0.5888888888888889
+      },
+      {
+        "word": "packet",
+        "n": 46,
+        "TCP": 8,
+        "UDP": 38,
+        "purity": 0.8260869565217391,
+        "major": "UDP",
+        "stumpAcc": 0.5833333333333334
+      },
+      {
+        "word": "live",
+        "n": 58,
+        "TCP": 14,
+        "UDP": 44,
+        "purity": 0.7586206896551724,
+        "major": "UDP",
+        "stumpAcc": 0.5833333333333334
+      },
+      {
+        "word": "code",
+        "n": 60,
+        "TCP": 44,
+        "UDP": 16,
+        "purity": 0.7333333333333333,
+        "major": "TCP",
+        "stumpAcc": 0.5777777777777777
+      },
+      {
+        "word": "skipped",
+        "n": 30,
+        "TCP": 2,
+        "UDP": 28,
+        "purity": 0.9333333333333333,
+        "major": "UDP",
+        "stumpAcc": 0.5722222222222222
+      },
+      {
+        "word": "large",
+        "n": 28,
+        "TCP": 26,
+        "UDP": 2,
+        "purity": 0.9285714285714286,
+        "major": "TCP",
+        "stumpAcc": 0.5666666666666667
+      },
+      {
+        "word": "recover",
+        "n": 24,
+        "TCP": 24,
+        "UDP": 0,
+        "purity": 1,
+        "major": "TCP",
+        "stumpAcc": 0.5666666666666667
+      },
+      {
+        "word": "before",
+        "n": 28,
+        "TCP": 26,
+        "UDP": 2,
+        "purity": 0.9285714285714286,
+        "major": "TCP",
+        "stumpAcc": 0.5666666666666667
+      }
+    ],
+    "appCategories": [
+      {
+        "app": "game",
+        "TCP": 14,
+        "UDP": 28,
+        "n": 42,
+        "majorShare": 0.6666666666666666
+      },
+      {
+        "app": "video",
+        "TCP": 16,
+        "UDP": 18,
+        "n": 34,
+        "majorShare": 0.5294117647058824
+      },
+      {
+        "app": "school",
+        "TCP": 14,
+        "UDP": 18,
+        "n": 32,
+        "majorShare": 0.5625
+      },
+      {
+        "app": "web",
+        "TCP": 16,
+        "UDP": 12,
+        "n": 28,
+        "majorShare": 0.5714285714285714
+      },
+      {
+        "app": "iot",
+        "TCP": 12,
+        "UDP": 14,
+        "n": 26,
+        "majorShare": 0.5384615384615384
+      },
+      {
+        "app": "business",
+        "TCP": 10,
+        "UDP": 6,
+        "n": 16,
+        "majorShare": 0.625
+      },
+      {
+        "app": "finance",
+        "TCP": 10,
+        "UDP": 6,
+        "n": 16,
+        "majorShare": 0.625
+      },
+      {
+        "app": "health",
+        "TCP": 8,
+        "UDP": 6,
+        "n": 14,
+        "majorShare": 0.5714285714285714
+      },
+      {
+        "app": "science",
+        "TCP": 6,
+        "UDP": 6,
+        "n": 12,
+        "majorShare": 0.5
+      },
+      {
+        "app": "music",
+        "TCP": 8,
+        "UDP": 4,
+        "n": 12,
+        "majorShare": 0.6666666666666666
+      },
+      {
+        "app": "voice",
+        "TCP": 4,
+        "UDP": 6,
+        "n": 10,
+        "majorShare": 0.6
+      },
+      {
+        "app": "shop",
+        "TCP": 6,
+        "UDP": 4,
+        "n": 10,
+        "majorShare": 0.6
+      },
+      {
+        "app": "chat",
+        "TCP": 6,
+        "UDP": 2,
+        "n": 8,
+        "majorShare": 0.75
+      },
+      {
+        "app": "backup",
+        "TCP": 6,
+        "UDP": 2,
+        "n": 8,
+        "majorShare": 0.75
+      },
+      {
+        "app": "security",
+        "TCP": 4,
+        "UDP": 4,
+        "n": 8,
+        "majorShare": 0.5
+      },
+      {
+        "app": "sensor",
+        "TCP": 4,
+        "UDP": 4,
+        "n": 8,
+        "majorShare": 0.5
+      },
+      {
+        "app": "terminal",
+        "TCP": 4,
+        "UDP": 2,
+        "n": 6,
+        "majorShare": 0.6666666666666666
+      },
+      {
+        "app": "email",
+        "TCP": 4,
+        "UDP": 2,
+        "n": 6,
+        "majorShare": 0.6666666666666666
+      },
+      {
+        "app": "network",
+        "TCP": 2,
+        "UDP": 4,
+        "n": 6,
+        "majorShare": 0.6666666666666666
+      },
+      {
+        "app": "database",
+        "TCP": 4,
+        "UDP": 0,
+        "n": 4,
+        "majorShare": 1
+      },
+      {
+        "app": "printing",
+        "TCP": 2,
+        "UDP": 2,
+        "n": 4,
+        "majorShare": 0.5
+      },
+      {
+        "app": "software",
+        "TCP": 4,
+        "UDP": 0,
+        "n": 4,
+        "majorShare": 1
+      },
+      {
+        "app": "logging",
+        "TCP": 4,
+        "UDP": 0,
+        "n": 4,
+        "majorShare": 1
+      },
+      {
+        "app": "robotics",
+        "TCP": 0,
+        "UDP": 4,
+        "n": 4,
+        "majorShare": 1
+      },
+      {
+        "app": "sports",
+        "TCP": 0,
+        "UDP": 4,
+        "n": 4,
+        "majorShare": 1
+      },
+      {
+        "app": "media",
+        "TCP": 2,
+        "UDP": 2,
+        "n": 4,
+        "majorShare": 0.5
+      },
+      {
+        "app": "collab",
+        "TCP": 4,
+        "UDP": 0,
+        "n": 4,
+        "majorShare": 1
+      },
+      {
+        "app": "transit",
+        "TCP": 0,
+        "UDP": 2,
+        "n": 2,
+        "majorShare": 1
+      },
+      {
+        "app": "maps",
+        "TCP": 0,
+        "UDP": 2,
+        "n": 2,
+        "majorShare": 1
+      },
+      {
+        "app": "fitness",
+        "TCP": 0,
+        "UDP": 2,
+        "n": 2,
+        "majorShare": 1
+      },
+      {
+        "app": "traffic",
+        "TCP": 0,
+        "UDP": 2,
+        "n": 2,
+        "majorShare": 1
+      },
+      {
+        "app": "radio",
+        "TCP": 0,
+        "UDP": 2,
+        "n": 2,
+        "majorShare": 1
+      },
+      {
+        "app": "maritime",
+        "TCP": 0,
+        "UDP": 2,
+        "n": 2,
+        "majorShare": 1
+      },
+      {
+        "app": "vr",
+        "TCP": 0,
+        "UDP": 2,
+        "n": 2,
+        "majorShare": 1
+      },
+      {
+        "app": "drone",
+        "TCP": 0,
+        "UDP": 2,
+        "n": 2,
+        "majorShare": 1
+      },
+      {
+        "app": "stage",
+        "TCP": 0,
+        "UDP": 2,
+        "n": 2,
+        "majorShare": 1
+      },
+      {
+        "app": "industrial",
+        "TCP": 2,
+        "UDP": 0,
+        "n": 2,
+        "majorShare": 1
+      },
+      {
+        "app": "podcast",
+        "TCP": 2,
+        "UDP": 0,
+        "n": 2,
+        "majorShare": 1
+      },
+      {
+        "app": "reader",
+        "TCP": 2,
+        "UDP": 0,
+        "n": 2,
+        "majorShare": 1
+      },
+      {
+        "app": "design",
+        "TCP": 0,
+        "UDP": 2,
+        "n": 2,
+        "majorShare": 1
+      }
+    ]
+  }
+}

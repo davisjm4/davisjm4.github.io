@@ -1,0 +1,1 @@
+PASS: 16 playable Java games, 16 Java catalog entries; catalog routes, unique cards, all topic filters, search, homepage redirect, nested routes, return links, summary, CSP/Teacher navigation.

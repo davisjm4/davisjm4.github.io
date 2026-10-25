@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c1722">
+<title>TCP vs. UDP Decision Lab | CSP Games</title>
+<meta name="description" content="Read a networking scenario, choose TCP or UDP from its requirements, then see why that protocol fits and the other does not.">
+<link rel="stylesheet" href="../style.css?v=platform-java-v3">
+<link rel="stylesheet" href="./style.css?v=tcpudp-v2">
+<script type="module" src="./app.js?v=tcpudp-v2"></script>
+</head>
+<body>
+<header><a href="../">← CSP Games</a><a href="../../cs-games/csp/">CS Games · AP CSP</a><a href="../session-summary/" data-session-link>Session Summary</a></header>
+<main>
+<div class="eyebrow">DevCat Studios · Big Idea 4 · Computer Systems and Networks</div>
+<h1>TCP vs. UDP Decision Lab</h1>
+<p class="intro">One scenario. Two transport protocols. Choose the one its requirements call for.</p>
+
+<div class="toolbar">
+  <label for="topic">Practice topic</label>
+  <select id="topic"><option value="mixed">Mixed · all topics</option></select>
+  <a href="#learn" id="learn-link">Learn / Reference</a>
+</div>
+
+<section class="panel round" aria-labelledby="scenario-title">
+  <div class="round-heading"><h2 id="scenario-title">Scenario</h2><span id="topic-label"></span></div>
+  <p id="scene" tabindex="-1"></p>
+  <p id="prompt" class="prompt"></p>
+  <div class="choices" role="group" aria-label="Choose a transport protocol">
+    <button type="button" id="tcp" data-answer="TCP">TCP</button>
+    <button type="button" id="udp" data-answer="UDP">UDP</button>
+  </div>
+  <div id="feedback" class="feedback" role="status" aria-live="polite" tabindex="-1" hidden></div>
+  <button type="button" id="next" class="secondary">Next question</button>
+  <p id="notice" role="status"></p>
+</section>
+
+<p id="stats" aria-live="polite"></p>
+<details class="panel" id="breakdown">
+  <summary>Accuracy by topic and by protocol</summary>
+  <h3>By topic</h3><div id="topic-stats"></div>
+  <h3>By correct protocol</h3><div id="protocol-stats"></div>
+</details>
+<p class="small">One scored answer per round: your first choice is final, and the explanation appears after you choose. Next question skips an unanswered round without counting it. Changing the topic keeps your session. Keyboard: Tab moves between controls and Enter or Space chooses; optional shortcuts T, U and N choose TCP, choose UDP and go to the next question when enabled below. Active time is shared CSP practice time and pauses when the page is hidden or idle.</p>
+
+<label class="shortcut-setting"><input type="checkbox" id="shortcuts"> Enable T / U / N keyboard shortcuts</label>
+<details class="panel" id="learn">
+  <summary>Learn / Reference — TCP and UDP</summary>
+  <h3>What a transport protocol does</h3>
+  <p>IP moves packets between devices across the Internet. A <strong>transport protocol</strong> runs on top of IP and delivers data between programs on those devices. TCP and UDP are the two most common transport protocols. Neither is better in general: an application picks the one whose behavior matches what it needs, and protocols built on top can add more.</p>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="TCP and UDP comparison">
+    <table>
+      <thead><tr><th scope="col">Property</th><th scope="col">TCP</th><th scope="col">UDP</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Transport style</th><td>Byte stream</td><td>Datagrams</td></tr>
+        <tr><th scope="row">Built-in ordered delivery</th><td>Yes</td><td>No</td></tr>
+        <tr><th scope="row">Built-in reliable delivery</th><td>Yes, while the connection succeeds</td><td>No</td></tr>
+        <tr><th scope="row">Built-in retransmission</th><td>Yes</td><td>No</td></tr>
+        <tr><th scope="row">Flow and congestion control</th><td>Yes</td><td>No (the application must pace itself)</td></tr>
+        <tr><th scope="row">Connection model</th><td>Connection-oriented</td><td>Connectionless</td></tr>
+        <tr><th scope="row">Header size</th><td>At least 20 bytes</td><td>8 bytes</td></tr>
+        <tr><th scope="row">Typical role</th><td>Reliable ordered streams</td><td>Flexible datagram transport</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small">The table describes built-in behavior. It does not make one protocol better than the other: an application or a protocol layered above UDP can add reliability, ordering and security itself.</p>
+
+  <h3>TCP</h3>
+  <p>TCP is <strong>connection-oriented</strong>: the two ends set up a connection with a three-way handshake before data flows, and both keep track of it. It delivers a <strong>byte stream</strong>: it numbers the data, uses acknowledgments to detect losses, <strong>retransmits</strong> lost segments and hands bytes to the application in their original <strong>order</strong>. Delivery is reliable while the connection works; if the network fails completely, data cannot arrive. A detected connection failure can be reported to the application, but detection can take time. A transport acknowledgment does not confirm that the receiving application completed an action. <strong>Flow control</strong> keeps a fast sender from overwhelming a slow receiver, and <strong>congestion control</strong> slows the sender when the network is congested.</p>
+  <p>TCP does not keep message boundaries, so applications that send separate messages over it mark where each one ends. TCP does not encrypt; encryption comes from TLS running above it.</p>
+
+  <h3>UDP</h3>
+  <p>UDP is <strong>connectionless</strong>: a program sends a <strong>datagram</strong> without any setup, and each datagram is delivered as a separate unit with its boundaries kept. UDP has no built-in guarantee that a datagram arrives or arrives in order, and it never retransmits. Its header is small (8 bytes), and it has no flow or congestion control, so applications that send a lot of data over it should adjust their own rate. UDP can also send one datagram to a broadcast or multicast address.</p>
+  <p>Because UDP adds so little, applications can build exactly the behavior they need on top of it: their own acknowledgments, repair data, or recovery only for important messages. UDP is not insecure by nature; protocols such as DTLS and QUIC encrypt data carried over it.</p>
+
+  <h3>Reliability versus timeliness</h3>
+  <p>Retransmission and in-order delivery have a cost: when one piece is lost, everything after it waits until the piece is resent. This is called <strong>head-of-line blocking</strong>. For a file or a bank transaction, waiting is right because every byte matters. For live voice, video or game positions, data that arrives late is useless, so skipping a lost piece and using the newest data keeps the experience responsive. A large delay budget, such as a livestream that runs 20 seconds behind, gives time to recover lost data, so “live” does not automatically mean UDP.</p>
+
+  <h3>Network overhead and connections</h3>
+  <p>TCP’s handshake costs a round trip before any data is sent, and its header is larger. That overhead matters for tiny messages and one-question exchanges, and matters little for a connection that stays open and carries a lot of data. Small size alone does not decide: a tiny message that must not be lost may still call for TCP.</p>
+
+  <h3>Protocols in use today</h3>
+  <p><strong>HTTP/1.1</strong> and <strong>HTTP/2</strong> run over TCP. <strong>QUIC</strong> runs over UDP and provides reliability, congestion control, encryption and independent streams itself, so a loss in one stream does not stall the others. <strong>HTTP/3</strong> runs over QUIC, so not all web traffic uses TCP; browsers fall back to HTTP/2 over TCP when a network blocks QUIC. <strong>DNS</strong> commonly uses UDP for ordinary small lookups and uses TCP for answers too large for the first reply and for zone transfers; DNS servers are expected to support both. Streaming does not automatically mean UDP either: much on-demand video is delivered over HTTP on TCP or QUIC.</p>
+
+  <h3>How to decide</h3>
+  <ul>
+    <li>Does the application rely on the transport to recover every byte, in order? That points to TCP.</li>
+    <li>Is late data useless, and does the application skip or handle missing data itself? That points to UDP.</li>
+    <li>Does a named protocol fix the transport (HTTP/2, SSH, QUIC, HTTP/3, DNS)? Then the protocol decides.</li>
+    <li>Does the application need one message to reach many devices, or must its session survive an address change? That points to UDP.</li>
+    <li>Never decide from the type of application alone: games, video and sensors appear with both answers.</li>
+  </ul>
+  <p class="small">References: <a href="https://apcentral.collegeboard.org/media/pdf/ap-computer-science-principles-course-and-exam-description.pdf">AP CSP Course and Exam Description, Topic 4.1</a> · <a href="https://www.rfc-editor.org/rfc/rfc9293">RFC 9293 (TCP)</a> · <a href="https://www.rfc-editor.org/rfc/rfc768">RFC 768 (UDP)</a> · <a href="https://www.rfc-editor.org/rfc/rfc9000">RFC 9000 (QUIC)</a> · <a href="https://www.rfc-editor.org/rfc/rfc9114">RFC 9114 (HTTP/3)</a> · <a href="https://www.rfc-editor.org/rfc/rfc7766">RFC 7766 (DNS over TCP)</a>.</p>
+</details>
+<p class="small">Core AP CSP alignment: CSN-1.C (Internet data and protocols), CSN-1.C.4, and CSN-1.D.2 (HTTP). QUIC, TLS, flow control, detailed DNS modes and head-of-line blocking are enrichment examples, not an AP protocol-mechanism memorization requirement.</p></main>
+<noscript>Enable JavaScript for interactive practice.</noscript>
+<footer>DevCat Studios · No accounts or uploads · Independent AP CSP practice</footer>
+</body>
+</html>

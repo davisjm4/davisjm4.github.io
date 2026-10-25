@@ -117,6 +117,14 @@ export const catalog = [
     "Plan packet routes and reroute around failed links.",
   ],
   [
+    "tcp-udp-lab",
+    "TCP vs. UDP Decision Lab",
+    "4 · Computer Systems and Networks",
+    "4.1",
+    "TRANSPORT",
+    "Choose TCP or UDP from a networking scenario’s requirements, then see why it fits.",
+  ],
+  [
     "parallel-processing-race",
     "Parallel Processing Race",
     "4 · Computer Systems and Networks",

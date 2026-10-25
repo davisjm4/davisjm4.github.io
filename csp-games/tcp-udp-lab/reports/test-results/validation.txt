@@ -1,0 +1,1 @@
+TCP/UDP validation: 29279 assertions passed. 60 families, 360 instances; best length shortcut 54.2%, best word shortcut “order” 65.6%.
