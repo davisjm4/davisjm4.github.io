@@ -1,0 +1,430 @@
+{
+  "families": 100,
+  "instances": 500,
+  "domains": 20,
+  "concepts": 25,
+  "rounds": 27200,
+  "exactViolations": 0,
+  "familyViolations": 0,
+  "conceptRepeats": 0,
+  "relaxedExact": 4500,
+  "relaxedFamily": 0,
+  "familiesReached": 100,
+  "instancesReached": 500,
+  "answerPositions": [
+    6753,
+    6847,
+    6852,
+    6748
+  ],
+  "modeCounts": {
+    "consequence": 5428,
+    "response": 5431,
+    "issue": 5474,
+    "tradeoff": 5434,
+    "evidence": 5433
+  },
+  "topicCounts": {
+    "fairness": 5461,
+    "impacts": 5430,
+    "accountability": 5429,
+    "decisions": 5422,
+    "privacy": 5458
+  },
+  "conceptCounts": {
+    "measurement": 1153,
+    "stakeholders": 1222,
+    "oversight": 1147,
+    "errors": 1092,
+    "misinformation": 1125,
+    "accessibility": 1207,
+    "privacy": 1053,
+    "security": 991,
+    "history": 1099,
+    "unintended": 1209,
+    "sensitive": 992,
+    "evaluation": 1064,
+    "transparency": 1088,
+    "explanation": 1151,
+    "criteria": 1024,
+    "deployment": 1009,
+    "environment": 1203,
+    "accountability": 1019,
+    "representation": 1093,
+    "minimization": 1115,
+    "employment": 1202,
+    "appeal": 1024,
+    "consent": 1056,
+    "rights": 931,
+    "synthetic": 931
+  },
+  "lengthHeuristicAcross500": {
+    "longest": 56,
+    "shortest": 171
+  },
+  "runs": [
+    {
+      "label": "Mixed balance",
+      "seed": 17,
+      "rounds": 5000,
+      "modes": {
+        "consequence": 998,
+        "response": 1000,
+        "issue": 1001,
+        "tradeoff": 1001,
+        "evidence": 1000
+      }
+    },
+    {
+      "label": "Mixed balance",
+      "seed": 812,
+      "rounds": 5000,
+      "modes": {
+        "tradeoff": 1001,
+        "response": 1000,
+        "consequence": 999,
+        "issue": 999,
+        "evidence": 1001
+      }
+    },
+    {
+      "label": "Cross-mode shared history",
+      "seed": 153,
+      "rounds": 5000,
+      "modes": {
+        "issue": 1033,
+        "evidence": 991,
+        "tradeoff": 993,
+        "response": 992,
+        "consequence": 991
+      }
+    },
+    {
+      "label": "Cross-topic shared history",
+      "seed": 196,
+      "rounds": 5000,
+      "modes": {
+        "consequence": 1000,
+        "issue": 999,
+        "tradeoff": 1001,
+        "evidence": 1000,
+        "response": 1000
+      }
+    },
+    {
+      "label": "All selections mixed/mixed",
+      "seed": 400,
+      "rounds": 200,
+      "modes": {
+        "consequence": 41,
+        "evidence": 38,
+        "tradeoff": 40,
+        "issue": 41,
+        "response": 40
+      }
+    },
+    {
+      "label": "All selections mixed/fairness",
+      "seed": 401,
+      "rounds": 200,
+      "modes": {
+        "response": 40,
+        "issue": 40,
+        "evidence": 40,
+        "consequence": 40,
+        "tradeoff": 40
+      }
+    },
+    {
+      "label": "All selections mixed/privacy",
+      "seed": 402,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 40,
+        "evidence": 41,
+        "issue": 40,
+        "consequence": 40,
+        "response": 39
+      }
+    },
+    {
+      "label": "All selections mixed/accountability",
+      "seed": 403,
+      "rounds": 200,
+      "modes": {
+        "response": 39,
+        "evidence": 42,
+        "consequence": 39,
+        "tradeoff": 40,
+        "issue": 40
+      }
+    },
+    {
+      "label": "All selections mixed/impacts",
+      "seed": 404,
+      "rounds": 200,
+      "modes": {
+        "response": 40,
+        "consequence": 40,
+        "tradeoff": 39,
+        "evidence": 41,
+        "issue": 40
+      }
+    },
+    {
+      "label": "All selections mixed/decisions",
+      "seed": 405,
+      "rounds": 200,
+      "modes": {
+        "evidence": 39,
+        "response": 41,
+        "tradeoff": 39,
+        "consequence": 40,
+        "issue": 41
+      }
+    },
+    {
+      "label": "All selections issue/mixed",
+      "seed": 410,
+      "rounds": 200,
+      "modes": {
+        "issue": 200
+      }
+    },
+    {
+      "label": "All selections issue/fairness",
+      "seed": 411,
+      "rounds": 200,
+      "modes": {
+        "issue": 200
+      }
+    },
+    {
+      "label": "All selections issue/privacy",
+      "seed": 412,
+      "rounds": 200,
+      "modes": {
+        "issue": 200
+      }
+    },
+    {
+      "label": "All selections issue/accountability",
+      "seed": 413,
+      "rounds": 200,
+      "modes": {
+        "issue": 200
+      }
+    },
+    {
+      "label": "All selections issue/impacts",
+      "seed": 414,
+      "rounds": 200,
+      "modes": {
+        "issue": 200
+      }
+    },
+    {
+      "label": "All selections issue/decisions",
+      "seed": 415,
+      "rounds": 200,
+      "modes": {
+        "issue": 200
+      }
+    },
+    {
+      "label": "All selections response/mixed",
+      "seed": 420,
+      "rounds": 200,
+      "modes": {
+        "response": 200
+      }
+    },
+    {
+      "label": "All selections response/fairness",
+      "seed": 421,
+      "rounds": 200,
+      "modes": {
+        "response": 200
+      }
+    },
+    {
+      "label": "All selections response/privacy",
+      "seed": 422,
+      "rounds": 200,
+      "modes": {
+        "response": 200
+      }
+    },
+    {
+      "label": "All selections response/accountability",
+      "seed": 423,
+      "rounds": 200,
+      "modes": {
+        "response": 200
+      }
+    },
+    {
+      "label": "All selections response/impacts",
+      "seed": 424,
+      "rounds": 200,
+      "modes": {
+        "response": 200
+      }
+    },
+    {
+      "label": "All selections response/decisions",
+      "seed": 425,
+      "rounds": 200,
+      "modes": {
+        "response": 200
+      }
+    },
+    {
+      "label": "All selections tradeoff/mixed",
+      "seed": 430,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 200
+      }
+    },
+    {
+      "label": "All selections tradeoff/fairness",
+      "seed": 431,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 200
+      }
+    },
+    {
+      "label": "All selections tradeoff/privacy",
+      "seed": 432,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 200
+      }
+    },
+    {
+      "label": "All selections tradeoff/accountability",
+      "seed": 433,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 200
+      }
+    },
+    {
+      "label": "All selections tradeoff/impacts",
+      "seed": 434,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 200
+      }
+    },
+    {
+      "label": "All selections tradeoff/decisions",
+      "seed": 435,
+      "rounds": 200,
+      "modes": {
+        "tradeoff": 200
+      }
+    },
+    {
+      "label": "All selections consequence/mixed",
+      "seed": 440,
+      "rounds": 200,
+      "modes": {
+        "consequence": 200
+      }
+    },
+    {
+      "label": "All selections consequence/fairness",
+      "seed": 441,
+      "rounds": 200,
+      "modes": {
+        "consequence": 200
+      }
+    },
+    {
+      "label": "All selections consequence/privacy",
+      "seed": 442,
+      "rounds": 200,
+      "modes": {
+        "consequence": 200
+      }
+    },
+    {
+      "label": "All selections consequence/accountability",
+      "seed": 443,
+      "rounds": 200,
+      "modes": {
+        "consequence": 200
+      }
+    },
+    {
+      "label": "All selections consequence/impacts",
+      "seed": 444,
+      "rounds": 200,
+      "modes": {
+        "consequence": 200
+      }
+    },
+    {
+      "label": "All selections consequence/decisions",
+      "seed": 445,
+      "rounds": 200,
+      "modes": {
+        "consequence": 200
+      }
+    },
+    {
+      "label": "All selections evidence/mixed",
+      "seed": 450,
+      "rounds": 200,
+      "modes": {
+        "evidence": 200
+      }
+    },
+    {
+      "label": "All selections evidence/fairness",
+      "seed": 451,
+      "rounds": 200,
+      "modes": {
+        "evidence": 200
+      }
+    },
+    {
+      "label": "All selections evidence/privacy",
+      "seed": 452,
+      "rounds": 200,
+      "modes": {
+        "evidence": 200
+      }
+    },
+    {
+      "label": "All selections evidence/accountability",
+      "seed": 453,
+      "rounds": 200,
+      "modes": {
+        "evidence": 200
+      }
+    },
+    {
+      "label": "All selections evidence/impacts",
+      "seed": 454,
+      "rounds": 200,
+      "modes": {
+        "evidence": 200
+      }
+    },
+    {
+      "label": "All selections evidence/decisions",
+      "seed": 455,
+      "rounds": 200,
+      "modes": {
+        "evidence": 200
+      }
+    }
+  ],
+  "deterministicComparisons": 250,
+  "reviewFixtures": 16,
+  "ambiguity": "No ambiguous instances admitted by authored scope; automated checks cannot prove ethical correctness. External educator review pending."
+}

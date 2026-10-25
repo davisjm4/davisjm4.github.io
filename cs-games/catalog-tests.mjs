@@ -95,3 +95,14 @@ console.log(`PASS: ${games.length} playable Java games, ${advanced.filter(g=>g.s
 { const {window,document}=parseHTML(read('cs-games/csp/index.html'));window.CSGamesCatalog=catalog;const f=document.getElementById('topic-filter');Object.defineProperty(f,'value',{writable:true,value:''});document.getElementById('game-search').value='Internet Layers';const ctx={window,document};vm.createContext(ctx);vm.runInContext(read('cs-games/course-page.js'),ctx);assert.ok(document.querySelector('a.launch[href="../../csp-games/internet-layers-lab/"]'));for(const t of ['4.1 Network Communication','4.2 Routing','4.3 Fault Tolerance']){f.value=t;vm.runInContext('render()',ctx);assert.ok(document.querySelector('a.launch[href="../../csp-games/internet-layers-lab/"]'),t);}console.log('PASS: Internet lab appears in CSP catalog and all its topic filters.');}
 
 {const {window,document}=parseHTML(read('cs-games/csp/index.html'));window.CSGamesCatalog=catalog;const f=document.getElementById('topic-filter');Object.defineProperty(f,'value',{writable:true,value:'4.1 Network Communication'});document.getElementById('game-search').value='';const ctx={window,document};vm.createContext(ctx);vm.runInContext(read('cs-games/course-page.js'),ctx);for(const slug of ['tcp-udp-lab','internet-layers-lab']){assert.equal(catalog.filter(g=>g.id===slug).length,1);assert.equal(document.querySelectorAll('a.launch[href="../../csp-games/'+slug+'/"]').length,1);}console.log('PASS: TCP/UDP and Internet Layers each launch once in networking catalog.');}
+// Applied ethics remains one launch in Big Idea 5, alongside existing impact practice.
+{
+ const {window,document}=parseHTML(read('cs-games/csp/index.html'));window.CSGamesCatalog=catalog;
+ const filter=document.getElementById('topic-filter');Object.defineProperty(filter,'value',{writable:true,value:''});
+ document.getElementById('game-search').value='AI Ethics';const ui={window,document};vm.createContext(ui);vm.runInContext(read('cs-games/course-page.js'),ui);
+ const links=()=>[...document.querySelectorAll('a.launch')].filter(a=>a.getAttribute('href')==='../../csp-games/ai-ethics-lab/');
+ assert.equal(links().length,1);assert.ok(document.getElementById('results').textContent.includes('Impact of Computing'));
+ for(const topic of catalog.find(g=>g.id==='ai-ethics-lab').topics){filter.value=topic;vm.runInContext('render()',ui);assert.equal(links().length,1,topic);}
+ filter.value='4.1 Network Communication';vm.runInContext('render()',ui);assert.equal(links().length,0);
+ console.log('PASS: AI Ethics renders exactly once under Big Idea 5 and each of its five topic filters.');
+}

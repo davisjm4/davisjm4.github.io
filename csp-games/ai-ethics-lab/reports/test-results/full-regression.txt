@@ -1,0 +1,576 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests.mjs && node ui-tests.mjs && node trivial-nontrivial/tests.mjs && node trivial-nontrivial/ui-tests.mjs && node concepts-tests.mjs && node concepts-ui-tests.mjs && node concepts-feedback-tests.mjs && node session-tests.mjs && node daily-session-tests.mjs && node session-ui-tests.mjs && node expanded-tests.mjs && node practice-tests.mjs && node practice-ui-tests.mjs && node collection-tests.mjs && node test-case-redesign-tests.mjs && node architect-redesign-tests.mjs && node response-redesign-tests.mjs && node create-task-lab/tests.mjs && node create-task-lab/ui-tests.mjs && node create-task-lab/family-repeat-tests.mjs && node rgb-color-builder/tests.mjs && node rgb-color-builder/ui-tests.mjs && npm run test:dance && npm run test:ascii && npm run test:analog && npm run test:compression && npm run test:numbers && npm run test:vocabulary && npm run test:internet && npm run test:tcpudp && npm run test:ethics
+
+PASS: 49285 generator, answer, and optimum assertions.
+PASS: 7606 interaction checks across all new games and modes (DOM simulation, not rendered-browser QA).
+PASS: preserved Network Breaker submission, new challenge, hint, and solution controls; 7773 total DOM interaction checks.
+PASS: 80 models; 208 behavior-distinct validated configurations from 240 bounded candidates; 80 independent output oracles; AP pseudocode subset, comparison, determinism, and repeat-avoidance checks.
+PASS: DOM controls for classification, correct/incorrect feedback, comparison, explanation, local scoring, category/activity breakdown, one-attempt lock, next challenge, share links/filters, reset confirmation, and Mixed Practice.
+PASS: 20000 generated Code Concepts challenges, 2082280 structural/answer assertions, all five Mixed Practice categories.
+PASS: 17844 Code Concepts interaction assertions covering spoiler-free errors, progressive hints, independent retries, permanently unscored reveals, repeated clicks, mode defaults, and statistics.
+PASS: 62000 hint and scoring-state assertions across every Code Concepts variant.
+PASS: 59 shared-session assertions: deduplication, first-try formula, retries, reveal/skip exclusion, cross-page persistence, reset, corrupt/older data, unavailable storage, and bounded 5,000-round history.
+Session daily-boundary, legacy migration, and per-mode summary tests passed.
+PASS: 148 cross-game/session/report DOM assertions: all 12 games plus legacy link, retries, persistence, reveals, print action, escaped identity, reset confirmation/cancel/confirm, and topic tables. Rendered print/device QA remains unavailable.
+Expanded concepts: 16,000 valid challenges; 7369 reverse / 8631 forward; all eight categories, retries and reveal verified.
+Practice engine: 5760 seeded challenges passed; all modes, models, valid alternatives, edge cases, and incorrect responses verified.
+Existing-game expansion: 4,000 randomized overflow, pixel, and cleaning challenges verified.
+1626 shared-passage follow-up answers verified.
+Expansion DOM: 1162 checks passed across the remaining shared-interface games, expanded concepts, mode defaults, support, retries, reveals, simulations, and shared persistence.
+Shared passages and expanded printable summary: accurate game/topic rows, print action, and reset cancel/confirm verified.
+Collection editor: 72 native drag/drop, touch-pointer, tap/keyboard, duplicate, unlimited-length, undo/reset, index-base, and closed-round checks passed (DOM simulation).
+Test Case Builder specification: 5600 generated questions; 137371 assertions; 65300 independent displayed-code executions. {"bugs":{"questions":1700,"templates":17,"answerPositions":[446,426,440,388]},"predict":{"questions":1200,"templates":12,"answerPositions":[322,266,312,300]},"boundary":{"questions":1000,"templates":10,"answerPositions":[254,254,261,231]},"branches":{"questions":600,"templates":6,"answerPositions":[152,162,148,138]},"edge":{"questions":1100,"templates":11,"answerPositions":[263,274,266,297]}}
+Algorithm Architect: 900 generated challenges across 9 modes (871 missing-component, 29 arrange); 12527 generator, semantic, UI, feedback, session, and responsive checks passed.
+Response Builder: 1064 generated questions, 1321 assertions, 32 distinct structures; longest-choice shortcut 311/1000, first-choice shortcut 263/1000.
+{
+  "date": "2026-10-24",
+  "families": 131,
+  "counts": {
+    "missing": {
+      "procedures": 10,
+      "parameters": 9,
+      "selection": 10,
+      "iteration": 9,
+      "lists": 10,
+      "io": 9,
+      "behavior": 6
+    },
+    "identify": {
+      "procedures": 13,
+      "parameters": 9,
+      "selection": 10,
+      "iteration": 10,
+      "lists": 10,
+      "io": 12,
+      "behavior": 4
+    }
+  },
+  "corpus": 389,
+  "exactCorpusUnique": 389,
+  "codeStructuralSignatures": 171,
+  "structurallyDistinctFormsPerFamily": "2–3 (4 mutations erase the third caller form)",
+  "scenarios": 20,
+  "scenariosAvailable": 20,
+  "mutations": 63,
+  "selectionKinds": [
+    "identifier",
+    "header",
+    "block",
+    "body",
+    "call",
+    "statement",
+    "expression",
+    "value"
+  ],
+  "sweep": 15720,
+  "sampled": 7200,
+  "executions": 32226,
+  "counterfactuals": 62238,
+  "validControlRate": 0.16666666666666666,
+  "repeatsInLast50": 0,
+  "assertions": 25457,
+  "sampling": [
+    {
+      "mode": "mixed",
+      "topic": "all",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "behavior": 42,
+        "iteration": 43,
+        "procedures": 43,
+        "io": 43,
+        "selection": 43,
+        "parameters": 43,
+        "lists": 43
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "procedures",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "procedures": 300
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "parameters",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "parameters": 300
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "selection",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "selection": 300
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "iteration",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "iteration": 300
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "lists",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "lists": 300
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "io",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "io": 300
+      }
+    },
+    {
+      "mode": "mixed",
+      "topic": "behavior",
+      "byMode": {
+        "identify": 150,
+        "missing": 150
+      },
+      "byTopic": {
+        "behavior": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "all",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "behavior": 43,
+        "procedures": 43,
+        "iteration": 43,
+        "io": 43,
+        "selection": 43,
+        "lists": 42,
+        "parameters": 43
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "procedures",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "procedures": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "parameters",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "parameters": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "selection",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "selection": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "iteration",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "iteration": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "lists",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "lists": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "io",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "io": 300
+      }
+    },
+    {
+      "mode": "missing",
+      "topic": "behavior",
+      "byMode": {
+        "missing": 300
+      },
+      "byTopic": {
+        "behavior": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "all",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "behavior": 42,
+        "iteration": 43,
+        "procedures": 43,
+        "io": 43,
+        "selection": 43,
+        "lists": 43,
+        "parameters": 43
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "procedures",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "procedures": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "parameters",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "parameters": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "selection",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "selection": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "iteration",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "iteration": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "lists",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "lists": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "io",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "io": 300
+      }
+    },
+    {
+      "mode": "identify",
+      "topic": "behavior",
+      "byMode": {
+        "identify": 300
+      },
+      "byTopic": {
+        "behavior": 300
+      }
+    }
+  ],
+  "limitations": [
+    "Behavioral verification executes the bounded structured model rendered as pseudocode; it does not compile arbitrary external pseudocode.",
+    "Counterfactual probes are finite; they do not establish universal equivalence.",
+    "Original examples focus on specific components, not entire scored submissions.",
+    "No external educator or separate agent has certified the corpus."
+  ]
+}
+Create Task Lab UI: 912 checks passed (DOM simulation; browser results reported separately).
+{
+  "rounds": 14112,
+  "families": 131,
+  "violations": 0,
+  "results": [
+    {
+      "mode": "mixed",
+      "topic": "all",
+      "min": 2,
+      "max": 9
+    },
+    {
+      "mode": "mixed",
+      "topic": "procedures",
+      "min": 19,
+      "max": 25
+    },
+    {
+      "mode": "mixed",
+      "topic": "parameters",
+      "min": 27,
+      "max": 28
+    },
+    {
+      "mode": "mixed",
+      "topic": "selection",
+      "min": 25,
+      "max": 25
+    },
+    {
+      "mode": "mixed",
+      "topic": "iteration",
+      "min": 25,
+      "max": 28
+    },
+    {
+      "mode": "mixed",
+      "topic": "lists",
+      "min": 25,
+      "max": 25
+    },
+    {
+      "mode": "mixed",
+      "topic": "io",
+      "min": 20,
+      "max": 28
+    },
+    {
+      "mode": "mixed",
+      "topic": "behavior",
+      "min": 41,
+      "max": 63
+    },
+    {
+      "mode": "missing",
+      "topic": "all",
+      "min": 7,
+      "max": 12
+    },
+    {
+      "mode": "missing",
+      "topic": "procedures",
+      "min": 50,
+      "max": 50
+    },
+    {
+      "mode": "missing",
+      "topic": "parameters",
+      "min": 55,
+      "max": 56
+    },
+    {
+      "mode": "missing",
+      "topic": "selection",
+      "min": 49,
+      "max": 51
+    },
+    {
+      "mode": "missing",
+      "topic": "iteration",
+      "min": 55,
+      "max": 56
+    },
+    {
+      "mode": "missing",
+      "topic": "lists",
+      "min": 50,
+      "max": 50
+    },
+    {
+      "mode": "missing",
+      "topic": "io",
+      "min": 55,
+      "max": 56
+    },
+    {
+      "mode": "missing",
+      "topic": "behavior",
+      "min": 83,
+      "max": 84
+    },
+    {
+      "mode": "identify",
+      "topic": "all",
+      "min": 5,
+      "max": 18
+    },
+    {
+      "mode": "identify",
+      "topic": "procedures",
+      "min": 30,
+      "max": 40
+    },
+    {
+      "mode": "identify",
+      "topic": "parameters",
+      "min": 55,
+      "max": 56
+    },
+    {
+      "mode": "identify",
+      "topic": "selection",
+      "min": 30,
+      "max": 64
+    },
+    {
+      "mode": "identify",
+      "topic": "iteration",
+      "min": 50,
+      "max": 50
+    },
+    {
+      "mode": "identify",
+      "topic": "lists",
+      "min": 50,
+      "max": 50
+    },
+    {
+      "mode": "identify",
+      "topic": "io",
+      "min": 30,
+      "max": 48
+    },
+    {
+      "mode": "identify",
+      "topic": "behavior",
+      "min": 125,
+      "max": 125
+    }
+  ]
+}
+RGB numerical / generator / session: 22279 assertions passed. 20000 rounds, 0 exact repeats, 0 adjacent near-duplicates. Min ΔE00 18.0065834149901; max Mixed streak 2.
+RGB DOM interactions: 415 assertions passed. Real browser/layout checks are reported separately.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:dance
+> node algorithm-dance-lab/tests/engine.test.mjs && node algorithm-dance-lab/tests/motion.test.mjs && node algorithm-dance-lab/tests/session.test.mjs && node algorithm-dance-lab/tests/ui.test.mjs && node algorithm-dance-lab/tests/expansion-engine.test.mjs && node algorithm-dance-lab/tests/expansion-motion.test.mjs && node algorithm-dance-lab/tests/project-audio.test.mjs && node algorithm-dance-lab/tests/studio-ui.test.mjs && node algorithm-dance-lab/tests/usability.test.mjs
+
+Interpreter / authored lesson: 486 assertions passed.
+Joint motion / playback: 584 assertions passed.
+Daily assessment / active-time tracking: 26 assertions passed.
+Block editor / full lesson / studio DOM interactions: 69 assertions passed.
+Expansion language / authored lessons: 231 independent assertions passed.
+Expansion mesh contact / direction / dropped-frame transport: 296 assertions passed.
+Project migration / archive safety / audio scheduler: 64 assertions passed.
+Expanded studio / all 13 lesson stages / music UI: 65 assertions passed.
+Usability / unlocked navigation / live input execution: 30 assertions passed.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:ascii
+> node ascii-binary-builder/tests.mjs && node ascii-binary-builder/ui-tests.mjs
+
+ASCII engine/generator: 36762 assertions passed; pools single:94, short:126, word:299; 15,000 deterministic cross-setting rounds, zero last-50 repeats.
+ASCII DOM interactions: 1083 assertions passed (live all-256 decoding, all settings, retries, privacy, state preservation, reference and daily reset).
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:analog
+> node analog-digital-lab/tests.mjs && node analog-digital-lab/ui-tests.mjs
+
+Analog/Digital engine: 75685 assertions passed; 22000 topic/mixed rounds plus 3,000 reload/switch rounds; exact/family/semantic repeat violations 0; 11000 Analog / 11000 Digital.
+Analog/Digital DOM: 186 assertions passed; all topics, one attempt, feedback timing, next/skip, summary buckets and daily reset.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:compression
+> node lossless-lossy-lab/tests.mjs && node lossless-lossy-lab/ui-tests.mjs
+
+Compression engine: 41685 assertions passed; 15000 core rounds (7500/7500), 3,000 reload/switch rounds and 6,000 coverage rounds; exact/family violations 0; all 360 instances reached.
+Compression DOM: 84 assertions passed; all topics, one attempt, feedback timing, next/skip, summary buckets and daily reset.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:numbers
+> node roundoff-overflow-lab/tests.mjs && node roundoff-overflow-lab/ui-tests.mjs
+
+Roundoff/Overflow engine: 36871 assertions; 14400 core +3000 switched +6000 coverage rounds, no exact50/family3 violations; all360 reached.
+Roundoff/Overflow DOM: 757 assertions passed; 48 scored rounds, all filters/categories, visual timing, terminal score, session buckets, daily reset.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:vocabulary
+> node vocabulary-fill-in-lab/tests.mjs && node vocabulary-fill-in-lab/ui-tests.mjs
+
+Vocabulary engine: 167614 assertions passed; 18000 core +6000 cross-filter/reload +12000 coverage rounds; exact/family/term violations0 where feasible; all600 instances/107 terms reached.
+Vocabulary DOM: 679 assertions passed; 412 scored rounds, all Big Ideas/topics, reference, one attempt, grouped summary beyond256 records, daily reset.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:internet
+> node internet-layers-lab/tests.mjs && node internet-layers-lab/ui-tests.mjs
+
+Internet engine: 48089 assertions passed; 49000 simulated rounds; exact/family/concept violations 0/0/0.
+Internet DOM: 2120 assertions passed; 444 scored rounds; all 36 mode/topic selections, accessible diagrams, terminal scoring, summary beyond256 records and daily reset.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:tcpudp
+> node tcp-udp-lab/tests/validation.test.mjs && node tcp-udp-lab/tests/generator.test.mjs && node tcp-udp-lab/tests/session.test.mjs && node tcp-udp-lab/tests/ui.test.mjs && node tcp-udp-lab/tests/integration.test.mjs
+
+TCP/UDP validation: 29279 assertions passed. 60 families, 360 instances; best length shortcut 54.7%, best word shortcut “order” 65.6%.
+TCP/UDP generator: 15284 assertions passed. 15000 core + 3000 switching + 2000 reload + 20000 long-run + 6000 coverage rounds; 0 exact-50 / 0 family-3 violations; long-run TCP 50.0%, best pattern guess 54.2%; min situation gap mixed 51, narrow 20.
+TCP/UDP session: 49 assertions passed (local stub tracker and real shared CSP tracker; one scored attempt, metadata, topic/protocol accuracy, reload persistence, daily reset, storage failure).
+TCP/UDP DOM: 73 assertions passed (two choices, single scored attempt, feedback, skips, all filters, topic/protocol accuracy, Learn, keyboard, persistence, daily reset).
+TCP/UDP integration review: 75 assertions passed; transport-policy, execution-confirmation, TLS/QUIC, DNS and nonblocking qualifications.
+TCP/UDP two-copy synchronization: 10 assertions passed; newer counters survive history saves, refresh and reset.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:ethics
+> node ai-ethics-lab/tests.mjs && node ai-ethics-lab/ui-tests.mjs
+
+AI Ethics engine/content: 37467 assertions passed. {"rounds":27200,"exactViolations":0,"familyViolations":0,"positions":[6753,6847,6852,6748],"length":{"longest":56,"shortest":171}}
+AI Ethics DOM/session: 2181 assertions passed; 444 scored rounds; all 36 selections, terminal scoring, metadata, cumulative summary beyond 256 records, daily and manual reset.

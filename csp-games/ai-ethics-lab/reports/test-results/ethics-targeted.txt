@@ -1,0 +1,7 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:ethics
+> node ai-ethics-lab/tests.mjs && node ai-ethics-lab/ui-tests.mjs
+
+AI Ethics engine/content: 37467 assertions passed. {"rounds":27200,"exactViolations":0,"familyViolations":0,"positions":[6753,6847,6852,6748],"length":{"longest":56,"shortest":171}}
+AI Ethics DOM/session: 2181 assertions passed; 444 scored rounds; all 36 selections, terminal scoring, metadata, cumulative summary beyond 256 records, daily and manual reset.
