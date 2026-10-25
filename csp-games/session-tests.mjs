@@ -17,12 +17,13 @@ const memory = () => {
     removeItem: (k) => m.delete(k),
   };
 };
+// Keep the long-session fixture away from midnight; rollover has dedicated tests.
 let counter = 0;
 const create = (storage) =>
   createSessionTracker({
     storage,
     id: () => String(++counter),
-    now: () => new Date(1700000000000 + counter * 1000).toISOString(),
+    now: () => new Date(Date.parse("2026-10-24T12:00:00Z") + counter * 1000).toISOString(),
   });
 let store = memory(),
   t = create(store);
