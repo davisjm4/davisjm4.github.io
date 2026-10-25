@@ -1,0 +1,47 @@
+{
+  "lengthHeuristics": {
+    "longest": 137,
+    "shortest": 173
+  },
+  "concepts": 16,
+  "rounds": 39000,
+  "exactViolations": 0,
+  "familyViolations": 0,
+  "conceptViolations": 0,
+  "exactFallbacks": 0,
+  "familyFallbacks": 0,
+  "conceptFallbacks": 0,
+  "positions": [
+    9800,
+    9531,
+    9830,
+    9839
+  ],
+  "modes": {
+    "role": 7799,
+    "missing": 7801,
+    "next": 7801,
+    "misconception": 7800,
+    "diagram": 7799
+  },
+  "topics": {
+    "roles": 7798,
+    "reliability": 7799,
+    "communication": 7801,
+    "routing": 7801,
+    "diagrams": 7801
+  },
+  "familiesSeen": 80,
+  "instancesSeen": 400,
+  "mixedModeBalance": {
+    "misconception": 2000,
+    "diagram": 2000,
+    "next": 2001,
+    "role": 1999,
+    "missing": 2000
+  },
+  "assertions": 47689,
+  "additionalMixedBalanceRounds": 10000,
+  "familyCount": 80,
+  "instanceCount": 400
+}

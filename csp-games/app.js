@@ -21,6 +21,7 @@ const $ = (id) => document.getElementById(id),
         })[c],
     );
 export const catalog = [
+  ["internet-layers-lab", "Internet Layers & Protocol Roles Lab", "4 · Networks", "4.1–4.3", "NET", "Reason about protocol roles, communication steps and resilient packet paths."],
   ["vocabulary-fill-in-lab", "AP CSP Vocabulary Fill-in Lab", "All five Big Ideas", "1–5", "WORDS", "Complete contextual vocabulary statements with a plausible word bank and immediate explanation."],
   ["roundoff-overflow-lab", "Roundoff vs. Overflow Lab", "2 · Data", "2.1", "RANGE", "Distinguish insufficient range, insufficient precision and exact numerical representation."],
   ["lossless-lossy-lab", "Lossless vs. Lossy Compression Lab", "2 · Data", "2.2", "COMPRESSION", "Choose compression from exact-restoration and fidelity requirements."],

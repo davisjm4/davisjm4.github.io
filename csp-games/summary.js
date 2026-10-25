@@ -1,4 +1,4 @@
-import {bigIdeaMetrics} from './session-groups.js?v=vocab-v1';
+import {bigIdeaMetrics,networkMetrics} from './session-groups.js?v=internet-groups-v1';
 import { sessionTracker, accuracy } from "./session.js?v=per-mode-daily-v1";
 const $ = (id) => document.getElementById(id),
   esc = (s) =>
@@ -33,6 +33,10 @@ function bigIdeaTables(games) {
   }).filter(Boolean);
   return sections.length ? '<section><h2>By Big Idea</h2>'+sections.join('')+'</section>' : '';
 }
+function networkTables(games,dimension,title) {
+  const sections=Object.values(games).map(g=>{const rows=networkMetrics(g.topics,dimension);return rows.length?'<section class="topic-report"><h3>'+esc(g.title)+'</h3>'+table(rows,title)+'</section>':'';}).filter(Boolean);
+  return sections.length?'<section><h2>'+esc(title)+'</h2>'+sections.join('')+'</section>':'';
+}
 function render() {
   const d = tracker.snapshot(),
     m = d.totals,
@@ -66,7 +70,7 @@ function render() {
             `<section class="topic-report"><h3>${esc(g.title)}</h3>${table(Object.values(g.topics))}</section>`,
         )
       .join("") || "<p>Topic results appear as you practice.</p>"
-    }</section><section><h2>By practice mode</h2>${modeTables(d.games)}</section>${bigIdeaTables(d.games)}<p class="print-note">Locally stored formative practice evidence. This report is not tamper-proof. Inactive and away time are excluded from active practice time.</p>`;
+    }</section><section><h2>By practice mode</h2>${modeTables(d.games)}</section>${bigIdeaTables(d.games)}${networkTables(d.games,"topic","By network topic")}${networkTables(d.games,"concept","By networking concept")}<p class="print-note">Locally stored formative practice evidence. This report is not tamper-proof. Inactive and away time are excluded from active practice time.</p>`;
 }
 for (let field of ["student-name", "student-period"])
   $(field).addEventListener("change", () => {

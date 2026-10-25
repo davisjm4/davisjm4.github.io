@@ -1,4 +1,4 @@
-import {bigIdeaMetrics} from './session-groups.js';
+import {bigIdeaMetrics,networkMetrics} from './session-groups.js';
 import fs from "node:fs";
 import vm from "node:vm";
 import assert from "node:assert/strict";
@@ -49,7 +49,7 @@ function launch(slug, concept = false) {
   let q, forced;
   const tracker = S.createSessionTracker({ storage });
   const ctx = {
-    bigIdeaMetrics,
+    bigIdeaMetrics,networkMetrics,
     window,
     document,
     console,
@@ -351,7 +351,7 @@ for (let n = 0; n < 4; n++) {
   let printed = false;
   window.print = () => (printed = true);
   const ctx = {
-    bigIdeaMetrics,
+    bigIdeaMetrics,networkMetrics,
     window,
     document,
     console,

@@ -3,13 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests.mjs && node ui-tests.mjs && node trivial-nontrivial/tests.mjs && node trivial-nontrivial/ui-tests.mjs && node concepts-tests.mjs && node concepts-ui-tests.mjs && node concepts-feedback-tests.mjs && node session-tests.mjs && node daily-session-tests.mjs && node session-ui-tests.mjs && node expanded-tests.mjs && node practice-tests.mjs && node practice-ui-tests.mjs && node collection-tests.mjs && node test-case-redesign-tests.mjs && node architect-redesign-tests.mjs && node response-redesign-tests.mjs && node create-task-lab/tests.mjs && node create-task-lab/ui-tests.mjs && node create-task-lab/family-repeat-tests.mjs && node rgb-color-builder/tests.mjs && node rgb-color-builder/ui-tests.mjs && npm run test:dance && npm run test:ascii && npm run test:analog && npm run test:compression && npm run test:numbers && npm run test:vocabulary",
+    "test": "node tests.mjs && node ui-tests.mjs && node trivial-nontrivial/tests.mjs && node trivial-nontrivial/ui-tests.mjs && node concepts-tests.mjs && node concepts-ui-tests.mjs && node concepts-feedback-tests.mjs && node session-tests.mjs && node daily-session-tests.mjs && node session-ui-tests.mjs && node expanded-tests.mjs && node practice-tests.mjs && node practice-ui-tests.mjs && node collection-tests.mjs && node test-case-redesign-tests.mjs && node architect-redesign-tests.mjs && node response-redesign-tests.mjs && node create-task-lab/tests.mjs && node create-task-lab/ui-tests.mjs && node create-task-lab/family-repeat-tests.mjs && node rgb-color-builder/tests.mjs && node rgb-color-builder/ui-tests.mjs && npm run test:dance && npm run test:ascii && npm run test:analog && npm run test:compression && npm run test:numbers && npm run test:vocabulary && npm run test:internet",
     "test:dance": "node algorithm-dance-lab/tests/engine.test.mjs && node algorithm-dance-lab/tests/motion.test.mjs && node algorithm-dance-lab/tests/session.test.mjs && node algorithm-dance-lab/tests/ui.test.mjs && node algorithm-dance-lab/tests/expansion-engine.test.mjs && node algorithm-dance-lab/tests/expansion-motion.test.mjs && node algorithm-dance-lab/tests/project-audio.test.mjs && node algorithm-dance-lab/tests/studio-ui.test.mjs && node algorithm-dance-lab/tests/usability.test.mjs",
     "test:ascii": "node ascii-binary-builder/tests.mjs && node ascii-binary-builder/ui-tests.mjs",
     "test:analog": "node analog-digital-lab/tests.mjs && node analog-digital-lab/ui-tests.mjs",
     "test:compression": "node lossless-lossy-lab/tests.mjs && node lossless-lossy-lab/ui-tests.mjs",
     "test:numbers": "node roundoff-overflow-lab/tests.mjs && node roundoff-overflow-lab/ui-tests.mjs",
-    "test:vocabulary": "node vocabulary-fill-in-lab/tests.mjs && node vocabulary-fill-in-lab/ui-tests.mjs"
+    "test:vocabulary": "node vocabulary-fill-in-lab/tests.mjs && node vocabulary-fill-in-lab/ui-tests.mjs",
+    "test:internet": "node internet-layers-lab/tests.mjs && node internet-layers-lab/ui-tests.mjs"
   },
   "devDependencies": {
     "linkedom": "^0.18.12"

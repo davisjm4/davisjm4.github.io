@@ -1,4 +1,4 @@
-import {bigIdeaMetrics} from './session-groups.js';
+import {bigIdeaMetrics,networkMetrics} from './session-groups.js';
 import { mountCollectionEditor } from "./collection-editor.js";
 import { practiceGames } from "./practice-engine.js";
 import fs from "node:fs";
@@ -81,7 +81,7 @@ function launch(slug) {
       (captures[key] = E[key](...args))
     );
   const ctx = {
-    bigIdeaMetrics,
+    bigIdeaMetrics,networkMetrics,
     mountCollectionEditor,
     practiceGames,
     document,
