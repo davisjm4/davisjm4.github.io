@@ -30,11 +30,17 @@ One shared first-submission hook integrates compatible existing games. A separat
 
 Two complete CSP regression runs passed, including the final import hardening and recommendation refinements. The focused pathway suites also passed after the final dashboard explanation and explicit-interface additions. New suites test mapping/thresholds/storage/migration/privacy/reset separation/recommendations/import/export/DOM controls. Consolidated catalog and America/Los_Angeles daily session checks passed. All game launch URLs returned 200. Detailed logs are adjacent.
 
-Rendered production verification, final commit, deployment and tracker write will be recorded after publication. DOM checks do not certify physical Chromebook/touch hardware or native screen-reader speech.
+Production browser checks verified empty history, real Binary Builder practice/return, one-question Level 1 evidence, changed recommendations, export, native-file validation and merge, separate pathway reset, preserved daily reporting, keyboard cancellation, Create/skill views and responsive frames. See BROWSER_VERIFICATION.md for exact evidence and limits. Native repeated-picker replace and live clock rollover were not claimed; those behaviors were tested in model/DOM suites. Physical Chromebook/touch hardware and native screen-reader speech remain unverified.
 
 ## H. Publication
 
-Pending live verification. Do not interpret this pre-publication report as a completed release.
+Published and canonical live URL verified: https://davisjm4.github.io/csp-games/exam-readiness/.
+
+Initial implementation commit: 2b276a785394d4233bf3245d63b59335acd64f60; Pages run 40253936739 and all 13 verification workflows succeeded (14/14 jobs/workflows). Focus/storage recovery fix: 8153f350ca6120a18329dc5f01c5e3f3f3fdc224; Pages 40256180974 and Pathway CI 40256181168 succeeded. Script-cache refresh: ac954e24479d5660cb36f8e9b3cab603e6fe20ef. This is the final runtime release; subsequent report commits contain verification/tracker documentation only.
+
+Final runtime Pages deployment 40256450106 and Pathway CI 40256450751 both succeeded. The latter executed the complete CSP suite, focused pathway tests in America/Los_Angeles and consolidated catalog tests.
+
+Master Inventory G-118 (row 56), Priority Backlog (row 25) and Release History (row 22) were updated and read back successfully. Status: Published — live verified; classroom review pending. Updated site/report links and native hyperlink metadata were verified. Existing rows and formatting were preserved; the added release row uses wrapped text. Native Google Sheets visual fit was not independently inspected.
 
 ## I. Outstanding issues
 
