@@ -1,0 +1,1 @@
+Boolean learning UI: 209 assertions; all 20 table cells, answer lock/explanations, range controls/errors/reset, original node/scoring preserved; no session evidence from learning panels.

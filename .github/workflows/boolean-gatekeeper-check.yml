@@ -1,0 +1,26 @@
+name: CSP Boolean Gatekeeper Targeted Verification
+on:
+  push:
+    branches: [main]
+    paths: ['csp-games/boolean-gatekeeper/**', '.github/workflows/boolean-gatekeeper-check.yml']
+  pull_request:
+    paths: ['csp-games/boolean-gatekeeper/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix csp-games
+      - run: node csp-games/boolean-gatekeeper/tests.mjs && node csp-games/boolean-gatekeeper/ui-tests.mjs
+      - run: node csp-games/ui-tests.mjs && node csp-games/session-ui-tests.mjs && TZ=America/Los_Angeles node csp-games/daily-session-tests.mjs
+      - run: node csp-games/architect-redesign-tests.mjs && node csp-games/test-case-redesign-tests.mjs
+      - run: node java-games/boolean-conditional-lab/range-explorer-tests.mjs
+      - run: ln -s ../csp-games/node_modules java-games/node_modules
+      - run: node cs-games/catalog-tests.mjs

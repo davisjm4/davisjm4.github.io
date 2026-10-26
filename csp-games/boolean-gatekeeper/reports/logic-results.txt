@@ -1,0 +1,1 @@
+Boolean completion: 528119 assertions; 3200 exhaustive range states, five distinct truth functions, 20 table cells; existing evaluation/branch/correction verified.

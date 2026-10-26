@@ -1,0 +1,1 @@
+PASS: 152 cross-game/session/report DOM assertions: all 12 games plus legacy link, retries, persistence, reveals, print action, escaped identity, reset confirmation/cancel/confirm, and topic tables. Rendered print/device QA remains unavailable.

@@ -1,0 +1,2 @@
+PASS: 7606 interaction checks across all new games and modes (DOM simulation, not rendered-browser QA).
+PASS: preserved Network Breaker submission, new challenge, hint, and solution controls; 7773 total DOM interaction checks.
