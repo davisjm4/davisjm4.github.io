@@ -29,7 +29,7 @@ No backend, accounts, uploads, third-party dependencies, homepage edits, progres
 Executed:
 
 - New logic verification: 3,200 exhaustive range configurations with independent Boolean/text/segment oracles; boundaries, overlaps, singleton/empty/reversed intervals, negation and grouping; five distinct truth functions; all 20 truth-table cells; existing expression, branch and correction fixtures.
-- New DOM suite: 209 core assertions plus eight scoped SVG-style checks, all table cells, explanation and answer locking, range controls/errors/reset, accessibility labels and preservation of the original DOM/scoring callback. Learning interactions leave session totals unchanged.
+- New DOM suite: 209 core assertions plus eight scoped SVG-style and two empty-geometry checks, all table cells, explanation and answer locking, range controls/errors/reset, accessibility labels and preservation of the original DOM/scoring callback. Learning interactions leave session totals unchanged.
 - Existing CSP interaction suite, shared-session/report DOM suite and America/Los_Angeles daily-session tests.
 - Existing Algorithm Architect and Test Case Builder semantic/UI regression suites.
 - Existing Java Range Explorer correctness tests: 1,602 checks, with no Java file changes.
@@ -41,9 +41,11 @@ Detailed results are adjacent in this reports directory. New CI runs these targe
 
 Published and verified at https://davisjm4.github.io/csp-games/boolean-gatekeeper/.
 
-Implementation: fb0f27d007900a00c02aa939334abb9d801f9c06; Pages 40259082985 and targeted CI 40259083261 succeeded. A browser-discovered collision with the shared network SVG styles was corrected only in the new panel, including cache keys: final runtime 6406da486b762f09e736ac7f6f8815837d0b346f. Final Pages 40259413395 and targeted CI 40259413583 succeeded.
+Implementation: fb0f27d007900a00c02aa939334abb9d801f9c06; Pages 40259082985 and targeted CI 40259083261 succeeded. A browser-discovered collision with the shared network SVG styles was corrected only in the new panel, including cache keys: SVG compatibility release 6406da486b762f09e736ac7f6f8815837d0b346f. Its Pages 40259413395 and targeted CI 40259413583 succeeded.
 
-The canonical live page loaded boolean-tools-v2. Actual TRUE-region stroke was verified green at 8px. Live checks exercised original scoring, correct/incorrect truth answers and locking, keyboard Enter/slider input, inclusive/exclusive endpoints, OR/AND/NOT, overlaps, empty ranges, invalid-input recovery and reset. Tool interactions left original scored results unchanged. Expanded panels were checked at outer widths 320/390/768/1024/1366 with no horizontal page overflow. See BROWSER_VERIFICATION.md for evidence and limits.
+A final narrow endpoint-rendering correction, 42879d5361a0c1c91f78bd57b67e8745766f8f66, makes an excluded equal-bound interval display as empty instead of showing a configured point. This final runtime uses boolean-tools-v3. Final Pages 40260202009 and Boolean CI 40260202861 succeeded; the canonical browser verified the excluded equal-bound range has no configured or TRUE segment.
+
+The canonical live page loaded the current learning tools. Actual TRUE-region stroke was verified green at 8px. Live checks exercised original scoring, correct/incorrect truth answers and locking, keyboard Enter/slider input, inclusive/exclusive endpoints, OR/AND/NOT, overlaps, empty ranges, invalid-input recovery and reset. Tool interactions left original scored results unchanged. Expanded panels were checked at outer widths 320/390/768/1024/1366 with no horizontal page overflow. See BROWSER_VERIFICATION.md for evidence and limits.
 
 G-005 in Master Inventory row 6 and the existing Priority Backlog row 7 were updated and read back: Published — live verified; classroom review pending. Existing URL hyperlink metadata and unrelated rows were preserved. Native spreadsheet visual fit was not independently inspected. No unrelated Java tracker issue was marked resolved.
 
