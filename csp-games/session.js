@@ -1,4 +1,6 @@
 /* CSP Games session schema v1. Local only: no network or student-data uploads. */
+import { createProgressStore } from './exam-readiness/storage.js';
+import { initializeFromSession, recordFirstSubmission } from './exam-readiness/bridge.js';
 export const SESSION_KEY = "cspGames.session.v1";
 const fields = [
   "generated",
@@ -236,6 +238,11 @@ export function createSessionTracker({
     const r = data.records[instance];
     if (!r || r.status !== "active")
       return { accepted: false, status: r?.status || "expired" };
+    if (r.submissions === 0) {
+      // Record once, before retries or closeIncorrect can change record status.
+      // Pathway failure must never interrupt the existing daily score flow.
+      try { recordFirstSubmission(pathway, r, data, correct, now()); } catch {}
+    }
     if (r.submissions === 0) add(r, "attempted");
     r.submissions++;
     add(r, "submissions");
@@ -310,6 +317,8 @@ export function createSessionTracker({
   }
   read();
   save();
+  const pathway = createProgressStore({ storage, now, onWarning: message => onWarning('Pathway: ' + message) });
+  try { initializeFromSession(data, pathway); } catch {}
   return {
     begin,
     submit,
@@ -440,6 +449,13 @@ export function addSessionNavigation(home = "../") {
     a.href = home + "session-summary/";
     a.textContent = "Session Summary";
     a.dataset.sessionLink = "true";
+    header.appendChild(a);
+  }
+  if (header && !header.querySelector('[data-pathway-link]')) {
+    const a = document.createElement('a');
+    a.href = home + 'exam-readiness/';
+    a.textContent = 'Exam Readiness Pathway';
+    a.dataset.pathwayLink = 'true';
     header.appendChild(a);
   }
   const t = sessionTracker();

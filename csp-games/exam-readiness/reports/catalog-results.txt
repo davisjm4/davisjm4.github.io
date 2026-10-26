@@ -1,0 +1,6 @@
+PASS: 16 playable Java games, 16 Java catalog entries; catalog routes, unique cards, all topic filters, search, homepage redirect, nested routes, return links, summary, CSP/Teacher navigation.
+PASS: Vocabulary catalog launches in all five CSP groups and filters.
+PASS: Internet lab appears in CSP catalog and all its topic filters.
+PASS: TCP/UDP and Internet Layers each launch once in networking catalog.
+PASS: AI Ethics renders exactly once under Big Idea 5 and each of its five topic filters.
+PASS: Digital Divide launches once under Big Idea 5 and its topic filters; existing impact/AI/vocabulary entries preserved.

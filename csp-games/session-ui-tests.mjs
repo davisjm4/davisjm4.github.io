@@ -1,4 +1,6 @@
 import {bigIdeaMetrics,networkMetrics} from './session-groups.js';
+import {createProgressStore} from './exam-readiness/storage.js';
+import {initializeFromSession,recordFirstSubmission} from './exam-readiness/bridge.js';
 import { mountCollectionEditor } from "./collection-editor.js";
 import { practiceGames } from "./practice-engine.js";
 import fs from "node:fs";
@@ -12,7 +14,7 @@ const { parseHTML } = createRequire(import.meta.url)(
   process.env.CSP_DOM_LIBRARY || "linkedom",
 );
 const read = (p) => fs.readFileSync(new URL(p, import.meta.url), "utf8"),
-  sessionSource = read("./session.js").replace(/export /g, ""),
+  sessionSource = read("./session.js").replace(/import[^;]+;/g, "").replace(/export /g, ""),
   appSource = read("./app.js")
     .replace(/import[^;]+;/g, "")
     .replace("export const catalog", "const catalog"),
@@ -81,6 +83,7 @@ function launch(slug) {
       (captures[key] = E[key](...args))
     );
   const ctx = {
+    createProgressStore, initializeFromSession, recordFirstSubmission,
     bigIdeaMetrics,networkMetrics,
     mountCollectionEditor,
     practiceGames,

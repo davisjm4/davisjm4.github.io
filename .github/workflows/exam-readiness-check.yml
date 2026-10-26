@@ -1,0 +1,24 @@
+name: Exam Readiness Pathway Verification
+on:
+  push:
+    branches: [main]
+    paths: ['csp-games/exam-readiness/**', 'csp-games/session.js', 'csp-games/package.json', 'cs-games/csp/index.html', '.github/workflows/exam-readiness-check.yml']
+  pull_request:
+    paths: ['csp-games/exam-readiness/**', 'csp-games/session.js']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix csp-games
+      - run: npm test --prefix csp-games
+      - run: TZ=America/Los_Angeles npm run test:pathway --prefix csp-games
+      - run: ln -s ../csp-games/node_modules java-games/node_modules
+      - run: node cs-games/catalog-tests.mjs
