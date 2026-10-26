@@ -1,2 +1,3 @@
 Boolean learning UI: 209 assertions; all 20 table cells, answer lock/explanations, range controls/errors/reset, original node/scoring preserved; no session evidence from learning panels.
 Scoped SVG line styles verified against shared network-style collisions.
+Equal-bound excluded ranges render empty, rather than an included configured point.
