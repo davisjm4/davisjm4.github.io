@@ -1,0 +1,16 @@
+PASS hub → boolean → directory (keyboard return)
+PASS hub → mixed → directory (keyboard return)
+PASS hub → loop → directory (keyboard return)
+PASS hub → array → directory (keyboard return)
+PASS WPR communication practice → skills → RACECES
+PASS shared tools → RACECES Mathematics → shared tools
+PASS direct Canvas route, summary and legacy csp-games
+PASS direct Canvas route, summary and legacy java-games
+PASS csp stored scores and history preserved
+PASS advanced stored scores and history preserved
+PASS WPR reporting and RACECES stored totals/attempts preserved across hub navigation
+PASS 1366px: seven navigation surfaces visible and within viewport; hub/directories have no page overflow
+PASS 1024px: seven navigation surfaces visible and within viewport; hub/directories have no page overflow
+PASS 390px: seven navigation surfaces visible and within viewport; hub/directories have no page overflow
+PASS 320px: seven navigation surfaces visible and within viewport; hub/directories have no page overflow
+PASS all 48 catalog game entry points render with usable mobile return navigation

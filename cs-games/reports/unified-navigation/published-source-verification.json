@@ -1,0 +1,40 @@
+{
+  "verified_at": "2026-10-26T22:21:03.811Z",
+  "results": [
+    {
+      "path": "cs-games/index.html",
+      "match": true,
+      "local_sha256": "5cfc90975c01fa13701334e4bb50e0445ac6dab6b7875cd3816fc39611217f75",
+      "published_sha256": "5cfc90975c01fa13701334e4bb50e0445ac6dab6b7875cd3816fc39611217f75",
+      "error": null
+    },
+    {
+      "path": "cs-games/styles.css",
+      "match": true,
+      "local_sha256": "e979a8f3a0ac8f77efc07feac88af5b8d4f703a0568e905c4bc80ab5ab96fd3a",
+      "published_sha256": "e979a8f3a0ac8f77efc07feac88af5b8d4f703a0568e905c4bc80ab5ab96fd3a",
+      "error": null
+    },
+    {
+      "path": "cs-games/course-page.js",
+      "match": true,
+      "local_sha256": "12e6393f2bb5395eac994fbc98bfffc103dc02ead7ec41e2d2356fb67e55a8da",
+      "published_sha256": "12e6393f2bb5395eac994fbc98bfffc103dc02ead7ec41e2d2356fb67e55a8da",
+      "error": null
+    },
+    {
+      "path": "cs-games/navigation.css",
+      "match": true,
+      "local_sha256": "5519d52b20c0933295e675d758a6a1e4f2d7c7c2de3b0d9c48d614e02f95c7f6",
+      "published_sha256": "5519d52b20c0933295e675d758a6a1e4f2d7c7c2de3b0d9c48d614e02f95c7f6",
+      "error": null
+    },
+    {
+      "path": "java-games/class-object-lab/class-builder-rearrange/index.html",
+      "match": true,
+      "local_sha256": "e94b525cd6b32b1ea4a3b28ee65fa21119790993278b336ae1d5a92c756171a3",
+      "published_sha256": "e94b525cd6b32b1ea4a3b28ee65fa21119790993278b336ae1d5a92c756171a3",
+      "error": null
+    }
+  ]
+}
