@@ -18,7 +18,7 @@ const changeMode=m=>{$('mode').value=m;$('mode').onchange();},event=(el,type)=>e
 function setColor(rgb){const s=app.state();if(s.current.mode==='binary'){
  for(const b of document.querySelectorAll('#editor button')){const c=+b.dataset.c,i=+b.dataset.bit;if(Boolean(rgb[c]&E.WEIGHTS[i])!==Boolean(app.state().student[c]&E.WEIGHTS[i]))b.click();}
 }else{for(const select of document.querySelectorAll('#editor select')){select.value=E.hexByte(rgb[+select.dataset.c])[+select.dataset.digit];event(select,'change');}}}
-ok($('mode').value==='mixed','Mixed is default');ok(!document.querySelector('#difficulty'),'no difficulty');ok(document.querySelector('a[href="../session-summary/"]'),'shared summary');ok(document.querySelector('a[href="../../cs-games/csp/"]'),'consolidated nav');
+ok($('mode').value==='mixed','Mixed is default');ok(!document.querySelector('#difficulty'),'no difficulty');ok(document.querySelector('a[href="../session-summary/"]'),'shared summary');ok(document.querySelector('a[href="/cs-games/csp/"]'),'consolidated nav');
 for(const mode of ['binary','hex']){
  changeMode(mode);eq(app.state().current.mode,mode);eq(app.state().student,[0,0,0]);ok($('target-caption').textContent.includes('hidden'),'target hidden');
  eq(document.querySelectorAll('#editor button').length,mode==='binary'?24:0);eq(document.querySelectorAll('#editor select').length,mode==='hex'?6:0);

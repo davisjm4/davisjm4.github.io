@@ -36,5 +36,5 @@ for(const f of engine.families.filter(f=>f.mode==='identify'))for(let v=0;v<3;v+
 $('mode').value='identify';$('topic').value='io';app.next();const original=app.state().current;
 $('share').click();await Promise.resolve();check(globalThis.copied.includes(original.familyId),'reproducible share link');
 const before=app.state().tracker.snapshot().totals.attempted;window.confirm=()=>false;$('reset').click();check(app.state().tracker.snapshot().totals.attempted===before,'reset cancel');window.confirm=()=>true;$('reset').click();check(app.state().tracker.snapshot().totals.attempted===0,'reset confirm');
-check(document.querySelector('a[href="../session-summary/"]'),'summary link');check(document.querySelector('a[href="../../cs-games/csp/"]'),'consolidated navigation');
+check(document.querySelector('a[href="../session-summary/"]'),'summary link');check(document.querySelector('a[href="/cs-games/csp/"]'),'consolidated navigation');
 console.log(`Create Task Lab UI: ${checks} checks passed (DOM simulation; browser results reported separately).`);

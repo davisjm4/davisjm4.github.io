@@ -120,7 +120,7 @@ function launch() {
 let t = launch();
 same(t.$("concept-mode").value, "mixed");
 same(t.$("new").textContent, "Next Challenge");
-ok(t.document.querySelector("header a").getAttribute("href") === "../");
+ok(t.document.querySelector('header a[href="/cs-games/csp/"]').getAttribute("href") === "/cs-games/csp/");
 function wrong(t) {
   if (t.q.interaction === "count")
     t.$("concept-count").value = t.q.answer === "unknown" ? 1 : t.q.answer + 1;

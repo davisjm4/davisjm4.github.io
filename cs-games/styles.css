@@ -243,3 +243,7 @@ h3 { font-size: 1.2rem; margin: 8px 0; }
   .topic-list { padding-left: 16px; padding-right: 16px; }
 }
 .nav{flex-wrap:wrap}.course-card.workplace{border-top:4px solid var(--accent)}.shared-tools{border-top:1px solid var(--line);padding-top:24px}.shared-tools p{color:var(--muted)}.shared-tools a{display:inline-block;padding:8px 0}.toolbar>*{max-width:100%;min-width:0}
+
+/* Keep the new three-pathway cards within narrow viewports. */
+.course-card { min-width: 0; }
+.course-card h2, .shared-tools h2 { overflow-wrap: anywhere; }
