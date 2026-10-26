@@ -1,6 +1,6 @@
 # Copyright & Creative Commons Lab — G-117
 
-October 25, 2026 (America/Los_Angeles). Target: https://davisjm4.github.io/csp-games/copyright-creative-commons-lab/ . Publication verification is recorded below after deployment.
+October 25, 2026 (America/Los_Angeles). Published and verified: https://davisjm4.github.io/csp-games/copyright-creative-commons-lab/ .
 
 ## Existing functionality and audit
 
@@ -47,11 +47,13 @@ Added one card to the CSP homepage and one catalog entry to consolidated CS Game
 - New model/content suite: 93,239 checks; all 60 review fixtures, four unique choices and one keyed answer per case, explanations, source references, license-policy counterfactuals, all filters, cross-filter history, deterministic sampling and 30,000 Mixed rounds across 120 seeds.
 - New DOM/session suite: 1,994 checks with storage enabled and 1,994 with storage unavailable; all 60 families, seven filter selections, 440 scored rounds per run, one-submission locking, specific feedback, source-link timing, summary totals beyond 256 records, daily and confirmed/canceled manual reset. Also executed in America/Los_Angeles.
 - Existing CSP package suites and catalog tests: results in adjacent logs. A default-host run exposed an existing long-session fixture crossing midnight in Australia/Sydney; that fixture passes with America/Los_Angeles, and regression verification uses explicit UTC like GitHub CI. No platform code was changed to mask the fixture.
-- Browser and final CI results are recorded in the publication section and BROWSER_VERIFICATION.md after execution.
+- Live browser checks passed for representative correct/incorrect rounds, keyboard input and visible focus, all topic filters, shared reporting, persistence, reset cancellation, both navigation entry points and responsive widths 320/390/768/1024/1366. See BROWSER_VERIFICATION.md for measured evidence and limits.
 
 ## Publication and tracker
 
-Pending final deployment, live student-flow validation and exact commit/tracker readback. This status will be replaced only after those checks complete.
+Implementation commit: `3264e0dac32513ec2d4a9d338c084cf1f1e4add0`. GitHub Pages run **40278787097** succeeded. Copyright verification run **40278788175**, job **121427212102**, passed the full `npm test --prefix csp-games`, Los Angeles timezone UI check and consolidated catalog suite. Local package suites were also executed: the early suites are in regression-results.txt and the remainder were explicitly completed in remaining-regression-results.txt.
+
+The live canonical page and a multiple-round student flow were verified. G-117 Master Inventory row 55 and Priority Backlog row 24 were updated to **Published — live verified; classroom review pending**, with the canonical URL, implementation SHA, 60-family coverage, test results, evidence limits and next classroom-review action. Targeted readback confirmed the values and the URL hyperlink; unrelated rows and formatting were preserved. Native spreadsheet visual fit was not independently inspected. Final documentation-only commits record these outcomes without changing the runtime.
 
 ## Remaining review and exclusions
 
