@@ -1,0 +1,25 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests.mjs && node ui-tests.mjs && node trivial-nontrivial/tests.mjs && node trivial-nontrivial/ui-tests.mjs && node concepts-tests.mjs && node concepts-ui-tests.mjs && node concepts-feedback-tests.mjs && node session-tests.mjs && node daily-session-tests.mjs && node session-ui-tests.mjs && node expanded-tests.mjs && node practice-tests.mjs && node practice-ui-tests.mjs && node collection-tests.mjs && node test-case-redesign-tests.mjs && node architect-redesign-tests.mjs && node response-redesign-tests.mjs && node create-task-lab/tests.mjs && node create-task-lab/ui-tests.mjs && node create-task-lab/family-repeat-tests.mjs && node rgb-color-builder/tests.mjs && node rgb-color-builder/ui-tests.mjs && npm run test:dance && npm run test:ascii && npm run test:analog && npm run test:compression && npm run test:numbers && npm run test:vocabulary && npm run test:internet && npm run test:tcpudp && npm run test:ethics && npm run test:divide && npm run test:pathway && npm run test:copyright
+
+PASS: 49285 generator, answer, and optimum assertions.
+PASS: 7606 interaction checks across all new games and modes (DOM simulation, not rendered-browser QA).
+PASS: preserved Network Breaker submission, new challenge, hint, and solution controls; 7773 total DOM interaction checks.
+PASS: 80 models; 208 behavior-distinct validated configurations from 240 bounded candidates; 80 independent output oracles; AP pseudocode subset, comparison, determinism, and repeat-avoidance checks.
+PASS: DOM controls for classification, correct/incorrect feedback, comparison, explanation, local scoring, category/activity breakdown, one-attempt lock, next challenge, share links/filters, reset confirmation, and Mixed Practice.
+PASS: 20000 generated Code Concepts challenges, 2082280 structural/answer assertions, all five Mixed Practice categories.
+PASS: 17844 Code Concepts interaction assertions covering spoiler-free errors, progressive hints, independent retries, permanently unscored reveals, repeated clicks, mode defaults, and statistics.
+PASS: 62000 hint and scoring-state assertions across every Code Concepts variant.
+PASS: 59 shared-session assertions: deduplication, first-try formula, retries, reveal/skip exclusion, cross-page persistence, reset, corrupt/older data, unavailable storage, and bounded 5,000-round history.
+Session daily-boundary, legacy migration, and per-mode summary tests passed.
+PASS: 154 cross-game/session/report DOM assertions: all 12 games plus legacy link, retries, persistence, reveals, print action, escaped identity, reset confirmation/cancel/confirm, and topic tables. Rendered print/device QA remains unavailable.
+Expanded concepts: 16,000 valid challenges; 7369 reverse / 8631 forward; all eight categories, retries and reveal verified.
+Practice engine: 5760 seeded challenges passed; all modes, models, valid alternatives, edge cases, and incorrect responses verified.
+Existing-game expansion: 4,000 randomized overflow, pixel, and cleaning challenges verified.
+1626 shared-passage follow-up answers verified.
+Expansion DOM: 1162 checks passed across the remaining shared-interface games, expanded concepts, mode defaults, support, retries, reveals, simulations, and shared persistence.
+Shared passages and expanded printable summary: accurate game/topic rows, print action, and reset cancel/confirm verified.
+Collection editor: 72 native drag/drop, touch-pointer, tap/keyboard, duplicate, unlimited-length, undo/reset, index-base, and closed-round checks passed (DOM simulation).
+Test Case Builder specification: 5600 generated questions; 137371 assertions; 65300 independent displayed-code executions. {"bugs":{"questions":1700,"templates":17,"answerPositions":[446,426,440,388]},"predict":{"questions":1200,"templates":12,"answerPositions":[322,266,312,300]},"boundary":{"questions":1000,"templates":10,"answerPositions":[254,254,261,231]},"branches":{"questions":600,"templates":6,"answerPositions":[152,162,148,138]},"edge":{"questions":1100,"templates":11,"answerPositions":[263,274,266,297]}}
+Algorithm Architect: 900 generated challenges across 9 modes (871 missing-component, 29 arrange); 12527 generator, semantic, UI, feedback, session, and responsive checks passed.

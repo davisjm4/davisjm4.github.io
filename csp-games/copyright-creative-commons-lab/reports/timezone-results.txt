@@ -1,0 +1,1 @@
+Copyright DOM/session: 1994 checks passed; all 60 families, 7 filters, 440 scored rounds, terminal first submission, shared summary, daily/confirmed manual resets; storage enabled.

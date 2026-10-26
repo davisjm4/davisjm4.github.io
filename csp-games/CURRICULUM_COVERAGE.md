@@ -474,12 +474,13 @@ Classification: Not covered = no meaningful practice; Introduced = identificatio
 - Objectives: IOC-1.F — Evaluate responsible creation and use.
 - Essential knowledge: IOC-1.F.1, IOC-1.F.2, IOC-1.F.3, IOC-1.F.4, IOC-1.F.5, IOC-1.F.6, IOC-1.F.7, IOC-1.F.8, IOC-1.F.9, IOC-1.F.10, IOC-1.F.11 — Attribution, licenses, intellectual property, data rights.
 - Source PDF page: 126
-- Activity: Computing Impact Lab / Code Concepts / Mixed AP Exam Practice
+- Activity: Copyright & Creative Commons Lab / Computing Impact Lab / Code Concepts / Mixed AP Exam Practice
 - Modes: Copyright/license/attribution; informed consent; privacy and trade-offs
 - Identification / application / explanation: Implemented for listed concepts / Implemented for listed modes; broader objectives remain partial / Structured response construction in relevant Response Builder / Impact Lab modes; unstructured reflection is unscored
 - Validation: Known annotated metadata, rule-based test-input evaluation, exact algorithms, or exhaustive small-domain construction tests; no keyword grading
 - Implementation: Playable; bounded templates and rules
 - Testing: Seeded generator checks and DOM interaction/regression tests; physical Chromebook/mobile/print QA unavailable
+- Dedicated licensing practice: [Copyright & Creative Commons Lab](./copyright-creative-commons-lab/) supplies 60 distinct authored decision families across six topics, including bounded uncertainty and source-linked explanations; one scored submission per case. It is educational practice, not legal advice or an authentic licensing workflow assessment.
 - Remaining gap: Legal exceptions, jurisdiction-specific rules, open-source distinctions, and authentic attribution practice remain partial. Subjective ethics are not automatically scored.
 
 ## 5.6 Safe Computing

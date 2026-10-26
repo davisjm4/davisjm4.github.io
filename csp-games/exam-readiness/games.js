@@ -1,6 +1,14 @@
 // Audited catalog at 8846cf7. Launches use main pages unless a supported deep link is explicitly verified.
 export const GAMES = [
   {
+    "id": "copyright-creative-commons-lab",
+    "title": "Copyright & Creative Commons Lab",
+    "url": "/csp-games/copyright-creative-commons-lab/",
+    "objectives": "Apply stated copyright permissions, CC conditions, attribution and fair-use uncertainty in six scenario topics.",
+    "tracking": "shared first-submission adapter",
+    "deepLink": false
+},
+  {
     "id": "digital-divide-lab",
     "title": "Digital Divide Scenario Lab",
     "url": "/csp-games/digital-divide-lab/",
