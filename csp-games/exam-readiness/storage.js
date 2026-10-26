@@ -42,7 +42,7 @@ export function createProgressStore({storage,now=()=>new Date().toISOString(),on
    if(blocked)throw Error('Reset unreadable pathway storage before importing. Export temporary work first.');
    state={...empty(),initialized:true,events};save();return true;
   },
-  reset(confirmed){if(!confirmed)return false;state={...empty(),initialized:true};blocked=false;volatile=false;save();return true;},
+  reset(confirmed){if(!confirmed)return false;state={...empty(),initialized:true};blocked=false;volatile=false;warning='';save();return true;},
   get warning(){return warning;},get temporary(){return volatile;}
  };
 }
