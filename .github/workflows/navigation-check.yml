@@ -1,0 +1,23 @@
+name: Unified navigation verification
+on:
+  push:
+    branches: [main]
+    paths: ['cs-games/**', 'csp-games/**/index.html', 'csp-games/index.html', 'java-games/**/index.html', 'wpr-games/**/index.html', '.github/workflows/navigation-check.yml']
+  pull_request:
+    paths: ['cs-games/**', 'csp-games/**/index.html', 'java-games/**/index.html', 'wpr-games/**/index.html']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  navigation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix csp-games
+      - run: ln -s ../csp-games/node_modules java-games/node_modules
+      - run: node cs-games/catalog-tests.mjs
+      - run: node cs-games/navigation-tests.mjs

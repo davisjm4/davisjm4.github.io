@@ -4,6 +4,7 @@ const course = document.body.dataset.course;
 const isCsp = course === "csp";
 const items = catalog.filter(g => g.course === course);
 const groups = isCsp ? [
+  ["mixed","Mixed AP practice",["All five Big Ideas"]],
   ["1","Big Idea 1 — Creative Development",["1.1 Collaboration","1.2 Program Purpose","1.3 Program Design","1.4 Testing"]],
   ["2","Big Idea 2 — Data",["2.1 Binary Representation","2.2 Data Compression","2.3 Data Analysis","2.4 Data Transformations"]],
   ["3","Big Idea 3 — Algorithms and Programming",["3.1 Program Components","3.2 Variables and Expressions","3.3 Selection and Iteration","3.4 Boolean Logic","3.5 Lists","3.6 Procedures","3.7 Algorithm Design","3.8 Iteration","3.9 Algorithm Efficiency","3.10 Procedures","3.11 Searching","3.12 Simulations"]],
@@ -35,7 +36,7 @@ function render(){
   let shown = 0;
   const rendered = new Set();
   results.innerHTML = groups.map(([id,title,topics]) => {
-    const groupItems = items.filter(g => g.topics.some(t => topics.includes(t)) && matches(g,query,topic) && (isCsp || !rendered.has(g.id)));
+    const groupItems = items.filter(g => g.topics.some(t => topics.includes(t)) && matches(g,query,topic) && !rendered.has(g.id));
     if (!groupItems.length) return "";
     groupItems.forEach(g => rendered.add(g.id));
     shown += groupItems.length;

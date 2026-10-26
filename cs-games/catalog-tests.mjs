@@ -39,9 +39,9 @@ for(const slug of games){
   const doc=documentAt(`java-games/${slug}/index.html`);
   assert.ok(doc.querySelector('script[src]'),`No playable script: ${slug}`);
   assert.ok(!doc.querySelector('meta[http-equiv="refresh"]'),`Game redirects: ${slug}`);
-  const back=doc.querySelector('header a');
+  const back=doc.querySelector('header .ecosystem-nav a[href="/cs-games/advanced/"]');
   assert.equal(resolve(back?.getAttribute('href'),route),canonical,`${slug}: primary return destination`);
-  assert.match(back.textContent,/Advanced CS Games/,`${slug}: return label`);
+  assert.match(back.textContent,/Advanced Computer Science/,`${slug}: return label`);
 }
 const legacy=read('java-games/index.html');
 assert.match(legacy, /http-equiv="refresh" content="0; url=\/cs-games\/advanced\/"/);
@@ -86,10 +86,10 @@ console.log(`PASS: ${games.length} playable Java games, ${advanced.filter(g=>g.s
   const filter=document.getElementById('topic-filter');Object.defineProperty(filter,'value',{writable:true,value:''});
   document.getElementById('game-search').value='Vocabulary';const cspUI={window,document};vm.createContext(cspUI);vm.runInContext(read('cs-games/course-page.js'),cspUI);
   const links=()=>[...document.querySelectorAll('a.launch')].filter(a=>a.getAttribute('href')==='../../csp-games/vocabulary-fill-in-lab/');
-  assert.equal(links().length,5,'Vocabulary launch must be available in all five Big Idea groups.');
-  filter.value='All five Big Ideas';vm.runInContext('render()',cspUI);assert.equal(links().length,5);
-  for(const topic of ['1.2 Program Purpose','2.1 Binary Representation','3.1 Program Components','4.1 Network Communication','5.1 Computing Innovations']){filter.value=topic;vm.runInContext('render()',cspUI);assert.equal(links().length,5,topic);}
-  console.log('PASS: Vocabulary catalog launches in all five CSP groups and filters.');
+  assert.equal(links().length,1,'Vocabulary launch must appear once while retaining all topic filters.');
+  filter.value='All five Big Ideas';vm.runInContext('render()',cspUI);assert.equal(links().length,1);
+  for(const topic of ['1.2 Program Purpose','2.1 Binary Representation','3.1 Program Components','4.1 Network Communication','5.1 Computing Innovations']){filter.value=topic;vm.runInContext('render()',cspUI);assert.equal(links().length,1,topic);}
+  console.log('PASS: Vocabulary catalog launches once across all topic filters.');
 }
 
 { const {window,document}=parseHTML(read('cs-games/csp/index.html'));window.CSGamesCatalog=catalog;const f=document.getElementById('topic-filter');Object.defineProperty(f,'value',{writable:true,value:''});document.getElementById('game-search').value='Internet Layers';const ctx={window,document};vm.createContext(ctx);vm.runInContext(read('cs-games/course-page.js'),ctx);assert.ok(document.querySelector('a.launch[href="../../csp-games/internet-layers-lab/"]'));for(const t of ['4.1 Network Communication','4.2 Routing','4.3 Fault Tolerance']){f.value=t;vm.runInContext('render()',ctx);assert.ok(document.querySelector('a.launch[href="../../csp-games/internet-layers-lab/"]'),t);}console.log('PASS: Internet lab appears in CSP catalog and all its topic filters.');}

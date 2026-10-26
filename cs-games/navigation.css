@@ -1,0 +1,8 @@
+/* Compact, static ecosystem navigation; no game or session dependencies. */
+nav.ecosystem-nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;min-width:0;max-width:100%;font:500 .88rem/1.5 system-ui,sans-serif;color:#b4c5d3;letter-spacing:normal;text-transform:none}
+nav.ecosystem-nav a{color:#66e4c4;display:inline-block;padding:6px 0;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+nav.ecosystem-nav a:focus-visible{outline:3px solid #ffd37d;outline-offset:3px}
+nav.ecosystem-nav span[aria-current]{overflow-wrap:anywhere;color:#b4c5d3}
+.ecosystem-header{flex-wrap:wrap;gap:8px 18px}
+.ecosystem-nav-row{padding:10px 16px;background:#0c1722;border-bottom:1px solid #33495c}
+.ecosystem-nav-row .ecosystem-nav{max-width:1180px;margin:auto}
