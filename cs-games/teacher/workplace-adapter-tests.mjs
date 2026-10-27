@@ -108,7 +108,7 @@ for (let i = 0; unique.length < 12 && i < 500; i++) {
 assert.equal(unique.length, 12);
 const xml = buildAssessmentXml({ title: "Workplace sample", seed: 70000 }, unique);
 assert.equal((xml.match(/<item ident=/g) || []).length, unique.length);
-assert.equal((xml.match(/<setvar action="Set" varname="SCORE">2<\/setvar>/g) || []).length, unique.length);
+assert.equal((xml.match(/<setvar action="Set" varname="SCORE">100<\/setvar>/g) || []).length, unique.length);
 assert.ok(buildManifest().includes('href="assessment.xml"'));
 assert.ok(xml.includes("Line 1:"), "document lines should remain in QTI question content");
 assert.ok(xml.includes("Sentence 1:"), "order items should preserve numbered sentence content");

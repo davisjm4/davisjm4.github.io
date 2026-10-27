@@ -7,7 +7,7 @@
   <title>Teacher Tools | CS Games</title>
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="./teacher.css">
-  <script type="module" src="./teacher.js?v=array-feedback-20261024"></script>
+  <script type="module" src="./teacher.js?v=package-b-20261026"></script>
 </head>
 <body>
   <header class="site-header">
@@ -49,7 +49,8 @@
         <label>Career settings<select id="workplace-contexts" multiple size="6" aria-describedby="workplace-help"></select></label>
         <p id="workplace-help" class="muted">Choose one or more skills and settings. Leave either list unselected to include all options.</p>
       </fieldset>
-      <p class="muted">For modes without difficulty controls, questions use the engine's native mixed level. If a mode offers only some levels, the nearest available level is used and shown in the preview. In Canvas, open Course Settings → Import Course Content, then import the downloaded QTI .zip and review the quiz.</p>
+      <p class="muted">Modes without difficulty controls use their native Mixed level. Limited-level modes use the nearest supported level, with a notice here and in the preview. Unavailable filtered combinations block generation. Canvas import scoring and feedback display have not been verified in a sandbox; review imported points and explanations before assigning.</p>
+      <p id="eligibility" class="muted" role="status"></p>
       <div class="actions">
         <button id="generate">Generate Quiz</button>
         <button id="regenerate-quiz" class="secondary" disabled>Regenerate Quiz</button>

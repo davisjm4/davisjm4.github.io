@@ -1,0 +1,28 @@
+name: Teacher Tools reliability
+on:
+  push:
+    branches: [main]
+    paths: ['cs-games/teacher/**', 'java-games/**', 'wpr-games/**', '.github/workflows/teacher-tools-check.yml']
+  pull_request:
+    paths: ['cs-games/teacher/**', 'java-games/**', 'wpr-games/**', '.github/workflows/teacher-tools-check.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  assessment-reliability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: node cs-games/teacher/qti-tests.mjs
+      - run: node cs-games/teacher/adapters-tests.mjs
+      - run: node cs-games/teacher/quiz-distribution-tests.mjs
+      - run: node cs-games/teacher/workplace-adapter-tests.mjs
+      - run: PACKAGE_B_EVIDENCE_DIR=/tmp/package-b node cs-games/teacher/package-b-tests.mjs
+      - run: python3 cs-games/teacher/validate-qti-packages.py /tmp/package-b/qti

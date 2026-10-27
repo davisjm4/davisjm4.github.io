@@ -55,7 +55,7 @@ check(chosen.length>=20,"Could not generate a distinct mixed-source sample");
 check(new Set(chosen.map(q=>q.id)).size===chosen.length,"Question IDs must be unique");
 const xml=buildAssessmentXml({title:"Adapter sample",seed:981},chosen),manifest=buildManifest();
 check((xml.match(/<item ident=/g)||[]).length===chosen.length,"QTI item count");
-check((xml.match(/<setvar action="Set" varname="SCORE">3<\/setvar>/g)||[]).length===chosen.length,"QTI points retained");
+check((xml.match(/<setvar action="Set" varname="SCORE">100<\/setvar>/g)||[]).length===chosen.length,"QTI points retained");
 check(manifest.includes('href="assessment.xml"'),"Manifest must reference assessment.xml");
 check(chosen.every(q=>xml.includes(`choice_${q.correctIndex}</varequal>`)),"QTI response mapping missing");
 const sample=chosen.find(q=>q.code?.includes("\n"));

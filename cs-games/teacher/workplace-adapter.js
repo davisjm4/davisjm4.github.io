@@ -29,6 +29,15 @@ function getHybrid() {
   hybrid = W.selector.createHybrid(library, W.composeContent);
   return hybrid;
 }
+export function workplaceEligibility(modeId, difficulty, filters = {}) {
+  try {
+    const contexts = filters.contexts?.length ? filters.contexts : [null];
+    return contexts.every(context => W.selector.eligibleUnits(getHybrid(), {
+      skills: filters.skills?.length ? filters.skills : null, modes: [modeId],
+      difficulty: String(difficulty).toLowerCase(), context
+    }).length > 0);
+  } catch { return false; }
+}
 const allOptions = challenge => challenge.options.map(option => option.text);
 const clean = value => String(value).trim().replace(/\s+/g, " ").toLocaleLowerCase();
 function choicesAreDistinct(choices) {

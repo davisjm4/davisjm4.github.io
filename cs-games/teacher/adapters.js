@@ -7,8 +7,10 @@ import { generateArray, formatNames as arrayModes, solutionArray, assessArray } 
 import { generateRecursion, modeNames as recursionModes, assessRecursion } from "../../java-games/recursion-lab/engine.js";
 import { generate as genSearch, MODE_IDS as searchModeIds, MODES as searchModes, assess as assessSearch, exportQuestion as exportSearch } from "../../java-games/search-sort-lab/engine/generator.js";
 import { generateTraceChallenge, verifyChallengeModel } from "../../java-games/variable-lab/trace-generator/src/index.js";
-import { generateRacecesAssessmentItem } from "./raceces-adapter.js?v=20261022-raceces2";
-import { generateWorkplaceAssessmentItem } from "./workplace-adapter.js?v=20261022-workplace1";
+import { generateRacecesAssessmentItem } from "./raceces-adapter.js?v=package-b-20261026";
+import { generateWorkplaceAssessmentItem } from "./workplace-adapter.js?v=package-b-20261026";
+import { difficultyId, resolveDifficulty } from "./difficulty.js?v=package-b-20261026";
+import { searchQuestionContext } from "./search-context.js?v=package-b-20261026";
 const stringLab = globalThis.StringLab;
 function supportsStringChoices(family, difficulty) {
   for (let seed=1; seed<=8; seed++) {
@@ -21,14 +23,14 @@ const stringFamilies=stringLab?.Generator&&stringLab?.PracticeFamilies
   ? stringLab.Generator.families().map(f=>({...f,exportLevels:f.levels.filter(level=>supportsStringChoices(f.id,level))})).filter(f=>f.exportLevels.length)
   : [];
 
-const normalize = (q, {sourceId, sourceName, modeId, modeName, difficulty, points, answer, choices, prompt, code, explanation, signature, family, verify}) => {
+const normalize = (q, {sourceId, sourceName, modeId, modeName, difficulty, points, answer, choices, prompt, code, context, explanation, signature, family, verify}) => {
   const list = choices.map(x => typeof x === "string" ? x : String(x.text));
   const correct = String(answer);
   const correctIndex = list.indexOf(correct);
   if (list.length !== 4 || new Set(list).size !== 4 || correctIndex < 0 || list.lastIndexOf(correct) !== correctIndex) return null;
   if (!prompt || !explanation || (verify && !verify())) return null;
   return { id: `${sourceId}-${modeId}-${hash(`${signature}|${correct}`)}`, sourceId, source: sourceName, modeId, mode: modeName,
-    difficulty, family: family || modeId, stem: prompt, code: code || "", choices: list, correctIndex, correctAnswer: correct,
+    difficulty: q.difficulty || q.difficultyName || difficulty, family: family || modeId, stem: prompt, code: code || "", requiredCode: code || "", context: context || "", choices: list, correctIndex, correctAnswer: correct,
     explanation: typeof explanation === "string" ? explanation : Array.isArray(explanation) ? explanation.join(" ") : explanation.summary || "", signature: `${sourceId}|${modeId}|${signature}`, points };
 };
 function hash(s) { let h=2166136261; for (const c of String(s)) {h^=c.charCodeAt(0);h=Math.imul(h,16777619);} return (h>>>0).toString(36); }
@@ -87,7 +89,9 @@ export const sources = [
   }),
   src("search-sort","Search & Sort Lab",searchModeIds.map(id=>({id,name:searchModes[id].title,difficulties:["beginner","intermediate","advanced"]})),(mode,difficulty,seed,points)=>{
     const q=genSearch(mode,difficulty.toLowerCase(),seed); if(!q) return null; const out=exportSearch(q);
-    return normalize(q,{sourceId:"search-sort",sourceName:"Search & Sort Lab",modeId:mode,modeName:searchModes[mode].title,difficulty:q.difficulty,points,answer:q.choices[q.answerIndex].text,choices:q.choices,prompt:q.stem,code:q.code,explanation:q.explanation,signature:`${q.family}|${q.stem}|${q.code}|${q.choices.map(c=>c.text).sort().join("|")}`,family:q.family,verify:()=>assessSearch(q,q.answerIndex)&&out.correctIndex===q.answerIndex});
+    const context=searchQuestionContext(q,out); if(context===null) return null;
+    const item=normalize(q,{sourceId:"search-sort",sourceName:"Search & Sort Lab",modeId:mode,modeName:searchModes[mode].title,difficulty:q.difficulty,points,answer:out.choices[out.correctIndex].text,choices:out.choices,prompt:out.stem,code:out.code,context,explanation:out.explanation,signature:`${q.family}|${q.stem}|${q.code}|${context}|${q.choices.map(c=>c.text).sort().join("|")}`,family:q.family,verify:()=>assessSearch(q,q.answerIndex)&&out.correctIndex===q.answerIndex});
+    return item?{...item,requiredContext:context}:null;
   }),
 ];
 export const sourceById = Object.fromEntries(sources.map(s=>[s.id,s]));
@@ -96,6 +100,11 @@ export function generateAssessmentItem(sourceId, modeId, difficulty, seed, point
   const source=sourceById[sourceId], mode=source?.modes.find(m=>m.id===modeId);
   if(!source||!mode) return null;
   // Sources with no explicit difficulty interface are intentionally marked mixed.
-  const level=mode.difficulties?.includes(difficulty)?difficulty:(mode.difficulties?.includes(difficulty.toLowerCase())?difficulty.toLowerCase():"Mixed");
-  try { return source.generate(modeId,level,seed,points,options); } catch { return null; }
+  const resolution=resolveDifficulty(mode,difficulty,seed>>>0);
+  if(resolution.error) return null;
+  try {
+    const item=source.generate(modeId,resolution.level,seed,points,options);
+    if(!item || difficultyId(item.difficulty)!==difficultyId(resolution.level)) return null;
+    return Object.assign(item,{requestedDifficulty:difficulty,eligibilityNotice:resolution.notice});
+  } catch { return null; }
 }

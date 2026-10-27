@@ -117,7 +117,7 @@ for (const [name, items] of [["Boolean", booleanQuestions], ["Conditional", cond
     for (const item of items) {
       assert.ok(item.correctIndex >= 0 && item.correctIndex < item.choices.length);
       assert.ok(xml.includes(`choice_${item.correctIndex}</varequal>`));
-      assert.ok(xml.includes(`<setvar action="Set" varname="SCORE">${item.points}</setvar>`));
+      assert.ok(xml.includes(`<setvar action="Set" varname="SCORE">100</setvar>`));
       for (const choice of item.choices) assert.ok(xml.includes(`<mattext texttype="text/plain">${escapeForXml(choice)}</mattext>`));
     }
     assert.match(manifest, /href="assessment\.xml"/);

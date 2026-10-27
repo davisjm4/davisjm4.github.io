@@ -35,6 +35,9 @@ function availableModels(modeId, level, filters) {
     model.level === level
   );
 }
+export function racecesEligibility(modeId, difficulty, filters = {}) {
+  return !!availableModels(modeId, LEVELS[difficulty], filters)?.length;
+}
 function numberedResponse(lines, includeGap = false) {
   return lines.map((line, i) => `${includeGap && line.gap ? `Sentence ${i + 1}: [Missing sentence]` : `Sentence ${i + 1}: ${line.text}`}`).join("\n");
 }
