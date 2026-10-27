@@ -1,0 +1,2 @@
+Java DOM: 4917 checks passed across all four games and modes, complete two-part debugging, retries/reveals, collection edits, loop walkthroughs, defaults, and persistence.
+Java summary: all four games, identity, print, confirmed reset/cancel, and CSP data preservation verified.

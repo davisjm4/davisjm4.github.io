@@ -1,0 +1,76 @@
+- heading "Variable Lab feedback verification" [level=1]
+- paragraph: Regression evidence only. Exact classroom fixtures run the current published app and engine. This page does not change the student question bank or scores in the regular game.
+- text: Scenario
+- combobox "Scenario":
+  - option "Classroom Identification"
+  - option "Classroom Assemble"
+  - option "Published Identification"
+  - option "Published Assemble" [selected]
+- text: Viewport
+- combobox "Viewport":
+  - option "Desktop — 1100 px"
+  - option "Phone — 390 px" [selected]
+- button "Load verification"
+- status: Loaded live-assemble at 390 CSS pixels. Fixture attempts are test data in this browser.
+- iframe [active] [id="practice"]:
+  - banner:
+    - navigation "Breadcrumb":
+      - link "CS Games":
+        - /url: /cs-games/
+      - generic: ›
+      - link "Advanced Computer Science":
+        - /url: /cs-games/advanced/
+      - generic: ›
+      - generic: Variable Lab
+    - link "Session Summary":
+      - /url: ../session-summary/
+  - main:
+    - generic: Java · Types · Declarations · Assignment · Conversions
+    - heading "Variable Lab" [level=1]
+    - paragraph: Identify declaration components, values, and types with selectable Java pieces.
+    - text: Practice mode
+    - combobox "Practice mode":
+      - option "Mixed Practice"
+      - option "Identification"
+      - option "Assemble Declaration" [selected]
+      - option "Trace the Variable"
+    - button "New Challenge"
+    - paragraph
+    - generic: Assemble Declaration
+    - heading "A speed test measured 62.5 megabits per second. Store the download speed." [level=2]
+    - generic "Introductory type convention"
+    - text: Type
+    - combobox "Type" [disabled]:
+      - option "Choose…"
+      - option "char"
+      - option "double" [selected]
+      - option "int"
+      - option "String"
+      - option "boolean"
+    - text: Variable name
+    - combobox "Variable name" [disabled]:
+      - option "Choose…"
+      - option "download speed"
+      - option "deviceName"
+      - option "downloadSpeed" [selected]
+      - option "wifiConnected"
+    - text: Operator
+    - combobox "Operator" [disabled]:
+      - option "Choose…"
+      - option "=" [selected]
+      - option "!="
+      - option "=="
+    - text: Value
+    - combobox "Value" [disabled]:
+      - option "Choose…"
+      - option "62.5" [selected]
+      - option "62,5"
+      - option "62"
+      - option "\"62.5\""
+    - generic: double downloadSpeed = 62.5;
+    - button "Check Answer" [disabled]
+    - button "Show Answer" [disabled]
+    - button "Next Challenge"
+    - status [active]: Correct independently after retry. double downloadSpeed = 62.5; This declares “downloadSpeed” and initializes it using =. Its double value is compatible with double. It also matches the scenario and the displayed type convention. In your earlier declaration, “!=” compares values. A declaration needs an assignment operator between its name and initial value. “download speed” cannot be one Java variable name. Spaces separate tokens. Use letters, digits, underscores, or dollar signs; do not start with a digit or use a reserved word. int stores whole-number values. “"62.5"” is a String literal of type String, which cannot directly initialize int. Choose a compatible type and value; quotes affect the Java type. “"62.5"” represents “62.5” as String, which differs from the value described in the scenario. Match the scenario’s quantity, text, capitalization, or condition.
+    - paragraph: "First-try accuracy: 0% (0/3) · Solved after retry: 2 · Revealed: 1 · Submissions: 6"
+  - contentinfo: Practice freely. No accounts or data uploads. Results are stored locally in this browser. Independent practice tools; not affiliated with College Board.

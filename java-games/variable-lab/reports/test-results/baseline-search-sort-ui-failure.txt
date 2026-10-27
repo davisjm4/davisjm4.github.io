@@ -1,0 +1,19 @@
+ui.test.mjs
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: returns to Advanced CS catalog
+    at ok (file:///workspace/scratch/93f70e3769bf/baseline/java-games/search-sort-lab/tests/harness.mjs:4:40)
+    at file:///workspace/scratch/93f70e3769bf/baseline/java-games/search-sort-lab/tests/ui.test.mjs:32:3
+    at section (file:///workspace/scratch/93f70e3769bf/baseline/java-games/search-sort-lab/tests/harness.mjs:10:9)
+    at file:///workspace/scratch/93f70e3769bf/baseline/java-games/search-sort-lab/tests/ui.test.mjs:29:7 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

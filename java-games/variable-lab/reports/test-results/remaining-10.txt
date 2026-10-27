@@ -1,0 +1,2 @@
+node ../cs-games/teacher/adapters-tests.mjs
+Passed 852 validated adapter samples across 136 source/mode/difficulty combinations; balanced 24-item sample {"workplace-readiness":3,"raceces":3,"boolean":3,"variable":3,"math":2,"string":2,"loop":2,"array":2,"recursion":2,"search-sort":2}; 50 distinct items export correctly.

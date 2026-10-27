@@ -1,0 +1,70 @@
+[
+  {
+    "cmd": "node ../tests/robot-algorithms.test.js",
+    "status": 0
+  },
+  {
+    "cmd": "node loop-lab/loop-redesign-tests.mjs",
+    "status": 0
+  },
+  {
+    "cmd": "node class-object-lab/class-object-tests.mjs",
+    "status": 0
+  },
+  {
+    "cmd": "node class-object-lab/class-builder-rearrange/tests/session-tests.mjs",
+    "status": 0
+  },
+  {
+    "cmd": "node ../tests/method-constructor-lab.test.js",
+    "status": 0
+  },
+  {
+    "cmd": "node boolean-conditional-lab/boolean-tests.mjs",
+    "status": 0
+  },
+  {
+    "cmd": "node boolean-conditional-lab/range-explorer-tests.mjs",
+    "status": 0
+  },
+  {
+    "cmd": "node boolean-conditional-lab/range-explorer-ui-tests.mjs",
+    "status": 0
+  },
+  {
+    "cmd": "node boolean-conditional-lab/tests/quality-gates.mjs 1000",
+    "status": 0
+  },
+  {
+    "cmd": "node ../cs-games/teacher/qti-tests.mjs",
+    "status": 0
+  },
+  {
+    "cmd": "node ../cs-games/teacher/adapters-tests.mjs",
+    "status": 0
+  },
+  {
+    "cmd": "node ../cs-games/teacher/raceces-adapter-tests.mjs",
+    "status": 1
+  },
+  {
+    "cmd": "node recursion-lab/recursion-tests.mjs",
+    "status": 0
+  },
+  {
+    "cmd": "node recursion-lab/recursion-jvm-tests.mjs",
+    "status": 0
+  },
+  {
+    "cmd": "node ../tests/arraylist-lab.test.js",
+    "status": 0
+  },
+  {
+    "cmd": "node string-lab/tests/generator.test.cjs",
+    "status": 0
+  },
+  {
+    "cmd": "npm run test:search-sort-lab",
+    "status": 1
+  }
+]

@@ -1,0 +1,21 @@
+node ../tests/method-constructor-lab.test.js
+Method & Constructor Lab tests
+  ✓ Java argument compatibility (widening, no narrowing) (12 checks)
+  ✓ overload resolution (most specific applicable method) (8 checks)
+  ✓ token model, tap-to-expand selection, and roles (12 checks)
+  ✓ generator validation (150 per mode, all 9 modes) (8545 checks)
+  ✓ meaningful variety (28 checks)
+  ✓ click-the-code questions target the right component (1627 checks)
+  ✓ multiple-choice quality (4304 checks)
+  ✓ calls, overloads, and widening (238 checks)
+  ✓ argument ordering (tap-to-order) (877 checks)
+  ✓ return rules (239 checks)
+  ✓ constructors and object creation (157 checks)
+  ✓ returned values match the program that is run on the JVM (293 checks)
+  ✓ fix-the-error cases and access modifiers (1413 checks)
+  ✓ DOM: defaults, every mode renders, nothing revealed before answering (47 checks)
+  ✓ DOM: click-the-code scoring with expansion (14 checks)
+  ✓ DOM: multiple choice and tap-to-order scoring (13 checks)
+  ✓ DOM: shared session schema and reset (9 checks)
+
+Method & Constructor Lab: 17836 checks passed in 17 sections (150 generated challenges per mode).

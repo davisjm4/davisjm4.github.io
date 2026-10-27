@@ -1,0 +1,4 @@
+beginner: 20 generated, model verified, choices and adapter checked
+intermediate: 20 generated, model verified, choices and adapter checked
+advanced: 30 generated, model verified, choices and adapter checked
+Variable Lab mode generation passed.

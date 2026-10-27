@@ -1,0 +1,2 @@
+node loop-lab/loop-redesign-tests.mjs
+Loop Lab redesign (updated for expansion): 30440 checks passed; 75 seeded legacy fixtures; 95 structural variants across 10 families; mixed distribution {"iterations":606,"final":592,"choose":604,"components":633,"conditional":618,"while":559,"nested":579,"debug":590,"algorithms":593,"executions":626}.

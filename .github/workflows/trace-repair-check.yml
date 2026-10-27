@@ -74,6 +74,13 @@ jobs:
         env:
           JAVA_BIN: java
         run: node quality-tests.mjs
+      - name: Variable Lab instructional feedback regression
+        working-directory: java-games
+        env:
+          JAVA_BIN: java
+        run: |
+          node variable-lab/feedback-tests.mjs
+          node variable-lab/feedback-ui-tests.mjs
       - name: Compiler and JVM regression
         working-directory: java-games
         run: |

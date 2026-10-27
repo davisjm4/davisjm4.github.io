@@ -1,0 +1,30 @@
+node ../tests/arraylist-lab.test.js
+ArrayList Lab tests
+  ✓ creating ArrayLists: empty and single-element lists (17 checks)
+  ✓ add() and indexed insertion (shifting, index size() is valid) (8 checks)
+  ✓ get() and set() (5 checks)
+  ✓ both remove() overloads and their return values (14 checks)
+  ✓ size(), contains(), indexOf(), duplicates, case-sensitive Strings (6 checks)
+  ✓ loop traversal and removal while iterating (shifting / skipping) (22 checks)
+  ✓ reveal diff tracks inserted / removed / replaced / shifted elements (4 checks)
+  ✓ generate and validate 150 challenges per family (12 families, 53 templates) (7224 checks)
+    distinct challenges per family: {"A":100,"B":150,"K":150,"C":150,"D":150,"E":150,"F":150,"G":150,"H":147,"I":150,"J":150,"L":140}
+  ✓ correct answer validation and exactly one correct choice (9280 checks)
+    (independently re-executed 381 challenges)
+  ✓ independent re-execution of displayed statements (not using the engine model) (351 checks)
+  ✓ no answer revealed before submission (996 checks)
+  ✓ distractors represent misconceptions, not filler (429 checks)
+    answer positions [405,411,390,398]; correct uniquely longest in 115/1604 four-choice questions
+  ✓ no answer-position or longest-choice shortcut (5 checks)
+    mixed distribution: {"C":89,"H":118,"G":90,"I":90,"D":148,"K":101,"B":101,"J":84,"E":110,"A":71,"L":82,"F":116} levels {"1":410,"2":553,"3":237}
+  ✓ mixed practice: variety, balance, and recent-repeat suppression (4000 checks)
+  ✓ first-attempt scoring with the shared session tracker (5 checks)
+  ✓ page loads in Mixed Practice with an accessible, answer-free first challenge (7 checks)
+  ✓ every mode: clickable interactions, correct feedback, first-try scoring (1401 checks)
+  ✓ incorrect answers: immediate correct answer, misconception note, recorded as revealed (415 checks)
+  ✓ Show Answer, Skip, and mode change are recorded correctly (8 checks)
+  ✓ multi-select cells can be toggled before checking (4 checks)
+  ✓ session persists in local storage across page loads (3 checks)
+  ✓ hub registration and shared navigation (6 checks)
+
+ArrayList Lab: 24210 checks passed in 22 sections.

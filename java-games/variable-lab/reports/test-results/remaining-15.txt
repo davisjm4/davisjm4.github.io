@@ -1,0 +1,71 @@
+node string-lab/tests/generator.test.cjs
+{
+  "tested": 21000,
+  "modeDifficulty": {
+    "algorithms/beginner": {
+      "tested": 1000,
+      "exactDuplicates": 14,
+      "exactDuplicatePct": 1.4,
+      "normalizedStructures": 13,
+      "families": 10
+    },
+    "algorithms/intermediate": {
+      "tested": 1000,
+      "exactDuplicates": 9,
+      "exactDuplicatePct": 0.9,
+      "normalizedStructures": 14,
+      "families": 10
+    },
+    "algorithms/advanced": {
+      "tested": 1000,
+      "exactDuplicates": 16,
+      "exactDuplicatePct": 1.6,
+      "normalizedStructures": 15,
+      "families": 11
+    },
+    "compare/beginner": {
+      "tested": 1000,
+      "exactDuplicates": 43,
+      "exactDuplicatePct": 4.3,
+      "normalizedStructures": 14,
+      "families": 6
+    },
+    "compare/intermediate": {
+      "tested": 1000,
+      "exactDuplicates": 27,
+      "exactDuplicatePct": 2.7,
+      "normalizedStructures": 14,
+      "families": 6
+    },
+    "compare/advanced": {
+      "tested": 1000,
+      "exactDuplicates": 45,
+      "exactDuplicatePct": 4.5,
+      "normalizedStructures": 15,
+      "families": 7
+    },
+    "loop/beginner": {
+      "tested": 1000,
+      "exactDuplicates": 143,
+      "exactDuplicatePct": 14.3,
+      "normalizedStructures": 20,
+      "families": 7
+    },
+    "loop/intermediate": {
+      "tested": 1000,
+      "exactDuplicates": 163,
+      "exactDuplicatePct": 16.3,
+      "normalizedStructures": 20,
+      "families": 7
+    },
+    "loop/advanced": {
+      "tested": 1000,
+      "exactDuplicates": 142,
+      "exactDuplicatePct": 14.2,
+      "normalizedStructures": 21,
+      "families": 8
+    }
+  },
+  "jvmRepresentativePrograms": 34,
+  "result": "PASS"
+}

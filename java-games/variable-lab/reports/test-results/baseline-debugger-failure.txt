@@ -1,0 +1,77 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Advanced CS/. Input:
+
+'<!doctype html>\n' +
+  '<html lang="en">\n' +
+  '  <head>\n' +
+  '    <meta charset="utf-8" />\n' +
+  '    <meta name="viewport" content="width=device-width,initial-scale=1" />\n' +
+  '    <meta\n' +
+  '      name="description"\n' +
+  '      content="Interactive Java and AP Computer Science A practice from DevCat Studios. No sign-in required."\n' +
+  '    />\n' +
+  '    <meta name="theme-color" content="#0c1722" />\n' +
+  '    <title>Debugger Lab | Java Games</title>\n' +
+  '    <link rel="stylesheet" href="./debugger.css?v=debugger-generator-v2" />\n' +
+  '    <script type="module" src="./debugger-ui.js?v=debugger-generator-v2"></script>\n' +
+  '  <link rel="stylesheet" href="/cs-games/navigation.css?v=1"></head>\n' +
+  '  <body data-game="debugger-lab">\n' +
+  '    <header class="ecosystem-header"><nav class="ecosystem-nav" aria-label="Breadcrumb"><a href="/cs-games/">CS Games</a><span aria-hidden="true">›</span><a href="/cs-games/advanced/">Advanced Computer Science</a><span aria-hidden="true">›</span><span aria-current="page">Debugger Lab</span></nav>\n' +
+  '      <small>DevCat Studios · Build your understanding</small>\n' +
+  '    </header>\n' +
+  '    <main id="main"></main>\n' +
+  '    <noscript\n' +
+  '      ><p>Enable JavaScript to play these interactive games.</p></noscript\n' +
+  '    >\n' +
+  '    <footer>\n' +
+  '      Practice freely. No accounts or data uploads. Results are stored locally\n' +
+  '      in this browser. Independent practice tools; not affiliated with College\n' +
+  '      Board.\n' +
+  '    </footer>\n' +
+  '  </body>\n' +
+  '</html>\n'
+
+    at file:///workspace/scratch/93f70e3769bf/baseline/java-games/debugger-lab/debugger-redesign-tests.mjs:81:145
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '<!doctype html>\n' +
+    '<html lang="en">\n' +
+    '  <head>\n' +
+    '    <meta charset="utf-8" />\n' +
+    '    <meta name="viewport" content="width=device-width,initial-scale=1" />\n' +
+    '    <meta\n' +
+    '      name="description"\n' +
+    '      content="Interactive Java and AP Computer Science A practice from DevCat Studios. No sign-in required."\n' +
+    '    />\n' +
+    '    <meta name="theme-color" content="#0c1722" />\n' +
+    '    <title>Debugger Lab | Java Games</title>\n' +
+    '    <link rel="stylesheet" href="./debugger.css?v=debugger-generator-v2" />\n' +
+    '    <script type="module" src="./debugger-ui.js?v=debugger-generator-v2"></script>\n' +
+    '  <link rel="stylesheet" href="/cs-games/navigation.css?v=1"></head>\n' +
+    '  <body data-game="debugger-lab">\n' +
+    '    <header class="ecosystem-header"><nav class="ecosystem-nav" aria-label="Breadcrumb"><a href="/cs-games/">CS Games</a><span aria-hidden="true">›</span><a href="/cs-games/advanced/">Advanced Computer Science</a><span aria-hidden="true">›</span><span aria-current="page">Debugger Lab</span></nav>\n' +
+    '      <small>DevCat Studios · Build your understanding</small>\n' +
+    '    </header>\n' +
+    '    <main id="main"></main>\n' +
+    '    <noscript\n' +
+    '      ><p>Enable JavaScript to play these interactive games.</p></noscript\n' +
+    '    >\n' +
+    '    <footer>\n' +
+    '      Practice freely. No accounts or data uploads. Results are stored locally\n' +
+    '      in this browser. Independent practice tools; not affiliated with College\n' +
+    '      Board.\n' +
+    '    </footer>\n' +
+    '  </body>\n' +
+    '</html>\n',
+  expected: /Advanced CS/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

@@ -1,0 +1,2 @@
+node boolean-conditional-lab/range-explorer-ui-tests.mjs
+Range Explorer UI checks passed: default, fixed boundaries, outside complement, adaptive targets, multi-range overlap, validation, and reset.

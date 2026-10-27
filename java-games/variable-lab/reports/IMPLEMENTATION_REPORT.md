@@ -3,7 +3,7 @@
 Date: October 26, 2026 (America/Los_Angeles)
 Baseline: `bcea7de679b51f700e352200c211b5a1682c7fb6` (latest main inspected before edits; includes Package A and Package B).
 Published game: https://davisjm4.github.io/java-games/variable-lab/
-Publication and browser verification: pending the deployment verification recorded in the final report update.
+Implementation commit: `7f8fa4a8ab026334e668a4178ceead87a84576d3`. Published and directly verified in Chrome on October 26, 2026. GitHub Pages deployment run `40450027319` succeeded; navigation, Teacher Tools reliability, and Trace Repair Verification workflows all succeeded.
 
 ## Root cause and implementation review
 
@@ -21,6 +21,7 @@ Original expectations were checked against `java-games/README.md`, `QUALITY_AUDI
 - `java-games/variable-lab/index.html`: cache version for the repaired app and a small feedback readability rule, scoped to Variable Lab.
 - `java-games/quality-tests.mjs`: revise the Variable Lab name assertion to accept valid alternate identifiers when the prompt requires no exact name.
 - `java-games/variable-lab/feedback-tests.mjs` and `feedback-ui-tests.mjs`: focused semantic, instructional, compiler, and DOM integration tests.
+- `.github/workflows/trace-repair-check.yml`: add the two focused feedback regression commands to the existing Java verification job.
 - `java-games/variable-lab/reports/*`: report, exact fixtures, reproducible browser verification page, and machine-readable evidence.
 
 ## Classroom examples: before and after
@@ -75,7 +76,9 @@ Oracle Java Language Specification references: [assignment contexts, §5.2](http
 - Existing Variable Lab quality checks passed: 1,000 Assemble samples retain exactly 20% per type, 21 families, existing repeat avoidance, and 1,800 Identification samples across 12 variants.
 - Unchanged Trace adapter tests passed (70 challenges); Trace unit tests passed (35); catalog/navigation checks passed.
 - Full `npm test` was attempted. It passed the preceding Math and Array suites, then stopped at `debugger-lab/debugger-redesign-tests.mjs:81`: an unrelated test expects the retired text “Advanced CS” but the preserved Package A breadcrumb says “Advanced Computer Science.” The same failure was reproduced in an isolated checkout of baseline `bcea7de`. No navigation or Debugger changes were made.
-- Remaining downstream suite results and Teacher Tools compatibility checks are recorded in the final verification update and evidence bundle.
+- Remaining downstream suites were run independently so the earlier Debugger failure could not hide their results. Robot, Loop, Class/Object, class-builder sessions, Method/Constructor, Boolean/Range Explorer UI and quality gates, Recursion (including JVM), ArrayList, and String passed. Teacher Tools QTI passed all six formatting/integrity checks and 852 adapter samples across 136 combinations.
+- Two additional unrelated baseline failures were confirmed: RACECES adapter test expects 15 authored topics while the source has 23; Search/Sort UI expects the old “Advanced CS” navigation text. Both reproduce on untouched baseline. Search/Sort algorithms, generation, quality and JVM suites passed before that UI assertion. These three baseline issues were documented without changing their implementations or tests.
+- CI now also runs both focused feedback test files as a normal part of Trace Repair Verification, using Java 17.
 
 Reproduce focused tests from `java-games/`:
 
@@ -92,7 +95,11 @@ node variable-lab/trace-generator/tests/unit.test.mjs
 
 ## Browser and mobile verification
 
-The standalone `reports/classroom-browser.html` verification page runs the current app and engine with the exact classroom fixtures. Its iframe can render either fixture or the ordinary published mode at 1100 or 390 CSS pixels. It does not add a mode, alter generation, or expose a fixture override in the student game. Browser results will be recorded after publication. The cloud browser could not access the local preview server, so pre-publication interaction was verified through the DOM integration tests.
+The standalone `reports/classroom-browser.html` verification page runs the current app and engine with the exact classroom fixtures. Its iframe can render either fixture or the ordinary published mode at 1100 or 390 CSS pixels. It does not add a mode, alter generation, or expose a fixture override in the student game. Both exact classroom examples were reproduced after publication at 1100 and 390 CSS pixels, with actual iframe client widths checked from rendered DOM. Identification correctly diagnosed false as a Boolean literal, progressed its second hint, classified an expanded declaration, and revealed the operator with no independent credit. Assemble showed three issues for the exact malformed declaration, acknowledged the corrected operator, accepted int plantCount = 45; after retry, and explained its reveal with no independent credit.
+
+The ordinary published generators were also exercised: Identification distinguished a selected character literal from the requested assignment statement; phone-width Assemble diagnosed int download speed != "62.5"; and accepted the corrected double downloadSpeed = 62.5; with retry credit. The direct published game loaded with Mixed Practice selected, and Session Summary opened with the expected per-mode totals. Dark styling, code taps, field selectors, feedback wrapping and vertical phone scrolling worked. Existing navigation remained intact. This verifies narrow layout and interaction in desktop Chrome, not a physical phone touch device.
+
+Representative screenshots in the delivered evidence bundle show the exact Identification and Assemble desktop feedback and readable Identification feedback at phone width. Machine-readable evidence includes feedback-results.json, browser-verification.json and the saved published Assemble DOM. The verification fixture uses the real session tracker with memory-only storage; ordinary published-mode checks use the normal session behavior. The cloud browser could not access the local preview server, so pre-publication interaction was checked through DOM integration tests.
 
 ## Scope and limitations
 

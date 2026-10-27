@@ -1,0 +1,71 @@
+npm run test:search-sort-lab
+
+> test:search-sort-lab
+> node search-sort-lab/tests/algorithms.test.mjs && node search-sort-lab/tests/generator.test.mjs && node search-sort-lab/tests/quality.test.mjs && node search-sort-lab/tests/jvm.test.mjs && node search-sort-lab/tests/ui.test.mjs
+
+algorithms.test.mjs
+  ✓ hand-worked examples from the assignment (7 checks, 2 ms)
+  ✓ binary search edge cases (17 checks, 0 ms)
+  ✓ binary search with duplicates follows the documented implementation (not first/last) (5 checks, 0 ms)
+  ✓ binary search matches brute force on 3000 random sorted arrays (6000 checks, 11 ms)
+  ✓ binary search defects behave as documented (4 checks, 0 ms)
+  ✓ linear search (4 checks, 0 ms)
+  ✓ every sort: sorted result + same multiset, across structured shapes (5040 checks, 15 ms)
+  ✓ selection sort: intermediate states, counts, self-swaps, ties (2263 checks, 4 ms)
+  ✓ insertion sort: shifts vs swaps, stability, counts (612 checks, 1 ms)
+  ✓ merge sort: splits, merge order, comparison convention, uneven sizes (3698 checks, 7 ms)
+  ✓ operation counts agree with direct instrumentation (900 checks, 4 ms)
+algorithms.test.mjs: 18550 checks passed in 11 sections
+generator.test.mjs (PER_CELL=1000)
+  ✓ 1000 challenges per mode x difficulty are valid, solvable, and independently verified (72054 checks, 692 ms)
+  ✓ same seed reproduces the identical challenge; different seeds differ (2178 checks, 198 ms)
+  ✓ difficulty metadata is consistent and genuinely graded (24012 checks, 21 ms)
+  ✓ every challenge family is reachable at the difficulties it declares (336 checks, 92 ms)
+  ✓ session behavior: no immediate repeats, mode/difficulty switching, export schema (8196 checks, 208 ms)
+  ✓ distractors: distinct, actually wrong, and carry a misconception explanation (54001 checks, 12 ms)
+generator.test.mjs: 160777 checks passed in 6 sections; 18000 challenges generated and verified
+quality.test.mjs (N=1000 per cell, session length 200)
+  ✓ variety analysis (108 checks, 831 ms)
+  ✓ per-family repetitiveness (investigating overly repetitive families) (1 checks, 1210 ms)
+  ✓ repetition frequency over simulated 200-challenge classroom sessions (1 checks, 217 ms)
+quality.test.mjs: 110 checks passed in 3 sections; flags: 15
+binary/beginner/b-first-mid: only 2 distinct answers
+binary/beginner/b-update-line: only 2 distinct answers
+binary/intermediate/b-update-line: only 2 distinct answers
+binary/advanced/b-unsorted-return: only 1 distinct answers
+selection/beginner/s-sorted-region: only 2 distinct answers
+insertion/beginner/i-vs-selection: only 2 distinct answers
+insertion/intermediate/i-vs-selection: only 2 distinct answers
+insertion/advanced/i-vs-selection: only 2 distinct answers
+compare/beginner/c-which-search: only 2 distinct answers
+compare/intermediate/c-which-search: only 2 distinct answers
+compare/advanced/c-which-search: only 2 distinct answers
+compare/intermediate/c-sort-fewer: only 2 distinct answers
+compare/beginner/c-fit: only 2 distinct answers
+compare/intermediate/c-fit: only 2 distinct answers
+compare/advanced/c-fit: only 2 distinct answers
+jvm.test.mjs
+  ✓ Part 1: real Java algorithms match the simulators (600 random arrays) (601 checks, 645 ms)
+    574 distinct snippet shapes compiled
+  ✓ Part 2: every distinct displayed Java snippet compiles (1 checks, 1496 ms)
+jvm.test.mjs: 602 checks passed in 2 sections
+ui.test.mjs
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: returns to Advanced CS catalog
+    at ok (file:///workspace/scratch/93f70e3769bf/repo/java-games/search-sort-lab/tests/harness.mjs:4:40)
+    at file:///workspace/scratch/93f70e3769bf/repo/java-games/search-sort-lab/tests/ui.test.mjs:32:3
+    at section (file:///workspace/scratch/93f70e3769bf/repo/java-games/search-sort-lab/tests/harness.mjs:10:9)
+    at file:///workspace/scratch/93f70e3769bf/repo/java-games/search-sort-lab/tests/ui.test.mjs:29:7 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

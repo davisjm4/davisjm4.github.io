@@ -1,0 +1,1 @@
+45 classroom DOM integration checks passed: token taps, keyboard, expansion, progressive hints, multiple errors, alternative names, retries, reveal, reset on next, and scoring.

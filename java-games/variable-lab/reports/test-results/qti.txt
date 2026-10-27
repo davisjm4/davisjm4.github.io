@@ -1,0 +1,7 @@
+✓ shared preview/export renderer keeps structure and safe markup
+✓ XML-sensitive Java operators survive XML then HTML parsing exactly
+✓ explicit Java answer choices use safe preformatted HTML
+✓ Boolean package QTI, IDs, choices, answers and points are intact
+✓ Conditional package QTI, IDs, choices, answers and points are intact
+✓ Mixed package QTI, IDs, choices, answers and points are intact
+Passed 6 QTI formatting and integrity checks.

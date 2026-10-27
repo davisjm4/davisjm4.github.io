@@ -27,7 +27,13 @@ async function load() {
     frame.src='/java-games/variable-lab/?mode='+selected.slice(5);
   } else {
     const code=await fetch('/java-games/app.js?v=variable-feedback-repair-v1').then(r=>r.text());
-    const script=`import * as RealJ from './engine.js?v=variable-feedback-repair-v1';\nconst J={...RealJ,generate:()=>(${JSON.stringify(fixtures[selected])})};\n`+code.replace(/^import \* as J from [^;]+;/,'');
+    // Keep fixture scores in memory while using the real tracker. Ordinary
+    // published-mode checks below retain the normal game/session behavior.
+    const sessionCode=`import {createSessionTracker} from './session.js?v=per-mode-daily-v1';
+      const memory=new Map(), isolated=createSessionTracker({storage:{getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)}});
+      const sessionTracker=()=>isolated, addSessionNavigation=()=>{};
+      const roundSummary=()=>{const s=isolated.snapshot().totals;return 'First-try accuracy: '+(s.attempted?Math.round(100*s.firstTry/s.attempted)+'%':'—')+' ('+s.firstTry+'/'+s.attempted+') · Solved after retry: '+s.afterRetry+' · Revealed: '+s.revealed+' · Submissions: '+s.submissions;};`;
+    const script=`import * as RealJ from './engine.js?v=variable-feedback-repair-v1';\nconst J={...RealJ,generate:()=>(${JSON.stringify(fixtures[selected])})};\n`+code.replace(/^import \* as J from [^;]+;/,'').replace(/import \{\s*sessionTracker,[\s\S]*?\} from [^;]+;/,sessionCode);
     frame.removeAttribute('src');
     frame.srcdoc=`<!doctype html><html lang="en"><head><base href="/java-games/"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css?v=trace-v1"><style>#feedback{overflow-wrap:anywhere;line-height:1.5}</style></head><body data-game="variable-lab"><main id="main"></main><script type="module">${script.replace(/<\/script/gi,'<\\/script')}<\/script></body></html>`;
   }

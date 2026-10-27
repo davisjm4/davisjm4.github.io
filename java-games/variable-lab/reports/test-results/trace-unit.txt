@@ -1,0 +1,37 @@
+  ok   integer division truncates toward zero
+  ok   remainder keeps the sign of the left operand
+  ok   division by zero is a runtime error in the model (generator must prevent it)
+  ok   operator precedence and parentheses
+  ok   compound assignment evaluates the whole right side first
+  ok   compound int division / remainder and increments
+  ok   primitive copies are independent
+  ok   double arithmetic and printing
+  ok   String concatenation is left to right
+  ok   boolean operators, relational, short-circuit
+  ok   char values print as characters and copy by value
+  ok   int overflow and bounds are rejected rather than wrapped
+  ok   type checker rejects invalid Java
+  ok   state history records every statement
+  ok   precedence distractors 24, 16 and 10 are GENERATED for value = value + 4 * 4 (not hardcoded)
+  ok   same transformer produces the equivalent wrong answer for other expressions
+  ok   linked-copy misconception is executed, not asserted
+  ok   String number concatenation misconceptions
+  ok   trivial programs can never qualify as Advanced
+  ok   the spec’s advanced example qualifies
+  ok   irrelevant assignments do not count toward difficulty
+  ok   slice is sound: removing non-slice statements never changes the answer
+  ok   dependency depth follows reaching definitions
+  ok   determinism: same seed and history reproduce the identical challenge
+  ok   different seeds produce different challenges
+  ok   checkpoint questions reference a real line of the displayed code
+  ok   options: unique, include the answer, boolean results use two choices
+  ok   advanced questions always meet the Advanced rules
+  ok   pre-submission view never reveals the answer or intermediate values
+  ok   adapter produces a flat multiple-choice object with a bounded topic
+  ok   trivial self-operations (a - a, a && a, a && !a) are rejected
+  ok   generated programs never contain trivial self-operations
+  ok   signatures: exact differs with names, semantic ignores names and literals
+  ok   history is bounded, serialisable and holds no identifiers
+  ok   recentSignatures prevents exact repeats inside the window
+
+unit tests: 35 passed, 0 failed

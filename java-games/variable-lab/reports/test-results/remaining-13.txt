@@ -1,0 +1,2 @@
+node recursion-lab/recursion-jvm-tests.mjs
+JVM validation: 38 generated snippets compiled; 20 generated algorithm outputs matched simulator expectations. javac was unavailable; Java 17 source launcher's compiler was used.
