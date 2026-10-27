@@ -82,6 +82,9 @@ jobs:
           node variable-lab/feedback-tests.mjs
           node variable-lab/feedback-ui-tests.mjs
           node variable-lab/scenario-validation-tests.mjs
+      - name: Loop Lab misconception feedback regression
+        working-directory: java-games
+        run: node loop-lab/tests/package-c-feedback.test.mjs
       - name: Compiler and JVM regression
         working-directory: java-games
         run: |

@@ -19,7 +19,13 @@ assert.ok(raceSource, "R-A-C-E-C-E-S source registered");
 const modes = ["identify", "missing", "rearrange"];
 const levels = ["Beginner", "Intermediate", "Advanced"];
 const topics = racecesCatalog().topics;
-assert.equal(topics.length, 15, "all authored topic IDs are exposed");
+const expectedIds = ['honeybees','solar-panels','water-cycle','arch-bridges','public-libraries','moon-phases','cactus','levers','bicycle-gears','rust','mars-rovers','printing-press','coral-reefs','lightning','binary-numbers','math-algebraic-expressions','math-coordinate-transformations','math-equations-inequalities','math-functions','math-geometry','math-measurement','math-statistics-probability','math-triangles-polygons'];
+const expectedMathIds = expectedIds.slice(15);
+assert.equal(topics.length, 23, "all current topic IDs are exposed");
+assert.equal(new Set(topics.map(t=>t.id)).size,23,'topic IDs are unique');
+assert.deepEqual(topics.map(t=>t.id).sort(),[...expectedIds].sort(),'matches independently recorded topic IDs');
+assert.deepEqual(topics.map(({id,subject,title})=>({id,subject,title})),R.CONTENT.topics.map(({id,subject,title})=>({id,subject,title})),'adapter catalog matches source metadata');
+assert.deepEqual(topics.filter(t=>t.subject==='Mathematics').map(t=>t.id).sort(),[...expectedMathIds].sort(),'all eight mathematics topics have the correct subject');
 const stats = {};
 function assertXmlWellFormed(xml) {
   const tokens=xml.match(/<\?[^>]*\?>|<[^>]+>|[^<]+/g)||[],stack=[];
@@ -60,6 +66,26 @@ function verify(item, mode) {
     if (ch.dependency) assert.ok(!R.Rearrange.analyze(ch.solution.alternate || [], ch.info, ch.dependency).valid);
   }
 }
+
+// Each mathematics topic must be usable with each mode and level. Rejection of
+// an individual seed is allowed, but every returned item still passes the
+// existing independent grading and answer-uniqueness checks.
+const mathematicsCoverage=[];
+for (const topic of topics.filter(t=>t.subject==='Mathematics')) for (const mode of modes) for (const level of levels) {
+  let item=null, usedSeed=null;
+  for(let attempt=0;attempt<100 && !item;attempt++) {
+    usedSeed=0xc00000+expectedMathIds.indexOf(topic.id)*10000+modes.indexOf(mode)*1000+levels.indexOf(level)*100+attempt;
+    item=generateAssessmentItem('raceces',mode,level,usedSeed,2,{subject:'Mathematics',topics:[topic.id]});
+  }
+  assert.ok(item,`mathematics topic ${topic.id}/${mode}/${level} must generate an assessable item`);
+  assert.equal(item.topic,topic.title);
+  assert.equal(item._audit.challenge.topicId,topic.id);
+  verify(item,mode);
+  const same=generateAssessmentItem('raceces',mode,level,usedSeed,2,{subject:'Mathematics',topics:[topic.id]});
+  assert.deepEqual(item,same,'filtered mathematics generation is deterministic');
+  mathematicsCoverage.push({topic:topic.id,mode,level,seed:usedSeed});
+}
+assert.equal(mathematicsCoverage.length,72);
 
 let total=0, accepted=0, rejected=0, authored=0, compositional=0, failures=0;
 const acceptedByModeLevel={};
@@ -120,7 +146,18 @@ for(const count of [10,20,50])for(const seed of [17,839,12091]) {
   const xml=buildAssessmentXml({title:`Writing ${count}`,seed},items),manifest=buildManifest();
   assertXmlWellFormed(xml);assertXmlWellFormed(manifest);
   assert.equal((xml.match(/<item ident=/g)||[]).length,count);
-  assert.equal((xml.match(/<setvar action="Set" varname="SCORE">2<\/setvar>/g)||[]).length,count);
+  // Package B uses percentage response weights and stores points separately.
+  // Check each item's metadata, correct key, and all three zero-weight choices.
+  const itemXmls=xml.match(/<item ident=[\s\S]*?<\/item>/g)||[];
+  assert.equal(itemXmls.length,count);
+  for(const [i,part] of itemXmls.entries()) {
+    assert.ok(part.includes('<fieldlabel>points_possible</fieldlabel><fieldentry>2</fieldentry>'));
+    assert.ok(part.includes('<decvar maxvalue="100" minvalue="0" defaultval="0" varname="SCORE" vartype="Decimal"/>'));
+    assert.ok(part.includes(`<varequal respident="response_1">choice_${items[i].correctIndex}</varequal></conditionvar><setvar action="Set" varname="SCORE">100</setvar>`));
+    assert.equal((part.match(/<setvar action="Set" varname="SCORE">0<\/setvar>/g)||[]).length,3);
+    assert.equal((part.match(/<setvar action="Set" varname="SCORE">100<\/setvar>/g)||[]).length,1);
+  }
+  assert.ok(xml.includes(`<fieldlabel>points_possible</fieldlabel><fieldentry>${count*2}</fieldentry>`),'assessment point total is preserved');
   assert.equal(items.reduce((sum,q)=>sum+q.points,0),count*2);
   assert.equal(items.every(q=>xml.includes(`choice_${q.correctIndex}</varequal>`)),true);
   assert.equal(manifest.includes('href="assessment.xml"'),true);
@@ -165,4 +202,4 @@ for(let i=0;i<5000;i++) {
 }
 assert.ok(independent>0);
 
-console.log(JSON.stringify({totalCandidates:total,accepted,rejected,answerFailures:failures,authored,compositional,acceptedByModeLevel,repeatStats,independent,dependent,mixedJavaAndWriting:true},null,2));
+console.log(JSON.stringify({totalCandidates:total,accepted,rejected,answerFailures:failures,authored,compositional,acceptedByModeLevel,mathematicsCoverage,repeatStats,independent,dependent,mixedJavaAndWriting:true},null,2));

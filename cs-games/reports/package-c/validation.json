@@ -1,0 +1,469 @@
+{
+  "baseline": "66fd689ef2d75372223ceaa22842980dcde0cf36",
+  "loop": {
+    "seed": 518,
+    "code": "int n = 93;\nwhile (n < 0) {\n    n--;\n}",
+    "answer": "93",
+    "choices": [
+      "94",
+      "92",
+      "0",
+      "93"
+    ],
+    "wrong": {
+      "choice": "0",
+      "misconception": "zero-while-boundary",
+      "note": "The while condition is checked before the body. It is false on the first check, so the body runs zero times and the variable keeps its initial value. Zero is the boundary, not the final value."
+    },
+    "initialValues": 86,
+    "zeroWhileChallenges": 200,
+    "relatedWhileChallenges": 60,
+    "realIfControl": {
+      "seed": 0,
+      "code": "int count = 0;\nint n = 2;\nwhile (n <= 12) {\n    if (n % 2 == 1) count++;\n    n++;\n}",
+      "note": "This ignores the if condition, as if the statement ran on every iteration."
+    },
+    "compiler": "Real javac verified 6 snippets.",
+    "jvmExamples": 6
+  },
+  "raceces": {
+    "totalCandidates": 9000,
+    "accepted": 8995,
+    "rejected": 5,
+    "answerFailures": 0,
+    "mathematicsCoverage": [
+      {
+        "topic": "math-algebraic-expressions",
+        "mode": "identify",
+        "level": "Beginner",
+        "seed": 12582912
+      },
+      {
+        "topic": "math-algebraic-expressions",
+        "mode": "identify",
+        "level": "Intermediate",
+        "seed": 12583012
+      },
+      {
+        "topic": "math-algebraic-expressions",
+        "mode": "identify",
+        "level": "Advanced",
+        "seed": 12583112
+      },
+      {
+        "topic": "math-algebraic-expressions",
+        "mode": "missing",
+        "level": "Beginner",
+        "seed": 12583912
+      },
+      {
+        "topic": "math-algebraic-expressions",
+        "mode": "missing",
+        "level": "Intermediate",
+        "seed": 12584012
+      },
+      {
+        "topic": "math-algebraic-expressions",
+        "mode": "missing",
+        "level": "Advanced",
+        "seed": 12584112
+      },
+      {
+        "topic": "math-algebraic-expressions",
+        "mode": "rearrange",
+        "level": "Beginner",
+        "seed": 12584912
+      },
+      {
+        "topic": "math-algebraic-expressions",
+        "mode": "rearrange",
+        "level": "Intermediate",
+        "seed": 12585012
+      },
+      {
+        "topic": "math-algebraic-expressions",
+        "mode": "rearrange",
+        "level": "Advanced",
+        "seed": 12585112
+      },
+      {
+        "topic": "math-coordinate-transformations",
+        "mode": "identify",
+        "level": "Beginner",
+        "seed": 12592912
+      },
+      {
+        "topic": "math-coordinate-transformations",
+        "mode": "identify",
+        "level": "Intermediate",
+        "seed": 12593012
+      },
+      {
+        "topic": "math-coordinate-transformations",
+        "mode": "identify",
+        "level": "Advanced",
+        "seed": 12593112
+      },
+      {
+        "topic": "math-coordinate-transformations",
+        "mode": "missing",
+        "level": "Beginner",
+        "seed": 12593912
+      },
+      {
+        "topic": "math-coordinate-transformations",
+        "mode": "missing",
+        "level": "Intermediate",
+        "seed": 12594012
+      },
+      {
+        "topic": "math-coordinate-transformations",
+        "mode": "missing",
+        "level": "Advanced",
+        "seed": 12594112
+      },
+      {
+        "topic": "math-coordinate-transformations",
+        "mode": "rearrange",
+        "level": "Beginner",
+        "seed": 12594912
+      },
+      {
+        "topic": "math-coordinate-transformations",
+        "mode": "rearrange",
+        "level": "Intermediate",
+        "seed": 12595012
+      },
+      {
+        "topic": "math-coordinate-transformations",
+        "mode": "rearrange",
+        "level": "Advanced",
+        "seed": 12595112
+      },
+      {
+        "topic": "math-equations-inequalities",
+        "mode": "identify",
+        "level": "Beginner",
+        "seed": 12602912
+      },
+      {
+        "topic": "math-equations-inequalities",
+        "mode": "identify",
+        "level": "Intermediate",
+        "seed": 12603012
+      },
+      {
+        "topic": "math-equations-inequalities",
+        "mode": "identify",
+        "level": "Advanced",
+        "seed": 12603112
+      },
+      {
+        "topic": "math-equations-inequalities",
+        "mode": "missing",
+        "level": "Beginner",
+        "seed": 12603912
+      },
+      {
+        "topic": "math-equations-inequalities",
+        "mode": "missing",
+        "level": "Intermediate",
+        "seed": 12604012
+      },
+      {
+        "topic": "math-equations-inequalities",
+        "mode": "missing",
+        "level": "Advanced",
+        "seed": 12604112
+      },
+      {
+        "topic": "math-equations-inequalities",
+        "mode": "rearrange",
+        "level": "Beginner",
+        "seed": 12604912
+      },
+      {
+        "topic": "math-equations-inequalities",
+        "mode": "rearrange",
+        "level": "Intermediate",
+        "seed": 12605012
+      },
+      {
+        "topic": "math-equations-inequalities",
+        "mode": "rearrange",
+        "level": "Advanced",
+        "seed": 12605112
+      },
+      {
+        "topic": "math-functions",
+        "mode": "identify",
+        "level": "Beginner",
+        "seed": 12612912
+      },
+      {
+        "topic": "math-functions",
+        "mode": "identify",
+        "level": "Intermediate",
+        "seed": 12613012
+      },
+      {
+        "topic": "math-functions",
+        "mode": "identify",
+        "level": "Advanced",
+        "seed": 12613112
+      },
+      {
+        "topic": "math-functions",
+        "mode": "missing",
+        "level": "Beginner",
+        "seed": 12613912
+      },
+      {
+        "topic": "math-functions",
+        "mode": "missing",
+        "level": "Intermediate",
+        "seed": 12614012
+      },
+      {
+        "topic": "math-functions",
+        "mode": "missing",
+        "level": "Advanced",
+        "seed": 12614112
+      },
+      {
+        "topic": "math-functions",
+        "mode": "rearrange",
+        "level": "Beginner",
+        "seed": 12614912
+      },
+      {
+        "topic": "math-functions",
+        "mode": "rearrange",
+        "level": "Intermediate",
+        "seed": 12615012
+      },
+      {
+        "topic": "math-functions",
+        "mode": "rearrange",
+        "level": "Advanced",
+        "seed": 12615112
+      },
+      {
+        "topic": "math-geometry",
+        "mode": "identify",
+        "level": "Beginner",
+        "seed": 12622912
+      },
+      {
+        "topic": "math-geometry",
+        "mode": "identify",
+        "level": "Intermediate",
+        "seed": 12623012
+      },
+      {
+        "topic": "math-geometry",
+        "mode": "identify",
+        "level": "Advanced",
+        "seed": 12623112
+      },
+      {
+        "topic": "math-geometry",
+        "mode": "missing",
+        "level": "Beginner",
+        "seed": 12623912
+      },
+      {
+        "topic": "math-geometry",
+        "mode": "missing",
+        "level": "Intermediate",
+        "seed": 12624012
+      },
+      {
+        "topic": "math-geometry",
+        "mode": "missing",
+        "level": "Advanced",
+        "seed": 12624112
+      },
+      {
+        "topic": "math-geometry",
+        "mode": "rearrange",
+        "level": "Beginner",
+        "seed": 12624912
+      },
+      {
+        "topic": "math-geometry",
+        "mode": "rearrange",
+        "level": "Intermediate",
+        "seed": 12625012
+      },
+      {
+        "topic": "math-geometry",
+        "mode": "rearrange",
+        "level": "Advanced",
+        "seed": 12625112
+      },
+      {
+        "topic": "math-measurement",
+        "mode": "identify",
+        "level": "Beginner",
+        "seed": 12632912
+      },
+      {
+        "topic": "math-measurement",
+        "mode": "identify",
+        "level": "Intermediate",
+        "seed": 12633012
+      },
+      {
+        "topic": "math-measurement",
+        "mode": "identify",
+        "level": "Advanced",
+        "seed": 12633112
+      },
+      {
+        "topic": "math-measurement",
+        "mode": "missing",
+        "level": "Beginner",
+        "seed": 12633912
+      },
+      {
+        "topic": "math-measurement",
+        "mode": "missing",
+        "level": "Intermediate",
+        "seed": 12634012
+      },
+      {
+        "topic": "math-measurement",
+        "mode": "missing",
+        "level": "Advanced",
+        "seed": 12634112
+      },
+      {
+        "topic": "math-measurement",
+        "mode": "rearrange",
+        "level": "Beginner",
+        "seed": 12634912
+      },
+      {
+        "topic": "math-measurement",
+        "mode": "rearrange",
+        "level": "Intermediate",
+        "seed": 12635012
+      },
+      {
+        "topic": "math-measurement",
+        "mode": "rearrange",
+        "level": "Advanced",
+        "seed": 12635112
+      },
+      {
+        "topic": "math-statistics-probability",
+        "mode": "identify",
+        "level": "Beginner",
+        "seed": 12642912
+      },
+      {
+        "topic": "math-statistics-probability",
+        "mode": "identify",
+        "level": "Intermediate",
+        "seed": 12643012
+      },
+      {
+        "topic": "math-statistics-probability",
+        "mode": "identify",
+        "level": "Advanced",
+        "seed": 12643112
+      },
+      {
+        "topic": "math-statistics-probability",
+        "mode": "missing",
+        "level": "Beginner",
+        "seed": 12643912
+      },
+      {
+        "topic": "math-statistics-probability",
+        "mode": "missing",
+        "level": "Intermediate",
+        "seed": 12644012
+      },
+      {
+        "topic": "math-statistics-probability",
+        "mode": "missing",
+        "level": "Advanced",
+        "seed": 12644112
+      },
+      {
+        "topic": "math-statistics-probability",
+        "mode": "rearrange",
+        "level": "Beginner",
+        "seed": 12644912
+      },
+      {
+        "topic": "math-statistics-probability",
+        "mode": "rearrange",
+        "level": "Intermediate",
+        "seed": 12645012
+      },
+      {
+        "topic": "math-statistics-probability",
+        "mode": "rearrange",
+        "level": "Advanced",
+        "seed": 12645112
+      },
+      {
+        "topic": "math-triangles-polygons",
+        "mode": "identify",
+        "level": "Beginner",
+        "seed": 12652912
+      },
+      {
+        "topic": "math-triangles-polygons",
+        "mode": "identify",
+        "level": "Intermediate",
+        "seed": 12653012
+      },
+      {
+        "topic": "math-triangles-polygons",
+        "mode": "identify",
+        "level": "Advanced",
+        "seed": 12653112
+      },
+      {
+        "topic": "math-triangles-polygons",
+        "mode": "missing",
+        "level": "Beginner",
+        "seed": 12653912
+      },
+      {
+        "topic": "math-triangles-polygons",
+        "mode": "missing",
+        "level": "Intermediate",
+        "seed": 12654012
+      },
+      {
+        "topic": "math-triangles-polygons",
+        "mode": "missing",
+        "level": "Advanced",
+        "seed": 12654112
+      },
+      {
+        "topic": "math-triangles-polygons",
+        "mode": "rearrange",
+        "level": "Beginner",
+        "seed": 12654912
+      },
+      {
+        "topic": "math-triangles-polygons",
+        "mode": "rearrange",
+        "level": "Intermediate",
+        "seed": 12655012
+      },
+      {
+        "topic": "math-triangles-polygons",
+        "mode": "rearrange",
+        "level": "Advanced",
+        "seed": 12655112
+      }
+    ]
+  }
+}

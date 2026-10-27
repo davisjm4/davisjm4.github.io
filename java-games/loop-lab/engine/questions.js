@@ -10,6 +10,7 @@ export const MISCONCEPTIONS = {
   "ignore-inner": "This counts only the outer loop. The inner loop runs completely on every outer iteration.",
   "outer-times-inner-max": "This treats a dependent inner bound as if it were constant. The inner bound changes with the outer variable.",
   "ignore-condition": "This ignores the if condition, as if the statement ran on every iteration.",
+  "zero-while-boundary": "The while condition is checked before the body. It is false on the first check, so the body runs zero times and the variable keeps its initial value. Zero is the boundary, not the final value.",
   "inverted-condition": "This counts the cases where the condition is false instead of true.",
   "accum-overwrite": "This replaces the accumulator instead of adding to it. += keeps the running total; = discards it.",
   "accum-init": "This ignores the accumulator's starting value.",

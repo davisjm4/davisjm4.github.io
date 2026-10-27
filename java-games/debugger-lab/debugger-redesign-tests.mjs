@@ -4,6 +4,7 @@ import { createRequire } from "node:module";
 import { execFileSync, spawnSync } from "node:child_process";
 import * as D from "./debugger-engine.js";
 import * as Session from "../session.js";
+import { assertCourseBreadcrumb } from '../package-c-navigation-test-helper.mjs';
 
 const modes = Object.keys(D.challengeFamilies);
 const levels = D.DIFFICULTIES;
@@ -78,7 +79,12 @@ const memory=new Map(),storage={getItem:k=>memory.get(k)||null,setItem:(k,v)=>me
 
 // Compile every family/difficulty representative with the JDK compiler, then run all exception examples.
 for(const file of ["procedural-generator.js","debugger-engine.js","debugger-ui.js"])assert.ok(fs.statSync(new URL(file,new URL("./",import.meta.url))).size>100);
-const html=fs.readFileSync(new URL("./index.html",import.meta.url),"utf8");assert.match(html,/debugger-ui\.js\?v=debugger-generator-v2/);assert.match(html,/Advanced CS/);
+const html=fs.readFileSync(new URL("./index.html",import.meta.url),"utf8");assert.match(html,/debugger-ui\.js\?v=debugger-generator-v2/);
+const {parseHTML:parseBreadcrumb}=createRequire(import.meta.url)(process.env.JAVA_DOM_LIBRARY||"linkedom");
+assertCourseBreadcrumb(parseBreadcrumb(html).document,/^Debugger Lab$/);
+const brokenBreadcrumb=parseBreadcrumb(html).document;
+brokenBreadcrumb.querySelector('a[href="/cs-games/advanced/"]').setAttribute('href','/wrong-path/');
+assert.throws(()=>assertCourseBreadcrumb(brokenBreadcrumb,/^Debugger Lab$/),/pathway link exists/);
 const java=process.env.JAVA_BIN||"java",jvmDir=`/tmp/debugger-jvm-${process.pid}`;fs.mkdirSync(jvmDir,{recursive:true});const manifest=[];const exceptionChecks=[];let jvmSnippets=0;
 for(const mode of modes)for(const difficulty of levels)for(const family of D.challengeFamilies[mode]){const seed=(Math.imul(jvmSnippets+13,2246822519)^Math.imul(modes.indexOf(mode)+1,3266489917)^Math.imul(levels.indexOf(difficulty)+4,668265263))>>>0;const q=D.generateDebugger(mode,{difficulty,family,seed});const sourcePath=`${jvmDir}/${jvmSnippets++}.java`;fs.writeFileSync(sourcePath,q.source);manifest.push(`${sourcePath}\t${q.errorCategory!=="compile"}`);if(mode==="exception")exceptionChecks.push({q,sourcePath});}
 const manifestPath=`${jvmDir}/manifest.tsv`;fs.writeFileSync(manifestPath,manifest.join("\n"));const compilerOutput=execFileSync(java,[new URL("../compiler-harness.java",import.meta.url).pathname,manifestPath],{encoding:"utf8",timeout:120000});

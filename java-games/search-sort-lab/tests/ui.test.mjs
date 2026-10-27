@@ -4,6 +4,8 @@
 import { parseHTML } from "linkedom";
 import fs from "node:fs";
 import { section, ok, eq, summary } from "./harness.mjs";
+import { assertCourseBreadcrumb } from '../../package-c-navigation-test-helper.mjs';
+import assert from 'node:assert/strict';
 
 console.log("ui.test.mjs");
 const root = new URL("../", import.meta.url);
@@ -29,7 +31,10 @@ const key = (k, target) => { const event = Object.assign(new window.Event("keydo
 await section("page structure, navigation, accessibility markers", () => {
   eq($("mode").options.length, 6);
   eq([...$("difficulty").options].map((o) => o.value), ["beginner", "intermediate", "advanced"]);
-  ok(document.querySelector("header a").href === "https://davisjm4.github.io/cs-games/advanced/", "returns to Advanced CS catalog");
+  assertCourseBreadcrumb(document,/^Search\s*&(?:amp;)?\s*Sort Lab$/);
+  const broken=parseHTML(html).document;
+  broken.querySelector('a[href="/cs-games/advanced/"]').setAttribute('href','/wrong-path/');
+  assert.throws(()=>assertCourseBreadcrumb(broken,/^Search\s*&(?:amp;)?\s*Sort Lab$/),/pathway link exists/);
   ok(!html.includes("/java-games/\""), "no link to the obsolete /java-games/ homepage");
   ok(/viewport/.test(html) && /<html lang="en"/.test(html), "viewport + lang");
   eq($("choices").getAttribute("role"), "radiogroup");

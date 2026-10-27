@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Package C Loop Lab verification</title>
+<style>body{margin:16px;background:#0c1722;color:#eef6ff;font:16px system-ui}label,button{margin:8px}select,button{padding:8px;font:inherit}iframe{display:block;background:#0c1722;border:1px solid #789;max-width:100%;height:1300px}</style>
+<h1>Package C Loop Lab verification</h1>
+<p>Regression evidence: deterministic seed 518 uses the published Loop Lab engine and interface. Fixture results stay in memory.</p>
+<label>Viewport <select id="width"><option value="1100">Desktop — 1100 px</option><option value="390">Phone — 390 px</option></select></label><button id="load">Load verification</button>
+<p id="status" role="status"></p><iframe id="practice" title="Loop Lab verification viewport" width="1100"></iframe>
+<script type="module">
+const frame=document.getElementById('practice'),status=document.getElementById('status');
+async function load(){
+  const app=await fetch('/java-games/loop-lab/loop-ui.js?v=package-c-v1').then(r=>r.text());
+  const session=`import {createSessionTracker} from '../session.js?v=per-mode-daily-v1';
+    const memory=new Map(), tracker=createSessionTracker({storage:{getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)}});
+    const sessionTracker=()=>tracker, addSessionNavigation=()=>{};
+    const roundSummary=()=>{const s=tracker.snapshot().totals;return 'First-try accuracy: '+(s.attempted?Math.round(100*s.firstTry/s.attempted)+'%':'—')+' ('+s.firstTry+'/'+s.attempted+') · Solved after retry: '+s.afterRetry+' · Revealed: '+s.revealed+' · Submissions: '+s.submissions;};`;
+  const injected=`import {generateChallenge as testGenerate} from './loop-engine.js?v=package-c-v1';\nconst createLoopSession=()=>({next:()=>testGenerate({mode:'while',difficulty:'beginner',seed:518,family:'zero-while'})});\n`+
+    app.replace('createLoopSession,','createLoopSession as unusedLoopSession,').replace(/import \{\s*sessionTracker,\s*addSessionNavigation,\s*roundSummary\s*\} from [^;]+;/,session);
+  frame.width=document.getElementById('width').value;
+  frame.srcdoc=`<!doctype html><html lang="en"><head><base href="/java-games/loop-lab/"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="loop.css?v=loop-expansion-v2"></head><body><main id="main"></main><script type="module">${injected.replace(/<\/script/gi,'<\\/script')}<\/script></body></html>`;
+  status.textContent=`Loaded seed 518 at ${frame.width} CSS pixels.`;
+}
+document.getElementById('load').onclick=load;await load();
+</script></html>
