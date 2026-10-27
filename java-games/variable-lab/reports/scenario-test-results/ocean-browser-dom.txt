@@ -1,0 +1,66 @@
+- heading "Variable Lab feedback verification" [level=1]
+- paragraph: Regression evidence only. Exact classroom fixtures run the current published app and engine. This page does not change the student question bank or scores in the regular game.
+- text: Scenario
+- combobox "Scenario":
+  - option "Table number naming"
+  - option "Ocean Quest naming" [selected]
+  - option "Classroom Identification"
+  - option "Classroom Assemble"
+  - option "Published Identification"
+  - option "Published Assemble"
+- text: Viewport
+- combobox "Viewport":
+  - option "Desktop — 1100 px"
+  - option "Phone — 390 px" [selected]
+- button "Load verification"
+- status: Loaded ocean at 390 CSS pixels. Fixture attempts are test data in this browser.
+- iframe [active] [id="practice"]:
+  - main:
+    - generic: Java · Types · Declarations · Assignment · Conversions
+    - heading "Variable Lab" [level=1]
+    - paragraph: Identify declaration components, values, and types with selectable Java pieces.
+    - text: Practice mode
+    - combobox "Practice mode":
+      - option "Mixed Practice" [selected]
+      - option "Identification"
+      - option "Assemble Declaration"
+      - option "Trace the Variable"
+    - button "New Challenge"
+    - paragraph
+    - generic: Assemble Declaration
+    - heading "Tonight's movie is Ocean Quest. Store the movie title." [level=2]
+    - generic "Introductory type convention"
+    - text: Type
+    - combobox "Type":
+      - option "Choose…"
+      - option "double"
+      - option "int"
+      - option "char"
+      - option "boolean"
+      - option "String" [selected]
+    - text: Variable name
+    - combobox "Variable name":
+      - option "Choose…"
+      - option "movieTitle"
+      - option "seatRow" [selected]
+      - option "incorrect-name"
+      - option "movieTitleOther"
+    - text: Operator
+    - combobox "Operator":
+      - option "Choose…"
+      - option "=" [selected]
+      - option "=="
+      - option "!="
+    - text: Value
+    - combobox "Value":
+      - option "Choose…"
+      - option "\"Ocean Quest\"" [selected]
+      - option "Skyward"
+      - option "'Skyward'"
+      - option "\"skyward\""
+    - generic: String seatRow = "Ocean Quest";
+    - button "Check Answer"
+    - button "Show Answer"
+    - button "Next Challenge"
+    - status [active]: "Not quite. Hint 1: Your data type, assignment operator, value are correct. This declaration is valid Java, but the variable name does not match what the scenario asks you to store. Your declaration “String seatRow = \"Ocean Quest\";” has 1 issue to investigate: 1. “seatRow” is a valid Java identifier, but its meaning does not match the information requested. The scenario says: Store the movie title. Reread the scenario and choose the name that best describes that information. Retry independently, skip, or choose Show Answer."
+    - paragraph: "First-try accuracy: 0% (0/1) · Solved after retry: 0 · Revealed: 0 · Submissions: 1"

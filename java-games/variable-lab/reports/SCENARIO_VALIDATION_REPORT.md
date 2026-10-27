@@ -104,3 +104,19 @@ This repair ran the focused and relevant existing suites above. It did not rerun
 Identification feedback and validation, Trace implementation, content catalog, difficulty selection, dark styling, dropdown interface, navigation, retry/Show Answer/Next controls, scoring, Session Summary, storage and daily behavior are preserved. Shared-file behavioral changes are restricted to Assemble diagnosis/contract construction; application imports were versioned for cache refresh.
 
 Teacher Tools, QTI, other Java games, CSP, WPR/RACECES and the master tracker were not changed. Concurrent upstream changes are protected by an expected-head branch update. Names are accepted through explicit dropdown metadata, not open-ended semantic inference. The underlying literal validator retains its previously documented bounded Java subset. Browser verification uses desktop Chrome and a 390 CSS-pixel viewport rather than physical Chromebook/phone hardware.
+
+## Publication and browser verification addendum
+
+Implementation commit: `aa42cf4ffbf6c85c55301ea7f13cef5a3d26d558`.
+Published game verified directly: https://davisjm4.github.io/java-games/variable-lab/?mode=assemble
+Exact source-derived regression fixtures: https://davisjm4.github.io/java-games/variable-lab/reports/classroom-browser.html
+
+GitHub Pages deployment `40455200263` completed successfully. Trace Repair Verification `40455200751` (including the new scenario suite), Unified navigation verification `40455200743`, and Teacher Tools reliability `40455200685` all passed. The expected-head update preserved concurrent-change protection.
+
+Browser checks passed in Chrome:
+
+- At 1100 CSS pixels, `int customerName = 11;` was rejected with only the naming issue. The other three fields were acknowledged. The first hint concealed `tableNumber`; the second used the source-authored order-name contrast. Changing only the name to `tableNumber` produced solved-after-retry 1, first-try 0, submissions 3 after two unsuccessful attempts.
+- At 390 CSS pixels (confirmed from the rendered iframe width), the complete Ocean Quest movie scenario displayed correctly. `String seatRow = "Ocean Quest";` received only a scenario-name diagnosis. Feedback wrapped and could be scrolled vertically. Show Answer displayed `String movieTitle = "Ocean Quest";`, explained its meaning, and recorded revealed 1 with no independent solve. The correct declaration on the next challenge earned first-try credit normally.
+- In the ordinary published game without fixture overrides, `boolean petName = false;` was rejected for a vaccination scenario. Correcting only the identifier to `isVaccinated` earned retry credit, with first-try 0 and submissions 2.
+
+Representative screenshots are included in the delivered report bundle. `scenario-browser-verification.json` contains machine-readable results and CI run identifiers. `scenario-test-results/ocean-browser-dom.txt` and `published-game-browser-dom.txt` preserve observed browser state. Exact fixtures use memory-only test sessions and the production app/engine; the ordinary-game check uses its normal local session. No test-only route or override was added to the student activity.

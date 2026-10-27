@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-26",
+  "timezone": "America/Los_Angeles",
+  "implementationCommit": "aa42cf4ffbf6c85c55301ea7f13cef5a3d26d558",
+  "url": "https://davisjm4.github.io/java-games/variable-lab/?mode=assemble",
+  "browser": "Chrome",
+  "viewports": [
+    1100,
+    390
+  ],
+  "checks": {
+    "tableWrongName": "rejected; correct type/operator/value acknowledged; intended name concealed",
+    "tableSecondHint": "contrasted customerName with source-authored order-name request",
+    "tableCorrected": "int tableNumber = 11; accepted after retry; firstTry 0, afterRetry 1, submissions 3",
+    "oceanScenario": "Tonight's movie is Ocean Quest. Store the movie title.",
+    "oceanWrongName": "String seatRow = \"Ocean Quest\"; rejected as scenario-name only at 390 CSS px",
+    "oceanReveal": "movieTitle revealed with name meaning; firstTry 0, afterRetry 0, revealed 1",
+    "oceanCorrectOnNext": "String movieTitle = \"Ocean Quest\"; accepted first try on the next challenge",
+    "ordinaryGeneratedGame": "boolean petName = false; rejected; boolean isVaccinated = false; accepted after retry; firstTry 0, afterRetry 1, submissions 2"
+  },
+  "limitations": [
+    "CSS viewport emulation, not physical mobile hardware"
+  ],
+  "ci": [
+    {
+      "id": 40455200743,
+      "name": "Unified navigation verification",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/davisjm4/davisjm4.github.io/actions/runs/40455200743",
+      "commit": "aa42cf4ffbf6c85c55301ea7f13cef5a3d26d558"
+    },
+    {
+      "id": 40455200685,
+      "name": "Teacher Tools reliability",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/davisjm4/davisjm4.github.io/actions/runs/40455200685",
+      "commit": "aa42cf4ffbf6c85c55301ea7f13cef5a3d26d558"
+    },
+    {
+      "id": 40455200751,
+      "name": "Trace Repair Verification",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/davisjm4/davisjm4.github.io/actions/runs/40455200751",
+      "commit": "aa42cf4ffbf6c85c55301ea7f13cef5a3d26d558"
+    },
+    {
+      "id": 40455200263,
+      "name": "pages build and deployment",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/davisjm4/davisjm4.github.io/actions/runs/40455200263",
+      "commit": "aa42cf4ffbf6c85c55301ea7f13cef5a3d26d558"
+    }
+  ]
+}
