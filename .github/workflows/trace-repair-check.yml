@@ -81,6 +81,7 @@ jobs:
         run: |
           node variable-lab/feedback-tests.mjs
           node variable-lab/feedback-ui-tests.mjs
+          node variable-lab/scenario-validation-tests.mjs
       - name: Compiler and JVM regression
         working-directory: java-games
         run: |

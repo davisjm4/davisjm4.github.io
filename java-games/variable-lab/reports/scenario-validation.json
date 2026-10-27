@@ -1,0 +1,5842 @@
+{
+  "seed": 20261026,
+  "scenarios": [
+    {
+      "family": "video-games",
+      "type": "int",
+      "name": "coinsCollected",
+      "request": "Keep track of the coins collected.",
+      "acceptedNames": [
+        "coinsCollected"
+      ],
+      "examples": [
+        {
+          "prompt": "A player has collected 12 coins so far. Keep track of the coins collected.",
+          "answer": {
+            "type": "int",
+            "name": "coinsCollected",
+            "operator": "=",
+            "value": "12"
+          }
+        },
+        {
+          "prompt": "A player has collected 480 coins so far. Keep track of the coins collected.",
+          "answer": {
+            "type": "int",
+            "name": "coinsCollected",
+            "operator": "=",
+            "value": "480"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "damageMultiplier",
+          "meaning": "Store the damage multiplier."
+        },
+        {
+          "name": "levelCompleted",
+          "meaning": "Record whether the level is complete."
+        },
+        {
+          "name": "playerUsername",
+          "meaning": "Store the player's username."
+        },
+        {
+          "name": "difficultyLevel",
+          "meaning": "Store the one-letter difficulty setting."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "video-games",
+      "type": "double",
+      "name": "damageMultiplier",
+      "request": "Store the damage multiplier.",
+      "acceptedNames": [
+        "damageMultiplier"
+      ],
+      "examples": [
+        {
+          "prompt": "A power-up multiplies attack damage by 1.25. Store the damage multiplier.",
+          "answer": {
+            "type": "double",
+            "name": "damageMultiplier",
+            "operator": "=",
+            "value": "1.25"
+          }
+        },
+        {
+          "prompt": "A power-up multiplies attack damage by 3.75. Store the damage multiplier.",
+          "answer": {
+            "type": "double",
+            "name": "damageMultiplier",
+            "operator": "=",
+            "value": "3.75"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "coinsCollected",
+          "meaning": "Keep track of the coins collected."
+        },
+        {
+          "name": "levelCompleted",
+          "meaning": "Record whether the level is complete."
+        },
+        {
+          "name": "playerUsername",
+          "meaning": "Store the player's username."
+        },
+        {
+          "name": "difficultyLevel",
+          "meaning": "Store the one-letter difficulty setting."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "video-games",
+      "type": "boolean",
+      "name": "levelCompleted",
+      "request": "Record whether the level is complete.",
+      "acceptedNames": [
+        "levelCompleted"
+      ],
+      "examples": [
+        {
+          "prompt": "The player has finished the level. Record whether the level is complete.",
+          "answer": {
+            "type": "boolean",
+            "name": "levelCompleted",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The player has not finished the level yet. Record whether the level is complete.",
+          "answer": {
+            "type": "boolean",
+            "name": "levelCompleted",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "coinsCollected",
+          "meaning": "Keep track of the coins collected."
+        },
+        {
+          "name": "damageMultiplier",
+          "meaning": "Store the damage multiplier."
+        },
+        {
+          "name": "playerUsername",
+          "meaning": "Store the player's username."
+        },
+        {
+          "name": "difficultyLevel",
+          "meaning": "Store the one-letter difficulty setting."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "video-games",
+      "type": "String",
+      "name": "playerUsername",
+      "request": "Store the player's username.",
+      "acceptedNames": [
+        "playerUsername"
+      ],
+      "examples": [
+        {
+          "prompt": "A player signs in with the username NovaFox. Store the player's username.",
+          "answer": {
+            "type": "String",
+            "name": "playerUsername",
+            "operator": "=",
+            "value": "\"NovaFox\""
+          }
+        },
+        {
+          "prompt": "A player signs in with the username PixelKnight. Store the player's username.",
+          "answer": {
+            "type": "String",
+            "name": "playerUsername",
+            "operator": "=",
+            "value": "\"PixelKnight\""
+          }
+        },
+        {
+          "prompt": "A player signs in with the username ShadowByte. Store the player's username.",
+          "answer": {
+            "type": "String",
+            "name": "playerUsername",
+            "operator": "=",
+            "value": "\"ShadowByte\""
+          }
+        },
+        {
+          "prompt": "A player signs in with the username LunaStar. Store the player's username.",
+          "answer": {
+            "type": "String",
+            "name": "playerUsername",
+            "operator": "=",
+            "value": "\"LunaStar\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "coinsCollected",
+          "meaning": "Keep track of the coins collected."
+        },
+        {
+          "name": "damageMultiplier",
+          "meaning": "Store the damage multiplier."
+        },
+        {
+          "name": "levelCompleted",
+          "meaning": "Record whether the level is complete."
+        },
+        {
+          "name": "difficultyLevel",
+          "meaning": "Store the one-letter difficulty setting."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "video-games",
+      "type": "char",
+      "name": "difficultyLevel",
+      "request": "Store the one-letter difficulty setting.",
+      "acceptedNames": [
+        "difficultyLevel"
+      ],
+      "examples": [
+        {
+          "prompt": "The difficulty setting is shown as the letter E (for Easy). Store the one-letter difficulty setting.",
+          "answer": {
+            "type": "char",
+            "name": "difficultyLevel",
+            "operator": "=",
+            "value": "'E'"
+          }
+        },
+        {
+          "prompt": "The difficulty setting is shown as the letter H (for Hard). Store the one-letter difficulty setting.",
+          "answer": {
+            "type": "char",
+            "name": "difficultyLevel",
+            "operator": "=",
+            "value": "'H'"
+          }
+        },
+        {
+          "prompt": "The difficulty setting is shown as the letter N (for Normal). Store the one-letter difficulty setting.",
+          "answer": {
+            "type": "char",
+            "name": "difficultyLevel",
+            "operator": "=",
+            "value": "'N'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "coinsCollected",
+          "meaning": "Keep track of the coins collected."
+        },
+        {
+          "name": "damageMultiplier",
+          "meaning": "Store the damage multiplier."
+        },
+        {
+          "name": "levelCompleted",
+          "meaning": "Record whether the level is complete."
+        },
+        {
+          "name": "playerUsername",
+          "meaning": "Store the player's username."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "robotics",
+      "type": "int",
+      "name": "wheelCount",
+      "request": "Store the number of wheels.",
+      "acceptedNames": [
+        "wheelCount"
+      ],
+      "examples": [
+        {
+          "prompt": "A rover robot is built with 3 wheels. Store the number of wheels.",
+          "answer": {
+            "type": "int",
+            "name": "wheelCount",
+            "operator": "=",
+            "value": "3"
+          }
+        },
+        {
+          "prompt": "A rover robot is built with 8 wheels. Store the number of wheels.",
+          "answer": {
+            "type": "int",
+            "name": "wheelCount",
+            "operator": "=",
+            "value": "8"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "batteryVoltage",
+          "meaning": "Store the battery reading."
+        },
+        {
+          "name": "obstacleDetected",
+          "meaning": "Represent whether an obstacle was detected."
+        },
+        {
+          "name": "robotName",
+          "meaning": "Store the robot's name."
+        },
+        {
+          "name": "driveMode",
+          "meaning": "Store the one-letter drive mode."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "robotics",
+      "type": "double",
+      "name": "batteryVoltage",
+      "request": "Store the battery reading.",
+      "acceptedNames": [
+        "batteryVoltage"
+      ],
+      "examples": [
+        {
+          "prompt": "The robot's battery currently reads 6.5 volts. Store the battery reading.",
+          "answer": {
+            "type": "double",
+            "name": "batteryVoltage",
+            "operator": "=",
+            "value": "6.5"
+          }
+        },
+        {
+          "prompt": "The robot's battery currently reads 12.5 volts. Store the battery reading.",
+          "answer": {
+            "type": "double",
+            "name": "batteryVoltage",
+            "operator": "=",
+            "value": "12.5"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "wheelCount",
+          "meaning": "Store the number of wheels."
+        },
+        {
+          "name": "obstacleDetected",
+          "meaning": "Represent whether an obstacle was detected."
+        },
+        {
+          "name": "robotName",
+          "meaning": "Store the robot's name."
+        },
+        {
+          "name": "driveMode",
+          "meaning": "Store the one-letter drive mode."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "robotics",
+      "type": "boolean",
+      "name": "obstacleDetected",
+      "request": "Represent whether an obstacle was detected.",
+      "acceptedNames": [
+        "obstacleDetected"
+      ],
+      "examples": [
+        {
+          "prompt": "The robot's sensor has detected an obstacle. Represent whether an obstacle was detected.",
+          "answer": {
+            "type": "boolean",
+            "name": "obstacleDetected",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The robot's sensor has not detected any obstacle. Represent whether an obstacle was detected.",
+          "answer": {
+            "type": "boolean",
+            "name": "obstacleDetected",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "wheelCount",
+          "meaning": "Store the number of wheels."
+        },
+        {
+          "name": "batteryVoltage",
+          "meaning": "Store the battery reading."
+        },
+        {
+          "name": "robotName",
+          "meaning": "Store the robot's name."
+        },
+        {
+          "name": "driveMode",
+          "meaning": "Store the one-letter drive mode."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "robotics",
+      "type": "String",
+      "name": "robotName",
+      "request": "Store the robot's name.",
+      "acceptedNames": [
+        "robotName"
+      ],
+      "examples": [
+        {
+          "prompt": "The team named its robot Atlas. Store the robot's name.",
+          "answer": {
+            "type": "String",
+            "name": "robotName",
+            "operator": "=",
+            "value": "\"Atlas\""
+          }
+        },
+        {
+          "prompt": "The team named its robot Sparky. Store the robot's name.",
+          "answer": {
+            "type": "String",
+            "name": "robotName",
+            "operator": "=",
+            "value": "\"Sparky\""
+          }
+        },
+        {
+          "prompt": "The team named its robot Rover Two. Store the robot's name.",
+          "answer": {
+            "type": "String",
+            "name": "robotName",
+            "operator": "=",
+            "value": "\"Rover Two\""
+          }
+        },
+        {
+          "prompt": "The team named its robot Bolt. Store the robot's name.",
+          "answer": {
+            "type": "String",
+            "name": "robotName",
+            "operator": "=",
+            "value": "\"Bolt\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "wheelCount",
+          "meaning": "Store the number of wheels."
+        },
+        {
+          "name": "batteryVoltage",
+          "meaning": "Store the battery reading."
+        },
+        {
+          "name": "obstacleDetected",
+          "meaning": "Represent whether an obstacle was detected."
+        },
+        {
+          "name": "driveMode",
+          "meaning": "Store the one-letter drive mode."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "robotics",
+      "type": "char",
+      "name": "driveMode",
+      "request": "Store the one-letter drive mode.",
+      "acceptedNames": [
+        "driveMode"
+      ],
+      "examples": [
+        {
+          "prompt": "The control panel shows the drive mode as the letter A (for Autonomous). Store the one-letter drive mode.",
+          "answer": {
+            "type": "char",
+            "name": "driveMode",
+            "operator": "=",
+            "value": "'A'"
+          }
+        },
+        {
+          "prompt": "The control panel shows the drive mode as the letter M (for Manual). Store the one-letter drive mode.",
+          "answer": {
+            "type": "char",
+            "name": "driveMode",
+            "operator": "=",
+            "value": "'M'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "wheelCount",
+          "meaning": "Store the number of wheels."
+        },
+        {
+          "name": "batteryVoltage",
+          "meaning": "Store the battery reading."
+        },
+        {
+          "name": "obstacleDetected",
+          "meaning": "Represent whether an obstacle was detected."
+        },
+        {
+          "name": "robotName",
+          "meaning": "Store the robot's name."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "classroom",
+      "type": "int",
+      "name": "studentsPresent",
+      "request": "Store how many students are present.",
+      "acceptedNames": [
+        "studentsPresent"
+      ],
+      "examples": [
+        {
+          "prompt": "18 students are in class today. Store how many students are present.",
+          "answer": {
+            "type": "int",
+            "name": "studentsPresent",
+            "operator": "=",
+            "value": "18"
+          }
+        },
+        {
+          "prompt": "34 students are in class today. Store how many students are present.",
+          "answer": {
+            "type": "int",
+            "name": "studentsPresent",
+            "operator": "=",
+            "value": "34"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "quizAverage",
+          "meaning": "Store the quiz average."
+        },
+        {
+          "name": "homeworkSubmitted",
+          "meaning": "Record whether the homework was submitted."
+        },
+        {
+          "name": "courseName",
+          "meaning": "Store the course name."
+        },
+        {
+          "name": "middleInitial",
+          "meaning": "Store the middle initial."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "classroom",
+      "type": "double",
+      "name": "quizAverage",
+      "request": "Store the quiz average.",
+      "acceptedNames": [
+        "quizAverage"
+      ],
+      "examples": [
+        {
+          "prompt": "The class average on the quiz is 71.5 points. Store the quiz average.",
+          "answer": {
+            "type": "double",
+            "name": "quizAverage",
+            "operator": "=",
+            "value": "71.5"
+          }
+        },
+        {
+          "prompt": "The class average on the quiz is 96.5 points. Store the quiz average.",
+          "answer": {
+            "type": "double",
+            "name": "quizAverage",
+            "operator": "=",
+            "value": "96.5"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "studentsPresent",
+          "meaning": "Store how many students are present."
+        },
+        {
+          "name": "homeworkSubmitted",
+          "meaning": "Record whether the homework was submitted."
+        },
+        {
+          "name": "courseName",
+          "meaning": "Store the course name."
+        },
+        {
+          "name": "middleInitial",
+          "meaning": "Store the middle initial."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "classroom",
+      "type": "boolean",
+      "name": "homeworkSubmitted",
+      "request": "Record whether the homework was submitted.",
+      "acceptedNames": [
+        "homeworkSubmitted"
+      ],
+      "examples": [
+        {
+          "prompt": "Jordan turned in the homework. Record whether the homework was submitted.",
+          "answer": {
+            "type": "boolean",
+            "name": "homeworkSubmitted",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "Jordan has not turned in the homework. Record whether the homework was submitted.",
+          "answer": {
+            "type": "boolean",
+            "name": "homeworkSubmitted",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "studentsPresent",
+          "meaning": "Store how many students are present."
+        },
+        {
+          "name": "quizAverage",
+          "meaning": "Store the quiz average."
+        },
+        {
+          "name": "courseName",
+          "meaning": "Store the course name."
+        },
+        {
+          "name": "middleInitial",
+          "meaning": "Store the middle initial."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "classroom",
+      "type": "String",
+      "name": "courseName",
+      "request": "Store the course name.",
+      "acceptedNames": [
+        "courseName"
+      ],
+      "examples": [
+        {
+          "prompt": "The course on the schedule is Computer Science. Store the course name.",
+          "answer": {
+            "type": "String",
+            "name": "courseName",
+            "operator": "=",
+            "value": "\"Computer Science\""
+          }
+        },
+        {
+          "prompt": "The course on the schedule is Biology. Store the course name.",
+          "answer": {
+            "type": "String",
+            "name": "courseName",
+            "operator": "=",
+            "value": "\"Biology\""
+          }
+        },
+        {
+          "prompt": "The course on the schedule is World History. Store the course name.",
+          "answer": {
+            "type": "String",
+            "name": "courseName",
+            "operator": "=",
+            "value": "\"World History\""
+          }
+        },
+        {
+          "prompt": "The course on the schedule is Algebra. Store the course name.",
+          "answer": {
+            "type": "String",
+            "name": "courseName",
+            "operator": "=",
+            "value": "\"Algebra\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "studentsPresent",
+          "meaning": "Store how many students are present."
+        },
+        {
+          "name": "quizAverage",
+          "meaning": "Store the quiz average."
+        },
+        {
+          "name": "homeworkSubmitted",
+          "meaning": "Record whether the homework was submitted."
+        },
+        {
+          "name": "middleInitial",
+          "meaning": "Store the middle initial."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "classroom",
+      "type": "char",
+      "name": "middleInitial",
+      "request": "Store the middle initial.",
+      "acceptedNames": [
+        "middleInitial"
+      ],
+      "examples": [
+        {
+          "prompt": "A student's middle initial is R. Store the middle initial.",
+          "answer": {
+            "type": "char",
+            "name": "middleInitial",
+            "operator": "=",
+            "value": "'R'"
+          }
+        },
+        {
+          "prompt": "A student's middle initial is J. Store the middle initial.",
+          "answer": {
+            "type": "char",
+            "name": "middleInitial",
+            "operator": "=",
+            "value": "'J'"
+          }
+        },
+        {
+          "prompt": "A student's middle initial is M. Store the middle initial.",
+          "answer": {
+            "type": "char",
+            "name": "middleInitial",
+            "operator": "=",
+            "value": "'M'"
+          }
+        },
+        {
+          "prompt": "A student's middle initial is T. Store the middle initial.",
+          "answer": {
+            "type": "char",
+            "name": "middleInitial",
+            "operator": "=",
+            "value": "'T'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "studentsPresent",
+          "meaning": "Store how many students are present."
+        },
+        {
+          "name": "quizAverage",
+          "meaning": "Store the quiz average."
+        },
+        {
+          "name": "homeworkSubmitted",
+          "meaning": "Record whether the homework was submitted."
+        },
+        {
+          "name": "courseName",
+          "meaning": "Store the course name."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "sports",
+      "type": "int",
+      "name": "teamScore",
+      "request": "Store the team's score.",
+      "acceptedNames": [
+        "teamScore"
+      ],
+      "examples": [
+        {
+          "prompt": "A basketball team scored 58 points. Store the team's score.",
+          "answer": {
+            "type": "int",
+            "name": "teamScore",
+            "operator": "=",
+            "value": "58"
+          }
+        },
+        {
+          "prompt": "A basketball team scored 121 points. Store the team's score.",
+          "answer": {
+            "type": "int",
+            "name": "teamScore",
+            "operator": "=",
+            "value": "121"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "raceTime",
+          "meaning": "Store the race time."
+        },
+        {
+          "name": "wentToOvertime",
+          "meaning": "Record whether the game went to overtime."
+        },
+        {
+          "name": "mvpName",
+          "meaning": "Store the winner's name."
+        },
+        {
+          "name": "divisionLetter",
+          "meaning": "Store the division letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "sports",
+      "type": "double",
+      "name": "raceTime",
+      "request": "Store the race time.",
+      "acceptedNames": [
+        "raceTime"
+      ],
+      "examples": [
+        {
+          "prompt": "A sprinter finished the race in 10.50 seconds. Store the race time.",
+          "answer": {
+            "type": "double",
+            "name": "raceTime",
+            "operator": "=",
+            "value": "10.50"
+          }
+        },
+        {
+          "prompt": "A sprinter finished the race in 14.90 seconds. Store the race time.",
+          "answer": {
+            "type": "double",
+            "name": "raceTime",
+            "operator": "=",
+            "value": "14.90"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "teamScore",
+          "meaning": "Store the team's score."
+        },
+        {
+          "name": "wentToOvertime",
+          "meaning": "Record whether the game went to overtime."
+        },
+        {
+          "name": "mvpName",
+          "meaning": "Store the winner's name."
+        },
+        {
+          "name": "divisionLetter",
+          "meaning": "Store the division letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "sports",
+      "type": "boolean",
+      "name": "wentToOvertime",
+      "request": "Record whether the game went to overtime.",
+      "acceptedNames": [
+        "wentToOvertime"
+      ],
+      "examples": [
+        {
+          "prompt": "The game was tied at the end and went to overtime. Record whether the game went to overtime.",
+          "answer": {
+            "type": "boolean",
+            "name": "wentToOvertime",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The game ended in regulation without overtime. Record whether the game went to overtime.",
+          "answer": {
+            "type": "boolean",
+            "name": "wentToOvertime",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "teamScore",
+          "meaning": "Store the team's score."
+        },
+        {
+          "name": "raceTime",
+          "meaning": "Store the race time."
+        },
+        {
+          "name": "mvpName",
+          "meaning": "Store the winner's name."
+        },
+        {
+          "name": "divisionLetter",
+          "meaning": "Store the division letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "sports",
+      "type": "String",
+      "name": "mvpName",
+      "request": "Store the winner's name.",
+      "acceptedNames": [
+        "mvpName"
+      ],
+      "examples": [
+        {
+          "prompt": "The most valuable player award went to Maya Lopez. Store the winner's name.",
+          "answer": {
+            "type": "String",
+            "name": "mvpName",
+            "operator": "=",
+            "value": "\"Maya Lopez\""
+          }
+        },
+        {
+          "prompt": "The most valuable player award went to Andre Kim. Store the winner's name.",
+          "answer": {
+            "type": "String",
+            "name": "mvpName",
+            "operator": "=",
+            "value": "\"Andre Kim\""
+          }
+        },
+        {
+          "prompt": "The most valuable player award went to Priya Shah. Store the winner's name.",
+          "answer": {
+            "type": "String",
+            "name": "mvpName",
+            "operator": "=",
+            "value": "\"Priya Shah\""
+          }
+        },
+        {
+          "prompt": "The most valuable player award went to Sam Ortiz. Store the winner's name.",
+          "answer": {
+            "type": "String",
+            "name": "mvpName",
+            "operator": "=",
+            "value": "\"Sam Ortiz\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "teamScore",
+          "meaning": "Store the team's score."
+        },
+        {
+          "name": "raceTime",
+          "meaning": "Store the race time."
+        },
+        {
+          "name": "wentToOvertime",
+          "meaning": "Record whether the game went to overtime."
+        },
+        {
+          "name": "divisionLetter",
+          "meaning": "Store the division letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "sports",
+      "type": "char",
+      "name": "divisionLetter",
+      "request": "Store the division letter.",
+      "acceptedNames": [
+        "divisionLetter"
+      ],
+      "examples": [
+        {
+          "prompt": "The team plays in Division A. Store the division letter.",
+          "answer": {
+            "type": "char",
+            "name": "divisionLetter",
+            "operator": "=",
+            "value": "'A'"
+          }
+        },
+        {
+          "prompt": "The team plays in Division B. Store the division letter.",
+          "answer": {
+            "type": "char",
+            "name": "divisionLetter",
+            "operator": "=",
+            "value": "'B'"
+          }
+        },
+        {
+          "prompt": "The team plays in Division C. Store the division letter.",
+          "answer": {
+            "type": "char",
+            "name": "divisionLetter",
+            "operator": "=",
+            "value": "'C'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "teamScore",
+          "meaning": "Store the team's score."
+        },
+        {
+          "name": "raceTime",
+          "meaning": "Store the race time."
+        },
+        {
+          "name": "wentToOvertime",
+          "meaning": "Record whether the game went to overtime."
+        },
+        {
+          "name": "mvpName",
+          "meaning": "Store the winner's name."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "entertainment",
+      "type": "int",
+      "name": "runtimeMinutes",
+      "request": "Store the movie's length in minutes.",
+      "acceptedNames": [
+        "runtimeMinutes"
+      ],
+      "examples": [
+        {
+          "prompt": "A movie runs for 84 minutes. Store the movie's length in minutes.",
+          "answer": {
+            "type": "int",
+            "name": "runtimeMinutes",
+            "operator": "=",
+            "value": "84"
+          }
+        },
+        {
+          "prompt": "A movie runs for 165 minutes. Store the movie's length in minutes.",
+          "answer": {
+            "type": "int",
+            "name": "runtimeMinutes",
+            "operator": "=",
+            "value": "165"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "viewerRating",
+          "meaning": "Store the average rating."
+        },
+        {
+          "name": "subtitlesOn",
+          "meaning": "Record whether subtitles are on."
+        },
+        {
+          "name": "movieTitle",
+          "meaning": "Store the movie title."
+        },
+        {
+          "name": "seatRow",
+          "meaning": "Store the row letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "entertainment",
+      "type": "double",
+      "name": "viewerRating",
+      "request": "Store the average rating.",
+      "acceptedNames": [
+        "viewerRating"
+      ],
+      "examples": [
+        {
+          "prompt": "Viewers gave the show an average rating of 2.5 stars. Store the average rating.",
+          "answer": {
+            "type": "double",
+            "name": "viewerRating",
+            "operator": "=",
+            "value": "2.5"
+          }
+        },
+        {
+          "prompt": "Viewers gave the show an average rating of 4.9 stars. Store the average rating.",
+          "answer": {
+            "type": "double",
+            "name": "viewerRating",
+            "operator": "=",
+            "value": "4.9"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "runtimeMinutes",
+          "meaning": "Store the movie's length in minutes."
+        },
+        {
+          "name": "subtitlesOn",
+          "meaning": "Record whether subtitles are on."
+        },
+        {
+          "name": "movieTitle",
+          "meaning": "Store the movie title."
+        },
+        {
+          "name": "seatRow",
+          "meaning": "Store the row letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "entertainment",
+      "type": "boolean",
+      "name": "subtitlesOn",
+      "request": "Record whether subtitles are on.",
+      "acceptedNames": [
+        "subtitlesOn"
+      ],
+      "examples": [
+        {
+          "prompt": "Subtitles are turned on. Record whether subtitles are on.",
+          "answer": {
+            "type": "boolean",
+            "name": "subtitlesOn",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "Subtitles are turned off. Record whether subtitles are on.",
+          "answer": {
+            "type": "boolean",
+            "name": "subtitlesOn",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "runtimeMinutes",
+          "meaning": "Store the movie's length in minutes."
+        },
+        {
+          "name": "viewerRating",
+          "meaning": "Store the average rating."
+        },
+        {
+          "name": "movieTitle",
+          "meaning": "Store the movie title."
+        },
+        {
+          "name": "seatRow",
+          "meaning": "Store the row letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "entertainment",
+      "type": "String",
+      "name": "movieTitle",
+      "request": "Store the movie title.",
+      "acceptedNames": [
+        "movieTitle"
+      ],
+      "examples": [
+        {
+          "prompt": "Tonight's movie is Ocean Quest. Store the movie title.",
+          "answer": {
+            "type": "String",
+            "name": "movieTitle",
+            "operator": "=",
+            "value": "\"Ocean Quest\""
+          }
+        },
+        {
+          "prompt": "Tonight's movie is Skyward. Store the movie title.",
+          "answer": {
+            "type": "String",
+            "name": "movieTitle",
+            "operator": "=",
+            "value": "\"Skyward\""
+          }
+        },
+        {
+          "prompt": "Tonight's movie is The Last Comet. Store the movie title.",
+          "answer": {
+            "type": "String",
+            "name": "movieTitle",
+            "operator": "=",
+            "value": "\"The Last Comet\""
+          }
+        },
+        {
+          "prompt": "Tonight's movie is Moonlight Run. Store the movie title.",
+          "answer": {
+            "type": "String",
+            "name": "movieTitle",
+            "operator": "=",
+            "value": "\"Moonlight Run\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "runtimeMinutes",
+          "meaning": "Store the movie's length in minutes."
+        },
+        {
+          "name": "viewerRating",
+          "meaning": "Store the average rating."
+        },
+        {
+          "name": "subtitlesOn",
+          "meaning": "Record whether subtitles are on."
+        },
+        {
+          "name": "seatRow",
+          "meaning": "Store the row letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "entertainment",
+      "type": "char",
+      "name": "seatRow",
+      "request": "Store the row letter.",
+      "acceptedNames": [
+        "seatRow"
+      ],
+      "examples": [
+        {
+          "prompt": "Your theater seat is in row F. Store the row letter.",
+          "answer": {
+            "type": "char",
+            "name": "seatRow",
+            "operator": "=",
+            "value": "'F'"
+          }
+        },
+        {
+          "prompt": "Your theater seat is in row K. Store the row letter.",
+          "answer": {
+            "type": "char",
+            "name": "seatRow",
+            "operator": "=",
+            "value": "'K'"
+          }
+        },
+        {
+          "prompt": "Your theater seat is in row D. Store the row letter.",
+          "answer": {
+            "type": "char",
+            "name": "seatRow",
+            "operator": "=",
+            "value": "'D'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "runtimeMinutes",
+          "meaning": "Store the movie's length in minutes."
+        },
+        {
+          "name": "viewerRating",
+          "meaning": "Store the average rating."
+        },
+        {
+          "name": "subtitlesOn",
+          "meaning": "Record whether subtitles are on."
+        },
+        {
+          "name": "movieTitle",
+          "meaning": "Store the movie title."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "shopping",
+      "type": "int",
+      "name": "itemsInCart",
+      "request": "Store the number of items in the cart.",
+      "acceptedNames": [
+        "itemsInCart"
+      ],
+      "examples": [
+        {
+          "prompt": "A shopper has 2 items in the cart. Store the number of items in the cart.",
+          "answer": {
+            "type": "int",
+            "name": "itemsInCart",
+            "operator": "=",
+            "value": "2"
+          }
+        },
+        {
+          "prompt": "A shopper has 15 items in the cart. Store the number of items in the cart.",
+          "answer": {
+            "type": "int",
+            "name": "itemsInCart",
+            "operator": "=",
+            "value": "15"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "shirtPrice",
+          "meaning": "Store the price in dollars."
+        },
+        {
+          "name": "couponApplied",
+          "meaning": "Record whether a coupon was used."
+        },
+        {
+          "name": "productCode",
+          "meaning": "Store the product code."
+        },
+        {
+          "name": "shirtSize",
+          "meaning": "Store the one-letter size."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "shopping",
+      "type": "double",
+      "name": "shirtPrice",
+      "request": "Store the price in dollars.",
+      "acceptedNames": [
+        "shirtPrice"
+      ],
+      "examples": [
+        {
+          "prompt": "A shirt costs $8.25. Store the price in dollars.",
+          "answer": {
+            "type": "double",
+            "name": "shirtPrice",
+            "operator": "=",
+            "value": "8.25"
+          }
+        },
+        {
+          "prompt": "A shirt costs $29.75. Store the price in dollars.",
+          "answer": {
+            "type": "double",
+            "name": "shirtPrice",
+            "operator": "=",
+            "value": "29.75"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "itemsInCart",
+          "meaning": "Store the number of items in the cart."
+        },
+        {
+          "name": "couponApplied",
+          "meaning": "Record whether a coupon was used."
+        },
+        {
+          "name": "productCode",
+          "meaning": "Store the product code."
+        },
+        {
+          "name": "shirtSize",
+          "meaning": "Store the one-letter size."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "shopping",
+      "type": "boolean",
+      "name": "couponApplied",
+      "request": "Record whether a coupon was used.",
+      "acceptedNames": [
+        "couponApplied"
+      ],
+      "examples": [
+        {
+          "prompt": "A coupon was applied at checkout. Record whether a coupon was used.",
+          "answer": {
+            "type": "boolean",
+            "name": "couponApplied",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "No coupon was applied at checkout. Record whether a coupon was used.",
+          "answer": {
+            "type": "boolean",
+            "name": "couponApplied",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "itemsInCart",
+          "meaning": "Store the number of items in the cart."
+        },
+        {
+          "name": "shirtPrice",
+          "meaning": "Store the price in dollars."
+        },
+        {
+          "name": "productCode",
+          "meaning": "Store the product code."
+        },
+        {
+          "name": "shirtSize",
+          "meaning": "Store the one-letter size."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "shopping",
+      "type": "String",
+      "name": "productCode",
+      "request": "Store the product code.",
+      "acceptedNames": [
+        "productCode"
+      ],
+      "examples": [
+        {
+          "prompt": "The product's label shows the code SKU-4410. Store the product code.",
+          "answer": {
+            "type": "String",
+            "name": "productCode",
+            "operator": "=",
+            "value": "\"SKU-4410\""
+          }
+        },
+        {
+          "prompt": "The product's label shows the code TX-208. Store the product code.",
+          "answer": {
+            "type": "String",
+            "name": "productCode",
+            "operator": "=",
+            "value": "\"TX-208\""
+          }
+        },
+        {
+          "prompt": "The product's label shows the code B12-77. Store the product code.",
+          "answer": {
+            "type": "String",
+            "name": "productCode",
+            "operator": "=",
+            "value": "\"B12-77\""
+          }
+        },
+        {
+          "prompt": "The product's label shows the code QR-5093. Store the product code.",
+          "answer": {
+            "type": "String",
+            "name": "productCode",
+            "operator": "=",
+            "value": "\"QR-5093\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "itemsInCart",
+          "meaning": "Store the number of items in the cart."
+        },
+        {
+          "name": "shirtPrice",
+          "meaning": "Store the price in dollars."
+        },
+        {
+          "name": "couponApplied",
+          "meaning": "Record whether a coupon was used."
+        },
+        {
+          "name": "shirtSize",
+          "meaning": "Store the one-letter size."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "shopping",
+      "type": "char",
+      "name": "shirtSize",
+      "request": "Store the one-letter size.",
+      "acceptedNames": [
+        "shirtSize"
+      ],
+      "examples": [
+        {
+          "prompt": "The shirt's size tag says S (small). Store the one-letter size.",
+          "answer": {
+            "type": "char",
+            "name": "shirtSize",
+            "operator": "=",
+            "value": "'S'"
+          }
+        },
+        {
+          "prompt": "The shirt's size tag says M (medium). Store the one-letter size.",
+          "answer": {
+            "type": "char",
+            "name": "shirtSize",
+            "operator": "=",
+            "value": "'M'"
+          }
+        },
+        {
+          "prompt": "The shirt's size tag says L (large). Store the one-letter size.",
+          "answer": {
+            "type": "char",
+            "name": "shirtSize",
+            "operator": "=",
+            "value": "'L'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "itemsInCart",
+          "meaning": "Store the number of items in the cart."
+        },
+        {
+          "name": "shirtPrice",
+          "meaning": "Store the price in dollars."
+        },
+        {
+          "name": "couponApplied",
+          "meaning": "Record whether a coupon was used."
+        },
+        {
+          "name": "productCode",
+          "meaning": "Store the product code."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "science",
+      "type": "int",
+      "name": "trialCount",
+      "request": "Store the number of trials.",
+      "acceptedNames": [
+        "trialCount"
+      ],
+      "examples": [
+        {
+          "prompt": "The lab group repeated the experiment 3 times. Store the number of trials.",
+          "answer": {
+            "type": "int",
+            "name": "trialCount",
+            "operator": "=",
+            "value": "3"
+          }
+        },
+        {
+          "prompt": "The lab group repeated the experiment 12 times. Store the number of trials.",
+          "answer": {
+            "type": "int",
+            "name": "trialCount",
+            "operator": "=",
+            "value": "12"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "sampleMass",
+          "meaning": "Store the measured mass."
+        },
+        {
+          "name": "reactionObserved",
+          "meaning": "Record whether a reaction was observed."
+        },
+        {
+          "name": "elementSymbol",
+          "meaning": "Store the element symbol."
+        },
+        {
+          "name": "groupLabel",
+          "meaning": "Store the group's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "science",
+      "type": "double",
+      "name": "sampleMass",
+      "request": "Store the measured mass.",
+      "acceptedNames": [
+        "sampleMass"
+      ],
+      "examples": [
+        {
+          "prompt": "A sample has a mass of 1.2 grams. Store the measured mass.",
+          "answer": {
+            "type": "double",
+            "name": "sampleMass",
+            "operator": "=",
+            "value": "1.2"
+          }
+        },
+        {
+          "prompt": "A sample has a mass of 9.8 grams. Store the measured mass.",
+          "answer": {
+            "type": "double",
+            "name": "sampleMass",
+            "operator": "=",
+            "value": "9.8"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "trialCount",
+          "meaning": "Store the number of trials."
+        },
+        {
+          "name": "reactionObserved",
+          "meaning": "Record whether a reaction was observed."
+        },
+        {
+          "name": "elementSymbol",
+          "meaning": "Store the element symbol."
+        },
+        {
+          "name": "groupLabel",
+          "meaning": "Store the group's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "science",
+      "type": "boolean",
+      "name": "reactionObserved",
+      "request": "Record whether a reaction was observed.",
+      "acceptedNames": [
+        "reactionObserved"
+      ],
+      "examples": [
+        {
+          "prompt": "The solution bubbled, so a reaction was observed. Record whether a reaction was observed.",
+          "answer": {
+            "type": "boolean",
+            "name": "reactionObserved",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "Nothing changed, so no reaction was observed. Record whether a reaction was observed.",
+          "answer": {
+            "type": "boolean",
+            "name": "reactionObserved",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "trialCount",
+          "meaning": "Store the number of trials."
+        },
+        {
+          "name": "sampleMass",
+          "meaning": "Store the measured mass."
+        },
+        {
+          "name": "elementSymbol",
+          "meaning": "Store the element symbol."
+        },
+        {
+          "name": "groupLabel",
+          "meaning": "Store the group's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "science",
+      "type": "String",
+      "name": "elementSymbol",
+      "request": "Store the element symbol.",
+      "acceptedNames": [
+        "elementSymbol"
+      ],
+      "examples": [
+        {
+          "prompt": "The element being tested has the two-letter symbol Na. Store the element symbol.",
+          "answer": {
+            "type": "String",
+            "name": "elementSymbol",
+            "operator": "=",
+            "value": "\"Na\""
+          }
+        },
+        {
+          "prompt": "The element being tested has the two-letter symbol Fe. Store the element symbol.",
+          "answer": {
+            "type": "String",
+            "name": "elementSymbol",
+            "operator": "=",
+            "value": "\"Fe\""
+          }
+        },
+        {
+          "prompt": "The element being tested has the two-letter symbol Cu. Store the element symbol.",
+          "answer": {
+            "type": "String",
+            "name": "elementSymbol",
+            "operator": "=",
+            "value": "\"Cu\""
+          }
+        },
+        {
+          "prompt": "The element being tested has the two-letter symbol Mg. Store the element symbol.",
+          "answer": {
+            "type": "String",
+            "name": "elementSymbol",
+            "operator": "=",
+            "value": "\"Mg\""
+          }
+        },
+        {
+          "prompt": "The element being tested has the two-letter symbol He. Store the element symbol.",
+          "answer": {
+            "type": "String",
+            "name": "elementSymbol",
+            "operator": "=",
+            "value": "\"He\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "trialCount",
+          "meaning": "Store the number of trials."
+        },
+        {
+          "name": "sampleMass",
+          "meaning": "Store the measured mass."
+        },
+        {
+          "name": "reactionObserved",
+          "meaning": "Record whether a reaction was observed."
+        },
+        {
+          "name": "groupLabel",
+          "meaning": "Store the group's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "science",
+      "type": "char",
+      "name": "groupLabel",
+      "request": "Store the group's letter.",
+      "acceptedNames": [
+        "groupLabel"
+      ],
+      "examples": [
+        {
+          "prompt": "Each lab group has a letter. Your group is group C. Store the group's letter.",
+          "answer": {
+            "type": "char",
+            "name": "groupLabel",
+            "operator": "=",
+            "value": "'C'"
+          }
+        },
+        {
+          "prompt": "Each lab group has a letter. Your group is group B. Store the group's letter.",
+          "answer": {
+            "type": "char",
+            "name": "groupLabel",
+            "operator": "=",
+            "value": "'B'"
+          }
+        },
+        {
+          "prompt": "Each lab group has a letter. Your group is group E. Store the group's letter.",
+          "answer": {
+            "type": "char",
+            "name": "groupLabel",
+            "operator": "=",
+            "value": "'E'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "trialCount",
+          "meaning": "Store the number of trials."
+        },
+        {
+          "name": "sampleMass",
+          "meaning": "Store the measured mass."
+        },
+        {
+          "name": "reactionObserved",
+          "meaning": "Record whether a reaction was observed."
+        },
+        {
+          "name": "elementSymbol",
+          "meaning": "Store the element symbol."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "kitchen",
+      "type": "int",
+      "name": "eggsNeeded",
+      "request": "Store the number of eggs.",
+      "acceptedNames": [
+        "eggsNeeded"
+      ],
+      "examples": [
+        {
+          "prompt": "A pancake recipe calls for 2 eggs. Store the number of eggs.",
+          "answer": {
+            "type": "int",
+            "name": "eggsNeeded",
+            "operator": "=",
+            "value": "2"
+          }
+        },
+        {
+          "prompt": "A pancake recipe calls for 6 eggs. Store the number of eggs.",
+          "answer": {
+            "type": "int",
+            "name": "eggsNeeded",
+            "operator": "=",
+            "value": "6"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "cupsOfFlour",
+          "meaning": "Store the amount of flour in cups."
+        },
+        {
+          "name": "ovenPreheated",
+          "meaning": "Record whether the oven is preheated."
+        },
+        {
+          "name": "recipeName",
+          "meaning": "Store the recipe name."
+        },
+        {
+          "name": "spiceLevel",
+          "meaning": "Store the one-letter spice level."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "kitchen",
+      "type": "double",
+      "name": "cupsOfFlour",
+      "request": "Store the amount of flour in cups.",
+      "acceptedNames": [
+        "cupsOfFlour"
+      ],
+      "examples": [
+        {
+          "prompt": "The recipe needs 1.25 cups of flour. Store the amount of flour in cups.",
+          "answer": {
+            "type": "double",
+            "name": "cupsOfFlour",
+            "operator": "=",
+            "value": "1.25"
+          }
+        },
+        {
+          "prompt": "The recipe needs 3.75 cups of flour. Store the amount of flour in cups.",
+          "answer": {
+            "type": "double",
+            "name": "cupsOfFlour",
+            "operator": "=",
+            "value": "3.75"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "eggsNeeded",
+          "meaning": "Store the number of eggs."
+        },
+        {
+          "name": "ovenPreheated",
+          "meaning": "Record whether the oven is preheated."
+        },
+        {
+          "name": "recipeName",
+          "meaning": "Store the recipe name."
+        },
+        {
+          "name": "spiceLevel",
+          "meaning": "Store the one-letter spice level."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "kitchen",
+      "type": "boolean",
+      "name": "ovenPreheated",
+      "request": "Record whether the oven is preheated.",
+      "acceptedNames": [
+        "ovenPreheated"
+      ],
+      "examples": [
+        {
+          "prompt": "The oven has finished preheating. Record whether the oven is preheated.",
+          "answer": {
+            "type": "boolean",
+            "name": "ovenPreheated",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The oven is still heating up. Record whether the oven is preheated.",
+          "answer": {
+            "type": "boolean",
+            "name": "ovenPreheated",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "eggsNeeded",
+          "meaning": "Store the number of eggs."
+        },
+        {
+          "name": "cupsOfFlour",
+          "meaning": "Store the amount of flour in cups."
+        },
+        {
+          "name": "recipeName",
+          "meaning": "Store the recipe name."
+        },
+        {
+          "name": "spiceLevel",
+          "meaning": "Store the one-letter spice level."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "kitchen",
+      "type": "String",
+      "name": "recipeName",
+      "request": "Store the recipe name.",
+      "acceptedNames": [
+        "recipeName"
+      ],
+      "examples": [
+        {
+          "prompt": "Tonight's recipe is Banana Bread. Store the recipe name.",
+          "answer": {
+            "type": "String",
+            "name": "recipeName",
+            "operator": "=",
+            "value": "\"Banana Bread\""
+          }
+        },
+        {
+          "prompt": "Tonight's recipe is Veggie Tacos. Store the recipe name.",
+          "answer": {
+            "type": "String",
+            "name": "recipeName",
+            "operator": "=",
+            "value": "\"Veggie Tacos\""
+          }
+        },
+        {
+          "prompt": "Tonight's recipe is Lemon Muffins. Store the recipe name.",
+          "answer": {
+            "type": "String",
+            "name": "recipeName",
+            "operator": "=",
+            "value": "\"Lemon Muffins\""
+          }
+        },
+        {
+          "prompt": "Tonight's recipe is Fried Rice. Store the recipe name.",
+          "answer": {
+            "type": "String",
+            "name": "recipeName",
+            "operator": "=",
+            "value": "\"Fried Rice\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "eggsNeeded",
+          "meaning": "Store the number of eggs."
+        },
+        {
+          "name": "cupsOfFlour",
+          "meaning": "Store the amount of flour in cups."
+        },
+        {
+          "name": "ovenPreheated",
+          "meaning": "Record whether the oven is preheated."
+        },
+        {
+          "name": "spiceLevel",
+          "meaning": "Store the one-letter spice level."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "kitchen",
+      "type": "char",
+      "name": "spiceLevel",
+      "request": "Store the one-letter spice level.",
+      "acceptedNames": [
+        "spiceLevel"
+      ],
+      "examples": [
+        {
+          "prompt": "The salsa jar labels its spice level as the letter M (for Mild). Store the one-letter spice level.",
+          "answer": {
+            "type": "char",
+            "name": "spiceLevel",
+            "operator": "=",
+            "value": "'M'"
+          }
+        },
+        {
+          "prompt": "The salsa jar labels its spice level as the letter H (for Hot). Store the one-letter spice level.",
+          "answer": {
+            "type": "char",
+            "name": "spiceLevel",
+            "operator": "=",
+            "value": "'H'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "eggsNeeded",
+          "meaning": "Store the number of eggs."
+        },
+        {
+          "name": "cupsOfFlour",
+          "meaning": "Store the amount of flour in cups."
+        },
+        {
+          "name": "ovenPreheated",
+          "meaning": "Record whether the oven is preheated."
+        },
+        {
+          "name": "recipeName",
+          "meaning": "Store the recipe name."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "technology",
+      "type": "int",
+      "name": "batteryPercent",
+      "request": "Store the battery percentage.",
+      "acceptedNames": [
+        "batteryPercent"
+      ],
+      "examples": [
+        {
+          "prompt": "A phone shows 12% battery remaining. Store the battery percentage.",
+          "answer": {
+            "type": "int",
+            "name": "batteryPercent",
+            "operator": "=",
+            "value": "12"
+          }
+        },
+        {
+          "prompt": "A phone shows 98% battery remaining. Store the battery percentage.",
+          "answer": {
+            "type": "int",
+            "name": "batteryPercent",
+            "operator": "=",
+            "value": "98"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "downloadSpeed",
+          "meaning": "Store the download speed."
+        },
+        {
+          "name": "wifiConnected",
+          "meaning": "Record whether the laptop is connected."
+        },
+        {
+          "name": "deviceName",
+          "meaning": "Store the device's name."
+        },
+        {
+          "name": "keyPressed",
+          "meaning": "Store the uppercase letter of the key that was pressed."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "technology",
+      "type": "double",
+      "name": "downloadSpeed",
+      "request": "Store the download speed.",
+      "acceptedNames": [
+        "downloadSpeed"
+      ],
+      "examples": [
+        {
+          "prompt": "A speed test measured 12.5 megabits per second. Store the download speed.",
+          "answer": {
+            "type": "double",
+            "name": "downloadSpeed",
+            "operator": "=",
+            "value": "12.5"
+          }
+        },
+        {
+          "prompt": "A speed test measured 95.5 megabits per second. Store the download speed.",
+          "answer": {
+            "type": "double",
+            "name": "downloadSpeed",
+            "operator": "=",
+            "value": "95.5"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "batteryPercent",
+          "meaning": "Store the battery percentage."
+        },
+        {
+          "name": "wifiConnected",
+          "meaning": "Record whether the laptop is connected."
+        },
+        {
+          "name": "deviceName",
+          "meaning": "Store the device's name."
+        },
+        {
+          "name": "keyPressed",
+          "meaning": "Store the uppercase letter of the key that was pressed."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "technology",
+      "type": "boolean",
+      "name": "wifiConnected",
+      "request": "Record whether the laptop is connected.",
+      "acceptedNames": [
+        "wifiConnected"
+      ],
+      "examples": [
+        {
+          "prompt": "The laptop is connected to Wi-Fi. Record whether the laptop is connected.",
+          "answer": {
+            "type": "boolean",
+            "name": "wifiConnected",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The laptop is not connected to Wi-Fi. Record whether the laptop is connected.",
+          "answer": {
+            "type": "boolean",
+            "name": "wifiConnected",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "batteryPercent",
+          "meaning": "Store the battery percentage."
+        },
+        {
+          "name": "downloadSpeed",
+          "meaning": "Store the download speed."
+        },
+        {
+          "name": "deviceName",
+          "meaning": "Store the device's name."
+        },
+        {
+          "name": "keyPressed",
+          "meaning": "Store the uppercase letter of the key that was pressed."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "technology",
+      "type": "String",
+      "name": "deviceName",
+      "request": "Store the device's name.",
+      "acceptedNames": [
+        "deviceName"
+      ],
+      "examples": [
+        {
+          "prompt": "The device appears on the network as Room 12 Chromebook. Store the device's name.",
+          "answer": {
+            "type": "String",
+            "name": "deviceName",
+            "operator": "=",
+            "value": "\"Room 12 Chromebook\""
+          }
+        },
+        {
+          "prompt": "The device appears on the network as Library Tablet. Store the device's name.",
+          "answer": {
+            "type": "String",
+            "name": "deviceName",
+            "operator": "=",
+            "value": "\"Library Tablet\""
+          }
+        },
+        {
+          "prompt": "The device appears on the network as Lab PC 3. Store the device's name.",
+          "answer": {
+            "type": "String",
+            "name": "deviceName",
+            "operator": "=",
+            "value": "\"Lab PC 3\""
+          }
+        },
+        {
+          "prompt": "The device appears on the network as Front Desk Laptop. Store the device's name.",
+          "answer": {
+            "type": "String",
+            "name": "deviceName",
+            "operator": "=",
+            "value": "\"Front Desk Laptop\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "batteryPercent",
+          "meaning": "Store the battery percentage."
+        },
+        {
+          "name": "downloadSpeed",
+          "meaning": "Store the download speed."
+        },
+        {
+          "name": "wifiConnected",
+          "meaning": "Record whether the laptop is connected."
+        },
+        {
+          "name": "keyPressed",
+          "meaning": "Store the uppercase letter of the key that was pressed."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "technology",
+      "type": "char",
+      "name": "keyPressed",
+      "request": "Store the uppercase letter of the key that was pressed.",
+      "acceptedNames": [
+        "keyPressed"
+      ],
+      "examples": [
+        {
+          "prompt": "A game is waiting for input, and the user presses the Q key. Store the uppercase letter of the key that was pressed.",
+          "answer": {
+            "type": "char",
+            "name": "keyPressed",
+            "operator": "=",
+            "value": "'Q'"
+          }
+        },
+        {
+          "prompt": "A game is waiting for input, and the user presses the W key. Store the uppercase letter of the key that was pressed.",
+          "answer": {
+            "type": "char",
+            "name": "keyPressed",
+            "operator": "=",
+            "value": "'W'"
+          }
+        },
+        {
+          "prompt": "A game is waiting for input, and the user presses the P key. Store the uppercase letter of the key that was pressed.",
+          "answer": {
+            "type": "char",
+            "name": "keyPressed",
+            "operator": "=",
+            "value": "'P'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "batteryPercent",
+          "meaning": "Store the battery percentage."
+        },
+        {
+          "name": "downloadSpeed",
+          "meaning": "Store the download speed."
+        },
+        {
+          "name": "wifiConnected",
+          "meaning": "Record whether the laptop is connected."
+        },
+        {
+          "name": "deviceName",
+          "meaning": "Store the device's name."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "transportation",
+      "type": "int",
+      "name": "busRoute",
+      "request": "Store the route number.",
+      "acceptedNames": [
+        "busRoute"
+      ],
+      "examples": [
+        {
+          "prompt": "You ride city bus route 5 to school. Store the route number.",
+          "answer": {
+            "type": "int",
+            "name": "busRoute",
+            "operator": "=",
+            "value": "5"
+          }
+        },
+        {
+          "prompt": "You ride city bus route 118 to school. Store the route number.",
+          "answer": {
+            "type": "int",
+            "name": "busRoute",
+            "operator": "=",
+            "value": "118"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "tripDistance",
+          "meaning": "Store the trip distance."
+        },
+        {
+          "name": "trainDelayed",
+          "meaning": "Record whether the train is delayed."
+        },
+        {
+          "name": "flightCode",
+          "meaning": "Store the flight code."
+        },
+        {
+          "name": "terminalGate",
+          "meaning": "Store the gate area's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "transportation",
+      "type": "double",
+      "name": "tripDistance",
+      "request": "Store the trip distance.",
+      "acceptedNames": [
+        "tripDistance"
+      ],
+      "examples": [
+        {
+          "prompt": "The drive to the stadium is 2.4 miles. Store the trip distance.",
+          "answer": {
+            "type": "double",
+            "name": "tripDistance",
+            "operator": "=",
+            "value": "2.4"
+          }
+        },
+        {
+          "prompt": "The drive to the stadium is 38.6 miles. Store the trip distance.",
+          "answer": {
+            "type": "double",
+            "name": "tripDistance",
+            "operator": "=",
+            "value": "38.6"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "busRoute",
+          "meaning": "Store the route number."
+        },
+        {
+          "name": "trainDelayed",
+          "meaning": "Record whether the train is delayed."
+        },
+        {
+          "name": "flightCode",
+          "meaning": "Store the flight code."
+        },
+        {
+          "name": "terminalGate",
+          "meaning": "Store the gate area's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "transportation",
+      "type": "boolean",
+      "name": "trainDelayed",
+      "request": "Record whether the train is delayed.",
+      "acceptedNames": [
+        "trainDelayed"
+      ],
+      "examples": [
+        {
+          "prompt": "The arrivals board says the train is delayed. Record whether the train is delayed.",
+          "answer": {
+            "type": "boolean",
+            "name": "trainDelayed",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The arrivals board says the train is on time. Record whether the train is delayed.",
+          "answer": {
+            "type": "boolean",
+            "name": "trainDelayed",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "busRoute",
+          "meaning": "Store the route number."
+        },
+        {
+          "name": "tripDistance",
+          "meaning": "Store the trip distance."
+        },
+        {
+          "name": "flightCode",
+          "meaning": "Store the flight code."
+        },
+        {
+          "name": "terminalGate",
+          "meaning": "Store the gate area's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "transportation",
+      "type": "String",
+      "name": "flightCode",
+      "request": "Store the flight code.",
+      "acceptedNames": [
+        "flightCode"
+      ],
+      "examples": [
+        {
+          "prompt": "Your flight is listed as UA482. Store the flight code.",
+          "answer": {
+            "type": "String",
+            "name": "flightCode",
+            "operator": "=",
+            "value": "\"UA482\""
+          }
+        },
+        {
+          "prompt": "Your flight is listed as DL1207. Store the flight code.",
+          "answer": {
+            "type": "String",
+            "name": "flightCode",
+            "operator": "=",
+            "value": "\"DL1207\""
+          }
+        },
+        {
+          "prompt": "Your flight is listed as WN35. Store the flight code.",
+          "answer": {
+            "type": "String",
+            "name": "flightCode",
+            "operator": "=",
+            "value": "\"WN35\""
+          }
+        },
+        {
+          "prompt": "Your flight is listed as AA918. Store the flight code.",
+          "answer": {
+            "type": "String",
+            "name": "flightCode",
+            "operator": "=",
+            "value": "\"AA918\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "busRoute",
+          "meaning": "Store the route number."
+        },
+        {
+          "name": "tripDistance",
+          "meaning": "Store the trip distance."
+        },
+        {
+          "name": "trainDelayed",
+          "meaning": "Record whether the train is delayed."
+        },
+        {
+          "name": "terminalGate",
+          "meaning": "Store the gate area's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "transportation",
+      "type": "char",
+      "name": "terminalGate",
+      "request": "Store the gate area's letter.",
+      "acceptedNames": [
+        "terminalGate"
+      ],
+      "examples": [
+        {
+          "prompt": "The flight leaves from gate area B. Store the gate area's letter.",
+          "answer": {
+            "type": "char",
+            "name": "terminalGate",
+            "operator": "=",
+            "value": "'B'"
+          }
+        },
+        {
+          "prompt": "The flight leaves from gate area C. Store the gate area's letter.",
+          "answer": {
+            "type": "char",
+            "name": "terminalGate",
+            "operator": "=",
+            "value": "'C'"
+          }
+        },
+        {
+          "prompt": "The flight leaves from gate area D. Store the gate area's letter.",
+          "answer": {
+            "type": "char",
+            "name": "terminalGate",
+            "operator": "=",
+            "value": "'D'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "busRoute",
+          "meaning": "Store the route number."
+        },
+        {
+          "name": "tripDistance",
+          "meaning": "Store the trip distance."
+        },
+        {
+          "name": "trainDelayed",
+          "meaning": "Record whether the train is delayed."
+        },
+        {
+          "name": "flightCode",
+          "meaning": "Store the flight code."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "events",
+      "type": "int",
+      "name": "ticketsSold",
+      "request": "Store the number of tickets sold.",
+      "acceptedNames": [
+        "ticketsSold"
+      ],
+      "examples": [
+        {
+          "prompt": "The concert sold 1250 tickets. Store the number of tickets sold.",
+          "answer": {
+            "type": "int",
+            "name": "ticketsSold",
+            "operator": "=",
+            "value": "1250"
+          }
+        },
+        {
+          "prompt": "The concert sold 9800 tickets. Store the number of tickets sold.",
+          "answer": {
+            "type": "int",
+            "name": "ticketsSold",
+            "operator": "=",
+            "value": "9800"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "ticketPrice",
+          "meaning": "Store the ticket price in dollars."
+        },
+        {
+          "name": "eventCancelled",
+          "meaning": "Record whether the festival is cancelled."
+        },
+        {
+          "name": "venueName",
+          "meaning": "Store the venue's name."
+        },
+        {
+          "name": "seatSection",
+          "meaning": "Store the section letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "events",
+      "type": "double",
+      "name": "ticketPrice",
+      "request": "Store the ticket price in dollars.",
+      "acceptedNames": [
+        "ticketPrice"
+      ],
+      "examples": [
+        {
+          "prompt": "Each concert ticket costs $12.50. Store the ticket price in dollars.",
+          "answer": {
+            "type": "double",
+            "name": "ticketPrice",
+            "operator": "=",
+            "value": "12.50"
+          }
+        },
+        {
+          "prompt": "Each concert ticket costs $64.50. Store the ticket price in dollars.",
+          "answer": {
+            "type": "double",
+            "name": "ticketPrice",
+            "operator": "=",
+            "value": "64.50"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "ticketsSold",
+          "meaning": "Store the number of tickets sold."
+        },
+        {
+          "name": "eventCancelled",
+          "meaning": "Record whether the festival is cancelled."
+        },
+        {
+          "name": "venueName",
+          "meaning": "Store the venue's name."
+        },
+        {
+          "name": "seatSection",
+          "meaning": "Store the section letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "events",
+      "type": "boolean",
+      "name": "eventCancelled",
+      "request": "Record whether the festival is cancelled.",
+      "acceptedNames": [
+        "eventCancelled"
+      ],
+      "examples": [
+        {
+          "prompt": "Because of a storm, the outdoor festival was cancelled. Record whether the festival is cancelled.",
+          "answer": {
+            "type": "boolean",
+            "name": "eventCancelled",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The weather cleared, so the outdoor festival will go on as planned. Record whether the festival is cancelled.",
+          "answer": {
+            "type": "boolean",
+            "name": "eventCancelled",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "ticketsSold",
+          "meaning": "Store the number of tickets sold."
+        },
+        {
+          "name": "ticketPrice",
+          "meaning": "Store the ticket price in dollars."
+        },
+        {
+          "name": "venueName",
+          "meaning": "Store the venue's name."
+        },
+        {
+          "name": "seatSection",
+          "meaning": "Store the section letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "events",
+      "type": "String",
+      "name": "venueName",
+      "request": "Store the venue's name.",
+      "acceptedNames": [
+        "venueName"
+      ],
+      "examples": [
+        {
+          "prompt": "The concert will be held at Desert Arena. Store the venue's name.",
+          "answer": {
+            "type": "String",
+            "name": "venueName",
+            "operator": "=",
+            "value": "\"Desert Arena\""
+          }
+        },
+        {
+          "prompt": "The concert will be held at Riverside Park. Store the venue's name.",
+          "answer": {
+            "type": "String",
+            "name": "venueName",
+            "operator": "=",
+            "value": "\"Riverside Park\""
+          }
+        },
+        {
+          "prompt": "The concert will be held at Main Street Hall. Store the venue's name.",
+          "answer": {
+            "type": "String",
+            "name": "venueName",
+            "operator": "=",
+            "value": "\"Main Street Hall\""
+          }
+        },
+        {
+          "prompt": "The concert will be held at Sunset Theater. Store the venue's name.",
+          "answer": {
+            "type": "String",
+            "name": "venueName",
+            "operator": "=",
+            "value": "\"Sunset Theater\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "ticketsSold",
+          "meaning": "Store the number of tickets sold."
+        },
+        {
+          "name": "ticketPrice",
+          "meaning": "Store the ticket price in dollars."
+        },
+        {
+          "name": "eventCancelled",
+          "meaning": "Record whether the festival is cancelled."
+        },
+        {
+          "name": "seatSection",
+          "meaning": "Store the section letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "events",
+      "type": "char",
+      "name": "seatSection",
+      "request": "Store the section letter.",
+      "acceptedNames": [
+        "seatSection"
+      ],
+      "examples": [
+        {
+          "prompt": "Your ticket is for seating section G. Store the section letter.",
+          "answer": {
+            "type": "char",
+            "name": "seatSection",
+            "operator": "=",
+            "value": "'G'"
+          }
+        },
+        {
+          "prompt": "Your ticket is for seating section H. Store the section letter.",
+          "answer": {
+            "type": "char",
+            "name": "seatSection",
+            "operator": "=",
+            "value": "'H'"
+          }
+        },
+        {
+          "prompt": "Your ticket is for seating section J. Store the section letter.",
+          "answer": {
+            "type": "char",
+            "name": "seatSection",
+            "operator": "=",
+            "value": "'J'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "ticketsSold",
+          "meaning": "Store the number of tickets sold."
+        },
+        {
+          "name": "ticketPrice",
+          "meaning": "Store the ticket price in dollars."
+        },
+        {
+          "name": "eventCancelled",
+          "meaning": "Record whether the festival is cancelled."
+        },
+        {
+          "name": "venueName",
+          "meaning": "Store the venue's name."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "fitness",
+      "type": "int",
+      "name": "dailySteps",
+      "request": "Store today's step count.",
+      "acceptedNames": [
+        "dailySteps"
+      ],
+      "examples": [
+        {
+          "prompt": "A fitness tracker counted 3200 steps today. Store today's step count.",
+          "answer": {
+            "type": "int",
+            "name": "dailySteps",
+            "operator": "=",
+            "value": "3200"
+          }
+        },
+        {
+          "prompt": "A fitness tracker counted 14800 steps today. Store today's step count.",
+          "answer": {
+            "type": "int",
+            "name": "dailySteps",
+            "operator": "=",
+            "value": "14800"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "bodyTemperature",
+          "meaning": "Store the temperature reading."
+        },
+        {
+          "name": "workoutFinished",
+          "meaning": "Record whether the workout was finished."
+        },
+        {
+          "name": "exerciseName",
+          "meaning": "Store the exercise name."
+        },
+        {
+          "name": "intensityLevel",
+          "meaning": "Store the one-letter intensity setting."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "fitness",
+      "type": "double",
+      "name": "bodyTemperature",
+      "request": "Store the temperature reading.",
+      "acceptedNames": [
+        "bodyTemperature"
+      ],
+      "examples": [
+        {
+          "prompt": "A thermometer reads 97.1 degrees Fahrenheit. Store the temperature reading.",
+          "answer": {
+            "type": "double",
+            "name": "bodyTemperature",
+            "operator": "=",
+            "value": "97.1"
+          }
+        },
+        {
+          "prompt": "A thermometer reads 99.4 degrees Fahrenheit. Store the temperature reading.",
+          "answer": {
+            "type": "double",
+            "name": "bodyTemperature",
+            "operator": "=",
+            "value": "99.4"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "dailySteps",
+          "meaning": "Store today's step count."
+        },
+        {
+          "name": "workoutFinished",
+          "meaning": "Record whether the workout was finished."
+        },
+        {
+          "name": "exerciseName",
+          "meaning": "Store the exercise name."
+        },
+        {
+          "name": "intensityLevel",
+          "meaning": "Store the one-letter intensity setting."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "fitness",
+      "type": "boolean",
+      "name": "workoutFinished",
+      "request": "Record whether the workout was finished.",
+      "acceptedNames": [
+        "workoutFinished"
+      ],
+      "examples": [
+        {
+          "prompt": "Lee completed the entire workout. Record whether the workout was finished.",
+          "answer": {
+            "type": "boolean",
+            "name": "workoutFinished",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "Lee stopped before finishing the workout. Record whether the workout was finished.",
+          "answer": {
+            "type": "boolean",
+            "name": "workoutFinished",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "dailySteps",
+          "meaning": "Store today's step count."
+        },
+        {
+          "name": "bodyTemperature",
+          "meaning": "Store the temperature reading."
+        },
+        {
+          "name": "exerciseName",
+          "meaning": "Store the exercise name."
+        },
+        {
+          "name": "intensityLevel",
+          "meaning": "Store the one-letter intensity setting."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "fitness",
+      "type": "String",
+      "name": "exerciseName",
+      "request": "Store the exercise name.",
+      "acceptedNames": [
+        "exerciseName"
+      ],
+      "examples": [
+        {
+          "prompt": "The first exercise in the routine is Jumping Jacks. Store the exercise name.",
+          "answer": {
+            "type": "String",
+            "name": "exerciseName",
+            "operator": "=",
+            "value": "\"Jumping Jacks\""
+          }
+        },
+        {
+          "prompt": "The first exercise in the routine is Push-ups. Store the exercise name.",
+          "answer": {
+            "type": "String",
+            "name": "exerciseName",
+            "operator": "=",
+            "value": "\"Push-ups\""
+          }
+        },
+        {
+          "prompt": "The first exercise in the routine is Plank. Store the exercise name.",
+          "answer": {
+            "type": "String",
+            "name": "exerciseName",
+            "operator": "=",
+            "value": "\"Plank\""
+          }
+        },
+        {
+          "prompt": "The first exercise in the routine is Lunges. Store the exercise name.",
+          "answer": {
+            "type": "String",
+            "name": "exerciseName",
+            "operator": "=",
+            "value": "\"Lunges\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "dailySteps",
+          "meaning": "Store today's step count."
+        },
+        {
+          "name": "bodyTemperature",
+          "meaning": "Store the temperature reading."
+        },
+        {
+          "name": "workoutFinished",
+          "meaning": "Record whether the workout was finished."
+        },
+        {
+          "name": "intensityLevel",
+          "meaning": "Store the one-letter intensity setting."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "fitness",
+      "type": "char",
+      "name": "intensityLevel",
+      "request": "Store the one-letter intensity setting.",
+      "acceptedNames": [
+        "intensityLevel"
+      ],
+      "examples": [
+        {
+          "prompt": "The treadmill shows its intensity setting as the letter L (for Low). Store the one-letter intensity setting.",
+          "answer": {
+            "type": "char",
+            "name": "intensityLevel",
+            "operator": "=",
+            "value": "'L'"
+          }
+        },
+        {
+          "prompt": "The treadmill shows its intensity setting as the letter H (for High). Store the one-letter intensity setting.",
+          "answer": {
+            "type": "char",
+            "name": "intensityLevel",
+            "operator": "=",
+            "value": "'H'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "dailySteps",
+          "meaning": "Store today's step count."
+        },
+        {
+          "name": "bodyTemperature",
+          "meaning": "Store the temperature reading."
+        },
+        {
+          "name": "workoutFinished",
+          "meaning": "Record whether the workout was finished."
+        },
+        {
+          "name": "exerciseName",
+          "meaning": "Store the exercise name."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "weather",
+      "type": "int",
+      "name": "humidityPercent",
+      "request": "Store the humidity percentage.",
+      "acceptedNames": [
+        "humidityPercent"
+      ],
+      "examples": [
+        {
+          "prompt": "The weather app shows humidity at 8%. Store the humidity percentage.",
+          "answer": {
+            "type": "int",
+            "name": "humidityPercent",
+            "operator": "=",
+            "value": "8"
+          }
+        },
+        {
+          "prompt": "The weather app shows humidity at 64%. Store the humidity percentage.",
+          "answer": {
+            "type": "int",
+            "name": "humidityPercent",
+            "operator": "=",
+            "value": "64"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "rainfallInches",
+          "meaning": "Store the rainfall amount."
+        },
+        {
+          "name": "rainExpected",
+          "meaning": "Record whether rain is expected."
+        },
+        {
+          "name": "forecastSummary",
+          "meaning": "Store the forecast summary."
+        },
+        {
+          "name": "windDirection",
+          "meaning": "Store the one-letter wind direction."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "weather",
+      "type": "double",
+      "name": "rainfallInches",
+      "request": "Store the rainfall amount.",
+      "acceptedNames": [
+        "rainfallInches"
+      ],
+      "examples": [
+        {
+          "prompt": "The storm dropped 0.2 inches of rain. Store the rainfall amount.",
+          "answer": {
+            "type": "double",
+            "name": "rainfallInches",
+            "operator": "=",
+            "value": "0.2"
+          }
+        },
+        {
+          "prompt": "The storm dropped 2.8 inches of rain. Store the rainfall amount.",
+          "answer": {
+            "type": "double",
+            "name": "rainfallInches",
+            "operator": "=",
+            "value": "2.8"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "humidityPercent",
+          "meaning": "Store the humidity percentage."
+        },
+        {
+          "name": "rainExpected",
+          "meaning": "Record whether rain is expected."
+        },
+        {
+          "name": "forecastSummary",
+          "meaning": "Store the forecast summary."
+        },
+        {
+          "name": "windDirection",
+          "meaning": "Store the one-letter wind direction."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "weather",
+      "type": "boolean",
+      "name": "rainExpected",
+      "request": "Record whether rain is expected.",
+      "acceptedNames": [
+        "rainExpected"
+      ],
+      "examples": [
+        {
+          "prompt": "The forecast says rain is expected tomorrow. Record whether rain is expected.",
+          "answer": {
+            "type": "boolean",
+            "name": "rainExpected",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The forecast says no rain is expected tomorrow. Record whether rain is expected.",
+          "answer": {
+            "type": "boolean",
+            "name": "rainExpected",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "humidityPercent",
+          "meaning": "Store the humidity percentage."
+        },
+        {
+          "name": "rainfallInches",
+          "meaning": "Store the rainfall amount."
+        },
+        {
+          "name": "forecastSummary",
+          "meaning": "Store the forecast summary."
+        },
+        {
+          "name": "windDirection",
+          "meaning": "Store the one-letter wind direction."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "weather",
+      "type": "String",
+      "name": "forecastSummary",
+      "request": "Store the forecast summary.",
+      "acceptedNames": [
+        "forecastSummary"
+      ],
+      "examples": [
+        {
+          "prompt": "Today's forecast reads: Partly cloudy. Store the forecast summary.",
+          "answer": {
+            "type": "String",
+            "name": "forecastSummary",
+            "operator": "=",
+            "value": "\"Partly cloudy\""
+          }
+        },
+        {
+          "prompt": "Today's forecast reads: Sunny and hot. Store the forecast summary.",
+          "answer": {
+            "type": "String",
+            "name": "forecastSummary",
+            "operator": "=",
+            "value": "\"Sunny and hot\""
+          }
+        },
+        {
+          "prompt": "Today's forecast reads: Windy. Store the forecast summary.",
+          "answer": {
+            "type": "String",
+            "name": "forecastSummary",
+            "operator": "=",
+            "value": "\"Windy\""
+          }
+        },
+        {
+          "prompt": "Today's forecast reads: Light showers. Store the forecast summary.",
+          "answer": {
+            "type": "String",
+            "name": "forecastSummary",
+            "operator": "=",
+            "value": "\"Light showers\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "humidityPercent",
+          "meaning": "Store the humidity percentage."
+        },
+        {
+          "name": "rainfallInches",
+          "meaning": "Store the rainfall amount."
+        },
+        {
+          "name": "rainExpected",
+          "meaning": "Record whether rain is expected."
+        },
+        {
+          "name": "windDirection",
+          "meaning": "Store the one-letter wind direction."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "weather",
+      "type": "char",
+      "name": "windDirection",
+      "request": "Store the one-letter wind direction.",
+      "acceptedNames": [
+        "windDirection"
+      ],
+      "examples": [
+        {
+          "prompt": "The weather vane shows the wind coming from N (north). Store the one-letter wind direction.",
+          "answer": {
+            "type": "char",
+            "name": "windDirection",
+            "operator": "=",
+            "value": "'N'"
+          }
+        },
+        {
+          "prompt": "The weather vane shows the wind coming from S (south). Store the one-letter wind direction.",
+          "answer": {
+            "type": "char",
+            "name": "windDirection",
+            "operator": "=",
+            "value": "'S'"
+          }
+        },
+        {
+          "prompt": "The weather vane shows the wind coming from E (east). Store the one-letter wind direction.",
+          "answer": {
+            "type": "char",
+            "name": "windDirection",
+            "operator": "=",
+            "value": "'E'"
+          }
+        },
+        {
+          "prompt": "The weather vane shows the wind coming from W (west). Store the one-letter wind direction.",
+          "answer": {
+            "type": "char",
+            "name": "windDirection",
+            "operator": "=",
+            "value": "'W'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "humidityPercent",
+          "meaning": "Store the humidity percentage."
+        },
+        {
+          "name": "rainfallInches",
+          "meaning": "Store the rainfall amount."
+        },
+        {
+          "name": "rainExpected",
+          "meaning": "Record whether rain is expected."
+        },
+        {
+          "name": "forecastSummary",
+          "meaning": "Store the forecast summary."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "music",
+      "type": "int",
+      "name": "beatsPerMinute",
+      "request": "Store the tempo.",
+      "acceptedNames": [
+        "beatsPerMinute"
+      ],
+      "examples": [
+        {
+          "prompt": "A song has a tempo of 72 beats per minute. Store the tempo.",
+          "answer": {
+            "type": "int",
+            "name": "beatsPerMinute",
+            "operator": "=",
+            "value": "72"
+          }
+        },
+        {
+          "prompt": "A song has a tempo of 168 beats per minute. Store the tempo.",
+          "answer": {
+            "type": "int",
+            "name": "beatsPerMinute",
+            "operator": "=",
+            "value": "168"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "songLength",
+          "meaning": "Store the song length in minutes."
+        },
+        {
+          "name": "isPlaying",
+          "meaning": "Record whether music is playing."
+        },
+        {
+          "name": "songTitle",
+          "meaning": "Store the song title."
+        },
+        {
+          "name": "musicalNote",
+          "meaning": "Store the note's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "music",
+      "type": "double",
+      "name": "songLength",
+      "request": "Store the song length in minutes.",
+      "acceptedNames": [
+        "songLength"
+      ],
+      "examples": [
+        {
+          "prompt": "A song lasts 2.50 minutes. Store the song length in minutes.",
+          "answer": {
+            "type": "double",
+            "name": "songLength",
+            "operator": "=",
+            "value": "2.50"
+          }
+        },
+        {
+          "prompt": "A song lasts 5.75 minutes. Store the song length in minutes.",
+          "answer": {
+            "type": "double",
+            "name": "songLength",
+            "operator": "=",
+            "value": "5.75"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "beatsPerMinute",
+          "meaning": "Store the tempo."
+        },
+        {
+          "name": "isPlaying",
+          "meaning": "Record whether music is playing."
+        },
+        {
+          "name": "songTitle",
+          "meaning": "Store the song title."
+        },
+        {
+          "name": "musicalNote",
+          "meaning": "Store the note's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "music",
+      "type": "boolean",
+      "name": "isPlaying",
+      "request": "Record whether music is playing.",
+      "acceptedNames": [
+        "isPlaying"
+      ],
+      "examples": [
+        {
+          "prompt": "The music app is playing a song right now. Record whether music is playing.",
+          "answer": {
+            "type": "boolean",
+            "name": "isPlaying",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The music app is paused. Record whether music is playing.",
+          "answer": {
+            "type": "boolean",
+            "name": "isPlaying",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "beatsPerMinute",
+          "meaning": "Store the tempo."
+        },
+        {
+          "name": "songLength",
+          "meaning": "Store the song length in minutes."
+        },
+        {
+          "name": "songTitle",
+          "meaning": "Store the song title."
+        },
+        {
+          "name": "musicalNote",
+          "meaning": "Store the note's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "music",
+      "type": "String",
+      "name": "songTitle",
+      "request": "Store the song title.",
+      "acceptedNames": [
+        "songTitle"
+      ],
+      "examples": [
+        {
+          "prompt": "The song on the radio is called Golden Hour. Store the song title.",
+          "answer": {
+            "type": "String",
+            "name": "songTitle",
+            "operator": "=",
+            "value": "\"Golden Hour\""
+          }
+        },
+        {
+          "prompt": "The song on the radio is called City Lights. Store the song title.",
+          "answer": {
+            "type": "String",
+            "name": "songTitle",
+            "operator": "=",
+            "value": "\"City Lights\""
+          }
+        },
+        {
+          "prompt": "The song on the radio is called Echoes. Store the song title.",
+          "answer": {
+            "type": "String",
+            "name": "songTitle",
+            "operator": "=",
+            "value": "\"Echoes\""
+          }
+        },
+        {
+          "prompt": "The song on the radio is called Run Away. Store the song title.",
+          "answer": {
+            "type": "String",
+            "name": "songTitle",
+            "operator": "=",
+            "value": "\"Run Away\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "beatsPerMinute",
+          "meaning": "Store the tempo."
+        },
+        {
+          "name": "songLength",
+          "meaning": "Store the song length in minutes."
+        },
+        {
+          "name": "isPlaying",
+          "meaning": "Record whether music is playing."
+        },
+        {
+          "name": "musicalNote",
+          "meaning": "Store the note's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "music",
+      "type": "char",
+      "name": "musicalNote",
+      "request": "Store the note's letter.",
+      "acceptedNames": [
+        "musicalNote"
+      ],
+      "examples": [
+        {
+          "prompt": "A tuner shows that the guitar string is playing the note G. Store the note's letter.",
+          "answer": {
+            "type": "char",
+            "name": "musicalNote",
+            "operator": "=",
+            "value": "'G'"
+          }
+        },
+        {
+          "prompt": "A tuner shows that the guitar string is playing the note C. Store the note's letter.",
+          "answer": {
+            "type": "char",
+            "name": "musicalNote",
+            "operator": "=",
+            "value": "'C'"
+          }
+        },
+        {
+          "prompt": "A tuner shows that the guitar string is playing the note F. Store the note's letter.",
+          "answer": {
+            "type": "char",
+            "name": "musicalNote",
+            "operator": "=",
+            "value": "'F'"
+          }
+        },
+        {
+          "prompt": "A tuner shows that the guitar string is playing the note A. Store the note's letter.",
+          "answer": {
+            "type": "char",
+            "name": "musicalNote",
+            "operator": "=",
+            "value": "'A'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "beatsPerMinute",
+          "meaning": "Store the tempo."
+        },
+        {
+          "name": "songLength",
+          "meaning": "Store the song length in minutes."
+        },
+        {
+          "name": "isPlaying",
+          "meaning": "Record whether music is playing."
+        },
+        {
+          "name": "songTitle",
+          "meaning": "Store the song title."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "library",
+      "type": "int",
+      "name": "booksBorrowed",
+      "request": "Store the number of books checked out.",
+      "acceptedNames": [
+        "booksBorrowed"
+      ],
+      "examples": [
+        {
+          "prompt": "A student checked out 2 books. Store the number of books checked out.",
+          "answer": {
+            "type": "int",
+            "name": "booksBorrowed",
+            "operator": "=",
+            "value": "2"
+          }
+        },
+        {
+          "prompt": "A student checked out 9 books. Store the number of books checked out.",
+          "answer": {
+            "type": "int",
+            "name": "booksBorrowed",
+            "operator": "=",
+            "value": "9"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "lateFee",
+          "meaning": "Store the fee in dollars."
+        },
+        {
+          "name": "bookAvailable",
+          "meaning": "Record whether the book is available."
+        },
+        {
+          "name": "authorName",
+          "meaning": "Store the author's name."
+        },
+        {
+          "name": "shelfSection",
+          "meaning": "Store the section letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "library",
+      "type": "double",
+      "name": "lateFee",
+      "request": "Store the fee in dollars.",
+      "acceptedNames": [
+        "lateFee"
+      ],
+      "examples": [
+        {
+          "prompt": "A late book has a fee of $0.25. Store the fee in dollars.",
+          "answer": {
+            "type": "double",
+            "name": "lateFee",
+            "operator": "=",
+            "value": "0.25"
+          }
+        },
+        {
+          "prompt": "A late book has a fee of $4.75. Store the fee in dollars.",
+          "answer": {
+            "type": "double",
+            "name": "lateFee",
+            "operator": "=",
+            "value": "4.75"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "booksBorrowed",
+          "meaning": "Store the number of books checked out."
+        },
+        {
+          "name": "bookAvailable",
+          "meaning": "Record whether the book is available."
+        },
+        {
+          "name": "authorName",
+          "meaning": "Store the author's name."
+        },
+        {
+          "name": "shelfSection",
+          "meaning": "Store the section letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "library",
+      "type": "boolean",
+      "name": "bookAvailable",
+      "request": "Record whether the book is available.",
+      "acceptedNames": [
+        "bookAvailable"
+      ],
+      "examples": [
+        {
+          "prompt": "The book you want is on the shelf. Record whether the book is available.",
+          "answer": {
+            "type": "boolean",
+            "name": "bookAvailable",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The book you want is checked out by someone else. Record whether the book is available.",
+          "answer": {
+            "type": "boolean",
+            "name": "bookAvailable",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "booksBorrowed",
+          "meaning": "Store the number of books checked out."
+        },
+        {
+          "name": "lateFee",
+          "meaning": "Store the fee in dollars."
+        },
+        {
+          "name": "authorName",
+          "meaning": "Store the author's name."
+        },
+        {
+          "name": "shelfSection",
+          "meaning": "Store the section letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "library",
+      "type": "String",
+      "name": "authorName",
+      "request": "Store the author's name.",
+      "acceptedNames": [
+        "authorName"
+      ],
+      "examples": [
+        {
+          "prompt": "The novel was written by Toni Morrison. Store the author's name.",
+          "answer": {
+            "type": "String",
+            "name": "authorName",
+            "operator": "=",
+            "value": "\"Toni Morrison\""
+          }
+        },
+        {
+          "prompt": "The novel was written by Gary Paulsen. Store the author's name.",
+          "answer": {
+            "type": "String",
+            "name": "authorName",
+            "operator": "=",
+            "value": "\"Gary Paulsen\""
+          }
+        },
+        {
+          "prompt": "The novel was written by Jason Reynolds. Store the author's name.",
+          "answer": {
+            "type": "String",
+            "name": "authorName",
+            "operator": "=",
+            "value": "\"Jason Reynolds\""
+          }
+        },
+        {
+          "prompt": "The novel was written by Kwame Alexander. Store the author's name.",
+          "answer": {
+            "type": "String",
+            "name": "authorName",
+            "operator": "=",
+            "value": "\"Kwame Alexander\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "booksBorrowed",
+          "meaning": "Store the number of books checked out."
+        },
+        {
+          "name": "lateFee",
+          "meaning": "Store the fee in dollars."
+        },
+        {
+          "name": "bookAvailable",
+          "meaning": "Record whether the book is available."
+        },
+        {
+          "name": "shelfSection",
+          "meaning": "Store the section letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "library",
+      "type": "char",
+      "name": "shelfSection",
+      "request": "Store the section letter.",
+      "acceptedNames": [
+        "shelfSection"
+      ],
+      "examples": [
+        {
+          "prompt": "The book is shelved in section F. Store the section letter.",
+          "answer": {
+            "type": "char",
+            "name": "shelfSection",
+            "operator": "=",
+            "value": "'F'"
+          }
+        },
+        {
+          "prompt": "The book is shelved in section N. Store the section letter.",
+          "answer": {
+            "type": "char",
+            "name": "shelfSection",
+            "operator": "=",
+            "value": "'N'"
+          }
+        },
+        {
+          "prompt": "The book is shelved in section R. Store the section letter.",
+          "answer": {
+            "type": "char",
+            "name": "shelfSection",
+            "operator": "=",
+            "value": "'R'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "booksBorrowed",
+          "meaning": "Store the number of books checked out."
+        },
+        {
+          "name": "lateFee",
+          "meaning": "Store the fee in dollars."
+        },
+        {
+          "name": "bookAvailable",
+          "meaning": "Record whether the book is available."
+        },
+        {
+          "name": "authorName",
+          "meaning": "Store the author's name."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "space",
+      "type": "int",
+      "name": "crewSize",
+      "request": "Store the size of the crew.",
+      "acceptedNames": [
+        "crewSize"
+      ],
+      "examples": [
+        {
+          "prompt": "The space mission has 3 astronauts on board. Store the size of the crew.",
+          "answer": {
+            "type": "int",
+            "name": "crewSize",
+            "operator": "=",
+            "value": "3"
+          }
+        },
+        {
+          "prompt": "The space mission has 7 astronauts on board. Store the size of the crew.",
+          "answer": {
+            "type": "int",
+            "name": "crewSize",
+            "operator": "=",
+            "value": "7"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "fuelRemaining",
+          "meaning": "Store the fuel level."
+        },
+        {
+          "name": "launchApproved",
+          "meaning": "Record whether the launch is approved."
+        },
+        {
+          "name": "missionName",
+          "meaning": "Store the mission's name."
+        },
+        {
+          "name": "rocketStage",
+          "meaning": "Store the stage's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "space",
+      "type": "double",
+      "name": "fuelRemaining",
+      "request": "Store the fuel level.",
+      "acceptedNames": [
+        "fuelRemaining"
+      ],
+      "examples": [
+        {
+          "prompt": "Mission control reports 42.5 percent of the fuel remaining. Store the fuel level.",
+          "answer": {
+            "type": "double",
+            "name": "fuelRemaining",
+            "operator": "=",
+            "value": "42.5"
+          }
+        },
+        {
+          "prompt": "Mission control reports 97.5 percent of the fuel remaining. Store the fuel level.",
+          "answer": {
+            "type": "double",
+            "name": "fuelRemaining",
+            "operator": "=",
+            "value": "97.5"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "crewSize",
+          "meaning": "Store the size of the crew."
+        },
+        {
+          "name": "launchApproved",
+          "meaning": "Record whether the launch is approved."
+        },
+        {
+          "name": "missionName",
+          "meaning": "Store the mission's name."
+        },
+        {
+          "name": "rocketStage",
+          "meaning": "Store the stage's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "space",
+      "type": "boolean",
+      "name": "launchApproved",
+      "request": "Record whether the launch is approved.",
+      "acceptedNames": [
+        "launchApproved"
+      ],
+      "examples": [
+        {
+          "prompt": "Mission control approved the launch. Record whether the launch is approved.",
+          "answer": {
+            "type": "boolean",
+            "name": "launchApproved",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "Mission control has not approved the launch. Record whether the launch is approved.",
+          "answer": {
+            "type": "boolean",
+            "name": "launchApproved",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "crewSize",
+          "meaning": "Store the size of the crew."
+        },
+        {
+          "name": "fuelRemaining",
+          "meaning": "Store the fuel level."
+        },
+        {
+          "name": "missionName",
+          "meaning": "Store the mission's name."
+        },
+        {
+          "name": "rocketStage",
+          "meaning": "Store the stage's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "space",
+      "type": "String",
+      "name": "missionName",
+      "request": "Store the mission's name.",
+      "acceptedNames": [
+        "missionName"
+      ],
+      "examples": [
+        {
+          "prompt": "The new mission is called Artemis. Store the mission's name.",
+          "answer": {
+            "type": "String",
+            "name": "missionName",
+            "operator": "=",
+            "value": "\"Artemis\""
+          }
+        },
+        {
+          "prompt": "The new mission is called Red Horizon. Store the mission's name.",
+          "answer": {
+            "type": "String",
+            "name": "missionName",
+            "operator": "=",
+            "value": "\"Red Horizon\""
+          }
+        },
+        {
+          "prompt": "The new mission is called Starlight. Store the mission's name.",
+          "answer": {
+            "type": "String",
+            "name": "missionName",
+            "operator": "=",
+            "value": "\"Starlight\""
+          }
+        },
+        {
+          "prompt": "The new mission is called Deep Survey. Store the mission's name.",
+          "answer": {
+            "type": "String",
+            "name": "missionName",
+            "operator": "=",
+            "value": "\"Deep Survey\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "crewSize",
+          "meaning": "Store the size of the crew."
+        },
+        {
+          "name": "fuelRemaining",
+          "meaning": "Store the fuel level."
+        },
+        {
+          "name": "launchApproved",
+          "meaning": "Record whether the launch is approved."
+        },
+        {
+          "name": "rocketStage",
+          "meaning": "Store the stage's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "space",
+      "type": "char",
+      "name": "rocketStage",
+      "request": "Store the stage's letter.",
+      "acceptedNames": [
+        "rocketStage"
+      ],
+      "examples": [
+        {
+          "prompt": "The rocket stage that separated is stage A. Store the stage's letter.",
+          "answer": {
+            "type": "char",
+            "name": "rocketStage",
+            "operator": "=",
+            "value": "'A'"
+          }
+        },
+        {
+          "prompt": "The rocket stage that separated is stage B. Store the stage's letter.",
+          "answer": {
+            "type": "char",
+            "name": "rocketStage",
+            "operator": "=",
+            "value": "'B'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "crewSize",
+          "meaning": "Store the size of the crew."
+        },
+        {
+          "name": "fuelRemaining",
+          "meaning": "Store the fuel level."
+        },
+        {
+          "name": "launchApproved",
+          "meaning": "Record whether the launch is approved."
+        },
+        {
+          "name": "missionName",
+          "meaning": "Store the mission's name."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "money",
+      "type": "int",
+      "name": "weeksSaved",
+      "request": "Store the number of weeks.",
+      "acceptedNames": [
+        "weeksSaved"
+      ],
+      "examples": [
+        {
+          "prompt": "Ava has been saving her allowance for 3 weeks. Store the number of weeks.",
+          "answer": {
+            "type": "int",
+            "name": "weeksSaved",
+            "operator": "=",
+            "value": "3"
+          }
+        },
+        {
+          "prompt": "Ava has been saving her allowance for 26 weeks. Store the number of weeks.",
+          "answer": {
+            "type": "int",
+            "name": "weeksSaved",
+            "operator": "=",
+            "value": "26"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "savingsBalance",
+          "meaning": "Store the balance in dollars."
+        },
+        {
+          "name": "goalReached",
+          "meaning": "Record whether the savings goal was reached."
+        },
+        {
+          "name": "accountNickname",
+          "meaning": "Store the account's nickname."
+        },
+        {
+          "name": "currencySymbol",
+          "meaning": "Store the currency symbol."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "money",
+      "type": "double",
+      "name": "savingsBalance",
+      "request": "Store the balance in dollars.",
+      "acceptedNames": [
+        "savingsBalance"
+      ],
+      "examples": [
+        {
+          "prompt": "Ava's savings account holds $24.50. Store the balance in dollars.",
+          "answer": {
+            "type": "double",
+            "name": "savingsBalance",
+            "operator": "=",
+            "value": "24.50"
+          }
+        },
+        {
+          "prompt": "Ava's savings account holds $186.75. Store the balance in dollars.",
+          "answer": {
+            "type": "double",
+            "name": "savingsBalance",
+            "operator": "=",
+            "value": "186.75"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "weeksSaved",
+          "meaning": "Store the number of weeks."
+        },
+        {
+          "name": "goalReached",
+          "meaning": "Record whether the savings goal was reached."
+        },
+        {
+          "name": "accountNickname",
+          "meaning": "Store the account's nickname."
+        },
+        {
+          "name": "currencySymbol",
+          "meaning": "Store the currency symbol."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "money",
+      "type": "boolean",
+      "name": "goalReached",
+      "request": "Record whether the savings goal was reached.",
+      "acceptedNames": [
+        "goalReached"
+      ],
+      "examples": [
+        {
+          "prompt": "Ava has saved enough to buy new headphones. Record whether the savings goal was reached.",
+          "answer": {
+            "type": "boolean",
+            "name": "goalReached",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "Ava has not saved enough for new headphones yet. Record whether the savings goal was reached.",
+          "answer": {
+            "type": "boolean",
+            "name": "goalReached",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "weeksSaved",
+          "meaning": "Store the number of weeks."
+        },
+        {
+          "name": "savingsBalance",
+          "meaning": "Store the balance in dollars."
+        },
+        {
+          "name": "accountNickname",
+          "meaning": "Store the account's nickname."
+        },
+        {
+          "name": "currencySymbol",
+          "meaning": "Store the currency symbol."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "money",
+      "type": "String",
+      "name": "accountNickname",
+      "request": "Store the account's nickname.",
+      "acceptedNames": [
+        "accountNickname"
+      ],
+      "examples": [
+        {
+          "prompt": "Ava nicknamed her savings account Headphone Fund. Store the account's nickname.",
+          "answer": {
+            "type": "String",
+            "name": "accountNickname",
+            "operator": "=",
+            "value": "\"Headphone Fund\""
+          }
+        },
+        {
+          "prompt": "Ava nicknamed her savings account Summer Trip. Store the account's nickname.",
+          "answer": {
+            "type": "String",
+            "name": "accountNickname",
+            "operator": "=",
+            "value": "\"Summer Trip\""
+          }
+        },
+        {
+          "prompt": "Ava nicknamed her savings account Bike Savings. Store the account's nickname.",
+          "answer": {
+            "type": "String",
+            "name": "accountNickname",
+            "operator": "=",
+            "value": "\"Bike Savings\""
+          }
+        },
+        {
+          "prompt": "Ava nicknamed her savings account Rainy Day. Store the account's nickname.",
+          "answer": {
+            "type": "String",
+            "name": "accountNickname",
+            "operator": "=",
+            "value": "\"Rainy Day\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "weeksSaved",
+          "meaning": "Store the number of weeks."
+        },
+        {
+          "name": "savingsBalance",
+          "meaning": "Store the balance in dollars."
+        },
+        {
+          "name": "goalReached",
+          "meaning": "Record whether the savings goal was reached."
+        },
+        {
+          "name": "currencySymbol",
+          "meaning": "Store the currency symbol."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "money",
+      "type": "char",
+      "name": "currencySymbol",
+      "request": "Store the currency symbol.",
+      "acceptedNames": [
+        "currencySymbol"
+      ],
+      "examples": [
+        {
+          "prompt": "A price tag uses the dollar sign to show its currency. Store the currency symbol.",
+          "answer": {
+            "type": "char",
+            "name": "currencySymbol",
+            "operator": "=",
+            "value": "'$'"
+          }
+        },
+        {
+          "prompt": "A price tag uses the euro sign to show its currency. Store the currency symbol.",
+          "answer": {
+            "type": "char",
+            "name": "currencySymbol",
+            "operator": "=",
+            "value": "'€'"
+          }
+        },
+        {
+          "prompt": "A price tag uses the pound sign to show its currency. Store the currency symbol.",
+          "answer": {
+            "type": "char",
+            "name": "currencySymbol",
+            "operator": "=",
+            "value": "'£'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "weeksSaved",
+          "meaning": "Store the number of weeks."
+        },
+        {
+          "name": "savingsBalance",
+          "meaning": "Store the balance in dollars."
+        },
+        {
+          "name": "goalReached",
+          "meaning": "Record whether the savings goal was reached."
+        },
+        {
+          "name": "accountNickname",
+          "meaning": "Store the account's nickname."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "pets",
+      "type": "int",
+      "name": "petAge",
+      "request": "Store the dog's age in years.",
+      "acceptedNames": [
+        "petAge"
+      ],
+      "examples": [
+        {
+          "prompt": "A dog at the shelter is 2 years old. Store the dog's age in years.",
+          "answer": {
+            "type": "int",
+            "name": "petAge",
+            "operator": "=",
+            "value": "2"
+          }
+        },
+        {
+          "prompt": "A dog at the shelter is 14 years old. Store the dog's age in years.",
+          "answer": {
+            "type": "int",
+            "name": "petAge",
+            "operator": "=",
+            "value": "14"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "petWeight",
+          "meaning": "Store the dog's weight."
+        },
+        {
+          "name": "isVaccinated",
+          "meaning": "Record whether the dog is vaccinated."
+        },
+        {
+          "name": "petName",
+          "meaning": "Store the dog's name."
+        },
+        {
+          "name": "kennelRow",
+          "meaning": "Store the row's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "pets",
+      "type": "double",
+      "name": "petWeight",
+      "request": "Store the dog's weight.",
+      "acceptedNames": [
+        "petWeight"
+      ],
+      "examples": [
+        {
+          "prompt": "The vet weighed the dog at 4.5 pounds. Store the dog's weight.",
+          "answer": {
+            "type": "double",
+            "name": "petWeight",
+            "operator": "=",
+            "value": "4.5"
+          }
+        },
+        {
+          "prompt": "The vet weighed the dog at 38.5 pounds. Store the dog's weight.",
+          "answer": {
+            "type": "double",
+            "name": "petWeight",
+            "operator": "=",
+            "value": "38.5"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "petAge",
+          "meaning": "Store the dog's age in years."
+        },
+        {
+          "name": "isVaccinated",
+          "meaning": "Record whether the dog is vaccinated."
+        },
+        {
+          "name": "petName",
+          "meaning": "Store the dog's name."
+        },
+        {
+          "name": "kennelRow",
+          "meaning": "Store the row's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "pets",
+      "type": "boolean",
+      "name": "isVaccinated",
+      "request": "Record whether the dog is vaccinated.",
+      "acceptedNames": [
+        "isVaccinated"
+      ],
+      "examples": [
+        {
+          "prompt": "The dog has received all of its vaccines. Record whether the dog is vaccinated.",
+          "answer": {
+            "type": "boolean",
+            "name": "isVaccinated",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The dog has not received its vaccines yet. Record whether the dog is vaccinated.",
+          "answer": {
+            "type": "boolean",
+            "name": "isVaccinated",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "petAge",
+          "meaning": "Store the dog's age in years."
+        },
+        {
+          "name": "petWeight",
+          "meaning": "Store the dog's weight."
+        },
+        {
+          "name": "petName",
+          "meaning": "Store the dog's name."
+        },
+        {
+          "name": "kennelRow",
+          "meaning": "Store the row's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "pets",
+      "type": "String",
+      "name": "petName",
+      "request": "Store the dog's name.",
+      "acceptedNames": [
+        "petName"
+      ],
+      "examples": [
+        {
+          "prompt": "The family named their new dog Biscuit. Store the dog's name.",
+          "answer": {
+            "type": "String",
+            "name": "petName",
+            "operator": "=",
+            "value": "\"Biscuit\""
+          }
+        },
+        {
+          "prompt": "The family named their new dog Luna. Store the dog's name.",
+          "answer": {
+            "type": "String",
+            "name": "petName",
+            "operator": "=",
+            "value": "\"Luna\""
+          }
+        },
+        {
+          "prompt": "The family named their new dog Captain. Store the dog's name.",
+          "answer": {
+            "type": "String",
+            "name": "petName",
+            "operator": "=",
+            "value": "\"Captain\""
+          }
+        },
+        {
+          "prompt": "The family named their new dog Pepper. Store the dog's name.",
+          "answer": {
+            "type": "String",
+            "name": "petName",
+            "operator": "=",
+            "value": "\"Pepper\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "petAge",
+          "meaning": "Store the dog's age in years."
+        },
+        {
+          "name": "petWeight",
+          "meaning": "Store the dog's weight."
+        },
+        {
+          "name": "isVaccinated",
+          "meaning": "Record whether the dog is vaccinated."
+        },
+        {
+          "name": "kennelRow",
+          "meaning": "Store the row's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "pets",
+      "type": "char",
+      "name": "kennelRow",
+      "request": "Store the row's letter.",
+      "acceptedNames": [
+        "kennelRow"
+      ],
+      "examples": [
+        {
+          "prompt": "The dog sleeps in kennel row A. Store the row's letter.",
+          "answer": {
+            "type": "char",
+            "name": "kennelRow",
+            "operator": "=",
+            "value": "'A'"
+          }
+        },
+        {
+          "prompt": "The dog sleeps in kennel row D. Store the row's letter.",
+          "answer": {
+            "type": "char",
+            "name": "kennelRow",
+            "operator": "=",
+            "value": "'D'"
+          }
+        },
+        {
+          "prompt": "The dog sleeps in kennel row E. Store the row's letter.",
+          "answer": {
+            "type": "char",
+            "name": "kennelRow",
+            "operator": "=",
+            "value": "'E'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "petAge",
+          "meaning": "Store the dog's age in years."
+        },
+        {
+          "name": "petWeight",
+          "meaning": "Store the dog's weight."
+        },
+        {
+          "name": "isVaccinated",
+          "meaning": "Record whether the dog is vaccinated."
+        },
+        {
+          "name": "petName",
+          "meaning": "Store the dog's name."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "garden",
+      "type": "int",
+      "name": "seedsPlanted",
+      "request": "Store the number of seeds planted.",
+      "acceptedNames": [
+        "seedsPlanted"
+      ],
+      "examples": [
+        {
+          "prompt": "The garden club planted 12 sunflower seeds. Store the number of seeds planted.",
+          "answer": {
+            "type": "int",
+            "name": "seedsPlanted",
+            "operator": "=",
+            "value": "12"
+          }
+        },
+        {
+          "prompt": "The garden club planted 60 sunflower seeds. Store the number of seeds planted.",
+          "answer": {
+            "type": "int",
+            "name": "seedsPlanted",
+            "operator": "=",
+            "value": "60"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "plantHeight",
+          "meaning": "Store the plant's height."
+        },
+        {
+          "name": "soilIsDry",
+          "meaning": "Record whether the soil is dry."
+        },
+        {
+          "name": "plantSpecies",
+          "meaning": "Store the kind of plant."
+        },
+        {
+          "name": "plotRow",
+          "meaning": "Store the row letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "garden",
+      "type": "double",
+      "name": "plantHeight",
+      "request": "Store the plant's height.",
+      "acceptedNames": [
+        "plantHeight"
+      ],
+      "examples": [
+        {
+          "prompt": "A tomato plant is 3.5 centimeters tall. Store the plant's height.",
+          "answer": {
+            "type": "double",
+            "name": "plantHeight",
+            "operator": "=",
+            "value": "3.5"
+          }
+        },
+        {
+          "prompt": "A tomato plant is 42.5 centimeters tall. Store the plant's height.",
+          "answer": {
+            "type": "double",
+            "name": "plantHeight",
+            "operator": "=",
+            "value": "42.5"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "seedsPlanted",
+          "meaning": "Store the number of seeds planted."
+        },
+        {
+          "name": "soilIsDry",
+          "meaning": "Record whether the soil is dry."
+        },
+        {
+          "name": "plantSpecies",
+          "meaning": "Store the kind of plant."
+        },
+        {
+          "name": "plotRow",
+          "meaning": "Store the row letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "garden",
+      "type": "boolean",
+      "name": "soilIsDry",
+      "request": "Record whether the soil is dry.",
+      "acceptedNames": [
+        "soilIsDry"
+      ],
+      "examples": [
+        {
+          "prompt": "The moisture sensor reports that the soil is dry. Record whether the soil is dry.",
+          "answer": {
+            "type": "boolean",
+            "name": "soilIsDry",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The moisture sensor reports that the soil is still moist. Record whether the soil is dry.",
+          "answer": {
+            "type": "boolean",
+            "name": "soilIsDry",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "seedsPlanted",
+          "meaning": "Store the number of seeds planted."
+        },
+        {
+          "name": "plantHeight",
+          "meaning": "Store the plant's height."
+        },
+        {
+          "name": "plantSpecies",
+          "meaning": "Store the kind of plant."
+        },
+        {
+          "name": "plotRow",
+          "meaning": "Store the row letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "garden",
+      "type": "String",
+      "name": "plantSpecies",
+      "request": "Store the kind of plant.",
+      "acceptedNames": [
+        "plantSpecies"
+      ],
+      "examples": [
+        {
+          "prompt": "The sign in the garden bed says Sunflower. Store the kind of plant.",
+          "answer": {
+            "type": "String",
+            "name": "plantSpecies",
+            "operator": "=",
+            "value": "\"Sunflower\""
+          }
+        },
+        {
+          "prompt": "The sign in the garden bed says Desert Marigold. Store the kind of plant.",
+          "answer": {
+            "type": "String",
+            "name": "plantSpecies",
+            "operator": "=",
+            "value": "\"Desert Marigold\""
+          }
+        },
+        {
+          "prompt": "The sign in the garden bed says Basil. Store the kind of plant.",
+          "answer": {
+            "type": "String",
+            "name": "plantSpecies",
+            "operator": "=",
+            "value": "\"Basil\""
+          }
+        },
+        {
+          "prompt": "The sign in the garden bed says Prickly Pear. Store the kind of plant.",
+          "answer": {
+            "type": "String",
+            "name": "plantSpecies",
+            "operator": "=",
+            "value": "\"Prickly Pear\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "seedsPlanted",
+          "meaning": "Store the number of seeds planted."
+        },
+        {
+          "name": "plantHeight",
+          "meaning": "Store the plant's height."
+        },
+        {
+          "name": "soilIsDry",
+          "meaning": "Record whether the soil is dry."
+        },
+        {
+          "name": "plotRow",
+          "meaning": "Store the row letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "garden",
+      "type": "char",
+      "name": "plotRow",
+      "request": "Store the row letter.",
+      "acceptedNames": [
+        "plotRow"
+      ],
+      "examples": [
+        {
+          "prompt": "The plant is growing in row B of the garden. Store the row letter.",
+          "answer": {
+            "type": "char",
+            "name": "plotRow",
+            "operator": "=",
+            "value": "'B'"
+          }
+        },
+        {
+          "prompt": "The plant is growing in row C of the garden. Store the row letter.",
+          "answer": {
+            "type": "char",
+            "name": "plotRow",
+            "operator": "=",
+            "value": "'C'"
+          }
+        },
+        {
+          "prompt": "The plant is growing in row F of the garden. Store the row letter.",
+          "answer": {
+            "type": "char",
+            "name": "plotRow",
+            "operator": "=",
+            "value": "'F'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "seedsPlanted",
+          "meaning": "Store the number of seeds planted."
+        },
+        {
+          "name": "plantHeight",
+          "meaning": "Store the plant's height."
+        },
+        {
+          "name": "soilIsDry",
+          "meaning": "Record whether the soil is dry."
+        },
+        {
+          "name": "plantSpecies",
+          "meaning": "Store the kind of plant."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "restaurant",
+      "type": "int",
+      "name": "tableNumber",
+      "request": "Store the table number.",
+      "acceptedNames": [
+        "tableNumber"
+      ],
+      "examples": [
+        {
+          "prompt": "The host seats your group at table 1. Store the table number.",
+          "answer": {
+            "type": "int",
+            "name": "tableNumber",
+            "operator": "=",
+            "value": "1"
+          }
+        },
+        {
+          "prompt": "The host seats your group at table 40. Store the table number.",
+          "answer": {
+            "type": "int",
+            "name": "tableNumber",
+            "operator": "=",
+            "value": "40"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "billTotal",
+          "meaning": "Store the bill total in dollars."
+        },
+        {
+          "name": "orderReady",
+          "meaning": "Record whether the order is ready."
+        },
+        {
+          "name": "customerName",
+          "meaning": "Store the name on the order."
+        },
+        {
+          "name": "mealSize",
+          "meaning": "Store the one-letter meal size."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "restaurant",
+      "type": "double",
+      "name": "billTotal",
+      "request": "Store the bill total in dollars.",
+      "acceptedNames": [
+        "billTotal"
+      ],
+      "examples": [
+        {
+          "prompt": "The bill for dinner comes to $18.25. Store the bill total in dollars.",
+          "answer": {
+            "type": "double",
+            "name": "billTotal",
+            "operator": "=",
+            "value": "18.25"
+          }
+        },
+        {
+          "prompt": "The bill for dinner comes to $96.75. Store the bill total in dollars.",
+          "answer": {
+            "type": "double",
+            "name": "billTotal",
+            "operator": "=",
+            "value": "96.75"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "tableNumber",
+          "meaning": "Store the table number."
+        },
+        {
+          "name": "orderReady",
+          "meaning": "Record whether the order is ready."
+        },
+        {
+          "name": "customerName",
+          "meaning": "Store the name on the order."
+        },
+        {
+          "name": "mealSize",
+          "meaning": "Store the one-letter meal size."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "restaurant",
+      "type": "boolean",
+      "name": "orderReady",
+      "request": "Record whether the order is ready.",
+      "acceptedNames": [
+        "orderReady"
+      ],
+      "examples": [
+        {
+          "prompt": "The kitchen says your order is ready for pickup. Record whether the order is ready.",
+          "answer": {
+            "type": "boolean",
+            "name": "orderReady",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "The kitchen says your order is still being prepared. Record whether the order is ready.",
+          "answer": {
+            "type": "boolean",
+            "name": "orderReady",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "tableNumber",
+          "meaning": "Store the table number."
+        },
+        {
+          "name": "billTotal",
+          "meaning": "Store the bill total in dollars."
+        },
+        {
+          "name": "customerName",
+          "meaning": "Store the name on the order."
+        },
+        {
+          "name": "mealSize",
+          "meaning": "Store the one-letter meal size."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "restaurant",
+      "type": "String",
+      "name": "customerName",
+      "request": "Store the name on the order.",
+      "acceptedNames": [
+        "customerName"
+      ],
+      "examples": [
+        {
+          "prompt": "The pickup order is under the name Jordan. Store the name on the order.",
+          "answer": {
+            "type": "String",
+            "name": "customerName",
+            "operator": "=",
+            "value": "\"Jordan\""
+          }
+        },
+        {
+          "prompt": "The pickup order is under the name Ms. Patel. Store the name on the order.",
+          "answer": {
+            "type": "String",
+            "name": "customerName",
+            "operator": "=",
+            "value": "\"Ms. Patel\""
+          }
+        },
+        {
+          "prompt": "The pickup order is under the name Chris Nguyen. Store the name on the order.",
+          "answer": {
+            "type": "String",
+            "name": "customerName",
+            "operator": "=",
+            "value": "\"Chris Nguyen\""
+          }
+        },
+        {
+          "prompt": "The pickup order is under the name Alex. Store the name on the order.",
+          "answer": {
+            "type": "String",
+            "name": "customerName",
+            "operator": "=",
+            "value": "\"Alex\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "tableNumber",
+          "meaning": "Store the table number."
+        },
+        {
+          "name": "billTotal",
+          "meaning": "Store the bill total in dollars."
+        },
+        {
+          "name": "orderReady",
+          "meaning": "Record whether the order is ready."
+        },
+        {
+          "name": "mealSize",
+          "meaning": "Store the one-letter meal size."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "restaurant",
+      "type": "char",
+      "name": "mealSize",
+      "request": "Store the one-letter meal size.",
+      "acceptedNames": [
+        "mealSize"
+      ],
+      "examples": [
+        {
+          "prompt": "The receipt shows the meal size as S (small). Store the one-letter meal size.",
+          "answer": {
+            "type": "char",
+            "name": "mealSize",
+            "operator": "=",
+            "value": "'S'"
+          }
+        },
+        {
+          "prompt": "The receipt shows the meal size as L (large). Store the one-letter meal size.",
+          "answer": {
+            "type": "char",
+            "name": "mealSize",
+            "operator": "=",
+            "value": "'L'"
+          }
+        },
+        {
+          "prompt": "The receipt shows the meal size as M (medium). Store the one-letter meal size.",
+          "answer": {
+            "type": "char",
+            "name": "mealSize",
+            "operator": "=",
+            "value": "'M'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "tableNumber",
+          "meaning": "Store the table number."
+        },
+        {
+          "name": "billTotal",
+          "meaning": "Store the bill total in dollars."
+        },
+        {
+          "name": "orderReady",
+          "meaning": "Record whether the order is ready."
+        },
+        {
+          "name": "customerName",
+          "meaning": "Store the name on the order."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "travel",
+      "type": "int",
+      "name": "roomNumber",
+      "request": "Store the room number.",
+      "acceptedNames": [
+        "roomNumber"
+      ],
+      "examples": [
+        {
+          "prompt": "Your hotel room number is 101. Store the room number.",
+          "answer": {
+            "type": "int",
+            "name": "roomNumber",
+            "operator": "=",
+            "value": "101"
+          }
+        },
+        {
+          "prompt": "Your hotel room number is 948. Store the room number.",
+          "answer": {
+            "type": "int",
+            "name": "roomNumber",
+            "operator": "=",
+            "value": "948"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "nightlyRate",
+          "meaning": "Store the nightly rate in dollars."
+        },
+        {
+          "name": "breakfastIncluded",
+          "meaning": "Record whether breakfast is included."
+        },
+        {
+          "name": "destinationCity",
+          "meaning": "Store the destination city."
+        },
+        {
+          "name": "hotelWing",
+          "meaning": "Store the wing's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "travel",
+      "type": "double",
+      "name": "nightlyRate",
+      "request": "Store the nightly rate in dollars.",
+      "acceptedNames": [
+        "nightlyRate"
+      ],
+      "examples": [
+        {
+          "prompt": "The hotel charges $79.50 per night. Store the nightly rate in dollars.",
+          "answer": {
+            "type": "double",
+            "name": "nightlyRate",
+            "operator": "=",
+            "value": "79.50"
+          }
+        },
+        {
+          "prompt": "The hotel charges $189.50 per night. Store the nightly rate in dollars.",
+          "answer": {
+            "type": "double",
+            "name": "nightlyRate",
+            "operator": "=",
+            "value": "189.50"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "roomNumber",
+          "meaning": "Store the room number."
+        },
+        {
+          "name": "breakfastIncluded",
+          "meaning": "Record whether breakfast is included."
+        },
+        {
+          "name": "destinationCity",
+          "meaning": "Store the destination city."
+        },
+        {
+          "name": "hotelWing",
+          "meaning": "Store the wing's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "travel",
+      "type": "boolean",
+      "name": "breakfastIncluded",
+      "request": "Record whether breakfast is included.",
+      "acceptedNames": [
+        "breakfastIncluded"
+      ],
+      "examples": [
+        {
+          "prompt": "Breakfast is included with the room. Record whether breakfast is included.",
+          "answer": {
+            "type": "boolean",
+            "name": "breakfastIncluded",
+            "operator": "=",
+            "value": "true"
+          }
+        },
+        {
+          "prompt": "Breakfast is not included with the room. Record whether breakfast is included.",
+          "answer": {
+            "type": "boolean",
+            "name": "breakfastIncluded",
+            "operator": "=",
+            "value": "false"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "roomNumber",
+          "meaning": "Store the room number."
+        },
+        {
+          "name": "nightlyRate",
+          "meaning": "Store the nightly rate in dollars."
+        },
+        {
+          "name": "destinationCity",
+          "meaning": "Store the destination city."
+        },
+        {
+          "name": "hotelWing",
+          "meaning": "Store the wing's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "travel",
+      "type": "String",
+      "name": "destinationCity",
+      "request": "Store the destination city.",
+      "acceptedNames": [
+        "destinationCity"
+      ],
+      "examples": [
+        {
+          "prompt": "The family is driving to San Diego for vacation. Store the destination city.",
+          "answer": {
+            "type": "String",
+            "name": "destinationCity",
+            "operator": "=",
+            "value": "\"San Diego\""
+          }
+        },
+        {
+          "prompt": "The family is driving to Salt Lake City for vacation. Store the destination city.",
+          "answer": {
+            "type": "String",
+            "name": "destinationCity",
+            "operator": "=",
+            "value": "\"Salt Lake City\""
+          }
+        },
+        {
+          "prompt": "The family is driving to Phoenix for vacation. Store the destination city.",
+          "answer": {
+            "type": "String",
+            "name": "destinationCity",
+            "operator": "=",
+            "value": "\"Phoenix\""
+          }
+        },
+        {
+          "prompt": "The family is driving to Denver for vacation. Store the destination city.",
+          "answer": {
+            "type": "String",
+            "name": "destinationCity",
+            "operator": "=",
+            "value": "\"Denver\""
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "roomNumber",
+          "meaning": "Store the room number."
+        },
+        {
+          "name": "nightlyRate",
+          "meaning": "Store the nightly rate in dollars."
+        },
+        {
+          "name": "breakfastIncluded",
+          "meaning": "Record whether breakfast is included."
+        },
+        {
+          "name": "hotelWing",
+          "meaning": "Store the wing's letter."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    },
+    {
+      "family": "travel",
+      "type": "char",
+      "name": "hotelWing",
+      "request": "Store the wing's letter.",
+      "acceptedNames": [
+        "hotelWing"
+      ],
+      "examples": [
+        {
+          "prompt": "Your room is in the N wing of the hotel. Store the wing's letter.",
+          "answer": {
+            "type": "char",
+            "name": "hotelWing",
+            "operator": "=",
+            "value": "'N'"
+          }
+        },
+        {
+          "prompt": "Your room is in the E wing of the hotel. Store the wing's letter.",
+          "answer": {
+            "type": "char",
+            "name": "hotelWing",
+            "operator": "=",
+            "value": "'E'"
+          }
+        },
+        {
+          "prompt": "Your room is in the W wing of the hotel. Store the wing's letter.",
+          "answer": {
+            "type": "char",
+            "name": "hotelWing",
+            "operator": "=",
+            "value": "'W'"
+          }
+        }
+      ],
+      "potentialNameDistractors": [
+        {
+          "name": "roomNumber",
+          "meaning": "Store the room number."
+        },
+        {
+          "name": "nightlyRate",
+          "meaning": "Store the nightly rate in dollars."
+        },
+        {
+          "name": "breakfastIncluded",
+          "meaning": "Record whether breakfast is included."
+        },
+        {
+          "name": "destinationCity",
+          "meaning": "Store the destination city."
+        }
+      ],
+      "ambiguity": "None among existing dropdown options: each sibling describes a different requested property."
+    }
+  ],
+  "fixtures": {
+    "table": {
+      "prompt": "The host seats your group at table 11. Store the table number.",
+      "wrong": {
+        "type": "int",
+        "name": "customerName",
+        "operator": "=",
+        "value": "11"
+      },
+      "correct": {
+        "type": "int",
+        "name": "tableNumber",
+        "operator": "=",
+        "value": "11"
+      },
+      "first": "Your data type, assignment operator, value are correct.\nThis declaration is valid Java, but the variable name does not match what the scenario asks you to store.\nYour declaration “int customerName = 11;” has 1 issue to investigate:\n1. “customerName” is a valid Java identifier, but its meaning does not match the information requested. The scenario says: Store the table number. Reread the scenario and choose the name that best describes that information.",
+      "second": "Your data type, assignment operator, value are correct.\nThis declaration is valid Java, but the variable name does not match what the scenario asks you to store.\nYour declaration “int customerName = 11;” has 1 issue to investigate:\n1. “customerName” is a valid Java identifier, but its meaning does not match the information requested. The scenario says: Store the table number. Reread the scenario and choose the name that best describes that information. “customerName” belongs with this different request: Store the name on the order.\nCompare what the chosen name describes with what the scenario asks you to store.",
+      "reveal": "int tableNumber = 11;\nThis declares “tableNumber” and initializes it using =. Its int value is compatible with int. The name “tableNumber” describes the requested information: Store the table number. It also matches the scenario and the displayed type convention.\nIn your earlier declaration, “customerName” is a valid Java identifier, but its meaning does not match the information requested. The scenario says: Store the table number. Reread the scenario and choose the name that best describes that information."
+    },
+    "ocean": {
+      "prompt": "Tonight's movie is Ocean Quest. Store the movie title.",
+      "wrong": {
+        "type": "String",
+        "name": "seatRow",
+        "operator": "=",
+        "value": "\"Ocean Quest\""
+      },
+      "correct": {
+        "type": "String",
+        "name": "movieTitle",
+        "operator": "=",
+        "value": "\"Ocean Quest\""
+      },
+      "first": "Your data type, assignment operator, value are correct.\nThis declaration is valid Java, but the variable name does not match what the scenario asks you to store.\nYour declaration “String seatRow = \"Ocean Quest\";” has 1 issue to investigate:\n1. “seatRow” is a valid Java identifier, but its meaning does not match the information requested. The scenario says: Store the movie title. Reread the scenario and choose the name that best describes that information.",
+      "second": "Your data type, assignment operator, value are correct.\nThis declaration is valid Java, but the variable name does not match what the scenario asks you to store.\nYour declaration “String seatRow = \"Ocean Quest\";” has 1 issue to investigate:\n1. “seatRow” is a valid Java identifier, but its meaning does not match the information requested. The scenario says: Store the movie title. Reread the scenario and choose the name that best describes that information. “seatRow” belongs with this different request: Store the row letter.\nCompare what the chosen name describes with what the scenario asks you to store.",
+      "reveal": "String movieTitle = \"Ocean Quest\";\nThis declares “movieTitle” and initializes it using =. Its String value is compatible with String. The name “movieTitle” describes the requested information: Store the movie title. It also matches the scenario and the displayed type convention.\nIn your earlier declaration, “seatRow” is a valid Java identifier, but its meaning does not match the information requested. The scenario says: Store the movie title. Reread the scenario and choose the name that best describes that information."
+    }
+  },
+  "generated": {
+    "beginner": {
+      "challenges": 1000,
+      "scenarios": 105
+    },
+    "intermediate": {
+      "challenges": 1000,
+      "scenarios": 105
+    },
+    "advanced": {
+      "challenges": 1000,
+      "scenarios": 105
+    }
+  },
+  "browserFixtures": {
+    "table": {
+      "kind": "assemble",
+      "prompt": "The host seats your group at table 11. Store the table number.",
+      "convention": "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.",
+      "fields": [
+        {
+          "id": "type",
+          "label": "Type",
+          "choices": [
+            "char",
+            "double",
+            "String",
+            "boolean",
+            "int"
+          ]
+        },
+        {
+          "id": "name",
+          "label": "Variable name",
+          "choices": [
+            "tableNumber",
+            "customerName",
+            "incorrect-name",
+            "tableNumberOther"
+          ]
+        },
+        {
+          "id": "operator",
+          "label": "Operator",
+          "choices": [
+            "!=",
+            "=",
+            "=="
+          ]
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "choices": [
+            "11",
+            "18.0",
+            "'18'",
+            "\"18\""
+          ]
+        }
+      ],
+      "answer": {
+        "type": "int",
+        "name": "tableNumber",
+        "operator": "=",
+        "value": "11"
+      },
+      "scenario": {
+        "family": "restaurant",
+        "context": "Restaurants",
+        "name": "tableNumber",
+        "type": "int",
+        "spoken": "11"
+      },
+      "code": "Build the declaration.",
+      "compilerSource": "public class Practice { public static void main(String[] args) { int tableNumber = 11; } }",
+      "explanation": "int tableNumber = 11; Table numbers are whole numbers, so int fits.",
+      "topic": "assemble-int",
+      "contract": {
+        "version": 1,
+        "scenarioText": "The host seats your group at table 11. Store the table number.",
+        "storedInformation": "Store the table number.",
+        "expectedType": "int",
+        "acceptedNames": [
+          "tableNumber"
+        ],
+        "expectedOperator": "=",
+        "acceptedValues": [
+          "11"
+        ],
+        "typeConvention": "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.",
+        "nameMeanings": {
+          "tableNumber": "Store the table number.",
+          "billTotal": "Store the bill total in dollars.",
+          "orderReady": "Record whether the order is ready.",
+          "customerName": "Store the name on the order.",
+          "mealSize": "Store the one-letter meal size."
+        }
+      },
+      "game": "variable-lab",
+      "mode": "assemble"
+    },
+    "ocean": {
+      "kind": "assemble",
+      "prompt": "Tonight's movie is Ocean Quest. Store the movie title.",
+      "convention": "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.",
+      "fields": [
+        {
+          "id": "type",
+          "label": "Type",
+          "choices": [
+            "double",
+            "int",
+            "char",
+            "boolean",
+            "String"
+          ]
+        },
+        {
+          "id": "name",
+          "label": "Variable name",
+          "choices": [
+            "movieTitle",
+            "seatRow",
+            "incorrect-name",
+            "movieTitleOther"
+          ]
+        },
+        {
+          "id": "operator",
+          "label": "Operator",
+          "choices": [
+            "=",
+            "==",
+            "!="
+          ]
+        },
+        {
+          "id": "value",
+          "label": "Value",
+          "choices": [
+            "\"Ocean Quest\"",
+            "Skyward",
+            "'Skyward'",
+            "\"skyward\""
+          ]
+        }
+      ],
+      "answer": {
+        "type": "String",
+        "name": "movieTitle",
+        "operator": "=",
+        "value": "\"Ocean Quest\""
+      },
+      "scenario": {
+        "family": "entertainment",
+        "context": "Movies and streaming",
+        "name": "movieTitle",
+        "type": "String",
+        "spoken": "Ocean Quest"
+      },
+      "code": "Build the declaration.",
+      "compilerSource": "public class Practice { public static void main(String[] args) { String movieTitle = \"Ocean Quest\"; } }",
+      "explanation": "String movieTitle = \"Ocean Quest\"; A title is text, so it is a String.",
+      "topic": "assemble-String",
+      "contract": {
+        "version": 1,
+        "scenarioText": "Tonight's movie is Ocean Quest. Store the movie title.",
+        "storedInformation": "Store the movie title.",
+        "expectedType": "String",
+        "acceptedNames": [
+          "movieTitle"
+        ],
+        "expectedOperator": "=",
+        "acceptedValues": [
+          "\"Ocean Quest\""
+        ],
+        "typeConvention": "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.",
+        "nameMeanings": {
+          "runtimeMinutes": "Store the movie's length in minutes.",
+          "viewerRating": "Store the average rating.",
+          "subtitlesOn": "Record whether subtitles are on.",
+          "movieTitle": "Store the movie title.",
+          "seatRow": "Store the row letter."
+        }
+      },
+      "game": "variable-lab",
+      "mode": "assemble"
+    }
+  },
+  "compiler": "Real javac verified 212 snippets.",
+  "checks": 305817
+}

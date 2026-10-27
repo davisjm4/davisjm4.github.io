@@ -1,0 +1,1 @@
+63851 feedback assertions passed; 900 Identification challenges (all 12 variants × 3 supplied difficulty options × 25), 300 Assemble challenges. Real javac verified 44 snippets.

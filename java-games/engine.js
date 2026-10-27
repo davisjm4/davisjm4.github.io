@@ -5,7 +5,7 @@ import {
 } from "../csp-games/engine.js?v=platform-expansion-v2";
 import { TYPES, scenarioFamilies } from "./variable-scenarios.js?v=variable-lab-v4";
 import { generateTrace } from "./variable-lab/trace-adapter.js?v=trace-generator-v1";
-import { variableHint, variableExplanation, assessAssembly } from "./variable-lab/feedback.js?v=feedback-repair-v1";
+import { variableHint, variableExplanation, assessAssembly } from "./variable-lab/feedback.js?v=scenario-validation-v2";
 export const games = {
   "variable-lab": {
     name: "Variable Lab",
@@ -230,7 +230,14 @@ const typeReason = {
 };
 function assembleChallenge() {
   const type = assembleTypes.next(), {family, item} = scenarioFor(type), value = scenarioValue(item);
-  const siblings = shuffle(family.items.filter(i => i.name !== item.name).map(i => i.name)).slice(0, 2);
+  return buildAssembleChallenge(family, item, value);
+}
+// Pure answer contract construction shared by ordinary generation and systematic
+// catalog tests. Naming meaning comes from authored scenario data, never a guess
+// based on spelling, compilation success, or the type of the chosen literal.
+export function buildAssembleChallenge(family, item, value) {
+  const type = item.type, acceptedNames = [...new Set([item.name, ...(item.acceptedNames || [])])];
+  const siblings = shuffle(family.items.filter(i => !acceptedNames.includes(i.name)).map(i => i.name)).slice(0, 2);
   const malformed = pick([item.name.replace(/([A-Z])/g, " $1").toLowerCase(), item.name.replace(/([A-Z])/g, "-$1").toLowerCase()]);
   const q = {
     kind: "assemble",
@@ -238,7 +245,7 @@ function assembleChallenge() {
     convention: "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.",
     fields: [
       {id: "type", label: "Type", choices: shuffle([...TYPES])},
-      {id: "name", label: "Variable name", choices: choices(item.name, [...siblings, malformed])},
+      {id: "name", label: "Variable name", choices: choices(item.name, [...acceptedNames.slice(1), ...siblings, malformed])},
       {id: "operator", label: "Operator", choices: shuffle(["=", "==", "!="])},
       {id: "value", label: "Value", choices: choices(value.literal, value.wrong)},
     ],
@@ -248,6 +255,12 @@ function assembleChallenge() {
     compilerSource: `public class Practice { public static void main(String[] args) { ${type} ${item.name} = ${value.literal}; } }`,
     explanation: `${type} ${item.name} = ${value.literal}; ${item.why}`,
     topic: "assemble-" + type,
+  };
+  q.contract = {
+    version: 1, scenarioText: q.prompt, storedInformation: item.ask,
+    expectedType: type, acceptedNames, expectedOperator: "=",
+    acceptedValues: [value.literal], typeConvention: q.convention,
+    nameMeanings: Object.fromEntries(family.items.map(i => [i.name, i.ask])),
   };
   return q;
 }

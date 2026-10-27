@@ -87,7 +87,8 @@ for(const count of [1,2,3,4]) {
   eq(d.length,count); eq(J.assess(fixture,r),false);
   evidence.assembly['issues'+count]=J.hint(fixture,1,r);
 }
-eq(J.assess(classroomAssembly,{...solved,name:'plantCount'}),true);
+eq(J.assess(classroomAssembly,{...solved,name:'plantCount'}),false);
+eq(J.assess({...classroomAssembly,contract:{acceptedNames:['seedsPlanted','plantCount']}},{...solved,name:'plantCount'}),true);
 eq(J.assess(classroomAssembly,{...solved,type:'double'}),false);
 ok(J.hint(classroomAssembly,1,{...solved,type:'double'}).includes('can legally receive'));
 eq(J.assess(base,{...solved,type:'double'}),true);
@@ -127,7 +128,7 @@ for(let i=0;i<300;i++) {
     const r={...a,[field.id]:choice}, d=diagnoseAssembly(q,r);
     eq(J.assess(q,r),d.length===0);
     if(choice===a[field.id])eq(d,[]);
-    else if(field.id==='name' && !identifierIssue(choice))eq(d,[]);
+    else if(field.id==='name' && q.contract.acceptedNames.includes(choice))eq(d,[]);
     else {ok(d.length>0); ok(J.hint(q,1,r).includes(choice));}
   }
 }

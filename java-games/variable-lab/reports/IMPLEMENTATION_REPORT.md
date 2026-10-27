@@ -1,5 +1,7 @@
 # Java Variable Lab — instructional feedback repair
 
+> The name-acceptance policy in this historical report is superseded by [Scenario-Aware Declaration Validation](SCENARIO_VALIDATION_REPORT.md). Other feedback improvements remain in place.
+
 Date: October 26, 2026 (America/Los_Angeles)
 Baseline: `bcea7de679b51f700e352200c211b5a1682c7fb6` (latest main inspected before edits; includes Package A and Package B).
 Published game: https://davisjm4.github.io/java-games/variable-lab/

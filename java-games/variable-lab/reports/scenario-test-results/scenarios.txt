@@ -1,0 +1,2 @@
+45 classroom DOM integration checks passed: token taps, keyboard, expansion, progressive hints, multiple errors, alternative names, retries, reveal, reset on next, and scoring.
+305817 scenario assertions passed: 105 authored scenarios, 21 families, all stored text/char/Boolean alternatives and numeric endpoints, 3,000 generated challenges. Real javac verified 212 snippets.

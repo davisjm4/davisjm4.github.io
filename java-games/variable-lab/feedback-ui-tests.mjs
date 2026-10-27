@@ -10,7 +10,7 @@ const require=createRequire(import.meta.url), {parseHTML}=require(process.env.CS
 const fixtures=JSON.parse(fs.readFileSync(process.env.VARIABLE_FEEDBACK_FIXTURES || new URL('./reports/classroom-fixtures.json',import.meta.url),'utf8'));
 let checks=0;
 const eq=(a,b)=>{assert.deepEqual(a,b);checks++;}, ok=x=>{assert.ok(x);checks++;};
-function launch(mode) {
+export function launch(mode, fixture = fixtures[mode]) {
   const {window,document}=parseHTML(fs.readFileSync(new URL('./index.html',import.meta.url),'utf8'));
   Object.defineProperty(window.HTMLSelectElement.prototype,'value',{
     configurable:true,
@@ -18,7 +18,7 @@ function launch(mode) {
     set(v){for(const o of this.querySelectorAll('option')){o.removeAttribute('selected');if(o.getAttribute('value')===v)o.setAttribute('selected','');}},
   });
   const memory=new Map(), storage={getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)};
-  const tracker=S.createSessionTracker({storage}), q=fixtures[mode];
+  const tracker=S.createSessionTracker({storage}), q=fixture;
   const context={window,document,console,Math,Set,setTimeout,clearTimeout,diagnostics:{},
     J:{...J,generate:()=>q},sessionTracker:()=>tracker,addSessionNavigation:()=>{},
     roundSummary:()=>JSON.stringify(tracker.snapshot().totals)};
@@ -49,13 +49,13 @@ for(const mode of ['identify','assemble']) {
     token.onkeydown({key:'Enter',preventDefault(){},stopPropagation(){}});
   } else {
     t.fill({...wrong,operator:'='});t.click('check');ok(t.$('feedback').textContent.includes('Progress:'));
-    t.fill({...t.q.answer,name:'plantCount'});
+    t.fill(t.q.answer);
   }
   t.click('check');
   eq(t.tracker.snapshot().totals.afterRetry,before.afterRetry+1);
   eq(t.tracker.snapshot().totals.firstTry,before.firstTry);
   ok(t.$('check').disabled);ok(!t.$('next').disabled);
-  ok(t.$('feedback').textContent.includes(mode==='identify'?'= is the assignment':'int plantCount = 45;'));
+  ok(t.$('feedback').textContent.includes(mode==='identify'?'= is the assignment':'int seedsPlanted = 45;'));
   const totals=t.tracker.snapshot().totals;t.click('check');eq(t.tracker.snapshot().totals,totals);
   t.click('new');t.fill(wrong);t.click('check');t.click('show');
   ok(t.$('feedback').textContent.includes('not independently solved'));

@@ -70,21 +70,25 @@ function sameValue(a, b) {
 }
 export function diagnoseAssembly(q, r) {
   const issues = [], add = (id, fields, text) => issues.push({id, fields, text});
+  const expectedType = q.contract?.expectedType || q.answer.type;
+  const convention = q.contract?.typeConvention ?? q.convention;
   if (r.operator !== '=') add('operator', ['operator'], `${quote(r.operator)} ${['==','!=','<','>','<=','>='].includes(r.operator) ? 'compares values' : /=$/.test(r.operator || '') ? 'updates an already-declared variable' : 'does not initialize a variable'}. A declaration needs an assignment operator between its name and initial value.`);
   const nameError = identifierIssue(r.name || '');
   if (nameError) add('identifier', ['name'], nameError);
-  const info = literalInfo(r.value), expected = literalInfo(q.answer.value);
+  else if (!(q.contract?.acceptedNames || [q.answer.name]).includes(r.name))
+    add('scenario-name', ['name'], `${quote(r.name)} is a valid Java identifier, but its meaning does not match the information requested. The scenario says: ${q.contract?.storedInformation || q.prompt} Reread the scenario and choose the name that best describes that information.`);
+  const info = literalInfo(r.value), expected = literalInfo(q.contract?.acceptedValues?.[0] || q.answer.value);
   const compatible = assignmentCompatible(r.type, info);
   if (!types.has(r.type)) add('type', ['type'], `${quote(r.type)} is not a data type offered by this declaration activity.`);
   if (info.error) add('literal', ['value'], info.error);
   else if (types.has(r.type) && !compatible) add('compatibility',
-    q.convention && r.type === q.answer.type ? ['value'] : sameValue(info, expected) ? ['type'] : ['type','value'],
+    convention && r.type === expectedType ? ['value'] : sameValue(info, expected) ? ['type'] : ['type','value'],
     compatibilityRule(r.type, r.value, info));
   // Generated scenarios explicitly require the introductory type convention.
   // A legal widening conversion can still fail that stated learning objective.
-  if (q.convention && r.type !== q.answer.type && (compatible || info.error))
+  if (convention && r.type !== expectedType && (compatible || info.error))
     add('scenario-type', ['type'], `${quote(r.type)} ${compatible ? `can legally receive ${quote(r.value)}` : 'does not match the scenario’s quantity under the displayed introductory type convention'}. ${compatible ? 'Java permits that conversion, but this challenge asks for the most appropriate type under its displayed convention. ' : ''}Decide whether the scenario describes a count, decimal measurement, condition, single character, or text.`);
-  if (!info.error && !sameValue(info, expected)) add('scenario-value', ['value'], `${quote(r.value)} represents ${info.type === 'char' ? `character code ${info.value}` : `${quote(String(info.value))} as ${info.type}`}, which differs from the value described in the scenario. Match the scenario’s quantity, text, capitalization, or condition.`);
+  if (!info.error && !(q.contract?.acceptedValues || [q.answer.value]).some(v => sameValue(info, literalInfo(v)))) add('scenario-value', ['value'], `${quote(r.value)} represents ${info.type === 'char' ? `character code ${info.value}` : `${quote(String(info.value))} as ${info.type}`}, which differs from the value described in the scenario. Match the scenario’s quantity, text, capitalization, or condition.`);
   return issues;
 }
 export const assessAssembly = (q, r) => diagnoseAssembly(q, r).length === 0;
@@ -128,14 +132,19 @@ export function variableHint(q, r = {}, attempt = 1, previous) {
   if (q.mode !== 'assemble') return identificationHint(q, r, attempt, previous);
   const issues = diagnoseAssembly(q, r), old = previous ? diagnoseAssembly(q, previous) : [];
   const fixed = old.filter(x => !issues.some(i => i.id === x.id));
-  const progress = fixed.length ? `Progress: you corrected ${fixed.map(x => x.id === 'identifier' ? 'the variable name' : x.id.replaceAll('-', ' ')).join(', ')}. ` : '';
-  return `${progress}Your declaration ${quote(`${r.type} ${r.name} ${r.operator} ${r.value};`)} has ${issues.length} issue${issues.length === 1 ? '' : 's'} to investigate:\n${issues.map((x, i) => `${i + 1}. ${x.text}${attempt > 1 && x.id === 'operator' ? ' For initialization, Java uses =; == tests equality and != tests inequality.' : ''}`).join('\n')}${attempt > 1 ? '\nCheck each remaining field against the scenario and the Java type of its value.' : ''}${attempt > 2 ? `\nAttempt ${attempt}: fix the numbered issues, then check the complete declaration again; use Show Answer for a worked example.` : ''}`;
+  const progress = fixed.length ? `Progress: you corrected ${fixed.map(x => ['identifier','scenario-name'].includes(x.id) ? 'the variable name' : x.id.replaceAll('-', ' ')).join(', ')}. ` : '';
+  const affected = new Set(issues.flatMap(i => i.fields));
+  const labels = {type:'data type',name:'variable name',operator:'assignment operator',value:'value'};
+  const correct = Object.keys(labels).filter(k => !affected.has(k));
+  const acknowledged = correct.length ? `Your ${correct.map(k => labels[k]).join(', ')} ${correct.length === 1 ? 'is' : 'are'} correct.\n` : '';
+  const nameOnly = issues.length === 1 && issues[0].id === 'scenario-name';
+  return `${progress}${acknowledged}${nameOnly ? 'This declaration is valid Java, but the variable name does not match what the scenario asks you to store.\n' : ''}Your declaration ${quote(`${r.type} ${r.name} ${r.operator} ${r.value};`)} has ${issues.length} issue${issues.length === 1 ? '' : 's'} to investigate:\n${issues.map((x, i) => `${i + 1}. ${x.text}${attempt > 1 && x.id === 'scenario-name' && q.contract?.nameMeanings?.[r.name] ? ` ${quote(r.name)} belongs with this different request: ${q.contract.nameMeanings[r.name]}` : ''}${attempt > 1 && x.id === 'operator' ? ' For initialization, Java uses =; == tests equality and != tests inequality.' : ''}`).join('\n')}${attempt > 1 ? `\n${nameOnly ? 'Compare what the chosen name describes with what the scenario asks you to store.' : 'Check each remaining field against the scenario and the Java type of its value.'}` : ''}${attempt > 2 ? `\nAttempt ${attempt}: fix the numbered issues, then check the complete declaration again; use Show Answer for a worked example.` : ''}`;
 }
 export function variableExplanation(q, r, previous, reveal = false) {
   if (q.mode === 'assemble') {
     const a = reveal ? q.answer : r, info = literalInfo(a.value);
     const conversion = info.type === a.type ? `Its ${info.type} value is compatible with ${a.type}.` : `Java allows this ${info.type}-to-${a.type} assignment conversion.`;
-    return `${a.type} ${a.name} ${a.operator} ${a.value};\nThis declares ${quote(a.name)} and initializes it using =. ${conversion} ${q.convention ? 'It also matches the scenario and the displayed type convention.' : ''}${previous ? `\nIn your earlier declaration, ${diagnoseAssembly(q, previous).map(i => i.text).join(' ')}` : ''}`;
+    return `${a.type} ${a.name} ${a.operator} ${a.value};\nThis declares ${quote(a.name)} and initializes it using =. ${conversion} ${q.contract ? `The name ${quote(a.name)} describes the requested information: ${q.contract.storedInformation} ` : ''}${q.convention ? 'It also matches the scenario and the displayed type convention.' : ''}${previous ? `\nIn your earlier declaration, ${diagnoseAssembly(q, previous).map(i => i.text).join(' ')}` : ''}`;
   }
   const contrast = previous ? `\nYour earlier selection was ${quote(q.kind === 'select' ? treeNodes(q.root).find(n => n.id === previous.id)?.text : previous.answer)}.${q.kind === 'select' ? ` It was ${withArticle(describe(treeNodes(q.root).find(n => n.id === previous.id)).category)}.` : ''}` : '';
   return q.explanation + contrast;

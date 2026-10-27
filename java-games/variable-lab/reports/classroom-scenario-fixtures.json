@@ -1,0 +1,176 @@
+{
+  "table": {
+    "kind": "assemble",
+    "prompt": "The host seats your group at table 11. Store the table number.",
+    "convention": "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.",
+    "fields": [
+      {
+        "id": "type",
+        "label": "Type",
+        "choices": [
+          "char",
+          "double",
+          "String",
+          "boolean",
+          "int"
+        ]
+      },
+      {
+        "id": "name",
+        "label": "Variable name",
+        "choices": [
+          "tableNumber",
+          "customerName",
+          "incorrect-name",
+          "tableNumberOther"
+        ]
+      },
+      {
+        "id": "operator",
+        "label": "Operator",
+        "choices": [
+          "!=",
+          "=",
+          "=="
+        ]
+      },
+      {
+        "id": "value",
+        "label": "Value",
+        "choices": [
+          "11",
+          "18.0",
+          "'18'",
+          "\"18\""
+        ]
+      }
+    ],
+    "answer": {
+      "type": "int",
+      "name": "tableNumber",
+      "operator": "=",
+      "value": "11"
+    },
+    "scenario": {
+      "family": "restaurant",
+      "context": "Restaurants",
+      "name": "tableNumber",
+      "type": "int",
+      "spoken": "11"
+    },
+    "code": "Build the declaration.",
+    "compilerSource": "public class Practice { public static void main(String[] args) { int tableNumber = 11; } }",
+    "explanation": "int tableNumber = 11; Table numbers are whole numbers, so int fits.",
+    "topic": "assemble-int",
+    "contract": {
+      "version": 1,
+      "scenarioText": "The host seats your group at table 11. Store the table number.",
+      "storedInformation": "Store the table number.",
+      "expectedType": "int",
+      "acceptedNames": [
+        "tableNumber"
+      ],
+      "expectedOperator": "=",
+      "acceptedValues": [
+        "11"
+      ],
+      "typeConvention": "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.",
+      "nameMeanings": {
+        "tableNumber": "Store the table number.",
+        "billTotal": "Store the bill total in dollars.",
+        "orderReady": "Record whether the order is ready.",
+        "customerName": "Store the name on the order.",
+        "mealSize": "Store the one-letter meal size."
+      }
+    },
+    "game": "variable-lab",
+    "mode": "assemble"
+  },
+  "ocean": {
+    "kind": "assemble",
+    "prompt": "Tonight's movie is Ocean Quest. Store the movie title.",
+    "convention": "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.",
+    "fields": [
+      {
+        "id": "type",
+        "label": "Type",
+        "choices": [
+          "double",
+          "int",
+          "char",
+          "boolean",
+          "String"
+        ]
+      },
+      {
+        "id": "name",
+        "label": "Variable name",
+        "choices": [
+          "movieTitle",
+          "seatRow",
+          "incorrect-name",
+          "movieTitleOther"
+        ]
+      },
+      {
+        "id": "operator",
+        "label": "Operator",
+        "choices": [
+          "=",
+          "==",
+          "!="
+        ]
+      },
+      {
+        "id": "value",
+        "label": "Value",
+        "choices": [
+          "\"Ocean Quest\"",
+          "Skyward",
+          "'Skyward'",
+          "\"skyward\""
+        ]
+      }
+    ],
+    "answer": {
+      "type": "String",
+      "name": "movieTitle",
+      "operator": "=",
+      "value": "\"Ocean Quest\""
+    },
+    "scenario": {
+      "family": "entertainment",
+      "context": "Movies and streaming",
+      "name": "movieTitle",
+      "type": "String",
+      "spoken": "Ocean Quest"
+    },
+    "code": "Build the declaration.",
+    "compilerSource": "public class Practice { public static void main(String[] args) { String movieTitle = \"Ocean Quest\"; } }",
+    "explanation": "String movieTitle = \"Ocean Quest\"; A title is text, so it is a String.",
+    "topic": "assemble-String",
+    "contract": {
+      "version": 1,
+      "scenarioText": "Tonight's movie is Ocean Quest. Store the movie title.",
+      "storedInformation": "Store the movie title.",
+      "expectedType": "String",
+      "acceptedNames": [
+        "movieTitle"
+      ],
+      "expectedOperator": "=",
+      "acceptedValues": [
+        "\"Ocean Quest\""
+      ],
+      "typeConvention": "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.",
+      "nameMeanings": {
+        "runtimeMinutes": "Store the movie's length in minutes.",
+        "viewerRating": "Store the average rating.",
+        "subtitlesOn": "Record whether subtitles are on.",
+        "movieTitle": "Store the movie title.",
+        "seatRow": "Store the row letter."
+      }
+    },
+    "game": "variable-lab",
+    "mode": "assemble"
+  }
+}

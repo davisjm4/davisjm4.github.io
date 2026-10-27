@@ -11,14 +11,14 @@
 </style>
 <h1>Variable Lab feedback verification</h1>
 <p>Regression evidence only. Exact classroom fixtures run the current published app and engine. This page does not change the student question bank or scores in the regular game.</p>
-<label>Scenario <select id="scenario"><option value="identify">Classroom Identification</option><option value="assemble">Classroom Assemble</option><option value="live-identify">Published Identification</option><option value="live-assemble">Published Assemble</option></select></label>
+<label>Scenario <select id="scenario"><option value="table">Table number naming</option><option value="ocean">Ocean Quest naming</option><option value="identify">Classroom Identification</option><option value="assemble">Classroom Assemble</option><option value="live-identify">Published Identification</option><option value="live-assemble">Published Assemble</option></select></label>
 <label>Viewport <select id="width"><option value="1100">Desktop — 1100 px</option><option value="390">Phone — 390 px</option></select></label>
 <button id="load">Load verification</button>
 <p id="status" role="status"></p>
 <iframe id="practice" title="Variable Lab verification viewport" width="1100"></iframe>
 <script type="module">
 const frame=document.getElementById('practice'), status=document.getElementById('status');
-const fixtures=await fetch('./classroom-fixtures.json').then(r=>r.json());
+const fixtures={...await fetch('./classroom-fixtures.json').then(r=>r.json()),...await fetch('./classroom-scenario-fixtures.json').then(r=>r.json())};
 async function load() {
   const selected=document.getElementById('scenario').value;
   frame.width=document.getElementById('width').value;
@@ -26,14 +26,14 @@ async function load() {
     frame.removeAttribute('srcdoc');
     frame.src='/java-games/variable-lab/?mode='+selected.slice(5);
   } else {
-    const code=await fetch('/java-games/app.js?v=variable-feedback-repair-v1').then(r=>r.text());
+    const code=await fetch('/java-games/app.js?v=variable-scenario-validation-v2').then(r=>r.text());
     // Keep fixture scores in memory while using the real tracker. Ordinary
     // published-mode checks below retain the normal game/session behavior.
     const sessionCode=`import {createSessionTracker} from './session.js?v=per-mode-daily-v1';
       const memory=new Map(), isolated=createSessionTracker({storage:{getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)}});
       const sessionTracker=()=>isolated, addSessionNavigation=()=>{};
       const roundSummary=()=>{const s=isolated.snapshot().totals;return 'First-try accuracy: '+(s.attempted?Math.round(100*s.firstTry/s.attempted)+'%':'—')+' ('+s.firstTry+'/'+s.attempted+') · Solved after retry: '+s.afterRetry+' · Revealed: '+s.revealed+' · Submissions: '+s.submissions;};`;
-    const script=`import * as RealJ from './engine.js?v=variable-feedback-repair-v1';\nconst J={...RealJ,generate:()=>(${JSON.stringify(fixtures[selected])})};\n`+code.replace(/^import \* as J from [^;]+;/,'').replace(/import \{\s*sessionTracker,[\s\S]*?\} from [^;]+;/,sessionCode);
+    const script=`import * as RealJ from './engine.js?v=variable-scenario-validation-v2';\nconst J={...RealJ,generate:()=>(${JSON.stringify(fixtures[selected])})};\n`+code.replace(/^import \* as J from [^;]+;/,'').replace(/import \{\s*sessionTracker,[\s\S]*?\} from [^;]+;/,sessionCode);
     frame.removeAttribute('src');
     frame.srcdoc=`<!doctype html><html lang="en"><head><base href="/java-games/"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css?v=trace-v1"><style>#feedback{overflow-wrap:anywhere;line-height:1.5}</style></head><body data-game="variable-lab"><main id="main"></main><script type="module">${script.replace(/<\/script/gi,'<\\/script')}<\/script></body></html>`;
   }
