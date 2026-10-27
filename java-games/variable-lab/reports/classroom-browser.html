@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Variable Lab feedback verification fixtures</title>
+<style>
+  body { margin: 16px; color: #eef6ff; background: #0c1722; font: 16px system-ui; }
+  label, button { margin: 8px; display: inline-block; }
+  select, button { padding: 8px; font: inherit; }
+  iframe { display: block; background: #0c1722; border: 1px solid #789; height: 1300px; max-width: 100%; }
+</style>
+<h1>Variable Lab feedback verification</h1>
+<p>Regression evidence only. Exact classroom fixtures run the current published app and engine. This page does not change the student question bank or scores in the regular game.</p>
+<label>Scenario <select id="scenario"><option value="identify">Classroom Identification</option><option value="assemble">Classroom Assemble</option><option value="live-identify">Published Identification</option><option value="live-assemble">Published Assemble</option></select></label>
+<label>Viewport <select id="width"><option value="1100">Desktop — 1100 px</option><option value="390">Phone — 390 px</option></select></label>
+<button id="load">Load verification</button>
+<p id="status" role="status"></p>
+<iframe id="practice" title="Variable Lab verification viewport" width="1100"></iframe>
+<script type="module">
+const frame=document.getElementById('practice'), status=document.getElementById('status');
+const fixtures=await fetch('./classroom-fixtures.json').then(r=>r.json());
+async function load() {
+  const selected=document.getElementById('scenario').value;
+  frame.width=document.getElementById('width').value;
+  if(selected.startsWith('live-')) {
+    frame.removeAttribute('srcdoc');
+    frame.src='/java-games/variable-lab/?mode='+selected.slice(5);
+  } else {
+    const code=await fetch('/java-games/app.js?v=variable-feedback-repair-v1').then(r=>r.text());
+    const script=`import * as RealJ from './engine.js?v=variable-feedback-repair-v1';\nconst J={...RealJ,generate:()=>(${JSON.stringify(fixtures[selected])})};\n`+code.replace(/^import \* as J from [^;]+;/,'');
+    frame.removeAttribute('src');
+    frame.srcdoc=`<!doctype html><html lang="en"><head><base href="/java-games/"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css?v=trace-v1"><style>#feedback{overflow-wrap:anywhere;line-height:1.5}</style></head><body data-game="variable-lab"><main id="main"></main><script type="module">${script.replace(/<\/script/gi,'<\\/script')}<\/script></body></html>`;
+  }
+  status.textContent=`Loaded ${selected} at ${frame.width} CSS pixels. Fixture attempts are test data in this browser.`;
+}
+document.getElementById('load').onclick=load;
+await load();
+</script>
+</html>

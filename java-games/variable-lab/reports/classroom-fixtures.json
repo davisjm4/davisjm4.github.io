@@ -1,0 +1,124 @@
+{
+  "identify": {
+    "game": "variable-lab",
+    "mode": "identify",
+    "kind": "select",
+    "topic": "operator",
+    "prompt": "Select the assignment operator in the declaration of ovenPreheated.",
+    "root": {
+      "id": "snippet",
+      "children": [
+        {
+          "id": "aux-declaration",
+          "children": [
+            {
+              "id": "aux-type",
+              "text": "int"
+            },
+            " ",
+            {
+              "id": "aux-name",
+              "text": "eggsNeeded"
+            },
+            " ",
+            {
+              "id": "aux-operator",
+              "text": "="
+            },
+            " ",
+            {
+              "id": "aux-value",
+              "text": "3"
+            },
+            ";"
+          ]
+        },
+        "\n",
+        {
+          "id": "declaration",
+          "children": [
+            {
+              "id": "type",
+              "text": "boolean"
+            },
+            " ",
+            {
+              "id": "name",
+              "text": "ovenPreheated"
+            },
+            " ",
+            {
+              "id": "operator",
+              "text": "="
+            },
+            " ",
+            {
+              "id": "value",
+              "text": "false"
+            },
+            ";"
+          ]
+        }
+      ]
+    },
+    "answerId": "operator",
+    "explanation": "= is the assignment operator. It initializes ovenPreheated with false, a Boolean literal. == compares values instead of assigning them."
+  },
+  "assemble": {
+    "game": "variable-lab",
+    "mode": "assemble",
+    "kind": "assemble",
+    "topic": "assemble-int",
+    "prompt": "The garden club planted 45 seeds. Store the number of seeds planted.",
+    "convention": "Choose the most appropriate type: int for whole-number quantities, double for decimal quantities, boolean for true/false, char for one character, and String for text.",
+    "answer": {
+      "type": "int",
+      "name": "seedsPlanted",
+      "operator": "=",
+      "value": "45"
+    },
+    "fields": [
+      {
+        "id": "type",
+        "label": "Type",
+        "choices": [
+          "int",
+          "char",
+          "double",
+          "boolean",
+          "String"
+        ]
+      },
+      {
+        "id": "name",
+        "label": "Variable name",
+        "choices": [
+          "seedsPlanted",
+          "seeds-planted",
+          "plantCount",
+          "class"
+        ]
+      },
+      {
+        "id": "operator",
+        "label": "Operator",
+        "choices": [
+          "=",
+          "==",
+          "!="
+        ]
+      },
+      {
+        "id": "value",
+        "label": "Value",
+        "choices": [
+          "45",
+          "45.0",
+          "\"45\"",
+          "45,0"
+        ]
+      }
+    ],
+    "explanation": "int seedsPlanted = 45; int fits the whole-number count in this scenario."
+  }
+}

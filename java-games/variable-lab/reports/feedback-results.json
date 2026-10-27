@@ -1,0 +1,209 @@
+{
+  "seed": 262026,
+  "identification": {
+    "value": "You selected “false”. That is a Boolean literal. The question asks for an assignment operator. This is a value of type boolean, not an operator or a variable name. Look for the symbol that assigns an initial value to the requested variable.",
+    "type": "You selected “boolean”. That is a primitive data type. The question asks for an assignment operator. A data type describes what a variable can store; it is not the variable’s name or its stored value. Look for the symbol that assigns an initial value to the requested variable.",
+    "name": "You selected “ovenPreheated”. That is a variable name (identifier). The question asks for an assignment operator. An identifier names a variable; the name is distinct from the value stored in it. Look for the symbol that assigns an initial value to the requested variable.",
+    "declaration": "You selected “boolean ovenPreheated = false;”. That is a declaration and initialization statement. The question asks for an assignment operator. A declaration introduces a variable with a data type; initialization supplies its first value. Look for the symbol that assigns an initial value to the requested variable.",
+    "generated": {
+      "type": 75,
+      "name": 75,
+      "operator": 75,
+      "value": 75,
+      "declaration": 75,
+      "initialization": 75,
+      "assignment-operator": 75,
+      "assignment": 75,
+      "declaration-only": 75,
+      "stored": 75,
+      "conversion": 75,
+      "compatibility": 75
+    },
+    "categories": [
+      "declaration and initialization statement",
+      "primitive data type",
+      "variable name (identifier)",
+      "assignment operator",
+      "character literal",
+      "String literal",
+      "String data type (a reference type)",
+      "decimal numeric literal",
+      "Boolean literal",
+      "integer literal",
+      "declaration without initialization",
+      "assignment statement"
+    ]
+  },
+  "assembly": {
+    "classroom": "Your declaration “char seeds-planted == 45.0;” has 3 issues to investigate:\n1. “==” compares values. A declaration needs an assignment operator between its name and initial value.\n2. “seeds-planted” cannot be one Java variable name. Java reads the hyphen as a subtraction operator. Use letters, digits, underscores, or dollar signs; do not start with a digit or use a reserved word.\n3. char stores one UTF-16 character, such as 'A' or '7'. “45.0” is a decimal numeric literal of type double, which cannot directly initialize char. A narrowing numeric conversion needs an explicit cast and may lose information; this declaration has no cast.",
+    "retry": "Progress: you corrected operator. Your declaration “char seeds-planted = 45.0;” has 2 issues to investigate:\n1. “seeds-planted” cannot be one Java variable name. Java reads the hyphen as a subtraction operator. Use letters, digits, underscores, or dollar signs; do not start with a digit or use a reserved word.\n2. char stores one UTF-16 character, such as 'A' or '7'. “45.0” is a decimal numeric literal of type double, which cannot directly initialize char. A narrowing numeric conversion needs an explicit cast and may lose information; this declaration has no cast.\nCheck each remaining field against the scenario and the Java type of its value.",
+    "issues1": "Your declaration “int seedsPlanted == 45;” has 1 issue to investigate:\n1. “==” compares values. A declaration needs an assignment operator between its name and initial value.",
+    "issues2": "Your declaration “int class == 45;” has 2 issues to investigate:\n1. “==” compares values. A declaration needs an assignment operator between its name and initial value.\n2. “class” is a Java keyword or reserved literal, so it cannot be a variable name.",
+    "issues3": "Your declaration “boolean class == 45;” has 3 issues to investigate:\n1. “==” compares values. A declaration needs an assignment operator between its name and initial value.\n2. “class” is a Java keyword or reserved literal, so it cannot be a variable name.\n3. boolean stores true or false. “45” is a integer literal of type int, which cannot directly initialize boolean. Choose a compatible type and value; quotes affect the Java type.",
+    "issues4": "Your declaration “boolean class == 45,0;” has 4 issues to investigate:\n1. “==” compares values. A declaration needs an assignment operator between its name and initial value.\n2. “class” is a Java keyword or reserved literal, so it cannot be a variable name.\n3. “45,0” is not a numeric literal in this declaration. Java numbers do not include commas, currency signs, or a trailing percent sign.\n4. “boolean” does not match the scenario’s quantity under the displayed introductory type convention. Decide whether the scenario describes a count, decimal measurement, condition, single character, or text."
+  },
+  "java": [
+    {
+      "declaration": "int sample = 45;",
+      "valid": true
+    },
+    {
+      "declaration": "double sample = 45;",
+      "valid": true
+    },
+    {
+      "declaration": "double sample = 45.0;",
+      "valid": true
+    },
+    {
+      "declaration": "char sample = 45.0;",
+      "valid": false
+    },
+    {
+      "declaration": "int sample = 45.0;",
+      "valid": false
+    },
+    {
+      "declaration": "float sample = 45.0;",
+      "valid": false
+    },
+    {
+      "declaration": "float sample = 45.0f;",
+      "valid": true
+    },
+    {
+      "declaration": "double sample = 45.0f;",
+      "valid": true
+    },
+    {
+      "declaration": "long sample = 45;",
+      "valid": true
+    },
+    {
+      "declaration": "int sample = 45L;",
+      "valid": false
+    },
+    {
+      "declaration": "char sample = 65;",
+      "valid": true
+    },
+    {
+      "declaration": "char sample = 65536;",
+      "valid": false
+    },
+    {
+      "declaration": "char sample = -1;",
+      "valid": false
+    },
+    {
+      "declaration": "byte sample = 127;",
+      "valid": true
+    },
+    {
+      "declaration": "byte sample = 128;",
+      "valid": false
+    },
+    {
+      "declaration": "short sample = 32767;",
+      "valid": true
+    },
+    {
+      "declaration": "short sample = 32768;",
+      "valid": false
+    },
+    {
+      "declaration": "int sample = '7';",
+      "valid": true
+    },
+    {
+      "declaration": "double sample = '7';",
+      "valid": true
+    },
+    {
+      "declaration": "char sample = '7';",
+      "valid": true
+    },
+    {
+      "declaration": "char sample = '!';",
+      "valid": true
+    },
+    {
+      "declaration": "String sample = \"A\";",
+      "valid": true
+    },
+    {
+      "declaration": "char sample = \"A\";",
+      "valid": false
+    },
+    {
+      "declaration": "String sample = 'A';",
+      "valid": false
+    },
+    {
+      "declaration": "char sample = 'AB';",
+      "valid": false
+    },
+    {
+      "declaration": "boolean sample = false;",
+      "valid": true
+    },
+    {
+      "declaration": "boolean sample = \"false\";",
+      "valid": false
+    },
+    {
+      "declaration": "String sample = \"false\";",
+      "valid": true
+    },
+    {
+      "declaration": "boolean sample = False;",
+      "valid": false
+    },
+    {
+      "declaration": "int sample = \"45\";",
+      "valid": false
+    },
+    {
+      "declaration": "int sample = 45,000;",
+      "valid": false
+    },
+    {
+      "declaration": "int sample = $45;",
+      "valid": false
+    },
+    {
+      "declaration": "double sample = 45%;",
+      "valid": false
+    },
+    {
+      "declaration": "char sample = '\\n';",
+      "valid": true
+    },
+    {
+      "declaration": "String sample = \"hello\\nworld\";",
+      "valid": true
+    },
+    {
+      "declaration": "int sample = 2147483648;",
+      "valid": false
+    },
+    {
+      "declaration": "long sample = 2147483648L;",
+      "valid": true
+    },
+    {
+      "declaration": "int sample = -2147483648;",
+      "valid": true
+    },
+    {
+      "declaration": "char sample = '';",
+      "valid": false
+    },
+    {
+      "declaration": "String sample = \"unfinished;",
+      "valid": false
+    }
+  ],
+  "compiler": "Real javac verified 44 snippets.",
+  "checks": 63250
+}

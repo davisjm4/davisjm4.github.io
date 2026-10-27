@@ -5,6 +5,7 @@ import {
 } from "../csp-games/engine.js?v=platform-expansion-v2";
 import { TYPES, scenarioFamilies } from "./variable-scenarios.js?v=variable-lab-v4";
 import { generateTrace } from "./variable-lab/trace-adapter.js?v=trace-generator-v1";
+import { variableHint, variableExplanation, assessAssembly } from "./variable-lab/feedback.js?v=feedback-repair-v1";
 export const games = {
   "variable-lab": {
     name: "Variable Lab",
@@ -109,8 +110,14 @@ const hints = {
     "Consider every visited index and whether an operation replaces, inserts, or removes an element. Check final length, order, and duplicate values.",
   ],
 };
-export function hint(q, attempt) {
+export function hint(q, attempt, response, previous) {
+  if (q.game === "variable-lab" && ["identify", "assemble"].includes(q.mode))
+    return variableHint(q, response, attempt, previous);
   return hints[q.game][Math.min(2, attempt - 1)];
+}
+export function explanation(q, response, previous, reveal = false) {
+  return q.game === "variable-lab" && ["identify", "assemble"].includes(q.mode)
+    ? variableExplanation(q, response, previous, reveal) : q.explanation;
 }
 export function assess(q, r) {
   if (q.kind === "debug")
@@ -125,7 +132,8 @@ export function assess(q, r) {
       JSON.stringify([...q.answerIds].sort())
     );
   if (q.kind === "assemble")
-    return Object.entries(q.answer).every(([k, v]) => r[k] === v);
+    return q.game === "variable-lab" ? assessAssembly(q, r)
+      : Object.entries(q.answer).every(([k, v]) => r[k] === v);
   if (q.kind === "select") return (q.validIds || [q.answerId]).includes(r.id);
   return String(r.answer) === String(q.answer);
 }

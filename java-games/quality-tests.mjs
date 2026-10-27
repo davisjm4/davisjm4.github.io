@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import * as J from './engine.js';
 import {scenarioFamilies, TYPES} from './variable-scenarios.js';
+import {identifierIssue} from './variable-lab/feedback.js';
 let seed=91923; Math.random=()=> (seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32;
 const JAVA=process.env.JAVA_BIN||['/usr/lib/jvm/java-17-openjdk-amd64/bin/java','/usr/lib/jvm/java-21-openjdk-amd64/bin/java'].find(p=>fs.existsSync(p))||'java';
 const dir='/tmp/java-quality'; fs.mkdirSync(dir,{recursive:true});
@@ -51,12 +52,13 @@ for(let i=0;i<1000;i++){
   if(a.type==='boolean') assert.ok(['true','false'].includes(a.value));
   if(a.type==='char') assert.ok(/^'.'$/u.test(a.value));
   if(a.type==='String') assert.ok(/^"[^"]+"$/.test(a.value));
-  // every field: unique choices, one correct, every wrong choice rejected
+  // Unique choices; valid alternative names are allowed because the prompt
+  // does not require a particular identifier. Other scenario requirements hold.
   assert.deepEqual(q.fields.map(f=>f.choices.length),[5,4,3,4]);
   for(const f of q.fields){
     assert.equal(f.choices.length,new Set(f.choices).size);
     assert.equal(f.choices.filter(x=>x===a[f.id]).length,1);
-    for(const x of f.choices.filter(x=>x!==a[f.id])) assert.equal(J.assess(q,{...a,[f.id]:x}),false);
+    for(const x of f.choices.filter(x=>x!==a[f.id])) assert.equal(J.assess(q,{...a,[f.id]:x}),f.id==='name' && !identifierIssue(x));
   }
   assert.ok(J.assess(q,a));
   if(i<400){const path=`${dir}/assemble-${i}.java`;fs.writeFileSync(path,q.compilerSource);manifest.push(path+'\ttrue');}

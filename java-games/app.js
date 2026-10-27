@@ -1,4 +1,4 @@
-import * as J from "./engine.js?v=variable-trace-generator-v1";
+import * as J from "./engine.js?v=variable-feedback-repair-v1";
 import { mathGame } from "./math-lab/engine.js?v=math-v1";
 import { robotGame } from "./robot-algorithms/engine.js?v=robot-v3";
 import { classObjectGame } from "./class-object-lab/class-engine.js?v=class-object-v1";
@@ -55,6 +55,7 @@ function startGame() {
     marked = new Set(),
     editor,
     wrong = 0,
+    lastWrong = null,
     submitted = false,
     timer = null;
   document.title = game.name + " | Java Games";
@@ -121,6 +122,7 @@ function startGame() {
     selectedFix = null;
     marked.clear();
     wrong = 0;
+    lastWrong = null;
     submitted = false;
     editor = null;
     $("feedback").hidden = true;
@@ -335,8 +337,9 @@ function startGame() {
       wrong++;
       message(
         false,
-        `Not quite. Hint ${Math.min(3, wrong)}: ${J.hint(q, wrong)}\nRetry independently, skip, or choose Show Answer.`,
+        `Not quite. Hint ${Math.min(3, wrong)}: ${J.hint(q, wrong, r, lastWrong)}\nRetry independently, skip, or choose Show Answer.`,
       );
+      lastWrong = { ...r };
       return;
     }
     if (q.mode === "trace") {
@@ -346,7 +349,7 @@ function startGame() {
     }
     finish(
       false,
-      `${wrong ? "Correct independently after retry." : "Correct on the first try."}\n${q.explanation}`,
+      `${wrong ? "Correct independently after retry." : "Correct on the first try."}\n${J.explanation(q, r, lastWrong)}`,
     );
   }
   function show() {
@@ -369,7 +372,7 @@ function startGame() {
     finish(
       true,
       "Answer revealed — not independently solved.\n" +
-        q.explanation +
+        J.explanation(q, answer, lastWrong, true) +
         "\nThis challenge cannot earn independent credit.",
     );
     if (q.mode === "trace") showTraceFeedback();
