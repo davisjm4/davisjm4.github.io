@@ -63,7 +63,8 @@ Both tests check the hub and pathway destinations, current label and current-pag
 - Debugger redesign test passed including 168 Java compiler snippets and 30 runtime/exception executions. Search & Sort UI passed 198 checks including navigation negative control.
 - Shared navigation/catalog, QTI formatting, Teacher Tools adapters, Java session, Variable Lab feedback/DOM and 105-scenario validation passed. The Variable Lab scenario suite covered 3,000 generated challenges and 212 Java compiler examples.
 - The broad Java `npm test` completed successfully, including Debugger, Loop Lab, Variable Lab, ArrayList Lab, String Lab and Search & Sort. Search & Sort's quality suite reported 15 existing low-diversity flags as informational warnings; its tests passed.
-- Final GitHub checks, publication, browser checks and commit IDs are recorded in the verification addendum after completion.
+- Implementation commit: `ea99a1794eb9fb715142547f2e76c4fe1611ef22`; the Pages build and deployment and the Trace Repair Verification, Teacher Tools reliability, and Unified navigation verification workflows all succeeded.
+- Published browser verification used the deterministic fixture at 1100 and 390 CSS pixels. Selecting `0` displayed the corrected while-loop explanation, correct answer `93`, a one-check trace, and the existing revealed/submission accounting. The actual Loop Lab page also loaded and generated a challenge. Browser navigation checks exercised the Debugger and Search & Sort breadcrumbs. Desktop and phone screenshots and DOM snapshots are included in the evidence bundle.
 
 Raw command output, original failures and machine-readable evidence are provided in the accompanying evidence bundle.
 
