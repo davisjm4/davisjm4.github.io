@@ -1,0 +1,72 @@
+[
+  {
+    "source": "analog-digital-lab",
+    "instances": 720,
+    "families": 60,
+    "coverage": "exhaustive"
+  },
+  {
+    "source": "lossless-lossy-lab",
+    "instances": 360,
+    "families": 60,
+    "coverage": "exhaustive"
+  },
+  {
+    "source": "roundoff-overflow-lab",
+    "instances": 360,
+    "families": 60,
+    "coverage": "exhaustive"
+  },
+  {
+    "source": "ai-ethics-lab",
+    "instances": 500,
+    "families": 100,
+    "coverage": "exhaustive"
+  },
+  {
+    "source": "digital-divide-lab",
+    "instances": 400,
+    "families": 80,
+    "coverage": "exhaustive"
+  },
+  {
+    "source": "internet-layers-lab",
+    "instances": 400,
+    "families": 80,
+    "coverage": "exhaustive"
+  },
+  {
+    "source": "tcp-udp-lab",
+    "instances": 360,
+    "families": 60,
+    "coverage": "exhaustive"
+  },
+  {
+    "source": "copyright-creative-commons-lab",
+    "instances": 60,
+    "families": 60,
+    "coverage": "exhaustive"
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "instances": 600,
+    "families": 150,
+    "coverage": "exhaustive"
+  },
+  {
+    "source": "response-explorer",
+    "instances": 78,
+    "families": 32,
+    "coverage": "exhaustive"
+  },
+  {
+    "source": "documentation",
+    "instances": 57,
+    "coverage": "exhaustive eligible item IDs"
+  },
+  {
+    "source": "inheritance",
+    "instances": 4,
+    "coverage": "exhaustive eligible item IDs"
+  }
+]

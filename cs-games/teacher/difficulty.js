@@ -10,6 +10,7 @@ export function resolveDifficulty(mode, requested, index = 0) {
   if (wanted === "mixed") return { level: levels[(index + Math.floor(index / levels.length)) % levels.length], notice: "" };
   const exact = levels.find(level => difficultyId(level) === wanted);
   if (exact) return { level: exact, notice: "" };
+  if(mode.difficultyPolicy==="strict") return {error:`${mode.name} supports ${levels.join(", ")} only. Choose a supported level or Mixed.`};
   const nearest = [...levels].sort((a,b) => Math.abs(order.indexOf(difficultyId(a))-order.indexOf(wanted)) - Math.abs(order.indexOf(difficultyId(b))-order.indexOf(wanted)))[0];
   return { level: nearest, notice: `${mode.name} does not export ${requested}; using its nearest supported level, ${nearest}. Supported levels: ${levels.join(", ")}.` };
 }

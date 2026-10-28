@@ -2,16 +2,16 @@ name: Teacher Tools reliability
 on:
   push:
     branches: [main]
-    paths: ['cs-games/teacher/**', 'java-games/**', 'wpr-games/**', '.github/workflows/teacher-tools-check.yml']
+    paths: ['cs-games/teacher/**', 'java-games/**', 'csp-games/**', 'wpr-games/**', '.github/workflows/teacher-tools-check.yml']
   pull_request:
-    paths: ['cs-games/teacher/**', 'java-games/**', 'wpr-games/**', '.github/workflows/teacher-tools-check.yml']
+    paths: ['cs-games/teacher/**', 'java-games/**', 'csp-games/**', 'wpr-games/**', '.github/workflows/teacher-tools-check.yml']
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   assessment-reliability:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,3 +26,5 @@ jobs:
       - run: node cs-games/teacher/workplace-adapter-tests.mjs
       - run: PACKAGE_B_EVIDENCE_DIR=/tmp/package-b node cs-games/teacher/package-b-tests.mjs
       - run: python3 cs-games/teacher/validate-qti-packages.py /tmp/package-b/qti
+      - run: PACKAGE_F_EVIDENCE_DIR=/tmp/package-f node cs-games/teacher/package-f-tests.mjs
+      - run: python3 cs-games/teacher/validate-qti-packages.py /tmp/package-f/qti

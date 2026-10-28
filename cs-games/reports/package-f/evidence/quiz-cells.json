@@ -1,0 +1,1508 @@
+[
+  {
+    "source": "boolean",
+    "mode": "evaluate",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "evaluate",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "evaluate",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "identify",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "identify",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "identify",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "truthTable",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "truthTable",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "truthTable",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "switchIf",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "switchIf",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "switchIf",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "coverage",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "coverage",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "boolean",
+    "mode": "coverage",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "variable",
+    "mode": "identify/type",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "variable",
+    "mode": "identify/name",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "variable",
+    "mode": "identify/operator",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "variable",
+    "mode": "identify/value",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "variable",
+    "mode": "identify/declaration",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "variable",
+    "mode": "identify/initialization",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "variable",
+    "mode": "identify/assignment-operator",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "variable",
+    "mode": "identify/assignment",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "variable",
+    "mode": "identify/declaration-only",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "variable",
+    "mode": "identify/stored",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "variable",
+    "mode": "identify/conversion",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "variable",
+    "mode": "identify/compatibility",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "math",
+    "mode": "math-methods",
+    "difficulty": "beginner",
+    "count": 3
+  },
+  {
+    "source": "math",
+    "mode": "math-methods",
+    "difficulty": "intermediate",
+    "count": 3
+  },
+  {
+    "source": "math",
+    "mode": "math-methods",
+    "difficulty": "advanced",
+    "count": 3
+  },
+  {
+    "source": "math",
+    "mode": "numeric-limits",
+    "difficulty": "beginner",
+    "count": 3
+  },
+  {
+    "source": "math",
+    "mode": "numeric-limits",
+    "difficulty": "intermediate",
+    "count": 3
+  },
+  {
+    "source": "math",
+    "mode": "numeric-limits",
+    "difficulty": "advanced",
+    "count": 3
+  },
+  {
+    "source": "analog-digital-lab",
+    "mode": "audio",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "analog-digital-lab",
+    "mode": "images",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "analog-digital-lab",
+    "mode": "environment",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "analog-digital-lab",
+    "mode": "time",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "analog-digital-lab",
+    "mode": "motion",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "analog-digital-lab",
+    "mode": "electrical",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "analog-digital-lab",
+    "mode": "sensors",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "analog-digital-lab",
+    "mode": "storage",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "analog-digital-lab",
+    "mode": "sampling",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "analog-digital-lab",
+    "mode": "adc",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "analog-digital-lab",
+    "mode": "dac",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "analog-digital-lab",
+    "mode": "phenomena",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "lossless-lossy-lab",
+    "mode": "records",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "lossless-lossy-lab",
+    "mode": "images",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "lossless-lossy-lab",
+    "mode": "media",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "lossless-lossy-lab",
+    "mode": "delivery",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "roundoff-overflow-lab",
+    "mode": "integer",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "roundoff-overflow-lab",
+    "mode": "precision",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "roundoff-overflow-lab",
+    "mode": "applications",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "ai-ethics-lab",
+    "mode": "issue",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "ai-ethics-lab",
+    "mode": "response",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "ai-ethics-lab",
+    "mode": "tradeoff",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "ai-ethics-lab",
+    "mode": "consequence",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "ai-ethics-lab",
+    "mode": "evidence",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "digital-divide-lab",
+    "mode": "barrier",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "digital-divide-lab",
+    "mode": "impact",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "digital-divide-lab",
+    "mode": "solution",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "digital-divide-lab",
+    "mode": "tradeoff",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "digital-divide-lab",
+    "mode": "evidence",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "internet-layers-lab",
+    "mode": "role",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "internet-layers-lab",
+    "mode": "missing",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "internet-layers-lab",
+    "mode": "next",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "internet-layers-lab",
+    "mode": "misconception",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "internet-layers-lab",
+    "mode": "diagram",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "tcp-udp-lab",
+    "mode": "reliability",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "tcp-udp-lab",
+    "mode": "realtime",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "tcp-udp-lab",
+    "mode": "streaming",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "tcp-udp-lab",
+    "mode": "overhead",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "tcp-udp-lab",
+    "mode": "protocols",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "copyright-creative-commons-lab",
+    "mode": "basics",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "copyright-creative-commons-lab",
+    "mode": "public",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "copyright-creative-commons-lab",
+    "mode": "licenses",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "copyright-creative-commons-lab",
+    "mode": "attribution",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "copyright-creative-commons-lab",
+    "mode": "remix",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "copyright-creative-commons-lab",
+    "mode": "fair",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "purpose",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "design",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "testing",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "representation",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "compression",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "analysis",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "control",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "collections",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "procedures",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "algorithms",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "networks",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "resilience",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "protection",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "impacts",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "responsibility",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "vocabulary-fill-in-lab",
+    "mode": "participation",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "create-task-lab",
+    "mode": "missing",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "create-task-lab",
+    "mode": "identify",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "response-builder",
+    "mode": "behavior",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "response-builder",
+    "mode": "evidence",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "response-builder",
+    "mode": "test",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "response-builder",
+    "mode": "abstraction",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "response-builder",
+    "mode": "reasoning",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "test-case-builder",
+    "mode": "bugs",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "test-case-builder",
+    "mode": "predict",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "test-case-builder",
+    "mode": "boundary",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "test-case-builder",
+    "mode": "branches",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "test-case-builder",
+    "mode": "edge",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "algorithm-architect",
+    "mode": "sequence",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "algorithm-architect",
+    "mode": "selection",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "algorithm-architect",
+    "mode": "iteration",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "algorithm-architect",
+    "mode": "nested",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "algorithm-architect",
+    "mode": "nested-selection",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "algorithm-architect",
+    "mode": "counter",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "algorithm-architect",
+    "mode": "accumulator",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "algorithm-architect",
+    "mode": "search",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "algorithm-architect",
+    "mode": "procedure",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "code-concepts",
+    "mode": "procedures",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "code-concepts",
+    "mode": "selection",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "code-concepts",
+    "mode": "iteration",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "code-concepts",
+    "mode": "variables",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "code-concepts",
+    "mode": "lists",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "trivial-nontrivial",
+    "mode": "selection",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "trivial-nontrivial",
+    "mode": "iteration",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "trivial-nontrivial",
+    "mode": "procedures",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "trivial-nontrivial",
+    "mode": "algorithms",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "structure",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "structure",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "structure",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "defaults",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "defaults",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "defaults",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "constructors",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "constructors",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "constructors",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "getters",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "getters",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "getters",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "setters",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "setters",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "setters",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "this",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "this",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "this",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "independent",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "independent",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "independent",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "aliases",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "aliases",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "aliases",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "equality",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "equality",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "equality",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "parameters",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "parameters",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "parameters",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "static",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "static",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "static",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "tostring",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "tostring",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "tostring",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "reverse",
+    "difficulty": "Beginner",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "reverse",
+    "difficulty": "Intermediate",
+    "count": 3
+  },
+  {
+    "source": "class-object",
+    "mode": "reverse",
+    "difficulty": "Advanced",
+    "count": 3
+  },
+  {
+    "source": "arraylist",
+    "mode": "access",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "arraylist",
+    "mode": "insert-remove",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "arraylist",
+    "mode": "search-size",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "arraylist",
+    "mode": "traverse",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "arraylist",
+    "mode": "compare",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "linkedlist",
+    "mode": "trace",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "linkedlist",
+    "mode": "collections",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "method-constructor",
+    "mode": "identify-method",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "method-constructor",
+    "mode": "identify-constructor",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "method-constructor",
+    "mode": "match-call",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "method-constructor",
+    "mode": "return",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "method-constructor",
+    "mode": "constructors",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "method-constructor",
+    "mode": "returned-values",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "method-constructor",
+    "mode": "fix",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "method-constructor",
+    "mode": "access",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "correction",
+    "difficulty": "beginner",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "correction",
+    "difficulty": "intermediate",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "correction",
+    "difficulty": "advanced",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "statement",
+    "difficulty": "beginner",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "statement",
+    "difficulty": "intermediate",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "statement",
+    "difficulty": "advanced",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "explanation",
+    "difficulty": "beginner",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "explanation",
+    "difficulty": "intermediate",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "explanation",
+    "difficulty": "advanced",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "test",
+    "difficulty": "beginner",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "test",
+    "difficulty": "intermediate",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "test",
+    "difficulty": "advanced",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "exception",
+    "difficulty": "beginner",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "exception",
+    "difficulty": "intermediate",
+    "count": 3
+  },
+  {
+    "source": "debugger",
+    "mode": "exception",
+    "difficulty": "advanced",
+    "count": 3
+  },
+  {
+    "source": "documentation",
+    "mode": "inspector",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "documentation",
+    "mode": "docs",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "documentation",
+    "mode": "detective",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "inheritance",
+    "mode": "abstract",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "robot-algorithms",
+    "mode": "predict",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "robot-algorithms",
+    "mode": "loops",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "robot-algorithms",
+    "mode": "conditionals",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "robot-algorithms",
+    "mode": "methods",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "boolean-gatekeeper",
+    "mode": "evaluate",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "binary-builder",
+    "mode": "capacity",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "binary-builder",
+    "mode": "overflow",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "binary-builder",
+    "mode": "pixels",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "list-lab",
+    "mode": "trace",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "binary-search-hunt",
+    "mode": "trace",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "algorithm-race",
+    "mode": "search",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "algorithm-race",
+    "mode": "duplicates",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "algorithm-race",
+    "mode": "sum",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "compression-challenge",
+    "mode": "text",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "compression-challenge",
+    "mode": "image",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "data-detective",
+    "mode": "filter",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "mixed-ap-practice",
+    "mode": "creative",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "mixed-ap-practice",
+    "mode": "data",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "mixed-ap-practice",
+    "mode": "algorithms",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "mixed-ap-practice",
+    "mode": "systems",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "mixed-ap-practice",
+    "mode": "impact",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "simulation-lab",
+    "mode": "randomness",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "simulation-lab",
+    "mode": "prediction",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "simulation-lab",
+    "mode": "comparison",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "innovation/claim",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "innovation/evidence",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "innovation/reason",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "privacy/claim",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "privacy/evidence",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "privacy/reason",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "bias/claim",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "bias/evidence",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "bias/reason",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "access/claim",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "access/evidence",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "access/reason",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "crowd/claim",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "crowd/evidence",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "crowd/reason",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "rights/claim",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "rights/evidence",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "rights/reason",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "tradeoffs/claim",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "tradeoffs/evidence",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "computing-impact-lab",
+    "mode": "tradeoffs/reason",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "cybersecurity-defender",
+    "mode": "phishing",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "parallel-processing-race",
+    "mode": "independent",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "parallel-processing-race",
+    "mode": "dependent",
+    "difficulty": "mixed",
+    "count": 3
+  },
+  {
+    "source": "response-explorer",
+    "mode": "find-data",
+    "difficulty": "beginner",
+    "count": 3
+  },
+  {
+    "source": "response-explorer",
+    "mode": "find-data",
+    "difficulty": "intermediate",
+    "count": 3
+  },
+  {
+    "source": "response-explorer",
+    "mode": "find-data",
+    "difficulty": "advanced",
+    "count": 3
+  },
+  {
+    "source": "response-explorer",
+    "mode": "understand-structure",
+    "difficulty": "beginner",
+    "count": 3
+  },
+  {
+    "source": "response-explorer",
+    "mode": "understand-structure",
+    "difficulty": "intermediate",
+    "count": 3
+  },
+  {
+    "source": "response-explorer",
+    "mode": "understand-structure",
+    "difficulty": "advanced",
+    "count": 3
+  }
+]

@@ -1,0 +1,16 @@
+# Package F candidate decisions before implementation
+
+Baseline: 7f44b0daf4214cdb287790ce303c646007ae228c; 10 sources / 136 variants. Package B production files remain present; Package C test/feedback changes are preserved. No completed D+E report was located in repository or saved-report discovery. Tracker read successfully; updates wait for publication verification.
+
+| Priority | Candidate group | Complexity | Instructional value | Decision / gate |
+| --- | --- | --- | --- | --- |
+| 1 | Class & Object; ArrayList; Debugger | Medium | Direct Java object-state, collection, debugging assessments | Reuse source generators and graders. Compile/execute representative Java. Preserve all required code and assumptions; never copy solution diagrams into stems. |
+| 2 | Create Task; Response Builder; Test Case Builder; Algorithm Architect missing-component format | Medium | Core CSP program analysis, diagnosis and testing | Keep existing single-decision formats; include scenario, input, requirements and full pseudocode. Region identification uses labeled source spans. Construction mode remains practice-only. |
+| 3 | Vocabulary; Analog/Digital; Lossless/Lossy; Roundoff/Overflow; TCP/UDP; AI Ethics; Digital Divide; Internet Layers; Copyright | Low–medium | Broad CSP conceptual and scenario coverage | Exhaustively validate finite catalogs. Preserve native two/three/four choices, tables and diagram text. Do not manufacture difficulty levels. |
+| 4 | Selected Method/Constructor, LinkedList, Inheritance, Documentation modes | Medium | Methods, references, inheritance and API interpretation | Integrate objective choice/line formats only after source-grader checks. Defer multi-response/construction formats requiring a different interaction contract. |
+| 5 | Existing Boolean/Variable/Math sources: eligible uncovered modes | Medium | Extend current source coverage without duplicate listings | Reuse current engines; keep earlier variants stable. Exclude exploratory tools and nonrepresentable interactions explicitly. |
+| 6 | Existing CSP engine activities: Boolean evaluation, binary representation, list tracing, search tracing, compression, algorithm comparison, data and security decisions; standalone mixed/impact questions | Medium | Foundational representation/algorithm/networking coverage | Adapt only stated native tasks with reproducible source generation and independently checked keys. Inspect all context contracts before enabling. |
+| 7 | Trivial/Nontrivial classification and comparison | Medium | Program-meaningfulness reasoning | Reuse existing programs, explicit assumptions and authored evaluation key; do not expose source execution results in the stem. |
+| Defer | RGB/ASCII manipulation; Dance composition/live response; Network Breaker/Packet Router; robot program construction; free exploration; readiness tracker; class rearrangement | High or interaction-dependent | Valuable interactive practice | No forced MC conversion. Export only an already-defined standalone submode if its complete input and grading contract can be validated. Record exact exclusions in final matrix. |
+
+No new student-facing modes, families, generators, scoring, session behavior or navigation are planned. All feasible eligible sources must pass their validation gates; candidate status is not completion.

@@ -27,8 +27,8 @@ for(const source of sources){
       for(let sample=0;sample<3;sample++){
         const question=generateAssessmentItem(source.id,mode.id,level,1700+sample*271+tested*31,2);
         if(!question)continue;
-        check(question.choices.length===4,`${source.id}/${mode.id}: expected 4 choices`);
-        check(new Set(question.choices).size===4,`${source.id}/${mode.id}: choices must be unique`);
+        check(question.assessmentEdition==='F'?question.choices.length>=2&&question.choices.length<=4:question.choices.length===4,`${source.id}/${mode.id}: expected 4 choices`);
+        check(new Set(question.choices).size===question.choices.length,`${source.id}/${mode.id}: choices must be unique`);
         check(question.choices[question.correctIndex]===question.correctAnswer,`${source.id}/${mode.id}: keyed answer mismatch`);
         check(question.explanation.length>0&&(question.stem||question.prompt||question.questionContext)?.length>0,`${source.id}/${mode.id}: missing prompt/explanation`);
         check(question.points===2,`${source.id}/${mode.id}: point value`);

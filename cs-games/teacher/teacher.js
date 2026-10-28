@@ -1,8 +1,8 @@
-import { sources, sourceById } from "./adapters.js?v=package-b-20261026";
+import { sources, sourceById } from "./adapters.js?v=package-f-20261027";
 import { racecesCatalog } from "./raceces-adapter.js?v=package-b-20261026";
 import { workplaceCatalog } from "./workplace-adapter.js?v=package-b-20261026";
-import { buildQuiz, attemptAssessmentItem, selectionEligibility } from "./assessment-builder.js?v=package-b-20261026";
-import { buildAssessmentXml, buildManifest, createZip, escapeHtml, formatChoiceHtml, formatQuestionHtml, validateAssessment } from "./qti.js?v=package-b-20261026";
+import { buildQuiz, attemptAssessmentItem, selectionEligibility } from "./assessment-builder.js?v=package-f-20261027";
+import { buildAssessmentXml, buildManifest, createZip, escapeHtml, formatChoiceHtml, formatQuestionHtml, validateAssessment } from "./qti.js?v=package-f-20261027";
 const $ = id => document.getElementById(id);
 let quiz=[], config=null;
 let previousSources=[];
@@ -42,6 +42,11 @@ function updateModes(){
   if(!$("mode").selectedOptions.length) [...$("mode").options].forEach(o=>o.selected=true);
   previousSources=currentSources;
 }
+function updateDifficultyOptions(){
+ const selected=[...$("mode").selectedOptions].map(o=>{const [id,mode]=o.value.split('::');return sourceById[id].modes.find(m=>m.id===mode)}),strict=selected.filter(m=>m.difficultyPolicy==='strict');
+ for(const option of $("difficulty").options){const allowed=option.value==='mixed'||selected.some(m=>m.difficulties)&&strict.every(m=>m.difficulties.some(d=>d.toLowerCase()===option.value.toLowerCase()));option.hidden=!allowed;option.disabled=!allowed;}
+ if($("difficulty").selectedOptions[0]?.disabled)$("difficulty").value='mixed';
+}
 function makeConfig(){
  const pairs=[...$("mode").selectedOptions].map(o=>{const [sourceId,modeId]=o.value.split("::");return{sourceId,modeId}});
  const raw=$("seed").value.trim(); return {title:$("quiz-title").value.trim()||"CS Games Practice Quiz",pairs,count:Math.max(1,Math.min(50,Math.trunc(Number($("question-count").value))||5)),points:Math.max(1,Math.min(100,Number($("points").value)||1)),difficulty:$("difficulty").value,seed:raw===""?(Date.now()>>>0):(Number(raw)>>>0),racecesFilters:{subject:$("raceces-subject").value||"all",topics:[...$("raceces-topics").querySelectorAll("input:checked")].map(x=>x.value)},workplaceFilters:{skills:[...$("workplace-skills").selectedOptions].map(x=>x.value),contexts:[...$("workplace-contexts").selectedOptions].map(x=>x.value)}};
@@ -67,6 +72,7 @@ function downloadZip(){
  const blob=createZip([{name:"imsmanifest.xml",data:manifest},{name:"assessment.xml",data:xml},{name:"metadata.json",data:metadata}]);const link=document.createElement("a");link.href=URL.createObjectURL(blob);link.download=(config.title.replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")||"cs-games-quiz")+".zip";link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);$("status").textContent="Validated QTI 1.2 ZIP downloaded. Canvas import scoring and feedback display have not been verified in a sandbox. Review imported points and explanations before assigning.";
 }
 function showEligibility(){
+ updateDifficultyOptions();
  const c=makeConfig(),messages=new Set();
  for(const pair of c.pairs){
   const mode=sourceById[pair.sourceId].modes.find(m=>m.id===pair.modeId);

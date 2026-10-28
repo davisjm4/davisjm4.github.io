@@ -7,7 +7,7 @@
   <title>Teacher Tools | CS Games</title>
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="./teacher.css">
-  <script type="module" src="./teacher.js?v=package-b-20261026"></script>
+  <script type="module" src="./teacher.js?v=package-f-20261027"></script>
 </head>
 <body>
   <header class="site-header">
@@ -36,7 +36,7 @@
         <label>Random seed (optional)<input id="seed" inputmode="numeric" placeholder="New seed each time"></label>
       </div>
       <p id="source-help" class="muted">Choose one or more games. Use Ctrl (Windows) or Command (Mac) to select multiple entries.</p>
-      <p id="mode-help" class="muted">Modes are grouped by source. Visual, drag-and-drop, and non-four-choice activities are excluded.</p>
+      <p id="mode-help" class="muted">Modes are grouped by source. Exports use single-answer multiple choice with two to four native choices. Only validated standalone modes are listed.</p>
       <fieldset id="raceces-filters" class="source-filters" hidden>
         <legend>R-A-C-E-C-E-S writing filters</legend>
         <label>Subject<select id="raceces-subject"><option value="all">All Topics (all subjects)</option></select></label>
@@ -50,6 +50,7 @@
         <p id="workplace-help" class="muted">Choose one or more skills and settings. Leave either list unselected to include all options.</p>
       </fieldset>
       <p class="muted">Modes without difficulty controls use their native Mixed level. Limited-level modes use the nearest supported level, with a notice here and in the preview. Unavailable filtered combinations block generation. Canvas import scoring and feedback display have not been verified in a sandbox; review imported points and explanations before assigning.</p>
+      <details class="muted"><summary>Assessment coverage and limitations</summary><p>Some integrations cover selected interpretation modes: LinkedList exports tracing and collection decisions; Method &amp; Constructor exports choices and source-span identification, not argument rearrangement; Documentation excludes comment editing, Javadoc construction, and multi-part classification; Inheritance exports native single-choice Abstract Class questions; API Response Explorer excludes multi-selection and classification; Robot Algorithms excludes route construction and repair tasks. Computing Impact items assess one labeled claim, evidence, or reasoning step. Cybersecurity exports single-warning phishing cases only. Algorithm Architect exports its existing missing-component format. Code Concepts excludes multi-region selection. Simulation exports reference questions, not live experiments. Trivial/Non-Trivial exports Program A classification. WPR and RACECES ordering remains recognition of a valid sequence.</p><p>RGB, ASCII, Dance, Network Breaker, Packet Router, Class Builder rearrangement, and API Project Builder remain interactive practice. Their complete manipulation or construction tasks do not have a validated standalone export in this package. The readiness pathway tracks practice evidence and has no question generator.</p></details>
       <p id="eligibility" class="muted" role="status"></p>
       <div class="actions">
         <button id="generate">Generate Quiz</button>

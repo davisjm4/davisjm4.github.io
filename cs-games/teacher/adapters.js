@@ -1,3 +1,7 @@
+import { responseExplorerSource } from './response-explorer-adapter.js?v=package-f-20261027';
+import { cspSources } from './csp-adapters.js?v=package-f-20261027';
+import { javaSources, expandedBooleanModes, generateExpandedBoolean, expandedVariableModes, generateExpandedVariable, expandedMathModes, generateExpandedMath } from './java-expansion-adapters.js?v=package-f-20261027';
+import { coreCspSources } from './core-csp-adapters.js?v=package-f-20261027';
 // Thin bridges from the games' existing procedural engines to Canvas MC items.
 // Source logic stays in java-games; this module owns only normalization/validation.
 import { booleanGame, generate as genBoolean, makeRng as booleanRng, assess as assessBoolean, signature as booleanSignature } from "../../java-games/boolean-conditional-lab/engine.js";
@@ -9,7 +13,7 @@ import { generate as genSearch, MODE_IDS as searchModeIds, MODES as searchModes,
 import { generateTraceChallenge, verifyChallengeModel } from "../../java-games/variable-lab/trace-generator/src/index.js";
 import { generateRacecesAssessmentItem } from "./raceces-adapter.js?v=package-b-20261026";
 import { generateWorkplaceAssessmentItem } from "./workplace-adapter.js?v=package-b-20261026";
-import { difficultyId, resolveDifficulty } from "./difficulty.js?v=package-b-20261026";
+import { difficultyId, resolveDifficulty } from "./difficulty.js?v=package-f-20261027";
 import { searchQuestionContext } from "./search-context.js?v=package-b-20261026";
 const stringLab = globalThis.StringLab;
 function supportsStringChoices(family, difficulty) {
@@ -94,6 +98,14 @@ export const sources = [
     return item?{...item,requiredContext:context}:null;
   }),
 ];
+// Extend existing listings without renaming or replacing baseline variants.
+export const baselineSourceIds=sources.map(s=>s.id);
+export const baselineModeIds=Object.fromEntries(sources.map(s=>[s.id,s.modes.map(m=>m.id)]));
+for(const [id,modes,generate] of [['boolean',expandedBooleanModes,generateExpandedBoolean],['variable',expandedVariableModes,generateExpandedVariable],['math',expandedMathModes,generateExpandedMath]]){
+ const s=sources.find(s=>s.id===id),previous=s.generate,ids=new Set(modes.map(m=>m.id));s.modes.push(...modes);
+ s.generate=(mode,...args)=>ids.has(mode)?generate(mode,...args):previous(mode,...args);
+}
+sources.push(...cspSources,...javaSources,...coreCspSources,responseExplorerSource);
 export const sourceById = Object.fromEntries(sources.map(s=>[s.id,s]));
 
 export function generateAssessmentItem(sourceId, modeId, difficulty, seed, points, options = {}) {

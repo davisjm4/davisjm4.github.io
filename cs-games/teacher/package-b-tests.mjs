@@ -2,7 +2,7 @@ import "./test-runtime.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-const {sources,sourceById,generateAssessmentItem}=await import("./adapters.js?v=package-b-20261026");
+const {sources:allSources,sourceById,generateAssessmentItem,baselineSourceIds,baselineModeIds}=await import("./adapters.js?v=package-b-20261026");
 const {buildQuiz,selectionEligibility}=await import("./assessment-builder.js");
 const {difficultyId,resolveDifficulty}=await import("./difficulty.js");
 const {searchQuestionContext}=await import("./search-context.js");
@@ -10,6 +10,7 @@ const {generate,exportQuestion,MODE_IDS,MODES,familiesFor}=await import("../../j
 const {formatQuestionHtml,buildAssessmentXml,buildManifest,createZip,validateAssessment}=await import("./qti.js?v=package-b-20261026");
 const {workplaceCatalog}=await import("./workplace-adapter.js?v=package-b-20261026");
 const {racecesCatalog}=await import("./raceces-adapter.js?v=package-b-20261026");
+const sources=allSources.filter(s=>baselineSourceIds.includes(s.id)).map(s=>({...s,modes:s.modes.filter(m=>baselineModeIds[s.id].includes(m.id))}));
 const output=process.env.PACKAGE_B_EVIDENCE_DIR;
 if(output)fs.mkdirSync(path.join(output,"qti"),{recursive:true});
 const write=(file,value)=>{if(output)fs.writeFileSync(path.join(output,file),JSON.stringify(value,null,2)+"\n")};

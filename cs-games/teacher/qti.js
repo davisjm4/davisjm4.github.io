@@ -63,9 +63,10 @@ export function validateAssessment(quiz, expectedCount) {
     if(![prompt,context,passage,questionContext,response].some(v=>String(v).trim())) errors.push(`${label}: missing question text.`);
     if(!String(item.explanation||"").trim()) errors.push(`${label}: missing explanation.`);
     if(item.sourceId==="search-sort"&&(typeof item.requiredContext!=="string"||context!==item.requiredContext)) errors.push(`${label}: required Search & Sort context is missing or changed.`);
+    if(item.requiredInstruction&&Object.entries(item.requiredInstruction).some(([key,value])=>String(item[key]??'')!==String(value))) errors.push(`${label}: required instructional content is missing or changed.`);
     if(item.requiredCode!=null&&code!==item.requiredCode) errors.push(`${label}: required source code is missing or changed.`);
     const choices=(item.choices||[]).map(c=>c&&typeof c==="object"?String(c.code??c.text):String(c));
-    if(choices.length!==4||new Set(choices).size!==4||choices.some(c=>!c.trim())||!Number.isInteger(item.correctIndex)||item.correctIndex<0||item.correctIndex>=choices.length) errors.push(`${label}: invalid answer choices or key.`);
+    if((choices.length<2||choices.length>4)||new Set(choices).size!==choices.length||choices.some(c=>!c.trim())||!Number.isInteger(item.correctIndex)||item.correctIndex<0||item.correctIndex>=choices.length) errors.push(`${label}: invalid answer choices or key.`);
     if(item.correctAnswer!=null&&choices[item.correctIndex]!==String(item.correctAnswer)) errors.push(`${label}: answer key does not match the correct answer.`);
     if([prompt,context,passage,questionContext,response,code,item.explanation,...choices].some(v=>/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/.test(String(v)))) errors.push(`${label}: content contains invalid XML characters.`);
   }

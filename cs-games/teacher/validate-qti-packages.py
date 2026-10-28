@@ -52,7 +52,7 @@ def validate(file):
             from html import unescape
             assert unescape(html) == unescape(original["html"])
         choices = item.findall("q:presentation/q:response_lid/q:render_choice/q:response_label", Q)
-        assert len(choices) == len({c.attrib["ident"] for c in choices}) == 4
+        assert 2 <= len(choices) == len({c.attrib["ident"] for c in choices}) <= 4
         feedback = {f.attrib["ident"]: f for f in item.findall("q:itemfeedback", Q)}
         assert set(feedback) == {"general_fb"}
         assert feedback["general_fb"].findtext(".//q:mattext", namespaces=Q) == original["explanation"]
