@@ -58,6 +58,9 @@ const nativeExtras={
  'linkedlist-lab':['Link Nodes','Insert & Remove','Trace','Collections'],
  'inheritance-polymorphism-lab':['Hierarchy','Override','Tracer','Abstract','Debug'],
  'documentation-lab':['Inspector','Editor','Javadoc Builder','Read Docs','API Detective','Response Explorer','API Project Builder'],
+ 'string-lab':globalThis.StringLab.Generator.MODES.map(m=>m.label),
+ 'robot-algorithms':['Predict','Loops','Build','Conditionals','Debug','Methods'],
+ 'response-explorer':['Find Data','Understand Structure','Select What the App Needs'],
  'variable-lab':['Identify','Assemble','Trace']
 };
 const items=entries.map(g=>{const url=new URL(g.url,'https://davisjm4.github.io/cs-games/'+(g.course==='advanced'?'advanced':'csp')+'/'),directory=url.pathname.replace(/^\//,'').replace(/\/$/,''),slug=directory.split('/').at(-1);return{activity:g.title,pathway:g.source==='java'?'Advanced CS':'AP CSP',url:url.href,directory,slug,objectives:g.skill}});

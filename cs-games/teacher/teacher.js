@@ -68,7 +68,7 @@ function regenerateOne(index){
 }
 function downloadZip(){
  const errors=validateAssessment(quiz,config?.count);if(errors.length){$("status").textContent="Export blocked: "+errors.join(" ");$("download").disabled=true;return}
- const xml=buildAssessmentXml(config,quiz),manifest=buildManifest(),metadata=JSON.stringify({title:config.title,sources:[...new Set(quiz.map(q=>q.source))],questions:quiz.length,points:quiz.reduce((s,q)=>s+q.points,0)},null,2);
+ const xml=buildAssessmentXml(config,quiz),manifest=buildManifest(),metadata=JSON.stringify({title:config.title,sources:[...new Set(quiz.map(q=>q.source))],questions:quiz.length,points:quiz.reduce((s,q)=>s+q.points,0),itemMetadata:quiz.map(q=>({sourceId:q.sourceId,source:q.source,topic:q.topic||q.family||q.modeId,mode:q.modeId||q.mode,difficulty:q.difficulty,family:q.family}))},null,2);
  const blob=createZip([{name:"imsmanifest.xml",data:manifest},{name:"assessment.xml",data:xml},{name:"metadata.json",data:metadata}]);const link=document.createElement("a");link.href=URL.createObjectURL(blob);link.download=(config.title.replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")||"cs-games-quiz")+".zip";link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);$("status").textContent="Validated QTI 1.2 ZIP downloaded. Canvas import scoring and feedback display have not been verified in a sandbox. Review imported points and explanations before assigning.";
 }
 function showEligibility(){

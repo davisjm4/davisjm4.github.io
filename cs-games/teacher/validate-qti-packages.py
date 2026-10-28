@@ -41,6 +41,10 @@ def validate(file):
         itemmeta = item.find("q:itemmetadata", Q)
         points = float(metadata(itemmeta, "points_possible"))
         assert points == original["points"]
+        provenance = expected.get("itemMetadata", [])[items.index(item)] if expected.get("itemMetadata") else original
+        for key, label in [("sourceId", "source_id"), ("source", "source_game"), ("topic", "source_topic"), ("mode", "source_mode"), ("difficulty", "source_difficulty")]:
+            if provenance.get(key) is not None:
+                assert metadata(itemmeta, label) == str(provenance[key]), "Missing provenance metadata"
         assert metadata(itemmeta, "question_type") == "multiple_choice_question"
         total += points
         html = item.findtext("q:presentation/q:material/q:mattext", namespaces=Q)

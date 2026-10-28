@@ -52,6 +52,7 @@ const samples = [
   makeQuestion("blank", "int start = 0;\n\nstart++;\n\nSystem.out.println(start);"),
   makeQuestion("strings", 'String text = "A & B < C > D";'),
   makeQuestion("chars", "char letter = 'Q';"),
+  makeQuestion("escapes", 'String empty = "";\nString escaped = "Line\\nTab\\tQuote\\\"Slash\\\\";\nint[] values = {0, -1, 2147483647};'),
   makeQuestion("generics", "java.util.List<String> names = new java.util.ArrayList<>();"),
 ];
 
@@ -64,7 +65,7 @@ await test("shared preview/export renderer keeps structure and safe markup", () 
   }
   assert.ok(formatQuestionHtml(samples[7]).includes("A &amp; B &lt; C &gt; D"));
   assert.ok(decodeEntities(formatQuestionHtml(samples[8])).includes("'Q'"));
-  assert.ok(formatQuestionHtml(samples[9]).includes("List&lt;String&gt;"));
+  assert.ok(formatQuestionHtml(samples.find(q=>q.id==="generics")).includes("List&lt;String&gt;"));
 });
 
 await test("XML-sensitive Java operators survive XML then HTML parsing exactly", () => {
