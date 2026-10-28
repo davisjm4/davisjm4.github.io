@@ -1,0 +1,21 @@
+name: Robotics Parts Sprint verification
+on:
+  push:
+    branches: [main]
+    paths: ['cs-games/robotics/**', 'java-games/session.js', 'cs-games/catalog.js', 'cs-games/course-page.js', '.github/workflows/robotics-check.yml']
+  pull_request:
+    paths: ['cs-games/robotics/**', 'java-games/session.js', 'cs-games/catalog.js', 'cs-games/course-page.js', '.github/workflows/robotics-check.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  identification-and-session:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: ROBOTICS_EVIDENCE=/tmp/robotics-validation node cs-games/robotics/parts-sprint/tests/engine-tests.mjs
+      - run: node java-games/session-tests.mjs

@@ -23,11 +23,11 @@ function documentAt(p){return parseHTML(read(p)).document;}
 function checkEntry(g){
   assert.ok(g.title&&g.description&&g.skill&&g.topics.length,`Incomplete metadata: ${g.id}`);
   assert.ok(!g.disabled,`Disabled catalog entry: ${g.id}`);
-  const url=resolve(g.url,`/cs-games/${g.course==='advanced'?'advanced':'csp'}/`);
+  const url=resolve(g.url,`/cs-games/${g.course}/`);
   assert.ok(fs.existsSync(path.join(root,url,'index.html')),`Missing entry point: ${url}`);
   return url;
 }
-for(const course of ['advanced','csp']){
+for(const course of ['advanced','csp','robotics']){
   const entries=catalog.filter(g=>g.course===course);
   assert.equal(new Set(entries.map(g=>g.id)).size,entries.length,`${course}: duplicate IDs`);
   const urls=entries.map(checkEntry);

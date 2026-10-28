@@ -1,9 +1,10 @@
 const catalog = window.CSGamesCatalog || [];
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const course = document.body.dataset.course;
+const isRobotics = course === "robotics";
 const isCsp = course === "csp";
 const items = catalog.filter(g => g.course === course);
-const groups = isCsp ? [
+const groups = isRobotics ? [["robotics","Robotics 1 — VEX V5",["Robotics 1 — VEX V5"]]] : isCsp ? [
   ["mixed","Mixed AP practice",["All five Big Ideas"]],
   ["1","Big Idea 1 — Creative Development",["1.1 Collaboration","1.2 Program Purpose","1.3 Program Design","1.4 Testing"]],
   ["2","Big Idea 2 — Data",["2.1 Binary Representation","2.2 Data Compression","2.3 Data Analysis","2.4 Data Transformations"]],
@@ -46,12 +47,12 @@ function render(){
   document.getElementById("result-count").textContent = shown+" activit"+(shown===1?"y":"ies")+" shown";
   document.querySelectorAll("[data-topic]").forEach(b => b.onclick = () => { document.getElementById("topic-filter").value = b.dataset.topic; render(); });
 }
-const title = isCsp ? "AP Computer Science Principles" : "Advanced Computer Science";
+const title = isRobotics ? "Robotics" : isCsp ? "AP Computer Science Principles" : "Advanced Computer Science";
 document.title = title+" | CS Games";
 document.querySelector("[data-course-title]").textContent = title;
-document.querySelector("[data-course-intro]").textContent = isCsp ? "Practice AP CSP concepts through short activities aligned to the five Big Ideas. Use the topic names to find a useful next challenge." : "Practice Java programming, algorithms, data structures, and object-oriented programming while preparing for Nevada's Advanced Computer Science course and End-of-Program assessment.";
-document.querySelector("[data-summary-link]").href = isCsp ? "/csp-games/session-summary/" : "/java-games/session-summary/";
-document.querySelector("[data-summary-link]").textContent = isCsp ? "AP CSP Session Summary" : "Advanced CS Session Summary";
+document.querySelector("[data-course-intro]").textContent = isRobotics ? "Practice Robotics 1 with VEX V5 hardware identification. Build technical vocabulary, learn visual distinctions and improve first-try accuracy through short races." : isCsp ? "Practice AP CSP concepts through short activities aligned to the five Big Ideas. Use the topic names to find a useful next challenge." : "Practice Java programming, algorithms, data structures, and object-oriented programming while preparing for Nevada's Advanced Computer Science course and End-of-Program assessment.";
+document.querySelector("[data-summary-link]").href = isRobotics ? "/cs-games/robotics/parts-sprint/#session-summary" : isCsp ? "/csp-games/session-summary/" : "/java-games/session-summary/";
+document.querySelector("[data-summary-link]").textContent = isRobotics ? "Robotics Session Summary" : isCsp ? "AP CSP Session Summary" : "Advanced CS Session Summary";
 const filter = document.getElementById("topic-filter");
 [...new Set(items.flatMap(g=>g.topics))].sort().forEach(t => filter.insertAdjacentHTML("beforeend",'<option value="'+esc(t)+'">'+esc(t)+'</option>'));
 document.getElementById("game-search").addEventListener("input",render);

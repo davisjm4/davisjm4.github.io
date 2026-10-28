@@ -14,10 +14,10 @@ const target=(a,p)=>new URL(a.getAttribute('href'),origin+'/'+p).pathname;
 const has=(d,p,url)=>[...d.querySelectorAll('a[href]')].some(a=>target(a,p)===url);
 const sandbox={window:{}};vm.runInNewContext(read('cs-games/catalog.js'),sandbox);const catalog=sandbox.window.CSGamesCatalog;
 const hub=doc('cs-games/index.html');
-assert.equal(hub.querySelectorAll('.course-card').length,3);
-for(const url of ['/cs-games/csp/','/cs-games/advanced/','/wpr-games/workplace-readiness/'])assert.ok(has(hub,'cs-games/index.html',url),url);
+assert.equal(hub.querySelectorAll('.course-card').length,4);
+for(const url of ['/cs-games/csp/','/cs-games/advanced/','/wpr-games/workplace-readiness/','/cs-games/robotics/'])assert.ok(has(hub,'cs-games/index.html',url),url);
 assert.ok(hub.querySelector('#shared-tools a[href="/wpr-games/raceces/"]'));
-for(const course of ['csp','advanced']){
+for(const course of ['csp','advanced','robotics']){
  const page=`cs-games/${course}/index.html`;const d=doc(page);
  assert.ok(has(d,page,'/cs-games/'));assert.ok(has(d,page,'/wpr-games/raceces/'));
  const {window,document}=parseHTML(read(page));window.CSGamesCatalog=catalog;
@@ -56,4 +56,4 @@ assert.ok(doc('wpr-games/raceces/index.html').querySelector('#subject-select'));
 for(const id of ['opt-skill','opt-mode','opt-difficulty','nav-summary','brand-link'])assert.ok(doc('wpr-games/workplace-readiness/index.html').getElementById(id));
 assert.equal(doc('wpr-games/workplace-readiness/index.html').getElementById('brand-link').getAttribute('href'),'#/');
 assert.equal(doc('wpr-games/raceces/index.html').querySelector('a[href="/cs-games/#shared-tools"]').textContent,'Shared Tools');
-console.log('PASS hub, three pathways, shared RACECES, WPR skill-selection return, subject selector, summaries and legacy routes. No navigation code accesses storage.');
+console.log('PASS hub, four pathways, shared RACECES, WPR skill-selection return, subject selector, summaries and legacy routes. No navigation code accesses storage.');
