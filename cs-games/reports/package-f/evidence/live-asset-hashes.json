@@ -1,0 +1,27 @@
+[
+  {
+    "path": "cs-games/teacher/index.html",
+    "matches": true,
+    "sha256": "f5846f10d76ba7e44367e4a412f4b7a491fb0fb3000b3ad414a2e9010a34273a"
+  },
+  {
+    "path": "cs-games/teacher/teacher.js",
+    "matches": true,
+    "sha256": "940c8b6505a390180cd3a7eb34b75ae93e00343ca7a71d84ad8c9be9b836be9c"
+  },
+  {
+    "path": "cs-games/teacher/adapters.js",
+    "matches": true,
+    "sha256": "5500542ac999ce38fc9f46953eec6fb689a93d0ac49a4c0dfa55b7819a3f1c5a"
+  },
+  {
+    "path": "cs-games/teacher/qti.js",
+    "matches": true,
+    "sha256": "6b54421f0b586d8029bbdcf76290279783d5abe3f5aa3c4768b775cb0b6fcbde"
+  },
+  {
+    "path": "cs-games/teacher/response-explorer-adapter.js",
+    "matches": true,
+    "sha256": "fb7087b64c031d5ef12794616b9240c243395b7038ff1577da57f831bc1142f1"
+  }
+]

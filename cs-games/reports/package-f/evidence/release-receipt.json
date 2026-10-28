@@ -1,0 +1,1119 @@
+{
+  "baselineCommit": "7f44b0daf4214cdb287790ce303c646007ae228c",
+  "integrationCommit": "a1fcb916b7dfd7a006271eb6dacc789eca31f1f1",
+  "metadataCommit": "270abc1ac2c27d9b4d9821dffef38eb48cb2dccb",
+  "finalSourceTree": "fc921d4356df6de76ce125709bcb0ae926f63679",
+  "url": "https://davisjm4.github.io/cs-games/teacher/",
+  "verifiedUTC": "2026-10-28T06:05:31.857818+00:00",
+  "actions": [
+    {
+      "id": 40641413441,
+      "name": "Unified navigation verification",
+      "conclusion": "success",
+      "url": "https://github.com/davisjm4/davisjm4.github.io/actions/runs/40641413441"
+    },
+    {
+      "id": 40641413438,
+      "name": "Teacher Tools reliability",
+      "conclusion": "success",
+      "url": "https://github.com/davisjm4/davisjm4.github.io/actions/runs/40641413438"
+    },
+    {
+      "id": 40641413016,
+      "name": "pages build and deployment",
+      "conclusion": "success",
+      "url": "https://github.com/davisjm4/davisjm4.github.io/actions/runs/40641413016"
+    }
+  ],
+  "browser": {
+    "base": "https://davisjm4.github.io",
+    "cases": [
+      {
+        "source": "loop",
+        "level": "Advanced",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Loop Lab \u00b7 Predict conditional behavior \u00b7 advanced \u00b7 3 points",
+          "Loop Lab \u00b7 Trace a while loop \u00b7 advanced \u00b7 3 points",
+          "Loop Lab \u00b7 Nested-loop reasoning \u00b7 advanced \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "variable",
+        "level": "Beginner",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Variable Lab \u00b7 Trace Variables \u00b7 beginner \u00b7 3 points",
+          "Variable Lab \u00b7 Trace Variables \u00b7 beginner \u00b7 3 points",
+          "Variable Lab \u00b7 Trace Variables \u00b7 beginner \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "variable",
+        "level": "Intermediate",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Variable Lab \u00b7 Trace Variables \u00b7 intermediate \u00b7 3 points",
+          "Variable Lab \u00b7 Trace Variables \u00b7 intermediate \u00b7 3 points",
+          "Variable Lab \u00b7 Trace Variables \u00b7 intermediate \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "variable",
+        "level": "Advanced",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Variable Lab \u00b7 Trace Variables \u00b7 advanced \u00b7 3 points",
+          "Variable Lab \u00b7 Trace Variables \u00b7 advanced \u00b7 3 points",
+          "Variable Lab \u00b7 Trace Variables \u00b7 advanced \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "variable",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Variable Lab \u00b7 Trace Variables \u00b7 beginner \u00b7 3 points",
+          "Variable Lab \u00b7 Trace Variables \u00b7 intermediate \u00b7 3 points",
+          "Variable Lab \u00b7 Trace Variables \u00b7 advanced \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "loop",
+        "level": "Beginner",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Loop Lab \u00b7 Predict conditional behavior \u00b7 beginner \u00b7 3 points",
+          "Loop Lab \u00b7 Trace a while loop \u00b7 beginner \u00b7 3 points",
+          "Loop Lab \u00b7 Nested-loop reasoning \u00b7 beginner \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "loop",
+        "level": "Intermediate",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Loop Lab \u00b7 Predict conditional behavior \u00b7 intermediate \u00b7 3 points",
+          "Loop Lab \u00b7 Trace a while loop \u00b7 intermediate \u00b7 3 points",
+          "Loop Lab \u00b7 Nested-loop reasoning \u00b7 intermediate \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "loop",
+        "level": "Advanced",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Loop Lab \u00b7 Predict conditional behavior \u00b7 advanced \u00b7 3 points",
+          "Loop Lab \u00b7 Trace a while loop \u00b7 advanced \u00b7 3 points",
+          "Loop Lab \u00b7 Nested-loop reasoning \u00b7 advanced \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "loop",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Loop Lab \u00b7 Predict conditional behavior \u00b7 beginner \u00b7 3 points",
+          "Loop Lab \u00b7 Trace a while loop \u00b7 intermediate \u00b7 3 points",
+          "Loop Lab \u00b7 Nested-loop reasoning \u00b7 advanced \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "search-sort",
+        "level": "Beginner",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Search & Sort Lab \u00b7 Trace Insertion Sort \u00b7 beginner \u00b7 3 points",
+          "Search & Sort Lab \u00b7 Merge Sort Trace \u00b7 beginner \u00b7 3 points",
+          "Search & Sort Lab \u00b7 Name That Algorithm \u00b7 beginner \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "search-sort",
+        "level": "Intermediate",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Search & Sort Lab \u00b7 Trace Insertion Sort \u00b7 intermediate \u00b7 3 points",
+          "Search & Sort Lab \u00b7 Merge Sort Trace \u00b7 intermediate \u00b7 3 points",
+          "Search & Sort Lab \u00b7 Name That Algorithm \u00b7 intermediate \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "search-sort",
+        "level": "Advanced",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Search & Sort Lab \u00b7 Trace Insertion Sort \u00b7 advanced \u00b7 3 points",
+          "Search & Sort Lab \u00b7 Merge Sort Trace \u00b7 advanced \u00b7 3 points",
+          "Search & Sort Lab \u00b7 Name That Algorithm \u00b7 advanced \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "search-sort",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Search & Sort Lab \u00b7 Trace Insertion Sort \u00b7 beginner \u00b7 3 points",
+          "Search & Sort Lab \u00b7 Merge Sort Trace \u00b7 intermediate \u00b7 3 points",
+          "Search & Sort Lab \u00b7 Name That Algorithm \u00b7 advanced \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "workplace-readiness",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Workplace Readiness Games \u00b7 Workplace Decisions \u00b7 beginner \u00b7 Workplace Safety \u00b7 Automotive Technology \u00b7 3 points",
+          "Workplace Readiness Games \u00b7 Best Next Step \u00b7 intermediate \u00b7 Conflict Resolution \u00b7 Construction \u00b7 3 points",
+          "Workplace Readiness Games \u00b7 Put the Steps in Order \u00b7 advanced \u00b7 Continuous Learning and Adaptability \u00b7 Education \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "raceces",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "R-A-C-E-C-E-S Writing Games \u00b7 Rearrange the Response \u00b7 Beginner \u00b7 Binary numbers \u00b7 3 points",
+          "R-A-C-E-C-E-S Writing Games \u00b7 Identify the Parts \u00b7 Intermediate \u00b7 Statistics, Probability, and Data Interpretation \u00b7 3 points",
+          "R-A-C-E-C-E-S Writing Games \u00b7 Choose the Missing Piece \u00b7 Advanced \u00b7 The printing press \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "boolean",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Boolean & Conditional Lab \u00b7 Construct a Condition \u00b7 Beginner \u00b7 3 points",
+          "Boolean & Conditional Lab \u00b7 evaluate \u00b7 Intermediate \u00b7 evaluate \u00b7 3 points",
+          "Boolean & Conditional Lab \u00b7 identify \u00b7 Advanced \u00b7 identify \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "variable",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Variable Lab \u00b7 Trace Variables \u00b7 beginner \u00b7 3 points",
+          "Variable Lab \u00b7 identify/type \u00b7 Mixed \u00b7 identify/type \u00b7 3 points",
+          "Variable Lab \u00b7 identify/name \u00b7 Mixed \u00b7 identify/name \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "math",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Math Lab \u00b7 Modulus \u00b7 Mixed \u00b7 3 points",
+          "Math Lab \u00b7 Modulus \u00b7 Mixed \u00b7 3 points",
+          "Math Lab \u00b7 Integer and Double Division \u00b7 Mixed \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "string",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "String Lab \u00b7 compare \u00b7 Distinguish reference equality and content \u00b7 beginner \u00b7 3 points",
+          "String Lab \u00b7 compare \u00b7 Trace a String comparison in a conditional \u00b7 intermediate \u00b7 3 points",
+          "String Lab \u00b7 compare \u00b7 Choose the right comparison expression \u00b7 advanced \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "loop",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Loop Lab \u00b7 Predict conditional behavior \u00b7 beginner \u00b7 3 points",
+          "Loop Lab \u00b7 Trace a while loop \u00b7 intermediate \u00b7 3 points",
+          "Loop Lab \u00b7 Nested-loop reasoning \u00b7 advanced \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "array",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Array Lab \u00b7 Choose the Java Statement \u00b7 Beginner \u00b7 3 points",
+          "Array Lab \u00b7 Create Arrays & Trace References \u00b7 Intermediate \u00b7 3 points",
+          "Array Lab \u00b7 In-Place Array Algorithms \u00b7 Advanced \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "recursion",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Recursion Lab \u00b7 Output & Strings \u00b7 Beginner \u00b7 3 points",
+          "Recursion Lab \u00b7 Arrays & Parameters \u00b7 Intermediate \u00b7 3 points",
+          "Recursion Lab \u00b7 Recursive Debugging \u00b7 Advanced \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "search-sort",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Search & Sort Lab \u00b7 Trace Insertion Sort \u00b7 beginner \u00b7 3 points",
+          "Search & Sort Lab \u00b7 Merge Sort Trace \u00b7 intermediate \u00b7 3 points",
+          "Search & Sort Lab \u00b7 Name That Algorithm \u00b7 advanced \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "analog-digital-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Analog vs. Digital Lab \u00b7 sampling \u00b7 Mixed \u00b7 sampling \u00b7 3 points",
+          "Analog vs. Digital Lab \u00b7 adc \u00b7 Mixed \u00b7 adc \u00b7 3 points",
+          "Analog vs. Digital Lab \u00b7 dac \u00b7 Mixed \u00b7 dac \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "lossless-lossy-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Lossless vs. Lossy Compression Lab \u00b7 records \u00b7 Mixed \u00b7 records \u00b7 3 points",
+          "Lossless vs. Lossy Compression Lab \u00b7 images \u00b7 Mixed \u00b7 images \u00b7 3 points",
+          "Lossless vs. Lossy Compression Lab \u00b7 media \u00b7 Mixed \u00b7 media \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "roundoff-overflow-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Roundoff vs. Overflow Lab \u00b7 applications \u00b7 Mixed \u00b7 applications \u00b7 3 points",
+          "Roundoff vs. Overflow Lab \u00b7 integer \u00b7 Mixed \u00b7 integer \u00b7 3 points",
+          "Roundoff vs. Overflow Lab \u00b7 precision \u00b7 Mixed \u00b7 precision \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "ai-ethics-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "AI Ethics Scenario Lab \u00b7 evidence \u00b7 Mixed \u00b7 fairness \u00b7 3 points",
+          "AI Ethics Scenario Lab \u00b7 issue \u00b7 Mixed \u00b7 fairness \u00b7 3 points",
+          "AI Ethics Scenario Lab \u00b7 response \u00b7 Mixed \u00b7 fairness \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "digital-divide-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Digital Divide Scenario Lab \u00b7 evidence \u00b7 Mixed \u00b7 impacts \u00b7 3 points",
+          "Digital Divide Scenario Lab \u00b7 barrier \u00b7 Mixed \u00b7 devices \u00b7 3 points",
+          "Digital Divide Scenario Lab \u00b7 impact \u00b7 Mixed \u00b7 access \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "internet-layers-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Internet Layers & Protocol Roles Lab \u00b7 diagram \u00b7 Mixed \u00b7 roles \u00b7 3 points",
+          "Internet Layers & Protocol Roles Lab \u00b7 role \u00b7 Mixed \u00b7 routing \u00b7 3 points",
+          "Internet Layers & Protocol Roles Lab \u00b7 missing \u00b7 Mixed \u00b7 communication \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "tcp-udp-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "TCP vs. UDP Decision Lab \u00b7 protocols \u00b7 Mixed \u00b7 protocols \u00b7 3 points",
+          "TCP vs. UDP Decision Lab \u00b7 reliability \u00b7 Mixed \u00b7 reliability \u00b7 3 points",
+          "TCP vs. UDP Decision Lab \u00b7 realtime \u00b7 Mixed \u00b7 realtime \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "copyright-creative-commons-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Copyright & Creative Commons Lab \u00b7 licenses \u00b7 Mixed \u00b7 licenses \u00b7 3 points",
+          "Copyright & Creative Commons Lab \u00b7 attribution \u00b7 Mixed \u00b7 attribution \u00b7 3 points",
+          "Copyright & Creative Commons Lab \u00b7 remix \u00b7 Mixed \u00b7 remix \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "vocabulary-fill-in-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "AP CSP Vocabulary Fill-in Lab \u00b7 procedures \u00b7 Mixed \u00b7 procedures \u00b7 3 points",
+          "AP CSP Vocabulary Fill-in Lab \u00b7 algorithms \u00b7 Mixed \u00b7 algorithms \u00b7 3 points",
+          "AP CSP Vocabulary Fill-in Lab \u00b7 networks \u00b7 Mixed \u00b7 networks \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "create-task-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Create Performance Task Lab \u00b7 missing \u00b7 Beginner \u00b7 procedures \u00b7 3 points",
+          "Create Performance Task Lab \u00b7 identify \u00b7 Beginner \u00b7 procedures \u00b7 3 points",
+          "Create Performance Task Lab \u00b7 missing \u00b7 Beginner \u00b7 parameters \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "response-builder",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Response Builder \u00b7 reasoning \u00b7 Mixed \u00b7 reasoning.minimal \u00b7 3 points",
+          "Response Builder \u00b7 behavior \u00b7 Mixed \u00b7 behavior.minimal \u00b7 3 points",
+          "Response Builder \u00b7 evidence \u00b7 Mixed \u00b7 evidence.minimal \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "test-case-builder",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Test Case Builder \u00b7 edge \u00b7 Mixed \u00b7 edge \u00b7 3 points",
+          "Test Case Builder \u00b7 bugs \u00b7 Mixed \u00b7 bugs \u00b7 3 points",
+          "Test Case Builder \u00b7 predict \u00b7 Mixed \u00b7 predict \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "algorithm-architect",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Algorithm Architect \u00b7 counter \u00b7 Mixed \u00b7 counter \u00b7 3 points",
+          "Algorithm Architect \u00b7 accumulator \u00b7 Mixed \u00b7 accumulator \u00b7 3 points",
+          "Algorithm Architect \u00b7 search \u00b7 Mixed \u00b7 search \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "code-concepts",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Code Concepts \u00b7 lists \u00b7 Mixed \u00b7 lists \u00b7 3 points",
+          "Code Concepts \u00b7 procedures \u00b7 Mixed \u00b7 procedures \u00b7 3 points",
+          "Code Concepts \u00b7 selection \u00b7 Mixed \u00b7 selection \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "trivial-nontrivial",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Trivial or Non-Trivial? \u00b7 selection \u00b7 Mixed \u00b7 selection \u00b7 3 points",
+          "Trivial or Non-Trivial? \u00b7 iteration \u00b7 Mixed \u00b7 iteration \u00b7 3 points",
+          "Trivial or Non-Trivial? \u00b7 procedures \u00b7 Mixed \u00b7 procedures \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "class-object",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Class & Object Lab \u00b7 structure \u00b7 Beginner \u00b7 structure \u00b7 3 points",
+          "Class & Object Lab \u00b7 defaults \u00b7 Intermediate \u00b7 defaults \u00b7 3 points",
+          "Class & Object Lab \u00b7 constructors \u00b7 Advanced \u00b7 constructors \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "arraylist",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "ArrayList Lab \u00b7 compare \u00b7 Mixed \u00b7 compare \u00b7 3 points",
+          "ArrayList Lab \u00b7 access \u00b7 Mixed \u00b7 access \u00b7 3 points",
+          "ArrayList Lab \u00b7 insert-remove \u00b7 Mixed \u00b7 insert-remove \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "linkedlist",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "LinkedList Lab \u00b7 trace \u00b7 Mixed \u00b7 trace \u00b7 3 points",
+          "LinkedList Lab \u00b7 collections \u00b7 Mixed \u00b7 collections \u00b7 3 points",
+          "LinkedList Lab \u00b7 trace \u00b7 Mixed \u00b7 trace \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "method-constructor",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Method & Constructor Lab \u00b7 identify-method \u00b7 Mixed \u00b7 identify-method \u00b7 3 points",
+          "Method & Constructor Lab \u00b7 identify-constructor \u00b7 Mixed \u00b7 identify-constructor \u00b7 3 points",
+          "Method & Constructor Lab \u00b7 match-call \u00b7 Mixed \u00b7 match-call \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "debugger",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Debugger Lab \u00b7 exception \u00b7 beginner \u00b7 exception \u00b7 3 points",
+          "Debugger Lab \u00b7 correction \u00b7 intermediate \u00b7 correction \u00b7 3 points",
+          "Debugger Lab \u00b7 statement \u00b7 advanced \u00b7 statement \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "documentation",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Documentation Lab \u00b7 detective \u00b7 Mixed \u00b7 detective \u00b7 3 points",
+          "Documentation Lab \u00b7 inspector \u00b7 Mixed \u00b7 inspector \u00b7 3 points",
+          "Documentation Lab \u00b7 docs \u00b7 Mixed \u00b7 docs \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "inheritance",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Inheritance & Polymorphism Lab \u00b7 abstract \u00b7 Mixed \u00b7 abstract \u00b7 3 points",
+          "Inheritance & Polymorphism Lab \u00b7 abstract \u00b7 Mixed \u00b7 abstract \u00b7 3 points",
+          "Inheritance & Polymorphism Lab \u00b7 abstract \u00b7 Mixed \u00b7 abstract \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "robot-algorithms",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Robot Algorithms \u00b7 predict \u00b7 Mixed \u00b7 predict \u00b7 3 points",
+          "Robot Algorithms \u00b7 loops \u00b7 Mixed \u00b7 loops \u00b7 3 points",
+          "Robot Algorithms \u00b7 conditionals \u00b7 Mixed \u00b7 conditionals \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "boolean-gatekeeper",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Boolean Gatekeeper \u00b7 evaluate \u00b7 Mixed \u00b7 evaluate \u00b7 3 points",
+          "Boolean Gatekeeper \u00b7 evaluate \u00b7 Mixed \u00b7 evaluate \u00b7 3 points",
+          "Boolean Gatekeeper \u00b7 evaluate \u00b7 Mixed \u00b7 evaluate \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "binary-builder",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Binary Builder \u00b7 pixels \u00b7 Mixed \u00b7 pixels \u00b7 3 points",
+          "Binary Builder \u00b7 capacity \u00b7 Mixed \u00b7 capacity \u00b7 3 points",
+          "Binary Builder \u00b7 overflow \u00b7 Mixed \u00b7 overflow \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "list-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "List Lab \u00b7 trace \u00b7 Mixed \u00b7 trace \u00b7 3 points",
+          "List Lab \u00b7 trace \u00b7 Mixed \u00b7 trace \u00b7 3 points",
+          "List Lab \u00b7 trace \u00b7 Mixed \u00b7 trace \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "binary-search-hunt",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Binary Search Hunt \u00b7 trace \u00b7 Mixed \u00b7 trace \u00b7 3 points",
+          "Binary Search Hunt \u00b7 trace \u00b7 Mixed \u00b7 trace \u00b7 3 points",
+          "Binary Search Hunt \u00b7 trace \u00b7 Mixed \u00b7 trace \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "algorithm-race",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Algorithm Race \u00b7 sum \u00b7 Mixed \u00b7 sum \u00b7 3 points",
+          "Algorithm Race \u00b7 search \u00b7 Mixed \u00b7 search \u00b7 3 points",
+          "Algorithm Race \u00b7 duplicates \u00b7 Mixed \u00b7 duplicates \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "compression-challenge",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Compression Challenge \u00b7 text \u00b7 Mixed \u00b7 text \u00b7 3 points",
+          "Compression Challenge \u00b7 image \u00b7 Mixed \u00b7 image \u00b7 3 points",
+          "Compression Challenge \u00b7 text \u00b7 Mixed \u00b7 text \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "data-detective",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Data Detective \u00b7 filter \u00b7 Mixed \u00b7 filter \u00b7 3 points",
+          "Data Detective \u00b7 filter \u00b7 Mixed \u00b7 filter \u00b7 3 points",
+          "Data Detective \u00b7 filter \u00b7 Mixed \u00b7 filter \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "mixed-ap-practice",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Mixed AP Exam Practice \u00b7 impact \u00b7 Mixed \u00b7 impact \u00b7 3 points",
+          "Mixed AP Exam Practice \u00b7 creative \u00b7 Mixed \u00b7 creative \u00b7 3 points",
+          "Mixed AP Exam Practice \u00b7 data \u00b7 Mixed \u00b7 data \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "simulation-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Simulation Lab \u00b7 comparison \u00b7 Mixed \u00b7 comparison \u00b7 3 points",
+          "Simulation Lab \u00b7 randomness \u00b7 Mixed \u00b7 randomness \u00b7 3 points",
+          "Simulation Lab \u00b7 prediction \u00b7 Mixed \u00b7 prediction \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "computing-impact-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Computing Impact Lab \u00b7 tradeoffs/reason \u00b7 Mixed \u00b7 tradeoffs/reason \u00b7 3 points",
+          "Computing Impact Lab \u00b7 innovation/claim \u00b7 Mixed \u00b7 innovation/claim \u00b7 3 points",
+          "Computing Impact Lab \u00b7 innovation/evidence \u00b7 Mixed \u00b7 innovation/evidence \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "cybersecurity-defender",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Cybersecurity Defender \u00b7 phishing \u00b7 Mixed \u00b7 phishing \u00b7 3 points",
+          "Cybersecurity Defender \u00b7 phishing \u00b7 Mixed \u00b7 phishing \u00b7 3 points",
+          "Cybersecurity Defender \u00b7 phishing \u00b7 Mixed \u00b7 phishing \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "parallel-processing-race",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Parallel Processing Race \u00b7 independent \u00b7 Mixed \u00b7 independent \u00b7 3 points",
+          "Parallel Processing Race \u00b7 dependent \u00b7 Mixed \u00b7 dependent \u00b7 3 points",
+          "Parallel Processing Race \u00b7 independent \u00b7 Mixed \u00b7 independent \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "response-explorer",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "API Response Explorer \u00b7 find-data \u00b7 beginner \u00b7 tiktok \u00b7 3 points",
+          "API Response Explorer \u00b7 understand-structure \u00b7 intermediate \u00b7 spotify \u00b7 3 points",
+          "API Response Explorer \u00b7 find-data \u00b7 advanced \u00b7 youtube \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "search-sort",
+        "level": "Beginner",
+        "count": 3,
+        "points": 1,
+        "notes": [
+          "Search & Sort Lab \u00b7 Compare the Work \u00b7 beginner \u00b7 1 point",
+          "Search & Sort Lab \u00b7 Compare the Work \u00b7 beginner \u00b7 1 point",
+          "Search & Sort Lab \u00b7 Compare the Work \u00b7 beginner \u00b7 1 point"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "string",
+        "level": "Advanced",
+        "count": 3,
+        "points": 5,
+        "notes": [
+          "String Lab \u00b7 predict \u00b7 Single concatenation \u00b7 beginner \u00b7 5 points \u00b7 Single concatenation does not export Advanced; using its nearest supported level, Beginner. Supported levels: Beginner.",
+          "String Lab \u00b7 predict \u00b7 Single concatenation \u00b7 beginner \u00b7 5 points \u00b7 Single concatenation does not export Advanced; using its nearest supported level, Beginner. Supported levels: Beginner.",
+          "String Lab \u00b7 predict \u00b7 Single concatenation \u00b7 beginner \u00b7 5 points \u00b7 Single concatenation does not export Advanced; using its nearest supported level, Beginner. Supported levels: Beginner."
+        ],
+        "status": "Quiz generated. Review every answer before downloading. String Lab: Single concatenation does not export Advanced; using its nearest supported level, Beginner. Supported levels: Beginner."
+      },
+      {
+        "source": "create-task-lab",
+        "level": "Beginner",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Create Performance Task Lab \u00b7 identify \u00b7 Beginner \u00b7 procedures \u00b7 3 points",
+          "Create Performance Task Lab \u00b7 identify \u00b7 Beginner \u00b7 procedures \u00b7 3 points",
+          "Create Performance Task Lab \u00b7 identify \u00b7 Beginner \u00b7 procedures \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "class-object",
+        "level": "Advanced",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Class & Object Lab \u00b7 aliases \u00b7 Advanced \u00b7 aliases \u00b7 3 points",
+          "Class & Object Lab \u00b7 aliases \u00b7 Advanced \u00b7 aliases \u00b7 3 points",
+          "Class & Object Lab \u00b7 aliases \u00b7 Advanced \u00b7 aliases \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "internet-layers-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Internet Layers & Protocol Roles Lab \u00b7 diagram \u00b7 Mixed \u00b7 roles \u00b7 3 points",
+          "Internet Layers & Protocol Roles Lab \u00b7 diagram \u00b7 Mixed \u00b7 roles \u00b7 3 points",
+          "Internet Layers & Protocol Roles Lab \u00b7 diagram \u00b7 Mixed \u00b7 roles \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "digital-divide-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Digital Divide Scenario Lab \u00b7 evidence \u00b7 Mixed \u00b7 impacts \u00b7 3 points",
+          "Digital Divide Scenario Lab \u00b7 evidence \u00b7 Mixed \u00b7 devices \u00b7 3 points",
+          "Digital Divide Scenario Lab \u00b7 evidence \u00b7 Mixed \u00b7 impacts \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "response-explorer",
+        "level": "Advanced",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "API Response Explorer \u00b7 find-data \u00b7 advanced \u00b7 google-maps \u00b7 3 points",
+          "API Response Explorer \u00b7 find-data \u00b7 advanced \u00b7 discord \u00b7 3 points",
+          "API Response Explorer \u00b7 find-data \u00b7 advanced \u00b7 youtube \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": "analog-digital-lab",
+        "level": "mixed",
+        "count": 3,
+        "points": 3,
+        "notes": [
+          "Analog vs. Digital Lab \u00b7 sampling \u00b7 Mixed \u00b7 sampling \u00b7 3 points",
+          "Analog vs. Digital Lab \u00b7 adc \u00b7 Mixed \u00b7 adc \u00b7 3 points",
+          "Analog vs. Digital Lab \u00b7 dac \u00b7 Mixed \u00b7 dac \u00b7 3 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      },
+      {
+        "source": [
+          "workplace-readiness",
+          "raceces",
+          "boolean",
+          "variable",
+          "math",
+          "string",
+          "loop",
+          "array",
+          "recursion",
+          "search-sort",
+          "analog-digital-lab",
+          "lossless-lossy-lab",
+          "roundoff-overflow-lab",
+          "ai-ethics-lab",
+          "digital-divide-lab",
+          "internet-layers-lab",
+          "tcp-udp-lab",
+          "copyright-creative-commons-lab",
+          "vocabulary-fill-in-lab",
+          "create-task-lab",
+          "response-builder",
+          "test-case-builder",
+          "algorithm-architect",
+          "code-concepts",
+          "trivial-nontrivial",
+          "class-object",
+          "arraylist",
+          "linkedlist",
+          "method-constructor",
+          "debugger",
+          "documentation",
+          "inheritance",
+          "robot-algorithms",
+          "boolean-gatekeeper",
+          "binary-builder",
+          "list-lab",
+          "binary-search-hunt",
+          "algorithm-race",
+          "compression-challenge",
+          "data-detective",
+          "mixed-ap-practice",
+          "simulation-lab",
+          "computing-impact-lab",
+          "cybersecurity-defender",
+          "parallel-processing-race",
+          "response-explorer"
+        ],
+        "level": "mixed",
+        "count": 50,
+        "points": 5,
+        "notes": [
+          "Simulation Lab \u00b7 comparison \u00b7 Mixed \u00b7 comparison \u00b7 5 points",
+          "Computing Impact Lab \u00b7 tradeoffs/reason \u00b7 Mixed \u00b7 tradeoffs/reason \u00b7 5 points",
+          "Cybersecurity Defender \u00b7 phishing \u00b7 Mixed \u00b7 phishing \u00b7 5 points",
+          "Parallel Processing Race \u00b7 independent \u00b7 Mixed \u00b7 independent \u00b7 5 points",
+          "API Response Explorer \u00b7 find-data \u00b7 advanced \u00b7 spotify \u00b7 5 points",
+          "Workplace Readiness Games \u00b7 Put the Steps in Order \u00b7 beginner \u00b7 Teamwork \u00b7 Engineering \u00b7 5 points",
+          "R-A-C-E-C-E-S Writing Games \u00b7 Rearrange the Response \u00b7 Advanced \u00b7 Solar panels \u00b7 5 points",
+          "Boolean & Conditional Lab \u00b7 Construct a Condition \u00b7 Beginner \u00b7 5 points",
+          "Variable Lab \u00b7 Trace Variables \u00b7 intermediate \u00b7 5 points",
+          "Math Lab \u00b7 Modulus \u00b7 Mixed \u00b7 5 points",
+          "String Lab \u00b7 compare \u00b7 Distinguish reference equality and content \u00b7 intermediate \u00b7 5 points",
+          "Loop Lab \u00b7 Predict conditional behavior \u00b7 advanced \u00b7 5 points",
+          "Array Lab \u00b7 Choose the Java Statement \u00b7 Intermediate \u00b7 5 points",
+          "Recursion Lab \u00b7 Output & Strings \u00b7 Advanced \u00b7 5 points",
+          "Search & Sort Lab \u00b7 Trace Insertion Sort \u00b7 beginner \u00b7 5 points",
+          "Analog vs. Digital Lab \u00b7 sampling \u00b7 Mixed \u00b7 sampling \u00b7 5 points",
+          "Lossless vs. Lossy Compression Lab \u00b7 records \u00b7 Mixed \u00b7 records \u00b7 5 points",
+          "Roundoff vs. Overflow Lab \u00b7 applications \u00b7 Mixed \u00b7 applications \u00b7 5 points",
+          "AI Ethics Scenario Lab \u00b7 evidence \u00b7 Mixed \u00b7 fairness \u00b7 5 points",
+          "Digital Divide Scenario Lab \u00b7 evidence \u00b7 Mixed \u00b7 solutions \u00b7 5 points",
+          "Internet Layers & Protocol Roles Lab \u00b7 diagram \u00b7 Mixed \u00b7 communication \u00b7 5 points",
+          "TCP vs. UDP Decision Lab \u00b7 protocols \u00b7 Mixed \u00b7 protocols \u00b7 5 points",
+          "Copyright & Creative Commons Lab \u00b7 licenses \u00b7 Mixed \u00b7 licenses \u00b7 5 points",
+          "AP CSP Vocabulary Fill-in Lab \u00b7 procedures \u00b7 Mixed \u00b7 procedures \u00b7 5 points",
+          "Create Performance Task Lab \u00b7 missing \u00b7 Beginner \u00b7 iteration \u00b7 5 points",
+          "Response Builder \u00b7 reasoning \u00b7 Mixed \u00b7 reasoning.minimal \u00b7 5 points",
+          "Test Case Builder \u00b7 edge \u00b7 Mixed \u00b7 edge \u00b7 5 points",
+          "Algorithm Architect \u00b7 counter \u00b7 Mixed \u00b7 counter \u00b7 5 points",
+          "Code Concepts \u00b7 lists \u00b7 Mixed \u00b7 lists \u00b7 5 points",
+          "Trivial or Non-Trivial? \u00b7 selection \u00b7 Mixed \u00b7 selection \u00b7 5 points",
+          "Class & Object Lab \u00b7 structure \u00b7 Intermediate \u00b7 structure \u00b7 5 points",
+          "ArrayList Lab \u00b7 compare \u00b7 Mixed \u00b7 compare \u00b7 5 points",
+          "LinkedList Lab \u00b7 trace \u00b7 Mixed \u00b7 trace \u00b7 5 points",
+          "Method & Constructor Lab \u00b7 identify-method \u00b7 Mixed \u00b7 identify-method \u00b7 5 points",
+          "Debugger Lab \u00b7 exception \u00b7 beginner \u00b7 exception \u00b7 5 points",
+          "Documentation Lab \u00b7 detective \u00b7 Mixed \u00b7 detective \u00b7 5 points",
+          "Inheritance & Polymorphism Lab \u00b7 abstract \u00b7 Mixed \u00b7 abstract \u00b7 5 points",
+          "Robot Algorithms \u00b7 predict \u00b7 Mixed \u00b7 predict \u00b7 5 points",
+          "Boolean Gatekeeper \u00b7 evaluate \u00b7 Mixed \u00b7 evaluate \u00b7 5 points",
+          "Binary Builder \u00b7 pixels \u00b7 Mixed \u00b7 pixels \u00b7 5 points",
+          "List Lab \u00b7 trace \u00b7 Mixed \u00b7 trace \u00b7 5 points",
+          "Binary Search Hunt \u00b7 trace \u00b7 Mixed \u00b7 trace \u00b7 5 points",
+          "Algorithm Race \u00b7 sum \u00b7 Mixed \u00b7 sum \u00b7 5 points",
+          "Compression Challenge \u00b7 text \u00b7 Mixed \u00b7 text \u00b7 5 points",
+          "Data Detective \u00b7 filter \u00b7 Mixed \u00b7 filter \u00b7 5 points",
+          "Mixed AP Exam Practice \u00b7 impact \u00b7 Mixed \u00b7 impact \u00b7 5 points",
+          "Simulation Lab \u00b7 randomness \u00b7 Mixed \u00b7 randomness \u00b7 5 points",
+          "Computing Impact Lab \u00b7 innovation/claim \u00b7 Mixed \u00b7 innovation/claim \u00b7 5 points",
+          "Cybersecurity Defender \u00b7 phishing \u00b7 Mixed \u00b7 phishing \u00b7 5 points",
+          "Parallel Processing Race \u00b7 dependent \u00b7 Mixed \u00b7 dependent \u00b7 5 points"
+        ],
+        "status": "Quiz generated. Review every answer before downloading."
+      }
+    ],
+    "pageErrors": [],
+    "failedRequests": [],
+    "unsupportedCasesBlocked": 5,
+    "mixedCount": 50,
+    "mixedTotal": 250,
+    "downloads": 9,
+    "regeneration": "pass",
+    "studentStorage": "untouched",
+    "canvasImport": "not performed"
+  },
+  "runtimeAssets": [
+    {
+      "path": "cs-games/teacher/index.html",
+      "matches": true,
+      "sha256": "f5846f10d76ba7e44367e4a412f4b7a491fb0fb3000b3ad414a2e9010a34273a"
+    },
+    {
+      "path": "cs-games/teacher/teacher.js",
+      "matches": true,
+      "sha256": "940c8b6505a390180cd3a7eb34b75ae93e00343ca7a71d84ad8c9be9b836be9c"
+    },
+    {
+      "path": "cs-games/teacher/adapters.js",
+      "matches": true,
+      "sha256": "5500542ac999ce38fc9f46953eec6fb689a93d0ac49a4c0dfa55b7819a3f1c5a"
+    },
+    {
+      "path": "cs-games/teacher/qti.js",
+      "matches": true,
+      "sha256": "6b54421f0b586d8029bbdcf76290279783d5abe3f5aa3c4768b775cb0b6fcbde"
+    },
+    {
+      "path": "cs-games/teacher/response-explorer-adapter.js",
+      "matches": true,
+      "sha256": "fb7087b64c031d5ef12794616b9240c243395b7038ff1577da57f831bc1142f1"
+    }
+  ],
+  "liveQtiPackages": [
+    {
+      "package": "live-class-object.zip",
+      "items": 3,
+      "totalPoints": 9.0,
+      "zipCrc": "pass",
+      "xml": "pass",
+      "manifest": "pass",
+      "ids": "pass",
+      "keys": "pass",
+      "scoringAllChoices": "pass",
+      "feedbackAllChoices": "pass",
+      "questionContent": "pass",
+      "provenanceFields": "pass",
+      "canvasImport": "unverified"
+    },
+    {
+      "package": "live-create-task.zip",
+      "items": 3,
+      "totalPoints": 9.0,
+      "zipCrc": "pass",
+      "xml": "pass",
+      "manifest": "pass",
+      "ids": "pass",
+      "keys": "pass",
+      "scoringAllChoices": "pass",
+      "feedbackAllChoices": "pass",
+      "questionContent": "pass",
+      "provenanceFields": "pass",
+      "canvasImport": "unverified"
+    },
+    {
+      "package": "live-data-context.zip",
+      "items": 3,
+      "totalPoints": 9.0,
+      "zipCrc": "pass",
+      "xml": "pass",
+      "manifest": "pass",
+      "ids": "pass",
+      "keys": "pass",
+      "scoringAllChoices": "pass",
+      "feedbackAllChoices": "pass",
+      "questionContent": "pass",
+      "provenanceFields": "pass",
+      "canvasImport": "unverified"
+    },
+    {
+      "package": "live-loop-advanced.zip",
+      "items": 3,
+      "totalPoints": 9.0,
+      "zipCrc": "pass",
+      "xml": "pass",
+      "manifest": "pass",
+      "ids": "pass",
+      "keys": "pass",
+      "scoringAllChoices": "pass",
+      "feedbackAllChoices": "pass",
+      "questionContent": "pass",
+      "provenanceFields": "pass",
+      "canvasImport": "unverified"
+    },
+    {
+      "package": "live-mixed-5-points.zip",
+      "items": 50,
+      "totalPoints": 250.0,
+      "zipCrc": "pass",
+      "xml": "pass",
+      "manifest": "pass",
+      "ids": "pass",
+      "keys": "pass",
+      "scoringAllChoices": "pass",
+      "feedbackAllChoices": "pass",
+      "questionContent": "pass",
+      "provenanceFields": "pass",
+      "canvasImport": "unverified"
+    },
+    {
+      "package": "live-network-diagram-context.zip",
+      "items": 3,
+      "totalPoints": 9.0,
+      "zipCrc": "pass",
+      "xml": "pass",
+      "manifest": "pass",
+      "ids": "pass",
+      "keys": "pass",
+      "scoringAllChoices": "pass",
+      "feedbackAllChoices": "pass",
+      "questionContent": "pass",
+      "provenanceFields": "pass",
+      "canvasImport": "unverified"
+    },
+    {
+      "package": "live-response-json.zip",
+      "items": 3,
+      "totalPoints": 9.0,
+      "zipCrc": "pass",
+      "xml": "pass",
+      "manifest": "pass",
+      "ids": "pass",
+      "keys": "pass",
+      "scoringAllChoices": "pass",
+      "feedbackAllChoices": "pass",
+      "questionContent": "pass",
+      "provenanceFields": "pass",
+      "canvasImport": "unverified"
+    },
+    {
+      "package": "live-search-context.zip",
+      "items": 3,
+      "totalPoints": 3.0,
+      "zipCrc": "pass",
+      "xml": "pass",
+      "manifest": "pass",
+      "ids": "pass",
+      "keys": "pass",
+      "scoringAllChoices": "pass",
+      "feedbackAllChoices": "pass",
+      "questionContent": "pass",
+      "provenanceFields": "pass",
+      "canvasImport": "unverified"
+    },
+    {
+      "package": "live-two-choice.zip",
+      "items": 3,
+      "totalPoints": 9.0,
+      "zipCrc": "pass",
+      "xml": "pass",
+      "manifest": "pass",
+      "ids": "pass",
+      "keys": "pass",
+      "scoringAllChoices": "pass",
+      "feedbackAllChoices": "pass",
+      "questionContent": "pass",
+      "provenanceFields": "pass",
+      "canvasImport": "unverified"
+    }
+  ],
+  "canvasImport": "Not Verified",
+  "trackerNotesUpdated": 40,
+  "studentSourceFilesChanged": 0
+}

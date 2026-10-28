@@ -25,7 +25,7 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
   }
   async function download(name){
    const expected=await page.locator('.quiz-item').evaluateAll(items=>items.map(article=>({html:article.querySelector('.question-content').innerHTML,correctIndex:[...article.querySelectorAll('.choice-list li')].findIndex(li=>li.classList.contains('correct')),points:Number(article.querySelector('.source-note').textContent.match(/· (\d+(?:\.\d+)?) points?/)[1]),explanation:article.querySelector('.answer-note').textContent.replace(/^Explanation: /,'')})));
-   const pending=page.waitForEvent('download');await page.click('#download');const file=await pending;assert.equal(await file.failure(),null);await file.saveAs(path.join(output,name+'.zip'));fs.writeFileSync(path.join(output,name+'.expected.json'),JSON.stringify(expected,null,2));
+   const pending=page.waitForEvent('download');await page.click('#download');const file=await pending;assert.equal(await file.failure(),null);await file.saveAs(path.join(output,name+'.zip'));assert.ok(fs.readFileSync(path.join(output,name+'.zip')).includes(Buffer.from('source_difficulty')),'Published QTI provenance metadata is missing');fs.writeFileSync(path.join(output,name+'.expected.json'),JSON.stringify(expected,null,2));
   }
   // Reproduce the live audit request exactly.
   await generate('loop','Advanced',3,3);await download('live-loop-advanced');

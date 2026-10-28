@@ -41,6 +41,7 @@ def validate(file):
         itemmeta = item.find("q:itemmetadata", Q)
         points = float(metadata(itemmeta, "points_possible"))
         assert points == original["points"]
+        assert all(metadata(itemmeta, label) for label in ["source_id", "source_game", "source_topic", "source_mode", "source_difficulty"]), "Missing item provenance"
         provenance = expected.get("itemMetadata", [])[items.index(item)] if expected.get("itemMetadata") else original
         for key, label in [("sourceId", "source_id"), ("source", "source_game"), ("topic", "source_topic"), ("mode", "source_mode"), ("difficulty", "source_difficulty")]:
             if provenance.get(key) is not None:
@@ -88,7 +89,7 @@ def validate(file):
     return {"package": file.name, "items": len(items), "totalPoints": total,
             "zipCrc": "pass", "xml": "pass", "manifest": "pass", "ids": "pass",
             "keys": "pass", "scoringAllChoices": "pass", "feedbackAllChoices": "pass",
-            "questionContent": "pass", "canvasImport": "unverified"}
+            "questionContent": "pass", "provenanceFields": "pass", "canvasImport": "unverified"}
 
 
 if __name__ == "__main__":

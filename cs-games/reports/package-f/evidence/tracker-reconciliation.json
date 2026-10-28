@@ -1,0 +1,293 @@
+{
+  "followUp": {"cell":"L40","id":"G-102","appended":"Final Package F provenance follow-up 270abc1ac2c27d9b4d9821dffef38eb48cb2dccb: explicit source/topic/mode/difficulty QTI metadata plus ZIP sidecar. Pages 40641413016, Teacher Tools CI 40641413438 and navigation CI 40641413441 passed. Final live 68 browser cases, nine downloads and independent QTI provenance/scoring/content checks passed; five deployed runtime hashes match the tested checkout. Canvas import remains NOT VERIFIED.","verified":true,"historyPreserved":true},
+  "spreadsheetUrl": "https://docs.google.com/spreadsheets/d/16Zr5Nn2ubN2ecBvOZUbeDpOnxqGHvDUty08QqqMPtnA/edit?ouid=112429890898147301790",
+  "sheet": "Master Inventory",
+  "changedCells": 40,
+  "otherCellsUnchanged": true,
+  "idsPreserved": true,
+  "historyPreserved": true,
+  "formatPreserved": true,
+  "nativeVisualFit": "Not verified; existing note-column dimensions and formatting preserved",
+  "changes": [
+    {
+      "cell": "L2",
+      "id": "G-001",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: sequence, selection, iteration, nested, nested-selection, counter, accumulator, search, procedure. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Existing missing-component question only; free construction remains practice. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L3",
+      "id": "G-002",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: search, duplicates, sum. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L4",
+      "id": "G-003",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: capacity, overflow, pixels. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Capacity, explicit wrap result and pixel bit-count only; direct bit construction remains interactive. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L5",
+      "id": "G-004",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: trace. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Midpoint-inspection count only; click-by-click interval search remains practice. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L6",
+      "id": "G-005",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: evaluate. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Evaluate only; making a satisfying assignment and exploratory truth/range tools remain interactive. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L7",
+      "id": "G-006",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: procedures, selection, iteration, variables, lists. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Single-region identification and counts; multi-region selection is excluded. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L8",
+      "id": "G-007",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: text, image. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Run counting in text/row-major grids; encoding and optimization controls remain practice. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L9",
+      "id": "G-008",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: innovation/claim, innovation/evidence, innovation/reason, privacy/claim, privacy/evidence, privacy/reason, bias/claim, bias/evidence, bias/reason, access/claim, access/evidence, access/reason, crowd/claim, crowd/evidence, crowd/reason, rights/claim, rights/evidence, rights/reason, tradeoffs/claim, tradeoffs/evidence, tradeoffs/reason. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. One explicitly named claim, evidence or reasoning step per item; not the complete three-step response or personal policy reflection. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L10",
+      "id": "G-009",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: phishing. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Exactly one phishing-warning field. No safe/multiple-warning messages or password construction. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L11",
+      "id": "G-010",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: filter. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Standalone dataset-filter counts; sorting, charts and data-cleaning interactions are not exported. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L12",
+      "id": "G-011",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: trace. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Final list after the native operations; interactive manipulation itself is not exported. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L13",
+      "id": "G-012",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: creative, data, algorithms, systems, impact. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L16",
+      "id": "G-015",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: independent, dependent. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Minimum finishing time under the native queue/dependency model; scheduling construction is not exported. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L17",
+      "id": "G-016",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: behavior, evidence, test, abstraction, reasoning. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L18",
+      "id": "G-017",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: randomness, prediction, comparison. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Randomness, reference prediction and comparison questions; trial controls and multi-part limitations tasks remain practice. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L19",
+      "id": "G-018",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: bugs, predict, boundary, branches, edge. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L21",
+      "id": "G-020",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: access, insert-remove, search-size, traverse, compare. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Choice, single-cell and insertion-gap decisions; select-every-removed-element tasks excluded. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L22",
+      "id": "G-021",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: branch, conditions, equivalent, short, construct, evaluate, identify, truthTable, switchIf, coverage. Difficulty: Beginner, Intermediate, Advanced. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. All ten scored modes; exploratory range tools remain unscored practice. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L23",
+      "id": "G-022",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: structure, defaults, constructors, getters, setters, this, independent, aliases, equality, parameters, static, tostring, reverse. Difficulty: Beginner, Intermediate, Advanced. Format: QTI 1.2 single-answer MC (2–4 choices). 1365 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L24",
+      "id": "G-023",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: correction, statement, explanation, test, exception. Difficulty: beginner, intermediate, advanced. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L25",
+      "id": "G-024",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: inspector, docs, detective. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Choice, comment-line and documentation-line interpretation. Editor, Javadoc builder, classification and call construction excluded. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L26",
+      "id": "G-025",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: abstract. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Native single-choice Abstract Class questions only. Hierarchies, multi-selection, tracing tuples, headers and repairs remain practice. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L27",
+      "id": "G-026",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: trace, collections. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Traversal and Java collection decisions; reference wiring and pointer mutation excluded. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L29",
+      "id": "G-028",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: modulus:larger, modulus:smaller, modulus:divisible, modulus:remainder, modulus:negative-dividend, modulus:negative-divisor, modulus:both-negative, division:integer, division:widened, division:double-right, division:double-left, division:both-double, casting:after-division, casting:before-division, casting:denominator-cast, casting:positive-cast, casting:negative-cast, casting:cast-quotient, expressions:add-division, expressions:grouped-sum, expressions:subtract-remainder, expressions:remainder-product, expressions:division-product, expressions:product-remainder, expressions:nested-group, expressions:double-precedence, reverse:decimal-quotient, reverse:whole-quotient, reverse:remainder-choice, reverse:cast-choice, reverse:precedence-choice, math-methods, numeric-limits. Difficulty: Native Mixed, beginner, intermediate, advanced. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L30",
+      "id": "G-029",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: identify-method, identify-constructor, match-call, return, constructors, returned-values, fix, access. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Native choice and single-span identification; argument rearrangement excluded. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L32",
+      "id": "G-031",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: predict, loops, conditionals, methods. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Prediction, loops, conditionals and methods with complete grid/sensor context. Route construction and repair tasks excluded. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L35",
+      "id": "G-034",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: trace, identify/type, identify/name, identify/operator, identify/value, identify/declaration, identify/initialization, identify/assignment-operator, identify/assignment, identify/declaration-only, identify/stored, identify/conversion, identify/compatibility. Difficulty: beginner, intermediate, advanced, Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Trace plus all 12 identification variants; declaration assembly remains practice. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L38",
+      "id": "G-100",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: find-data, understand-structure. Difficulty: beginner, intermediate, advanced. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Find Data and single-selection Understand Structure across native levels. Slot/classification/multiple-needs tasks excluded. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L40",
+      "id": "G-102",
+      "appended": "Package F (2026-10-28): Published and live-verified 46 assessment sources / 333 export variants, up from 10 / 136 (+36 sources, +197 variants). Complete 54-activity inventory: A19 / B3 / C24 / D8. 39,365 seeded accepted items, 251 new mode/level cells, 121 offline QTI packages (1/3/5 points), 68 live browser generation cases and nine downloaded ZIPs passed. Existing 136 variants and 867 baseline comparison records retained. Canvas sandbox import/scoring/feedback display NOT VERIFIED. Eight interactive/practice-only activities deferred; partial modes explicitly restricted. Student games and Package A/B/C unchanged. Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Live: https://davisjm4.github.io/cs-games/teacher/ . Evidence: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L43",
+      "id": "G-105",
+      "appended": "Package F (2026-10-28): Teacher Tools partial integration published and live-verified. Supported modes: selection, iteration, procedures, algorithms. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. Program A meaningfulness classification; Program B comparisons and paired outcomes are not exported. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L44",
+      "id": "G-106",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: missing, identify. Difficulty: Beginner. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L47",
+      "id": "G-109",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: audio, images, environment, time, motion, electrical, sensors, storage, sampling, adc, dac, phenomena. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L48",
+      "id": "G-110",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: records, images, media, delivery. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L49",
+      "id": "G-111",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: integer, precision, applications. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L50",
+      "id": "G-112",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: purpose, design, testing, representation, compression, analysis, control, collections, procedures, algorithms, networks, resilience, protection, impacts, responsibility, participation. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L51",
+      "id": "G-113",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: role, missing, next, misconception, diagram. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L52",
+      "id": "G-114",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: reliability, realtime, streaming, overhead, protocols. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L53",
+      "id": "G-115",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: issue, response, tradeoff, consequence, evidence. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L54",
+      "id": "G-116",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: barrier, impact, solution, tradeoff, evidence. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    },
+    {
+      "cell": "L55",
+      "id": "G-117",
+      "appended": "Package F (2026-10-28): Teacher Tools full integration published and live-verified. Supported modes: basics, public, licenses, attribution, remix, fair. Difficulty: Native Mixed. Format: QTI 1.2 single-answer MC (2–4 choices). 1000 seeded accepted items; source grader and QTI validation. 1/3/5-point ZIP/XML/key/scoring/feedback checks pass; Canvas sandbox import NOT VERIFIED. No additional interaction limitation; live Canvas import not verified. Teacher Tools: https://davisjm4.github.io/cs-games/teacher/ . Commit a1fcb916b7dfd7a006271eb6dacc789eca31f1f1. Coverage/report: https://github.com/davisjm4/davisjm4.github.io/tree/main/cs-games/reports/package-f/ .",
+      "historyPreserved": true,
+      "formatPreserved": true
+    }
+  ]
+}
