@@ -1,0 +1,44 @@
+{
+  "evidenceType": "Summary of checks observed in implementation session; original local browser JSON and screenshots unavailable",
+  "implementationCommit": "11c2b87b598dbbb002e681fd0bacaa779bb93f24",
+  "liveURL": "https://davisjm4.github.io/cs-games/robotics/parts-sprint/",
+  "modeLevelCases": 16,
+  "imagesLoaded": 56,
+  "viewports": [
+    320,
+    390,
+    768,
+    1024,
+    1366
+  ],
+  "observedChecks": [
+    "wrong-then-correct retains first miss",
+    "normalized aliases and Enter",
+    "help has no first-try credit",
+    "finish/replay/bests",
+    "60-second expiry",
+    "local-day rollover",
+    "reset cancellation/confirmation",
+    "Java/CSP storage sentinels unchanged",
+    "keyboard and emulated touch",
+    "reduced motion",
+    "answer controls at least 44x44",
+    "existing pathway and tools smoke checks"
+  ],
+  "observedPageErrors": 0,
+  "observedFailedRequests": 0,
+  "publishedAssetMatchesObserved": 8,
+  "digestReceiptAvailable": false,
+  "screenshotsAttached": false,
+  "originalBrowserJSONAttached": false,
+  "fullLocalJavaStdoutAttached": false,
+  "localJavaSuiteExitObserved": 0,
+  "physicalChromebook": "Not verified",
+  "nativeScreenReader": "Not verified",
+  "workflowRuns": {
+    "pages": 40701155405,
+    "robotics": 40701157986,
+    "navigation": 40701157952,
+    "csp": 40701157959
+  }
+}

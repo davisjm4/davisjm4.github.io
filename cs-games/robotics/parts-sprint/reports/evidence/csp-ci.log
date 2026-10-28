@@ -1,0 +1,766 @@
+﻿2026-10-28T13:56:59.7555764Z Current runner version: '2.338.0'
+2026-10-28T13:56:59.7572948Z ##[group]Runner Image Provisioner
+2026-10-28T13:56:59.7573483Z Hosted Compute Agent
+2026-10-28T13:56:59.7573963Z Version: 20261021.618
+2026-10-28T13:56:59.7574353Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-28T13:56:59.7574825Z Build Date: 2026-10-21T00:45:21Z
+2026-10-28T13:56:59.7575261Z Worker ID: {a3d452e9-cf60-4a41-be2a-76cef3fe9fa4}
+2026-10-28T13:56:59.7575693Z Region: centralus
+2026-10-28T13:56:59.7576201Z Cloud: Azure
+2026-10-28T13:56:59.7576544Z ##[endgroup]
+2026-10-28T13:56:59.7577397Z ##[group]Operating System
+2026-10-28T13:56:59.7577784Z Ubuntu
+2026-10-28T13:56:59.7578109Z 24.04.5
+2026-10-28T13:56:59.7578501Z LTS
+2026-10-28T13:56:59.7578825Z ##[endgroup]
+2026-10-28T13:56:59.7579158Z ##[group]Runner Image
+2026-10-28T13:56:59.7579576Z Image: ubuntu-24.04
+2026-10-28T13:56:59.7579934Z Version: 20261012.334.1
+2026-10-28T13:56:59.7580761Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-28T13:56:59.7581923Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-28T13:56:59.7582555Z ##[endgroup]
+2026-10-28T13:56:59.7583274Z ##[group]GITHUB_TOKEN Permissions
+2026-10-28T13:56:59.7584743Z Contents: read
+2026-10-28T13:56:59.7585096Z Metadata: read
+2026-10-28T13:56:59.7585746Z ##[endgroup]
+2026-10-28T13:56:59.7587070Z Secret source: Actions
+2026-10-28T13:56:59.7587747Z Cache mode: write
+2026-10-28T13:56:59.7588179Z Prepare workflow directory
+2026-10-28T13:56:59.7810122Z Prepare all required actions
+2026-10-28T13:56:59.7842648Z Getting action download info
+2026-10-28T13:57:00.0340407Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-28T13:57:00.1337868Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-28T13:57:00.2979143Z Complete job name: verify
+2026-10-28T13:57:00.3506868Z ##[group]Run actions/checkout@v4
+2026-10-28T13:57:00.3507293Z with:
+2026-10-28T13:57:00.3507547Z   repository: davisjm4/davisjm4.github.io
+2026-10-28T13:57:00.3509789Z   token: ***
+2026-10-28T13:57:00.3510025Z   ssh-strict: true
+2026-10-28T13:57:00.3510268Z   ssh-user: git
+2026-10-28T13:57:00.3510518Z   persist-credentials: true
+2026-10-28T13:57:00.3510789Z   clean: true
+2026-10-28T13:57:00.3511040Z   sparse-checkout-cone-mode: true
+2026-10-28T13:57:00.3511330Z   fetch-depth: 1
+2026-10-28T13:57:00.3511708Z   fetch-tags: false
+2026-10-28T13:57:00.3511952Z   show-progress: true
+2026-10-28T13:57:00.3512197Z   lfs: false
+2026-10-28T13:57:00.3512426Z   submodules: false
+2026-10-28T13:57:00.3512679Z   set-safe-directory: true
+2026-10-28T13:57:00.3512962Z   allow-unsafe-pr-checkout: false
+2026-10-28T13:57:00.3513328Z ##[endgroup]
+2026-10-28T13:57:00.5741788Z Syncing repository: davisjm4/davisjm4.github.io
+2026-10-28T13:57:00.5743041Z ##[group]Getting Git version info
+2026-10-28T13:57:00.5743650Z Working directory is '/home/runner/work/davisjm4.github.io/davisjm4.github.io'
+2026-10-28T13:57:00.5744625Z [command]/usr/bin/git version
+2026-10-28T13:57:00.5812394Z git version 2.55.0
+2026-10-28T13:57:00.5824988Z ##[endgroup]
+2026-10-28T13:57:00.5834327Z Temporarily overriding HOME='/home/runner/work/_temp/8e51bdb7-8e66-4960-9a28-a080cea7daa7' before making global git config changes
+2026-10-28T13:57:00.5835763Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T13:57:00.5837715Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/davisjm4.github.io/davisjm4.github.io
+2026-10-28T13:57:00.5877648Z Deleting the contents of '/home/runner/work/davisjm4.github.io/davisjm4.github.io'
+2026-10-28T13:57:00.5880446Z ##[group]Initializing the repository
+2026-10-28T13:57:00.5883143Z [command]/usr/bin/git init /home/runner/work/davisjm4.github.io/davisjm4.github.io
+2026-10-28T13:57:00.5978879Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-28T13:57:00.5980080Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-28T13:57:00.5980883Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-28T13:57:00.5981671Z hint: call:
+2026-10-28T13:57:00.5982015Z hint:
+2026-10-28T13:57:00.5982461Z hint: 	git config --global init.defaultBranch <name>
+2026-10-28T13:57:00.5982994Z hint:
+2026-10-28T13:57:00.5983496Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-28T13:57:00.5984339Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-28T13:57:00.5985007Z hint:
+2026-10-28T13:57:00.5985391Z hint: 	git branch -m <name>
+2026-10-28T13:57:00.5985791Z hint:
+2026-10-28T13:57:00.5986380Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-28T13:57:00.5987399Z Initialized empty Git repository in /home/runner/work/davisjm4.github.io/davisjm4.github.io/.git/
+2026-10-28T13:57:00.5990307Z [command]/usr/bin/git remote add origin https://github.com/davisjm4/davisjm4.github.io
+2026-10-28T13:57:00.6043765Z ##[endgroup]
+2026-10-28T13:57:00.6044429Z ##[group]Disabling automatic garbage collection
+2026-10-28T13:57:00.6044997Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-28T13:57:00.6074651Z ##[endgroup]
+2026-10-28T13:57:00.6075264Z ##[group]Setting up auth
+2026-10-28T13:57:00.6080118Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T13:57:00.6115991Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-28T13:57:00.6412829Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T13:57:00.6441725Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-28T13:57:00.6616219Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T13:57:00.6644673Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-28T13:57:00.6818561Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-28T13:57:00.6852459Z ##[endgroup]
+2026-10-28T13:57:00.6853027Z ##[group]Fetching the repository
+2026-10-28T13:57:00.6860457Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +11c2b87b598dbbb002e681fd0bacaa779bb93f24:refs/remotes/origin/main
+2026-10-28T13:57:03.5942136Z From https://github.com/davisjm4/davisjm4.github.io
+2026-10-28T13:57:03.5943322Z  * [new ref]         11c2b87b598dbbb002e681fd0bacaa779bb93f24 -> origin/main
+2026-10-28T13:57:03.5945367Z ##[endgroup]
+2026-10-28T13:57:03.5946175Z ##[group]Determining the checkout info
+2026-10-28T13:57:03.5962865Z ##[endgroup]
+2026-10-28T13:57:03.5963602Z [command]/usr/bin/git sparse-checkout disable
+2026-10-28T13:57:03.6005990Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-28T13:57:03.6046629Z ##[group]Checking out the ref
+2026-10-28T13:57:03.6047252Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-10-28T13:57:03.7601045Z Switched to a new branch 'main'
+2026-10-28T13:57:03.7604045Z branch 'main' set up to track 'origin/main'.
+2026-10-28T13:57:03.7617373Z ##[endgroup]
+2026-10-28T13:57:03.7658063Z [command]/usr/bin/git log -1 --format=%H
+2026-10-28T13:57:03.7680428Z 11c2b87b598dbbb002e681fd0bacaa779bb93f24
+2026-10-28T13:57:03.7958850Z ##[group]Run actions/setup-node@v4
+2026-10-28T13:57:03.7959625Z with:
+2026-10-28T13:57:03.7960208Z   node-version: 22
+2026-10-28T13:57:03.7960837Z   always-auth: false
+2026-10-28T13:57:03.7961623Z   check-latest: false
+2026-10-28T13:57:03.7967169Z   token: ***
+2026-10-28T13:57:03.7967903Z ##[endgroup]
+2026-10-28T13:57:03.8934211Z (node:2091) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-28T13:57:03.8936585Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-28T13:57:03.8942577Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+2026-10-28T13:57:03.8944567Z ##[group]Environment details
+2026-10-28T13:57:04.2012613Z node: v22.23.3
+2026-10-28T13:57:04.2012983Z npm: 10.9.9
+2026-10-28T13:57:04.2013129Z yarn: 1.22.22
+2026-10-28T13:57:04.2013667Z ##[endgroup]
+2026-10-28T13:57:04.2186948Z ##[group]Run npm ci --ignore-scripts --prefix csp-games
+2026-10-28T13:57:04.2187335Z [36;1mnpm ci --ignore-scripts --prefix csp-games[0m
+2026-10-28T13:57:04.2417658Z shell: /usr/bin/bash -e {0}
+2026-10-28T13:57:04.2417953Z ##[endgroup]
+2026-10-28T13:57:05.1335768Z 
+2026-10-28T13:57:05.1341348Z added 20 packages, and audited 21 packages in 848ms
+2026-10-28T13:57:05.1341985Z 
+2026-10-28T13:57:05.1342206Z 16 packages are looking for funding
+2026-10-28T13:57:05.1342574Z   run `npm fund` for details
+2026-10-28T13:57:05.1342843Z 
+2026-10-28T13:57:05.1342941Z found 0 vulnerabilities
+2026-10-28T13:57:05.1704125Z ##[group]Run npm test --prefix csp-games
+2026-10-28T13:57:05.1704354Z [36;1mnpm test --prefix csp-games[0m
+2026-10-28T13:57:05.1763136Z shell: /usr/bin/bash -e {0}
+2026-10-28T13:57:05.1763292Z ##[endgroup]
+2026-10-28T13:57:05.2684610Z 
+2026-10-28T13:57:05.2684902Z > test
+2026-10-28T13:57:05.2687615Z > node tests.mjs && node ui-tests.mjs && node trivial-nontrivial/tests.mjs && node trivial-nontrivial/ui-tests.mjs && node concepts-tests.mjs && node concepts-ui-tests.mjs && node concepts-feedback-tests.mjs && node session-tests.mjs && node daily-session-tests.mjs && node session-ui-tests.mjs && node expanded-tests.mjs && node practice-tests.mjs && node practice-ui-tests.mjs && node collection-tests.mjs && node test-case-redesign-tests.mjs && node architect-redesign-tests.mjs && node response-redesign-tests.mjs && node create-task-lab/tests.mjs && node create-task-lab/ui-tests.mjs && node create-task-lab/family-repeat-tests.mjs && node rgb-color-builder/tests.mjs && node rgb-color-builder/ui-tests.mjs && npm run test:dance && npm run test:ascii && npm run test:analog && npm run test:compression && npm run test:numbers && npm run test:vocabulary && npm run test:internet && npm run test:tcpudp && npm run test:ethics && npm run test:divide && npm run test:pathway && npm run test:copyright
+2026-10-28T13:57:05.2689381Z 
+2026-10-28T13:57:05.4405004Z PASS: 49285 generator, answer, and optimum assertions.
+2026-10-28T13:57:07.4784762Z PASS: 7606 interaction checks across all new games and modes (DOM simulation, not rendered-browser QA).
+2026-10-28T13:57:07.7592418Z PASS: preserved Network Breaker submission, new challenge, hint, and solution controls; 7773 total DOM interaction checks.
+2026-10-28T13:57:07.9354573Z PASS: 80 models; 208 behavior-distinct validated configurations from 240 bounded candidates; 80 independent output oracles; AP pseudocode subset, comparison, determinism, and repeat-avoidance checks.
+2026-10-28T13:57:08.1632323Z PASS: DOM controls for classification, correct/incorrect feedback, comparison, explanation, local scoring, category/activity breakdown, one-attempt lock, next challenge, share links/filters, reset confirmation, and Mixed Practice.
+2026-10-28T13:57:08.5213237Z PASS: 20000 generated Code Concepts challenges, 2082280 structural/answer assertions, all five Mixed Practice categories.
+2026-10-28T13:57:15.5384193Z PASS: 17844 Code Concepts interaction assertions covering spoiler-free errors, progressive hints, independent retries, permanently unscored reveals, repeated clicks, mode defaults, and statistics.
+2026-10-28T13:57:15.6240788Z PASS: 62000 hint and scoring-state assertions across every Code Concepts variant.
+2026-10-28T13:57:18.4987951Z PASS: 59 shared-session assertions: deduplication, first-try formula, retries, reveal/skip exclusion, cross-page persistence, reset, corrupt/older data, unavailable storage, and bounded 5,000-round history.
+2026-10-28T13:57:18.5329470Z Session daily-boundary, legacy migration, and per-mode summary tests passed.
+2026-10-28T13:57:18.7828663Z PASS: 151 cross-game/session/report DOM assertions: all 12 games plus legacy link, retries, persistence, reveals, print action, escaped identity, reset confirmation/cancel/confirm, and topic tables. Rendered print/device QA remains unavailable.
+2026-10-28T13:57:19.6823730Z Expanded concepts: 16,000 valid challenges; 7369 reverse / 8631 forward; all eight categories, retries and reveal verified.
+2026-10-28T13:57:24.9420338Z Practice engine: 5760 seeded challenges passed; all modes, models, valid alternatives, edge cases, and incorrect responses verified.
+2026-10-28T13:57:24.9646818Z Existing-game expansion: 4,000 randomized overflow, pixel, and cleaning challenges verified.
+2026-10-28T13:57:24.9713541Z 1626 shared-passage follow-up answers verified.
+2026-10-28T13:57:25.5503329Z Expansion DOM: 1162 checks passed across the remaining shared-interface games, expanded concepts, mode defaults, support, retries, reveals, simulations, and shared persistence.
+2026-10-28T13:57:25.6065261Z Shared passages and expanded printable summary: accurate game/topic rows, print action, and reset cancel/confirm verified.
+2026-10-28T13:57:25.7747236Z Collection editor: 72 native drag/drop, touch-pointer, tap/keyboard, duplicate, unlimited-length, undo/reset, index-base, and closed-round checks passed (DOM simulation).
+2026-10-28T13:57:27.1736848Z Test Case Builder specification: 5600 generated questions; 137371 assertions; 65300 independent displayed-code executions. {"bugs":{"questions":1700,"templates":17,"answerPositions":[446,426,440,388]},"predict":{"questions":1200,"templates":12,"answerPositions":[322,266,312,300]},"boundary":{"questions":1000,"templates":10,"answerPositions":[254,254,261,231]},"branches":{"questions":600,"templates":6,"answerPositions":[152,162,148,138]},"edge":{"questions":1100,"templates":11,"answerPositions":[263,274,266,297]}}
+2026-10-28T13:57:29.6838352Z Algorithm Architect: 900 generated challenges across 9 modes (871 missing-component, 29 arrange); 12527 generator, semantic, UI, feedback, session, and responsive checks passed.
+2026-10-28T13:57:29.7849142Z Response Builder: 1064 generated questions, 1321 assertions, 32 distinct structures; longest-choice shortcut 311/1000, first-choice shortcut 263/1000.
+2026-10-28T13:57:43.5049573Z {
+2026-10-28T13:57:43.5051056Z   "date": "2026-10-24",
+2026-10-28T13:57:43.5051312Z   "families": 131,
+2026-10-28T13:57:43.5051637Z   "counts": {
+2026-10-28T13:57:43.5052192Z     "missing": {
+2026-10-28T13:57:43.5053106Z       "procedures": 10,
+2026-10-28T13:57:43.5053300Z       "parameters": 9,
+2026-10-28T13:57:43.5054433Z       "selection": 10,
+2026-10-28T13:57:43.5054799Z       "iteration": 9,
+2026-10-28T13:57:43.5055011Z       "lists": 10,
+2026-10-28T13:57:43.5055183Z       "io": 9,
+2026-10-28T13:57:43.5055358Z       "behavior": 6
+2026-10-28T13:57:43.5056602Z     },
+2026-10-28T13:57:43.5056781Z     "identify": {
+2026-10-28T13:57:43.5057011Z       "procedures": 13,
+2026-10-28T13:57:43.5057203Z       "parameters": 9,
+2026-10-28T13:57:43.5057391Z       "selection": 10,
+2026-10-28T13:57:43.5057598Z       "iteration": 10,
+2026-10-28T13:57:43.5057787Z       "lists": 10,
+2026-10-28T13:57:43.5057964Z       "io": 12,
+2026-10-28T13:57:43.5059147Z       "behavior": 4
+2026-10-28T13:57:43.5059319Z     }
+2026-10-28T13:57:43.5059478Z   },
+2026-10-28T13:57:43.5059638Z   "corpus": 389,
+2026-10-28T13:57:43.5060407Z   "exactCorpusUnique": 389,
+2026-10-28T13:57:43.5061047Z   "codeStructuralSignatures": 171,
+2026-10-28T13:57:43.5063056Z   "structurallyDistinctFormsPerFamily": "2–3 (4 mutations erase the third caller form)",
+2026-10-28T13:57:43.5064506Z   "scenarios": 20,
+2026-10-28T13:57:43.5064695Z   "scenariosAvailable": 20,
+2026-10-28T13:57:43.5064912Z   "mutations": 63,
+2026-10-28T13:57:43.5065082Z   "selectionKinds": [
+2026-10-28T13:57:43.5066330Z     "identifier",
+2026-10-28T13:57:43.5066507Z     "header",
+2026-10-28T13:57:43.5067279Z     "block",
+2026-10-28T13:57:43.5068155Z     "body",
+2026-10-28T13:57:43.5068319Z     "call",
+2026-10-28T13:57:43.5068487Z     "statement",
+2026-10-28T13:57:43.5068675Z     "expression",
+2026-10-28T13:57:43.5068858Z     "value"
+2026-10-28T13:57:43.5069028Z   ],
+2026-10-28T13:57:43.5069194Z   "sweep": 15720,
+2026-10-28T13:57:43.5070388Z   "sampled": 7200,
+2026-10-28T13:57:43.5070574Z   "executions": 32226,
+2026-10-28T13:57:43.5070785Z   "counterfactuals": 62238,
+2026-10-28T13:57:43.5071045Z   "validControlRate": 0.16666666666666666,
+2026-10-28T13:57:43.5072478Z   "repeatsInLast50": 0,
+2026-10-28T13:57:43.5072686Z   "assertions": 25457,
+2026-10-28T13:57:43.5072881Z   "sampling": [
+2026-10-28T13:57:43.5073060Z     {
+2026-10-28T13:57:43.5073226Z       "mode": "mixed",
+2026-10-28T13:57:43.5073430Z       "topic": "all",
+2026-10-28T13:57:43.5073614Z       "byMode": {
+2026-10-28T13:57:43.5073801Z         "identify": 150,
+2026-10-28T13:57:43.5074004Z         "missing": 150
+2026-10-28T13:57:43.5074195Z       },
+2026-10-28T13:57:43.5074399Z       "byTopic": {
+2026-10-28T13:57:43.5075753Z         "behavior": 42,
+2026-10-28T13:57:43.5075949Z         "iteration": 43,
+2026-10-28T13:57:43.5076324Z         "procedures": 43,
+2026-10-28T13:57:43.5077683Z         "io": 43,
+2026-10-28T13:57:43.5077863Z         "selection": 43,
+2026-10-28T13:57:43.5078068Z         "parameters": 43,
+2026-10-28T13:57:43.5078268Z         "lists": 43
+2026-10-28T13:57:43.5079494Z       }
+2026-10-28T13:57:43.5079648Z     },
+2026-10-28T13:57:43.5079836Z     {
+2026-10-28T13:57:43.5080057Z       "mode": "mixed",
+2026-10-28T13:57:43.5080962Z       "topic": "procedures",
+2026-10-28T13:57:43.5081442Z       "byMode": {
+2026-10-28T13:57:43.5081724Z         "identify": 150,
+2026-10-28T13:57:43.5081920Z         "missing": 150
+2026-10-28T13:57:43.5082104Z       },
+2026-10-28T13:57:43.5082271Z       "byTopic": {
+2026-10-28T13:57:43.5082488Z         "procedures": 300
+2026-10-28T13:57:43.5083833Z       }
+2026-10-28T13:57:43.5083991Z     },
+2026-10-28T13:57:43.5084161Z     {
+2026-10-28T13:57:43.5084377Z       "mode": "mixed",
+2026-10-28T13:57:43.5085515Z       "topic": "parameters",
+2026-10-28T13:57:43.5085728Z       "byMode": {
+2026-10-28T13:57:43.5085936Z         "identify": 150,
+2026-10-28T13:57:43.5086132Z         "missing": 150
+2026-10-28T13:57:43.5086313Z       },
+2026-10-28T13:57:43.5086477Z       "byTopic": {
+2026-10-28T13:57:43.5086663Z         "parameters": 300
+2026-10-28T13:57:43.5088122Z       }
+2026-10-28T13:57:43.5088277Z     },
+2026-10-28T13:57:43.5088437Z     {
+2026-10-28T13:57:43.5088621Z       "mode": "mixed",
+2026-10-28T13:57:43.5089873Z       "topic": "selection",
+2026-10-28T13:57:43.5090075Z       "byMode": {
+2026-10-28T13:57:43.5090255Z         "identify": 150,
+2026-10-28T13:57:43.5090450Z         "missing": 150
+2026-10-28T13:57:43.5090637Z       },
+2026-10-28T13:57:43.5090804Z       "byTopic": {
+2026-10-28T13:57:43.5090990Z         "selection": 300
+2026-10-28T13:57:43.5091184Z       }
+2026-10-28T13:57:43.5091336Z     },
+2026-10-28T13:57:43.5091592Z     {
+2026-10-28T13:57:43.5092518Z       "mode": "mixed",
+2026-10-28T13:57:43.5093079Z       "topic": "iteration",
+2026-10-28T13:57:43.5093284Z       "byMode": {
+2026-10-28T13:57:43.5093466Z         "identify": 150,
+2026-10-28T13:57:43.5093663Z         "missing": 150
+2026-10-28T13:57:43.5094889Z       },
+2026-10-28T13:57:43.5095051Z       "byTopic": {
+2026-10-28T13:57:43.5095235Z         "iteration": 300
+2026-10-28T13:57:43.5095424Z       }
+2026-10-28T13:57:43.5095974Z     },
+2026-10-28T13:57:43.5096776Z     {
+2026-10-28T13:57:43.5096938Z       "mode": "mixed",
+2026-10-28T13:57:43.5097125Z       "topic": "lists",
+2026-10-28T13:57:43.5097312Z       "byMode": {
+2026-10-28T13:57:43.5098616Z         "identify": 150,
+2026-10-28T13:57:43.5098822Z         "missing": 150
+2026-10-28T13:57:43.5099024Z       },
+2026-10-28T13:57:43.5099280Z       "byTopic": {
+2026-10-28T13:57:43.5100074Z         "lists": 300
+2026-10-28T13:57:43.5100250Z       }
+2026-10-28T13:57:43.5100409Z     },
+2026-10-28T13:57:43.5100685Z     {
+2026-10-28T13:57:43.5100847Z       "mode": "mixed",
+2026-10-28T13:57:43.5101033Z       "topic": "io",
+2026-10-28T13:57:43.5101216Z       "byMode": {
+2026-10-28T13:57:43.5102559Z         "identify": 150,
+2026-10-28T13:57:43.5102756Z         "missing": 150
+2026-10-28T13:57:43.5102944Z       },
+2026-10-28T13:57:43.5103365Z       "byTopic": {
+2026-10-28T13:57:43.5104275Z         "io": 300
+2026-10-28T13:57:43.5104444Z       }
+2026-10-28T13:57:43.5104600Z     },
+2026-10-28T13:57:43.5104752Z     {
+2026-10-28T13:57:43.5105997Z       "mode": "mixed",
+2026-10-28T13:57:43.5106191Z       "topic": "behavior",
+2026-10-28T13:57:43.5106394Z       "byMode": {
+2026-10-28T13:57:43.5106578Z         "identify": 150,
+2026-10-28T13:57:43.5106774Z         "missing": 150
+2026-10-28T13:57:43.5106957Z       },
+2026-10-28T13:57:43.5107119Z       "byTopic": {
+2026-10-28T13:57:43.5107305Z         "behavior": 300
+2026-10-28T13:57:43.5108557Z       }
+2026-10-28T13:57:43.5108714Z     },
+2026-10-28T13:57:43.5108867Z     {
+2026-10-28T13:57:43.5109039Z       "mode": "missing",
+2026-10-28T13:57:43.5109572Z       "topic": "all",
+2026-10-28T13:57:43.5110283Z       "byMode": {
+2026-10-28T13:57:43.5110576Z         "missing": 300
+2026-10-28T13:57:43.5110760Z       },
+2026-10-28T13:57:43.5110950Z       "byTopic": {
+2026-10-28T13:57:43.5112068Z         "behavior": 43,
+2026-10-28T13:57:43.5112265Z         "procedures": 43,
+2026-10-28T13:57:43.5112468Z         "iteration": 43,
+2026-10-28T13:57:43.5112908Z         "io": 43,
+2026-10-28T13:57:43.5113734Z         "selection": 43,
+2026-10-28T13:57:43.5113923Z         "lists": 42,
+2026-10-28T13:57:43.5114104Z         "parameters": 43
+2026-10-28T13:57:43.5114285Z       }
+2026-10-28T13:57:43.5114714Z     },
+2026-10-28T13:57:43.5115684Z     {
+2026-10-28T13:57:43.5115844Z       "mode": "missing",
+2026-10-28T13:57:43.5116039Z       "topic": "procedures",
+2026-10-28T13:57:43.5116241Z       "byMode": {
+2026-10-28T13:57:43.5117197Z         "missing": 300
+2026-10-28T13:57:43.5117781Z       },
+2026-10-28T13:57:43.5117942Z       "byTopic": {
+2026-10-28T13:57:43.5118485Z         "procedures": 300
+2026-10-28T13:57:43.5119325Z       }
+2026-10-28T13:57:43.5119475Z     },
+2026-10-28T13:57:43.5119635Z     {
+2026-10-28T13:57:43.5119796Z       "mode": "missing",
+2026-10-28T13:57:43.5119993Z       "topic": "parameters",
+2026-10-28T13:57:43.5120725Z       "byMode": {
+2026-10-28T13:57:43.5121449Z         "missing": 300
+2026-10-28T13:57:43.5121726Z       },
+2026-10-28T13:57:43.5121882Z       "byTopic": {
+2026-10-28T13:57:43.5122068Z         "parameters": 300
+2026-10-28T13:57:43.5122244Z       }
+2026-10-28T13:57:43.5122427Z     },
+2026-10-28T13:57:43.5123733Z     {
+2026-10-28T13:57:43.5123882Z       "mode": "missing",
+2026-10-28T13:57:43.5124063Z       "topic": "selection",
+2026-10-28T13:57:43.5124243Z       "byMode": {
+2026-10-28T13:57:43.5125602Z         "missing": 300
+2026-10-28T13:57:43.5125738Z       },
+2026-10-28T13:57:43.5125845Z       "byTopic": {
+2026-10-28T13:57:43.5125963Z         "selection": 300
+2026-10-28T13:57:43.5126087Z       }
+2026-10-28T13:57:43.5127459Z     },
+2026-10-28T13:57:43.5127597Z     {
+2026-10-28T13:57:43.5127718Z       "mode": "missing",
+2026-10-28T13:57:43.5128348Z       "topic": "iteration",
+2026-10-28T13:57:43.5129014Z       "byMode": {
+2026-10-28T13:57:43.5129198Z         "missing": 300
+2026-10-28T13:57:43.5129393Z       },
+2026-10-28T13:57:43.5130535Z       "byTopic": {
+2026-10-28T13:57:43.5130726Z         "iteration": 300
+2026-10-28T13:57:43.5130919Z       }
+2026-10-28T13:57:43.5131081Z     },
+2026-10-28T13:57:43.5131236Z     {
+2026-10-28T13:57:43.5132654Z       "mode": "missing",
+2026-10-28T13:57:43.5132834Z       "topic": "lists",
+2026-10-28T13:57:43.5133672Z       "byMode": {
+2026-10-28T13:57:43.5134172Z         "missing": 300
+2026-10-28T13:57:43.5134289Z       },
+2026-10-28T13:57:43.5134394Z       "byTopic": {
+2026-10-28T13:57:43.5134509Z         "lists": 300
+2026-10-28T13:57:43.5134625Z       }
+2026-10-28T13:57:43.5135898Z     },
+2026-10-28T13:57:43.5136016Z     {
+2026-10-28T13:57:43.5136122Z       "mode": "missing",
+2026-10-28T13:57:43.5136354Z       "topic": "io",
+2026-10-28T13:57:43.5136476Z       "byMode": {
+2026-10-28T13:57:43.5136594Z         "missing": 300
+2026-10-28T13:57:43.5136716Z       },
+2026-10-28T13:57:43.5136821Z       "byTopic": {
+2026-10-28T13:57:43.5137161Z         "io": 300
+2026-10-28T13:57:43.5138264Z       }
+2026-10-28T13:57:43.5138364Z     },
+2026-10-28T13:57:43.5138464Z     {
+2026-10-28T13:57:43.5138569Z       "mode": "missing",
+2026-10-28T13:57:43.5139792Z       "topic": "behavior",
+2026-10-28T13:57:43.5139922Z       "byMode": {
+2026-10-28T13:57:43.5140037Z         "missing": 300
+2026-10-28T13:57:43.5140152Z       },
+2026-10-28T13:57:43.5140256Z       "byTopic": {
+2026-10-28T13:57:43.5140718Z         "behavior": 300
+2026-10-28T13:57:43.5141934Z       }
+2026-10-28T13:57:43.5142075Z     },
+2026-10-28T13:57:43.5143327Z     {
+2026-10-28T13:57:43.5143436Z       "mode": "identify",
+2026-10-28T13:57:43.5143567Z       "topic": "all",
+2026-10-28T13:57:43.5143686Z       "byMode": {
+2026-10-28T13:57:43.5143807Z         "identify": 300
+2026-10-28T13:57:43.5145041Z       },
+2026-10-28T13:57:43.5145193Z       "byTopic": {
+2026-10-28T13:57:43.5145410Z         "behavior": 42,
+2026-10-28T13:57:43.5145536Z         "iteration": 43,
+2026-10-28T13:57:43.5145666Z         "procedures": 43,
+2026-10-28T13:57:43.5145792Z         "io": 43,
+2026-10-28T13:57:43.5145910Z         "selection": 43,
+2026-10-28T13:57:43.5146035Z         "lists": 43,
+2026-10-28T13:57:43.5146158Z         "parameters": 43
+2026-10-28T13:57:43.5146279Z       }
+2026-10-28T13:57:43.5147804Z     },
+2026-10-28T13:57:43.5147906Z     {
+2026-10-28T13:57:43.5148014Z       "mode": "identify",
+2026-10-28T13:57:43.5148512Z       "topic": "procedures",
+2026-10-28T13:57:43.5149150Z       "byMode": {
+2026-10-28T13:57:43.5149293Z         "identify": 300
+2026-10-28T13:57:43.5149495Z       },
+2026-10-28T13:57:43.5149642Z       "byTopic": {
+2026-10-28T13:57:43.5149812Z         "procedures": 300
+2026-10-28T13:57:43.5150003Z       }
+2026-10-28T13:57:43.5150162Z     },
+2026-10-28T13:57:43.5151428Z     {
+2026-10-28T13:57:43.5151705Z       "mode": "identify",
+2026-10-28T13:57:43.5151916Z       "topic": "parameters",
+2026-10-28T13:57:43.5152123Z       "byMode": {
+2026-10-28T13:57:43.5152244Z         "identify": 300
+2026-10-28T13:57:43.5152367Z       },
+2026-10-28T13:57:43.5152470Z       "byTopic": {
+2026-10-28T13:57:43.5152589Z         "parameters": 300
+2026-10-28T13:57:43.5152716Z       }
+2026-10-28T13:57:43.5152815Z     },
+2026-10-28T13:57:43.5152913Z     {
+2026-10-28T13:57:43.5153021Z       "mode": "identify",
+2026-10-28T13:57:43.5154195Z       "topic": "selection",
+2026-10-28T13:57:43.5154327Z       "byMode": {
+2026-10-28T13:57:43.5154442Z         "identify": 300
+2026-10-28T13:57:43.5154561Z       },
+2026-10-28T13:57:43.5154663Z       "byTopic": {
+2026-10-28T13:57:43.5154781Z         "selection": 300
+2026-10-28T13:57:43.5155964Z       }
+2026-10-28T13:57:43.5156122Z     },
+2026-10-28T13:57:43.5156278Z     {
+2026-10-28T13:57:43.5156443Z       "mode": "identify",
+2026-10-28T13:57:43.5156651Z       "topic": "iteration",
+2026-10-28T13:57:43.5156796Z       "byMode": {
+2026-10-28T13:57:43.5156921Z         "identify": 300
+2026-10-28T13:57:43.5158150Z       },
+2026-10-28T13:57:43.5158286Z       "byTopic": {
+2026-10-28T13:57:43.5158404Z         "iteration": 300
+2026-10-28T13:57:43.5158524Z       }
+2026-10-28T13:57:43.5158622Z     },
+2026-10-28T13:57:43.5158765Z     {
+2026-10-28T13:57:43.5159161Z       "mode": "identify",
+2026-10-28T13:57:43.5159999Z       "topic": "lists",
+2026-10-28T13:57:43.5160264Z       "byMode": {
+2026-10-28T13:57:43.5160466Z         "identify": 300
+2026-10-28T13:57:43.5160670Z       },
+2026-10-28T13:57:43.5160847Z       "byTopic": {
+2026-10-28T13:57:43.5161047Z         "lists": 300
+2026-10-28T13:57:43.5161238Z       }
+2026-10-28T13:57:43.5161421Z     },
+2026-10-28T13:57:43.5161682Z     {
+2026-10-28T13:57:43.5161885Z       "mode": "identify",
+2026-10-28T13:57:43.5163167Z       "topic": "io",
+2026-10-28T13:57:43.5163384Z       "byMode": {
+2026-10-28T13:57:43.5163705Z         "identify": 300
+2026-10-28T13:57:43.5163899Z       },
+2026-10-28T13:57:43.5164066Z       "byTopic": {
+2026-10-28T13:57:43.5164260Z         "io": 300
+2026-10-28T13:57:43.5164469Z       }
+2026-10-28T13:57:43.5165745Z     },
+2026-10-28T13:57:43.5165905Z     {
+2026-10-28T13:57:43.5166081Z       "mode": "identify",
+2026-10-28T13:57:43.5166320Z       "topic": "behavior",
+2026-10-28T13:57:43.5167252Z       "byMode": {
+2026-10-28T13:57:43.5167521Z         "identify": 300
+2026-10-28T13:57:43.5167713Z       },
+2026-10-28T13:57:43.5167881Z       "byTopic": {
+2026-10-28T13:57:43.5168386Z         "behavior": 300
+2026-10-28T13:57:43.5169296Z       }
+2026-10-28T13:57:43.5169465Z     }
+2026-10-28T13:57:43.5169623Z   ],
+2026-10-28T13:57:43.5169796Z   "limitations": [
+2026-10-28T13:57:43.5170424Z     "Behavioral verification executes the bounded structured model rendered as pseudocode; it does not compile arbitrary external pseudocode.",
+2026-10-28T13:57:43.5172337Z     "Counterfactual probes are finite; they do not establish universal equivalence.",
+2026-10-28T13:57:43.5172924Z     "Original examples focus on specific components, not entire scored submissions.",
+2026-10-28T13:57:43.5174342Z     "No external educator or separate agent has certified the corpus."
+2026-10-28T13:57:43.5174572Z   ]
+2026-10-28T13:57:43.5174674Z }
+2026-10-28T13:57:43.8063691Z Create Task Lab UI: 912 checks passed (DOM simulation; browser results reported separately).
+2026-10-28T13:58:02.7929223Z {
+2026-10-28T13:58:02.7929505Z   "rounds": 14112,
+2026-10-28T13:58:02.7929726Z   "families": 131,
+2026-10-28T13:58:02.7929923Z   "violations": 0,
+2026-10-28T13:58:02.7930209Z   "results": [
+2026-10-28T13:58:02.7932618Z     {
+2026-10-28T13:58:02.7932885Z       "mode": "mixed",
+2026-10-28T13:58:02.7933113Z       "topic": "all",
+2026-10-28T13:58:02.7933314Z       "min": 2,
+2026-10-28T13:58:02.7933496Z       "max": 9
+2026-10-28T13:58:02.7933670Z     },
+2026-10-28T13:58:02.7933837Z     {
+2026-10-28T13:58:02.7934013Z       "mode": "mixed",
+2026-10-28T13:58:02.7934271Z       "topic": "procedures",
+2026-10-28T13:58:02.7934500Z       "min": 19,
+2026-10-28T13:58:02.7934686Z       "max": 25
+2026-10-28T13:58:02.7934878Z     },
+2026-10-28T13:58:02.7935037Z     {
+2026-10-28T13:58:02.7935210Z       "mode": "mixed",
+2026-10-28T13:58:02.7935422Z       "topic": "parameters",
+2026-10-28T13:58:02.7935645Z       "min": 27,
+2026-10-28T13:58:02.7935819Z       "max": 28
+2026-10-28T13:58:02.7935980Z     },
+2026-10-28T13:58:02.7936132Z     {
+2026-10-28T13:58:02.7936291Z       "mode": "mixed",
+2026-10-28T13:58:02.7936479Z       "topic": "selection",
+2026-10-28T13:58:02.7936674Z       "min": 25,
+2026-10-28T13:58:02.7936838Z       "max": 25
+2026-10-28T13:58:02.7937086Z     },
+2026-10-28T13:58:02.7937236Z     {
+2026-10-28T13:58:02.7937393Z       "mode": "mixed",
+2026-10-28T13:58:02.7937584Z       "topic": "iteration",
+2026-10-28T13:58:02.7937790Z       "min": 25,
+2026-10-28T13:58:02.7937956Z       "max": 28
+2026-10-28T13:58:02.7938122Z     },
+2026-10-28T13:58:02.7938283Z     {
+2026-10-28T13:58:02.7938460Z       "mode": "mixed",
+2026-10-28T13:58:02.7938659Z       "topic": "lists",
+2026-10-28T13:58:02.7938861Z       "min": 25,
+2026-10-28T13:58:02.7939052Z       "max": 25
+2026-10-28T13:58:02.7939220Z     },
+2026-10-28T13:58:02.7939370Z     {
+2026-10-28T13:58:02.7939526Z       "mode": "mixed",
+2026-10-28T13:58:02.7939747Z       "topic": "io",
+2026-10-28T13:58:02.7939942Z       "min": 20,
+2026-10-28T13:58:02.7940114Z       "max": 28
+2026-10-28T13:58:02.7940305Z     },
+2026-10-28T13:58:02.7940462Z     {
+2026-10-28T13:58:02.7940653Z       "mode": "mixed",
+2026-10-28T13:58:02.7940848Z       "topic": "behavior",
+2026-10-28T13:58:02.7941076Z       "min": 41,
+2026-10-28T13:58:02.7941249Z       "max": 63
+2026-10-28T13:58:02.7941443Z     },
+2026-10-28T13:58:02.7941731Z     {
+2026-10-28T13:58:02.7941930Z       "mode": "missing",
+2026-10-28T13:58:02.7942154Z       "topic": "all",
+2026-10-28T13:58:02.7942348Z       "min": 7,
+2026-10-28T13:58:02.7942539Z       "max": 12
+2026-10-28T13:58:02.7943241Z     },
+2026-10-28T13:58:02.7943397Z     {
+2026-10-28T13:58:02.7943590Z       "mode": "missing",
+2026-10-28T13:58:02.7943806Z       "topic": "procedures",
+2026-10-28T13:58:02.7944044Z       "min": 50,
+2026-10-28T13:58:02.7944216Z       "max": 50
+2026-10-28T13:58:02.7944408Z     },
+2026-10-28T13:58:02.7944564Z     {
+2026-10-28T13:58:02.7944759Z       "mode": "missing",
+2026-10-28T13:58:02.7944991Z       "topic": "parameters",
+2026-10-28T13:58:02.7945223Z       "min": 55,
+2026-10-28T13:58:02.7945397Z       "max": 56
+2026-10-28T13:58:02.7945588Z     },
+2026-10-28T13:58:02.7945742Z     {
+2026-10-28T13:58:02.7945934Z       "mode": "missing",
+2026-10-28T13:58:02.7946155Z       "topic": "selection",
+2026-10-28T13:58:02.7946365Z       "min": 49,
+2026-10-28T13:58:02.7946561Z       "max": 51
+2026-10-28T13:58:02.7946727Z     },
+2026-10-28T13:58:02.7946911Z     {
+2026-10-28T13:58:02.7947076Z       "mode": "missing",
+2026-10-28T13:58:02.7947307Z       "topic": "iteration",
+2026-10-28T13:58:02.7947535Z       "min": 55,
+2026-10-28T13:58:02.7947720Z       "max": 56
+2026-10-28T13:58:02.7947917Z     },
+2026-10-28T13:58:02.7948076Z     {
+2026-10-28T13:58:02.7948269Z       "mode": "missing",
+2026-10-28T13:58:02.7948796Z       "topic": "lists",
+2026-10-28T13:58:02.7948992Z       "min": 50,
+2026-10-28T13:58:02.7949192Z       "max": 50
+2026-10-28T13:58:02.7949363Z     },
+2026-10-28T13:58:02.7949537Z     {
+2026-10-28T13:58:02.7949706Z       "mode": "missing",
+2026-10-28T13:58:02.7949924Z       "topic": "io",
+2026-10-28T13:58:02.7950109Z       "min": 55,
+2026-10-28T13:58:02.7950309Z       "max": 56
+2026-10-28T13:58:02.7950475Z     },
+2026-10-28T13:58:02.7950651Z     {
+2026-10-28T13:58:02.7950819Z       "mode": "missing",
+2026-10-28T13:58:02.7951042Z       "topic": "behavior",
+2026-10-28T13:58:02.7951239Z       "min": 83,
+2026-10-28T13:58:02.7951436Z       "max": 84
+2026-10-28T13:58:02.7951742Z     },
+2026-10-28T13:58:02.7951925Z     {
+2026-10-28T13:58:02.7952112Z       "mode": "identify",
+2026-10-28T13:58:02.7952319Z       "topic": "all",
+2026-10-28T13:58:02.7952536Z       "min": 5,
+2026-10-28T13:58:02.7974932Z       "max": 18
+2026-10-28T13:58:02.7975162Z     },
+2026-10-28T13:58:02.7975335Z     {
+2026-10-28T13:58:02.7975554Z       "mode": "identify",
+2026-10-28T13:58:02.7975787Z       "topic": "procedures",
+2026-10-28T13:58:02.7976034Z       "min": 30,
+2026-10-28T13:58:02.7976232Z       "max": 40
+2026-10-28T13:58:02.7976416Z     },
+2026-10-28T13:58:02.7976599Z     {
+2026-10-28T13:58:02.7976778Z       "mode": "identify",
+2026-10-28T13:58:02.7977021Z       "topic": "parameters",
+2026-10-28T13:58:02.7977260Z       "min": 55,
+2026-10-28T13:58:02.7977447Z       "max": 56
+2026-10-28T13:58:02.7977641Z     },
+2026-10-28T13:58:02.7977809Z     {
+2026-10-28T13:58:02.7978000Z       "mode": "identify",
+2026-10-28T13:58:02.7978215Z       "topic": "selection",
+2026-10-28T13:58:02.7978453Z       "min": 30,
+2026-10-28T13:58:02.7978627Z       "max": 64
+2026-10-28T13:58:02.7978828Z     },
+2026-10-28T13:58:02.7978990Z     {
+2026-10-28T13:58:02.7979190Z       "mode": "identify",
+2026-10-28T13:58:02.7979428Z       "topic": "iteration",
+2026-10-28T13:58:02.7979642Z       "min": 50,
+2026-10-28T13:58:02.7979857Z       "max": 50
+2026-10-28T13:58:02.7980039Z     },
+2026-10-28T13:58:02.7980222Z     {
+2026-10-28T13:58:02.7980419Z       "mode": "identify",
+2026-10-28T13:58:02.7980627Z       "topic": "lists",
+2026-10-28T13:58:02.7980849Z       "min": 50,
+2026-10-28T13:58:02.7981028Z       "max": 50
+2026-10-28T13:58:02.7981228Z     },
+2026-10-28T13:58:02.7981387Z     {
+2026-10-28T13:58:02.7981694Z       "mode": "identify",
+2026-10-28T13:58:02.7981919Z       "topic": "io",
+2026-10-28T13:58:02.7982116Z       "min": 30,
+2026-10-28T13:58:02.7982309Z       "max": 48
+2026-10-28T13:58:02.7982491Z     },
+2026-10-28T13:58:02.7982647Z     {
+2026-10-28T13:58:02.7982847Z       "mode": "identify",
+2026-10-28T13:58:02.7983075Z       "topic": "behavior",
+2026-10-28T13:58:02.7983288Z       "min": 125,
+2026-10-28T13:58:02.7983488Z       "max": 125
+2026-10-28T13:58:02.7983671Z     }
+2026-10-28T13:58:02.7984121Z   ]
+2026-10-28T13:58:02.7984316Z }
+2026-10-28T13:58:16.4686498Z RGB numerical / generator / session: 22279 assertions passed. 20000 rounds, 0 exact repeats, 0 adjacent near-duplicates. Min ΔE00 18.006583414990114; max Mixed streak 2.
+2026-10-28T13:58:16.8159120Z RGB DOM interactions: 415 assertions passed. Real browser/layout checks are reported separately.
+2026-10-28T13:58:16.8861322Z 
+2026-10-28T13:58:16.8862020Z > test:dance
+2026-10-28T13:58:16.8864230Z > node algorithm-dance-lab/tests/engine.test.mjs && node algorithm-dance-lab/tests/motion.test.mjs && node algorithm-dance-lab/tests/session.test.mjs && node algorithm-dance-lab/tests/ui.test.mjs && node algorithm-dance-lab/tests/expansion-engine.test.mjs && node algorithm-dance-lab/tests/expansion-motion.test.mjs && node algorithm-dance-lab/tests/project-audio.test.mjs && node algorithm-dance-lab/tests/studio-ui.test.mjs && node algorithm-dance-lab/tests/usability.test.mjs
+2026-10-28T13:58:16.8865871Z 
+2026-10-28T13:58:16.9346297Z Interpreter / authored lesson: 486 assertions passed.
+2026-10-28T13:58:16.9948882Z Joint motion / playback: 584 assertions passed.
+2026-10-28T13:58:17.0457129Z Daily assessment / active-time tracking: 26 assertions passed.
+2026-10-28T13:58:17.5038385Z Block editor / full lesson / studio DOM interactions: 69 assertions passed.
+2026-10-28T13:58:18.5245408Z Expansion language / authored lessons: 231 independent assertions passed.
+2026-10-28T13:58:18.6375201Z Expansion mesh contact / direction / dropped-frame transport: 296 assertions passed.
+2026-10-28T13:58:18.6785055Z Project migration / archive safety / audio scheduler: 64 assertions passed.
+2026-10-28T13:58:19.0492968Z Expanded studio / all 13 lesson stages / music UI: 65 assertions passed.
+2026-10-28T13:58:20.2036092Z Usability / unlocked navigation / live input execution: 30 assertions passed.
+2026-10-28T13:58:20.2851030Z 
+2026-10-28T13:58:20.2851768Z > test:ascii
+2026-10-28T13:58:20.2852305Z > node ascii-binary-builder/tests.mjs && node ascii-binary-builder/ui-tests.mjs
+2026-10-28T13:58:20.2852674Z 
+2026-10-28T13:58:20.8735241Z ASCII engine/generator: 36762 assertions passed; pools single:94, short:126, word:299; 15,000 deterministic cross-setting rounds, zero last-50 repeats.
+2026-10-28T13:58:21.1500243Z ASCII DOM interactions: 1083 assertions passed (live all-256 decoding, all settings, retries, privacy, state preservation, reference and daily reset).
+2026-10-28T13:58:21.2231178Z 
+2026-10-28T13:58:21.2231824Z > test:analog
+2026-10-28T13:58:21.2232285Z > node analog-digital-lab/tests.mjs && node analog-digital-lab/ui-tests.mjs
+2026-10-28T13:58:21.2232478Z 
+2026-10-28T13:58:22.1735343Z Analog/Digital engine: 75685 assertions passed; 22000 topic/mixed rounds plus 3,000 reload/switch rounds; exact/family/semantic repeat violations 0; 11000 Analog / 11000 Digital.
+2026-10-28T13:58:22.3014224Z Analog/Digital DOM: 186 assertions passed; all topics, one attempt, feedback timing, next/skip, summary buckets and daily reset.
+2026-10-28T13:58:22.3738059Z 
+2026-10-28T13:58:22.3738661Z > test:compression
+2026-10-28T13:58:22.3739043Z > node lossless-lossy-lab/tests.mjs && node lossless-lossy-lab/ui-tests.mjs
+2026-10-28T13:58:22.3739231Z 
+2026-10-28T13:58:23.0243588Z Compression engine: 41685 assertions passed; 15000 core rounds (7500/7500), 3,000 reload/switch rounds and 6,000 coverage rounds; exact/family violations 0; all 360 instances reached.
+2026-10-28T13:58:23.1262327Z Compression DOM: 84 assertions passed; all topics, one attempt, feedback timing, next/skip, summary buckets and daily reset.
+2026-10-28T13:58:23.1958174Z 
+2026-10-28T13:58:23.1958586Z > test:numbers
+2026-10-28T13:58:23.1958952Z > node roundoff-overflow-lab/tests.mjs && node roundoff-overflow-lab/ui-tests.mjs
+2026-10-28T13:58:23.1959150Z 
+2026-10-28T13:58:26.7779257Z Roundoff/Overflow engine: 36871 assertions; 14400 core +3000 switched +6000 coverage rounds, no exact50/family3 violations; all360 reached.
+2026-10-28T13:58:26.9954018Z Roundoff/Overflow DOM: 757 assertions passed; 48 scored rounds, all filters/categories, visual timing, terminal score, session buckets, daily reset.
+2026-10-28T13:58:27.0694447Z 
+2026-10-28T13:58:27.0694966Z > test:vocabulary
+2026-10-28T13:58:27.0695400Z > node vocabulary-fill-in-lab/tests.mjs && node vocabulary-fill-in-lab/ui-tests.mjs
+2026-10-28T13:58:27.0695610Z 
+2026-10-28T13:58:30.0722657Z Vocabulary engine: 167614 assertions passed; 18000 core +6000 cross-filter/reload +12000 coverage rounds; exact/family/term violations0 where feasible; all600 instances/107 terms reached.
+2026-10-28T13:58:32.5270091Z Vocabulary DOM: 679 assertions passed; 412 scored rounds, all Big Ideas/topics, reference, one attempt, grouped summary beyond256 records, daily reset.
+2026-10-28T13:58:32.6022971Z 
+2026-10-28T13:58:32.6023790Z > test:internet
+2026-10-28T13:58:32.6024489Z > node internet-layers-lab/tests.mjs && node internet-layers-lab/ui-tests.mjs
+2026-10-28T13:58:32.6024940Z 
+2026-10-28T13:58:39.5158630Z Internet engine: 48089 assertions passed; 49000 simulated rounds; exact/family/concept violations 0/0/0.
+2026-10-28T13:58:42.6101349Z Internet DOM: 2120 assertions passed; 444 scored rounds; all 36 mode/topic selections, accessible diagrams, terminal scoring, summary beyond256 records and daily reset.
+2026-10-28T13:58:42.6869191Z 
+2026-10-28T13:58:42.6869601Z > test:tcpudp
+2026-10-28T13:58:42.6870342Z > node tcp-udp-lab/tests/validation.test.mjs && node tcp-udp-lab/tests/generator.test.mjs && node tcp-udp-lab/tests/session.test.mjs && node tcp-udp-lab/tests/ui.test.mjs && node tcp-udp-lab/tests/integration.test.mjs
+2026-10-28T13:58:42.6870782Z 
+2026-10-28T13:58:44.0445284Z TCP/UDP validation: 29279 assertions passed. 60 families, 360 instances; best length shortcut 54.7%, best word shortcut “order” 65.6%.
+2026-10-28T13:58:45.2339102Z TCP/UDP generator: 15284 assertions passed. 15000 core + 3000 switching + 2000 reload + 20000 long-run + 6000 coverage rounds; 0 exact-50 / 0 family-3 violations; long-run TCP 50.0%, best pattern guess 54.2%; min situation gap mixed 51, narrow 20.
+2026-10-28T13:58:45.2868818Z TCP/UDP session: 49 assertions passed (local stub tracker and real shared CSP tracker; one scored attempt, metadata, topic/protocol accuracy, reload persistence, daily reset, storage failure).
+2026-10-28T13:58:45.4044231Z TCP/UDP DOM: 73 assertions passed (two choices, single scored attempt, feedback, skips, all filters, topic/protocol accuracy, Learn, keyboard, persistence, daily reset).
+2026-10-28T13:58:45.4431025Z TCP/UDP integration review: 75 assertions passed; transport-policy, execution-confirmation, TLS/QUIC, DNS and nonblocking qualifications.
+2026-10-28T13:58:45.4499362Z TCP/UDP two-copy synchronization: 10 assertions passed; newer counters survive history saves, refresh and reset.
+2026-10-28T13:58:45.5194383Z 
+2026-10-28T13:58:45.5194892Z > test:ethics
+2026-10-28T13:58:45.5196404Z > node ai-ethics-lab/tests.mjs && node ai-ethics-lab/ui-tests.mjs
+2026-10-28T13:58:45.5196923Z 
+2026-10-28T13:58:48.1795643Z AI Ethics engine/content: 37467 assertions passed. {"rounds":27200,"exactViolations":0,"familyViolations":0,"positions":[6753,6847,6852,6748],"length":{"longest":56,"shortest":171}}
+2026-10-28T13:58:51.6437209Z AI Ethics DOM/session: 2181 assertions passed; 444 scored rounds; all 36 selections, terminal scoring, metadata, cumulative summary beyond 256 records, daily and manual reset.
+2026-10-28T13:58:51.7248934Z 
+2026-10-28T13:58:51.7249468Z > test:divide
+2026-10-28T13:58:51.7249978Z > node digital-divide-lab/tests.mjs && node digital-divide-lab/ui-tests.mjs
+2026-10-28T13:58:51.7250218Z 
+2026-10-28T13:58:53.8858804Z Digital Divide engine/content: 31059 assertions passed. {"rounds":22200,"exactViolations":0,"familyViolations":0,"barrierViolations":0,"actualExactRepeats":5725,"actualFamilyRepeats":6252,"consecutiveBarriers":12,"positions":[5531,5633,5496,5540],"longest":100,"shortest":105}
+2026-10-28T13:58:57.3506559Z Digital Divide DOM/session: 2682 assertions passed; 444 scored rounds; all 36 selections, terminal scoring, metadata, cumulative summary beyond 256 records, daily and manual reset.
+2026-10-28T13:58:57.4304207Z 
+2026-10-28T13:58:57.4304735Z > test:pathway
+2026-10-28T13:58:57.4305542Z > node exam-readiness/tests/model.test.mjs && node exam-readiness/tests/integration.test.mjs && node exam-readiness/tests/ui.test.mjs
+2026-10-28T13:58:57.4306003Z 
+2026-10-28T13:58:57.4786910Z Pathway model/storage/curriculum: 402 assertions passed.
+2026-10-28T13:58:57.4794441Z Pathway additional validation: 411 cumulative assertions passed.
+2026-10-28T13:58:57.4795282Z Strong accuracy boundary: passed at 90%, lower level below threshold.
+2026-10-28T13:58:57.5012939Z Recovery warning and history/numeric bounds: passed.
+2026-10-28T13:58:57.9405169Z Pathway game bridge/reset/mapping: 3303 assertions passed.
+2026-10-28T13:58:57.9407452Z Explicit skill event interface: deduplication passed.
+2026-10-28T13:58:58.1132785Z Pathway dashboard/import/reset DOM: 46 assertions passed. Keyboard and physical screen-reader behavior require browser/manual checks.
+2026-10-28T13:58:58.1145435Z Focus refresh: unchanged evidence preserves disclosure/focus nodes; new evidence refreshes dashboard.
+2026-10-28T13:58:58.1877889Z 
+2026-10-28T13:58:58.1878362Z > test:copyright
+2026-10-28T13:58:58.1879482Z > node copyright-creative-commons-lab/tests.mjs && node copyright-creative-commons-lab/ui-tests.mjs && node copyright-creative-commons-lab/ui-tests.mjs --unavailable
+2026-10-28T13:58:58.1879872Z 
+2026-10-28T13:58:58.3308159Z Copyright model/content: 93239 checks passed; 60 families, 10/topic; 24 foundational, 24 applied, 12 nuanced; 30,000 seeded Mixed rounds; independent review fixtures and six-license policy counterfactuals.
+2026-10-28T13:59:01.2184292Z Copyright DOM/session: 1994 checks passed; all 60 families, 7 filters, 440 scored rounds, terminal first submission, shared summary, daily/confirmed manual resets; storage enabled.
+2026-10-28T13:59:02.4746483Z Copyright DOM/session: 1994 checks passed; all 60 families, 7 filters, 440 scored rounds, terminal first submission, shared summary, daily/confirmed manual resets; storage unavailable.
+2026-10-28T13:59:02.4968344Z ##[group]Run TZ=America/Los_Angeles node csp-games/copyright-creative-commons-lab/ui-tests.mjs
+2026-10-28T13:59:02.4968736Z [36;1mTZ=America/Los_Angeles node csp-games/copyright-creative-commons-lab/ui-tests.mjs[0m
+2026-10-28T13:59:02.5022486Z shell: /usr/bin/bash -e {0}
+2026-10-28T13:59:02.5022637Z ##[endgroup]
+2026-10-28T13:59:05.4417881Z Copyright DOM/session: 1994 checks passed; all 60 families, 7 filters, 440 scored rounds, terminal first submission, shared summary, daily/confirmed manual resets; storage enabled.
+2026-10-28T13:59:05.4569983Z ##[group]Run ln -s ../csp-games/node_modules java-games/node_modules
+2026-10-28T13:59:05.4570278Z [36;1mln -s ../csp-games/node_modules java-games/node_modules[0m
+2026-10-28T13:59:05.4626515Z shell: /usr/bin/bash -e {0}
+2026-10-28T13:59:05.4626675Z ##[endgroup]
+2026-10-28T13:59:05.4734266Z ##[group]Run node cs-games/catalog-tests.mjs
+2026-10-28T13:59:05.4734478Z [36;1mnode cs-games/catalog-tests.mjs[0m
+2026-10-28T13:59:05.4787266Z shell: /usr/bin/bash -e {0}
+2026-10-28T13:59:05.4787416Z ##[endgroup]
+2026-10-28T13:59:05.6193607Z PASS: 16 playable Java games, 16 Java catalog entries; catalog routes, unique cards, all topic filters, search, homepage redirect, nested routes, return links, summary, CSP/Teacher navigation.
+2026-10-28T13:59:05.6225070Z PASS: Vocabulary catalog launches once across all topic filters.
+2026-10-28T13:59:05.6260221Z PASS: Internet lab appears in CSP catalog and all its topic filters.
+2026-10-28T13:59:05.6277379Z PASS: TCP/UDP and Internet Layers each launch once in networking catalog.
+2026-10-28T13:59:05.6305314Z PASS: AI Ethics renders exactly once under Big Idea 5 and each of its five topic filters.
+2026-10-28T13:59:05.6335015Z PASS: Digital Divide launches once under Big Idea 5 and its topic filters; existing impact/AI/vocabulary entries preserved.
+2026-10-28T13:59:05.6354262Z PASS: Copyright lab launches once in Big Idea 5 and Responsible Computing, with topic filtering.
+2026-10-28T13:59:05.6572434Z Post job cleanup.
+2026-10-28T13:59:05.7433664Z (node:2739) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-28T13:59:05.7434355Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-28T13:59:05.7605379Z Post job cleanup.
+2026-10-28T13:59:05.8231255Z [command]/usr/bin/git version
+2026-10-28T13:59:05.8265826Z git version 2.55.0
+2026-10-28T13:59:05.8294758Z Temporarily overriding HOME='/home/runner/work/_temp/06618e57-9d1b-4906-938d-9c7becc9fdc6' before making global git config changes
+2026-10-28T13:59:05.8295600Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T13:59:05.8299653Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/davisjm4.github.io/davisjm4.github.io
+2026-10-28T13:59:05.8340980Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T13:59:05.8400936Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-28T13:59:05.8611119Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T13:59:05.8638240Z http.https://github.com/.extraheader
+2026-10-28T13:59:05.8648281Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-28T13:59:05.8708915Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-28T13:59:05.8915709Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T13:59:05.8946635Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-28T13:59:05.9266135Z Cleaning up orphan processes
+2026-10-28T13:59:05.9530098Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

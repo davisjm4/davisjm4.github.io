@@ -1,0 +1,24 @@
+{
+  "evidenceType": "Recorded read-back results from implementation session; not a new packaging-time spreadsheet fetch",
+  "spreadsheet": "https://docs.google.com/spreadsheets/d/16Zr5Nn2ubN2ecBvOZUbeDpOnxqGHvDUty08QqqMPtnA/edit",
+  "entries": [
+    {
+      "sheet": "Master Inventory",
+      "range": "A58:L58",
+      "id": "G-120"
+    },
+    {
+      "sheet": "Release History",
+      "range": "A23:G23"
+    },
+    {
+      "sheet": "Issues & Risks",
+      "range": "A7:G7",
+      "id": "I-007"
+    }
+  ],
+  "writtenValuesReadBack": 26,
+  "matched": true,
+  "historicalRowsPreserved": true,
+  "nativeVisualFit": "Not verified"
+}

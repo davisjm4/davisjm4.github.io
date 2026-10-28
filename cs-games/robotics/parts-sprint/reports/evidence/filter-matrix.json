@@ -1,0 +1,898 @@
+[
+  {
+    "category": "structure",
+    "difficulty": "Beginner",
+    "mode": "learn",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "Beginner",
+    "mode": "sprint",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "Beginner",
+    "mode": "find",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "Beginner",
+    "mode": "mixed",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "Intermediate",
+    "mode": "learn",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "Intermediate",
+    "mode": "sprint",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "Intermediate",
+    "mode": "find",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "Intermediate",
+    "mode": "mixed",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "Advanced",
+    "mode": "learn",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "Advanced",
+    "mode": "sprint",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "Advanced",
+    "mode": "find",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "Advanced",
+    "mode": "mixed",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "mixed",
+    "mode": "learn",
+    "components": 9,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "mixed",
+    "mode": "sprint",
+    "components": 9,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "mixed",
+    "mode": "find",
+    "components": 9,
+    "status": "pass"
+  },
+  {
+    "category": "structure",
+    "difficulty": "mixed",
+    "mode": "mixed",
+    "components": 9,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "Beginner",
+    "mode": "learn",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "Beginner",
+    "mode": "sprint",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "Beginner",
+    "mode": "find",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "Beginner",
+    "mode": "mixed",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "Intermediate",
+    "mode": "learn",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "Intermediate",
+    "mode": "sprint",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "Intermediate",
+    "mode": "find",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "Intermediate",
+    "mode": "mixed",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "Advanced",
+    "mode": "learn",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "Advanced",
+    "mode": "sprint",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "Advanced",
+    "mode": "find",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "Advanced",
+    "mode": "mixed",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "mixed",
+    "mode": "learn",
+    "components": 7,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "mixed",
+    "mode": "sprint",
+    "components": 7,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "mixed",
+    "mode": "find",
+    "components": 7,
+    "status": "pass"
+  },
+  {
+    "category": "fasteners",
+    "difficulty": "mixed",
+    "mode": "mixed",
+    "components": 7,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "Beginner",
+    "mode": "learn",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "Beginner",
+    "mode": "sprint",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "Beginner",
+    "mode": "find",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "Beginner",
+    "mode": "mixed",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "Intermediate",
+    "mode": "learn",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "Intermediate",
+    "mode": "sprint",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "Intermediate",
+    "mode": "find",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "Intermediate",
+    "mode": "mixed",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "Advanced",
+    "mode": "learn",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "Advanced",
+    "mode": "sprint",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "Advanced",
+    "mode": "find",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "Advanced",
+    "mode": "mixed",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "mixed",
+    "mode": "learn",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "mixed",
+    "mode": "sprint",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "mixed",
+    "mode": "find",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "spacing",
+    "difficulty": "mixed",
+    "mode": "mixed",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "Beginner",
+    "mode": "learn",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "Beginner",
+    "mode": "sprint",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "Beginner",
+    "mode": "find",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "Beginner",
+    "mode": "mixed",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "Intermediate",
+    "mode": "learn",
+    "components": 3,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "Intermediate",
+    "mode": "sprint",
+    "components": 3,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "Intermediate",
+    "mode": "find",
+    "components": 3,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "Intermediate",
+    "mode": "mixed",
+    "components": 3,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "Advanced",
+    "mode": "learn",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "Advanced",
+    "mode": "sprint",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "Advanced",
+    "mode": "find",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "Advanced",
+    "mode": "mixed",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "mixed",
+    "mode": "learn",
+    "components": 9,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "mixed",
+    "mode": "sprint",
+    "components": 9,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "mixed",
+    "mode": "find",
+    "components": 9,
+    "status": "pass"
+  },
+  {
+    "category": "motion",
+    "difficulty": "mixed",
+    "mode": "mixed",
+    "components": 9,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "Beginner",
+    "mode": "learn",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "Beginner",
+    "mode": "sprint",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "Beginner",
+    "mode": "find",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "Beginner",
+    "mode": "mixed",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "Intermediate",
+    "mode": "learn",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "Intermediate",
+    "mode": "sprint",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "Intermediate",
+    "mode": "find",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "Intermediate",
+    "mode": "mixed",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "Advanced",
+    "mode": "learn",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "Advanced",
+    "mode": "sprint",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "Advanced",
+    "mode": "find",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "Advanced",
+    "mode": "mixed",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "mixed",
+    "mode": "learn",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "mixed",
+    "mode": "sprint",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "mixed",
+    "mode": "find",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "transmission",
+    "difficulty": "mixed",
+    "mode": "mixed",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "Beginner",
+    "mode": "learn",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "Beginner",
+    "mode": "sprint",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "Beginner",
+    "mode": "find",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "Beginner",
+    "mode": "mixed",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "Intermediate",
+    "mode": "learn",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "Intermediate",
+    "mode": "sprint",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "Intermediate",
+    "mode": "find",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "Intermediate",
+    "mode": "mixed",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "Advanced",
+    "mode": "learn",
+    "components": 0,
+    "status": "explicitly unavailable"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "Advanced",
+    "mode": "sprint",
+    "components": 0,
+    "status": "explicitly unavailable"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "Advanced",
+    "mode": "find",
+    "components": 0,
+    "status": "explicitly unavailable"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "Advanced",
+    "mode": "mixed",
+    "components": 0,
+    "status": "explicitly unavailable"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "mixed",
+    "mode": "learn",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "mixed",
+    "mode": "sprint",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "mixed",
+    "mode": "find",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "wheels",
+    "difficulty": "mixed",
+    "mode": "mixed",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "Beginner",
+    "mode": "learn",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "Beginner",
+    "mode": "sprint",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "Beginner",
+    "mode": "find",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "Beginner",
+    "mode": "mixed",
+    "components": 1,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "Intermediate",
+    "mode": "learn",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "Intermediate",
+    "mode": "sprint",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "Intermediate",
+    "mode": "find",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "Intermediate",
+    "mode": "mixed",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "Advanced",
+    "mode": "learn",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "Advanced",
+    "mode": "sprint",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "Advanced",
+    "mode": "find",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "Advanced",
+    "mode": "mixed",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "mixed",
+    "mode": "learn",
+    "components": 5,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "mixed",
+    "mode": "sprint",
+    "components": 5,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "mixed",
+    "mode": "find",
+    "components": 5,
+    "status": "pass"
+  },
+  {
+    "category": "tools",
+    "difficulty": "mixed",
+    "mode": "mixed",
+    "components": 5,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "Beginner",
+    "mode": "learn",
+    "components": 8,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "Beginner",
+    "mode": "sprint",
+    "components": 8,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "Beginner",
+    "mode": "find",
+    "components": 8,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "Beginner",
+    "mode": "mixed",
+    "components": 8,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "Intermediate",
+    "mode": "learn",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "Intermediate",
+    "mode": "sprint",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "Intermediate",
+    "mode": "find",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "Intermediate",
+    "mode": "mixed",
+    "components": 4,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "Advanced",
+    "mode": "learn",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "Advanced",
+    "mode": "sprint",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "Advanced",
+    "mode": "find",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "Advanced",
+    "mode": "mixed",
+    "components": 2,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "mixed",
+    "mode": "learn",
+    "components": 14,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "mixed",
+    "mode": "sprint",
+    "components": 14,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "mixed",
+    "mode": "find",
+    "components": 14,
+    "status": "pass"
+  },
+  {
+    "category": "electronics",
+    "difficulty": "mixed",
+    "mode": "mixed",
+    "components": 14,
+    "status": "pass"
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "checks": 229558,
+  "components": 56,
+  "distinctComponentFormatInstances": 168,
+  "simulations": 15000,
+  "exactCooldownViolations": 0,
+  "componentCooldownRelaxations": 114,
+  "distributions": {
+    "mode": {
+      "learn": 4988,
+      "sprint": 4988,
+      "find": 5024
+    },
+    "difficulty": {
+      "Beginner": 5074,
+      "Intermediate": 5151,
+      "Advanced": 4775
+    },
+    "category": {
+      "structure": 2322,
+      "tools": 1478,
+      "fasteners": 1919,
+      "wheels": 1051,
+      "electronics": 3234,
+      "spacing": 1134,
+      "transmission": 1216,
+      "motion": 2646
+    },
+    "answerPositions": [
+      3805,
+      3775,
+      3710,
+      3710
+    ]
+  },
+  "filterCells": 128,
+  "emptyCells": 4,
+  "aliasEntries": 219,
+  "invalidOrAmbiguous": 0,
+  "canvasIntegration": "Not added",
+  "physicalChromebook": "Not verified",
+  "nativeScreenReader": "Not verified"
+}

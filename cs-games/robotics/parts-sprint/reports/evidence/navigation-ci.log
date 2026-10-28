@@ -1,0 +1,176 @@
+﻿2026-10-28T13:56:59.9765984Z Current runner version: '2.338.0'
+2026-10-28T13:56:59.9788805Z ##[group]Runner Image Provisioner
+2026-10-28T13:56:59.9789511Z Hosted Compute Agent
+2026-10-28T13:56:59.9790133Z Version: 20261021.618
+2026-10-28T13:56:59.9790666Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-28T13:56:59.9791610Z Build Date: 2026-10-21T00:45:21Z
+2026-10-28T13:56:59.9792201Z Worker ID: {a28ebd04-5650-407d-b73c-b83b39455090}
+2026-10-28T13:56:59.9792790Z Region: westus
+2026-10-28T13:56:59.9793297Z Cloud: Azure
+2026-10-28T13:56:59.9793835Z ##[endgroup]
+2026-10-28T13:56:59.9795119Z ##[group]Operating System
+2026-10-28T13:56:59.9795665Z Ubuntu
+2026-10-28T13:56:59.9796113Z 24.04.5
+2026-10-28T13:56:59.9796616Z LTS
+2026-10-28T13:56:59.9797066Z ##[endgroup]
+2026-10-28T13:56:59.9797520Z ##[group]Runner Image
+2026-10-28T13:56:59.9798086Z Image: ubuntu-24.04
+2026-10-28T13:56:59.9798572Z Version: 20261025.353.1
+2026-10-28T13:56:59.9799700Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261025.353/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-28T13:56:59.9800928Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261025.353
+2026-10-28T13:56:59.9802066Z ##[endgroup]
+2026-10-28T13:56:59.9802988Z ##[group]GITHUB_TOKEN Permissions
+2026-10-28T13:56:59.9804850Z Contents: read
+2026-10-28T13:56:59.9805708Z Metadata: read
+2026-10-28T13:56:59.9806213Z ##[endgroup]
+2026-10-28T13:56:59.9807959Z Secret source: Actions
+2026-10-28T13:56:59.9808855Z Cache mode: write
+2026-10-28T13:56:59.9809449Z Prepare workflow directory
+2026-10-28T13:57:00.0076058Z Prepare all required actions
+2026-10-28T13:57:00.0115510Z Getting action download info
+2026-10-28T13:57:00.3572317Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-28T13:57:00.4552685Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-28T13:57:00.6536572Z Complete job name: navigation
+2026-10-28T13:57:00.7220495Z ##[group]Run actions/checkout@v4
+2026-10-28T13:57:00.7221391Z with:
+2026-10-28T13:57:00.7221778Z   repository: davisjm4/davisjm4.github.io
+2026-10-28T13:57:00.7224805Z   token: ***
+2026-10-28T13:57:00.7225157Z   ssh-strict: true
+2026-10-28T13:57:00.7225508Z   ssh-user: git
+2026-10-28T13:57:00.7225864Z   persist-credentials: true
+2026-10-28T13:57:00.7226248Z   clean: true
+2026-10-28T13:57:00.7226597Z   sparse-checkout-cone-mode: true
+2026-10-28T13:57:00.7227004Z   fetch-depth: 1
+2026-10-28T13:57:00.7227362Z   fetch-tags: false
+2026-10-28T13:57:00.7227712Z   show-progress: true
+2026-10-28T13:57:00.7228058Z   lfs: false
+2026-10-28T13:57:00.7228392Z   submodules: false
+2026-10-28T13:57:00.7228743Z   set-safe-directory: true
+2026-10-28T13:57:00.7229140Z   allow-unsafe-pr-checkout: false
+2026-10-28T13:57:00.7229747Z ##[endgroup]
+2026-10-28T13:57:00.9194270Z Syncing repository: davisjm4/davisjm4.github.io
+2026-10-28T13:57:00.9196170Z ##[group]Getting Git version info
+2026-10-28T13:57:00.9197156Z Working directory is '/home/runner/work/davisjm4.github.io/davisjm4.github.io'
+2026-10-28T13:57:00.9198576Z [command]/usr/bin/git version
+2026-10-28T13:57:00.9238650Z git version 2.56.0
+2026-10-28T13:57:00.9258316Z ##[endgroup]
+2026-10-28T13:57:00.9272688Z Temporarily overriding HOME='/home/runner/work/_temp/a073eafc-23fd-40b4-a0ba-79439a3358b3' before making global git config changes
+2026-10-28T13:57:00.9274639Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T13:57:00.9277508Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/davisjm4.github.io/davisjm4.github.io
+2026-10-28T13:57:00.9327525Z Deleting the contents of '/home/runner/work/davisjm4.github.io/davisjm4.github.io'
+2026-10-28T13:57:00.9331529Z ##[group]Initializing the repository
+2026-10-28T13:57:00.9335923Z [command]/usr/bin/git init /home/runner/work/davisjm4.github.io/davisjm4.github.io
+2026-10-28T13:57:00.9417907Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-28T13:57:00.9419884Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-28T13:57:00.9421592Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-28T13:57:00.9422791Z hint: call:
+2026-10-28T13:57:00.9423454Z hint:
+2026-10-28T13:57:00.9424265Z hint: 	git config --global init.defaultBranch <name>
+2026-10-28T13:57:00.9425210Z hint:
+2026-10-28T13:57:00.9426095Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-28T13:57:00.9428455Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-28T13:57:00.9429603Z hint:
+2026-10-28T13:57:00.9430275Z hint: 	git branch -m <name>
+2026-10-28T13:57:00.9431023Z hint:
+2026-10-28T13:57:00.9432226Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-28T13:57:00.9434681Z Initialized empty Git repository in /home/runner/work/davisjm4.github.io/davisjm4.github.io/.git/
+2026-10-28T13:57:00.9437650Z [command]/usr/bin/git remote add origin https://github.com/davisjm4/davisjm4.github.io
+2026-10-28T13:57:00.9479722Z ##[endgroup]
+2026-10-28T13:57:00.9480704Z ##[group]Disabling automatic garbage collection
+2026-10-28T13:57:00.9492195Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-28T13:57:00.9530237Z ##[endgroup]
+2026-10-28T13:57:00.9531599Z ##[group]Setting up auth
+2026-10-28T13:57:00.9539654Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T13:57:00.9574806Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-28T13:57:00.9886840Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T13:57:00.9928092Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-28T13:57:01.0155535Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T13:57:01.0195206Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-28T13:57:01.0408008Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-28T13:57:01.0455192Z ##[endgroup]
+2026-10-28T13:57:01.0456166Z ##[group]Fetching the repository
+2026-10-28T13:57:01.0466233Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +11c2b87b598dbbb002e681fd0bacaa779bb93f24:refs/remotes/origin/main
+2026-10-28T13:57:03.7827638Z From https://github.com/davisjm4/davisjm4.github.io
+2026-10-28T13:57:03.7829893Z  * [new ref]         11c2b87b598dbbb002e681fd0bacaa779bb93f24 -> origin/main
+2026-10-28T13:57:03.7834729Z ##[endgroup]
+2026-10-28T13:57:03.7836175Z ##[group]Determining the checkout info
+2026-10-28T13:57:03.7837787Z ##[endgroup]
+2026-10-28T13:57:03.7838738Z [command]/usr/bin/git sparse-checkout disable
+2026-10-28T13:57:03.7893626Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-28T13:57:03.7938569Z ##[group]Checking out the ref
+2026-10-28T13:57:03.7941639Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-10-28T13:57:03.9628421Z Switched to a new branch 'main'
+2026-10-28T13:57:03.9630679Z branch 'main' set up to track 'origin/main'.
+2026-10-28T13:57:03.9690296Z ##[endgroup]
+2026-10-28T13:57:03.9693100Z [command]/usr/bin/git log -1 --format=%H
+2026-10-28T13:57:03.9726853Z 11c2b87b598dbbb002e681fd0bacaa779bb93f24
+2026-10-28T13:57:04.0074033Z ##[group]Run actions/setup-node@v4
+2026-10-28T13:57:04.0075054Z with:
+2026-10-28T13:57:04.0075740Z   node-version: 22
+2026-10-28T13:57:04.0076514Z   always-auth: false
+2026-10-28T13:57:04.0077316Z   check-latest: false
+2026-10-28T13:57:04.0084669Z   token: ***
+2026-10-28T13:57:04.0085576Z ##[endgroup]
+2026-10-28T13:57:04.1372640Z (node:2089) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-28T13:57:04.1376931Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-28T13:57:04.1380520Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+2026-10-28T13:57:04.1383038Z ##[group]Environment details
+2026-10-28T13:57:04.4444921Z node: v22.23.4
+2026-10-28T13:57:04.4445419Z npm: 10.9.9
+2026-10-28T13:57:04.4445743Z yarn: 1.22.22
+2026-10-28T13:57:04.4447181Z ##[endgroup]
+2026-10-28T13:57:04.4681354Z ##[group]Run npm ci --ignore-scripts --prefix csp-games
+2026-10-28T13:57:04.4681898Z [36;1mnpm ci --ignore-scripts --prefix csp-games[0m
+2026-10-28T13:57:04.4708771Z shell: /usr/bin/bash -e {0}
+2026-10-28T13:57:04.4709072Z ##[endgroup]
+2026-10-28T13:57:06.6018703Z 
+2026-10-28T13:57:06.6025694Z added 20 packages, and audited 21 packages in 2s
+2026-10-28T13:57:06.6026269Z 
+2026-10-28T13:57:06.6026526Z 16 packages are looking for funding
+2026-10-28T13:57:06.6027083Z   run `npm fund` for details
+2026-10-28T13:57:06.6027326Z 
+2026-10-28T13:57:06.6027535Z found 0 vulnerabilities
+2026-10-28T13:57:06.6395465Z ##[group]Run ln -s ../csp-games/node_modules java-games/node_modules
+2026-10-28T13:57:06.6395895Z [36;1mln -s ../csp-games/node_modules java-games/node_modules[0m
+2026-10-28T13:57:06.6416517Z shell: /usr/bin/bash -e {0}
+2026-10-28T13:57:06.6416755Z ##[endgroup]
+2026-10-28T13:57:06.6489598Z ##[group]Run node cs-games/catalog-tests.mjs
+2026-10-28T13:57:06.6489883Z [36;1mnode cs-games/catalog-tests.mjs[0m
+2026-10-28T13:57:06.6505823Z shell: /usr/bin/bash -e {0}
+2026-10-28T13:57:06.6506040Z ##[endgroup]
+2026-10-28T13:57:06.8233637Z PASS: 16 playable Java games, 16 Java catalog entries; catalog routes, unique cards, all topic filters, search, homepage redirect, nested routes, return links, summary, CSP/Teacher navigation.
+2026-10-28T13:57:06.8272507Z PASS: Vocabulary catalog launches once across all topic filters.
+2026-10-28T13:57:06.8313605Z PASS: Internet lab appears in CSP catalog and all its topic filters.
+2026-10-28T13:57:06.8334756Z PASS: TCP/UDP and Internet Layers each launch once in networking catalog.
+2026-10-28T13:57:06.8384623Z PASS: AI Ethics renders exactly once under Big Idea 5 and each of its five topic filters.
+2026-10-28T13:57:06.8416317Z PASS: Digital Divide launches once under Big Idea 5 and its topic filters; existing impact/AI/vocabulary entries preserved.
+2026-10-28T13:57:06.8441747Z PASS: Copyright lab launches once in Big Idea 5 and Responsible Computing, with topic filtering.
+2026-10-28T13:57:06.8629036Z ##[group]Run node cs-games/navigation-tests.mjs
+2026-10-28T13:57:06.8629362Z [36;1mnode cs-games/navigation-tests.mjs[0m
+2026-10-28T13:57:06.8647798Z shell: /usr/bin/bash -e {0}
+2026-10-28T13:57:06.8648023Z ##[endgroup]
+2026-10-28T13:57:07.0388767Z PASS csp: 32 unique cards; every topic filter, every title search, empty results and activity route.
+2026-10-28T13:57:07.0861413Z PASS advanced: 24 unique cards; every topic filter, every title search, empty results and activity route.
+2026-10-28T13:57:07.0862713Z PASS robotics: 1 unique cards; every topic filter, every title search, empty results and activity route.
+2026-10-28T13:57:07.1154173Z PASS csp-games: 34 activity/report entry pages retain URLs, have canonical return/home links and accessible static breadcrumbs.
+2026-10-28T13:57:07.1253067Z PASS java-games: 17 activity/report entry pages retain URLs, have canonical return/home links and accessible static breadcrumbs.
+2026-10-28T13:57:07.1313670Z PASS hub, four pathways, shared RACECES, WPR skill-selection return, subject selector, summaries and legacy routes. No navigation code accesses storage.
+2026-10-28T13:57:07.1473609Z Post job cleanup.
+2026-10-28T13:57:07.2488464Z (node:2152) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-28T13:57:07.2602544Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-28T13:57:07.2683209Z Post job cleanup.
+2026-10-28T13:57:07.3502586Z [command]/usr/bin/git version
+2026-10-28T13:57:07.3543723Z git version 2.56.0
+2026-10-28T13:57:07.3579174Z Temporarily overriding HOME='/home/runner/work/_temp/937a182a-7c8a-4537-bbe9-04463680d030' before making global git config changes
+2026-10-28T13:57:07.3580278Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T13:57:07.3584147Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/davisjm4.github.io/davisjm4.github.io
+2026-10-28T13:57:07.3632443Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T13:57:07.3673199Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-28T13:57:07.3903934Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T13:57:07.3945696Z http.https://github.com/.extraheader
+2026-10-28T13:57:07.3965079Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-28T13:57:07.4005196Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-28T13:57:07.4252341Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T13:57:07.4294423Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-28T13:57:07.4642632Z Cleaning up orphan processes
+2026-10-28T13:57:07.4978339Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

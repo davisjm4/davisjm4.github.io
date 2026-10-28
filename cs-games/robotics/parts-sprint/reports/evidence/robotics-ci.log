@@ -1,0 +1,192 @@
+﻿2026-10-28T13:57:00.0024149Z Current runner version: '2.338.0'
+2026-10-28T13:57:00.0048502Z ##[group]Runner Image Provisioner
+2026-10-28T13:57:00.0049392Z Hosted Compute Agent
+2026-10-28T13:57:00.0049993Z Version: 20261021.618
+2026-10-28T13:57:00.0050725Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-28T13:57:00.0051784Z Build Date: 2026-10-21T00:45:21Z
+2026-10-28T13:57:00.0052461Z Worker ID: {91749fdf-cc59-4550-8af3-c2fb88ae73fa}
+2026-10-28T13:57:00.0053258Z Region: westcentralus
+2026-10-28T13:57:00.0053839Z Cloud: Azure
+2026-10-28T13:57:00.0054416Z ##[endgroup]
+2026-10-28T13:57:00.0056005Z ##[group]Operating System
+2026-10-28T13:57:00.0056639Z Ubuntu
+2026-10-28T13:57:00.0057256Z 24.04.5
+2026-10-28T13:57:00.0057767Z LTS
+2026-10-28T13:57:00.0058306Z ##[endgroup]
+2026-10-28T13:57:00.0058916Z ##[group]Runner Image
+2026-10-28T13:57:00.0059521Z Image: ubuntu-24.04
+2026-10-28T13:57:00.0060128Z Version: 20261025.353.1
+2026-10-28T13:57:00.0061612Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261025.353/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-28T13:57:00.0063339Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261025.353
+2026-10-28T13:57:00.0064322Z ##[endgroup]
+2026-10-28T13:57:00.0065479Z ##[group]GITHUB_TOKEN Permissions
+2026-10-28T13:57:00.0067586Z Contents: read
+2026-10-28T13:57:00.0068387Z Metadata: read
+2026-10-28T13:57:00.0069029Z ##[endgroup]
+2026-10-28T13:57:00.0071627Z Secret source: Actions
+2026-10-28T13:57:00.0072684Z Cache mode: write
+2026-10-28T13:57:00.0073343Z Prepare workflow directory
+2026-10-28T13:57:00.0470363Z Prepare all required actions
+2026-10-28T13:57:00.0518561Z Getting action download info
+2026-10-28T13:57:00.3463898Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-28T13:57:00.4642086Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-28T13:57:00.6596927Z Complete job name: identification-and-session
+2026-10-28T13:57:00.7465346Z ##[group]Run actions/checkout@v4
+2026-10-28T13:57:00.7466257Z with:
+2026-10-28T13:57:00.7466718Z   repository: davisjm4/davisjm4.github.io
+2026-10-28T13:57:00.7470353Z   token: ***
+2026-10-28T13:57:00.7470785Z   ssh-strict: true
+2026-10-28T13:57:00.7471424Z   ssh-user: git
+2026-10-28T13:57:00.7471880Z   persist-credentials: true
+2026-10-28T13:57:00.7472363Z   clean: true
+2026-10-28T13:57:00.7472804Z   sparse-checkout-cone-mode: true
+2026-10-28T13:57:00.7473318Z   fetch-depth: 1
+2026-10-28T13:57:00.7473742Z   fetch-tags: false
+2026-10-28T13:57:00.7474185Z   show-progress: true
+2026-10-28T13:57:00.7474636Z   lfs: false
+2026-10-28T13:57:00.7475038Z   submodules: false
+2026-10-28T13:57:00.7475479Z   set-safe-directory: true
+2026-10-28T13:57:00.7475977Z   allow-unsafe-pr-checkout: false
+2026-10-28T13:57:00.7476753Z ##[endgroup]
+2026-10-28T13:57:01.0670412Z Syncing repository: davisjm4/davisjm4.github.io
+2026-10-28T13:57:01.0673485Z ##[group]Getting Git version info
+2026-10-28T13:57:01.0675044Z Working directory is '/home/runner/work/davisjm4.github.io/davisjm4.github.io'
+2026-10-28T13:57:01.0677057Z [command]/usr/bin/git version
+2026-10-28T13:57:01.0822225Z git version 2.56.0
+2026-10-28T13:57:01.0845575Z ##[endgroup]
+2026-10-28T13:57:01.0863195Z Temporarily overriding HOME='/home/runner/work/_temp/a722c0ad-1d45-4873-b5ff-bd02a498253e' before making global git config changes
+2026-10-28T13:57:01.0865936Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T13:57:01.0870792Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/davisjm4.github.io/davisjm4.github.io
+2026-10-28T13:57:01.0931764Z Deleting the contents of '/home/runner/work/davisjm4.github.io/davisjm4.github.io'
+2026-10-28T13:57:01.0937412Z ##[group]Initializing the repository
+2026-10-28T13:57:01.0942839Z [command]/usr/bin/git init /home/runner/work/davisjm4.github.io/davisjm4.github.io
+2026-10-28T13:57:01.1130732Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-28T13:57:01.1133136Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-28T13:57:01.1134734Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-28T13:57:01.1136009Z hint: call:
+2026-10-28T13:57:01.1136807Z hint:
+2026-10-28T13:57:01.1137749Z hint: 	git config --global init.defaultBranch <name>
+2026-10-28T13:57:01.1138879Z hint:
+2026-10-28T13:57:01.1139916Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-28T13:57:01.1141740Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-28T13:57:01.1143034Z hint:
+2026-10-28T13:57:01.1143792Z hint: 	git branch -m <name>
+2026-10-28T13:57:01.1144660Z hint:
+2026-10-28T13:57:01.1145692Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-28T13:57:01.1147560Z Initialized empty Git repository in /home/runner/work/davisjm4.github.io/davisjm4.github.io/.git/
+2026-10-28T13:57:01.1160565Z [command]/usr/bin/git remote add origin https://github.com/davisjm4/davisjm4.github.io
+2026-10-28T13:57:01.1214537Z ##[endgroup]
+2026-10-28T13:57:01.1215860Z ##[group]Disabling automatic garbage collection
+2026-10-28T13:57:01.1218427Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-28T13:57:01.1255335Z ##[endgroup]
+2026-10-28T13:57:01.1256516Z ##[group]Setting up auth
+2026-10-28T13:57:01.1263469Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T13:57:01.1303475Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-28T13:57:01.1782969Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T13:57:01.1825169Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-28T13:57:01.2065985Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T13:57:01.2112146Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-28T13:57:01.2354770Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-28T13:57:01.2402933Z ##[endgroup]
+2026-10-28T13:57:01.2403683Z ##[group]Fetching the repository
+2026-10-28T13:57:01.2417029Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +11c2b87b598dbbb002e681fd0bacaa779bb93f24:refs/remotes/origin/main
+2026-10-28T13:57:03.6616574Z From https://github.com/davisjm4/davisjm4.github.io
+2026-10-28T13:57:03.6618545Z  * [new ref]         11c2b87b598dbbb002e681fd0bacaa779bb93f24 -> origin/main
+2026-10-28T13:57:03.6624406Z ##[endgroup]
+2026-10-28T13:57:03.6626032Z ##[group]Determining the checkout info
+2026-10-28T13:57:03.6628410Z ##[endgroup]
+2026-10-28T13:57:03.6634483Z [command]/usr/bin/git sparse-checkout disable
+2026-10-28T13:57:03.6701136Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-28T13:57:03.6753466Z ##[group]Checking out the ref
+2026-10-28T13:57:03.6756361Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-10-28T13:57:03.8759667Z Switched to a new branch 'main'
+2026-10-28T13:57:03.8765318Z branch 'main' set up to track 'origin/main'.
+2026-10-28T13:57:03.8779823Z ##[endgroup]
+2026-10-28T13:57:03.8834313Z [command]/usr/bin/git log -1 --format=%H
+2026-10-28T13:57:03.8869072Z 11c2b87b598dbbb002e681fd0bacaa779bb93f24
+2026-10-28T13:57:03.9275272Z ##[group]Run actions/setup-node@v4
+2026-10-28T13:57:03.9276605Z with:
+2026-10-28T13:57:03.9277552Z   node-version: 22
+2026-10-28T13:57:03.9278587Z   always-auth: false
+2026-10-28T13:57:03.9279622Z   check-latest: false
+2026-10-28T13:57:03.9288257Z   token: ***
+2026-10-28T13:57:03.9289452Z ##[endgroup]
+2026-10-28T13:57:04.0791055Z (node:2384) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-28T13:57:04.0794890Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-28T13:57:04.0798815Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+2026-10-28T13:57:04.0800832Z ##[group]Environment details
+2026-10-28T13:57:06.8161793Z node: v22.23.4
+2026-10-28T13:57:06.8162700Z npm: 10.9.9
+2026-10-28T13:57:06.8163594Z yarn: 1.22.22
+2026-10-28T13:57:06.8165072Z ##[endgroup]
+2026-10-28T13:57:06.8393708Z ##[group]Run ROBOTICS_EVIDENCE=/tmp/robotics-validation node cs-games/robotics/parts-sprint/tests/engine-tests.mjs
+2026-10-28T13:57:06.8394726Z [36;1mROBOTICS_EVIDENCE=/tmp/robotics-validation node cs-games/robotics/parts-sprint/tests/engine-tests.mjs[0m
+2026-10-28T13:57:06.8428700Z shell: /usr/bin/bash -e {0}
+2026-10-28T13:57:06.8429032Z ##[endgroup]
+2026-10-28T13:57:12.0575853Z {
+2026-10-28T13:57:12.0576881Z   "checks": 229558,
+2026-10-28T13:57:12.0577583Z   "components": 56,
+2026-10-28T13:57:12.0578381Z   "distinctComponentFormatInstances": 168,
+2026-10-28T13:57:12.0578971Z   "simulations": 15000,
+2026-10-28T13:57:12.0579467Z   "exactCooldownViolations": 0,
+2026-10-28T13:57:12.0579986Z   "componentCooldownRelaxations": 114,
+2026-10-28T13:57:12.0580437Z   "distributions": {
+2026-10-28T13:57:12.0580679Z     "mode": {
+2026-10-28T13:57:12.0580895Z       "learn": 4988,
+2026-10-28T13:57:12.0581130Z       "sprint": 4988,
+2026-10-28T13:57:12.0581697Z       "find": 5024
+2026-10-28T13:57:12.0581987Z     },
+2026-10-28T13:57:12.0582206Z     "difficulty": {
+2026-10-28T13:57:12.0582437Z       "Beginner": 5074,
+2026-10-28T13:57:12.0582679Z       "Intermediate": 5151,
+2026-10-28T13:57:12.0582921Z       "Advanced": 4775
+2026-10-28T13:57:12.0583140Z     },
+2026-10-28T13:57:12.0583343Z     "category": {
+2026-10-28T13:57:12.0583567Z       "structure": 2322,
+2026-10-28T13:57:12.0583801Z       "tools": 1478,
+2026-10-28T13:57:12.0584025Z       "fasteners": 1919,
+2026-10-28T13:57:12.0584282Z       "wheels": 1051,
+2026-10-28T13:57:12.0584508Z       "electronics": 3234,
+2026-10-28T13:57:12.0584750Z       "spacing": 1134,
+2026-10-28T13:57:12.0584980Z       "transmission": 1216,
+2026-10-28T13:57:12.0585251Z       "motion": 2646
+2026-10-28T13:57:12.0585464Z     },
+2026-10-28T13:57:12.0585668Z     "answerPositions": [
+2026-10-28T13:57:12.0585946Z       3805,
+2026-10-28T13:57:12.0586172Z       3775,
+2026-10-28T13:57:12.0586361Z       3710,
+2026-10-28T13:57:12.0586548Z       3710
+2026-10-28T13:57:12.0586740Z     ]
+2026-10-28T13:57:12.0586924Z   },
+2026-10-28T13:57:12.0587124Z   "filterCells": 128,
+2026-10-28T13:57:12.0587359Z   "emptyCells": 4,
+2026-10-28T13:57:12.0587587Z   "aliasEntries": 219,
+2026-10-28T13:57:12.0587829Z   "invalidOrAmbiguous": 0,
+2026-10-28T13:57:12.0588117Z   "canvasIntegration": "Not added",
+2026-10-28T13:57:12.0588439Z   "physicalChromebook": "Not verified",
+2026-10-28T13:57:12.0588766Z   "nativeScreenReader": "Not verified"
+2026-10-28T13:57:12.0589039Z }
+2026-10-28T13:57:12.0827997Z ##[group]Run node java-games/session-tests.mjs
+2026-10-28T13:57:12.0828401Z [36;1mnode java-games/session-tests.mjs[0m
+2026-10-28T13:57:12.0849809Z shell: /usr/bin/bash -e {0}
+2026-10-28T13:57:12.0850075Z ##[endgroup]
+2026-10-28T13:57:12.1248509Z Session daily-boundary, legacy migration, and per-mode summary tests passed.
+2026-10-28T13:57:12.1387089Z Post job cleanup.
+2026-10-28T13:57:12.2691684Z (node:2431) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-28T13:57:12.2693207Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-28T13:57:12.2924874Z Post job cleanup.
+2026-10-28T13:57:12.3831921Z [command]/usr/bin/git version
+2026-10-28T13:57:12.3878058Z git version 2.56.0
+2026-10-28T13:57:12.3953633Z Temporarily overriding HOME='/home/runner/work/_temp/9a05489c-b863-4b41-8585-78cebb95af61' before making global git config changes
+2026-10-28T13:57:12.3955732Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T13:57:12.3957453Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/davisjm4.github.io/davisjm4.github.io
+2026-10-28T13:57:12.4013827Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T13:57:12.4068394Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-28T13:57:12.4338141Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T13:57:12.4389332Z http.https://github.com/.extraheader
+2026-10-28T13:57:12.4402015Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-28T13:57:12.4449730Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-28T13:57:12.4716040Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T13:57:12.4772574Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-28T13:57:12.5173433Z Cleaning up orphan processes
+2026-10-28T13:57:12.5567703Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

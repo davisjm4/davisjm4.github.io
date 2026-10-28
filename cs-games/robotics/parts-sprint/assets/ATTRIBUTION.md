@@ -1,6 +1,6 @@
 # Image attribution and educational-use conditions
 
-Part images are © VEX Robotics, Inc., and remain owned by VEX Robotics. They are reproduced **unmodified** from official VEX Library educational articles for this free, noncommercial classroom identification activity. Every question links its image's original article; `manifest.json` records each exact source URL, article, original alternative text and SHA-256 hash.
+Part images are © VEX Robotics, Inc., and remain owned by VEX Robotics. They are reproduced **unmodified** from official VEX Library educational articles for this free, noncommercial classroom identification activity. Every question credits VEX; single-image questions link their original articles, and `manifest.json` records each exact source URL, article, original alternative text and SHA-256 hash.
 
 The VEX Library's published footer makes its educational content freely available solely for educational use, requires attribution when reproducing/modifying/redistributing it, and prohibits monetary gain without explicit consent. These conditions are the basis for this educational use. This is **not** a Creative Commons or unrestricted commercial license. Commercial reuse requires separate permission.
 
