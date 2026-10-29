@@ -9,6 +9,8 @@ Or you can check out the coding notebooks for my CS classes:
 
 [ACS2 Coding Notebook](notebookACS2.md)
 
+[Engineering Notebook](engineering-notebook.md)
+
 ## My Projects
 - [Network Breaker](network-breaker.html)
 
