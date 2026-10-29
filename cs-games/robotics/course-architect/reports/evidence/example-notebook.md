@@ -277,4 +277,4 @@ Total path = 730 cm; drawing path = 292 mm. In-place turns add zero translationa
 
 **Comparison with preceding selected test:** Scale: 1:25 → 1:25; Available area: 4000 × 3000 mm → 4000 × 3000 mm; Course bounds: 2900 × 2200 mm → 2900 × 2200 mm; Straight lengths: 2100, —, 1500, —, 2200, —, 1500, — mm → 2100, —, 1500, —, 2200, —, 1500, — mm; Turn radii: —, —, —, —, —, —, —, — mm → —, —, —, —, —, —, —, — mm; Total length: 7300 mm → 7300 mm; Narrowest lane surplus: 231.385 mm → 231.385 mm; Turns below estimate: 0 → 0; Failures: 0 → 0; Warnings: 5 → 5; Drawing fit: Pass → Pass; Resolved problems: None → ; New problems:  → None
 
-**Recorded physical test** (2026-10-29): Navigation outcome: Partly. Struggles: Second turn. Measurement differences: 2 cm. Adjustments: Widened lane. Improvement: Not yet retested.
+**Recorded physical test** (2026-10-29): Navigation outcome: Partly. Struggles: SYNTHETIC TEST FIXTURE ONLY — no robot was physically tested. Second turn. Measurement differences: 2 cm. Adjustments: Widened lane. Improvement: Not yet retested.

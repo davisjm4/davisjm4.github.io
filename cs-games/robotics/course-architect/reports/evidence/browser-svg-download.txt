@@ -1,0 +1,1 @@
+PASS: Published Test 2 SVG download byte-matches diagram(preset()) at scale 1:20. No screen pan/zoom/view settings leaked into the export.

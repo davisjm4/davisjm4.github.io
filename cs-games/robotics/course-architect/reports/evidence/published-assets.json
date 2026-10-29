@@ -1,0 +1,97 @@
+{
+  "commit": "522b7bc7ff9c429ab2eaa413347edd901011ef27",
+  "checked": "2026-10-29T15:13:19.808Z",
+  "rows": [
+    {
+      "path": "/cs-games/robotics/course-architect/index.html",
+      "status": 200,
+      "bytes": 9957,
+      "sha256": "4a897e266bbcf912c7ef198a98f0d1a20b09d49fb75c8e777587db5b21e96e11",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/robotics/course-architect/app.mjs",
+      "status": 200,
+      "bytes": 24886,
+      "sha256": "3d569a35768998108ec93cdf808eca25d2fd2beef67fc3962f47b7d3adc0dfed",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/robotics/course-architect/core.mjs",
+      "status": 200,
+      "bytes": 23310,
+      "sha256": "510ffefa6b95cdfc622ee90a97f515515ac1dcfa8196df12c2adf81b795d0955",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/robotics/course-architect/diagram.mjs",
+      "status": 200,
+      "bytes": 6103,
+      "sha256": "39bf1108396ccc0a0438047695b1b340faedb3b6e1bd2fb6a7cd3c7d900cbf5e",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/robotics/course-architect/style.css",
+      "status": 200,
+      "bytes": 5997,
+      "sha256": "970dc5e9a08c129aa02ddd56947360614245549b3a4b7c6d8f6d8773151bbc54",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/catalog.js",
+      "status": 200,
+      "bytes": 21612,
+      "sha256": "42d3ec7ba6ed3bac5a700f591680f20fbd63d3af5cee7b676a590cfcc2993d57",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/course-page.js",
+      "status": 200,
+      "bytes": 6704,
+      "sha256": "52863a74366848b3c97aaed94ac330b2632e5f2f2d59aa72dceff9a01d402a55",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/robotics/index.html",
+      "status": 200,
+      "bytes": 1852,
+      "sha256": "4740019ac3dcb741b0e65f2fb3b775452d79e0199c968751d3b0b044461cc08a",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/",
+      "status": 200,
+      "bytes": 2284
+    },
+    {
+      "path": "/cs-games/robotics/parts-sprint/",
+      "status": 200,
+      "bytes": 6284
+    },
+    {
+      "path": "/cs-games/csp/",
+      "status": 200,
+      "bytes": 1673
+    },
+    {
+      "path": "/cs-games/advanced/",
+      "status": 200,
+      "bytes": 1623
+    },
+    {
+      "path": "/wpr-games/workplace-readiness/",
+      "status": 200,
+      "bytes": 4840
+    },
+    {
+      "path": "/wpr-games/raceces/",
+      "status": 200,
+      "bytes": 4618
+    },
+    {
+      "path": "/cs-games/teacher/",
+      "status": 200,
+      "bytes": 10226
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "spreadsheet": "16Zr5Nn2ubN2ecBvOZUbeDpOnxqGHvDUty08QqqMPtnA",
+  "activity": "G-121",
+  "issue": "I-008",
+  "ranges": [
+    "Master Inventory!A59:L59",
+    "Release History!A24:G24",
+    "Issues & Risks!A8:G8"
+  ],
+  "readback": "All expected values matched",
+  "formatting": "Copied nearest complete exemplar formatting, WRAP on new rows; no validation/chip constraints",
+  "visualCheck": "Native metadata only; signed-in visual inspection not performed"
+}
