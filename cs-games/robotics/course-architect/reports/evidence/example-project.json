@@ -1,0 +1,1537 @@
+{
+  "version": 1,
+  "design": {
+    "title": "Instructional example — Simple Rectangle",
+    "description": "Example measurements only. Replace with measurements of your own robot and classroom.",
+    "mode": "guided",
+    "unit": "cm",
+    "robot": {
+      "width": 300,
+      "length": 240,
+      "clearance": 30,
+      "minRadius": 300,
+      "inPlace": true
+    },
+    "area": {
+      "width": 4000,
+      "length": 3000,
+      "margin": 50
+    },
+    "page": {
+      "kind": "letter",
+      "orientation": "landscape",
+      "width": 279.4,
+      "height": 215.9,
+      "margin": 10
+    },
+    "scale": 25,
+    "lane": 700,
+    "start": {
+      "x": 700,
+      "y": 700,
+      "heading": 0
+    },
+    "finishMarked": true,
+    "obstacles": [],
+    "segments": [
+      {
+        "type": "straight",
+        "length": 2100,
+        "lane": null
+      },
+      {
+        "type": "rotate",
+        "direction": "right",
+        "angle": 90,
+        "lane": null
+      },
+      {
+        "type": "straight",
+        "length": 1500,
+        "lane": null
+      },
+      {
+        "type": "rotate",
+        "direction": "right",
+        "angle": 90,
+        "lane": null
+      },
+      {
+        "type": "straight",
+        "length": 2200,
+        "lane": null
+      },
+      {
+        "type": "rotate",
+        "direction": "right",
+        "angle": 90,
+        "lane": null
+      },
+      {
+        "type": "straight",
+        "length": 1500,
+        "lane": null
+      },
+      {
+        "type": "rotate",
+        "direction": "right",
+        "angle": 90,
+        "lane": null
+      }
+    ],
+    "notes": {
+      "goal": "Fit paper",
+      "prediction": "The smaller drawing fits.",
+      "observations": "Width failed",
+      "revision": "Increase N",
+      "reasoning": "Paper is fixed",
+      "reflection": "Test the real robot next."
+    }
+  },
+  "tests": [
+    {
+      "number": 1,
+      "date": "2026-10-29T12:00:00Z",
+      "design": {
+        "title": "Instructional example — Simple Rectangle",
+        "description": "Example measurements only. Replace with measurements of your own robot and classroom.",
+        "mode": "guided",
+        "unit": "cm",
+        "robot": {
+          "width": 300,
+          "length": 240,
+          "clearance": 30,
+          "minRadius": 300,
+          "inPlace": true
+        },
+        "area": {
+          "width": 4000,
+          "length": 3000,
+          "margin": 50
+        },
+        "page": {
+          "kind": "letter",
+          "orientation": "landscape",
+          "width": 279.4,
+          "height": 215.9,
+          "margin": 10
+        },
+        "scale": 20,
+        "lane": 700,
+        "start": {
+          "x": 700,
+          "y": 700,
+          "heading": 0
+        },
+        "finishMarked": true,
+        "obstacles": [],
+        "segments": [
+          {
+            "type": "straight",
+            "length": 2200,
+            "lane": null
+          },
+          {
+            "type": "rotate",
+            "direction": "right",
+            "angle": 90,
+            "lane": null
+          },
+          {
+            "type": "straight",
+            "length": 1500,
+            "lane": null
+          },
+          {
+            "type": "rotate",
+            "direction": "right",
+            "angle": 90,
+            "lane": null
+          },
+          {
+            "type": "straight",
+            "length": 2200,
+            "lane": null
+          },
+          {
+            "type": "rotate",
+            "direction": "right",
+            "angle": 90,
+            "lane": null
+          },
+          {
+            "type": "straight",
+            "length": 1500,
+            "lane": null
+          },
+          {
+            "type": "rotate",
+            "direction": "right",
+            "angle": 90,
+            "lane": null
+          }
+        ],
+        "notes": {
+          "goal": "Fit paper",
+          "prediction": "The smaller drawing fits.",
+          "observations": "Width failed",
+          "revision": "Increase N",
+          "reasoning": "Paper is fixed",
+          "reflection": "Test the real robot next."
+        }
+      },
+      "results": {
+        "checks": [
+          {
+            "key": "drawing",
+            "status": "Pass",
+            "message": "Full measured area requires 200 × 150 mm on paper; usable region 259.4 × 195.9 mm. Fits at the selected scale.",
+            "segment": null
+          },
+          {
+            "key": "drawing-annotations",
+            "status": "Pass",
+            "message": "Annotated SVG size 224 × 180 mm, including labels. Fits whole sheet; print at 100% and verify the scale bar.",
+            "segment": null
+          },
+          {
+            "key": "consistency",
+            "status": "Pass",
+            "message": "Connected geometry is recomputed from the start pose. Start and finish are marked.",
+            "segment": null
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 1: straight corridor width 700 mm; rectangular body plus safety needs 360 mm. Geometric width condition passes.",
+            "segment": 1
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 1: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 1
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 1: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 1
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 2: rotation-pad diameter 700 mm; rectangular body plus safety needs 468.615 mm. Geometric width condition passes.",
+            "segment": 2
+          },
+          {
+            "key": "turning",
+            "status": "Warning",
+            "message": "Segment 2: In-place rotation capability selected; verify it with the real drivetrain. Required body rotation disk: 468.615 mm.",
+            "segment": 2
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 2: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 2
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 2: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 2
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 3: straight corridor width 700 mm; rectangular body plus safety needs 360 mm. Geometric width condition passes.",
+            "segment": 3
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 3: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 3
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 3: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 3
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 4: rotation-pad diameter 700 mm; rectangular body plus safety needs 468.615 mm. Geometric width condition passes.",
+            "segment": 4
+          },
+          {
+            "key": "turning",
+            "status": "Warning",
+            "message": "Segment 4: In-place rotation capability selected; verify it with the real drivetrain. Required body rotation disk: 468.615 mm.",
+            "segment": 4
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 4: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 4
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 4: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 4
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 5: straight corridor width 700 mm; rectangular body plus safety needs 360 mm. Geometric width condition passes.",
+            "segment": 5
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 5: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 5
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 5: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 5
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 6: rotation-pad diameter 700 mm; rectangular body plus safety needs 468.615 mm. Geometric width condition passes.",
+            "segment": 6
+          },
+          {
+            "key": "turning",
+            "status": "Warning",
+            "message": "Segment 6: In-place rotation capability selected; verify it with the real drivetrain. Required body rotation disk: 468.615 mm.",
+            "segment": 6
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 6: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 6
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 6: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 6
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 7: straight corridor width 700 mm; rectangular body plus safety needs 360 mm. Geometric width condition passes.",
+            "segment": 7
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 7: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 7
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 7: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 7
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 8: rotation-pad diameter 700 mm; rectangular body plus safety needs 468.615 mm. Geometric width condition passes.",
+            "segment": 8
+          },
+          {
+            "key": "turning",
+            "status": "Warning",
+            "message": "Segment 8: In-place rotation capability selected; verify it with the real drivetrain. Required body rotation disk: 468.615 mm.",
+            "segment": 8
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 8: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 8
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 8: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 8
+          },
+          {
+            "key": "method",
+            "status": "Warning",
+            "message": "Floor/obstacle checks use rectangle SAT at adaptive poses ≤5 mm maximum corner travel and ≤1° heading, with a conservative ≤2.5 mm per-side guard. Near contacts can fail conservatively. Width checks use an analytic rectangular-body envelope. Endpoint/junction pads are automatically widened to at least the robot safety diagonal and must be built; crossings are permitted. Verify tape boundaries and driving physically.",
+            "segment": null
+          },
+          {
+            "key": "physical-test",
+            "status": "Not evaluated",
+            "message": "Digital geometry does not confirm physical navigation. Build and drive the course, then record observations.",
+            "segment": null
+          }
+        ],
+        "total": 7400,
+        "geometry": {
+          "segments": [
+            {
+              "segment": {
+                "type": "straight",
+                "length": 2200,
+                "lane": null
+              },
+              "index": 0,
+              "start": {
+                "x": 700,
+                "y": 700,
+                "h": 0
+              },
+              "length": 2200,
+              "end": {
+                "x": 2900,
+                "y": 700,
+                "h": 0
+              }
+            },
+            {
+              "segment": {
+                "type": "rotate",
+                "direction": "right",
+                "angle": 90,
+                "lane": null
+              },
+              "index": 1,
+              "start": {
+                "x": 2900,
+                "y": 700,
+                "h": 0
+              },
+              "length": 0,
+              "end": {
+                "x": 2900,
+                "y": 700,
+                "h": 1.5707963267948966
+              }
+            },
+            {
+              "segment": {
+                "type": "straight",
+                "length": 1500,
+                "lane": null
+              },
+              "index": 2,
+              "start": {
+                "x": 2900,
+                "y": 700,
+                "h": 1.5707963267948966
+              },
+              "length": 1500,
+              "end": {
+                "x": 2900,
+                "y": 2200,
+                "h": 1.5707963267948966
+              }
+            },
+            {
+              "segment": {
+                "type": "rotate",
+                "direction": "right",
+                "angle": 90,
+                "lane": null
+              },
+              "index": 3,
+              "start": {
+                "x": 2900,
+                "y": 2200,
+                "h": 1.5707963267948966
+              },
+              "length": 0,
+              "end": {
+                "x": 2900,
+                "y": 2200,
+                "h": 3.141592653589793
+              }
+            },
+            {
+              "segment": {
+                "type": "straight",
+                "length": 2200,
+                "lane": null
+              },
+              "index": 4,
+              "start": {
+                "x": 2900,
+                "y": 2200,
+                "h": 3.141592653589793
+              },
+              "length": 2200,
+              "end": {
+                "x": 700,
+                "y": 2200.0000000000005,
+                "h": 3.141592653589793
+              }
+            },
+            {
+              "segment": {
+                "type": "rotate",
+                "direction": "right",
+                "angle": 90,
+                "lane": null
+              },
+              "index": 5,
+              "start": {
+                "x": 700,
+                "y": 2200.0000000000005,
+                "h": 3.141592653589793
+              },
+              "length": 0,
+              "end": {
+                "x": 700,
+                "y": 2200.0000000000005,
+                "h": 4.71238898038469
+              }
+            },
+            {
+              "segment": {
+                "type": "straight",
+                "length": 1500,
+                "lane": null
+              },
+              "index": 6,
+              "start": {
+                "x": 700,
+                "y": 2200.0000000000005,
+                "h": 4.71238898038469
+              },
+              "length": 1500,
+              "end": {
+                "x": 699.9999999999998,
+                "y": 700.0000000000005,
+                "h": 4.71238898038469
+              }
+            },
+            {
+              "segment": {
+                "type": "rotate",
+                "direction": "right",
+                "angle": 90,
+                "lane": null
+              },
+              "index": 7,
+              "start": {
+                "x": 699.9999999999998,
+                "y": 700.0000000000005,
+                "h": 4.71238898038469
+              },
+              "length": 0,
+              "end": {
+                "x": 699.9999999999998,
+                "y": 700.0000000000005,
+                "h": 6.283185307179586
+              }
+            }
+          ],
+          "total": 7400,
+          "start": {
+            "x": 700,
+            "y": 700,
+            "h": 0
+          },
+          "end": {
+            "x": 699.9999999999998,
+            "y": 700.0000000000005,
+            "h": 6.283185307179586
+          }
+        },
+        "bounds": {
+          "minX": 349.9999999999998,
+          "maxX": 3250,
+          "minY": 350,
+          "maxY": 2550.0000000000005
+        },
+        "poseCount": 1848,
+        "minClearance": 231.38501944560068,
+        "smallTurns": 0,
+        "failures": 0,
+        "warnings": 5
+      },
+      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"224mm\" height=\"180mm\" viewBox=\"-240 -360 4480 3600\" role=\"img\" aria-labelledby=\"course-title course-desc\"><title id=\"course-title\">Instructional example — Simple Rectangle — scale 1:20</title><desc id=\"course-desc\">8 connected segments. Robot 300 by 240 mm. Use the segment table and design checks for a complete text alternative. Export size is physical millimeters; screen zoom is separate.</desc><defs><pattern id=\"grid\" width=\"100\" height=\"100\" patternUnits=\"userSpaceOnUse\"><path d=\"M100 0H0V100\" fill=\"none\" stroke=\"#b9c8d2\" stroke-width=\"2\"/></pattern><marker id=\"arrow\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"5\" markerHeight=\"5\" orient=\"auto-start-reverse\"><path d=\"M0 0L10 5L0 10z\" fill=\"#08736b\"/></marker></defs><g font-family=\"system-ui,sans-serif\" font-size=\"80\" fill=\"#203a50\"><rect x=\"-240\" y=\"-360\" width=\"4480\" height=\"3600\" fill=\"#f5f8fb\"/><rect width=\"4000\" height=\"3000\" fill=\"url(#grid)\" stroke=\"#203a50\" stroke-width=\"8\"/><rect x=\"50\" y=\"50\" width=\"3900\" height=\"2900\" fill=\"none\" stroke=\"#6b7380\" stroke-dasharray=\"40 40\" stroke-width=\"4\"/><circle cx=\"700\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"2900\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"2900\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"2900\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"2900\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"2900\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"2900\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"2900\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"2900\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"700\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"700\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"700\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"700\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"699.9999999999998\" cy=\"700.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"699.9999999999998\" cy=\"700.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><circle cx=\"699.9999999999998\" cy=\"700.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><path d=\"M700 700 L2900 700\" fill=\"none\" stroke=\"#dbe5ed\" stroke-width=\"700\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"2900\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><path d=\"M2900 700 L2900 2200\" fill=\"none\" stroke=\"#dbe5ed\" stroke-width=\"700\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"2900\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><path d=\"M2900 2200 L700 2200.0000000000005\" fill=\"none\" stroke=\"#dbe5ed\" stroke-width=\"700\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"700\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><path d=\"M700 2200.0000000000005 L699.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"#dbe5ed\" stroke-width=\"700\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"699.9999999999998\" cy=\"700.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"5\"/><path data-segment=\"0\" d=\"M700 700 L2900 700\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"16\" marker-end=\"url(#arrow)\"/><text x=\"1800\" y=\"572\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"20\" stroke-linejoin=\"round\">1. 220 cm actual</text><path data-segment=\"0\" d=\"M700 700 L2900 700\" fill=\"none\" stroke=\"transparent\" stroke-width=\"120\"/><path data-segment=\"1\" d=\"M2900 700 L2900 700\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"16\" marker-end=\"url(#arrow)\"/><circle data-segment=\"1\" cx=\"2900\" cy=\"700\" r=\"60\" fill=\"#ffcf7d\"/><text x=\"2900\" y=\"572\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"20\" stroke-linejoin=\"round\">2. in-place right 90°</text><path data-segment=\"1\" d=\"M2900 700 L2900 700\" fill=\"none\" stroke=\"transparent\" stroke-width=\"120\"/><path data-segment=\"2\" d=\"M2900 700 L2900 2200\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"16\" marker-end=\"url(#arrow)\"/><text x=\"2900\" y=\"1322\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"20\" stroke-linejoin=\"round\">3. 150 cm actual</text><path data-segment=\"2\" d=\"M2900 700 L2900 2200\" fill=\"none\" stroke=\"transparent\" stroke-width=\"120\"/><path data-segment=\"3\" d=\"M2900 2200 L2900 2200\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"16\" marker-end=\"url(#arrow)\"/><circle data-segment=\"3\" cx=\"2900\" cy=\"2200\" r=\"60\" fill=\"#ffcf7d\"/><text x=\"2900\" y=\"2072\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"20\" stroke-linejoin=\"round\">4. in-place right 90°</text><path data-segment=\"3\" d=\"M2900 2200 L2900 2200\" fill=\"none\" stroke=\"transparent\" stroke-width=\"120\"/><path data-segment=\"4\" d=\"M2900 2200 L700 2200.0000000000005\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"16\" marker-end=\"url(#arrow)\"/><text x=\"1800\" y=\"2072\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"20\" stroke-linejoin=\"round\">5. 220 cm actual</text><path data-segment=\"4\" d=\"M2900 2200 L700 2200.0000000000005\" fill=\"none\" stroke=\"transparent\" stroke-width=\"120\"/><path data-segment=\"5\" d=\"M700 2200.0000000000005 L700 2200.0000000000005\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"16\" marker-end=\"url(#arrow)\"/><circle data-segment=\"5\" cx=\"700\" cy=\"2200.0000000000005\" r=\"60\" fill=\"#ffcf7d\"/><text x=\"700\" y=\"2072.0000000000005\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"20\" stroke-linejoin=\"round\">6. in-place right 90°</text><path data-segment=\"5\" d=\"M700 2200.0000000000005 L700 2200.0000000000005\" fill=\"none\" stroke=\"transparent\" stroke-width=\"120\"/><path data-segment=\"6\" d=\"M700 2200.0000000000005 L699.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"16\" marker-end=\"url(#arrow)\"/><text x=\"699.9999999999999\" y=\"1322.0000000000005\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"20\" stroke-linejoin=\"round\">7. 150 cm actual</text><path data-segment=\"6\" d=\"M700 2200.0000000000005 L699.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"transparent\" stroke-width=\"120\"/><path data-segment=\"7\" d=\"M699.9999999999998 700.0000000000005 L699.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"16\" marker-end=\"url(#arrow)\"/><circle data-segment=\"7\" cx=\"699.9999999999998\" cy=\"700.0000000000005\" r=\"60\" fill=\"#ffcf7d\"/><text x=\"699.9999999999998\" y=\"572.0000000000005\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"20\" stroke-linejoin=\"round\">8. in-place right 90°</text><path data-segment=\"7\" d=\"M699.9999999999998 700.0000000000005 L699.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"transparent\" stroke-width=\"120\"/><line x1=\"700\" y1=\"350\" x2=\"700\" y2=\"1050\" stroke=\"#145db0\" stroke-width=\"20\"/><text x=\"780\" y=\"820\" fill=\"#145db0\">START / FINISH</text><polygon points=\"1650,520 1950,520 1950,880 1650,880\" fill=\"#39a2b330\" stroke=\"#147a8a\" stroke-dasharray=\"20 20\" stroke-width=\"6\"/><polygon points=\"1680,550 1920,550 1920,850 1680,850\" fill=\"#ffc65c\" fill-opacity=\".85\" stroke=\"#6d4800\" stroke-width=\"8\"/><text x=\"0\" y=\"-264\" >Robo Rally · 1:20 · Instructional example — Simple Rectangle</text><text x=\"0\" y=\"-152\" >Area 400 × 300 cm actual = 200 × 150 mm drawing</text><line x1=\"0\" y1=\"3120\" x2=\"1000\" y2=\"3120\" stroke=\"#203a50\" stroke-width=\"16\"/><text x=\"0\" y=\"3240\" >100 cm actual = 50 mm drawing</text></g></svg>",
+      "physical": null
+    },
+    {
+      "number": 2,
+      "date": "2026-10-29T12:01:00Z",
+      "design": {
+        "title": "Instructional example — Simple Rectangle",
+        "description": "Example measurements only. Replace with measurements of your own robot and classroom.",
+        "mode": "guided",
+        "unit": "cm",
+        "robot": {
+          "width": 300,
+          "length": 240,
+          "clearance": 30,
+          "minRadius": 300,
+          "inPlace": true
+        },
+        "area": {
+          "width": 4000,
+          "length": 3000,
+          "margin": 50
+        },
+        "page": {
+          "kind": "letter",
+          "orientation": "landscape",
+          "width": 279.4,
+          "height": 215.9,
+          "margin": 10
+        },
+        "scale": 25,
+        "lane": 700,
+        "start": {
+          "x": 700,
+          "y": 700,
+          "heading": 0
+        },
+        "finishMarked": true,
+        "obstacles": [],
+        "segments": [
+          {
+            "type": "straight",
+            "length": 2100,
+            "lane": null
+          },
+          {
+            "type": "rotate",
+            "direction": "right",
+            "angle": 90,
+            "lane": null
+          },
+          {
+            "type": "straight",
+            "length": 1500,
+            "lane": null
+          },
+          {
+            "type": "rotate",
+            "direction": "right",
+            "angle": 90,
+            "lane": null
+          },
+          {
+            "type": "straight",
+            "length": 2200,
+            "lane": null
+          },
+          {
+            "type": "rotate",
+            "direction": "right",
+            "angle": 90,
+            "lane": null
+          },
+          {
+            "type": "straight",
+            "length": 1500,
+            "lane": null
+          },
+          {
+            "type": "rotate",
+            "direction": "right",
+            "angle": 90,
+            "lane": null
+          }
+        ],
+        "notes": {
+          "goal": "Fit paper",
+          "prediction": "The smaller drawing fits.",
+          "observations": "Width failed",
+          "revision": "Increase N",
+          "reasoning": "Paper is fixed",
+          "reflection": "Test the real robot next."
+        }
+      },
+      "results": {
+        "checks": [
+          {
+            "key": "drawing",
+            "status": "Pass",
+            "message": "Full measured area requires 160 × 120 mm on paper; usable region 259.4 × 195.9 mm. Fits at the selected scale.",
+            "segment": null
+          },
+          {
+            "key": "drawing-annotations",
+            "status": "Pass",
+            "message": "Annotated SVG size 184 × 150 mm, including labels. Fits whole sheet; print at 100% and verify the scale bar.",
+            "segment": null
+          },
+          {
+            "key": "consistency",
+            "status": "Pass",
+            "message": "Connected geometry is recomputed from the start pose. Start and finish are marked.",
+            "segment": null
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 1: straight corridor width 700 mm; rectangular body plus safety needs 360 mm. Geometric width condition passes.",
+            "segment": 1
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 1: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 1
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 1: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 1
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 2: rotation-pad diameter 700 mm; rectangular body plus safety needs 468.615 mm. Geometric width condition passes.",
+            "segment": 2
+          },
+          {
+            "key": "turning",
+            "status": "Warning",
+            "message": "Segment 2: In-place rotation capability selected; verify it with the real drivetrain. Required body rotation disk: 468.615 mm.",
+            "segment": 2
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 2: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 2
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 2: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 2
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 3: straight corridor width 700 mm; rectangular body plus safety needs 360 mm. Geometric width condition passes.",
+            "segment": 3
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 3: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 3
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 3: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 3
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 4: rotation-pad diameter 700 mm; rectangular body plus safety needs 468.615 mm. Geometric width condition passes.",
+            "segment": 4
+          },
+          {
+            "key": "turning",
+            "status": "Warning",
+            "message": "Segment 4: In-place rotation capability selected; verify it with the real drivetrain. Required body rotation disk: 468.615 mm.",
+            "segment": 4
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 4: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 4
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 4: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 4
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 5: straight corridor width 700 mm; rectangular body plus safety needs 360 mm. Geometric width condition passes.",
+            "segment": 5
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 5: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 5
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 5: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 5
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 6: rotation-pad diameter 700 mm; rectangular body plus safety needs 468.615 mm. Geometric width condition passes.",
+            "segment": 6
+          },
+          {
+            "key": "turning",
+            "status": "Warning",
+            "message": "Segment 6: In-place rotation capability selected; verify it with the real drivetrain. Required body rotation disk: 468.615 mm.",
+            "segment": 6
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 6: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 6
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 6: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 6
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 7: straight corridor width 700 mm; rectangular body plus safety needs 360 mm. Geometric width condition passes.",
+            "segment": 7
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 7: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 7
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 7: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 7
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 8: rotation-pad diameter 700 mm; rectangular body plus safety needs 468.615 mm. Geometric width condition passes.",
+            "segment": 8
+          },
+          {
+            "key": "turning",
+            "status": "Warning",
+            "message": "Segment 8: In-place rotation capability selected; verify it with the real drivetrain. Required body rotation disk: 468.615 mm.",
+            "segment": 8
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 8: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 8
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 8: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 8
+          },
+          {
+            "key": "method",
+            "status": "Warning",
+            "message": "Floor/obstacle checks use rectangle SAT at adaptive poses ≤5 mm maximum corner travel and ≤1° heading, with a conservative ≤2.5 mm per-side guard. Near contacts can fail conservatively. Width checks use an analytic rectangular-body envelope. Endpoint/junction pads are automatically widened to at least the robot safety diagonal and must be built; crossings are permitted. Verify tape boundaries and driving physically.",
+            "segment": null
+          },
+          {
+            "key": "physical-test",
+            "status": "Not evaluated",
+            "message": "Digital geometry does not confirm physical navigation. Build and drive the course, then record observations.",
+            "segment": null
+          }
+        ],
+        "total": 7300,
+        "geometry": {
+          "segments": [
+            {
+              "segment": {
+                "type": "straight",
+                "length": 2100,
+                "lane": null
+              },
+              "index": 0,
+              "start": {
+                "x": 700,
+                "y": 700,
+                "h": 0
+              },
+              "length": 2100,
+              "end": {
+                "x": 2800,
+                "y": 700,
+                "h": 0
+              }
+            },
+            {
+              "segment": {
+                "type": "rotate",
+                "direction": "right",
+                "angle": 90,
+                "lane": null
+              },
+              "index": 1,
+              "start": {
+                "x": 2800,
+                "y": 700,
+                "h": 0
+              },
+              "length": 0,
+              "end": {
+                "x": 2800,
+                "y": 700,
+                "h": 1.5707963267948966
+              }
+            },
+            {
+              "segment": {
+                "type": "straight",
+                "length": 1500,
+                "lane": null
+              },
+              "index": 2,
+              "start": {
+                "x": 2800,
+                "y": 700,
+                "h": 1.5707963267948966
+              },
+              "length": 1500,
+              "end": {
+                "x": 2800,
+                "y": 2200,
+                "h": 1.5707963267948966
+              }
+            },
+            {
+              "segment": {
+                "type": "rotate",
+                "direction": "right",
+                "angle": 90,
+                "lane": null
+              },
+              "index": 3,
+              "start": {
+                "x": 2800,
+                "y": 2200,
+                "h": 1.5707963267948966
+              },
+              "length": 0,
+              "end": {
+                "x": 2800,
+                "y": 2200,
+                "h": 3.141592653589793
+              }
+            },
+            {
+              "segment": {
+                "type": "straight",
+                "length": 2200,
+                "lane": null
+              },
+              "index": 4,
+              "start": {
+                "x": 2800,
+                "y": 2200,
+                "h": 3.141592653589793
+              },
+              "length": 2200,
+              "end": {
+                "x": 600,
+                "y": 2200.0000000000005,
+                "h": 3.141592653589793
+              }
+            },
+            {
+              "segment": {
+                "type": "rotate",
+                "direction": "right",
+                "angle": 90,
+                "lane": null
+              },
+              "index": 5,
+              "start": {
+                "x": 600,
+                "y": 2200.0000000000005,
+                "h": 3.141592653589793
+              },
+              "length": 0,
+              "end": {
+                "x": 600,
+                "y": 2200.0000000000005,
+                "h": 4.71238898038469
+              }
+            },
+            {
+              "segment": {
+                "type": "straight",
+                "length": 1500,
+                "lane": null
+              },
+              "index": 6,
+              "start": {
+                "x": 600,
+                "y": 2200.0000000000005,
+                "h": 4.71238898038469
+              },
+              "length": 1500,
+              "end": {
+                "x": 599.9999999999998,
+                "y": 700.0000000000005,
+                "h": 4.71238898038469
+              }
+            },
+            {
+              "segment": {
+                "type": "rotate",
+                "direction": "right",
+                "angle": 90,
+                "lane": null
+              },
+              "index": 7,
+              "start": {
+                "x": 599.9999999999998,
+                "y": 700.0000000000005,
+                "h": 4.71238898038469
+              },
+              "length": 0,
+              "end": {
+                "x": 599.9999999999998,
+                "y": 700.0000000000005,
+                "h": 6.283185307179586
+              }
+            }
+          ],
+          "total": 7300,
+          "start": {
+            "x": 700,
+            "y": 700,
+            "h": 0
+          },
+          "end": {
+            "x": 599.9999999999998,
+            "y": 700.0000000000005,
+            "h": 6.283185307179586
+          }
+        },
+        "bounds": {
+          "minX": 249.99999999999977,
+          "maxX": 3150,
+          "minY": 350,
+          "maxY": 2550.0000000000005
+        },
+        "poseCount": 1828,
+        "minClearance": 231.38501944560068,
+        "smallTurns": 0,
+        "failures": 0,
+        "warnings": 5
+      },
+      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"184mm\" height=\"150mm\" viewBox=\"-300 -450 4600 3750\" role=\"img\" aria-labelledby=\"course-title course-desc\"><title id=\"course-title\">Instructional example — Simple Rectangle — scale 1:25</title><desc id=\"course-desc\">8 connected segments. Robot 300 by 240 mm. Use the segment table and design checks for a complete text alternative. Export size is physical millimeters; screen zoom is separate.</desc><defs><pattern id=\"grid\" width=\"100\" height=\"100\" patternUnits=\"userSpaceOnUse\"><path d=\"M100 0H0V100\" fill=\"none\" stroke=\"#b9c8d2\" stroke-width=\"2.5\"/></pattern><marker id=\"arrow\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"5\" markerHeight=\"5\" orient=\"auto-start-reverse\"><path d=\"M0 0L10 5L0 10z\" fill=\"#08736b\"/></marker></defs><g font-family=\"system-ui,sans-serif\" font-size=\"100\" fill=\"#203a50\"><rect x=\"-300\" y=\"-450\" width=\"4600\" height=\"3750\" fill=\"#f5f8fb\"/><rect width=\"4000\" height=\"3000\" fill=\"url(#grid)\" stroke=\"#203a50\" stroke-width=\"10\"/><rect x=\"50\" y=\"50\" width=\"3900\" height=\"2900\" fill=\"none\" stroke=\"#6b7380\" stroke-dasharray=\"50 50\" stroke-width=\"5\"/><circle cx=\"700\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"600\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"600\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"600\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"600\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"599.9999999999998\" cy=\"700.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"599.9999999999998\" cy=\"700.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"599.9999999999998\" cy=\"700.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><path d=\"M700 700 L2800 700\" fill=\"none\" stroke=\"#dbe5ed\" stroke-width=\"700\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"2800\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><path d=\"M2800 700 L2800 2200\" fill=\"none\" stroke=\"#dbe5ed\" stroke-width=\"700\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"2800\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><path d=\"M2800 2200 L600 2200.0000000000005\" fill=\"none\" stroke=\"#dbe5ed\" stroke-width=\"700\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"600\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><path d=\"M600 2200.0000000000005 L599.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"#dbe5ed\" stroke-width=\"700\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"599.9999999999998\" cy=\"700.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><path data-segment=\"0\" d=\"M700 700 L2800 700\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><text x=\"1750\" y=\"540\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">1. 210 cm actual</text><path data-segment=\"0\" d=\"M700 700 L2800 700\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"1\" d=\"M2800 700 L2800 700\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><circle data-segment=\"1\" cx=\"2800\" cy=\"700\" r=\"75\" fill=\"#ffcf7d\"/><text x=\"2800\" y=\"540\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">2. in-place right 90°</text><path data-segment=\"1\" d=\"M2800 700 L2800 700\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"2\" d=\"M2800 700 L2800 2200\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><text x=\"2800\" y=\"1290\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">3. 150 cm actual</text><path data-segment=\"2\" d=\"M2800 700 L2800 2200\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"3\" d=\"M2800 2200 L2800 2200\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><circle data-segment=\"3\" cx=\"2800\" cy=\"2200\" r=\"75\" fill=\"#ffcf7d\"/><text x=\"2800\" y=\"2040\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">4. in-place right 90°</text><path data-segment=\"3\" d=\"M2800 2200 L2800 2200\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"4\" d=\"M2800 2200 L600 2200.0000000000005\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><text x=\"1700\" y=\"2040\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">5. 220 cm actual</text><path data-segment=\"4\" d=\"M2800 2200 L600 2200.0000000000005\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"5\" d=\"M600 2200.0000000000005 L600 2200.0000000000005\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><circle data-segment=\"5\" cx=\"600\" cy=\"2200.0000000000005\" r=\"75\" fill=\"#ffcf7d\"/><text x=\"600\" y=\"2040.0000000000005\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">6. in-place right 90°</text><path data-segment=\"5\" d=\"M600 2200.0000000000005 L600 2200.0000000000005\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"6\" d=\"M600 2200.0000000000005 L599.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><text x=\"599.9999999999999\" y=\"1290.0000000000005\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">7. 150 cm actual</text><path data-segment=\"6\" d=\"M600 2200.0000000000005 L599.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"7\" d=\"M599.9999999999998 700.0000000000005 L599.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><circle data-segment=\"7\" cx=\"599.9999999999998\" cy=\"700.0000000000005\" r=\"75\" fill=\"#ffcf7d\"/><text x=\"599.9999999999998\" y=\"540.0000000000005\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">8. in-place right 90°</text><path data-segment=\"7\" d=\"M599.9999999999998 700.0000000000005 L599.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><line x1=\"700\" y1=\"350\" x2=\"700\" y2=\"1050\" stroke=\"#145db0\" stroke-width=\"25\"/><text x=\"800\" y=\"850\" fill=\"#145db0\">START</text><line x1=\"599.9999999999997\" y1=\"350.00000000000045\" x2=\"599.9999999999999\" y2=\"1050.0000000000005\" stroke=\"#9e2948\" stroke-width=\"25\"/><text x=\"699.9999999999998\" y=\"850.0000000000005\" fill=\"#9e2948\">FINISH</text><polygon points=\"1600,520 1900,520 1900,880 1600,880\" fill=\"#39a2b330\" stroke=\"#147a8a\" stroke-dasharray=\"25 25\" stroke-width=\"7.5\"/><polygon points=\"1630,550 1870,550 1870,850 1630,850\" fill=\"#ffc65c\" fill-opacity=\".85\" stroke=\"#6d4800\" stroke-width=\"10\"/><text x=\"0\" y=\"-330\" >Robo Rally · 1:25 · Instructional example — Simple Rectangle</text><text x=\"0\" y=\"-190\" >Area 400 × 300 cm actual = 160 × 120 mm drawing</text><line x1=\"0\" y1=\"3150\" x2=\"1000\" y2=\"3150\" stroke=\"#203a50\" stroke-width=\"20\"/><text x=\"0\" y=\"3300\" >100 cm actual = 40 mm drawing</text></g></svg>",
+      "physical": null
+    },
+    {
+      "number": 3,
+      "date": "2026-10-29T12:02:00Z",
+      "design": {
+        "title": "Instructional example — Simple Rectangle",
+        "description": "Example measurements only. Replace with measurements of your own robot and classroom.",
+        "mode": "guided",
+        "unit": "cm",
+        "robot": {
+          "width": 300,
+          "length": 240,
+          "clearance": 30,
+          "minRadius": 300,
+          "inPlace": true
+        },
+        "area": {
+          "width": 4000,
+          "length": 3000,
+          "margin": 50
+        },
+        "page": {
+          "kind": "letter",
+          "orientation": "landscape",
+          "width": 279.4,
+          "height": 215.9,
+          "margin": 10
+        },
+        "scale": 25,
+        "lane": 700,
+        "start": {
+          "x": 700,
+          "y": 700,
+          "heading": 0
+        },
+        "finishMarked": true,
+        "obstacles": [],
+        "segments": [
+          {
+            "type": "straight",
+            "length": 2100,
+            "lane": null
+          },
+          {
+            "type": "rotate",
+            "direction": "right",
+            "angle": 90,
+            "lane": null
+          },
+          {
+            "type": "straight",
+            "length": 1500,
+            "lane": null
+          },
+          {
+            "type": "rotate",
+            "direction": "right",
+            "angle": 90,
+            "lane": null
+          },
+          {
+            "type": "straight",
+            "length": 2200,
+            "lane": null
+          },
+          {
+            "type": "rotate",
+            "direction": "right",
+            "angle": 90,
+            "lane": null
+          },
+          {
+            "type": "straight",
+            "length": 1500,
+            "lane": null
+          },
+          {
+            "type": "rotate",
+            "direction": "right",
+            "angle": 90,
+            "lane": null
+          }
+        ],
+        "notes": {
+          "goal": "Fit paper",
+          "prediction": "The smaller drawing fits.",
+          "observations": "Width failed",
+          "revision": "Increase N",
+          "reasoning": "Paper is fixed",
+          "reflection": "Test the real robot next."
+        }
+      },
+      "results": {
+        "checks": [
+          {
+            "key": "drawing",
+            "status": "Pass",
+            "message": "Full measured area requires 160 × 120 mm on paper; usable region 259.4 × 195.9 mm. Fits at the selected scale.",
+            "segment": null
+          },
+          {
+            "key": "drawing-annotations",
+            "status": "Pass",
+            "message": "Annotated SVG size 184 × 150 mm, including labels. Fits whole sheet; print at 100% and verify the scale bar.",
+            "segment": null
+          },
+          {
+            "key": "consistency",
+            "status": "Pass",
+            "message": "Connected geometry is recomputed from the start pose. Start and finish are marked.",
+            "segment": null
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 1: straight corridor width 700 mm; rectangular body plus safety needs 360 mm. Geometric width condition passes.",
+            "segment": 1
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 1: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 1
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 1: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 1
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 2: rotation-pad diameter 700 mm; rectangular body plus safety needs 468.615 mm. Geometric width condition passes.",
+            "segment": 2
+          },
+          {
+            "key": "turning",
+            "status": "Warning",
+            "message": "Segment 2: In-place rotation capability selected; verify it with the real drivetrain. Required body rotation disk: 468.615 mm.",
+            "segment": 2
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 2: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 2
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 2: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 2
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 3: straight corridor width 700 mm; rectangular body plus safety needs 360 mm. Geometric width condition passes.",
+            "segment": 3
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 3: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 3
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 3: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 3
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 4: rotation-pad diameter 700 mm; rectangular body plus safety needs 468.615 mm. Geometric width condition passes.",
+            "segment": 4
+          },
+          {
+            "key": "turning",
+            "status": "Warning",
+            "message": "Segment 4: In-place rotation capability selected; verify it with the real drivetrain. Required body rotation disk: 468.615 mm.",
+            "segment": 4
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 4: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 4
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 4: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 4
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 5: straight corridor width 700 mm; rectangular body plus safety needs 360 mm. Geometric width condition passes.",
+            "segment": 5
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 5: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 5
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 5: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 5
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 6: rotation-pad diameter 700 mm; rectangular body plus safety needs 468.615 mm. Geometric width condition passes.",
+            "segment": 6
+          },
+          {
+            "key": "turning",
+            "status": "Warning",
+            "message": "Segment 6: In-place rotation capability selected; verify it with the real drivetrain. Required body rotation disk: 468.615 mm.",
+            "segment": 6
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 6: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 6
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 6: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 6
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 7: straight corridor width 700 mm; rectangular body plus safety needs 360 mm. Geometric width condition passes.",
+            "segment": 7
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 7: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 7
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 7: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 7
+          },
+          {
+            "key": "clearance",
+            "status": "Pass",
+            "message": "Segment 8: rotation-pad diameter 700 mm; rectangular body plus safety needs 468.615 mm. Geometric width condition passes.",
+            "segment": 8
+          },
+          {
+            "key": "turning",
+            "status": "Warning",
+            "message": "Segment 8: In-place rotation capability selected; verify it with the real drivetrain. Required body rotation disk: 468.615 mm.",
+            "segment": 8
+          },
+          {
+            "key": "physical",
+            "status": "Pass",
+            "message": "Segment 8: body safety envelope and rounded corridor remain inside wall margins.",
+            "segment": 8
+          },
+          {
+            "key": "obstacles",
+            "status": "Pass",
+            "message": "Segment 8: no robot-envelope or corridor intersection with entered obstacles.",
+            "segment": 8
+          },
+          {
+            "key": "method",
+            "status": "Warning",
+            "message": "Floor/obstacle checks use rectangle SAT at adaptive poses ≤5 mm maximum corner travel and ≤1° heading, with a conservative ≤2.5 mm per-side guard. Near contacts can fail conservatively. Width checks use an analytic rectangular-body envelope. Endpoint/junction pads are automatically widened to at least the robot safety diagonal and must be built; crossings are permitted. Verify tape boundaries and driving physically.",
+            "segment": null
+          },
+          {
+            "key": "physical-test",
+            "status": "Not evaluated",
+            "message": "Digital geometry does not confirm physical navigation. Build and drive the course, then record observations.",
+            "segment": null
+          }
+        ],
+        "total": 7300,
+        "geometry": {
+          "segments": [
+            {
+              "segment": {
+                "type": "straight",
+                "length": 2100,
+                "lane": null
+              },
+              "index": 0,
+              "start": {
+                "x": 700,
+                "y": 700,
+                "h": 0
+              },
+              "length": 2100,
+              "end": {
+                "x": 2800,
+                "y": 700,
+                "h": 0
+              }
+            },
+            {
+              "segment": {
+                "type": "rotate",
+                "direction": "right",
+                "angle": 90,
+                "lane": null
+              },
+              "index": 1,
+              "start": {
+                "x": 2800,
+                "y": 700,
+                "h": 0
+              },
+              "length": 0,
+              "end": {
+                "x": 2800,
+                "y": 700,
+                "h": 1.5707963267948966
+              }
+            },
+            {
+              "segment": {
+                "type": "straight",
+                "length": 1500,
+                "lane": null
+              },
+              "index": 2,
+              "start": {
+                "x": 2800,
+                "y": 700,
+                "h": 1.5707963267948966
+              },
+              "length": 1500,
+              "end": {
+                "x": 2800,
+                "y": 2200,
+                "h": 1.5707963267948966
+              }
+            },
+            {
+              "segment": {
+                "type": "rotate",
+                "direction": "right",
+                "angle": 90,
+                "lane": null
+              },
+              "index": 3,
+              "start": {
+                "x": 2800,
+                "y": 2200,
+                "h": 1.5707963267948966
+              },
+              "length": 0,
+              "end": {
+                "x": 2800,
+                "y": 2200,
+                "h": 3.141592653589793
+              }
+            },
+            {
+              "segment": {
+                "type": "straight",
+                "length": 2200,
+                "lane": null
+              },
+              "index": 4,
+              "start": {
+                "x": 2800,
+                "y": 2200,
+                "h": 3.141592653589793
+              },
+              "length": 2200,
+              "end": {
+                "x": 600,
+                "y": 2200.0000000000005,
+                "h": 3.141592653589793
+              }
+            },
+            {
+              "segment": {
+                "type": "rotate",
+                "direction": "right",
+                "angle": 90,
+                "lane": null
+              },
+              "index": 5,
+              "start": {
+                "x": 600,
+                "y": 2200.0000000000005,
+                "h": 3.141592653589793
+              },
+              "length": 0,
+              "end": {
+                "x": 600,
+                "y": 2200.0000000000005,
+                "h": 4.71238898038469
+              }
+            },
+            {
+              "segment": {
+                "type": "straight",
+                "length": 1500,
+                "lane": null
+              },
+              "index": 6,
+              "start": {
+                "x": 600,
+                "y": 2200.0000000000005,
+                "h": 4.71238898038469
+              },
+              "length": 1500,
+              "end": {
+                "x": 599.9999999999998,
+                "y": 700.0000000000005,
+                "h": 4.71238898038469
+              }
+            },
+            {
+              "segment": {
+                "type": "rotate",
+                "direction": "right",
+                "angle": 90,
+                "lane": null
+              },
+              "index": 7,
+              "start": {
+                "x": 599.9999999999998,
+                "y": 700.0000000000005,
+                "h": 4.71238898038469
+              },
+              "length": 0,
+              "end": {
+                "x": 599.9999999999998,
+                "y": 700.0000000000005,
+                "h": 6.283185307179586
+              }
+            }
+          ],
+          "total": 7300,
+          "start": {
+            "x": 700,
+            "y": 700,
+            "h": 0
+          },
+          "end": {
+            "x": 599.9999999999998,
+            "y": 700.0000000000005,
+            "h": 6.283185307179586
+          }
+        },
+        "bounds": {
+          "minX": 249.99999999999977,
+          "maxX": 3150,
+          "minY": 350,
+          "maxY": 2550.0000000000005
+        },
+        "poseCount": 1828,
+        "minClearance": 231.38501944560068,
+        "smallTurns": 0,
+        "failures": 0,
+        "warnings": 5
+      },
+      "diagram": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"184mm\" height=\"150mm\" viewBox=\"-300 -450 4600 3750\" role=\"img\" aria-labelledby=\"course-title course-desc\"><title id=\"course-title\">Instructional example — Simple Rectangle — scale 1:25</title><desc id=\"course-desc\">8 connected segments. Robot 300 by 240 mm. Use the segment table and design checks for a complete text alternative. Export size is physical millimeters; screen zoom is separate.</desc><defs><pattern id=\"grid\" width=\"100\" height=\"100\" patternUnits=\"userSpaceOnUse\"><path d=\"M100 0H0V100\" fill=\"none\" stroke=\"#b9c8d2\" stroke-width=\"2.5\"/></pattern><marker id=\"arrow\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"5\" markerHeight=\"5\" orient=\"auto-start-reverse\"><path d=\"M0 0L10 5L0 10z\" fill=\"#08736b\"/></marker></defs><g font-family=\"system-ui,sans-serif\" font-size=\"100\" fill=\"#203a50\"><rect x=\"-300\" y=\"-450\" width=\"4600\" height=\"3750\" fill=\"#f5f8fb\"/><rect width=\"4000\" height=\"3000\" fill=\"url(#grid)\" stroke=\"#203a50\" stroke-width=\"10\"/><rect x=\"50\" y=\"50\" width=\"3900\" height=\"2900\" fill=\"none\" stroke=\"#6b7380\" stroke-dasharray=\"50 50\" stroke-width=\"5\"/><circle cx=\"700\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"2800\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"600\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"600\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"600\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"600\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"599.9999999999998\" cy=\"700.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"599.9999999999998\" cy=\"700.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><circle cx=\"599.9999999999998\" cy=\"700.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><path d=\"M700 700 L2800 700\" fill=\"none\" stroke=\"#dbe5ed\" stroke-width=\"700\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"2800\" cy=\"700\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><path d=\"M2800 700 L2800 2200\" fill=\"none\" stroke=\"#dbe5ed\" stroke-width=\"700\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"2800\" cy=\"2200\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><path d=\"M2800 2200 L600 2200.0000000000005\" fill=\"none\" stroke=\"#dbe5ed\" stroke-width=\"700\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"600\" cy=\"2200.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><path d=\"M600 2200.0000000000005 L599.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"#dbe5ed\" stroke-width=\"700\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"599.9999999999998\" cy=\"700.0000000000005\" r=\"350\" fill=\"#dbe5ed\" stroke=\"#9dacbb\" stroke-width=\"6.25\"/><path data-segment=\"0\" d=\"M700 700 L2800 700\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><text x=\"1750\" y=\"540\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">1. 210 cm actual</text><path data-segment=\"0\" d=\"M700 700 L2800 700\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"1\" d=\"M2800 700 L2800 700\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><circle data-segment=\"1\" cx=\"2800\" cy=\"700\" r=\"75\" fill=\"#ffcf7d\"/><text x=\"2800\" y=\"540\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">2. in-place right 90°</text><path data-segment=\"1\" d=\"M2800 700 L2800 700\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"2\" d=\"M2800 700 L2800 2200\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><text x=\"2800\" y=\"1290\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">3. 150 cm actual</text><path data-segment=\"2\" d=\"M2800 700 L2800 2200\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"3\" d=\"M2800 2200 L2800 2200\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><circle data-segment=\"3\" cx=\"2800\" cy=\"2200\" r=\"75\" fill=\"#ffcf7d\"/><text x=\"2800\" y=\"2040\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">4. in-place right 90°</text><path data-segment=\"3\" d=\"M2800 2200 L2800 2200\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"4\" d=\"M2800 2200 L600 2200.0000000000005\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><text x=\"1700\" y=\"2040\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">5. 220 cm actual</text><path data-segment=\"4\" d=\"M2800 2200 L600 2200.0000000000005\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"5\" d=\"M600 2200.0000000000005 L600 2200.0000000000005\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><circle data-segment=\"5\" cx=\"600\" cy=\"2200.0000000000005\" r=\"75\" fill=\"#ffcf7d\"/><text x=\"600\" y=\"2040.0000000000005\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">6. in-place right 90°</text><path data-segment=\"5\" d=\"M600 2200.0000000000005 L600 2200.0000000000005\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"6\" d=\"M600 2200.0000000000005 L599.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><text x=\"599.9999999999999\" y=\"1290.0000000000005\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">7. 150 cm actual</text><path data-segment=\"6\" d=\"M600 2200.0000000000005 L599.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><path data-segment=\"7\" d=\"M599.9999999999998 700.0000000000005 L599.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"#08736b\" stroke-width=\"20\" marker-end=\"url(#arrow)\"/><circle data-segment=\"7\" cx=\"599.9999999999998\" cy=\"700.0000000000005\" r=\"75\" fill=\"#ffcf7d\"/><text x=\"599.9999999999998\" y=\"540.0000000000005\" text-anchor=\"middle\" paint-order=\"stroke\" stroke=\"#fff\" stroke-width=\"25\" stroke-linejoin=\"round\">8. in-place right 90°</text><path data-segment=\"7\" d=\"M599.9999999999998 700.0000000000005 L599.9999999999998 700.0000000000005\" fill=\"none\" stroke=\"transparent\" stroke-width=\"150\"/><line x1=\"700\" y1=\"350\" x2=\"700\" y2=\"1050\" stroke=\"#145db0\" stroke-width=\"25\"/><text x=\"800\" y=\"850\" fill=\"#145db0\">START</text><line x1=\"599.9999999999997\" y1=\"350.00000000000045\" x2=\"599.9999999999999\" y2=\"1050.0000000000005\" stroke=\"#9e2948\" stroke-width=\"25\"/><text x=\"699.9999999999998\" y=\"850.0000000000005\" fill=\"#9e2948\">FINISH</text><polygon points=\"1600,520 1900,520 1900,880 1600,880\" fill=\"#39a2b330\" stroke=\"#147a8a\" stroke-dasharray=\"25 25\" stroke-width=\"7.5\"/><polygon points=\"1630,550 1870,550 1870,850 1630,850\" fill=\"#ffc65c\" fill-opacity=\".85\" stroke=\"#6d4800\" stroke-width=\"10\"/><text x=\"0\" y=\"-330\" >Robo Rally · 1:25 · Instructional example — Simple Rectangle</text><text x=\"0\" y=\"-190\" >Area 400 × 300 cm actual = 160 × 120 mm drawing</text><line x1=\"0\" y1=\"3150\" x2=\"1000\" y2=\"3150\" stroke=\"#203a50\" stroke-width=\"20\"/><text x=\"0\" y=\"3300\" >100 cm actual = 40 mm drawing</text></g></svg>",
+      "physical": {
+        "date": "2026-10-29",
+        "outcome": "Partly",
+        "struggles": "Second turn",
+        "measurements": "2 cm",
+        "adjustments": "Widened lane",
+        "improvement": "Not yet retested"
+      }
+    }
+  ]
+}

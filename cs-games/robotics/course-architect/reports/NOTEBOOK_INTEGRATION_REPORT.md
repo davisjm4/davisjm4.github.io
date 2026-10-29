@@ -1,0 +1,13 @@
+# Notebook integration report
+
+Every saved test deep-copies the design, measurements, scale, page, geometry/results, timestamp, six student-note fields and SVG diagram. Subsequent workspace edits do not change previous tests. Physical observations create a new immutable entry from an explicitly selected saved design. They are never inferred from geometry.
+
+Prepare Notebook Entry uses selected saved tests; Export all saved tests generates one combined Markdown report. Entries include objective, measurement conversions, floor/robot scale substitutions, paper/margin calculation, per-segment lengths/radii/angles/endpoints, arc formulas, total length, lane surplus, obstacles, selected turn assumptions, digital statuses/guidance, prediction, observations, changes, reasoning, reflection and optional recorded physical observations. Multiple selections include a comparison with the preceding selected test. Student text is escaped for GitHub Markdown/HTML.
+
+SVG names are stable: robo-rally-test-001.svg, etc. Markdown uses `./robo-rally-test-001.svg`. Instructions tell students to upload the downloaded SVG beside the notebook, or adjust the image path to their chosen folder. No diagram upload or repository modification is claimed. Students can download one diagram at a time if their browser limits multiple downloads.
+
+The backup is versioned JSON containing the current design and saved tests. Import validates file size/schema, numeric bounds, units, counts, unique test IDs, dates, note lengths, physical-observation fields and each saved design before a confirmation dialog. Results/diagrams are safely reconstructed from validated saved measurements, ignoring untrusted embedded SVG. Automated tests confirm a same-version round trip reproduces the original numerical results. A changed future geometry engine must version its migration rather than silently reinterpret historical projects.
+
+Local browser storage is device-specific; blocked/full storage produces explicit recovery guidance. Backups are the transfer/recovery route. Reset course, restore backup, load example and clear tests have explicit confirmation; geometry edits support undo/redo. Tests are not scored attempts and do not reset daily.
+
+Evidence includes a complete three-test Markdown report, matching SVGs and an importable example project. The third automated sample's physical observation is synthetic test data labelled by its fixture, not an assertion that a real robot was tested. Browser verification separately confirmed two-test selection, exact saved scales/dimensions, absence of invented successful physical results, JSON download, reload and backup restoration.

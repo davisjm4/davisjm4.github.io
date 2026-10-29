@@ -1,0 +1,20 @@
+{
+  "checks": 32490,
+  "status": "PASS",
+  "presets": {
+    "rectangle": {
+      "failures": 0,
+      "warnings": 5
+    },
+    "tight": {
+      "failures": 3,
+      "warnings": 2
+    },
+    "mixed": {
+      "failures": 0,
+      "warnings": 2
+    }
+  },
+  "physicalDevices": "not tested",
+  "nativeScreenReader": "not tested"
+}
