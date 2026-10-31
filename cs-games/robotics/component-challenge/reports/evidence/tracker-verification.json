@@ -1,0 +1,11 @@
+{
+  "id": "G-122",
+  "risk": "I-009",
+  "ranges": [
+    "Master Inventory!A60:L60",
+    "Release History!A25:G25",
+    "Issues & Risks!A9:G9"
+  ],
+  "readback": "All expected values matched",
+  "visualReview": "Native format metadata only"
+}

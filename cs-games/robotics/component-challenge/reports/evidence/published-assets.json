@@ -1,0 +1,123 @@
+{
+  "date": "2026-10-31T08:16:05.448Z",
+  "implementation": "110699e08290d037de97e235140898480bcffe07",
+  "rows": [
+    {
+      "path": "/cs-games/robotics/component-challenge/index.html",
+      "status": 200,
+      "bytes": 5369,
+      "hash": "103875ff82174f6a5fbb771d866c17445ae119d97c3efda9df4d6d5ff9ff3963",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/robotics/component-challenge/app.mjs",
+      "status": 200,
+      "bytes": 8439,
+      "hash": "f32121c2ed75767984cf1364cd17924d3baf482fe36f4b009792801afd1fb398",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/robotics/component-challenge/engine.mjs",
+      "status": 200,
+      "bytes": 3765,
+      "hash": "52358b0a6bab870488a7906e457311082b34b37b285ce0cf45a78e7b9f9c4bf3",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/robotics/component-challenge/scenarios.mjs",
+      "status": 200,
+      "bytes": 53526,
+      "hash": "d58c3f183d91032f1ab969d55122e35a30316b0de5c97789492fd62ecb5e253d",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/robotics/component-challenge/style.css",
+      "status": 200,
+      "bytes": 3090,
+      "hash": "36a12db0d748cf8c17766400dd5edf0acc81ad82596e1e8cdad679f8ab02f6b5",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/catalog.js",
+      "status": 200,
+      "bytes": 22028,
+      "hash": "ae20aba41cf995dd1db0fb55de8fe7e030b007b6aba5b58c54b7f76b65cdb515",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/course-page.js",
+      "status": 200,
+      "bytes": 6701,
+      "hash": "fbf8b2a56ad579f04147b3fb26b07f2ae22137b3ae4eadf8e16e400bd9b43942",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/robotics/index.html",
+      "status": 200,
+      "bytes": 1956,
+      "hash": "7f62453951a6819c2c7c5a203ecf2cfe0c2bc65b4457dc061d40699c4df8d6e7",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/robotics/parts-sprint/catalog.js",
+      "status": 200,
+      "bytes": 76955,
+      "hash": "c39b30a39c766cb76983a0f7b6511e78932fbd48b964dfd111e16b7ec9ca34ae",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/robotics/parts-sprint/session.js",
+      "status": 200,
+      "bytes": 1925,
+      "hash": "bc888ecbdd46d4b27d5672a32bab473882578ec5bbb8315c86359c0e76153d13",
+      "matchesSource": true
+    },
+    {
+      "path": "/java-games/session.js",
+      "status": 200,
+      "bytes": 15041,
+      "hash": "f045e8c1d4d91ad574e0a50379fba33a20c7504f5b1bce9b634bc7705abb75f0",
+      "matchesSource": true
+    },
+    {
+      "path": "/cs-games/",
+      "status": 200,
+      "bytes": 2284
+    },
+    {
+      "path": "/cs-games/robotics/parts-sprint/",
+      "status": 200,
+      "bytes": 6284
+    },
+    {
+      "path": "/cs-games/robotics/course-architect/",
+      "status": 200,
+      "bytes": 9957
+    },
+    {
+      "path": "/cs-games/csp/",
+      "status": 200,
+      "bytes": 1673
+    },
+    {
+      "path": "/cs-games/advanced/",
+      "status": 200,
+      "bytes": 1623
+    },
+    {
+      "path": "/wpr-games/workplace-readiness/",
+      "status": 200,
+      "bytes": 4840
+    },
+    {
+      "path": "/wpr-games/raceces/",
+      "status": 200,
+      "bytes": 4618
+    },
+    {
+      "path": "/cs-games/teacher/",
+      "status": 200,
+      "bytes": 10226
+    }
+  ]
+}
