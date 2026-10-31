@@ -1,0 +1,1 @@
+PASS: 26 UI contracts: Mixed/Beginner defaults, accessible native controls, canonical navigation, shared catalog/session imports, guarded/reveal scoring, reduced motion and no account/network calls. Browser workflows verified separately.

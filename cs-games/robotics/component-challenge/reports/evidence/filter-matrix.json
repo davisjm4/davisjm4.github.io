@@ -1,0 +1,1312 @@
+[
+  {
+    "mode": "choose",
+    "difficulty": "Beginner",
+    "category": "fasteners",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Beginner",
+    "category": "transmission",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Beginner",
+    "category": "tools",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Intermediate",
+    "category": "wheels",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Intermediate",
+    "category": "tools",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Advanced",
+    "category": "structure",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Advanced",
+    "category": "wheels",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Advanced",
+    "category": "fasteners",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Advanced",
+    "category": "tools",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Beginner",
+    "category": "structure",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Beginner",
+    "category": "wheels",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Beginner",
+    "category": "fasteners",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Beginner",
+    "category": "transmission",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Intermediate",
+    "category": "spacing",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Intermediate",
+    "category": "wheels",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Intermediate",
+    "category": "tools",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Advanced",
+    "category": "spacing",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Advanced",
+    "category": "structure",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Advanced",
+    "category": "wheels",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Advanced",
+    "category": "tools",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Beginner",
+    "category": "wheels",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Beginner",
+    "category": "fasteners",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Intermediate",
+    "category": "wheels",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Intermediate",
+    "category": "transmission",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Intermediate",
+    "category": "tools",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Advanced",
+    "category": "spacing",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Advanced",
+    "category": "wheels",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Advanced",
+    "category": "fasteners",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Advanced",
+    "category": "tools",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Beginner",
+    "category": "motion",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Beginner",
+    "category": "spacing",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Beginner",
+    "category": "structure",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Beginner",
+    "category": "wheels",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Beginner",
+    "category": "fasteners",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Beginner",
+    "category": "transmission",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Intermediate",
+    "category": "motion",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Intermediate",
+    "category": "spacing",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Intermediate",
+    "category": "structure",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Intermediate",
+    "category": "wheels",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Intermediate",
+    "category": "transmission",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Advanced",
+    "category": "motion",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Advanced",
+    "category": "structure",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Advanced",
+    "category": "wheels",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Advanced",
+    "category": "fasteners",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Advanced",
+    "category": "transmission",
+    "pool": 0,
+    "rounds": 0,
+    "status": "Explicitly unavailable"
+  },
+  {
+    "mode": "mixed",
+    "difficulty": "mixed",
+    "category": "all",
+    "pool": 75,
+    "rounds": 304,
+    "exactRepeats": 0,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 0,
+    "modes": {
+      "solution": 78,
+      "choose": 77,
+      "fix": 77,
+      "tools": 72
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "mixed",
+    "category": "all",
+    "pool": 25,
+    "rounds": 304,
+    "exactRepeats": 279,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 304,
+    "modes": {
+      "choose": 304
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "mixed",
+    "category": "all",
+    "pool": 18,
+    "rounds": 303,
+    "exactRepeats": 285,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "mixed",
+    "category": "all",
+    "pool": 20,
+    "rounds": 303,
+    "exactRepeats": 283,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "tools",
+    "difficulty": "mixed",
+    "category": "all",
+    "pool": 12,
+    "rounds": 303,
+    "exactRepeats": 291,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "tools": 303
+    }
+  },
+  {
+    "mode": "mixed",
+    "difficulty": "Beginner",
+    "category": "all",
+    "pool": 26,
+    "rounds": 303,
+    "exactRepeats": 277,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "tools": 48,
+      "solution": 70,
+      "fix": 71,
+      "choose": 114
+    }
+  },
+  {
+    "mode": "mixed",
+    "difficulty": "Intermediate",
+    "category": "all",
+    "pool": 33,
+    "rounds": 303,
+    "exactRepeats": 270,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 73,
+      "tools": 47,
+      "solution": 74,
+      "choose": 109
+    }
+  },
+  {
+    "mode": "mixed",
+    "difficulty": "Advanced",
+    "category": "all",
+    "pool": 16,
+    "rounds": 303,
+    "exactRepeats": 287,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "tools": 57,
+      "solution": 113,
+      "fix": 76,
+      "choose": 57
+    }
+  },
+  {
+    "mode": "mixed",
+    "difficulty": "mixed",
+    "category": "motion",
+    "pool": 20,
+    "rounds": 303,
+    "exactRepeats": 283,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 91,
+      "solution": 106,
+      "choose": 106
+    }
+  },
+  {
+    "mode": "mixed",
+    "difficulty": "mixed",
+    "category": "spacing",
+    "pool": 10,
+    "rounds": 303,
+    "exactRepeats": 293,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 121,
+      "tools": 31,
+      "solution": 91,
+      "fix": 60
+    }
+  },
+  {
+    "mode": "mixed",
+    "difficulty": "mixed",
+    "category": "structure",
+    "pool": 7,
+    "rounds": 303,
+    "exactRepeats": 296,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 130,
+      "solution": 130,
+      "fix": 43
+    }
+  },
+  {
+    "mode": "mixed",
+    "difficulty": "mixed",
+    "category": "wheels",
+    "pool": 3,
+    "rounds": 303,
+    "exactRepeats": 300,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "mixed",
+    "difficulty": "mixed",
+    "category": "fasteners",
+    "pool": 13,
+    "rounds": 303,
+    "exactRepeats": 290,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 93,
+      "fix": 93,
+      "tools": 47,
+      "solution": 70
+    }
+  },
+  {
+    "mode": "mixed",
+    "difficulty": "mixed",
+    "category": "transmission",
+    "pool": 10,
+    "rounds": 303,
+    "exactRepeats": 293,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 91,
+      "choose": 121,
+      "fix": 91
+    }
+  },
+  {
+    "mode": "mixed",
+    "difficulty": "mixed",
+    "category": "tools",
+    "pool": 12,
+    "rounds": 303,
+    "exactRepeats": 291,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "tools": 226,
+      "solution": 26,
+      "fix": 51
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Beginner",
+    "category": "all",
+    "pool": 10,
+    "rounds": 303,
+    "exactRepeats": 293,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Intermediate",
+    "category": "all",
+    "pool": 12,
+    "rounds": 303,
+    "exactRepeats": 291,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Advanced",
+    "category": "all",
+    "pool": 3,
+    "rounds": 303,
+    "exactRepeats": 300,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Beginner",
+    "category": "all",
+    "pool": 6,
+    "rounds": 303,
+    "exactRepeats": 297,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Intermediate",
+    "category": "all",
+    "pool": 8,
+    "rounds": 303,
+    "exactRepeats": 295,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Advanced",
+    "category": "all",
+    "pool": 4,
+    "rounds": 303,
+    "exactRepeats": 299,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Beginner",
+    "category": "all",
+    "pool": 6,
+    "rounds": 303,
+    "exactRepeats": 297,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Intermediate",
+    "category": "all",
+    "pool": 8,
+    "rounds": 303,
+    "exactRepeats": 295,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Advanced",
+    "category": "all",
+    "pool": 6,
+    "rounds": 303,
+    "exactRepeats": 297,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Beginner",
+    "category": "all",
+    "pool": 4,
+    "rounds": 303,
+    "exactRepeats": 299,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "tools": 303
+    }
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Intermediate",
+    "category": "all",
+    "pool": 5,
+    "rounds": 303,
+    "exactRepeats": 298,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "tools": 303
+    }
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Advanced",
+    "category": "all",
+    "pool": 3,
+    "rounds": 303,
+    "exactRepeats": 300,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "tools": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Beginner",
+    "category": "motion",
+    "pool": 3,
+    "rounds": 303,
+    "exactRepeats": 300,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Beginner",
+    "category": "spacing",
+    "pool": 2,
+    "rounds": 303,
+    "exactRepeats": 301,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Beginner",
+    "category": "structure",
+    "pool": 2,
+    "rounds": 303,
+    "exactRepeats": 301,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Beginner",
+    "category": "wheels",
+    "pool": 3,
+    "rounds": 303,
+    "exactRepeats": 300,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Intermediate",
+    "category": "motion",
+    "pool": 3,
+    "rounds": 303,
+    "exactRepeats": 300,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Intermediate",
+    "category": "spacing",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Intermediate",
+    "category": "structure",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Intermediate",
+    "category": "fasteners",
+    "pool": 4,
+    "rounds": 303,
+    "exactRepeats": 299,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Intermediate",
+    "category": "transmission",
+    "pool": 3,
+    "rounds": 303,
+    "exactRepeats": 300,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Advanced",
+    "category": "motion",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Advanced",
+    "category": "spacing",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "choose",
+    "difficulty": "Advanced",
+    "category": "transmission",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "choose": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Beginner",
+    "category": "motion",
+    "pool": 2,
+    "rounds": 303,
+    "exactRepeats": 301,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Beginner",
+    "category": "spacing",
+    "pool": 2,
+    "rounds": 303,
+    "exactRepeats": 301,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Beginner",
+    "category": "tools",
+    "pool": 2,
+    "rounds": 303,
+    "exactRepeats": 301,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Intermediate",
+    "category": "motion",
+    "pool": 2,
+    "rounds": 303,
+    "exactRepeats": 301,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Intermediate",
+    "category": "structure",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Intermediate",
+    "category": "fasteners",
+    "pool": 3,
+    "rounds": 303,
+    "exactRepeats": 300,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Intermediate",
+    "category": "transmission",
+    "pool": 2,
+    "rounds": 303,
+    "exactRepeats": 301,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Advanced",
+    "category": "motion",
+    "pool": 2,
+    "rounds": 303,
+    "exactRepeats": 301,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Advanced",
+    "category": "fasteners",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "fix",
+    "difficulty": "Advanced",
+    "category": "transmission",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "fix": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Beginner",
+    "category": "motion",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Beginner",
+    "category": "spacing",
+    "pool": 2,
+    "rounds": 303,
+    "exactRepeats": 301,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Beginner",
+    "category": "structure",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Beginner",
+    "category": "transmission",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Beginner",
+    "category": "tools",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Intermediate",
+    "category": "motion",
+    "pool": 3,
+    "rounds": 303,
+    "exactRepeats": 300,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Intermediate",
+    "category": "spacing",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Intermediate",
+    "category": "structure",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Intermediate",
+    "category": "fasteners",
+    "pool": 3,
+    "rounds": 303,
+    "exactRepeats": 300,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Advanced",
+    "category": "motion",
+    "pool": 3,
+    "rounds": 303,
+    "exactRepeats": 300,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Advanced",
+    "category": "structure",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "solution",
+    "difficulty": "Advanced",
+    "category": "transmission",
+    "pool": 2,
+    "rounds": 303,
+    "exactRepeats": 301,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "solution": 303
+    }
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Beginner",
+    "category": "tools",
+    "pool": 4,
+    "rounds": 303,
+    "exactRepeats": 299,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "tools": 303
+    }
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Intermediate",
+    "category": "fasteners",
+    "pool": 2,
+    "rounds": 303,
+    "exactRepeats": 301,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "tools": 303
+    }
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Intermediate",
+    "category": "tools",
+    "pool": 3,
+    "rounds": 303,
+    "exactRepeats": 300,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "tools": 303
+    }
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Advanced",
+    "category": "spacing",
+    "pool": 1,
+    "rounds": 303,
+    "exactRepeats": 302,
+    "immediateFamilies": 302,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "tools": 303
+    }
+  },
+  {
+    "mode": "tools",
+    "difficulty": "Advanced",
+    "category": "tools",
+    "pool": 2,
+    "rounds": 303,
+    "exactRepeats": 301,
+    "immediateFamilies": 0,
+    "positionRepeats": 0,
+    "fallbacks": 303,
+    "modes": {
+      "tools": 303
+    }
+  }
+]

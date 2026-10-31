@@ -1,0 +1,81 @@
+{
+  "status": "PASS",
+  "assertions": 196667,
+  "reasoningFamilies": 66,
+  "playableInstances": 75,
+  "familiesByMode": {
+    "choose": 25,
+    "fix": 18,
+    "tools": 12,
+    "solution": 20
+  },
+  "modeCounts": {
+    "choose": 25,
+    "fix": 18,
+    "tools": 12,
+    "solution": 20
+  },
+  "difficultyCounts": {
+    "Beginner": 26,
+    "Intermediate": 33,
+    "Advanced": 16
+  },
+  "categoryCounts": {
+    "motion": 20,
+    "spacing": 10,
+    "structure": 7,
+    "wheels": 3,
+    "fasteners": 13,
+    "transmission": 10,
+    "tools": 12
+  },
+  "simulatedSelections": 20000,
+  "distinctInstancesSelected": 75,
+  "distribution": {
+    "mode": {
+      "solution": 5697,
+      "choose": 6080,
+      "fix": 4968,
+      "tools": 3255
+    },
+    "difficulty": {
+      "Advanced": 5579,
+      "Beginner": 6883,
+      "Intermediate": 7538
+    },
+    "category": {
+      "motion": 4562,
+      "spacing": 3268,
+      "tools": 3149,
+      "fasteners": 2737,
+      "transmission": 2920,
+      "structure": 2588,
+      "wheels": 776
+    },
+    "answerPosition": {
+      "0": 3285,
+      "1": 3425,
+      "2": 3449,
+      "3": 4144
+    }
+  },
+  "actualExactRepeats": 19321,
+  "avoidableExactRepeats": 0,
+  "immediateFamilyRepeats": 4832,
+  "avoidableFamilyRepeats": 0,
+  "consecutiveAnswerPositions": 0,
+  "narrowPoolNotices": 19696,
+  "emptyFilterSelections": 45,
+  "invalidSchemaChallenges": 0,
+  "technicalCertification": "Automated structural and grading checks only; no claim of human-certified engineering correctness.",
+  "technicalFlags": [
+    {
+      "id": "driver-access-constraint",
+      "review": "Both named tool sizes supplied; inspect contextual best-choice reasoning."
+    }
+  ],
+  "physicalTouch": "Not performed",
+  "physicalChromebook": "Not performed",
+  "nativeScreenReader": "Not performed",
+  "browserWorkflows": "Separate UI evidence required"
+}
