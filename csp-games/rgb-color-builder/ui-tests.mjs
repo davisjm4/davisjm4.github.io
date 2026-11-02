@@ -18,6 +18,12 @@ const changeMode=m=>{$('mode').value=m;$('mode').onchange();},event=(el,type)=>e
 function setColor(rgb){const s=app.state();if(s.current.mode==='binary'){
  for(const b of document.querySelectorAll('#editor button')){const c=+b.dataset.c,i=+b.dataset.bit;if(Boolean(rgb[c]&E.WEIGHTS[i])!==Boolean(app.state().student[c]&E.WEIGHTS[i]))b.click();}
 }else{for(const select of document.querySelectorAll('#editor select')){select.value=E.hexByte(rgb[+select.dataset.c])[+select.dataset.digit];event(select,'change');}}}
+function targetHidden(){
+ ok($('target-caption').textContent.includes('hidden until matched'),'caption keeps answer hidden until success');
+ ok($('target-swatch').getAttribute('aria-label').includes('hidden until matched'),'accessible label keeps answer hidden');
+ ok(!$('feedback').textContent.includes('Target:'),'feedback does not give target code');
+ ok(!$('feedback').textContent.includes('→'),'feedback does not give channel destinations');
+}
 ok($('mode').value==='mixed','Mixed is default');ok(!document.querySelector('#difficulty'),'no difficulty');ok(document.querySelector('a[href="../session-summary/"]'),'shared summary');ok(document.querySelector('a[href="/cs-games/csp/"]'),'consolidated nav');
 for(const mode of ['binary','hex']){
  changeMode(mode);eq(app.state().current.mode,mode);eq(app.state().student,[0,0,0]);ok($('target-caption').textContent.includes('hidden'),'target hidden');
@@ -30,11 +36,16 @@ for(const mode of ['binary','hex']){
  $('reset').click();eq(app.state().student,[0,0,0]);eq(app.state().tracker.snapshot().totals.attempted,before);
  $('hint').click();ok(!$('hint-text').hidden);ok(!$('hint-text').textContent.includes(E.hex(target)));ok($('target-caption').textContent.includes('hidden'));
  // First deliberately incorrect check, then exact correction, duplicate click ignored.
- setColor(target[0]+target[1]+target[2]>383?[0,0,0]:[255,255,255]);$('check').click();ok($('feedback').textContent.includes('Not Yet Correct'));ok($('feedback').textContent.includes(E.hex(target)));
+ setColor(target[0]+target[1]+target[2]>383?[0,0,0]:[255,255,255]);$('check').click();ok($('feedback').textContent.includes('Not Yet Correct'));targetHidden();
+ ok(/increase to add more light|decrease to reduce light/.test($('feedback').textContent),'wrong check gives directional guidance');
  eq(app.state().tracker.snapshot().totals.attempted,before+1);const firstTry=app.state().tracker.snapshot().totals.firstTry,submissions=app.state().tracker.snapshot().totals.submissions;
  $('check').click();eq(app.state().tracker.snapshot().totals.submissions,submissions,'same color cannot repeatedly submit');
+ $('hint').click();targetHidden();$('reset').click();targetHidden();
  setColor(target);$('check').click();ok(app.state().solved);ok($('feedback').textContent.includes('Correct — close enough'));eq(app.state().tracker.snapshot().totals.firstTry,firstTry,'retry preserves first check');ok($('check').disabled);
- $('new').click();ok(!app.state().submitted);ok($('target-caption').textContent.includes('hidden'));setColor(app.state().current.rgb);$('check').click();eq(app.state().tracker.snapshot().totals.firstTry,firstTry+1);
+ ok($('target-caption').textContent.includes(E.hex(target)),'successful match reveals target for comparison');
+ ok($('feedback').textContent.includes(`Target: ${E.hex(target)}`));
+ ok($('target-swatch').getAttribute('aria-label').includes(`red ${target[0]}`));
+ $('new').click();ok(!app.state().submitted);targetHidden();setColor(app.state().current.rgb);$('check').click();eq(app.state().tracker.snapshot().totals.firstTry,firstTry+1);
 }
 changeMode('mixed');let prior=[];for(let i=0;i<60;i++){const q=app.state().current;ok(!prior.includes(E.hex(q.rgb)),'50 round history across modes');prior.push(E.hex(q.rgb));if(prior.length>50)prior.shift();$('new').click();}
 ok($('stats').textContent.includes('Overall / Mixed'));ok($('stats').textContent.includes('Binary:'));ok($('stats').textContent.includes('Hex:'));

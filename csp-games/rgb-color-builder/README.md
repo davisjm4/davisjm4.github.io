@@ -14,9 +14,9 @@ Inspected Binary Builder in `../app.js` and `../engine.js`: it supports unsigned
 
 ## Student experience
 
-Mixed is default. Binary RGB exposes 24 individually labeled buttons with positional weights and pressed states. Hexadecimal RGB exposes six native 0–F selectors, which support touch, arrows, and native letter/digit selection. Both editors synchronize decimal, eight-bit binary, hex code, and the student swatch immediately. Editing is never a submission. Reset returns to black without a failed answer. The target's numeric values stay hidden until the first check; hints only name broad light mixtures or explain gray. Help contains fixed canonical examples independent of the target.
+Mixed is default. Binary RGB exposes 24 individually labeled buttons with positional weights and pressed states. Hexadecimal RGB exposes six native 0–F selectors, which support touch, arrows, and native letter/digit selection. Both editors synchronize decimal, eight-bit binary, hex code, and the student swatch immediately. Editing is never a submission. Reset returns to black without a failed answer. The target's numeric values stay hidden until a successful match; hints only name broad light mixtures or explain gray. Help contains fixed canonical examples independent of the target.
 
-Check Color reports Correct or Not Yet Correct, target/student RGB and hex, perceptual distance, and channel-by-channel directions. An unchanged answer cannot be submitted repeatedly. Incorrect answers remain editable; correction is a guided retry and never changes first-try accuracy. A successful round remains available for exploration; New Color begins the next scored challenge.
+Check Color reports Correct or Not Yet Correct, the submitted RGB and hex, perceptual distance, and channel-by-channel directions. Incorrect checks do not reveal target values in the caption, accessible label, or feedback; exact target values appear only after a successful match. An unchanged answer cannot be submitted repeatedly. Incorrect answers remain editable; correction is a retry with directional guidance and never changes first-try accuracy. A successful round remains available for exploration; New Color begins the next scored challenge.
 
 ## Perceptual matching and tolerance
 
@@ -54,7 +54,7 @@ Audit: 20 seeds × 1,000 rounds = **20,000 rounds**. Every family appeared exact
 
 Uses the existing `cspGames.session.v1` schema. Only checks call `submit`; edits, hints and resets do not. Distinct challenge counts, first-try correct, retries, submissions, Binary and Hex mode buckets, and aggregate Mixed/overall accuracy use established conventions. Daily local-date reset and active practice time are inherited. Midnight or an externally reset session expires the old round and creates a new target before another adjustment/check. Session totals survive ordinary reloads.
 
-Record annotations include target/student RGB, first submitted RGB and distance, first-try result, representation, selected mode, family, prior-target distance, and skill IDs: `binary-representation`, `hexadecimal-representation`, `rgb-color-representation`, `data-representation`. This provides a future readiness-pathway bridge without building the pathway. The shared report's after-retry metric includes guided corrections after target values are shown; only first-try performance is independent evidence here.
+Record annotations include target/student RGB, first submitted RGB and distance, first-try result, representation, selected mode, family, prior-target distance, and skill IDs: `binary-representation`, `hexadecimal-representation`, `rgb-color-representation`, `data-representation`. This provides a future readiness-pathway bridge without building the pathway. The shared report's after-retry metric includes corrections supported by directional guidance; exact target values remain hidden until the round is solved.
 
 ## Validation and reproduction
 

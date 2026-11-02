@@ -1,4 +1,4 @@
-import * as E from './engine.js?v=rgb-v1';
+import * as E from './engine.js?v=rgb-target-hidden-v2';
 import {sessionTracker,addSessionNavigation} from '../session.js?v=per-mode-daily-v1';
 const $=id=>document.getElementById(id), title='RGB Color Code Builder',slug='rgb-color-builder';
 const tracker=sessionTracker();addSessionNavigation('../');
@@ -24,8 +24,8 @@ function newColor(message='') {
   tracker.annotate(recordId,{skills:E.SKILLS,representation:current.mode,selection:current.selection,targetRGB:current.rgb,targetHex:E.hex(current.rgb),family:current.family,distanceFromPrevious:current.distanceFromPrevious,generatorFallback:current.fallback});
   persistHistory();$('representation').textContent=labels[current.mode];
   $('target-swatch').style.backgroundColor=E.css(current.rgb);
-  $('target-swatch').setAttribute('aria-label','Target color to match; exact values hidden until checking');
-  $('target-caption').textContent='Match by sight · code hidden until checking';
+  $('target-swatch').setAttribute('aria-label','Target color to match; exact values hidden until matched');
+  $('target-caption').textContent='Match by sight · code hidden until matched';
   $('editor-instructions').textContent=current.mode==='binary'?'Tap a bit to toggle it. Each 1 adds the place value above it.':'Choose each digit (0–F). The left digit counts sixteens; the right digit counts ones.';
   $('editor').innerHTML=names.map((name,c)=>`<fieldset class="channel" data-channel="${c}"><legend>${name} · <span id="channel-${c}">0</span> / 255</legend>${current.mode==='binary'?`<div class="bit-grid">${E.WEIGHTS.map((w,i)=>`<div class="bit-control"><small aria-hidden="true">${w}</small><button type="button" data-c="${c}" data-bit="${i}" aria-label="${name} bit ${w}" aria-pressed="false">0</button></div>`).join('')}</div>`:`<div class="hex-pair">${[0,1].map(i=>`<label>${i===0?'Sixteens (×16)':'Ones (×1)'}<select data-c="${c}" data-digit="${i}" aria-label="${name} ${i===0?'high':'low'} hexadecimal digit">${[...E.DIGITS].map(d=>`<option value="${d}">${d}</option>`).join('')}</select></label>`).join('')}<span class="channel-value" id="pair-${c}">00 = 0</span></div>`}</fieldset>`).join('');
   for(const b of $('editor').querySelectorAll('button')) b.onclick=()=>{if(!guard())return;student=E.toggle(student,Number(b.dataset.c),Number(b.dataset.bit));adjusted();};
@@ -56,10 +56,12 @@ function check(){
   if(first)tracker.annotate(recordId,{firstSubmittedRGB:[...student],firstDistance:delta,firstTryCorrect:correct});
   submitted=true;solved=correct;lastChecked=E.hex(student);
   tracker.annotate(recordId,{lastSubmittedRGB:[...student],lastDistance:delta});
-  $('target-caption').textContent=`${E.hex(current.rgb)} · RGB(${current.rgb.join(', ')})`;
-  $('target-swatch').setAttribute('aria-label',`Target: red ${current.rgb[0]}, green ${current.rgb[1]}, blue ${current.rgb[2]}`);
+  if(correct){
+    $('target-caption').textContent=`${E.hex(current.rgb)} · RGB(${current.rgb.join(', ')})`;
+    $('target-swatch').setAttribute('aria-label',`Target: red ${current.rgb[0]}, green ${current.rgb[1]}, blue ${current.rgb[2]}`);
+  }
   $('feedback').hidden=false;$('feedback').className='feedback '+(correct?'good':'retry');
-  $('feedback').textContent=`${correct?'Correct — close enough!':'Not Yet Correct — keep experimenting.'}\nTarget: ${E.hex(current.rgb)} · RGB(${current.rgb.join(', ')})\nYour checked color: ${E.hex(student)} · RGB(${student.join(', ')})\nPerceptual distance: ${delta.toFixed(2)} (accepted: ≤ ${E.TOLERANCE}).\n${E.explanation(current.rgb,student)}\n${first?'Your first check is recorded.':'Your original first-try result is unchanged.'}${correct?' Choose New Color when ready.':' Adjust the channels and check again.'}`;
+  $('feedback').textContent=`${correct?'Correct — close enough!':'Not Yet Correct — keep experimenting.'}\n${correct?`Target: ${E.hex(current.rgb)} · RGB(${current.rgb.join(', ')})\n`:''}Your checked color: ${E.hex(student)} · RGB(${student.join(', ')})\nPerceptual distance: ${delta.toFixed(2)} (accepted: ≤ ${E.TOLERANCE}).\n${E.explanation(current.rgb,student,{revealTarget:correct})}\n${first?'Your first check is recorded.':'Your original first-try result is unchanged.'}${correct?' Choose New Color when ready.':' Adjust the channels and check again.'}`;
   $('action-status').textContent='';update();stats();
 }
 $('mode').onchange=()=>newColor();$('new').onclick=()=>newColor();$('check').onclick=check;

@@ -106,7 +106,7 @@ export function hint(rgb) {
   const max=Math.max(...rgb),names=['red','green','blue'],dominant=rgb.map((v,i)=>v>=max-34?names[i]:null).filter(Boolean);
   return `Look for ${dominant.join(' and ')} light in the target. Experiment with those channels first, then use the other channels to change the mixture. A larger place value makes a bigger change.`;
 }
-export function explanation(target,student) {
-  const directions=target.map((v,i)=>`${['Red','Green','Blue'][i]}: ${student[i]===v?'exact':student[i]<v?'increase to add more light':'decrease to reduce light'} (${student[i]} → ${v})`).join('. ')+'.';
+export function explanation(target,student,{revealTarget=false}={}) {
+  const directions=target.map((v,i)=>`${['Red','Green','Blue'][i]}: ${student[i]===v?'exact':student[i]<v?'increase to add more light':'decrease to reduce light'}${revealTarget?` (${student[i]} → ${v})`:''}`).join('. ')+'.';
   return directions+' Eight bits represent 0–255. Two hex digits encode the same channel: FF = 255, and each hex digit represents four bits.'+(target.every(v=>v===target[0])?' Equal RGB values produce grayscale.':'');
 }
