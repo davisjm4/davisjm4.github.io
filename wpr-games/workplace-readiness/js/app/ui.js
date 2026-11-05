@@ -68,7 +68,7 @@
     if (s.indexOf('skill:') === 0) f.skills = [s.slice(6)];
     else if (s.indexOf('cat:') === 0) f.category = s.slice(4);
     if (m && m !== 'mixed') f.modes = [m];
-    return f;
+    return W.targeted ? W.targeted.readPractice(f) : f;
   }
 
   /* ---------- stat bar ---------- */
@@ -246,6 +246,7 @@
       controls.lock();
       reveal(c, result, controls, resp);
       var fb = feedbackBlock(result);
+      if (c.tags?.length) fb.appendChild(h('p', { text: skill.name + ' · ' + c.tags.map(function (t) { return t.topic + ' / ' + t.subtopic; }).join(' · ') }));
       ticket.insertBefore(fb, actions);
       clear(actions);
       var next = h('button', { type: 'button', class: 'btn primary', id: 'btn-next', text: 'Next challenge', onclick: function () { handlers.next(); } });

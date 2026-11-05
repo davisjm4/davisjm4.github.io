@@ -54,6 +54,10 @@
         s.completed++;
         if (correct) { s.correct++; s.firstAttemptCorrect++; } else { s.incorrect++; }
         bump(s.bySkill, meta.skill, correct);
+        s.byTopic = s.byTopic || {};
+        s.bySubtopic = s.bySubtopic || {};
+        new Set((meta.tags || []).map(function (t) { return t.topicId; })).forEach(function (id) { bump(s.byTopic, id, correct); });
+        (meta.tags || []).forEach(function (t) { bump(s.bySubtopic, t.subtopicId, correct); });
         bump(s.byCategory, meta.category, correct);
         bump(s.byMode, meta.mode, correct);
         bump(s.byDifficulty, meta.difficulty, correct);

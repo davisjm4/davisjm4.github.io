@@ -394,6 +394,304 @@
         "policyNotNeeded": true
       },
       "alternatesReviewed": true
+    },
+    {
+      "id": "PRO-D-101",
+      "skill": "professionalism",
+      "family": "professionalism.uniform-change",
+      "pattern": "uniform-change",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "professionalism:appearance"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A uniform policy requires a clean issued shirt for front-desk shifts. Yours has a large ink stain, and the stockroom has spare shirts.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Request a clean issued shirt from your lead.",
+          "why": "An approved replacement meets the policy.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Cover the stain with a personal jacket.",
+          "why": "The jacket may not be part of the uniform.",
+          "misconception": "The jacket may not be part of the uniform."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Turn the uniform shirt inside out.",
+          "why": "That can hide the stain but does not provide the required uniform.",
+          "misconception": "That can hide the stain but does not provide the required uniform."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Wear a clean shirt from home without checking.",
+          "why": "Cleanliness alone does not satisfy the issued-shirt requirement.",
+          "misconception": "Cleanliness alone does not satisfy the issued-shirt requirement."
+        }
+      ],
+      "principle": "Use approved uniform replacements when your regular uniform cannot meet the dress code.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "PRO-D-102",
+      "skill": "professionalism",
+      "family": "professionalism.client-dress-code",
+      "pattern": "client-dress-code",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "professionalism:appearance"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A field team normally dresses casually. The client’s written instructions require business casual for a presentation. You have time to change before leaving.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Follow the client’s business casual instructions for the presentation.",
+          "why": "The event has a specific dress expectation that differs from the regular shift.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Follow your normal field dress code for every visit.",
+          "why": "The event instructions supersede the normal custom here.",
+          "misconception": "The event instructions supersede the normal custom here."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Wear the most formal clothes you own for every client meeting.",
+          "why": "Formality should match the stated context.",
+          "misconception": "Formality should match the stated context."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Wait to see what the client is wearing before deciding.",
+          "why": "The client already provided the information needed.",
+          "misconception": "The client already provided the information needed."
+        }
+      ],
+      "principle": "Check the dress expectations for the specific workplace event.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "PRO-D-103",
+      "skill": "professionalism",
+      "family": "professionalism.food-grooming",
+      "pattern": "food-grooming",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "professionalism:appearance"
+      ],
+      "contexts": [
+        "culinary",
+        "hospitality"
+      ],
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A food prep station requires long hair to be secured and covered before work. Your hair is tied back but still uncovered. A supply of approved covers is at the entrance.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Put on an approved hair cover before entering the station.",
+          "why": "The posted instruction requires both securing and covering long hair.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Start prep because the hair is already tied.",
+          "why": "Tying hair satisfies only part of the posted rule.",
+          "misconception": "Tying hair satisfies only part of the posted rule."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Ask a teammate to check for loose hair after prep.",
+          "why": "Checking afterward does not prevent contamination.",
+          "misconception": "Checking afterward does not prevent contamination."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Cover your hair only if a customer can see you.",
+          "why": "The requirement applies during food prep regardless of customers.",
+          "misconception": "The requirement applies during food prep regardless of customers."
+        }
+      ],
+      "principle": "Meet every part of the grooming requirement before beginning the task.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "PRO-D-104",
+      "skill": "professionalism",
+      "family": "professionalism.interview-role-examples",
+      "pattern": "interview-role-examples",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "professionalism:self-representation"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A job posting lists tracking inventory and explaining discrepancies as key responsibilities. You have a school project where you performed both tasks.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Prepare a specific example of the project and what you did to resolve a discrepancy.",
+          "why": "A relevant example provides evidence that you can perform a stated responsibility.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Memorize a list of unrelated hobbies.",
+          "why": "The list does not demonstrate the required skills.",
+          "misconception": "The list does not demonstrate the required skills."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Say you have no relevant experience because it was a school project.",
+          "why": "Experience can be relevant even when it comes from school.",
+          "misconception": "Experience can be relevant even when it comes from school."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Claim professional experience you do not have.",
+          "why": "That misrepresents your background.",
+          "misconception": "That misrepresents your background."
+        }
+      ],
+      "principle": "Prepare truthful examples connected to the position’s requirements.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "PRO-D-105",
+      "skill": "professionalism",
+      "family": "professionalism.interview-attire-check",
+      "pattern": "interview-attire-check",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "professionalism:self-representation"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "Your interview includes a short visit to an active workshop. The invitation mentions protective footwear but gives no other dress guidance.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Confirm footwear requirements and interview dress expectations.",
+          "why": "The visit has a safety requirement and an appearance expectation worth confirming.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Assume formal dress shoes satisfy the workshop requirement.",
+          "why": "Formality alone does not establish protective features.",
+          "misconception": "Formality alone does not establish protective features."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Wear your usual school outfit without checking.",
+          "why": "The workshop requirement may still be unmet.",
+          "misconception": "The workshop requirement may still be unmet."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Cancel the workshop visit without discussing it.",
+          "why": "That skips part of the interview without resolving the question.",
+          "misconception": "That skips part of the interview without resolving the question."
+        }
+      ],
+      "principle": "Confirm both dress expectations and safety requirements before an interview site visit.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
     }
   ]
 }

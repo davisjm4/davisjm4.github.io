@@ -1,0 +1,6 @@
+
+# Local reporting configuration
+wrangler.toml
+.dev.vars
+*.sqlite
+*.sqlite-*

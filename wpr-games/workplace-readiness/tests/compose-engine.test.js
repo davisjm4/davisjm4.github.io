@@ -24,9 +24,9 @@ test('content: every kit passes kit validation with no errors', () => {
   const r = K.validateCompose(lib, cx);
   assert.deepEqual(r.errors, []);
 });
-test('content: authored library is untouched and still validates (140 templates, 0 errors)', () => {
+test('content: authored library and topic additions validate', () => {
   const r = V.validateLibrary(lib);
-  assert.equal(lib.templates.length, 140);
+  assert.ok(lib.templates.length >= 140);
   assert.deepEqual(r.errors, []);
 });
 test('content: 12 reusable frameworks, every kit uses one, every framework is used', () => {

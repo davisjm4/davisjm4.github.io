@@ -7,8 +7,8 @@
   <meta name="description" content="Free practice for the 22 Workplace Readiness Skills: short, realistic workplace situations with instant feedback. No accounts needed.">
   <meta name="theme-color" content="#0c1722">
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="css/style.css?v=wr-cx-20261022-1">
-<link rel="stylesheet" href="/cs-games/navigation.css?v=1"></head>
+  <link rel="stylesheet" href="css/style.css?v=wpr-targeted-v1">
+<script>if (location.protocol !== 'file:') document.head.append(Object.assign(document.createElement('link'), { rel: 'stylesheet', href: '/cs-games/navigation.css?v=1' }));</script></head>
 <body>
   <a class="skip" href="#main">Skip to main content</a>
 <div class="ecosystem-nav-row"><nav class="ecosystem-nav" aria-label="Breadcrumb"><a href="/cs-games/">CS Games</a><span aria-hidden="true">›</span><span aria-current="page">Workplace Readiness</span></nav></div>
@@ -16,7 +16,7 @@
     <a class="brand" href="#/" id="brand-link">Workplace Readiness Games</a>
     <nav class="top-nav" aria-label="Primary">
       <a href="#/practice" id="nav-practice">Practice</a>
-      <a href="#/summary" id="nav-summary">Session summary</a>
+      <a href="#/summary" id="nav-summary">Performance</a>
     </nav>
   </header>
 
@@ -33,6 +33,7 @@
         <div class="field"><label for="opt-difficulty">Difficulty</label><select id="opt-difficulty"></select></div>
         <div class="field"><label for="opt-context">Career setting</label><select id="opt-context"></select></div>
       </form>
+      <div id="targeted-options"></div>
       <p id="options-note" class="note" role="status"></p>
       <div class="actions">
         <button type="button" class="btn primary" id="btn-start">Start practice</button>
@@ -50,9 +51,11 @@
     </section>
 
     <section id="view-summary" aria-labelledby="summary-title" hidden>
-      <h1 id="summary-title" tabindex="-1">Session summary</h1>
+      <h1 id="summary-title" tabindex="-1">Performance</h1>
       <div id="summary-body"></div>
+      <div id="readiness-body"></div>
     </section>
+    <section id="assignment-body" hidden aria-label="Teacher assignment"></section>
   </main>
 
   <footer class="site-footer">
@@ -69,14 +72,16 @@
   <script src="js/core/grader.js"></script>
   <script src="js/core/validator.js"></script>
   <script src="js/core/generator.js?v=wr-20261021-19787ca"></script>
-  <script src="js/data/content-bundle.js?v=wr-content-20261021-140"></script>
-  <script src="js/compose/engine.js?v=wr-cx-20261022-1"></script>
-  <script src="js/compose/check.js?v=wr-cx-20261022-1"></script>
-  <script src="js/compose/selector.js?v=wr-cx-20261022-1"></script>
+  <script src="js/data/content-bundle.js?v=wpr-targeted-v1"></script>
+  <script src="js/compose/engine.js?v=wpr-targeted-v1"></script>
+  <script src="js/compose/check.js?v=wpr-targeted-v1"></script>
+  <script src="js/compose/selector.js?v=wpr-targeted-v1"></script>
   <script src="js/data/compose-bundle.js?v=wr-cx-content-20261022-1"></script>
   <script src="js/app/storage.js"></script>
   <script src="js/app/session.js"></script>
   <script src="js/app/ui.js"></script>
-  <script src="js/app/app.js?v=wr-20261022-cx1"></script>
+  <script src="js/app/targeted.js"></script>
+  <script src="js/app/app.js?v=wpr-targeted-v1"></script>
+  <script>if (location.protocol !== 'file:') import('./online/student.mjs');</script>
 </body>
 </html>
