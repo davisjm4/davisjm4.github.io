@@ -588,6 +588,65 @@
         "notes": "Only one note lacks enough information to identify and complete its assigned action.",
         "policyNotNeeded": true
       }
+    },
+    {
+      "id": "RAW-D-101",
+      "skill": "reading-and-writing",
+      "family": "reading-and-writing.business-salutation",
+      "pattern": "business-salutation",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "reading-and-writing:conventions"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A client signs messages as Ms. Rivera. You are writing a first formal reply, and the company guide uses the recipient’s stated title and surname.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Open with Dear Ms. Rivera, then explain your purpose.",
+          "why": "The greeting follows the guide and the title the client uses.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Open with Hey there and jump into the request.",
+          "why": "That does not follow the stated formal greeting convention.",
+          "misconception": "That does not follow the stated formal greeting convention."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Use a different title based on an assumption.",
+          "why": "The client already supplied the title to use.",
+          "misconception": "The client already supplied the title to use."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Skip the greeting because the email address identifies the client.",
+          "why": "The guide still calls for a formal greeting.",
+          "misconception": "The guide still calls for a formal greeting."
+        }
+      ],
+      "principle": "Use the recipient’s stated title and the communication conventions for the situation.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
     }
   ]
 }

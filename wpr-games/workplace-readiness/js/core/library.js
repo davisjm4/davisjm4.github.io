@@ -19,7 +19,7 @@
   /* content: { skills:[], families:[], contexts:[], people:[], templates:[] } */
   function create(content) {
     var lib = {
-      skills: content.skills,
+      skills: content.skills, topics: content.topics || [],
       families: content.families,
       contexts: content.contexts,
       people: content.people,

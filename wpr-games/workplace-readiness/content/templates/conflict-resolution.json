@@ -318,6 +318,301 @@
         "notes": "Natural chain.",
         "policyNotNeeded": true
       }
+    },
+    {
+      "id": "CON-D-101",
+      "skill": "conflict-resolution",
+      "family": "conflict-resolution.manager-priority-disagreement",
+      "pattern": "manager-priority-disagreement",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "conflict-resolution:diplomatic-negotiation"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "Your supervisor asks you to start a new job immediately. An earlier task they assigned is due in twenty minutes. You can finish only one on time.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Describe the conflict and ask the supervisor to confirm which task takes priority.",
+          "why": "The supervisor needs the tradeoff to make an informed decision about both commitments.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Do the newer task and let the old deadline pass quietly.",
+          "why": "That conceals a foreseeable missed commitment.",
+          "misconception": "That conceals a foreseeable missed commitment."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Finish the old task and ignore the new instruction.",
+          "why": "That assumes the priority has not changed.",
+          "misconception": "That assumes the priority has not changed."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Tell the rest of the team the supervisor is disorganized.",
+          "why": "That does not resolve the conflicting deadlines.",
+          "misconception": "That does not resolve the conflicting deadlines."
+        }
+      ],
+      "principle": "Raise priority conflicts with the person who can decide, using facts and a concrete tradeoff.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "CON-D-102",
+      "skill": "conflict-resolution",
+      "family": "conflict-resolution.supervisor-report-route",
+      "pattern": "supervisor-report-route",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "conflict-resolution:when-to-escalate"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "Your supervisor repeatedly sends insulting messages after you asked them to stop. The handbook directs employees to Human Resources when the concern involves their direct supervisor.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Save the relevant messages and use the handbook’s reporting route.",
+          "why": "The stated procedure identifies a channel outside the direct reporting relationship.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Post screenshots in the team chat to gather support.",
+          "why": "Public sharing exposes the messages and bypasses the reporting channel.",
+          "misconception": "Public sharing exposes the messages and bypasses the reporting channel."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Ask the supervisor to submit the complaint about themselves.",
+          "why": "The handbook names a different route for this situation.",
+          "misconception": "The handbook names a different route for this situation."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Wait until another employee complains first.",
+          "why": "The procedure allows you to report the documented behavior now.",
+          "misconception": "The procedure allows you to report the documented behavior now."
+        }
+      ],
+      "principle": "Use the designated escalation route and report observable behavior with relevant evidence.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "CON-D-103",
+      "skill": "conflict-resolution",
+      "family": "conflict-resolution.supervisor-criticism",
+      "pattern": "supervisor-criticism",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "conflict-resolution:performance-concerns"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "During a private check-in, your supervisor says your handoffs are incomplete. You want to improve but do not know which information is missing.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Ask for an example and confirm expectations.",
+          "why": "An example turns broad criticism into specific expectations you can act on.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Defend every past handoff before asking questions.",
+          "why": "Defending the past does not clarify what needs to change.",
+          "misconception": "Defending the past does not clarify what needs to change."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Tell coworkers the criticism was unfair.",
+          "why": "Discussing it with peers does not clarify the expectation.",
+          "misconception": "Discussing it with peers does not clarify the expectation."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Promise to write longer handoffs immediately.",
+          "why": "Length is not the same as including the missing information.",
+          "misconception": "Length is not the same as including the missing information."
+        }
+      ],
+      "principle": "Receive feedback professionally by asking for a concrete example and confirming the next step.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "CON-D-104",
+      "skill": "conflict-resolution",
+      "family": "conflict-resolution.unequal-workload",
+      "pattern": "unequal-workload",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "conflict-resolution:performance-concerns"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "Your team agreed that two coworkers would split end-of-shift checks. You have finished both sets three times because the other person leaves without checking in.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Privately discuss the agreed split and propose a reliable handoff.",
+          "why": "A factual discussion can identify a scheduling problem and produce a workable agreement.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Stop doing your own checks until the other person notices.",
+          "why": "That creates additional unfinished work.",
+          "misconception": "That creates additional unfinished work."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Announce that your coworker is lazy at the next meeting.",
+          "why": "The label assumes motive and makes problem solving harder.",
+          "misconception": "The label assumes motive and makes problem solving harder."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Keep doing both sets without mentioning the pattern.",
+          "why": "That leaves the workload problem unresolved.",
+          "misconception": "That leaves the workload problem unresolved."
+        }
+      ],
+      "principle": "Address an uneven workload with specific observations and a clear request.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "CON-D-105",
+      "skill": "conflict-resolution",
+      "family": "conflict-resolution.supervisor-work-credit",
+      "pattern": "supervisor-work-credit",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "conflict-resolution:diplomatic-negotiation"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "Your supervisor’s team update credits another person for a section you completed. The project log lists each contributor. The supervisor asks for corrections before the update goes to the client.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Privately share the relevant log entry and request a correction.",
+          "why": "The log supports the correction, and a private note gives the supervisor a chance to fix it.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Reply to the whole team accusing the supervisor of favoritism.",
+          "why": "The attribution error does not establish intent.",
+          "misconception": "An inaccurate credit proves bias."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Wait until the client sees the update before requesting a correction.",
+          "why": "The supervisor is accepting corrections before the update goes out.",
+          "misconception": "Concerns should wait until they affect a customer."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Remove the other contributor from the project log before responding.",
+          "why": "The log should accurately preserve all contributions.",
+          "misconception": "Changing the evidence is an appropriate way to correct a message."
+        }
+      ],
+      "principle": "Address an attribution error privately, using verifiable work records and a specific correction.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
     }
   ]
 }

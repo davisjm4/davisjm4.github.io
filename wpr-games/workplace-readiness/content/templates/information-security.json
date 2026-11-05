@@ -466,6 +466,124 @@
         "notes": "Procedure stated in scenario; no specific technical or legal claims."
       },
       "alternatesReviewed": true
+    },
+    {
+      "id": "ISE-D-101",
+      "skill": "information-security",
+      "family": "information-security.mfa-unexpected-prompt",
+      "pattern": "mfa-unexpected-prompt",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-security:security-procedures"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A work account sends a sign-in approval request while you are not signing in. Your organization has a help desk for suspected account activity.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Reject the request and report it to the help desk.",
+          "why": "Approving an unexpected prompt can grant someone else access.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Approve it to dismiss the notification.",
+          "why": "Approval authorizes the sign-in attempt.",
+          "misconception": "Approval authorizes the sign-in attempt."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Ask a coworker to approve it from their phone.",
+          "why": "They cannot verify that you started the sign-in.",
+          "misconception": "They cannot verify that you started the sign-in."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Post a screenshot with the account details in a public channel.",
+          "why": "That exposes account information and bypasses the reporting route.",
+          "misconception": "That exposes account information and bypasses the reporting route."
+        }
+      ],
+      "principle": "Approve sign-in prompts only when you initiated the sign-in and recognize its details.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "ISE-D-102",
+      "skill": "information-security",
+      "family": "information-security.credential-sharing",
+      "pattern": "credential-sharing",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-security:security-procedures"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A teammate needs access to a scheduling app, but their account was not provisioned. The company requires separate named accounts.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Ask the administrator to provision individual access.",
+          "why": "Individual access preserves permissions and accountability.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Send your password in a direct message.",
+          "why": "A private message still shares your credentials.",
+          "misconception": "A private message still shares your credentials."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Leave your unlocked workstation with them.",
+          "why": "They would act under your account.",
+          "misconception": "They would act under your account."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Create a shared account without approval.",
+          "why": "That bypasses the stated provisioning rule.",
+          "misconception": "That bypasses the stated provisioning rule."
+        }
+      ],
+      "principle": "Use approved account provisioning to provide access without sharing credentials.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
     }
   ]
 }

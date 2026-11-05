@@ -259,7 +259,11 @@ test('privacy: stored data holds only practice statistics', T, async () => {
   const raw = await p.evaluate(() => localStorage.getItem('wrg.v1'));
   const d = JSON.parse(raw);
   assert.deepEqual(Object.keys(d).sort(), ['activeMs', 'filters', 'index', 'seed', 'startedAt', 'stats', 'updatedAt', 'version']);
-  assert.equal(await p.evaluate(() => Object.keys(localStorage).length), 1, 'a single storage key');
+  assert.deepEqual(await p.evaluate(() => Object.keys(localStorage).sort()), ['wrg.readiness.v1','wrg.v1']);
+  const readiness = await p.evaluate(() => JSON.parse(localStorage.getItem('wrg.readiness.v1')));
+  assert.deepEqual(Object.keys(readiness).sort(), ['marks','practice','reports','settings','version']);
+  assert.deepEqual(readiness.reports, []);
+  assert.ok(Object.values(readiness.practice).every(values => values.length === 1 && values[0] === 1));
   assert.equal(await p.evaluate(() => document.cookie), '', 'no cookies');
   await closePage(p);
 });

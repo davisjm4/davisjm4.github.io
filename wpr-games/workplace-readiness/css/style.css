@@ -157,3 +157,33 @@ details summary { cursor: pointer; color: var(--muted); min-height: 2.5rem; disp
 .platform-home:hover{color:#62dbc5}
 .platform-home:focus-visible{outline:2px solid #62dbc5;outline-offset:3px}
 .site-header .platform-home{margin:0}
+
+.target-options { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: .6rem 0; }
+.target-options label { display: inline-flex; gap: .3rem; align-items: center; padding: .25rem 0; }
+.target-options [hidden], .target-options[hidden] { display: none; }
+#targeted-options details { margin-bottom: .65rem; }
+
+.wpr-assignment #view-home, .wpr-assignment #view-practice, .wpr-assignment #view-summary { display: none; }
+.wpr-assignment .top-nav { display: none; }
+.wpr-pre { white-space: pre-wrap; }
+.wpr-answer { display: block; padding: .65rem; cursor: pointer; }
+.wpr-answer:focus-within { outline: 2px solid currentColor; }
+.wpr-table-scroll { position: relative; width: 100%; max-width: 100%; overflow-x: auto; margin: 1rem 0; }
+.wpr-table-scroll table { width: 100%; border-collapse: collapse; }
+.wpr-table-scroll caption { text-align: left; font-weight: 700; margin-bottom: .6rem; }
+.wpr-table-scroll :is(th,td) { text-align: left; vertical-align: top; padding: .55rem; border-bottom: 1px solid #64768a; }
+.wpr-controls { display: flex; gap: .7rem; flex-wrap: wrap; align-items: center; }
+.wpr-controls input[type=file] { max-width: min(100%, 16rem); }
+.wpr-controls input[type=number] { width: 4.5rem; }
+.wpr-status { display: inline-block; border-radius: .25rem; padding: .2rem .4rem; color: #101920; font-weight: 650; }
+.wpr-status.needs { background: #ffd1d0; }
+.wpr-status.developing { background: #ffe6a2; }
+.wpr-status.ready { background: #a7e8c0; }
+.wpr-status.unknown { background: #d5dce5; }
+.wpr-marks label { display: block; min-width: 9rem; }
+#readiness-body details { margin: .65rem 0; }
+@media print {
+  .top-nav, .ecosystem-nav-row, .site-footer, .wpr-controls, .actions { display: none !important; }
+  body, .ticket { background: white !important; color: black !important; }
+  .wpr-table-scroll { overflow: visible; }
+}

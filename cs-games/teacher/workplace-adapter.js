@@ -22,7 +22,7 @@ function reject(reason) {
 export function getWorkplaceAdapterDiagnostics() {
   return { attempted: diagnostics.attempted, accepted: diagnostics.accepted, rejected: { ...diagnostics.rejected } };
 }
-function getHybrid() {
+export function getHybrid() {
   if (hybrid) return hybrid;
   if (!W?.content || !W?.composeContent || !W?.selector || !W?.library) throw new Error("Workplace Readiness engine assets are unavailable.");
   const library = W.library.create(W.content);
@@ -63,7 +63,12 @@ function baseItem(challenge, modeId, points, fields) {
     context: challenge.scenario || "", prompt: challenge.prompt || MODE_NAMES[modeId],
     passage: fields.passage || "", response: fields.response || "",
     choices, correctIndex: fields.correctIndex, correctAnswer: choices[fields.correctIndex],
-    explanation: fields.explanation, points,
+    explanation: fields.explanation, points, skillId: challenge.skill, tags: challenge.tags || [],
+    conceptIds: challenge.concepts || [], family: challenge.family,
+    feedback: fields.responses.map(response => {
+      const result = W.grader.grade(challenge, response);
+      return { lines: result.feedback.lines, misconception: challenge.key.options?.[response.optionId]?.misconception || '' };
+    }),
     reasoningSignature: `workplace-reasoning|${semantic}`,
     configurationSignature: `workplace-config|${modeId}|${semantic}`,
     signature: `workplace-exact|${exact}|key:${fields.correctIndex}`
@@ -78,7 +83,7 @@ function adaptChoice(challenge, modeId, points) {
   if (best < 0 || !graderAcceptsExactly(challenge, responses, best)) return null;
   const result = W.grader.grade(challenge, responses[best]);
   const explanation = [challenge.key.options[challenge.key.bestId]?.why, challenge.principle].filter(Boolean).join(" ") || result.feedback?.lines?.[0]?.text;
-  return baseItem(challenge, modeId, points, { choices, correctIndex: best, explanation });
+  return baseItem(challenge, modeId, points, { choices, correctIndex: best, explanation, responses });
 }
 function numberedDocument(challenge) {
   const doc = challenge.doc;
@@ -101,7 +106,7 @@ function adaptFind(challenge, points) {
   const responses = selected.map(c => ({ segmentId: c.id }));
   if (!graderAcceptsExactly(challenge, responses, correctIndex)) return null;
   const explanation = [challenge.key.segments[problemId]?.note, challenge.principle].filter(Boolean).join(" ");
-  return baseItem(challenge, "find", points, { choices, correctIndex, explanation, passage: numberedDocument(challenge) });
+  return baseItem(challenge, "find", points, { choices, correctIndex, explanation, passage: numberedDocument(challenge), responses });
 }
 function adaptOrder(challenge, points) {
   const steps = challenge.steps || [], ids = steps.map(step => step.id);
@@ -123,7 +128,7 @@ function adaptOrder(challenge, points) {
   if (!graderAcceptsExactly(challenge, responses, correctIndex)) return null;
   const response = steps.map((step, i) => `Sentence ${i + 1}: ${step.text}`).join("\n");
   const explanation = challenge.principle || "A valid sequence places every step after the steps it depends on.";
-  return baseItem(challenge, "order", points, { choices, correctIndex, explanation, response });
+  return baseItem(challenge, "order", points, { choices, correctIndex, explanation, response, responses });
 }
 export function generateWorkplaceAssessmentItem(modeId, difficulty, seed, points, filters = {}) {
   diagnostics.attempted++;
@@ -142,7 +147,7 @@ export function generateWorkplaceAssessmentItem(modeId, difficulty, seed, points
     const challenge = session.next();
     if (challenge.mode !== modeId || (diff !== "mixed" && challenge.difficulty !== diff)) return reject("filter-contract-mismatch");
     if (W.selector.validate(wh, challenge)) return reject("source-validation-failed");
-    const item = modeId === "decision" || modeId === "nextstep" ? adaptChoice(challenge, modeId, points) : modeId === "find" ? adaptFind(challenge, points) : adaptOrder(challenge, points);
+    const item = adaptWorkplaceChallenge(challenge, points);
     if (!item) return reject("ambiguous-or-unverifiable-answer-set");
     diagnostics.accepted++;
     return item;
@@ -154,4 +159,10 @@ export function workplaceCatalog() {
   if (!W?.content) return { skills: [], contexts: [] };
   return { skills: W.content.skills.map(({ id, name, number, category }) => ({ id, name, number, category })),
     contexts: W.content.contexts.map(({ id, name, label }) => ({ id, name: name || label || id })) };
+}
+
+export function adaptWorkplaceChallenge(challenge, points = 1) {
+  const mode = challenge.mode;
+  return mode === "decision" || mode === "nextstep" ? adaptChoice(challenge, mode, points)
+    : mode === "find" ? adaptFind(challenge, points) : adaptOrder(challenge, points);
 }

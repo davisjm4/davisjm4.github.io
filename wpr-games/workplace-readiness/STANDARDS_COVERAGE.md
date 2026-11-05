@@ -1,5 +1,7 @@
 # Standards coverage
 
+**Historical baseline.** The counts below describe the authored catalog before targeted practice. See [Targeted practice coverage](reports/TOPIC_COVERAGE.md) for the new topic and subtopic catalog.
+
 Workplace Readiness Games is an **independent practice resource** aligned to the publicly published Workplace Readiness Skills (WRS) module pages of the Career and Technical Consortium of States (CTECS), reviewed 2026-10-18 at <https://wrs.ctecs.org/practice/>. It is not an official CTECS product, uses no official, retired or purchased assessment questions, and does not guarantee results on any assessment. All scenarios, options and feedback are original.
 
 The module pages for each skill list the concepts a student should be able to demonstrate. Each is recorded here as a stable **concept ID** (`skill-id:concept`), and every template declares the concepts it assesses. The validator rejects templates that cite unknown concepts, so this mapping is checked, not decorative.
@@ -382,4 +384,3 @@ Source module: <https://wrs.ctecs.org/practice/workplace-safety/>
 | Following emergency protocols such as evacuation routes | SAF-N-001, SAF-O-002 |
 
 Reasoning families: Pause work and report a newly found hazard; Sequence for handling a hazard; Refusing to sign off unperformed safety checks; Wearing required protective equipment; Responding to an alarm; Evacuation order; An unlabeled container; Reading a spill clean-up procedure; Cleaning after a minor injury.
-
