@@ -22,7 +22,7 @@ export function sqliteAdapter(db) {
 }
 const root = fileURLToPath(new URL('../../../',import.meta.url));
 const types = { '.html':'text/html; charset=utf-8','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml' };
-export async function startDev({ port = 0, filename = ':memory:', teacherTokens, submissionSecret = randomBytes(32).toString('hex') }) {
+export async function startDev({ port = 0, filename = ':memory:', teacherTokens, submissionSecret = randomBytes(32).toString('hex'), pathwayAdapters = {} }) {
   const db = new DatabaseSync(filename);
   db.exec(readFileSync(new URL('./schema.sql',import.meta.url),'utf8'));
   const DB = sqliteAdapter(db);
@@ -40,7 +40,7 @@ export async function startDev({ port = 0, filename = ':memory:', teacherTokens,
       try {
         const request = new Request(url,{method:req.method,headers:req.headers,
           ...(['GET','HEAD'].includes(req.method)?{}:{body:Readable.toWeb(req),duplex:'half'})});
-        const response = await worker.fetch(request,{DB,verifyLocalTeacher,SUBMISSION_SECRET:submissionSecret,ALLOWED_ORIGINS:url.origin+',http://localhost:'+server.address().port});
+        const response = await worker.fetch(request,{DB,...pathwayAdapters,verifyLocalTeacher,SUBMISSION_SECRET:submissionSecret,ALLOWED_ORIGINS:url.origin+',http://localhost:'+server.address().port});
         res.writeHead(response.status,Object.fromEntries(response.headers));
         return res.end(await response.text());
       } catch {

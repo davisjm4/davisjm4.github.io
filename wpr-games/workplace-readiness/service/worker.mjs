@@ -1,3 +1,4 @@
+import { pathwayRoute } from './pathways.mjs';
 import { validateSnapshot, publicAssignment, dimensions, answerReport, grade, MIN_CLASS, RETENTION_DAYS } from '../online/model.mjs';
 import { teacherIdentity } from './auth.mjs';
 const DAY = 86400000;
@@ -15,8 +16,8 @@ function open(row, a, now) {
   if (row.expires <= now || (a.closes && a.closes <= now)) fail(410,'This assignment is closed.');
 }
 
-async function body(request) {
-  if (Number(request.headers.get('content-length')) > 500000) fail(413,'Request is too large.');
+async function body(request, limit = 500000) {
+  if (Number(request.headers.get('content-length')) > limit) fail(413,'Request is too large.');
   const reader = request.body?.getReader();
   if (!reader) fail(400,'Request body is required.');
   let size = 0, json = '';
@@ -25,7 +26,7 @@ async function body(request) {
     const { done, value } = await reader.read();
     if (done) break;
     size += value.byteLength;
-    if (size > 500000) { await reader.cancel(); fail(413,'Request is too large.'); }
+    if (size > limit) { await reader.cancel(); fail(413,'Request is too large.'); }
     json += decoder.decode(value,{stream:true});
   }
   try { return JSON.parse(json+decoder.decode()); } catch { fail(400,'Invalid JSON.'); }
@@ -64,6 +65,7 @@ async function classReport(db, row, a) {
 }
 
 async function route(request, env, path) {
+  if (path.startsWith('/pathways/')) return pathwayRoute(request,env,path,{body:request=>body(request,1800000),teacherIdentity});
   const now = Date.now(), db = env.DB, method = request.method;
   const [group, id, action] = path.split('/').filter(Boolean);
   if (group === 'teacher') {

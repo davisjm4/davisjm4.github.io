@@ -1,0 +1,28 @@
+✔ graph reuses registries and every node represents an objective (1.592229ms)
+✔ school rotation differs from class meetings; PD, nonrotation, weekday and shortened overrides (1.824979ms)
+✔ CSV quoting, import confirmation, exact early-release minutes, ICS exclusive end (11.100087ms)
+✔ protected windows use only previous skills and shift instruction; quiz minutes and exam preserved (16.575003ms)
+✔ insufficient time keeps every required node and reports alternatives (3.921995ms)
+✔ reordering, independent class schedules, extending exam and recalculating remaining days (9.91251ms)
+✔ prerequisites are respected and cycles rejected (1.891709ms)
+✔ pacing distinguishes overdue insufficient evidence from low proficiency; moving target preserves award (1.940372ms)
+✔ focused and mixed evidence credit the same skills with coverage, no page visits or retries (0.417807ms)
+✔ CSV/ICS contain only actual class meetings and same protected sessions (15.758478ms)
+✔ future map/list contract comes directly from checkpoint order; removing nodes leaves evidence intact (3.54526ms)
+✔ independent cached sessions update at safe boundaries, offline evidence survives and IDs deduplicate (1.863737ms)
+✔ bulk review windows retain existing assessments unless teacher explicitly overrides (1.168373ms)
+✔ node completion remains distinct from a revised 0–4 pacing target (2.233582ms)
+✔ old curriculum descriptors remain available to a future graph release (2.043427ms)
+✔ invalid imported dates, unsupported time zones, malformed policies and excess allocation rejected (2.562295ms)
+✔ question metadata uses assessed skill in Mixed Practice and rejects untrusted automatic credit (3.71787ms)
+✔ moving the exam earlier recalculates automatic targets and preserves pinned targets with a warning (6.81028ms)
+Evidence: two independent synthetic student HTTP sessions, isolated class and teacher, four immutable revisions, stale-edit protection, rollback and unchanged learning evidence.
+✔ Worker/D1 pathway lifecycle across teachers, classes and independent synthetic students (1085.38635ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1284.159828
