@@ -10,7 +10,7 @@ export function createPathway(graph,{id=crypto.randomUUID(),classId=crypto.rando
       standardRefs:n.standardRefs,primaryObjectives:n.primaryObjectives,targetDate:null,targetLocked:false,required:true,policyId:provisionalPolicy.id,policyVersion:1,
       expectedMastery:null,practice:n.practice,prerequisites:n.prerequisites,minutes:n.estimatedMinutes,revision:0})),sessions:[],warnings:[]};
 }
-export function validatePathway(p,graph,{validateSessions=true}={}) {
+export function validatePathway(p,graph,{validateSessions=true,validateTargets=true}={}) {
   if(!p||p.schemaVersion!==1||typeof p.id!=='string'||p.id.length>150||typeof p.classId!=='string'||p.classId.length>150||!p.title?.trim()||p.title.length>120)throw new Error('Invalid pathway identity.');
   if(!graph.courses.some(c=>c.id===p.courseId)||p.graphVersion!==graph.version&&p.curriculumSnapshot?.version!==p.graphVersion)throw new Error('Unknown course or graph version.');
   if(!dateOK(p.examDate)||p.examDate<p.calendar.start||p.examDate>p.calendar.end)throw new Error('Exam date must fall within the school calendar.');
@@ -24,7 +24,7 @@ export function validatePathway(p,graph,{validateSessions=true}={}) {
   if(new Set(p.policies.map(x=>x.id+'@'+x.version)).size!==p.policies.length)throw new Error('Policy versions must be unique.');
   for(const policy of p.policies){if(!Number.isInteger(policy.version)||policy.version<1||!policy.id||typeof policy.provisional!=='boolean'||!policy.coverage||Array.isArray(policy.coverage)||Object.values(policy.coverage).some(n=>!Number.isInteger(n)||n<0)||(policy.scoreTarget!==null&&(!Number.isFinite(policy.scoreTarget)||policy.scoreTarget<0||policy.scoreTarget>4))||(policy.minimumQuestions!==null&&(!Number.isInteger(policy.minimumQuestions)||policy.minimumQuestions<1))||(policy.accuracy!==null&&(!Number.isFinite(policy.accuracy)||policy.accuracy<0||policy.accuracy>1)))throw new Error('Invalid mastery policy.');}
   for(const c of p.checkpoints){if(!nodes.has(c.nodeId)||c.pathwayId!==p.id||c.areaId!==nodes.get(c.nodeId).areaId||typeof c.required!=='boolean'||!Number.isFinite(c.minutes)||c.minutes<1||c.minutes>10000||!p.policies.some(x=>x.id===c.policyId&&x.version===c.policyVersion)||c.targetDate!==null&&!dateOK(c.targetDate))throw new Error('Invalid checkpoint.');
-    if(c.targetDate&&(c.targetDate<p.calendar.start||c.targetDate>p.examDate))throw new Error('Checkpoint target is outside the planning window.');
+    if(validateTargets&&c.targetDate&&(c.targetDate<p.calendar.start||c.targetDate>p.calendar.end))throw new Error('Checkpoint target is outside the planning window.');
     if(c.expectedMastery!==null&&(!Number.isFinite(c.expectedMastery)||c.expectedMastery<0||c.expectedMastery>4))throw new Error('Mastery targets use the 0–4 scale.');
     if(!Array.isArray(c.prerequisites)||c.prerequisites.some(id=>!nodes.has(id)))throw new Error('Unknown prerequisite.');}
   const visiting=new Set(),visited=new Set();function visit(id){if(visiting.has(id))throw new Error('Prerequisite cycle.');if(visited.has(id))return;visiting.add(id);for(const d of p.checkpoints.find(c=>c.nodeId===id)?.prerequisites||[])visit(d);visiting.delete(id);visited.add(id);}p.sequence.forEach(visit);

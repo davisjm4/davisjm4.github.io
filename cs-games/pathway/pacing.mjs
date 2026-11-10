@@ -1,7 +1,7 @@
 import {meetings} from './calendar.mjs';
 import {clone,validatePathway} from './model.mjs';
 export function generatePacing(input,graph,{from=input.calendar.start}={}) {
-  validatePathway(input,graph,{validateSessions:false});const p=clone(input),warnings=[],byNode=new Map(p.checkpoints.map(c=>[c.nodeId,c]));
+  validatePathway(input,graph,{validateSessions:false,validateTargets:false});const p=clone(input),warnings=[],byNode=new Map(p.checkpoints.map(c=>[c.nodeId,c]));
   const nodes=new Map([...(p.curriculumSnapshot?.nodes||graph.nodes),...(p.customNodes||[])].map(n=>[n.id,n]));
   for(const c of p.checkpoints)for(const dep of c.prerequisites)if(!byNode.has(dep))warnings.push('Prerequisite '+dep+' is outside this plan. Assess prior knowledge or add the missing skill.');
   const sequence=[],seen=new Set();function add(id){if(seen.has(id))return;seen.add(id);for(const d of byNode.get(id)?.prerequisites||[])if(byNode.has(d))add(d);sequence.push(id);}p.sequence.forEach(add);
@@ -39,7 +39,7 @@ export function generatePacing(input,graph,{from=input.calendar.start}={}) {
   const deficit=unscheduled.filter(c=>c.required).reduce((n,c)=>n+c.remainingMinutes,0);
   if(deficit)warnings.push('Required content needs '+deficit+' additional minutes. Extend the exam date, increase meeting minutes, revise time estimates, or explicitly make selected nodes optional. No requirements have been removed.');
   if(!all.some(m=>m.date===p.examDate))warnings.push('The target exam date is not a class meeting. Choose a meeting date to reserve an exam session.');
-  for(const c of p.checkpoints)if(c.targetLocked&&c.targetDate){const last=sessions.filter(s=>s.allocations?.some(a=>a.nodeId===c.nodeId)).at(-1);if(last&&last.date>c.targetDate)warnings.push('Checkpoint '+c.nodeId+' is due before its planned instruction finishes.');}
+  for(const c of p.checkpoints)if(c.targetLocked&&c.targetDate){if(c.targetDate>p.examDate)warnings.push('Checkpoint '+c.nodeId+' is scheduled after the target exam. Move its target or extend the exam date.');const last=sessions.filter(s=>s.allocations?.some(a=>a.nodeId===c.nodeId)).at(-1);if(last&&last.date>c.targetDate)warnings.push('Checkpoint '+c.nodeId+' is due before its planned instruction finishes.');}
   p.sessions=sessions;p.warnings=warnings;p.capacity={meetings:all.length,totalMinutes:all.reduce((n,m)=>n+m.minutes,0),instructionMinutes,protectedMinutes,deficit,unscheduled};return p;
 }
 const quote=s=>'"'+String(s??'').replaceAll('"','""')+'"';

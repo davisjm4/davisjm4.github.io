@@ -54,7 +54,7 @@ All automated fixtures use synthetic teachers and students. The HTTP integration
 | Existing platform | Existing CSP readiness tests (3,309 bridge assertions and 411 model assertions), WPR online tests, catalog and unified navigation tests pass |
 | Browser | Synthetic A-day class meeting count, protected mixed-practice range, preview gate, local revision, student published preview and independent copy verified in Chrome |
 
-Automated pathway suite: **18 tests passed**, including one multi-step HTTP integration scenario. Existing WPR online suite: **4 tests passed**. Existing readiness integration/model and catalog/navigation regressions passed. CI workflow is included at `.github/workflows/class-pathway-check.yml`.
+Automated pathway suite: **19 tests passed**, including one multi-step HTTP integration scenario. Existing WPR online suite: **4 tests passed**. Existing readiness integration/model and catalog/navigation regressions passed. CI workflow is included at `.github/workflows/class-pathway-check.yml`.
 
 ## Deliberate boundaries
 
