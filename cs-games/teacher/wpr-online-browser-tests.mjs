@@ -26,9 +26,13 @@ async function a11y(page,selector) {
 }
 test('teacher publishes exact three-topic diagnostic, student takes it, teacher links class remediation', {timeout:90000}, async t=>{
   const {url,server,db}=await startDev({teacherTokens:{teacher:token}});
-  t.after(()=>{server.close();db.close();});
-  const browser=await launch();
-  t.after(()=>browser.close());
+  let browser;
+  t.after(async()=>{
+    await browser?.close();
+    await new Promise(resolve=>server.close(resolve));
+    db.close();
+  });
+  browser=await launch();
   const teacher=await browser.newPage(), studentContext=await browser.createBrowserContext();
   const student=await studentContext.newPage();
   await student.setViewport({width:360,height:780});
@@ -119,5 +123,107 @@ test('teacher publishes exact three-topic diagnostic, student takes it, teacher 
   await exactButton(teacher,'Generate / regenerate assessment');
   await exactButton(teacher,'Publish online assignment');
   assert.equal(await teacher.$eval('#download',e=>e.textContent),'Download Canvas QTI ZIP');
+  assert.deepEqual(errors,[]);
+});
+
+test('a student joins, practices offline, restores on another device and leaves guest history untouched', {timeout:90000}, async t=>{
+  const {url,server,db}=await startDev({teacherTokens:{teacher:token}});
+  let browser;
+  t.after(async()=>{
+    await browser?.close();
+    await new Promise(resolve=>server.close(resolve));
+    db.close();
+  });
+  browser=await launch();
+  const teacher=await browser.newPage();
+  const first=await (await browser.createBrowserContext()).newPage();
+  const second=await (await browser.createBrowserContext()).newPage();
+  const errors=[];
+  for(const p of [teacher,first,second]) p.on('pageerror',e=>errors.push(e.message));
+  await first.setViewport({width:360,height:780,isMobile:true,hasTouch:true});
+  const wpr=url+'/wpr-games/workplace-readiness/';
+  const target='?practice=1&topics=attire-ppe&modes=decision';
+
+  await teacher.goto(url+'/cs-games/teacher/',{waitUntil:'load'});
+  await teacher.type('[name="teacher-key"]',token);
+  await exactButton(teacher,'Sign in to development service');
+  await wait(teacher,'#wpr-teacher-profiles [name="class-title"]');
+  await teacher.type('[name="class-title"]','Period 5');
+  await exactButton(teacher,'Create profile class');
+  const invite=await (await wait(teacher,'#wpr-teacher-profiles a[href*="#enroll="]')).evaluate(x=>x.href);
+  await teacher.waitForFunction(()=>document.querySelector('[name="profileClassId"]')?.options.length===2);
+  assert.equal(await teacher.$eval('[name="profileClassId"]',e=>e.value),'');
+
+  const guestStats=()=>first.evaluate(()=>JSON.parse(localStorage.getItem('wrg.v1')).stats);
+  await first.goto(wpr+target,{waitUntil:'load'});
+  await exactButton(first,'Start shared practice');
+  await wait(first,'.choice[role="radio"]');
+  await first.tap('.choice[role="radio"]');
+  await first.tap('#btn-check');
+  const guest=await guestStats();
+  assert.equal(guest.completed,1);
+  await first.goto(invite,{waitUntil:'load'});
+  await exactButton(first,'Enroll in this class');
+  const recovery=await (await wait(first,'.wpr-profile-secret')).evaluate(e=>e.textContent);
+  await Promise.all([first.waitForNavigation({waitUntil:'load'}),exactButton(first,'I saved my recovery credential')]);
+  const id=await first.evaluate(()=>WRG.profileDevice.identity.id);
+  await first.goto(wpr+target,{waitUntil:'load'});
+  await exactButton(first,'Start shared practice');
+  await wait(first,'.choice[role="radio"]');
+  await first.setOfflineMode(true);
+  await first.tap('.choice[role="radio"]');
+  await first.tap('#btn-check');
+  await first.waitForFunction(()=>Object.keys(localStorage).some(k=>k.includes('.outbox.')));
+  assert.equal(db.prepare('SELECT COUNT(*) AS n FROM performance_events').get().n,0);
+  await first.setOfflineMode(false);
+  await first.waitForFunction(()=>!Object.keys(localStorage).some(k=>k.includes('.outbox.')));
+  assert.equal(db.prepare('SELECT COUNT(*) AS n FROM performance_events').get().n,1);
+  assert.deepEqual(await guestStats(),guest);
+
+  await second.goto(wpr,{waitUntil:'load'});
+  await (await wait(second,'#student-profile summary')).click();
+  await second.type('#student-profile [name="id"]',id);
+  await second.type('#student-profile [name="recovery"]',recovery);
+  await Promise.all([second.waitForNavigation({waitUntil:'load'}),exactButton(second,'Restore profile','#student-profile')]);
+  await (await wait(second,'#student-profile summary')).click();
+  await exactButton(second,'View synced progress','#student-profile');
+  await wait(second,'#profile-progress table');
+  assert.match(await second.$eval('#profile-progress',e=>e.textContent),/Practice scores|1\/1|0\/1/);
+  assert.match(await second.$eval('#profile-progress',e=>e.textContent),/Attire/);
+  await a11y(second,'#student-profile');
+  await exactButton(teacher,'Open profile class','#wpr-teacher-profiles');
+  await exactButton(teacher,'View progress','#wpr-teacher-profiles');
+  await wait(teacher,'#wpr-profile-report table');
+  assert.match(await teacher.$eval('#wpr-profile-report',e=>e.textContent),new RegExp(id));
+  const classId=db.prepare('SELECT class_id FROM student_profiles WHERE id=?').get(id).class_id;
+  await teacher.select('[name="profileClassId"]',classId);
+  await teacher.select('#wpr-quotas select','topic:attire-ppe');
+  await teacher.evaluate(()=>{
+    document.querySelector('[name="quota-count"]').value='3';
+    document.querySelector('#wpr-builder-form [name="shuffle"]').checked=false;
+  });
+  await exactButton(teacher,'Generate / regenerate assessment');
+  await exactButton(teacher,'Publish online assignment');
+  const link=await (await wait(teacher,'a[href*="?assignment="]')).evaluate(x=>x.href);
+  const assignmentId=new URL(link).searchParams.get('assignment');
+  const assignment=JSON.parse(db.prepare('SELECT snapshot FROM assignments WHERE id=?').get(assignmentId).snapshot);
+  assert.equal(assignment.profileClassId,classId);
+  await second.goto(link,{waitUntil:'load'});
+  await exactButton(second,'Start assessment');
+  for (const q of assignment.questions) {
+    await wait(second,'#assignment-body .wpr-answer');
+    await second.click('#assignment-body input[value="'+q.correctIndex+'"]');
+    await exactButton(second,'Save answer','#assignment-body');
+  }
+  await exactButton(second,'Submit and view results');
+  await second.waitForFunction(()=>document.querySelector('#assignment-body h1')?.textContent.endsWith(' results'));
+  assert.match(await second.$eval('#assignment-body',e=>e.textContent),/3 correct of 3 attempted/);
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM performance_events WHERE kind='assessment'").get().n,1);
+
+  await (await wait(first,'#student-profile summary')).click();
+  await Promise.all([first.waitForNavigation({waitUntil:'load'}),exactButton(first,'Sign out on this device','#student-profile')]);
+  assert.deepEqual(await first.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('wrg.profile.'))),[]);
+  assert.deepEqual(await guestStats(),guest);
+  assert.equal(await second.evaluate(()=>WRG.profileDevice.identity.id),id);
   assert.deepEqual(errors,[]);
 });

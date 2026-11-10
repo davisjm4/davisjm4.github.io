@@ -25,6 +25,7 @@ const types = { '.html':'text/html; charset=utf-8','.js':'text/javascript','.mjs
 export async function startDev({ port = 0, filename = ':memory:', teacherTokens, submissionSecret = randomBytes(32).toString('hex') }) {
   const db = new DatabaseSync(filename);
   db.exec(readFileSync(new URL('./schema.sql',import.meta.url),'utf8'));
+  db.exec(readFileSync(new URL('./profiles.sql',import.meta.url),'utf8'));
   const DB = sqliteAdapter(db);
   const verifyLocalTeacher = token => {
     const supplied = Buffer.from(token);
@@ -34,13 +35,14 @@ export async function startDev({ port = 0, filename = ':memory:', teacherTokens,
     }
     return null;
   };
+  let origin;
   const server = createServer(async (req,res) => {
-    const url = new URL(req.url,'http://127.0.0.1:' + server.address().port);
+    const url = new URL(req.url,origin);
     if (url.pathname.startsWith('/api/wpr/')) {
       try {
         const request = new Request(url,{method:req.method,headers:req.headers,
           ...(['GET','HEAD'].includes(req.method)?{}:{body:Readable.toWeb(req),duplex:'half'})});
-        const response = await worker.fetch(request,{DB,verifyLocalTeacher,SUBMISSION_SECRET:submissionSecret,ALLOWED_ORIGINS:url.origin+',http://localhost:'+server.address().port});
+        const response = await worker.fetch(request,{DB,verifyLocalTeacher,ENABLE_STUDENT_PROFILES:'1',SUBMISSION_SECRET:submissionSecret,ALLOWED_ORIGINS:origin+',http://localhost:'+url.port});
         res.writeHead(response.status,Object.fromEntries(response.headers));
         return res.end(await response.text());
       } catch {
@@ -58,8 +60,11 @@ export async function startDev({ port = 0, filename = ':memory:', teacherTokens,
       createReadStream(file).pipe(res);
     } catch {res.writeHead(404);res.end('Not found.');}
   });
-  await new Promise(resolve => server.listen(port,'127.0.0.1',resolve));
-  return { server, db, url:'http://127.0.0.1:'+server.address().port };
+  await new Promise(resolve => server.listen(port,'127.0.0.1',()=>{
+    origin='http://127.0.0.1:'+server.address().port;
+    resolve();
+  }));
+  return { server, db, url:origin };
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const key = process.env.WPR_DEV_TEACHER_TOKEN;

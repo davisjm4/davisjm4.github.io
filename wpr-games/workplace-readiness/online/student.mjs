@@ -10,10 +10,11 @@ async function init() {
   host.hidden=false;
   document.body.classList.add('wpr-assignment');
   const endpoint='/student/'+encodeURIComponent(id);
-  const key='wrg.assignment.'+id;
+  const device=globalThis.WRG?.profileDevice;
+  const key=device?.key('wrg.assignment.'+id) || 'wrg.assignment.'+id;
   let local = memory;
   try {local=JSON.parse(localStorage.getItem(key))||memory;} catch {}
-  const save=()=>{memory=local;try {localStorage.setItem(key,JSON.stringify(local));} catch {}};
+  const save=()=>{if (device?.identity && !device.isCurrent()) return;memory=local;try {localStorage.setItem(key,JSON.stringify(local));} catch {}};
   const showError=(err,again)=> {
     host.replaceChildren(el('h1',{text:'Workplace Readiness assignment'}),el('p',{role:'alert',text:err.message}),
       button('Try again',again),el('p',{},el('a',{href:'./',text:'Open Workplace Readiness practice'})));
@@ -28,14 +29,16 @@ async function init() {
   let a;
   try {a=await request(endpoint);} catch(e) {showError(e,init);return;}
   const status=el('p',{role:'status','aria-live':'polite'});
+  const profileToken=a.profileRequired?device?.identity?.token:undefined;
   function intro() {
     const title=el('h1',{tabindex:-1,text:a.title});
     const start=button(local.token?'Resume assignment':a.kind==='diagnostic'?'Start assessment':'Start assigned practice',async()=>{
       start.disabled=true;
       try {
-        local.browser ||= crypto.randomUUID();
+        if (a.profileRequired && !profileToken) throw new Error('Restore your class profile above before starting.');
+        if (!a.profileRequired) local.browser ||= crypto.randomUUID();
         save();
-        if (!local.token) local.token=(await request(endpoint+'/start',{body:{browser:local.browser}})).token;
+        if (!local.token) local.token=(await request(endpoint+'/start',{token:profileToken,body:{browser:local.browser}})).token;
         local.retakes=a.retakes;
         local.answers ||= Array(a.questions.length).fill(null);
         if (!local.order) {
@@ -51,7 +54,7 @@ async function init() {
     host.replaceChildren(title,
       el('p',{text:(a.kind==='diagnostic'?'Teacher-assigned diagnostic':'Teacher-assigned practice')+' · '+a.questions.length+' questions'}),
       el('p',{text:'Choose one response for each question. '+(a.feedbackTiming==='immediate'?'Feedback follows each locked answer.':'Feedback appears after you submit the assessment.')}),
-      el('p',{text:(a.reporting?'Completed responses contribute to anonymous class totals. ':'Your report stays in this browser. ')+(a.retakes==='once'?'One completed attempt per browser.':'Additional attempts are allowed.')}),
+      el('p',{text:(a.profileRequired?'This assignment saves results to your class profile. Your teacher can see results by profile ID. ':a.reporting?'Completed responses contribute to anonymous class totals. ':'Your report stays in this browser. ')+(a.retakes==='once'?(a.profileRequired?'One completed attempt per profile.':'One completed attempt per browser.'):'Additional attempts are allowed.')}),
       a.closes?el('p',{text:'Closes '+new Date(a.closes).toLocaleString()}):null,start,status);
     title.focus();
   }
@@ -80,7 +83,7 @@ async function init() {
       options.disabled=true;
       next.disabled=true;
       try {
-        const f=await request(endpoint+'/answer',{body:{token:local.token,index,choice}});
+        const f=await request(endpoint+'/answer',{token:profileToken,body:{token:local.token,index,choice}});
         saved(choice);delete local.pending;save();
         const feedbackTitle=el('h2',{tabindex:-1,text:f.correct?'Correct':'Incorrect'});
         next.replaceWith(el('section',{class:'feedback '+(f.correct?'ok':'miss')},feedbackTitle,
@@ -106,7 +109,7 @@ async function init() {
     const submit=button('Submit and view results',async()=>{
       submit.disabled=true;
       try {
-        const report=await request(endpoint+'/submit',{body:{token:local.token,answers:local.answers}});
+        const report=await request(endpoint+'/submit',{token:profileToken,body:{token:local.token,answers:local.answers}});
         addReport(report);local.report=report;delete local.answers;delete local.token;delete local.order;save();
         init();
       } catch(e) {status.textContent=e.message;submit.disabled=false;}

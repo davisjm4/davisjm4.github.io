@@ -187,3 +187,10 @@ details summary { cursor: pointer; color: var(--muted); min-height: 2.5rem; disp
   body, .ticket { background: white !important; color: black !important; }
   .wpr-table-scroll { overflow: visible; }
 }
+
+#student-profile { margin-block: 1rem; }
+#student-profile details { padding: .6rem; }
+.wpr-profile-form { display: grid; gap: .5rem; max-width: 31rem; }
+.wpr-profile-form label { display: grid; gap: .25rem; }
+.wpr-profile-form input { min-width: 0; }
+.wpr-profile-secret, #profile-progress h3 { overflow-wrap: anywhere; }

@@ -10,3 +10,7 @@
 #wpr-online .wpr-table-scroll { overflow-x: auto; }
 #wpr-online th, #wpr-online td { padding: .35rem .65rem; text-align: left; }
 #wpr-online .wpr-class-item { border-top: 1px solid currentColor; padding: .5rem 0; }
+
+#wpr-teacher-profiles { margin-top: 2rem; }
+#wpr-teacher-profiles .wpr-profile-secret { overflow-wrap: anywhere; }
+#wpr-teacher-profiles .wpr-table-scroll { overflow: auto; }

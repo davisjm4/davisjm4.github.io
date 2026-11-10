@@ -1,5 +1,6 @@
 import { validateSnapshot, publicAssignment, dimensions, answerReport, grade, MIN_CLASS, RETENTION_DAYS } from '../online/model.mjs';
 import { teacherIdentity } from './auth.mjs';
+import { routeProfiles, profilesEnabled, ownerClass, studentProfile, saveProfileAssessment, purgeProfiles } from './profiles.mjs';
 const DAY = 86400000;
 const UUID = /^[0-9a-f-]{36}$/;
 const hex = b => Array.from(new Uint8Array(b), x=>x.toString(16).padStart(2,'0')).join('');
@@ -65,7 +66,10 @@ async function classReport(db, row, a) {
 
 async function route(request, env, path) {
   const now = Date.now(), db = env.DB, method = request.method;
-  const [group, id, action] = path.split('/').filter(Boolean);
+  const segments = path.split('/').filter(Boolean);
+  const [group, id, action] = segments;
+  if (group==='profile' || (group==='teacher' && id==='profiles'))
+    return routeProfiles(request,env,segments,body,now);
   if (group === 'teacher') {
     const owner = await teacherIdentity(request,env);
     if (!owner) fail(401,'Teacher sign-in required.');
@@ -76,9 +80,16 @@ async function route(request, env, path) {
     if (id === 'assignments' && !action && method === 'POST') {
       const data = await body(request), message = validateSnapshot(data,now);
       if (message) fail(400,message);
+      if (data.profileClassId != null) {
+        if (!profilesEnabled(env)) fail(403,'Student profiles are unavailable.');
+        await ownerClass(db,owner,data.profileClassId,now,true);
+      }
       const id = crypto.randomUUID();
-      const result = await db.prepare('INSERT INTO assignments(id,owner,snapshot,created,expires) SELECT ?,?,?,?,? WHERE (SELECT count(*) FROM assignments WHERE owner=? AND expires>?)<100')
-        .bind(id,owner,JSON.stringify(data),now,now+RETENTION_DAYS*DAY,owner,now).run();
+      const classId=data.profileClassId ?? null;
+      const activeClass=classId ? ' AND EXISTS (SELECT 1 FROM profile_classes WHERE id=? AND owner=? AND archived IS NULL AND expires>?)' : '';
+      const classParams=classId ? [classId,owner,now] : [];
+      const result = await db.prepare('INSERT INTO assignments(id,owner,snapshot,created,expires) SELECT ?,?,?,?,? WHERE (SELECT count(*) FROM assignments WHERE owner=? AND expires>?)<100'+activeClass)
+        .bind(id,owner,JSON.stringify(data),now,now+RETENTION_DAYS*DAY,owner,now,...classParams).run();
       if (!result.meta.changes) fail(429,'Assignment limit reached. Delete an older assignment before publishing.');
       return {id};
     }
@@ -97,16 +108,20 @@ async function route(request, env, path) {
   const a = parsed(row);
   if (!action && method === 'GET') { open(row,a,now); return publicAssignment(a,id); }
   if (method !== 'POST') fail(404,'Assignment not found.');
+  const profile = a.profileClassId ? await studentProfile(request,env,now) : null;
+  if (profile && profile.class_id !== a.profileClassId) fail(403,'This assignment belongs to a different class.');
+  if (profile && (!env.SUBMISSION_SECRET || env.SUBMISSION_SECRET.length < 32)) fail(503,'The reporting service is not fully configured.');
+  const profileBrowser = profile ? await submissionDigest(env.SUBMISSION_SECRET, 'profile:' + id, [profile.id]) : null;
   const input = await body(request);
   if (!input || typeof input !== 'object') fail(400,'Invalid request.');
   if (action === 'start') {
     open(row,a,now);
-    if (!UUID.test(input.browser || '')) fail(400,'Invalid attempt request.');
+    if (!profile && !UUID.test(input.browser || '')) fail(400,'Invalid attempt request.');
     // This random per-assignment browser nonce limits accidental retakes on one browser.
-    const browser = await hash(id+'|'+input.browser);
+    const browser = profileBrowser || await hash(id+'|'+input.browser);
     const existing = await db.prepare('SELECT token,finished FROM receipts WHERE assignment=? AND browser=? ORDER BY created DESC LIMIT 1').bind(id,browser).first();
     if (existing && !existing.finished) return { token:existing.token };
-    if (existing && a.retakes === 'once') fail(409,'This browser has already completed the assignment.');
+    if (existing && a.retakes === 'once') fail(409,(profile?'This profile':'This browser')+' has already completed the assignment.');
     const token = crypto.randomUUID();
     const result = await db.prepare(`INSERT INTO receipts(token,assignment,browser,created)
       SELECT ?,?,?,? WHERE (SELECT count(*) FROM receipts WHERE assignment=? AND created>?)<300
@@ -118,7 +133,7 @@ async function route(request, env, path) {
   }
   if (!UUID.test(input.token || '')) fail(400,'Invalid attempt.');
   const receipt = await db.prepare('SELECT * FROM receipts WHERE token=? AND assignment=?').bind(input.token,id).first();
-  if (!receipt) fail(404,'Attempt not found.');
+  if (!receipt || (profile && receipt.browser !== profileBrowser)) fail(404,'Attempt not found.');
   if (action === 'answer' && a.feedbackTiming === 'immediate') {
     open(row,a,now);
     const { index, choice } = input;
@@ -147,6 +162,7 @@ async function route(request, env, path) {
   const finalized = await db.prepare('SELECT finished,digest FROM receipts WHERE token=?').bind(receipt.token).first();
   if (finalized.digest !== digest) fail(409,'This attempt was already submitted with different answers.');
   outcome.report.date = new Date(finalized.finished).toISOString();
+  if (profile) await saveProfileAssessment(db,profile,receipt.token,outcome.report,now);
   return outcome.report;
 }
 
@@ -167,5 +183,6 @@ export default {
     const now = Date.now();
     await env.DB.prepare('DELETE FROM assignments WHERE expires<=?').bind(now).run();
     await env.DB.prepare('DELETE FROM receipts WHERE finished IS NULL AND created<?').bind(now-DAY).run();
+    if (profilesEnabled(env) || env.PROFILE_SCHEMA_INSTALLED==='1') await purgeProfiles(env.DB,now);
   }
 };

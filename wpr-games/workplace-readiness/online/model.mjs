@@ -45,7 +45,7 @@ export function publicQuestion(q) {
 }
 export function publicAssignment(record, id) {
   const { title, kind, feedbackTiming, retakes, closes, reporting, shuffle } = record;
-  return { id, version: VERSION, title, kind, feedbackTiming, retakes, closes, reporting, shuffle, questions: record.questions.map(publicQuestion) };
+  return { id, version: VERSION, title, kind, feedbackTiming, retakes, closes, reporting, shuffle, profileRequired:Boolean(record.profileClassId), questions: record.questions.map(publicQuestion) };
 }
 export function dimensions(q) {
   const map = new Map();

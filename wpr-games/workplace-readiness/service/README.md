@@ -1,6 +1,8 @@
 # Workplace Readiness reporting service
 
-The student website and Teacher Tools remain on GitHub Pages. A separate Worker handles authenticated teacher requests, frozen assignment versions, anonymous submissions, and class totals. No public Pages path needs privileged credentials.
+The student website and Teacher Tools remain on GitHub Pages. A separate Worker handles authenticated teacher requests, frozen assignment versions, anonymous submissions, class totals, and optional pseudonymous profiles. No public Pages path needs privileged credentials.
+
+See [teacher-managed profiles](PROFILES.md) for enrollment, recovery, retention, and the separate production approval gate.
 
 ## Run the integrated development version
 
