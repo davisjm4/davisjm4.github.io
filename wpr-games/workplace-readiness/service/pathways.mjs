@@ -48,7 +48,7 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
   }
   if(action==='publish'&&method==='POST'){
     const data=await body(request);if(data.previewToken!==await hash(p.draft+'|'+p.draft_version+'|'+p.head)||data.draftVersion!==p.draft_version||data.expectedRevision!==p.head)error(409,'Preview the latest draft before publishing.');
-    const draft=JSON.parse(p.draft);valid(draft);const snapshot=stamp({...draft,curriculumSnapshot:{version:graph.version,nodes:graph.nodes.filter(n=>draft.sequence.includes(n.id)),areas:graph.areas.filter(a=>draft.checkpoints.some(c=>c.areaId===a.id))}},p.head+1);
+    const draft=JSON.parse(p.draft);valid(draft);const snapshot=stamp({...draft,curriculumSnapshot:draft.graphVersion===graph.version?{version:graph.version,nodes:graph.nodes.filter(n=>draft.sequence.includes(n.id)),areas:graph.areas.filter(a=>draft.checkpoints.some(c=>c.areaId===a.id))}:draft.curriculumSnapshot},p.head+1);
     // Insertion and pointer change are one SQLite statement via the trigger. No student evidence is touched.
     const result=await db.prepare('INSERT INTO pathway_revisions(pathway_id,revision,parent_revision,snapshot,summary,created) SELECT ?,?,?,?,?,? WHERE EXISTS(SELECT 1 FROM class_pathways WHERE id=? AND owner=? AND head=? AND draft_version=?)')
       .bind(id,p.head+1,p.head,JSON.stringify(snapshot),JSON.stringify(diffPathways(current,draft).map(c=>({kind:c.kind,id:c.id}))),Date.now(),id,owner,p.head,p.draft_version).run();

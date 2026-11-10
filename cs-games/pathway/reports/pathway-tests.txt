@@ -1,22 +1,22 @@
-✔ graph reuses registries and every node represents an objective (1.830719ms)
-✔ school rotation differs from class meetings; PD, nonrotation, weekday and shortened overrides (2.089798ms)
-✔ CSV quoting, import confirmation, exact early-release minutes, ICS exclusive end (11.681243ms)
-✔ protected windows use only previous skills and shift instruction; quiz minutes and exam preserved (25.578964ms)
-✔ insufficient time keeps every required node and reports alternatives (5.02098ms)
-✔ reordering, independent class schedules, extending exam and recalculating remaining days (10.709052ms)
-✔ prerequisites are respected and cycles rejected (4.077874ms)
-✔ pacing distinguishes overdue insufficient evidence from low proficiency; moving target preserves award (1.819602ms)
-✔ focused and mixed evidence credit the same skills with coverage, no page visits or retries (0.372649ms)
-✔ CSV/ICS contain only actual class meetings and same protected sessions (13.832253ms)
-✔ future map/list contract comes directly from checkpoint order; removing nodes leaves evidence intact (3.357912ms)
-✔ independent cached sessions update at safe boundaries, offline evidence survives and IDs deduplicate (1.75161ms)
-✔ bulk review windows retain existing assessments unless teacher explicitly overrides (1.166502ms)
-✔ node completion remains distinct from a revised 0–4 pacing target (2.898413ms)
-✔ old curriculum descriptors remain available to a future graph release (2.147195ms)
-✔ invalid imported dates, unsupported time zones, malformed policies and excess allocation rejected (2.814326ms)
-✔ question metadata uses assessed skill in Mixed Practice and rejects untrusted automatic credit (4.366017ms)
+✔ graph reuses registries and every node represents an objective (1.828884ms)
+✔ school rotation differs from class meetings; PD, nonrotation, weekday and shortened overrides (2.172029ms)
+✔ CSV quoting, import confirmation, exact early-release minutes, ICS exclusive end (13.146928ms)
+✔ protected windows use only previous skills and shift instruction; quiz minutes and exam preserved (18.032058ms)
+✔ insufficient time keeps every required node and reports alternatives (4.007033ms)
+✔ reordering, independent class schedules, extending exam and recalculating remaining days (10.800196ms)
+✔ prerequisites are respected and cycles rejected (1.504798ms)
+✔ pacing distinguishes overdue insufficient evidence from low proficiency; moving target preserves award (1.5058ms)
+✔ focused and mixed evidence credit the same skills with coverage, no page visits or retries (0.380381ms)
+✔ CSV/ICS contain only actual class meetings and same protected sessions (16.067921ms)
+✔ future map/list contract comes directly from checkpoint order; removing nodes leaves evidence intact (3.497498ms)
+✔ independent cached sessions update at safe boundaries, offline evidence survives and IDs deduplicate (5.034865ms)
+✔ bulk review windows retain existing assessments unless teacher explicitly overrides (1.477166ms)
+✔ node completion remains distinct from a revised 0–4 pacing target (1.216445ms)
+✔ old curriculum descriptors remain available to a future graph release (1.996736ms)
+✔ invalid imported dates, unsupported time zones, malformed policies and excess allocation rejected (2.736476ms)
+✔ question metadata uses assessed skill in Mixed Practice and rejects untrusted automatic credit (3.972561ms)
 Evidence: two independent synthetic student HTTP sessions, isolated class and teacher, four immutable revisions, stale-edit protection, rollback and unchanged learning evidence.
-✔ Worker/D1 pathway lifecycle across teachers, classes and independent synthetic students (1103.795813ms)
+✔ Worker/D1 pathway lifecycle across teachers, classes and independent synthetic students (1222.594446ms)
 ℹ tests 18
 ℹ suites 0
 ℹ pass 18
@@ -24,4 +24,4 @@ Evidence: two independent synthetic student HTTP sessions, isolated class and te
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 1288.750674
+ℹ duration_ms 1419.458904

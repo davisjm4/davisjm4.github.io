@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-10",
+  "environment": "Chrome desktop, managed local static preview",
+  "data": "synthetic classes only",
+  "observations": [
+    "Teacher editor loaded curriculum graph, class schedule, node table and student structure.",
+    "Every-weekday calendar counted 205 actual meetings; an A-day class counted 103 meetings and 8240 minutes.",
+    "A five-date May 10–14 protected Mixed Practice range appeared in date overrides; only actual A-day meetings consume class time.",
+    "Preview enabled local revision saving while shared publication stayed disabled without teacher service connection.",
+    "Saving local revision 1 changed the student preview to Published revision 1 with the same checkpoint data.",
+    "Copy to new class created a distinct class ID at revision 0 without changing the original local published class."
+  ],
+  "limits": [
+    "No production identity or backend synchronization was simulated through the UI.",
+    "Real Worker/SQLite update propagation tested separately through independent authenticated HTTP sessions.",
+    "No physical Chromebook, mobile touch or screen reader certification claimed."
+  ]
+}
