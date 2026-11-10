@@ -1,0 +1,6 @@
+PASS csp: 32 unique cards; every topic filter, every title search, empty results and activity route.
+PASS advanced: 24 unique cards; every topic filter, every title search, empty results and activity route.
+PASS robotics: 3 unique cards; every topic filter, every title search, empty results and activity route.
+PASS csp-games: 34 activity/report entry pages retain URLs, have canonical return/home links and accessible static breadcrumbs.
+PASS java-games: 17 activity/report entry pages retain URLs, have canonical return/home links and accessible static breadcrumbs.
+PASS hub, four pathways, shared RACECES, WPR skill-selection return, subject selector, summaries and legacy routes. No navigation code accesses storage.

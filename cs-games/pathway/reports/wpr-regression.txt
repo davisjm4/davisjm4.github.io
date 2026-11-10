@@ -1,0 +1,12 @@
+✔ taxonomy integrity, narrow eligibility and content capacity (443.470389ms)
+✔ builder respects three quotas, validates keys and regenerates just one item (11.629204ms)
+✔ CSV cells, accuracy boundaries and evidence labels (0.422985ms)
+✔ server freezes content, aggregates five anonymous submissions, gates reports and prevents duplicate counts (150.80797ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 611.27987
