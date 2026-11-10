@@ -1,4 +1,4 @@
-import { sourceById, generateAssessmentItem } from "./adapters.js?v=package-f-20261027";
+import { sourceById, generateAssessmentItem } from "./adapters.js?v=loop-types-v1";
 import { resolveDifficulty } from "./difficulty.js?v=package-f-20261027";
 import { workplaceEligibility } from "./workplace-adapter.js?v=package-b-20261026";
 import { racecesEligibility } from "./raceces-adapter.js?v=package-b-20261026";

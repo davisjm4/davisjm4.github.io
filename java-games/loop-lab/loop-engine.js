@@ -15,7 +15,9 @@ import { executionFamilies } from "./engine/families-executions.js?v=loop-expans
 import { LEVELS } from "./engine/fam-util.js?v=loop-expansion-v2";
 import { printProgram } from "./engine/java-model.js?v=loop-expansion-v2";
 
-export const ENGINE_VERSION = "loop-expansion-v2";
+import { loopTypeFamilies, LOOP_TYPES } from "./engine/families-loop-types.js";
+
+export const ENGINE_VERSION = "loop-types-v1";
 export const DIFFICULTIES = LEVELS;
 export const DIFFICULTY_NAMES = { beginner: "Beginner", intermediate: "Intermediate", advanced: "Advanced" };
 
@@ -25,21 +27,25 @@ export const originalModeNames = {
   conditional: "Predict conditional behavior", while: "Trace a while loop", nested: "Nested-loop reasoning", debug: "Debug a loop",
 };
 export const newModeNames = { algorithms: "Standard Iteration Algorithms", executions: "Count the Executions" };
-export const familyNames = { ...originalModeNames, ...newModeNames };
+export const loopTypeModeNames = { looptype: "Choose the Loop Type" };
+export const familyNames = { ...originalModeNames, ...newModeNames, ...loopTypeModeNames };
 export const MODES = Object.keys(familyNames);
 
-const VARIANT_NAMES = Object.fromEntries([...algorithmFamilies, ...executionFamilies].map((f) => [f.id, f.name]));
-const newModeFamilies = { algorithms: algorithmFamilies, executions: executionFamilies };
+const VARIANT_NAMES = Object.fromEntries([...algorithmFamilies, ...executionFamilies, ...loopTypeFamilies].map((f) => [f.id, f.name]));
+const newModeFamilies = { algorithms: algorithmFamilies, executions: executionFamilies, looptype: loopTypeFamilies };
 export const challengeFamilies = Object.fromEntries(MODES.map((m) => [m, newModeFamilies[m] ? newModeFamilies[m].map((f) => f.id) : Object.keys(originalFamilies[m].variants)]));
 export const reasoningFamilyNames = VARIANT_NAMES;
 export { MISCONCEPTIONS };
 
 function variantsFor(mode, difficulty) {
-  if (newModeFamilies[mode]) return newModeFamilies[mode].map((f) => f.id);
+  if (newModeFamilies[mode]) return newModeFamilies[mode].filter((f) => !f.level || f.level === difficulty).map((f) => f.id);
   return allowed(originalFamilies[mode].variants, difficulty);
 }
 function variantLevels(mode, variant) {
-  if (newModeFamilies[mode]) return LEVELS;
+  if (newModeFamilies[mode]) {
+    const level = newModeFamilies[mode].find((f) => f.id === variant)?.level;
+    return level ? [level] : LEVELS;
+  }
   const lv = originalFamilies[mode].variants[variant]?.lv; return lv ? LEVELS.slice(lv[0], lv[1] + 1) : [];
 }
 function runFamily(mode, variant, difficulty, rng) {
@@ -58,6 +64,7 @@ export function generateChallenge({ mode = "mixed", difficulty = "beginner", see
   if (!familyNames[m]) throw new Error("unknown mode " + mode);
   const pool = variantsFor(m, difficulty);
   let variant = family && challengeFamilies[m].includes(family) ? family : pickRng.pick(pool);
+  if (m === "looptype" && !pool.includes(variant)) throw new Error("Loop type family does not match the requested difficulty");
   let level = difficulty;
   if (!variantLevels(m, variant).includes(level)) level = variantLevels(m, variant)[0];
   let lastErr;
@@ -65,6 +72,10 @@ export function generateChallenge({ mode = "mixed", difficulty = "beginner", see
     const rng = makeRng(hashString(`gen:${m}:${variant}:${level}:${seed}:${attempt}`));
     try {
       const spec = runFamily(m, variant, level, rng);
+      if (m === "looptype") {
+        const family = loopTypeFamilies.find((f) => f.id === variant);
+        return assemble(buildLoopType(spec, family, rng), { mode: m, requestedMode: mode, difficulty: level, requestedDifficulty: difficulty, seed, variant, attempt });
+      }
       spec.rng = rng;
       const c = buildChallenge(spec);
       return assemble(c, { mode: m, requestedMode: mode, difficulty: level, requestedDifficulty: difficulty, seed, variant, attempt });
@@ -74,6 +85,19 @@ export function generateChallenge({ mode = "mixed", difficulty = "beginner", see
     }
   }
   throw new Error(`generation failed for ${m}/${variant}/${level}/${seed}: ${lastErr?.message}`);
+}
+
+function buildLoopType(spec, family, rng) {
+  const answer = LOOP_TYPES[family.best];
+  return {
+    code: "", scenario: spec.scenario, prompt: "Which loop best fits the requested design?",
+    answer, correctAnswer: answer, choices: rng.shuffle(Object.values(LOOP_TYPES)),
+    distractors: Object.entries(family.alternatives).map(([type, note]) => ({
+      choice: LOOP_TYPES[type], misconception: `loop-type-${type}`, note,
+    })),
+    explanation: spec.why, principle: family.principle, example: { code: spec.example, output: spec.output },
+    concept: family.name, template: family.id, params: {}, choiceFormat: "value", targetKind: "loop-type",
+  };
 }
 
 function assemble(c, { mode, requestedMode, difficulty, requestedDifficulty, seed, variant, attempt }) {
@@ -90,9 +114,14 @@ function assemble(c, { mode, requestedMode, difficulty, requestedDifficulty, see
     trace: c.trace, studentTrace: c.studentTrace, output: c.output, metadata: c.metadata, params: c.params, targetKind: c.targetKind,
     expectsError: c.expectsError,
   };
-  Object.defineProperty(q, "javaProgram", { value: c.javaProgram, enumerable: false });
+  if (c.scenario) Object.assign(q, { scenario: c.scenario, principle: c.principle, example: c.example });
+  Object.defineProperty(q, "javaProgram", { value: c.javaProgram || null, enumerable: false });
   Object.defineProperty(q, "buggyProgram", { value: c.buggyProgram || null, enumerable: false });
-  q.signature = { exact: hashString(`${q.code}|${q.prompt}|${[...q.choices].sort().join("|")}`).toString(36), structural: hashString(structuralSignature(printProgram(c.javaProgram).code, c.targetKind)).toString(36) };
+  const structure = c.javaProgram ? structuralSignature(printProgram(c.javaProgram).code, c.targetKind) : `loop-type:${variant}`;
+  q.signature = {
+    exact: hashString(`${q.scenario || q.code}|${q.prompt}|${[...q.choices].sort().join("|")}`).toString(36),
+    structural: hashString(structure).toString(36),
+  };
   validateChallenge(q);
   return q;
 }
@@ -103,9 +132,18 @@ export function validateChallenge(q) {
   if (new Set(q.choices).size !== 4) fail("choices not unique");
   if (!q.choices.includes(q.answer)) fail("answer missing from choices");
   if (q.distractors.some((d) => d.choice === q.answer)) fail("distractor equals answer");
-  if (!q.code || !q.prompt || !q.explanation) fail("missing text");
+  if ((!q.code && !q.scenario) || !q.prompt || !q.explanation) fail("missing text");
+  if (q.mode === "looptype") {
+    const family = loopTypeFamilies.find((f) => f.id === q.variant);
+    const alternatives = q.choices.filter((choice) => choice !== q.answer);
+    if (q.targetKind !== "loop-type" || !family || family.level !== q.difficulty ||
+        q.answer !== LOOP_TYPES[family.best] || q.correctAnswer !== q.answer ||
+        !Object.values(LOOP_TYPES).every((label) => q.choices.includes(label)) ||
+        q.distractors.length !== 3 || !alternatives.every((choice) => q.distractors.some((d) => d.choice === choice && d.note)) ||
+        !q.scenario || q.code || !q.principle || !q.example?.code || !Array.isArray(q.example.output)) fail("invalid loop type decision");
+  }
   if (q.choices.some((c) => typeof c !== "string" || !c.length)) fail("empty choice");
-  if (q.code.includes("undefined") || q.prompt.includes("undefined") || q.explanation.includes("undefined") || q.choices.some((c) => c.includes("undefined") || c.includes("NaN"))) fail("undefined text");
+  if (q.code.includes("undefined") || q.prompt.includes("undefined") || (q.scenario || "").includes("undefined") || q.explanation.includes("undefined") || q.choices.some((c) => c.includes("undefined") || c.includes("NaN"))) fail("undefined text");
   return true;
 }
 

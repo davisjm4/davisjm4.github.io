@@ -28,6 +28,11 @@ for (const f of ["style.css", "session.js"]) fs.copyFileSync(path.join(gamesDir,
 const siteCss = path.join(gamesDir, "..", "csp-games", "style.css");
 if (fs.existsSync(siteCss)) { fs.mkdirSync(path.join(root, "csp-games"), { recursive: true }); fs.copyFileSync(siteCss, path.join(root, "csp-games", "style.css")); }
 fs.cpSync(lab, path.join(jg, "loop-lab"), { recursive: true, filter: (src) => !/node_modules|\/reports|\/legacy/.test(src) });
+const navigationCss = path.join(gamesDir, "..", "cs-games", "navigation.css");
+if (fs.existsSync(navigationCss)) {
+  fs.mkdirSync(path.join(root, "cs-games"), { recursive: true });
+  fs.copyFileSync(navigationCss, path.join(root, "cs-games", "navigation.css"));
+}
 const types = { ".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css", ".json": "application/json" };
 const server = http.createServer((req, res) => { const u = decodeURIComponent(new URL(req.url, "http://x").pathname); let f = path.join(root, u); if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, "index.html"); if (!fs.existsSync(f)) { res.writeHead(404); return res.end("nf"); } res.writeHead(200, { "content-type": types[path.extname(f)] || "application/octet-stream" }); fs.createReadStream(f).pipe(res); });
 await new Promise((r) => server.listen(0, r));
@@ -51,20 +56,25 @@ try {
   await page.waitForSelector("#choices [role=radio]");
   ok((await page.$eval("h1", (e) => e.textContent)) === "Loop Lab", "heading");
   const modeOpts = await page.$$eval("#mode option", (os) => os.map((o) => o.value));
-  ok(modeOpts.length === 11 && modeOpts.includes("algorithms") && modeOpts.includes("executions") && modeOpts[0] === "mixed", "mode selector: Mixed + 8 original + 2 new");
+  ok(modeOpts.length === 12 && modeOpts.includes("algorithms") && modeOpts.includes("executions") && modeOpts.includes("looptype") && modeOpts[0] === "mixed", "mode selector: Mixed + 11 distinct modes");
   ok((await page.$$eval("#difficulty option", (os) => os.length)) === 3, "three difficulty options");
   ok(await page.$("a[data-session-link]"), "Session Summary link present");
   const sessionSubs = () => page.evaluate(() => { const s = JSON.parse(localStorage.getItem("javaGames.session.v1") || "null"); return s?.games?.["loop-lab"] || null; });
-  const q = () => page.evaluate(() => { const c = window.__loopLab.q; return { prompt: c.prompt, answer: c.answer, choices: c.choices, mode: c.mode, difficulty: c.difficulty, code: c.code, choiceFormat: c.choiceFormat }; });
+  const q = () => page.evaluate(() => { const c = window.__loopLab.q; return { prompt: c.prompt, answer: c.answer, choices: c.choices, mode: c.mode, difficulty: c.difficulty, code: c.code, scenario: c.scenario, example: c.example?.code, choiceFormat: c.choiceFormat }; });
   // every mode × difficulty renders correctly
   for (const mode of modeOpts) for (const d of ["beginner", "intermediate", "advanced"]) {
     await page.select("#difficulty", d); await page.select("#mode", mode);
     const cur = await q();
     if (mode !== "mixed") ok(cur.mode === mode, `${mode}: rendered challenge belongs to mode`);
-    ok(cur.difficulty === d || !["algorithms", "executions"].includes(mode), "difficulty honored");
-    const shown = await page.$eval(".loop-snippet code", (e) => e.textContent);
-    ok(shown === cur.code, "code shown verbatim (escaped correctly)");
-    ok(shown.includes("\n") || shown.startsWith("// Goal"), "code keeps line breaks");
+    ok(cur.difficulty === d || !["algorithms", "executions", "looptype"].includes(mode), "difficulty honored");
+    if (cur.mode === "looptype") {
+      ok(await page.$eval("#loop-scenario", (e) => e.textContent) === cur.scenario, "scenario shown verbatim");
+      ok(!(await page.$(".loop-snippet")), "worked example stays hidden before submission");
+    } else {
+      const shown = await page.$eval(".loop-snippet code", (e) => e.textContent);
+      ok(shown === cur.code, "code shown verbatim (escaped correctly)");
+      ok(shown.includes("\n") || shown.startsWith("// Goal"), "code keeps line breaks");
+    }
     const radios = await page.$$eval("#choices [role=radio]", (bs) => bs.map((b) => ({ checked: b.getAttribute("aria-checked"), pressed: b.hasAttribute("aria-pressed"), text: b.querySelector(".choice-text").textContent })));
     ok(radios.length === 4 && radios.every((r) => r.checked === "false" && !r.pressed), "four radios, valid ARIA");
     ok(JSON.stringify(radios.map((r) => r.text)) === JSON.stringify(cur.choices), "choice text matches");
@@ -102,14 +112,28 @@ try {
   ok((await page.evaluate(() => document.activeElement.dataset.index)) === "1", "focus follows selection");
   await page.focus("#check"); await page.keyboard.press("Enter");
   ok(await page.$eval("#feedback", (f) => !f.hidden), "keyboard submission works");
+  await page.select("#mode", "looptype"); await page.select("#difficulty", "advanced");
+  cur = await q();
+  const previousTypeAttempts = (await sessionSubs()).modes.looptype?.submissions || 0;
+  const wrongType = cur.choices.findIndex((choice) => choice !== cur.answer);
+  const keyboardChoice = wrongType === 0 ? 3 : wrongType - 1;
+  await page.focus(`#choices [data-index="${keyboardChoice}"]`);
+  await page.keyboard.press("ArrowRight");
+  ok(await page.$eval(`#choices [data-index="${wrongType}"]`, (b) => b.getAttribute("aria-checked")) === "true", "loop type choices support arrow keys");
+  await page.focus("#check"); await page.keyboard.press("Enter");
+  ok(await page.$eval("#feedback", (f) => f.classList.contains("bad") && f.textContent.includes("Programming principle:")), "loop type feedback explains the principle");
+  ok(await page.$$eval("#feedback li", (items) => items.length) === 3, "feedback explains every alternative");
+  ok(await page.$eval("#feedback pre code", (code) => code.textContent) === cur.example, "worked Java appears only after submission");
+  ok((await sessionSubs()).modes.looptype.submissions === previousTypeAttempts + 1, "loop type scoring is reported under its own mode");
   // mobile: no horizontal page overflow across many challenges, incl. code-choice and nested output
   await page.setViewport({ width: 360, height: 740, isMobile: true, hasTouch: true });
-  for (const [mode, d] of [["choose", "advanced"], ["executions", "advanced"], ["algorithms", "advanced"], ["nested", "intermediate"], ["debug", "advanced"], ["components", "advanced"]]) {
+  for (const [mode, d] of [["looptype", "advanced"], ["choose", "advanced"], ["executions", "advanced"], ["algorithms", "advanced"], ["nested", "intermediate"], ["debug", "advanced"], ["components", "advanced"]]) {
     await page.select("#difficulty", d); await page.select("#mode", mode);
     for (let i = 0; i < 8; i++) {
       const w = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, iw: window.innerWidth }));
       ok(w.sw <= w.iw + 1, `${mode}/${d}: no horizontal page overflow on a phone (${w.sw} > ${w.iw})`);
       const c = await q(); await press(`#choices [data-index="${c.choices.indexOf(c.answer)}"]`, "tap"); await press("#check", "tap");
+      if (mode === "looptype") await press("#feedback details:last-child summary", "tap");
       const w2 = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, iw: window.innerWidth }));
       ok(w2.sw <= w2.iw + 1, `${mode}/${d}: feedback and trace fit on a phone`);
       await press("#next", "tap");

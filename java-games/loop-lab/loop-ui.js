@@ -1,4 +1,4 @@
-import { originalModeNames, newModeNames, DIFFICULTIES, DIFFICULTY_NAMES, createLoopSession, assessLoop, distractorFor } from "./loop-engine.js?v=package-c-v1";
+import { originalModeNames, newModeNames, loopTypeModeNames, DIFFICULTIES, DIFFICULTY_NAMES, createLoopSession, assessLoop, distractorFor } from "./loop-engine.js?v=loop-types-v1";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -21,8 +21,8 @@ export function startLoopLab() {
   const practice = createLoopSession({ seed });
   let q, instance, selected = null, closed = false;
   const opts = (names) => Object.entries(names).map(([id, name]) => `<option value="${id}">${esc(name)}</option>`).join("");
-  $("main").innerHTML = `<div class="eyebrow">Java · Loops · Algorithms · Execution counts</div><h1>Loop Lab</h1><p class="intro">Predict what loops execute, how variables change, why loops stop, and how much work they do.</p>
-<div class="toolbar"><label>Practice mode <select id="mode"><option value="mixed" selected>Mixed Practice</option><optgroup label="Loop fundamentals">${opts(originalModeNames)}</optgroup><optgroup label="Algorithms and execution counts">${opts(newModeNames)}</optgroup></select></label>
+  $("main").innerHTML = `<div class="eyebrow">Java · Loops · Algorithms · Execution counts</div><h1>Loop Lab</h1><p class="intro">Predict what loops execute, how variables change, why loops stop, how much work they do, and which loop fits a programming task.</p>
+<div class="toolbar"><label>Practice mode <select id="mode"><option value="mixed" selected>Mixed Practice</option><optgroup label="Loop fundamentals">${opts(originalModeNames)}${opts(loopTypeModeNames)}</optgroup><optgroup label="Algorithms and execution counts">${opts(newModeNames)}</optgroup></select></label>
 <label>Difficulty <select id="difficulty">${DIFFICULTIES.map((d) => `<option value="${d}">${DIFFICULTY_NAMES[d]}</option>`).join("")}</select></label>
 <button id="new" class="secondary">New Challenge</button></div><section id="stage" class="panel"></section><p id="stats" class="stats"></p>`;
   addSessionNavigation("../");
@@ -37,9 +37,9 @@ export function startLoopLab() {
     instance = tracker.begin(q.game, q.title, q.topic, q.topicTitle, q.mode, q.modeName); selected = null; closed = false;
     tracker.annotate(instance, { mode: q.mode, difficulty: q.difficulty, skill: q.concept, generatorFamily: q.reasoningFamily, seed: q.seed });
     const blockChoices = q.choiceFormat === "code" || q.choiceFormat === "block";
-    $("stage").innerHTML = `<div class="challenge-meta">${esc(q.modeName)} · ${esc(q.variantName)} · ${esc(q.difficultyName)}</div><h2 id="prompt" tabindex="-1">${esc(q.prompt)}</h2>
-<pre class="snippet loop-snippet" tabindex="0" aria-label="Java code"><code>${esc(q.code)}</code></pre>${studentTraceHtml(q.studentTrace)}
-<div id="choices" class="loop-choices${blockChoices ? " block-choices" : ""}" role="radiogroup" aria-labelledby="prompt">${q.choices.map((c, i) => `<button type="button" class="secondary loop-choice${q.choiceFormat === "code" ? " code-choice" : ""}" role="radio" aria-checked="false" tabindex="${i === 0 ? 0 : -1}" data-index="${i}"><span class="choice-text">${esc(c)}</span></button>`).join("")}</div>
+    $("stage").innerHTML = `<div class="challenge-meta">${esc(q.modeName)}${q.scenario ? "" : " · " + esc(q.variantName)} · ${esc(q.difficultyName)}</div><h2 id="prompt" tabindex="-1">${esc(q.prompt)}</h2>
+${q.scenario ? `<p id="loop-scenario">${esc(q.scenario)}</p>` : `<pre class="snippet loop-snippet" tabindex="0" aria-label="Java code"><code>${esc(q.code)}</code></pre>`}${studentTraceHtml(q.studentTrace)}
+<div id="choices" class="loop-choices${blockChoices ? " block-choices" : ""}" role="radiogroup" aria-labelledby="prompt"${q.scenario ? ' aria-describedby="loop-scenario"' : ""}>${q.choices.map((c, i) => `<button type="button" class="secondary loop-choice${q.choiceFormat === "code" ? " code-choice" : ""}" role="radio" aria-checked="false" tabindex="${i === 0 ? 0 : -1}" data-index="${i}"><span class="choice-text">${esc(c)}</span></button>`).join("")}</div>
 <div class="actions"><button id="check" disabled>Check Answer</button><button id="next" class="secondary">Next Challenge</button></div><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div>`;
     const buttons = [...$("choices").querySelectorAll("[role=radio]")];
     buttons.forEach((b, i) => {
@@ -61,7 +61,8 @@ export function startLoopLab() {
       buttons.forEach((b, i) => { b.classList.toggle("correct-answer", q.choices[i] === q.answer); b.classList.toggle("incorrect-answer", q.choices[i] === selected && selected !== q.answer); });
       const wrong = !correct ? distractorFor(q, selected) : null;
       const f = $("feedback"); f.hidden = false; f.className = `feedback ${correct ? "good" : "bad"}`;
-      f.innerHTML = `<p><strong>${correct ? "Correct." : "Not quite."}</strong> Correct answer: <code class="answer-text">${esc(q.correctAnswer)}</code></p>${wrong?.note ? `<p class="misconception">${esc(wrong.note)}</p>` : ""}<p>${esc(q.explanation)}</p>${traceHtml(q.trace)}`;
+      const designFeedback = q.scenario ? `<p><strong>Programming principle:</strong> ${esc(q.principle)}</p><details class="loop-trace"><summary>Compare the other loop types</summary><ul>${q.distractors.map((d) => `<li><strong>${esc(d.choice)}:</strong> ${esc(d.note)}</li>`).join("")}</ul></details><details class="loop-trace"><summary>Java example</summary><pre class="snippet loop-snippet" tabindex="0" aria-label="Worked Java example"><code>${esc(q.example.code)}</code></pre></details>` : "";
+      f.innerHTML = `<p><strong>${correct ? "Correct." : "Not quite."}</strong> Correct answer: <code class="answer-text">${esc(q.correctAnswer)}</code></p>${wrong?.note ? `<p class="misconception">${esc(wrong.note)}</p>` : ""}<p>${esc(q.explanation)}</p>${traceHtml(q.trace)}${designFeedback}`;
       f.focus(); stats();
     };
     $("next").onclick = next;

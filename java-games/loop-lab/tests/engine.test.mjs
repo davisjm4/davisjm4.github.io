@@ -122,7 +122,7 @@ function cell(mode, difficulty, count) {
   return stats;
 }
 
-for (const mode of E.MODES) for (const d of E.DIFFICULTIES) {
+for (const mode of E.MODES.filter((id) => id !== "looptype")) for (const d of E.DIFFICULTIES) {
   const per = mode === "algorithms" || mode === "executions" ? NEW_PER : OLD_PER;
   results.cells[`${mode}/${d}`] = cell(mode, d, per);
 }
@@ -141,7 +141,7 @@ for (const [m, vs] of Object.entries(legacy)) for (const v of vs) { ok(E.challen
 
 // difficulty progression per mode (mean complexity score and structural index)
 const progression = {};
-for (const mode of E.MODES) {
+for (const mode of E.MODES.filter((id) => id !== "looptype")) {
   const mean = (d, f) => { const qs = allQs.filter((q) => q.mode === mode && q.requestedDifficulty === d); return qs.reduce((s, q) => s + f(q.metadata), 0) / qs.length; };
   const score = E.DIFFICULTIES.map((d) => mean(d, (m) => m.score));
   const structure = E.DIFFICULTIES.map((d) => mean(d, (m) => m.nestingDepth + m.conditions + m.changingVariables + m.dependentBounds + m.earlyExits));
@@ -151,7 +151,7 @@ for (const mode of E.MODES) {
 }
 // per-family: Advanced must be more complex than Beginner (score and structure)
 const familyProgression = {};
-for (const mode of E.MODES) for (const fam of E.challengeFamilies[mode]) {
+for (const mode of E.MODES.filter((id) => id !== "looptype")) for (const fam of E.challengeFamilies[mode]) {
   const qs = (d) => allQs.filter((q) => q.mode === mode && q.variant === fam && q.difficulty === d);
   const m = (d, f) => { const a = qs(d); return a.length ? a.reduce((s, q) => s + f(q.metadata), 0) / a.length : null; };
   const sc = E.DIFFICULTIES.map((d) => m(d, (x) => x.score)), st = E.DIFFICULTIES.map((d) => m(d, (x) => x.nestingDepth + x.conditions + x.changingVariables + x.dependentBounds + x.earlyExits));
@@ -160,7 +160,7 @@ for (const mode of E.MODES) for (const fam of E.challengeFamilies[mode]) {
 }
 // Advanced is not just Beginner with bigger numbers: structural overlap
 const overlap = {};
-for (const mode of E.MODES) {
+for (const mode of E.MODES.filter((id) => id !== "looptype")) {
   const sig = (d) => new Set(allQs.filter((q) => q.mode === mode && q.requestedDifficulty === d).map((q) => q.signature.structural));
   const b = sig("beginner"), a = sig("advanced");
   const shared = [...a].filter((x) => b.has(x)).length;

@@ -42,6 +42,17 @@ for(const source of sources){
 for(const sourceId of ["boolean","variable","math","string","loop","array","recursion","search-sort"])
   check(sources.some(s=>s.id===sourceId),`Missing requested source ${sourceId}`);
 const {buildAssessmentXml,buildManifest,formatQuestionHtml}=await import(new URL("./qti.js",import.meta.url));
+// Design questions must export the deciding context without the worked answer.
+const loopDecisions = ["beginner", "intermediate", "advanced"].map((difficulty, i) =>
+  generateAssessmentItem("loop", "looptype", difficulty, 811 + i, 2));
+for (const item of loopDecisions) {
+  check(item?.context && !item.code, "Loop Type exports the scenario without the worked Java example");
+  check(item.stem === "Which loop best fits the requested design?", "Loop Type exports the design prompt");
+  check(item.explanation.includes("Principle:"), "Loop Type exports the transferable feedback");
+}
+const loopDecisionXml = buildAssessmentXml({title:"Java loop selection",seed:811},loopDecisions);
+check((loopDecisionXml.match(/<item ident=/g)||[]).length===3,"Loop Type QTI includes all difficulty levels");
+check(loopDecisions.every(q=>loopDecisionXml.includes(`choice_${q.correctIndex}</varequal>`)),"Loop Type QTI retains the correct answers");
 const chosen=[];const seen=new Set();
 for(let i=0;i<24;i++){
   const source=sources[i%sources.length], mode=source.modes[(i*7)%source.modes.length], level=mode.difficulties?.[i%mode.difficulties.length]||"Mixed";
