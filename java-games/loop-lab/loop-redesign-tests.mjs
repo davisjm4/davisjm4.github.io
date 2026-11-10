@@ -11,7 +11,7 @@ const positions = new Set();
 for (let i = 0; i < 6000; i++) {
   const q = generateLoop();
   seen.add(q.family); variants.add(`${q.family}/${q.variant}`); concepts.add(q.concept); familyCounts[q.family]++;
-  ok(q.code.length > 10 && q.prompt.length > 10 && q.explanation.length > 15);
+  ok((q.scenario || q.code).length > 10 && q.prompt.length > 10 && q.explanation.length > 15);
   ok(q.choices.length === 4 && new Set(q.choices).size === 4);
   ok(q.choices.includes(q.answer) && q.correctAnswer === q.answer);
   ok(assessLoop(q, {answer: q.answer}));

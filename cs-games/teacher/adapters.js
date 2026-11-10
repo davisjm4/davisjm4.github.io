@@ -6,7 +6,7 @@ import { coreCspSources } from './core-csp-adapters.js?v=package-f-20261027';
 // Source logic stays in java-games; this module owns only normalization/validation.
 import { booleanGame, generate as genBoolean, makeRng as booleanRng, assess as assessBoolean, signature as booleanSignature } from "../../java-games/boolean-conditional-lab/engine.js";
 import { mathGame, structures as mathStructures, generate as genMath, validateQuestion as validateMath, assess as assessMath } from "../../java-games/math-lab/engine.js";
-import { generateChallenge as genLoop, familyNames as loopModes, validateChallenge as validateLoop } from "../../java-games/loop-lab/loop-engine.js";
+import { generateChallenge as genLoop, familyNames as loopModes, validateChallenge as validateLoop } from "../../java-games/loop-lab/loop-engine.js?v=loop-types-v1";
 import { generateArray, formatNames as arrayModes, solutionArray, assessArray } from "../../java-games/array-lab/array-engine.js?v=array-feedback-20261024";
 import { generateRecursion, modeNames as recursionModes, assessRecursion } from "../../java-games/recursion-lab/engine.js";
 import { generate as genSearch, MODE_IDS as searchModeIds, MODES as searchModes, assess as assessSearch, exportQuestion as exportSearch } from "../../java-games/search-sort-lab/engine/generator.js";
@@ -75,7 +75,7 @@ export const sources = [
   })] : []),
   src("loop","Loop Lab",Object.entries(loopModes).map(([id,name])=>({id,name,difficulties:["beginner","intermediate","advanced"]})),(mode,difficulty,seed,points)=>{
     const q=genLoop({mode,difficulty:difficulty.toLowerCase(),seed});
-    return normalize(q,{sourceId:"loop",sourceName:"Loop Lab",modeId:mode,modeName:q.modeName,difficulty:q.difficultyName,points,answer:q.answer,choices:q.choices,prompt:q.prompt,code:q.code,explanation:q.explanation,signature:`${q.signature.exact}`,family:q.reasoningFamily,verify:()=>validateLoop(q)&&q.choices.filter(c=>c===q.answer).length===1});
+    return normalize(q,{sourceId:"loop",sourceName:"Loop Lab",modeId:mode,modeName:q.modeName,difficulty:q.difficultyName,points,answer:q.answer,choices:q.choices,prompt:q.prompt,context:q.scenario,code:q.code,explanation:q.principle ? [q.explanation, ...q.distractors.map((d) => `${d.choice}: ${d.note}`), `Principle: ${q.principle}`].join("\n") : q.explanation,signature:`${q.signature.exact}`,family:q.reasoningFamily,verify:()=>validateLoop(q)&&q.choices.filter(c=>c===q.answer).length===1});
   }),
   src("array","Array Lab",Object.entries(arrayModes).map(([id,name])=>({id,name,difficulties:["Beginner","Intermediate","Advanced"]})),(mode,difficulty,seed,points)=>{
     const q=generateArray(mode,undefined,{difficulty,seed});let answer=q.answer,choices=q.choices,response={answer};

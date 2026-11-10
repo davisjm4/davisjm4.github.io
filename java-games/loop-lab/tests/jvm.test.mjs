@@ -16,7 +16,7 @@ const t0 = Date.now();
 let checks = 0; const ok = (v, m) => { assert.ok(v, m); checks++; };
 
 const qs = [];
-for (const mode of E.MODES) for (const d of E.DIFFICULTIES) for (let s = 1; s <= PER; s++) qs.push(E.generateChallenge({ mode, difficulty: d, seed: (s * 97 + 13) >>> 0 }));
+for (const mode of E.MODES.filter((id) => id !== "looptype")) for (const d of E.DIFFICULTIES) for (let s = 1; s <= PER; s++) qs.push(E.generateChallenge({ mode, difficulty: d, seed: (s * 97 + 13) >>> 0 }));
 // focused sets requested by the brief: nested loops, dependent bounds, digit extraction, GCD, sentinels, execution counts
 const focus = [["executions", "nested-independent"], ["executions", "nested-dependent"], ["executions", "simple-counts"], ["executions", "non-unit-updates"], ["executions", "early-termination"], ["executions", "conditional-execution"], ["executions", "operation-types"], ["algorithms", "digit-extraction"], ["algorithms", "gcd"], ["algorithms", "sentinel"], ["algorithms", "nested-algorithms"]];
 for (const [mode, family] of focus) for (const d of E.DIFFICULTIES) for (let s = 1; s <= FOCUS / 3; s++) qs.push(E.generateChallenge({ mode, difficulty: d, seed: (s * 7331 + 5) >>> 0, family }));

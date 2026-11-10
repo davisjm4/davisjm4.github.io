@@ -1,7 +1,7 @@
-import { sources, sourceById } from "./adapters.js?v=package-f-20261027";
+import { sources, sourceById } from "./adapters.js?v=loop-types-v1";
 import { racecesCatalog } from "./raceces-adapter.js?v=package-b-20261026";
 import { workplaceCatalog } from "./workplace-adapter.js?v=package-b-20261026";
-import { buildQuiz, attemptAssessmentItem, selectionEligibility } from "./assessment-builder.js?v=package-f-20261027";
+import { buildQuiz, attemptAssessmentItem, selectionEligibility } from "./assessment-builder.js?v=loop-types-v1";
 import { buildAssessmentXml, buildManifest, createZip, escapeHtml, formatChoiceHtml, formatQuestionHtml, validateAssessment } from "./qti.js?v=package-f-20261027";
 const $ = id => document.getElementById(id);
 let quiz=[], config=null;

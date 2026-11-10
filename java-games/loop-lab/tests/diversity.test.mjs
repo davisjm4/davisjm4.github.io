@@ -10,7 +10,7 @@ const isNew = (m) => m === "algorithms" || m === "executions";
 const report = { samples: {}, sessions: {}, legacyBaseline: null };
 let checks = 0; const ok = (v, m) => { assert.ok(v, m); checks++; };
 
-for (const mode of E.MODES) for (const d of E.DIFFICULTIES) {
+for (const mode of E.MODES.filter((id) => id !== "looptype")) for (const d of E.DIFFICULTIES) {
   const n = isNew(mode) ? NEW : OLD;
   const exact = new Map(), structural = new Map(), fam = {}, tpl = new Set(), tags = {}, distractorSets = new Set(), answerDistribution = {};
   let fallback = 0, distractors = 0; const meta = { score: 0, loopIterations: 0, changingVariables: 0, nestingDepth: 0, conditions: 0, dependentBounds: 0, earlyExits: 0, stateTransitions: 0, tracedOperations: 0, accumulatorUpdates: 0 };
