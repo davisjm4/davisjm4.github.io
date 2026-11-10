@@ -1,0 +1,18 @@
+name = "devcat-wpr-reporting"
+main = "worker.mjs"
+compatibility_date = "2026-11-05"
+
+[vars]
+ALLOWED_ORIGINS = "https://davisjm4.github.io"
+GOOGLE_CLIENT_ID = "REPLACE_WITH_GOOGLE_OAUTH_WEB_CLIENT_ID"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "devcat-wpr"
+database_id = "REPLACE_WITH_D1_DATABASE_UUID"
+
+[triggers]
+crons = ["17 11 * * *"]
+
+[observability]
+enabled = false

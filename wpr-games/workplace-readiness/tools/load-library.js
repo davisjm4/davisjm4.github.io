@@ -17,7 +17,7 @@ function loadContent() {
   const people = readJson(path.join(ROOT, 'people.json')).people;
   const contexts = readDir(path.join(ROOT, 'contexts'));
   const templates = [].concat(...readDir(path.join(ROOT, 'templates')).map(f => f.templates));
-  return { skills, families, contexts, people, templates };
+  return { skills, families, contexts, people, templates, topics: readJson(path.join(ROOT, 'topics.json')) };
 }
 
 function loadLibrary() { return library.create(loadContent()); }

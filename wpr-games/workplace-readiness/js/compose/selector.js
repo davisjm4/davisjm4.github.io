@@ -57,6 +57,15 @@
       h.templatesById[u.id] = { id: u.id, skill: u.skill, family: u.family, mode: u.mode, difficulty: u.difficulty, composed: true };
     });
     h.units = authored.concat(cat.units);
+    h.topicIndex = Object.create(null);
+    h.units.forEach(function (u) {
+      var refs = [u.kitId || u.id, '@' + u.skill];
+      h.topicIndex[u.id] = lib.topics.flatMap(function (t) {
+        return t.subtopics.filter(function (s) {
+          return s[2].split(' ').some(function (ref) { return refs.indexOf(ref) !== -1; });
+        }).map(function (s) { return { topicId: t.id, topic: t.name, subtopicId: s[0], subtopic: s[1] }; });
+      });
+    });
     h.unitsById = Object.create(null);
     h.units.forEach(function (u) { h.unitsById[u.id] = u; });
     return h;
@@ -77,6 +86,13 @@
       if (f.modes && f.modes.length && f.modes.indexOf(u.mode) === -1) return false;
       if (f.difficulty && f.difficulty !== 'mixed' && u.difficulty !== f.difficulty) return false;
       if (f.context && u.contexts.indexOf(f.context) === -1) return false;
+      if (f.contexts && f.contexts.length && !f.contexts.some(function (id) { return u.contexts.includes(id); })) return false;
+      if ((f.topics && f.topics.length) || (f.subtopics && f.subtopics.length)) {
+        return h.topicIndex[u.id].some(function (tag) {
+          return (!f.topics || !f.topics.length || f.topics.includes(tag.topicId)) &&
+            (!f.subtopics || !f.subtopics.length || f.subtopics.includes(tag.subtopicId));
+        });
+      }
       return true;
     });
   }
@@ -97,8 +113,9 @@
   /* ---------- rendering ---------- */
 
   function renderUnit(h, u, opts) {
-    if (u.kind === 'authored') return G.renderTemplate(u.template, h.base, opts);
-    return E.renderUnit(u, h.catalog, h.base, opts);
+    var c = u.kind === 'authored' ? G.renderTemplate(u.template, h.base, opts) : E.renderUnit(u, h.catalog, h.base, opts);
+    c.tags = h.topicIndex[u.id];
+    return c;
   }
 
   function validate(h, c) {
@@ -204,7 +221,7 @@
 
     function pickContext(u, rng) {
       if (filters.context) return filters.context;
-      var items = u.contexts.map(function (id) {
+      var items = u.contexts.filter(function (id) { return !filters.contexts?.length || filters.contexts.includes(id); }).map(function (id) {
         var a = age(lastCtx, id);
         return { weight: a === Infinity ? 13 : 1 + Math.min(a, 12), value: id };
       });

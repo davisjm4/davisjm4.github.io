@@ -822,6 +822,168 @@
       "skill": "customer-service-orientation",
       "label": "Verify availability before making a customer commitment",
       "description": "Checks current schedule information before promising a completion time."
+    },
+    {
+      "id": "professionalism.uniform-change",
+      "skill": "professionalism",
+      "label": "uniform change",
+      "description": "Use approved uniform replacements when your regular uniform cannot meet the dress code."
+    },
+    {
+      "id": "professionalism.client-dress-code",
+      "skill": "professionalism",
+      "label": "client dress code",
+      "description": "Check the dress expectations for the specific workplace event."
+    },
+    {
+      "id": "professionalism.food-grooming",
+      "skill": "professionalism",
+      "label": "food grooming",
+      "description": "Meet every part of the grooming requirement before beginning the task."
+    },
+    {
+      "id": "workplace-safety.protective-footwear",
+      "skill": "workplace-safety",
+      "label": "protective footwear",
+      "description": "Choose footwear that addresses all stated hazards and fits securely."
+    },
+    {
+      "id": "workplace-safety.eye-protection-fit",
+      "skill": "workplace-safety",
+      "label": "eye protection fit",
+      "description": "Check protective equipment fit before beginning a task."
+    },
+    {
+      "id": "workplace-safety.replace-damaged-ppe",
+      "skill": "workplace-safety",
+      "label": "replace damaged ppe",
+      "description": "Follow the inspection criteria and replace protective equipment that fails them."
+    },
+    {
+      "id": "workplace-safety.loose-clothing-machinery",
+      "skill": "workplace-safety",
+      "label": "loose clothing machinery",
+      "description": "Resolve loose clothing and jewelry hazards before equipment begins moving."
+    },
+    {
+      "id": "conflict-resolution.manager-priority-disagreement",
+      "skill": "conflict-resolution",
+      "label": "manager priority disagreement",
+      "description": "Raise priority conflicts with the person who can decide, using facts and a concrete tradeoff."
+    },
+    {
+      "id": "conflict-resolution.supervisor-report-route",
+      "skill": "conflict-resolution",
+      "label": "supervisor report route",
+      "description": "Use the designated escalation route and report observable behavior with relevant evidence."
+    },
+    {
+      "id": "conflict-resolution.supervisor-criticism",
+      "skill": "conflict-resolution",
+      "label": "supervisor criticism",
+      "description": "Receive feedback professionally by asking for a concrete example and confirming the next step."
+    },
+    {
+      "id": "conflict-resolution.unequal-workload",
+      "skill": "conflict-resolution",
+      "label": "unequal workload",
+      "description": "Address an uneven workload with specific observations and a clear request."
+    },
+    {
+      "id": "information-technology.spreadsheet-row-sort",
+      "skill": "information-technology",
+      "label": "spreadsheet row sort",
+      "description": "Sort the full range when the columns in each row belong together."
+    },
+    {
+      "id": "information-technology.spreadsheet-formula",
+      "skill": "information-technology",
+      "label": "spreadsheet formula",
+      "description": "Use cell references and the appropriate operation when a spreadsheet result needs to update."
+    },
+    {
+      "id": "information-technology.spreadsheet-filter",
+      "skill": "information-technology",
+      "label": "spreadsheet filter",
+      "description": "Use a filter view to see a subset of shared data without deleting records."
+    },
+    {
+      "id": "information-technology.word-heading-styles",
+      "skill": "information-technology",
+      "label": "word heading styles",
+      "description": "Use semantic headings to make a document easier to navigate."
+    },
+    {
+      "id": "information-technology.word-review-changes",
+      "skill": "information-technology",
+      "label": "word review changes",
+      "description": "Use revision tracking when a reviewer needs to approve specific changes."
+    },
+    {
+      "id": "information-technology.word-search-replace",
+      "skill": "information-technology",
+      "label": "word search replace",
+      "description": "Use reviewable replacements when identical text has different purposes."
+    },
+    {
+      "id": "information-technology.locate-latest-file",
+      "skill": "information-technology",
+      "label": "locate latest file",
+      "description": "Use the documented approval and revision when choosing a file to distribute."
+    },
+    {
+      "id": "information-technology.storage-versus-memory",
+      "skill": "information-technology",
+      "label": "storage versus memory",
+      "description": "Distinguish file storage from working memory and input or display hardware."
+    },
+    {
+      "id": "information-technology.browser-isolate-issue",
+      "skill": "information-technology",
+      "label": "browser isolate issue",
+      "description": "Change one variable when troubleshooting and report what the comparison isolates."
+    },
+    {
+      "id": "information-security.mfa-unexpected-prompt",
+      "skill": "information-security",
+      "label": "mfa unexpected prompt",
+      "description": "Approve sign-in prompts only when you initiated the sign-in and recognize its details."
+    },
+    {
+      "id": "information-security.credential-sharing",
+      "skill": "information-security",
+      "label": "credential sharing",
+      "description": "Use approved account provisioning to provide access without sharing credentials."
+    },
+    {
+      "id": "professionalism.interview-role-examples",
+      "skill": "professionalism",
+      "label": "interview role examples",
+      "description": "Prepare truthful examples connected to the position’s requirements."
+    },
+    {
+      "id": "professionalism.interview-attire-check",
+      "skill": "professionalism",
+      "label": "interview attire check",
+      "description": "Confirm both dress expectations and safety requirements before an interview site visit."
+    },
+    {
+      "id": "reading-and-writing.business-salutation",
+      "skill": "reading-and-writing",
+      "label": "business salutation",
+      "description": "Use the recipient’s stated title and the communication conventions for the situation."
+    },
+    {
+      "id": "workplace-safety.ppe-storage-damage",
+      "skill": "workplace-safety",
+      "label": "PPE contamination from improper storage",
+      "description": "Recognize potential contamination and separate the affected equipment."
+    },
+    {
+      "id": "conflict-resolution.supervisor-work-credit",
+      "skill": "conflict-resolution",
+      "label": "Correcting supervisor attribution",
+      "description": "Privately resolve a work-credit discrepancy using verifiable records."
     }
   ]
 }

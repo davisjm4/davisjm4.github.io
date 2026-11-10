@@ -25,3 +25,7 @@ npm run capacity         # configurations per skill/difficulty cell
 npm run samples          # rewrite SAMPLES.md for human review (read it after content changes)
 npm run docs:compose     # re-run the audit and regenerate DIVERSITY_REPORT.md
 ```
+
+## Targeted practice and online diagnostics
+
+The topic catalog adds narrow filters and shareable practice links to the existing game. For teacher diagnostics, student performance, CSV exports, and setup, see the [implementation report](reports/IMPLEMENTATION.md), [topic coverage](reports/TOPIC_COVERAGE.md), and [reporting service](service/README.md).

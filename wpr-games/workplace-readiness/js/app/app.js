@@ -52,19 +52,21 @@
         tracker.touch();
         var result = GR.grade(current, resp);
         if (result.ok) {
-          tracker.record({ skill: current.skill, category: current.category, mode: current.mode, difficulty: current.difficulty }, result.correct);
+          tracker.record({ skill: current.skill, category: current.category, mode: current.mode, difficulty: current.difficulty, tags: current.tags }, result.correct);
+          W.readiness?.recordPractice(current, result.correct);
           tracker.data.index = gen.index;
           save(); UI.renderStatbar(tracker);
         }
         return result;
       },
-      next: function () { showNext(); }
+      next: function () { if (gen.filters.count && gen.index >= gen.filters.count) go('#/summary'); else showNext(); }
     });
   }
 
   function startPractice(filters, fresh) {
     openStream(filters, fresh);
-    go('#/practice', true);
+    if (gen.filters.count && gen.index >= gen.filters.count) go('#/summary', true);
+    else go('#/practice', true);
   }
 
   /* ---------- routing ---------- */
@@ -93,12 +95,16 @@
   function checkOptions() {
     var f = UI.readOptions(), eligible = hyb ? W.selector.eligibleUnits(hyb, f) : G.eligibleTemplates(lib, f), n = eligible.length;
     var note = doc.getElementById('options-note'), start = doc.getElementById('btn-start');
+    if ((f.topics?.length || f.subtopics?.length) && (!hyb || W.selector.capacity(hyb, f).families < 3)) {
+      note.textContent = 'Fewer than three reasoning families match. Mix difficulty or mode, change the setting, or choose more topics.';
+      start.disabled = true; return 0;
+    }
     if (!n) { note.textContent = 'No challenges match these choices. Try mixed modes or difficulty.'; start.disabled = true; }
     else if (hyb) {
       var cap = W.selector.capacity(hyb, f);
-      note.textContent = cap.signatures < 20
+      note.textContent = (cap.signatures < 20
         ? cap.signatures + ' distinct reasoning problems match this selection. Underlying ideas will repeat during a 20-question session; broaden the skill, mode, difficulty, or setting filters for more variety.'
-        : cap.signatures + ' distinct reasoning problems match this selection. The generator avoids repeating any of them within 20 questions.';
+        : cap.signatures + ' distinct reasoning problems match this selection. The generator avoids repeating any of them within 20 questions.') + ' ' + cap.families + ' reasoning families.';
       start.disabled = false;
     } else {
       var patterns = new Set(eligible.map(function (t) { return t.family + ':' + t.pattern; })).size;
@@ -113,7 +119,11 @@
   function render() {
     var r = (root.location.hash || '#/').replace(/^#/, '') || '/';
     if (r === '/practice') {
-      if (!gen) { var f = tracker.data.filters && tracker.data.seed ? tracker.data.filters : UI.readOptions(); openStream(f, false); }
+      if (!gen) {
+        var f = tracker.data.filters && tracker.data.seed ? tracker.data.filters : UI.readOptions();
+        try { openStream(f, false); }
+        catch (e) { root.location.hash = '#/'; setView('home'); refreshHome(); return; }
+      }
       setView('practice');
       if (route !== '/practice' || !current) showNext();
       var q = doc.querySelector('#ticket-slot [role="radio"], #ticket-slot .grip'); if (q) q.focus();
@@ -138,11 +148,14 @@
       warning.textContent = composeFailure;
       warning.hidden = false;
     }
-    UI.fillOptions(lib, tracker.data.filters);
+    var shared = W.targeted.readLink(root.location.href);
+    UI.fillOptions(lib, shared || tracker.data.filters);
+    W.targeted.mountPractice(lib, shared || tracker.data.filters, checkOptions);
+    if (shared) doc.getElementById('btn-start').textContent = shared.count ? 'Start ' + shared.count + '-question practice' : 'Start shared practice';
     ['opt-skill', 'opt-mode', 'opt-difficulty', 'opt-context'].forEach(function (id) { doc.getElementById(id).addEventListener('change', checkOptions); });
     doc.getElementById('btn-start').addEventListener('click', function () {
       if (!checkOptions()) return;
-      var f = UI.readOptions(); startPractice(f, false);
+      var f = UI.readOptions(); startPractice(f, Boolean(shared));
     });
     doc.getElementById('btn-continue').addEventListener('click', function () { startPractice(tracker.data.filters, false); });
     doc.getElementById('btn-home-summary').addEventListener('click', function () { go('#/summary'); });

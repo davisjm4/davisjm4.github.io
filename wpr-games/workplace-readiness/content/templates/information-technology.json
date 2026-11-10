@@ -385,6 +385,537 @@
         "notes": "Single line postpones updates indefinitely.",
         "policyNotNeeded": true
       }
+    },
+    {
+      "id": "ITE-D-101",
+      "skill": "information-technology",
+      "family": "information-technology.spreadsheet-row-sort",
+      "pattern": "spreadsheet-row-sort",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-technology:software-and-applications"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "An inventory spreadsheet has item names, quantities, and reorder dates. Your lead wants the earliest reorder date first without mixing up the item records.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Sort complete records by reorder date.",
+          "why": "Sorting whole records preserves the relationship between each item and its date.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Sort only the date column.",
+          "why": "Dates would no longer reliably match the corresponding items.",
+          "misconception": "Dates would no longer reliably match the corresponding items."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Filter out items with later dates.",
+          "why": "Filtering hides records rather than ordering all of them.",
+          "misconception": "Filtering hides records rather than ordering all of them."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Change the date format in every cell.",
+          "why": "Formatting changes appearance, not row order.",
+          "misconception": "Formatting changes appearance, not row order."
+        }
+      ],
+      "principle": "Sort the full range when the columns in each row belong together.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "ITE-D-102",
+      "skill": "information-technology",
+      "family": "information-technology.spreadsheet-formula",
+      "pattern": "spreadsheet-formula",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-technology:software-and-applications"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A sales worksheet lists quantities in column B and unit prices in column C. Row 2 needs a total that updates if its quantity changes.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Multiply B2 by C2 with a formula.",
+          "why": "The formula uses the quantity and unit price from the same row.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Type the total from a calculator into the cell.",
+          "why": "A fixed number does not update when its inputs change.",
+          "misconception": "A fixed number does not update when its inputs change."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Add the quantity and price with a formula.",
+          "why": "Adding quantity and price does not calculate extended cost.",
+          "misconception": "Adding quantity and price does not calculate extended cost."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Multiply the quantity and price from row 3 instead.",
+          "why": "Those references point to another record.",
+          "misconception": "Those references point to another record."
+        }
+      ],
+      "principle": "Use cell references and the appropriate operation when a spreadsheet result needs to update.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "ITE-D-103",
+      "skill": "information-technology",
+      "family": "information-technology.spreadsheet-filter",
+      "pattern": "spreadsheet-filter",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-technology:software-and-applications"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A shared order table contains open and closed orders. A coworker needs to see only open orders without deleting any rows or changing another user’s view. The spreadsheet supports private filter views.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Create a private filter view for the Open status.",
+          "why": "The view limits the displayed rows while preserving the shared data and other views.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Delete the closed rows and recover them later.",
+          "why": "Deleting rows changes the underlying shared data.",
+          "misconception": "Deleting rows changes the underlying shared data."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Sort by status and leave all rows visible.",
+          "why": "Sorting groups rows but does not meet the request to show only open ones.",
+          "misconception": "Sorting groups rows but does not meet the request to show only open ones."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Create a shared filter that changes the whole team’s view.",
+          "why": "The request calls for a private view.",
+          "misconception": "The request calls for a private view."
+        }
+      ],
+      "principle": "Use a filter view to see a subset of shared data without deleting records.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "ITE-D-104",
+      "skill": "information-technology",
+      "family": "information-technology.word-heading-styles",
+      "pattern": "word-heading-styles",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-technology:software-and-applications"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A long training document needs navigable section headings. Its editor offers built-in heading styles.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Apply heading styles to section titles in the correct hierarchy.",
+          "why": "Heading styles convey document structure to navigation tools and assistive technology.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Make each title bold and larger without using styles.",
+          "why": "Visual emphasis alone does not add heading structure.",
+          "misconception": "Visual emphasis alone does not add heading structure."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Put each title inside a screenshot.",
+          "why": "The words become harder to navigate or edit.",
+          "misconception": "The words become harder to navigate or edit."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Insert extra blank lines above each title.",
+          "why": "Spacing alone does not create navigable headings.",
+          "misconception": "Spacing alone does not create navigable headings."
+        }
+      ],
+      "principle": "Use semantic headings to make a document easier to navigate.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "ITE-D-105",
+      "skill": "information-technology",
+      "family": "information-technology.word-review-changes",
+      "pattern": "word-review-changes",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-technology:software-and-applications"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A supervisor wants to review your revisions to an existing manual before accepting them. The word processor can track edits.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Turn on change tracking and revise the manual in the shared review copy.",
+          "why": "Tracked changes let the reviewer see and accept or reject individual edits.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Replace the manual with a clean copy and discard the old one.",
+          "why": "The reviewer loses the revision history.",
+          "misconception": "The reviewer loses the revision history."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Highlight every revised paragraph without recording deletions.",
+          "why": "Highlighting does not show what was removed.",
+          "misconception": "Highlighting does not show what was removed."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Send a screenshot of the new pages.",
+          "why": "A screenshot cannot be used to accept or reject edits.",
+          "misconception": "A screenshot cannot be used to accept or reject edits."
+        }
+      ],
+      "principle": "Use revision tracking when a reviewer needs to approve specific changes.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "ITE-D-106",
+      "skill": "information-technology",
+      "family": "information-technology.word-search-replace",
+      "pattern": "word-search-replace",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-technology:software-and-applications"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A handbook repeats an old building name. It also quotes an archived notice where that name must remain. The editor has Find and Replace.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Review each match and replace only current references.",
+          "why": "Checking the context preserves the required archived quotation.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Replace all matches at once.",
+          "why": "That also changes the archived quotation.",
+          "misconception": "That also changes the archived quotation."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Search for the new name and delete its matches.",
+          "why": "That does not identify old references.",
+          "misconception": "That does not identify old references."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Change only the first match and assume the rest are duplicates.",
+          "why": "Other current references may still need updating.",
+          "misconception": "Other current references may still need updating."
+        }
+      ],
+      "principle": "Use reviewable replacements when identical text has different purposes.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "ITE-D-107",
+      "skill": "information-technology",
+      "family": "information-technology.locate-latest-file",
+      "pattern": "locate-latest-file",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-technology:cloud-and-file-sharing"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A project folder contains two draft files and one file marked Approved. Your lead asks for the version authorized for distribution.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Verify the revision of the approved distribution copy.",
+          "why": "Approval and revision identify the intended distribution copy.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Send the file with the largest size.",
+          "why": "File size does not establish approval.",
+          "misconception": "File size does not establish approval."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Send all copies so recipients can pick.",
+          "why": "That risks distributing drafts and shifting the decision to recipients.",
+          "misconception": "That risks distributing drafts and shifting the decision to recipients."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Rename the newest draft Approved and send it.",
+          "why": "Renaming cannot grant approval.",
+          "misconception": "Renaming cannot grant approval."
+        }
+      ],
+      "principle": "Use the documented approval and revision when choosing a file to distribute.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "ITE-D-108",
+      "skill": "information-technology",
+      "family": "information-technology.storage-versus-memory",
+      "pattern": "storage-versus-memory",
+      "mode": "decision",
+      "difficulty": "beginner",
+      "concepts": [
+        "information-technology:hardware-and-devices"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "A workstation has enough memory to open its apps but reports almost no free space when saving a large video. The media team has an approved storage location with room.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Save the project to the approved location with sufficient storage.",
+          "why": "The error is about persistent storage space for the file.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Close the monitor settings window and retry.",
+          "why": "That does not create space to save the file.",
+          "misconception": "That does not create space to save the file."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Increase the screen resolution to fit the video.",
+          "why": "Screen resolution does not add storage capacity.",
+          "misconception": "Screen resolution does not add storage capacity."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Connect a larger external keyboard to the workstation.",
+          "why": "An input device does not affect available storage.",
+          "misconception": "An input device does not affect available storage."
+        }
+      ],
+      "principle": "Distinguish file storage from working memory and input or display hardware.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
+    },
+    {
+      "id": "ITE-D-109",
+      "skill": "information-technology",
+      "family": "information-technology.browser-isolate-issue",
+      "pattern": "browser-isolate-issue",
+      "mode": "decision",
+      "difficulty": "intermediate",
+      "concepts": [
+        "information-technology:troubleshooting"
+      ],
+      "contexts": "any",
+      "slots": {},
+      "facts": [
+        "stated-workplace-situation"
+      ],
+      "scenario": "An approved site is slow in one browser profile. The same site opens normally on the same computer in a clean profile.",
+      "prompt": "Which response best fits this situation?",
+      "options": [
+        {
+          "id": "best",
+          "role": "best",
+          "text": "Report a profile-specific problem and note recent profile changes.",
+          "why": "The comparison narrows the issue to a difference between profiles.",
+          "requires": [
+            "stated-workplace-situation"
+          ]
+        },
+        {
+          "id": "d1",
+          "role": "distractor",
+          "text": "Report that the entire company network is down.",
+          "why": "The site works in another profile on the same computer.",
+          "misconception": "The site works in another profile on the same computer."
+        },
+        {
+          "id": "d2",
+          "role": "distractor",
+          "text": "Replace the monitor to speed up the page.",
+          "why": "The profile test does not implicate the display.",
+          "misconception": "The profile test does not implicate the display."
+        },
+        {
+          "id": "d3",
+          "role": "distractor",
+          "text": "Delete shared files to free space without asking.",
+          "why": "That risks data loss and does not follow the evidence.",
+          "misconception": "That risks data loss and does not follow the evidence."
+        }
+      ],
+      "principle": "Change one variable when troubleshooting and report what the comparison isolates.",
+      "review": {
+        "status": "approved",
+        "checks": [
+          "no-jurisdiction-claims",
+          "policy-stated-in-scenario"
+        ],
+        "notes": "Original scenario. The necessary conditions are given in the prompt."
+      }
     }
   ]
 }

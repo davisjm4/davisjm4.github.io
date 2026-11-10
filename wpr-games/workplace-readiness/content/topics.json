@@ -1,0 +1,255 @@
+[
+  {
+    "id": "attire-ppe",
+    "name": "Workplace Attire & PPE",
+    "subtopics": [
+      [
+        "dress-and-grooming",
+        "Dress codes, uniforms & grooming",
+        "PRO-D-001 PRO-D-101 PRO-D-102 PRO-D-103 PRO-D-105"
+      ],
+      [
+        "ppe-selection-fit",
+        "Protective equipment selection & fit",
+        "SAF-D-002 SAF-D-101 SAF-D-102"
+      ],
+      [
+        "ppe-condition-hazards",
+        "PPE inspection & unsafe attire",
+        "SAF-D-103 SAF-D-104 SAF-D-105"
+      ]
+    ]
+  },
+  {
+    "id": "workplace-relationships",
+    "name": "Workplace Relationships & Conflict",
+    "subtopics": [
+      [
+        "coworker-disagreements",
+        "Coworker disagreements & work styles",
+        "CON-D-001 CON-D-002 CON-O-001 con-shared-task-dispute CON-D-104"
+      ],
+      [
+        "management-conflict",
+        "Conflict with supervisors & escalation",
+        "CON-N-001 CON-D-101 CON-D-102 CON-D-103 CON-D-105"
+      ],
+      [
+        "constructive-feedback",
+        "Giving and receiving constructive feedback",
+        "CON-F-001 CON-D-103 CLA-D-001 cla-review-feedback"
+      ]
+    ]
+  },
+  {
+    "id": "professional-communication",
+    "name": "Professional Communication",
+    "subtopics": [
+      [
+        "email-tone",
+        "Professional email, tone & clarity",
+        "RAW-D-002 RAW-F-001 RAW-O-001 RAW-D-101 PRO-F-001 raw-delay-email"
+      ],
+      [
+        "listening-instructions",
+        "Active listening, instructions & communication channels",
+        "LIS-D-001 LIS-D-002 LIS-N-001 LIS-F-001 lis-spoken-instructions RAW-D-003"
+      ],
+      [
+        "customer-complaints",
+        "Responding to customer complaints",
+        "CUS-D-001 CUS-F-001 CUS-O-001 CUS-D-003"
+      ]
+    ]
+  },
+  {
+    "id": "workplace-safety",
+    "name": "Workplace Safety",
+    "subtopics": [
+      [
+        "hazards-and-procedures",
+        "Recognizing and reporting hazards",
+        "SAF-N-002 SAF-O-001 SAF-D-001 SAF-D-103 SAF-D-104"
+      ],
+      [
+        "emergency-response",
+        "Emergency response & spill procedures",
+        "SAF-N-001 SAF-O-002 SAF-D-003 SAF-F-001 SAF-D-004 saf-chemical-task"
+      ],
+      [
+        "equipment-safety",
+        "Safe equipment use & manufacturer instructions",
+        "JST-N-001 JST-D-002 JST-F-001 JST-O-001 JST-D-003 jst-equipment-use saf-powered-equipment"
+      ]
+    ]
+  },
+  {
+    "id": "computer-technology",
+    "name": "Computer & Technology Skills",
+    "subtopics": [
+      [
+        "spreadsheet-tools",
+        "Spreadsheets",
+        "ITE-D-101 ITE-D-102 ITE-D-103"
+      ],
+      [
+        "word-processing",
+        "Word processing & document accessibility",
+        "ITE-D-104 ITE-D-105 ITE-D-106"
+      ],
+      [
+        "files-and-software",
+        "File management, sharing & software selection",
+        "ITE-D-001 ITE-D-002 ITE-D-003 ITE-D-107 ite-sharing-file"
+      ],
+      [
+        "device-troubleshooting",
+        "Computer basics & troubleshooting",
+        "ITE-O-001 ITE-N-001 ITE-F-001 ITE-D-108 ITE-D-109 ite-printer-trouble"
+      ],
+      [
+        "accounts-and-data",
+        "Account safety, privacy & appropriate use",
+        "ISE-D-001 ISE-D-002 ISE-N-001 ISE-D-101 ISE-D-102 ise-workstation ise-data-request"
+      ],
+      [
+        "digital-messaging",
+        "Digital messages, platforms & phishing",
+        "PRO-D-002 RAW-D-101 ISE-F-001 ISE-O-001 ise-suspicious-email"
+      ]
+    ]
+  },
+  {
+    "id": "professionalism-work-ethic",
+    "name": "Professionalism & Work Ethic",
+    "subtopics": [
+      [
+        "attendance-accountability",
+        "Attendance, commitments & accountability",
+        "PRO-N-001 WET-D-001 WET-N-001 WET-D-002 WET-F-001 wet-shift-commitments"
+      ],
+      [
+        "honesty-and-confidentiality",
+        "Honesty, workplace policy & confidentiality",
+        "INT-D-001 INT-D-002 INT-D-003 INT-F-001 ISE-D-002 ise-data-request"
+      ],
+      [
+        "initiative",
+        "Taking initiative within your role",
+        "@initiative-and-self-direction"
+      ]
+    ]
+  },
+  {
+    "id": "teamwork",
+    "name": "Teamwork",
+    "subtopics": [
+      [
+        "team-roles-work",
+        "Roles, dividing work & supporting teammates",
+        "TEA-D-001 TEA-O-001 TEA-F-001 tea-team-project tea-short-staffed"
+      ],
+      [
+        "team-communication",
+        "Communication & respecting contributions",
+        "TEA-N-001 TEA-D-002 DIV-D-002 DIV-D-003 DIV-N-001 DIV-O-001"
+      ]
+    ]
+  },
+  {
+    "id": "career-life",
+    "name": "Career & Life Management",
+    "subtopics": [
+      [
+        "career-planning",
+        "Career goals, training & development",
+        "CAR-D-001 CAR-O-001 CAR-D-003 CAR-N-002 CAR-O-002 car-next-step CLA-N-001 CLA-F-001 CLA-O-001"
+      ],
+      [
+        "interview-preparation",
+        "Interview preparation & appearance",
+        "PRO-O-001 PRO-D-104 PRO-D-105 PRO-D-003"
+      ],
+      [
+        "workplace-resources",
+        "Benefits, pay & workplace resources",
+        "CAR-D-002 CAR-N-001 CAR-F-001 CAR-F-002 car-paycheck"
+      ]
+    ]
+  },
+  {
+    "id": "problem-solving",
+    "name": "Problem Solving & Innovation",
+    "subtopics": [
+      [
+        "evaluate-solutions",
+        "Problem definition & evaluating solutions",
+        "@critical-thinking-and-problem-solving"
+      ],
+      [
+        "creative-solutions",
+        "Creative ideas & process improvement",
+        "@creativity-and-innovation"
+      ],
+      [
+        "wider-impact",
+        "Wider impacts & business tradeoffs",
+        "@big-picture-thinking"
+      ]
+    ]
+  },
+  {
+    "id": "work-planning",
+    "name": "Work Planning & Adaptability",
+    "subtopics": [
+      [
+        "priorities",
+        "Priorities, scheduling & resources",
+        "@efficiency-and-productivity"
+      ],
+      [
+        "learn-and-adapt",
+        "Learning and adapting to change",
+        "@continuous-learning-and-adaptability"
+      ]
+    ]
+  },
+  {
+    "id": "workplace-math",
+    "name": "Workplace Math",
+    "subtopics": [
+      [
+        "applied-calculations",
+        "Applied calculations, estimates & pay",
+        "@mathematics"
+      ]
+    ]
+  },
+  {
+    "id": "workplace-information",
+    "name": "Workplace Information & Writing",
+    "subtopics": [
+      [
+        "source-checking",
+        "Finding and evaluating sources",
+        "@information-literacy"
+      ],
+      [
+        "written-instructions",
+        "Interpreting and writing instructions",
+        "RAW-D-001 RAW-N-001 RAW-D-003 RAW-N-002 RAW-O-002 RAW-F-002 raw-reading-procedure"
+      ]
+    ]
+  },
+  {
+    "id": "inclusive-workplaces",
+    "name": "Inclusive Workplaces",
+    "subtopics": [
+      [
+        "inclusion-and-bias",
+        "Inclusive collaboration & checking bias",
+        "@respect-for-diversity"
+      ]
+    ]
+  }
+]
