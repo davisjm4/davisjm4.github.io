@@ -221,7 +221,8 @@ test('Pathway editor: dark theme, four stages, readable labels, responsive at 39
   // Four stages, one at a time, in order.
   assert.deepEqual(await page.$$eval('#stepper button strong', b => b.map(x => x.textContent)), ['Pacing Setup', 'Customize Pathway', 'Pacing Guide', 'Review & Publish']);
   for (const name of ['calendar', 'goals', 'pacing', 'review']) {
-    await page.click(`#stepper button[data-stage="${name}"]`);
+    await page.focus(`#stepper button[data-stage="${name}"]`);
+    await page.keyboard.press('Enter');
     await page.waitForFunction(n => !document.getElementById('stage-' + n).hidden, {}, name);
     assert.equal(await page.$$eval('[data-stage-panel]:not([hidden])', s => s.length), 1);
     assert.equal(await page.$eval('#stepper [aria-current]', b => b.dataset.stage), name);
