@@ -62,6 +62,7 @@ async function signInHub(page) {
   await page.waitForSelector('#wpr-teacher-profiles:not([hidden]) .class-card', { timeout: 10000 });
 }
 async function signInEditor(page) {
+  await page.waitForSelector('input[aria-label="Development teacher token"]',{visible:true,timeout:10000});
   await page.type('input[aria-label="Development teacher token"]', token);
   await clickByText(page, '#auth', 'Sign in to development service');
   await page.waitForFunction(() => document.querySelector('#connection').textContent.startsWith('Signed in'), { timeout: 10000 });
