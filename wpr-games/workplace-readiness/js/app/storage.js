@@ -13,6 +13,8 @@
 
   function create(backend) {
     var mem = null, usable = false;
+    var device = typeof self !== 'undefined' ? self.WRG?.profileDevice : null;
+    var key = device ? device.key(KEY) : KEY;
     try {
       if (backend) { backend.setItem('wrg.__t', '1'); backend.removeItem('wrg.__t'); usable = true; }
     } catch (e) { usable = false; }
@@ -20,21 +22,22 @@
       persistent: usable,
       load: function () {
         try {
-          var raw = usable ? backend.getItem(KEY) : (mem && JSON.stringify(mem));
+          var raw = usable ? backend.getItem(key) : (mem && JSON.stringify(mem));
           if (!raw) return null;
           var d = JSON.parse(raw);
           return d && d.version === 1 ? d : null;
         } catch (e) { return null; }
       },
       save: function (data) {
+        if (device?.identity && !device.isCurrent()) return false;
         try {
-          if (usable) backend.setItem(KEY, JSON.stringify(data)); else mem = JSON.parse(JSON.stringify(data));
+          if (usable) backend.setItem(key, JSON.stringify(data)); else mem = JSON.parse(JSON.stringify(data));
           return true;
         } catch (e) { mem = JSON.parse(JSON.stringify(data)); return false; }
       },
       clear: function () {
         mem = null;
-        try { if (usable) backend.removeItem(KEY); } catch (e) { /* ignore */ }
+        try { if (usable) backend.removeItem(key); } catch (e) { /* ignore */ }
       }
     };
   }

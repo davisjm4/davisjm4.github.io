@@ -35,7 +35,7 @@ export function startLoopLab() {
     if (instance) tracker.skip(instance);
     q = practice.next({ mode: $("mode").value, difficulty: $("difficulty").value });
     instance = tracker.begin(q.game, q.title, q.topic, q.topicTitle, q.mode, q.modeName); selected = null; closed = false;
-    tracker.annotate(instance, { mode: q.mode, difficulty: q.difficulty, skill: q.concept, generatorFamily: q.reasoningFamily, seed: q.seed });
+    tracker.annotate(instance, { mode: q.mode, practiceSetting: $("mode").value, difficulty: q.difficulty, skill: q.concept, generatorFamily: q.reasoningFamily, seed: q.seed });
     const blockChoices = q.choiceFormat === "code" || q.choiceFormat === "block";
     $("stage").innerHTML = `<div class="challenge-meta">${esc(q.modeName)}${q.scenario ? "" : " · " + esc(q.variantName)} · ${esc(q.difficultyName)}</div><h2 id="prompt" tabindex="-1">${esc(q.prompt)}</h2>
 ${q.scenario ? `<p id="loop-scenario">${esc(q.scenario)}</p>` : `<pre class="snippet loop-snippet" tabindex="0" aria-label="Java code"><code>${esc(q.code)}</code></pre>`}${studentTraceHtml(q.studentTrace)}

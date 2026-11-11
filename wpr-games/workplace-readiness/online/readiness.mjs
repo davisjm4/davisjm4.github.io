@@ -1,12 +1,14 @@
 import { VERSION, performanceCsv, evidence, dimensions, isId } from './model.mjs';
+import { queuePractice } from './profile-student.mjs';
 import { el, button, pct, table, download } from './dom.mjs';
 const W = globalThis.WRG;
-const KEY = 'wrg.readiness.v1';
+const KEY = W.profileDevice?.key('wrg.readiness.v1') || 'wrg.readiness.v1';
 const empty = () => ({version:VERSION,reports:[],practice:{},marks:{},settings:{min:3,focus:0.6,ready:0.8}});
 const safeParse = key => {try {return JSON.parse(localStorage.getItem(key));} catch {return null;}};
 let data = safeParse(KEY) || empty();
 let persistent = true;
 function save() {
+  if (W.profileDevice?.identity && !W.profileDevice.isCurrent()) return;
   try {localStorage.setItem(KEY,JSON.stringify(data)); persistent=true;} catch {persistent=false;}
 }
 const link = d => W.targeted.practiceLink(d.scope === 'skill' ? {skills:[d.id]}
@@ -135,6 +137,7 @@ function recordDimension(d, right) {
   if (arr.length>30) arr.shift();
 }
 export function recordPractice(q, right) {
+  queuePractice(q,right);
   const skill = W.content.skills.find(s=>s.id===q.skill);
   for (const d of dimensions({skillId:q.skill,topic:skill?.name,tags:q.tags})) {
     recordDimension(d,right);

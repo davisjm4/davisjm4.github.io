@@ -8,7 +8,7 @@ Four course templates reuse existing curriculum/skill metadata. The generated gr
 
 Teachers can configure different class calendars/rotations, import and confirm ICS/CSV dates, edit individual dates or ranges, protect review/testing time, change checkpoint dates/requirements/targets, reorder areas or skills, add their own areas/nodes, change time estimates, recalculate all or remaining instruction, copy an independent class, save/restore backups and export JSON/CSV/ICS. Daily, weekly and unit views are projections of the same scheduled sessions. Each class has separate stable IDs. Removed requirements do not remove evidence.
 
-The local editor works on GitHub Pages. The shared service extends the existing WPR Worker/D1 service and teacher authentication. **Production API configuration and pseudonymous student profile/evidence adapters are not connected in this repository baseline. No live cloud student synchronization is claimed.** Publication is disabled in the production static UI until the existing service is configured and teacher sign-in succeeds. Local preview revisions are clearly labeled and never presented as cloud publications.
+The local editor works on GitHub Pages. Build 5 connects the shared class pathway service to enrolled pseudonymous profiles and immutable assessment evidence in the existing WPR Worker/D1 service. The production API and Google client await provisioning. Until then the static editor supports local planning and preview.
 
 ## Files
 
@@ -48,14 +48,9 @@ Review/mixed/guided range edits retain existing quiz/final overrides. An explici
 
 ## Identity and evidence integration boundary
 
-This is not a second account system. `class_pathways` stores a class reference and teacher owner; it does not issue student identities, credentials, enrollment links or roster names. An existing/future class profile service must supply these Worker environment hooks:
+The shared service resolves class ownership and enrollment through the existing profile database. Students authenticate with their profile session, and the service looks up that enrolled class’s published revision and verified evidence. The development-only hooks remain available for synthetic tests. Anonymous diagnostics use their separate reporting flow.
 
-- `resolvePathwayStudent(request)` → authenticated `{ profileId, classIds }` from existing enrollment.
-- `readPathwayEvidence(profileId)` → immutable eligible evidence from the existing evidence source.
-
-Without both hooks, student reads return 503. Merely configuring a public API URL does not implement student identity. The local integration tests supply synthetic hooks explicitly. Anonymous/account-free practice and anonymous WPR diagnostic routes are unchanged.
-
-Evidence IDs must be globally stable per source attempt. Question records include `id`, `questionId`, `sessionId`, `timestamp`, `activityId`, actual `familyId`, `nodeIds`, `firstAttempt`, `correct`, eligibility and optional subskills. Requested mode may be Mixed; the assessed mode and source family determine credit. No page visit or elapsed time yields mastery. The normalizer defaults to ineligible unless called by a trusted grader adapter. Existing browser totals must not be uploaded as verified mastery. Individual game-to-node adapters beyond the existing CSP resolver and reviewed source selectors remain integration work; there is no new all-game automatic mastery claim.
+Evidence IDs must be globally stable per source attempt. Question records include `id`, `questionId`, `sessionId`, `timestamp`, `activityId`, actual `familyId`, `nodeIds`, `firstAttempt`, `correct`, eligibility and optional subskills. Requested mode may be Mixed; the assessed mode and source family determine credit. No page visit or elapsed time yields mastery. The normalizer defaults to ineligible unless called by a trusted grader adapter. Existing browser totals must not be uploaded as verified mastery. Build 5 normalizes supported browser practice against existing catalog selectors and labels it provisional. Teacher-verified checkpoint evidence is recorded separately. Automatic calibrated mastery remains future work.
 
 An eligible assessment can provide a 0–4 score. A separate `mastery-award` binds node completion to a policy ID/version. Completion, numeric score and whether a checkpoint meets its teacher target are different fields. A stricter policy can require reassessment without erasing the earlier award or original attempts. Default policy values are null and provisional, pending the mastery calibration audit. Teacher-defined activated policies support variable question counts, accuracy and subskill coverage; they are not system-calibrated recommendations.
 
@@ -63,16 +58,10 @@ An eligible assessment can provide a 0–4 score. A separate `mastery-award` bin
 
 Published revisions are immutable snapshots. An insertion trigger changes the class head and records immutable policy definitions atomically in the same D1 database. Draft edits use optimistic draft-version checks; publishing requires a current preview token and expected published revision. Rollback stages an earlier configuration as a draft, then normal preview/publication creates a new revision. Historical revision numbers are never rewound. Node descriptors are pinned in published snapshots so a future graph release cannot remove the vocabulary of an older revision.
 
-Students resolve the class's current published reference; no permanent independent student pathway copies are created. Pacing status is recalculated at student read/reconciliation using the latest targets and eligible evidence. Status history is append-only per profile/revision/outcome. This foundation uses bounded client polling (60 seconds), focus and online events instead of sockets. The caller uses `setActive(true)` while a question or assessment is active and `setActive(false)` at a safe boundary; pending revisions are adopted then, with an update notice. It must bind assessment-wide activity, not merely each answer, when an exam is running.
+Students resolve the class's current published reference; no permanent independent student pathway copies are created. Pacing status is recalculated at student read/reconciliation using the latest targets and eligible evidence. Status history is append-only per profile/revision/outcome. The structured student hub revalidates the class revision on focus, reconnection and a visible-page interval. It does not reload game or assessment pages. A consumer that embeds updates in a live assessment can use the client’s active-task deferral contract to adopt pending changes at the assessment boundary.
 
-The client cache is scoped by pseudonymous profile and class. Offline evidence remains in a stable-ID outbox until an existing progress service acknowledges that exact ID. The receiving service must enforce idempotency; the new pathway API deliberately has no untrusted evidence-writing endpoint. Existing WPR receipt duplicate protection is regression-tested. Polling and outbox are integration modules, not an already-connected change to every practice page. Offline use requires a previously loaded interface/pathway; full first-visit offline navigation/service-worker installation is outside this build.
+The client cache is scoped by pseudonymous profile and class. Build 5 queues supported practice through the shared profile service, which acknowledges stable IDs and deduplicates retries. Offline use requires a previously loaded interface or pathway.
 
 ## Production deployment
 
-1. Complete the already-documented WPR Worker/D1/OAuth setup in `service/README.md`; no provider credentials or production account connection are present here.
-2. Apply the additive `service/migrations/0002_pathways.sql` to the **same** D1 database. Fresh development databases load the updated `schema.sql` automatically. Existing WPR assignment/receipt/aggregate tables are preserved; the cron does not delete pathway history.
-3. Deploy the updated existing Worker. Set the existing public `productionApi` and `googleClientId` values in `online/config.mjs` only after its real URL/client are provisioned.
-4. Connect the profile enrollment/evidence hooks above to the completed pseudonymous profile work. Implement and verify its evidence submission adapter using stable event IDs.
-5. Verify independent real devices, teacher allowlist/ownership, school origin CORS, active examination deferral and offline reconciliation using synthetic accounts before classroom rollout.
-
-The developer cannot complete provider provisioning or missing profile service deployment using an unrelated app connection. These are explicit production dependencies, not hidden success assumptions.
+Follow the [CS Games deployment runbook](../../wpr-games/workplace-readiness/service/DEPLOYMENT.md). It covers additive D1 migrations, Google teacher sign-in, the existing GitHub Pages origin, and real-device verification.

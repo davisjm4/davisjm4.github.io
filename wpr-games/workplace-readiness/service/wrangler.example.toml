@@ -1,15 +1,20 @@
-name = "devcat-wpr-reporting"
+name = "cs-games-api"
 main = "worker.mjs"
 compatibility_date = "2026-11-05"
+workers_dev = true
+preview_urls = false
 
 [vars]
 ALLOWED_ORIGINS = "https://davisjm4.github.io"
 GOOGLE_CLIENT_ID = "REPLACE_WITH_GOOGLE_OAUTH_WEB_CLIENT_ID"
+ENABLE_STUDENT_PROFILES = "1"
+PROFILE_SCHEMA_INSTALLED = "1"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "devcat-wpr"
+database_name = "cs-games-data"
 database_id = "REPLACE_WITH_D1_DATABASE_UUID"
+migrations_dir = "migrations"
 
 [triggers]
 crons = ["17 11 * * *"]
