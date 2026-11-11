@@ -119,13 +119,16 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
 
   await stage('calendar');
   assert.equal(await teacher.$eval('#settings',form=>form.hidden),true);
-  await teacher.click('#add-pacing');
+  await press('#add-pacing');
+  await wait(teacher,'#settings:not([hidden])');
   assert.deepEqual(await teacher.$eval('#settings',form=>[form.elements.start.value,form.elements.end.value,form.elements.exam.value]),['','','']);
   for(const [name,value] of [['start','2027-01-11'],['end','2027-06-04']]){
     await teacher.$eval('#settings [name='+name+']',(input,date)=>{input.value=date;input.dispatchEvent(new Event('input',{bubbles:true}));},value);
   }
-  await teacher.click('#settings [name=shareTargets]');
-  await teacher.click('#settings button[type=submit]');
+  await teacher.focus('#settings [name=shareTargets]');
+  await teacher.keyboard.press('Space');
+  assert.equal(await teacher.$eval('#settings [name=shareTargets]',checkbox=>checkbox.checked),true);
+  await press('#settings button[type=submit]');
   await see(teacher,'#status','Pacing updated');
   await publish(3);
   await student.reload();
@@ -133,7 +136,7 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   assert.doesNotMatch(await textOf(student,pathway),/overdue/i);
 
   await stage('calendar');
-  await teacher.click('#remove-pacing');
+  await press('#remove-pacing');
   await see(teacher,'#status','Pacing removed');
   await publish(4);
   const restored=await (await browser.createBrowserContext()).newPage();
