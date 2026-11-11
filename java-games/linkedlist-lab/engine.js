@@ -67,12 +67,18 @@ function choices(correct, distractors, rng) {
 }
 function linkChallenge(rng) {
   const target = values(rng, 3, 5);
-  const nodes = shuffle(target.map((value, i) => ({ id: "n" + i, value })), rng);
   const correct = {};
   for (let i = 0; i < target.length; i++) correct["n" + i] = i + 1 < target.length ? "n" + (i + 1) : null;
-  const wrong = {};
-  nodes.forEach((n, i) => { wrong[n.id] = i + 1 < nodes.length ? nodes[i + 1].id : null; });
-  const head = pick(nodes, rng).id;
+  // The page pre-fills the starting references, so a starting state that already spells the target would be a free correct answer
+  // (about 1 in 18 three-node draws). Redraw until the starting state needs at least one change.
+  let nodes, wrong, head;
+  for (let tries = 0; tries < 50; tries++) {
+    nodes = shuffle(target.map((value, i) => ({ id: "n" + i, value })), rng);
+    wrong = {};
+    nodes.forEach((n, i) => { wrong[n.id] = i + 1 < nodes.length ? nodes[i + 1].id : null; });
+    head = pick(nodes, rng).id;
+    if (JSON.stringify(chain(nodes, head, wrong).values) !== JSON.stringify(target)) break;
+  }
   return {
     kind: "links", mode: "link", family: "connect",
     nodes, head, next: wrong, answer: { head: "n0", next: correct },

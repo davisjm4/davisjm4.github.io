@@ -1,5 +1,6 @@
 import * as E from "./engine.js?v=bool-v5";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
+import { labEvidence } from "../lab-evidence.js?v=lab-evidence-v1";
 import { mountRangeExplorer } from "./range-explorer.js?v=range-explorer-v3";
 
 const $ = id => document.getElementById(id);
@@ -36,7 +37,7 @@ function render() {
 function next() {
   if (instance && tracker.status(instance) === "active") tracker.skip(instance);
   q = practice.next($("mode").value, $("difficulty").value);
-  instance = tracker.begin("boolean-conditional-lab", E.booleanGame.name, q.topic, E.booleanGame.modes[q.topic], q.mode, E.booleanGame.modes[q.mode]); closed = false; selected = null; render();
+  instance = tracker.begin("boolean-conditional-lab", E.booleanGame.name, q.topic, E.booleanGame.modes[q.topic], q.mode, E.booleanGame.modes[q.mode]); tracker.annotate(instance, labEvidence("boolean-conditional-lab", q) || {}); closed = false; selected = null; render();
 }
 function submit() {
   if (closed || selected === null || tracker.status(instance) !== "active") return;

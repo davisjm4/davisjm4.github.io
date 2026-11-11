@@ -6,6 +6,8 @@ import {
 import { TYPES, scenarioFamilies } from "./variable-scenarios.js?v=variable-lab-v4";
 import { generateTrace } from "./variable-lab/trace-adapter.js?v=trace-generator-v1";
 import { variableHint, variableExplanation, assessAssembly } from "./variable-lab/feedback.js?v=scenario-validation-v2";
+// Re-exported so the page (and its test harnesses, which inject the engine namespace) obtain evidence metadata without a new import.
+export { variableEvidence, ASSESSED_MODES as VARIABLE_ASSESSED_MODES, IDENTIFY_VARIANTS as VARIABLE_IDENTIFY_VARIANTS } from "./variable-lab/evidence.js?v=variable-evidence-v1";
 export const games = {
   "variable-lab": {
     name: "Variable Lab",

@@ -8,8 +8,9 @@ Two new practice modes for the existing Math Lab (`/java-games/math-lab/`):
 | `numeric-limits` | Numeric Limits, Overflow & Round-off | 14 |
 
 Each mode has Beginner, Intermediate and Advanced difficulty and generates
-challenges procedurally without a fixed bank. The existing five modes and Mixed
-Practice are unchanged, and Mixed Practice still draws only from them.
+challenges procedurally without a fixed bank. The existing five modes are
+unchanged. Mixed Practice now also draws these two modes (see `../mixed.js`); the
+difficulty selected on the page applies to the questions it draws from them.
 
 Built against repository commit `c77569e`; the patch was re-verified to apply cleanly, with all tests passing, on the newer `16b628c` (latest at packaging).
 Nothing was pushed or published.

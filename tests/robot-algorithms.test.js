@@ -407,6 +407,7 @@ function section(name, fn) {
     process.exit(1);
   }
   const S = await import(pathToFileURL(path.join(ROOT, "java-games", "session.js")).href);
+  const LabEvidence = await import(pathToFileURL(path.join(ROOT, "java-games", "lab-evidence.js")).href);
 
   function launch({ query = "", storageMap = new Map() } = {}) {
     const html = fs.readFileSync(path.join(GAME_DIR, "index.html"), "utf8");
@@ -444,6 +445,7 @@ function section(name, fn) {
       clearTimeout: () => {},
       E,
       sessionTracker: () => tracker,
+      labEvidence: LabEvidence.labEvidence, // the page imports this; the harness strips import lines
       addSessionNavigation: () => {},
       roundSummary: (game) => S.accuracy(tracker.snapshot().games[game] || { attempted: 0 }) + "",
     };

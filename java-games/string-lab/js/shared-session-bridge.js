@@ -1,4 +1,6 @@
-/* Map String Lab's versioned events into the established Java Games session tracker. */
+/* Map String Lab's versioned events into the established Java Games session tracker.
+ * Evidence convention: practiceMode is the engine mode id of the question actually shown (never the requested Mixed setting) and
+ * reasoningFamily is the generator family id. Curriculum selectors use modeId = engine mode id and familyIds = generator families. */
 (function (root) {
   'use strict';
   var queue = [], tracker = null, records = Object.create(null);
@@ -11,7 +13,7 @@
     if (evt.type === 'challenge_presented') {
       var id = tracker.begin('string-lab', 'String Lab', topic, title, topic, title);
       records[evt.instance] = id;
-      tracker.annotate(id, { difficulty: ch.difficulty, mode: ch.mode, reasoningFamily: ch.family, skill: title });
+      tracker.annotate(id, { practiceMode: ch.mode, difficulty: ch.difficulty, mode: ch.mode, reasoningFamily: ch.family, skill: title });
     } else if (evt.type === 'challenge_completed') {
       var completedId = records[evt.instance];
       if (!completedId) return;
@@ -21,7 +23,7 @@
         if (evt.outcome === 'incorrect') tracker.closeIncorrect(completedId);
       }
       tracker.annotate(completedId, {
-        difficulty: ch.difficulty, mode: ch.mode, reasoningFamily: ch.family,
+        practiceMode: ch.mode, difficulty: ch.difficulty, mode: ch.mode, reasoningFamily: ch.family,
         skill: title, activeMs: Math.max(0, Math.round(evt.activeMs || 0)),
         outcome: evt.outcome, firstAttemptCorrect: !!evt.firstAttemptCorrect
       });

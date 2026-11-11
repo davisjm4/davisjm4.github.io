@@ -1,4 +1,4 @@
-import * as J from "./engine.js?v=variable-scenario-validation-v2";
+import * as J from "./engine.js?v=variable-evidence-v1";
 import { mathGame } from "./math-lab/engine.js?v=math-v1";
 import { robotGame } from "./robot-algorithms/engine.js?v=robot-v3";
 import { classObjectGame } from "./class-object-lab/class-engine.js?v=class-object-v1";
@@ -66,24 +66,28 @@ function startGame() {
       .map(([id, label]) => `<option value="${id}">${label}</option>`)
       .join(
         "",
-      )}</select></label>${slug === "variable-lab" ? '<label id="difficulty-wrap" hidden>Difficulty <select id="difficulty"><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option></select></label>' : ""}<button id="new" class="secondary">New Challenge</button></div><p id="mode-description" class="muted"></p><section id="stage" class="panel"></section><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div><p id="stats" class="stats"></p>`;
+      )}</select></label>${slug === "variable-lab" ? '<label id="difficulty-wrap" hidden>Trace difficulty <select id="difficulty"><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option></select></label>' : ""}<button id="new" class="secondary">New Challenge</button></div><p id="mode-description" class="muted"></p><section id="stage" class="panel"></section><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div><p id="stats" class="stats"></p>`;
   addSessionNavigation("../");
   if (requestedMode && game.modes[requestedMode]) $("mode").value = requestedMode;
   if ($("difficulty") && ["beginner", "intermediate", "advanced"].includes(requestedDifficulty))
     $("difficulty").value = requestedDifficulty;
   const syncTraceControls = () => {
-      const trace = slug === "variable-lab" && $("mode").value === "trace";
-      if ($("difficulty-wrap")) $("difficulty-wrap").hidden = !trace;
+      const trace = slug === "variable-lab" && $("mode").value === "trace",
+        mixed = slug === "variable-lab" && $("mode").value === "mixed";
+      if ($("difficulty-wrap")) $("difficulty-wrap").hidden = !(trace || mixed);
       $("mode-description").textContent = trace
         ? "Follow changes to Java variables and predict their values or printed output."
-        : "";
+        : mixed
+          ? "Trace difficulty applies only to the Trace the Variable questions in Mixed Practice; other question types have no difficulty levels."
+          : "";
     },
     syncUrl = () => {
       if (typeof history === "undefined" || typeof location === "undefined" || !history.replaceState) return;
       const url = new URL(location.href);
       if ($("mode").value === "mixed") url.searchParams.delete("mode");
       else url.searchParams.set("mode", $("mode").value);
-      if ($("mode").value === "trace" && $("difficulty")) url.searchParams.set("difficulty", $("difficulty").value);
+      if ($("difficulty") && ($("mode").value === "trace" || ($("mode").value === "mixed" && $("difficulty").value !== "beginner")))
+        url.searchParams.set("difficulty", $("difficulty").value);
       else url.searchParams.delete("difficulty");
       history.replaceState(null, "", url);
     };
@@ -104,7 +108,7 @@ function startGame() {
       slug,
       $("mode").value,
       undefined,
-      slug === "variable-lab" && $("mode").value === "trace"
+      slug === "variable-lab" && ["trace", "mixed"].includes($("mode").value)
         ? { difficulty: $("difficulty")?.value || "beginner" }
         : {},
     );
@@ -116,7 +120,10 @@ function startGame() {
       q.mode,
       game.modes[q.mode] || q.topicTitle || q.mode,
     );
-    if (q.mode === "trace")
+    if (slug === "variable-lab") {
+      const evidence = J.variableEvidence(q);
+      if (evidence) tracker.annotate(instance, evidence);
+    } else if (q.mode === "trace")
       tracker.annotate(instance, { mode: "trace", difficulty: q.difficulty, family: q.traceFamily, format: q.format });
     selected = null;
     selectedFix = null;

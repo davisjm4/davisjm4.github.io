@@ -2,6 +2,7 @@
    (localStorage key javaGames.session.v1) so results appear in the
    existing Session Summary. */
 import * as E from "./engine.js?v=robot-v3";
+import { labEvidence } from "../lab-evidence.js?v=lab-evidence-v1";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 
 const GAME = "robot-algorithms";
@@ -267,6 +268,7 @@ function newChallenge() {
   recent.push(E.signature(ch));
   if (recent.length > 40) recent.shift();
   instance = tracker.begin(GAME, TITLE, ch.mode, E.MODES[ch.mode], ch.mode, E.MODES[ch.mode]);
+  tracker.annotate(instance, labEvidence(GAME, ch) || {});
   selected = null;
   submitted = false;
   render();

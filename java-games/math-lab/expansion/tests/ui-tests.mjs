@@ -9,6 +9,7 @@ import { createRequire } from "node:module";
 import * as M from "../../engine.js";
 import * as S from "../../../session.js";
 import * as X from "../generator.js";
+import * as MX from "../../mixed.js";
 
 let assertions = 0;
 const eq = (a, b, m) => { assert.deepEqual(a, b, m); assertions++; };
@@ -32,14 +33,15 @@ const context = {
   EXPANSION_MODES: X.EXPANSION_MODES, DIFFICULTIES: X.DIFFICULTIES, DIFFICULTY_TITLES: X.DIFFICULTY_TITLES,
   createExpansionDeck: () => { const d = X.createExpansionDeck({ seed: 2026 }); return { next: (m, diff) => (q = d.next(m, diff)) }; },
   assessExpansion: X.assessExpansion,
+  createMixedDeck: MX.createMixedDeck, mathEvidence: MX.mathEvidence,
 };
 vm.createContext(context);
 vm.runInContext(fs.readFileSync(new URL("../../app.js", import.meta.url), "utf8").replace(/import[^;]+;/g, "").replace("export function", "function"), context);
 const $ = id => document.getElementById(id);
 const game = () => tracker.snapshot().games["math-lab"];
 
-// Default stays Mixed Practice with the difficulty control hidden.
-eq($("mode").value, "mixed"); ok($("difficulty-group").hidden, "difficulty hidden for legacy modes");
+// Default stays Mixed Practice. Mixed now rotates every mode, so the difficulty control (for the expansion-mode questions) is visible, defaulting to Beginner.
+eq($("mode").value, "mixed"); ok(!$("difficulty-group").hidden, "difficulty control visible in Mixed"); eq($("difficulty").value, "beginner");
 for (const id of Object.keys(X.EXPANSION_MODES)) ok($("mode").querySelector(`option[value="${id}"]`), "mode option " + id);
 for (const legacy of Object.keys(M.mathGame.modes)) ok($("mode").querySelector(`option[value="${legacy}"]`), "legacy option " + legacy);
 eq(document.querySelectorAll("input,textarea").length, 0);
@@ -85,6 +87,38 @@ $("mode").value = "casting"; $("mode").onchange();
 ok($("difficulty-group").hidden); eq(q.mode, "casting"); ok(!("kind" in q && q.kind === "expansion"));
 // Persistence across a reload of the tracker.
 eq(S.createSessionTracker({ storage }).snapshot().games["math-lab"].attempted, submitted);
+// ---- Mixed Practice rotates all seven modes, at the difficulty actually shown ----
+$("mode").value = "mixed"; $("difficulty").value = "intermediate"; $("mode").onchange();
+ok(!$("difficulty-group").hidden && !$("difficulty-note").hidden, "difficulty control and note visible in Mixed");
+eq($("difficulty-label").textContent, "Methods & limits difficulty");
+const ALL = [...Object.keys(M.structures), ...Object.keys(X.EXPANSION_MODES)], drawn = [];
+for (let i = 0; i < ALL.length * 12; i++) {
+  drawn.push(q.mode);
+  const record = Object.values(tracker.snapshot().records).at(-1);
+  eq(record.mode, q.mode); eq(record.details.practiceMode, q.mode);
+  if (X.EXPANSION_MODES[q.mode]) {
+    eq(q.difficulty, "intermediate"); eq(record.details.difficulty, "intermediate"); eq(record.details.reasoningFamily, q.family);
+    ok($("stage").textContent.includes("Intermediate"), "difficulty shown for expansion question in Mixed");
+  } else {
+    eq(record.details.difficulty, undefined, "original modes have no difficulty level"); eq(record.details.reasoningFamily, `${q.mode}:${q.shape}`);
+    ok(!$("stage").textContent.includes("Intermediate"));
+  }
+  $("next").onclick();
+}
+// The deck already drew before this loop, so rounds are not aligned to index 0; balance over 12 rounds is exact to within one round.
+for (const m of ALL) { const n = drawn.filter(x => x === m).length; ok(n >= 11 && n <= 13, `${m} drawn ${n} times in 12 rounds`); }
+// A fresh deck covers each mode exactly once per round, with stand-in generators that report only the mode asked for.
+{ const fresh = MX.createMixedDeck({ deck: { next: m => ({ mode: m }) }, expansionDeck: { next: m => ({ mode: m }) }, rng: Math.random });
+  const seq = Array.from({ length: ALL.length * 30 }, () => fresh.next("beginner").mode);
+  for (let r = 0; r < 30; r++) eq([...seq.slice(r * ALL.length, (r + 1) * ALL.length)].sort(), [...ALL].sort(), "fresh deck: each round covers every mode once");
+  for (let i = 1; i < seq.length; i++) ok(seq[i] !== seq[i - 1], "fresh deck: no immediate repeat across round boundaries"); }
+for (let i = 1; i < drawn.length; i++) ok(drawn[i] !== drawn[i - 1], "never the same mode twice in a row");
+// Changing the difficulty in Mixed changes the expansion questions only.
+$("difficulty").value = "advanced"; $("difficulty").onchange();
+let sawExpansion = 0;
+for (let i = 0; i < ALL.length * 2; i++) { if (X.EXPANSION_MODES[q.mode]) { eq(q.difficulty, "advanced"); sawExpansion++; } $("next").onclick(); }
+ok(sawExpansion >= 2, "expansion questions appear in Mixed");
+$("mode").value = "casting"; $("mode").onchange(); ok($("difficulty-group").hidden && $("difficulty-note").hidden, "control hidden again in an original mode");
 // Narrow-viewport CSS rules exist for the new control (static check, not a rendered layout).
 const css = fs.readFileSync(new URL("../../game.css", import.meta.url), "utf8");
 ok(/@media \(max-width: 540px\)[\s\S]*#difficulty/.test(css), "difficulty select full-width on narrow screens");

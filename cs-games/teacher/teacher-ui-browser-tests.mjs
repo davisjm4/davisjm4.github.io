@@ -480,3 +480,24 @@ test('teacher session survives class navigation, expires safely, and resumes uns
   await page.waitForSelector('#teacher-account [name=teacher-key]',{visible:true});
   assert.equal(await page.$eval('#wpr-teacher-profiles',root=>root.hidden),true);
 });
+
+test('integrated graph exposes new Advanced CS skills in the pathway assessment picker', {timeout: 30000}, async t=>{
+  const svc=await service(t);
+  const browser=await launch();t.after(()=>browser.close());
+  const page=await browser.newPage();
+  await page.goto(svc.url+'/cs-games/teacher/pacing/');
+  await page.waitForSelector('#assess-search');
+  await page.evaluate(()=>document.querySelectorAll('#stage-calendar details.more').forEach(d=>{d.open=true;}));
+  for(const [label,id] of [
+    ['Assemble a variable declaration','node:advanced:variable-lab:assemble'],
+    ['Build a robot route program','node:advanced:robot-algorithms:build']
+  ]){
+    await page.$eval('#assess-search',input=>{input.value='';});
+    await page.type('#assess-search',label);
+    const control=await page.waitForSelector('#assess-list input',{visible:true});
+    assert.match(await visibleText(page,'#assess-list'),new RegExp(label));
+    assert.doesNotMatch(await visibleText(page,'#assess-list'),RAW_ID);
+    await control.click();
+    assert.ok((await page.$eval('input[name=assessmentNodes]',input=>input.value.split(','))).includes(id));
+  }
+});

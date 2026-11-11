@@ -2,9 +2,9 @@ name: Class Learning Pathway Verification
 on:
   push:
     branches: [main]
-    paths: ['cs-games/pathway/**','cs-games/teacher/pacing/**','wpr-games/workplace-readiness/service/**','.github/workflows/class-pathway-check.yml']
+    paths: ['cs-games/pathway/**','cs-games/teacher/pacing/**','wpr-games/workplace-readiness/service/**','wpr-games/workplace-readiness/online/profile-sync.mjs','java-games/app.js','java-games/engine.js','java-games/session.js','java-games/variable-lab/**','java-games/string-lab/js/**','java-games/lab-evidence.js','java-games/math-lab/**','java-games/loop-lab/**','java-games/array-lab/**','java-games/boolean-conditional-lab/**','java-games/arraylist-lab/**','java-games/linkedlist-lab/**','java-games/method-constructor-lab/**','java-games/inheritance-polymorphism-lab/**','java-games/search-sort-lab/**','java-games/recursion-lab/**','java-games/debugger-lab/**','java-games/documentation-lab/**','java-games/robot-algorithms/**','java-games/class-object-lab/**','.github/workflows/class-pathway-check.yml']
   pull_request:
-    paths: ['cs-games/pathway/**','cs-games/teacher/pacing/**','wpr-games/workplace-readiness/service/**','.github/workflows/class-pathway-check.yml']
+    paths: ['cs-games/pathway/**','cs-games/teacher/pacing/**','wpr-games/workplace-readiness/service/**','wpr-games/workplace-readiness/online/profile-sync.mjs','java-games/app.js','java-games/engine.js','java-games/session.js','java-games/variable-lab/**','java-games/string-lab/js/**','java-games/lab-evidence.js','java-games/math-lab/**','java-games/loop-lab/**','java-games/array-lab/**','java-games/boolean-conditional-lab/**','java-games/arraylist-lab/**','java-games/linkedlist-lab/**','java-games/method-constructor-lab/**','java-games/inheritance-polymorphism-lab/**','java-games/search-sort-lab/**','java-games/recursion-lab/**','java-games/debugger-lab/**','java-games/documentation-lab/**','java-games/robot-algorithms/**','java-games/class-object-lab/**','.github/workflows/class-pathway-check.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -19,5 +19,6 @@ jobs:
           node-version: '24'
       - run: node --test cs-games/pathway/tests/*.test.mjs
       - run: node cs-games/pathway/build-graph.mjs && git diff --exit-code -- cs-games/pathway/curriculum-graph.json
+      - run: node cs-games/pathway/tests/build-gap-registry.mjs --check
       - run: node cs-games/teacher/wpr-online-tests.mjs
       - run: node csp-games/exam-readiness/tests/model.test.mjs && node csp-games/exam-readiness/tests/integration.test.mjs

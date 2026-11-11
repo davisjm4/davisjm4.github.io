@@ -2,6 +2,7 @@
    (localStorage key javaGames.session.v1) used by Session Summary:
    one topic per practice mode, one scored submission per challenge. */
 import * as E from "./engine.js?v=doclab-v1";
+import { labEvidence } from "../lab-evidence.js?v=lab-evidence-v1";
 import * as API from "./api-project-builder-ui.js?v=api-builder-v38-step6";
 import * as RX from "./response-explorer-ui.js?v=rx-expansion-v2";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
@@ -492,6 +493,7 @@ function newChallenge() {
   }
   ch = E.generate(selectedMode, picker, rng);
   instance = tracker.begin(E.GAME_ID, E.docLabGame.name, ch.mode, E.MODES[ch.mode], ch.mode, E.MODES[ch.mode]);
+  tracker.annotate(instance, labEvidence(E.GAME_ID, ch) || {});
   closed = false;
   outcome = null;
   resp = null;

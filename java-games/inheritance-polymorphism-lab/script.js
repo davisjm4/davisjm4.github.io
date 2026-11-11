@@ -3,6 +3,7 @@
    practice mode. addSessionNavigation() also starts the shared active-time
    tracker, so this game needs no timer of its own. */
 import * as E from "./engine.js?v=iplab-v1";
+import { labEvidence } from "../lab-evidence.js?v=lab-evidence-v1";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
 
 const $ = (id) => document.getElementById(id);
@@ -578,6 +579,7 @@ function newChallenge(item) {
   if (instance && tracker.status(instance) === "active") tracker.skip(instance);
   ch = item ? E.instantiate(item, rng) : E.generate($("mode").value, picker, rng);
   instance = tracker.begin(E.GAME_ID, E.ipLabGame.name, ch.mode, E.MODES[ch.mode], ch.mode, E.MODES[ch.mode]);
+  tracker.annotate(instance, labEvidence(E.GAME_ID, ch) || {});
   closed = false;
   outcome = null;
   resp = null;

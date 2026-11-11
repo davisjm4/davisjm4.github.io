@@ -1,0 +1,3089 @@
+{
+ "_about": "Node and family ids, selectors and bound families of the Phase 1 graph (commit fc70e68). Phase 2 must stay additive to this.",
+ "graphVersion": "2026.11.10.1",
+ "nodeIds": [
+  "node:advanced:variable-lab:trace",
+  "node:advanced:variable-lab:identify/type",
+  "node:advanced:variable-lab:identify/name",
+  "node:advanced:variable-lab:identify/operator",
+  "node:advanced:variable-lab:identify/value",
+  "node:advanced:variable-lab:identify/declaration",
+  "node:advanced:variable-lab:identify/initialization",
+  "node:advanced:variable-lab:identify/assignment-operator",
+  "node:advanced:variable-lab:identify/assignment",
+  "node:advanced:variable-lab:identify/declaration-only",
+  "node:advanced:variable-lab:identify/stored",
+  "node:advanced:variable-lab:identify/conversion",
+  "node:advanced:variable-lab:identify/compatibility",
+  "node:advanced:variable-lab:assemble",
+  "node:advanced:math-lab:modulus",
+  "node:advanced:math-lab:division",
+  "node:advanced:math-lab:casting",
+  "node:advanced:math-lab:expressions",
+  "node:advanced:math-lab:reverse",
+  "node:advanced:math-lab:math-methods",
+  "node:advanced:math-lab:numeric-limits",
+  "node:advanced:boolean-conditional-lab:branch",
+  "node:advanced:boolean-conditional-lab:conditions",
+  "node:advanced:boolean-conditional-lab:equivalent",
+  "node:advanced:boolean-conditional-lab:short",
+  "node:advanced:boolean-conditional-lab:construct",
+  "node:advanced:boolean-conditional-lab:evaluate",
+  "node:advanced:boolean-conditional-lab:identify",
+  "node:advanced:boolean-conditional-lab:truthTable",
+  "node:advanced:boolean-conditional-lab:switchIf",
+  "node:advanced:boolean-conditional-lab:coverage",
+  "node:advanced:string-lab:predict",
+  "node:advanced:string-lab:trace",
+  "node:advanced:string-lab:index",
+  "node:advanced:string-lab:expr",
+  "node:advanced:string-lab:algo",
+  "node:advanced:string-lab:compare",
+  "node:advanced:string-lab:loop",
+  "node:advanced:loop-lab:looptype",
+  "node:advanced:loop-lab:components",
+  "node:advanced:loop-lab:iterations",
+  "node:advanced:loop-lab:while",
+  "node:advanced:loop-lab:final",
+  "node:advanced:loop-lab:choose",
+  "node:advanced:loop-lab:conditional",
+  "node:advanced:loop-lab:nested",
+  "node:advanced:loop-lab:debug",
+  "node:advanced:loop-lab:algorithms",
+  "node:advanced:loop-lab:executions",
+  "node:advanced:array-lab:element",
+  "node:advanced:array-lab:predict-update",
+  "node:advanced:array-lab:perform-update",
+  "node:advanced:array-lab:search",
+  "node:advanced:array-lab:traversal",
+  "node:advanced:array-lab:access-2d",
+  "node:advanced:array-lab:update-2d",
+  "node:advanced:array-lab:nested",
+  "node:advanced:array-lab:reverse",
+  "node:advanced:array-lab:create-references",
+  "node:advanced:array-lab:in-place",
+  "node:advanced:array-lab:trace-2d",
+  "node:advanced:arraylist-lab:access",
+  "node:advanced:arraylist-lab:insert-remove",
+  "node:advanced:arraylist-lab:search-size",
+  "node:advanced:arraylist-lab:traverse",
+  "node:advanced:arraylist-lab:compare",
+  "node:advanced:linkedlist-lab:trace",
+  "node:advanced:linkedlist-lab:collections",
+  "node:advanced:method-constructor-lab:identify-method",
+  "node:advanced:method-constructor-lab:identify-constructor",
+  "node:advanced:method-constructor-lab:match-call",
+  "node:advanced:method-constructor-lab:return",
+  "node:advanced:method-constructor-lab:constructors",
+  "node:advanced:method-constructor-lab:returned-values",
+  "node:advanced:method-constructor-lab:fix",
+  "node:advanced:method-constructor-lab:access",
+  "node:advanced:class-object-lab:structure",
+  "node:advanced:class-object-lab:defaults",
+  "node:advanced:class-object-lab:constructors",
+  "node:advanced:class-object-lab:getters",
+  "node:advanced:class-object-lab:setters",
+  "node:advanced:class-object-lab:this",
+  "node:advanced:class-object-lab:independent",
+  "node:advanced:class-object-lab:aliases",
+  "node:advanced:class-object-lab:equality",
+  "node:advanced:class-object-lab:parameters",
+  "node:advanced:class-object-lab:static",
+  "node:advanced:class-object-lab:tostring",
+  "node:advanced:class-object-lab:reverse",
+  "node:advanced:inheritance-polymorphism-lab:abstract",
+  "node:advanced:search-sort-lab:binary",
+  "node:advanced:search-sort-lab:selection",
+  "node:advanced:search-sort-lab:insertion",
+  "node:advanced:search-sort-lab:merge",
+  "node:advanced:search-sort-lab:name",
+  "node:advanced:search-sort-lab:compare",
+  "node:advanced:recursion-lab:base",
+  "node:advanced:recursion-lab:returns",
+  "node:advanced:recursion-lab:output",
+  "node:advanced:recursion-lab:arrays",
+  "node:advanced:recursion-lab:debug",
+  "node:advanced:recursion-lab:searchsort",
+  "node:advanced:debugger-lab:correction",
+  "node:advanced:debugger-lab:statement",
+  "node:advanced:debugger-lab:explanation",
+  "node:advanced:debugger-lab:test",
+  "node:advanced:debugger-lab:exception",
+  "node:advanced:documentation-lab:inspector",
+  "node:advanced:documentation-lab:docs",
+  "node:advanced:documentation-lab:detective",
+  "node:advanced:robot-algorithms:predict",
+  "node:advanced:robot-algorithms:loops",
+  "node:advanced:robot-algorithms:conditionals",
+  "node:advanced:robot-algorithms:methods",
+  "node:csp:vocabulary-fill-in-lab:CSP-PURPOSE",
+  "node:csp:test-case-builder:CSP-FUNCTION",
+  "node:csp:create-task-lab:CSP-INPUT",
+  "node:csp:create-task-lab:CSP-OUTPUT",
+  "node:csp:vocabulary-fill-in-lab:CSP-DEVELOPMENT",
+  "node:csp:vocabulary-fill-in-lab:CSP-COLLABORATION",
+  "node:csp:vocabulary-fill-in-lab:CSP-DESIGN",
+  "node:csp:vocabulary-fill-in-lab:CSP-DOCUMENTATION",
+  "node:csp:test-case-builder:CSP-TESTING",
+  "node:csp:test-case-builder:CSP-DEBUGGING",
+  "node:csp:binary-builder:CSP-BINARY",
+  "node:csp:binary-builder:CSP-CAPACITY",
+  "node:csp:rgb-color-builder:CSP-RGB",
+  "node:csp:binary-builder:CSP-REPRESENTATION",
+  "node:csp:ascii-binary-builder:CSP-CHARACTERS",
+  "node:csp:analog-digital-lab:CSP-ANALOG",
+  "node:csp:roundoff-overflow-lab:CSP-NUMERIC",
+  "node:csp:lossless-lossy-lab:CSP-COMPRESSION",
+  "node:csp:data-detective:CSP-ANALYSIS",
+  "node:csp:data-detective:CSP-VISUALIZATION",
+  "node:csp:data-detective:CSP-TRANSFORM",
+  "node:csp:code-concepts:CSP-VARIABLES",
+  "node:csp:code-concepts:CSP-EXPRESSIONS",
+  "node:csp:boolean-gatekeeper:CSP-BOOLEAN",
+  "node:csp:algorithm-architect:CSP-SELECTION",
+  "node:csp:algorithm-architect:CSP-ITERATION",
+  "node:csp:algorithm-architect:CSP-SEQUENCE",
+  "node:csp:trivial-nontrivial:CSP-ALGORITHMS",
+  "node:csp:list-lab:CSP-LISTS",
+  "node:csp:response-builder:CSP-DATA-ABSTRACTION",
+  "node:csp:binary-search-hunt:CSP-SEARCH",
+  "node:csp:code-concepts:CSP-PROCEDURES",
+  "node:csp:code-concepts:CSP-PARAMETERS",
+  "node:csp:response-builder:CSP-PROCEDURAL-ABSTRACTION",
+  "node:csp:vocabulary-fill-in-lab:CSP-LIBRARIES",
+  "node:csp:simulation-lab:CSP-RANDOM",
+  "node:csp:simulation-lab:CSP-SIMULATION",
+  "node:csp:algorithm-race:CSP-EFFICIENCY",
+  "node:csp:vocabulary-fill-in-lab:CSP-UNDECIDABLE",
+  "node:csp:internet-layers-lab:CSP-SYSTEMS",
+  "node:csp:internet-layers-lab:CSP-PROTOCOLS",
+  "node:csp:internet-layers-lab:CSP-IP",
+  "node:csp:internet-layers-lab:CSP-DNS",
+  "node:csp:tcp-udp-lab:CSP-TRANSPORT",
+  "node:csp:internet-layers-lab:CSP-PACKETS",
+  "node:csp:network-breaker:CSP-RESILIENCE",
+  "node:csp:parallel-processing-race:CSP-PARALLEL",
+  "node:csp:internet-layers-lab:CSP-SECURE-NETWORKS",
+  "node:csp:ai-ethics-lab:CSP-IMPACTS",
+  "node:csp:digital-divide-lab:CSP-DIVIDE",
+  "node:csp:ai-ethics-lab:CSP-BIAS",
+  "node:csp:computing-impact-lab:CSP-CROWD",
+  "node:csp:copyright-creative-commons-lab:CSP-RIGHTS",
+  "node:csp:ai-ethics-lab:CSP-ETHICS",
+  "node:csp:ai-ethics-lab:CSP-PRIVACY",
+  "node:csp:cybersecurity-defender:CSP-SECURITY",
+  "node:csp:create-task-lab:CSP-PPR",
+  "node:csp:create-task-lab:CSP-STUDENT-PROCEDURE",
+  "node:workplace:creativity-and-innovation:contribute-ideas",
+  "node:workplace:creativity-and-innovation:improve-processes",
+  "node:workplace:creativity-and-innovation:allocate-resources",
+  "node:workplace:creativity-and-innovation:value-of-creativity",
+  "node:workplace:critical-thinking-and-problem-solving:analyze-problems",
+  "node:workplace:critical-thinking-and-problem-solving:evaluate-solutions",
+  "node:workplace:critical-thinking-and-problem-solving:logical-decisions",
+  "node:workplace:critical-thinking-and-problem-solving:implement-action",
+  "node:workplace:initiative-and-self-direction:proactive-decisions",
+  "node:workplace:initiative-and-self-direction:identify-needs",
+  "node:workplace:initiative-and-self-direction:minimal-supervision",
+  "node:workplace:initiative-and-self-direction:apply-solutions",
+  "node:workplace:integrity:laws-and-regulations",
+  "node:workplace:integrity:policies-and-procedures",
+  "node:workplace:integrity:honesty-and-fairness",
+  "node:workplace:integrity:respect-for-property",
+  "node:workplace:integrity:importance-of-integrity",
+  "node:workplace:work-ethic:diligence",
+  "node:workplace:work-ethic:dependability",
+  "node:workplace:work-ethic:accountability",
+  "node:workplace:work-ethic:accepting-consequences",
+  "node:workplace:conflict-resolution:diplomatic-negotiation",
+  "node:workplace:conflict-resolution:work-style-differences",
+  "node:workplace:conflict-resolution:performance-concerns",
+  "node:workplace:conflict-resolution:personality-and-culture",
+  "node:workplace:conflict-resolution:when-to-escalate",
+  "node:workplace:listening-and-speaking:nonverbal-cues",
+  "node:workplace:listening-and-speaking:active-listening",
+  "node:workplace:listening-and-speaking:presenting",
+  "node:workplace:listening-and-speaking:audience-and-setting",
+  "node:workplace:respect-for-diversity:individual-differences",
+  "node:workplace:respect-for-diversity:valuing-differences",
+  "node:workplace:respect-for-diversity:own-bias",
+  "node:workplace:respect-for-diversity:collaborating",
+  "node:workplace:customer-service-orientation:internal-and-external",
+  "node:workplace:customer-service-orientation:prioritize-service",
+  "node:workplace:customer-service-orientation:anticipate-needs",
+  "node:workplace:customer-service-orientation:courteous-knowledgeable",
+  "node:workplace:teamwork:expectations-roles-goals",
+  "node:workplace:teamwork:share-responsibility",
+  "node:workplace:teamwork:respect-contributions",
+  "node:workplace:teamwork:team-communication",
+  "node:workplace:big-picture-thinking:role-in-mission",
+  "node:workplace:big-picture-thinking:impacts-of-actions",
+  "node:workplace:big-picture-thinking:organization-structure",
+  "node:workplace:big-picture-thinking:community-and-industry",
+  "node:workplace:career-and-life-management:qualifications-and-advancement",
+  "node:workplace:career-and-life-management:benefits-and-resources",
+  "node:workplace:career-and-life-management:wellness-and-finances",
+  "node:workplace:career-and-life-management:smart-goals",
+  "node:workplace:continuous-learning-and-adaptability:learning-resources",
+  "node:workplace:continuous-learning-and-adaptability:acting-on-feedback",
+  "node:workplace:continuous-learning-and-adaptability:credentials",
+  "node:workplace:continuous-learning-and-adaptability:changing-requirements",
+  "node:workplace:efficiency-and-productivity:work-plan",
+  "node:workplace:efficiency-and-productivity:prioritize-tasks",
+  "node:workplace:efficiency-and-productivity:adapt-goals",
+  "node:workplace:efficiency-and-productivity:human-resources",
+  "node:workplace:efficiency-and-productivity:capital-resources",
+  "node:workplace:efficiency-and-productivity:natural-resources",
+  "node:workplace:information-literacy:locate-sources",
+  "node:workplace:information-literacy:evaluate-credibility",
+  "node:workplace:information-literacy:judge-relevance",
+  "node:workplace:information-literacy:use-information",
+  "node:workplace:information-security:information-formats",
+  "node:workplace:information-security:cyber-threats",
+  "node:workplace:information-security:ethical-technology-use",
+  "node:workplace:information-security:acceptable-use",
+  "node:workplace:information-security:confidentiality",
+  "node:workplace:information-security:security-procedures",
+  "node:workplace:information-technology:hardware-and-devices",
+  "node:workplace:information-technology:software-and-applications",
+  "node:workplace:information-technology:cloud-and-file-sharing",
+  "node:workplace:information-technology:emerging-technology",
+  "node:workplace:information-technology:troubleshooting",
+  "node:workplace:job-specific-tools-and-technologies:select-right-tool",
+  "node:workplace:job-specific-tools-and-technologies:safe-use",
+  "node:workplace:mathematics:basic-calculations",
+  "node:workplace:mathematics:job-task-math",
+  "node:workplace:mathematics:personal-finance",
+  "node:workplace:professionalism:punctuality-attendance",
+  "node:workplace:professionalism:etiquette",
+  "node:workplace:professionalism:self-representation",
+  "node:workplace:professionalism:appearance",
+  "node:workplace:reading-and-writing:interpret-documents",
+  "node:workplace:reading-and-writing:clarity",
+  "node:workplace:reading-and-writing:tone-and-audience",
+  "node:workplace:reading-and-writing:conventions",
+  "node:workplace:workplace-safety:safety-guidelines",
+  "node:workplace:workplace-safety:safety-data-sheets",
+  "node:workplace:workplace-safety:ppe",
+  "node:workplace:workplace-safety:universal-precautions",
+  "node:workplace:workplace-safety:identify-hazards",
+  "node:workplace:workplace-safety:emergency-protocols",
+  "node:robotics:parts-sprint:structure",
+  "node:robotics:parts-sprint:fasteners",
+  "node:robotics:parts-sprint:spacing",
+  "node:robotics:parts-sprint:motion",
+  "node:robotics:parts-sprint:transmission",
+  "node:robotics:parts-sprint:wheels",
+  "node:robotics:parts-sprint:tools",
+  "node:robotics:parts-sprint:electronics",
+  "node:robotics:course-architect:scale",
+  "node:robotics:course-architect:geometry",
+  "node:robotics:course-architect:testing",
+  "node:robotics:component-challenge:choose",
+  "node:robotics:component-challenge:troubleshoot",
+  "node:robotics:component-challenge:solution",
+  "node:robotics:component-challenge:tools"
+ ],
+ "familyIds": [
+  "family:node:advanced:math-lab:modulus:modulus:larger",
+  "family:node:advanced:math-lab:modulus:modulus:smaller",
+  "family:node:advanced:math-lab:modulus:modulus:divisible",
+  "family:node:advanced:math-lab:modulus:modulus:remainder",
+  "family:node:advanced:math-lab:modulus:modulus:negative-dividend",
+  "family:node:advanced:math-lab:modulus:modulus:negative-divisor",
+  "family:node:advanced:math-lab:modulus:modulus:both-negative",
+  "family:node:advanced:math-lab:division:division:integer",
+  "family:node:advanced:math-lab:division:division:widened",
+  "family:node:advanced:math-lab:division:division:double-right",
+  "family:node:advanced:math-lab:division:division:double-left",
+  "family:node:advanced:math-lab:division:division:both-double",
+  "family:node:advanced:math-lab:casting:casting:after-division",
+  "family:node:advanced:math-lab:casting:casting:before-division",
+  "family:node:advanced:math-lab:casting:casting:denominator-cast",
+  "family:node:advanced:math-lab:casting:casting:positive-cast",
+  "family:node:advanced:math-lab:casting:casting:negative-cast",
+  "family:node:advanced:math-lab:casting:casting:cast-quotient",
+  "family:node:advanced:math-lab:expressions:expressions:add-division",
+  "family:node:advanced:math-lab:expressions:expressions:grouped-sum",
+  "family:node:advanced:math-lab:expressions:expressions:subtract-remainder",
+  "family:node:advanced:math-lab:expressions:expressions:remainder-product",
+  "family:node:advanced:math-lab:expressions:expressions:division-product",
+  "family:node:advanced:math-lab:expressions:expressions:product-remainder",
+  "family:node:advanced:math-lab:expressions:expressions:nested-group",
+  "family:node:advanced:math-lab:expressions:expressions:double-precedence",
+  "family:node:advanced:math-lab:reverse:reverse:decimal-quotient",
+  "family:node:advanced:math-lab:reverse:reverse:whole-quotient",
+  "family:node:advanced:math-lab:reverse:reverse:remainder-choice",
+  "family:node:advanced:math-lab:reverse:reverse:cast-choice",
+  "family:node:advanced:math-lab:reverse:reverse:precedence-choice",
+  "family:node:advanced:math-lab:math-methods:mm.abs",
+  "family:node:advanced:math-lab:math-methods:mm.pow",
+  "family:node:advanced:math-lab:math-methods:mm.sqrt",
+  "family:node:advanced:math-lab:math-methods:mm.return-type",
+  "family:node:advanced:math-lab:math-methods:mm.random-basics",
+  "family:node:advanced:math-lab:math-methods:mm.random-bounds",
+  "family:node:advanced:math-lab:math-methods:mm.random-values",
+  "family:node:advanced:math-lab:math-methods:mm.random-count",
+  "family:node:advanced:math-lab:math-methods:mm.random-choose",
+  "family:node:advanced:math-lab:math-methods:mm.random-debug",
+  "family:node:advanced:math-lab:math-methods:mm.combined",
+  "family:node:advanced:math-lab:math-methods:mm.supplied-random",
+  "family:node:advanced:math-lab:numeric-limits:nl.int-limits",
+  "family:node:advanced:math-lab:numeric-limits:nl.overflow-multiply",
+  "family:node:advanced:math-lab:numeric-limits:nl.overflow-detect",
+  "family:node:advanced:math-lab:numeric-limits:nl.midpoint",
+  "family:node:advanced:math-lab:numeric-limits:nl.int-division",
+  "family:node:advanced:math-lab:numeric-limits:nl.average",
+  "family:node:advanced:math-lab:numeric-limits:nl.float-equality",
+  "family:node:advanced:math-lab:numeric-limits:nl.float-print",
+  "family:node:advanced:math-lab:numeric-limits:nl.rounding",
+  "family:node:advanced:math-lab:numeric-limits:nl.div-zero",
+  "family:node:advanced:math-lab:numeric-limits:nl.literal-cast",
+  "family:node:advanced:math-lab:numeric-limits:nl.compound-narrowing",
+  "family:node:advanced:math-lab:numeric-limits:nl.trace",
+  "family:node:advanced:math-lab:numeric-limits:nl.first-problem",
+  "family:node:advanced:string-lab:predict:predict.concat.single",
+  "family:node:advanced:string-lab:predict:predict.concat.numbers",
+  "family:node:advanced:string-lab:predict:predict.concat.expr",
+  "family:node:advanced:string-lab:predict:predict.length",
+  "family:node:advanced:string-lab:predict:predict.charAt",
+  "family:node:advanced:string-lab:predict:predict.substring",
+  "family:node:advanced:string-lab:predict:predict.indexOf",
+  "family:node:advanced:string-lab:predict:predict.chain",
+  "family:node:advanced:string-lab:predict:predict.indexSubstring",
+  "family:node:advanced:string-lab:predict:predict.twoStrings",
+  "family:node:advanced:string-lab:trace:trace.reassign.substring",
+  "family:node:advanced:string-lab:trace:trace.reassign.concat",
+  "family:node:advanced:string-lab:trace:trace.sequence",
+  "family:node:advanced:string-lab:trace:trace.immutable",
+  "family:node:advanced:string-lab:trace:trace.mixedImmutable",
+  "family:node:advanced:string-lab:trace:trace.alias",
+  "family:node:advanced:string-lab:trace:trace.indexSplit",
+  "family:node:advanced:string-lab:trace:trace.numbers",
+  "family:node:advanced:string-lab:trace:trace.twoStrings",
+  "family:node:advanced:string-lab:index:index.charPosition",
+  "family:node:advanced:string-lab:index:index.indexOfCall",
+  "family:node:advanced:string-lab:index:index.beginIndex",
+  "family:node:advanced:string-lab:index:index.firstOccurrence",
+  "family:node:advanced:string-lab:index:index.whichNegativeOne",
+  "family:node:advanced:string-lab:index:index.endIndex",
+  "family:node:advanced:string-lab:index:index.shifted",
+  "family:node:advanced:string-lab:index:index.lastIndex",
+  "family:node:advanced:string-lab:index:index.charThenSearch",
+  "family:node:advanced:string-lab:expr:expr.char",
+  "family:node:advanced:string-lab:expr:expr.substring",
+  "family:node:advanced:string-lab:expr:expr.length",
+  "family:node:advanced:string-lab:expr:expr.find",
+  "family:node:advanced:string-lab:expr:expr.concat",
+  "family:node:advanced:string-lab:expr:expr.tail",
+  "family:node:advanced:string-lab:expr:expr.split",
+  "family:node:advanced:string-lab:expr:expr.firstLast",
+  "family:node:advanced:string-lab:algo:algo.count.forward",
+  "family:node:advanced:string-lab:algo:algo.count.backward",
+  "family:node:advanced:string-lab:algo:algo.find.position",
+  "family:node:advanced:string-lab:algo:algo.find.indexof",
+  "family:node:advanced:string-lab:algo:algo.find.substring",
+  "family:node:advanced:string-lab:algo:algo.reverse.build",
+  "family:node:advanced:string-lab:algo:algo.transform.filter",
+  "family:node:advanced:string-lab:algo:algo.transform.replace",
+  "family:node:advanced:string-lab:algo:algo.substring.count",
+  "family:node:advanced:string-lab:algo:algo.palindrome.compare",
+  "family:node:advanced:string-lab:algo:algo.multi.filter",
+  "family:node:advanced:string-lab:compare:compare.equals",
+  "family:node:advanced:string-lab:compare:compare.compareto.sign",
+  "family:node:advanced:string-lab:compare:compare.compareto.value",
+  "family:node:advanced:string-lab:compare:compare.identity.alias",
+  "family:node:advanced:string-lab:compare:compare.conditional.branch",
+  "family:node:advanced:string-lab:compare:compare.choose.expression",
+  "family:node:advanced:string-lab:compare:compare.alias.reassign",
+  "family:node:advanced:string-lab:loop:loop.bound",
+  "family:node:advanced:string-lab:loop:loop.substring.endpoint",
+  "family:node:advanced:string-lab:loop:loop.reverse",
+  "family:node:advanced:string-lab:loop:loop.matching",
+  "family:node:advanced:string-lab:loop:loop.accumulator",
+  "family:node:advanced:string-lab:loop:loop.bug",
+  "family:node:advanced:string-lab:loop:loop.edge",
+  "family:node:advanced:string-lab:loop:loop.combined",
+  "family:node:advanced:loop-lab:looptype:count-with-header",
+  "family:node:advanced:loop-lab:looptype:check-before-work",
+  "family:node:advanced:loop-lab:looptype:first-attempt",
+  "family:node:advanced:loop-lab:looptype:array-values",
+  "family:node:advanced:loop-lab:looptype:report-index",
+  "family:node:advanced:loop-lab:looptype:primed-sentinel",
+  "family:node:advanced:loop-lab:looptype:validation-read-first",
+  "family:node:advanced:loop-lab:looptype:validate-existing-choice",
+  "family:node:advanced:loop-lab:looptype:menu-after-selection",
+  "family:node:advanced:loop-lab:looptype:indexed-stride",
+  "family:node:advanced:loop-lab:looptype:iterable-without-index",
+  "family:node:advanced:loop-lab:looptype:element-search-break",
+  "family:node:advanced:loop-lab:looptype:replace-array-slots",
+  "family:node:advanced:loop-lab:looptype:mutate-referenced-object",
+  "family:node:advanced:loop-lab:looptype:iterator-removal",
+  "family:node:advanced:loop-lab:looptype:reverse-index-removal",
+  "family:node:advanced:loop-lab:looptype:bounded-validation",
+  "family:node:advanced:loop-lab:looptype:guard-with-dependent-progress",
+  "family:node:advanced:loop-lab:components:components/for-update",
+  "family:node:advanced:loop-lab:components:components/for-condition",
+  "family:node:advanced:loop-lab:components:components/while-init",
+  "family:node:advanced:loop-lab:components:components/body",
+  "family:node:advanced:loop-lab:components:components/while-condition",
+  "family:node:advanced:loop-lab:components:components/inner-update",
+  "family:node:advanced:loop-lab:components:components/accumulator-vs-counter",
+  "family:node:advanced:loop-lab:components:components/control-variable",
+  "family:node:advanced:loop-lab:components:components/outer-condition",
+  "family:node:advanced:loop-lab:iterations:iterations/inc-exclusive",
+  "family:node:advanced:loop-lab:iterations:iterations/dec-inclusive",
+  "family:node:advanced:loop-lab:iterations:iterations/zero-start",
+  "family:node:advanced:loop-lab:iterations:iterations/while-decrement",
+  "family:node:advanced:loop-lab:iterations:iterations/one-step",
+  "family:node:advanced:loop-lab:iterations:iterations/skip-step",
+  "family:node:advanced:loop-lab:iterations:iterations/multiplicative",
+  "family:node:advanced:loop-lab:iterations:iterations/halving",
+  "family:node:advanced:loop-lab:iterations:iterations/not-equal",
+  "family:node:advanced:loop-lab:iterations:iterations/two-pointer",
+  "family:node:advanced:loop-lab:iterations:iterations/compound-condition",
+  "family:node:advanced:loop-lab:iterations:iterations/body-modifies-counter",
+  "family:node:advanced:loop-lab:while:while/integer-half",
+  "family:node:advanced:loop-lab:while:while/increment-sentinel",
+  "family:node:advanced:loop-lab:while:while/zero-while",
+  "family:node:advanced:loop-lab:while:while/decrement",
+  "family:node:advanced:loop-lab:while:while/two-var",
+  "family:node:advanced:loop-lab:while:while/multiply-until",
+  "family:node:advanced:loop-lab:while:while/digit-strip",
+  "family:node:advanced:loop-lab:while:while/compound-and",
+  "family:node:advanced:loop-lab:final:final/sum-range",
+  "family:node:advanced:loop-lab:final:final/product",
+  "family:node:advanced:loop-lab:final:final/overwrite",
+  "family:node:advanced:loop-lab:final:final/count-even",
+  "family:node:advanced:loop-lab:final:final/continue-sum",
+  "family:node:advanced:loop-lab:final:final/break-sum",
+  "family:node:advanced:loop-lab:final:final/alternating",
+  "family:node:advanced:loop-lab:final:final/two-accumulators",
+  "family:node:advanced:loop-lab:final:final/running-difference",
+  "family:node:advanced:loop-lab:final:final/conditional-product",
+  "family:node:advanced:loop-lab:choose:choose/evens",
+  "family:node:advanced:loop-lab:choose:choose/down",
+  "family:node:advanced:loop-lab:choose:choose/multiples",
+  "family:node:advanced:loop-lab:choose:choose/odd-range",
+  "family:node:advanced:loop-lab:choose:choose/countdown-step",
+  "family:node:advanced:loop-lab:choose:choose/while-sum",
+  "family:node:advanced:loop-lab:choose:choose/nonunit-while",
+  "family:node:advanced:loop-lab:choose:choose/nested-grid",
+  "family:node:advanced:loop-lab:conditional:conditional/odd-count",
+  "family:node:advanced:loop-lab:conditional:conditional/greater-sum",
+  "family:node:advanced:loop-lab:conditional:conditional/continue-even",
+  "family:node:advanced:loop-lab:conditional:conditional/break-target",
+  "family:node:advanced:loop-lab:conditional:conditional/else-count",
+  "family:node:advanced:loop-lab:conditional:conditional/compound-and",
+  "family:node:advanced:loop-lab:conditional:conditional/two-divisors",
+  "family:node:advanced:loop-lab:conditional:conditional/nested-if-break",
+  "family:node:advanced:loop-lab:nested:nested/rectangle",
+  "family:node:advanced:loop-lab:nested:nested/diagonal",
+  "family:node:advanced:loop-lab:nested:nested/triangular",
+  "family:node:advanced:loop-lab:nested:nested/inner-step",
+  "family:node:advanced:loop-lab:nested:nested/break-inner",
+  "family:node:advanced:loop-lab:nested:nested/dependent-start",
+  "family:node:advanced:loop-lab:nested:nested/nested-continue",
+  "family:node:advanced:loop-lab:nested:nested/line-output",
+  "family:node:advanced:loop-lab:nested:nested/outer-accum",
+  "family:node:advanced:loop-lab:nested:nested/two-counters",
+  "family:node:advanced:loop-lab:debug:debug/inclusive",
+  "family:node:advanced:loop-lab:debug:debug/counter-update",
+  "family:node:advanced:loop-lab:debug:debug/accumulate",
+  "family:node:advanced:loop-lab:debug:debug/while-progress",
+  "family:node:advanced:loop-lab:debug:debug/array-bound",
+  "family:node:advanced:loop-lab:debug:debug/wrong-init",
+  "family:node:advanced:loop-lab:debug:debug/wrong-start",
+  "family:node:advanced:loop-lab:debug:debug/reset-inside",
+  "family:node:advanced:loop-lab:debug:debug/wrong-direction",
+  "family:node:advanced:loop-lab:debug:debug/misplaced-print",
+  "family:node:advanced:loop-lab:algorithms:digit-extraction",
+  "family:node:advanced:loop-lab:algorithms:divisor-counting",
+  "family:node:advanced:loop-lab:algorithms:gcd",
+  "family:node:advanced:loop-lab:algorithms:min-max",
+  "family:node:advanced:loop-lab:algorithms:accumulators",
+  "family:node:advanced:loop-lab:algorithms:sentinel",
+  "family:node:advanced:loop-lab:algorithms:boolean-flags",
+  "family:node:advanced:loop-lab:algorithms:string-accumulation",
+  "family:node:advanced:loop-lab:algorithms:nested-algorithms",
+  "family:node:advanced:loop-lab:algorithms:combined-tracing",
+  "family:node:advanced:loop-lab:executions:simple-counts",
+  "family:node:advanced:loop-lab:executions:non-unit-updates",
+  "family:node:advanced:loop-lab:executions:nested-independent",
+  "family:node:advanced:loop-lab:executions:nested-dependent",
+  "family:node:advanced:loop-lab:executions:conditional-execution",
+  "family:node:advanced:loop-lab:executions:early-termination",
+  "family:node:advanced:loop-lab:executions:compare-algorithms",
+  "family:node:advanced:loop-lab:executions:growth-patterns",
+  "family:node:advanced:loop-lab:executions:operation-types",
+  "family:node:advanced:loop-lab:executions:sequential-loops",
+  "family:node:advanced:array-lab:element:literal-index",
+  "family:node:advanced:array-lab:element:arithmetic-index",
+  "family:node:advanced:array-lab:element:last-index",
+  "family:node:advanced:array-lab:element:end-relative",
+  "family:node:advanced:array-lab:element:stored-index",
+  "family:node:advanced:array-lab:element:changed-index",
+  "family:node:advanced:array-lab:element:conditional-index",
+  "family:node:advanced:array-lab:element:chained-index",
+  "family:node:advanced:array-lab:element:value-index",
+  "family:node:advanced:array-lab:element:bounds-check",
+  "family:node:advanced:array-lab:predict-update:dependent-value",
+  "family:node:advanced:array-lab:predict-update:compound-update",
+  "family:node:advanced:array-lab:predict-update:increment-decrement",
+  "family:node:advanced:array-lab:predict-update:target-index",
+  "family:node:advanced:array-lab:predict-update:source-index",
+  "family:node:advanced:array-lab:predict-update:sequential-update",
+  "family:node:advanced:array-lab:predict-update:temporary-swap",
+  "family:node:advanced:array-lab:predict-update:conditional-update",
+  "family:node:advanced:array-lab:predict-update:loop-update",
+  "family:node:advanced:array-lab:predict-update:alias-update",
+  "family:node:advanced:array-lab:perform-update:computed-target",
+  "family:node:advanced:array-lab:perform-update:last-target",
+  "family:node:advanced:array-lab:perform-update:middle-target",
+  "family:node:advanced:array-lab:perform-update:copy-target",
+  "family:node:advanced:array-lab:perform-update:compound-target",
+  "family:node:advanced:array-lab:perform-update:increment-target",
+  "family:node:advanced:array-lab:perform-update:swap-targets",
+  "family:node:advanced:array-lab:perform-update:conditional-target",
+  "family:node:advanced:array-lab:perform-update:loop-target",
+  "family:node:advanced:array-lab:perform-update:dependent-target",
+  "family:node:advanced:array-lab:search:first-match",
+  "family:node:advanced:array-lab:search:last-match",
+  "family:node:advanced:array-lab:search:existence",
+  "family:node:advanced:array-lab:search:match-count",
+  "family:node:advanced:array-lab:search:missing-target",
+  "family:node:advanced:array-lab:search:early-stop",
+  "family:node:advanced:array-lab:search:reverse-search",
+  "family:node:advanced:array-lab:search:conditional-search",
+  "family:node:advanced:array-lab:search:minimum-search",
+  "family:node:advanced:array-lab:search:changing-search",
+  "family:node:advanced:array-lab:search:maximum-search",
+  "family:node:advanced:array-lab:search:all-match",
+  "family:node:advanced:array-lab:traversal:full-sum",
+  "family:node:advanced:array-lab:traversal:selected-sum",
+  "family:node:advanced:array-lab:traversal:qualifying-count",
+  "family:node:advanced:array-lab:traversal:extreme-value",
+  "family:node:advanced:array-lab:traversal:forward-fold",
+  "family:node:advanced:array-lab:traversal:reverse-fold",
+  "family:node:advanced:array-lab:traversal:boundary-traversal",
+  "family:node:advanced:array-lab:traversal:alternating-traversal",
+  "family:node:advanced:array-lab:traversal:mutating-traversal",
+  "family:node:advanced:array-lab:traversal:dependent-fold",
+  "family:node:advanced:array-lab:traversal:weighted-sum",
+  "family:node:advanced:array-lab:access-2d:direct-cell",
+  "family:node:advanced:array-lab:access-2d:computed-row",
+  "family:node:advanced:array-lab:access-2d:computed-column",
+  "family:node:advanced:array-lab:access-2d:last-row",
+  "family:node:advanced:array-lab:access-2d:row-last-element",
+  "family:node:advanced:array-lab:access-2d:ragged-cell",
+  "family:node:advanced:array-lab:access-2d:row-selection",
+  "family:node:advanced:array-lab:access-2d:conditional-cell",
+  "family:node:advanced:array-lab:access-2d:value-selected-cell",
+  "family:node:advanced:array-lab:access-2d:invalid-cell",
+  "family:node:advanced:array-lab:update-2d:direct-update",
+  "family:node:advanced:array-lab:update-2d:computed-update",
+  "family:node:advanced:array-lab:update-2d:copy-cell",
+  "family:node:advanced:array-lab:update-2d:compound-cell",
+  "family:node:advanced:array-lab:update-2d:row-condition",
+  "family:node:advanced:array-lab:update-2d:column-condition",
+  "family:node:advanced:array-lab:update-2d:swap-cells",
+  "family:node:advanced:array-lab:update-2d:row-update",
+  "family:node:advanced:array-lab:update-2d:nested-update",
+  "family:node:advanced:array-lab:update-2d:ragged-update",
+  "family:node:advanced:array-lab:update-2d:row-alias-target",
+  "family:node:advanced:array-lab:nested:full-grid",
+  "family:node:advanced:array-lab:nested:traversal-order",
+  "family:node:advanced:array-lab:nested:visited-count",
+  "family:node:advanced:array-lab:nested:conditional-count",
+  "family:node:advanced:array-lab:nested:grid-sum",
+  "family:node:advanced:array-lab:nested:skip-boundary",
+  "family:node:advanced:array-lab:nested:early-inner-stop",
+  "family:node:advanced:array-lab:nested:ragged-traversal",
+  "family:node:advanced:array-lab:nested:cell-mutation",
+  "family:node:advanced:array-lab:nested:loop-dependency",
+  "family:node:advanced:array-lab:reverse:indexed-assignment",
+  "family:node:advanced:array-lab:reverse:off-by-one",
+  "family:node:advanced:array-lab:reverse:last-update",
+  "family:node:advanced:array-lab:reverse:copy-element",
+  "family:node:advanced:array-lab:reverse:swap-save",
+  "family:node:advanced:array-lab:reverse:compound-statement",
+  "family:node:advanced:array-lab:reverse:grid-statement",
+  "family:node:advanced:array-lab:reverse:allocate-array",
+  "family:node:advanced:array-lab:reverse:assignment-statement",
+  "family:node:advanced:array-lab:reverse:conditional-statement",
+  "family:node:advanced:array-lab:create-references:independent-allocations",
+  "family:node:advanced:array-lab:create-references:shared-reference",
+  "family:node:advanced:array-lab:create-references:reference-reassignment",
+  "family:node:advanced:array-lab:create-references:alias-mutation",
+  "family:node:advanced:array-lab:create-references:method-mutation",
+  "family:node:advanced:array-lab:create-references:parameter-reassignment",
+  "family:node:advanced:array-lab:create-references:returned-reference",
+  "family:node:advanced:array-lab:create-references:chained-references",
+  "family:node:advanced:array-lab:create-references:default-state",
+  "family:node:advanced:array-lab:create-references:reference-boundary",
+  "family:node:advanced:array-lab:create-references:reference-equality",
+  "family:node:advanced:array-lab:in-place:shift-left",
+  "family:node:advanced:array-lab:in-place:shift-right",
+  "family:node:advanced:array-lab:in-place:rotate-left",
+  "family:node:advanced:array-lab:in-place:rotate-right",
+  "family:node:advanced:array-lab:in-place:reverse-all",
+  "family:node:advanced:array-lab:in-place:reverse-section",
+  "family:node:advanced:array-lab:in-place:swap-transform",
+  "family:node:advanced:array-lab:in-place:conditional-transform",
+  "family:node:advanced:array-lab:in-place:compact-values",
+  "family:node:advanced:array-lab:in-place:staged-transform",
+  "family:node:advanced:array-lab:in-place:adjacent-differences",
+  "family:node:advanced:array-lab:trace-2d:row-sum",
+  "family:node:advanced:array-lab:trace-2d:column-sum",
+  "family:node:advanced:array-lab:trace-2d:maximum-row",
+  "family:node:advanced:array-lab:trace-2d:minimum-column",
+  "family:node:advanced:array-lab:trace-2d:grid-search",
+  "family:node:advanced:array-lab:trace-2d:conditional-total",
+  "family:node:advanced:array-lab:trace-2d:diagonal-total",
+  "family:node:advanced:array-lab:trace-2d:neighbor-total",
+  "family:node:advanced:array-lab:trace-2d:row-transform",
+  "family:node:advanced:array-lab:trace-2d:conditional-transform"
+ ],
+ "selectors": {
+  "node:advanced:variable-lab:trace": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "trace"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:identify/type": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "identify/type"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:identify/name": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "identify/name"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:identify/operator": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "identify/operator"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:identify/value": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "identify/value"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:identify/declaration": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "identify/declaration"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:identify/initialization": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "identify/initialization"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:identify/assignment-operator": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "identify/assignment-operator"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:identify/assignment": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "identify/assignment"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:identify/declaration-only": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "identify/declaration-only"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:identify/stored": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "identify/stored"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:identify/conversion": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "identify/conversion"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:identify/compatibility": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "identify/compatibility"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Trace plus all 12 identification variants; declaration assembly remains practice."
+   }
+  ],
+  "node:advanced:variable-lab:assemble": [
+   {
+    "activityId": "variable-lab",
+    "sourceId": "variable",
+    "modeIds": [
+     "assemble"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Declaration assembly for int, double, boolean, char and String; scenario context varies but the reasoning is the declaration type."
+   }
+  ],
+  "node:advanced:math-lab:modulus": [
+   {
+    "activityId": "math-lab",
+    "modeId": "modulus",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:math-lab:division": [
+   {
+    "activityId": "math-lab",
+    "modeId": "division",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:math-lab:casting": [
+   {
+    "activityId": "math-lab",
+    "modeId": "casting",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:math-lab:expressions": [
+   {
+    "activityId": "math-lab",
+    "modeId": "expressions",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:math-lab:reverse": [
+   {
+    "activityId": "math-lab",
+    "modeId": "reverse",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:math-lab:math-methods": [
+   {
+    "activityId": "math-lab",
+    "modeId": "math-methods",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:math-lab:numeric-limits": [
+   {
+    "activityId": "math-lab",
+    "modeId": "numeric-limits",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:boolean-conditional-lab:branch": [
+   {
+    "activityId": "boolean-conditional-lab",
+    "sourceId": "boolean",
+    "modeIds": [
+     "branch"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "All ten scored modes; exploratory range tools remain unscored practice."
+   }
+  ],
+  "node:advanced:boolean-conditional-lab:conditions": [
+   {
+    "activityId": "boolean-conditional-lab",
+    "sourceId": "boolean",
+    "modeIds": [
+     "conditions"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "All ten scored modes; exploratory range tools remain unscored practice."
+   }
+  ],
+  "node:advanced:boolean-conditional-lab:equivalent": [
+   {
+    "activityId": "boolean-conditional-lab",
+    "sourceId": "boolean",
+    "modeIds": [
+     "equivalent"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "All ten scored modes; exploratory range tools remain unscored practice."
+   }
+  ],
+  "node:advanced:boolean-conditional-lab:short": [
+   {
+    "activityId": "boolean-conditional-lab",
+    "sourceId": "boolean",
+    "modeIds": [
+     "short"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "All ten scored modes; exploratory range tools remain unscored practice."
+   }
+  ],
+  "node:advanced:boolean-conditional-lab:construct": [
+   {
+    "activityId": "boolean-conditional-lab",
+    "sourceId": "boolean",
+    "modeIds": [
+     "construct"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "All ten scored modes; exploratory range tools remain unscored practice."
+   }
+  ],
+  "node:advanced:boolean-conditional-lab:evaluate": [
+   {
+    "activityId": "boolean-conditional-lab",
+    "sourceId": "boolean",
+    "modeIds": [
+     "evaluate"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "All ten scored modes; exploratory range tools remain unscored practice."
+   }
+  ],
+  "node:advanced:boolean-conditional-lab:identify": [
+   {
+    "activityId": "boolean-conditional-lab",
+    "sourceId": "boolean",
+    "modeIds": [
+     "identify"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "All ten scored modes; exploratory range tools remain unscored practice."
+   }
+  ],
+  "node:advanced:boolean-conditional-lab:truthTable": [
+   {
+    "activityId": "boolean-conditional-lab",
+    "sourceId": "boolean",
+    "modeIds": [
+     "truthTable"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "All ten scored modes; exploratory range tools remain unscored practice."
+   }
+  ],
+  "node:advanced:boolean-conditional-lab:switchIf": [
+   {
+    "activityId": "boolean-conditional-lab",
+    "sourceId": "boolean",
+    "modeIds": [
+     "switchIf"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "All ten scored modes; exploratory range tools remain unscored practice."
+   }
+  ],
+  "node:advanced:boolean-conditional-lab:coverage": [
+   {
+    "activityId": "boolean-conditional-lab",
+    "sourceId": "boolean",
+    "modeIds": [
+     "coverage"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "All ten scored modes; exploratory range tools remain unscored practice."
+   }
+  ],
+  "node:advanced:string-lab:predict": [
+   {
+    "activityId": "string-lab",
+    "sourceId": "string",
+    "modeId": "predict",
+    "familyIds": [
+     "predict.concat.single",
+     "predict.concat.numbers",
+     "predict.concat.expr",
+     "predict.length",
+     "predict.charAt",
+     "predict.substring",
+     "predict.indexOf",
+     "predict.chain",
+     "predict.indexSubstring",
+     "predict.twoStrings"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:string-lab:trace": [
+   {
+    "activityId": "string-lab",
+    "sourceId": "string",
+    "modeId": "trace",
+    "familyIds": [
+     "trace.reassign.substring",
+     "trace.reassign.concat",
+     "trace.sequence",
+     "trace.immutable",
+     "trace.mixedImmutable",
+     "trace.alias",
+     "trace.indexSplit",
+     "trace.numbers",
+     "trace.twoStrings"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:string-lab:index": [
+   {
+    "activityId": "string-lab",
+    "sourceId": "string",
+    "modeId": "index",
+    "familyIds": [
+     "index.charPosition",
+     "index.indexOfCall",
+     "index.beginIndex",
+     "index.firstOccurrence",
+     "index.whichNegativeOne",
+     "index.endIndex",
+     "index.shifted",
+     "index.lastIndex",
+     "index.charThenSearch"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:string-lab:expr": [
+   {
+    "activityId": "string-lab",
+    "sourceId": "string",
+    "modeId": "expr",
+    "familyIds": [
+     "expr.char",
+     "expr.substring",
+     "expr.length",
+     "expr.find",
+     "expr.concat",
+     "expr.tail",
+     "expr.split",
+     "expr.firstLast"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:string-lab:algo": [
+   {
+    "activityId": "string-lab",
+    "sourceId": "string",
+    "modeId": "algorithms",
+    "familyIds": [
+     "algo.count.forward",
+     "algo.count.backward",
+     "algo.find.position",
+     "algo.find.indexof",
+     "algo.find.substring",
+     "algo.reverse.build",
+     "algo.transform.filter",
+     "algo.transform.replace",
+     "algo.substring.count",
+     "algo.palindrome.compare",
+     "algo.multi.filter"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:string-lab:compare": [
+   {
+    "activityId": "string-lab",
+    "sourceId": "string",
+    "modeId": "compare",
+    "familyIds": [
+     "compare.equals",
+     "compare.compareto.sign",
+     "compare.compareto.value",
+     "compare.identity.alias",
+     "compare.conditional.branch",
+     "compare.choose.expression",
+     "compare.alias.reassign"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:string-lab:loop": [
+   {
+    "activityId": "string-lab",
+    "sourceId": "string",
+    "modeId": "loop",
+    "familyIds": [
+     "loop.bound",
+     "loop.substring.endpoint",
+     "loop.reverse",
+     "loop.matching",
+     "loop.accumulator",
+     "loop.bug",
+     "loop.edge",
+     "loop.combined"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:loop-lab:looptype": [
+   {
+    "activityId": "loop-lab",
+    "modeId": "looptype",
+    "familyField": "reasoningFamily",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:loop-lab:components": [
+   {
+    "activityId": "loop-lab",
+    "modeId": "components",
+    "familyField": "reasoningFamily",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:loop-lab:iterations": [
+   {
+    "activityId": "loop-lab",
+    "modeId": "iterations",
+    "familyField": "reasoningFamily",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:loop-lab:while": [
+   {
+    "activityId": "loop-lab",
+    "modeId": "while",
+    "familyField": "reasoningFamily",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:loop-lab:final": [
+   {
+    "activityId": "loop-lab",
+    "modeId": "final",
+    "familyField": "reasoningFamily",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:loop-lab:choose": [
+   {
+    "activityId": "loop-lab",
+    "modeId": "choose",
+    "familyField": "reasoningFamily",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:loop-lab:conditional": [
+   {
+    "activityId": "loop-lab",
+    "modeId": "conditional",
+    "familyField": "reasoningFamily",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:loop-lab:nested": [
+   {
+    "activityId": "loop-lab",
+    "modeId": "nested",
+    "familyField": "reasoningFamily",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:loop-lab:debug": [
+   {
+    "activityId": "loop-lab",
+    "modeId": "debug",
+    "familyField": "reasoningFamily",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:loop-lab:algorithms": [
+   {
+    "activityId": "loop-lab",
+    "modeId": "algorithms",
+    "familyField": "reasoningFamily",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:loop-lab:executions": [
+   {
+    "activityId": "loop-lab",
+    "modeId": "executions",
+    "familyField": "reasoningFamily",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:array-lab:element": [
+   {
+    "activityId": "array-lab",
+    "modeId": "element",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:array-lab:predict-update": [
+   {
+    "activityId": "array-lab",
+    "modeId": "predict-update",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:array-lab:perform-update": [
+   {
+    "activityId": "array-lab",
+    "modeId": "perform-update",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:array-lab:search": [
+   {
+    "activityId": "array-lab",
+    "modeId": "search",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:array-lab:traversal": [
+   {
+    "activityId": "array-lab",
+    "modeId": "traversal",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:array-lab:access-2d": [
+   {
+    "activityId": "array-lab",
+    "modeId": "access-2d",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:array-lab:update-2d": [
+   {
+    "activityId": "array-lab",
+    "modeId": "update-2d",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:array-lab:nested": [
+   {
+    "activityId": "array-lab",
+    "modeId": "nested",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:array-lab:reverse": [
+   {
+    "activityId": "array-lab",
+    "modeId": "reverse",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:array-lab:create-references": [
+   {
+    "activityId": "array-lab",
+    "modeId": "create-references",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:array-lab:in-place": [
+   {
+    "activityId": "array-lab",
+    "modeId": "in-place",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:array-lab:trace-2d": [
+   {
+    "activityId": "array-lab",
+    "modeId": "trace-2d",
+    "familyField": "familyId",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:advanced:arraylist-lab:access": [
+   {
+    "activityId": "arraylist-lab",
+    "sourceId": "arraylist",
+    "modeIds": [
+     "access"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Choice, single-cell and insertion-gap decisions; select-every-removed-element tasks excluded."
+   }
+  ],
+  "node:advanced:arraylist-lab:insert-remove": [
+   {
+    "activityId": "arraylist-lab",
+    "sourceId": "arraylist",
+    "modeIds": [
+     "insert-remove"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Choice, single-cell and insertion-gap decisions; select-every-removed-element tasks excluded."
+   }
+  ],
+  "node:advanced:arraylist-lab:search-size": [
+   {
+    "activityId": "arraylist-lab",
+    "sourceId": "arraylist",
+    "modeIds": [
+     "search-size"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Choice, single-cell and insertion-gap decisions; select-every-removed-element tasks excluded."
+   }
+  ],
+  "node:advanced:arraylist-lab:traverse": [
+   {
+    "activityId": "arraylist-lab",
+    "sourceId": "arraylist",
+    "modeIds": [
+     "traverse"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Choice, single-cell and insertion-gap decisions; select-every-removed-element tasks excluded."
+   }
+  ],
+  "node:advanced:arraylist-lab:compare": [
+   {
+    "activityId": "arraylist-lab",
+    "sourceId": "arraylist",
+    "modeIds": [
+     "compare"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Choice, single-cell and insertion-gap decisions; select-every-removed-element tasks excluded."
+   }
+  ],
+  "node:advanced:linkedlist-lab:trace": [
+   {
+    "activityId": "linkedlist-lab",
+    "sourceId": "linkedlist",
+    "modeIds": [
+     "trace"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Traversal and Java collection decisions; reference wiring and pointer mutation excluded."
+   }
+  ],
+  "node:advanced:linkedlist-lab:collections": [
+   {
+    "activityId": "linkedlist-lab",
+    "sourceId": "linkedlist",
+    "modeIds": [
+     "collections"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Traversal and Java collection decisions; reference wiring and pointer mutation excluded."
+   }
+  ],
+  "node:advanced:method-constructor-lab:identify-method": [
+   {
+    "activityId": "method-constructor-lab",
+    "sourceId": "method-constructor",
+    "modeIds": [
+     "identify-method"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Native choice and single-span identification; argument rearrangement excluded."
+   }
+  ],
+  "node:advanced:method-constructor-lab:identify-constructor": [
+   {
+    "activityId": "method-constructor-lab",
+    "sourceId": "method-constructor",
+    "modeIds": [
+     "identify-constructor"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Native choice and single-span identification; argument rearrangement excluded."
+   }
+  ],
+  "node:advanced:method-constructor-lab:match-call": [
+   {
+    "activityId": "method-constructor-lab",
+    "sourceId": "method-constructor",
+    "modeIds": [
+     "match-call"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Native choice and single-span identification; argument rearrangement excluded."
+   }
+  ],
+  "node:advanced:method-constructor-lab:return": [
+   {
+    "activityId": "method-constructor-lab",
+    "sourceId": "method-constructor",
+    "modeIds": [
+     "return"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Native choice and single-span identification; argument rearrangement excluded."
+   }
+  ],
+  "node:advanced:method-constructor-lab:constructors": [
+   {
+    "activityId": "method-constructor-lab",
+    "sourceId": "method-constructor",
+    "modeIds": [
+     "constructors"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Native choice and single-span identification; argument rearrangement excluded."
+   }
+  ],
+  "node:advanced:method-constructor-lab:returned-values": [
+   {
+    "activityId": "method-constructor-lab",
+    "sourceId": "method-constructor",
+    "modeIds": [
+     "returned-values"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Native choice and single-span identification; argument rearrangement excluded."
+   }
+  ],
+  "node:advanced:method-constructor-lab:fix": [
+   {
+    "activityId": "method-constructor-lab",
+    "sourceId": "method-constructor",
+    "modeIds": [
+     "fix"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Native choice and single-span identification; argument rearrangement excluded."
+   }
+  ],
+  "node:advanced:method-constructor-lab:access": [
+   {
+    "activityId": "method-constructor-lab",
+    "sourceId": "method-constructor",
+    "modeIds": [
+     "access"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Native choice and single-span identification; argument rearrangement excluded."
+   }
+  ],
+  "node:advanced:class-object-lab:structure": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "structure"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:class-object-lab:defaults": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "defaults"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:class-object-lab:constructors": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "constructors"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:class-object-lab:getters": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "getters"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:class-object-lab:setters": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "setters"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:class-object-lab:this": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "this"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:class-object-lab:independent": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "independent"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:class-object-lab:aliases": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "aliases"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:class-object-lab:equality": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "equality"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:class-object-lab:parameters": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "parameters"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:class-object-lab:static": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "static"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:class-object-lab:tostring": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "tostring"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:class-object-lab:reverse": [
+   {
+    "activityId": "class-object-lab",
+    "sourceId": "class-object",
+    "modeIds": [
+     "reverse"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:inheritance-polymorphism-lab:abstract": [
+   {
+    "activityId": "inheritance-polymorphism-lab",
+    "sourceId": "inheritance",
+    "modeIds": [
+     "abstract"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Native single-choice Abstract Class questions only. Hierarchies, multi-selection, tracing tuples, headers and repairs remain practice."
+   }
+  ],
+  "node:advanced:search-sort-lab:binary": [
+   {
+    "activityId": "search-sort-lab",
+    "sourceId": "search-sort",
+    "modeIds": [
+     "binary"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:search-sort-lab:selection": [
+   {
+    "activityId": "search-sort-lab",
+    "sourceId": "search-sort",
+    "modeIds": [
+     "selection"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:search-sort-lab:insertion": [
+   {
+    "activityId": "search-sort-lab",
+    "sourceId": "search-sort",
+    "modeIds": [
+     "insertion"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:search-sort-lab:merge": [
+   {
+    "activityId": "search-sort-lab",
+    "sourceId": "search-sort",
+    "modeIds": [
+     "merge"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:search-sort-lab:name": [
+   {
+    "activityId": "search-sort-lab",
+    "sourceId": "search-sort",
+    "modeIds": [
+     "name"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:search-sort-lab:compare": [
+   {
+    "activityId": "search-sort-lab",
+    "sourceId": "search-sort",
+    "modeIds": [
+     "compare"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:recursion-lab:base": [
+   {
+    "activityId": "recursion-lab",
+    "sourceId": "recursion",
+    "modeIds": [
+     "base"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:recursion-lab:returns": [
+   {
+    "activityId": "recursion-lab",
+    "sourceId": "recursion",
+    "modeIds": [
+     "returns"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:recursion-lab:output": [
+   {
+    "activityId": "recursion-lab",
+    "sourceId": "recursion",
+    "modeIds": [
+     "output"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:recursion-lab:arrays": [
+   {
+    "activityId": "recursion-lab",
+    "sourceId": "recursion",
+    "modeIds": [
+     "arrays"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:recursion-lab:debug": [
+   {
+    "activityId": "recursion-lab",
+    "sourceId": "recursion",
+    "modeIds": [
+     "debug"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:recursion-lab:searchsort": [
+   {
+    "activityId": "recursion-lab",
+    "sourceId": "recursion",
+    "modeIds": [
+     "searchsort"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:debugger-lab:correction": [
+   {
+    "activityId": "debugger-lab",
+    "sourceId": "debugger",
+    "modeIds": [
+     "correction"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:debugger-lab:statement": [
+   {
+    "activityId": "debugger-lab",
+    "sourceId": "debugger",
+    "modeIds": [
+     "statement"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:debugger-lab:explanation": [
+   {
+    "activityId": "debugger-lab",
+    "sourceId": "debugger",
+    "modeIds": [
+     "explanation"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:debugger-lab:test": [
+   {
+    "activityId": "debugger-lab",
+    "sourceId": "debugger",
+    "modeIds": [
+     "test"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:debugger-lab:exception": [
+   {
+    "activityId": "debugger-lab",
+    "sourceId": "debugger",
+    "modeIds": [
+     "exception"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "No additional interaction limitation; live Canvas import not verified."
+   }
+  ],
+  "node:advanced:documentation-lab:inspector": [
+   {
+    "activityId": "documentation-lab",
+    "sourceId": "documentation",
+    "modeIds": [
+     "inspector"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Choice, comment-line and documentation-line interpretation. Editor, Javadoc builder, classification and call construction excluded."
+   }
+  ],
+  "node:advanced:documentation-lab:docs": [
+   {
+    "activityId": "documentation-lab",
+    "sourceId": "documentation",
+    "modeIds": [
+     "docs"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Choice, comment-line and documentation-line interpretation. Editor, Javadoc builder, classification and call construction excluded."
+   }
+  ],
+  "node:advanced:documentation-lab:detective": [
+   {
+    "activityId": "documentation-lab",
+    "sourceId": "documentation",
+    "modeIds": [
+     "detective"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Choice, comment-line and documentation-line interpretation. Editor, Javadoc builder, classification and call construction excluded."
+   }
+  ],
+  "node:advanced:robot-algorithms:predict": [
+   {
+    "activityId": "robot-algorithms",
+    "sourceId": "robot-algorithms",
+    "modeIds": [
+     "predict"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Prediction, loops, conditionals and methods with complete grid/sensor context. Route construction and repair tasks excluded."
+   }
+  ],
+  "node:advanced:robot-algorithms:loops": [
+   {
+    "activityId": "robot-algorithms",
+    "sourceId": "robot-algorithms",
+    "modeIds": [
+     "loops"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Prediction, loops, conditionals and methods with complete grid/sensor context. Route construction and repair tasks excluded."
+   }
+  ],
+  "node:advanced:robot-algorithms:conditionals": [
+   {
+    "activityId": "robot-algorithms",
+    "sourceId": "robot-algorithms",
+    "modeIds": [
+     "conditionals"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Prediction, loops, conditionals and methods with complete grid/sensor context. Route construction and repair tasks excluded."
+   }
+  ],
+  "node:advanced:robot-algorithms:methods": [
+   {
+    "activityId": "robot-algorithms",
+    "sourceId": "robot-algorithms",
+    "modeIds": [
+     "methods"
+    ],
+    "requiresQuestionMapping": true,
+    "coverageLimit": "Prediction, loops, conditionals and methods with complete grid/sensor context. Route construction and repair tasks excluded."
+   }
+  ],
+  "node:csp:vocabulary-fill-in-lab:CSP-PURPOSE": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-PURPOSE",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:test-case-builder:CSP-FUNCTION": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-FUNCTION",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:create-task-lab:CSP-INPUT": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-INPUT",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:create-task-lab:CSP-OUTPUT": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-OUTPUT",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:vocabulary-fill-in-lab:CSP-DEVELOPMENT": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-DEVELOPMENT",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:vocabulary-fill-in-lab:CSP-COLLABORATION": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-COLLABORATION",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:vocabulary-fill-in-lab:CSP-DESIGN": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-DESIGN",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:vocabulary-fill-in-lab:CSP-DOCUMENTATION": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-DOCUMENTATION",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:test-case-builder:CSP-TESTING": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-TESTING",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:test-case-builder:CSP-DEBUGGING": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-DEBUGGING",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:binary-builder:CSP-BINARY": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-BINARY",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:binary-builder:CSP-CAPACITY": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-CAPACITY",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:rgb-color-builder:CSP-RGB": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-RGB",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:binary-builder:CSP-REPRESENTATION": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-REPRESENTATION",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:ascii-binary-builder:CSP-CHARACTERS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-CHARACTERS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:analog-digital-lab:CSP-ANALOG": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-ANALOG",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:roundoff-overflow-lab:CSP-NUMERIC": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-NUMERIC",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:lossless-lossy-lab:CSP-COMPRESSION": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-COMPRESSION",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:data-detective:CSP-ANALYSIS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-ANALYSIS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:data-detective:CSP-VISUALIZATION": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-VISUALIZATION",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:data-detective:CSP-TRANSFORM": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-TRANSFORM",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:code-concepts:CSP-VARIABLES": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-VARIABLES",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:code-concepts:CSP-EXPRESSIONS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-EXPRESSIONS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:boolean-gatekeeper:CSP-BOOLEAN": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-BOOLEAN",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:algorithm-architect:CSP-SELECTION": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-SELECTION",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:algorithm-architect:CSP-ITERATION": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-ITERATION",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:algorithm-architect:CSP-SEQUENCE": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-SEQUENCE",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:trivial-nontrivial:CSP-ALGORITHMS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-ALGORITHMS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:list-lab:CSP-LISTS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-LISTS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:response-builder:CSP-DATA-ABSTRACTION": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-DATA-ABSTRACTION",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:binary-search-hunt:CSP-SEARCH": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-SEARCH",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:code-concepts:CSP-PROCEDURES": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-PROCEDURES",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:code-concepts:CSP-PARAMETERS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-PARAMETERS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:response-builder:CSP-PROCEDURAL-ABSTRACTION": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-PROCEDURAL-ABSTRACTION",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:vocabulary-fill-in-lab:CSP-LIBRARIES": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-LIBRARIES",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:simulation-lab:CSP-RANDOM": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-RANDOM",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:simulation-lab:CSP-SIMULATION": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-SIMULATION",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:algorithm-race:CSP-EFFICIENCY": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-EFFICIENCY",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:vocabulary-fill-in-lab:CSP-UNDECIDABLE": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-UNDECIDABLE",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:internet-layers-lab:CSP-SYSTEMS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-SYSTEMS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:internet-layers-lab:CSP-PROTOCOLS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-PROTOCOLS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:internet-layers-lab:CSP-IP": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-IP",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:internet-layers-lab:CSP-DNS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-DNS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:tcp-udp-lab:CSP-TRANSPORT": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-TRANSPORT",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:internet-layers-lab:CSP-PACKETS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-PACKETS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:network-breaker:CSP-RESILIENCE": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-RESILIENCE",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:parallel-processing-race:CSP-PARALLEL": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-PARALLEL",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:internet-layers-lab:CSP-SECURE-NETWORKS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-SECURE-NETWORKS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:ai-ethics-lab:CSP-IMPACTS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-IMPACTS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:digital-divide-lab:CSP-DIVIDE": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-DIVIDE",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:ai-ethics-lab:CSP-BIAS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-BIAS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:computing-impact-lab:CSP-CROWD": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-CROWD",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:copyright-creative-commons-lab:CSP-RIGHTS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-RIGHTS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:ai-ethics-lab:CSP-ETHICS": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-ETHICS",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:ai-ethics-lab:CSP-PRIVACY": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-PRIVACY",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:cybersecurity-defender:CSP-SECURITY": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-SECURITY",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:create-task-lab:CSP-PPR": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-PPR",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:csp:create-task-lab:CSP-STUDENT-PROCEDURE": [
+   {
+    "adapter": "csp-readiness/resolveRecord",
+    "skillId": "CSP-STUDENT-PROCEDURE",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:creativity-and-innovation:contribute-ideas": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "creativity-and-innovation:contribute-ideas",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:creativity-and-innovation:improve-processes": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "creativity-and-innovation:improve-processes",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:creativity-and-innovation:allocate-resources": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "creativity-and-innovation:allocate-resources",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:creativity-and-innovation:value-of-creativity": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "creativity-and-innovation:value-of-creativity",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:critical-thinking-and-problem-solving:analyze-problems": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "critical-thinking-and-problem-solving:analyze-problems",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:critical-thinking-and-problem-solving:evaluate-solutions": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "critical-thinking-and-problem-solving:evaluate-solutions",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:critical-thinking-and-problem-solving:logical-decisions": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "critical-thinking-and-problem-solving:logical-decisions",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:critical-thinking-and-problem-solving:implement-action": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "critical-thinking-and-problem-solving:implement-action",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:initiative-and-self-direction:proactive-decisions": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "initiative-and-self-direction:proactive-decisions",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:initiative-and-self-direction:identify-needs": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "initiative-and-self-direction:identify-needs",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:initiative-and-self-direction:minimal-supervision": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "initiative-and-self-direction:minimal-supervision",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:initiative-and-self-direction:apply-solutions": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "initiative-and-self-direction:apply-solutions",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:integrity:laws-and-regulations": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "integrity:laws-and-regulations",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:integrity:policies-and-procedures": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "integrity:policies-and-procedures",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:integrity:honesty-and-fairness": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "integrity:honesty-and-fairness",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:integrity:respect-for-property": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "integrity:respect-for-property",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:integrity:importance-of-integrity": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "integrity:importance-of-integrity",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:work-ethic:diligence": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "work-ethic:diligence",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:work-ethic:dependability": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "work-ethic:dependability",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:work-ethic:accountability": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "work-ethic:accountability",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:work-ethic:accepting-consequences": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "work-ethic:accepting-consequences",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:conflict-resolution:diplomatic-negotiation": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "conflict-resolution:diplomatic-negotiation",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:conflict-resolution:work-style-differences": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "conflict-resolution:work-style-differences",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:conflict-resolution:performance-concerns": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "conflict-resolution:performance-concerns",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:conflict-resolution:personality-and-culture": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "conflict-resolution:personality-and-culture",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:conflict-resolution:when-to-escalate": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "conflict-resolution:when-to-escalate",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:listening-and-speaking:nonverbal-cues": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "listening-and-speaking:nonverbal-cues",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:listening-and-speaking:active-listening": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "listening-and-speaking:active-listening",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:listening-and-speaking:presenting": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "listening-and-speaking:presenting",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:listening-and-speaking:audience-and-setting": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "listening-and-speaking:audience-and-setting",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:respect-for-diversity:individual-differences": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "respect-for-diversity:individual-differences",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:respect-for-diversity:valuing-differences": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "respect-for-diversity:valuing-differences",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:respect-for-diversity:own-bias": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "respect-for-diversity:own-bias",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:respect-for-diversity:collaborating": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "respect-for-diversity:collaborating",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:customer-service-orientation:internal-and-external": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "customer-service-orientation:internal-and-external",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:customer-service-orientation:prioritize-service": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "customer-service-orientation:prioritize-service",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:customer-service-orientation:anticipate-needs": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "customer-service-orientation:anticipate-needs",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:customer-service-orientation:courteous-knowledgeable": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "customer-service-orientation:courteous-knowledgeable",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:teamwork:expectations-roles-goals": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "teamwork:expectations-roles-goals",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:teamwork:share-responsibility": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "teamwork:share-responsibility",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:teamwork:respect-contributions": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "teamwork:respect-contributions",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:teamwork:team-communication": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "teamwork:team-communication",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:big-picture-thinking:role-in-mission": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "big-picture-thinking:role-in-mission",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:big-picture-thinking:impacts-of-actions": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "big-picture-thinking:impacts-of-actions",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:big-picture-thinking:organization-structure": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "big-picture-thinking:organization-structure",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:big-picture-thinking:community-and-industry": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "big-picture-thinking:community-and-industry",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:career-and-life-management:qualifications-and-advancement": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "career-and-life-management:qualifications-and-advancement",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:career-and-life-management:benefits-and-resources": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "career-and-life-management:benefits-and-resources",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:career-and-life-management:wellness-and-finances": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "career-and-life-management:wellness-and-finances",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:career-and-life-management:smart-goals": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "career-and-life-management:smart-goals",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:continuous-learning-and-adaptability:learning-resources": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "continuous-learning-and-adaptability:learning-resources",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:continuous-learning-and-adaptability:acting-on-feedback": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "continuous-learning-and-adaptability:acting-on-feedback",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:continuous-learning-and-adaptability:credentials": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "continuous-learning-and-adaptability:credentials",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:continuous-learning-and-adaptability:changing-requirements": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "continuous-learning-and-adaptability:changing-requirements",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:efficiency-and-productivity:work-plan": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "efficiency-and-productivity:work-plan",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:efficiency-and-productivity:prioritize-tasks": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "efficiency-and-productivity:prioritize-tasks",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:efficiency-and-productivity:adapt-goals": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "efficiency-and-productivity:adapt-goals",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:efficiency-and-productivity:human-resources": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "efficiency-and-productivity:human-resources",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:efficiency-and-productivity:capital-resources": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "efficiency-and-productivity:capital-resources",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:efficiency-and-productivity:natural-resources": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "efficiency-and-productivity:natural-resources",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-literacy:locate-sources": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-literacy:locate-sources",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-literacy:evaluate-credibility": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-literacy:evaluate-credibility",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-literacy:judge-relevance": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-literacy:judge-relevance",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-literacy:use-information": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-literacy:use-information",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-security:information-formats": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-security:information-formats",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-security:cyber-threats": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-security:cyber-threats",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-security:ethical-technology-use": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-security:ethical-technology-use",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-security:acceptable-use": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-security:acceptable-use",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-security:confidentiality": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-security:confidentiality",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-security:security-procedures": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-security:security-procedures",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-technology:hardware-and-devices": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-technology:hardware-and-devices",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-technology:software-and-applications": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-technology:software-and-applications",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-technology:cloud-and-file-sharing": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-technology:cloud-and-file-sharing",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-technology:emerging-technology": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-technology:emerging-technology",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:information-technology:troubleshooting": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "information-technology:troubleshooting",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:job-specific-tools-and-technologies:select-right-tool": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "job-specific-tools-and-technologies:select-right-tool",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:job-specific-tools-and-technologies:safe-use": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "job-specific-tools-and-technologies:safe-use",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:mathematics:basic-calculations": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "mathematics:basic-calculations",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:mathematics:job-task-math": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "mathematics:job-task-math",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:mathematics:personal-finance": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "mathematics:personal-finance",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:professionalism:punctuality-attendance": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "professionalism:punctuality-attendance",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:professionalism:etiquette": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "professionalism:etiquette",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:professionalism:self-representation": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "professionalism:self-representation",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:professionalism:appearance": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "professionalism:appearance",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:reading-and-writing:interpret-documents": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "reading-and-writing:interpret-documents",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:reading-and-writing:clarity": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "reading-and-writing:clarity",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:reading-and-writing:tone-and-audience": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "reading-and-writing:tone-and-audience",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:reading-and-writing:conventions": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "reading-and-writing:conventions",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:workplace-safety:safety-guidelines": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "workplace-safety:safety-guidelines",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:workplace-safety:safety-data-sheets": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "workplace-safety:safety-data-sheets",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:workplace-safety:ppe": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "workplace-safety:ppe",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:workplace-safety:universal-precautions": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "workplace-safety:universal-precautions",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:workplace-safety:identify-hazards": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "workplace-safety:identify-hazards",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:workplace:workplace-safety:emergency-protocols": [
+   {
+    "activityId": "workplace-readiness",
+    "conceptId": "workplace-safety:emergency-protocols",
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:robotics:parts-sprint:structure": [
+   {
+    "activityId": "parts-sprint",
+    "category": "structure",
+    "modes": [
+     "learn",
+     "sprint",
+     "find"
+    ],
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:robotics:parts-sprint:fasteners": [
+   {
+    "activityId": "parts-sprint",
+    "category": "fasteners",
+    "modes": [
+     "learn",
+     "sprint",
+     "find"
+    ],
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:robotics:parts-sprint:spacing": [
+   {
+    "activityId": "parts-sprint",
+    "category": "spacing",
+    "modes": [
+     "learn",
+     "sprint",
+     "find"
+    ],
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:robotics:parts-sprint:motion": [
+   {
+    "activityId": "parts-sprint",
+    "category": "motion",
+    "modes": [
+     "learn",
+     "sprint",
+     "find"
+    ],
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:robotics:parts-sprint:transmission": [
+   {
+    "activityId": "parts-sprint",
+    "category": "transmission",
+    "modes": [
+     "learn",
+     "sprint",
+     "find"
+    ],
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:robotics:parts-sprint:wheels": [
+   {
+    "activityId": "parts-sprint",
+    "category": "wheels",
+    "modes": [
+     "learn",
+     "sprint",
+     "find"
+    ],
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:robotics:parts-sprint:tools": [
+   {
+    "activityId": "parts-sprint",
+    "category": "tools",
+    "modes": [
+     "learn",
+     "sprint",
+     "find"
+    ],
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:robotics:parts-sprint:electronics": [
+   {
+    "activityId": "parts-sprint",
+    "category": "electronics",
+    "modes": [
+     "learn",
+     "sprint",
+     "find"
+    ],
+    "requiresQuestionMapping": true
+   }
+  ],
+  "node:robotics:course-architect:scale": [
+   {
+    "activityId": "course-architect",
+    "modeId": "scale",
+    "requiresQuestionMapping": true,
+    "eligibility": "teacher-assessment-only"
+   }
+  ],
+  "node:robotics:course-architect:geometry": [
+   {
+    "activityId": "course-architect",
+    "modeId": "geometry",
+    "requiresQuestionMapping": true,
+    "eligibility": "teacher-assessment-only"
+   }
+  ],
+  "node:robotics:course-architect:testing": [
+   {
+    "activityId": "course-architect",
+    "modeId": "testing",
+    "requiresQuestionMapping": true,
+    "eligibility": "teacher-assessment-only"
+   }
+  ],
+  "node:robotics:component-challenge:choose": [
+   {
+    "activityId": "component-challenge",
+    "modeId": "choose",
+    "requiresQuestionMapping": true,
+    "eligibility": "adapter-pending"
+   }
+  ],
+  "node:robotics:component-challenge:troubleshoot": [
+   {
+    "activityId": "component-challenge",
+    "modeId": "troubleshoot",
+    "requiresQuestionMapping": true,
+    "eligibility": "adapter-pending"
+   }
+  ],
+  "node:robotics:component-challenge:solution": [
+   {
+    "activityId": "component-challenge",
+    "modeId": "solution",
+    "requiresQuestionMapping": true,
+    "eligibility": "adapter-pending"
+   }
+  ],
+  "node:robotics:component-challenge:tools": [
+   {
+    "activityId": "component-challenge",
+    "modeId": "tools",
+    "requiresQuestionMapping": true,
+    "eligibility": "adapter-pending"
+   }
+  ]
+ }
+}

@@ -1,0 +1,2155 @@
+{
+  "seed": 20261112,
+  "beforeRev": "fc70e68",
+  "baseRev": "422398d",
+  "graphs": {
+    "base": {
+      "nodes": 280,
+      "questionFamilies": 296,
+      "version": "2026.11.10.1"
+    },
+    "before": {
+      "nodes": 281,
+      "questionFamilies": 358
+    },
+    "after": {
+      "nodes": 290,
+      "questionFamilies": 453,
+      "version": "2026.11.10.1"
+    }
+  },
+  "before": {
+    "math-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "modulus": 84,
+          "division": 84,
+          "casting": 84,
+          "expressions": 84,
+          "reverse": 84,
+          "math-methods": 0,
+          "numeric-limits": 0
+        }
+      },
+      "modes": {
+        "modulus": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": false
+        },
+        "division": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": false
+        },
+        "casting": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": false
+        },
+        "expressions": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": false
+        },
+        "reverse": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": false
+        },
+        "math-methods": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "numeric-limits": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        }
+      }
+    },
+    "loop-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "iterations": 43,
+          "final": 43,
+          "choose": 39,
+          "components": 47,
+          "conditional": 37,
+          "while": 30,
+          "nested": 35,
+          "debug": 31,
+          "algorithms": 45,
+          "executions": 35,
+          "looptype": 35
+        }
+      },
+      "modes": {
+        "iterations": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "final": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "choose": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "components": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "conditional": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "while": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "nested": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "debug": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "algorithms": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "executions": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "looptype": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        }
+      }
+    },
+    "array-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "element": 35,
+          "predict-update": 35,
+          "perform-update": 35,
+          "search": 35,
+          "traversal": 35,
+          "access-2d": 35,
+          "update-2d": 35,
+          "nested": 35,
+          "reverse": 35,
+          "create-references": 35,
+          "in-place": 35,
+          "trace-2d": 35
+        }
+      },
+      "modes": {
+        "element": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "predict-update": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "perform-update": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "search": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "traversal": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "access-2d": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "update-2d": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "nested": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "reverse": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "create-references": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "in-place": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "trace-2d": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        }
+      }
+    },
+    "boolean-conditional-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "evaluate": 33,
+          "branch": 34,
+          "conditions": 39,
+          "equivalent": 35,
+          "short": 46,
+          "identify": 39,
+          "construct": 43,
+          "truthTable": 58,
+          "switchIf": 46,
+          "coverage": 47
+        }
+      },
+      "modes": {
+        "evaluate": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 0,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "branch": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 0,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "conditions": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 0,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "equivalent": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 0,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "short": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 0,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "identify": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 0,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "construct": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 0,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "truthTable": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 0,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "switchIf": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 0,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "coverage": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 0,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": true
+        }
+      }
+    },
+    "arraylist-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "access": 91,
+          "insert-remove": 168,
+          "search-size": 73,
+          "traverse": 60,
+          "compare": 28
+        }
+      },
+      "modes": {
+        "access": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "insert-remove": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "search-size": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "traverse": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "compare": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        }
+      }
+    },
+    "linkedlist-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 222,
+        "counts": {
+          "link": 92,
+          "mutate": 106,
+          "trace": 114,
+          "collections": 108
+        }
+      },
+      "modes": {
+        "link": {
+          "drawn": 12,
+          "credited": 0,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "mutate": {
+          "drawn": 12,
+          "credited": 0,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "trace": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "collections": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        }
+      }
+    },
+    "method-constructor-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 370,
+        "counts": {
+          "identify-method": 47,
+          "identify-constructor": 48,
+          "match-call": 47,
+          "order-args": 50,
+          "return": 40,
+          "constructors": 38,
+          "returned-values": 47,
+          "fix": 54,
+          "access": 49
+        }
+      },
+      "modes": {
+        "identify-method": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "identify-constructor": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "match-call": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "order-args": {
+          "drawn": 12,
+          "credited": 0,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "return": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "constructors": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "returned-values": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "fix": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "access": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        }
+      }
+    },
+    "inheritance-polymorphism-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 84,
+        "counts": {
+          "hierarchy": 84,
+          "override": 84,
+          "tracer": 84,
+          "abstract": 84,
+          "debug": 84
+        }
+      },
+      "modes": {
+        "hierarchy": {
+          "drawn": 12,
+          "credited": 0,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "override": {
+          "drawn": 12,
+          "credited": 0,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "tracer": {
+          "drawn": 12,
+          "credited": 0,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "abstract": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "debug": {
+          "drawn": 12,
+          "credited": 0,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        }
+      }
+    },
+    "search-sort-lab": {
+      "mixed": null,
+      "modes": {
+        "binary": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "selection": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "insertion": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "merge": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "name": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "compare": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        }
+      }
+    },
+    "recursion-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "base": 61,
+          "returns": 65,
+          "output": 75,
+          "arrays": 67,
+          "debug": 82,
+          "searchsort": 70
+        }
+      },
+      "modes": {
+        "base": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "returns": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "output": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "arrays": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "debug": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "searchsort": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        }
+      }
+    },
+    "debugger-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "correction": 85,
+          "statement": 86,
+          "explanation": 77,
+          "test": 95,
+          "exception": 77
+        }
+      },
+      "modes": {
+        "correction": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "statement": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "explanation": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "test": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "exception": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        }
+      }
+    },
+    "documentation-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 252,
+        "counts": {
+          "inspector": 84,
+          "editor": 84,
+          "builder": 84,
+          "docs": 84,
+          "detective": 84
+        }
+      },
+      "modes": {
+        "inspector": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "editor": {
+          "drawn": 12,
+          "credited": 0,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "builder": {
+          "drawn": 12,
+          "credited": 0,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "docs": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "detective": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        }
+      }
+    },
+    "robot-algorithms": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 278,
+        "counts": {
+          "predict": 75,
+          "loops": 70,
+          "build": 74,
+          "conditionals": 64,
+          "debug": 68,
+          "methods": 69
+        }
+      },
+      "modes": {
+        "predict": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "loops": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "build": {
+          "drawn": 12,
+          "credited": 0,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "conditionals": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "debug": {
+          "drawn": 12,
+          "credited": 0,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "methods": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        }
+      }
+    },
+    "class-object-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "structure": 27,
+          "defaults": 33,
+          "constructors": 31,
+          "getters": 25,
+          "setters": 38,
+          "this": 29,
+          "independent": 35,
+          "aliases": 34,
+          "equality": 35,
+          "parameters": 26,
+          "static": 38,
+          "tostring": 38,
+          "reverse": 31
+        }
+      },
+      "modes": {
+        "structure": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "defaults": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "constructors": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "getters": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "setters": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "this": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "independent": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "aliases": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "equality": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "parameters": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "static": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "tostring": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "reverse": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        }
+      }
+    }
+  },
+  "after": {
+    "math-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "modulus": 60,
+          "division": 60,
+          "casting": 60,
+          "expressions": 60,
+          "reverse": 60,
+          "math-methods": 60,
+          "numeric-limits": 60
+        }
+      },
+      "modes": {
+        "modulus": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": false
+        },
+        "division": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": false
+        },
+        "casting": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": false
+        },
+        "expressions": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": false
+        },
+        "reverse": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": false
+        },
+        "math-methods": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "numeric-limits": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        }
+      }
+    },
+    "loop-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "iterations": 43,
+          "final": 43,
+          "choose": 39,
+          "components": 47,
+          "conditional": 37,
+          "while": 30,
+          "nested": 35,
+          "debug": 31,
+          "algorithms": 45,
+          "executions": 35,
+          "looptype": 35
+        }
+      },
+      "modes": {
+        "iterations": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "final": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "choose": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "components": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "conditional": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "while": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "nested": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "debug": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "algorithms": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "executions": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "looptype": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        }
+      }
+    },
+    "array-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "element": 35,
+          "predict-update": 35,
+          "perform-update": 35,
+          "search": 35,
+          "traversal": 35,
+          "access-2d": 35,
+          "update-2d": 35,
+          "nested": 35,
+          "reverse": 35,
+          "create-references": 35,
+          "in-place": 35,
+          "trace-2d": 35
+        }
+      },
+      "modes": {
+        "element": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "predict-update": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "perform-update": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "search": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "traversal": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "access-2d": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "update-2d": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "nested": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "reverse": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "create-references": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "in-place": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        },
+        "trace-2d": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 24,
+          "hasLevels": true
+        }
+      }
+    },
+    "boolean-conditional-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "evaluate": 42,
+          "branch": 39,
+          "conditions": 38,
+          "equivalent": 46,
+          "short": 37,
+          "identify": 48,
+          "construct": 46,
+          "truthTable": 48,
+          "switchIf": 39,
+          "coverage": 37
+        }
+      },
+      "modes": {
+        "evaluate": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "branch": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "conditions": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "equivalent": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "short": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "identify": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "construct": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "truthTable": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "switchIf": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "coverage": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        }
+      }
+    },
+    "arraylist-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "access": 94,
+          "insert-remove": 173,
+          "search-size": 72,
+          "traverse": 56,
+          "compare": 25
+        }
+      },
+      "modes": {
+        "access": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "insert-remove": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "search-size": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "traverse": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "compare": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        }
+      }
+    },
+    "linkedlist-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "link": 98,
+          "mutate": 114,
+          "trace": 105,
+          "collections": 103
+        }
+      },
+      "modes": {
+        "link": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "mutate": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "trace": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "collections": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        }
+      }
+    },
+    "method-constructor-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "identify-method": 37,
+          "identify-constructor": 48,
+          "match-call": 50,
+          "order-args": 45,
+          "return": 44,
+          "constructors": 42,
+          "returned-values": 51,
+          "fix": 54,
+          "access": 49
+        }
+      },
+      "modes": {
+        "identify-method": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "identify-constructor": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "match-call": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "order-args": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "return": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "constructors": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "returned-values": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "fix": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        },
+        "access": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 0,
+          "familyBound": 0,
+          "hasLevels": null
+        }
+      }
+    },
+    "inheritance-polymorphism-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "hierarchy": 84,
+          "override": 84,
+          "tracer": 84,
+          "abstract": 84,
+          "debug": 84
+        }
+      },
+      "modes": {
+        "hierarchy": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "override": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "tracer": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "abstract": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "debug": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        }
+      }
+    },
+    "search-sort-lab": {
+      "mixed": null,
+      "modes": {
+        "binary": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "selection": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "insertion": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "merge": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "name": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "compare": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        }
+      }
+    },
+    "recursion-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "base": 68,
+          "returns": 63,
+          "output": 77,
+          "arrays": 62,
+          "debug": 82,
+          "searchsort": 68
+        }
+      },
+      "modes": {
+        "base": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "returns": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "output": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "arrays": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "debug": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "searchsort": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        }
+      }
+    },
+    "debugger-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "correction": 85,
+          "statement": 86,
+          "explanation": 77,
+          "test": 95,
+          "exception": 77
+        }
+      },
+      "modes": {
+        "correction": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "statement": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "explanation": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "test": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "exception": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        }
+      }
+    },
+    "documentation-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "inspector": 84,
+          "editor": 84,
+          "builder": 84,
+          "docs": 84,
+          "detective": 84
+        }
+      },
+      "modes": {
+        "inspector": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "editor": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "builder": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "docs": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "detective": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        }
+      }
+    },
+    "robot-algorithms": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "predict": 77,
+          "loops": 71,
+          "build": 67,
+          "conditionals": 82,
+          "debug": 66,
+          "methods": 57
+        }
+      },
+      "modes": {
+        "predict": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "loops": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "build": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "conditionals": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "debug": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        },
+        "methods": {
+          "drawn": 12,
+          "credited": 12,
+          "difficultyRecorded": 12,
+          "familySent": 12,
+          "familyBound": 12,
+          "hasLevels": null
+        }
+      }
+    },
+    "class-object-lab": {
+      "mixed": {
+        "drawn": 420,
+        "credited": 420,
+        "counts": {
+          "structure": 18,
+          "defaults": 23,
+          "constructors": 44,
+          "getters": 29,
+          "setters": 37,
+          "this": 29,
+          "independent": 32,
+          "aliases": 35,
+          "equality": 32,
+          "parameters": 29,
+          "static": 42,
+          "tostring": 42,
+          "reverse": 28
+        }
+      },
+      "modes": {
+        "structure": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "defaults": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "constructors": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "getters": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "setters": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "this": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "independent": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "aliases": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "equality": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "parameters": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "static": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "tostring": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        },
+        "reverse": {
+          "drawn": 24,
+          "credited": 24,
+          "difficultyRecorded": 24,
+          "familySent": 24,
+          "familyBound": 0,
+          "hasLevels": true
+        }
+      }
+    }
+  }
+}

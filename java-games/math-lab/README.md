@@ -80,7 +80,7 @@ families, misconception-tagged choices, and a bounded recent-question deck.
 `generateChallenge({ mode, difficulty, seed })` is the reusable Teacher Tools
 entry point; `createExpansionDeck()` supplies continuous play without a
 question-bank limit. The original expression engine and five modes remain
-unchanged, and Mixed Practice continues to use only the original modes.
+unchanged. Mixed Practice rotates all seven scored modes in shuffled rounds (`mixed.js`): the five original modes plus Math Methods and Numeric Limits, never the same mode twice in a row. The difficulty control is shown in Mixed Practice and applies only to the Math Methods and Numeric Limits questions it draws; each question is credited to its own mode and records the difficulty it was shown at.
 
 Run the expansion checks with `npm run test:math-expansion`. They sample 1,000
 seeds per mode and difficulty, validate deterministic keys and distractors,

@@ -867,6 +867,44 @@
       "familyBindingStatus": "question-adapter-required"
     },
     {
+      "id": "node:advanced:variable-lab:assemble",
+      "courseId": "advanced",
+      "areaId": "area:advanced:variable-lab",
+      "title": "Assemble a variable declaration",
+      "objective": "Assemble a variable declaration",
+      "standardRefs": [],
+      "primaryObjectives": [
+        {
+          "registry": "teacher-objective",
+          "id": "objective:advanced:variable-lab:assemble",
+          "label": "Assemble a variable declaration"
+        }
+      ],
+      "practice": [
+        {
+          "activityId": "variable-lab",
+          "url": "/java-games/variable-lab/"
+        }
+      ],
+      "familySelectors": [
+        {
+          "activityId": "variable-lab",
+          "sourceId": "variable",
+          "modeIds": [
+            "assemble"
+          ],
+          "requiresQuestionMapping": true,
+          "coverageLimit": "Declaration assembly for int, double, boolean, char and String; scenario context varies but the reasoning is the declaration type."
+        }
+      ],
+      "prerequisites": [],
+      "estimatedMinutes": 80,
+      "complexity": "application",
+      "estimateProvisional": true,
+      "familyIds": [],
+      "familyBindingStatus": "question-adapter-required"
+    },
+    {
       "id": "node:advanced:math-lab:modulus",
       "courseId": "advanced",
       "areaId": "area:advanced:math-lab",
@@ -1577,7 +1615,8 @@
         {
           "activityId": "string-lab",
           "sourceId": "string",
-          "modeIds": [
+          "modeId": "predict",
+          "familyIds": [
             "predict.concat.single",
             "predict.concat.numbers",
             "predict.concat.expr",
@@ -1597,8 +1636,19 @@
       "estimatedMinutes": 80,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:string-lab:predict:predict.concat.single",
+        "family:node:advanced:string-lab:predict:predict.concat.numbers",
+        "family:node:advanced:string-lab:predict:predict.concat.expr",
+        "family:node:advanced:string-lab:predict:predict.length",
+        "family:node:advanced:string-lab:predict:predict.charAt",
+        "family:node:advanced:string-lab:predict:predict.substring",
+        "family:node:advanced:string-lab:predict:predict.indexOf",
+        "family:node:advanced:string-lab:predict:predict.chain",
+        "family:node:advanced:string-lab:predict:predict.indexSubstring",
+        "family:node:advanced:string-lab:predict:predict.twoStrings"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:string-lab:trace",
@@ -1624,7 +1674,8 @@
         {
           "activityId": "string-lab",
           "sourceId": "string",
-          "modeIds": [
+          "modeId": "trace",
+          "familyIds": [
             "trace.reassign.substring",
             "trace.reassign.concat",
             "trace.sequence",
@@ -1643,8 +1694,18 @@
       "estimatedMinutes": 160,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:string-lab:trace:trace.reassign.substring",
+        "family:node:advanced:string-lab:trace:trace.reassign.concat",
+        "family:node:advanced:string-lab:trace:trace.sequence",
+        "family:node:advanced:string-lab:trace:trace.immutable",
+        "family:node:advanced:string-lab:trace:trace.mixedImmutable",
+        "family:node:advanced:string-lab:trace:trace.alias",
+        "family:node:advanced:string-lab:trace:trace.indexSplit",
+        "family:node:advanced:string-lab:trace:trace.numbers",
+        "family:node:advanced:string-lab:trace:trace.twoStrings"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:string-lab:index",
@@ -1670,7 +1731,8 @@
         {
           "activityId": "string-lab",
           "sourceId": "string",
-          "modeIds": [
+          "modeId": "index",
+          "familyIds": [
             "index.charPosition",
             "index.indexOfCall",
             "index.beginIndex",
@@ -1689,8 +1751,18 @@
       "estimatedMinutes": 80,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:string-lab:index:index.charPosition",
+        "family:node:advanced:string-lab:index:index.indexOfCall",
+        "family:node:advanced:string-lab:index:index.beginIndex",
+        "family:node:advanced:string-lab:index:index.firstOccurrence",
+        "family:node:advanced:string-lab:index:index.whichNegativeOne",
+        "family:node:advanced:string-lab:index:index.endIndex",
+        "family:node:advanced:string-lab:index:index.shifted",
+        "family:node:advanced:string-lab:index:index.lastIndex",
+        "family:node:advanced:string-lab:index:index.charThenSearch"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:string-lab:expr",
@@ -1716,7 +1788,8 @@
         {
           "activityId": "string-lab",
           "sourceId": "string",
-          "modeIds": [
+          "modeId": "expr",
+          "familyIds": [
             "expr.char",
             "expr.substring",
             "expr.length",
@@ -1734,8 +1807,17 @@
       "estimatedMinutes": 80,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:string-lab:expr:expr.char",
+        "family:node:advanced:string-lab:expr:expr.substring",
+        "family:node:advanced:string-lab:expr:expr.length",
+        "family:node:advanced:string-lab:expr:expr.find",
+        "family:node:advanced:string-lab:expr:expr.concat",
+        "family:node:advanced:string-lab:expr:expr.tail",
+        "family:node:advanced:string-lab:expr:expr.split",
+        "family:node:advanced:string-lab:expr:expr.firstLast"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:string-lab:algo",
@@ -1761,15 +1843,18 @@
         {
           "activityId": "string-lab",
           "sourceId": "string",
-          "modeIds": [
+          "modeId": "algorithms",
+          "familyIds": [
             "algo.count.forward",
             "algo.count.backward",
             "algo.find.position",
+            "algo.find.indexof",
             "algo.find.substring",
             "algo.reverse.build",
             "algo.transform.filter",
             "algo.transform.replace",
             "algo.substring.count",
+            "algo.palindrome.compare",
             "algo.multi.filter"
           ],
           "requiresQuestionMapping": true,
@@ -1780,8 +1865,20 @@
       "estimatedMinutes": 160,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:string-lab:algo:algo.count.forward",
+        "family:node:advanced:string-lab:algo:algo.count.backward",
+        "family:node:advanced:string-lab:algo:algo.find.position",
+        "family:node:advanced:string-lab:algo:algo.find.indexof",
+        "family:node:advanced:string-lab:algo:algo.find.substring",
+        "family:node:advanced:string-lab:algo:algo.reverse.build",
+        "family:node:advanced:string-lab:algo:algo.transform.filter",
+        "family:node:advanced:string-lab:algo:algo.transform.replace",
+        "family:node:advanced:string-lab:algo:algo.substring.count",
+        "family:node:advanced:string-lab:algo:algo.palindrome.compare",
+        "family:node:advanced:string-lab:algo:algo.multi.filter"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:string-lab:compare",
@@ -1807,7 +1904,10 @@
         {
           "activityId": "string-lab",
           "sourceId": "string",
-          "modeIds": [
+          "modeId": "compare",
+          "familyIds": [
+            "compare.equals",
+            "compare.compareto.sign",
             "compare.compareto.value",
             "compare.identity.alias",
             "compare.conditional.branch",
@@ -1822,8 +1922,16 @@
       "estimatedMinutes": 80,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:string-lab:compare:compare.equals",
+        "family:node:advanced:string-lab:compare:compare.compareto.sign",
+        "family:node:advanced:string-lab:compare:compare.compareto.value",
+        "family:node:advanced:string-lab:compare:compare.identity.alias",
+        "family:node:advanced:string-lab:compare:compare.conditional.branch",
+        "family:node:advanced:string-lab:compare:compare.choose.expression",
+        "family:node:advanced:string-lab:compare:compare.alias.reassign"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:string-lab:loop",
@@ -1849,7 +1957,8 @@
         {
           "activityId": "string-lab",
           "sourceId": "string",
-          "modeIds": [
+          "modeId": "loop",
+          "familyIds": [
             "loop.bound",
             "loop.substring.endpoint",
             "loop.reverse",
@@ -1867,8 +1976,17 @@
       "estimatedMinutes": 80,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:string-lab:loop:loop.bound",
+        "family:node:advanced:string-lab:loop:loop.substring.endpoint",
+        "family:node:advanced:string-lab:loop:loop.reverse",
+        "family:node:advanced:string-lab:loop:loop.matching",
+        "family:node:advanced:string-lab:loop:loop.accumulator",
+        "family:node:advanced:string-lab:loop:loop.bug",
+        "family:node:advanced:string-lab:loop:loop.edge",
+        "family:node:advanced:string-lab:loop:loop.combined"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:loop-lab:looptype",
@@ -3236,6 +3354,53 @@
       "familyBindingStatus": "question-adapter-required"
     },
     {
+      "id": "node:advanced:linkedlist-lab:references",
+      "courseId": "advanced",
+      "areaId": "area:advanced:linkedlist-lab",
+      "title": "Update linked-node references",
+      "objective": "Set the head and next references so a linked chain has the required order: connect loose nodes, insert at the head, middle or tail, and remove from the head, middle or tail.",
+      "standardRefs": [],
+      "primaryObjectives": [
+        {
+          "registry": "teacher-objective",
+          "id": "objective:advanced:linkedlist-lab:references",
+          "label": "Update linked-node references"
+        }
+      ],
+      "practice": [
+        {
+          "activityId": "linkedlist-lab",
+          "url": "/java-games/linkedlist-lab/"
+        }
+      ],
+      "familySelectors": [
+        {
+          "activityId": "linkedlist-lab",
+          "sourceId": "linkedlist",
+          "modeIds": [
+            "link",
+            "mutate"
+          ],
+          "requiresQuestionMapping": true,
+          "coverageLimit": "Reference wiring and pointer updates. link has a single reasoning family (connect loose nodes); mutate has six operations. Scored by exact chain comparison."
+        }
+      ],
+      "prerequisites": [],
+      "estimatedMinutes": 160,
+      "complexity": "multi-step tracing",
+      "estimateProvisional": true,
+      "familyIds": [
+        "family:node:advanced:linkedlist-lab:references:link/connect",
+        "family:node:advanced:linkedlist-lab:references:mutate/insert-head",
+        "family:node:advanced:linkedlist-lab:references:mutate/insert-middle",
+        "family:node:advanced:linkedlist-lab:references:mutate/append",
+        "family:node:advanced:linkedlist-lab:references:mutate/remove-head",
+        "family:node:advanced:linkedlist-lab:references:mutate/remove-middle",
+        "family:node:advanced:linkedlist-lab:references:mutate/remove-tail"
+      ],
+      "familyBindingStatus": "source-family-ids"
+    },
+    {
       "id": "node:advanced:method-constructor-lab:identify-method",
       "courseId": "advanced",
       "areaId": "area:advanced:method-constructor-lab",
@@ -3336,10 +3501,12 @@
           "activityId": "method-constructor-lab",
           "sourceId": "method-constructor",
           "modeIds": [
-            "match-call"
+            "match-call",
+            "order-args"
           ],
           "requiresQuestionMapping": true,
-          "coverageLimit": "Native choice and single-span identification; argument rearrangement excluded."
+          "coverageLimit": "Native choice and single-span identification; argument rearrangement excluded.",
+          "evidenceScope": "Also credited by order-args (tap arguments into the order a signature requires). No other method or constructor node accepts order-args."
         }
       ],
       "prerequisites": [],
@@ -4068,8 +4235,192 @@
       "estimatedMinutes": 80,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:inheritance-polymorphism-lab:abstract:abstract/mustabstract",
+        "family:node:advanced:inheritance-polymorphism-lab:abstract:abstract/implement",
+        "family:node:advanced:inheritance-polymorphism-lab:abstract:abstract/header",
+        "family:node:advanced:inheritance-polymorphism-lab:abstract:abstract/instantiate",
+        "family:node:advanced:inheritance-polymorphism-lab:abstract:abstract/compiles"
+      ],
+      "familyBindingStatus": "source-family-ids"
+    },
+    {
+      "id": "node:advanced:inheritance-polymorphism-lab:hierarchy",
+      "courseId": "advanced",
+      "areaId": "area:advanced:inheritance-polymorphism-lab",
+      "title": "Read and build class hierarchies",
+      "objective": "Use extends relationships to build a class hierarchy, decide what an object inherits, whose code runs, which assignments follow is-a, and repair an invalid hierarchy.",
+      "standardRefs": [],
+      "primaryObjectives": [
+        {
+          "registry": "teacher-objective",
+          "id": "objective:advanced:inheritance-polymorphism-lab:hierarchy",
+          "label": "Read and build class hierarchies"
+        }
+      ],
+      "practice": [
+        {
+          "activityId": "inheritance-polymorphism-lab",
+          "url": "/java-games/inheritance-polymorphism-lab/"
+        }
+      ],
+      "familySelectors": [
+        {
+          "activityId": "inheritance-polymorphism-lab",
+          "sourceId": "inheritance",
+          "modeIds": [
+            "hierarchy"
+          ],
+          "requiresQuestionMapping": true,
+          "coverageLimit": "All questions in the mode are scored from the lab answer key checked against javac/java by the lab test suite; item banks are small (16-21 items per mode)."
+        }
+      ],
+      "prerequisites": [],
+      "estimatedMinutes": 80,
+      "complexity": "application",
+      "estimateProvisional": true,
+      "familyIds": [
+        "family:node:advanced:inheritance-polymorphism-lab:hierarchy:hierarchy/connect",
+        "family:node:advanced:inheritance-polymorphism-lab:hierarchy:hierarchy/has",
+        "family:node:advanced:inheritance-polymorphism-lab:hierarchy:hierarchy/supplier",
+        "family:node:advanced:inheritance-polymorphism-lab:hierarchy:hierarchy/isa",
+        "family:node:advanced:inheritance-polymorphism-lab:hierarchy:hierarchy/fix"
+      ],
+      "familyBindingStatus": "source-family-ids"
+    },
+    {
+      "id": "node:advanced:inheritance-polymorphism-lab:override",
+      "courseId": "advanced",
+      "areaId": "area:advanced:inheritance-polymorphism-lab",
+      "title": "Classify and resolve overridden methods",
+      "objective": "Decide whether a method overrides, overloads, hides or is an error, and which declaration runs, including calls through super.",
+      "standardRefs": [],
+      "primaryObjectives": [
+        {
+          "registry": "teacher-objective",
+          "id": "objective:advanced:inheritance-polymorphism-lab:override",
+          "label": "Classify and resolve overridden methods"
+        }
+      ],
+      "practice": [
+        {
+          "activityId": "inheritance-polymorphism-lab",
+          "url": "/java-games/inheritance-polymorphism-lab/"
+        }
+      ],
+      "familySelectors": [
+        {
+          "activityId": "inheritance-polymorphism-lab",
+          "sourceId": "inheritance",
+          "modeIds": [
+            "override"
+          ],
+          "requiresQuestionMapping": true,
+          "coverageLimit": "All questions in the mode are scored from the lab answer key checked against javac/java by the lab test suite; item banks are small (16-21 items per mode)."
+        }
+      ],
+      "prerequisites": [],
+      "estimatedMinutes": 80,
+      "complexity": "application",
+      "estimateProvisional": true,
+      "familyIds": [
+        "family:node:advanced:inheritance-polymorphism-lab:override:override/classify",
+        "family:node:advanced:inheritance-polymorphism-lab:override:override/runs",
+        "family:node:advanced:inheritance-polymorphism-lab:override:override/super",
+        "family:node:advanced:inheritance-polymorphism-lab:override:override/static",
+        "family:node:advanced:inheritance-polymorphism-lab:override:override/compare"
+      ],
+      "familyBindingStatus": "source-family-ids"
+    },
+    {
+      "id": "node:advanced:inheritance-polymorphism-lab:tracer",
+      "courseId": "advanced",
+      "areaId": "area:advanced:inheritance-polymorphism-lab",
+      "title": "Trace polymorphic method calls",
+      "objective": "Separate the reference type (what compiles) from the object type (which method runs) to trace calls, casts and constructor chaining.",
+      "standardRefs": [],
+      "primaryObjectives": [
+        {
+          "registry": "teacher-objective",
+          "id": "objective:advanced:inheritance-polymorphism-lab:tracer",
+          "label": "Trace polymorphic method calls"
+        }
+      ],
+      "practice": [
+        {
+          "activityId": "inheritance-polymorphism-lab",
+          "url": "/java-games/inheritance-polymorphism-lab/"
+        }
+      ],
+      "familySelectors": [
+        {
+          "activityId": "inheritance-polymorphism-lab",
+          "sourceId": "inheritance",
+          "modeIds": [
+            "tracer"
+          ],
+          "requiresQuestionMapping": true,
+          "coverageLimit": "All questions in the mode are scored from the lab answer key checked against javac/java by the lab test suite; item banks are small (16-21 items per mode)."
+        }
+      ],
+      "prerequisites": [],
+      "estimatedMinutes": 160,
+      "complexity": "multi-step tracing",
+      "estimateProvisional": true,
+      "familyIds": [
+        "family:node:advanced:inheritance-polymorphism-lab:tracer:tracer/identify",
+        "family:node:advanced:inheritance-polymorphism-lab:tracer:tracer/swap",
+        "family:node:advanced:inheritance-polymorphism-lab:tracer:tracer/template",
+        "family:node:advanced:inheritance-polymorphism-lab:tracer:tracer/compiles",
+        "family:node:advanced:inheritance-polymorphism-lab:tracer:tracer/ctor"
+      ],
+      "familyBindingStatus": "source-family-ids"
+    },
+    {
+      "id": "node:advanced:inheritance-polymorphism-lab:debug",
+      "courseId": "advanced",
+      "areaId": "area:advanced:inheritance-polymorphism-lab",
+      "title": "Diagnose inheritance errors",
+      "objective": "Identify the kind of inheritance failure in a short program, locate the faulty line and choose a repair. Families are the defect types, so a policy can require each defect type separately.",
+      "standardRefs": [],
+      "primaryObjectives": [
+        {
+          "registry": "teacher-objective",
+          "id": "objective:advanced:inheritance-polymorphism-lab:debug",
+          "label": "Diagnose inheritance errors"
+        }
+      ],
+      "practice": [
+        {
+          "activityId": "inheritance-polymorphism-lab",
+          "url": "/java-games/inheritance-polymorphism-lab/"
+        }
+      ],
+      "familySelectors": [
+        {
+          "activityId": "inheritance-polymorphism-lab",
+          "sourceId": "inheritance",
+          "modeIds": [
+            "debug"
+          ],
+          "requiresQuestionMapping": true,
+          "coverageLimit": "All questions in the mode are scored from the lab answer key checked against javac/java by the lab test suite; item banks are small (16-21 items per mode). Credits only this node, never hierarchy, override, tracer or abstract."
+        }
+      ],
+      "prerequisites": [],
+      "estimatedMinutes": 160,
+      "complexity": "multi-step tracing",
+      "estimateProvisional": true,
+      "familyIds": [
+        "family:node:advanced:inheritance-polymorphism-lab:debug:debug/signature",
+        "family:node:advanced:inheritance-polymorphism-lab:debug:debug/assign",
+        "family:node:advanced:inheritance-polymorphism-lab:debug:debug/abstract",
+        "family:node:advanced:inheritance-polymorphism-lab:debug:debug/subonly",
+        "family:node:advanced:inheritance-polymorphism-lab:debug:debug/super",
+        "family:node:advanced:inheritance-polymorphism-lab:debug:debug/visibility",
+        "family:node:advanced:inheritance-polymorphism-lab:debug:debug/expectation"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:search-sort-lab:binary",
@@ -4752,8 +5103,16 @@
       "estimatedMinutes": 80,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:documentation-lab:inspector:inspector/why",
+        "family:node:advanced:documentation-lab:inspector:inspector/pre",
+        "family:node:advanced:documentation-lab:inspector:inspector/special",
+        "family:node:advanced:documentation-lab:inspector:inspector/none",
+        "family:node:advanced:documentation-lab:inspector:inspector/surprise",
+        "family:node:advanced:documentation-lab:inspector:inspector/expr",
+        "family:node:advanced:documentation-lab:inspector:inspector/prune"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:documentation-lab:docs",
@@ -4790,8 +5149,15 @@
       "estimatedMinutes": 80,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:documentation-lab:docs:docs/predict",
+        "family:node:advanced:documentation-lab:docs:docs/range",
+        "family:node:advanced:documentation-lab:docs:docs/effect",
+        "family:node:advanced:documentation-lab:docs:docs/guarantee",
+        "family:node:advanced:documentation-lab:docs:docs/find",
+        "family:node:advanced:documentation-lab:docs:docs/overload"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:documentation-lab:detective",
@@ -4828,8 +5194,108 @@
       "estimatedMinutes": 80,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:documentation-lab:detective:detective/similar",
+        "family:node:advanced:documentation-lab:detective:detective/args",
+        "family:node:advanced:documentation-lab:detective:detective/result",
+        "family:node:advanced:documentation-lab:detective:detective/overload",
+        "family:node:advanced:documentation-lab:detective:detective/compose",
+        "family:node:advanced:documentation-lab:detective:detective/convert",
+        "family:node:advanced:documentation-lab:detective:detective/compare"
+      ],
+      "familyBindingStatus": "source-family-ids"
+    },
+    {
+      "id": "node:advanced:documentation-lab:editor",
+      "courseId": "advanced",
+      "areaId": "area:advanced:documentation-lab",
+      "title": "Repair inaccurate code comments",
+      "objective": "Find the comment line that contradicts correct code and choose the accurate repair; only the comment is wrong.",
+      "standardRefs": [],
+      "primaryObjectives": [
+        {
+          "registry": "teacher-objective",
+          "id": "objective:advanced:documentation-lab:editor",
+          "label": "Repair inaccurate code comments"
+        }
+      ],
+      "practice": [
+        {
+          "activityId": "documentation-lab",
+          "url": "/java-games/documentation-lab/"
+        }
+      ],
+      "familySelectors": [
+        {
+          "activityId": "documentation-lab",
+          "sourceId": "documentation",
+          "modeIds": [
+            "editor"
+          ],
+          "requiresQuestionMapping": true,
+          "coverageLimit": "Closed-form choices scored against an authored answer key; correct Javadoc is checked with javadoc doclint and every code snippet is compiled by the lab JVM tests. Item banks are small (editor about 20 items, builder 12)."
+        }
+      ],
+      "prerequisites": [],
+      "estimatedMinutes": 80,
+      "complexity": "application",
+      "estimateProvisional": true,
+      "familyIds": [
+        "family:node:advanced:documentation-lab:editor:editor/compare",
+        "family:node:advanced:documentation-lab:editor:editor/bound",
+        "family:node:advanced:documentation-lab:editor:editor/param",
+        "family:node:advanced:documentation-lab:editor:editor/ret",
+        "family:node:advanced:documentation-lab:editor:editor/old",
+        "family:node:advanced:documentation-lab:editor:editor/red",
+        "family:node:advanced:documentation-lab:editor:editor/throws"
+      ],
+      "familyBindingStatus": "source-family-ids"
+    },
+    {
+      "id": "node:advanced:documentation-lab:builder",
+      "courseId": "advanced",
+      "areaId": "area:advanced:documentation-lab",
+      "title": "Build accurate Javadoc",
+      "objective": "Choose accurate description, @param, @return and @throws content for a method, or leave out a tag that does not apply.",
+      "standardRefs": [],
+      "primaryObjectives": [
+        {
+          "registry": "teacher-objective",
+          "id": "objective:advanced:documentation-lab:builder",
+          "label": "Build accurate Javadoc"
+        }
+      ],
+      "practice": [
+        {
+          "activityId": "documentation-lab",
+          "url": "/java-games/documentation-lab/"
+        }
+      ],
+      "familySelectors": [
+        {
+          "activityId": "documentation-lab",
+          "sourceId": "documentation",
+          "modeIds": [
+            "builder"
+          ],
+          "requiresQuestionMapping": true,
+          "coverageLimit": "Closed-form choices scored against an authored answer key; correct Javadoc is checked with javadoc doclint and every code snippet is compiled by the lab JVM tests. Item banks are small (editor about 20 items, builder 12)."
+        }
+      ],
+      "prerequisites": [],
+      "estimatedMinutes": 80,
+      "complexity": "application",
+      "estimateProvisional": true,
+      "familyIds": [
+        "family:node:advanced:documentation-lab:builder:builder/calc",
+        "family:node:advanced:documentation-lab:builder:builder/bool",
+        "family:node:advanced:documentation-lab:builder:builder/effect",
+        "family:node:advanced:documentation-lab:builder:builder/fields",
+        "family:node:advanced:documentation-lab:builder:builder/paths",
+        "family:node:advanced:documentation-lab:builder:builder/throws",
+        "family:node:advanced:documentation-lab:builder:builder/range"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:robot-algorithms:predict",
@@ -4866,8 +5332,11 @@
       "estimatedMinutes": 80,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:robot-algorithms:predict:predict:sequence",
+        "family:node:advanced:robot-algorithms:predict:predict:outcome"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:robot-algorithms:loops",
@@ -4904,8 +5373,17 @@
       "estimatedMinutes": 160,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:robot-algorithms:loops:loops:for-count",
+        "family:node:advanced:robot-algorithms:loops:loops:for-turns",
+        "family:node:advanced:robot-algorithms:loops:loops:while-sensor",
+        "family:node:advanced:robot-algorithms:loops:loops:while-counter",
+        "family:node:advanced:robot-algorithms:loops:loops:nested",
+        "family:node:advanced:robot-algorithms:loops:loops:for-if-counter",
+        "family:node:advanced:robot-algorithms:loops:loops:for-if-sensor",
+        "family:node:advanced:robot-algorithms:loops:loops:while-if"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:robot-algorithms:conditionals",
@@ -4942,8 +5420,13 @@
       "estimatedMinutes": 160,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:robot-algorithms:conditionals:conditionals:if-else",
+        "family:node:advanced:robot-algorithms:conditionals:conditionals:sequence",
+        "family:node:advanced:robot-algorithms:conditionals:conditionals:compound",
+        "family:node:advanced:robot-algorithms:conditionals:conditionals:in-loop"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:advanced:robot-algorithms:methods",
@@ -4980,8 +5463,100 @@
       "estimatedMinutes": 160,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:advanced:robot-algorithms:methods:methods:basic",
+        "family:node:advanced:robot-algorithms:methods:methods:loop",
+        "family:node:advanced:robot-algorithms:methods:methods:nested",
+        "family:node:advanced:robot-algorithms:methods:methods:param",
+        "family:node:advanced:robot-algorithms:methods:methods:if"
+      ],
+      "familyBindingStatus": "source-family-ids"
+    },
+    {
+      "id": "node:advanced:robot-algorithms:build",
+      "courseId": "advanced",
+      "areaId": "area:advanced:robot-algorithms",
+      "title": "Build a robot route program",
+      "objective": "Assemble a statement-palette program that moves the robot to the goal and meets the stated requirement, validated by simulation.",
+      "standardRefs": [],
+      "primaryObjectives": [
+        {
+          "registry": "teacher-objective",
+          "id": "objective:advanced:robot-algorithms:build",
+          "label": "Build a robot route program"
+        }
+      ],
+      "practice": [
+        {
+          "activityId": "robot-algorithms",
+          "url": "/java-games/robot-algorithms/"
+        }
+      ],
+      "familySelectors": [
+        {
+          "activityId": "robot-algorithms",
+          "sourceId": "robot-algorithms",
+          "modeIds": [
+            "build"
+          ],
+          "requiresQuestionMapping": true,
+          "coverageLimit": "Scored by the lab simulator: build programs must reach the goal under the stated requirement; every repair option was run in the simulator. Credits only this node, never the loops, conditionals or methods nodes."
+        }
+      ],
+      "prerequisites": [],
+      "estimatedMinutes": 160,
+      "complexity": "multi-step tracing",
+      "estimateProvisional": true,
+      "familyIds": [
+        "family:node:advanced:robot-algorithms:build:build:path",
+        "family:node:advanced:robot-algorithms:build:build:loop",
+        "family:node:advanced:robot-algorithms:build:build:general"
+      ],
+      "familyBindingStatus": "source-family-ids"
+    },
+    {
+      "id": "node:advanced:robot-algorithms:debug",
+      "courseId": "advanced",
+      "areaId": "area:advanced:robot-algorithms",
+      "title": "Repair a robot program",
+      "objective": "Choose the change that fixes a robot program so it meets the requirement; defect types are the families (turn, bound, condition, missing, order).",
+      "standardRefs": [],
+      "primaryObjectives": [
+        {
+          "registry": "teacher-objective",
+          "id": "objective:advanced:robot-algorithms:debug",
+          "label": "Repair a robot program"
+        }
+      ],
+      "practice": [
+        {
+          "activityId": "robot-algorithms",
+          "url": "/java-games/robot-algorithms/"
+        }
+      ],
+      "familySelectors": [
+        {
+          "activityId": "robot-algorithms",
+          "sourceId": "robot-algorithms",
+          "modeIds": [
+            "debug"
+          ],
+          "requiresQuestionMapping": true,
+          "coverageLimit": "Scored by the lab simulator: build programs must reach the goal under the stated requirement; every repair option was run in the simulator. Credits only this node, never the loops, conditionals or methods nodes."
+        }
+      ],
+      "prerequisites": [],
+      "estimatedMinutes": 160,
+      "complexity": "multi-step tracing",
+      "estimateProvisional": true,
+      "familyIds": [
+        "family:node:advanced:robot-algorithms:debug:debug:turn",
+        "family:node:advanced:robot-algorithms:debug:debug:bound",
+        "family:node:advanced:robot-algorithms:debug:debug:condition",
+        "family:node:advanced:robot-algorithms:debug:debug:missing",
+        "family:node:advanced:robot-algorithms:debug:debug:order"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:csp:vocabulary-fill-in-lab:CSP-PURPOSE",
@@ -13286,6 +13861,564 @@
       "label": "nl.first-problem"
     },
     {
+      "id": "family:node:advanced:string-lab:predict:predict.concat.single",
+      "nodeIds": [
+        "node:advanced:string-lab:predict"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "predict.concat.single",
+      "label": "Single concatenation"
+    },
+    {
+      "id": "family:node:advanced:string-lab:predict:predict.concat.numbers",
+      "nodeIds": [
+        "node:advanced:string-lab:predict"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "predict.concat.numbers",
+      "label": "Concatenation with numbers"
+    },
+    {
+      "id": "family:node:advanced:string-lab:predict:predict.concat.expr",
+      "nodeIds": [
+        "node:advanced:string-lab:predict"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "predict.concat.expr",
+      "label": "Concatenation mixed with length and substring"
+    },
+    {
+      "id": "family:node:advanced:string-lab:predict:predict.length",
+      "nodeIds": [
+        "node:advanced:string-lab:predict"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "predict.length",
+      "label": "length()"
+    },
+    {
+      "id": "family:node:advanced:string-lab:predict:predict.charAt",
+      "nodeIds": [
+        "node:advanced:string-lab:predict"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "predict.charAt",
+      "label": "charAt()"
+    },
+    {
+      "id": "family:node:advanced:string-lab:predict:predict.substring",
+      "nodeIds": [
+        "node:advanced:string-lab:predict"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "predict.substring",
+      "label": "substring()"
+    },
+    {
+      "id": "family:node:advanced:string-lab:predict:predict.indexOf",
+      "nodeIds": [
+        "node:advanced:string-lab:predict"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "predict.indexOf",
+      "label": "indexOf()"
+    },
+    {
+      "id": "family:node:advanced:string-lab:predict:predict.chain",
+      "nodeIds": [
+        "node:advanced:string-lab:predict"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "predict.chain",
+      "label": "Method chaining"
+    },
+    {
+      "id": "family:node:advanced:string-lab:predict:predict.indexSubstring",
+      "nodeIds": [
+        "node:advanced:string-lab:predict"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "predict.indexSubstring",
+      "label": "indexOf() combined with substring()"
+    },
+    {
+      "id": "family:node:advanced:string-lab:predict:predict.twoStrings",
+      "nodeIds": [
+        "node:advanced:string-lab:predict"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "predict.twoStrings",
+      "label": "Two String variables"
+    },
+    {
+      "id": "family:node:advanced:string-lab:trace:trace.reassign.substring",
+      "nodeIds": [
+        "node:advanced:string-lab:trace"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "trace.reassign.substring",
+      "label": "Reassign with substring"
+    },
+    {
+      "id": "family:node:advanced:string-lab:trace:trace.reassign.concat",
+      "nodeIds": [
+        "node:advanced:string-lab:trace"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "trace.reassign.concat",
+      "label": "Reassign with concatenation"
+    },
+    {
+      "id": "family:node:advanced:string-lab:trace:trace.sequence",
+      "nodeIds": [
+        "node:advanced:string-lab:trace"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "trace.sequence",
+      "label": "Sequential updates"
+    },
+    {
+      "id": "family:node:advanced:string-lab:trace:trace.immutable",
+      "nodeIds": [
+        "node:advanced:string-lab:trace"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "trace.immutable",
+      "label": "Methods do not change the String"
+    },
+    {
+      "id": "family:node:advanced:string-lab:trace:trace.mixedImmutable",
+      "nodeIds": [
+        "node:advanced:string-lab:trace"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "trace.mixedImmutable",
+      "label": "Discarded results mixed with real updates"
+    },
+    {
+      "id": "family:node:advanced:string-lab:trace:trace.alias",
+      "nodeIds": [
+        "node:advanced:string-lab:trace"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "trace.alias",
+      "label": "Two variables, one String"
+    },
+    {
+      "id": "family:node:advanced:string-lab:trace:trace.indexSplit",
+      "nodeIds": [
+        "node:advanced:string-lab:trace"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "trace.indexSplit",
+      "label": "Splitting at indexOf()"
+    },
+    {
+      "id": "family:node:advanced:string-lab:trace:trace.numbers",
+      "nodeIds": [
+        "node:advanced:string-lab:trace"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "trace.numbers",
+      "label": "Numbers in String updates"
+    },
+    {
+      "id": "family:node:advanced:string-lab:trace:trace.twoStrings",
+      "nodeIds": [
+        "node:advanced:string-lab:trace"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "trace.twoStrings",
+      "label": "Combining two Strings"
+    },
+    {
+      "id": "family:node:advanced:string-lab:index:index.charPosition",
+      "nodeIds": [
+        "node:advanced:string-lab:index"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "index.charPosition",
+      "label": "Index of a character"
+    },
+    {
+      "id": "family:node:advanced:string-lab:index:index.indexOfCall",
+      "nodeIds": [
+        "node:advanced:string-lab:index"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "index.indexOfCall",
+      "label": "What indexOf() returns"
+    },
+    {
+      "id": "family:node:advanced:string-lab:index:index.beginIndex",
+      "nodeIds": [
+        "node:advanced:string-lab:index"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "index.beginIndex",
+      "label": "Choosing the substring begin index"
+    },
+    {
+      "id": "family:node:advanced:string-lab:index:index.firstOccurrence",
+      "nodeIds": [
+        "node:advanced:string-lab:index"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "index.firstOccurrence",
+      "label": "First occurrence of repeated text"
+    },
+    {
+      "id": "family:node:advanced:string-lab:index:index.whichNegativeOne",
+      "nodeIds": [
+        "node:advanced:string-lab:index"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "index.whichNegativeOne",
+      "label": "Which search fails (-1)"
+    },
+    {
+      "id": "family:node:advanced:string-lab:index:index.endIndex",
+      "nodeIds": [
+        "node:advanced:string-lab:index"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "index.endIndex",
+      "label": "Choosing the substring end index"
+    },
+    {
+      "id": "family:node:advanced:string-lab:index:index.shifted",
+      "nodeIds": [
+        "node:advanced:string-lab:index"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "index.shifted",
+      "label": "Index inside a new substring"
+    },
+    {
+      "id": "family:node:advanced:string-lab:index:index.lastIndex",
+      "nodeIds": [
+        "node:advanced:string-lab:index"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "index.lastIndex",
+      "label": "Index of the last character"
+    },
+    {
+      "id": "family:node:advanced:string-lab:index:index.charThenSearch",
+      "nodeIds": [
+        "node:advanced:string-lab:index"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "index.charThenSearch",
+      "label": "Search for a character you just read"
+    },
+    {
+      "id": "family:node:advanced:string-lab:expr:expr.char",
+      "nodeIds": [
+        "node:advanced:string-lab:expr"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "expr.char",
+      "label": "Choose the charAt() expression"
+    },
+    {
+      "id": "family:node:advanced:string-lab:expr:expr.substring",
+      "nodeIds": [
+        "node:advanced:string-lab:expr"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "expr.substring",
+      "label": "Choose the substring(begin, end) expression"
+    },
+    {
+      "id": "family:node:advanced:string-lab:expr:expr.length",
+      "nodeIds": [
+        "node:advanced:string-lab:expr"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "expr.length",
+      "label": "Choose the length() expression"
+    },
+    {
+      "id": "family:node:advanced:string-lab:expr:expr.find",
+      "nodeIds": [
+        "node:advanced:string-lab:expr"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "expr.find",
+      "label": "Choose the indexOf() expression"
+    },
+    {
+      "id": "family:node:advanced:string-lab:expr:expr.concat",
+      "nodeIds": [
+        "node:advanced:string-lab:expr"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "expr.concat",
+      "label": "Choose the concatenation expression"
+    },
+    {
+      "id": "family:node:advanced:string-lab:expr:expr.tail",
+      "nodeIds": [
+        "node:advanced:string-lab:expr"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "expr.tail",
+      "label": "Choose the substring that returns a tail"
+    },
+    {
+      "id": "family:node:advanced:string-lab:expr:expr.split",
+      "nodeIds": [
+        "node:advanced:string-lab:expr"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "expr.split",
+      "label": "Combine indexOf() and substring()"
+    },
+    {
+      "id": "family:node:advanced:string-lab:expr:expr.firstLast",
+      "nodeIds": [
+        "node:advanced:string-lab:expr"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "expr.firstLast",
+      "label": "Build a String from first and last letters"
+    },
+    {
+      "id": "family:node:advanced:string-lab:algo:algo.count.forward",
+      "nodeIds": [
+        "node:advanced:string-lab:algo"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "algo.count.forward",
+      "label": "Count matching characters"
+    },
+    {
+      "id": "family:node:advanced:string-lab:algo:algo.count.backward",
+      "nodeIds": [
+        "node:advanced:string-lab:algo"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "algo.count.backward",
+      "label": "Count while traversing backward"
+    },
+    {
+      "id": "family:node:advanced:string-lab:algo:algo.find.position",
+      "nodeIds": [
+        "node:advanced:string-lab:algo"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "algo.find.position",
+      "label": "Find first or last matching position"
+    },
+    {
+      "id": "family:node:advanced:string-lab:algo:algo.find.indexof",
+      "nodeIds": [
+        "node:advanced:string-lab:algo"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "algo.find.indexof",
+      "label": "Search with indexOf"
+    },
+    {
+      "id": "family:node:advanced:string-lab:algo:algo.find.substring",
+      "nodeIds": [
+        "node:advanced:string-lab:algo"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "algo.find.substring",
+      "label": "Find a matching substring"
+    },
+    {
+      "id": "family:node:advanced:string-lab:algo:algo.reverse.build",
+      "nodeIds": [
+        "node:advanced:string-lab:algo"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "algo.reverse.build",
+      "label": "Build a reversed String"
+    },
+    {
+      "id": "family:node:advanced:string-lab:algo:algo.transform.filter",
+      "nodeIds": [
+        "node:advanced:string-lab:algo"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "algo.transform.filter",
+      "label": "Filter and reconstruct characters"
+    },
+    {
+      "id": "family:node:advanced:string-lab:algo:algo.transform.replace",
+      "nodeIds": [
+        "node:advanced:string-lab:algo"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "algo.transform.replace",
+      "label": "Replace selected characters by reconstruction"
+    },
+    {
+      "id": "family:node:advanced:string-lab:algo:algo.substring.count",
+      "nodeIds": [
+        "node:advanced:string-lab:algo"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "algo.substring.count",
+      "label": "Count substring matches"
+    },
+    {
+      "id": "family:node:advanced:string-lab:algo:algo.palindrome.compare",
+      "nodeIds": [
+        "node:advanced:string-lab:algo"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "algo.palindrome.compare",
+      "label": "Compare opposite String positions"
+    },
+    {
+      "id": "family:node:advanced:string-lab:algo:algo.multi.filter",
+      "nodeIds": [
+        "node:advanced:string-lab:algo"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "algo.multi.filter",
+      "label": "Filter with two conditions"
+    },
+    {
+      "id": "family:node:advanced:string-lab:compare:compare.equals",
+      "nodeIds": [
+        "node:advanced:string-lab:compare"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "compare.equals",
+      "label": "Compare String contents with equals"
+    },
+    {
+      "id": "family:node:advanced:string-lab:compare:compare.compareto.sign",
+      "nodeIds": [
+        "node:advanced:string-lab:compare"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "compare.compareto.sign",
+      "label": "Compare lexicographic order"
+    },
+    {
+      "id": "family:node:advanced:string-lab:compare:compare.compareto.value",
+      "nodeIds": [
+        "node:advanced:string-lab:compare"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "compare.compareto.value",
+      "label": "Interpret a compareTo result"
+    },
+    {
+      "id": "family:node:advanced:string-lab:compare:compare.identity.alias",
+      "nodeIds": [
+        "node:advanced:string-lab:compare"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "compare.identity.alias",
+      "label": "Distinguish reference equality and content"
+    },
+    {
+      "id": "family:node:advanced:string-lab:compare:compare.conditional.branch",
+      "nodeIds": [
+        "node:advanced:string-lab:compare"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "compare.conditional.branch",
+      "label": "Trace a String comparison in a conditional"
+    },
+    {
+      "id": "family:node:advanced:string-lab:compare:compare.choose.expression",
+      "nodeIds": [
+        "node:advanced:string-lab:compare"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "compare.choose.expression",
+      "label": "Choose the right comparison expression"
+    },
+    {
+      "id": "family:node:advanced:string-lab:compare:compare.alias.reassign",
+      "nodeIds": [
+        "node:advanced:string-lab:compare"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "compare.alias.reassign",
+      "label": "Trace aliasing after reassignment"
+    },
+    {
+      "id": "family:node:advanced:string-lab:loop:loop.bound",
+      "nodeIds": [
+        "node:advanced:string-lab:loop"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "loop.bound",
+      "label": "Choose a loop bound"
+    },
+    {
+      "id": "family:node:advanced:string-lab:loop:loop.substring.endpoint",
+      "nodeIds": [
+        "node:advanced:string-lab:loop"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "loop.substring.endpoint",
+      "label": "Choose substring endpoints"
+    },
+    {
+      "id": "family:node:advanced:string-lab:loop:loop.reverse",
+      "nodeIds": [
+        "node:advanced:string-lab:loop"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "loop.reverse",
+      "label": "Complete reverse traversal"
+    },
+    {
+      "id": "family:node:advanced:string-lab:loop:loop.matching",
+      "nodeIds": [
+        "node:advanced:string-lab:loop"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "loop.matching",
+      "label": "Choose a matching condition"
+    },
+    {
+      "id": "family:node:advanced:string-lab:loop:loop.accumulator",
+      "nodeIds": [
+        "node:advanced:string-lab:loop"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "loop.accumulator",
+      "label": "Choose the accumulator update"
+    },
+    {
+      "id": "family:node:advanced:string-lab:loop:loop.bug",
+      "nodeIds": [
+        "node:advanced:string-lab:loop"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "loop.bug",
+      "label": "Find the loop bug"
+    },
+    {
+      "id": "family:node:advanced:string-lab:loop:loop.edge",
+      "nodeIds": [
+        "node:advanced:string-lab:loop"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "loop.edge",
+      "label": "Reason about an empty or short String"
+    },
+    {
+      "id": "family:node:advanced:string-lab:loop:loop.combined",
+      "nodeIds": [
+        "node:advanced:string-lab:loop"
+      ],
+      "activityId": "string-lab",
+      "sourceFamilyId": "loop.combined",
+      "label": "Complete a backward search with multiple conditions"
+    },
+    {
       "id": "family:node:advanced:loop-lab:looptype:count-with-header",
       "nodeIds": [
         "node:advanced:loop-lab:looptype"
@@ -15435,6 +16568,861 @@
       "activityId": "array-lab",
       "sourceFamilyId": "conditional-transform",
       "label": "conditional-transform"
+    },
+    {
+      "id": "family:node:advanced:linkedlist-lab:references:link/connect",
+      "nodeIds": [
+        "node:advanced:linkedlist-lab:references"
+      ],
+      "activityId": "linkedlist-lab",
+      "sourceFamilyId": "link/connect",
+      "label": "Connect loose nodes"
+    },
+    {
+      "id": "family:node:advanced:linkedlist-lab:references:mutate/insert-head",
+      "nodeIds": [
+        "node:advanced:linkedlist-lab:references"
+      ],
+      "activityId": "linkedlist-lab",
+      "sourceFamilyId": "mutate/insert-head",
+      "label": "insert-head"
+    },
+    {
+      "id": "family:node:advanced:linkedlist-lab:references:mutate/insert-middle",
+      "nodeIds": [
+        "node:advanced:linkedlist-lab:references"
+      ],
+      "activityId": "linkedlist-lab",
+      "sourceFamilyId": "mutate/insert-middle",
+      "label": "insert-middle"
+    },
+    {
+      "id": "family:node:advanced:linkedlist-lab:references:mutate/append",
+      "nodeIds": [
+        "node:advanced:linkedlist-lab:references"
+      ],
+      "activityId": "linkedlist-lab",
+      "sourceFamilyId": "mutate/append",
+      "label": "append"
+    },
+    {
+      "id": "family:node:advanced:linkedlist-lab:references:mutate/remove-head",
+      "nodeIds": [
+        "node:advanced:linkedlist-lab:references"
+      ],
+      "activityId": "linkedlist-lab",
+      "sourceFamilyId": "mutate/remove-head",
+      "label": "remove-head"
+    },
+    {
+      "id": "family:node:advanced:linkedlist-lab:references:mutate/remove-middle",
+      "nodeIds": [
+        "node:advanced:linkedlist-lab:references"
+      ],
+      "activityId": "linkedlist-lab",
+      "sourceFamilyId": "mutate/remove-middle",
+      "label": "remove-middle"
+    },
+    {
+      "id": "family:node:advanced:linkedlist-lab:references:mutate/remove-tail",
+      "nodeIds": [
+        "node:advanced:linkedlist-lab:references"
+      ],
+      "activityId": "linkedlist-lab",
+      "sourceFamilyId": "mutate/remove-tail",
+      "label": "remove-tail"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:abstract:abstract/mustabstract",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:abstract"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "abstract/mustabstract",
+      "label": "Which class must be abstract?"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:abstract:abstract/implement",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:abstract"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "abstract/implement",
+      "label": "What must be implemented?"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:abstract:abstract/header",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:abstract"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "abstract/header",
+      "label": "Write the implementing header"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:abstract:abstract/instantiate",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:abstract"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "abstract/instantiate",
+      "label": "Creating objects"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:abstract:abstract/compiles",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:abstract"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "abstract/compiles",
+      "label": "Does it compile?"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:hierarchy:hierarchy/connect",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:hierarchy"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "hierarchy/connect",
+      "label": "Build the hierarchy"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:hierarchy:hierarchy/has",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:hierarchy"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "hierarchy/has",
+      "label": "What does an object inherit?"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:hierarchy:hierarchy/supplier",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:hierarchy"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "hierarchy/supplier",
+      "label": "Whose code runs?"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:hierarchy:hierarchy/isa",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:hierarchy"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "hierarchy/isa",
+      "label": "Is-a assignments"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:hierarchy:hierarchy/fix",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:hierarchy"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "hierarchy/fix",
+      "label": "Repair an invalid hierarchy"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:override:override/classify",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:override"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "override/classify",
+      "label": "Override, overload, or error?"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:override:override/runs",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:override"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "override/runs",
+      "label": "Which declaration runs?"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:override:override/super",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:override"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "override/super",
+      "label": "Calls through super"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:override:override/static",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:override"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "override/static",
+      "label": "Static methods are hidden"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:override:override/compare",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:override"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "override/compare",
+      "label": "Override vs. overload outcome"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:tracer:tracer/identify",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:tracer"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "tracer/identify",
+      "label": "Reference vs. object"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:tracer:tracer/swap",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:tracer"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "tracer/swap",
+      "label": "Swap the object"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:tracer:tracer/template",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:tracer"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "tracer/template",
+      "label": "Methods that call other methods"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:tracer:tracer/compiles",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:tracer"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "tracer/compiles",
+      "label": "Compile time vs. run time"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:tracer:tracer/ctor",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:tracer"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "tracer/ctor",
+      "label": "Constructor chaining"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:debug:debug/signature",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:debug"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "debug/signature",
+      "label": "Override that isn't"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:debug:debug/assign",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:debug"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "debug/assign",
+      "label": "Invalid assignment"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:debug:debug/abstract",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:debug"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "debug/abstract",
+      "label": "Abstract rules"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:debug:debug/subonly",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:debug"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "debug/subonly",
+      "label": "Subclass-only method"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:debug:debug/super",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:debug"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "debug/super",
+      "label": "super and constructors"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:debug:debug/visibility",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:debug"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "debug/visibility",
+      "label": "Weaker access"
+    },
+    {
+      "id": "family:node:advanced:inheritance-polymorphism-lab:debug:debug/expectation",
+      "nodeIds": [
+        "node:advanced:inheritance-polymorphism-lab:debug"
+      ],
+      "activityId": "inheritance-polymorphism-lab",
+      "sourceFamilyId": "debug/expectation",
+      "label": "Wrong assumption about what runs"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:inspector:inspector/why",
+      "nodeIds": [
+        "node:advanced:documentation-lab:inspector"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "inspector/why",
+      "label": "Explain a design decision"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:inspector:inspector/pre",
+      "nodeIds": [
+        "node:advanced:documentation-lab:inspector"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "inspector/pre",
+      "label": "State a precondition"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:inspector:inspector/special",
+      "nodeIds": [
+        "node:advanced:documentation-lab:inspector"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "inspector/special",
+      "label": "Explain a special case"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:inspector:inspector/none",
+      "nodeIds": [
+        "node:advanced:documentation-lab:inspector"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "inspector/none",
+      "label": "When no comment is needed"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:inspector:inspector/surprise",
+      "nodeIds": [
+        "node:advanced:documentation-lab:inspector"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "inspector/surprise",
+      "label": "Warn about surprising behavior"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:inspector:inspector/expr",
+      "nodeIds": [
+        "node:advanced:documentation-lab:inspector"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "inspector/expr",
+      "label": "Explain a tricky expression"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:inspector:inspector/prune",
+      "nodeIds": [
+        "node:advanced:documentation-lab:inspector"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "inspector/prune",
+      "label": "Spot the comment that doesn't belong"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:docs:docs/predict",
+      "nodeIds": [
+        "node:advanced:documentation-lab:docs"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "docs/predict",
+      "label": "Predict the result"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:docs:docs/range",
+      "nodeIds": [
+        "node:advanced:documentation-lab:docs"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "docs/range",
+      "label": "Valid arguments & edge cases"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:docs:docs/effect",
+      "nodeIds": [
+        "node:advanced:documentation-lab:docs"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "docs/effect",
+      "label": "Changes the object or returns a result?"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:docs:docs/guarantee",
+      "nodeIds": [
+        "node:advanced:documentation-lab:docs"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "docs/guarantee",
+      "label": "Guaranteed or assumed?"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:docs:docs/find",
+      "nodeIds": [
+        "node:advanced:documentation-lab:docs"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "docs/find",
+      "label": "Find it in the docs"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:docs:docs/overload",
+      "nodeIds": [
+        "node:advanced:documentation-lab:docs"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "docs/overload",
+      "label": "Overloads & return types"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:detective:detective/similar",
+      "nodeIds": [
+        "node:advanced:documentation-lab:detective"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "detective/similar",
+      "label": "Similar-sounding methods"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:detective:detective/args",
+      "nodeIds": [
+        "node:advanced:documentation-lab:detective"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "detective/args",
+      "label": "Argument order & meaning"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:detective:detective/result",
+      "nodeIds": [
+        "node:advanced:documentation-lab:detective"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "detective/result",
+      "label": "Use the returned value"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:detective:detective/overload",
+      "nodeIds": [
+        "node:advanced:documentation-lab:detective"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "detective/overload",
+      "label": "Choose the right overload"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:detective:detective/compose",
+      "nodeIds": [
+        "node:advanced:documentation-lab:detective"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "detective/compose",
+      "label": "Combine calls"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:detective:detective/convert",
+      "nodeIds": [
+        "node:advanced:documentation-lab:detective"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "detective/convert",
+      "label": "Convert values"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:detective:detective/compare",
+      "nodeIds": [
+        "node:advanced:documentation-lab:detective"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "detective/compare",
+      "label": "Compare correctly"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:editor:editor/compare",
+      "nodeIds": [
+        "node:advanced:documentation-lab:editor"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "editor/compare",
+      "label": "Comparison contradicts code"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:editor:editor/bound",
+      "nodeIds": [
+        "node:advanced:documentation-lab:editor"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "editor/bound",
+      "label": "Boundary conditions"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:editor:editor/param",
+      "nodeIds": [
+        "node:advanced:documentation-lab:editor"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "editor/param",
+      "label": "Misleading @param"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:editor:editor/ret",
+      "nodeIds": [
+        "node:advanced:documentation-lab:editor"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "editor/ret",
+      "label": "Incorrect @return"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:editor:editor/old",
+      "nodeIds": [
+        "node:advanced:documentation-lab:editor"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "editor/old",
+      "label": "Outdated documentation"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:editor:editor/red",
+      "nodeIds": [
+        "node:advanced:documentation-lab:editor"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "editor/red",
+      "label": "Unnecessary comment"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:editor:editor/throws",
+      "nodeIds": [
+        "node:advanced:documentation-lab:editor"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "editor/throws",
+      "label": "Exception documentation"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:builder:builder/calc",
+      "nodeIds": [
+        "node:advanced:documentation-lab:builder"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "builder/calc",
+      "label": "Computed results"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:builder:builder/bool",
+      "nodeIds": [
+        "node:advanced:documentation-lab:builder"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "builder/bool",
+      "label": "Boolean conditions"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:builder:builder/effect",
+      "nodeIds": [
+        "node:advanced:documentation-lab:builder"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "builder/effect",
+      "label": "void methods & side effects"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:builder:builder/fields",
+      "nodeIds": [
+        "node:advanced:documentation-lab:builder"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "builder/fields",
+      "label": "Fields vs. parameters"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:builder:builder/paths",
+      "nodeIds": [
+        "node:advanced:documentation-lab:builder"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "builder/paths",
+      "label": "Several return paths"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:builder:builder/throws",
+      "nodeIds": [
+        "node:advanced:documentation-lab:builder"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "builder/throws",
+      "label": "Methods that throw"
+    },
+    {
+      "id": "family:node:advanced:documentation-lab:builder:builder/range",
+      "nodeIds": [
+        "node:advanced:documentation-lab:builder"
+      ],
+      "activityId": "documentation-lab",
+      "sourceFamilyId": "builder/range",
+      "label": "Inclusive vs. exclusive ranges"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:predict:predict:sequence",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:predict"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "predict:sequence",
+      "label": "sequence"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:predict:predict:outcome",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:predict"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "predict:outcome",
+      "label": "outcome"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:loops:loops:for-count",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:loops"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "loops:for-count",
+      "label": "for-count"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:loops:loops:for-turns",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:loops"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "loops:for-turns",
+      "label": "for-turns"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:loops:loops:while-sensor",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:loops"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "loops:while-sensor",
+      "label": "while-sensor"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:loops:loops:while-counter",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:loops"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "loops:while-counter",
+      "label": "while-counter"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:loops:loops:nested",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:loops"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "loops:nested",
+      "label": "nested"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:loops:loops:for-if-counter",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:loops"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "loops:for-if-counter",
+      "label": "for-if-counter"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:loops:loops:for-if-sensor",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:loops"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "loops:for-if-sensor",
+      "label": "for-if-sensor"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:loops:loops:while-if",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:loops"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "loops:while-if",
+      "label": "while-if"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:conditionals:conditionals:if-else",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:conditionals"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "conditionals:if-else",
+      "label": "if-else"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:conditionals:conditionals:sequence",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:conditionals"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "conditionals:sequence",
+      "label": "sequence"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:conditionals:conditionals:compound",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:conditionals"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "conditionals:compound",
+      "label": "compound"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:conditionals:conditionals:in-loop",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:conditionals"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "conditionals:in-loop",
+      "label": "in-loop"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:methods:methods:basic",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:methods"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "methods:basic",
+      "label": "basic"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:methods:methods:loop",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:methods"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "methods:loop",
+      "label": "loop"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:methods:methods:nested",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:methods"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "methods:nested",
+      "label": "nested"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:methods:methods:param",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:methods"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "methods:param",
+      "label": "param"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:methods:methods:if",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:methods"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "methods:if",
+      "label": "if"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:build:build:path",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:build"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "build:path",
+      "label": "path"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:build:build:loop",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:build"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "build:loop",
+      "label": "loop"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:build:build:general",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:build"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "build:general",
+      "label": "general"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:debug:debug:turn",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:debug"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "debug:turn",
+      "label": "turn"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:debug:debug:bound",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:debug"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "debug:bound",
+      "label": "bound"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:debug:debug:condition",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:debug"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "debug:condition",
+      "label": "condition"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:debug:debug:missing",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:debug"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "debug:missing",
+      "label": "missing"
+    },
+    {
+      "id": "family:node:advanced:robot-algorithms:debug:debug:order",
+      "nodeIds": [
+        "node:advanced:robot-algorithms:debug"
+      ],
+      "activityId": "robot-algorithms",
+      "sourceFamilyId": "debug:order",
+      "label": "order"
     }
   ],
   "coverageLimits": [
