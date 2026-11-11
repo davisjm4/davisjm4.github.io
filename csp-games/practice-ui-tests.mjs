@@ -1,3 +1,4 @@
+import { activeProfile } from '../wpr-games/workplace-readiness/online/profile-sync.mjs';
 import {bigIdeaMetrics,networkMetrics} from './session-groups.js';
 import fs from "node:fs";
 import vm from "node:vm";
@@ -49,6 +50,7 @@ function launch(slug, concept = false) {
   let q, forced;
   const tracker = S.createSessionTracker({ storage });
   const ctx = {
+    activeProfile,
     bigIdeaMetrics,networkMetrics,
     window,
     document,
