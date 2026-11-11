@@ -1,3 +1,4 @@
+import { activeProfile, device, recordGameAttempt, scopedStorage } from '../wpr-games/workplace-readiness/online/profile-sync.mjs';
 import {bigIdeaMetrics,networkMetrics} from './session-groups.js';
 import {createProgressStore} from './exam-readiness/storage.js';
 import {initializeFromSession,recordFirstSubmission} from './exam-readiness/bridge.js';
@@ -83,6 +84,7 @@ function launch(slug) {
       (captures[key] = E[key](...args))
     );
   const ctx = {
+    activeProfile, device, recordGameAttempt, scopedStorage,
     createProgressStore, initializeFromSession, recordFirstSubmission,
     bigIdeaMetrics,networkMetrics,
     mountCollectionEditor,

@@ -35,7 +35,7 @@ function next(){
 function answer(value,button){
  lastInteraction=performance.now();if(!String(value).trim()){$('feedback').textContent='Enter a part name before checking.';return;}if(!checkTime())return;
  const result=feedback(question.part,value),scored=race.submit(result.correct);if(!scored.accepted)return;
- if(tracker.status(record)==='active')tracker.submit(record,result.correct);
+ if(tracker.status(record)==='active'){tracker.annotate(record,{assisted:scored.assisted});tracker.submit(record,result.correct);}
  $('feedback').textContent=result.text+(scored.assisted?' Reference-assisted practice; no first-try credit.':'');$('feedback').className='feedback'+(result.correct?' correct':'');$('next').hidden=false;
  if(result.correct){$('answers').querySelectorAll('button,input').forEach(el=>el.disabled=true);$('help').disabled=true;$('next').focus();}else{if(button)button.disabled=true;if($('typed')){$('typed').focus();$('typed').select();}}
  metrics();summary();if(!race.snapshot().active)finish();

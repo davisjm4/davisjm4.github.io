@@ -4,3 +4,5 @@ wrangler.toml
 .dev.vars
 *.sqlite
 *.sqlite-*
+.dev.vars.*
+.wrangler/

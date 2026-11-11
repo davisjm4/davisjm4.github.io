@@ -1,7 +1,8 @@
+import { scopedStorage } from '../../wpr-games/workplace-readiness/online/profile-sync.mjs';
 import {createProgressStore} from './storage.js';
 import {mappedRecord} from './mapping.js';
 let shared;
-export function progressStore(){if(!shared){let storage;try{storage=globalThis.localStorage;}catch{}shared=createProgressStore({storage,onWarning:message=>{
+export function progressStore(){if(!shared){let storage;try{storage=scopedStorage(globalThis.localStorage);}catch{}shared=createProgressStore({storage,onWarning:message=>{
  if(typeof document==='undefined')return;let p=document.getElementById('pathway-storage-warning');if(!p){p=document.createElement('p');p.id='pathway-storage-warning';p.setAttribute('role','status');(document.querySelector('main')||document.body)?.prepend(p);}p.textContent=message;
  }});}return shared;}
 // Do not copy optional Session Summary names, periods, answers or student-entered text.

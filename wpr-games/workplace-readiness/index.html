@@ -7,7 +7,7 @@
   <meta name="description" content="Free practice for the 22 Workplace Readiness Skills: short, realistic workplace situations with instant feedback. No accounts needed.">
   <meta name="theme-color" content="#0c1722">
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="css/style.css?v=wpr-targeted-v1">
+  <link rel="stylesheet" href="css/style.css?v=wpr-profiles-v1">
 <script>if (location.protocol !== 'file:') document.head.append(Object.assign(document.createElement('link'), { rel: 'stylesheet', href: '/cs-games/navigation.css?v=1' }));</script></head>
 <body>
   <a class="skip" href="#main">Skip to main content</a>
@@ -40,7 +40,7 @@
         <button type="button" class="btn" id="btn-continue" hidden>Continue practice</button>
         <button type="button" class="btn quiet" id="btn-home-summary" hidden>View session summary</button>
       </div>
-      <p class="privacy">Your results stay on this device. There are no accounts, and no names or personal details are saved.</p>
+      <p class="privacy">Guest practice stays on this device. If you sign into a class profile, your teacher can see your synced progress by profile ID.</p>
     </section>
 
     <section id="view-practice" aria-label="Practice" hidden>
@@ -55,6 +55,7 @@
       <div id="summary-body"></div>
       <div id="readiness-body"></div>
     </section>
+    <section id="student-profile" hidden aria-label="Student profile"></section>
     <section id="assignment-body" hidden aria-label="Teacher assignment"></section>
   </main>
 
@@ -72,16 +73,17 @@
   <script src="js/core/grader.js"></script>
   <script src="js/core/validator.js"></script>
   <script src="js/core/generator.js?v=wr-20261021-19787ca"></script>
-  <script src="js/data/content-bundle.js?v=wpr-targeted-v1"></script>
-  <script src="js/compose/engine.js?v=wpr-targeted-v1"></script>
-  <script src="js/compose/check.js?v=wpr-targeted-v1"></script>
-  <script src="js/compose/selector.js?v=wpr-targeted-v1"></script>
+  <script src="js/data/content-bundle.js?v=wpr-profiles-v1"></script>
+  <script src="js/compose/engine.js?v=wpr-profiles-v1"></script>
+  <script src="js/compose/check.js?v=wpr-profiles-v1"></script>
+  <script src="js/compose/selector.js?v=wpr-profiles-v1"></script>
   <script src="js/data/compose-bundle.js?v=wr-cx-content-20261022-1"></script>
-  <script src="js/app/storage.js"></script>
+  <script src="online/profile-device.js"></script>
+  <script src="js/app/storage.js?v=profile-scope-v1"></script>
   <script src="js/app/session.js"></script>
   <script src="js/app/ui.js"></script>
   <script src="js/app/targeted.js"></script>
-  <script src="js/app/app.js?v=wpr-targeted-v1"></script>
-  <script>if (location.protocol !== 'file:') import('./online/student.mjs');</script>
+  <script src="js/app/app.js?v=wpr-profiles-v1"></script>
+  <script>if (location.protocol !== 'file:') import('./online/student.mjs?v=profiles-v1');</script>
 </body>
 </html>

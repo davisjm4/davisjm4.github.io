@@ -208,6 +208,8 @@ export function startArrayLab() {
     instanceId = tracker.begin(question.game, question.title, question.topic, question.topicTitle, question.format, formatNames[question.format]);
     tracker.annotate(instanceId, {
       mode: question.formatName,
+      practiceMode: question.format,
+      practiceSetting: $("mode").value,
       difficulty: question.difficulty || null,
       skill: question.skill || question.topic,
       family: question.family || question.variant,

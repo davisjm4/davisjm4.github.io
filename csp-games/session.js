@@ -1,4 +1,5 @@
-/* CSP Games session schema v1. Local only: no network or student-data uploads. */
+import { activeProfile, device, recordGameAttempt, scopedStorage } from '../wpr-games/workplace-readiness/online/profile-sync.mjs';
+/* CSP Games session schema v1. Daily browser summaries. An active profile can sync scored attempts. */
 import { createProgressStore } from './exam-readiness/storage.js';
 import { initializeFromSession, recordFirstSubmission } from './exam-readiness/bridge.js';
 export const SESSION_KEY = "cspGames.session.v1";
@@ -28,6 +29,7 @@ export function createSessionTracker({
   now = () => new Date().toISOString(),
   id = uid,
   onWarning = () => {},
+  onAttempt,
 } = {}) {
   let data,
     volatile = false,
@@ -251,6 +253,7 @@ export function createSessionTracker({
       add(r, r.submissions === 1 ? "firstTry" : "afterRetry");
     } else add(r, "incorrect");
     activity();
+    onAttempt?.(r,data.id,correct,data.lastActivityAt);
     return {
       accepted: true,
       status: r.status,
@@ -290,6 +293,7 @@ export function createSessionTracker({
   }
   function student(name, period) {
     read();
+    if (activeProfile) return;
     data.student = {
       name: String(name).slice(0, 100),
       period: String(period).slice(0, 40),
@@ -354,8 +358,9 @@ export function sessionTracker() {
       storage = globalThis.localStorage;
     } catch {}
     singleton = createSessionTracker({
-      storage,
+      storage: scopedStorage(storage),
       onWarning: showStorageWarning,
+      onAttempt: activeProfile ? (...args)=>recordGameAttempt('csp',...args) : undefined,
     });
   }
   return singleton;
@@ -368,7 +373,7 @@ export function startActivePractice() {
   if (typeof document === "undefined" || typeof window === "undefined" || activeController) return;
   const tracker = sessionTracker(),
     tabId = uid(),
-    leaseKey = SESSION_KEY + ".activeLease";
+    leaseKey = (activeProfile ? device.key(SESSION_KEY) : SESSION_KEY) + ".activeLease";
   let lastInteraction = Date.now(),
     lastTick = lastInteraction,
     timer;
@@ -456,6 +461,13 @@ export function addSessionNavigation(home = "../") {
     a.href = home + 'exam-readiness/';
     a.textContent = 'Exam Readiness Pathway';
     a.dataset.pathwayLink = 'true';
+    header.appendChild(a);
+  }
+  if (header && activeProfile && !header.querySelector("[data-profile-link]")) {
+    const a=document.createElement("a");
+    a.href="/cs-games/student/";
+    a.textContent="My class progress";
+    a.dataset.profileLink="true";
     header.appendChild(a);
   }
   const t = sessionTracker();

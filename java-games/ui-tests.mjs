@@ -1,3 +1,4 @@
+import { activeProfile } from '../wpr-games/workplace-readiness/online/profile-sync.mjs';
 import fs from "node:fs";
 import vm from "node:vm";
 import assert from "node:assert/strict";
@@ -343,6 +344,7 @@ console.log(
   let printed = false;
   window.print = () => (printed = true);
   const ctx = {
+    activeProfile,
     window,
     document,
     Date,

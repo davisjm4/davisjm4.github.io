@@ -1,6 +1,8 @@
 # Workplace Readiness reporting service
 
-The student website and Teacher Tools remain on GitHub Pages. A separate Worker handles authenticated teacher requests, frozen assignment versions, anonymous submissions, and class totals. No public Pages path needs privileged credentials.
+The student website and Teacher Tools remain on GitHub Pages. A separate Worker handles authenticated teacher requests, frozen assignment versions, anonymous submissions, class totals, and optional pseudonymous profiles. No public Pages path needs privileged credentials.
+
+See [teacher-managed profiles](PROFILES.md) for enrollment, recovery and retention.
 
 ## Run the integrated development version
 
@@ -21,27 +23,7 @@ Open http://127.0.0.1:8791/cs-games/teacher/ and use the local teacher token in 
 
 ## Production deployment
 
-Use a school-authorized Cloudflare account and Google Cloud project. This repository includes no active provider connection or production deployment.
-
-1. Create a Google OAuth **Web application** client for Google Identity Services. Add `https://davisjm4.github.io` to authorized JavaScript origins. Configure the consent screen and permitted teacher accounts. The Worker verifies the ID token's signature, audience, issuer, expiry, verified email and exact email allowlist. A Drive connector authorization is separate from this application client.
-2. Create the D1 database with Wrangler, from this directory. Copy `wrangler.example.toml` to a local configuration file and insert the returned database ID and public OAuth client ID. Keep account-specific local configuration out of commits.
-
-   ```sh
-   npx wrangler d1 create devcat-wpr
-   cp wrangler.example.toml wrangler.toml
-   npx wrangler d1 execute devcat-wpr --remote --file=schema.sql
-   npx wrangler secret put TEACHER_EMAILS
-   npx wrangler secret put SUBMISSION_SECRET
-   npx wrangler deploy
-   ```
-
-   Enter a comma-separated list of authorized teacher emails for `TEACHER_EMAILS`. Use a stable random secret of at least 32 characters for `SUBMISSION_SECRET`. Rotating the submission secret invalidates retries for previously completed receipts. The cron removes expired assignments after 90 days and unfinished receipts after one day. Keep request-body logging off and confirm provider data retention settings before using real classroom data.
-3. Set `productionApi` in [online/config.mjs](../online/config.mjs) to the Worker HTTPS origin with `/api/wpr` appended, without a trailing slash. Set `googleClientId` to the public OAuth client ID. Review and merge the Pages changes through the normal repository release process.
-4. Verify teacher sign-in, unauthorized reporting access, a real shared student link across different devices, duplicate retries and the five-submission privacy threshold. Publish a synthetic assignment to test. Delete it when finished.
-
-Cloudflare D1 was selected for its Worker binding, SQLite compatibility and scheduled cleanup. A managed Postgres service would also support this workflow, but would require a separate database connection or HTTP transaction interface. This service uses one write to commit a receipt and all aggregate counters together.
-
-[Cloudflare D1 binding documentation](https://developers.cloudflare.com/d1/worker-api/d1-database/) · [Google ID token verification](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token)
+Follow the [CS Games deployment runbook](DEPLOYMENT.md) for dedicated Worker and D1 provisioning, Google teacher authentication, backups and synthetic smoke testing.
 
 ## Data and access
 

@@ -24,6 +24,7 @@ jobs:
       - run: node cs-games/teacher/adapters-tests.mjs
       - run: node cs-games/teacher/quiz-distribution-tests.mjs
       - run: node cs-games/teacher/workplace-adapter-tests.mjs
+      - run: node --test cs-games/teacher/wpr-online-tests.mjs cs-games/teacher/wpr-profile-tests.mjs
       - run: PACKAGE_B_EVIDENCE_DIR=/tmp/package-b node cs-games/teacher/package-b-tests.mjs
       - run: python3 cs-games/teacher/validate-qti-packages.py /tmp/package-b/qti
       - run: PACKAGE_F_EVIDENCE_DIR=/tmp/package-f node cs-games/teacher/package-f-tests.mjs

@@ -1,3 +1,4 @@
+import { teacherProfiles, profileClassSelect } from './wpr-profiles.mjs';
 import { generateDiagnostic, availability, validateSnapshot } from './wpr-online-builder.mjs';
 import { VERSION, csv, MODES, LEVELS } from '../../wpr-games/workplace-readiness/online/model.mjs';
 import { apiBase, googleClientId, request } from '../../wpr-games/workplace-readiness/online/config.mjs';
@@ -19,13 +20,15 @@ const labelled = (text,control)=>el('label',{},text,control);
 const checks = (name,title,choices)=>el('details',{},el('summary',{text:title}),
   el('fieldset',{class:'wpr-checks'},el('legend',{text:title}),
     choices.map(([value,label])=>el('label',{},input(name,{type:'checkbox',value}),' '+label))));
+const profileClass=profileClassSelect();
+const profileManager=teacherProfiles(()=>token,profileClass.update);
 const settings = el('div',{class:'teacher-form'},
   labelled('Assignment title',input('title',{maxlength:120,value:'Workplace Readiness Diagnostic',required:true})),
   labelled('Assignment type',select('kind',[['diagnostic','Diagnostic assessment'],['practice','Targeted practice assignment']])),
   labelled('Difficulty',select('difficulty',LEVELS.map(x=>[x,x[0].toUpperCase()+x.slice(1)]))),
   labelled('Feedback timing',select('feedbackTiming',[['after','After submission'],['immediate','After each answer']])),
-  labelled('Retakes',select('retakes',[['once','One completed attempt per browser'],['repeat','Allow repeat attempts']])),
-  labelled('Optional closing date',input('closes',{type:'datetime-local'})));
+  labelled('Retakes',select('retakes',[['once','One completed attempt per browser or class profile'],['repeat','Allow repeat attempts']])),
+  labelled('Optional closing date',input('closes',{type:'datetime-local'})),profileClass.field);
 const form = el('form',{id:'wpr-builder-form'},settings,
   el('div',{class:'wpr-checks'},
     el('label',{},input('shuffle',{type:'checkbox',checked:true}),' Shuffle question order'),
@@ -70,6 +73,7 @@ function snapshot() {
   const f = new FormData(form);
   return { version:VERSION,title:String(f.get('title')).trim(),kind:f.get('kind'),retakes:f.get('retakes'),
     feedbackTiming:f.get('feedbackTiming'),shuffle:f.has('shuffle'),reporting:f.has('reporting')||f.get('kind')==='diagnostic',
+    profileClassId:f.get('profileClassId') || undefined,
     closes:f.get('closes') ? new Date(f.get('closes')).getTime() : null,questions };
 }
 function showPreview() {
@@ -139,14 +143,15 @@ form.addEventListener('submit',e=>{
     generated=selection;showPreview();
   } catch(e) {invalidate();status.textContent=e.message;}
 });
-host.append(el('h2',{text:'Create Online Diagnostic'}),el('p',{text:'Build a Workplace Readiness diagnostic or tracked practice assignment. A published link opens a frozen set of questions, and students can take it without an account.'}),
-  auth,form,status,preview,publish,publishStatus,reports);
+host.append(el('h2',{text:'Create Online Diagnostic'}),el('p',{text:'Build a Workplace Readiness diagnostic or tracked practice assignment. A published link opens a frozen set of questions. Anonymous assignments are available to any student with the link.'}),
+  auth,form,status,preview,publish,publishStatus,reports,profileManager.root);
 addQuota();
 
 async function signIn(value) {
   token=value;
   try {await refreshAssignments(true);auth.append(el('p',{role:'status',text:'Teacher reporting access verified for this session.'}));}
-  catch(e) {token='';auth.append(el('p',{role:'alert',text:e.message}));}
+  catch(e) {token='';auth.append(el('p',{role:'alert',text:e.message}));return;}
+  try {await profileManager.refresh();} catch(e) {status.textContent=e.message;}
 }
 if (!apiBase) auth.append(el('p',{class:'muted',text:'Preview is available. Publishing and class reports require a connected reporting service.'}));
 else if (['127.0.0.1','localhost'].includes(location.hostname)) {

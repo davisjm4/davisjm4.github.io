@@ -1,3 +1,4 @@
+import { activeProfile } from '../wpr-games/workplace-readiness/online/profile-sync.mjs';
 import {bigIdeaMetrics,networkMetrics} from './session-groups.js?v=internet-groups-v1';
 import { sessionTracker, accuracy } from "./session.js?v=per-mode-daily-v1";
 const $ = (id) => document.getElementById(id),
@@ -16,6 +17,12 @@ const $ = (id) => document.getElementById(id),
 const tracker = sessionTracker(),
   fmt = (m) => (accuracy(m) === null ? "—" : accuracy(m).toFixed(1) + "%"),
   time = (t) => new Date(t).toLocaleString();
+if (activeProfile) {
+  for (const field of ["student-name", "student-period"]) {
+    $(field).disabled=true;
+    $(field).closest("label").hidden=true;
+  }
+}
 function table(items, firstColumn = "Game / topic") {
   return `<div class="table-wrap"><table class="report-table"><thead><tr><th>${firstColumn}</th><th>Attempted</th><th>First-try correct</th><th>First-try accuracy</th><th>Solved after retry</th><th>Submissions</th><th>Incorrect</th><th>Revealed</th><th>Skipped</th></tr></thead><tbody>${items.map((m) => `<tr><th scope="row">${esc(m.title)}</th><td data-label="Attempted">${m.attempted}</td><td data-label="First-try correct">${m.firstTry}</td><td data-label="First-try accuracy">${fmt(m)}</td><td data-label="Solved after retry">${m.afterRetry}</td><td data-label="Submissions">${m.submissions}</td><td data-label="Incorrect">${m.incorrect}</td><td data-label="Revealed">${m.revealed}</td><td data-label="Skipped">${m.skipped}</td></tr>`).join("")}</tbody></table></div>`;
 }
