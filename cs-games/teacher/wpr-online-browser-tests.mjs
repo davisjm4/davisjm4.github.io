@@ -38,7 +38,7 @@ test('teacher publishes exact three-topic diagnostic, student takes it, teacher 
   await student.setViewport({width:360,height:780});
   const errors=[];
   for(const p of [teacher,student]) p.on('pageerror',e=>errors.push(e.message));
-  await teacher.goto(url+'/cs-games/teacher/',{waitUntil:'load'});
+  await teacher.goto(url+'/cs-games/teacher/#practice',{waitUntil:'load'});
   await wait(teacher,'#wpr-builder-form');
   await teacher.type('[name="teacher-key"]',token);
   await exactButton(teacher,'Sign in to development service');
@@ -149,7 +149,7 @@ test('a student joins, practices offline, restores on another device and leaves 
   await exactButton(teacher,'Sign in to development service');
   await wait(teacher,'#wpr-teacher-profiles [name="class-title"]');
   await teacher.type('[name="class-title"]','Period 5');
-  await exactButton(teacher,'Create profile class');
+  await exactButton(teacher,'Add class');
   const invite=await (await wait(teacher,'#wpr-teacher-profiles a[href*="#enroll="]')).evaluate(x=>x.href);
   await teacher.waitForFunction(()=>document.querySelector('[name="profileClassId"]')?.options.length===2);
   assert.equal(await teacher.$eval('[name="profileClassId"]',e=>e.value),'');
@@ -191,11 +191,13 @@ test('a student joins, practices offline, restores on another device and leaves 
   assert.match(await second.$eval('#profile-progress',e=>e.textContent),/Practice scores|1\/1|0\/1/);
   assert.match(await second.$eval('#profile-progress',e=>e.textContent),/Attire/);
   await a11y(second,'#student-profile');
-  await exactButton(teacher,'Open profile class','#wpr-teacher-profiles');
+  await (await wait(teacher,'#wpr-teacher-profiles .class-card')).click();
   await exactButton(teacher,'View progress','#wpr-teacher-profiles');
   await wait(teacher,'#wpr-profile-report table');
   assert.match(await teacher.$eval('#wpr-profile-report',e=>e.textContent),new RegExp(id));
   const classId=db.prepare('SELECT class_id FROM student_profiles WHERE id=?').get(id).class_id;
+  await teacher.evaluate(()=>{location.hash='#practice';});
+  await wait(teacher,'#wpr-builder-form');
   await teacher.select('[name="profileClassId"]',classId);
   await teacher.select('#wpr-quotas select','topic:attire-ppe');
   await teacher.evaluate(()=>{
@@ -249,7 +251,7 @@ test('Loop Lab attempts reach a recovered CS Games profile after reconnecting', 
   await wait(teacher,'[name="class-title"]');
   await teacher.type('[name="class-title"]','Synthetic Java class');
   await teacher.select('[name="class-course"]','advanced');
-  await exactButton(teacher,'Create profile class');
+  await exactButton(teacher,'Add class');
   const link=await (await wait(teacher,'#wpr-teacher-profiles a[href*="#enroll="]')).evaluate(node=>node.href);
   assert.equal(new URL(link).pathname,'/cs-games/student/');
   await first.goto(link);

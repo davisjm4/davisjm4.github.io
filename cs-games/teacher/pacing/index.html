@@ -1,21 +1,294 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Class Learning Pathways | CS Games</title><meta name="description" content="Create a class pathway, plan instructional meetings, and publish revisions while preserving student evidence."><link rel="stylesheet" href="../../styles.css"><link rel="stylesheet" href="../teacher.css"><link rel="stylesheet" href="./pacing.css"><script type="module" src="./app.mjs"></script></head>
-<body><header class="site-header"><nav class="nav"><a class="brand" href="../../">CS Games</a><a href="../">Teacher Tools</a><a href="../../csp/">AP CSP</a><a href="../../advanced/">Advanced CS</a><a href="../../robotics/">Robotics</a></nav></header>
-<main class="wrap"><section class="hero"><div class="eyebrow">Teacher Tools · Class Learning Pathway</div><h1>Plan the learning. Keep the evidence.</h1><p class="lede">One class pathway connects your calendar, skill checkpoints, standards overview, and student progression.</p><p id="connection" class="notice" role="status"></p><div id="auth" class="actions"></div></section>
-<div class="toolbar panel"><label>Saved class pathway<select id="saved"></select></label><button id="new">New class pathway</button><button id="copy" class="secondary">Copy to new class</button><button id="save" class="secondary">Save draft</button><button id="reload-shared" class="secondary">Reload shared class</button><button id="restore" class="secondary">Restore JSON</button><input type="file" id="restore-file" accept=".json" hidden></div>
-<p id="status" role="status" aria-live="polite"></p>
-<nav class="tabs" aria-label="Pathway views"><a href="#setup">Calendar &amp; class</a><a href="#pacing">Pacing guide</a><a href="#nodes">Standards &amp; nodes</a><a href="#revisions">Preview &amp; publish</a><a href="#student">Student preview</a></nav>
-<section id="setup" class="panel"><div class="section-heading"><div><div class="eyebrow">1 · Configure</div><h2>Calendar &amp; class schedule</h2></div><span id="revision-badge" class="badge">Draft</span></div>
-<div id="class-enrollment" hidden><label>Enrolled class<select id="enrolled-class"></select></label><p><a href="../#wpr-online">Manage class profiles in Teacher Tools</a></p></div>
-<form id="settings"><div class="teacher-form"><label>Class title<input name="title" required maxlength="120"></label><label>Course template<select name="course" id="course"></select></label><label>School start<input name="start" type="date" required></label><label>School end<input name="end" type="date" required></label><label>Target exam date<input name="exam" type="date" required></label><label>Minutes per meeting<input name="minutes" type="number" min="1" max="1440" required></label><label>Class weekdays (Mon=1 … Sun=0)<input name="weekdays" placeholder="1,2,3,4,5" required></label><label>School rotation cycle<input name="rotation" placeholder="A,B or custom cycle"></label><label>This class meets on rotations<input name="classRotations" placeholder="A or leave empty for every school day"></label><label>Initial rotation offset<input name="offset" type="number" min="0" max="100" value="0"></label><label>School time zone<input name="timezone" value="America/Los_Angeles" required></label><label>Pacing tolerance in days<input name="tolerance" type="number" min="0" max="365" value="0"></label></div><p class="muted">The rotation advances on school instructional dates, including days this class does not meet. Closures and non-rotation days do not advance it. Time estimates are provisional and editable.</p><button type="submit">Apply settings &amp; generate</button></form>
-<details><summary>Import a school calendar (ICS or CSV)</summary><p>CSV columns: date (or start/end, inclusive), label, type, minutes, schoolday, rotation, nonrotation. Schoolday and nonrotation use true/false. ICS imports all-day dates with exclusive end dates. Expand recurring events before importing.</p><label>Calendar file<input id="calendar-file" type="file" accept=".ics,.csv"></label><div id="import-preview"></div></details>
-<details open><summary>Set individual dates or a protected date range</summary><form id="day-edit"><div class="teacher-form"><label>From<input name="from" type="date" required></label><label>Through<input name="to" type="date" required></label><label>Day type<select name="type" id="day-types"></select></label><label>Minutes (blank keeps existing/default)<input name="minutes" type="number" min="0" max="1440"></label><label>School date<select name="schoolDay"><option value="">Keep school calendar</option><option value="true">Instructional date</option><option value="false">School closed</option></select></label><label>Rotation label override<input name="rotation" placeholder="Keep normal rotation"></label><label>Rotation handling<select name="nonRotation"><option value="">Keep current</option><option value="true">Does not advance rotation</option><option value="false">Advances normally</option></select></label><label>Description<input name="label" maxlength="120"></label><label>Assessment node IDs (optional)<input name="assessmentNodes" placeholder="Comma-separated node IDs"></label></div><button type="submit" class="secondary">Apply dates &amp; recalculate</button></form><div id="overrides"></div></details>
-</section>
-<section id="pacing" class="panel"><div class="section-heading"><div><div class="eyebrow">2 · Allocate time</div><h2>Instructional pacing guide</h2></div><button id="generate">Recalculate schedule</button></div><div id="capacity" class="metrics"></div><div id="warnings" role="status"></div><div class="actions"><label>View<select id="view"><option value="daily">Daily</option><option value="weekly">Weekly</option><option value="unit">Unit</option></select></label><label>Recalculate from<input id="recalculate-from" type="date"></label><button id="export-json" class="secondary">Export JSON</button><button id="export-csv" class="secondary">Export CSV</button><button id="export-ics" class="secondary">Export ICS</button></div><div id="schedule"></div></section>
-<section id="nodes" class="panel"><div class="eyebrow">3 · Set expectations</div><h2>Standards &amp; mastery nodes</h2><p>Each checkpoint assesses a skill. Practice visits and time spent never award mastery. Node completion is separate from a standards-based 0–4 score.</p><p id="coverage-limits" class="notice"></p><div class="actions"><label>Learning area<select id="area-filter"></select></label><button id="area-up" class="secondary">Move area earlier</button><button id="area-down" class="secondary">Move area later</button><button id="optional-area" class="secondary">Make area optional</button><button id="remove-area" class="secondary">Remove area from plan</button></div><div id="node-table"></div>
-<details><summary>Add an area and assessable skill</summary><form id="add-node"><div class="teacher-form"><label>Area title<input name="area" required maxlength="120"></label><label>Skill / instructional objective<input name="objective" required maxlength="300"></label><label>Minutes<input name="minutes" type="number" value="80" min="1" max="10000"></label><label>Practice URL (optional)<input name="url" type="url" placeholder="https://davisjm4.github.io/…"></label><label>Standard references (registry:id, optional)<input name="standards"></label><label>Prerequisite node IDs (optional)<input name="prerequisites"></label></div><button type="submit" class="secondary">Add skill node</button></form></details>
-<details><summary>Version a mastery policy</summary><p>Calibration is pending. The default provisional policy requires eligible teacher assessment; it has no invented question threshold. Teacher-defined trial policies must be labeled provisional. Historical policy definitions are retained.</p><form id="policy-form"><div class="teacher-form"><label>Policy label<input name="label" value="Teacher-defined trial — calibration pending" required></label><label>Minimum eligible first-attempt questions<input name="questions" type="number" min="1"></label><label>Accuracy (0–1)<input name="accuracy" type="number" min="0" max="1" step=".01"></label><label>Coverage JSON (subskill: correct count)<input name="coverage" value="{}"></label><label>Eligible assessment score target (0–4)<input name="score" type="number" min="0" max="4" step=".5"></label></div><p><label><input name="activate" type="checkbox"> Activate this teacher-defined policy for the selected area (uncheck to keep it provisional).</label></p><button type="submit" class="secondary">Create new policy version for area</button></form></details>
-</section>
-<section id="revisions" class="panel"><div class="eyebrow">4 · Review changes</div><h2>Draft → Preview changes → Publish</h2><p>Drafts affect this editor only. Publication creates an immutable revision and changes the class reference. Previous practice and assessment evidence stays with the student.</p><div class="actions"><button id="preview">Preview changes</button><button id="publish" disabled>Publish class revision</button><button id="local-publish" class="secondary" disabled>Save local preview revision</button><button id="history" class="secondary">Refresh revision history</button></div><p id="publish-note" class="muted"></p><div id="changes"></div><div id="history-list"></div></section>
-<section id="student" class="panel"><div class="eyebrow">Same published data · Accessible progression</div><h2>Student pathway preview</h2><p id="student-source"></p><div id="student-view"></div></section>
-</main><footer class="footer"><div class="wrap">DevCat Studios · CS Games · Graphical learning map deferred</div></footer></body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Learning Pathways | Teacher Tools | CS Games</title>
+  <meta name="description" content="Set up your class calendar, choose learning goals, review the pacing guide, and publish your class learning pathway.">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../teacher.css">
+  <link rel="stylesheet" href="../teacher-ui.css">
+  <link rel="stylesheet" href="./pacing.css">
+  <script type="module" src="./app.mjs?v=ux-v1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="../../">CS Games</a>
+      <a href="../../csp/">AP CSP</a>
+      <a href="../../advanced/">Advanced CS</a>
+      <a href="../../robotics/">Robotics</a>
+      <a class="active" aria-current="page" href="../">Teacher Tools</a>
+    </nav>
+  </header>
+  <div class="tt-bar">
+    <nav class="tt-bar-inner" aria-label="Teacher Tools sections">
+      <span class="label">Teacher Tools</span>
+      <a href="../#classes">My Classes</a>
+      <a href="../#practice">Practice &amp; Assessments</a>
+      <a href="./" aria-current="page">Learning Pathways</a>
+    </nav>
+  </div>
+
+  <main id="main" class="wrap tt" tabindex="-1">
+    <div class="page-head">
+      <div>
+        <div class="eyebrow">Learning Pathways</div>
+        <h1 id="page-title">Class learning pathway</h1>
+        <p id="page-sub" class="lede"></p>
+      </div>
+      <div id="auth" class="account"></div>
+    </div>
+    <p id="connection" class="banner info" role="status"></p>
+
+    <!-- Class bar: which class, and where it stands -->
+    <section class="card class-bar" aria-label="Class and status">
+      <div class="field-grid" style="margin:0;align-items:end">
+        <label>Class<select id="saved"></select></label>
+        <div>
+          <div class="hint" style="margin-bottom:6px">Status</div>
+          <div id="revision-badge" class="chips" style="margin:0" aria-live="polite"></div>
+        </div>
+        <div class="actions" style="margin:0">
+          <button id="save" class="secondary">Save draft</button>
+          <button id="new" class="secondary">New class pathway</button>
+        </div>
+      </div>
+    </section>
+    <p id="status" role="status" aria-live="polite" hidden></p>
+
+    <!-- Four-stage workflow -->
+    <nav aria-label="Pathway stages">
+      <ol class="stepper" id="stepper">
+        <li><button type="button" data-stage="calendar"><span class="num"><span>1</span></span><span class="txt"><strong>Class &amp; Calendar</strong><small id="step-calendar-note">When the class meets</small></span></button></li>
+        <li><button type="button" data-stage="goals"><span class="num"><span>2</span></span><span class="txt"><strong>Learning Goals</strong><small id="step-goals-note">Skills and standards</small></span></button></li>
+        <li><button type="button" data-stage="pacing"><span class="num"><span>3</span></span><span class="txt"><strong>Pacing Guide</strong><small id="step-pacing-note">Every class meeting</small></span></button></li>
+        <li><button type="button" data-stage="review"><span class="num"><span>4</span></span><span class="txt"><strong>Review &amp; Publish</strong><small id="step-review-note">Share with students</small></span></button></li>
+      </ol>
+    </nav>
+
+    <!-- ───────── Stage 1: Class & Calendar ───────── -->
+    <section id="stage-calendar" data-stage-panel="calendar" class="card accent" aria-labelledby="calendar-title">
+      <div class="card-head"><div><div class="eyebrow">Step 1 of 4</div><h2 id="calendar-title">Class &amp; calendar</h2><p>Tell us about the class and when it meets. We build the pacing guide from this.</p></div></div>
+      <div id="class-enrollment" hidden>
+        <div class="field-grid"><label>Student class<select id="enrolled-class"></select><small>Links this pathway to the students enrolled in your class. <a href="../#classes">Manage students in My Classes</a></small></label></div>
+      </div>
+      <form id="settings" novalidate>
+        <h3>About the class</h3>
+        <div class="field-grid">
+          <label>Class name<input name="title" required maxlength="120"></label>
+          <label>Course<select name="course" id="course"></select><small>To use a different course, create a new class pathway.</small></label>
+        </div>
+        <h3>School year</h3>
+        <div class="field-grid">
+          <label>First day of school<input name="start" type="date" required></label>
+          <label>Last day of school<input name="end" type="date" required></label>
+          <label>Exam date<input name="exam" type="date" required><small>The final class meeting before this date is the last day of new instruction.</small></label>
+        </div>
+        <h3>How often does the class meet?</h3>
+        <fieldset class="schedule-type" style="border:0;padding:0;margin:0">
+          <legend class="sr-only">Schedule type</legend>
+          <div class="choice-grid" id="schedule-modes">
+            <label class="choice"><input type="radio" name="scheduleMode" value="every"><span><strong>Every school day</strong><small>Meets every instructional day, Monday–Friday.</small></span></label>
+            <label class="choice"><input type="radio" name="scheduleMode" value="ab"><span><strong>A/B block schedule</strong><small>School alternates A days and B days.</small></span></label>
+            <label class="choice"><input type="radio" name="scheduleMode" value="weekdays"><span><strong>Selected weekdays</strong><small>Meets on the weekdays you choose.</small></span></label>
+            <label class="choice"><input type="radio" name="scheduleMode" value="custom"><span><strong>Custom rotation</strong><small>Your own labels, such as a 6-day cycle.</small></span></label>
+          </div>
+        </fieldset>
+        <div id="weekday-panel" class="sub-panel">
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend style="padding:0;font-weight:700">Days of the week the class can meet</legend>
+            <div class="weekday-picker" id="weekday-picker"></div>
+          </fieldset>
+        </div>
+        <div id="ab-panel" class="sub-panel" hidden>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend style="padding:0;font-weight:700">This class meets on</legend>
+            <div class="weekday-picker" id="ab-picker">
+              <label class="choice"><input type="checkbox" name="abLabel" value="A"><span>A days</span></label>
+              <label class="choice"><input type="checkbox" name="abLabel" value="B"><span>B days</span></label>
+            </div>
+          </fieldset>
+          <div class="field-grid" style="margin-bottom:0">
+            <label>Pick a school day you know the letter for<input name="anchorDate" type="date"><small>Optional. For example, a date you know is an A day.</small></label>
+            <label>That day is an<select name="anchorLabel"><option value="A">A day</option><option value="B">B day</option></select></label>
+          </div>
+          <p id="ab-hint" class="hint" aria-live="polite"></p>
+        </div>
+        <div id="custom-panel" class="sub-panel" hidden>
+          <div class="field-grid">
+            <label>Rotation labels, in order<input name="rotation" placeholder="Day 1, Day 2, Day 3"><small>Separate labels with commas. The cycle repeats on each school day.</small></label>
+            <label>Labels this class meets on<input name="classRotations" placeholder="Leave empty to meet on every label"><small>Use labels from the list. Leave empty for all of them.</small></label>
+          </div>
+        </div>
+        <div class="field-grid">
+          <label>Minutes per class meeting<input name="minutes" type="number" min="1" max="1440" required></label>
+        </div>
+        <p id="schedule-summary" class="banner info" aria-live="polite"></p>
+        <details class="more"><summary>Advanced settings <small>Time zone, rotation offset, pacing tolerance</small></summary>
+          <div class="body">
+            <div class="field-grid">
+              <label>School time zone<input name="timezone" value="America/Los_Angeles" required><small>Use an IANA name such as America/Los_Angeles.</small></label>
+              <label>Pacing tolerance (days)<input name="tolerance" type="number" min="0" max="365" value="0"><small>Extra days before a checkpoint counts as behind.</small></label>
+              <label>Rotation offset<input name="offset" type="number" min="0" max="100" value="0"><small>Which rotation label the first school day uses (0 = the first label). Setting a known school day above overrides this.</small></label>
+            </div>
+            <p class="hint">The rotation advances on school instructional dates, including days this class does not meet. Closures and non-rotation days do not advance it. Time estimates are provisional and editable.</p>
+          </div>
+        </details>
+        <p id="settings-dirty" class="banner warn" role="status" hidden>You have changed these settings. Save them to update the schedule.</p>
+        <div class="actions"><button type="submit" class="primary">Save settings &amp; update schedule</button></div>
+      </form>
+
+      <h3>Closures, testing windows &amp; special dates</h3>
+      <details class="more" id="calendar-tools">
+        <summary>Import a school calendar <small>ICS or CSV file</small></summary>
+        <div class="body">
+          <p>CSV columns: date (or start/end, inclusive), label, type, minutes, schoolday, rotation, nonrotation. Schoolday and nonrotation use true/false. ICS imports all-day dates with exclusive end dates. Expand recurring events before importing.</p>
+          <label>Calendar file<input id="calendar-file" type="file" accept=".ics,.csv"></label>
+          <div id="import-preview"></div>
+        </div>
+      </details>
+      <details class="more">
+        <summary>Set individual dates or a date range <small id="override-count">No special dates yet</small></summary>
+        <div class="body">
+          <form id="day-edit">
+            <div class="field-grid">
+              <label>From<input name="from" type="date" required></label>
+              <label>Through<input name="to" type="date" required></label>
+              <label>What happens on these dates<select name="type" id="day-types"></select></label>
+              <label>Class minutes<input name="minutes" type="number" min="0" max="1440"><small>Leave blank to keep the usual minutes.</small></label>
+              <label>School date<select name="schoolDay"><option value="">Keep school calendar</option><option value="true">Instructional date</option><option value="false">School closed</option></select></label>
+              <label>Description<input name="label" maxlength="120" placeholder="For example, Unit 2 test"></label>
+            </div>
+            <div class="span-all">
+              <label for="assess-search">Skills assessed on these dates <small>Optional. Search by skill, area or standard.</small></label>
+              <div class="picker" id="assess-picker">
+                <input id="assess-search" type="search" placeholder="Search skills, areas or standards" aria-controls="assess-list" autocomplete="off">
+                <ul id="assess-list" class="picker-list" aria-label="Matching skills"></ul>
+                <div id="assess-selected" class="picker-selected" aria-live="polite"></div>
+              </div>
+              <input type="hidden" name="assessmentNodes">
+            </div>
+            <details class="more" style="margin-top:16px"><summary>Rotation options</summary><div class="body">
+              <div class="field-grid">
+                <label>Rotation label for these dates<input name="rotation" list="rotation-options" placeholder="Keep normal rotation"><small>Sets the letter for the first date and continues from there.</small></label>
+                <label>Rotation handling<select name="nonRotation"><option value="">Keep current</option><option value="true">Does not advance rotation</option><option value="false">Advances normally</option></select></label>
+              </div>
+              <datalist id="rotation-options"></datalist>
+            </div></details>
+            <div class="actions"><button type="submit" class="secondary">Apply dates &amp; update schedule</button></div>
+          </form>
+          <div id="overrides"></div>
+        </div>
+      </details>
+      <div class="stage-nav"><span class="next-label"></span><button type="button" class="primary" data-go="goals">Next: Learning goals →</button></div>
+    </section>
+
+    <!-- ───────── Stage 2: Learning Goals ───────── -->
+    <section id="stage-goals" data-stage-panel="goals" class="card accent" aria-labelledby="goals-title" hidden>
+      <div class="card-head"><div><div class="eyebrow">Step 2 of 4</div><h2 id="goals-title">Learning goals</h2><p>Each skill is checked by a checkpoint. Practice visits and time spent never award mastery. Choose what students will learn, in what order, and what is required.</p></div></div>
+      <details class="more"><summary>What the curriculum covers <small>Coverage notes</small></summary><div class="body"><p id="coverage-limits"></p></div></details>
+      <div class="field-grid" style="align-items:end">
+        <label>Learning area<select id="area-filter"></select><small>Choose an area to reorder or change it as a group.</small></label>
+        <div class="actions" style="margin:0">
+          <button id="area-up" class="secondary small">Move area earlier</button>
+          <button id="area-down" class="secondary small">Move area later</button>
+          <button id="optional-area" class="secondary small">Make area optional</button>
+          <button id="remove-area" class="secondary small danger">Remove area from plan</button>
+        </div>
+      </div>
+      <label class="check"><input type="checkbox" id="show-policy"> Show mastery policy column</label>
+      <div id="node-table" data-advanced="off"></div>
+      <details class="more"><summary>Add your own area and skill</summary><div class="body">
+        <form id="add-node">
+          <div class="field-grid">
+            <label>Area title<input name="area" required maxlength="120"></label>
+            <label>Skill or learning goal<input name="objective" required maxlength="300"></label>
+            <label>Minutes<input name="minutes" type="number" value="80" min="1" max="10000"></label>
+            <label>Practice link (optional)<input name="url" type="url" placeholder="https://davisjm4.github.io/…"></label>
+          </div>
+          <details class="more"><summary>Standards and prerequisites <small>Optional</small></summary><div class="body"><div class="field-grid">
+            <label>Standard references<input name="standards" placeholder="registry:id"><small>Use the form registry:id. Separate several with commas.</small></label>
+            <label>Prerequisite skills<input name="prerequisites"><small>Comma-separated skill identifiers. Most teachers leave this empty.</small></label>
+          </div></div></details>
+          <div class="actions"><button type="submit" class="secondary">Add skill</button></div>
+        </form>
+      </div></details>
+      <details class="more"><summary>Advanced: mastery policy <small>Versioned rules for completing a skill</small></summary><div class="body">
+        <p>Calibration is pending. The default provisional policy requires an eligible teacher assessment and has no invented question threshold. Teacher-defined trial policies are labeled provisional. Historical policy definitions are retained.</p>
+        <form id="policy-form">
+          <div class="field-grid">
+            <label>Policy label<input name="label" value="Teacher-defined trial — calibration pending" required></label>
+            <label>Minimum eligible first-attempt questions<input name="questions" type="number" min="1"></label>
+            <label>Accuracy (0–1)<input name="accuracy" type="number" min="0" max="1" step=".01"></label>
+            <label>Coverage JSON (subskill: correct count)<input name="coverage" value="{}"></label>
+            <label>Eligible assessment score target (0–4)<input name="score" type="number" min="0" max="4" step=".5"></label>
+          </div>
+          <label class="check"><input name="activate" type="checkbox"> Activate this teacher-defined policy for the selected area (leave unchecked to keep it provisional).</label>
+          <div class="actions"><button type="submit" class="secondary">Create new policy version for area</button></div>
+        </form>
+      </div></details>
+      <div class="stage-nav"><button type="button" data-go="calendar">← Back: Class &amp; calendar</button><button type="button" class="primary" data-go="pacing">Next: Pacing guide →</button></div>
+    </section>
+
+    <!-- ───────── Stage 3: Pacing Guide ───────── -->
+    <section id="stage-pacing" data-stage-panel="pacing" class="card accent" aria-labelledby="pacing-title" hidden>
+      <div class="card-head"><div><div class="eyebrow">Step 3 of 4</div><h2 id="pacing-title">Pacing guide</h2><p>Every class meeting from the first day to the exam, built from your calendar and learning goals.</p></div></div>
+      <div id="capacity" class="stats"></div>
+      <div id="warnings" role="status"></div>
+      <div class="field-grid" style="align-items:end">
+        <label>View<select id="view"><option value="daily">Daily</option><option value="weekly">Weekly</option><option value="unit">By unit</option></select></label>
+        <label>Update schedule starting<input id="recalculate-from" type="date"><small>Earlier meetings stay as they are.</small></label>
+        <div class="actions" style="margin:0"><button id="generate" class="secondary">Recalculate schedule</button></div>
+      </div>
+      <div id="schedule"></div>
+      <details class="more"><summary>Download this pacing guide <small>CSV spreadsheet or calendar file</small></summary><div class="body">
+        <div class="actions" style="margin-top:0"><button id="export-csv" class="secondary">Download CSV</button><button id="export-ics" class="secondary">Download calendar (ICS)</button></div>
+      </div></details>
+      <div class="stage-nav"><button type="button" data-go="goals">← Back: Learning goals</button><button type="button" class="primary" data-go="review">Next: Review &amp; publish →</button></div>
+    </section>
+
+    <!-- ───────── Stage 4: Review & Publish ───────── -->
+    <section id="stage-review" data-stage-panel="review" class="card accent" aria-labelledby="review-title" hidden>
+      <div class="card-head"><div><div class="eyebrow">Step 4 of 4</div><h2 id="review-title">Review &amp; publish</h2><p>Drafts change only this editor. Publishing creates a new version for students. Practice and assessment evidence stays with each student.</p></div></div>
+      <div id="pub-summary" class="banner info" role="status"></div>
+      <ol class="tracker" id="tracker" aria-label="Publishing progress"></ol>
+      <div id="publish-error" class="banner bad" role="alert" hidden></div>
+      <div class="actions">
+        <button id="preview" class="primary">Save &amp; preview changes</button>
+        <button id="publish" class="primary" disabled>Publish to students</button>
+        <button id="local-publish" class="secondary" disabled hidden>Save local preview revision</button>
+      </div>
+      <p id="publish-note" class="hint"></p>
+      <div id="changes"></div>
+      <h3>Preview student progression</h3>
+      <p id="student-source" class="muted"></p>
+      <div id="student-view"></div>
+      <div class="stage-nav"><button type="button" data-go="pacing">← Back: Pacing guide</button><span class="next-label">Need a backup or earlier version? See More tools below.</span></div>
+    </section>
+
+    <!-- ───────── Secondary tools ───────── -->
+    <details class="more" id="tools">
+      <summary>More tools <small>Backup, restore, copy, revision history</small></summary>
+      <div class="body">
+        <div class="field-grid wide">
+          <div><h4>Back up this class</h4><p class="hint">Download everything in this pathway, including revisions, as a JSON file.</p><div class="actions"><button id="export-json" class="secondary">Export JSON backup</button></div></div>
+          <div><h4>Restore from a backup</h4><p class="hint">Load a JSON backup into this browser as a local draft.</p><div class="actions"><button id="restore" class="secondary">Restore JSON</button></div><input type="file" id="restore-file" accept=".json" hidden></div>
+          <div><h4>Copy to a new class</h4><p class="hint">Make an independent copy. Publishing the copy never changes the original.</p><div class="actions"><button id="copy" class="secondary">Copy to new class</button></div></div>
+          <div><h4>Reload the shared draft</h4><p class="hint">Replace this browser’s draft with the latest shared draft. The old copy is kept in the next JSON backup.</p><div class="actions"><button id="reload-shared" class="secondary">Reload shared class</button></div></div>
+        </div>
+        <h4>Revision history</h4>
+        <p class="hint">Earlier published versions. Restoring one creates a draft. Preview and publish it to update students.</p>
+        <div class="actions"><button id="history" class="secondary">Refresh revision history</button></div>
+        <div id="history-list"></div>
+        <h4>Troubleshooting details</h4>
+        <p class="hint">Identifiers for support. Teachers do not need these for everyday use.</p>
+        <dl id="troubleshoot" class="kv"></dl>
+        <div class="actions"><button id="copy-ids" class="secondary small" type="button">Copy troubleshooting details</button></div>
+      </div>
+    </details>
+  </main>
+  <footer class="footer"><div class="wrap">DevCat Studios · CS Games · Teacher Tools</div></footer>
+</body>
+</html>

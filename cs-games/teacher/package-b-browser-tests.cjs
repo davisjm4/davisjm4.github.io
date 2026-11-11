@@ -2,7 +2,7 @@
 const fs=require('fs'),path=require('path'),http=require('http'),assert=require('node:assert/strict');
 const {chromium}=require('playwright');
 const root=path.resolve(__dirname,'../..'),output=path.resolve(process.env.PACKAGE_B_BROWSER_DIR||'/tmp/package-b-browser');fs.mkdirSync(output,{recursive:true});
-const server=http.createServer((req,res)=>{let p=path.join(root,decodeURIComponent(req.url.split('?')[0]));if(fs.existsSync(p)&&fs.statSync(p).isDirectory())p=path.join(p,'index.html');fs.readFile(p,(e,d)=>{res.setHeader('Content-Type',p.endsWith('.js')?'text/javascript':p.endsWith('.css')?'text/css':'text/html');res.statusCode=e?404:200;res.end(e?'missing':d)});});
+const server=http.createServer((req,res)=>{let p=path.join(root,decodeURIComponent(req.url.split('?')[0]));if(fs.existsSync(p)&&fs.statSync(p).isDirectory())p=path.join(p,'index.html');fs.readFile(p,(e,d)=>{res.setHeader('Content-Type',/\.m?js$/.test(p)?'text/javascript':p.endsWith('.css')?'text/css':p.endsWith('.json')?'application/json':'text/html');res.statusCode=e?404:200;res.end(e?'missing':d)});});
 (async()=>{
  await new Promise(r=>server.listen(0,'127.0.0.1',r));
  const base=process.env.PACKAGE_B_BASE_URL||`http://127.0.0.1:${server.address().port}`;
@@ -11,13 +11,18 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
  const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_EXECUTABLE_PATH||undefined,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
  try{
   const context=await browser.newContext({proxy,ignoreHTTPSErrors:!!proxy,acceptDownloads:true});const page=await context.newPage();page.setDefaultTimeout(30000);
-  const errors=[],requests=[];page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)requests.push({url:r.url(),status:r.status()})});
-  const response=await page.goto(base+'/cs-games/teacher/?package-b-verification=20261026');assert.equal(response.status(),200);await page.waitForFunction(()=>document.querySelector('#source').options.length===10);
-  const sourceIds=await page.locator('#source option').evaluateAll(options=>options.map(o=>o.value));assert.equal(sourceIds.length,10);
+  const errors=[],requests=[];page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400&&!r.url().endsWith('/favicon.ico'))requests.push({url:r.url(),status:r.status()})});
+  const response=await page.goto(base+'/cs-games/teacher/?package-b-verification=20261026#practice');assert.equal(response.status(),200);await page.waitForFunction(()=>document.querySelector('#source').options.length>0);await page.evaluate(()=>{document.querySelector('#practice-canvas details.more').open=true;});
+  const {visible,expected}=await page.evaluate(async()=>{
+   const {sources,baselineSourceIds}=await import('/cs-games/teacher/adapters.js?v=loop-types-v1');
+   return {visible:[...document.querySelectorAll('#source option')].map(o=>o.value),expected:baselineSourceIds};
+  });
+  assert.deepEqual(visible.filter(id=>expected.includes(id)),expected);
+  const sourceIds=expected;
   await page.evaluate(()=>localStorage.setItem('package-b-sentinel','unchanged'));
   const cases=[];
   async function generate(source,level='mixed',count=3,points=3,mode){
-   await page.selectOption('#source',source);await page.selectOption('#difficulty',level);if(mode)await page.selectOption('#mode',`${source}::${mode}`);
+   await page.selectOption('#source',source);await page.selectOption('#difficulty',level);if(source==='variable'&&level!=='mixed'&&!mode)mode='trace';if(mode)await page.selectOption('#mode',`${source}::${mode}`);
    await page.fill('#question-count',String(count));await page.fill('#points',String(points));await page.fill('#seed','731');await page.click('#generate');
    const status=await page.locator('#status').textContent();assert.ok(status.startsWith('Quiz generated'),status);assert.equal(await page.locator('.quiz-item').count(),count);assert.equal(await page.locator('#download').isEnabled(),true);
    const notes=await page.locator('.source-note').allTextContents();if(['variable','loop','search-sort'].includes(source)&&level!=='mixed')assert.ok(notes.every(n=>n.toLowerCase().includes(level.toLowerCase())),notes.join('\n'));
@@ -32,7 +37,7 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
   for(const source of ['variable','loop','search-sort'])for(const level of ['Beginner','Intermediate','Advanced','mixed'])await generate(source,level);
   for(const source of sourceIds)await generate(source);
   await generate('search-sort','Beginner',3,1,'compare');assert.ok((await page.locator('.question-content').allTextContents()).every(t=>t.includes('[')));await download('live-search-context');
-  const limited=await page.evaluate(async()=>{const {sourceById}=await import('./adapters.js?v=package-b-20261026');return sourceById.string.modes.find(m=>!m.difficulties.some(d=>d.toLowerCase()==='advanced')).id});
+  const limited=await page.evaluate(async()=>{const {sourceById}=await import('/cs-games/teacher/adapters.js?v=package-b-20261026');return sourceById.string.modes.find(m=>!m.difficulties.some(d=>d.toLowerCase()==='advanced')).id});
   await generate('string','Advanced',3,5,limited);assert.match(await page.locator('#status').textContent(),/nearest supported level/);
   for(const [skill,mode,level]of [['job-specific-tools-and-technologies','order','Beginner'],['mathematics','nextstep','Beginner'],['mathematics','order','Intermediate'],['professionalism','order','Beginner'],['reading-and-writing','order','Intermediate']]){
    await page.selectOption('#source','workplace-readiness');await page.selectOption('#mode',`workplace-readiness::${mode}`);await page.selectOption('#difficulty',level);await page.selectOption('#workplace-skills',skill);

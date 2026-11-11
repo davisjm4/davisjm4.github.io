@@ -6,6 +6,8 @@ import { el, button, pct, table, download, options, copy } from '../../wpr-games
 
 const W = globalThis.WRG;
 const host = document.getElementById('wpr-online');
+const slot = id => document.getElementById(id);
+const kindNames = {diagnostic:'Diagnostic assessment',practice:'Targeted practice'};
 const assignmentPath = '/wpr-games/workplace-readiness/?assignment=';
 const modeNames = {decision:'Workplace Decisions',nextstep:'Best Next Step',order:'Put the Steps in Order',find:'Find the Problem'};
 let token = '', questions = [], generated = null;
@@ -115,7 +117,7 @@ const publish=button('Publish online assignment',async()=>{
     refreshAssignments();
   } catch(e) {publishStatus.textContent=e.message;}
   finally {publish.disabled=false;}
-});
+},'btn primary');
 publish.disabled=true;
 form.append(el('h3',{text:'Question distribution'}),el('p',{text:'Add one group for each skill, topic, or subtopic you want to measure. The builder fills each group with distinct questions.'}),quotas,
   el('div',{class:'actions'},button('Add coverage group',()=>{addQuota();invalidate();}),
@@ -143,46 +145,57 @@ form.addEventListener('submit',e=>{
     generated=selection;showPreview();
   } catch(e) {invalidate();status.textContent=e.message;}
 });
-host.append(el('h2',{text:'Create Online Diagnostic'}),el('p',{text:'Build a Workplace Readiness diagnostic or tracked practice assignment. A published link opens a frozen set of questions. Anonymous assignments are available to any student with the link.'}),
-  auth,form,status,preview,publish,publishStatus,reports,profileManager.root);
+host.append(el('h2',{text:'Create an online diagnostic or practice'}),el('p',{class:'muted',text:'Build a Workplace Readiness diagnostic or tracked practice assignment. A published link opens a frozen set of questions. Anonymous assignments are available to any student with the link.'}),
+  form,status,preview,el('div',{class:'actions'},publish),publishStatus);
+(slot('teacher-account')||host).append(auth);
+if (slot('published-assessments')) slot('published-assessments').replaceChildren(reports); else host.append(reports);
+if (slot('my-classes')) slot('my-classes').append(profileManager.root); else host.append(profileManager.root);
 addQuota();
 
+const authControls = el('div',{id:'wpr-teacher-signin',class:'actions'});
+const authNote = el('div',{id:'wpr-teacher-auth-note',role:'status','aria-live':'polite'});
+auth.append(authNote,authControls);
 async function signIn(value) {
   token=value;
-  try {await refreshAssignments(true);auth.append(el('p',{role:'status',text:'Teacher reporting access verified for this session.'}));}
-  catch(e) {token='';auth.append(el('p',{role:'alert',text:e.message}));return;}
+  try {await refreshAssignments(true);}
+  catch(e) {token='';authNote.replaceChildren(el('p',{class:'banner bad',role:'alert',text:e.message}));return;}
+  authNote.replaceChildren(el('div',{class:'actions'},el('span',{class:'chip good',text:'Signed in as teacher'}),
+    button('Sign in again',()=>{authControls.hidden=false;authNote.replaceChildren();},'btn quiet small')));
+  authControls.hidden=true;
   try {await profileManager.refresh();} catch(e) {status.textContent=e.message;}
 }
-if (!apiBase) auth.append(el('p',{class:'muted',text:'Preview is available. Publishing and class reports require a connected reporting service.'}));
+if (!apiBase) authNote.append(el('p',{class:'muted',text:'Preview is available. Publishing and class reports require a connected reporting service.'}));
 else if (['127.0.0.1','localhost'].includes(location.hostname)) {
   const secret=input('teacher-key',{type:'password',autocomplete:'off'});
-  auth.append(labelled('Local development teacher token',secret),button('Sign in to development service',()=>{
+  authControls.append(labelled('Local development teacher token',secret),button('Sign in to development service',()=>{
     const value=secret.value;secret.value='';signIn(value);
-  }));
+  },'btn primary'));
 } else if (googleClientId) {
   const script=el('script',{src:'https://accounts.google.com/gsi/client',async:true});
   script.onload=()=>{
     google.accounts.id.initialize({client_id:googleClientId,callback:r=>signIn(r.credential)});
-    google.accounts.id.renderButton(auth,{theme:'outline',text:'signin_with'});
+    google.accounts.id.renderButton(authControls,{theme:'outline',text:'signin_with'});
   };
-  script.onerror=()=>auth.append(el('p',{role:'alert',text:'Teacher sign-in could not load.'}));
+  script.onerror=()=>authNote.append(el('p',{class:'banner bad',role:'alert',text:'Teacher sign-in could not load. Check your connection and refresh the page.'}));
   document.head.append(script);
 }
 async function refreshAssignments(propagate=false) {
   try {
     const data=await request('/teacher/assignments',{token});
-    reports.replaceChildren(el('h3',{text:'My published Workplace Readiness assignments'}),
-      button('Refresh assignments',()=>refreshAssignments()));
+    reports.replaceChildren(el('div',{class:'actions'},button('Refresh assignments',()=>refreshAssignments(),'btn small')));
+    if (!data.assignments.length) reports.append(el('p',{class:'muted',text:'You have not published an assessment yet. Create one under Create an online diagnostic or practice.'}));
     for (const a of data.assignments) {
       const url=new URL(assignmentPath+a.id,location.href).href;
-      reports.append(el('p',{},a.title+' · '+a.kind+' ',
-        button('Class report',()=>openReport(a.id)),
-        button('Copy student link',()=>copy(url,status)),
-        button('Delete assignment',async()=>{
-          if (!confirm('Delete '+a.title+' and its class totals?')) return;
-          try {await request('/teacher/'+a.id,{token,method:'DELETE'});await refreshAssignments();}
-          catch(e) {status.textContent=e.message;}
-        })));
+      reports.append(el('div',{class:'row-card'},
+        el('div',{},el('strong',{text:a.title}),el('small',{text:kindNames[a.kind]||'Online assignment'})),
+        el('div',{class:'actions'},
+          button('Class report',()=>openReport(a.id)),
+          button('Copy student link',()=>copy(url,status)),
+          button('Delete assignment',async()=>{
+            if (!confirm('Delete '+a.title+' and its class totals?')) return;
+            try {await request('/teacher/'+a.id,{token,method:'DELETE'});await refreshAssignments();}
+            catch(e) {status.textContent=e.message;}
+          },'btn danger'))));
     }
     reports.append(el('div',{id:'wpr-active-report',tabindex:-1}));
   } catch(e) {if (propagate) throw e;status.textContent=e.message;}

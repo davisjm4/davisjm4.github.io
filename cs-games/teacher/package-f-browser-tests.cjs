@@ -2,7 +2,7 @@
 const fs=require('fs'),path=require('path'),http=require('http'),assert=require('node:assert/strict');
 const {chromium}=require('playwright');
 const root=path.resolve(__dirname,'../..'),output=path.resolve(process.env.PACKAGE_F_BROWSER_DIR||'/tmp/package-f-browser');fs.mkdirSync(output,{recursive:true});
-const server=http.createServer((req,res)=>{let p=path.join(root,decodeURIComponent(req.url.split('?')[0]));if(fs.existsSync(p)&&fs.statSync(p).isDirectory())p=path.join(p,'index.html');fs.readFile(p,(e,d)=>{res.setHeader('Content-Type',p.endsWith('.js')?'text/javascript':p.endsWith('.css')?'text/css':p.endsWith('.json')?'application/json':'text/html');res.statusCode=e?404:200;res.end(e?'missing':d)});});
+const server=http.createServer((req,res)=>{let p=path.join(root,decodeURIComponent(req.url.split('?')[0]));if(fs.existsSync(p)&&fs.statSync(p).isDirectory())p=path.join(p,'index.html');fs.readFile(p,(e,d)=>{res.setHeader('Content-Type',/\.m?js$/.test(p)?'text/javascript':p.endsWith('.css')?'text/css':p.endsWith('.json')?'application/json':'text/html');res.statusCode=e?404:200;res.end(e?'missing':d)});});
 (async()=>{
  await new Promise(r=>server.listen(0,'127.0.0.1',r));
  const base=process.env.PACKAGE_F_BASE_URL||`http://127.0.0.1:${server.address().port}`;
@@ -11,9 +11,14 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
  const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_EXECUTABLE_PATH||undefined,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
  try{
   const context=await browser.newContext({proxy,ignoreHTTPSErrors:!!proxy,acceptDownloads:true});const page=await context.newPage();page.setDefaultTimeout(30000);
-  const errors=[],requests=[];page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)requests.push({url:r.url(),status:r.status()})});
-  const response=await page.goto(base+'/cs-games/teacher/?package-f-verification=20261027');assert.equal(response.status(),200);await page.waitForFunction(()=>document.querySelector('#source').options.length===46);
-  const sourceIds=await page.locator('#source option').evaluateAll(options=>options.map(o=>o.value));assert.equal(sourceIds.length,46);
+  const errors=[],requests=[];page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400&&!r.url().endsWith('/favicon.ico'))requests.push({url:r.url(),status:r.status()})});
+  const response=await page.goto(base+'/cs-games/teacher/?package-f-verification=20261027#practice');assert.equal(response.status(),200);await page.waitForFunction(()=>document.querySelector('#source').options.length>0);await page.evaluate(()=>{document.querySelector('#practice-canvas details.more').open=true;});
+  const {visible,expected}=await page.evaluate(async()=>{
+   const {sources,baselineSourceIds}=await import('/cs-games/teacher/adapters.js?v=loop-types-v1');
+   return {visible:[...document.querySelectorAll('#source option')].map(o=>o.value),expected:sources.map(s=>s.id)};
+  });
+  assert.deepEqual(visible,expected);
+  const sourceIds=expected;
   await page.evaluate(()=>localStorage.setItem('package-f-sentinel','unchanged'));
   const cases=[];
   async function generate(source,level='mixed',count=3,points=3,mode){
@@ -32,7 +37,7 @@ const server=http.createServer((req,res)=>{let p=path.join(root,decodeURICompone
   for(const source of ['variable','loop','search-sort'])for(const level of ['Beginner','Intermediate','Advanced','mixed'])await generate(source,level);
   for(const source of sourceIds)await generate(source);
   await generate('search-sort','Beginner',3,1,'compare');assert.ok((await page.locator('.question-content').allTextContents()).every(t=>t.includes('[')));await download('live-search-context');
-  const limited=await page.evaluate(async()=>{const {sourceById}=await import('./adapters.js?v=package-f-20261027');return sourceById.string.modes.find(m=>!m.difficulties.some(d=>d.toLowerCase()==='advanced')).id});
+  const limited=await page.evaluate(async()=>{const {sourceById}=await import('/cs-games/teacher/adapters.js?v=package-f-20261027');return sourceById.string.modes.find(m=>!m.difficulties.some(d=>d.toLowerCase()==='advanced')).id});
   await generate('string','Advanced',3,5,limited);assert.match(await page.locator('#status').textContent(),/nearest supported level/);
   await page.selectOption('#source','create-task-lab');
   assert.equal(await page.locator('#difficulty option[value="Advanced"]').evaluate(el=>el.disabled),true,JSON.stringify({errors,state:await page.evaluate(()=>({source:[...document.querySelector('#source').selectedOptions].map(o=>o.value),modes:[...document.querySelector('#mode').selectedOptions].map(o=>o.value),difficulty:[...document.querySelector('#difficulty').options].map(o=>[o.value,o.disabled])}))}));

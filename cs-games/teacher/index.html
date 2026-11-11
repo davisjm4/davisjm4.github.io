@@ -3,69 +3,136 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Teacher Tools for generating Canvas-ready Java programming, R-A-C-E-C-E-S writing, and Workplace Readiness assessments.">
+  <meta name="description" content="Teacher Tools: manage your classes, create online diagnostics and Canvas quizzes, and plan class learning pathways.">
   <title>Teacher Tools | CS Games</title>
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="./teacher.css">
+  <link rel="stylesheet" href="./teacher-ui.css">
   <script type="module" src="./teacher.js?v=loop-types-v1"></script>
-  <script type="module" src="./wpr-online.mjs?v=profiles-v1"></script>
+  <script type="module" src="./wpr-online.mjs?v=profiles-v2"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
   <header class="site-header">
-    <nav class="nav">
+    <nav class="nav" aria-label="Main">
       <a class="brand" href="../">CS Games</a>
       <a href="../csp/">AP CSP</a>
       <a href="../advanced/">Advanced CS</a>
       <a class="active" aria-current="page" href="./">Teacher Tools</a>
     </nav>
   </header>
-  <main class="wrap">
-    <section class="hero">
-      <div class="eyebrow">CS Games · Teacher Tools</div>
-      <h1>Build a practice quiz</h1>
-      <p class="lede">Generate a small Canvas-compatible multiple-choice assessment from an existing game. Questions are created locally in this browser.</p>
-    </section>
-    <section class="panel"><h2>Class Learning Pathways</h2><p>Connect your class calendar, instructional goals, mastery nodes and student progression.</p><a class="button" href="./pacing/">Open pathway &amp; pacing editor</a></section>
-    <section class="panel">
-      <h2>Quiz settings</h2>
-      <div class="teacher-form">
-        <label>Quiz title<input id="quiz-title" value="Java Programming Practice" maxlength="120"></label>
-        <label>Assessment sources<select id="source" multiple size="9" aria-describedby="source-help"></select></label>
-        <label>Practice modes<select id="mode" multiple size="8" aria-describedby="mode-help"></select></label>
-        <label>Difficulty<select id="difficulty"><option value="mixed">Mixed difficulty</option><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option></select></label>
-        <label>Questions<input id="question-count" type="number" min="1" max="50" value="5"></label>
-        <label>Points per question<input id="points" type="number" min="1" max="100" value="1"></label>
-        <label>Random seed (optional)<input id="seed" inputmode="numeric" placeholder="New seed each time"></label>
+  <div class="tt-bar">
+    <nav class="tt-bar-inner" id="teacher-sections" aria-label="Teacher Tools sections">
+      <span class="label">Teacher Tools</span>
+      <a href="#classes" data-view-link="classes">My Classes</a>
+      <a href="#practice" data-view-link="practice">Practice &amp; Assessments</a>
+      <a href="#pathways" data-view-link="pathways">Learning Pathways</a>
+    </nav>
+  </div>
+  <main id="main" class="wrap tt" tabindex="-1">
+    <div class="page-head">
+      <div>
+        <div class="eyebrow">CS Games · Teacher Tools</div>
+        <h1>Teacher Tools</h1>
+        <p class="lede">Find your class, plan the year, and give students practice and assessments, all in one place.</p>
       </div>
-      <p id="source-help" class="muted">Choose one or more games. Use Ctrl (Windows) or Command (Mac) to select multiple entries.</p>
-      <p id="mode-help" class="muted">Modes are grouped by source. Exports use single-answer multiple choice with two to four native choices. Only validated standalone modes are listed.</p>
-      <fieldset id="raceces-filters" class="source-filters" hidden>
-        <legend>R-A-C-E-C-E-S writing filters</legend>
-        <label>Subject<select id="raceces-subject"><option value="all">All Topics (all subjects)</option></select></label>
-        <p class="muted">Choose one subject, then optionally select one or more topics. Leave all topic boxes unchecked to include every topic in the selected subject.</p>
-        <div id="raceces-topics" class="topic-options" aria-label="Writing topics"></div>
-      </fieldset>
-      <fieldset id="workplace-filters" class="source-filters" hidden>
-        <legend>Workplace Readiness filters</legend>
-        <label>Skills<select id="workplace-skills" multiple size="7" aria-describedby="workplace-help"></select></label>
-        <label>Career settings<select id="workplace-contexts" multiple size="6" aria-describedby="workplace-help"></select></label>
-        <p id="workplace-help" class="muted">Choose one or more skills and settings. Leave either list unselected to include all options.</p>
-      </fieldset>
-      <p class="muted">Modes without difficulty controls use their native Mixed level. Limited-level modes use the nearest supported level, with a notice here and in the preview. Unavailable filtered combinations block generation. Canvas import scoring and feedback display have not been verified in a sandbox; review imported points and explanations before assigning.</p>
-      <details class="muted"><summary>Assessment coverage and limitations</summary><p>Some integrations cover selected interpretation modes: LinkedList exports tracing and collection decisions; Method &amp; Constructor exports choices and source-span identification, not argument rearrangement; Documentation excludes comment editing, Javadoc construction, and multi-part classification; Inheritance exports native single-choice Abstract Class questions; API Response Explorer excludes multi-selection and classification; Robot Algorithms excludes route construction and repair tasks. Computing Impact items assess one labeled claim, evidence, or reasoning step. Cybersecurity exports single-warning phishing cases only. Algorithm Architect exports its existing missing-component format. Code Concepts excludes multi-region selection. Simulation exports reference questions, not live experiments. Trivial/Non-Trivial exports Program A classification. WPR and RACECES ordering remains recognition of a valid sequence.</p><p>RGB, ASCII, Dance, Network Breaker, Packet Router, Class Builder rearrangement, and API Project Builder remain interactive practice. Their complete manipulation or construction tasks do not have a validated standalone export in this package. The readiness pathway tracks practice evidence and has no question generator.</p></details>
-      <p id="eligibility" class="muted" role="status"></p>
-      <div class="actions">
-        <button id="generate">Generate Quiz</button>
-        <button id="regenerate-quiz" class="secondary" disabled>Regenerate Quiz</button>
-        <button id="download" class="secondary" disabled>Download Canvas QTI ZIP</button>
+      <div id="teacher-account" class="account" aria-label="Teacher sign-in"></div>
+    </div>
+
+    <!-- ───────── My Classes ───────── -->
+    <section id="classes" data-view="classes" aria-labelledby="classes-title">
+      <div id="classes-signed-out" class="card empty">
+        <h2 id="classes-title">My Classes</h2>
+        <p>Sign in with your teacher account to see your classes, student profiles and class pathways.</p>
+        <p class="muted">Not signed in yet? You can still plan a pathway or export a Canvas quiz. Both work without an account.</p>
+        <div class="actions" style="justify-content:center"><a class="btn" href="#practice">Practice &amp; Assessments</a><a class="btn" href="./pacing/">Plan a learning pathway</a></div>
       </div>
-      <p id="status" class="status-line" role="status"></p>
+      <div id="my-classes"></div>
     </section>
-    <section id="wpr-online" class="panel" aria-label="Online Workplace Readiness assignments"></section>
-    <section id="quiz-summary" class="panel" hidden></section>
-    <section id="preview" aria-live="polite"></section>
+
+    <!-- ───────── Practice & Assessments ───────── -->
+    <section id="practice" data-view="practice" aria-labelledby="practice-title">
+      <div class="card flat" style="padding:0;border:0;margin-top:0">
+        <h2 id="practice-title">Practice &amp; Assessments</h2>
+        <p class="muted">Create an online diagnostic or targeted practice for students, review what you have published, or export questions to Canvas.</p>
+        <div class="chips" role="group" aria-label="Jump to a task">
+          <a class="btn small" href="#practice-online">Create online diagnostic or practice</a>
+          <a class="btn small" href="#practice-published">Published assessments</a>
+          <a class="btn small" href="#practice-canvas">Export a quiz to Canvas</a>
+        </div>
+      </div>
+      <section id="practice-online" class="card accent" aria-label="Create an online diagnostic or targeted practice">
+        <div id="wpr-online"></div>
+      </section>
+      <section id="practice-published" class="card" aria-labelledby="published-title">
+        <div class="card-head"><div><h2 id="published-title">Published assessments</h2><p>Open class reports, copy student links, or remove an assignment.</p></div></div>
+        <div id="published-assessments"><p class="muted">Sign in to see the assessments you have published.</p></div>
+      </section>
+      <section id="practice-canvas" class="card gold" aria-labelledby="canvas-title">
+        <div class="card-head"><div><h2 id="canvas-title">Export a quiz to Canvas</h2><p>Generate a small multiple-choice assessment from existing games and download a Canvas QTI file. Questions are created in this browser, with no sign-in needed.</p></div></div>
+        <div class="field-grid" id="quiz-settings">
+          <label>Quiz title<input id="quiz-title" value="Java Programming Practice" maxlength="120"></label>
+          <label>Difficulty<select id="difficulty"><option value="mixed">Mixed difficulty</option><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option></select></label>
+          <label>Number of questions<input id="question-count" type="number" min="1" max="50" value="5"></label>
+          <label>Points per question<input id="points" type="number" min="1" max="100" value="1"></label>
+          <label class="span-all">Games to draw questions from<select id="source" multiple size="9" aria-describedby="source-help"></select></label>
+          <p id="source-help" class="hint span-all">Choose one or more games. Hold Ctrl (Windows) or Command (Mac) to select several.</p>
+          <label class="span-all">Practice modes<select id="mode" multiple size="8" aria-describedby="mode-help"></select></label>
+          <p id="mode-help" class="hint span-all">Modes are grouped by game. Exports use single-answer multiple choice with two to four choices. Only validated standalone modes are listed.</p>
+        </div>
+        <fieldset id="raceces-filters" class="source-filters" hidden>
+          <legend>R-A-C-E-C-E-S writing filters</legend>
+          <label>Subject<select id="raceces-subject"><option value="all">All Topics (all subjects)</option></select></label>
+          <p class="hint">Choose one subject, then optionally select one or more topics. Leave all topic boxes unchecked to include every topic in the selected subject.</p>
+          <div id="raceces-topics" class="topic-options" aria-label="Writing topics"></div>
+        </fieldset>
+        <fieldset id="workplace-filters" class="source-filters" hidden>
+          <legend>Workplace Readiness filters</legend>
+          <label>Skills<select id="workplace-skills" multiple size="7" aria-describedby="workplace-help"></select></label>
+          <label>Career settings<select id="workplace-contexts" multiple size="6" aria-describedby="workplace-help"></select></label>
+          <p id="workplace-help" class="hint">Choose one or more skills and settings. Leave either list unselected to include all options.</p>
+        </fieldset>
+        <details class="more"><summary>Advanced options <small>Random seed</small></summary><div class="body">
+          <label>Random seed (optional)<input id="seed" inputmode="numeric" placeholder="New seed each time"><small>Use the same seed to regenerate the same quiz.</small></label>
+        </div></details>
+        <p id="eligibility" class="hint" role="status"></p>
+        <p class="hint">Canvas import scoring and feedback display have not been verified in a sandbox. Review imported points and explanations before assigning.</p>
+        <details class="more"><summary>Assessment coverage and limitations</summary><div class="body">
+          <p>Some integrations cover selected interpretation modes: LinkedList exports tracing and collection decisions; Method &amp; Constructor exports choices and source-span identification, not argument rearrangement; Documentation excludes comment editing, Javadoc construction, and multi-part classification; Inheritance exports native single-choice Abstract Class questions; API Response Explorer excludes multi-selection and classification; Robot Algorithms excludes route construction and repair tasks. Computing Impact items assess one labeled claim, evidence, or reasoning step. Cybersecurity exports single-warning phishing cases only. Algorithm Architect exports its existing missing-component format. Code Concepts excludes multi-region selection. Simulation exports reference questions, not live experiments. Trivial/Non-Trivial exports Program A classification. WPR and RACECES ordering remains recognition of a valid sequence.</p><p>RGB, ASCII, Dance, Network Breaker, Packet Router, Class Builder rearrangement, and API Project Builder remain interactive practice. Their complete manipulation or construction tasks do not have a validated standalone export in this package. The readiness pathway tracks practice evidence and has no question generator.</p>
+        </div></details>
+        <div class="actions">
+          <button id="generate" class="primary">Generate Quiz</button>
+          <button id="regenerate-quiz" class="secondary" disabled>Regenerate Quiz</button>
+          <button id="download" class="secondary" disabled>Download Canvas QTI ZIP</button>
+        </div>
+        <p id="status" class="status-line" role="status"></p>
+      </section>
+      <section id="quiz-summary" class="card" hidden></section>
+      <section id="preview" aria-live="polite"></section>
+    </section>
+
+    <!-- ───────── Learning Pathways ───────── -->
+    <section id="pathways" data-view="pathways" aria-labelledby="pathways-title">
+      <div class="card accent">
+        <div class="card-head">
+          <div><h2 id="pathways-title">Learning Pathways</h2><p>Connect your class calendar, learning goals and pacing guide. Publish when you are ready, and students see the same plan.</p></div>
+          <a class="btn primary" href="./pacing/">Open the pathway editor</a>
+        </div>
+        <div class="task-grid" aria-label="Pathway tasks">
+          <a class="task" href="./pacing/#calendar"><strong>Set up your calendar</strong><span>Meeting days, A/B schedule, closures and exam date.</span></a>
+          <a class="task" href="./pacing/#goals"><strong>Review standards and skills</strong><span>Choose and order what each class will learn.</span></a>
+          <a class="task" href="./pacing/#pacing"><strong>Edit pacing</strong><span>See every meeting and adjust time and deadlines.</span></a>
+          <a class="task" href="./pacing/#review"><strong>Preview and publish</strong><span>Check what students will see, then publish changes.</span></a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div><h2>Your class pathways</h2><p>Open the pathway for any class. Status shows what students currently see.</p></div></div>
+        <div id="pathway-class-list"><p class="muted">Sign in to see your classes. You can also open the editor and plan locally without signing in.</p></div>
+      </div>
+    </section>
   </main>
   <footer class="footer"><div class="wrap">CS Games · Teacher Tools. Questions and files remain in this browser until downloaded.</div></footer>
+  <script src="./views.js?v=ux-v1"></script>
   <script src="../../java-games/string-lab/js/rng.js?v=string-lab-1.1.1"></script>
   <script src="../../java-games/string-lab/js/words.js?v=string-lab-1.1.1"></script>
   <script src="../../java-games/string-lab/js/java-ast.js?v=string-lab-1.1.1"></script>
