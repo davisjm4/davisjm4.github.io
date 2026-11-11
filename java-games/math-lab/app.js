@@ -61,6 +61,8 @@ export function startMathLab() {
     $("next").onclick = next;
     stats();
   }
+  const requestedMode = typeof location === 'undefined' ? null : new URLSearchParams(location.search).get('mode');
+  if (requestedMode && [...$("mode").options].some(option => option.value === requestedMode)) $("mode").value = requestedMode;
   $("mode").onchange = next;
   $("difficulty").onchange = next;
   window.addEventListener("pagehide", () => { if (instance) tracker.skip(instance); });

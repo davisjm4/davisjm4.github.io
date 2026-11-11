@@ -1,15 +1,20 @@
 import {meetings} from './calendar.mjs';
-import {clone,validatePathway} from './model.mjs';
-export function generatePacing(input,graph,{from=input.calendar.start}={}) {
+import {clone,validatePathway,prerequisiteOrder} from './model.mjs';
+export function generatePacing(input,graph,{from=input.calendar?.start}={}) {
   validatePathway(input,graph,{validateSessions:false,validateTargets:false});const p=clone(input),warnings=[],byNode=new Map(p.checkpoints.map(c=>[c.nodeId,c]));
+  if(!p.calendar)return p;
+  const end=p.examDate??p.calendar.end;
   const nodes=new Map([...(p.curriculumSnapshot?.nodes||graph.nodes),...(p.customNodes||[])].map(n=>[n.id,n]));
   for(const c of p.checkpoints)for(const dep of c.prerequisites)if(!byNode.has(dep))warnings.push('Prerequisite '+dep+' is outside this plan. Assess prior knowledge or add the missing skill.');
-  const sequence=[],seen=new Set();function add(id){if(seen.has(id))return;seen.add(id);for(const d of byNode.get(id)?.prerequisites||[])if(byNode.has(d))add(d);sequence.push(id);}p.sequence.forEach(add);
-  if(JSON.stringify(sequence)!==JSON.stringify(p.sequence))warnings.push('Prerequisites require a different teaching order; preview the adjusted sequence.');p.sequence=sequence;
-  const remaining=new Map(p.checkpoints.map(c=>[c.nodeId,c.minutes]));const introduced=new Set();const sessions=(p.sessions||[]).filter(s=>s.date<from&&s.date<=p.examDate).map(clone);
+  const sequence=prerequisiteOrder(p.sequence,id=>byNode.get(id).prerequisites);
+  if(JSON.stringify(sequence)!==JSON.stringify(p.sequence)){
+    warnings.push('The schedule teaches prerequisite skills before dependent skills.');
+    if(p.pacingVisibility===undefined)p.sequence=sequence;
+  }
+  const remaining=new Map(p.checkpoints.map(c=>[c.nodeId,c.minutes]));const introduced=new Set();const sessions=(p.sessions||[]).filter(s=>s.date<from&&s.date<=end).map(clone);
   for(const s of sessions)for(const a of s.allocations||[]){introduced.add(a.nodeId);remaining.set(a.nodeId,Math.max(0,(remaining.get(a.nodeId)||0)-a.minutes));}
   for(const c of p.checkpoints)if(!c.targetLocked&&(!c.targetDate||c.targetDate>=from))c.targetDate=null;
-  const all=meetings(p.calendar).filter(m=>m.meets&&m.date<=p.examDate);let instructionMinutes=0,protectedMinutes=0;
+  const all=meetings(p.calendar).filter(m=>m.meets&&m.date<=end);let instructionMinutes=0,protectedMinutes=0;
   for(const m of all){if(m.date<from)continue;
     const dayType=m.date===p.examDate?'Semester / Final Exam':m.dayType;
     const isProtected=['Study / Review','Mixed Practice','Quiz / Testing','Semester / Final Exam'].includes(dayType);
@@ -38,8 +43,8 @@ export function generatePacing(input,graph,{from=input.calendar.start}={}) {
   const unscheduled=p.checkpoints.filter(c=>remaining.get(c.nodeId)>0).map(c=>({nodeId:c.nodeId,required:c.required,remainingMinutes:remaining.get(c.nodeId)}));
   const deficit=unscheduled.filter(c=>c.required).reduce((n,c)=>n+c.remainingMinutes,0);
   if(deficit)warnings.push('Required content needs '+deficit+' additional minutes. Extend the exam date, increase meeting minutes, revise time estimates, or explicitly make selected nodes optional. No requirements have been removed.');
-  if(!all.some(m=>m.date===p.examDate))warnings.push('The target exam date is not a class meeting. Choose a meeting date to reserve an exam session.');
-  for(const c of p.checkpoints)if(c.targetLocked&&c.targetDate){if(c.targetDate>p.examDate)warnings.push('Checkpoint '+c.nodeId+' is scheduled after the target exam. Move its target or extend the exam date.');const last=sessions.filter(s=>s.allocations?.some(a=>a.nodeId===c.nodeId)).at(-1);if(last&&last.date>c.targetDate)warnings.push('Checkpoint '+c.nodeId+' is due before its planned instruction finishes.');}
+  if(p.examDate&&!all.some(m=>m.date===p.examDate))warnings.push('The target exam date is not a class meeting. Choose a meeting date to reserve an exam session.');
+  for(const c of p.checkpoints)if(c.targetLocked&&c.targetDate){if(p.examDate&&c.targetDate>p.examDate)warnings.push('Checkpoint '+c.nodeId+' is scheduled after the target exam. Move its target or extend the exam date.');const last=sessions.filter(s=>s.allocations?.some(a=>a.nodeId===c.nodeId)).at(-1);if(last&&last.date>c.targetDate)warnings.push('Checkpoint '+c.nodeId+' has a target before its planned instruction finishes.');}
   p.sessions=sessions;p.warnings=warnings;p.capacity={meetings:all.length,totalMinutes:all.reduce((n,m)=>n+m.minutes,0),instructionMinutes,protectedMinutes,deficit,unscheduled};return p;
 }
 const quote=s=>'"'+String(s??'').replaceAll('"','""')+'"';

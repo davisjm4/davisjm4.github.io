@@ -58,7 +58,10 @@ test('teacher publishes exact three-topic diagnostic, student takes it, teacher 
   await teacher.click('#wpr-online-preview details summary');
   await exactButton(teacher,'Regenerate question 1');
   await exactButton(teacher,'Publish online assignment');
-  const share=await teacher.waitForSelector('a[href*="?assignment="]',{timeout:10000});
+  const share=await teacher.waitForSelector('a[href*="?assignment="]',{timeout:10000}).catch(async error=>{
+    const status=await teacher.$$eval('#wpr-online [role=status]',nodes=>nodes.map(node=>node.textContent));
+    throw new Error('Assignment share link missing. '+status.join(' '),{cause:error});
+  });
   const link=await share.evaluate(x=>x.href);
   const assignmentId=new URL(link).searchParams.get('assignment');
   const a=JSON.parse(db.prepare('SELECT snapshot FROM assignments WHERE id=?').get(assignmentId).snapshot);
@@ -149,7 +152,7 @@ test('a student joins, practices offline, restores on another device and leaves 
   await exactButton(teacher,'Sign in to development service');
   await wait(teacher,'#wpr-teacher-profiles [name="class-title"]');
   await teacher.type('[name="class-title"]','Period 5');
-  await exactButton(teacher,'Add class');
+  await exactButton(teacher,'Create class');
   const invite=await (await wait(teacher,'#wpr-teacher-profiles a[href*="#enroll="]')).evaluate(x=>x.href);
   await teacher.waitForFunction(()=>document.querySelector('[name="profileClassId"]')?.options.length===2);
   assert.equal(await teacher.$eval('[name="profileClassId"]',e=>e.value),'');
@@ -166,7 +169,9 @@ test('a student joins, practices offline, restores on another device and leaves 
   await exactButton(first,'Enroll in this class');
   const recovery=await (await wait(first,'.wpr-profile-secret')).evaluate(e=>e.textContent);
   await Promise.all([first.waitForNavigation({waitUntil:'load'}),exactButton(first,'I saved my recovery credential')]);
-  const id=await first.evaluate(()=>WRG.profileDevice.identity.id);
+  await wait(first,'#student-pathway .pathway-area');
+  assert.match(await first.$eval('#student-pathway',e=>e.textContent),/Workplace Readiness · Self-paced/);
+  const id=db.prepare('SELECT id FROM student_profiles').get().id;
   await first.goto(wpr+target,{waitUntil:'load'});
   await exactButton(first,'Start shared practice');
   await wait(first,'.choice[role="radio"]');
@@ -251,7 +256,7 @@ test('Loop Lab attempts reach a recovered CS Games profile after reconnecting', 
   await wait(teacher,'[name="class-title"]');
   await teacher.type('[name="class-title"]','Synthetic Java class');
   await teacher.select('[name="class-course"]','advanced');
-  await exactButton(teacher,'Add class');
+  await exactButton(teacher,'Create class');
   const link=await (await wait(teacher,'#wpr-teacher-profiles a[href*="#enroll="]')).evaluate(node=>node.href);
   assert.equal(new URL(link).pathname,'/cs-games/student/');
   await first.goto(link);
@@ -277,7 +282,10 @@ test('Loop Lab attempts reach a recovered CS Games profile after reconnecting', 
   await second.type('#student-profile [name="id"]',id);
   await second.type('#student-profile [name="recovery"]',recovery);
   await Promise.all([second.waitForNavigation(),exactButton(second,'Restore profile','#student-profile')]);
-  await exactButton(second,'View synced progress','#student-profile');
+  await second.click('header a[href="#student-profile"]');
+  await second.waitForSelector('#student-profile details[open]',{visible:true});
+  await second.focus('#student-profile details[open] button:nth-of-type(2)');
+  await second.keyboard.press('Enter');
   await wait(second,'#profile-progress table');
   assert.match(await second.$eval('#profile-progress',node=>node.textContent),/loop-lab/);
   assert.deepEqual(errors,[]);

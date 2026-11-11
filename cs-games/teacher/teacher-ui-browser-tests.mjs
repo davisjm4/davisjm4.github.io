@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
+import { profileHash } from '../../wpr-games/workplace-readiness/service/profiles.mjs';
 import { startDev } from '../../wpr-games/workplace-readiness/service/dev.mjs';
 import { createPathway, clone } from '../pathway/model.mjs';
 import { generatePacing } from '../pathway/pacing.mjs';
@@ -31,8 +32,10 @@ async function service(t) {
   return { ...dev, api };
 }
 // A published class with one unpublished edit, through the real API.
-async function seedClass(api, title = 'CS Games Test') {
-  const klass = await api('/teacher/profiles', { title, courseId: 'advanced' });
+async function seedClass({api,db}, title = 'CS Games Test') {
+  const klass={id:crypto.randomUUID()};
+  db.prepare('INSERT INTO profile_classes(id,owner,title,invite,created,expires,course_id) VALUES(?,?,?,?,?,?,?)')
+    .run(klass.id,'teacher',title,await profileHash(crypto.randomUUID()),Date.now(),Date.now()+86400000,'advanced');
   for (let i = 0; i < 3; i++) await api(`/teacher/profiles/${klass.id}/students`, {});
   let p = createPathway(graph, { title, courseId: 'advanced', classId: klass.id, calendar: { start: '2026-08-10', end: '2027-05-28', weekdays: [1, 2, 3, 4, 5], minutes: 80, rotation: ['A', 'B'], classRotations: [], rotationOffset: 0, overrides: [] } });
   p.examDate = '2027-05-21';
@@ -59,6 +62,7 @@ async function signInHub(page) {
   await page.waitForSelector('#wpr-teacher-profiles:not([hidden]) .class-card', { timeout: 10000 });
 }
 async function signInEditor(page) {
+  await page.waitForSelector('input[aria-label="Development teacher token"]',{visible:true,timeout:10000});
   await page.type('input[aria-label="Development teacher token"]', token);
   await clickByText(page, '#auth', 'Sign in to development service');
   await page.waitForFunction(() => document.querySelector('#connection').textContent.startsWith('Signed in'), { timeout: 10000 });
@@ -68,10 +72,24 @@ async function axeViolations(page, selector) {
   return page.evaluate(async s => (await axe.run(s, { runOnly: ['wcag2a', 'wcag2aa'] })).violations.map(v => ({ id: v.id, nodes: v.nodes.slice(0, 3).map(n => n.target.join(' ') + ' :: ' + (n.failureSummary || '').split('\n').slice(0, 2).join(' ')) })), selector);
 }
 const stage = (page, name) => page.evaluate(n => { location.hash = n; }, name).then(() => page.waitForFunction(n => !document.getElementById('stage-' + n).hidden, {}, name));
+async function addCalendar(page,{ab=false}={}) {
+  await stage(page,'calendar');
+  await page.click('#add-pacing');
+  for(const [name,value] of [['start','2026-08-10'],['end','2027-05-28']]){
+    await page.$eval('#settings [name='+name+']',(input,date)=>{input.value=date;input.dispatchEvent(new Event('input',{bubbles:true}));},value);
+  }
+  if(ab){
+    await page.click('input[name=scheduleMode][value=ab]');
+    for(const input of await page.$$('#ab-picker input'))if(!await input.evaluate(e=>e.checked))await input.click();
+  }
+  await page.click('#settings button[type=submit]');
+  await page.waitForFunction(()=>document.querySelector('#status')?.textContent.includes('Pacing updated'));
+}
+
 
 test('Teacher Tools: three views, readable class overview, no raw identifiers, student IDs kept', { timeout: 120000 }, async t => {
   const svc = await service(t);
-  const seeded = await seedClass(svc.api);
+  const seeded = await seedClass(svc);
   const browser = await launch(); t.after(() => browser.close());
   const page = await browser.newPage();
   const errors = []; page.on('pageerror', e => errors.push(e.message));
@@ -111,7 +129,7 @@ test('Teacher Tools: three views, readable class overview, no raw identifiers, s
   await page.waitForFunction(() => document.querySelector('#class-pathway-status')?.innerText.includes('Unpublished changes'), { timeout: 10000 });
   const overview = await visibleText(page, '#class-overview > .card');
   assert.match(overview, /CS Games Test/); assert.match(overview, /Advanced Computer Science/);
-  assert.match(overview, /Unpublished changes/); assert.match(overview, /Last published/); assert.match(overview, /Open learning pathway/);
+  assert.match(overview, /Unpublished changes/); assert.match(overview, /Last published/); assert.match(overview, /Open student pathway/);
   assert.doesNotMatch(overview, UUID, 'class overview must not show a raw id'); assert.doesNotMatch(overview, RAW_ID);
   assert.doesNotMatch(overview, /\bfalse\b|undefined|\[object/i);
   // Real counts only: three profiles were issued.
@@ -122,7 +140,7 @@ test('Teacher Tools: three views, readable class overview, no raw identifiers, s
   assert.equal(await page.$eval('#class-troubleshooting', e => e.closest('details').open), false);
   assert.match(await page.$eval('#class-troubleshooting', e => e.textContent), new RegExp(seeded.classId));
   // The pathway link opens that class.
-  assert.match(await page.$eval('#class-overview a.btn.primary', a => a.getAttribute('href')), new RegExp('/pacing/\\?class=' + seeded.classId));
+  assert.match(await page.$eval('#class-overview a[href$="#goals"]', a => a.getAttribute('href')), new RegExp('/pacing/\\?class=' + seeded.classId));
 
   // Pathways view lists classes by name with status.
   await page.evaluate(() => { location.hash = '#pathways'; });
@@ -143,7 +161,7 @@ test('Teacher Tools: three views, readable class overview, no raw identifiers, s
 
 test('Teacher Tools: accessible views, readable contrast, keyboard focus', { timeout: 120000 }, async t => {
   const svc = await service(t);
-  await seedClass(svc.api);
+  await seedClass(svc);
   const browser = await launch(); t.after(() => browser.close());
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 900 });
@@ -177,7 +195,7 @@ test('Teacher Tools: accessible views, readable contrast, keyboard focus', { tim
 
 test('Pathway editor: dark theme, four stages, readable labels, responsive at 390/768/1280', { timeout: 150000 }, async t => {
   const svc = await service(t);
-  const seeded = await seedClass(svc.api);
+  const seeded = await seedClass(svc);
   const browser = await launch(); t.after(() => browser.close());
   const page = await browser.newPage();
   const errors = []; page.on('pageerror', e => errors.push(e.message));
@@ -202,9 +220,10 @@ test('Pathway editor: dark theme, four stages, readable labels, responsive at 39
   assert.doesNotMatch(chips, UUID); assert.doesNotMatch(chips, /Class [0-9a-f]{8}/);
 
   // Four stages, one at a time, in order.
-  assert.deepEqual(await page.$$eval('#stepper button strong', b => b.map(x => x.textContent)), ['Class & Calendar', 'Learning Goals', 'Pacing Guide', 'Review & Publish']);
+  assert.deepEqual(await page.$$eval('#stepper button strong', b => b.map(x => x.textContent)), ['Pacing Setup', 'Customize Pathway', 'Pacing Guide', 'Review & Publish']);
   for (const name of ['calendar', 'goals', 'pacing', 'review']) {
-    await page.click(`#stepper button[data-stage="${name}"]`);
+    await page.focus(`#stepper button[data-stage="${name}"]`);
+    await page.keyboard.press('Enter');
     await page.waitForFunction(n => !document.getElementById('stage-' + n).hidden, {}, name);
     assert.equal(await page.$$eval('[data-stage-panel]:not([hidden])', s => s.length), 1);
     assert.equal(await page.$eval('#stepper [aria-current]', b => b.dataset.stage), name);
@@ -239,7 +258,7 @@ test('Pathway editor: dark theme, four stages, readable labels, responsive at 39
 
 test('Pathway editor: accessibility and contrast for every stage', { timeout: 150000 }, async t => {
   const svc = await service(t);
-  const seeded = await seedClass(svc.api);
+  const seeded = await seedClass(svc);
   const browser = await launch(); t.after(() => browser.close());
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 900 });
@@ -271,8 +290,11 @@ test('Pathway editor: weekday checkboxes, A/B schedule and known-day anchor driv
   await page.goto(svc.url + '/cs-games/teacher/pacing/', { waitUntil: 'load' });
   const stored = () => page.evaluate(() => { const s = JSON.parse(localStorage.getItem('cs-games:teacher-pathways:v1')); return s.classes[s.selected].draft.calendar; });
   const meetings = () => page.$eval('#capacity .stat strong', e => Number(e.textContent));
-  const apply = async () => { await page.click('#settings button[type=submit]'); await page.waitForFunction(() => document.querySelector('#status')?.textContent.includes('Settings saved'), { timeout: 10000 }); };
+  const apply = async () => { await page.click('#settings button[type=submit]'); await page.waitForFunction(() => document.querySelector('#status')?.textContent.includes('Pacing updated'), { timeout: 10000 }); };
+  await addCalendar(page,{ab:true});
+  await stage(page,'pacing');
   const startMeetings = await meetings();
+  await stage(page,'calendar');
   const initial = await stored();
   assert.deepEqual([initial.weekdays, initial.rotation, initial.classRotations], [[1, 2, 3, 4, 5], ['A', 'B'], []]);
   assert.equal(await page.$eval('input[name=scheduleMode]:checked', r => r.value), 'ab', 'an existing A/B class is recognised');
@@ -335,6 +357,7 @@ test('Pathway editor: searchable skill picker keeps the node-id data contract', 
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 900 });
   await page.goto(svc.url + '/cs-games/teacher/pacing/', { waitUntil: 'load' });
+  await addCalendar(page);
   await page.evaluate(() => document.querySelectorAll('#stage-calendar details.more').forEach(d => { d.open = true; }));
   await page.type('#assess-search', 'nested loop');
   const rows = await page.$$eval('#assess-list li label', l => l.map(x => x.innerText));
@@ -360,7 +383,7 @@ test('Pathway editor: searchable skill picker keeps the node-id data contract', 
 
 test('Pathway editor: draft, unpublished-change, published and publication-error states stay distinct; publish behaviour is unchanged', { timeout: 150000 }, async t => {
   const svc = await service(t);
-  const seeded = await seedClass(svc.api);
+  const seeded = await seedClass(svc);
   const browser = await launch(); t.after(() => browser.close());
   const page = await browser.newPage();
   const errors = []; page.on('pageerror', e => errors.push(e.message));
@@ -445,7 +468,7 @@ test('Pathway editor: exports, backup and copy remain available under More tools
 
 test('teacher session survives class navigation, expires safely, and resumes unsaved calendar edits', {timeout: 90000}, async t=>{
   const svc=await service(t);
-  const seeded=await seedClass(svc.api);
+  const seeded=await seedClass(svc);
   const browser=await launch();t.after(()=>browser.close());
   const page=await browser.newPage();
   const hub=svc.url+'/cs-games/teacher/';
@@ -453,11 +476,12 @@ test('teacher session survives class navigation, expires safely, and resumes uns
   await signInHub(page);
   await page.click('.class-card');
   await page.waitForSelector('#class-students');
-  const link=await page.$eval('#class-overview a.btn.primary',a=>a.href);
+  const link=await page.$eval('#class-overview a[href$="#goals"]',a=>a.href);
   await page.goto(link);
   await page.waitForFunction(()=>document.querySelector('#connection')?.textContent.startsWith('Signed in'));
   assert.equal(await page.$('[name=teacher-key]'),null);
   assert.match(await visibleText(page,'#auth'),/Signed in as teacher/);
+  await stage(page,'calendar');
   await page.waitForSelector('#settings [name=minutes]',{visible:true});
   await page.$eval('#settings [name=minutes]',input=>{
     input.value='73';
@@ -476,7 +500,8 @@ test('teacher session survives class navigation, expires safely, and resumes uns
   await page.waitForSelector('#class-students',{visible:true});
   assert.equal(await page.$('[name=teacher-key]'),null);
   assert.equal(svc.db.prepare('SELECT COUNT(*) AS n FROM profile_classes').get().n,1);
-  await clickByText(page,'#teacher-account','Sign out');
+  await page.focus('#teacher-account .account-control button');
+  await page.keyboard.press('Enter');
   await page.waitForSelector('#teacher-account [name=teacher-key]',{visible:true});
   assert.equal(await page.$eval('#wpr-teacher-profiles',root=>root.hidden),true);
 });
@@ -487,6 +512,7 @@ test('integrated graph exposes new Advanced CS skills in the pathway assessment 
   const page=await browser.newPage();
   await page.goto(svc.url+'/cs-games/teacher/pacing/');
   await page.waitForSelector('#assess-search');
+  await addCalendar(page);
   await page.evaluate(()=>document.querySelectorAll('#stage-calendar details.more').forEach(d=>{d.open=true;}));
   for(const [label,id] of [
     ['Assemble a variable declaration','node:advanced:variable-lab:assemble'],

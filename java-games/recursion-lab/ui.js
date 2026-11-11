@@ -5,6 +5,8 @@ export function startRecursionLab() {
   const $ = id => document.getElementById(id), tracker = sessionTracker(), generator = createRecursionGenerator(Date.now());
   let question, instance, selected = null, closed = false;
   $("main").innerHTML = `<div class="eyebrow">Java · Recursion · Call Stack · Returns</div><h1>Recursion Lab</h1><p class="intro">Trace recursive methods, base cases, return values, output, arrays, and recursive search and sort algorithms.</p><div class="toolbar"><label>Practice mode <select id="mode"><option value="mixed" selected>Mixed Practice</option>${Object.entries(modeNames).map(([id,n])=>`<option value="${id}">${n}</option>`).join("")}</select></label><label>Difficulty <select id="difficulty">${difficulties.map((d,i)=>`<option${i===0?" selected":""}>${d}</option>`).join("")}</select></label><button id="new" class="secondary">New Challenge</button></div><section id="stage" class="panel"></section><p id="stats" class="stats"></p>`;
+  const requestedMode=typeof URLSearchParams==='undefined'?null:new URLSearchParams(globalThis.location?.search||'').get('mode');
+  if(requestedMode&&Array.from($("mode").options).some(option=>option.value===requestedMode))$("mode").value=requestedMode;
   addSessionNavigation("../");
   const stats = () => $("stats").textContent = roundSummary("recursion-lab", $("mode").value);
   function next() {

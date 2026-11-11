@@ -8,6 +8,9 @@
 .student-panel th, .student-panel td { padding: .5rem; text-align: left; border-bottom: 1px solid var(--line); }
 .wpr-table-scroll { overflow-x: auto; }
 .wpr-profile-secret { overflow-wrap: anywhere; }
-.pathway-checkpoints li { padding: .5rem 0; }
-.pathway-checkpoints small { display: block; color: var(--muted); }
-.pathway-checkpoints a { margin-right: .8rem; }
+
+.student-panel button { color: var(--text); background: var(--panel-2, #1c3348); border: 1px solid var(--line); border-radius: 8px; }
+.student-panel button:hover { border-color: var(--accent); }
+.student-panel button:focus-visible, .pathway-area summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.student-panel .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+#student-profile { scroll-margin-top: 5rem; }

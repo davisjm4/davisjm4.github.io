@@ -71,6 +71,8 @@ ${q.scenario ? `<p id="loop-scenario">${esc(q.scenario)}</p>` : `<pre class="sni
   }
   // Test hook (only with ?test=1): lets the browser test read the current challenge.
   try { if (new URLSearchParams(location.search).has("test")) window.__loopLab = { get q() { return q; } }; } catch {}
+  const requestedMode = typeof location === 'undefined' ? null : new URLSearchParams(location.search).get('mode');
+  if (requestedMode && [...$("mode").options].some(option => option.value === requestedMode)) $("mode").value = requestedMode;
   $("mode").onchange = next; $("difficulty").onchange = next; $("new").onclick = next;
   window.addEventListener("pagehide", () => { if (instance) tracker.skip(instance); });
   next();

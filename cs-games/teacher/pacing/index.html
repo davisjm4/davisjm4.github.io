@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../teacher.css">
   <link rel="stylesheet" href="../teacher-ui.css">
   <link rel="stylesheet" href="./pacing.css">
+  <link rel="stylesheet" href="../../student/pathway-view.css">
   <script type="module" src="./app.mjs?v=shared-session-1-ux-v1"></script>
 </head>
 <body>
@@ -59,11 +60,11 @@
     </section>
     <p id="status" role="status" aria-live="polite" hidden></p>
 
-    <!-- Four-stage workflow -->
-    <nav aria-label="Pathway stages">
+    <!-- Optional pathway controls -->
+    <nav aria-label="Pathway tools">
       <ol class="stepper" id="stepper">
-        <li><button type="button" data-stage="calendar"><span class="num"><span>1</span></span><span class="txt"><strong>Class &amp; Calendar</strong><small id="step-calendar-note">When the class meets</small></span></button></li>
-        <li><button type="button" data-stage="goals"><span class="num"><span>2</span></span><span class="txt"><strong>Learning Goals</strong><small id="step-goals-note">Skills and standards</small></span></button></li>
+        <li><button type="button" data-stage="calendar"><span class="num"><span>1</span></span><span class="txt"><strong>Pacing Setup</strong><small id="step-calendar-note">When the class meets</small></span></button></li>
+        <li><button type="button" data-stage="goals"><span class="num"><span>2</span></span><span class="txt"><strong>Customize Pathway</strong><small id="step-goals-note">Skills and standards</small></span></button></li>
         <li><button type="button" data-stage="pacing"><span class="num"><span>3</span></span><span class="txt"><strong>Pacing Guide</strong><small id="step-pacing-note">Every class meeting</small></span></button></li>
         <li><button type="button" data-stage="review"><span class="num"><span>4</span></span><span class="txt"><strong>Review &amp; Publish</strong><small id="step-review-note">Share with students</small></span></button></li>
       </ol>
@@ -71,11 +72,15 @@
 
     <!-- ───────── Stage 1: Class & Calendar ───────── -->
     <section id="stage-calendar" data-stage-panel="calendar" class="card accent" aria-labelledby="calendar-title">
-      <div class="card-head"><div><div class="eyebrow">Step 1 of 4</div><h2 id="calendar-title">Class &amp; calendar</h2><p>Tell us about the class and when it meets. We build the pacing guide from this.</p></div></div>
+      <div class="card-head"><div><div class="eyebrow">Optional planning</div><h2 id="calendar-title">Pacing &amp; target dates</h2><p>Use a calendar for your own planning or share optional targets with students.</p></div></div>
       <div id="class-enrollment" hidden>
         <div class="field-grid"><label>Student class<select id="enrolled-class"></select><small>Links this pathway to the students enrolled in your class. <a href="../#classes">Manage students in My Classes</a></small></label></div>
       </div>
-      <form id="settings" novalidate>
+      <div class="actions">
+        <button id="add-pacing" class="primary" type="button">Add pacing &amp; target dates</button>
+        <button id="remove-pacing" class="secondary" type="button" hidden>Remove pacing from draft</button>
+      </div>
+      <form id="settings" novalidate hidden>
         <h3>About the class</h3>
         <div class="field-grid">
           <label>Class name<input name="title" required maxlength="120"></label>
@@ -85,7 +90,7 @@
         <div class="field-grid">
           <label>First day of school<input name="start" type="date" required></label>
           <label>Last day of school<input name="end" type="date" required></label>
-          <label>Exam date<input name="exam" type="date" required><small>The final class meeting before this date is the last day of new instruction.</small></label>
+          <label>Exam date (optional)<input name="exam" type="date"><small>Choose a date to reserve a final exam session.</small></label>
         </div>
         <h3>How often does the class meet?</h3>
         <fieldset class="schedule-type" style="border:0;padding:0;margin:0">
@@ -137,10 +142,12 @@
             <p class="hint">The rotation advances on school instructional dates, including days this class does not meet. Closures and non-rotation days do not advance it. Time estimates are provisional and editable.</p>
           </div>
         </details>
+        <label class="check"><input type="checkbox" name="shareTargets"> Include suggested target dates when I publish this draft</label>
         <p id="settings-dirty" class="banner warn" role="status" hidden>You have changed these settings. Save them to update the schedule.</p>
         <div class="actions"><button type="submit" class="primary">Save settings &amp; update schedule</button></div>
       </form>
 
+      <div id="calendar-exceptions" hidden>
       <h3>Closures, testing windows &amp; special dates</h3>
       <details class="more" id="calendar-tools">
         <summary>Import a school calendar <small>ICS or CSV file</small></summary>
@@ -183,12 +190,13 @@
           <div id="overrides"></div>
         </div>
       </details>
-      <div class="stage-nav"><span class="next-label"></span><button type="button" class="primary" data-go="goals">Next: Learning goals →</button></div>
+      </div>
+      <div class="stage-nav"><span class="next-label"></span><button type="button" class="secondary" data-go="goals">Customize learning goals</button></div>
     </section>
 
     <!-- ───────── Stage 2: Learning Goals ───────── -->
     <section id="stage-goals" data-stage-panel="goals" class="card accent" aria-labelledby="goals-title" hidden>
-      <div class="card-head"><div><div class="eyebrow">Step 2 of 4</div><h2 id="goals-title">Learning goals</h2><p>Each skill is checked by a checkpoint. Practice visits and time spent never award mastery. Choose what students will learn, in what order, and what is required.</p></div></div>
+      <div class="card-head"><div><div class="eyebrow">Customize</div><h2 id="goals-title">Learning goals</h2><p>Each skill is checked by a checkpoint. Practice visits and time spent never award mastery. Choose what students will learn, in what order, and what is required.</p></div></div>
       <details class="more"><summary>What the curriculum covers <small>Coverage notes</small></summary><div class="body"><p id="coverage-limits"></p></div></details>
       <div class="field-grid" style="align-items:end">
         <label>Learning area<select id="area-filter"></select><small>Choose an area to reorder or change it as a group.</small></label>
@@ -199,7 +207,11 @@
           <button id="remove-area" class="secondary small danger">Remove area from plan</button>
         </div>
       </div>
-      <label class="check"><input type="checkbox" id="show-policy"> Show mastery policy column</label>
+      <form id="area-target-form" class="field-grid" hidden>
+        <label>Suggested date for this area<input name="date" type="date"><small>Leave blank to clear the dates for this area.</small></label>
+        <div class="actions"><button type="submit" class="secondary">Set area target in draft</button></div>
+      </form>
+      <label class="check"><input type="checkbox" id="show-policy"> Show advanced policy settings</label>
       <div id="node-table" data-advanced="off"></div>
       <details class="more"><summary>Add your own area and skill</summary><div class="body">
         <form id="add-node">
@@ -216,8 +228,20 @@
           <div class="actions"><button type="submit" class="secondary">Add skill</button></div>
         </form>
       </div></details>
+      <details class="more"><summary>Practice requirements <small>Set a question count and accuracy goal</small></summary><div class="body">
+        <p>Students can meet a practice goal through synced first attempts. Teacher assessments and verified mastery awards are recorded separately.</p>
+        <form id="practice-goal-form">
+          <div class="field-grid">
+            <label>Apply to<select name="scope"><option value="class">Entire class</option><option value="area">Selected learning area</option><option value="skill">Individual skill</option></select></label>
+            <label id="practice-skill-field" hidden>Skill<select name="skill"></select></label>
+            <label>First attempts required<input type="number" name="quantity" min="1" max="10000" step="1"></label>
+            <label>Accuracy required (%)<input type="number" name="percent" min="0" max="100" step="1"></label>
+          </div>
+          <div class="actions"><button class="primary" type="submit">Save practice goal to draft</button><button class="secondary" id="clear-practice-goal" type="button">Clear practice goal</button></div>
+        </form>
+      </div></details>
       <details class="more"><summary>Advanced: mastery policy <small>Versioned rules for completing a skill</small></summary><div class="body">
-        <p>Calibration is pending. The default provisional policy requires an eligible teacher assessment and has no invented question threshold. Teacher-defined trial policies are labeled provisional. Historical policy definitions are retained.</p>
+        <p>Use these controls for advanced assessment policies. Earlier published policy versions remain in history.</p>
         <form id="policy-form">
           <div class="field-grid">
             <label>Policy label<input name="label" value="Teacher-defined trial — calibration pending" required></label>
@@ -230,12 +254,12 @@
           <div class="actions"><button type="submit" class="secondary">Create new policy version for area</button></div>
         </form>
       </div></details>
-      <div class="stage-nav"><button type="button" data-go="calendar">← Back: Class &amp; calendar</button><button type="button" class="primary" data-go="pacing">Next: Pacing guide →</button></div>
+      <div class="stage-nav"><button type="button" data-go="calendar">Pacing setup (optional)</button><button type="button" class="primary" data-go="review">Review changes →</button></div>
     </section>
 
     <!-- ───────── Stage 3: Pacing Guide ───────── -->
     <section id="stage-pacing" data-stage-panel="pacing" class="card accent" aria-labelledby="pacing-title" hidden>
-      <div class="card-head"><div><div class="eyebrow">Step 3 of 4</div><h2 id="pacing-title">Pacing guide</h2><p>Every class meeting from the first day to the exam, built from your calendar and learning goals.</p></div></div>
+      <div class="card-head"><div><div class="eyebrow">Optional planning</div><h2 id="pacing-title">Pacing guide</h2><p>Every class meeting from the first day to the exam, built from your calendar and learning goals.</p></div></div>
       <div id="capacity" class="stats"></div>
       <div id="warnings" role="status"></div>
       <div class="field-grid" style="align-items:end">
@@ -252,7 +276,7 @@
 
     <!-- ───────── Stage 4: Review & Publish ───────── -->
     <section id="stage-review" data-stage-panel="review" class="card accent" aria-labelledby="review-title" hidden>
-      <div class="card-head"><div><div class="eyebrow">Step 4 of 4</div><h2 id="review-title">Review &amp; publish</h2><p>Drafts change only this editor. Publishing creates a new version for students. Practice and assessment evidence stays with each student.</p></div></div>
+      <div class="card-head"><div><div class="eyebrow">Publish changes</div><h2 id="review-title">Review &amp; publish</h2><p>Drafts change only this editor. Publishing creates a new version for students. Practice and assessment evidence stays with each student.</p></div></div>
       <div id="pub-summary" class="banner info" role="status"></div>
       <ol class="tracker" id="tracker" aria-label="Publishing progress"></ol>
       <div id="publish-error" class="banner bad" role="alert" hidden></div>

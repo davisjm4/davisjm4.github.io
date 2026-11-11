@@ -30,14 +30,15 @@ function credentialCard(result) {
 function mount() {
   if (!host || !device || !profilesAvailable) return;
   host.hidden=false;
-  const details=el('details',{open:location.pathname.startsWith('/cs-games/student/')},el('summary',{text:identity?'Student profile · '+identity.id.slice(0,8):'Student profile'}));
+  const onPathway=location.pathname.startsWith('/cs-games/student/');
+  const details=el('details',{open:onPathway&&!identity},el('summary',{text:identity?'Student profile · '+identity.id.slice(0,8):'Student profile'}));
   const results=el('div',{id:'profile-progress'});
   host.append(heading,details,status,results);
   const invite=new URLSearchParams(location.hash.slice(1)).get('enroll');
   if (identity) {
     details.append(el('p',{text:'Profile ID · '+identity.id}),
       el('p',{text:'Supported attempts sync to your class profile. Queued practice uploads when this browser reconnects.'}),
-      !location.pathname.startsWith('/cs-games/student/') && el('a',{href:'/cs-games/student/',text:'Open my class pathway'}),
+      ...(!onPathway ? [el('a',{href:'/cs-games/student/',text:'Open my class pathway'})] : []),
       button('Sync practice now',syncSoon),
       button('View synced progress',async()=>{
         try {
@@ -92,4 +93,8 @@ mount();
 // An enrollment link may open in a tab already on the same path.
 if (profilesAvailable) addEventListener('hashchange',()=>{
   if (PROFILE_KEY.test(new URLSearchParams(location.hash.slice(1)).get('enroll') || '')) location.reload();
+  if(location.hash==='#student-profile'&&location.pathname.startsWith('/cs-games/student/')){
+    const details=host?.querySelector('details');
+    if(details)details.open=true;
+  }
 });

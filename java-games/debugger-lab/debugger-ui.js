@@ -43,6 +43,8 @@ export function startDebuggerLab() {
     <section id="feedback" class="feedback" role="status" tabindex="-1" hidden></section>
     <p id="stats" class="stats"></p>`;
 
+  const requestedMode=typeof URLSearchParams==='undefined'?null:new URLSearchParams(globalThis.location?.search||'').get('mode');
+  if(requestedMode&&Array.from($("mode").options).some(option=>option.value===requestedMode))$("mode").value=requestedMode;
   addSessionNavigation("../");
   const active = () => !closed && tracker.status(instanceId) === "active";
   const updateStats = () => { $("stats").textContent = roundSummary("debugger-lab", $("mode").value); };

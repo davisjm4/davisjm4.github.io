@@ -5,8 +5,12 @@ const warn=text=>{$('storage-warning').hidden=false;$('storage-warning').textCon
 let storage;try{storage=globalThis.localStorage;}catch{warn('Local storage is unavailable. This practice works in memory; history and bests will not persist.');}
 const session=createRoboticsSession({storage,onWarning:warn}),tracker=session.tracker;
 let race=null,question=null,record=null,draw=0,shownResult=false,lastInteraction=performance.now(),day=session.ensure(),settings=null;
-const baseSeed=Number(new URLSearchParams(location.search).get('seed'))||Date.now();
+const params=new URLSearchParams(location.search);
+const baseSeed=Number(params.get('seed'))||Date.now();
 for(const [id,label]of Object.entries(CATEGORIES))$('category').insertAdjacentHTML('beforeend',`<option value="${id}">${label}</option>`);
+const category=params.get('category');
+if(Object.hasOwn(CATEGORIES,category))$('category').value=category;
+if(params.get('mode')==='mixed')$('mode').value='mixed';
 function readSettings(){const mode=$('mode').value;return{mode,difficulty:$('difficulty').value,category:$('category').value,duration:mode==='learn'?0:Number($('duration').value)};}
 const bestKey=s=>[s.mode,s.difficulty,s.category,s.duration].join('|');
 const pct=m=>m.attempted?`${Math.round(100*m.firstTry/m.attempted)}% (${m.firstTry}/${m.attempted})`:'— (no independent attempts)';

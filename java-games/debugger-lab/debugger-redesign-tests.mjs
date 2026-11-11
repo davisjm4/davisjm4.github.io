@@ -79,7 +79,7 @@ const memory=new Map(),storage={getItem:k=>memory.get(k)||null,setItem:(k,v)=>me
 
 // Compile every family/difficulty representative with the JDK compiler, then run all exception examples.
 for(const file of ["procedural-generator.js","debugger-engine.js","debugger-ui.js"])assert.ok(fs.statSync(new URL(file,new URL("./",import.meta.url))).size>100);
-const html=fs.readFileSync(new URL("./index.html",import.meta.url),"utf8");assert.match(html,/debugger-ui\.js\?v=debugger-generator-v2/);
+const html=fs.readFileSync(new URL("./index.html",import.meta.url),"utf8");assert.match(html,/<script\b[^>]*src="\.\/debugger-ui\.js\?v=[a-z0-9-]+-v\d+"/);
 const {parseHTML:parseBreadcrumb}=createRequire(import.meta.url)(process.env.JAVA_DOM_LIBRARY||"linkedom");
 assertCourseBreadcrumb(parseBreadcrumb(html).document,/^Debugger Lab$/);
 const brokenBreadcrumb=parseBreadcrumb(html).document;
