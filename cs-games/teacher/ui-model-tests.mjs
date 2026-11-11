@@ -114,13 +114,13 @@ test('publication status distinguishes never published, unpublished changes, and
   const published = { ...clone(p), revision: 3 };
   const clean = publicationStatus({ published, draft: clone(published) });
   assert.equal(clean.key, 'published');
-  assert.match(clean.detail, /revision 3/);
+  assert.match(clean.detail, /Students see the published pathway/);
   const edited = clone(published);
   edited.checkpoints[0].minutes += 10;
   const changed = publicationStatus({ published, draft: edited });
   assert.equal(changed.key, 'changes');
   assert.equal(changed.changeCount, 1);
-  assert.match(changed.detail, /still see revision 3/);
+  assert.match(changed.detail, /Students still see the published pathway/);
 });
 
 test('draft status says where the working copy lives', () => {
