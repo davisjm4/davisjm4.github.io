@@ -67,9 +67,10 @@ async function classReport(db, row, a) {
 
 async function route(request, env, path) {
   if (path==='/health' && request.method==='GET') {
-    const tables=await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('assignments','profile_classes','performance_events','pathway_revisions')").all();
+    const tables=await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('assignments','profile_classes','performance_events','pathway_revisions','mastery_attempt_states','mastery_attempts','mastery_restart_requests')").all();
     const columns=await env.DB.prepare('PRAGMA table_info(student_profiles)').all();
-    return {service:'cs-games',schema:4,databaseReady:tables.results.length===4 && columns.results.some(column=>column.name==='event_count'),
+    return {service:'cs-games',schema:4,databaseReady:tables.results.filter(table=>!table.name.startsWith('mastery_')).length===4 && columns.results.some(column=>column.name==='event_count'),
+      masteryHistoryReady:tables.results.filter(table=>table.name.startsWith('mastery_')).length===3,
       teacherConfigured:Boolean(env.GOOGLE_CLIENT_ID && !env.GOOGLE_CLIENT_ID.startsWith('REPLACE_') && env.TEACHER_EMAILS?.trim()),
       diagnosticsConfigured:Boolean(env.SUBMISSION_SECRET?.length>=32),profilesEnabled:profilesEnabled(env)};
   }

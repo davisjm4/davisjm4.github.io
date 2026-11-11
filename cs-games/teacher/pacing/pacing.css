@@ -13,7 +13,6 @@
 .kv { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 8px 0; }
 .kv dt { color: var(--muted); font-weight: 700; }
 .kv dd { margin: 0; overflow-wrap: anywhere; font-family: ui-monospace, Consolas, monospace; font-size: .88rem; }
-#node-table[data-advanced="off"] .col-policy { display: none; }
 #node-table td.node-title { min-width: 240px; }
 #node-table td.node-title strong { display: block; }
 #node-table .order-actions { display: flex; gap: 6px; }
@@ -29,7 +28,6 @@ details.student-area > ol { padding: 0 16px 14px 38px; }
   #node-table .order-actions { justify-content: flex-start; }
   .kv { grid-template-columns: 1fr; }
   .kv dd { margin-bottom: 8px; }
-  #node-table[data-advanced="off"] .col-policy { display: none; }
 }
 #status { position: sticky; top: 56px; z-index: 9; box-shadow: 0 8px 24px #000a; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; }
 #status[hidden] { display: none; }

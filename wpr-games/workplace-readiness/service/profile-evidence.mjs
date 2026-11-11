@@ -33,10 +33,7 @@ export function cleanGameAttempt(event, validId) {
     familyId:meta.familyId || 'unclassified', timestamp:new Date(event.occurred).toISOString(),
     firstAttempt:attempt===1, correct,
   });
-  const nodeIds=courseId==='robotics' && activity==='parts-sprint'
-    ? graph.nodes.filter(node=>node.familySelectors.some(selector=>selector.activityId===activity &&
-      selector.category===meta.topic && selector.modes?.includes(meta.assessedMode))).map(node=>node.id)
-    : evidence.nodeIds;
+  const nodeIds=evidence.nodeIds;
   const assisted=event.assisted===true;
   const independent=attempt===1 && !assisted;
   return {

@@ -14,7 +14,8 @@ const evidenceDir=process.env.PATHWAY_EVIDENCE_DIR;
 async function clickText(page,scope,text){
   const handle=await page.waitForFunction((scope,text)=>[...document.querySelectorAll(scope+' button, '+scope+' a')]
     .find(node=>node.textContent.trim()===text&&node.offsetWidth&&!node.disabled),{timeout:8000},scope,text);
-  await handle.asElement().click();
+  await handle.evaluate(node=>node.focus());
+  await page.keyboard.press('Enter');
 }
 const wait=(page,selector)=>page.waitForSelector(selector,{visible:true,timeout:8000});
 const see=(page,selector,text)=>page.waitForFunction((selector,text)=>document.querySelector(selector)?.innerText.includes(text),{timeout:8000},selector,text);
@@ -102,12 +103,13 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   await see(teacher,'#status','Draft saved');
   assert.equal(head(),1);
   assert.doesNotMatch(await textOf(student,pathway),/Optional skill/);
-  const stage=async name=>{await teacher.focus('#stepper [data-stage='+name+']');await teacher.keyboard.press('Enter');await wait(teacher,'#stage-'+name);};
+  const press=async selector=>{await wait(teacher,selector);await teacher.focus(selector);await teacher.keyboard.press('Enter');};
+  const stage=async name=>{await press('#stepper [data-stage='+name+']');await wait(teacher,'#stage-'+name);};
   const publish=async revision=>{
     await stage('review');
-    await teacher.click('#preview');
+    await press('#preview');
     await see(teacher,'#status','Preview ready');
-    await teacher.click('#publish');
+    await press('#publish:not([disabled])');
     await see(teacher,'#status','Published.');
     assert.equal(head(),revision);
   };
@@ -117,13 +119,16 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
 
   await stage('calendar');
   assert.equal(await teacher.$eval('#settings',form=>form.hidden),true);
-  await teacher.click('#add-pacing');
+  await press('#add-pacing');
+  await wait(teacher,'#settings:not([hidden])');
   assert.deepEqual(await teacher.$eval('#settings',form=>[form.elements.start.value,form.elements.end.value,form.elements.exam.value]),['','','']);
   for(const [name,value] of [['start','2027-01-11'],['end','2027-06-04']]){
     await teacher.$eval('#settings [name='+name+']',(input,date)=>{input.value=date;input.dispatchEvent(new Event('input',{bubbles:true}));},value);
   }
-  await teacher.click('#settings [name=shareTargets]');
-  await teacher.click('#settings button[type=submit]');
+  await teacher.focus('#settings [name=shareTargets]');
+  await teacher.keyboard.press('Space');
+  assert.equal(await teacher.$eval('#settings [name=shareTargets]',checkbox=>checkbox.checked),true);
+  await press('#settings button[type=submit]');
   await see(teacher,'#status','Pacing updated');
   await publish(3);
   await student.reload();
@@ -131,7 +136,7 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   assert.doesNotMatch(await textOf(student,pathway),/overdue/i);
 
   await stage('calendar');
-  await teacher.click('#remove-pacing');
+  await press('#remove-pacing');
   await see(teacher,'#status','Pacing removed');
   await publish(4);
   const restored=await (await browser.createBrowserContext()).newPage();
