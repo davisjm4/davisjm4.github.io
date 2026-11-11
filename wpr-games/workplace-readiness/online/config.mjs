@@ -1,7 +1,7 @@
 // Set these public values after deploying the reporting service. Never put credentials here.
-export const productionApi = '';
-export const googleClientId = '';
-const profilesOnProduction = false;
+export const productionApi = 'https://cs-games-api.cs-games-davisjm4.workers.dev/api/wpr';
+export const googleClientId = '1030010713743-pdt1cknkf1utf54kvo568d2o6q84aai0.apps.googleusercontent.com';
+const profilesOnProduction = true;
 const local = ['127.0.0.1', 'localhost'].includes(globalThis.location?.hostname);
 export const apiBase = local ? '/api/wpr' : productionApi;
 export const profilesAvailable = local || Boolean(profilesOnProduction && productionApi && googleClientId);
