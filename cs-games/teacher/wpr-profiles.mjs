@@ -192,6 +192,7 @@ export function teacherProfiles(onClasses) {
         c.archived&&el('div',{class:'banner warn'},el('p',{text:'Archived. Scheduled deletion by '+new Date(c.expires).toISOString().slice(0,10)+'.'})),
         el('div',{class:'task-grid'},
           !c.archived&&el('a',{class:'task',href:pacingHref(c.id)},el('strong',{text:'Customize pathway'}),el('span',{text:'Change learning goals or set practice requirements.'})),
+          !c.archived&&pathways.get(c.id)?.revision>0&&el('a',{class:'task',href:'/cs-games/teacher/requirements/?class='+encodeURIComponent(c.id)},el('strong',{text:'Customize mastery requirements'}),el('span',{text:'Set optional question counts and accuracy goals.'})),
           !c.archived&&el('a',{class:'task',href:pacingHref(c.id,'calendar')},el('strong',{text:'Pacing & target dates'}),el('span',{text:'Plan privately or share optional target dates.'})),
           el('a',{class:'task',href:'#practice-online',onclick:()=>onClasses(classes,c.id)},el('strong',{text:'Practice & assessments'}),el('span',{text:'Create a diagnostic or targeted practice for students.'})),
           el('a',{class:'task',href:'#class-students'},el('strong',{text:'Students & progress'}),el('span',{text:'Enrollment link, student profile IDs and each student’s progress.'}))),previewSlot),

@@ -7,3 +7,8 @@
 .pathway-actions { display: flex; flex-wrap: wrap; gap: .3rem .85rem; }
 .pathway-actions a { display: inline-flex; align-items: center; min-height: 44px; }
 #published-student-preview { margin-top: 1rem; }
+
+.practice-challenge { padding: .75rem; margin-block: .6rem; border: 1px solid var(--line); border-radius: 10px; }
+.practice-challenge small { margin-block: .25rem; }
+.practice-history summary { min-height: 44px; }
+.practice-history ul { padding-inline-start: 1.5rem; }

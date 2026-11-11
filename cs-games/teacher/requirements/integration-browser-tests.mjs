@@ -1,0 +1,141 @@
+import assert from 'node:assert/strict';
+import {test} from 'node:test';
+import {createRequire} from 'node:module';
+import {mkdirSync,readFileSync} from 'node:fs';
+import {join} from 'node:path';
+import {startDev} from '../../../wpr-games/workplace-readiness/service/dev.mjs';
+
+const require=createRequire(new URL('../../../wpr-games/workplace-readiness/package.json',import.meta.url));
+const {launch}=require('./tests/browser/harness.js');
+const axeSource=readFileSync(require.resolve('axe-core/axe.min.js'),'utf8');
+const token='synthetic-mastery-browser-teacher';
+const focusLink='#student-pathway a[href*="/loop-lab/"][href*="mode=looptype"]';
+const wait=(page,selector)=>page.waitForSelector(selector,{visible:true,timeout:10000});
+async function activate(page,selector){
+  await wait(page,selector);
+  await page.focus(selector);
+  await page.keyboard.press('Enter');
+}
+async function byText(page,scope,text){
+  const handle=await page.waitForFunction((scope,text)=>[...document.querySelectorAll(scope+' button, '+scope+' a')]
+    .find(node=>node.textContent.trim()===text&&node.offsetWidth&&!node.disabled),{timeout:10000},scope,text);
+  await handle.evaluate(node=>node.focus());
+  await page.keyboard.press('Enter');
+}
+const see=(page,selector,text)=>page.waitForFunction((selector,text)=>document.querySelector(selector)?.innerText.includes(text),{timeout:10000},selector,text);
+
+test('a real teacher publication and two Loop Lab modes reach one student mastery attempt', {timeout:120000},async t=>{
+  const dev=await startDev({teacherTokens:{teacher:token}});
+  const browser=await launch();
+  t.after(async()=>{await browser.close();await new Promise(resolve=>dev.server.close(resolve));dev.db.close();});
+  const teacher=await browser.newPage();
+  const student=await (await browser.createBrowserContext()).newPage();
+  await teacher.setViewport({width:1280,height:900});
+  await teacher.goto(dev.url+'/cs-games/teacher/');
+  await wait(teacher,'[name=teacher-key]');
+  await teacher.type('[name=teacher-key]',token);
+  await byText(teacher,'#teacher-account','Sign in to development service');
+  await wait(teacher,'[name=class-title]');
+  await teacher.type('[name=class-title]','Period 5 Advanced CS');
+  await teacher.select('[name=class-course]','advanced');
+  await byText(teacher,'#wpr-teacher-profiles','Create class');
+  const enrollment=await (await wait(teacher,'#class-overview a[href*="#enroll="]')).evaluate(node=>node.href);
+  await student.goto(enrollment);
+  await byText(student,'#student-profile','Enroll in this class');
+  const recovery=await (await wait(student,'.wpr-profile-secret')).evaluate(node=>node.textContent);
+  await Promise.all([student.waitForNavigation(),byText(student,'#student-profile','I saved my recovery credential')]);
+  await see(student,'#student-pathway','Self-paced');
+  assert.equal(await student.$('.practice-challenge'),null);
+
+  await Promise.all([teacher.waitForNavigation(),activate(teacher,'#class-overview a[href*="/requirements/"]')]);
+  await wait(teacher,'.mreq');
+  assert.equal(await teacher.$('[name=teacher-key]'),null);
+  await teacher.type('input[aria-label="Minimum questions"]','30');
+  await teacher.type('input[aria-label="Required accuracy as a percentage"]','90');
+  await byText(teacher,'.mreq','Save class defaults');
+  await see(teacher,'.mreq-status','Class defaults saved to the draft.');
+  const evidence=process.env.MASTERY_EVIDENCE_DIR;
+  if(evidence)mkdirSync(evidence,{recursive:true});
+  const widths=[[390,844],[768,1024],[1280,900]];
+  async function checkLayouts(page,name){
+    for(const [width,height] of widths){
+      await page.setViewport({width,height});
+      assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' overflows at '+width+'px');
+      if(evidence)await page.screenshot({path:join(evidence,name+'-'+width+'.png')});
+    }
+  }
+  await checkLayouts(teacher,'teacher-class-requirements');
+  await teacher.evaluate(axeSource);
+  const violations=()=>teacher.evaluate(async ()=>(await axe.run('.mreq',{runOnly:['wcag2a','wcag2aa']})).violations.map(v=>[v.id,v.nodes.map(n=>n.target)]));
+  assert.deepEqual(await violations(),[]);
+  await activate(teacher,'[data-tab=review]');
+  const acknowledgement=await teacher.$('.mreq-panel input[type=checkbox]');
+  if(acknowledgement)await acknowledgement.click();
+  await byText(teacher,'.mreq','Save draft');
+  await see(teacher,'.mreq-status','Draft saved');
+  await student.reload();
+  await see(student,'#student-pathway','Self-paced');
+  assert.equal(await student.$('.practice-challenge'),null);
+  await byText(teacher,'.mreq','Publish requirements');
+  await see(teacher,'.mreq-status','Published version 2');
+
+  const showLoop=async()=>{
+    await wait(student,'#student-pathway .pathway-area');
+    await student.$eval(focusLink,link=>{link.closest('details').open=true;});
+    await wait(student,'#student-pathway details[open] .practice-challenge');
+  };
+  await student.reload();
+  await showLoop();
+  const card=()=>student.$eval(focusLink,link=>link.closest('li').querySelector('.practice-challenge').textContent);
+  assert.match(await card(),/30 questions with at least 90%/);
+
+  async function answer(mode){
+    await wait(student,'#choices button');
+    assert.equal(await student.$eval('#mode',node=>node.value),mode);
+    await student.click('#choices button');
+    await activate(student,'#check');
+    await student.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
+  }
+  await Promise.all([student.waitForNavigation(),activate(student,focusLink)]);
+  await answer('looptype');
+  await Promise.all([student.waitForNavigation(),activate(student,'a[data-profile-link]')]);
+  await showLoop();
+  assert.match(await card(),/1 of 30 questions/);
+
+  const mixedLink=await student.$eval(focusLink,link=>link.closest('li').querySelector('a[href*="mode=mixed"]').href);
+  // Preserve the game's regular generator. Draw Mixed questions until Loop Type appears.
+  const testLink=new URL(mixedLink);
+  testLink.searchParams.set('test','1');
+  await student.goto(testLink.href);
+  for(let i=0;i<40;i++){
+    const mode=await student.evaluate(()=>window.__loopLab?.q?.mode);
+    if(mode==='looptype')break;
+    await activate(student,'#next');
+  }
+  assert.equal(await student.evaluate(()=>window.__loopLab?.q?.mode),'looptype');
+  await answer('mixed');
+  await Promise.all([student.waitForNavigation(),activate(student,'a[data-profile-link]')]);
+  await showLoop();
+  assert.match(await card(),/2 of 30 questions/);
+  const events=dev.db.prepare("SELECT data FROM performance_events WHERE activity='loop-lab' ORDER BY occurred").all().map(row=>JSON.parse(row.data));
+  assert.deepEqual(events.map(row=>[row.mode,row.assessedMode]),[['looptype','looptype'],['mixed','looptype']]);
+
+  await student.$eval(focusLink,link=>{
+    const card=link.closest('li').querySelector('.practice-challenge');
+    card.scrollIntoView({block:'center',behavior:'instant'});
+  });
+  await checkLayouts(student,'student-live-practice');
+  student.once('dialog',dialog=>void dialog.accept());
+  await activate(student,'button[aria-label*="Restart practice attempt for Choose"]');
+  await see(student,'#student-connection','Fresh attempt started');
+  const recovered=await (await browser.createBrowserContext()).newPage();
+  await recovered.goto(dev.url+'/cs-games/student/');
+  await wait(recovered,'[name=id]');
+  await recovered.type('[name=id]',dev.db.prepare('SELECT id FROM student_profiles').get().id);
+  await recovered.type('[name=recovery]',recovery);
+  await Promise.all([recovered.waitForNavigation(),byText(recovered,'#student-profile','Restore profile')]);
+  await recovered.waitForSelector(focusLink);
+  await recovered.$eval(focusLink,link=>{link.closest('.pathway-area').open=true;link.closest('li').querySelector('.practice-history').open=true;});
+  assert.match(await recovered.$eval(focusLink,link=>link.closest('li').innerText),/Attempt 1 · Restarted · [0-2] correct out of 2/);
+  assert.equal(dev.db.prepare("SELECT COUNT(*) n FROM performance_events WHERE kind='assessment'").get().n,0);
+});

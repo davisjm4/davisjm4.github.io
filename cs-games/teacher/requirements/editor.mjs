@@ -36,7 +36,7 @@ export function createRequirementsEditor(root, options) {
   // ---- shared pieces ----
   const cat = () => catalog(st.pathway, graph);
   const resolved = () => resolveAll(st.pathway, graph);
-  const sourceChip = (r) => el('span', { class: `mreq-chip level-${r.level}`, text: r.level === 'skill' ? 'Own setting' : r.level === 'area' ? 'Area setting' : r.level === 'class' ? 'Class defaults' : r.level === 'legacy' ? 'Older editor' : 'Not set' });
+  const sourceChip = (r) => el('span', { class: `mreq-chip level-${r.level}`, text: r.level === 'skill' ? 'Own setting' : r.level === 'area' ? 'Area setting' : r.level === 'class' ? 'Class defaults' : r.level === 'legacy' ? 'Earlier setting' : 'Not set' });
   const clone = (x) => JSON.parse(JSON.stringify(x));
   function apply(result, { done }) {
     if (!result.ok) { alertWith(result.blocked?.length ? 'This can\'t be saved because it can\'t be met.' : 'This couldn\'t be saved.', result.errors.map((e) => e.message)); return false; }
@@ -163,7 +163,7 @@ export function createRequirementsEditor(root, options) {
     const rev = reviewRequirements(st.pathway, st.published, graph, { facts, acknowledged: st.ack });
     const t = rev.table, d = rev.differences;
     const n = (k, one, many) => `${t.counts[k]} ${t.counts[k] === 1 ? one : many}`;
-    const counts = el('p', { class: 'mreq-reach', text: `${plural(t.counts.skills, 'skill')} in this class: ${n('usingClass', 'uses class defaults', 'use class defaults')}, ${n('usingArea', 'uses an area setting', 'use an area setting')}, ${n('ownSettings', 'has its own settings', 'have their own settings')}${t.counts.older ? `, ${n('older', 'uses the older policy editor', 'use the older policy editor')}` : ''}, ${n('notSet', 'has no requirement', 'have no requirement')}.` });
+    const counts = el('p', { class: 'mreq-reach', text: `${plural(t.counts.skills, 'skill')} in this class: ${n('usingClass', 'uses class defaults', 'use class defaults')}, ${n('usingArea', 'uses an area setting', 'use an area setting')}, ${n('ownSettings', 'has its own settings', 'have their own settings')}${t.counts.older ? `, ${n('older', 'uses an earlier setting', 'use earlier settings')}` : ''}, ${n('notSet', 'has no requirement', 'have no requirement')}.` });
     const table = el('div', { class: 'mreq-table', role: 'table', 'aria-label': 'Defaults and overrides' },
       el('div', { class: 'mreq-tr head', role: 'row' }, ['Where', 'Requirement', 'Skills affected'].map((h) => el('div', { role: 'columnheader', text: h }))),
       t.rows.map((row) => el('div', { class: 'mreq-tr', role: 'row' },
@@ -203,7 +203,7 @@ export function createRequirementsEditor(root, options) {
   async function doPublish() {
     st.busy = true; render();
     try {
-      const stamped = stampPublishTime(st.pathway, st.published, (options.now ?? (() => new Date().toISOString()))());
+      const stamped = options.serverTimestamps ? st.pathway : stampPublishTime(st.pathway, st.published, (options.now ?? (() => new Date().toISOString()))());
       const out = await adapter.publish({ pathway: stamped, acknowledged: st.ack });
       st.pathway = out.pathway ?? stamped; st.published = out.published ?? clone(st.pathway); st.history = out.history ?? st.history; st.ack = false; st.busy = false;
       onChange?.(clone(st.pathway)); render(); say(out.message ?? 'Requirements published with the class pathway.');

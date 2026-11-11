@@ -44,12 +44,12 @@ export function createServiceAdapter({ request, token, entry }) {
   };
   return {
     saveDraft: draft,
-    async publish({ pathway }) {
+    async publish({ pathway, acknowledged }) {
       await draft(pathway);
       const preview = await request(`/pathways/teacher/${pathway.id}/preview`, { token, body: {} });
-      const result = await request(`/pathways/teacher/${pathway.id}/publish`, { token, body: { previewToken: preview.previewToken, draftVersion: preview.draftVersion, expectedRevision: preview.expectedRevision } });
+      const result = await request(`/pathways/teacher/${pathway.id}/publish`, { token, body: { previewToken: preview.previewToken, draftVersion: preview.draftVersion, expectedRevision: preview.expectedRevision, ...(acknowledged===true?{acknowledged:true}:{}) } });
       entry.draftVersion = preview.draftVersion + 1;
-      return { pathway, published: result.published, message: `Published version ${result.revision} of the class pathway, with these requirements.` };
+      return { pathway: result.published, published: result.published, message: `Published version ${result.revision} of the class pathway, with these requirements.` };
     },
     async history() {
       return [];
