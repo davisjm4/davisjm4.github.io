@@ -20,9 +20,21 @@ test('wiring: every lab page still sends the begin/annotate shape this suite rep
     const src = pageSource(file).replace(/\s+/g, ' ');
     for (const needle of needles) assert.ok(src.includes(needle.replace(/\s+/g, ' ')), `${lab}: ${file} no longer contains: ${needle}`);
   }
-  // Cache tags: a changed page must be fetched fresh next to its changed imports.
-  for (const [file, tag] of [['java-games/linkedlist-lab/index.html', 'linkedlist-evidence-v1'], ['java-games/inheritance-polymorphism-lab/index.html', 'iplab-evidence-v1'], ['java-games/documentation-lab/index.html', 'doc-evidence-v1'], ['java-games/robot-algorithms/index.html', 'robot-evidence-v1'], ['java-games/boolean-conditional-lab/index.html', 'bool-evidence-v1'], ['java-games/math-lab/index.html', 'math-mixed-v1']])
-    assert.ok(pageSource(file).includes(tag), `${file} cache tag ${tag}`);
+  // The lab pages must load the matching versioned entry script; cache versions advance with later changes.
+  for (const [file, entry] of [
+    ['java-games/linkedlist-lab/index.html', 'script.js'],
+    ['java-games/inheritance-polymorphism-lab/index.html', 'script.js'],
+    ['java-games/documentation-lab/index.html', 'script.js'],
+    ['java-games/robot-algorithms/index.html', 'script.js'],
+    ['java-games/boolean-conditional-lab/index.html', 'boolean-ui.js'],
+    ['java-games/math-lab/index.html', 'app.js']
+  ]) {
+    const script = [...pageSource(file).matchAll(/<script\b[^>]*src="([^"]+)"/g)].map(match => match[1]);
+    assert.ok(script.some(src => {
+      const url = new URL(src, 'https://games.example/' + file);
+      return url.pathname === '/' + file.replace('index.html', entry) && /^[a-z0-9-]+-v\d+$/.test(url.searchParams.get('v') || '');
+    }), file + ' must load its versioned game module');
+  }
 });
 
 // ------------------------------------------------------------------ graph ------------------------------------------------------------------
