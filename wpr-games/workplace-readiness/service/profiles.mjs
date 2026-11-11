@@ -1,4 +1,5 @@
-import { cleanGameAttempt, courses, metadataId, practiceMetadata, profilePathway, publishedPlan, readProfileEvidence } from './profile-evidence.mjs';
+import {defaultPathwayStatements,ensureClassPathway} from './default-pathways.mjs';
+import { cleanGameAttempt, courses, metadataId, practiceMetadata, profilePathway, publishedPlan, readProfileEvidence, readPracticeProgress } from './profile-evidence.mjs';
 import { teacherIdentity } from './auth.mjs';
 import { PROFILE_VERSION, WPR_ACTIVITY, PROFILE_ID, PROFILE_KEY, DAY, CLASS_DAYS, ARCHIVE_DAYS, SESSION_DAYS, BATCH_LIMIT } from '../online/profile-model.mjs';
 import skills from '../content/skills.json' with {type:'json'};
@@ -42,7 +43,7 @@ export async function studentProfile(request,env,now=Date.now()) {
   const token=request.headers.get('Authorization')?.match(/^Bearer ([0-9a-f]{64})$/)?.[1];
   if (!token) profileError(401,'Student profile sign-in required.');
   const digest=await profileHash(token);
-  const p=await first(env.DB,`SELECT p.id,p.class_id,p.generation,p.evidence_count,s.expires,c.title,c.course_id
+  const p=await first(env.DB,`SELECT p.id,p.class_id,p.generation,p.evidence_count,p.event_count,s.expires,c.title,c.course_id
     FROM profile_sessions s JOIN student_profiles p ON p.id=s.profile
     JOIN profile_classes c ON c.id=p.class_id WHERE s.digest=? AND s.expires>?
     AND p.active=1 AND p.generation=s.generation AND c.archived IS NULL AND c.expires>?`,digest,now,now);
@@ -112,7 +113,7 @@ export async function saveProfileAssessment(db,p,receipt,report,now) {
     data:{assignmentId,assignmentKind:kind,n,c,dimensions}},now);
 }
 async function progress(db,id,classId,{includePathway=false}={}) {
-  const [activity,measures,history,attempts,plan,evidence]=await Promise.all([
+  const [activity,measures,history,attempts,plan,evidence,practice]=await Promise.all([
     all(db,`SELECT pathway,activity,kind,COUNT(*) events,
       SUM(json_extract(data,'$.n')) n,SUM(json_extract(data,'$.c')) c FROM performance_events
       WHERE profile=? GROUP BY pathway,activity,kind ORDER BY pathway,activity,kind`,id),
@@ -126,10 +127,11 @@ async function progress(db,id,classId,{includePathway=false}={}) {
       ORDER BY occurred DESC,id DESC LIMIT 100`,id),
     includePathway ? publishedPlan(db,classId) : null,
     includePathway ? readProfileEvidence(db,id) : [],
+    includePathway ? readPracticeProgress(db,id) : null,
   ]);
   return {version:PROFILE_VERSION,id,activity,measures,
     attempts:attempts.map(({data,...row})=>({...row,...JSON.parse(data)})),
-    verifiedEvidence:evidence, pathway:plan ? profilePathway(plan,evidence) : null,
+    verifiedEvidence:evidence, pathway:plan ? profilePathway(plan,evidence,practice) : null,
     assessments:history.map(r=>{
     return {occurred:r.occurred,...JSON.parse(r.data)};
   })};
@@ -162,10 +164,11 @@ async function classProgress(db,classId) {
 function validateTitle(input) {
   const title=typeof input?.title==='string' ? input.title.trim() : '';
   if (!title || title.length>80 || /[\u0000-\u001f]/.test(title)) profileError(400,'Enter a class title of 1 to 80 characters.');
-  if (Object.keys(input).some(key=>!['title','courseId'].includes(key))) profileError(400,'Send the class title and course only.');
+  if (Object.keys(input).some(key=>!['title','courseId','creationKey'].includes(key))) profileError(400,'Send the class title and course only.');
   const courseId=input.courseId ?? 'workplace';
   if (!courses.has(courseId)) profileError(400,'Choose a supported course.');
-  return {title,courseId};
+  if(input.creationKey!==undefined&&!present(input.creationKey,PROFILE_KEY)) profileError(400,'Invalid class creation key.');
+  return {title,courseId,creationKey:input.creationKey};
 }
 async function teacherRoute(request,env,segments,readBody,now) {
   const owner=await teacherIdentity(request,env), db=env.DB, method=request.method;
@@ -176,14 +179,31 @@ async function teacherRoute(request,env,segments,readBody,now) {
     if (method==='GET') return {classes:await all(db,`SELECT id,title,course_id,created,expires,archived FROM profile_classes
       WHERE owner=? AND expires>? ORDER BY created DESC`,owner,now)};
     if (method==='POST') {
-      const {title,courseId}=validateTitle(await readBody(request));
-      const id=crypto.randomUUID(), invite=randomKey();
-      const result=await write(db,`INSERT INTO profile_classes(id,owner,title,invite,created,expires,course_id)
-        SELECT ?,?,?,?,?,?,? WHERE (SELECT COUNT(*) FROM profile_classes WHERE owner=? AND expires>?)<?`,
-      id,owner,title,await profileHash(invite),now,now+CLASS_DAYS*DAY,courseId,owner,now,MAX_CLASSES);
-      if (!result.meta.changes) profileError(429,'Class limit reached.');
-      return {id,invite};
+      const {title,courseId,creationKey}=validateTitle(await readBody(request));
+      const id=crypto.randomUUID();
+      // The retry key has 256 bits of client entropy. Neither it nor the enrollment link is stored in plaintext.
+      const requestDigest=creationKey?await profileHash('create-class:'+creationKey):null;
+      const invite=creationKey?await profileHash('class-enrollment:'+owner+':'+creationKey):randomKey();
+      const inviteDigest=await profileHash(invite);
+      const insert=db.prepare(`INSERT INTO profile_classes(id,owner,title,invite,created,expires,course_id,creation_request)
+        SELECT ?,?,?,?,?,?,?,? WHERE (SELECT COUNT(*) FROM profile_classes WHERE owner=? AND expires>?)<?
+          AND NOT EXISTS (SELECT 1 FROM profile_classes WHERE owner=? AND creation_request=?)`)
+        .bind(id,owner,title,inviteDigest,now,now+CLASS_DAYS*DAY,courseId,requestDigest,owner,now,MAX_CLASSES,owner,requestDigest);
+      const [created]=await db.batch([insert,...defaultPathwayStatements(db,{classId:id,owner,title,courseId,now})]);
+      if(created.meta.changes)return {id,invite};
+      const prior=requestDigest&&await first(db,`SELECT id,title,course_id,invite,archived,expires FROM profile_classes
+        WHERE owner=? AND creation_request=?`,owner,requestDigest);
+      if(!prior)profileError(429,'Class limit reached.');
+      if(prior.title!==title||prior.course_id!==courseId||prior.archived||prior.expires<=now)
+        profileError(409,'This creation request already belongs to a different or inactive class.');
+      return {id:prior.id,invite:prior.invite===inviteDigest?invite:null};
     }
+  }
+  if(classId==='default-pathways'&&!section&&method==='POST'){
+    const candidates=await all(db,`SELECT id,title,course_id FROM profile_classes c
+      WHERE owner=? AND archived IS NULL AND expires>? AND NOT EXISTS (SELECT 1 FROM class_pathways WHERE class_id=c.id)`,owner,now);
+    for(const c of candidates)await db.batch(defaultPathwayStatements(db,{classId:c.id,owner,now,title:c.title,courseId:c.course_id}));
+    return {checked:candidates.length};
   }
   const c=await ownerClass(db,owner,classId,now);
   if (!section && method==='GET') {
@@ -275,8 +295,9 @@ export async function routeProfiles(request,env,segments,readBody,now) {
     const {invite,...extra}=await readBody(request) || {};
     if (Object.keys(extra).length || !present(invite,PROFILE_KEY)) profileError(400,'Invalid enrollment link.');
     const hash=await profileHash(invite);
-    const c=await first(db,'SELECT id FROM profile_classes WHERE invite=? AND archived IS NULL AND expires>?',hash,now);
+    const c=await first(db,'SELECT id,owner FROM profile_classes WHERE invite=? AND archived IS NULL AND expires>?',hash,now);
     if (!c) profileError(404,'Enrollment link is inactive.');
+    await ensureClassPathway(db,c.owner,c.id,now);
     const p=await issue(db,c.id,now,null,hash);
     return {...await session(db,p,now),recovery:p.recovery};
   }

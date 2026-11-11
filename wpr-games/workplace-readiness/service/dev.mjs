@@ -49,6 +49,9 @@ export async function startDev({ port = 0, filename = ':memory:', teacherTokens,
     }
   }
   db.exec(readFileSync(new URL('./migrations/0005_teacher_sessions.sql',import.meta.url),'utf8'));
+  if (!db.prepare('PRAGMA table_info(profile_classes)').all().some(column=>column.name==='creation_request')) {
+    db.exec(readFileSync(new URL('./migrations/0006_class_creation_requests.sql',import.meta.url),'utf8'));
+  }
   const DB = sqliteAdapter(db);
   const verifyLocalTeacher = token => {
     const supplied = Buffer.from(token);

@@ -1,5 +1,5 @@
 import { profilesAvailable,request } from '../../wpr-games/workplace-readiness/online/config.mjs';
-import { activeProfile,device,scopedStorage } from '../../wpr-games/workplace-readiness/online/profile-sync.mjs';
+import { activeProfile,device,scopedStorage,syncQueuedPractice } from '../../wpr-games/workplace-readiness/online/profile-sync.mjs';
 import { createPathwayClient } from '../pathway/client.mjs';
 import { renderPathway } from './pathway-view.mjs';
 
@@ -45,6 +45,7 @@ if (!profilesAvailable) {
       try {
         context ??= await request('/profile/identity',{token});
         if (!client) connect(context.classId);
+        await syncQueuedPractice();
         const previous=client.current?.revision;
         const result=await client.sync();
         if (result.online && previous===result.current?.revision) say('Class pathway is up to date.');

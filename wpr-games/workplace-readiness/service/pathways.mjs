@@ -1,8 +1,9 @@
 import {PROFILE_ID} from '../online/profile-model.mjs';
 import {ownerClass,profilesEnabled,studentProfile} from './profiles.mjs';
-import {readProfileEvidence} from './profile-evidence.mjs';
+import {readProfileEvidence,readPracticeProgress} from './profile-evidence.mjs';
+import {ensureClassPathway} from './default-pathways.mjs';
 import graph from '../../../cs-games/pathway/curriculum-graph.json' with {type:'json'};
-import {validatePathway,diffPathways,studentContract} from '../../../cs-games/pathway/model.mjs';
+import {validatePathway,diffPathways,studentContract,publicationSnapshot} from '../../../cs-games/pathway/model.mjs';
 const error=(status,message)=>{throw Object.assign(new Error(message),{status});};
 const hash=async value=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value))),x=>x.toString(16).padStart(2,'0')).join('');
 const valid=p=>{try{return validatePathway(p,graph);}catch(e){error(400,e.message);}};
@@ -19,19 +20,26 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
     if(testAdapter) identity=await env.resolvePathwayStudent(request);
     else {
       const profile=await studentProfile(request,env);
-      identity={profileId:profile.id,classIds:[profile.class_id],evidenceCount:profile.evidence_count};
+      identity={profileId:profile.id,classIds:[profile.class_id],evidenceCount:profile.evidence_count,eventCount:profile.event_count};
     }
     if(!identity?.profileId||!identity.classIds?.includes(id))error(403,'Class enrollment required.');
-    const p=await db.prepare(`SELECT p.id,p.head,json_extract(r.snapshot,'$.calendar.timeZone') timeZone
+    const lookup=()=>db.prepare(`SELECT p.id,p.head,json_extract(r.snapshot,'$.calendar.timeZone') timeZone
       FROM class_pathways p LEFT JOIN pathway_revisions r ON r.pathway_id=p.id AND r.revision=p.head
       WHERE p.class_id=?`).bind(id).first();
+    let p=await lookup();
+    if(!p&&!testAdapter){
+      const classroom=await db.prepare('SELECT owner FROM profile_classes WHERE id=?').bind(id).first();
+      if(classroom)await ensureClassPathway(db,classroom.owner,id,Date.now());
+      p=await lookup();
+    }
     if(!p||!p.head)error(404,'No pathway has been published for this class.');
     const today=new Intl.DateTimeFormat('en-CA',{timeZone:p.timeZone||'America/Los_Angeles',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-    const cacheKey=p.id+':'+p.head+':'+(identity.evidenceCount??0)+':'+today;
+    const cacheKey='progress-v1:'+p.id+':'+p.head+':'+(identity.evidenceCount??0)+':'+(identity.eventCount??0)+':'+today;
     if(!testAdapter && new URL(request.url).searchParams.get('known')===cacheKey) return {unchanged:true,cacheKey};
     const row=await db.prepare('SELECT snapshot FROM pathway_revisions WHERE pathway_id=? AND revision=?').bind(p.id,p.head).first();
     const evidence=testAdapter ? await env.readPathwayEvidence(identity.profileId) : await readProfileEvidence(db,identity.profileId);
-    const view=studentContract(parse(row),graph,evidence);
+    const practice=testAdapter?null:await readPracticeProgress(db,identity.profileId);
+    const view=studentContract(parse(row),graph,evidence,{practice});
     const digest=await hash(JSON.stringify({status:view.status,nodes:view.nodes.map(n=>n.checkpoint)}));
     await db.prepare('INSERT OR IGNORE INTO pathway_status_history(pathway_id,profile_id,revision,digest,status,created) VALUES(?,?,?,?,?,?)')
       .bind(p.id,identity.profileId,p.head,digest,view.status,Date.now()).run();
@@ -42,9 +50,9 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
   if(!id&&method==='GET'){
     const filter=requireEnrollment ? ' AND EXISTS(SELECT 1 FROM profile_classes c WHERE c.id=class_id AND c.owner=class_pathways.owner AND c.expires>?)' : '';
     const parameters=requireEnrollment ? [owner,Date.now()] : [owner];
-    const {results}=await db.prepare("SELECT id,class_id,head,draft_version,json_extract(draft,'$.title') title FROM class_pathways WHERE owner=?"+filter+' ORDER BY created DESC LIMIT 100')
+    const {results}=await db.prepare("SELECT id,class_id,head,draft_version,json_extract(draft,'$.title') title, json_extract(draft,'$.origin') origin FROM class_pathways WHERE owner=?"+filter+' ORDER BY created DESC LIMIT 100')
       .bind(...parameters).all();
-    return {pathways:results.map(row=>({id:row.id,classId:row.class_id,revision:row.head,draftVersion:row.draft_version,title:row.title}))};
+    return {pathways:results.map(row=>({id:row.id,classId:row.class_id,revision:row.head,draftVersion:row.draft_version,title:row.title,isDefault:row.head===1&&row.origin==='course-default'}))};
   }
   if(!id&&method==='POST'){
     const p=await body(request);valid(p);
@@ -61,6 +69,10 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
   const classroom=requireEnrollment?await ownerClass(db,owner,p.class_id,Date.now(),method==='POST'):null;
   const current=p.head?parse(await db.prepare('SELECT snapshot FROM pathway_revisions WHERE pathway_id=? AND revision=?').bind(id,p.head).first()):null;
   if(!action&&method==='GET')return {draft:JSON.parse(p.draft),draftVersion:p.draft_version,published:current};
+  if(action==='student-preview'&&method==='GET'){
+    if(!current)error(404,'No pathway has been published for this class.');
+    return {pathway:studentContract(current,graph)};
+  }
   if(action==='history'&&method==='GET'){const {results}=await db.prepare('SELECT revision,parent_revision,created,summary FROM pathway_revisions WHERE pathway_id=? ORDER BY revision DESC').bind(id).all();return {revisions:results};}
   if(action==='draft'&&method==='POST'){
     const data=await body(request);valid(data.pathway);
@@ -79,7 +91,7 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
   }
   if(action==='publish'&&method==='POST'){
     const data=await body(request);if(data.previewToken!==await hash(p.draft+'|'+p.draft_version+'|'+p.head)||data.draftVersion!==p.draft_version||data.expectedRevision!==p.head)error(409,'Preview the latest draft before publishing.');
-    const draft=JSON.parse(p.draft);valid(draft);const snapshot=stamp({...draft,curriculumSnapshot:draft.graphVersion===graph.version?{version:graph.version,nodes:graph.nodes.filter(n=>draft.sequence.includes(n.id)),areas:graph.areas.filter(a=>draft.checkpoints.some(c=>c.areaId===a.id))}:draft.curriculumSnapshot},p.head+1);
+    const draft=JSON.parse(p.draft);valid(draft);const snapshot=publicationSnapshot(draft,graph,p.head+1);
     // Insertion and pointer change are one SQLite statement via the trigger. No student evidence is touched.
     const result=await db.prepare('INSERT INTO pathway_revisions(pathway_id,revision,parent_revision,snapshot,summary,created) SELECT ?,?,?,?,?,? WHERE EXISTS(SELECT 1 FROM class_pathways WHERE id=? AND owner=? AND head=? AND draft_version=?)')
       .bind(id,p.head+1,p.head,JSON.stringify(snapshot),JSON.stringify(diffPathways(current,draft).map(c=>({kind:c.kind,id:c.id}))),Date.now(),id,owner,p.head,p.draft_version).run();

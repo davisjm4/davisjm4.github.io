@@ -3,6 +3,7 @@ import {test} from 'node:test';
 import {readFileSync} from 'node:fs';
 import {DatabaseSync} from 'node:sqlite';
 import {startDev,sqliteAdapter} from '../../wpr-games/workplace-readiness/service/dev.mjs';
+import {profileHash} from '../../wpr-games/workplace-readiness/service/profiles.mjs';
 import {teacherIdentity,teacherSession} from '../../wpr-games/workplace-readiness/service/auth.mjs';
 import {createPathway} from '../pathway/model.mjs';
 import {generatePacing} from '../pathway/pacing.mjs';
@@ -67,9 +68,20 @@ test('profile classes connect practice, verified mastery and immutable pathway r
   assert.equal((await ok('/health')).databaseReady,true);
   assert.equal((await call('/health',null,undefined,{headers:{Origin:'https://unrelated.example'}})).status,403);
   assert.equal((await call('/teacher/profiles',null)).status,401);
-  const classroom=await ok('/teacher/profiles',owner,{title:'Synthetic Advanced CS',courseId:'advanced'});
+  const classroom={id:crypto.randomUUID(),invite:'ab'.repeat(32)};
+  dev.db.prepare('INSERT INTO profile_classes(id,owner,title,invite,created,expires,course_id) VALUES(?,?,?,?,?,?,?)')
+    .run(classroom.id,'one','Synthetic Advanced CS',await profileHash(classroom.invite),Date.now(),Date.now()+86400000,'advanced');
   const foreign=await ok('/teacher/profiles',other,{title:'Different school',courseId:'advanced'});
   const roster='/teacher/profiles/'+classroom.id;
+
+
+  let plan=createPathway(graph,{classId:classroom.id,courseId:'advanced',calendar:{start:'2026-11-02',end:'2026-12-18',
+    weekdays:[1,2,3,4,5],minutes:80,rotation:['A','B'],classRotations:[],rotationOffset:0,overrides:[]}});
+  plan.checkpoints=plan.checkpoints.filter(item=>item.nodeId===nodeId);
+  plan.sequence=[nodeId];
+  plan=generatePacing(plan,graph);
+  assert.equal((await call('/pathways/teacher',owner,{...plan,classId:foreign.id})).status,404);
+  await ok('/pathways/teacher',owner,plan);
   const student=await ok('/profile/enroll',null,{invite:classroom.invite});
   const restored=await ok('/profile/restore',null,{id:student.id,recovery:student.recovery});
   assert.equal(restored.id,student.id);
@@ -79,14 +91,6 @@ test('profile classes connect practice, verified mastery and immutable pathway r
   assert.equal((await call(roster+'/students/'+student.id,other)).status,404);
   assert.equal((await call('/pathways/student/'+foreign.id,student.token)).status,403);
   assert.equal((await call('/profile/restore',null,{id:student.id,recovery:student.recovery,email:'synthetic@fictional.example'})).status,401);
-
-  let plan=createPathway(graph,{classId:classroom.id,courseId:'advanced',calendar:{start:'2026-11-02',end:'2026-12-18',
-    weekdays:[1,2,3,4,5],minutes:80,rotation:['A','B'],classRotations:[],rotationOffset:0,overrides:[]}});
-  plan.checkpoints=plan.checkpoints.filter(item=>item.nodeId===nodeId);
-  plan.sequence=[nodeId];
-  plan=generatePacing(plan,graph);
-  assert.equal((await call('/pathways/teacher',owner,{...plan,classId:foreign.id})).status,404);
-  await ok('/pathways/teacher',owner,plan);
   const editor='/pathways/teacher/'+plan.id;
   const studentPath='/pathways/student/'+classroom.id;
   assert.equal((await call(studentPath,student.token)).status,404);
@@ -172,6 +176,8 @@ test('additive migrations preserve legacy profile events and clear deleted profi
     db.exec("INSERT INTO student_profiles(id,class_id,recovery,created) VALUES('student','class','digest',1);");
     db.exec("INSERT INTO performance_events VALUES('student','historical',1,'workplace-readiness','workplace-readiness-games','practice',1,'{\"n\":1,\"c\":1}');");
     db.exec(migration('0004_integrated_progress.sql'));
+    db.exec(migration('0006_class_creation_requests.sql'));
+    assert.equal(db.prepare("SELECT creation_request FROM profile_classes WHERE id='class'").get().creation_request,null);
     assert.equal(db.prepare("SELECT course_id FROM profile_classes WHERE id='class'").get().course_id,'workplace');
     assert.equal(db.prepare("SELECT event_count FROM student_profiles WHERE id='student'").get().event_count,1);
     assert.equal(db.prepare("SELECT data FROM performance_events WHERE id='historical'").get().data,'{"n":1,"c":1}');

@@ -1,0 +1,9 @@
+.pathway-area { margin: .65rem 0; border: 1px solid var(--line); border-radius: 12px; }
+.pathway-area summary { cursor: pointer; padding: .8rem 1rem; min-height: 44px; }
+.pathway-checkpoints { margin: 0; padding: 0 1rem .5rem 2.5rem; }
+.pathway-checkpoints li { padding: .75rem 0; border-top: 1px solid var(--line); }
+.pathway-checkpoints p { margin: .25rem 0; }
+.pathway-checkpoints small { display: block; color: var(--muted); }
+.pathway-actions { display: flex; flex-wrap: wrap; gap: .3rem .85rem; }
+.pathway-actions a { display: inline-flex; align-items: center; min-height: 44px; }
+#published-student-preview { margin-top: 1rem; }

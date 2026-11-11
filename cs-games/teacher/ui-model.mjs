@@ -93,6 +93,7 @@ export function rotationLabelOn(calendar, date) {
 }
 
 export function scheduleSummary(calendar) {
+  if(!calendar)return 'Self-paced';
   const mode = scheduleModeFromCalendar(calendar);
   const days = describeWeekdays(calendar.weekdays || []);
   const parts = [];

@@ -56,6 +56,15 @@ export async function readProfileEvidence(db,profileId) {
     WHERE profile=? AND kind='assessment' AND json_type(data,'$.evidence')='array' ORDER BY occurred DESC,id DESC`).bind(profileId).all();
   return rows.results.flatMap(row=>JSON.parse(row.evidence));
 }
-export function profilePathway(plan,evidence) {
-  return studentContract(plan,graph,evidence);
+export function profilePathway(plan,evidence,practice) {
+  return studentContract(plan,graph,evidence,{practice});
+}
+
+export async function readPracticeProgress(db,profileId) {
+  const {results}=await db.prepare(`SELECT json_extract(d.value,'$.id') node,
+    SUM(json_extract(d.value,'$.n')) attempted,SUM(json_extract(d.value,'$.c')) correct
+    FROM performance_events e JOIN json_each(e.data,'$.dimensions') d
+    WHERE e.profile=? AND e.kind='practice' AND json_extract(d.value,'$.scope')='node'
+    GROUP BY node`).bind(profileId).all();
+  return new Map(results.map(({node,attempted,correct})=>[node,{attempted,correct}]));
 }
