@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import {readFileSync} from 'node:fs';
 import {DatabaseSync} from 'node:sqlite';
-import {startDev} from '../../wpr-games/workplace-readiness/service/dev.mjs';
-import {teacherIdentity} from '../../wpr-games/workplace-readiness/service/auth.mjs';
+import {startDev,sqliteAdapter} from '../../wpr-games/workplace-readiness/service/dev.mjs';
+import {teacherIdentity,teacherSession} from '../../wpr-games/workplace-readiness/service/auth.mjs';
 import {createPathway} from '../pathway/model.mjs';
 import {generatePacing} from '../pathway/pacing.mjs';
 import {createPathwayClient} from '../pathway/client.mjs';
@@ -18,7 +18,9 @@ test('registered Google audience, verified external teacher email and signature 
   const algorithm={name:'RSASSA-PKCS1-v1_5',modulusLength:2048,publicExponent:new Uint8Array([1,0,1]),hash:'SHA-256'};
   const keys=await crypto.subtle.generateKey(algorithm,true,['sign','verify']);
   const jwk={...await crypto.subtle.exportKey('jwk',keys.publicKey),kid:'test-key'};
-  const env={GOOGLE_CLIENT_ID:'fictional-client',TEACHER_EMAILS:'teacher@fictional.example,second@independent.example'};
+  const db=new DatabaseSync(':memory:');
+  db.exec(readFileSync(new URL('../../wpr-games/workplace-readiness/service/migrations/0005_teacher_sessions.sql',import.meta.url),'utf8'));
+  const env={DB:sqliteAdapter(db),GOOGLE_CLIENT_ID:'fictional-client',TEACHER_EMAILS:'teacher@fictional.example,second@independent.example'};
   const now=Math.floor(Date.now()/1000);
   const encode=value=>Buffer.from(JSON.stringify(value)).toString('base64url');
   async function idToken(claims={}) {
@@ -38,7 +40,14 @@ test('registered Google audience, verified external teacher email and signature 
     }
     const valid=await idToken();
     assert.equal(await verify(valid.slice(0,valid.lastIndexOf('.')+1)+'bad-signature'),null);
-  } finally { globalThis.fetch=originalFetch; }
+    const session=await teacherSession(new Request('https://fictional.example/api/wpr/teacher/session',{
+      method:'POST',headers:{Authorization:'Bearer '+valid}
+    }),env);
+    assert.equal(session.account,'teacher@fictional.example');
+    assert.equal(await verify(session.token),'google:10001');
+    env.TEACHER_EMAILS='second@independent.example';
+    assert.equal(await verify(session.token),null,'allowlist changes revoke authorization immediately');
+  } finally { globalThis.fetch=originalFetch;db.close(); }
 });
 
 test('profile classes connect practice, verified mastery and immutable pathway revisions across devices',async t=>{

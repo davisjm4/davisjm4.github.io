@@ -1,6 +1,6 @@
 import { pathwayRoute } from './pathways.mjs';
 import { validateSnapshot, publicAssignment, dimensions, answerReport, grade, MIN_CLASS, RETENTION_DAYS } from '../online/model.mjs';
-import { teacherIdentity } from './auth.mjs';
+import { teacherIdentity, teacherSession } from './auth.mjs';
 import { routeProfiles, profilesEnabled, ownerClass, studentProfile, saveProfileAssessment, purgeProfiles } from './profiles.mjs';
 const DAY = 86400000;
 const UUID = /^[0-9a-f-]{36}$/;
@@ -73,6 +73,7 @@ async function route(request, env, path) {
       teacherConfigured:Boolean(env.GOOGLE_CLIENT_ID && !env.GOOGLE_CLIENT_ID.startsWith('REPLACE_') && env.TEACHER_EMAILS?.trim()),
       diagnosticsConfigured:Boolean(env.SUBMISSION_SECRET?.length>=32),profilesEnabled:profilesEnabled(env)};
   }
+  if (path==='/teacher/session') return teacherSession(request,env);
   if (path.startsWith('/pathways/')) return pathwayRoute(request,env,path,{body:request=>body(request,1800000),teacherIdentity});
   const now = Date.now(), db = env.DB, method = request.method;
   const segments = path.split('/').filter(Boolean);
@@ -192,6 +193,7 @@ export default {
     const now = Date.now();
     await env.DB.prepare('DELETE FROM assignments WHERE expires<=?').bind(now).run();
     await env.DB.prepare('DELETE FROM receipts WHERE finished IS NULL AND created<?').bind(now-DAY).run();
+    await env.DB.prepare('DELETE FROM teacher_sessions WHERE expires<=?').bind(now).run();
     if (profilesEnabled(env) || env.PROFILE_SCHEMA_INSTALLED==='1') await purgeProfiles(env.DB,now);
   }
 };

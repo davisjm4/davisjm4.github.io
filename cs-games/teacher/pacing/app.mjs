@@ -1,7 +1,8 @@
 import {DAY_TYPES,importCalendar,applyImport,bulkDates} from '../../pathway/calendar.mjs';
 import {createPathway,clone,validatePathway,diffPathways,studentContract} from '../../pathway/model.mjs';
 import {generatePacing,exportCSV,exportICS,groupedView} from '../../pathway/pacing.mjs';
-import {apiBase,googleClientId,profilesAvailable,request} from '../../../wpr-games/workplace-readiness/online/config.mjs';
+import {profilesAvailable} from '../../../wpr-games/workplace-readiness/online/config.mjs';
+import {currentTeacher,mountTeacherAccount,observeTeacher,teacherRequest} from '../session.mjs';
 import {WEEKDAYS,courseLabel,scheduleModeFromCalendar,classLabelsFromCalendar,calendarFromSchedule,offsetForKnownDay,rotationLabelOn,scheduleSummary,formatDate,formatWhen,publicationStatus,draftStatus,filterSkills} from '../ui-model.mjs';
 const $=id=>document.getElementById(id),graph=await fetch('../../pathway/curriculum-graph.json').then(r=>r.json());
 const el=(tag,text,attrs={})=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;for(const [k,v]of Object.entries(attrs))n.setAttribute(k,v);return n;};
@@ -13,11 +14,14 @@ const list=s=>s.split(',').map(x=>x.trim()).filter(Boolean);
 const STAGES=['calendar','goals','pacing','review'];
 const STAGE_ALIASES={setup:'calendar',nodes:'goals',revisions:'review',student:'review'};
 const localKey='cs-games:teacher-pathways:v1';
-let store={selected:null,classes:{}},p,entry,token='',connected=false,preview=null,imported=[];
+let store={selected:null,classes:{}},p,entry,loadedOwner=null,connected=false,preview=null,imported=[];
 let enrolledClasses=[], remotePlans=[];
 let savedSnapshot=null,lastPublishedAt=null,publishError=null,settingsDirty=false,stage='calendar',statusTimer=null;
 const assessSel=new Set();
 const classHint=new URLSearchParams(location.search).get('class');
+if(classHint)document.querySelectorAll('a[href="../#classes"]').forEach(link=>{
+  link.href='../?class='+encodeURIComponent(classHint)+'#classes';
+});
 try{store=JSON.parse(localStorage.getItem(localKey))||store;}catch{}
 
 /* ───────── messages ───────── */
@@ -32,7 +36,7 @@ function setPublishError(text){publishError=text;refreshStatus();}
 const run=async(fn,kind)=>{try{await fn();if(kind)setPublishError(null);}catch(e){message(e.message,true);if(kind)setPublishError(e.message);}};
 
 /* ───────── storage and change tracking ───────── */
-function persist(){entry.draft=clone(p);store.selected=p.id;store.classes[p.id]=entry;try{localStorage.setItem(localKey,JSON.stringify(store));}catch{message('Browser storage is unavailable. Export a JSON backup (More tools) to keep your work.',true);}}
+function persist(){entry.unsaved=isDirty();entry.draft=clone(p);store.selected=p.id;store.classes[p.id]=entry;try{localStorage.setItem(localKey,JSON.stringify(store));}catch{message('Browser storage is unavailable. Export a JSON backup (More tools) to keep your work.',true);}}
 function invalidate(){preview=null;$('publish').disabled=true;$('local-publish').disabled=true;$('changes').replaceChildren();persist();queueStatus();}
 const markSaved=()=>{savedSnapshot=entry.remote&&!entry.needsReload?JSON.stringify(p):null;};
 const isDirty=()=>!!entry.remote&&(!!entry.needsReload||(savedSnapshot!==null&&savedSnapshot!==JSON.stringify(p)));
@@ -40,9 +44,9 @@ function queueStatus(){clearTimeout(statusTimer);statusTimer=setTimeout(refreshS
 
 /* ───────── data lookups ───────── */
 function allNodes(){return [...new Map([...graph.nodes,...(p.curriculumSnapshot?.nodes||[]),...p.customNodes].map(n=>[n.id,n])).values()];}function allAreas(){return [...new Map([...graph.areas,...(p.curriculumSnapshot?.areas||[]),...p.customAreas].map(a=>[a.id,a])).values()];}function node(id){return allNodes().find(n=>n.id===id);}function area(id){return allAreas().find(a=>a.id===id)?.title||id;}
-function newClass(courseId='advanced',classroom=null){
+function newClass(courseId='advanced',classroom=null,{temporary=false}={}){
   p=createPathway(graph,{title:classroom?.title||'New class pathway',courseId,...(classroom?{classId:classroom.id}:{}),calendar:{start:'2026-08-10',end:'2027-05-28',weekdays:[1,2,3,4,5],minutes:80,rotation:['A','B'],classRotations:[],rotationOffset:0,overrides:[]}});
-  p.examDate='2027-05-21';p=generatePacing(p,graph);entry={draft:p,revisions:[],remote:false,draftVersion:null};savedSnapshot=null;persist();render();
+  p.examDate='2027-05-21';p=generatePacing(p,graph);entry={draft:p,revisions:[],remote:false,draftVersion:null,owner:classroom?loadedOwner:null};savedSnapshot=null;if(!temporary)persist();render();
 }
 
 /* ───────── tables ───────── */
@@ -95,7 +99,7 @@ function readSettings(){
 function applySettings(){readSettings();recalculate();renderSaved();settingsDirty=false;$('settings-dirty').hidden=true;message('Settings saved. Your schedule is updated.');}
 function renderSaved(){
   const saved=$('saved');
-  const choices=new Map(Object.values(store.classes).map(item=>[item.draft.id,item.draft.title+(item.remote?'':' (this browser only)')]));
+  const choices=new Map(Object.values(store.classes).filter(item=>!item.remote&&!item.owner || connected&&item.owner===loadedOwner).map(item=>[item.draft.id,item.draft.title+(item.remote?'':' (this browser only)')]));
   for(const item of remotePlans) choices.set(item.id,item.title);
   saved.replaceChildren(...Array.from(choices,([id,title])=>option(id,title)));
   saved.value=p.id;
@@ -110,19 +114,25 @@ function renderEnrollment(){
   select.disabled=entry.remote;
 }
 async function openRemote(id){
-  const result=await request('/pathways/teacher/'+id,{token});
+  const active=currentTeacher();
+  const result=await teacherRequest('/pathways/teacher/'+id);
+  if(currentTeacher()!==active)return;
   const local=store.classes[id];
-  if(local && JSON.stringify(local.draft)!==JSON.stringify(result.draft)) {
-    entry={...local,remote:true,needsReload:true,remoteDraftVersion:result.draftVersion};
-  } else {
-    entry={draft:result.draft,published:result.published,revisions:result.published?[result.published]:[],draftVersion:result.draftVersion,remote:true};
-  }
+  const serverEntry={draft:result.draft,published:result.published,revisions:result.published?[result.published]:[],
+    draftVersion:result.draftVersion,remote:true,owner:active.owner};
+  const ownsCache=local?.owner===active.owner;
+  const sameVersion=local?.draftVersion===result.draftVersion;
+  const editsDiffer=local && JSON.stringify(local.draft)!==JSON.stringify(result.draft);
+  if(editsDiffer && (ownsCache && local.unsaved || sameVersion && local.remote && !local.owner)){
+    entry={...serverEntry,draft:local.draft,unsaved:true,needsReload:!sameVersion};
+  }else entry=serverEntry;
   p=clone(entry.draft);
-  invalidate();markSaved();render();loadLastPublished();
+  savedSnapshot=JSON.stringify(result.draft);
+  invalidate();render();loadLastPublished();
 }
 async function loadLastPublished(){
   lastPublishedAt=null;
-  try{if(connected&&entry.remote&&entry.published)lastPublishedAt=(await request('/pathways/teacher/'+p.id+'/history',{token})).revisions?.[0]?.created??null;}catch{}
+  try{if(connected&&entry.remote&&entry.published)lastPublishedAt=(await teacherRequest('/pathways/teacher/'+p.id+'/history')).revisions?.[0]?.created??null;}catch{}
   refreshStatus();
 }
 
@@ -238,6 +248,7 @@ function refreshStatus(){
 function render(){renderSaved();renderEnrollment();setSettings();renderSchedule();renderNodes();renderOverrides();renderStudent();renderHistory();resetPicker();$('coverage-limits').textContent=graph.coverageLimits.join(' ');$('publish-note').textContent=connected?'Preview the saved draft before publishing. Students receive the next revision at a safe question or assessment boundary.':'Shared publication needs a teacher sign-in. Local preview revisions test the structure in this browser. They do not reach student devices.';refreshStatus();}
 function recalculate(){const from=$('recalculate-from').value||p.calendar.start;p=generatePacing(p,graph,{from});invalidate();renderSchedule();renderNodes();renderOverrides();renderStudent(p,true);refreshStatus();message('Schedule updated. Review the changes before publishing.');}
 async function saveRemote(){
+  if(!connected&&(classHint||entry.owner))throw new Error('Sign in again to save this class draft.');
   readSettings();
   p=generatePacing(p,graph,{from:$('recalculate-from').value||p.calendar.start});
   validatePathway(p,graph);
@@ -249,16 +260,16 @@ async function saveRemote(){
     if(!classId)throw new Error('Choose a student class for this course (Step 1) before saving a shared draft.');
     if(remotePlans.some(item=>item.classId===classId))throw new Error('This class already has a shared pathway. Open it from the Class menu.');
     const upload={...clone(p),classId,revision:0,baseRevision:0,checkpoints:p.checkpoints.map(c=>({...c,revision:0}))};
-    const out=await request('/pathways/teacher',{token,body:upload});
+    const out=await teacherRequest('/pathways/teacher',{body:upload});
     entry.localRevisions=clone(entry.revisions);
-    entry.revisions=[];entry.published=null;p=upload;entry.remote=true;entry.draftVersion=out.draftVersion;
+    entry.revisions=[];entry.published=null;p=upload;entry.remote=true;entry.owner=loadedOwner;entry.draftVersion=out.draftVersion;
     remotePlans.push({id:p.id,classId,title:p.title});
     renderEnrollment();renderSaved();
   } else {
-    const out=await request('/pathways/teacher/'+p.id+'/draft',{token,body:{pathway:p,draftVersion:entry.draftVersion}});
+    const out=await teacherRequest('/pathways/teacher/'+p.id+'/draft',{body:{pathway:p,draftVersion:entry.draftVersion}});
     entry.draftVersion=out.draftVersion;
   }
-  persist();markSaved();refreshStatus();message('Draft saved. Students still see the published version until you publish.');
+  markSaved();persist();refreshStatus();message('Draft saved. Students still see the published version until you publish.');
 }
 function download(name,data,type){const url=URL.createObjectURL(new Blob([data],{type}));const a=el('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 
@@ -283,7 +294,12 @@ $('copy').onclick=()=>run(()=>{const copied=clone(p);copied.id=crypto.randomUUID
 $('new').onclick=()=>run(()=>{lastPublishedAt=null;newClass($('course').value||'advanced');message('New class pathway started. Give it a name and set the calendar in Step 1.');goStage('calendar');});
 $('saved').onchange=()=>run(async()=>{
   const id=$('saved').value;lastPublishedAt=null;
-  if(connected && remotePlans.some(item=>item.id===id))return openRemote(id);
+  const plan=connected&&remotePlans.find(item=>item.id===id);
+  if(plan && plan.classId!==classHint){
+    const url=new URL(location.href);url.searchParams.set('class',plan.classId);location.assign(url);
+    return;
+  }
+  if(plan)return openRemote(id);
   entry=store.classes[id];p=clone(entry.draft);savedSnapshot=null;invalidate();render();
 });
 $('settings').onsubmit=e=>{e.preventDefault();run(applySettings);};
@@ -300,39 +316,66 @@ $('optional-area').onclick=()=>run(()=>{if(!$('area-filter').value)throw new Err
 $('remove-area').onclick=()=>run(()=>{const id=$('area-filter').value;if(!id)throw new Error('Select an area first.');const ids=p.checkpoints.filter(c=>c.areaId===id).map(c=>c.nodeId);if(p.checkpoints.some(c=>!ids.includes(c.nodeId)&&c.prerequisites.some(d=>ids.includes(d))))throw new Error('This area is a prerequisite. Make it optional or revise dependent nodes first.');p.checkpoints=p.checkpoints.filter(c=>c.areaId!==id);p.sequence=p.sequence.filter(n=>!ids.includes(n));recalculate();});
 $('add-node').onsubmit=e=>{e.preventDefault();run(()=>{const f=$('add-node').elements;let a=p.customAreas.find(a=>a.title===f.area.value);if(!a){a={id:'area:custom:'+crypto.randomUUID(),title:f.area.value,courseId:p.courseId};p.customAreas.push(a);}const id='node:custom:'+crypto.randomUUID(),refs=list(f.standards.value).map(s=>{const i=s.indexOf(':');if(i<1)throw new Error('Use registry:id for standard references.');return {registry:s.slice(0,i),id:s.slice(i+1)};});const n={id,areaId:a.id,courseId:p.courseId,title:f.objective.value,objective:f.objective.value,standardRefs:refs,primaryObjectives:refs.length?refs:[{registry:'teacher-objective',id,label:f.objective.value}],practice:f.url.value?[{activityId:'teacher-assigned',url:f.url.value}]:[],prerequisites:list(f.prerequisites.value),familySelectors:[],estimatedMinutes:Number(f.minutes.value),estimateProvisional:true};p.customNodes.push(n);p.sequence.push(id);p.checkpoints.push({id:'checkpoint:'+p.id+':'+id,pathwayId:p.id,areaId:a.id,nodeId:id,standardRefs:n.standardRefs,primaryObjectives:n.primaryObjectives,targetDate:null,targetLocked:false,required:true,policyId:p.policies[0].id,policyVersion:p.policies[0].version,expectedMastery:null,practice:n.practice,prerequisites:n.prerequisites,minutes:n.estimatedMinutes,revision:p.revision});recalculate();f.reset?.();});};
 $('policy-form').onsubmit=e=>{e.preventDefault();run(()=>{const a=$('area-filter').value;if(!a)throw new Error('Select an area first.');const f=$('policy-form').elements,old=p.policies.find(x=>x.id==='policy:'+a),version=Math.max(0,...p.policies.filter(x=>x.id==='policy:'+a).map(x=>x.version))+1;const coverage=JSON.parse(f.coverage.value);if(!coverage||Array.isArray(coverage)||typeof coverage!=='object'||Object.values(coverage).some(n=>!Number.isInteger(n)||n<0))throw new Error('Coverage values must be nonnegative whole question counts.');const policy={id:'policy:'+a,version,label:f.label.value,provisional:!f.activate.checked,calibration:'teacher-defined; not system-calibrated',minimumQuestions:f.questions.value?Number(f.questions.value):null,accuracy:f.accuracy.value?Number(f.accuracy.value):null,coverage,scoreTarget:f.score.value!==''?Number(f.score.value):null};p.policies.push(policy);for(const c of p.checkpoints)if(c.areaId===a){c.policyId=policy.id;c.policyVersion=version;}validatePathway(p,graph);invalidate();renderNodes();renderStudent(p,true);message('New policy version saved in your draft. The original policy and student evidence are kept.');});};
-$('preview').onclick=()=>run(async()=>{await saveRemote();if(connected){preview=await request('/pathways/teacher/'+p.id+'/preview',{token,body:{}});renderChanges(preview.changes);$('publish').disabled=false;}else{preview={changes:diffPathways(entry.published,p)};renderChanges(preview.changes);$('local-publish').disabled=false;}renderStudent(p,true);refreshStatus();message('Preview ready. Review deadlines, requirements, protected windows and what students will see.');},'publish');
-$('publish').onclick=()=>run(async()=>{if(!preview||!connected)throw new Error('Preview the latest shared draft first.');const result=await request('/pathways/teacher/'+p.id+'/publish',{token,body:{previewToken:preview.previewToken,draftVersion:preview.draftVersion,expectedRevision:preview.expectedRevision}});p=result.published;entry.published=clone(p);entry.revisions.push(clone(p));entry.draftVersion=preview.draftVersion+1;invalidate();markSaved();render();loadLastPublished();message('Published. Enrolled students can see this pathway in My Class Progress.');},'publish');
+$('preview').onclick=()=>run(async()=>{await saveRemote();if(connected){preview=await teacherRequest('/pathways/teacher/'+p.id+'/preview',{body:{}});renderChanges(preview.changes);$('publish').disabled=false;}else{preview={changes:diffPathways(entry.published,p)};renderChanges(preview.changes);$('local-publish').disabled=false;}renderStudent(p,true);refreshStatus();message('Preview ready. Review deadlines, requirements, protected windows and what students will see.');},'publish');
+$('publish').onclick=()=>run(async()=>{if(!preview||!connected)throw new Error('Preview the latest shared draft first.');const result=await teacherRequest('/pathways/teacher/'+p.id+'/publish',{body:{previewToken:preview.previewToken,draftVersion:preview.draftVersion,expectedRevision:preview.expectedRevision}});p=result.published;entry.published=clone(p);entry.revisions.push(clone(p));entry.draftVersion=preview.draftVersion+1;markSaved();invalidate();render();loadLastPublished();message('Published. Enrolled students can see this pathway in My Class Progress.');},'publish');
 $('local-publish').onclick=()=>run(()=>{if(!preview)throw new Error('Preview the draft first.');p=clone(p);p.revision=(entry.published?.revision||0)+1;p.baseRevision=p.revision;p.checkpoints=p.checkpoints.map(c=>({...c,revision:p.revision}));entry.published=clone(p);entry.revisions.push(clone(p));invalidate();render();message('Local preview revision saved. Nothing was sent to students.');},'publish');
-$('history').onclick=()=>run(async()=>{if(!connected||!entry.remote){renderHistory();return;}const out=await request('/pathways/teacher/'+p.id+'/history',{token});$('history-list').replaceChildren(...out.revisions.map(r=>btn('Restore shared revision '+r.revision+' to draft',async()=>{const restored=await request('/pathways/teacher/'+p.id+'/rollback',{token,body:{revision:r.revision,draftVersion:entry.draftVersion}});p=restored.draft;entry.draftVersion=restored.draftVersion;invalidate();markSaved();render();message('Earlier version restored as a draft. Preview and publish to update students.');})));});
+$('history').onclick=()=>run(async()=>{if(!connected||!entry.remote){renderHistory();return;}const out=await teacherRequest('/pathways/teacher/'+p.id+'/history');$('history-list').replaceChildren(...out.revisions.map(r=>btn('Restore shared revision '+r.revision+' to draft',async()=>{const restored=await teacherRequest('/pathways/teacher/'+p.id+'/rollback',{body:{revision:r.revision,draftVersion:entry.draftVersion}});p=restored.draft;entry.draftVersion=restored.draftVersion;markSaved();invalidate();render();message('Earlier version restored as a draft. Preview and publish to update students.');})));});
 $('export-json').onclick=()=>run(()=>download('class-pathway.json',JSON.stringify({format:'cs-games-pathway-backup',graphVersion:graph.version,...entry,draft:p},null,2),'application/json'));
 $('export-csv').onclick=()=>run(()=>download('class-pacing.csv',exportCSV(p),'text/csv'));$('export-ics').onclick=()=>run(()=>download('class-pacing.ics',exportICS(p),'text/calendar'));
-$('reload-shared').onclick=()=>run(async()=>{if(!connected||!entry.remote)throw new Error('Sign in and choose a shared class first.');const current=await request('/pathways/teacher/'+p.id,{token});entry.recoveryDrafts=[...(entry.recoveryDrafts||[]),clone(p)];p=current.draft;entry.draftVersion=current.draftVersion;entry.published=current.published;entry.needsReload=false;invalidate();markSaved();render();loadLastPublished();message('Shared class reloaded. The previous browser copy is kept in the next JSON backup (recoveryDrafts).');});
-$('restore').onclick=()=>$('restore-file').click();$('restore-file').onchange=()=>run(async()=>{const file=$('restore-file').files[0];if(file.size>10000000)throw new Error('Backup is too large.');const data=JSON.parse(await file.text()),draft=data.draft||data;validatePathway(draft,graph);p=draft;entry={draft:p,published:data.published||null,revisions:data.revisions||[],remote:false,draftVersion:null};savedSnapshot=null;lastPublishedAt=null;invalidate();render();message('Backup restored as a local draft. Sign in and reload the shared class before publishing.');});
+$('reload-shared').onclick=()=>run(async()=>{if(!connected||!entry.remote)throw new Error('Sign in and choose a shared class first.');const current=await teacherRequest('/pathways/teacher/'+p.id);entry.recoveryDrafts=[...(entry.recoveryDrafts||[]),clone(p)];p=current.draft;entry.draftVersion=current.draftVersion;entry.published=current.published;entry.needsReload=false;markSaved();invalidate();render();loadLastPublished();message('Shared class reloaded. The previous browser copy is kept in the next JSON backup (recoveryDrafts).');});
+$('restore').onclick=()=>$('restore-file').click();$('restore-file').onchange=()=>run(async()=>{const file=$('restore-file').files[0];if(!file)return;if(file.size>10000000)throw new Error('Backup is too large.');const data=JSON.parse(await file.text()),draft=data.draft||data;validatePathway(draft,graph);p=draft;entry={draft:p,published:data.published||null,revisions:data.revisions||[],remote:false,draftVersion:null};savedSnapshot=null;lastPublishedAt=null;invalidate();render();message('Backup restored as a local draft. Sign in and reload the shared class before publishing.');});
 $('copy-ids').onclick=()=>run(async()=>{const text=[...$('troubleshoot').children].reduce((out,n,i,all)=>n.tagName==='DT'?out+n.textContent+': '+all[i+1].textContent+'\n':out,'');try{await navigator.clipboard.writeText(text);message('Troubleshooting details copied.');}catch{message('Copy is not available here. Select the details above and copy them manually.',true);}});
 
 /* ───────── sign-in ───────── */
-const authBox=el('div',undefined,{class:'actions'}),authNote=el('div',undefined,{id:'auth-note'});$('auth').append(authNote,authBox);
-async function signIn(value){
+async function connect(active){
+  connected=false;
+  const connection=$('connection');
+  if(!active){
+    remotePlans=[];enrolledClasses=[];
+    connection.className='banner info';
+    connection.textContent=classHint||loadedOwner
+      ? 'Sign in to save shared drafts and publish. Your in-progress changes stay in this tab.'
+      : 'Sign in to save shared drafts and publish to students. You can plan locally in the meantime.';
+    if(classHint||entry?.owner)$('pacing-content').hidden=true;
+    if(p){
+      preview=null;$('publish').disabled=true;$('local-publish').disabled=true;
+      renderSaved();renderEnrollment();refreshStatus();
+      if(entry.owner){$('page-title').textContent='Class learning pathway';$('page-sub').textContent='';}
+    }
+    return;
+  }
   const [plans,classes]=await Promise.all([
-    request('/pathways/teacher',{token:value}),
-    profilesAvailable ? request('/teacher/profiles',{token:value}) : {classes:[]},
+    teacherRequest('/pathways/teacher'),
+    profilesAvailable ? teacherRequest('/teacher/profiles') : {classes:[]},
   ]);
-  token=value;connected=true;
+  if(currentTeacher()!==active)return;
   remotePlans=plans.pathways;enrolledClasses=classes.classes;
-  $('connection').className='banner good';
-  $('connection').textContent='Signed in. You can save shared drafts and publish to your enrolled classes.';
-  authBox.hidden=true;authNote.replaceChildren(chip('Signed in as teacher','good'));
+  if(classHint&&!enrolledClasses.some(c=>c.id===classHint&&!c.archived)){
+    $('pacing-content').hidden=true;
+    throw new Error('This class is unavailable. Choose a class from My Classes.');
+  }
   const selected=remotePlans.find(item=>item.classId===classHint) || remotePlans.find(item=>item.id===p.id);
-  if(selected){await openRemote(selected.id);return;}
-  const classroom=enrolledClasses.find(c=>c.id===classHint&&!c.archived);
-  if(classroom){newClass(classroom.course_id,classroom);return;}
-  render();
+  const resume=loadedOwner===active.owner && (!entry.owner||entry.owner===active.owner)
+    && (!classHint||p.classId===classHint);
+  loadedOwner=active.owner;
+  connected=true;
+  connection.className='banner good';
+  connection.textContent='Signed in. You can save shared drafts and publish to your enrolled classes.';
+  if(resume){
+    renderSaved();renderEnrollment();refreshStatus();
+  }else if(selected){
+    await openRemote(selected.id);
+  }else{
+    const classroom=enrolledClasses.find(c=>c.id===classHint&&!c.archived);
+    const cached=classroom&&Object.values(store.classes).find(item=>!item.remote&&item.owner===active.owner&&item.draft.classId===classHint);
+    if(cached){entry=cached;p=clone(entry.draft);savedSnapshot=null;render();}
+    else if(classroom)newClass(classroom.course_id,classroom);
+    else if(entry.owner&&entry.owner!==active.owner)newClass();
+    else render();
+  }
+  if(currentTeacher()===active)$('pacing-content').hidden=false;
 }
 $('enrolled-class').onchange=()=>{preview=null;$('publish').disabled=true;refreshStatus();};
-$('connection').textContent=apiBase?'Sign in to save shared drafts and publish to students. Until then, your plan is saved in this browser. Teacher Tools and this editor sign in separately for now.':'Local planning is ready. Production reporting service and student profile integration are pending; cloud synchronization is unavailable.';
-if(apiBase&&['localhost','127.0.0.1'].includes(location.hostname)){const input=el('input',undefined,{type:'password',placeholder:'Development teacher token','aria-label':'Development teacher token',autocomplete:'off'});authBox.append(input,btn('Connect development service',()=>signIn(input.value),'primary'));}
-else if(apiBase&&googleClientId){const script=el('script');script.src='https://accounts.google.com/gsi/client';script.onload=()=>{google.accounts.id.initialize({client_id:googleClientId,callback:r=>run(()=>signIn(r.credential))});google.accounts.id.renderButton(authBox,{theme:'outline'});};script.onerror=()=>message('Teacher sign-in could not load. Check your connection and refresh the page. Local planning still works.',true);document.head.append(script);}
-
 /* ───────── start ───────── */
 buildStaticControls();
 document.addEventListener('input',e=>{
@@ -340,5 +383,11 @@ document.addEventListener('input',e=>{
   if(e.target.closest('#settings,#day-edit,#add-node,#policy-form,#node-table')){preview=null;$('publish').disabled=true;$('local-publish').disabled=true;queueStatus();}
 });
 document.addEventListener('change',e=>{if(e.target.closest('#settings')){settingsDirty=true;$('settings-dirty').hidden=false;updateScheduleUI();}});
-if(store.selected&&store.classes[store.selected]){entry=store.classes[store.selected];p=clone(entry.draft);render();}else newClass();
+const initial=store.classes[store.selected];
+if(initial&&!initial.remote&&!initial.owner){entry=initial;p=clone(entry.draft);render();}else newClass('advanced',null,{temporary:!!classHint});
+if(classHint)$('pacing-content').hidden=true;
+mountTeacherAccount($('auth'));
+observeTeacher(active=>void connect(active).catch(error=>{
+  if(currentTeacher()===active){$('connection').className='banner bad';$('connection').textContent=error.message;}
+}));
 showStage(location.hash.slice(1));

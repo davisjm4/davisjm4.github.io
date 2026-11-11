@@ -60,7 +60,7 @@ async function signInHub(page) {
 }
 async function signInEditor(page) {
   await page.type('input[aria-label="Development teacher token"]', token);
-  await clickByText(page, '#auth', 'Connect development service');
+  await clickByText(page, '#auth', 'Sign in to development service');
   await page.waitForFunction(() => document.querySelector('#connection').textContent.startsWith('Signed in'), { timeout: 10000 });
 }
 async function axeViolations(page, selector) {
@@ -440,5 +440,43 @@ test('Pathway editor: exports, backup and copy remain available under More tools
   assert.equal(await page.$eval('#local-publish', e => e.hidden), false);
   // Without sign-in the editor says so plainly and explains the separate sign-in.
   assert.match(await visibleText(page, '#connection'), /Sign in to save shared drafts/);
-  assert.match(await visibleText(page, '#connection'), /sign in separately/);
+  assert.doesNotMatch(await visibleText(page, '#connection'), /sign in separately/);
+});
+
+test('teacher session survives class navigation, expires safely, and resumes unsaved calendar edits', {timeout: 90000}, async t=>{
+  const svc=await service(t);
+  const seeded=await seedClass(svc.api);
+  const browser=await launch();t.after(()=>browser.close());
+  const page=await browser.newPage();
+  const hub=svc.url+'/cs-games/teacher/';
+  await page.goto(hub);
+  await signInHub(page);
+  await page.click('.class-card');
+  await page.waitForSelector('#class-students');
+  const link=await page.$eval('#class-overview a.btn.primary',a=>a.href);
+  await page.goto(link);
+  await page.waitForFunction(()=>document.querySelector('#connection')?.textContent.startsWith('Signed in'));
+  assert.equal(await page.$('[name=teacher-key]'),null);
+  assert.match(await visibleText(page,'#auth'),/Signed in as teacher/);
+  await page.waitForSelector('#settings [name=minutes]',{visible:true});
+  await page.$eval('#settings [name=minutes]',input=>{
+    input.value='73';
+    input.dispatchEvent(new Event('input',{bubbles:true}));
+  });
+  svc.db.prepare('UPDATE teacher_sessions SET expires=?').run(Date.now()-1);
+  await page.click('#save');
+  await page.waitForSelector('#auth [name=teacher-key]',{visible:true});
+  await signInEditor(page);
+  assert.equal(await page.$eval('#settings [name=minutes]',input=>input.value),'73');
+  await page.click('#save');
+  await page.waitForFunction(()=>document.querySelector('#status').innerText.includes('Draft saved'));
+  assert.equal(svc.db.prepare('SELECT head FROM class_pathways WHERE id=?').get(seeded.pathwayId).head,1);
+  assert.equal(JSON.parse(svc.db.prepare('SELECT draft FROM class_pathways WHERE id=?').get(seeded.pathwayId).draft).calendar.minutes,73);
+  await page.goto(hub+'?class='+seeded.classId+'#classes');
+  await page.waitForSelector('#class-students',{visible:true});
+  assert.equal(await page.$('[name=teacher-key]'),null);
+  assert.equal(svc.db.prepare('SELECT COUNT(*) AS n FROM profile_classes').get().n,1);
+  await clickByText(page,'#teacher-account','Sign out');
+  await page.waitForSelector('#teacher-account [name=teacher-key]',{visible:true});
+  assert.equal(await page.$eval('#wpr-teacher-profiles',root=>root.hidden),true);
 });

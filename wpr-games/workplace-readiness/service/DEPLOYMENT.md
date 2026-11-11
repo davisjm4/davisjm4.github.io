@@ -71,3 +71,11 @@ For a code incident, use the Worker deployment history to roll back to a schema-
 Monitor the current free limits before rollout. Cloudflare documents 100,000 Worker requests/day and 10 ms CPU per invocation on Workers Free. D1 Free documents 5 million row reads/day, 100,000 row writes/day, 500 MB per database and 5 GB across the account. The existing Cloudflare account may have other usage against account-level limits.
 
 [Workers limits](https://developers.cloudflare.com/workers/platform/limits/) · [D1 pricing and quotas](https://developers.cloudflare.com/d1/platform/pricing/) · [D1 technical limits](https://developers.cloudflare.com/d1/platform/limits/) · [D1 Time Travel](https://developers.cloudflare.com/d1/reference/time-travel/)
+
+## Shared Teacher Tools session rollout
+
+Apply additive migration `0005_teacher_sessions.sql` before deploying the Worker that supports `/api/wpr/teacher/session`. Then release the matching Teacher Tools frontend through GitHub Pages. The new Worker continues to accept the existing verified Google credentials during the rollout. Deploying the frontend first prevents new teacher sign-ins until the session endpoint is live.
+
+A verified Google credential is exchanged once for an opaque, two-hour teacher session. D1 keeps only the session digest, owner, verified account and expiration. The same browser tab carries the opaque token between Teacher Tools pages in session storage. The Worker rechecks the account allowlist and class ownership and revokes the session on sign-out. Student profiles use their existing independent credentials.
+
+After deployment, use an approved teacher account to sign in from My Classes, open a class and its pacing guide in the same tab, return to the class, and sign out. Confirm that both pages recognize sign-out. Use a synthetic class for draft and publication checks. For a rollback, restore the previous Pages frontend before rolling back the Worker. Leave the additive session table in place.

@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../teacher.css">
   <link rel="stylesheet" href="../teacher-ui.css">
   <link rel="stylesheet" href="./pacing.css">
-  <script type="module" src="./app.mjs?v=ux-v1"></script>
+  <script type="module" src="./app.mjs?v=shared-session-1-ux-v1"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -25,7 +25,7 @@
   <div class="tt-bar">
     <nav class="tt-bar-inner" aria-label="Teacher Tools sections">
       <span class="label">Teacher Tools</span>
-      <a href="../#classes">My Classes</a>
+      <a id="back-to-classes" href="../#classes">My Classes</a>
       <a href="../#practice">Practice &amp; Assessments</a>
       <a href="./" aria-current="page">Learning Pathways</a>
     </nav>
@@ -42,6 +42,7 @@
     </div>
     <p id="connection" class="banner info" role="status"></p>
 
+    <div id="pacing-content">
     <!-- Class bar: which class, and where it stands -->
     <section class="card class-bar" aria-label="Class and status">
       <div class="field-grid" style="margin:0;align-items:end">
@@ -288,6 +289,7 @@
         <div class="actions"><button id="copy-ids" class="secondary small" type="button">Copy troubleshooting details</button></div>
       </div>
     </details>
+    </div>
   </main>
   <footer class="footer"><div class="wrap">DevCat Studios · CS Games · Teacher Tools</div></footer>
 </body>

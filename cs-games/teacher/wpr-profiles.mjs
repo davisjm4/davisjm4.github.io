@@ -1,5 +1,6 @@
 import {renderPathway} from '../student/pathway-view.mjs';
-import { profilesAvailable, request } from '../../wpr-games/workplace-readiness/online/config.mjs';
+import { profilesAvailable } from '../../wpr-games/workplace-readiness/online/config.mjs';
+import {currentTeacher,teacherRequest} from './session.mjs';
 import { csv } from '../../wpr-games/workplace-readiness/online/model.mjs';
 import { el, button, download, table, copy, options } from '../../wpr-games/workplace-readiness/online/dom.mjs';
 import { PROFILE_CSV_HEADER, profileCsv, profileCsvRows, renderProfileProgress } from '../../wpr-games/workplace-readiness/online/profile-report.mjs';
@@ -8,6 +9,7 @@ import { COURSE_LABELS, courseLabel, publicationStatus, formatWhen } from './ui-
 const courseNames=COURSE_LABELS;
 const enrollUrl=(invite,courseId)=>new URL((courseId==='workplace'?'/wpr-games/workplace-readiness/':'/cs-games/student/')+'#enroll='+invite,location.href).href;
 const path='/teacher/profiles';
+const classHint=new URLSearchParams(location.search).get('class');
 const pacingHref=id=>'/cs-games/teacher/pacing/?class='+encodeURIComponent(id);
 const credentialText=({id,recovery})=>'Profile ID: '+id+'\nRecovery credential: '+recovery+'\nShare privately with this student only.';
 const chip=(text,tone='plain')=>el('span',{class:'chip '+tone,text});
@@ -16,20 +18,20 @@ const put=(node,...children)=>{node.replaceChildren(...children.flat().filter(x=
 export function profileClassSelect() {
   const select=el('select',{name:'profileClassId',disabled:true},options([['','Anonymous assignment']]));
   const field=el('label',{hidden:!profilesAvailable},'Student reporting',select);
-  return {field,update(classes){
-    const selected=select.value;
+  return {field,update(classes,requested){
+    const selected=requested||select.value;
     const active=classes.filter(c=>!c.archived);
     select.replaceChildren(...options([['','Anonymous assignment'],...active.map(c=>[c.id,'Class profile · '+c.title])]));
     select.value=active.some(c=>c.id===selected)?selected:'';
     select.disabled=!active.length;
   }};
 }
-export function teacherProfiles(getToken,onClasses) {
+export function teacherProfiles(onClasses) {
   const root=el('section',{id:'wpr-teacher-profiles',hidden:true,'aria-label':'Student profile classes'});
   const status=el('p',{role:'status','aria-live':'polite',class:'muted'}), classList=el('div',{class:'class-grid'}), panel=el('div',{id:'class-overview'}), credential=el('div',{class:'credential'});
   let classes=[], pathways=new Map(), selectedId=null;
-  const api=(suffix,opts={})=>request(path+suffix,{...opts,token:getToken()});
-  const rq=(suffix,opts={})=>request(suffix,{...opts,token:getToken()});
+  const api=(suffix,opts={})=>teacherRequest(path+suffix,opts);
+  const rq=(suffix,opts={})=>teacherRequest(suffix,opts);
   const act=(label,fn,cls='btn')=>button(label,async event=>{
     const clicked=event.currentTarget;
     clicked.disabled=true;
@@ -84,14 +86,18 @@ export function teacherProfiles(getToken,onClasses) {
     }
   }
   async function refresh() {
-    if(!profilesAvailable || !getToken())return;
+    const session=currentTeacher();
+    if(!profilesAvailable || !session)return;
     root.hidden=false;
     const signedOut=document.getElementById('classes-signed-out');
     if(signedOut)signedOut.hidden=true;
-    ({classes}=await api(''));
-    try{pathways=new Map((await rq('/pathways/teacher')).pathways.map(p=>[p.classId,p]));}catch{pathways=new Map();}
-    onClasses(classes);
+    const [list,plans]=await Promise.all([api(''),rq('/pathways/teacher')]);
+    if(currentTeacher()!==session)return;
+    classes=list.classes;
+    pathways=new Map(plans.pathways.map(p=>[p.classId,p]));
+    onClasses(classes,classHint);
     renderList();
+    if(!selectedId&&classHint&&classes.some(c=>c.id===classHint))await openClass(classHint);
   }
   async function loadPathwayStatus(c,slot) {
     const entry=pathways.get(c.id);
@@ -108,8 +114,13 @@ export function teacherProfiles(getToken,onClasses) {
   }
   async function openClass(id) {
     selectedId=id;
+    const url=new URL(location.href);
+    url.searchParams.set('class',id);
+    history.replaceState(null,'',url);
+    const session=currentTeacher();
     const base='/'+id;
     const {class:c,roster}=await api(base);
+    if(currentTeacher()!==session||selectedId!==id)return;
     const selected=el('div',{id:'wpr-profile-report'});
     const pathwaySlot=el('div',{id:'class-pathway-status'},el('p',{class:'muted',text:'Checking pathway status…'}));
     put(credential);
@@ -147,7 +158,7 @@ export function teacherProfiles(getToken,onClasses) {
         c.archived&&el('div',{class:'banner warn'},el('p',{text:'Archived. Scheduled deletion by '+new Date(c.expires).toISOString().slice(0,10)+'.'})),
         el('div',{class:'task-grid'},
           !c.archived&&el('a',{class:'task',href:pacingHref(c.id)},el('strong',{text:'Learning pathway'}),el('span',{text:'Calendar, learning goals, pacing guide and publishing.'})),
-          el('a',{class:'task',href:'#practice-online'},el('strong',{text:'Practice & assessments'}),el('span',{text:'Create a diagnostic or targeted practice for students.'})),
+          el('a',{class:'task',href:'#practice-online',onclick:()=>onClasses(classes,c.id)},el('strong',{text:'Practice & assessments'}),el('span',{text:'Create a diagnostic or targeted practice for students.'})),
           el('a',{class:'task',href:'#class-students'},el('strong',{text:'Students & progress'}),el('span',{text:'Enrollment link, student profile IDs and each student’s progress.'})))),
       el('div',{class:'card',id:'class-students'},
         el('div',{class:'card-head'},el('div',{},el('h3',{text:'Student profiles'}),el('p',{text:'Student profiles are pseudonymous. Keep your name-to-ID mapping in a school-controlled file. The roster export leaves names blank.'}))),
@@ -220,5 +231,15 @@ export function teacherProfiles(getToken,onClasses) {
     status,classList,panel,
     el('section',{class:'card','aria-labelledby':'add-class-title'},el('h3',{id:'add-class-title',text:'Add a class'}),
       el('p',{class:'muted',text:'Enter a class name only. Do not enter student names. Class profiles store pseudonymous learning records.'}),create));
-  return {root,refresh};
+  function clear(){
+    classes=[];pathways.clear();selectedId=null;
+    root.hidden=true;
+    put(panel);put(credential);put(classList);
+    onClasses([]);
+    const signedOut=document.getElementById('classes-signed-out');
+    if(signedOut)signedOut.hidden=false;
+    const list=document.getElementById('pathway-class-list');
+    if(list)put(list,el('p',{class:'muted',text:'Sign in to open an existing class pathway.'}));
+  }
+  return {root,refresh,clear};
 }

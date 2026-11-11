@@ -48,6 +48,7 @@ export async function startDev({ port = 0, filename = ':memory:', teacherTokens,
       throw error;
     }
   }
+  db.exec(readFileSync(new URL('./migrations/0005_teacher_sessions.sql',import.meta.url),'utf8'));
   const DB = sqliteAdapter(db);
   const verifyLocalTeacher = token => {
     const supplied = Buffer.from(token);
