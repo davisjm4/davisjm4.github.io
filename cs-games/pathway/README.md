@@ -107,3 +107,22 @@ CHROME_BIN=/path/to/chromium node --test cs-games/teacher/automatic-pathway-brow
 ```
 
 Node-level progress requires an existing verified metadata mapping for a question. Activities with broader tagging still open for practice, and their available totals remain in the existing student progress report. The Workplace Readiness link targets its CTECS skill; a concept-level question filter requires the future concept adapter. Focused Java modes may cover several related skills. The browser run uses synthetic profiles at 390, 768 and 1280 pixels. Physical Chromebook and production sign-in are rollout checks.
+
+## Optional mastery requirements
+
+Open a class in Teacher Tools and choose **Customize mastery requirements**. The editor uses the same shared pathway draft as the learning goals and pacing editor. Class defaults can be overridden by learning area and individual skill. Teachers can choose or edit a preset, set question count and first-try accuracy, optionally set a minimum correct count, and use supported difficulty, subskill and question-family requirements. The review screen explains available evidence and publication limits. Teachers explicitly save and publish changes. A new class starts with the full undated pathway and no selected requirements.
+
+The Worker reuses the imported engine and reads independently mapped game practice from the existing performance events. Focused and Mixed Practice use the assessed mode and family. The student's first tracked attempt can include practice already saved to the profile. Once an attempt is recorded, a later requirement version opens a fresh window at publication. Restarting opens a fresh window on the server clock and retains the earlier attempt. The pathway displays recent attempts and retains the full attempt history in D1. Student-side practice milestones, verified teacher awards, and teacher-assessed 0–4 scores stay distinct. The Worker never calls the engine's award proposal module.
+
+The earlier pacing policy controls are consolidated in the requirements editor. Previously published policies and any assessment records keep their original interpretation. The old policy itself remains stored and immutable. Review and publish continue to use the existing class pathway revisions and owner checks.
+
+### Mastery rollout
+
+This change is stacked on the automatic class pathways release. Stage migrations 0006 and 0007 in order before deploying the corresponding Worker build, then publish the matching Pages assets after approval. Migration 0007 adds attempt states, durable attempts and idempotent restart requests with profile retention. Existing classes, practice events and published pathways are unaffected by the migration. Check `masteryHistoryReady` on the Worker health response, and use two synthetic browser profiles to verify a draft, publication, game-to-pathway sync and restart. Record the D1 restore point and Worker/Pages versions before rollout. If reverting application code after teacher requirements have been published, keep the additive tables and immutable publications for forward recovery.
+
+The integration evaluates mapped first attempts recorded by the current games. Activity launches and unreported skips or reveals carry no question record. Activities without per-skill mapping remain available for practice, and known coverage gaps are shown in the editor. Course-specific difficulty, subskill and diversity claims depend on the graph and the verified evidence registry. Initial attempt state is materialized when the student opens the pathway. A physical Chromebook, real Google handoff and load on the target D1 plan are staging checks. Trusted automated certification remains a separate decision.
+
+```sh
+node --test cs-games/pathway/tests/*.test.mjs
+CHROME_BIN=/path/to/chromium node --test cs-games/teacher/requirements/integration-browser-tests.mjs
+```

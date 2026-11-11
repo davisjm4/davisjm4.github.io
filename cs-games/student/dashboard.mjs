@@ -14,11 +14,30 @@ if (!profilesAvailable) {
   const storage=scopedStorage(localStorage);
   let context=activeProfile.classId ? {classId:activeProfile.classId} : null;
   let client, known, refreshing;
+  const restartRequests=new Map();
   const say=message=>{notice.textContent=message;};
   const render=view=>{
     panel.hidden=false;
-    panel.replaceChildren(renderPathway(view));
+    const openAreas=[...panel.querySelectorAll('.pathway-area[open]')].map(area=>area.dataset.areaIndex);
+    panel.replaceChildren(renderPathway(view,{onRestart:restart,openAreas}));
   };
+  async function restart(node,button){
+    if(!confirm('Start a fresh practice attempt for '+node.title+'? Your earlier attempt and practice records stay in your history.'))return;
+    button.disabled=true;
+    const expectedAttemptId=node.masteryChallenge.activeAttemptId;
+    const requestId=restartRequests.get(expectedAttemptId)??crypto.randomUUID();
+    restartRequests.set(expectedAttemptId,requestId);
+    try {
+      if(!await syncQueuedPractice())throw new Error('Reconnect and sync your practice before restarting.');
+      await request('/pathways/student/'+context.classId+'/restart',{token,body:{nodeId:node.id,expectedAttemptId,requestId}});
+      restartRequests.delete(expectedAttemptId);
+      if(refreshing)await refreshing;
+      known=null;
+      await refresh();
+      say('Fresh attempt started. Your earlier practice is in the attempt history.');
+    }catch(error){say(error.message);}
+    finally{button.disabled=false;}
+  }
   function connect(classId) {
     client=createPathwayClient({storage,scope:classId,notify:say,onChange:render,load:async()=>{
       try {

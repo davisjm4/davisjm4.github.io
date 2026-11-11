@@ -74,12 +74,19 @@ export function syncAttempt(history, { policy, events, now, policies = [], carry
   let active = activeAttempt(h);
   if (active && policyKey(active.policy) !== policyKey(policy)) {
     const oldPolicy = findPolicy(policies, active.policy);
-    const snapshot = oldPolicy ? evaluateOpen(active, oldPolicy) : null;
     const at = policy.effectiveFrom ?? now;
-    const successor = newAttempt(h, policy, at, carryOver ? active.windowStart : at, 'policy-change');
-    const closed = close(active, { status: 'superseded-by-new-policy', at, reason: 'policy-change', snapshot: snapshot ?? { unavailable: 'policy-definition-missing', ledger: { eventIds: [] } }, successorId: successor.id, carriedOverTo: carryOver ? successor.id : null });
+    // Later submissions belong to the successor, even when the student first opens the pathway after publication.
+    const oldEvents = events.filter(event => event.ts < Date.parse(at));
+    const snapshot = oldPolicy ? evaluateEvidence({nodeId:h.nodeId,policy:oldPolicy,events:eventsFor(h,active,oldEvents),contentProfile}) : null;
+    const previouslyMet = snapshot?.qualifies === true;
+    const carry = carryOver && !previouslyMet;
+    const successor = newAttempt(h, policy, at, carry ? active.windowStart : at, 'policy-change');
+    const closed = close(active, { status: previouslyMet ? 'requirements-met' : 'superseded-by-new-policy',
+      at: previouslyMet ? snapshot.completion.at : at, reason: previouslyMet ? 'completed' : 'policy-change',
+      snapshot: snapshot ?? { unavailable: 'policy-definition-missing', ledger: { eventIds: [] } },
+      successorId: successor.id, carriedOverTo: carry ? successor.id : null });
     h = append(h, [...h.attempts.map((a) => (a.id === active.id ? closed : a)), successor]);
-    changes.push({ type: 'superseded', attemptId: closed.id, successorId: successor.id, from: closed.policy, to: policyRef(policy), carryOver });
+    changes.push({ type: 'superseded', attemptId: closed.id, successorId: successor.id, from: closed.policy, to: policyRef(policy), carryOver:carry });
     active = successor;
   }
   if (!active) {

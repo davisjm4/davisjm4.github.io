@@ -4,29 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Mastery Requirements | Teacher Tools | CS Games</title>
-  <meta name="description" content="Set how many questions and what accuracy show a skill is learned, for a whole class, a learning area, or one skill.">
   <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../teacher.css">
+  <link rel="stylesheet" href="../teacher-ui.css">
   <link rel="stylesheet" href="./requirements.css">
-  <script type="module" src="./demo.mjs"></script>
+  <script type="module" src="./app.mjs"></script>
 </head>
 <body>
-  <a class="mreq-skip" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main">Skip to main content</a>
   <header class="site-header">
     <nav class="nav" aria-label="Main">
       <a class="brand" href="../../">CS Games</a>
-      <a href="../../csp/">AP CSP</a>
-      <a href="../../advanced/">Advanced CS</a>
-      <a href="../../robotics/">Robotics</a>
-      <a href="../">Teacher Tools</a>
+      <a id="class-link" href="../#classes">My Classes</a>
     </nav>
   </header>
-  <main id="main" class="wrap" tabindex="-1">
-    <div class="eyebrow">Teacher Tools · Demonstration</div>
-    <h1>Mastery requirements</h1>
-    <p class="lede">Try the controls on two practice classes. Changes stay in this page: nothing is saved to a real class, nothing is published to students, and no requirement is attached to any skill until a teacher publishes it.</p>
-    <div class="mreq-demo-class"><label for="class">Practice class</label><select id="class"></select></div>
-    <div id="editor"></div>
+  <main id="main" class="wrap">
+    <h1>Customize mastery requirements</h1>
+    <p id="class-context" class="muted"></p>
+    <p class="muted">Requirements use synced practice. A game must report a skip or reveal for its counting rule to apply.</p>
+    <div id="teacher-account" aria-label="Teacher account"></div>
+    <p id="class-status" role="status"></p>
+    <div id="editor" hidden></div>
   </main>
-  <footer class="footer"><div class="wrap">DevCat Studios · CS Games · Demonstration page for the mastery requirements tool</div></footer>
 </body>
 </html>

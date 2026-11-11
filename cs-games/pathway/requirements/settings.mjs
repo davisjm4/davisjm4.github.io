@@ -161,7 +161,7 @@ export function explainRequirement(effective) {
   const u = e.unscored;
   if (u) {
     const excluded = ['skipped', 'revealed', 'assisted'].some((k) => u[k] === 'excluded');
-    lines.push(excluded ? `Skipped, revealed or hinted questions can be left out of the count, up to ${Math.round((u.maxExcludedShare ?? 0.1) * 100)}% of questions.` : 'Skipped, revealed or hinted questions count as incorrect.');
+    lines.push(excluded ? `Recorded skips, reveals or hint-assisted answers can be left out of the count, up to ${Math.round((u.maxExcludedShare ?? 0.1) * 100)}% of questions.` : 'Recorded skips, reveals or hint-assisted answers count as incorrect.');
   }
   return { complete: true, minimumQuestions: q, accuracyPercent: bp / 100, correctNeededAtMinimum: accuracyNeeded, mistakesAllowedAtMinimum: allowed, lines, text: lines.join(' ') };
 }
@@ -170,7 +170,7 @@ export function explainRequirement(effective) {
 export const COUNTING_RULES = Object.freeze([
   'Each question counts once, by the student\'s first answer. Trying again never adds credit, and a wrong first answer stays in the total.',
   'Questions from focused practice and from Mixed Practice both count toward the skill they test.',
-  'Skipped, revealed or hinted questions are never counted as correct. By default they count as incorrect; you may leave a few out instead.',
+  'Recorded skips, reveals or hint-assisted answers are never counted as correct. They count as incorrect by default, with optional exclusions. A game must report a skip or reveal for this rule to apply.',
   'If you set a minimum number of correct answers, it is required in addition to the accuracy: both must be met.',
   'A student can keep answering past the minimum to raise their accuracy. They never have to restart unless they choose to.',
   'Meeting the requirement is a practice milestone. It is separate from the 0 to 4 standards score, which comes from your own assessment.',

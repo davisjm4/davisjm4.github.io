@@ -211,8 +211,7 @@
         <label>Suggested date for this area<input name="date" type="date"><small>Leave blank to clear the dates for this area.</small></label>
         <div class="actions"><button type="submit" class="secondary">Set area target in draft</button></div>
       </form>
-      <label class="check"><input type="checkbox" id="show-policy"> Show advanced policy settings</label>
-      <div id="node-table" data-advanced="off"></div>
+      <div id="node-table"></div>
       <details class="more"><summary>Add your own area and skill</summary><div class="body">
         <form id="add-node">
           <div class="field-grid">
@@ -228,32 +227,7 @@
           <div class="actions"><button type="submit" class="secondary">Add skill</button></div>
         </form>
       </div></details>
-      <details class="more"><summary>Practice requirements <small>Set a question count and accuracy goal</small></summary><div class="body">
-        <p>Students can meet a practice goal through synced first attempts. Teacher assessments and verified mastery awards are recorded separately.</p>
-        <form id="practice-goal-form">
-          <div class="field-grid">
-            <label>Apply to<select name="scope"><option value="class">Entire class</option><option value="area">Selected learning area</option><option value="skill">Individual skill</option></select></label>
-            <label id="practice-skill-field" hidden>Skill<select name="skill"></select></label>
-            <label>First attempts required<input type="number" name="quantity" min="1" max="10000" step="1"></label>
-            <label>Accuracy required (%)<input type="number" name="percent" min="0" max="100" step="1"></label>
-          </div>
-          <div class="actions"><button class="primary" type="submit">Save practice goal to draft</button><button class="secondary" id="clear-practice-goal" type="button">Clear practice goal</button></div>
-        </form>
-      </div></details>
-      <details class="more"><summary>Advanced: mastery policy <small>Versioned rules for completing a skill</small></summary><div class="body">
-        <p>Use these controls for advanced assessment policies. Earlier published policy versions remain in history.</p>
-        <form id="policy-form">
-          <div class="field-grid">
-            <label>Policy label<input name="label" value="Teacher-defined trial — calibration pending" required></label>
-            <label>Minimum eligible first-attempt questions<input name="questions" type="number" min="1"></label>
-            <label>Accuracy (0–1)<input name="accuracy" type="number" min="0" max="1" step=".01"></label>
-            <label>Coverage JSON (subskill: correct count)<input name="coverage" value="{}"></label>
-            <label>Eligible assessment score target (0–4)<input name="score" type="number" min="0" max="4" step=".5"></label>
-          </div>
-          <label class="check"><input name="activate" type="checkbox"> Activate this teacher-defined policy for the selected area (leave unchecked to keep it provisional).</label>
-          <div class="actions"><button type="submit" class="secondary">Create new policy version for area</button></div>
-        </form>
-      </div></details>
+      <p id="mastery-settings-link" hidden><a class="btn" href="../requirements/">Customize mastery requirements</a></p>
       <div class="stage-nav"><button type="button" data-go="calendar">Pacing setup (optional)</button><button type="button" class="primary" data-go="review">Review changes →</button></div>
     </section>
 

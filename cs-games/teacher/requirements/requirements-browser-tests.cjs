@@ -21,7 +21,7 @@ async function check(name, fn) {
   try { await fn(); results.push({ name, ok: true }); console.log(`ok   ${name}`); }
   catch (e) { results.push({ name, ok: false, error: String(e.message).split('\n').slice(0, 14).join(' | ') }); console.log(`FAIL ${name}\n     ${String(e.message).split('\n').slice(0, 14).join('\n     ')}`); }
 }
-const PAGE = '/cs-games/teacher/requirements/';
+const PAGE = '/cs-games/teacher/requirements/demo.html';
 const BAD_TEXT = /node:|policy:|area:advanced|"schema"|[0-9a-f]{8}-[0-9a-f]{4}-|undefined|NaN|\[object|\bnull\b|\{"/;
 
 // ---- helpers that run inside the page ----
@@ -81,7 +81,7 @@ const inPage = {
 (async () => {
   await new Promise((r) => server.listen(0, '127.0.0.1', r));
   const base = `http://127.0.0.1:${server.address().port}`;
-  const browser = await chromium.launch({ headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu'] });
+  const browser = await chromium.launch({ executablePath: process.env.CHROME_BIN || undefined, headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu'] });
   const problems = { page: [], console: [], failedRequests: [], external: [] };
   async function open(viewport, { query = '', mobile = false } = {}) {
     const context = await browser.newContext({ viewport, deviceScaleFactor: 2, isMobile: mobile, hasTouch: mobile, reducedMotion: 'reduce' });

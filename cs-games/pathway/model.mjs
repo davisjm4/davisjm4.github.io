@@ -128,12 +128,14 @@ export function studentContract(p,graph,evidence=[],options={}) {
       questions:policy.minimumQuestions,accuracy:policy.accuracy,
       met:practice.attempted>=policy.minimumQuestions&&practice.correct/practice.attempted>=policy.accuracy
     }:null;
-    return {...node,checkpoint,practiceProgress:practice,practiceGoal};
+    return {...node,checkpoint,practiceProgress:practice,practiceGoal,
+      ...(options.mastery?.nodes.has(id)?{masteryChallenge:options.mastery.nodes.get(id)}:{}),
+      ...(!checkpoint.award&&evidence.some(e=>e.kind==='mastery-award'&&e.eligible===true&&e.nodeIds?.includes(id))?{earlierVerifiedAward:true}:{})};
   });
   const shared=!!p.calendar&&p.pacingVisibility!=='private';
   return {schemaVersion:1,pathwayId:p.id,classId:p.classId,title:p.title,courseId:p.courseId,
     revision:p.revision,graphVersion:p.graphVersion,status:state.status,
-    areas:[...new Set(skills.map(n=>n.areaId))].map(id=>areas.get(id)),
+    areas:[...new Set(skills.map(n=>n.areaId))].map(id=>options.mastery?.areas.has(id)?{...areas.get(id),practiceRequirements:options.mastery.areas.get(id)}:areas.get(id)),
     nodes:skills,edges:p.checkpoints.flatMap(c=>c.prerequisites.map(from=>({from,to:c.nodeId,kind:'prerequisite'}))),
     sessions:shared?p.sessions:[],policies:p.policies,examDate:shared?p.examDate:null};
 }

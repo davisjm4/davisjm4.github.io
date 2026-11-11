@@ -53,7 +53,8 @@ const visibleText = (page, selector) => page.$eval(selector, e => e.innerText);
 const overflow = page => page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
 async function clickByText(page, scope, text) {
   const handle = await page.waitForFunction((scope, text) => [...document.querySelectorAll(scope + ' button, ' + scope + ' a')].find(b => b.textContent.trim() === text && b.offsetWidth && !b.disabled), { timeout: 10000 }, scope, text);
-  await handle.asElement().click();
+  await handle.evaluate(node=>node.focus());
+  await page.keyboard.press('Enter');
 }
 async function signInHub(page) {
   await page.waitForSelector('[name="teacher-key"]');
@@ -451,11 +452,11 @@ test('Pathway editor: exports, backup and copy remain available under More tools
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 900 });
   await page.goto(svc.url + '/cs-games/teacher/pacing/', { waitUntil: 'load' });
-  for (const id of ['export-json', 'export-csv', 'export-ics', 'restore', 'copy', 'reload-shared', 'history', 'calendar-file', 'policy-form', 'add-node', 'area-up', 'area-down', 'optional-area', 'remove-area', 'local-publish', 'publish', 'preview']) {
+  for (const id of ['export-json', 'export-csv', 'export-ics', 'restore', 'copy', 'reload-shared', 'history', 'calendar-file', 'mastery-settings-link', 'add-node', 'area-up', 'area-down', 'optional-area', 'remove-area', 'local-publish', 'publish', 'preview']) {
     assert.ok(await page.$('#' + id), `#${id} still exists`);
   }
   // Unusual controls are tucked into collapsed sections rather than removed.
-  for (const sel of ['#tools', '#policy-form', '#add-node', '#calendar-file', '#export-csv', 'input[name=timezone]']) {
+  for (const sel of ['#tools', '#add-node', '#calendar-file', '#export-csv', 'input[name=timezone]']) {
     assert.equal(await page.$eval(sel, e => e.closest('details').open), false, `${sel} should be in a collapsed section`);
   }
   // Local-only mode: the local preview publish control is shown and the shared one is not.
