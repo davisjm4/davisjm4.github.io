@@ -7,37 +7,36 @@ The existing Workplace Readiness reporting service now handles CS Games teacher 
 | Component | Verified status |
 | --- | --- |
 | Repository baseline | Build 4 pathway editor from PR #16, with the profile/recovery work from PR #15 integrated into the same service |
-| Worker and D1 | Intended names `cs-games-api` and `cs-games-data`. The four migrations were applied to disposable local D1 and the Worker passed a Wrangler dry run. No production endpoint or database ID has been provisioned for Build 5. |
+| Worker and D1 | Cloudflare reports `cs-games-api` deployed at `https://cs-games-api.cs-games-davisjm4.workers.dev/api/wpr`. It binds `DB` to `cs-games-data` in ENAM. All four migrations applied remotely and the migration ledger is current. Active Worker version `5bb23099-2140-46e2-ada9-0c296973593b` includes `SUBMISSION_SECRET`. |
 | Teacher authentication | Google ID token signature, audience, issuer, expiry, verified email, and server-side allowlist exercised using synthetic signed tokens. A production OAuth web client and real hosted sign-in remain to be verified. |
-| GitHub Pages configuration | `online/config.mjs` defaults to disabled for production. The local development server can exercise the integrated workflows. |
+| GitHub Pages configuration | Public profile sync stays disabled pending the Google web client ID, `TEACHER_EMAILS`, and hosted sign-in testing. The Worker is deployed with `ENABLE_STUDENT_PROFILES=0`. |
 | Progress and pathways | The local HTTP suite exercises distinct student sessions, class isolation, replay, provisional versus verified evidence, revision publication, and rollback with retained evidence. |
+| Hosted verification | Wrangler confirms the deployment and migration ledger. Public DNS resolves. The work environment's proxy returned a connection error when requesting the Worker, so the HTTP health check and authenticated synthetic workflows still require a reachable client. |
 | Activity coverage | Existing Java and AP CSP session hooks, Workplace Readiness practice and diagnostics, and the scored Robotics Parts Sprint and Component Challenge use the shared profile service. Activities with incomplete metadata can record attempts without a skill or mastery estimate. Unscored activities do not produce scored evidence. |
 
 Use fictional profiles and class titles for setup and verification. The app stores a generated profile ID and hashed recovery/session credentials. Teachers maintain any name-to-ID mapping outside CS Games. Guest practice and anonymous WPR reporting remain available.
 
 ## Provider setup
 
-1. Sign into the existing Cloudflare account and confirm the account selection with `wrangler whoami`. Use the Workers and D1 free plans. Create resources named for CS Games only. Leave existing zones, custom domains, routes and deployments outside this project alone.
+1. Sign into the existing Cloudflare account and confirm the account selection with `wrangler whoami`. Use the Workers and D1 free plans. Reuse the CS Games Worker, database, and `cs-games-davisjm4.workers.dev` subdomain provisioned for this build. Leave existing zones, custom domains, routes and deployments outside this project alone.
 2. In [Google Auth Platform](https://console.cloud.google.com/auth/overview), select or create a CS Games project. Configure Branding for CS Games and choose an **External** audience. In testing, add only the designated teacher test accounts. Create a **Web application** OAuth client. Under **Authorized JavaScript origins**, add `https://davisjm4.github.io` without a path. The app uses the Google Identity Services credential callback and needs no redirect URI for this flow. The OAuth client ID is public. This integration needs no OAuth client secret or Drive scopes. Set the intended audience and publish the consent configuration when teacher access expands beyond the test users.
 3. In this directory, run these commands. The examples use Wrangler 4.160.0. Fill in the D1 database UUID and the public OAuth web client ID in the ignored `wrangler.toml`. If a CS Games database already exists, verify its account, schema and migration ledger before reusing it. The first migration creates the reporting tables idempotently for a database bootstrapped using the old `schema.sql`. A database that has already applied the additive profile column migration manually needs its ledger reconciled before running migrations.
 
    ```sh
    npm exec --yes --package=wrangler@4.160.0 -- wrangler login --device --scopes account:read user:read workers_scripts:write d1:write
    npm exec --yes --package=wrangler@4.160.0 -- wrangler whoami
-   npm exec --yes --package=wrangler@4.160.0 -- wrangler d1 create cs-games-data
    cp wrangler.example.toml wrangler.toml
    ```
 
-4. Apply migrations, set the Worker secrets, and deploy. Enter the comma-separated authorized teacher emails directly at the secret prompt. Use a stable random submission secret. The secret also protects in-progress assignment receipts, so coordinate any rotation around active assessments. Production disables Worker observability and preview URLs. The CORS allowlist is the exact GitHub Pages origin. Bearer credentials and ownership checks protect data independently of CORS.
+4. Apply any pending migrations, set the teacher allowlist, and deploy with the approved Google client ID and `ENABLE_STUDENT_PROFILES=1`. Enter the comma-separated authorized teacher emails directly at the secret prompt. The deployed Worker already has a stable random `SUBMISSION_SECRET`. The secret also protects in-progress assignment receipts, so coordinate any rotation around active assessments. Production disables Worker observability and preview URLs. The CORS allowlist is the exact GitHub Pages origin. Bearer credentials and ownership checks protect data independently of CORS.
 
    ```sh
    npm exec --yes --package=wrangler@4.160.0 -- wrangler d1 migrations apply cs-games-data --remote
    npm exec --yes --package=wrangler@4.160.0 -- wrangler secret put TEACHER_EMAILS
-   openssl rand -hex 32 | npm exec --yes --package=wrangler@4.160.0 -- wrangler secret put SUBMISSION_SECRET
    npm exec --yes --package=wrangler@4.160.0 -- wrangler deploy
    ```
 
-5. Record the HTTPS `workers.dev` URL printed by Wrangler, then request `/api/wpr/health` with `Origin: https://davisjm4.github.io`. Check the D1 schema, CORS response and configuration flags. Repeat with a different origin and check rejection. Set `productionApi` in [online/config.mjs](../online/config.mjs) to that Worker origin plus `/api/wpr`. Set `googleClientId` to the public OAuth web client ID and `profilesOnProduction` to true. Release through the existing GitHub Pages workflow.
+5. Request `https://cs-games-api.cs-games-davisjm4.workers.dev/api/wpr/health` with `Origin: https://davisjm4.github.io`. Check the D1 schema, CORS response and configuration flags. Repeat with a different origin and check rejection. Set `productionApi` in [online/config.mjs](../online/config.mjs) to that Worker origin plus `/api/wpr`. Set `googleClientId` to the public OAuth web client ID and `profilesOnProduction` to true. Release through the existing GitHub Pages workflow.
 
 [Google Identity Services web client setup](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid) · [Google server-side ID token verification](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token) · [Cloudflare D1 migrations](https://developers.cloudflare.com/d1/reference/migrations/)
 

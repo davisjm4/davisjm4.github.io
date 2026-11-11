@@ -353,6 +353,7 @@ for (let n = 0; n < 4; n++) {
   let printed = false;
   window.print = () => (printed = true);
   const ctx = {
+    activeProfile,
     bigIdeaMetrics,networkMetrics,
     window,
     document,
