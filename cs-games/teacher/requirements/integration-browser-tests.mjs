@@ -3,6 +3,7 @@ import {test} from 'node:test';
 import {createRequire} from 'node:module';
 import {mkdirSync,readFileSync} from 'node:fs';
 import {join} from 'node:path';
+import {createLoopSession,DIFFICULTIES} from '../../../java-games/loop-lab/loop-engine.js';
 import {startDev} from '../../../wpr-games/workplace-readiness/service/dev.mjs';
 
 const require=createRequire(new URL('../../../wpr-games/workplace-readiness/package.json',import.meta.url));
@@ -106,16 +107,24 @@ test('a real teacher publication and two Loop Lab modes reach one student master
   assert.match(await card(),/1 of 30 questions/);
 
   const mixedLink=await student.$eval(focusLink,link=>link.closest('li').querySelector('a[href*="mode=mixed"]').href);
-  // Preserve the game's regular generator. Draw Mixed questions until Loop Type appears.
+  // Fix only the generator seed. The real Mixed Practice engine still draws and scores the question.
+  const seed=Array.from({length:200},(_,i)=>i+1).find(seed=>
+    createLoopSession({seed}).next({mode:'mixed',difficulty:DIFFICULTIES[0]}).mode==='looptype');
+  assert.ok(seed);
+  const seedHook=await student.evaluateOnNewDocument(seed=>{
+    if(!location.pathname.startsWith('/java-games/loop-lab/'))return;
+    const random=crypto.getRandomValues.bind(crypto);
+    crypto.getRandomValues=values=>{
+      if(values instanceof Uint32Array&&values.length===1){values[0]=seed;return values;}
+      return random(values);
+    };
+  },seed);
   const testLink=new URL(mixedLink);
   testLink.searchParams.set('test','1');
   await student.goto(testLink.href);
-  for(let i=0;i<40;i++){
-    const mode=await student.evaluate(()=>window.__loopLab?.q?.mode);
-    if(mode==='looptype')break;
-    await activate(student,'#next');
-  }
-  assert.equal(await student.evaluate(()=>window.__loopLab?.q?.mode),'looptype');
+  await student.waitForFunction(()=>window.__loopLab?.q);
+  await student.removeScriptToEvaluateOnNewDocument(seedHook.identifier);
+  assert.equal(await student.evaluate(()=>window.__loopLab.q.mode),'looptype');
   await answer('mixed');
   await Promise.all([student.waitForNavigation(),activate(student,'a[data-profile-link]')]);
   await showLoop();

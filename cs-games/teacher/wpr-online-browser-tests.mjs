@@ -16,7 +16,7 @@ const exactButton = async (page,text,scope='body') => {
   const hit = await page.waitForFunction((text,scope)=>Array.from(document.querySelectorAll(scope+' button')).some(b=>b.textContent===text&&b.offsetWidth&&!b.disabled),{timeout:10000},text,scope);
   await hit.dispose();
   const buttons=await page.$$(scope+' button');
-  for(const b of buttons) if(await b.evaluate((x,t)=>x.textContent===t&&x.offsetWidth&&!x.disabled,text)) {await b.click();return;}
+  for(const b of buttons) if(await b.evaluate((x,t)=>x.textContent===t&&x.offsetWidth&&!x.disabled,text)) {await b.focus();await page.keyboard.press('Enter');return;}
   throw new Error('Missing button '+text);
 };
 async function a11y(page,selector) {
