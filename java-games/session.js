@@ -1,4 +1,5 @@
-import { activeProfile, device, recordGameAttempt, scopedStorage } from '../wpr-games/workplace-readiness/online/profile-sync.mjs?v=proficiency-v2';
+import { activeProfile, device, recordGameAttempt, scopedStorage } from '../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
+import { recordGuestAttempt } from '../cs-games/student/guest/hook.mjs?v=guest-map-v1';
 /* Java Games session schema v1. Daily browser summaries. An active profile can sync scored attempts. */
 export const SESSION_KEY = "javaGames.session.v1";
 const fields = [
@@ -351,7 +352,7 @@ export function sessionTracker() {
     singleton = createSessionTracker({
       storage: scopedStorage(storage),
       onWarning: showStorageWarning,
-      onAttempt: activeProfile ? (...args)=>recordGameAttempt('advanced',...args) : undefined,
+      onAttempt: activeProfile ? (...args)=>recordGameAttempt('advanced',...args) : recordGuestAttempt('advanced'),
     });
   }
   return singleton;

@@ -24,7 +24,7 @@ function safeUrl(raw) {
  * @param {{mixedActivities?: Set<string>}} [options] activity ids known to offer a Mixed Practice mode
  * @returns {{links: Array<{kind:string,activityId:string,label:string,url:string}>, mixed: {activityId:string,label:string,url:string}|null}}
  */
-export function practiceLinks(node, { mixedActivities } = {}) {
+export function practiceLinks(node, { mixedActivities, guest=false } = {}) {
   const links = [];
   let mixed = null;
   for (const item of node.checkpoint?.practice ?? node.practice ?? []) {
@@ -40,6 +40,7 @@ export function practiceLinks(node, { mixedActivities } = {}) {
     if (java && mode) u.searchParams.set('mode', String(mode).split('/')[0]);
     if (robotics) u.searchParams.set('category', selector.category);
     if (workplace) { u.searchParams.set('practice', '1'); u.searchParams.set('skills', workplace.id); }
+    if (local && guest) u.searchParams.set('learner', 'guest');
     links.push({ kind: java && mode ? 'focused' : robotics ? 'focused' : workplace ? 'workplace' : 'open', activityId: item.activityId,
       label: java && mode || robotics ? `Practice in ${name}` : workplace ? `Practice ${workplace.label}` : `Open ${name}`, url: href(u) });
     const javaMixed=java&&(mixedActivities?mixedActivities.has(item.activityId):item.activityId!=='search-sort-lab');
@@ -49,6 +50,7 @@ export function practiceLinks(node, { mixedActivities } = {}) {
         m.searchParams.delete('category');
         m.searchParams.set('mode', 'mixed');
       }
+      if (guest) m.searchParams.set('learner', 'guest');
       mixed = { activityId: item.activityId, label: `Mixed Practice in ${name}`, url: href(m) };
     }
   }

@@ -1,7 +1,7 @@
 import {
   sessionTracker,
   roundSummary,
-} from "./session.js?v=proficiency-v2";
+} from "./session.js?v=guest-map-v1";
 import { createConceptSession } from "./concepts-feedback.js?v=proficiency-v2";
 import {
   generateConcept,

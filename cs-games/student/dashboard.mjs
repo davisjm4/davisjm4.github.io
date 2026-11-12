@@ -1,5 +1,5 @@
 import { profilesAvailable,request } from '../../wpr-games/workplace-readiness/online/config.mjs';
-import { activeProfile,device,scopedStorage,syncQueuedPractice } from '../../wpr-games/workplace-readiness/online/profile-sync.mjs';
+import { activeProfile,device,scopedStorage,syncQueuedPractice } from '../../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
 import { createPathwayClient } from '../pathway/client.mjs';
 import { renderPathway } from './pathway-view.mjs?v=learning-map-v2';
 
@@ -62,8 +62,8 @@ if (!profilesAvailable) {
   };
   if(!classic){
     Promise.all([
-      import('./map/ui/app.mjs?v=proficiency-v3'),
-      import('./map/live-contract.mjs?v=proficiency-v3'),
+      import('./map/ui/app.mjs?v=guest-map-v1'),
+      import('./map/live-contract.mjs?v=guest-map-v1'),
       fetch('../pathway/evidence-gap-registry.json').then(response=>response.ok?response.json():null).catch(()=>null)
     ]).then(([app,contract,registry])=>{
       const mixedActivities=registry?new Set(registry.entries.filter(entry=>entry.mixedReaches===true).map(entry=>entry.game)):undefined;

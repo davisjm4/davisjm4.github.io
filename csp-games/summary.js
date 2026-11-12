@@ -1,6 +1,6 @@
-import { activeProfile } from '../wpr-games/workplace-readiness/online/profile-sync.mjs';
+import { activeProfile } from '../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
 import {bigIdeaMetrics,networkMetrics} from './session-groups.js?v=internet-groups-v1';
-import { sessionTracker, accuracy } from "./session.js?v=per-mode-daily-v1";
+import { sessionTracker, accuracy } from "./session.js?v=guest-map-v1";
 const $ = (id) => document.getElementById(id),
   esc = (s) =>
     String(s).replace(

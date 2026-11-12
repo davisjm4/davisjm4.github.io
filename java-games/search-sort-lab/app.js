@@ -7,7 +7,7 @@ import { makeRng } from "./engine/rng.js";
 
 let sessionApi;
 try {
-  sessionApi = await import("../session.js?v=per-mode-daily-v1");
+  sessionApi = await import("../session.js?v=guest-map-v1");
 } catch {
   const f = await import("./engine/session-fallback.js");
   let t;

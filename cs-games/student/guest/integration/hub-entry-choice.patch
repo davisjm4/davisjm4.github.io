@@ -1,0 +1,26 @@
+From 1c614b551642d6d6de7a59527b78865cfcdc33fb Mon Sep 17 00:00:00 2001
+From: Claude <c@x>
+Date: Thu, 12 Nov 2026 05:44:01 +0000
+Subject: [PATCH] Hub: add Explore on Your Own and Join a Class entry choice
+
+---
+ cs-games/index.html | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/cs-games/index.html b/cs-games/index.html
+index 78afac6..b3baf31 100644
+--- a/cs-games/index.html
++++ b/cs-games/index.html
+@@ -1,7 +1,11 @@
+ <!doctype html>
+ <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="CS Games: AP Computer Science Principles, Advanced Computer Science, Workplace Readiness and Robotics practice."><title>CS Games | DevCat Studios</title><link rel="stylesheet" href="./styles.css?v=robotics-1"></head><body>
+-<header class="site-header"><nav class="nav" aria-label="Main"><a class="brand" href="./" aria-current="page">CS Games</a><a href="./student/">My Class Progress</a><a href="./teacher/">Teacher Tools</a></nav></header>
++<header class="site-header"><nav class="nav" aria-label="Main"><a class="brand" href="./" aria-current="page">CS Games</a><a href="./student/guest/">Explore on Your Own</a><a href="./student/">My Class Progress</a><a href="./teacher/">Teacher Tools</a></nav></header>
+ <main class="wrap"><section class="hero"><div class="eyebrow">DevCat Studios · Student practice</div><h1>CS Games</h1><p class="lede">Choose a pathway to start practicing.</p></section>
++<section class="how" aria-label="How do you want to start?">
++<div><h2>Explore on Your Own</h2><p>No account needed. Practice skills and save progress in this browser.</p><a class="button" href="./student/guest/">Explore learning pathways</a></div>
++<div><h2>Join a Class</h2><p>Have an enrollment link from your teacher? Join to sync progress across devices.</p><a class="button" href="./student/">Open My Class Progress</a></div>
++</section>
+ <section class="course-grid" aria-label="Learning pathways">
+ <article class="course-card csp"><h2>AP Computer Science Principles</h2><p>Practice algorithms, programming concepts, data, computer systems, networks, and the impacts of computing.</p><a class="button" href="./csp/">Explore AP CSP</a></article>
+ <article class="course-card advanced"><h2>Advanced Computer Science</h2><p>Practice Java programming, algorithms, data structures, object-oriented programming, and advanced computational reasoning.</p><a class="button" href="./advanced/">Explore Advanced CS</a></article>

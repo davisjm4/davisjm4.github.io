@@ -1,5 +1,5 @@
 import {PARTS,CATEGORIES,FORMATS,generate,feedback,createRace} from './engine.js?v=parts-1';
-import {createRoboticsSession} from './session.js?v=parts-1';
+import {createRoboticsSession} from './session.js?v=guest-map-v1';
 const $=id=>document.getElementById(id),esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const warn=text=>{$('storage-warning').hidden=false;$('storage-warning').textContent=text;};
 let storage;try{storage=globalThis.localStorage;}catch{warn('Local storage is unavailable. This practice works in memory; history and bests will not persist.');}

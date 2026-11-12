@@ -1,5 +1,5 @@
-import { activeProfile } from '../wpr-games/workplace-readiness/online/profile-sync.mjs';
-import { sessionTracker, accuracy } from "./session.js?v=per-mode-daily-v1";
+import { activeProfile } from '../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
+import { sessionTracker, accuracy } from "./session.js?v=guest-map-v1";
 const $ = (id) => document.getElementById(id),
   esc = (s) =>
     String(s).replace(

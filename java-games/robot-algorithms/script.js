@@ -3,7 +3,7 @@
    existing Session Summary. */
 import * as E from "./engine.js?v=robot-v3";
 import { labEvidence } from "../lab-evidence.js?v=lab-evidence-v1";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=guest-map-v1";
 
 const GAME = "robot-algorithms";
 const TITLE = "Robot Algorithms";

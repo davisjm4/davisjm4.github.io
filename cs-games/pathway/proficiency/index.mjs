@@ -85,14 +85,14 @@ function firstPractice(events,nodeId){
   return {events:records,ignored};
 }
 
-export function recommendProficiency(nodes,skills,areas,{currentAreaId=null,familiarity={},pacingTargets={}}={}){
+export function recommendProficiency(nodes,skills,areas,{currentAreaId=null,familiarity={},pacingTargets={},skipFamiliar=false}={}){
   const choose=(node,kind,tier=null)=>({
     kind,nodeId:node.id,areaId:node.areaId,tier,targetDate:pacingTargets[node.id]??null,
     practice:tier?skills[node.id].tiers[tier].practice:null
   });
   const actionable=node=>(node.checkpoint?.practice??node.practice??[]).length>0;
   const required=node=>countsForAdvancement(node,skills[node.id]);
-  const goalCandidates=nodes.filter(node=>required(node)&&actionable(node)&&skills[node.id].goal&&!skills[node.id].goalMet);
+  const goalCandidates=nodes.filter(node=>required(node)&&actionable(node)&&(!skipFamiliar||!familiarity[node.id])&&skills[node.id].goal&&!skills[node.id].goalMet);
   const current=nodes.filter(node=>node.areaId===currentAreaId);
   const ready=areas[currentAreaId]?.readyToAdvance===true;
   const within=current.filter(node=>goalCandidates.includes(node));
@@ -128,7 +128,7 @@ function countsForAdvancement(node,skill){
 
 /** Shared entry point for a published class or an independent learner. Pass
  * nodes in curriculum order and normalized evidence for exactly one learner. */
-export function evaluateProficiency({courseId,nodes,eventsByNode=new Map(),policies=[],familiarity,pacingTargets}){
+export function evaluateProficiency({courseId,nodes,eventsByNode=new Map(),policies=[],familiarity,pacingTargets,skipFamiliar}){
   const scopes=new Set([...eventsByNode.values()].flatMap(events=>events.map(event=>JSON.stringify(event.scope))));
   if(scopes.size>1)throw new Error('Formative proficiency requires one student scope.');
   const rules=new Map(policies.map(policy=>[`${policy.id}@${policy.version}`,policy]));
@@ -149,7 +149,7 @@ export function evaluateProficiency({courseId,nodes,eventsByNode=new Map(),polic
     const demonstrated=required.length>0&&required.every(node=>skills[node.id].advancementMet);
     return [id,{readyToAdvance:demonstrated||hasCore&&!missing.length,missing,unavailable,hasCore}];
   }));
-  const recommendation=options=>recommendProficiency(nodes,skills,areas,{familiarity,pacingTargets,...options});
+  const recommendation=options=>recommendProficiency(nodes,skills,areas,{familiarity,pacingTargets,skipFamiliar,...options});
   return {schema:PROFICIENCY_SCHEMA,version:PROFICIENCY_VERSION,courseId,skills,areas,
     recommendation:recommendation(),byArea:Object.fromEntries([...grouped.keys()].map(id=>[id,recommendation({currentAreaId:id})]))};
 }

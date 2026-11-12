@@ -1,5 +1,5 @@
 import * as E from './engine.js?v=number-v3';
-import {sessionTracker,addSessionNavigation} from '../session.js?v=per-mode-daily-v1';
+import {sessionTracker,addSessionNavigation} from '../session.js?v=guest-map-v1';
 import {renderDemonstration} from './visual.js?v=number-v3';
 const $=id=>document.getElementById(id),tracker=sessionTracker(),slug='roundoff-overflow-lab',title='Roundoff vs. Overflow Lab',key='cspGames.numericalRepresentation.history.v1';addSessionNavigation('../');
 let sessionId,generator,current,recordId,answered=false;const seed=new URL(location.href).searchParams.get('seed');

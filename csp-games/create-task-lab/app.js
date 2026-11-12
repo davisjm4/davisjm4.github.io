@@ -1,5 +1,5 @@
 import {TOPICS,MODES,families,buildChallenge,createSampler,assess,validate} from './engine.js?v=family-history-v1';
-import {sessionTracker,addSessionNavigation,startActivePractice} from '../session.js?v=per-mode-daily-v1';
+import {sessionTracker,addSessionNavigation,startActivePractice} from '../session.js?v=guest-map-v1';
 const $=id=>document.getElementById(id),tracker=sessionTracker(),game='create-task-lab';
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const historyKey='csp-create-task-recent-v1';let history=[];try{history=JSON.parse(localStorage.getItem(historyKey)||'[]');if(!Array.isArray(history))history=[];}catch{}

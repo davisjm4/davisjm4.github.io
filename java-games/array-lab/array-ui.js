@@ -9,7 +9,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "../session.js?v=proficiency-v2";
+} from "../session.js?v=guest-map-v1";
 
 const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",

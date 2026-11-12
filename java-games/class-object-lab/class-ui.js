@@ -1,6 +1,6 @@
 import { modeNames, difficulties, createClassObjectGenerator, assessClassObject } from "./class-engine.js?v=class-object-compose-v1";
 import { formatJavaCode } from "./java-format.js?v=class-format-v1";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=guest-map-v1";
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const CBR_MODE = "class-builder-rearrange";
 const CBR_FILES = ["rng.js", "concepts.js", "java-model.js", "arrangement.js", "validator.js", "generator.js", "feedback.js", "session.js", "ui.js"];

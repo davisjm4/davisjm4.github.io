@@ -10,7 +10,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   startActivePractice,
-} from "../session.js?v=per-mode-daily-v1";
+} from "../session.js?v=guest-map-v1";
 
 const $ = id => document.getElementById(id);
 const tracker = sessionTracker();
