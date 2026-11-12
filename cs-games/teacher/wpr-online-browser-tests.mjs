@@ -169,8 +169,10 @@ test('a student joins, practices offline, restores on another device and leaves 
   await exactButton(first,'Enroll in this class');
   const recovery=await (await wait(first,'.wpr-profile-secret')).evaluate(e=>e.textContent);
   await Promise.all([first.waitForNavigation({waitUntil:'load'}),exactButton(first,'I saved my recovery credential')]);
-  await wait(first,'#student-pathway .pathway-area');
-  assert.match(await first.$eval('#student-pathway',e=>e.textContent),/Workplace Readiness · Self-paced/);
+  await wait(first,'#student-pathway .stop-open');
+  const studentPathway=await first.$eval('#student-pathway',e=>e.textContent);
+  assert.match(studentPathway,/Workplace Readiness journey/);
+  assert.match(studentPathway,/Self-paced/);
   const id=db.prepare('SELECT id FROM student_profiles').get().id;
   await first.goto(wpr+target,{waitUntil:'load'});
   await exactButton(first,'Start shared practice');

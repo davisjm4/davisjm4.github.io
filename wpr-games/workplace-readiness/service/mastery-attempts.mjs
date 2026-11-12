@@ -13,10 +13,27 @@ const fail=(status,message)=>{throw Object.assign(new Error(message),{status});}
 const describeAttempt=attempt=>({
   number:attempt.seq,
   status:attempt.status,
+  closedAt:attempt.closedAt,
   answered:attempt.snapshot?.counts?.attempted??0,
   correct:attempt.snapshot?.counts?.correct??0,
   accuracy:attempt.snapshot?.counts?.accuracyPercent??null
 });
+
+// Send evaluated student-facing fields only. The engine also carries internal
+// policy metadata, event references and transition details.
+function mapProgress(progress,activeAttemptId){
+  const {statusReason,attemptStatus,attempt,remaining,recovery,missing,requirementChecks,
+    lastCompletedAttempt,lifetime,verification,award}=progress;
+  return {
+    statusReason,attemptStatus,remaining,recovery,missing,lifetime,verification,award,
+    attempt:attempt?{
+      id:activeAttemptId,seq:attempt.seq,attempted:attempt.attempted,
+      correct:attempt.correct,accuracyPercent:attempt.accuracyPercent
+    }:null,
+    requirementChecks:requirementChecks.map(({code,label,met})=>({code,label,met})),
+    lastCompletedAttempt:lastCompletedAttempt?{seq:lastCompletedAttempt.seq,closedAt:lastCompletedAttempt.closedAt}:null
+  };
+}
 
 function configuredSkills(pathway){
   const nodes=new Map([...(pathway.curriculumSnapshot?.nodes??graph.nodes),...pathway.customNodes].map(node=>[node.id,node]));
@@ -108,11 +125,14 @@ export async function readMasteryProgress(db,profile,pathway,assessmentEvidence)
     const current=activeAttempt(result.history);
     const student=studentRequirementView(result.progress);
     const noSkillMapping=node.courseId==='workplace'||node.familySelectors.every(selector=>selector.eligibility);
+    const activeAttemptId=current&&student.progress?.answered>0?current.id:null;
+    const closed=result.history.attempts.filter(attempt=>attempt.closedAt!==null);
     nodes.set(id,{...student,
       ...(noSkillMapping?{practiceAvailability:'This activity is open for practice. Individual skill answers cannot be counted for this requirement yet.'}:{}),
-      activeAttemptId:current&&student.progress?.answered>0?current.id:null,
-      history:result.history.attempts.filter(attempt=>attempt.closedAt!==null).slice(-10).map(describeAttempt),
-      historyCount:result.history.attempts.filter(attempt=>attempt.closedAt!==null).length});
+      activeAttemptId,
+      ...(profile?{mapProgress:mapProgress(result.progress,activeAttemptId)}:{}),
+      history:closed.slice(-10).map(describeAttempt),
+      historyCount:closed.length});
     progresses.push(result.progress);
   }
   let stable=true;

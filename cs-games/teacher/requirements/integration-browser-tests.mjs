@@ -10,7 +10,10 @@ const require=createRequire(new URL('../../../wpr-games/workplace-readiness/pack
 const {launch}=require('./tests/browser/harness.js');
 const axeSource=readFileSync(require.resolve('axe-core/axe.min.js'),'utf8');
 const token='synthetic-mastery-browser-teacher';
-const focusLink='#student-pathway a[href*="/loop-lab/"][href*="mode=looptype"]';
+const stopButton='.stop-open[data-stop-id="area:advanced:loop-lab"]';
+const skillButton='.skill-node[data-node-id="node:advanced:loop-lab:looptype"]';
+const panel='.skill-panel[data-node-id="node:advanced:loop-lab:looptype"]';
+const focusLink=panel+' a[data-action=practice]';
 const wait=(page,selector)=>page.waitForSelector(selector,{visible:true,timeout:10000});
 async function activate(page,selector){
   await wait(page,selector);
@@ -25,7 +28,7 @@ async function byText(page,scope,text){
 }
 const see=(page,selector,text)=>page.waitForFunction((selector,text)=>document.querySelector(selector)?.innerText.includes(text),{timeout:10000},selector,text);
 
-test('a real teacher publication and two Loop Lab modes reach one student mastery attempt', {timeout:120000},async t=>{
+test('published requirements and real Loop Lab practice appear in the student map', {timeout:120000},async t=>{
   const dev=await startDev({teacherTokens:{teacher:token}});
   const browser=await launch();
   t.after(async()=>{await browser.close();await new Promise(resolve=>dev.server.close(resolve));dev.db.close();});
@@ -84,14 +87,15 @@ test('a real teacher publication and two Loop Lab modes reach one student master
   await see(teacher,'.mreq-status','Published version 2');
 
   const showLoop=async()=>{
-    await wait(student,'#student-pathway .pathway-area');
-    await student.$eval(focusLink,link=>{link.closest('details').open=true;});
-    await wait(student,'#student-pathway details[open] .practice-challenge');
+    await wait(student,'#student-pathway .map-app');
+    if(await student.$(skillButton)===null)await activate(student,stopButton);
+    if(await student.$(panel)===null)await activate(student,skillButton);
+    await wait(student,panel+' .checks');
   };
   await student.reload();
   await showLoop();
-  const card=()=>student.$eval(focusLink,link=>link.closest('li').querySelector('.practice-challenge').textContent);
-  assert.match(await card(),/30 questions with at least 90%/);
+  const card=()=>student.$eval(panel,node=>node.textContent);
+  assert.match(await card(),/30 questions answered and 90% right on the first try/);
 
   async function answer(mode){
     await wait(student,'#choices button');
@@ -104,51 +108,55 @@ test('a real teacher publication and two Loop Lab modes reach one student master
   await answer('looptype');
   await Promise.all([student.waitForNavigation(),activate(student,'a[data-profile-link]')]);
   await showLoop();
-  assert.match(await card(),/1 of 30 questions/);
+  assert.match(await card(),/1 of the 30 required questions/);
 
-  const mixedLink=await student.$eval(focusLink,link=>link.closest('li').querySelector('a[href*="mode=mixed"]').href);
+  const mixedLink=await student.$eval(panel+' a[data-action=mixed]',link=>link.href);
   // Fix only the generator seed. The real Mixed Practice engine still draws and scores the question.
-  const seed=Array.from({length:200},(_,i)=>i+1).find(seed=>
-    createLoopSession({seed}).next({mode:'mixed',difficulty:DIFFICULTIES[0]}).mode==='looptype');
-  assert.ok(seed);
-  const seedHook=await student.evaluateOnNewDocument(seed=>{
-    if(!location.pathname.startsWith('/java-games/loop-lab/'))return;
-    const random=crypto.getRandomValues.bind(crypto);
-    crypto.getRandomValues=values=>{
-      if(values instanceof Uint32Array&&values.length===1){values[0]=seed;return values;}
-      return random(values);
-    };
-  },seed);
-  const testLink=new URL(mixedLink);
-  testLink.searchParams.set('test','1');
-  await student.goto(testLink.href);
-  await student.waitForFunction(()=>window.__loopLab?.q);
-  await student.removeScriptToEvaluateOnNewDocument(seedHook.identifier);
-  assert.equal(await student.evaluate(()=>window.__loopLab.q.mode),'looptype');
-  await answer('mixed');
-  await Promise.all([student.waitForNavigation(),activate(student,'a[data-profile-link]')]);
-  await showLoop();
-  assert.match(await card(),/2 of 30 questions/);
+  for(const assessed of ['looptype','components']){
+    const seed=Array.from({length:200},(_,i)=>i+1).find(seed=>
+      createLoopSession({seed}).next({mode:'mixed',difficulty:DIFFICULTIES[0]}).mode===assessed);
+    assert.ok(seed);
+    const seedHook=await student.evaluateOnNewDocument(seed=>{
+      if(!location.pathname.startsWith('/java-games/loop-lab/'))return;
+      const random=crypto.getRandomValues.bind(crypto);
+      crypto.getRandomValues=values=>{
+        if(values instanceof Uint32Array&&values.length===1){values[0]=seed;return values;}
+        return random(values);
+      };
+    },seed);
+    const testLink=new URL(mixedLink);
+    testLink.searchParams.set('test','1');
+    await student.goto(testLink.href);
+    await student.waitForFunction(()=>window.__loopLab?.q);
+    await student.removeScriptToEvaluateOnNewDocument(seedHook.identifier);
+    assert.equal(await student.evaluate(()=>window.__loopLab.q.mode),assessed);
+    await answer('mixed');
+    await Promise.all([student.waitForNavigation(),activate(student,'a[data-profile-link]')]);
+    await showLoop();
+  }
+  assert.match(await card(),/2 of the 30 required questions/);
   const events=dev.db.prepare("SELECT data FROM performance_events WHERE activity='loop-lab' ORDER BY occurred").all().map(row=>JSON.parse(row.data));
-  assert.deepEqual(events.map(row=>[row.mode,row.assessedMode]),[['looptype','looptype'],['mixed','looptype']]);
+  assert.deepEqual(events.map(row=>[row.mode,row.assessedMode]),[['looptype','looptype'],['mixed','looptype'],['mixed','components']]);
+  assert.deepEqual(events.map(row=>row.dimensions.map(d=>d.id)),[
+    ['node:advanced:loop-lab:looptype'],['node:advanced:loop-lab:looptype'],['node:advanced:loop-lab:components']
+  ]);
+  assert.match(await student.$eval('.skill-node[data-node-id="node:advanced:loop-lab:components"]',node=>node.textContent),/1 of 30/);
 
-  await student.$eval(focusLink,link=>{
-    const card=link.closest('li');
-    card.id='verified-loop-browser-card';
-    for(const section of document.querySelectorAll('.pathway-area'))section.open=section===card.closest('.pathway-area');
-  });
-  await checkLayouts(student,'student-live-practice','#verified-loop-browser-card');
-  student.once('dialog',dialog=>void dialog.accept());
-  await activate(student,'button[aria-label*="Restart practice attempt for Choose"]');
-  await see(student,'#student-connection','Fresh attempt started');
+  await checkLayouts(student,'student-live-practice',panel);
+  await student.evaluate(axeSource);
+  assert.deepEqual(await student.evaluate(async ()=>(await axe.run('#student-pathway',{runOnly:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']})).violations.map(v=>[v.id,v.nodes.map(n=>n.target)])),[]);
+  await activate(student,panel+' [data-action=restart]');
+  await activate(student,panel+' [data-action=restart-confirm]');
+  await see(student,panel,'Current attempt (attempt 2): 0 answered');
   const recovered=await (await browser.createBrowserContext()).newPage();
   await recovered.goto(dev.url+'/cs-games/student/');
   await wait(recovered,'[name=id]');
   await recovered.type('[name=id]',dev.db.prepare('SELECT id FROM student_profiles').get().id);
   await recovered.type('[name=recovery]',recovery);
   await Promise.all([recovered.waitForNavigation(),byText(recovered,'#student-profile','Restore profile')]);
-  await recovered.waitForSelector(focusLink);
-  await recovered.$eval(focusLink,link=>{link.closest('.pathway-area').open=true;link.closest('li').querySelector('.practice-history').open=true;});
-  assert.match(await recovered.$eval(focusLink,link=>link.closest('li').innerText),/Attempt 1 · Restarted · [0-2] correct out of 2/);
+  await activate(recovered,stopButton);
+  await activate(recovered,skillButton);
+  await activate(recovered,panel+' .prev summary');
+  assert.match(await recovered.$eval(panel,node=>node.innerText),/Attempt 1: You started a new attempt\s*2 answered, [0-2] correct/);
   assert.equal(dev.db.prepare("SELECT COUNT(*) n FROM performance_events WHERE kind='assessment'").get().n,0);
 });

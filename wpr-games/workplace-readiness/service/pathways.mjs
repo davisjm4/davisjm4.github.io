@@ -50,7 +50,7 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
     // Include the current attempt version so a restart on another device invalidates this client's cached view.
     const attemptVersion=profile?await db.prepare('SELECT COALESCE(SUM(version),0) value FROM mastery_attempt_states WHERE profile_id=?')
       .bind(profile.id).first():{value:0};
-    const cacheKey='progress-v2:'+p.id+':'+p.head+':'+(identity.evidenceCount??0)+':'+(identity.eventCount??0)+':'+attemptVersion.value+':'+today;
+    const cacheKey='progress-v3:'+p.id+':'+p.head+':'+(identity.evidenceCount??0)+':'+(identity.eventCount??0)+':'+attemptVersion.value+':'+today;
     if(!action&&!testAdapter&&new URL(request.url).searchParams.get('known')===cacheKey)return {unchanged:true,cacheKey};
     const row=await db.prepare('SELECT snapshot FROM pathway_revisions WHERE pathway_id=? AND revision=?').bind(p.id,p.head).first();
     const pathway=parse(row);
@@ -63,7 +63,7 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
       testAdapter?null:readPracticeProgress(db,identity.profileId)
     ]);
     const mastery=profile?await readMasteryProgress(db,profile,pathway,evidence):null;
-    const view=studentContract(pathway,graph,evidence,{practice,mastery});
+    const view=studentContract(pathway,graph,evidence,{practice,mastery,today});
     const digest=await hash(JSON.stringify({status:view.status,nodes:view.nodes.map(n=>n.checkpoint)}));
     await db.prepare('INSERT OR IGNORE INTO pathway_status_history(pathway_id,profile_id,revision,digest,status,created) VALUES(?,?,?,?,?,?)')
       .bind(p.id,identity.profileId,p.head,digest,view.status,Date.now()).run();

@@ -56,14 +56,16 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   const recovery=await (await wait(student,'.wpr-profile-secret')).evaluate(node=>node.textContent);
   await Promise.all([student.waitForNavigation(),clickText(student,'#student-profile','I saved my recovery credential')]);
   const pathway='#student-pathway';
-  await wait(student,pathway+' .pathway-area');
-  assert.match(await textOf(student,pathway),/Advanced CS · Self-paced/);
-  assert.equal(await student.$$eval(pathway+' .pathway-checkpoints li',items=>items.length),123);
+  await wait(student,pathway+' .stop-open');
+  assert.match(await textOf(student,pathway),/Advanced CS journey/);
+  assert.match(await textOf(student,pathway),/Self-paced/);
+  const counts=JSON.parse(dev.db.prepare('SELECT snapshot FROM pathway_revisions').get().snapshot);
+  assert.match(await textOf(student,pathway+' .map-summary'),new RegExp(counts.sequence.length+' skills'));
   assert.doesNotMatch(await textOf(student,pathway),/overdue|due date|Suggested target/i);
-  assert.match(await textOf(student,pathway+' details:first-of-type summary'),/Variable Lab/i);
+  assert.match(await textOf(student,pathway+' .stop-open'),/Variable Lab/i);
   assert.doesNotMatch(await textOf(student,pathway),/Trace variable state0|\bfalse\b/);
 
-  const screens=[[390,844],[768,1024],[1280,900]];
+  const screens=[[390,844],[768,1024],[1280,900],[1366,768]];
   for(const [width,height] of screens){
     for(const page of [teacher,student])await page.setViewport({width,height});
     await checkOverflow(teacher,width);
@@ -79,30 +81,61 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
       await student.screenshot({path:join(evidenceDir,'after-student-'+width+'.png')});
     }
   }
+  if(evidenceDir){
+    await student.goto(dev.url+'/cs-games/student/?view=classic');
+    await wait(student,pathway+' .pathway-area');
+    await student.screenshot({path:join(evidenceDir,'before-student-1366.png')});
+    await student.goto(dev.url+'/cs-games/student/');
+  }
+  await wait(student,pathway+' .stop-open');
   await student.evaluate(axeSource);
   assert.deepEqual(await student.evaluate(async selector=>(await axe.run(selector,{runOnly:['wcag2a','wcag2aa']})).violations.map(item=>item.id),pathway),[]);
-  await student.$eval(pathway+' a[href*="/loop-lab/"][href*="mode=looptype"]',link=>{link.closest('details').open=true;});
-  await Promise.all([student.waitForNavigation(),student.click(pathway+' a[href*="/loop-lab/"][href*="mode=looptype"]')]);
+  await clickText(student,pathway,'List');
+  const listRows=await student.$$eval(pathway+' .skill-row',items=>items.length);
+  assert.equal(listRows,counts.sequence.length);
+  assert.equal(await student.$eval(pathway+' button[data-layout=list]',button=>button===document.activeElement),true);
+  assert.deepEqual(await student.evaluate(async selector=>(await axe.run(selector,{runOnly:['wcag2a','wcag2aa','wcag21a','wcag21aa']})).violations.map(item=>item.id),pathway),[]);
+  await clickText(student,pathway,'Map');
+  const loopStop=pathway+' .stop-open[data-stop-id="area:advanced:loop-lab"]';
+  const loopNode=pathway+' .skill-node[data-node-id="node:advanced:loop-lab:looptype"]';
+  async function openLoop(page){
+    await wait(page,pathway+' .map-app');
+    if(await page.$(loopNode)===null){
+      await wait(page,loopStop);
+      await page.$eval(loopStop,button=>button.click());
+    }
+    if(await page.$('.skill-panel[data-node-id="node:advanced:loop-lab:looptype"]')===null){
+      await wait(page,loopNode);
+      await page.$eval(loopNode,button=>button.click());
+    }
+    await wait(page,'.skill-panel [data-action=practice]');
+  }
+  await openLoop(student);
+  await Promise.all([student.waitForNavigation(),student.click('.skill-panel [data-action=practice]')]);
   assert.equal(await student.$eval('#mode',node=>node.value),'looptype');
   await wait(student,'#choices button');
   await student.click('#choices button');
   await student.click('#check');
   await student.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
   await Promise.all([student.waitForNavigation(),student.click('a[data-profile-link]')]);
-  await wait(student,pathway+' .pathway-area');
-  const loop=pathway+' a[href*="/loop-lab/"][href*="mode=looptype"]';
-  const loopText=()=>student.$eval(loop,node=>node.closest('li').textContent);
-  assert.match(await loopText(),/out of 1 first attempts/);
+  await openLoop(student);
+  assert.match(await textOf(student,'.skill-panel'),/1 answered, [01] right on the first try/);
 
   await Promise.all([teacher.waitForNavigation(),teacher.click('#class-overview a[href$="#goals"]')]);
   assert.equal(await teacher.$('[name=teacher-key]'),null);
   await wait(teacher,'#node-table input[type=checkbox]');
   const optional='#node-table input[type=checkbox]';
   await teacher.click(optional);
+  const orderBefore=await student.$$eval('.skill-node',nodes=>nodes.map(node=>node.dataset.nodeId));
+  const move=await teacher.waitForFunction(()=>{
+    const buttons=[...document.querySelectorAll('#node-table button[aria-label^="Move down:"]')];
+    return buttons.find(button=>button.getAttribute('aria-label').includes('Choose the Loop Type'));
+  });
+  await move.evaluate(button=>button.click());
   await teacher.click('#save');
   await see(teacher,'#status','Draft saved');
   assert.equal(head(),1);
-  assert.doesNotMatch(await textOf(student,pathway),/Optional skill/);
+  assert.equal(await student.$(pathway+' .skill-node[data-optional=true]'),null);
   const press=async selector=>{await wait(teacher,selector);await teacher.focus(selector);await teacher.keyboard.press('Enter');};
   const stage=async name=>{await press('#stepper [data-stage='+name+']');await wait(teacher,'#stage-'+name);};
   const publish=async revision=>{
@@ -114,8 +147,19 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
     assert.equal(head(),revision);
   };
   await publish(2);
+  const mapHome=async page=>{
+    await wait(page,pathway+' .map-app');
+    const back=await page.$('[data-action=back]');
+    if(back)await back.evaluate(button=>button.click());
+    await wait(page,pathway+' .stop-open');
+  };
   await student.reload();
-  await see(student,pathway,'Optional skill');
+  await openLoop(student);
+  const orderAfter=await student.$$eval('.skill-node',nodes=>nodes.map(node=>node.dataset.nodeId));
+  assert.deepEqual(orderAfter,[orderBefore[1],orderBefore[0],...orderBefore.slice(2)]);
+  assert.match(await textOf(student,'.skill-panel'),/1 answered, [01] right on the first try/);
+  await mapHome(student);
+  await see(student,pathway,'1 optional skill');
 
   await stage('calendar');
   assert.equal(await teacher.$eval('#settings',form=>form.hidden),true);
@@ -132,7 +176,7 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   await see(teacher,'#status','Pacing updated');
   await publish(3);
   await student.reload();
-  await see(student,pathway,'Suggested target');
+  await see(student,pathway,'Your teacher’s pacing');
   assert.doesNotMatch(await textOf(student,pathway),/overdue/i);
 
   await stage('calendar');
@@ -147,6 +191,7 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   await restored.type('#student-profile [name=recovery]',recovery);
   await Promise.all([restored.waitForNavigation(),clickText(restored,'#student-profile','Restore profile')]);
   await see(restored,pathway,'Self-paced');
-  assert.doesNotMatch(await textOf(restored,pathway),/Suggested target|overdue/i);
-  assert.match(await restored.$eval(loop,node=>node.closest('li').textContent),/out of 1 first attempts/);
+  assert.equal(await restored.$(pathway+' .pacing'),null);
+  await openLoop(restored);
+  assert.match(await textOf(restored,'.skill-panel'),/1 answered, [01] right on the first try/);
 });
