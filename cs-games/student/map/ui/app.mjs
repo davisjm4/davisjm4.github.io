@@ -5,15 +5,15 @@
 //
 // Every piece of progress shown comes from `progress` (cs-games.mastery-progress/1 objects). Nothing is stored by this component
 // except where the student is (the URL hash) and, for the demo, transient simulated attempts held in memory.
-import { buildMapModel, findNode, findStop, normalizeProgress } from '../model.mjs';
+import { buildMapModel, findNode, findStop, normalizeProgress } from '../model.mjs?v=proficiency-v1';
 import { readRoute, routeHash } from '../route.mjs';
 import { plural } from '../format.mjs';
-import { createPacingCard, createHeader, createLegend, createSuggested, createToolbar } from './chrome.mjs';
+import { createPacingCard, createHeader, createLegend, createSuggested, createToolbar } from './chrome.mjs?v=proficiency-v1';
 import { renderAreaMap } from './area-map.mjs';
 import { renderCourseMap } from './course-map.mjs';
 import { el } from './dom.mjs';
 import { renderListView } from './list-view.mjs';
-import { createPanelPlaceholder, createProgressPanel } from './progress-panel.mjs';
+import { createPanelPlaceholder, createProgressPanel } from './progress-panel.mjs?v=proficiency-v1';
 import { createStage } from './stage.mjs';
 
 export function mountStudentMap(container, options) {
@@ -174,7 +174,7 @@ export function mountStudentMap(container, options) {
     const header = createHeader(model, { route, stop, onBack: backToCourse });
     const meta = el('div', { class: 'map-meta' },
       route.view === 'area' ? mixedCard(stop) : null,
-      createSuggested(model, { onShow: (n) => { if (route.view === 'area' && n.stopId === route.stopId) select(n, { scroll: true, focusPanel: false }); else { lastStopId = n.stopId; route = { ...route, view: 'area', stopId: n.stopId, nodeId: n.id }; writeHash(false); render({ focus: 'panel' }); } }, onPractice: (i) => adapter.onPractice?.(i) }),
+      createSuggested(model, { stop, onShow: (n) => { if (route.view === 'area' && n.stopId === route.stopId) select(n, { scroll: true, focusPanel: false }); else { lastStopId = n.stopId; route = { ...route, view: 'area', stopId: n.stopId, nodeId: n.id }; writeHash(false); render({ focus: 'panel' }); } }, onPractice: (i) => adapter.onPractice?.(i) }),
       createPacingCard(model, { onShow: (n) => { route = { ...route, view: 'area', stopId: n.stopId, nodeId: n.id }; lastStopId = n.stopId; writeHash(false); render({ focus: 'panel' }); } }),
       sessionCard());
     const showZoom = route.layout === 'map';

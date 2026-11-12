@@ -47,7 +47,7 @@ function configuredSkills(pathway){
   return skills;
 }
 
-async function loadEvidence(db,profile,pathway,now){
+export async function loadEvidence(db,profile,pathway,now){
   const {results}=await db.prepare(`SELECT id,occurred,pathway,activity,data FROM performance_events
     WHERE profile=? AND kind='practice' AND pathway=? AND json_extract(data,'$.attempt')=1
     ORDER BY occurred,id`).bind(profile.id,pathway.courseId).all();
@@ -106,11 +106,11 @@ async function knownPolicies(db,pathway){
   return results.map(({definition})=>validateMasteryPolicy(JSON.parse(definition))).filter(x=>x.ok).map(x=>x.policy);
 }
 
-export async function readMasteryProgress(db,profile,pathway,assessmentEvidence){
+export async function readMasteryProgress(db,profile,pathway,assessmentEvidence,practiceEvidence){
   const skills=configuredSkills(pathway);
   if(!skills.size)return null;
   const now=new Date().toISOString();
-  const {scope,byNode}=profile ? await loadEvidence(db,profile,pathway,now)
+  const {scope,byNode}=profile ? practiceEvidence??await loadEvidence(db,profile,pathway,now)
     : {scope:{profileId:'teacher-preview',classId:pathway.classId},byNode:new Map()};
   const [existing,policies]=profile
     ?await Promise.all([loadHistories(db,profile.id,scope),knownPolicies(db,pathway)])

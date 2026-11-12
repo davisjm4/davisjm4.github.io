@@ -89,6 +89,7 @@ export function inputFromStudentContract(contract, {
       }))
     },
     courseId,classTitle:contract.title,sequence:nodes.map(n=>n.id),required,progress:{nodes:progressNodes,areas},attempts,mixedActivities,
+    proficiency:contract.proficiency,
     pacing:{mode:dated?'dated':'undated',today,currentAreaId,targets}
   };
 }

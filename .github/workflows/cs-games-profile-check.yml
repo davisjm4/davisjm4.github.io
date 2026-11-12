@@ -19,4 +19,4 @@ jobs:
           node-version: '24'
       - run: node --test cs-games/teacher/cs-games-backend-tests.mjs cs-games/teacher/wpr-profile-tests.mjs cs-games/teacher/wpr-online-tests.mjs cs-games/pathway/tests/*.test.mjs
       - run: npm ci --ignore-scripts --prefix wpr-games/workplace-readiness
-      - run: CHROME_BIN="$(command -v google-chrome)" node --test --test-concurrency=1 cs-games/teacher/wpr-online-browser-tests.mjs cs-games/teacher/automatic-pathway-browser-tests.mjs cs-games/teacher/requirements/integration-browser-tests.mjs
+      - run: CHROME_BIN="$(command -v google-chrome)" node --test --test-concurrency=1 cs-games/teacher/wpr-online-browser-tests.mjs cs-games/teacher/automatic-pathway-browser-tests.mjs cs-games/teacher/requirements/integration-browser-tests.mjs cs-games/teacher/proficiency-browser-tests.mjs

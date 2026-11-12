@@ -1,4 +1,5 @@
-import {readMasteryProgress,restartMasteryPractice} from './mastery-attempts.mjs';
+import {loadEvidence,readMasteryProgress,restartMasteryPractice} from './mastery-attempts.mjs';
+import {evaluateProficiency,PROFICIENCY_SCHEMA} from '../../../cs-games/pathway/proficiency/index.mjs';
 import {buildContentFacts} from '../../../cs-games/pathway/requirements/limits.mjs';
 import {reviewRequirements} from '../../../cs-games/pathway/requirements/review.mjs';
 import {isRequirementPolicy} from '../../../cs-games/pathway/requirements/ids.mjs';
@@ -50,7 +51,7 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
     // Include the current attempt version so a restart on another device invalidates this client's cached view.
     const attemptVersion=profile?await db.prepare('SELECT COALESCE(SUM(version),0) value FROM mastery_attempt_states WHERE profile_id=?')
       .bind(profile.id).first():{value:0};
-    const cacheKey='progress-v3:'+p.id+':'+p.head+':'+(identity.evidenceCount??0)+':'+(identity.eventCount??0)+':'+attemptVersion.value+':'+today;
+    const cacheKey='progress-v4:'+PROFICIENCY_SCHEMA+':'+p.id+':'+p.head+':'+(identity.evidenceCount??0)+':'+(identity.eventCount??0)+':'+attemptVersion.value+':'+today;
     if(!action&&!testAdapter&&new URL(request.url).searchParams.get('known')===cacheKey)return {unchanged:true,cacheKey};
     const row=await db.prepare('SELECT snapshot FROM pathway_revisions WHERE pathway_id=? AND revision=?').bind(p.id,p.head).first();
     const pathway=parse(row);
@@ -58,12 +59,19 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
       if(!profile)error(403,'Student profile sign-in required.');
       return restartMasteryPractice(db,profile,pathway,await body(request));
     }
-    const [evidence,practice]=await Promise.all([
+    const formative=profile&&['advanced','csp'].includes(pathway.courseId);
+    const [evidence,practice,practiceEvidence]=await Promise.all([
       testAdapter?env.readPathwayEvidence(identity.profileId):readProfileEvidence(db,identity.profileId),
-      testAdapter?null:readPracticeProgress(db,identity.profileId)
+      testAdapter?null:readPracticeProgress(db,identity.profileId),
+      formative?loadEvidence(db,profile,pathway,new Date().toISOString()):null
     ]);
-    const mastery=profile?await readMasteryProgress(db,profile,pathway,evidence):null;
+    const mastery=profile?await readMasteryProgress(db,profile,pathway,evidence,practiceEvidence):null;
     const view=studentContract(pathway,graph,evidence,{practice,mastery,today});
+    if(formative)view.proficiency=evaluateProficiency({
+      courseId:pathway.courseId,nodes:view.nodes,policies:pathway.policies,
+      eventsByNode:practiceEvidence.byNode,
+      pacingTargets:Object.fromEntries(view.nodes.map(node=>[node.id,node.checkpoint.targetDate]))
+    });
     const digest=await hash(JSON.stringify({status:view.status,nodes:view.nodes.map(n=>n.checkpoint)}));
     await db.prepare('INSERT OR IGNORE INTO pathway_status_history(pathway_id,profile_id,revision,digest,status,created) VALUES(?,?,?,?,?,?)')
       .bind(p.id,identity.profileId,p.head,digest,view.status,Date.now()).run();

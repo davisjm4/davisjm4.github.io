@@ -1,3 +1,4 @@
+import {proficiencyDetails,proficiencyLink} from './proficiency.mjs';
 // The skill progress panel. It renders the evaluated progress contract and explains it in plain language.
 // It never calculates: questions left, accuracy, and "correct in a row" all arrive from the engine's recovery object.
 import { attemptLabel, attemptLine, checklist, detailLines, exampleNotice, isClosedAttempt, leadText, lifetimeLine, optionalBlurb, practiceSummary, requirementLine, whatsLeft } from '../copy.mjs';
@@ -39,6 +40,9 @@ export function createProgressPanel(node, ctx) {
     node.example ? el('span', { class: 'tag tag-example', text: 'Example requirement' }) : null));
   if (node.optional) root.append(el('p', { class: 'muted', text: optionalBlurb }));
 
+  const formative=proficiencyDetails(node);
+  if(formative)root.append(formative);
+
   // What the engine says, in its own words first.
   root.append(el('p', { class: 'lead', text: leadText(node) }));
   for (const line of detailLines(node)) root.append(el('p', { class: 'muted', text: line }));
@@ -57,7 +61,10 @@ export function createProgressPanel(node, ctx) {
     root.append(el('p', { class: 'ok', text: 'Nothing is left for this requirement.' }));
   }
   // Practice.
-  const primary = node.practice[0];
+  const goal=node.proficiency?.goal;
+  const primary = goal&&!node.proficiency.goalMet
+    ? proficiencyLink(node,node.proficiency.tiers[goal]?.practice)
+    : node.practice[0];
   const actions = el('div', { class: 'panel-actions' });
   if (primary) {
     actions.append(el('a', { class: 'btn btn-primary', href: primary.url, 'data-action': 'practice', onclick: (e) => { if (ctx.onPractice({ node, url: primary.url, kind: primary.kind }) === true) e.preventDefault(); }, text: primaryLabel(node) }));
