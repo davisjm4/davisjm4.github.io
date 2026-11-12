@@ -214,7 +214,7 @@ export function createConceptSession({ tracker } = {}) {
     streak: 0,
   };
   let round;
-  function begin(question) {
+  function begin(question, selectedMode = question.category) {
     if (tracker && round?.instance) tracker.skip(round.instance);
     round = {
       question,
@@ -231,6 +231,7 @@ export function createConceptSession({ tracker } = {}) {
       wrong: 0,
       counted: false,
     };
+    tracker?.annotate?.(round.instance, {family:question.category + "/" + question.variant, selectedMode});
     return round;
   }
   function engage() {

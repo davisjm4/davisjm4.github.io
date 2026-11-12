@@ -4,9 +4,9 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=per-mode-daily-v1";
+} from "./session.js?v=proficiency-v2";
 import * as E from "./engine.js?v=platform-expansion-v2";
-import { startCodeConcepts } from "./concepts-ui.js?v=platform-expansion-v2";
+import { startCodeConcepts } from "./concepts-ui.js?v=proficiency-v2";
 const $ = (id) => document.getElementById(id),
   esc = (s) =>
     String(s).replace(
@@ -258,9 +258,10 @@ if (typeof document !== "undefined") {
 function clearFeedback() {
   $("feedback").hidden = true;
 }
-function mount(content) {
+function mount(content, evidence) {
   if (generating) {
     beginRound();
+    if (evidence) tracker.annotate(currentInstance, {...evidence, selectedMode:$("mode").value});
     generating = false;
   }
   $("stage").innerHTML = content;
@@ -273,6 +274,10 @@ const numeric = (id, label, value, min = 0, max = 12) =>
   `<label>${label} <input id="${id}" type="number" value="${value}" min="${min}" max="${max}" step="1"></label>`;
 function setup(controls, newRound) {
   $("controls").innerHTML = controls;
+  if (["binary-builder", "boolean-gatekeeper", "list-lab"].includes(slug)) {
+    const requested = typeof URLSearchParams === "undefined" ? null : new URLSearchParams(globalThis.location?.search).get("mode");
+    if ([...$("mode").options].some(option => option.value === requested)) $("mode").value = requested;
+  }
   const generate = () => {
     generating = true;
     roundTopic = slug;
@@ -365,9 +370,10 @@ function binary() {
       mode = chosenMode(["representation", "capacity", "overflow", "pixels"]);
       roundTopic = mode + " / " + n + "-bit";
       extension = E.binaryExtension(mode, n);
+      const evidence = {profileTopic:mode, practiceMode:mode, family:mode};
       if (mode === "capacity") {
         mount(
-          `<p>An unsigned identifier uses <strong>${n} bits</strong>. Configure its capacity and greatest representable value.</p>${numeric("capacity-answer", "Distinct values", "", 0, 65536)}${numeric("maximum-answer", "Greatest unsigned value", "", 0, 65535)}${button("check", "Check Answer")}`,
+          `<p>An unsigned identifier uses <strong>${n} bits</strong>. Configure its capacity and greatest representable value.</p>${numeric("capacity-answer", "Distinct values", "", 0, 65536)}${numeric("maximum-answer", "Greatest unsigned value", "", 0, 65535)}${button("check", "Check Answer")}`, evidence,
         );
         check("check", () => {
           if (
@@ -410,7 +416,7 @@ function binary() {
       target = mode === "pixels" ? extension.target : E.int(0, 2 ** n - 1);
       bits = Array(n).fill(0);
       mount(
-        `${mode === "pixels" ? `<p>A 3 × 3 grayscale image stores one unsigned ${n}-bit intensity per pixel. 0 is black; ${extension.max} is white. Encode the outlined pixel and calculate storage for the raw pixel data (no metadata or compression).</p><div class="pixel-practice">${extension.pixels.map((v, i) => `<div class="pixel-cell ${i === extension.index ? "pixel-target" : ""}" style="background:rgb(${Math.round((255 * v) / extension.max)} ${Math.round((255 * v) / extension.max)} ${Math.round((255 * v) / extension.max)})"><span>${v}</span></div>`).join("")}</div>` : ""}<p>Toggle each bit. Place values double as you move left.</p><p>Target decimal: <span class="big-number">${target}</span></p><div class="bits">${bits.map((_, i) => `<div class="bit"><button id="bit${i}" aria-label="Bit with place value ${2 ** (n - i - 1)}" aria-pressed="false">0</button><small>${2 ** (n - i - 1)}</small></div>`).join("")}</div><p>Your decimal value: <strong id="value">0</strong></p>${mode === "pixels" ? numeric("pixel-size", "Raw image size (bits)", "", 0, 100000) : ""}${button("check", "Check Answer")}`,
+        `${mode === "pixels" ? `<p>A 3 × 3 grayscale image stores one unsigned ${n}-bit intensity per pixel. 0 is black; ${extension.max} is white. Encode the outlined pixel and calculate storage for the raw pixel data (no metadata or compression).</p><div class="pixel-practice">${extension.pixels.map((v, i) => `<div class="pixel-cell ${i === extension.index ? "pixel-target" : ""}" style="background:rgb(${Math.round((255 * v) / extension.max)} ${Math.round((255 * v) / extension.max)} ${Math.round((255 * v) / extension.max)})"><span>${v}</span></div>`).join("")}</div>` : ""}<p>Toggle each bit. Place values double as you move left.</p><p>Target decimal: <span class="big-number">${target}</span></p><div class="bits">${bits.map((_, i) => `<div class="bit"><button id="bit${i}" aria-label="Bit with place value ${2 ** (n - i - 1)}" aria-pressed="false">0</button><small>${2 ** (n - i - 1)}</small></div>`).join("")}</div><p>Your decimal value: <strong id="value">0</strong></p>${mode === "pixels" ? numeric("pixel-size", "Raw image size (bits)", "", 0, 100000) : ""}${button("check", "Check Answer")}`, evidence,
       );
       bits.forEach((_, i) => {
         $("bit" + i).onclick = () => {
@@ -467,8 +473,12 @@ function booleanGame() {
         }
       }
       answer = null;
+      const needsBothInputs = mode === "make" && ["x", "y"].every(input =>
+        Array.from({length:13}, (_, value) => c.solutions.filter(pair => pair[input] === value).length)
+          .every(count => count < 13));
+      const evidence = needsBothInputs ? {family:`both-inputs:${c.e.op.toLowerCase()}`} : undefined;
       mount(
-        `<p>${mode === "evaluate" ? "Set the output switch to the result of this expression." : "Adjust x and y (whole numbers 0–12) to open the gate. A valid combination exists."}</p>${mode === "evaluate" ? `<pre>x ← ${c.values.x}\ny ← ${c.values.y}</pre>` : `<div class="row">${numeric("x", "x", c.values.x)}${numeric("y", "y", c.values.y)}</div>`}<pre>${esc(E.formatExpression(c.e))}</pre>${mode === "evaluate" ? `<div class="row">${button("true", "Output: TRUE", true)}${button("false", "Output: FALSE", true)}</div>` : ""}<div class="actions">${button("check", "Check Answer")}</div>`,
+        `<p>${mode === "evaluate" ? "Set the output switch to the result of this expression." : "Adjust x and y (whole numbers 0–12) to open the gate. A valid combination exists."}</p>${mode === "evaluate" ? `<pre>x ← ${c.values.x}\ny ← ${c.values.y}</pre>` : `<div class="row">${numeric("x", "x", c.values.x)}${numeric("y", "y", c.values.y)}</div>`}<pre>${esc(E.formatExpression(c.e))}</pre>${mode === "evaluate" ? `<div class="row">${button("true", "Output: TRUE", true)}${button("false", "Output: FALSE", true)}</div>` : ""}<div class="actions">${button("check", "Check Answer")}</div>`, evidence,
       );
       if (mode === "evaluate")
         for (let v of [true, false])
@@ -578,6 +588,8 @@ function listLab() {
       mode = chosenMode(["execute", "build"]);
       working = [...c.start];
       ops = [];
+      const evidence = mode === "execute"
+        ? {family:`list-execute:${c.ops.map(op => op.type.toLowerCase()).join("-")}`} : undefined;
       mount(
         `<p>Indices start at 1. INSERT shifts items right; REMOVE shifts items left.</p><pre>numbers ← [${c.start.join(", ")}]${mode === "execute" ? "\n\n" + c.ops.map(E.operationText).join("\n") : ""}</pre>${mode === "build" ? `<p>Target list: <strong>[${c.target.join(", ")}]</strong></p><p>Add and arrange operations. Any valid program that produces the target is accepted.</p>` : "<p>Manipulate the working list to show the final state. The list can grow and shrink; no final length is provided.</p>"}<div id="list" class="tokens"></div>${
           mode === "build"
@@ -587,7 +599,7 @@ function listLab() {
                 ["REMOVE", "REMOVE"],
               ])}${numeric("index", "Index", 1, 1, 40)}${numeric("item", "Value", 1, 0, 99)}${button("add", mode === "build" ? "Add operation" : "Apply edit", true)}</div>`
             : ""
-        }${mode === "build" ? '<div id="ops"></div>' : ""}<div class="actions">${mode === "build" ? button("reset", "Reset work", true) : ""}${button("check", "Check Answer")}</div>`,
+        }${mode === "build" ? '<div id="ops"></div>' : ""}<div class="actions">${mode === "build" ? button("reset", "Reset work", true) : ""}${button("check", "Check Answer")}</div>`, evidence,
       );
       renderList();
       if (mode === "build") renderOps();

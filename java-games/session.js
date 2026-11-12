@@ -1,4 +1,4 @@
-import { activeProfile, device, recordGameAttempt, scopedStorage } from '../wpr-games/workplace-readiness/online/profile-sync.mjs';
+import { activeProfile, device, recordGameAttempt, scopedStorage } from '../wpr-games/workplace-readiness/online/profile-sync.mjs?v=proficiency-v2';
 /* Java Games session schema v1. Daily browser summaries. An active profile can sync scored attempts. */
 export const SESSION_KEY = "javaGames.session.v1";
 const fields = [

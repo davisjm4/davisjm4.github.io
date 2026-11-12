@@ -31,9 +31,10 @@ export function proficiencyDetails(node){
 export function proficiencySuggestion(model,{onShow,onPractice,stop}){
   const guidance=stop?model.proficiency.byArea[stop.areaId]:model.proficiency.recommendation;
   if(!guidance)return null;
-  const {primary:next,extension}=guidance;
-  if(!next&&!extension)return null;
-  const ready=stop&&model.proficiency.areas[stop.areaId]?.readyToAdvance;
+  const {primary:next,extension,browseNext}=guidance;
+  if(!next&&!extension&&!browseNext)return null;
+  const area=stop&&model.proficiency.areas[stop.areaId];
+  const ready=area?.readyToAdvance;
   const action=(recommendation,label,secondary=false)=>{
     const node=model.nodeIndex[recommendation.nodeId];
     const link=proficiencyLink(node,recommendation.practice);
@@ -45,9 +46,11 @@ export function proficiencySuggestion(model,{onShow,onPractice,stop}){
   return el('div',{class:'suggested'},
     el('p',{class:'suggested-label',text:ready?'Ready to advance':'Suggested next'}),
     nextNode?el('p',{class:'suggested-title',text:`${nextNode.title}${next.tier?` · ${next.tier}`:''}`}):null,
-    next?.kind==='practice-evidence-gap'?el('p',{class:'muted',text:'Practice is available here. Evidence for the next proficiency level is still under review.'}):null,
+    area&&!area.hasCore?el('p',{class:'muted',text:'You can practice this area now. Level 3 assessment is still under review.'}):
+      area?.unavailable?.length?el('p',{class:'muted',text:ready?'You met the reviewed outcomes. Other skills in this area remain open for practice.':'Some skills in this area are still being reviewed for proficiency.'}):null,
     el('div',{class:'suggested-actions'},
       next?action(next,ready||next.kind==='continue-learning'?'Continue Learning':'Practice'):null,
       nextNode?el('button',{type:'button',class:'btn',text:'Show on map',onclick:()=>onShow(nextNode)}):null,
+      browseNext?el('button',{type:'button',class:'btn',text:'Browse next area',onclick:()=>onShow(model.nodeIndex[browseNext.nodeId])}):null,
       extension?action(extension,'Challenge Yourself — Level 4',true):null));
 }

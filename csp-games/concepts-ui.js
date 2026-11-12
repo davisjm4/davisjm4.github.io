@@ -1,8 +1,8 @@
 import {
   sessionTracker,
   roundSummary,
-} from "./session.js?v=per-mode-daily-v1";
-import { createConceptSession } from "./concepts-feedback.js?v=platform-expansion-v2";
+} from "./session.js?v=proficiency-v2";
+import { createConceptSession } from "./concepts-feedback.js?v=proficiency-v2";
 import {
   generateConcept,
   categoryLabels,
@@ -31,6 +31,8 @@ export function startCodeConcepts() {
     )
       .map(([v, label]) => `<option value="${v}">${escape(label)}</option>`)
       .join("")}</select></label>`;
+  const requested = typeof URLSearchParams === "undefined" ? null : new URLSearchParams(globalThis.location?.search).get("mode");
+  if (Object.hasOwn(categoryLabels, requested)) $("concept-mode").value = requested;
   $("new").textContent = "Next Challenge";
   const stats = () => ($("stats").textContent = roundSummary("code-concepts", $("concept-mode").value));
   function renderNode(n) {
@@ -81,7 +83,7 @@ export function startCodeConcepts() {
     selected.clear();
     chosenTerm = null;
     revealed = false;
-    session.begin(question);
+    session.begin(question, $("concept-mode").value);
     $("feedback").hidden = true;
     let numeric = question.interaction === "count",
       term = question.interaction === "term";

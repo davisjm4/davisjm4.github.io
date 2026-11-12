@@ -1,4 +1,4 @@
-import {proficiencyDetails,proficiencyLink} from './proficiency.mjs';
+import {proficiencyDetails,proficiencyLink} from './proficiency.mjs?v=proficiency-v2';
 // The skill progress panel. It renders the evaluated progress contract and explains it in plain language.
 // It never calculates: questions left, accuracy, and "correct in a row" all arrive from the engine's recovery object.
 import { attemptLabel, attemptLine, checklist, detailLines, exampleNotice, isClosedAttempt, leadText, lifetimeLine, optionalBlurb, practiceSummary, requirementLine, whatsLeft } from '../copy.mjs';

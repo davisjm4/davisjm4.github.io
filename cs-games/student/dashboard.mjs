@@ -62,7 +62,7 @@ if (!profilesAvailable) {
   };
   if(!classic){
     Promise.all([
-      import('./map/ui/app.mjs?v=learning-map-v2'),
+      import('./map/ui/app.mjs?v=proficiency-v2'),
       import('./map/live-contract.mjs?v=learning-map-v2'),
       fetch('../pathway/evidence-gap-registry.json').then(response=>response.ok?response.json():null).catch(()=>null)
     ]).then(([app,contract,registry])=>{

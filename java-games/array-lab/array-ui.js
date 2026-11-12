@@ -9,7 +9,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "../session.js?v=per-mode-daily-v1";
+} from "../session.js?v=proficiency-v2";
 
 const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -213,6 +213,7 @@ export function startArrayLab() {
       difficulty: question.difficulty || null,
       skill: question.skill || question.topic,
       family: question.family || question.variant,
+      evidenceRevision:question.generationVersion===1&&question.difficultyEvidence?'array-compose-v1':null,
       seed: question.seed ?? null,
     });
     selectedAnswer = null;
