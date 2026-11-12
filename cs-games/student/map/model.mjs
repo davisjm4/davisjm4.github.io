@@ -157,6 +157,7 @@ export function buildMapModel(input) {
       const view = {
         id: raw.id, title: raw.title, objective: raw.objective ?? '', areaId: raw.areaId, stopId: id, order: i + 1, orderOf: run.raw.length, courseIndex: flat.length,
         state, unrecognized, optional: !required, required, complete, started, requirementsConfigured, practiceOnly: !requirementsConfigured,
+        proficiency:input.proficiency?.skills?.[raw.id]??null,
         practiceGoal:raw.practiceGoal,verifiedAward:raw.verifiedAward||(progress?.verification==='verified'&&Boolean(progress.award?.id)),
         earlierVerifiedAward:raw.earlierVerifiedAward,standardsScore:raw.standardsScore??progress?.standards?.score,
         ring: ringFor(state, progress), progress, attempts: attempts[raw.id] ?? [], practice: links.links, mixed: links.mixed,
@@ -175,10 +176,14 @@ export function buildMapModel(input) {
   const currentStop = dated && pacingIn.currentAreaId
     ? (stops.find((s) => s.areaId === pacingIn.currentAreaId && !s.summary.complete) ?? stops.find((s) => s.areaId === pacingIn.currentAreaId) ?? null) : null;
   const candidates = flat.filter(isCandidate);
-  const next = pickNext(candidates, { preferStopId: currentStop?.id ?? null, dated });
+  const next = input.proficiency
+    ? flat.find(node=>node.id===input.proficiency.recommendation.primary?.nodeId)
+    : pickNext(candidates, { preferStopId: currentStop?.id ?? null, dated });
   if (next) next.suggested = true;
   for (const stop of stops) {
-    const inStop = pickNext(stop.nodes.filter(isCandidate), { dated });
+    const inStop = input.proficiency
+      ? stop.nodes.find(node=>node.id===input.proficiency.byArea[stop.areaId]?.primary?.nodeId)
+      : pickNext(stop.nodes.filter(isCandidate), { dated });
     stop.suggestedNodeId = inStop?.id ?? null;
   }
   const upcoming = dated ? flat.filter((n) => n.target && !n.complete).sort((a, b) => a.target.date.localeCompare(b.target.date)) : [];
@@ -189,7 +194,7 @@ export function buildMapModel(input) {
     mode: flat.some((n) => n.requirementsConfigured) ? 'requirements' : 'practice',
     pacing: { mode: dated ? 'dated' : 'undated', showDates: dated, today: dated ? today : null, note: dated ? (pacingIn.note ?? null) : null, currentStopId: currentStop?.id ?? null,
       upcoming: upcoming.slice(0, 5).map((n) => n.id), reviewIds: flat.filter((n) => n.state === 'review').map((n) => n.id) },
-    stops, nodes: flat, nodeIndex, suggestedNext: next ? { nodeId: next.id, stopId: next.stopId } : null,
+    stops, nodes: flat, nodeIndex, proficiency:input.proficiency, suggestedNext: next ? { nodeId: next.id, stopId: next.stopId } : null,
     totals: { stops: stops.length, skills: flat.length, withRequirements: required.filter((n) => n.requirementsConfigured).length, completeWithRequirements: required.filter((n) => n.requirementsConfigured && n.complete).length,
       practiceOnly: required.filter((n) => !n.requirementsConfigured).length, required: required.length, optional: flat.length - required.length, complete: required.filter((n) => n.complete).length,
       started: flat.filter((n) => n.started).length, stopsComplete: stops.filter((s) => s.summary.complete).length, stopsStarted: stops.filter((s) => s.summary.status !== 'not-started').length },

@@ -1,3 +1,4 @@
+import {proficiencySuggestion} from './proficiency.mjs';
 // The frame around the maps: header, view and zoom controls, legend, suggested next, and the optional pacing card.
 import { courseSummaryLine, pacingNote, stopSummaryLine } from '../copy.mjs';
 import { formatDay } from '../format.mjs';
@@ -28,7 +29,8 @@ export function createLegend({ dated }) {
     el('ul', {}, items), el('p', { class: 'muted small', text: 'Numbers show the suggested learning order. A ring shows questions answered toward a requirement; where there is no requirement, there is no ring.' }));
 }
 
-export function createSuggested(model, { onShow, onPractice }) {
+export function createSuggested(model, { onShow, onPractice, stop: currentStop }) {
+  if(model.proficiency)return proficiencySuggestion(model,{onShow,onPractice,stop:currentStop});
   const s = model.suggestedNext;
   if (!s) return model.totals.required > 0 && model.totals.complete === model.totals.required && model.totals.withRequirements > 0
     ? el('p', { class: 'suggested done', text: 'Every required skill with a requirement is complete. Optional skills and review are still open.' }) : null;
