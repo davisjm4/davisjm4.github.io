@@ -1,6 +1,6 @@
 import { evaluateEvidence, selectRecords } from '../mastery/evaluate.mjs';
 import { assertMasteryPolicy, isChallengeConfigured, validateMasteryPolicy } from '../mastery/policy.mjs';
-import { auditedDifficulty, proficiencyPractice, PROFICIENCY_VERSION, rubricFor } from './catalog.mjs';
+import { auditedEvidenceBand, proficiencyPractice, PROFICIENCY_VERSION, rubricFor } from './catalog.mjs';
 
 import { formativeFamily } from './coverage-phase2.mjs';
 
@@ -8,7 +8,6 @@ export {PROFICIENCY_VERSION};
 export const PROFICIENCY_SCHEMA='cs-games.formative-proficiency/1';
 export const LEVEL_LABELS=['No evidence','Beginning','Approaching','Meeting','Exceeding'];
 const difficulties=['beginner','intermediate','advanced'];
-const supportedCourses=new Set(['advanced','csp']);
 
 function evaluateTier(node,tier,rule,records,teacherPolicy){
   if(!rule)return {status:'unavailable'};
@@ -43,7 +42,7 @@ export function evaluateSkillProficiency(node,events,{policy=null}={}){
   const {events:records,ignored}=firstPractice(events,node.id);
   const classified=new Map(difficulties.map(tier=>[tier,[]]));
   for(const event of records){
-    const tier=auditedDifficulty(node,event);
+    const tier=auditedEvidenceBand(node,event);
     if(tier)classified.get(tier).push({...event,familyId:formativeFamily(event)});
   }
   const result=validateMasteryPolicy(policy);
@@ -56,13 +55,20 @@ export function evaluateSkillProficiency(node,events,{policy=null}={}){
   const level=met('advanced')&&met('intermediate')?4:met('intermediate')?3:met('beginner')?2:
     classifiedRecords.some(event=>event.correct&&!event.assisted&&event.outcome==='answered')?1:0;
   const goal=role==='core'?'intermediate':role==='foundational'?'beginner':null;
+  // Only a host-supplied checkpoint can carry a recorded standards score.
+  // Game events are evaluated independently in the formative bands above.
+  const score=node.checkpoint?.score;
+  const standardsScore=Number.isFinite(score)&&score>=0&&score<=4?score:null;
+  const advancementMet=level>=3||standardsScore>=3;
+  const goalMet=advancementMet||Boolean(goal&&(met(goal)||(goal==='beginner'&&standardsScore>=2)));
   return {
     nodeId:node.id,areaId:node.areaId,role,supplemental,level,label:LEVEL_LABELS[level],
     highestDemonstratedDifficulty:[...difficulties].reverse().find(met)??null,
-    tiers,goal,goalMet:goal!==null&&met(goal),advancementMet:level>=3,
-    extensionAvailable:level===3&&Boolean(rules.advanced),
+    tiers,goal,goalMet,advancementMet,
+    extensionAvailable:level===3&&standardsScore!==4&&Boolean(rules.advanced),
+    demonstrationAvailable:advancementMet&&level<4&&standardsScore!==4,
     practice:node.checkpoint?.practice??node.practice??[],
-    standardsScore:node.checkpoint?.score??null,
+    standardsScore,
     reviewRecommended:node.masteryChallenge?.status==='review-recommended',
     trust:'formative',evidenceQuality:{
       classified:classifiedRecords.length,unclassified:records.length-classifiedRecords.length,
@@ -100,27 +106,29 @@ export function recommendProficiency(nodes,skills,areas,{currentAreaId=null,fami
   const continuation=ready?next:null;
   const fallback=nodes.filter(node=>node.checkpoint?.required!==false&&actionable(node)&&!skills[node.id].goalMet);
   const localFallback=current.find(node=>fallback.includes(node)&&!familiarity[node.id]);
-  const candidate=focused??continuation??localFallback??goalCandidates[0]??fallback.find(node=>!familiarity[node.id])??fallback[0];
-  const extension=(ready?current:current.length?[]:nodes)
-    .find(node=>skills[node.id].extensionAvailable&&(ready||areas[node.areaId]?.readyToAdvance));
+  const localDemonstration=current.find(node=>required(node)&&!skills[node.id].goalMet&&!actionable(node));
+  const candidate=focused??continuation??localFallback??localDemonstration??goalCandidates[0]??fallback.find(node=>!familiarity[node.id])??fallback[0];
+  const extensions=(current.length?current:nodes).filter(node=>skills[node.id].demonstrationAvailable);
+  const extension=extensions.find(node=>skills[node.id].extensionAvailable)??extensions[0];
+  const automatedExtension=extension&&skills[extension.id].extensionAvailable;
   const review=nodes.filter(node=>skills[node.id].reviewRecommended).map(node=>choose(node,'review'));
   return {
-    primary:candidate?choose(candidate,continuation===candidate?'continue-learning':skills[candidate.id].goal?'practice-tier':'practice-evidence-gap',skills[candidate.id].goal):null,
+    primary:candidate?choose(candidate,continuation===candidate?'continue-learning':
+      candidate===localDemonstration?'plan-demonstration':skills[candidate.id].goal?'practice-tier':'practice-evidence-gap',skills[candidate.id].goal):null,
     browseNext:next&&current.length&&!ready?choose(next,'browse-next'):null,
-    extension:extension?choose(extension,'level-4-extension','advanced'):null,
+    extension:extension?choose(extension,automatedExtension?'level-4-extension':'level-4-demonstration',automatedExtension?'advanced':null):null,
     review
   };
 }
 
 function countsForAdvancement(node,skill){
   return node.checkpoint?.required!==false&&skill.role!=='extension'&&
-    (!skill.supplemental||skill.policy!==null);
+    (!skill.supplemental||skill.policy!==null||skill.advancementMet);
 }
 
 /** Shared entry point for a published class or an independent learner. Pass
  * nodes in curriculum order and normalized evidence for exactly one learner. */
 export function evaluateProficiency({courseId,nodes,eventsByNode=new Map(),policies=[],familiarity,pacingTargets}){
-  if(!supportedCourses.has(courseId))return null;
   const scopes=new Set([...eventsByNode.values()].flatMap(events=>events.map(event=>JSON.stringify(event.scope))));
   if(scopes.size>1)throw new Error('Formative proficiency requires one student scope.');
   const rules=new Map(policies.map(policy=>[`${policy.id}@${policy.version}`,policy]));
@@ -138,7 +146,8 @@ export function evaluateProficiency({courseId,nodes,eventsByNode=new Map(),polic
     const missing=assessable.filter(node=>!skills[node.id].goalMet).map(node=>node.id);
     const unavailable=required.filter(node=>!skills[node.id].goal).map(node=>node.id);
     const hasCore=assessable.some(node=>skills[node.id].role==='core');
-    return [id,{readyToAdvance:hasCore&&!missing.length,missing,unavailable,hasCore}];
+    const demonstrated=required.length>0&&required.every(node=>skills[node.id].advancementMet);
+    return [id,{readyToAdvance:demonstrated||hasCore&&!missing.length,missing,unavailable,hasCore}];
   }));
   const recommendation=options=>recommendProficiency(nodes,skills,areas,{familiarity,pacingTargets,...options});
   return {schema:PROFICIENCY_SCHEMA,version:PROFICIENCY_VERSION,courseId,skills,areas,

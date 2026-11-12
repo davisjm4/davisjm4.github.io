@@ -85,10 +85,10 @@ export function inputFromStudentContract(contract, {
         familySelectors:n.familySelectors,standardRefs:n.standardRefs,practice:n.checkpoint.practice,
         prerequisites:n.checkpoint.prerequisites,practiceGoal:n.practiceGoal,
         verifiedAward:Boolean(n.checkpoint.award),earlierVerifiedAward:n.earlierVerifiedAward===true,
-        standardsScore:n.checkpoint.score
+        standardsScore:n.checkpoint.score,demonstrationType:n.checkpoint.demonstrationType
       }))
     },
-    courseId,classTitle:contract.title,sequence:nodes.map(n=>n.id),required,progress:{nodes:progressNodes,areas},attempts,mixedActivities,
+    courseId,classTitle:contract.title,enrolled:Boolean(contract.classId),sequence:nodes.map(n=>n.id),required,progress:{nodes:progressNodes,areas},attempts,mixedActivities,
     proficiency:contract.proficiency,
     pacing:{mode:dated?'dated':'undated',today,currentAreaId,targets}
   };

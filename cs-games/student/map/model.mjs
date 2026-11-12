@@ -160,6 +160,7 @@ export function buildMapModel(input) {
         proficiency:input.proficiency?.skills?.[raw.id]??null,
         practiceGoal:raw.practiceGoal,verifiedAward:raw.verifiedAward||(progress?.verification==='verified'&&Boolean(progress.award?.id)),
         earlierVerifiedAward:raw.earlierVerifiedAward,standardsScore:raw.standardsScore??progress?.standards?.score,
+        demonstrationType:raw.demonstrationType,
         ring: ringFor(state, progress), progress, attempts: attempts[raw.id] ?? [], practice: links.links, mixed: links.mixed,
         prerequisites: (raw.prerequisites ?? []).map((pid) => ({ id: pid, title: prereqTitle.get(pid) ?? pid })),
         target, example: progress?.policy?.exampleOnly === true, verified: progress?.verification === 'verified', suggested: false,
@@ -190,7 +191,7 @@ export function buildMapModel(input) {
   const required = flat.filter((n) => n.required);
   const nodeIndex = Object.fromEntries(flat.map((n) => [n.id, n]));
   return {
-    schema: MODEL_SCHEMA, courseId, courseTitle: course.title, classTitle:input.classTitle, warnings,
+    schema: MODEL_SCHEMA, courseId, courseTitle: course.title, classTitle:input.classTitle, enrolled:input.enrolled===true, warnings,
     mode: flat.some((n) => n.requirementsConfigured) ? 'requirements' : 'practice',
     pacing: { mode: dated ? 'dated' : 'undated', showDates: dated, today: dated ? today : null, note: dated ? (pacingIn.note ?? null) : null, currentStopId: currentStop?.id ?? null,
       upcoming: upcoming.slice(0, 5).map((n) => n.id), reviewIds: flat.filter((n) => n.state === 'review').map((n) => n.id) },

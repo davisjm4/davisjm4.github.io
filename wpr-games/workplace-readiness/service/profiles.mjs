@@ -1,5 +1,6 @@
 import {defaultPathwayStatements,ensureClassPathway} from './default-pathways.mjs';
 import { cleanGameAttempt, courses, metadataId, practiceMetadata, profilePathway, publishedPlan, readProfileEvidence, readPracticeProgress } from './profile-evidence.mjs';
+import { DEMONSTRATION_TYPES } from '../../../cs-games/pathway/proficiency/demonstrations.mjs';
 import { teacherIdentity } from './auth.mjs';
 import { PROFILE_VERSION, WPR_ACTIVITY, PROFILE_ID, PROFILE_KEY, DAY, CLASS_DAYS, ARCHIVE_DAYS, SESSION_DAYS, BATCH_LIMIT } from '../online/profile-model.mjs';
 import skills from '../content/skills.json' with {type:'json'};
@@ -252,9 +253,10 @@ async function teacherRoute(request,env,segments,readBody,now) {
   profileError(404,'Profile route not found.');
 }
 async function recordTeacherEvidence(db,classroom,profileId,input,now) {
-  const allowed=['id','nodeId','score','award','revision'];
+  const allowed=['id','nodeId','score','award','revision','demonstrationType'];
   if (!input || Object.keys(input).some(key=>!allowed.includes(key)) || !present(input.id,PROFILE_ID) ||
       !Number.isFinite(input.score) || input.score<0 || input.score>4 || !Number.isInteger(input.score*2) ||
+      (input.demonstrationType!==undefined&&(typeof input.demonstrationType!=='string'||!Object.hasOwn(DEMONSTRATION_TYPES,input.demonstrationType))) ||
       typeof input.award!=='boolean' || !Number.isInteger(input.revision)) {
     profileError(400,'Select a published checkpoint and a score from 0 to 4 in half-point steps.');
   }
@@ -265,7 +267,8 @@ async function recordTeacherEvidence(db,classroom,profileId,input,now) {
   const checkpoint=plan.checkpoints.find(item=>item.nodeId===input.nodeId);
   if (!checkpoint) profileError(400,'This skill is outside the published pathway.');
   const timestamp=new Date(now).toISOString();
-  const assessment={id:input.id,nodeIds:[checkpoint.nodeId],kind:'assessment',score:input.score,eligible:true,timestamp};
+  const assessment={id:input.id,nodeIds:[checkpoint.nodeId],kind:'assessment',score:input.score,eligible:true,timestamp,
+    ...(input.demonstrationType?{demonstrationType:input.demonstrationType}:{})};
   const evidence=[assessment];
   if (input.award) evidence.push({...assessment,id:input.id+':award',kind:'mastery-award',
     policyId:checkpoint.policyId,policyVersion:checkpoint.policyVersion});

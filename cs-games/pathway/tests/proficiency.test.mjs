@@ -65,11 +65,12 @@ test('published policy overrides preserve tier isolation, recovery, and teacher 
   assert.equal(skill([...wrong,...java('intermediate',48)]).level,3);
 });
 
-test('AP CSP uses source question families and ignores estimated mappings',()=>{
+test('single-setting AP CSP practice uses source families and ignores estimated mappings',()=>{
   const records=divide.filter(q=>q.variant<=1).map(q=>normalize(raw(div,'digital-divide-lab',q.mode,
     `bi5:divide:${q.topic}:${q.barrier}`,q.family)));
   assert.equal(evaluateSkillProficiency(div,records.filter(e=>e.assessedMode==='barrier')).level,2);
   assert.equal(evaluateSkillProficiency(div,records.filter(e=>['impact','solution'].includes(e.assessedMode))).level,3);
+  assert.ok(records.every(event=>event.difficulty===null&&event.requestedMode==='mixed'));
   assert.equal(evaluateSkillProficiency(div,records).level,4);
   const attempts=numeric.map(q=>normalize(raw(num,'roundoff-overflow-lab',q.answer.toLowerCase(),q.answer,q.family)));
   assert.equal(evaluateSkillProficiency(num,attempts).level,2);
@@ -99,4 +100,19 @@ test('area readiness requires foundations and core, then offers optional extensi
   assert.equal(ready.byArea[trace.areaId].primary.nodeId,math.id);
   assert.equal(ready.byArea[trace.areaId].extension.nodeId,trace.id);
   assert.equal(ready.skills[math.id].tiers.advanced.status,'unavailable');
+});
+
+test('independent evaluation and teacher-reviewed progression use the same open standards model',()=>{
+  const node=graph.nodes.find(n=>n.courseId==='robotics');
+  const next=graph.nodes.find(n=>n.courseId==='robotics'&&n.areaId!==node.areaId);
+  const nodes=[node,next];
+  const independent=evaluateProficiency({courseId:'robotics',nodes});
+  assert.equal(independent.skills[node.id].standardsScore,null);
+  assert.equal(independent.byArea[node.areaId].browseNext.nodeId,next.id);
+  assert.equal(independent.byArea[node.areaId].extension,null);
+  const reviewed=evaluateProficiency({courseId:'robotics',nodes:[{...node,checkpoint:{score:3}},next]});
+  assert.equal(reviewed.skills[node.id].level,0);
+  assert.equal(reviewed.areas[node.areaId].readyToAdvance,true);
+  assert.equal(reviewed.byArea[node.areaId].primary.nodeId,next.id);
+  assert.equal(reviewed.byArea[node.areaId].extension.kind,'level-4-demonstration');
 });

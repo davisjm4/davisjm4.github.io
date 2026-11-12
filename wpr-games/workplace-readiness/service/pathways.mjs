@@ -59,17 +59,17 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
       if(!profile)error(403,'Student profile sign-in required.');
       return restartMasteryPractice(db,profile,pathway,await body(request));
     }
-    const formative=profile&&['advanced','csp'].includes(pathway.courseId);
+    const hasAutomatedRubrics=profile&&['advanced','csp'].includes(pathway.courseId);
     const [evidence,practice,practiceEvidence]=await Promise.all([
       testAdapter?env.readPathwayEvidence(identity.profileId):readProfileEvidence(db,identity.profileId),
       testAdapter?null:readPracticeProgress(db,identity.profileId),
-      formative?loadEvidence(db,profile,pathway,new Date().toISOString()):null
+      hasAutomatedRubrics?loadEvidence(db,profile,pathway,new Date().toISOString()):null
     ]);
     const mastery=profile?await readMasteryProgress(db,profile,pathway,evidence,practiceEvidence):null;
     const view=studentContract(pathway,graph,evidence,{practice,mastery,today});
-    if(formative)view.proficiency=evaluateProficiency({
+    if(profile)view.proficiency=evaluateProficiency({
       courseId:pathway.courseId,nodes:view.nodes,policies:pathway.policies,
-      eventsByNode:practiceEvidence.byNode,
+      eventsByNode:practiceEvidence?.byNode,
       pacingTargets:Object.fromEntries(view.nodes.map(node=>[node.id,node.checkpoint.targetDate]))
     });
     const digest=await hash(JSON.stringify({status:view.status,nodes:view.nodes.map(n=>n.checkpoint)}));
