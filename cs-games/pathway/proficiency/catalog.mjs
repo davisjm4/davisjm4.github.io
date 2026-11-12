@@ -1,6 +1,8 @@
-// Formative rubric v1. Entries are reviewed activity/mode/family combinations.
+import { phase2Difficulty, phase2Rubric } from './coverage-phase2.mjs';
+
+// Pilot rubric. Entries are reviewed activity/mode/family combinations.
 // A graph node or a difficulty label alone does not authorize proficiency credit.
-export const PROFICIENCY_VERSION = 1;
+export const PROFICIENCY_VERSION = 2;
 const traceId = 'node:advanced:variable-lab:trace';
 const divideId = 'node:csp:digital-divide-lab:CSP-DIVIDE';
 const numberId = 'node:csp:roundoff-overflow-lab:CSP-NUMERIC';
@@ -31,6 +33,10 @@ const traceOutcomes = tier => [
 ];
 
 export function rubricFor(node) {
+  return phase2Rubric(node)??pilotRubric(node);
+}
+
+export function pilotRubric(node) {
   if(node.id===traceId) return {role:'core',tiers:{
     beginner:{minimum:5,distinct:2},
     intermediate:{minimum:8,distinct:3,outcomes:traceOutcomes('intermediate')},
@@ -53,13 +59,14 @@ export function rubricFor(node) {
   ]}}};
   if(node.id==='node:advanced:variable-lab:assemble')return {role:'foundational',tiers:{beginner:{minimum:5,distinct:3}}};
   if(node.id.startsWith('node:advanced:variable-lab:identify/')&&variableRecognition.has(node.id.split('/').at(-1)))
-    return {role:'foundational',tiers:{beginner:{minimum:4,distinct:1}}};
+    return {role:'foundational',supplemental:true,tiers:{beginner:{minimum:4,distinct:1}}};
   return {role:'unreviewed',tiers:{}};
 }
 
 export function auditedDifficulty(node,event) {
   const {activityId,assessedMode,topic,familyId,difficulty}=event;
   if(!familyId)return null;
+  if(phase2Rubric(node))return phase2Difficulty(node,event);
   if(node.id===traceId&&activityId==='variable-lab'&&assessedMode==='trace'){
     return tiers.includes(difficulty)&&traceFamilies.includes(familyId)&&
       traceTopics(difficulty,['int','double','boolean','char','String']).includes(topic)?difficulty:null;
@@ -79,6 +86,8 @@ export function auditedDifficulty(node,event) {
 }
 
 export function proficiencyPractice(node,tier) {
+  const expanded=phase2Rubric(node);
+  if(expanded)return expanded.tiers[tier]?.practice??null;
   if(node.id===traceId)return {activityId:'variable-lab',mode:'trace',difficulty:tier};
   if(node.id===divideId)return {activityId:'digital-divide-lab',mode:rubricFor(node).tiers[tier]?.mode??'mixed'};
   if(node.id===numberId)return {activityId:'roundoff-overflow-lab'};

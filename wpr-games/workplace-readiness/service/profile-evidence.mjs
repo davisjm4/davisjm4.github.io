@@ -19,6 +19,7 @@ export function practiceMetadata(event) {
   return {
     mode:metadataId(event.mode), assessedMode:metadataId(event.assessedMode),
     topic:metadataId(event.topic), familyId:metadataId(event.familyId),
+    ...(metadataId(event.evidenceRevision)?{evidenceRevision:metadataId(event.evidenceRevision)}:{}),
     difficulty:difficultyLabels.has(difficulty) ? difficulty : null,
   };
 }

@@ -33,8 +33,11 @@ test('real Java and AP CSP answers reach the formative student map', {timeout:90
     await page.waitForSelector('.map-app');
     for(const activity of activities){
       await page.goto(dev.url+activity.path);
-      await page.waitForSelector(activity.answer,{visible:true});
-      await page.click(activity.answer);
+      if(activity.prepare)await activity.prepare(page);
+      if(activity.answer){
+        await page.waitForSelector(activity.answer,{visible:true});
+        await page.click(activity.answer);
+      }
       if(activity.submit)await page.click(activity.submit);
       await page.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
       const row=records.all(courseId,activity.id).map(x=>JSON.parse(x.data)).at(-1);
@@ -44,6 +47,8 @@ test('real Java and AP CSP answers reach the formative student map', {timeout:90
       assert.equal(row.assessedMode,activity.mode??row.topic.toLowerCase());
       assert.deepEqual(row.dimensions.map(x=>x.id),[activity.node]);
       if(activity.difficulty)assert.equal(row.difficulty,activity.difficulty);
+      if(activity.requestedMode)assert.equal(row.mode,activity.requestedMode);
+      if(activity.evidenceRevision)assert.equal(row.evidenceRevision,activity.evidenceRevision);
       const area=activity.node.split(':').slice(1,3).join(':');
       const hash=new URLSearchParams({v:'area',stop:'area:'+area,skill:activity.node});
       await page.goto(dev.url+'/cs-games/student/#'+hash);
@@ -57,11 +62,23 @@ test('real Java and AP CSP answers reach the formative student map', {timeout:90
     id:'variable-lab',path:'/java-games/variable-lab/?mode=trace&difficulty=intermediate',
     answer:'#value-bank [data-value]',submit:'#check',mode:'trace',difficulty:'intermediate',
     node:'node:advanced:variable-lab:trace'
+  },{
+    id:'array-lab',path:'/java-games/array-lab/?mode=mixed&difficulty=intermediate&seed=1',
+    answer:'#stage [data-answer]',submit:'#submit',mode:'reverse',difficulty:'intermediate',requestedMode:'mixed',
+    evidenceRevision:'array-compose-v1',node:'node:advanced:array-lab:reverse'
   }]);
   await visit('csp',[
     {id:'digital-divide-lab',path:'/csp-games/digital-divide-lab/?mode=solution&seed=1',
       answer:'#answers button',mode:'solution',node:'node:csp:digital-divide-lab:CSP-DIVIDE'},
     {id:'roundoff-overflow-lab',path:'/csp-games/roundoff-overflow-lab/?seed=1',
-      answer:'#overflow',node:'node:csp:roundoff-overflow-lab:CSP-NUMERIC'}
+      answer:'#overflow',node:'node:csp:roundoff-overflow-lab:CSP-NUMERIC'},
+    {id:'binary-builder',path:'/csp-games/binary-builder/?mode=capacity',submit:'#check',mode:'capacity',
+      requestedMode:'capacity',node:'node:csp:binary-builder:CSP-CAPACITY',
+      async prepare(page){
+        await page.waitForSelector('#capacity-answer');
+        assert.equal(await page.$eval('#mode',el=>el.value),'capacity');
+        await page.type('#capacity-answer','16');
+        await page.type('#maximum-answer','15');
+      }}
   ]);
 });

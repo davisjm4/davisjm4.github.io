@@ -79,6 +79,7 @@ export function normalizeEvent(rawInput, { graph, scope, trustResolver = null, n
   const event = {
     schema: EVENT_SCHEMA, id, questionId, sessionId, scope: Object.freeze({ profileId: scope.profileId, classId }), timestamp: new Date(ms).toISOString(), ts: ms,
     activityId, courseId: raw.courseId ?? null, requestedMode, assessedMode, topic: text(raw.topic), familyId: familyKnown ? familyId : null, difficulty,
+    evidenceRevision:text(raw.evidenceRevision),
     attemptNumber, firstAttempt: attemptNumber === 1, outcome, correct: outcome === 'answered' ? raw.correct : false, assisted: raw.assisted === true,
     subskills: Object.freeze(subskills), nodeIds: Object.freeze([...new Set(nodeIds)]), trust: trusted ? 'verified' : 'provisional', notes: Object.freeze(notes),
   };

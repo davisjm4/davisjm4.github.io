@@ -84,9 +84,9 @@ test('AP CSP uses source question families and ignores estimated mappings',()=>{
 });
 
 test('area readiness requires foundations and core, then offers optional extension',()=>{
-  const foundation=graph.nodes.find(n=>n.id.endsWith('variable-lab:identify/type'));
+  const foundation=graph.nodes.find(n=>n.id.endsWith('variable-lab:assemble'));
   const math=graph.nodes.find(n=>n.id.startsWith('node:advanced:math-lab:'));
-  const types=Array.from({length:5},()=>normalize(raw(foundation,'variable-lab','identify/type','type','identify/type')));
+  const types=['int','double','String','int','double'].map(type=>normalize(raw(foundation,'variable-lab','assemble','assemble',`assemble/${type}`)));
   const args={courseId:'advanced',nodes:[trace,foundation,math],eventsByNode:new Map([[trace.id,java('intermediate')]])};
   const missing=evaluateProficiency({...args,familiarity:{[foundation.id]:true}});
   assert.equal(missing.skills[foundation.id].level,0);

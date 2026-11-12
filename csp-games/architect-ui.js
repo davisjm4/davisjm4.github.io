@@ -8,7 +8,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=per-mode-daily-v1";
+} from "./session.js?v=proficiency-v2";
 export function startArchitect() {
   const $ = (id) => document.getElementById(id),
     esc = (v) =>
@@ -24,6 +24,7 @@ export function startArchitect() {
           })[c],
       ),
     tracker = sessionTracker();
+  const requested = typeof URLSearchParams === "undefined" ? null : new URLSearchParams(globalThis.location?.search).get("mode");
   let q,
     id,
     order = [],
@@ -100,6 +101,9 @@ export function startArchitect() {
     if (id) tracker.skip(id);
     q = generateArchitect($("mode").value);
     id = tracker.begin(q.game, q.title, q.topic, q.topicTitle, q.mode, q.modeName || q.topicTitle);
+    const variant = q.structure.slice(q.mode.length + 1).split("-")[0];
+    const component = q.format === "arrange" ? q.format : q.component.replaceAll(" ", "-");
+    tracker.annotate(id, {family:`${q.mode}:${variant}:${component}`, selectedMode:$("mode").value});
     order = [];
     selectedChoice = null;
     closed = false;
@@ -175,6 +179,7 @@ export function startArchitect() {
     $("next").onclick = next;
     stats();
   }
+  if (Object.hasOwn(architectModes, requested)) $("mode").value = requested;
   $("mode").onchange = next;
   $("new").onclick = next;
   window.addEventListener("pagehide", () => {

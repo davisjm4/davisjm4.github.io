@@ -1,4 +1,4 @@
-import { activeProfile, device, recordGameAttempt, scopedStorage } from '../wpr-games/workplace-readiness/online/profile-sync.mjs';
+import { activeProfile, device, recordGameAttempt, scopedStorage } from '../wpr-games/workplace-readiness/online/profile-sync.mjs?v=proficiency-v2';
 /* CSP Games session schema v1. Daily browser summaries. An active profile can sync scored attempts. */
 import { createProgressStore } from './exam-readiness/storage.js';
 import { initializeFromSession, recordFirstSubmission } from './exam-readiness/bridge.js';

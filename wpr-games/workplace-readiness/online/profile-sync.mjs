@@ -77,7 +77,8 @@ export function recordGameAttempt(courseId,record,sessionId,correct,occurred) {
     activity:record.game, attempt:record.submissions, correct:Boolean(correct), occurred:Date.parse(occurred),
     mode:metadata(details.practiceSetting || details.selectedMode || record.mode),
     assessedMode:metadata(details.practiceMode) || metadata(details.format) || metadata(details.mode) || metadata(record.mode),
-    topic:metadata(record.topic), difficulty:metadata(details.difficulty),
+    topic:metadata(details.profileTopic) || metadata(record.topic), difficulty:metadata(details.difficulty),
+    evidenceRevision:metadata(details.evidenceRevision),
     familyId:metadata(details.reasoningFamily || details.generatorFamily || details.familyId || details.family ||
       details.modelId || details.componentId), assisted:details.assisted===true});
 }
