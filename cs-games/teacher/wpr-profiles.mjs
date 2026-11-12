@@ -1,3 +1,4 @@
+import {DEMONSTRATION_TYPES} from '../pathway/proficiency/demonstrations.mjs';
 import {renderPathway} from '../student/pathway-view.mjs';
 import { profilesAvailable } from '../../wpr-games/workplace-readiness/online/config.mjs';
 import {currentTeacher,teacherRequest} from './session.mjs';
@@ -257,15 +258,18 @@ export function teacherProfiles(onClasses) {
     if (!canAssess || !pathway.nodes.length) return;
     const skill=el('select',{required:true},options(pathway.nodes.map(node=>[node.id,node.title])));
     const score=el('input',{type:'number',required:true,min:0,max:4,step:0.5});
+    const type=el('select',{},options([['','Choose an evidence type (optional)'],...Object.entries(DEMONSTRATION_TYPES)]));
     const award=el('input',{type:'checkbox'});
     const submit=el('button',{type:'submit',class:'btn primary',text:'Record assessment'});
     const form=el('form',{class:'card flat'},el('h4',{text:'Teacher assessment'}),el('label',{},'Checkpoint skill',skill),
-      el('label',{},'Standards-based score (0–4)',score),el('label',{class:'check'},award,' Award mastery for the current policy'),submit);
+      el('p',{class:'muted',text:'Use the skill’s rubric to score the demonstrated work. Level 4 is available for any checkpoint.'}),
+      el('label',{},'Evidence type',type),el('label',{},'Standards-based score (0–4)',score),el('label',{class:'check'},award,' Award mastery for the current policy'),submit);
     let pending;
     form.onsubmit=async event=>{
       event.preventDefault();
       submit.disabled=true;
-      const values={nodeId:skill.value,score:Number(score.value),award:award.checked,revision:pathway.revision};
+      const values={nodeId:skill.value,score:Number(score.value),award:award.checked,revision:pathway.revision,
+        ...(type.value?{demonstrationType:type.value}:{})};
       if (!pending || JSON.stringify(pending.values)!==JSON.stringify(values)) pending={id:crypto.randomUUID(),values};
       try {
         await api(person+'/evidence',{body:{id:pending.id,...values}});

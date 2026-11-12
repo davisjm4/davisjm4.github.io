@@ -1,4 +1,4 @@
-import {proficiencyDetails,proficiencyLink} from './proficiency.mjs?v=proficiency-v2';
+import {demonstrationDetails,proficiencyDetails,proficiencyLink} from './proficiency.mjs?v=proficiency-v3';
 // The skill progress panel. It renders the evaluated progress contract and explains it in plain language.
 // It never calculates: questions left, accuracy, and "correct in a row" all arrive from the engine's recovery object.
 import { attemptLabel, attemptLine, checklist, detailLines, exampleNotice, isClosedAttempt, leadText, lifetimeLine, optionalBlurb, practiceSummary, requirementLine, whatsLeft } from '../copy.mjs';
@@ -151,8 +151,7 @@ export function createProgressPanel(node, ctx) {
     root.append(attemptsBox);
   }
 
-  if (node.standardsScore != null) root.append(el('p', { class: 'muted small', text: `Teacher assessment score: ${node.standardsScore} of 4. Practice does not change it.` }));
-  else if (req) root.append(el('p', { class: 'muted small', text: 'Your 0 to 4 standards score comes from your teacher’s assessment. Practice does not change it.' }));
+  root.append(demonstrationDetails(node,ctx.model));
 
   if (node.prerequisites.length) {
     const known = node.prerequisites.filter((x) => ctx.model.nodeIndex[x.id]);

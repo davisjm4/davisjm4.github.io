@@ -5,15 +5,15 @@
 //
 // Every piece of progress shown comes from `progress` (cs-games.mastery-progress/1 objects). Nothing is stored by this component
 // except where the student is (the URL hash) and, for the demo, transient simulated attempts held in memory.
-import { buildMapModel, findNode, findStop, normalizeProgress } from '../model.mjs?v=proficiency-v1';
+import { buildMapModel, findNode, findStop, normalizeProgress } from '../model.mjs?v=proficiency-v3';
 import { readRoute, routeHash } from '../route.mjs';
 import { plural } from '../format.mjs';
-import { createPacingCard, createHeader, createLegend, createSuggested, createToolbar } from './chrome.mjs?v=proficiency-v2';
+import { createPacingCard, createHeader, createLegend, createSuggested, createToolbar } from './chrome.mjs?v=proficiency-v3';
 import { renderAreaMap } from './area-map.mjs';
 import { renderCourseMap } from './course-map.mjs';
 import { el } from './dom.mjs';
 import { renderListView } from './list-view.mjs';
-import { createPanelPlaceholder, createProgressPanel } from './progress-panel.mjs?v=proficiency-v2';
+import { createPanelPlaceholder, createProgressPanel } from './progress-panel.mjs?v=proficiency-v3';
 import { createStage } from './stage.mjs';
 
 export function mountStudentMap(container, options) {

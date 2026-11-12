@@ -12,7 +12,7 @@ test('real Java and AP CSP answers reach the formative student map', {timeout:90
   const browser=await launch();
   t.after(async()=>{await browser.close();await new Promise(resolve=>dev.server.close(resolve));dev.db.close();});
   const records=dev.db.prepare('SELECT data FROM performance_events WHERE pathway=? AND activity=? ORDER BY occurred');
-  async function visit(courseId,activities){
+  async function visit(courseId,activities,demonstrationNode){
     const response=await fetch(dev.url+'/api/wpr/teacher/profiles',{method:'POST',headers:{
       'Content-Type':'application/json',Authorization:'Bearer '+teacher
     },body:JSON.stringify({title:'Synthetic '+courseId,courseId})});
@@ -54,7 +54,19 @@ test('real Java and AP CSP answers reach the formative student map', {timeout:90
       await page.goto(dev.url+'/cs-games/student/#'+hash);
       await page.waitForSelector('.proficiency-details');
       assert.match(await page.$eval('.proficiency-details',el=>el.textContent),/1 correct|1\/\d+ answers/);
-      assert.doesNotMatch(await page.$eval('.proficiency-details',el=>el.textContent),/Level [234] ·/);
+      assert.ok(await page.$eval('[data-formative-level]',el=>Number(el.dataset.formativeLevel)<2));
+    }
+    if(demonstrationNode){
+      const area=demonstrationNode.split(':').slice(1,3).join(':');
+      const hash=new URLSearchParams({v:'area',stop:'area:'+area,skill:demonstrationNode});
+      await page.goto(dev.url+'/cs-games/student/#'+hash);
+      await page.waitForSelector('.demonstration-details summary');
+      await page.click('.demonstration-details summary');
+      const guide=await page.$eval('.demonstration-details',el=>el.innerText);
+      assert.match(guide,/Level 4 · Exceeding \(optional\)/);
+      assert.match(guide,/build, program, or simulation/);
+      assert.match(guide,/Your teacher can record a standards score/);
+      assert.doesNotMatch(await page.$eval('.proficiency-details',el=>el.textContent),/Not yet assessable/);
     }
     await context.close();
   }
@@ -81,4 +93,5 @@ test('real Java and AP CSP answers reach the formative student map', {timeout:90
         await page.type('#maximum-answer','15');
       }}
   ]);
+  await visit('robotics',[],'node:robotics:parts-sprint:structure');
 });

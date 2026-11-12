@@ -126,3 +126,9 @@ The integration evaluates mapped first attempts recorded by the current games. A
 node --test cs-games/pathway/tests/*.test.mjs
 CHROME_BIN=/path/to/chromium node --test cs-games/teacher/requirements/integration-browser-tests.mjs
 ```
+
+### Evidence routes for standards proficiency
+
+The practice rubric classifies audited evidence by the understanding it demonstrates. Activity difficulty controls are optional. A single Mixed Practice setting can supply evidence for several levels when its question families distinguish the reasoning each level requires. Coverage reports describe the current automated rubric. Students can demonstrate any standard through assessed performance, a project or portfolio, an explanation or interview, or an objective assessment.
+
+The shared evaluator accepts normalized practice evidence for independent learners and published classes. The map offers course-specific demonstration guidance in both contexts. Independent learners can retain their work in a portfolio and ask an instructor or mentor for feedback. Enrolled teachers can record the assessed level and optionally record an official mastery award through **Teacher Tools → My Classes → Student profiles → View progress → Teacher assessment**. The optional evidence type is stored with the assessment. Practice evidence cannot assign a standards grade, and a teacher score of at least 3 can inform progression while remaining separate from the formative practice level.

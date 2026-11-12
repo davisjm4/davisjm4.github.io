@@ -94,16 +94,19 @@ export function diffPathways(oldP,newP) {
 export function evaluateNode(nodeId,policy,evidence,expectedMastery=null) {
   const ev=[...new Map(evidence.filter(e=>e.nodeIds?.includes(nodeId)&&e.eligible===true).map(e=>[e.id,e])).values()];
   const earned=ev.find(e=>e.kind==='mastery-award'&&e.policyId===policy.id&&e.policyVersion===policy.version);
-  const scores=ev.filter(e=>e.kind==='assessment'&&Number.isFinite(e.score)&&e.score>=0&&e.score<=4).sort((a,b)=>b.timestamp.localeCompare(a.timestamp));const score=scores[0]?.score??null;
-  if(earned)return {completion:'complete',score,evidenceCount:ev.length,award:earned.id};
-  if(policy.provisional)return {completion:score!==null?'incomplete':'needs-assessment',score,evidenceCount:ev.length,historicalAwards:ev.filter(e=>e.kind==='mastery-award').map(e=>e.id)};
+  const latest=ev.filter(e=>e.kind==='assessment'&&Number.isFinite(e.score)&&e.score>=0&&e.score<=4)
+    .sort((a,b)=>b.timestamp.localeCompare(a.timestamp))[0];
+  const score=latest?.score??null;
+  const assessment=latest?.demonstrationType?{score,demonstrationType:latest.demonstrationType}:{score};
+  if(earned)return {completion:'complete',...assessment,evidenceCount:ev.length,award:earned.id};
+  if(policy.provisional)return {completion:score!==null?'incomplete':'needs-assessment',...assessment,evidenceCount:ev.length,historicalAwards:ev.filter(e=>e.kind==='mastery-award').map(e=>e.id)};
   const q=[...new Map(ev.filter(e=>e.kind==='question'&&e.firstAttempt===true&&!e.skipped&&!e.revealed&&e.familyId&&e.questionId).map(e=>[(e.sessionId||'')+':'+e.questionId,e])).values()];
   const accuracy=q.length?q.filter(e=>e.correct===true).length/q.length:0;
   const coverage=Object.entries(policy.coverage||{}).every(([key,min])=>q.filter(e=>e.subskills?.includes(key)&&e.correct===true).length>=min);
   const questionsPass=policy.minimumQuestions!==null&&policy.accuracy!==null&&q.length>=policy.minimumQuestions&&accuracy>=policy.accuracy&&coverage;
   const scorePass=policy.scoreTarget!==null&&score!==null&&score>=policy.scoreTarget;
   const complete=questionsPass||scorePass;
-  return {completion:complete?'complete':q.length||score!==null?'incomplete':'needs-assessment',score,evidenceCount:ev.length,accuracy,coverage};
+  return {completion:complete?'complete':q.length||score!==null?'incomplete':'needs-assessment',...assessment,evidenceCount:ev.length,accuracy,coverage};
 }
 export function pacingStatus(p,evidence,{today=new Intl.DateTimeFormat('en-CA',{timeZone:p.calendar?.timeZone||'America/Los_Angeles',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()),toleranceDays=p.toleranceDays||0}={}) {
   const shared=!!p.calendar&&p.pacingVisibility!=='private';

@@ -188,3 +188,47 @@ test('additive migrations preserve legacy profile events and clear deleted profi
     assert.equal(db.prepare('SELECT COUNT(*) n FROM performance_events').get().n,0);
   } finally {db.close();}
 });
+
+test('teacher-reviewed demonstrations can reach Level 4 in every class course independently of game practice',async t=>{
+  const dev=await startDev({teacherTokens:{one:owner,two:other}});
+  t.after(()=>{dev.server.close();dev.db.close();});
+  async function request(path,token,body,status=200){
+    const response=await fetch(dev.url+'/api/wpr'+path,{
+      method:body?'POST':'GET',
+      headers:{...(token?{Authorization:'Bearer '+token}:{}),...(body?{'Content-Type':'application/json'}:{})},
+      body:body?JSON.stringify(body):undefined
+    });
+    const result=await response.json();
+    assert.equal(response.status,status,JSON.stringify(result));
+    return result;
+  }
+  const courses={
+    advanced:['node:advanced:variable-lab:identify/type','explanation'],
+    csp:['node:csp:binary-builder:CSP-CAPACITY','assessment'],
+    robotics:['node:robotics:parts-sprint:structure','performance'],
+    workplace:[graph.nodes.find(n=>n.courseId==='workplace').id,'project']
+  };
+  for(const [courseId,[nodeId,demonstrationType]] of Object.entries(courses)){
+    const classroom=await request('/teacher/profiles',owner,{title:'Synthetic '+courseId,courseId});
+    const student=await request('/profile/enroll',null,{invite:classroom.invite});
+    const read='/pathways/student/'+classroom.id;
+    const route='/teacher/profiles/'+classroom.id+'/students/'+student.id+'/evidence';
+    const initial=await request(read,student.token);
+    assert.equal(initial.pathway.proficiency.skills[nodeId].standardsScore,null);
+    const assessment={id:crypto.randomUUID(),nodeId,score:4,award:true,revision:1,demonstrationType};
+    await request(route,student.token,assessment,401);
+    await request(route,other,assessment,404);
+    await request(route,owner,{...assessment,demonstrationType:['project']},400);
+    await request(route,owner,assessment);
+    const updated=await request(read+'?known='+encodeURIComponent(initial.cacheKey),student.token);
+    const node=updated.pathway.nodes.find(n=>n.id===nodeId);
+    const result=updated.pathway.proficiency.skills[nodeId];
+    assert.equal(node.checkpoint.demonstrationType,demonstrationType);
+    assert.equal(node.checkpoint.score,4);
+    assert.ok(node.checkpoint.award);
+    assert.equal(result.level,0,'Teacher grades stay separate from formative practice');
+    assert.equal(result.standardsScore,4);
+    assert.equal(result.advancementMet,true);
+    assert.equal(result.demonstrationAvailable,false);
+  }
+});

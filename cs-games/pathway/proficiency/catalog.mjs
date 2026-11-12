@@ -2,7 +2,7 @@ import { phase2Difficulty, phase2Rubric } from './coverage-phase2.mjs';
 
 // Pilot rubric. Entries are reviewed activity/mode/family combinations.
 // A graph node or a difficulty label alone does not authorize proficiency credit.
-export const PROFICIENCY_VERSION = 2;
+export const PROFICIENCY_VERSION = 3;
 const traceId = 'node:advanced:variable-lab:trace';
 const divideId = 'node:csp:digital-divide-lab:CSP-DIVIDE';
 const numberId = 'node:csp:roundoff-overflow-lab:CSP-NUMERIC';
@@ -63,7 +63,9 @@ export function pilotRubric(node) {
   return {role:'unreviewed',tiers:{}};
 }
 
-export function auditedDifficulty(node,event) {
+// Bands describe the evidence a question provides. Only audited sources may
+// use the activity’s difficulty metadata as part of that classification.
+export function auditedEvidenceBand(node,event) {
   const {activityId,assessedMode,topic,familyId,difficulty}=event;
   if(!familyId)return null;
   if(phase2Rubric(node))return phase2Difficulty(node,event);
@@ -84,6 +86,9 @@ export function auditedDifficulty(node,event) {
         assessedMode==='assemble'&&/^assemble\/(int|double|boolean|char|String)$/.test(familyId)))return 'beginner';
   return null;
 }
+
+// Preserve the original entry point for consumers of the pilot rubric.
+export const auditedDifficulty = auditedEvidenceBand;
 
 export function proficiencyPractice(node,tier) {
   const expanded=phase2Rubric(node);
