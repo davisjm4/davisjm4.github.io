@@ -1,0 +1,82 @@
+/* Independent-learner page. Uses the CS Games tokens from ../../styles.css; adds no new theme. */
+.skip-link { position: absolute; left: 8px; top: -60px; z-index: 10; padding: .6rem .9rem; background: var(--accent); color: #09201c; border-radius: 8px; font-weight: 800; }
+.skip-link:focus { top: 8px; }
+.guest-wrap { padding-top: 36px; }
+.guest-wrap h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+.guest-join { color: var(--muted); max-width: 46rem; }
+#guest-notice { min-height: 1.5em; color: var(--gold); margin: .25rem 0 .5rem; }
+#guest-storage-note:empty { display: none; }
+#guest-storage-note { border: 1px solid var(--gold); border-radius: 10px; padding: .6rem .9rem; margin: .5rem 0; }
+.guest-pathway { padding: .6rem; }
+
+.guest-courses { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .7rem; margin-block: .8rem; }
+.student-panel button.guest-course { display: grid; gap: .15rem; text-align: left; padding: .8rem 1rem; min-height: 64px; margin: 0; }
+.guest-course small { color: var(--muted); }
+.student-panel button.guest-course[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 4px 0 0 var(--accent); background: #17304a; }
+.guest-hint { color: var(--muted); margin: .4rem 0 0; }
+
+.guest-pickup { border-color: var(--accent); }
+.guest-pickup h2 { margin-bottom: .4rem; }
+.guest-target { font-size: 1.25rem; margin: .2rem 0; }
+.guest-pickup-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; align-items: center; }
+.guest-pickup-actions .button { min-height: 44px; }
+.guest-other ul { padding-inline-start: 1.2rem; }
+.guest-other li { margin: .35rem 0; }
+.student-panel button.guest-link { min-height: 44px; border: 0; background: none; color: var(--accent); text-decoration: underline; padding: 0 .25rem; margin: 0; }
+.guest-after { border-color: var(--gold); }
+.guest-after-list { list-style: none; padding: 0; display: grid; gap: .6rem; }
+.guest-after-list li { display: flex; flex-wrap: wrap; gap: .3rem .8rem; align-items: center; }
+.guest-after-list small { color: var(--muted); }
+.guest-next { min-height: 44px; }
+
+.guest-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: .8rem 1.2rem; margin: .5rem 0 .8rem; }
+.guest-stats dt { color: var(--muted); font-size: .9rem; }
+.guest-stats dd { margin: 0; font-size: 1.5rem; font-weight: 800; }
+.guest-recent { padding-inline-start: 1.2rem; }
+.guest-coverage { color: var(--muted); max-width: 52rem; }
+.guest-jump { display: flex; flex-wrap: wrap; gap: .5rem .8rem; align-items: center; margin: 1rem 0; }
+.guest-jump label { font-weight: 700; }
+.guest-jump .select { min-height: 44px; max-width: 100%; }
+
+/* Self-reported notes are dashed gold; practice is solid mint, so they cannot be mistaken for each other. */
+.chip { display: inline-block; margin: .15rem .4rem .15rem 0; padding: .1rem .6rem; border-radius: 999px; font-size: .85rem; line-height: 1.5; }
+.chip-practice { border: 1px solid var(--accent); color: var(--ink); }
+.chip-practiced { background: #12403a; }
+.chip-needs-review { background: #4a3317; border-color: var(--gold); }
+.chip-review { border: 1px solid var(--gold); background: #4a3317; margin-left: .5rem; }
+.chip-self { border: 1px dashed var(--gold); color: var(--gold); }
+.chip-suggested { background: var(--accent); color: #09201c; font-weight: 800; border: 1px solid var(--accent); }
+.guest-chips { margin: .2rem 0; }
+li.guest-suggested { box-shadow: -4px 0 0 var(--accent); padding-left: .6rem; }
+.guest-reason { color: var(--muted); display: block; }
+
+.guest-marks { display: flex; flex-wrap: wrap; gap: .4rem; margin: .5rem 0; align-items: center; }
+.student-panel button.guest-mark { min-height: 44px; margin: 0; padding: .4rem .8rem; }
+.student-panel button.guest-mark[aria-pressed="true"] { background: #4a3317; border: 1px dashed var(--gold); color: var(--gold); font-weight: 800; }
+.guest-inherit { color: var(--muted); }
+.guest-area-tools { display: flex; flex-wrap: wrap; gap: .3rem 1rem; align-items: center; padding: .4rem 1rem; border-top: 1px solid var(--line); }
+
+.guest-storage-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0; }
+.guest-file { display: inline-block; }
+.guest-file-button { display: inline-flex; align-items: center; min-height: 44px; padding: .5rem .85rem; border: 1px solid var(--line); border-radius: 8px; background: var(--panel-2, #1c3348); cursor: pointer; }
+.guest-file:focus-within .guest-file-button { outline: 3px solid var(--focus); outline-offset: 3px; }
+.student-panel .guest-danger { border-color: #c96a6a; }
+.guest-warn { color: var(--gold); }
+
+@media (max-width: 560px) {
+  .guest-courses { grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .student-panel button.guest-course { padding: .6rem .7rem; min-height: 60px; }
+  .guest-wrap { padding-inline: 14px; }
+  .guest-wrap h1 { margin-bottom: 10px; }
+  .student-panel { padding: .9rem; }
+  .pathway-checkpoints { padding-inline: .3rem .3rem 1.6rem; }
+  .guest-area-tools { padding-inline: .6rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+
+.guest-untracked { display: block; color: var(--muted); margin: .4rem 0; }
+
+.guest-map-host { min-width: 0; margin: 12px 0 24px; }
+.guest-skill-controls { margin: 14px 0; }
+.guest-note { font-weight: 600; }
+.guest-map-host .guest-marks { margin: 8px 0; }

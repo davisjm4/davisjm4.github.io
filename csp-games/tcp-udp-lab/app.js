@@ -1,6 +1,6 @@
 import * as E from './generator.js?v=tcpudp-v3';
 import { createLabSession, percent } from './session.js?v=tcpudp-v3';
-import { sessionTracker, addSessionNavigation } from '../session.js?v=per-mode-daily-v1';
+import { sessionTracker, addSessionNavigation } from '../session.js?v=guest-map-v1';
 
 const $ = id => document.getElementById(id);
 const tracker = sessionTracker();

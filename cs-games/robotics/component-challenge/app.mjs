@@ -1,6 +1,6 @@
 import {generate,grade,MODES,SCENARIOS,HISTORY_KEY} from './engine.mjs';
 import {PARTS} from '../parts-sprint/catalog.js';
-import {createRoboticsSession} from '../parts-sprint/session.js';
+import {createRoboticsSession} from '../parts-sprint/session.js?v=guest-map-v1';
 const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const warn=s=>{$('storage-warning').hidden=false;$('storage-warning').textContent=s;};let storage;try{storage=localStorage;}catch{warn('Storage unavailable: practice works in this tab.');}
 const session=createRoboticsSession({storage,onWarning:warn}),tracker=session.tracker;let day=session.ensure(),q=null,record=null,history=[],draw=0,assisted=false,started=false,lastInteraction=Date.now();const seed=Number(new URLSearchParams(location.search).get('seed'))||Date.now();

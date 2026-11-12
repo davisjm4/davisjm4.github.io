@@ -6,7 +6,7 @@ import {AudioTransport} from './audio.js?v=usability-v3';
 import {createProject,validateProject,compileProject,parseProject,exportProject,exportBundle,importBundle,loadProjects,createMediaStore,PROJECT_KEY,MAX_AUDIO} from './project.js?v=usability-v3';
 import {LESSONS,referenceProgram,lessonStarter,validateLesson,lessonHint} from './expansion-lessons.js?v=usability-v3';
 import {createLessonSession} from './session.js?v=usability-v3';
-import {sessionTracker} from '../session.js';
+import {sessionTracker} from '../session.js?v=guest-map-v1';
 export function createStudioApp({stageFactory=createStage,audioFactory=options=>new AudioTransport(options),mediaStore=createMediaStore(),shared=sessionTracker(),storage,now=()=>Date.now(),raf=fn=>requestAnimationFrame(fn),cancel=id=>cancelAnimationFrame(id)}={}){
  const $=id=>document.getElementById(id);if(!storage)try{storage=localStorage;}catch{}
  let activity='hokey',stage=0,projects=loadProjects(storage),project=projects['hokey:0']||createProject(),source='student',frame=null,destroyed=false,operation=0,currentResult=null,lastStudent=null,recording=null,page=0,highlighted='',stageView={apply(){},dispose(){}},editor,player;

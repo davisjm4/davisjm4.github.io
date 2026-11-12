@@ -1,5 +1,5 @@
 import * as E from './engine.js?v=rgb-target-hidden-v2';
-import {sessionTracker,addSessionNavigation} from '../session.js?v=per-mode-daily-v1';
+import {sessionTracker,addSessionNavigation} from '../session.js?v=guest-map-v1';
 const $=id=>document.getElementById(id), title='RGB Color Code Builder',slug='rgb-color-builder';
 const tracker=sessionTracker();addSessionNavigation('../');
 const names=['Red','Green','Blue'],labels={binary:'Binary RGB',hex:'Hexadecimal RGB'};

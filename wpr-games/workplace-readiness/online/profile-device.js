@@ -7,7 +7,9 @@
   }
   const activeKey='wrg.profile.active.v1';
   const profileId=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+  const guestPractice=typeof URLSearchParams!=='undefined' && new URLSearchParams(root.location?.search).get('learner')==='guest';
   function active() {
+    if (guestPractice) return null;
     try {
       const p=JSON.parse(root.localStorage.getItem(activeKey));
       return p && profileId.test(p.id) && /^[0-9a-f]{64}$/.test(p.token) && Number.isSafeInteger(p.expires) ? p : null;
@@ -31,6 +33,6 @@
   root.CSGamesProfileDevice={identity,key,isCurrent,signIn,clear};
   if (root.WRG) root.WRG.profileDevice=root.CSGamesProfileDevice;
   root.addEventListener?.('storage',event=>{
-    if (event.key===activeKey || event.key===null) root.location.reload();
+    if (!guestPractice && (event.key===activeKey || event.key===null)) root.location.reload();
   });
 }(globalThis));

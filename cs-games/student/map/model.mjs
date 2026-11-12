@@ -121,6 +121,7 @@ export function buildMapModel(input) {
   const today = pacingIn.today ?? null;
   const mixedActivities = input.mixedActivities ? new Set(input.mixedActivities) : undefined;
   const areaTitle = new Map(graph.areas.map((a) => [a.id, a.title]));
+  const areaMarks = new Map(graph.areas.map(area => [area.id,area.guest?.mark]));
   const prereqTitle = new Map(graph.nodes.map((n) => [n.id, n.title]));
 
   const ordered = orderNodes(graph.nodes.filter((n) => n.courseId === courseId), input.sequence, warnings);
@@ -142,6 +143,7 @@ export function buildMapModel(input) {
     const baseTitle = areaTitle.get(run.areaId) ?? humanize(String(run.areaId).split(':').at(-1));
     const title=parts===1?baseTitle:part===1?`${baseTitle} (1 of ${parts})`:`${baseTitle} (continued, ${part} of ${parts})`;
     const stop = { id, areaId: run.areaId, index: stopIndex, part, parts, title, baseTitle, identity: areaIdentity(run.areaId, courseId), nodes: [] };
+    stop.guestMark=areaMarks.get(run.areaId);
     run.raw.forEach((raw, i) => {
       const progress = progressByNode.get(raw.id) ?? null;
       const { state, unrecognized } = deriveNodeState(progress);
@@ -150,7 +152,7 @@ export function buildMapModel(input) {
       // The engine's progress object already folds the class checkpoint's `required` flag in. Without one (the zero-setup pathway)
       // the host can pass `required: { [nodeId]: false }` from its checkpoints so optional skills still read as optional.
       const required = progress?.required ?? (input.required?.[raw.id] !== false);
-      const links = practiceLinks(raw, { mixedActivities });
+      const links = practiceLinks(raw, { mixedActivities,guest:input.guest });
       const target = dated ? targetFor(pacingIn.targets?.[raw.id], complete, today) : null;
       const attempted = progress?.attempt?.attempted ?? 0;
       const started = state === 'in-progress' || state === 'review' || attempted > 0 || (progress?.lifetime?.questionsAnswered ?? 0) > 0;
@@ -158,7 +160,7 @@ export function buildMapModel(input) {
         id: raw.id, title: raw.title, objective: raw.objective ?? '', areaId: raw.areaId, stopId: id, order: i + 1, orderOf: run.raw.length, courseIndex: flat.length,
         state, unrecognized, optional: !required, required, complete, started, requirementsConfigured, practiceOnly: !requirementsConfigured,
         proficiency:input.proficiency?.skills?.[raw.id]??null,
-        practiceGoal:raw.practiceGoal,verifiedAward:raw.verifiedAward||(progress?.verification==='verified'&&Boolean(progress.award?.id)),
+        guest:raw.guest,practiceGoal:raw.practiceGoal,verifiedAward:raw.verifiedAward||(progress?.verification==='verified'&&Boolean(progress.award?.id)),
         earlierVerifiedAward:raw.earlierVerifiedAward,standardsScore:raw.standardsScore??progress?.standards?.score,
         demonstrationType:raw.demonstrationType,
         ring: ringFor(state, progress), progress, attempts: attempts[raw.id] ?? [], practice: links.links, mixed: links.mixed,
@@ -191,7 +193,7 @@ export function buildMapModel(input) {
   const required = flat.filter((n) => n.required);
   const nodeIndex = Object.fromEntries(flat.map((n) => [n.id, n]));
   return {
-    schema: MODEL_SCHEMA, courseId, courseTitle: course.title, classTitle:input.classTitle, enrolled:input.enrolled===true, warnings,
+    schema: MODEL_SCHEMA, courseId, courseTitle: course.title, classTitle:input.classTitle, enrolled:input.enrolled===true,guest:input.guest===true, warnings,
     mode: flat.some((n) => n.requirementsConfigured) ? 'requirements' : 'practice',
     pacing: { mode: dated ? 'dated' : 'undated', showDates: dated, today: dated ? today : null, note: dated ? (pacingIn.note ?? null) : null, currentStopId: currentStop?.id ?? null,
       upcoming: upcoming.slice(0, 5).map((n) => n.id), reviewIds: flat.filter((n) => n.state === 'review').map((n) => n.id) },

@@ -1,6 +1,6 @@
 import * as E from "./engine.js?v=linkedlist-v5";
 import { labEvidence } from "../lab-evidence.js?v=lab-evidence-v1";
-import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=per-mode-daily-v1";
+import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=guest-map-v1";
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const tracker=sessionTracker();

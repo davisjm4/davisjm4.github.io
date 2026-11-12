@@ -1,4 +1,4 @@
-import {activeProfile} from '../../wpr-games/workplace-readiness/online/profile-sync.mjs';
+import {activeProfile} from '../../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
 
 const nav=document.querySelector('header .ecosystem-nav');
 if(activeProfile&&nav){

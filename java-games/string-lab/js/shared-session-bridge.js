@@ -54,7 +54,7 @@
     if (!tracker) queue.push(evt); else process(evt);
   }, summary: summary, snapshot: snapshot };
 
-  import('../../session.js?v=per-mode-daily-v1').then(function (shared) {
+  import('../../session.js?v=guest-map-v1').then(function (shared) {
     tracker = shared.sessionTracker();
     shared.addSessionNavigation('../');
     queue.splice(0).forEach(process);

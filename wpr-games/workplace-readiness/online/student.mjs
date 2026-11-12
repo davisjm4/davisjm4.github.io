@@ -1,5 +1,5 @@
 import { request } from './config.mjs';
-import { addReport, displayReport, feedbackNodes } from './readiness.mjs';
+import { addReport, displayReport, feedbackNodes } from './readiness.mjs?v=guest-map-v1';
 import { el, button } from './dom.mjs';
 
 const id=new URL(location.href).searchParams.get('assignment');

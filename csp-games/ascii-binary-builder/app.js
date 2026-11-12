@@ -1,5 +1,5 @@
 import * as E from './engine.js?v=ascii-v1';
-import {sessionTracker,addSessionNavigation} from '../session.js?v=per-mode-daily-v1';
+import {sessionTracker,addSessionNavigation} from '../session.js?v=guest-map-v1';
 const $=id=>document.getElementById(id),tracker=sessionTracker(),slug='ascii-binary-builder',title='ASCII Binary Name Builder',historyKey='cspGames.ascii.history.v1';
 addSessionNavigation('../');let sessionId,generator,current=null,drafts={},recordId,selected=0,values=[],submitted=false,solved=false,lastChecked=null;
 const urlSeed=new URL(location.href).searchParams.get('seed');

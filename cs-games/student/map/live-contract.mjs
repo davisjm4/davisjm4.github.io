@@ -84,11 +84,11 @@ export function inputFromStudentContract(contract, {
         id:n.id,courseId:n.courseId,areaId:n.areaId,title:n.title,objective:n.objective,
         familySelectors:n.familySelectors,standardRefs:n.standardRefs,practice:n.checkpoint.practice,
         prerequisites:n.checkpoint.prerequisites,practiceGoal:n.practiceGoal,
-        verifiedAward:Boolean(n.checkpoint.award),earlierVerifiedAward:n.earlierVerifiedAward===true,
+        guest:n.guest,verifiedAward:Boolean(n.checkpoint.award),earlierVerifiedAward:n.earlierVerifiedAward===true,
         standardsScore:n.checkpoint.score,demonstrationType:n.checkpoint.demonstrationType
       }))
     },
-    courseId,classTitle:contract.title,enrolled:Boolean(contract.classId),sequence:nodes.map(n=>n.id),required,progress:{nodes:progressNodes,areas},attempts,mixedActivities,
+    courseId,classTitle:contract.title,enrolled:Boolean(contract.classId)&&!contract.guest,guest:contract.guest?.source==='independent',sequence:nodes.map(n=>n.id),required,progress:{nodes:progressNodes,areas},attempts,mixedActivities,
     proficiency:contract.proficiency,
     pacing:{mode:dated?'dated':'undated',today,currentAreaId,targets}
   };

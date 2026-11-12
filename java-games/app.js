@@ -15,7 +15,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=per-mode-daily-v1";
+} from "./session.js?v=guest-map-v1";
 const esc = (s) =>
   String(s).replace(
     /[&<>"']/g,

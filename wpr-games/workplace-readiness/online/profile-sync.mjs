@@ -1,9 +1,11 @@
-import './profile-device.js';
+import './profile-device.js?v=guest-map-v1';
 import { profilesAvailable, request } from './config.mjs';
 import { BATCH_LIMIT, PROFILE_ID, PROFILE_VERSION } from './profile-model.mjs';
 
 export const device=globalThis.CSGamesProfileDevice;
-export const activeProfile=profilesAvailable ? device.identity : null;
+// Guest map links explicitly select local practice for this tab, even on a shared browser.
+const guestPractice=new URLSearchParams(globalThis.location?.search).get('learner')==='guest';
+export const activeProfile=profilesAvailable&&!guestPractice ? device.identity : null;
 const prefix=device.key('outbox.');
 let sending, timer, retryDelay=2000;
 const listeners=new Set();

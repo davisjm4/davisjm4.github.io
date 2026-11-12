@@ -1,13 +1,14 @@
-import {activeProfile,recordGameAttempt,scopedStorage} from '../../../wpr-games/workplace-readiness/online/profile-sync.mjs';
+import {activeProfile,recordGameAttempt,scopedStorage} from '../../../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
+import {recordGuestAttempt} from '../../student/guest/hook.mjs?v=guest-map-v1';
 // Reuse the established daily/first-try session engine without mixing courses.
-import {createSessionTracker,SESSION_KEY as JAVA_KEY} from '../../../java-games/session.js';
+import {createSessionTracker,SESSION_KEY as JAVA_KEY} from '../../../java-games/session.js?v=guest-map-v1';
 import {beatsBest} from './engine.js?v=parts-1';
 export const SESSION_KEY='roboticsGames.session.v1',HISTORY_KEY='roboticsGames.partsSprint.history.v1',BEST_KEY='roboticsGames.partsSprint.best.v1';
 export function createRoboticsSession({storage,now,id,onWarning=()=>{}}={}){
  storage=scopedStorage(storage);
  const facade={getItem:key=>storage?.getItem(key===JAVA_KEY?SESSION_KEY:key),setItem:(key,value)=>storage?.setItem(key===JAVA_KEY?SESSION_KEY:key,value)};
  const tracker=createSessionTracker({storage:facade,now,id,onWarning,
-   onAttempt:activeProfile ? (...args)=>recordGameAttempt('robotics',...args) : undefined});let history=[],sessionId='';
+   onAttempt:activeProfile ? (...args)=>recordGameAttempt('robotics',...args) : recordGuestAttempt('robotics')});let history=[],sessionId='';
  function ensure(){const next=tracker.snapshot().id;if(next!==sessionId){sessionId=next;history=[];}try{const saved=JSON.parse(storage?.getItem(HISTORY_KEY)||'null');if(saved?.sessionId===sessionId&&Array.isArray(saved.history))history=saved.history.filter(h=>h&&typeof h.id==='string'&&typeof h.part==='string').slice(-100);}catch{}return sessionId;}
  function remember(record){ensure();history.push(record);history=history.slice(-100);try{storage?.setItem(HISTORY_KEY,JSON.stringify({sessionId,history}));}catch{} }
  function best(key,candidate){let saved={};try{saved=JSON.parse(storage?.getItem(BEST_KEY)||'{}')||{};}catch{}const prior=saved[key];if(candidate&&beatsBest(candidate,prior)){saved[key]={accuracy:candidate.accuracy,firstTry:candidate.firstTry,longest:candidate.longest,averageResponse:candidate.averageResponse};try{storage?.setItem(BEST_KEY,JSON.stringify(saved));}catch{}return{...saved[key],improved:true};}return prior||null;}

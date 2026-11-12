@@ -1,7 +1,7 @@
 import * as E from './engine.js?v=divide-v1';
 import {renderData}from './data-view.js?v=divide-v1';
 import {groupMetrics}from './metrics.js?v=divide-v1';
-import {sessionTracker,addSessionNavigation}from '../session.js?v=per-mode-daily-v1';
+import {sessionTracker,addSessionNavigation}from '../session.js?v=guest-map-v1';
 const $=id=>document.getElementById(id),tracker=sessionTracker(),slug='digital-divide-lab',title='Digital Divide Scenario Lab',key='cspGames.digitalDivide.history.v1';
 addSessionNavigation('../');let generator,sessionId,current,recordId=null,answered=false;const seed=new URL(location.href).searchParams.get('seed');
 function ensure(){const id=tracker.snapshot().id;if(id===sessionId)return false;sessionId=id;let history=[];try{const saved=JSON.parse(localStorage.getItem(key));if(saved?.sessionId===id&&Array.isArray(saved.history))history=saved.history;}catch{}generator=E.createGenerator({seed:seed===null?Date.now():Number(seed),history});return true;}

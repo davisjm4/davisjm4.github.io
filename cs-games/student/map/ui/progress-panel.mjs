@@ -1,4 +1,4 @@
-import {demonstrationDetails,proficiencyDetails,proficiencyLink} from './proficiency.mjs?v=proficiency-v3';
+import {demonstrationDetails,proficiencyDetails,proficiencyLink} from './proficiency.mjs?v=guest-map-v1';
 // The skill progress panel. It renders the evaluated progress contract and explains it in plain language.
 // It never calculates: questions left, accuracy, and "correct in a row" all arrive from the engine's recovery object.
 import { attemptLabel, attemptLine, checklist, detailLines, exampleNotice, isClosedAttempt, leadText, lifetimeLine, optionalBlurb, practiceSummary, requirementLine, whatsLeft } from '../copy.mjs';
@@ -40,11 +40,12 @@ export function createProgressPanel(node, ctx) {
     node.example ? el('span', { class: 'tag tag-example', text: 'Example requirement' }) : null));
   if (node.optional) root.append(el('p', { class: 'muted', text: optionalBlurb }));
 
+  if(ctx.guestSkillControls&&node.guest)root.append(ctx.guestSkillControls(node));
   const formative=proficiencyDetails(node);
   if(formative)root.append(formative);
 
   // What the engine says, in its own words first.
-  root.append(el('p', { class: 'lead', text: leadText(node) }));
+  if(!ctx.model.guest)root.append(el('p', { class: 'lead', text: leadText(node) }));
   for (const line of detailLines(node)) root.append(el('p', { class: 'muted', text: line }));
   if (node.state === 'requirements-met' && !detailLines(node).some((l) => /practice milestone/.test(l))) root.append(el('p', { class: 'note', text: STATES['requirements-met'].blurb }));
   if (node.state === 'mastered') root.append(el('p', { class: 'note', text: `${STATES.mastered.blurb}${p.award?.issuedAt ? ` (${formatStamp(p.award.issuedAt, ctx.timeZone)})` : ''}` }));

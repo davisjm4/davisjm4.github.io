@@ -1,4 +1,4 @@
-import {proficiencySuggestion} from './proficiency.mjs?v=proficiency-v3';
+import {proficiencySuggestion} from './proficiency.mjs?v=guest-map-v1';
 // The frame around the maps: header, view and zoom controls, legend, suggested next, and the optional pacing card.
 import { courseSummaryLine, pacingNote, stopSummaryLine } from '../copy.mjs';
 import { formatDay } from '../format.mjs';

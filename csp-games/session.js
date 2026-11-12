@@ -1,7 +1,8 @@
-import { activeProfile, device, recordGameAttempt, scopedStorage } from '../wpr-games/workplace-readiness/online/profile-sync.mjs?v=proficiency-v2';
+import { activeProfile, device, recordGameAttempt, scopedStorage } from '../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
+import { recordGuestAttempt } from '../cs-games/student/guest/hook.mjs?v=guest-map-v1';
 /* CSP Games session schema v1. Daily browser summaries. An active profile can sync scored attempts. */
 import { createProgressStore } from './exam-readiness/storage.js';
-import { initializeFromSession, recordFirstSubmission } from './exam-readiness/bridge.js';
+import { initializeFromSession, recordFirstSubmission } from './exam-readiness/bridge.js?v=guest-map-v1';
 export const SESSION_KEY = "cspGames.session.v1";
 const fields = [
   "generated",
@@ -360,7 +361,7 @@ export function sessionTracker() {
     singleton = createSessionTracker({
       storage: scopedStorage(storage),
       onWarning: showStorageWarning,
-      onAttempt: activeProfile ? (...args)=>recordGameAttempt('csp',...args) : undefined,
+      onAttempt: activeProfile ? (...args)=>recordGameAttempt('csp',...args) : recordGuestAttempt('csp'),
     });
   }
   return singleton;

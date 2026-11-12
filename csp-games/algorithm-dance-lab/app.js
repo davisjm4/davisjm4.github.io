@@ -4,7 +4,7 @@ import {createEditor,escape} from './editor.js?v=usability-v3';
 import {Player} from './player.js?v=usability-v3';
 import {createStage} from './renderer.js?v=usability-v3';
 import {createLessonSession} from './session.js?v=usability-v3';
-import {sessionTracker,startActivePractice} from '../session.js';
+import {sessionTracker,startActivePractice} from '../session.js?v=guest-map-v1';
 export function createApp({stageFactory=createStage,shared=sessionTracker(),storage,now=()=>Date.now(),raf=cb=>requestAnimationFrame(cb),cancel=id=>cancelAnimationFrame(id)}={}){
  const $=id=>document.getElementById(id);if(!storage)try{storage=localStorage;}catch{}
  let mode='lesson',stage=0,program=E.blank(),workspaces={},lastStudent=null,source='student',stageView={apply(){},dispose(){}},frame=null,lastFrame=0,destroyed=false;

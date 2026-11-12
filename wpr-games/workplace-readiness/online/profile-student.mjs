@@ -3,7 +3,7 @@ import { PROFILE_ID, PROFILE_KEY, practiceEvent } from './profile-model.mjs';
 import { el, button, download } from './dom.mjs';
 import { profileCsv, renderProfileProgress } from './profile-report.mjs';
 
-import {device,activeProfile as identity,observeSync,queueKeys,queueProfileEvent,syncQueuedPractice as syncSoon} from './profile-sync.mjs';
+import {device,activeProfile as identity,observeSync,queueKeys,queueProfileEvent,syncQueuedPractice as syncSoon} from './profile-sync.mjs?v=guest-map-v1';
 
 const host=document.getElementById('student-profile');
 const status=el('p',{role:'status','aria-live':'polite'});

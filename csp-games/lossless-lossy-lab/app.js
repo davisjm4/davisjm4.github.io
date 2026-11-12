@@ -1,5 +1,5 @@
 import * as E from './engine.js?v=compression-v1';
-import {sessionTracker,addSessionNavigation} from '../session.js?v=per-mode-daily-v1';
+import {sessionTracker,addSessionNavigation} from '../session.js?v=guest-map-v1';
 const $=id=>document.getElementById(id),tracker=sessionTracker(),slug='lossless-lossy-lab',title='Lossless vs. Lossy Compression Lab',key='cspGames.compressionDecision.history.v1';addSessionNavigation('../');
 let sessionId,generator,current,recordId,answered=false;const seed=new URL(location.href).searchParams.get('seed');
 function ensure(){const id=tracker.snapshot().id;if(id===sessionId)return false;sessionId=id;let history=[];try{const saved=JSON.parse(localStorage.getItem(key));if(saved?.sessionId===id&&Array.isArray(saved.history))history=saved.history;}catch{}generator=E.createGenerator({seed:seed===null?Date.now():Number(seed),history});return true;}

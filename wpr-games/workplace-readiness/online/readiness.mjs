@@ -1,5 +1,5 @@
 import { VERSION, performanceCsv, evidence, dimensions, isId } from './model.mjs';
-import { queuePractice } from './profile-student.mjs';
+import { queuePractice } from './profile-student.mjs?v=guest-map-v1';
 import { el, button, pct, table, download } from './dom.mjs';
 const W = globalThis.WRG;
 const KEY = W.profileDevice?.key('wrg.readiness.v1') || 'wrg.readiness.v1';

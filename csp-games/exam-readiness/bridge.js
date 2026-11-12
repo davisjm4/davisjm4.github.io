@@ -1,4 +1,4 @@
-import { scopedStorage } from '../../wpr-games/workplace-readiness/online/profile-sync.mjs';
+import { scopedStorage } from '../../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
 import {createProgressStore} from './storage.js';
 import {mappedRecord} from './mapping.js';
 let shared;

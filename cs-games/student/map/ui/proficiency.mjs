@@ -66,6 +66,7 @@ export function proficiencySuggestion(model,{onShow,onPractice,stop}){
   const nextNode=next?model.nodeIndex[next.nodeId]:null;
   return el('div',{class:'suggested'},
     el('p',{class:'suggested-label',text:ready?'Ready to advance':'Suggested next'}),
+    next?.reason?el('p',{class:'muted',text:next.reason}):null,
     nextNode?el('p',{class:'suggested-title',text:`${nextNode.title}${next.tier?` · Level ${tierLevels[next.tier]}`:''}`}):null,
     area&&!area.hasCore&&!ready?el('p',{class:'muted',text:'Show Level 3 with a task, project, or assessment that demonstrates the skill.'}):
       area?.unavailable?.length?el('p',{class:'muted',text:ready?'You met the reviewed outcomes. Other skills in this area remain open for practice.':'Some skills in this area are still being reviewed for proficiency.'}):null,
