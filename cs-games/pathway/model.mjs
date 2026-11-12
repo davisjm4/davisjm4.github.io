@@ -134,7 +134,7 @@ export function studentContract(p,graph,evidence=[],options={}) {
   });
   const shared=!!p.calendar&&p.pacingVisibility!=='private';
   return {schemaVersion:1,pathwayId:p.id,classId:p.classId,title:p.title,courseId:p.courseId,
-    revision:p.revision,graphVersion:p.graphVersion,status:state.status,
+    revision:p.revision,graphVersion:p.graphVersion,status:state.status,calculatedAt:state.calculatedAt,
     areas:[...new Set(skills.map(n=>n.areaId))].map(id=>options.mastery?.areas.has(id)?{...areas.get(id),practiceRequirements:options.mastery.areas.get(id)}:areas.get(id)),
     nodes:skills,edges:p.checkpoints.flatMap(c=>c.prerequisites.map(from=>({from,to:c.nodeId,kind:'prerequisite'}))),
     sessions:shared?p.sessions:[],policies:p.policies,examDate:shared?p.examDate:null};

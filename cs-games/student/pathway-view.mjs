@@ -1,31 +1,11 @@
 import { el } from '../../wpr-games/workplace-readiness/online/dom.mjs';
 
-const courseNames={advanced:'Advanced CS',csp:'AP CSP',robotics:'Robotics 1',workplace:'Workplace Readiness'};
+import { courseNames,practiceLinks } from './practice-links.mjs';
 
-function practiceLinks(node) {
-  return (node.checkpoint.practice||[]).flatMap(item=>{
-    let url;
-    try { url=new URL(item.url,location.origin); } catch { return []; }
-    if(url.protocol!=='https:'&&url.origin!==location.origin)return [];
-    const name=item.activityId.split('-').map(word=>word[0]?.toUpperCase()+word.slice(1)).join(' ');
-    const selector=node.familySelectors?.find(s=>s.activityId===item.activityId);
-    const mode=selector?.modeId??selector?.modeIds?.[0];
-    const isLocal=url.origin===location.origin;
-    const java=isLocal&&url.pathname.startsWith('/java-games/');
-    const focusedJava=java&&mode;
-    const roboticsCategory=isLocal&&item.activityId==='parts-sprint'&&selector?.category;
-    const workplaceSkill=isLocal&&item.activityId==='workplace-readiness'&&node.standardRefs?.find(s=>s.registry==='ctecs-wrs');
-    if(focusedJava)url.searchParams.set('mode',mode.split('/')[0]);
-    if(roboticsCategory)url.searchParams.set('category',roboticsCategory);
-    if(workplaceSkill){url.searchParams.set('practice','1');url.searchParams.set('skills',workplaceSkill.id);}
-    const links=[el('a',{href:url.href,text:focusedJava||roboticsCategory?'Focused practice in '+name:workplaceSkill?'Practice '+workplaceSkill.label:'Open '+name,rel:'noreferrer'})];
-    if(java||roboticsCategory){
-      url.searchParams.delete('category');
-      url.searchParams.set('mode','mixed');
-      links.push(el('a',{href:url.href,text:'Mixed Practice',rel:'noreferrer','aria-label':'Mixed Practice in '+name}));
-    }
-    return links;
-  });
+function practiceActions(node){
+  const {links,mixed}=practiceLinks(node);
+  return [...links.map(link=>el('a',{href:link.url,text:link.label,rel:'noreferrer'})),
+    ...(mixed?[el('a',{href:mixed.url,text:'Mixed Practice',rel:'noreferrer','aria-label':mixed.label})]:[])];
 }
 
 function masteryCard(node,onRestart){
@@ -82,7 +62,7 @@ export function renderPathway(view,{onRestart,openAreas=[]}={}) {
         node.earlierVerifiedAward&&el('small',{text:'Earlier teacher-verified mastery recorded'}),
         masteryCard(node,onRestart),
         c.score!==null&&c.score!==undefined&&el('small',{text:'Teacher assessment · '+c.score+'/4'}),
-        el('div',{class:'pathway-actions'},practiceLinks(node))));
+        el('div',{class:'pathway-actions'},practiceActions(node))));
     }
     const area=areas.get(areaId),requirements=area?.practiceRequirements;
     const count=requirements?.requiredTotal>0

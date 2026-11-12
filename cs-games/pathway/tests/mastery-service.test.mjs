@@ -106,6 +106,9 @@ test('defaults need no settings and published class and skill requirements drive
   assert.equal(low.progress.answered,30);
   assert.equal(low.progress.correct,25);
   assert.equal(low.remaining.correctInARowForAccuracy,20);
+  assert.equal(low.mapProgress.recovery.additionalCorrectForAccuracy,20);
+  assert.deepEqual(low.mapProgress.attempt,{id:low.activeAttemptId,seq:1,attempted:30,correct:25,accuracyPercent:83.3});
+  assert.deepEqual(low.mapProgress.requirementChecks.map(({code,met})=>[code,met]),[['minimumQuestions',true],['accuracy',false]]);
   assert.equal(skill(await first.view(),math).masteryChallenge.progress.answered,1);
   const recovery=Array.from({length:20},(_,index)=>attempt({at:at+100+index}));
   await ok('/profile/sync',first.student.token,{events:recovery});
@@ -113,6 +116,8 @@ test('defaults need no settings and published class and skill requirements drive
   assert.equal(node.masteryChallenge.progress.answered,50);
   assert.equal(node.masteryChallenge.progress.correct,45);
   assert.equal(node.masteryChallenge.status,'requirements-met');
+  assert.equal(node.masteryChallenge.mapProgress.verification,'provisional');
+  assert.equal(node.masteryChallenge.mapProgress.award,null);
   assert.match(node.masteryChallenge.milestoneNote,/practice milestone/);
   assert.equal(node.checkpoint.score,null);
   assert.equal(node.checkpoint.award,undefined);
@@ -139,7 +144,11 @@ test('restarts are owner-scoped, durable, safe to retry and respect later policy
   const recovered=await ok('/profile/restore',null,{id:subject.student.id,recovery:subject.student.recovery});
   const old=skill(await subject.view(recovered.token),loop).masteryChallenge;
   assert.equal(old.progress.answered,0);
-  assert.deepEqual(old.history,[{number:1,status:'restarted',answered:2,correct:1,accuracy:50}]);
+  const [{closedAt,...closed}]=old.history;
+  assert.ok(Number.isFinite(Date.parse(closedAt)));
+  assert.deepEqual(closed,{number:1,status:'restarted',answered:2,correct:1,accuracy:50});
+  assert.equal(old.mapProgress.attempt.seq,2);
+  assert.equal(old.mapProgress.lifetime.questionsAnswered,2);
   const row=db.prepare('SELECT body FROM mastery_attempts WHERE profile_id=? AND node_id=? AND sequence=1');
   const original=row.get(subject.student.id,loop).body;
   assert.throws(()=>db.prepare("UPDATE mastery_attempts SET body='{}' WHERE profile_id=? AND sequence=1").run(subject.student.id),/immutable/);
