@@ -19,7 +19,7 @@ export function createSkillSearch(model, { layout, query, onQuery, onShow, onPra
         el('div', { class: 'suggested-actions' },
           el('button', { class: 'btn', type: 'button', 'aria-label': 'Show ' + node.title + ' on ' + layout,
             text: layout === 'list' ? 'Show in List' : 'Show on Map', onclick: () => onShow(node) }),
-          link ? el('a', { class: 'btn', href: link.url, 'data-action': 'practice-search', 'aria-label': 'Practice ' + node.title, text: 'Practice',
+          link ? el('a', { class: 'btn', href: link.url, 'data-action': 'practice-search', 'data-return-skill': node.id, 'aria-label': 'Practice ' + node.title, text: 'Practice',
             onclick: event => { if (onPractice({ node, url: link.url, kind: link.kind }) === true) event.preventDefault(); } })
             : el('small', { text: 'Practice activity unavailable' })));
     }));

@@ -129,7 +129,9 @@ export function mountStudentMap(container, options) {
   function addReturnLinks(container) {
     if (!input.guest && !input.classId) return;
     for (const link of container.querySelectorAll('a[data-action^="practice"], a[data-action="mixed"]')) {
-      link.href = withPracticeReturn(link.href, { origin: location.origin, course: model.courseId, classId: input.classId, route });
+      const node = link.dataset.returnSkill ? findNode(model, link.dataset.returnSkill) : null;
+      const destination = node ? { ...route, view: 'area', stopId: node.stopId, nodeId: node.id } : route;
+      link.href = withPracticeReturn(link.href, { origin: location.origin, course: model.courseId, classId: input.classId, route: destination });
     }
   }
 

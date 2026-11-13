@@ -66,3 +66,46 @@ test('course cards open course maps and search survives practice return', { time
   assert.match(await page.$eval(result, node => node.textContent), /binary/i);
   assert.match(await page.$eval(result, node => node.textContent), /AP CSP/);
 });
+
+test('enrolled search launches class practice and syncs a first attempt', { timeout: 90000 }, async t => {
+  const token = 'synthetic-student-navigation-teacher';
+  const dev = await startDev({ teacherTokens: { teacher: token } });
+  const browser = await launch();
+  t.after(async () => { await browser.close(); await new Promise(resolve => dev.server.close(resolve)); dev.db.close(); });
+  const response = await fetch(dev.url + '/api/wpr/teacher/profiles', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title: 'Student navigation test class', courseId: 'advanced' }),
+  });
+  assert.equal(response.status, 200);
+  const classroom = await response.json();
+  const page = await browser.newPage();
+  await page.goto(dev.url + '/cs-games/student/#enroll=' + classroom.invite);
+  const activate = async label => {
+    const element = await page.waitForFunction(text =>
+      [...document.querySelectorAll('#student-profile button')].find(button => button.textContent === text), {}, label);
+    await element.evaluate(button => button.focus());
+    await page.keyboard.press('Enter');
+  };
+  await activate('Enroll in this class');
+  await page.waitForSelector('.wpr-profile-secret', { visible: true });
+  await Promise.all([page.waitForNavigation(), activate('I saved my recovery credential')]);
+  await page.waitForSelector('#map-skill-search');
+  assert.match(await page.$eval('[data-student-navigation]', header => header.textContent), /My Class/);
+  await page.type('#map-skill-search', 'modulus');
+  const link = '.map-search-results li:first-child a';
+  await page.waitForSelector(link);
+  await page.focus(link);
+  await Promise.all([page.waitForNavigation(), page.keyboard.press('Enter')]);
+  assert.equal(new URL(page.url()).searchParams.get('learner'), null);
+  assert.equal(new URL(page.url()).searchParams.get('mode'), 'modulus');
+  await page.click('button.choice');
+  await page.click('#check');
+  await page.waitForFunction(() => !Object.keys(localStorage).some(key => key.includes('.outbox.')));
+  await page.waitForSelector('a[data-profile-link]');
+  await page.focus('a[data-profile-link]');
+  await Promise.all([page.waitForNavigation(), page.keyboard.press('Enter')]);
+  await page.waitForSelector('.skill-panel[data-node-id="node:advanced:math-lab:modulus"]');
+  assert.equal(await page.$eval('#map-skill-search', input => input.value), 'modulus');
+  assert.equal(dev.db.prepare('SELECT COUNT(*) AS count FROM performance_events').get().count, 1);
+});
