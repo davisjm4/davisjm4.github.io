@@ -1,7 +1,7 @@
 import { profilesAvailable, request } from './config.mjs';
 import { PROFILE_ID, PROFILE_KEY, practiceEvent } from './profile-model.mjs';
 import { el, button, download } from './dom.mjs';
-import { profileCsv, renderProfileProgress } from './profile-report.mjs';
+import { profileCsv, renderProfileProgress } from './profile-report.mjs?v=targeted-clarity-v1';
 
 import {device,activeProfile as identity,observeSync,queueKeys,queueProfileEvent,syncQueuedPractice as syncSoon} from './profile-sync.mjs?v=guest-map-v1';
 

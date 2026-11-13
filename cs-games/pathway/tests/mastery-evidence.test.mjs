@@ -135,7 +135,7 @@ test('annotating evidence does not change tracker totals or per-mode summaries',
 
 // ============================ String Lab ============================
 const bridgeSource = fs.readFileSync(new URL('java-games/string-lab/js/shared-session-bridge.js', root), 'utf8')
-  .replace("import('../../session.js?v=guest-map-v1')", 'Promise.resolve(globalThis.__sharedSession)');
+  .replace(/import\('\.\.\/\.\.\/session\.js\?v=[^']+'\)/, 'Promise.resolve(globalThis.__sharedSession)');
 assert.ok(bridgeSource.includes('globalThis.__sharedSession'), 'bridge source transformation applied (dynamic import replaced)');
 globalThis.dispatchEvent = () => true; // the browser window provides this; the bridge dispatches a ready event when the tracker attaches
 globalThis.__sharedSession = { sessionTracker: () => tracker, addSessionNavigation() {} };

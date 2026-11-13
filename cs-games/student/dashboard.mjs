@@ -6,7 +6,7 @@ import { renderPathway } from './pathway-view.mjs?v=learning-map-v2';
 const notice=document.getElementById('student-connection');
 const panel=document.getElementById('student-pathway');
 if (!profilesAvailable) {
-  notice.textContent='Class profiles are awaiting service setup. You can open any practice game from the CS Games hub.';
+  notice.textContent='Class progress is unavailable right now. You can open any practice game from the CS Games hub.';
 } else if (!activeProfile) {
   notice.textContent='Join using a teacher’s enrollment link, or restore your profile with your recovery credential.';
 } else {
@@ -27,6 +27,20 @@ if (!profilesAvailable) {
         panel.classList.remove('student-panel');
         if(map)map.update(input,{highlight:true,label:'New practice recorded'});
         else {
+          const returnParams=new URLSearchParams(location.search);
+          const returnClass=returnParams.get('class');
+          if(returnClass&&(returnClass!==view.classId||returnParams.get('course')!==view.courseId)){
+            const safe=new URL(location.href);
+            safe.searchParams.delete('class');
+            safe.searchParams.delete('course');
+            safe.hash='';
+            history.replaceState(history.state,'',safe);
+            const note=document.createElement('p');
+            note.className='note';
+            note.setAttribute('role','status');
+            note.textContent='The original class map is unavailable. Here is the map for your active class.';
+            panel.before(note);
+          }
           const returnKey='student-map-return:'+view.classId;
           if(!enrollmentHash){
             try {
@@ -62,8 +76,8 @@ if (!profilesAvailable) {
   };
   if(!classic){
     Promise.all([
-      import('./map/ui/app.mjs?v=guest-map-v1'),
-      import('./map/live-contract.mjs?v=guest-map-v1'),
+      import('./map/ui/app.mjs?v=targeted-clarity-v1'),
+      import('./map/live-contract.mjs?v=targeted-clarity-v1'),
       fetch('../pathway/evidence-gap-registry.json').then(response=>response.ok?response.json():null).catch(()=>null)
     ]).then(([app,contract,registry])=>{
       const mixedActivities=registry?new Set(registry.entries.filter(entry=>entry.mixedReaches===true).map(entry=>entry.game)):undefined;

@@ -1,4 +1,4 @@
-import { teacherProfiles, profileClassSelect } from './wpr-profiles.mjs?v=proficiency-v3';
+import { teacherProfiles, profileClassSelect } from './wpr-profiles.mjs?v=targeted-clarity-v1';
 import { generateDiagnostic, availability, validateSnapshot } from './wpr-online-builder.mjs';
 import { VERSION, csv, MODES, LEVELS } from '../../wpr-games/workplace-readiness/online/model.mjs';
 import { currentTeacher, observeTeacher, mountTeacherAccount, teacherRequest } from './session.mjs';

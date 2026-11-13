@@ -15,7 +15,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=guest-map-v1";
+} from "./session.js?v=targeted-clarity-v1";
 const esc = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -66,7 +66,7 @@ function startGame() {
       .map(([id, label]) => `<option value="${id}">${label}</option>`)
       .join(
         "",
-      )}</select></label>${slug === "variable-lab" ? '<label id="difficulty-wrap" hidden>Trace difficulty <select id="difficulty"><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option></select></label>' : ""}<button id="new" class="secondary">New Challenge</button></div><p id="mode-description" class="muted"></p><section id="stage" class="panel"></section><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div><p id="stats" class="stats"></p>`;
+      )}</select></label>${slug === "variable-lab" ? '<label id="difficulty-wrap" hidden>Trace difficulty <select id="difficulty"><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option></select></label>' : ""}<button id="new" class="secondary">New Challenge</button></div><p id="mode-description" class="muted"></p><section id="stage" class="panel"></section><p id="stats" class="stats"></p>`;
   addSessionNavigation("../");
   if (requestedMode && game.modes[requestedMode]) $("mode").value = requestedMode;
   if ($("difficulty") && ["beginner", "intermediate", "advanced"].includes(requestedDifficulty))
@@ -132,16 +132,15 @@ function startGame() {
     lastWrong = null;
     submitted = false;
     editor = null;
-    $("feedback").hidden = true;
     const diag = diagnostics[q.variant];
     $("stage").innerHTML =
-      `<div class="eyebrow">${game.modes[q.mode]}${q.mode === "trace" ? " · " + esc(q.difficulty[0].toUpperCase() + q.difficulty.slice(1)) : ""}</div><h2>${esc(q.prompt)}</h2>${
+      `<div class="eyebrow">${game.modes[q.mode]}${q.mode === "trace" ? " · " + esc(q.difficulty[0].toUpperCase() + q.difficulty.slice(1)) : ""}</div><h2 id="challenge-prompt" tabindex="-1">${esc(q.prompt)}</h2>${
         q.kind === "debug"
           ? `<p>${esc(q.context)}</p><p class="muted">${esc(q.symptom)}</p>${diag ? `<details class="compiler-diagnostic"><summary>Compiler message</summary><p>Verified javac 17 diagnostic, line ${diag.line}: ${esc(diag.message)}</p></details>` : ""}<pre id="java-code" class="snippet debug-code">${q.tokens.map(t => t.selectable || t.gap ? `<button type="button" class="java-token${t.gap ? " token-gap" : ""}" data-location="${t.id}" aria-pressed="false" aria-label="${esc(t.gap ? "Missing component gap" : t.text)}">${esc(t.gap ? "▯" : t.text)}</button>` : esc(t.text)).join("")}</pre><h3>Choose a correction</h3><div id="fix-bank" class="block-bank">${q.fixes.map((fix, i) => `<button class="secondary" data-fix="${i}"><code>${esc(fix)}</code></button>`).join("")}</div>`
           : q.kind === "assemble"
             ? `<details class="muted"><summary>Introductory type convention</summary><p>${esc(q.convention)}</p></details><div class="builder-fields">${q.fields.map((f) => `<label>${f.label}<select id="piece-${f.id}"><option value="" selected>Choose…</option>${f.choices.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join("")}</select></label>`).join("")}</div><pre id="assembly-preview">Choose declaration pieces.</pre>`
             : `<pre id="java-code" class="snippet">${q.kind === "select" ? renderNode(q.root) : esc(q.code)}</pre>${q.kind === "select" ? '<p>Tap a component; Expand Selection includes its surrounding statement or loop.</p><div class="row"><button id="expand" class="secondary" disabled>Expand Selection</button><button id="clear" class="secondary">Clear Selection</button></div><pre id="selected-text">No component selected.</pre>' : ""}`
-      }${slug === "array-lab" && q.kind !== "collection" ? `<h3>Starting collection</h3><div class="collection-row collection-start">${q.initial.map((v, i) => `<div class="collection-item"><small>index ${i}</small><button>${v}</button></div>`).join("")}</div>` : ""}${q.kind === "collection" ? '<div id="collection-editor"></div>' : ""}${q.kind === "value" ? `<div id="value-bank" class="row">${q.choices.map((v, i) => `<button class="secondary" data-value="${i}">${esc(v)}</button>`).join("")}</div>` : ""}${q.kind === "multi" ? `<div id="grid" class="java-grid">${q.cells.map((c) => `<button class="secondary" data-cell="${esc(c.id)}" aria-pressed="false">${esc(c.label)}</button>`).join("")}</div>` : ""}<div class="actions"><button id="check">Check Answer</button><button id="show" class="secondary">Show Answer</button><button id="next" class="secondary">Next Challenge</button>${q.trace ? '<button id="watch" class="secondary" hidden disabled>Watch Execution</button>' : ""}</div><section id="execution" hidden></section>`;
+      }${slug === "array-lab" && q.kind !== "collection" ? `<h3>Starting collection</h3><div class="collection-row collection-start">${q.initial.map((v, i) => `<div class="collection-item"><small>index ${i}</small><button>${v}</button></div>`).join("")}</div>` : ""}${q.kind === "collection" ? '<div id="collection-editor"></div>' : ""}${q.kind === "value" ? `<div id="value-bank" class="row">${q.choices.map((v, i) => `<button class="secondary" data-value="${i}">${esc(v)}</button>`).join("")}</div>` : ""}${q.kind === "multi" ? `<div id="grid" class="java-grid">${q.cells.map((c) => `<button class="secondary" data-cell="${esc(c.id)}" aria-pressed="false">${esc(c.label)}</button>`).join("")}</div>` : ""}<div class="actions"><button id="check">Check Answer</button><div id="feedback" class="feedback" role="status" aria-atomic="true" tabindex="-1" hidden></div><button id="next" class="secondary">Next Challenge</button><button id="show" class="secondary">Show Answer</button>${q.trace ? '<button id="watch" class="secondary" hidden disabled>Watch Execution</button>' : ""}</div><section id="execution" hidden></section>`;
     function set(value) {
       if (!active()) return;
       selected = value;
@@ -219,7 +218,7 @@ function startGame() {
     }
     $("check").onclick = check;
     $("show").onclick = show;
-    $("next").onclick = next;
+    $("next").onclick = () => { next(); $("challenge-prompt").focus(); };
     if ($("watch")) $("watch").onclick = watch;
     stats();
   }
@@ -280,10 +279,12 @@ function startGame() {
     $("feedback").className =
       "feedback " + (neutral ? "" : good ? "good" : "bad");
     $("feedback").textContent = text;
-    $("feedback").focus();
+    const verdict = $("feedback");
+    verdict.focus({ preventScroll: true });
+    verdict.scrollIntoView?.({ block: "nearest", behavior: "instant" });
     stats();
   }
-  function showTraceFeedback() {
+  function showTraceFeedback(explanation) {
     if (q.mode !== "trace" || !q.traceRows) return;
     const variables = Object.keys(q.types || {});
     const header = variables.map((name) => `<th scope="col">${esc(name)}</th>`).join("");
@@ -292,7 +293,7 @@ function startGame() {
       .join("");
     $("execution").hidden = false;
     $("execution").innerHTML =
-      `<h3>Execution trace</h3><div class="trace-table-wrap"><table class="trace-table"><thead><tr><th scope="col">Step</th><th scope="col">Statement</th>${header}<th scope="col">Printed output</th></tr></thead><tbody>${rows}</tbody></table></div><div class="trace-explanation">${q.traceRows.map((step) => `<p><strong>Line ${step.line}:</strong> ${esc(step.explanation)}${[...(step.steps || []), ...(step.notes || [])].map(detail => ` ${esc(detail)}`).join("")}</p>`).join("")}</div>`;
+      `<h3>Execution trace</h3>${explanation ? `<p>${esc(explanation)}</p>` : ""}<div class="trace-table-wrap"><table class="trace-table"><thead><tr><th scope="col">Step</th><th scope="col">Statement</th>${header}<th scope="col">Printed output</th></tr></thead><tbody>${rows}</tbody></table></div><div class="trace-explanation">${q.traceRows.map((step) => `<p><strong>Line ${step.line}:</strong> ${esc(step.explanation)}${[...(step.steps || []), ...(step.notes || [])].map(detail => ` ${esc(detail)}`).join("")}</p>`).join("")}</div>`;
   }
   function lockTraceIncorrect() {
     const chosen = selected === null ? "" : String(selected),
@@ -308,9 +309,9 @@ function startGame() {
     $("next").disabled = false;
     message(
       false,
-      `Incorrect. Correct answer: ${q.answer}.${misconception ? " " + misconception.explanation : ""} Review the execution trace below, then choose Next Challenge.`,
+      `Incorrect. Correct answer: ${q.answer}. Review the execution trace below or choose Next Challenge.`,
     );
-    showTraceFeedback();
+    showTraceFeedback(misconception?.explanation);
   }
   function check() {
     if (!active()) {
@@ -350,7 +351,7 @@ function startGame() {
       return;
     }
     if (q.mode === "trace") {
-      finish(false, "Correct on the first try. Review the execution trace below.");
+      finish(false, "Correct on the first try. Review the execution trace below or choose Next Challenge.");
       showTraceFeedback();
       return;
     }

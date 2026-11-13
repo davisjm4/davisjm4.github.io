@@ -1,3 +1,4 @@
+import { withPracticeReturn } from '../../practice-return.mjs';
 // The student map component. Mount it with the curriculum graph and the evaluated progress contract; it draws, it never decides.
 //
 //   const map = mountStudentMap(container, { graph, courseId, progress, attempts, pacing, mixedActivities, adapter });
@@ -8,7 +9,7 @@
 import { buildMapModel, findNode, findStop, normalizeProgress } from '../model.mjs?v=guest-map-v1';
 import { readRoute, routeHash } from '../route.mjs';
 import { plural } from '../format.mjs';
-import { createPacingCard, createHeader, createLegend, createSuggested, createToolbar } from './chrome.mjs?v=guest-map-v1';
+import { createPacingCard, createHeader, createLegend, createSuggested, createToolbar } from './chrome.mjs?v=targeted-clarity-v1';
 import { renderAreaMap } from './area-map.mjs';
 import { renderCourseMap } from './course-map.mjs';
 import { el } from './dom.mjs';
@@ -113,6 +114,13 @@ export function mountStudentMap(container, options) {
       }
     },
   });
+  function addReturnLinks(container) {
+    if (!input.guest && !input.classId) return;
+    for (const link of container.querySelectorAll('a[data-action^="practice"], a[data-action="mixed"]')) {
+      link.href = withPracticeReturn(link.href, { origin: location.origin, course: model.courseId, classId: input.classId, route });
+    }
+  }
+
   function renderSide(focusPanel = false) {
     const side = root.querySelector('.map-side');
     if (!side) return;
@@ -123,6 +131,7 @@ export function mountStudentMap(container, options) {
       side.dataset.empty = 'false';
       const panel = createProgressPanel(node, panelCtx(stop));
       side.append(panel);
+      addReturnLinks(panel);
       root.dataset.panel = 'open';
       if (focusPanel) panel.querySelector('.panel-title')?.focus({ preventScroll: false });
     } else {
@@ -201,6 +210,7 @@ export function mountStudentMap(container, options) {
       const stops = stop ? [stop] : model.stops;
       main.append(renderListView(model, stops, { onSelect: (n) => select(n), onOpenStop: openStop, onPractice: (i) => adapter.onPractice?.(i), selectedId: route.nodeId, showStopButton: !stop }));
     }
+    addReturnLinks(root);
     if (showSide) renderSide(focus === 'panel'||Boolean(keepPanel));
     if (keepScroll && prev && stageCtl) stageCtl.viewport.scrollTo({ left: prev.left, top: prev.top, behavior: 'auto' });
 
@@ -227,8 +237,19 @@ export function mountStudentMap(container, options) {
   window.addEventListener('hashchange', onHash);
   window.addEventListener('popstate', onHash);
 
+  const hadMapContext = route.view === 'area' || route.nodeId !== null;
+  const wantedStop = route.stopId, wantedNode = route.nodeId;
   build();
-  render({ focus: null });
+  const stale = hadMapContext && (wantedStop !== route.stopId || wantedNode !== route.nodeId);
+  if (stale) writeHash(true);
+  render();
+  if ((input.guest || input.classId) && route.nodeId) requestAnimationFrame(() => {
+    if (document.activeElement === document.body) root.querySelector('.panel-title')?.focus();
+  });
+  if (stale) {
+    const note = el('p', { class: 'note', role: 'status', text: 'The previous skill or area is unavailable. Use this map to choose where to continue.' });
+    container.prepend(note);
+  }
 
   return {
     get model() { return model; },

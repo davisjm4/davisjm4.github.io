@@ -56,8 +56,10 @@ test('published requirements and real Loop Lab practice appear in the student ma
   assert.equal(await teacher.$('[name=teacher-key]'),null);
   await teacher.type('input[aria-label="Minimum questions"]','30');
   await teacher.type('input[aria-label="Required accuracy as a percentage"]','90');
-  await byText(teacher,'.mreq','Save class defaults');
-  await see(teacher,'.mreq-status','Class defaults saved to the draft.');
+  await see(teacher,'.mreq-persistence','Unapplied changes');
+  await byText(teacher,'.mreq','Apply class defaults');
+  await see(teacher,'.mreq-persistence','Unsaved changes');
+  await see(teacher,'.mreq-status','Class defaults applied.');
   const evidence=process.env.MASTERY_EVIDENCE_DIR;
   if(evidence)mkdirSync(evidence,{recursive:true});
   const widths=[[390,844],[768,1024],[1280,900]];
@@ -80,11 +82,13 @@ test('published requirements and real Loop Lab practice appear in the student ma
   if(acknowledgement)await acknowledgement.click();
   await byText(teacher,'.mreq','Save draft');
   await see(teacher,'.mreq-status','Draft saved');
+  await see(teacher,'.mreq-persistence','Saved draft.');
   await student.reload();
   await see(student,'#student-pathway','Self-paced');
   assert.equal(await student.$('.practice-challenge'),null);
   await byText(teacher,'.mreq','Publish requirements');
   await see(teacher,'.mreq-status','Published version 2');
+  await see(teacher,'.mreq-persistence','Published requirements · version 2');
 
   const showLoop=async()=>{
     await wait(student,'#student-pathway .map-app');
@@ -106,7 +110,9 @@ test('published requirements and real Loop Lab practice appear in the student ma
   }
   await Promise.all([student.waitForNavigation(),activate(student,focusLink)]);
   await answer('looptype');
+  assert.equal(await student.$eval('a[data-profile-link]',link=>link.textContent),'Back to Course Map');
   await Promise.all([student.waitForNavigation(),activate(student,'a[data-profile-link]')]);
+  await wait(student,panel);
   await showLoop();
   assert.match(await card(),/1 of the 30 required questions/);
 
