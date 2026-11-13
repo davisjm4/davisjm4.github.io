@@ -13,13 +13,14 @@ export function createSkillSearch(model, { layout, query, onQuery, onShow, onPra
     results.hidden = !matches.length;
     results.replaceChildren(...matches.map(({ node, stop, match }) => {
       const link = node.practice[0];
+      const practiceLabel = link?.kind === 'open' ? 'Open activity' : 'Practice';
       return el('li', {},
         el('strong', { text: node.title }),
         el('small', { text: [model.courseTitle, stop.baseTitle, 'Matches ' + match].filter(Boolean).join(' · ') }),
         el('div', { class: 'suggested-actions' },
           el('button', { class: 'btn', type: 'button', 'aria-label': 'Show ' + node.title + ' on ' + layout,
             text: layout === 'list' ? 'Show in List' : 'Show on Map', onclick: () => onShow(node) }),
-          link ? el('a', { class: 'btn', href: link.url, 'data-action': 'practice-search', 'data-return-skill': node.id, 'aria-label': 'Practice ' + node.title, text: 'Practice',
+          link ? el('a', { class: 'btn', href: link.url, 'data-action': 'practice-search', 'data-return-skill': node.id, 'aria-label': practiceLabel + ' for ' + node.title, text: practiceLabel,
             onclick: event => { if (onPractice({ node, url: link.url, kind: link.kind }) === true) event.preventDefault(); } })
             : el('small', { text: 'Practice activity unavailable' })));
     }));

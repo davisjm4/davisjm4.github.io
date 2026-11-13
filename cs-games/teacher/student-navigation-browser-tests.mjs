@@ -1,10 +1,12 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { startDev } from '../../wpr-games/workplace-readiness/service/dev.mjs';
 
 const require = createRequire(new URL('../../wpr-games/workplace-readiness/package.json', import.meta.url));
 const { launch } = require('./tests/browser/harness.js');
+const axeSource = readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 
 test('course cards open course maps and search survives practice return', { timeout: 90000 }, async t => {
   const dev = await startDev({});
@@ -38,10 +40,17 @@ test('course cards open course maps and search survives practice return', { time
   assert.equal(await page.$eval(menu, node => node.open), false);
   assert.equal(await page.evaluate(() => document.activeElement.tagName), 'SUMMARY');
 
+  assert.equal(await page.$('.guest-pickup'), null, 'new learners see the shared recommendation');
   const search = '#map-skill-search';
   const result = '.map-search-results li:first-child';
   await page.type(search, 'indexOf()');
   await page.waitForSelector(result);
+  await page.evaluate(axeSource);
+  const violations = await page.evaluate(async () => (await window.axe.run(
+    { include: ['[data-student-navigation]', '.map-skill-search'] },
+    { runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa'] },
+  )).violations.map(({ id, nodes }) => ({ id, elements: nodes.map(node => node.target) })));
+  assert.deepEqual(violations, []);
   assert.match(await page.$eval(result, row => row.textContent), /Find String indices/);
   await page.focus(result + ' button');
   await page.keyboard.press('Enter');

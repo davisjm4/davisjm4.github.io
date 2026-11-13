@@ -127,9 +127,10 @@ function courseChooser() {
 
 function pickUp() {
   const g = view.guest, target = g.resume;
+  if (map && !target?.fromPosition) return null;
   const heading = !target ? 'You have worked through the suggestions' : target.fromPosition ? 'Pick up where you left off' : g.totals.answered ? 'Try this next' : 'A good first step';
   const href = target && linkFor(target.nodeId);
-  const alternatives = g.suggestion.alternatives.filter(a => a.nodeId !== target?.nodeId).slice(0, 3);
+  const alternatives = map ? [] : g.suggestion.alternatives.filter(a => a.nodeId !== target?.nodeId).slice(0, 3);
   return el('section', { class: 'student-panel guest-pickup', 'aria-labelledby': 'pickup-h' }, el('h2', { id: 'pickup-h', text: heading }),
     target ? [el('p', { class: 'guest-target' }, el('strong', { text: target.title })), el('small', { text: target.reason }),
       el('div', { class: 'guest-pickup-actions' },
