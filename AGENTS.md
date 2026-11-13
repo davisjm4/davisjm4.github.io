@@ -1,0 +1,9 @@
+# CS Games contributor instructions
+
+For CS Games work, read [the specification index](docs/README.md) and [development and validation](docs/development.md) first. Read the domain documents linked from the index for every affected requirement. For teacher-directed learning, read the [assignment contract](docs/teacher-directed-learning.md), [student experience](docs/student-experience.md), [teacher experience](docs/teacher-experience.md), [mastery rules](docs/mastery-and-evidence.md), and [acceptance scenarios](docs/acceptance-tests.md) together.
+
+The approved CS Games specification is the development baseline. Product decisions marked approved come from the product owner. Proposed designs, application implementation, data migration, and deployment require authorization for their own scope. Publishing the specification authorizes documentation only.
+
+Before editing, identify the affected requirement IDs, current entry points, shared owners and compatibility risks. Reuse shared navigation, identity, evidence, mastery, reporting and My Session components. Apply [CSG-DEV-03](docs/development.md#csg-dev-03--shared-component-release-gate) to every new activity and CTE pathway. Parallel navigation, mastery, reporting and session interfaces require an approved exception before release. Preserve deployed links, stored records, source attribution, and role boundaries. Record unresolved policy conflicts in [the decision log](docs/decisions.md) and request a product decision before changing behavior that depends on one. Record test results by requirement and environment. Use synthetic data for authenticated walkthroughs.
+
+These product instructions apply to CS Games, its Java and AP CSP games, Workplace Readiness, RACECES, Robotics, Teacher Tools, and their shared backend. Preserve the scope of unrelated portfolio and classroom materials in this repository.
