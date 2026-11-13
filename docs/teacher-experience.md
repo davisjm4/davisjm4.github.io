@@ -1,0 +1,31 @@
+# Teacher experience
+
+## CSG-TCH-01 — Class-first dashboard
+
+**Approved direction · existing class list, redesigned dashboard planned. Roles:** teachers. Teacher Tools opens My Classes with create class and a clear class switcher. Within the selected class, prioritize instructional status and actionable progress. The proposed sections are Progress, Assignments, Plan and Manage. Preserve current class and selection across sections and return paths. Account recovery, enrollment invite rotation, archiving and destructive actions live in Manage or contextual menus.
+
+**States/data:** signed out, no classes, class selected, archived, loading, permission denied, offline. Server class ownership controls every read/write and derived metric. Keep membership and profile IDs stable. **Dependencies:** CSG-NAV-01/03, CSG-SEC-01. **Accessibility:** current class and section announced, safe confirmations. **Acceptance:** switch among four classes and return to the relevant student or assignment without losing context or exposing another class.
+
+## CSG-TCH-02 — Intervention, matrix and active restrictions
+
+**Approved direction · existing individual reports, class matrix planned. Roles:** teachers. Show Active Restrictions above normal class content as defined by CSG-TDL-03. Provide class-by-skill progress using stable students and skills, filtered by area. Offer student-first and skill-first views with filters for needs review, insufficient evidence, meeting, extension, restricted and recent activity. An intervention flag explains why, evidence volume and time range, and leads to a relevant action. A matrix cell opens student evidence in context and shows official score, formative level, teacher target and eligible first-attempt evidence separately. Account or sync event counts stay in diagnostics. Specific intervention thresholds and recency require approval (CSG-OPEN-07).
+
+**States/data:** no evidence, sparse evidence, incomplete, meeting, extension available, verified, restricted, filtered empty and partial data. Compute teacher-visible rollups from authorized evidence and preserve denominator, policy revision and scope. Never infer a failing score from blank or 0/0. **Dependencies:** CSG-MAS-01/02, CSG-TDL-03, CSG-SEC-01. **Accessibility:** semantic headers, readable table, keyboard filters and list alternative. **Acceptance:** from a 24-student class find who needs support on one skill without opening 24 reports. Distinguish a student with 10/36, one with 44/45 and one with no evidence. Restricted students and release remain at the top on phones.
+
+## CSG-TCH-03 — Review and record evidence
+
+**Approved · partial. Roles:** teachers and enrolled students. Open skill-scoped student evidence and see relevant attempts, eligibility, targets, demonstration criteria, recent revisions and official score history. Make **Record assessment** contextual to that student and skill. Use existing authorized 0–4 assessment and mastery controls. For an adjustment, show previous and new value, context and provenance, and preserve original evidence. Confirmation is visible by the form. No mass official score changes through assignment tools.
+
+**States/data:** no review, draft entry, validation error, saved, superseded assessment, insufficient evidence, conflict. Preserve actor and evidence auditability, scope and version. **Dependencies:** CSG-MAS-02/03, CSG-SEC-01. **Accessibility:** named score and evidence inputs, safe confirmation and error focus. **Acceptance:** record 4/4 through a project for one student/skill, confirm in place and verify student view. Edit only through authorized assessment workflow and retain the history.
+
+## CSG-TCH-04 — Requirements and pacing
+
+**Approved · current editors implemented, unified workspace proposed. Roles:** teachers, enrolled students. Plan houses the pathway, practice requirements and pacing. Start new classes with a self-paced published course pathway. Preserve class, area and skill overrides, draft validation, preview, explicit publish and rollback through a new revision. Preview affected learners/skills, dates and rule meaning. Keep protected testing/review days, calendar exceptions, rotations and optional target dates. Clearly distinguish local edit, saved draft and published state. Warn about navigating away with unsaved changes.
+
+**States/data:** self-paced, private plan, shared published, dirty, saved draft, invalid, previewed, stale conflict, published and rolled-forward rollback. Immutable published revisions and approved policy versions retain evidence. **Dependencies:** CSG-MAS-03, CSG-SEC-01. **Accessibility:** labeled controls and short review summary, reliable focus for errors. **Acceptance:** publish a 30-question/90% draft only after preview, verify students see the new revision and earlier records persist, reject stale competing publish, and reopen the right class and plan stage.
+
+## CSG-TCH-05 — Assignments, diagnostics and reports
+
+**Approved direction · diagnostics/export implemented, class focus planned. Roles:** teachers, enrolled students and anonymous diagnostic participants. Assignments lists class-scoped work and status, with distinct entry points for **Assign learning focus** and **Create diagnostic or practice**. Follow CSG-TDL for classroom direction. For diagnostics, preserve frozen snapshots, scoring keys, feedback timing and report scope. Support diagnose → inspect gaps → targeted practice → reassess. Clarify completed versus included counts in aggregated reports. Preserve current privacy suppression and indicate when a comparison is not meaningful. Provide class, student and assessment exports with source, scope, denominator and date/version.
+
+**States/data:** draft, published, scheduled, in progress, completed, insufficient report data, ended, export ready/error. Enforce class ownership and maintain separate anonymous vs class-linked report scope. **Dependencies:** CSG-TDL-01/03, CSG-SES-02, CSG-SEC-01/02. **Accessibility:** distinguish filters, report and export actions; use descriptive headings/table labels. **Acceptance:** open a diagnostic aggregate and create a targeted follow-up, verify small counts remain suppressed, export an explicitly labeled view, and link back to the same class. Confirm existing Canvas QTI export remains reachable.
