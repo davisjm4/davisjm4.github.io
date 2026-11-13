@@ -2,7 +2,7 @@ import { searchSkills } from '../search.mjs';
 import { el } from './dom.mjs';
 
 export function createSkillSearch(model, { layout, query, onQuery, onShow, onPractice }) {
-  const input = el('input', { id: 'map-skill-search', type: 'search', value: query, autocomplete: 'off' });
+  const input = el('input', { id: 'map-skill-search', type: 'search', value: query, maxlength: 120, autocomplete: 'off' });
   const status = el('p', { class: 'muted small', role: 'status' });
   const results = el('ul', { class: 'map-search-results', 'aria-label': 'Matching skills' });
   function render() {

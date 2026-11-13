@@ -26,7 +26,12 @@ export function mountStudentMap(container, options) {
   let overrides = { progress: new Map(), attempts: {} };
   let deltas = new Map();
   let model, route = hashRouting ? readRoute() : { view: 'course', stopId: null, nodeId: null, layout: 'map' };
-  let searchQuery = '';
+  const searchStorageKey = () => 'cs-games:skill-search:' + (input.classId ?? 'guest') + ':' + input.courseId;
+  function restoreQuery() {
+    if (!input.guest && !input.classId) return '';
+    try { return sessionStorage.getItem(searchStorageKey()) ?? ''; } catch { return ''; }
+  }
+  let searchQuery = restoreQuery();
   let stageCtl = null, zoomLevel = 1, resizeObserver = null, lastStopId = null, destroyed = false;
   const restartIds = new Map();   // one request id per attempt, reused on retry, so a repeated click cannot start two attempts
   const live = el('p', { class: 'sr-only', role: 'status', 'aria-live': 'polite' });
@@ -205,6 +210,9 @@ export function mountStudentMap(container, options) {
       onPractice: info => adapter.onPractice?.(info),
       onQuery(query, results) {
         searchQuery = query;
+        if (input.guest || input.classId) {
+          try { sessionStorage.setItem(searchStorageKey(), query); } catch { /* Search still works in this view. */ }
+        }
         addReturnLinks(results);
       },
     });
@@ -280,7 +288,7 @@ export function mountStudentMap(container, options) {
       if (label !== null) options.highlightLabel = label;
       overrides = { progress: new Map(), attempts: {} };
       if (courseChanged) {
-        searchQuery = '';
+        searchQuery = restoreQuery();
         route = { view: 'course', stopId: null, nodeId: null, layout: route.layout };
       }
       deltas = new Map();

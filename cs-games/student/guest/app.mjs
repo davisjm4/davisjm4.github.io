@@ -15,7 +15,8 @@ import { TRACKED_NODE_IDS, TRACKED_GRAPH_VERSION } from './coverage-data.mjs';
 const app = document.getElementById('guest-app');
 const notice = document.getElementById('guest-notice');
 const storageNote = document.getElementById('guest-storage-note');
-const classic = new URLSearchParams(location.search).get('view') === 'classic';
+const params = new URLSearchParams(location.search);
+const classic = params.get('view') === 'classic';
 const mapHost = el('section', {class:'guest-map-host','aria-label':'Interactive learning map'});
 let mixedActivities;
 const LAUNCH = 'cs-games:guest:launch';
@@ -98,7 +99,7 @@ const courseNames={advanced:'Advanced Computer Science',csp:'AP Computer Science
 function courseChooser() {
   const group = el('div', { class: 'guest-courses', role: 'group', 'aria-label': 'Choose a course' });
   for (const c of guestCourses(graph)) group.append(el('button', { type: 'button', class: 'guest-course', 'aria-pressed': String(c.id === courseId), 'data-course': c.id,
-    onclick: () => { if(courseId===c.id)return; store.setCourse(c.id); courseId = c.id; afterCard = null; openAreas = new Set(); const url = new URL(location.href); url.searchParams.set('course',c.id); url.hash=''; history.replaceState(null,'',url); render({ focus: 'course:' + c.id, fresh: true }); } },
+    onclick: () => { if(courseId===c.id)return; store.setCourse(c.id); courseId = c.id; afterCard = null; openAreas = new Set(); const url = new URL(location.href); url.searchParams.delete('choose'); url.searchParams.set('course',c.id); url.hash=''; history.replaceState(null,'',url); render({ focus: 'course:' + c.id, fresh: true }); } },
     el('strong', { text: courseNames[c.id]??c.title }), el('small', { text: c.skills + ' skills' })));
   return el('section', { class: 'student-panel', 'aria-labelledby': 'course-h' }, el('h2', { id: 'course-h', text: 'Choose a course' }), group,
     !courseId && el('p', { class: 'guest-hint', text: 'Every skill in the course opens right away. There is nothing to set up.' }));
@@ -140,7 +141,7 @@ function summaryPanel() {
   const g = view.guest, t = g.totals;
   const row = (k, v) => [el('dt', { text: k }), el('dd', { text: v })];
   const recent = g.recent;
-  return el('section', { class: 'student-panel', 'aria-labelledby': 'sum-h' }, el('h2', { id: 'sum-h', text: 'Your practice in this browser' }),
+  return el('section', { id: 'my-session', class: 'student-panel', 'aria-labelledby': 'sum-h', tabindex: '-1' }, el('h2', { id: 'sum-h', text: 'Your practice in this browser' }),
     el('dl', { class: 'guest-stats' }, row('Questions answered', String(t.answered)), row('First-try correct', String(t.correct)), row('First-try accuracy', pct(t.answered, t.correct)),
       row('Skills practiced', `${g.practicedSkills} of ${g.skillCount}`), row('Not practiced yet', String(g.notPracticedSkills)),
       row('Areas to review', g.reviewAreas.length ? String(g.reviewAreas.length) : 'None')),
@@ -214,12 +215,16 @@ function render({ focus, fresh = false } = {}) {
     if(map)map.update(input);
     else map=mountStudentMap(mapHost,{...input,adapter});
   }
-  app.replaceChildren(...[courseChooser(), pickUp(), coverageNote(), jumpControl(), classic?el('section',{class:'student-panel guest-pathway','aria-label':'Learning pathway'},pathwayEl):mapHost,
-    afterPracticeCard(), summaryPanel(), storagePanel(state)].filter(Boolean)); // replaceChildren(null) would print "null"
+  app.replaceChildren(...[courseChooser(), classic?el('section',{class:'student-panel guest-pathway','aria-label':'Learning pathway'},pathwayEl):mapHost,
+    jumpControl(), coverageNote(), pickUp(), afterPracticeCard(), summaryPanel(), storagePanel(state)].filter(Boolean)); // replaceChildren(null) would print "null"
   lastStamp = store.state().updated;
   syncStorageNote();
   if (focus) (app.querySelector(`[data-control="${CSS.escape(focus)}"]`) || app.querySelector(`[data-course="${CSS.escape(String(focus).replace('course:', ''))}"]`))?.focus({ preventScroll: true });
 }
+
+window.addEventListener('hashchange', () => {
+  if (location.hash === '#my-session') document.getElementById('my-session')?.focus();
+});
 
 function refreshIfChanged() { if (graph && store.state().updated !== lastStamp && !document.hidden) render(); }
 for (const type of ['focus', 'pageshow']) window.addEventListener(type, refreshIfChanged);
@@ -230,11 +235,15 @@ try {
   graph = await loadGraph();
   const registry=await fetch('../../pathway/evidence-gap-registry.json').then(r=>r.ok?r.json():null).catch(()=>null);
   mixedActivities=registry?new Set(registry.entries.filter(e=>e.mixedReaches===true).map(e=>e.game)):undefined;
-  const fromUrl = new URLSearchParams(location.search).get('course');
+  const fromUrl = params.get('course');
   const saved = store.state().course;
-  courseId = COURSE_IDS.includes(fromUrl) ? fromUrl : COURSE_IDS.includes(saved) ? saved : null;
+  courseId = COURSE_IDS.includes(fromUrl) ? fromUrl : params.get('choose') !== '1' && COURSE_IDS.includes(saved) ? saved : null;
   if (courseId && courseId !== saved) store.setCourse(courseId);
   render();
+  if (location.hash === '#my-session') {
+    if (courseId) document.getElementById('my-session')?.focus();
+    else say('Choose a course to see its independent practice history.');
+  }
 } catch (error) {
   app.replaceChildren(el('p', { role: 'alert', text: error.message + ' You can still open any practice game from the CS Games hub.' }), el('p', {}, el('a', { href: '../../', text: 'Go to the CS Games hub' })));
 }

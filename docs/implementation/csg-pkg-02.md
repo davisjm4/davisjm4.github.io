@@ -8,11 +8,12 @@ Status: in development. Branch: `codex/csg-pkg-02-student-navigation`, based on 
 
 ## In this branch
 
+- The homepage, guest map and enrolled page share a role-aware header. The Courses link opens the chooser. My Session links to the existing independent practice section during this stage. The guest map precedes secondary recommendations and reporting.
 - The four course cards open the associated guest maps and retain distinct activity catalog links.
 - The existing map and list component provides concept search for either layout and role. The search uses authored aliases and curriculum labels, ranks exact concept matches first and gives each result a skill, area, course and matched term.
-- Search and the selected skill survive a Map/List switch. Practice results use the contextual return link introduced in CSG-PKG-01.
-- `node --test cs-games/student/map/search.test.mjs` verifies the specified concepts, punctuation, role-independent course scope and no-match behavior. Local Chromium at 390 CSS px verified the homepage course entry, `indexOf()` search, skill selection and Map/List continuity.
+- Search and the selected skill survive a Map/List switch and a practice return in the same tab. The query stays in tab-local storage scoped by course and learner role.
+- `node --test cs-games/student/map/search.test.mjs` verifies the specified concepts, punctuation, role-independent course scope and no-match behavior. Local Chromium at 390 CSS px verified all four homepage course entries, keyboard skill selection, Map/List continuity, practice return and the no-match state. Guest attribution, targeted clarity regression and catalog route tests also passed.
 
 ## Resume here
 
-Complete the shared role-aware navigation and course chooser hierarchy. Preserve the Workplace Readiness RACECES entry and legacy `#shared-tools` link when adjusting the homepage. Preserve search state through practice return, including explicit search-result launches, and test keyboard focus, no match, unavailable activities, enrolled evidence and course switching. Update catalog navigation tests for the new map-first cards and verify the legacy paths directly. Run full viewport and accessibility parity before retiring the area jump or redundant suggestions. Then open the release PR and continue to CSG-PKG-03 after production verification.
+Finish the compact responsive header and verify its signed-in My Class state. Update the guest chooser layout and clarify scope before a signed-in learner enters independent practice. Exercise unavailable results, enrolled search evidence, course switching, and the seven approved concept examples in both Map and List. Verify legacy paths, layout and accessibility parity before retiring the area jump or redundant suggestions. Then open the release PR and continue to CSG-PKG-03 after production verification.
