@@ -266,3 +266,44 @@
 .map-app .crumbs { min-height: 28px; }
 .map-app .map-meta { margin: .7rem 0; }
 .map-app .seg-btn:focus-visible { outline-offset: -4px; }
+
+.map-skill-search {
+  display: block;
+  padding: 0.75rem 0;
+}
+
+.map-skill-search label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 650;
+}
+
+.map-skill-search input {
+  box-sizing: border-box;
+  width: min(100%, 32rem);
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  color: inherit;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+}
+
+.map-skill-search [role="status"]:empty {
+  margin: 0;
+}
+
+.map-search-results {
+  max-block-size: 22rem;
+  overflow: auto;
+  padding: 0;
+  list-style: none;
+}
+
+.map-search-results li {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--line);
+}

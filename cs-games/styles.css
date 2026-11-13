@@ -247,3 +247,5 @@ h3 { font-size: 1.2rem; margin: 8px 0; }
 /* Keep the new three-pathway cards within narrow viewports. */
 .course-card { min-width: 0; }
 .course-card h2, .shared-tools h2 { overflow-wrap: anywhere; }
+
+.course-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }

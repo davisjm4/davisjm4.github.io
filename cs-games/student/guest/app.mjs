@@ -6,7 +6,7 @@ import { buildGuestView, guestCourses } from './pathway.mjs?v=build6';
 import { reconcileEvents } from './evidence.mjs';
 import { afterPractice } from './suggest.mjs';
 import { activityName } from './progress.mjs';
-import { mountStudentMap } from '../map/ui/app.mjs?v=targeted-clarity-v1';
+import { mountStudentMap } from '../map/ui/app.mjs?v=student-navigation-v1';
 import { inputFromStudentContract } from '../map/live-contract.mjs?v=targeted-clarity-v1';
 import { decoratePathway, markButtons, practiceHref } from './decorate.mjs';
 import { classProfileActive } from './class-state.mjs';

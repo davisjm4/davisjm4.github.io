@@ -76,7 +76,7 @@ if (!profilesAvailable) {
   };
   if(!classic){
     Promise.all([
-      import('./map/ui/app.mjs?v=targeted-clarity-v1'),
+      import('./map/ui/app.mjs?v=student-navigation-v1'),
       import('./map/live-contract.mjs?v=targeted-clarity-v1'),
       fetch('../pathway/evidence-gap-registry.json').then(response=>response.ok?response.json():null).catch(()=>null)
     ]).then(([app,contract,registry])=>{
