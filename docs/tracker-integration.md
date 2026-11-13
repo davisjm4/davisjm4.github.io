@@ -1,6 +1,6 @@
 # Master Project Tracker integration proposal
 
-[Live Master Project Tracker](https://docs.google.com/spreadsheets/d/16Zr5Nn2ubN2ecBvOZUbeDpOnxqGHvDUty08QqqMPtnA/edit). Read-only review, November 13, 2026. Headers and sample rows were inspected. No spreadsheet updates are authorized by this draft.
+[Live Master Project Tracker](https://docs.google.com/spreadsheets/d/16Zr5Nn2ubN2ecBvOZUbeDpOnxqGHvDUty08QqqMPtnA/edit). CSG-DEC-14 authorizes adding the v1.0 baseline and requirement references while retaining existing history and IDs. The integration options below remain available for future scoped updates.
 
 | Existing tab | Observed fields and use | Proposed integration after approval |
 | --- | --- | --- |
@@ -12,7 +12,7 @@
 
 ## CSG-TRK-01 — Stable links and separate states
 
-**Proposed · pending baseline approval. Roles:** product owner, contributors, reviewers. Add a **Product Requirements** tab keyed by immutable CSG requirement ID and a **UX Decisions** tab keyed by decision ID. Cross-reference historical inventory IDs where grounded. The backlog links to package IDs and acceptance scenario IDs. Copy only short descriptions and stable URLs. Canonical policy stays in Git.
+**Approved baseline linkage · additional schema changes remain proposals. Roles:** product owner, contributors, reviewers. Add a **Product Requirements** tab keyed by immutable CSG requirement ID and a **UX Decisions** tab keyed by decision ID. Cross-reference historical inventory IDs where grounded. The backlog links to package IDs and acceptance scenario IDs. Copy only short descriptions and stable URLs. Canonical policy stays in Git.
 
 | Tab | Proposed columns |
 | --- | --- |

@@ -1,6 +1,6 @@
 # Product decision log
 
-Owner: Josiah Davisson. This register records product approval separately from the draft's merge and any subsequent implementation authorization.
+Owner: Josiah Davisson. This register records product approval separately from documentation publication and subsequent implementation authorization.
 
 | Decision ID | State and source | Decision and affected requirements |
 | --- | --- | --- |
@@ -11,12 +11,13 @@ Owner: Josiah Davisson. This register records product approval separately from t
 | CSG-DEC-05 | Approved direction · November 13 specification brief §3 | Course selection before map, Map/List, concept search, one recommendation, consistent return, My Session with named print and official mastery above provisional evidence. CSG-NAV-01/02/03, CSG-STU-03, CSG-SES-01. |
 | CSG-DEC-06 | Approved · November 13 brief §5 and addendum §§1–6 | Teacher-directed learning defaults to advisory. **Class-wide first** regardless of time. **Both destinations available** in either order. Keep independent position and each assignment state. Restrictions coexist, affect unrelated launches, and default to manual release. Teacher sees and releases restricted profiles in the dashboard. Assigned evidence uses the ordinary evaluator, and official evidence is retained. CSG-TDL-01–04, CSG-STU-04, CSG-TCH-02/05, CSG-MAS-04, CSG-SEC-03. |
 | CSG-DEC-07 | Superseded · initial §5 recommendation | Preferred individual focus is superseded by the explicit addendum on class-first display. Earlier activation time also carries no priority. |
-| CSG-DEC-08 | Approved · November 13 publication boundary | Documentation draft only. Merge, baseline version and tracker connections require explicit approval. Prior release authorization recorded in the tracker does not approve this draft. CSG-DEV-01/02. |
+| CSG-DEC-08 | Approved · November 13 publication boundary | Documentation draft only. Merge, baseline version and tracker connections require explicit approval. Publication approval was later recorded in CSG-DEC-14. Prior release authorization in the tracker applies only to its original scope. CSG-DEV-01/02. |
 | CSG-DEC-09 | Approved · Version 1.0 review, decisions 1 and 6 | Course formative proficiency, class practice target progress and official teacher-reviewed mastery are independent results. Publishing a target can change target status only for the same evidence and rubric. Preserve evidence, historical policy context and teacher-verified scores. CSG-MAS-02/03, CSG-STU-03, CSG-TCH-02/04. |
 | CSG-DEC-10 | Approved · Version 1.0 review, decision 2 | Enforce restrictions across authenticated class entry points and launches. Public guest access stays available independently. Guest attempts cannot authorize class access, complete class work or silently become class evidence. Clearly explain stale and unknown permission. CSG-TDL-04, CSG-SEC-02/03, CSG-NAV-02/03, CSG-STU-04. |
 | CSG-DEC-11 | Approved · Version 1.0 review, decision 3 | Keep RACECES as a shared tool with a prominent Workplace Readiness entry and its legacy URL. Remove the standalone homepage section as part of the navigation redesign. CSG-NAV-01/03. |
 | CSG-DEC-12 | Approved · Version 1.0 review, decision 4 | Adopt compatible defaults for links, area jump parity, assignment completion and recipients, manual release, offline permission, compact comparison, explicit drafts and guest print. See the dispositions below for product defaults and delivery details. |
 | CSG-DEC-13 | Approved · Version 1.0 review, decision 5 | Every new activity or CTE pathway must pass the shared-component release gate. Parallel navigation, mastery, reporting or session interfaces require an approved exception. CSG-PRD-02, CSG-UX-01, CSG-CUR-01/02, CSG-DEV-03. |
+| CSG-DEC-14 | Approved · November 13, 2026, v1.0 publication and CSG-OPEN-13 | Publish the approved documentation and link its requirements in the tracker. For any future evaluator migration, preserve historically earned progression, original evidence, historical proficiency with its original policy context, and teacher-verified scores. Show accurate current formative proficiency separately and explain differences to teachers and students. Require side-by-side replay and regression verification before evaluator deployment. This decision authorizes documentation, tagging and tracker updates only. CSG-MAS-03, CSG-AT-13, CSG-PKG-08, CSG-DEV-02. |
 
 ## Disposition of draft questions
 
@@ -37,10 +38,8 @@ The IDs below preserve links from draft 0.1. The approved defaults govern produc
 | CSG-OPEN-11 | Resolved by CSG-DEC-12. Explicit Save Draft, then Preview and Publish. | Autosave is deferred. It would need concurrency and recovery checks. |
 | CSG-OPEN-12 | Compatible slices under CSG-DEC-12. Fix independently verified feedback/reporting defects first where authorized. Gate teacher direction on the approved class access, target and completion contracts. | Package dates and deployment order are delivery planning. See [roadmap](evidence-and-roadmap.md). |
 
-## Conditional owner decision before migration
+## Evaluator migration decision
 
-| ID | Trigger and decision | Recommended default |
+| ID | Disposition | Required pre-deployment evidence |
 | --- | --- | --- |
-| CSG-OPEN-13 | If replay shows that the independent course rubric yields a lower result or different progression than a previously displayed coupled result, approve what students and teachers see at cutover and whether prior progression carries forward. | Keep the historical result with its original policy label and preserve previously earned progression. Show the current course result with its rubric and transition context. Keep evidence and official scores intact. Confirm against the actual replay before release. |
-
-No unresolved choice blocks approval of the Version 1.0 product behavior. CSG-OPEN-13 gates only an affected migration. Capture unavailable provenance as a gap. Audit recommendations and historical approvals apply only within their documented scope.
+| CSG-OPEN-13 | Resolved by CSG-DEC-14. Carry forward historically earned progression. Keep historical results with their original policy context and show accurate current formative proficiency separately. Explain differences to teachers and students. Preserve original evidence and teacher-verified mastery scores. | Side-by-side legacy and independent evaluator replay and passing regression tests under CSG-AT-13. Document unavailable historical provenance without inventing results. Evaluator implementation, data migration and deployment require separate authorization. |
