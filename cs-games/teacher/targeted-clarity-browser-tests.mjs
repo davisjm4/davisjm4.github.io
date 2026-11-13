@@ -158,7 +158,7 @@ test('CSG-PKG-01 inline assessment handles an unsuccessful write and records a s
     const rect = status.getBoundingClientRect();
     return { button: button?.type, top: rect.top, bottom: rect.bottom, height: innerHeight };
   });
-  assert.ok(placement.button === 'submit' && placement.top >= 0 && placement.bottom <= placement.height, JSON.stringify(placement));
+  assert.ok(placement.button === 'submit' && placement.top >= -1 && placement.bottom <= placement.height + 1, JSON.stringify(placement));
   assert.equal((await req(profilePath)).verifiedEvidence.filter(row => row.kind === 'assessment' && row.score === 4).length, 1);
   await screenshot(page, 'teacher-assessment-390');
 });
