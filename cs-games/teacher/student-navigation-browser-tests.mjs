@@ -12,6 +12,15 @@ test('course cards open course maps and search survives practice return', { time
   t.after(async () => { await browser.close(); await new Promise(resolve => dev.server.close(resolve)); dev.db.close(); });
   const page = await browser.newPage();
   await page.setViewport({ width: 390, height: 844 });
+  await page.setRequestInterception(true);
+  page.on('request', request => {
+    if (!request.url().endsWith('/curriculum-graph.json')) return void request.continue();
+    void fetch(request.url()).then(response => response.json()).then(graph => {
+      const node = graph.nodes.find(item => item.id === 'node:advanced:math-lab:modulus');
+      node.practice = [];
+      return request.respond({ status: 200, contentType: 'application/json', body: JSON.stringify(graph) });
+    });
+  });
   for (const course of ['csp', 'robotics', 'workplace', 'advanced']) {
     await page.goto(dev.url + '/cs-games/');
     await Promise.all([page.waitForNavigation(), page.click('.course-card a[href*="course=' + course + '"]')]);
@@ -76,6 +85,10 @@ test('course cards open course maps and search survives practice return', { time
     ]) {
       await replaceSearch(concept);
       assert.match(await page.$eval(result, node => node.textContent), title, concept + ' in ' + layout);
+      if (concept === 'remainder') {
+        assert.match(await page.$eval(result, node => node.textContent), /Practice activity unavailable/);
+        assert.equal(await page.$(result + ' a'), null);
+      }
     }
   }
   await page.select('#guest-course-switch', 'csp');

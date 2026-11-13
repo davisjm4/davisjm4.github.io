@@ -16,4 +16,4 @@ Status: in development. Branch: `codex/csg-pkg-02-student-navigation`, based on 
 
 ## Resume here
 
-Exercise unavailable results. All seven approved concept examples passed in both Map and List. Verify legacy paths, layout and accessibility parity before retiring the area jump or redundant suggestions. Draft PR #32 holds this implementation. Complete the remaining acceptance checks, mark it ready, merge after checks pass, verify production, and continue to CSG-PKG-03.
+All seven approved concept examples passed in both Map and List, including an isolated skill with no linked activity. Verify legacy paths, layout and accessibility parity before retiring the area jump or redundant suggestions. Draft PR #32 holds this implementation. Complete the remaining acceptance checks, mark it ready, merge after checks pass, verify production, and continue to CSG-PKG-03.
