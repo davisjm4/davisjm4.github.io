@@ -10,6 +10,19 @@ if (nav) {
     [activeProfile ? 'My Class' : 'Join a Class', '/cs-games/student/', page === 'class'],
     ['Teacher Tools', '/cs-games/teacher/', false],
   ];
-  nav.replaceChildren(el('a', { class: 'brand', href: '/cs-games/', text: 'CS Games' }),
-    ...links.map(([text, href, current]) => el('a', { text, href, 'aria-current': current ? 'page' : undefined })));
+  const menu = el('details', { class: 'student-nav-menu' },
+    el('summary', { text: 'Menu' }),
+    el('div', { class: 'student-nav-links' }, links.map(([text, href, current]) =>
+      el('a', { text, href, 'aria-current': current ? 'page' : undefined }))));
+  const narrow = matchMedia('(max-width: 560px)');
+  function sizeMenu() { menu.open = !narrow.matches; }
+  narrow.addEventListener('change', sizeMenu);
+  sizeMenu();
+  nav.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && narrow.matches && menu.open) {
+      menu.open = false;
+      menu.querySelector('summary').focus();
+    }
+  });
+  nav.replaceChildren(el('a', { class: 'brand', href: '/cs-games/', text: 'CS Games', 'aria-current': page === 'home' ? 'page' : undefined }), menu);
 }

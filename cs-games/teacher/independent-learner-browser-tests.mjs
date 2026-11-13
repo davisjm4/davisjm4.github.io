@@ -61,7 +61,7 @@ test('public guest map, real practice, resume, device layouts and profile isolat
   await button('.guest-pickup-actions button');
   await recorded(binary,1);
 
-  await button('[data-course=advanced]');
+  await page.select('#guest-course-switch','advanced');
   const variable='area:advanced:variable-lab';
   await button(`[data-stop-id="${variable}"]`);
   await button('.map-meta [data-mark=familiar]');
@@ -83,7 +83,7 @@ test('public guest map, real practice, resume, device layouts and profile isolat
   await button(".panel-close");
   for(const [course,width,height] of [['robotics',390,844],['workplace',768,1024],['advanced',1366,768]]){
     await page.setViewport({width,height});
-    await button(`[data-course=${course}]`);
+    await page.select('#guest-course-switch',course);
     await page.waitForSelector('.map-app[data-view=course]');
     assert.ok(await page.$eval('.map-title',e=>e.textContent.endsWith('journey')));
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));

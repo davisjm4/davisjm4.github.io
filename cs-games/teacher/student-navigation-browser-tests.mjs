@@ -20,6 +20,15 @@ test('course cards open course maps and search survives practice return', { time
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), course);
   }
 
+  const menu = '.student-nav-menu';
+  await page.waitForSelector(menu);
+  await page.focus(menu + ' summary');
+  await page.keyboard.press('Enter');
+  assert.equal(await page.$eval(menu, node => node.open), true);
+  await page.keyboard.press('Escape');
+  assert.equal(await page.$eval(menu, node => node.open), false);
+  assert.equal(await page.evaluate(() => document.activeElement.tagName), 'SUMMARY');
+
   const search = '#map-skill-search';
   const result = '.map-search-results li:first-child';
   await page.type(search, 'indexOf()');
@@ -47,4 +56,13 @@ test('course cards open course maps and search survives practice return', { time
   await page.$eval(search, input => { input.value = ''; input.dispatchEvent(new Event('input', { bubbles: true })); });
   await page.type(search, 'nonexistent concept');
   assert.match(await page.$eval('.map-skill-search [role=status]', node => node.textContent), /No matching skills/);
+  for (const [width, height] of [[320, 720], [768, 1024], [1024, 768], [1366, 900]]) {
+    await page.setViewport({ width, height });
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), width + 'px');
+  }
+  await page.select('#guest-course-switch', 'csp');
+  assert.equal(new URL(page.url()).searchParams.get('course'), 'csp');
+  await page.type(search, 'binary representation');
+  assert.match(await page.$eval(result, node => node.textContent), /binary/i);
+  assert.match(await page.$eval(result, node => node.textContent), /AP CSP/);
 });

@@ -8,12 +8,12 @@ Status: in development. Branch: `codex/csg-pkg-02-student-navigation`, based on 
 
 ## In this branch
 
-- The homepage, guest map and enrolled page share a role-aware header. The Courses link opens the chooser. My Session links to the existing independent practice section during this stage. The guest map precedes secondary recommendations and reporting.
+- The homepage, guest map and enrolled page share a role-aware header. The Courses link opens a separate chooser. A selected course uses a compact switcher, and the phone header opens and closes by keyboard. My Session links to the existing independent practice section during this stage. The guest map precedes secondary recommendations and reporting.
 - The four course cards open the associated guest maps and retain distinct activity catalog links.
 - The existing map and list component provides concept search for either layout and role. The search uses authored aliases and curriculum labels, ranks exact concept matches first and gives each result a skill, area, course and matched term.
 - Search and the selected skill survive a Map/List switch and a practice return in the same tab. The query stays in tab-local storage scoped by course and learner role.
-- `node --test cs-games/student/map/search.test.mjs` verifies the specified concepts, punctuation, role-independent course scope and no-match behavior. Local Chromium at 390 CSS px verified all four homepage course entries, keyboard skill selection, Map/List continuity, practice return and the no-match state. Guest attribution, targeted clarity regression and catalog route tests also passed.
+- `node --test cs-games/student/map/search.test.mjs` verifies the specified concepts, punctuation, role-independent course scope and no-match behavior. Local Chromium verified all four homepage course entries, keyboard menu and skill selection, Map/List continuity, practice return, course switching and the no-match state. The tested widths were 320, 390, 768, 1024 and 1366 CSS px. Guest attribution, targeted clarity regression and catalog route tests also passed.
 
 ## Resume here
 
-Finish the compact responsive header and verify its signed-in My Class state. Update the guest chooser layout and clarify scope before a signed-in learner enters independent practice. Exercise unavailable results, enrolled search evidence, course switching, and the seven approved concept examples in both Map and List. Verify legacy paths, layout and accessibility parity before retiring the area jump or redundant suggestions. Then open the release PR and continue to CSG-PKG-03 after production verification.
+Verify the signed-in My Class header and enrolled search evidence. Exercise unavailable results and run the seven approved concept examples in both Map and List. Verify legacy paths, layout and accessibility parity before retiring the area jump or redundant suggestions. Then open the release PR and continue to CSG-PKG-03 after production verification.

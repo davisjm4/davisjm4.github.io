@@ -80,3 +80,6 @@ li.guest-suggested { box-shadow: -4px 0 0 var(--accent); padding-left: .6rem; }
 .guest-skill-controls { margin: 14px 0; }
 .guest-note { font-weight: 600; }
 .guest-map-host .guest-marks { margin: 8px 0; }
+
+.guest-course-switch { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+.guest-course-switch select { max-width: 100%; min-height: 44px; font: inherit; color: inherit; background: var(--panel); border: 1px solid var(--line); border-radius: .5rem; padding: .375rem .625rem; }

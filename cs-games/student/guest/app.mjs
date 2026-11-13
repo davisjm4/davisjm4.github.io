@@ -96,13 +96,33 @@ const adapter={
   }
 };
 const courseNames={advanced:'Advanced Computer Science',csp:'AP Computer Science Principles'};
+function chooseCourse(id) {
+  if (courseId === id) return;
+  store.setCourse(id);
+  courseId = id;
+  afterCard = null;
+  openAreas = new Set();
+  const url = new URL(location.href);
+  url.searchParams.delete('choose');
+  url.searchParams.set('course', id);
+  url.hash = '';
+  history.replaceState(null, '', url);
+  render();
+  document.querySelector('#map-heading')?.focus({ preventScroll: true });
+}
+
 function courseChooser() {
+  const courses = guestCourses(graph);
+  const name = course => courseNames[course.id] ?? course.title;
+  if (courseId) {
+    const select = el('select', { id: 'guest-course-switch', onchange: event => chooseCourse(event.target.value) },
+      courses.map(course => el('option', { value: course.id, selected: course.id === courseId, text: name(course) })));
+    return el('div', { class: 'guest-course-switch' }, el('label', { for: 'guest-course-switch', text: 'Course' }), select);
+  }
   const group = el('div', { class: 'guest-courses', role: 'group', 'aria-label': 'Choose a course' });
-  for (const c of guestCourses(graph)) group.append(el('button', { type: 'button', class: 'guest-course', 'aria-pressed': String(c.id === courseId), 'data-course': c.id,
-    onclick: () => { if(courseId===c.id)return; store.setCourse(c.id); courseId = c.id; afterCard = null; openAreas = new Set(); const url = new URL(location.href); url.searchParams.delete('choose'); url.searchParams.set('course',c.id); url.hash=''; history.replaceState(null,'',url); render({ focus: 'course:' + c.id, fresh: true }); } },
-    el('strong', { text: courseNames[c.id]??c.title }), el('small', { text: c.skills + ' skills' })));
-  return el('section', { class: 'student-panel', 'aria-labelledby': 'course-h' }, el('h2', { id: 'course-h', text: 'Choose a course' }), group,
-    !courseId && el('p', { class: 'guest-hint', text: 'Every skill in the course opens right away. There is nothing to set up.' }));
+  for (const course of courses) group.append(el('button', { type: 'button', class: 'guest-course', 'data-course': course.id, onclick: () => chooseCourse(course.id) },
+    el('strong', { text: name(course) }), el('small', { text: course.skills + ' skills' })));
+  return el('section', { class: 'student-panel', 'aria-labelledby': 'course-h' }, el('h2', { id: 'course-h', text: 'Choose a course' }), group);
 }
 
 function pickUp() {
