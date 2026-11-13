@@ -1,8 +1,8 @@
-import { phase2Difficulty, phase2Rubric } from './coverage-phase2.mjs';
+import { phase2Difficulty, phase2Rubric } from './coverage-phase2.mjs?v=build6';
 
 // Pilot rubric. Entries are reviewed activity/mode/family combinations.
 // A graph node or a difficulty label alone does not authorize proficiency credit.
-export const PROFICIENCY_VERSION = 3;
+export const PROFICIENCY_VERSION = 4;
 const traceId = 'node:advanced:variable-lab:trace';
 const divideId = 'node:csp:digital-divide-lab:CSP-DIVIDE';
 const numberId = 'node:csp:roundoff-overflow-lab:CSP-NUMERIC';

@@ -4,6 +4,7 @@ import vm from "node:vm";
 import { createRequire } from "node:module";
 import * as A from "./architect-engine.js";
 import * as S from "./session.js";
+import { architectComponent } from "./proficiency-metadata.js";
 
 let seed = 930;
 Math.random = () => (seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 2 ** 32;
@@ -93,6 +94,7 @@ const ctx = {
   document, window, console, ...A,
   generateArchitect: (mode) => (currentQ = queuedQ || A.generateArchitect(mode), queuedQ = null, currentQ),
   sessionTracker: () => tracker,
+  architectComponent,
   addSessionNavigation: () => {},
   roundSummary: () => JSON.stringify(tracker.snapshot().totals),
 };

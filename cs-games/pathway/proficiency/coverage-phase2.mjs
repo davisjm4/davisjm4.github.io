@@ -115,12 +115,15 @@ for(const key of ['VARIABLES','PARAMETERS']){
   add(cspId(key),foundation(conceptTier(key)),(_node,event)=>conceptDifficulty(key,event));
 }
 
+// The first mode is the one the student map recommends. For Iteration it is the mode with the most Level 3 models (Nested and Counter
+// are dominated by counting increments, which are practice, so practicing them first would not reach the three models Level 3 needs).
 const architectModes = {
-  SELECTION:['nested-selection','selection'], ITERATION:['nested','iteration','counter','accumulator'],
+  SELECTION:['nested-selection','selection'], ITERATION:['iteration','accumulator','nested','counter'],
   SEQUENCE:['sequence'], ALGORITHMS:['search'], PROCEDURES:['procedure']
 };
 for(const [key,modes] of Object.entries(architectModes)){
-  const intermediate=rule('algorithm-architect',modes[0],6,3,undefined,0.8);
+  // Procedures has two composition models (the direct calls are practice, not Level 3), so three distinct models cannot be reached.
+  const intermediate=rule('algorithm-architect',modes[0],6,key==='PROCEDURES'?2:3,undefined,0.8);
   const tiers=concepts[key]?{beginner:conceptTier(key),intermediate}:{intermediate};
   add(cspId(key),core(tiers),(_node,event)=>{
     if(event.activityId!=='algorithm-architect')return conceptDifficulty(key,event);

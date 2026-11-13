@@ -6,6 +6,7 @@ import {
   roundSummary,
 } from "./session.js?v=guest-map-v1";
 import * as E from "./engine.js?v=platform-expansion-v2";
+import { booleanMakeEvidence, selectBooleanMakeChallenge } from "./proficiency-metadata.js?v=build6";
 import { startCodeConcepts } from "./concepts-ui.js?v=guest-map-v1";
 const $ = (id) => document.getElementById(id),
   esc = (s) =>
@@ -444,6 +445,7 @@ function binary() {
   );
 }
 function booleanGame() {
+  const recentMake = [];
   let c,
     mode,
     answer = null;
@@ -458,8 +460,8 @@ function booleanGame() {
     ),
     () => {
       clearFeedback();
-      c = E.booleanChallenge();
       mode = chosenMode(["evaluate", "make"]);
+      c = mode === "make" ? selectBooleanMakeChallenge(E.booleanChallenge, recentMake) : E.booleanChallenge();
       if (mode === "make" && E.evaluate(c.e, c.values)) {
         let found = false;
         for (let x = 0; x <= 12 && !found; x++) {
@@ -473,10 +475,8 @@ function booleanGame() {
         }
       }
       answer = null;
-      const needsBothInputs = mode === "make" && ["x", "y"].every(input =>
-        Array.from({length:13}, (_, value) => c.solutions.filter(pair => pair[input] === value).length)
-          .every(count => count < 13));
-      const evidence = needsBothInputs ? {family:`both-inputs:${c.e.op.toLowerCase()}`} : undefined;
+      const makeEvidence = mode === "make" ? booleanMakeEvidence(c.solutions, c.e.op) : null;
+      const evidence = makeEvidence?.family ? {family: makeEvidence.family} : undefined;
       mount(
         `<p>${mode === "evaluate" ? "Set the output switch to the result of this expression." : "Adjust x and y (whole numbers 0–12) to open the gate. A valid combination exists."}</p>${mode === "evaluate" ? `<pre>x ← ${c.values.x}\ny ← ${c.values.y}</pre>` : `<div class="row">${numeric("x", "x", c.values.x)}${numeric("y", "y", c.values.y)}</div>`}<pre>${esc(E.formatExpression(c.e))}</pre>${mode === "evaluate" ? `<div class="row">${button("true", "Output: TRUE", true)}${button("false", "Output: FALSE", true)}</div>` : ""}<div class="actions">${button("check", "Check Answer")}</div>`, evidence,
       );

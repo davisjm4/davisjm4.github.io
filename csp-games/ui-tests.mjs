@@ -6,6 +6,7 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import * as logic from "./engine.js";
 import * as S from "./session.js";
+import { booleanMakeEvidence, selectBooleanMakeChallenge } from "./proficiency-metadata.js";
 const require = createRequire(import.meta.url),
   { parseHTML } = require(process.env.CSP_DOM_LIBRARY || "linkedom");
 const src = fs
@@ -76,6 +77,7 @@ function launch(slug) {
     addSessionNavigation: () => {},
     roundSummary: () => "Shared session results",
     startCodeConcepts: () => {},
+    booleanMakeEvidence, selectBooleanMakeChallenge,
     mountCollectionEditor,
     practiceGames,
     document,

@@ -5,6 +5,7 @@ import {createProgressStore} from './exam-readiness/storage.js';
 import {initializeFromSession,recordFirstSubmission} from './exam-readiness/bridge.js';
 import { mountCollectionEditor } from "./collection-editor.js";
 import { practiceGames } from "./practice-engine.js";
+import { booleanMakeEvidence, selectBooleanMakeChallenge } from "./proficiency-metadata.js";
 import fs from "node:fs";
 import vm from "node:vm";
 import assert from "node:assert/strict";
@@ -86,6 +87,7 @@ function launch(slug) {
     );
   const ctx = {
     activeProfile, device, recordGameAttempt, recordGuestAttempt, scopedStorage,
+    booleanMakeEvidence, selectBooleanMakeChallenge,
     createProgressStore, initializeFromSession, recordFirstSubmission,
     bigIdeaMetrics,networkMetrics,
     mountCollectionEditor,

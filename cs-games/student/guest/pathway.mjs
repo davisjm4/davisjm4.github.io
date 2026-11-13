@@ -7,7 +7,7 @@
  * Each node gains a `guest` object and the view gains `view.guest`. A map that ignores them still renders a complete pathway.
  */
 import { createPathway, studentContract } from '../../pathway/model.mjs';
-import { evaluateProficiency } from '../../pathway/proficiency/index.mjs';
+import { evaluateProficiency } from '../../pathway/proficiency/index.mjs?v=build6';
 import { guestEvidenceByNode } from './evidence.mjs';
 import { summarizeProgress, recentActivity } from './progress.mjs';
 import { suggestNext, resumeTarget } from './suggest.mjs';

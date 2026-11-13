@@ -1,3 +1,4 @@
+import {architectComponent} from '../../../csp-games/proficiency-metadata.js';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {test} from 'node:test';
@@ -86,7 +87,7 @@ test('every new Java tier is reachable in the recommended practice mode',()=>{
 });
 
 test('direct Architect questions support multiple CSP areas and preserve difficulty boundaries',()=>{
-  const modes={SELECTION:'nested-selection',ITERATION:'nested',SEQUENCE:'sequence',ALGORITHMS:'search',PROCEDURES:'procedure'};
+  const modes={SELECTION:'nested-selection',ITERATION:'iteration',SEQUENCE:'sequence',ALGORITHMS:'search',PROCEDURES:'procedure'};
   const members=Object.keys(modes).map(csp);
   const byNode=new Map();
   for(const node of members){
@@ -96,7 +97,7 @@ test('direct Architect questions support multiple CSP areas and preserve difficu
     for(let i=0;i<160&&result.level<3;i++){
       const q=generateArchitect(mode);
       const variant=q.structure.slice(q.mode.length+1).split('-')[0];
-      const component=q.format==='arrange'?q.format:q.component.replaceAll(' ','-');
+      const component=architectComponent(q);
       const scored=q.format==='arrange'?evaluateArchitect(q,q.solution):evaluateMissing(q,q.correctChoice);
       assert.equal(scored.correct,true,mode);
       events.push(record(node,q.game,q.mode,`${q.mode}:${variant}:${component}`,{
