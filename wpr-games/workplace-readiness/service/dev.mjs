@@ -34,7 +34,7 @@ export function sqliteAdapter(db) {
 }
 const root = fileURLToPath(new URL('../../../',import.meta.url));
 const types = { '.html':'text/html; charset=utf-8','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml' };
-export async function startDev({ port = 0, filename = ':memory:', teacherTokens, submissionSecret = randomBytes(32).toString('hex'), pathwayAdapters = {} }) {
+export async function startDev({ port = 0, filename = ':memory:', teacherTokens, submissionSecret = randomBytes(32).toString('hex'), pathwayAdapters = {}, auditPage }) {
   const db = new DatabaseSync(filename);
   db.exec(readFileSync(new URL('./schema.sql',import.meta.url),'utf8'));
   db.exec(readFileSync(new URL('./migrations/0003_profiles.sql',import.meta.url),'utf8'));
@@ -64,7 +64,22 @@ export async function startDev({ port = 0, filename = ':memory:', teacherTokens,
   };
   let origin;
   const server = createServer(async (req,res) => {
+    if (auditPage) {
+      if (!req.url.startsWith('/') || req.url.startsWith('//') ||
+          req.headers.host !== new URL(origin).host ||
+          req.headers['sec-fetch-site'] === 'cross-site' ||
+          (req.headers.origin && req.headers.origin !== origin)) {
+        res.writeHead(403);return res.end('Use the printed loopback URL.');
+      }
+      res.setHeader('Content-Security-Policy', "connect-src 'self'; form-action 'self'; frame-ancestors 'none'");
+      res.setHeader('Referrer-Policy','no-referrer');
+      res.setHeader('Cache-Control','no-store');
+    }
     const url = new URL(req.url,origin);
+    if (auditPage && url.pathname === '/audit/' && req.method === 'GET') {
+      res.setHeader('Content-Type',types['.html']);
+      return res.end(auditPage());
+    }
     if (url.pathname.startsWith('/api/wpr/')) {
       try {
         const request = new Request(url,{method:req.method,headers:req.headers,
@@ -78,7 +93,7 @@ export async function startDev({ port = 0, filename = ':memory:', teacherTokens,
     }
     try {
       const name = decodeURIComponent(url.pathname);
-      if (name.split('/').some(p=>p.startsWith('.') || ['service','node_modules'].includes(p))) throw new Error();
+      if (name.split('/').some(p=>p.startsWith('.') || ['_audit','service','node_modules'].includes(p))) throw new Error();
       let file = resolve(root,'.'+name);
       if (!file.startsWith(resolve(root)+sep) && file !== resolve(root)) throw new Error();
       if (statSync(file).isDirectory()) file = resolve(file,'index.html');
