@@ -20,6 +20,7 @@ export function createMemoryAdapter({ pathway, published = null, now = () => new
   const state = { draft: clone(pathway), published: published ? clone(published) : null, revisions: [], saves: 0 };
   return {
     state,
+    storage: 'memory',
     async saveDraft(p) {
       assertPublishedVersionsUnchanged(state.published, p);
       state.draft = clone(p); state.saves++;
@@ -41,12 +42,15 @@ export function createServiceAdapter({ request, token, entry }) {
   const draft = async (pathway) => {
     const out = await request(`/pathways/teacher/${pathway.id}/draft`, { token, body: { pathway, draftVersion: entry.draftVersion } });
     entry.draftVersion = out.draftVersion;
+    return out.draftVersion;
   };
   return {
     saveDraft: draft,
-    async publish({ pathway, acknowledged }) {
-      await draft(pathway);
+    async publish({ pathway, acknowledged, onDraftSaved }) {
+      const draftVersion = await draft(pathway);
+      onDraftSaved?.();
       const preview = await request(`/pathways/teacher/${pathway.id}/preview`, { token, body: {} });
+      if (preview.draftVersion !== draftVersion) throw new Error('Another session changed the draft. Reload before publishing.');
       const result = await request(`/pathways/teacher/${pathway.id}/publish`, { token, body: { previewToken: preview.previewToken, draftVersion: preview.draftVersion, expectedRevision: preview.expectedRevision, ...(acknowledged===true?{acknowledged:true}:{}) } });
       entry.draftVersion = preview.draftVersion + 1;
       return { pathway: result.published, published: result.published, message: `Published version ${result.revision} of the class pathway, with these requirements.` };

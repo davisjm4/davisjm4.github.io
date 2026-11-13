@@ -12,10 +12,13 @@ export function createRequirementsEditor(root, options) {
   const { graph, registry = null, adapter = null, onChange = null, theme = null } = options;
   const facts = options.facts ?? buildContentFacts({ graph, registry });
   const st = { pathway: options.pathway, published: options.published ?? null, tab: options.tab ?? 'class', areas: new Set(), skills: new Set(), areaFilter: '', search: '', ack: false, busy: false, replaceLower: false, confirm: null, history: [] };
+  let savedSnapshot = adapter?.saveDraft ? JSON.stringify(st.pathway) : null;
+  let operation = '';
   const ctx = () => createContext({ graph, published: st.published, facts });
   const ids = { head: uid('mreq-h'), tabs: uid('mreq-tabs') };
 
   const status = el('p', { class: 'mreq-status', role: 'status', 'aria-live': 'polite', tabindex: '-1' });
+  const persistence = el('p', { class: 'mreq-persistence', role: 'status' });
   const alertBox = el('div', { class: 'mreq-alert', role: 'alert' });
   const tabList = el('div', { class: 'mreq-tabs', role: 'tablist', 'aria-label': 'Where to set requirements', id: ids.tabs });
   const panel = el('div', { class: 'mreq-panel', role: 'tabpanel', tabindex: '-1' });
@@ -24,7 +27,7 @@ export function createRequirementsEditor(root, options) {
       el('div', { class: 'mreq-eyebrow', text: 'Mastery requirements' }),
       el('h2', { id: ids.head, text: 'How much practice shows a skill is learned?' }),
       el('p', { class: 'mreq-lede', text: 'Choose how many questions students answer and how accurate they must be. Students can answer more than the minimum to improve their accuracy. Meeting a requirement is a practice milestone; it never sets the 0 to 4 standards score, which comes from your own assessment.' }),
-      status, alertBox),
+      persistence, status, alertBox),
     tabList, panel);
   root.replaceChildren(shell);
 
@@ -33,18 +36,27 @@ export function createRequirementsEditor(root, options) {
   const alertWith = (title, items) => { status.textContent = ''; fill(alertBox, el('p', { class: 'mreq-alert-title', text: title }), items?.length ? el('ul', {}, items.map((i) => el('li', { text: i }))) : null); alertBox.scrollIntoView?.({ block: 'nearest' }); };
   const clearMsg = () => { alertBox.replaceChildren(); };
 
+  function updatePersistence(formValid) {
+    const text = operation || (formValid === false ? 'Fix validation errors before applying these changes.'
+      : formValid === true ? 'Unapplied changes. Apply these settings to include them in the draft.'
+      : JSON.stringify(st.pathway) !== savedSnapshot ? 'Unsaved changes. Open Review & publish to save the draft.'
+      : st.published && JSON.stringify(st.published) === savedSnapshot ? `Published requirements · version ${st.published.revision}`
+      : adapter?.storage === 'memory' ? 'Draft is available in this demo tab.' : 'Saved draft.');
+    if (persistence.textContent !== text) persistence.textContent = text;
+  }
+
   // ---- shared pieces ----
   const cat = () => catalog(st.pathway, graph);
   const resolved = () => resolveAll(st.pathway, graph);
   const sourceChip = (r) => el('span', { class: `mreq-chip level-${r.level}`, text: r.level === 'skill' ? 'Own setting' : r.level === 'area' ? 'Area setting' : r.level === 'class' ? 'Class defaults' : r.level === 'legacy' ? 'Earlier setting' : 'Not set' });
   const clone = (x) => JSON.parse(JSON.stringify(x));
   function apply(result, { done }) {
-    if (!result.ok) { alertWith(result.blocked?.length ? 'This can\'t be saved because it can\'t be met.' : 'This couldn\'t be saved.', result.errors.map((e) => e.message)); return false; }
+    if (!result.ok) { updatePersistence(false); alertWith(result.blocked?.length ? 'These changes cannot be applied because the requirements cannot be met.' : 'The changes could not be applied.', result.errors.map((e) => e.message)); return false; }
     st.pathway = result.pathway;
     st.ack = false;
     onChange?.(clone(st.pathway));
     const n = result.changed.length;
-    const parts = [done ?? 'Saved to the draft.', n ? `${plural(n, 'skill')} changed.` : 'No skill changed.'];
+    const parts = [done ?? 'Changes applied.', n ? `${plural(n, 'skill')} changed.` : 'No skill changed.'];
     if (result.kept?.length) parts.push(result.kept.length === 1 ? '1 area or skill keeps its own setting.' : `${result.kept.length} areas or skills keep their own settings.`);
     const notes = (result.problems?.draftOnly.length ?? 0) + (result.problems?.warnings.length ?? 0);
     if (notes) parts.push(`${plural(notes, 'note')} to read on the Review tab.`);
@@ -63,7 +75,7 @@ export function createRequirementsEditor(root, options) {
     }
     return el('button', { type: 'button', class: 'secondary', onclick: () => { st.confirm = key; render(); panel.querySelector('.mreq-confirm button')?.focus(); } }, label);
   }
-  const checkbox = (label, checked, onchange, { id = uid('c'), hint = null } = {}) => el('label', { class: 'mreq-check', for: id }, el('input', { type: 'checkbox', id, checked, onchange: (e) => onchange(e.target.checked) }), el('span', {}, label, hint ? el('small', { class: 'mreq-hint', text: ` ${hint}` }) : null));
+  const checkbox = (label, checked, onchange, { id = uid('c'), hint = null, disabled = false, review = false } = {}) => el('label', { class: 'mreq-check', for: id, 'data-review-ack': review ? '' : undefined }, el('input', { type: 'checkbox', id, checked, disabled, onchange: (e) => onchange(e.target.checked) }), el('span', {}, label, hint ? el('small', { class: 'mreq-hint', text: ` ${hint}` }) : null));
 
   // ---- Class defaults ----
   function classPanel() {
@@ -71,8 +83,8 @@ export function createRequirementsEditor(root, options) {
     const reach = [`${plural(table.counts.usingClass, 'skill')} use${table.counts.usingClass === 1 ? 's' : ''} the class defaults.`];
     const own = table.counts.usingArea + table.counts.ownSettings + table.counts.older;
     if (view.active && own) reach.push(`${plural(own, 'skill')} ${own === 1 ? 'has' : 'have'} area or skill settings that take priority.`);
-    const form = createSettingsForm({ level: 'class', view, scopeName: 'the class', graph, onChange: (c) => { saveBtn.disabled = !c.ready; } });
-    const saveBtn = el('button', { type: 'button', class: 'primary', disabled: !form.ready(), onclick: () => { const c = form.collect(); if (Object.keys(c.errors).length) return; apply(applyToClass(st.pathway, c.settings, ctx(), { clear: c.clear, replaceLowerOverrides: st.replaceLower }), { done: 'Class defaults saved to the draft.' }); } }, 'Save class defaults');
+    const form = createSettingsForm({ level: 'class', view, scopeName: 'the class', graph, onChange: (c) => { saveBtn.disabled = !c.ready; updatePersistence(c.valid); } });
+    const saveBtn = el('button', { type: 'button', class: 'primary', disabled: !form.ready(), onclick: () => { const c = form.collect(); if (Object.keys(c.errors).length) return; apply(applyToClass(st.pathway, c.settings, ctx(), { clear: c.clear, replaceLowerOverrides: st.replaceLower }), { done: 'Class defaults applied.' }); } }, 'Apply class defaults');
     const hasLower = table.counts.usingArea + table.counts.ownSettings > 0 || readLevels(st.pathway).areas.size > 0;
     return el('div', { class: 'mreq-section' },
       el('h3', { text: 'Class defaults' }),
@@ -108,8 +120,8 @@ export function createRequirementsEditor(root, options) {
       const first = views[0], union = [...new Set(views.flatMap((v) => v.setHere))];
       const view = { ...first, setHere: union };
       const names = selected.map((a) => c.areas.find((x) => x.id === a).title);
-      const form = createSettingsForm({ level: 'area', view, graph, scopeName: names.join(', '), nodeTitle: names.length === 1 ? names[0] : 'a skill in these areas', onChange: (x) => { save.disabled = !x.ready; } });
-      const save = el('button', { type: 'button', class: 'primary', disabled: !form.ready(), onclick: () => { const x = form.collect(); if (Object.keys(x.errors).length) return; apply(applyToAreas(st.pathway, selected, x.settings, ctx(), { clear: x.clear, replaceLowerOverrides: st.replaceLower }), { done: `Saved for ${plural(selected.length, 'learning area')}.` }); } }, `Save for ${plural(selected.length, 'learning area')}`);
+      const form = createSettingsForm({ level: 'area', view, graph, scopeName: names.join(', '), nodeTitle: names.length === 1 ? names[0] : 'a skill in these areas', onChange: (x) => { save.disabled = !x.ready; updatePersistence(x.valid); } });
+      const save = el('button', { type: 'button', class: 'primary', disabled: !form.ready(), onclick: () => { const x = form.collect(); if (Object.keys(x.errors).length) return; apply(applyToAreas(st.pathway, selected, x.settings, ctx(), { clear: x.clear, replaceLowerOverrides: st.replaceLower }), { done: `Changes applied for ${plural(selected.length, 'learning area')}.` }); } }, `Apply to ${plural(selected.length, 'learning area')}`);
       const withOwn = c.areas.filter((a) => levels.areas.has(a.id) && !selected.includes(a.id));
       const copyId = uid('copy'), copySel = el('select', { id: copyId }, el('option', { value: '', text: 'Choose an area to copy from' }), withOwn.map((a) => el('option', { value: a.id, text: a.title })));
       const hasSkillOverrides = [...levels.skills.keys()].length > 0;
@@ -149,8 +161,8 @@ export function createRequirementsEditor(root, options) {
     else {
       const views = selected.map((s) => levelView(st.pathway, 'skill', s, graph)), first = views[0], union = [...new Set(views.flatMap((v) => v.setHere))];
       const one = selected.length === 1 ? r.find((x) => x.nodeId === selected[0]) : null;
-      const form = createSettingsForm({ level: 'skill', view: { ...first, setHere: union }, graph, scopeName: one?.title, nodeTitle: one?.title ?? 'a selected skill', profile: one ? facts.profileFor(one.nodeId) : null, onChange: (x) => { save.disabled = !x.ready; } });
-      const save = el('button', { type: 'button', class: 'primary', disabled: !form.ready(), onclick: () => { const x = form.collect(); if (Object.keys(x.errors).length) return; apply(applyToSkills(st.pathway, selected, x.settings, ctx(), { clear: x.clear }), { done: `Saved for ${plural(selected.length, 'skill')}.` }); } }, `Save for ${plural(selected.length, 'skill')}`);
+      const form = createSettingsForm({ level: 'skill', view: { ...first, setHere: union }, graph, scopeName: one?.title, nodeTitle: one?.title ?? 'a selected skill', profile: one ? facts.profileFor(one.nodeId) : null, onChange: (x) => { save.disabled = !x.ready; updatePersistence(x.valid); } });
+      const save = el('button', { type: 'button', class: 'primary', disabled: !form.ready(), onclick: () => { const x = form.collect(); if (Object.keys(x.errors).length) return; apply(applyToSkills(st.pathway, selected, x.settings, ctx(), { clear: x.clear }), { done: `Changes applied for ${plural(selected.length, 'skill')}.` }); } }, `Apply to ${plural(selected.length, 'skill')}`);
       const anyOwn = selected.some((s) => levels.skills.has(s) || r.find((x) => x.nodeId === s)?.hasLegacyPolicy);
       right = el('div', { class: 'mreq-section' }, el('h3', { text: one ? `Settings for ${one.title}` : `Settings for ${plural(selected.length, 'skill')}` }), form.element,
         el('div', { class: 'mreq-actions' }, save, anyOwn ? confirmButton('Restore selected skills to inherited', 'reset-skills', 'These skills will follow their learning area or the class defaults again. Continue?', () => apply(resetToInherited(st.pathway, { level: 'skill', ids: selected }, ctx()), { done: 'Selected skills restored to inherited settings.' }), { danger: false }) : null));
@@ -178,7 +190,7 @@ export function createRequirementsEditor(root, options) {
       el('summary', {}, el('strong', { text: g.heading }), ` · ${plural(g.items.length, 'skill')} · ${SEVERITY_HEADING[g.severity]} · ${g.verified ? 'verified limit' : 'estimate'}`),
       el('ul', {}, g.items.slice(0, 40).map((i) => el('li', { text: i.message })), g.items.length > 40 ? el('li', { text: `and ${g.items.length - 40} more` }) : null)))) : el('p', { text: 'No problems found.' });
     const ackId = uid('ack');
-    const ack = rev.readiness.needsAcknowledgement ? checkbox('I have read these notes and want to continue', st.ack, (v) => { st.ack = v; render(); panel.querySelector('#publish')?.scrollIntoView?.({ block: 'nearest' }); }, { id: ackId }) : null;
+    const ack = rev.readiness.needsAcknowledgement ? checkbox('I have read these notes and want to continue', st.ack, (v) => { st.ack = v; render(); (panel.querySelector('#publish:enabled') ?? panel.querySelector('[data-review-ack] input'))?.focus(); }, { id: ackId, disabled: st.busy, review: true }) : null;
     const publishId = 'publish';
     const publish = el('button', { type: 'button', class: 'primary', id: publishId, disabled: !rev.readiness.canPublish || st.busy || !adapter?.publish, onclick: () => doPublish() }, 'Publish requirements');
     const reasons = !rev.readiness.canPublish ? el('ul', { class: 'mreq-reasons' }, rev.readiness.reasons.map((x) => el('li', { text: x }))) : null;
@@ -192,29 +204,47 @@ export function createRequirementsEditor(root, options) {
       el('details', { class: 'mreq-details' }, el('summary', { text: 'How questions are counted' }), el('ul', {}, COUNTING_RULES.map((x) => el('li', { text: x })))),
       reasons,
       el('div', { class: 'mreq-actions' },
-        el('button', { type: 'button', class: 'secondary', disabled: !rev.readiness.canSaveDraft || st.busy || !adapter?.saveDraft, onclick: () => doSaveDraft() }, 'Save draft'), publish),
+        el('button', { type: 'button', class: 'secondary', 'data-save-draft': '', disabled: !rev.readiness.canSaveDraft || st.busy || !adapter?.saveDraft, onclick: () => doSaveDraft() }, 'Save draft'), publish),
       !adapter ? el('p', { class: 'mreq-hint', text: 'Saving and publishing are provided by the page that hosts this tool.' }) : null);
   }
   async function doSaveDraft() {
-    st.busy = true; render();
-    try { await adapter.saveDraft(clone(st.pathway)); st.busy = false; render(); say('Draft saved. Students do not see it until you publish.'); }
-    catch (e) { st.busy = false; render(); alertWith('The draft could not be saved.', [e.message]); }
+    st.busy = true; operation = 'Saving draft…'; render();
+    try {
+      await adapter.saveDraft(clone(st.pathway));
+      savedSnapshot = JSON.stringify(st.pathway);
+      say(adapter.storage === 'memory' ? 'Draft saved for this demo tab.' : 'Draft saved. Publish to share these requirements with students.');
+    } catch (error) {
+      alertWith('The draft could not be saved.', [error.message]);
+    } finally {
+      st.busy = false; operation = ''; render();
+      panel.querySelector('[data-save-draft]')?.focus({ preventScroll: true });
+    }
   }
   async function doPublish() {
-    st.busy = true; render();
+    st.busy = true; operation = 'Preparing to publish…'; render();
     try {
       const stamped = options.serverTimestamps ? st.pathway : stampPublishTime(st.pathway, st.published, (options.now ?? (() => new Date().toISOString()))());
-      const out = await adapter.publish({ pathway: stamped, acknowledged: st.ack });
-      st.pathway = out.pathway ?? stamped; st.published = out.published ?? clone(st.pathway); st.history = out.history ?? st.history; st.ack = false; st.busy = false;
-      onChange?.(clone(st.pathway)); render(); say(out.message ?? 'Requirements published with the class pathway.');
-    } catch (e) { st.busy = false; render(); alertWith('The requirements could not be published.', [e.message]); }
+      const out = await adapter.publish({ pathway: stamped, acknowledged: st.ack, onDraftSaved: () => {
+        savedSnapshot = JSON.stringify(st.pathway);
+        operation = 'Draft saved. Publishing requirements…';
+        updatePersistence();
+      } });
+      st.pathway = out.pathway ?? stamped; st.published = out.published ?? clone(st.pathway); st.history = out.history ?? st.history; st.ack = false;
+      savedSnapshot = JSON.stringify(st.pathway);
+      onChange?.(clone(st.pathway)); say(out.message ?? 'Requirements published with the class pathway.');
+    } catch (error) {
+      alertWith('The requirements could not be published.', [error.message]);
+    } finally {
+      st.busy = false; operation = ''; render();
+      panel.querySelector('#publish:enabled, [data-save-draft]:enabled')?.focus({ preventScroll: true });
+    }
   }
 
   // ---- tabs ----
   function paintTabs() {
     const badge = { class: readLevels(st.pathway).class ? 'set' : '', areas: String(readLevels(st.pathway).areas.size || ''), skills: String(readLevels(st.pathway).skills.size || ''), review: '' };
     fill(tabList, TABS.map(([key, label]) => el('button', { type: 'button', role: 'tab', id: `${ids.tabs}-${key}`, 'aria-selected': String(st.tab === key), 'aria-controls': `${ids.tabs}-panel`, tabindex: st.tab === key ? '0' : '-1', 'data-tab': key,
-      onclick: () => selectTab(key), onkeydown: (e) => tabKey(e, key) }, label, key === 'areas' && badge.areas ? el('span', { class: 'mreq-count', text: badge.areas, 'aria-label': `${badge.areas} customized` }) : null, key === 'skills' && badge.skills ? el('span', { class: 'mreq-count', text: badge.skills, 'aria-label': `${badge.skills} customized` }) : null)));
+      disabled: st.busy, onclick: () => selectTab(key), onkeydown: (e) => tabKey(e, key) }, label, key === 'areas' && badge.areas ? el('span', { class: 'mreq-count', text: badge.areas, 'aria-label': `${badge.areas} customized` }) : null, key === 'skills' && badge.skills ? el('span', { class: 'mreq-count', text: badge.skills, 'aria-label': `${badge.skills} customized` }) : null)));
   }
   function tabKey(e, key) {
     const keys = TABS.map((x) => x[0]), i = keys.indexOf(key);
@@ -222,8 +252,9 @@ export function createRequirementsEditor(root, options) {
     if (!next) return;
     e.preventDefault(); selectTab(next); tabList.querySelector(`[data-tab="${next}"]`)?.focus();
   }
-  function selectTab(key) { st.tab = key; st.confirm = null; clearMsg(); render(); }
+  function selectTab(key) { if(st.busy)return; st.tab = key; st.confirm = null; clearMsg(); render(); }
   function render() {
+    updatePersistence();
     paintTabs();
     panel.id = `${ids.tabs}-panel`;
     panel.setAttribute('aria-labelledby', `${ids.tabs}-${st.tab}`);

@@ -289,6 +289,6 @@ test('Loop Lab attempts reach a recovered CS Games profile after reconnecting', 
   await second.focus('#student-profile details[open] button:nth-of-type(2)');
   await second.keyboard.press('Enter');
   await wait(second,'#profile-progress table');
-  assert.match(await second.$eval('#profile-progress',node=>node.textContent),/loop-lab/);
+  assert.match(await second.$eval('#profile-progress',node=>node.textContent),/Loop Lab/);
   assert.deepEqual(errors,[]);
 });

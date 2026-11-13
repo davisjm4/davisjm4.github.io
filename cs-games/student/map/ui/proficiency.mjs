@@ -59,7 +59,7 @@ export function proficiencySuggestion(model,{onShow,onPractice,stop}){
     if(['plan-demonstration','level-4-demonstration'].includes(recommendation.kind))
       return el('button',{type:'button',class:'btn',text:label,onclick:()=>onShow(node)});
     const link=proficiencyLink(node,recommendation.practice);
-    return link?el('a',{class:secondary?'btn':'btn btn-primary',href:link.url,text:label,
+    return link?el('a',{class:secondary?'btn':'btn btn-primary',href:link.url,'data-action':'practice-recommended',text:label,
       onclick:e=>{if(onPractice({node,url:link.url,kind:link.kind})===true)e.preventDefault();}})
       :el('button',{type:'button',class:'btn',text:label,onclick:()=>onShow(node)});
   };
@@ -69,7 +69,7 @@ export function proficiencySuggestion(model,{onShow,onPractice,stop}){
     next?.reason?el('p',{class:'muted',text:next.reason}):null,
     nextNode?el('p',{class:'suggested-title',text:`${nextNode.title}${next.tier?` · Level ${tierLevels[next.tier]}`:''}`}):null,
     area&&!area.hasCore&&!ready?el('p',{class:'muted',text:'Show Level 3 with a task, project, or assessment that demonstrates the skill.'}):
-      area?.unavailable?.length?el('p',{class:'muted',text:ready?'You met the reviewed outcomes. Other skills in this area remain open for practice.':'Some skills in this area are still being reviewed for proficiency.'}):null,
+      area?.unavailable?.length?el('p',{class:'muted',text:ready?'You met the reviewed outcomes. Other skills in this area remain open for practice.':'Some skills in this area need a demonstration to show proficiency.'}):null,
     el('div',{class:'suggested-actions'},
       next?action(next,ready||next.kind==='continue-learning'?'Continue Learning':next.kind==='plan-demonstration'?'Plan a demonstration':'Practice'):null,
       nextNode?el('button',{type:'button',class:'btn',text:'Show on map',onclick:()=>onShow(nextNode)}):null,

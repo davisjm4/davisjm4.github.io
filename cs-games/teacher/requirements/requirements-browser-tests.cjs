@@ -110,7 +110,7 @@ const inPage = {
       assert.equal(await page.getByRole('tabpanel').count(), 1);
     });
     await check('nothing is set at first: Save is disabled and the prompt is neutral, with no red errors', async () => {
-      assert.equal(await page.getByRole('button', { name: 'Save class defaults' }).isDisabled(), true);
+      assert.equal(await page.getByRole('button', { name: 'Apply class defaults' }).isDisabled(), true);
       assert.equal(await page.locator('.mreq-error:visible').count(), 0);
       assert.match(await text(page, '.mreq-explain'), /Choose a starting point, or type a minimum number of questions and a required accuracy/);
     });
@@ -122,7 +122,7 @@ const inPage = {
       assert.match(t, /That allows up to 2 mistakes in the first 50\./);
       assert.match(t, /Students may answer more than 50 questions to improve their accuracy\./);
       assert.equal(await page.getByRole('radio', { name: /Quick recognition/ }).isChecked(), true);
-      assert.equal(await page.getByRole('button', { name: 'Save class defaults' }).isDisabled(), false);
+      assert.equal(await page.getByRole('button', { name: 'Apply class defaults' }).isDisabled(), false);
     });
     await check('choosing a preset fills the two numbers, which stay editable; changing one turns the preset into Custom', async () => {
       await page.getByRole('radio', { name: /Standard practice/ }).check();
@@ -136,13 +136,13 @@ const inPage = {
     await check('0.90 is refused with a clear message, 30.5 questions is refused, and Save stays disabled until both are valid', async () => {
       await page.getByRole('textbox', { name: 'Required accuracy as a percentage' }).fill('0.90');
       assert.match(await text(page, '.mreq-error:visible'), /not a fraction like 0\.90/);
-      assert.equal(await page.getByRole('button', { name: 'Save class defaults' }).isDisabled(), true);
+      assert.equal(await page.getByRole('button', { name: 'Apply class defaults' }).isDisabled(), true);
       assert.equal(await page.getByRole('textbox', { name: 'Required accuracy as a percentage' }).getAttribute('aria-invalid'), 'true');
       await page.getByRole('textbox', { name: 'Required accuracy as a percentage' }).fill('90');
       await page.getByRole('textbox', { name: 'Minimum questions' }).fill('30.5');
       assert.match(await text(page, '.mreq-error:visible'), /must be a whole number/);
-      assert.equal(await page.getByRole('button', { name: 'Save class defaults' }).isDisabled(), true);
-      for (const bad of ['0', '-3', '1e2', 'abc', '']) { await page.getByRole('textbox', { name: 'Minimum questions' }).fill(bad); assert.equal(await page.getByRole('button', { name: 'Save class defaults' }).isDisabled(), true, `"${bad}"`); }
+      assert.equal(await page.getByRole('button', { name: 'Apply class defaults' }).isDisabled(), true);
+      for (const bad of ['0', '-3', '1e2', 'abc', '']) { await page.getByRole('textbox', { name: 'Minimum questions' }).fill(bad); assert.equal(await page.getByRole('button', { name: 'Apply class defaults' }).isDisabled(), true, `"${bad}"`); }
       await page.getByRole('textbox', { name: 'Required accuracy as a percentage' }).fill('101');
       await page.getByRole('textbox', { name: 'Minimum questions' }).fill('30');
       assert.match(await text(page, '.mreq-error:visible'), /cannot be more than 100%/);
@@ -176,8 +176,8 @@ const inPage = {
     await shot(page, 'desktop-1-class-defaults');
     await check('saving class defaults reports how many skills changed and keeps the draft in the page', async () => {
       await page.getByRole('radio', { name: /Standard practice/ }).check();
-      await page.getByRole('button', { name: 'Save class defaults' }).click();
-      assert.equal((await text(page, '.mreq-status')).trim(), 'Class defaults saved to the draft. 123 skills changed.');
+      await page.getByRole('button', { name: 'Apply class defaults' }).click();
+      assert.equal((await text(page, '.mreq-status')).trim(), 'Class defaults applied. 123 skills changed.');
       assert.match(await text(page, '.mreq-reach'), /123 skills use the class defaults\./);
       assert.equal(await page.evaluate(() => window.__editor.getPathway().checkpoints.length), 123);
     });
@@ -190,8 +190,8 @@ const inPage = {
       assert.match(await text(page, '.mreq-main'), /Currently 30 questions\./); // inherited value and its source are shown
       assert.match(await text(page, '.mreq-main'), /Class defaults/);
       await page.getByRole('radio', { name: /Quick recognition/ }).check();
-      await page.getByRole('button', { name: 'Save for 1 learning area' }).click();
-      assert.equal((await text(page, '.mreq-status')).trim(), 'Saved for 1 learning area. 7 skills changed.');
+      await page.getByRole('button', { name: 'Apply to 1 learning area' }).click();
+      assert.equal((await text(page, '.mreq-status')).trim(), 'Changes applied for 1 learning area. 7 skills changed.');
       const row = page.locator('.mreq-item', { hasText: 'Math Lab' });
       assert.match(await row.innerText(), /7 skills · 50 questions at 95%/); assert.match(await row.innerText(), /Own setting/);
     });
@@ -227,8 +227,8 @@ const inPage = {
       await page.getByRole('textbox', { name: 'Required accuracy as a percentage' }).fill('80');
       assert.match(await text(page, '.mreq-explain'), /at least 80% first-attempt accuracy/);
       assert.match(await text(page, '.mreq-explain'), /at least 50 questions/, 'the question count is still inherited from the area');
-      await page.getByRole('button', { name: 'Save for 1 skill' }).click();
-      assert.equal((await text(page, '.mreq-status')).trim(), 'Saved for 1 skill. 1 skill changed.');
+      await page.getByRole('button', { name: 'Apply to 1 skill' }).click();
+      assert.equal((await text(page, '.mreq-status')).trim(), 'Changes applied for 1 skill. 1 skill changed.');
       const row = page.locator('.mreq-item', { hasText: 'Modulus' });
       assert.match(await row.innerText(), /Math Lab · 50 questions at 80%/); assert.match(await row.innerText(), /Own setting/);
     });
@@ -251,7 +251,7 @@ const inPage = {
       await page.getByRole('button', { name: 'Clear selection' }).click();
       await page.getByRole('button', { name: /Select all 11 shown/ }).click();
       assert.match(await text(page, '.mreq-side .mreq-hint[aria-live]'), /11 skills shown, 11 selected\.$/);
-      assert.equal(await page.getByRole('button', { name: 'Save for 11 skills' }).count(), 1);
+      assert.equal(await page.getByRole('button', { name: 'Apply to 11 skills' }).count(), 1);
       await page.getByRole('button', { name: 'Clear selection' }).click();
     });
 
@@ -263,9 +263,9 @@ const inPage = {
       await page.getByRole('button', { name: /Set a different value here: Difficulty levels/ }).click();
       await page.getByRole('button', { name: 'Add a difficulty requirement' }).click();
       const before = await page.evaluate(() => JSON.stringify(window.__editor.getPathway()));
-      await page.getByRole('button', { name: 'Save for 1 skill' }).click();
+      await page.getByRole('button', { name: 'Apply to 1 skill' }).click();
       const alert = await text(page, '.mreq-alert');
-      assert.match(alert, /This can't be saved because it can't be met\./);
+      assert.match(alert, /These changes cannot be applied because the requirements cannot be met\./);
       assert.match(alert, /Integer and Double Division: its practice has no difficulty levels, so an Advanced requirement can't be met\./);
       assert.equal(await page.evaluate(() => JSON.stringify(window.__editor.getPathway())), before, 'nothing was changed');
       assert.equal(await page.getByRole('alert').count(), 1);
@@ -278,8 +278,8 @@ const inPage = {
       await openAdvanced(page);
       await page.getByRole('button', { name: /Set a different value here: Question variety/ }).click();
       await page.getByRole('textbox', { name: 'Different kinds of questions' }).fill('11');
-      await page.getByRole('button', { name: 'Save for 1 skill' }).click();
-      assert.match(await text(page, '.mreq-status'), /Saved for 1 skill\./); assert.match(await text(page, '.mreq-status'), /1 note to read on the Review tab\./);
+      await page.getByRole('button', { name: 'Apply to 1 skill' }).click();
+      assert.match(await text(page, '.mreq-status'), /Changes applied for 1 skill\./); assert.match(await text(page, '.mreq-status'), /1 note to read on the Review tab\./);
       await tab(page, 'Review & publish').click();
       const problem = page.locator('details.mreq-problem.sev-draft-only');
       assert.match(await problem.innerText(), /More kinds of questions are required than exist/); assert.match(await problem.innerText(), /only 10 kinds of questions exist but you asked for 11/); assert.match(await problem.innerText(), /verified limit/);
@@ -294,7 +294,7 @@ const inPage = {
       await page.getByRole('checkbox', { name: 'Select Trace 2D Array Algorithms' }).check();
       await openAdvanced(page);
       await page.getByRole('textbox', { name: 'Different kinds of questions' }).fill('8');
-      await page.getByRole('button', { name: 'Save for 1 skill' }).click();
+      await page.getByRole('button', { name: 'Apply to 1 skill' }).click();
       await tab(page, 'Review & publish').click();
       assert.equal(await page.getByRole('button', { name: 'Publish requirements' }).isDisabled(), false);
       await page.getByRole('button', { name: 'Publish requirements' }).click();
@@ -314,7 +314,7 @@ const inPage = {
       assert.match(await text(page, '.mreq-section'), /No changes from the published version\./);
       await tab(page, 'Class defaults').click();
       await setClass(page, 40, 90);
-      await page.getByRole('button', { name: 'Save class defaults' }).click();
+      await page.getByRole('button', { name: 'Apply class defaults' }).click();
       await tab(page, 'Review & publish').click();
       const body = await text(page, '.mreq-section');
       assert.match(body, /Class defaults: 30 questions at 90% changed to 40 questions at 90%\./);
@@ -335,7 +335,7 @@ const inPage = {
       await page.waitForSelector('.mreq');
       assert.equal(await page.getByRole('textbox', { name: 'Minimum questions' }).inputValue(), '', 'Period 3 starts unconfigured');
       await setClass(page, 20, 95);
-      await page.getByRole('button', { name: 'Save class defaults' }).click();
+      await page.getByRole('button', { name: 'Apply class defaults' }).click();
       await page.locator('#class').selectOption('p1');
       await page.waitForSelector('.mreq');
       assert.equal(await page.getByRole('textbox', { name: 'Minimum questions' }).inputValue(), '40');
@@ -381,9 +381,9 @@ const inPage = {
       await page.keyboard.press('Control+A'); await page.keyboard.type('25');
       await page.keyboard.press('Tab'); await page.keyboard.press('Control+A'); await page.keyboard.type('92.5');
       assert.match(await text(page, '.mreq-explain'), /at least 25 questions with at least 92\.5% first-attempt accuracy/);
-      await page.getByRole('button', { name: 'Save class defaults' }).focus();
+      await page.getByRole('button', { name: 'Apply class defaults' }).focus();
       await page.keyboard.press('Enter');
-      assert.match(await text(page, '.mreq-status'), /Class defaults saved to the draft\. 123 skills changed\./);
+      assert.match(await text(page, '.mreq-status'), /Class defaults applied\. 123 skills changed\./);
       assert.equal(await page.evaluate(() => document.activeElement.className), 'mreq-status', 'focus moves to the status message so it is announced and the screen reader user keeps their place');
       await tab(page, 'Learning areas').focus(); await page.keyboard.press('Enter');
       await page.getByRole('checkbox', { name: 'Select Math Lab' }).focus(); await page.keyboard.press('Space');
@@ -428,7 +428,7 @@ const inPage = {
     await check(`${label} ${viewport.width}x${viewport.height}: every tab fits the screen without sideways scrolling`, async () => {
       for (const name of ['Class defaults', 'Learning areas', 'Individual skills', 'Review & publish']) {
         await tab(page, name).click();
-        if (name === 'Class defaults') { await setClass(page, 30, 90); await page.getByRole('button', { name: 'Save class defaults' }).click(); await tab(page, 'Class defaults').click(); }
+        if (name === 'Class defaults') { await setClass(page, 30, 90); await page.getByRole('button', { name: 'Apply class defaults' }).click(); await tab(page, 'Class defaults').click(); }
         if (name === 'Learning areas') await page.getByRole('checkbox', { name: 'Select Math Lab' }).check();
         if (name === 'Individual skills') await page.getByRole('checkbox', { name: 'Select Modulus' }).check().catch(() => page.getByLabel('Search skills').fill('Modulus').then(() => page.getByRole('checkbox', { name: 'Select Modulus' }).check()));
         for (const d of await page.locator('.mreq details > summary').all()) await d.click().catch(() => {});

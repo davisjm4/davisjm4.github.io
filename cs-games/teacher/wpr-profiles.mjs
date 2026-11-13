@@ -4,7 +4,7 @@ import { profilesAvailable } from '../../wpr-games/workplace-readiness/online/co
 import {currentTeacher,teacherRequest} from './session.mjs';
 import { csv } from '../../wpr-games/workplace-readiness/online/model.mjs';
 import { el, button, download, table, copy, options } from '../../wpr-games/workplace-readiness/online/dom.mjs';
-import { PROFILE_CSV_HEADER, profileCsv, profileCsvRows, renderProfileProgress } from '../../wpr-games/workplace-readiness/online/profile-report.mjs';
+import { PROFILE_CSV_HEADER, profileCsv, profileCsvRows, renderProfileProgress } from '../../wpr-games/workplace-readiness/online/profile-report.mjs?v=targeted-clarity-v1';
 import { COURSE_LABELS, courseLabel, publicationStatus, formatWhen } from './ui-model.mjs';
 
 const courseNames=COURSE_LABELS;
@@ -128,7 +128,7 @@ export function teacherProfiles(onClasses) {
     renderList();
     if(!selectedId&&classHint&&classes.some(c=>c.id===classHint))await openClass(classHint);
   }
-  async function loadPathwayStatus(c,slot) {
+  async function loadPathwayStatus(c,slot,activeStudents) {
     const entry=pathways.get(c.id);
     if(!entry){
       put(slot,el('p',{class:'muted',text:'A learning pathway is unavailable for this class.'}));
@@ -136,7 +136,7 @@ export function teacherProfiles(onClasses) {
     }
     try {
       if(entry.isDefault){
-        put(slot,el('p',{class:'muted',text:'The default pathway is ready for students. Share the enrollment link to get started.'}));
+        put(slot,el('p',{class:'muted',text:activeStudents ? 'Students have access to the default pathway.' : 'The default pathway is ready for students. Share the enrollment link to get started.'}));
         return;
       }
       const [detail,history]=await Promise.all([rq('/pathways/teacher/'+entry.id),rq('/pathways/teacher/'+entry.id+'/history')]);
@@ -233,7 +233,7 @@ export function teacherProfiles(onClasses) {
             el('p',{},'Class ID: ',el('code',{text:c.id}),' '),
             act('Copy class ID',()=>copy(c.id,status),'btn small')))));
     if(invites.has(c.id)&&!c.archived)showInvite(invites.get(c.id));
-    loadPathwayStatus(c,pathwaySlot);
+    loadPathwayStatus(c,pathwaySlot,active);
   }
   async function openStudentPreview(classId,slot){
     const plan=pathways.get(classId);
@@ -246,37 +246,78 @@ export function teacherProfiles(onClasses) {
 
   }
   async function showStudent(person,container,canAssess) {
+    const session=currentTeacher();
     const report=await api(person);
-    const pathway=report.pathway;
-    put(container,el('p',{class:'muted',text:report.classTitle+' · '+courseLabel(report.courseId)}),
-      renderProfileProgress(report),el('div',{class:'actions'},act('Download student CSV',()=>download('cs-games-profile.csv',profileCsv(report)))));
-    if (!pathway) {
-      container.append(el('p',{class:'banner info',text:'Publish a class pathway to view checkpoint progress and record mastery.'}));
-      return;
+    if(currentTeacher()!==session||!container.isConnected)return;
+    const results=el('div');
+    function renderReport(data){
+      put(results,el('p',{class:'muted',text:data.classTitle+' · '+courseLabel(data.courseId)}),
+        renderProfileProgress(data),el('div',{class:'actions'},act('Download student CSV',()=>download('cs-games-profile.csv',profileCsv(data)))),
+        data.pathway?renderPathway(data.pathway):el('p',{class:'banner info',text:'Publish a class pathway to view checkpoint progress and record mastery.'}));
     }
-    container.append(renderPathway(pathway));
-    if (!canAssess || !pathway.nodes.length) return;
+    renderReport(report);
+    put(container,results);
+    let pathway=report.pathway;
+    if (!canAssess || !pathway?.nodes.length) return;
     const skill=el('select',{required:true},options(pathway.nodes.map(node=>[node.id,node.title])));
     const score=el('input',{type:'number',required:true,min:0,max:4,step:0.5});
     const type=el('select',{},options([['','Choose an evidence type (optional)'],...Object.entries(DEMONSTRATION_TYPES)]));
     const award=el('input',{type:'checkbox'});
     const submit=el('button',{type:'submit',class:'btn primary',text:'Record assessment'});
+    const assessmentStatus=el('p',{role:'status',class:'muted',tabindex:-1});
+    const assessmentError=el('p',{role:'alert',class:'muted'});
+    const revealFeedback=node=>{
+      if(document.activeElement!==document.body&&!form.contains(document.activeElement))return;
+      node.scrollIntoView({block:'nearest',behavior:'instant'});
+    };
     const form=el('form',{class:'card flat'},el('h4',{text:'Teacher assessment'}),el('label',{},'Checkpoint skill',skill),
       el('p',{class:'muted',text:'Use the skill’s rubric to score the demonstrated work. Level 4 is available for any checkpoint.'}),
-      el('label',{},'Evidence type',type),el('label',{},'Standards-based score (0–4)',score),el('label',{class:'check'},award,' Award mastery for the current policy'),submit);
+      el('label',{},'Evidence type',type),el('label',{},'Standards-based score (0–4)',score),el('label',{class:'check'},award,' Award mastery for the current policy'),submit,assessmentStatus,assessmentError);
     let pending;
     form.onsubmit=async event=>{
       event.preventDefault();
+      if(submit.disabled)return;
       submit.disabled=true;
+      for(const field of [skill,score,type,award])field.disabled=true;
+      assessmentError.textContent='';
+      assessmentStatus.textContent='Recording assessment…';
       const values={nodeId:skill.value,score:Number(score.value),award:award.checked,revision:pathway.revision,
         ...(type.value?{demonstrationType:type.value}:{})};
       if (!pending || JSON.stringify(pending.values)!==JSON.stringify(values)) pending={id:crypto.randomUUID(),values};
       try {
         await api(person+'/evidence',{body:{id:pending.id,...values}});
-        await showStudent(person,container,canAssess);
-        status.textContent='Assessment recorded.';
-      } catch (error) {status.textContent=error.message;}
-      finally {submit.disabled=false;}
+        if(currentTeacher()!==session||!form.isConnected)return;
+        pending=null;
+        score.value='';
+        type.value='';
+        award.checked=false;
+        assessmentStatus.textContent='Assessment recorded.';
+        if(document.activeElement===document.body||form.contains(document.activeElement))assessmentStatus.focus({preventScroll:true});
+        revealFeedback(assessmentStatus);
+        try {
+          const fresh=await api(person);
+          if(currentTeacher()!==session||!form.isConnected)return;
+          renderReport(fresh);
+          pathway=fresh.pathway;
+          if(!pathway?.nodes.length){form.remove();return;}
+          skill.replaceChildren(...options(pathway.nodes.map(node=>[node.id,node.title])));
+          if(pathway.nodes.some(node=>node.id===values.nodeId))skill.value=values.nodeId;
+        } catch {
+          assessmentStatus.textContent='Assessment recorded. Open View progress again to refresh the report.';
+        }
+      } catch (error) {
+        assessmentStatus.textContent='';
+        assessmentError.textContent=error.message;
+      } finally {
+        submit.disabled=false;
+        for(const field of [skill,score,type,award])field.disabled=false;
+        if(form.isConnected) {
+          if(assessmentError.textContent) {
+            if(document.activeElement===document.body)submit.focus({preventScroll:true});
+            revealFeedback(assessmentError);
+          } else revealFeedback(assessmentStatus);
+        }
+      }
     };
     container.append(form);
   }

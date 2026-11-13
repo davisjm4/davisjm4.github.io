@@ -187,7 +187,7 @@
       return '<h3 style="margin:14px 0 4px;font-size:.95rem">' + esc(title) + '</h3><table class="skills"><thead><tr><th>' + esc(label) + '</th><th class="n">Done</th><th class="n">First try</th></tr></thead><tbody>' +
         rows.map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td class="n">' + r[1].completed + '</td><td class="n">' + r[1].firstAttemptCorrect + '</td></tr>'; }).join('') + '</tbody></table>';
     }
-    var empty = { completed: 0, firstAttemptCorrect: 0 };
+    var empty = { completed: 0, attempted: 0, firstAttemptCorrect: 0 };
     html += table('By skill', G.SKILLS.map(function (k) { return [k, s.bySkill[k] || empty]; }), 'Skill');
     html += '<h3 style="margin:14px 0 4px;font-size:.95rem">By practice mode</h3><table class="skills"><thead><tr><th>Mode</th><th class="n">First-try correct</th><th class="n">Attempts</th><th class="n">Accuracy</th></tr></thead><tbody>' + G.MODES.map(function (mode) {
       var m = s.byMode[mode.id] || empty, pct = m.attempted ? Math.round(100 * m.firstAttemptCorrect / m.attempted) + '%' : '—';

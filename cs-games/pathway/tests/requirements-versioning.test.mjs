@@ -286,7 +286,7 @@ test('the service adapter makes the same draft, preview and publish calls as the
   const request = async (url, { token, body }) => {
     calls.push({ url, token, body });
     if (url.endsWith('/draft')) return { draftVersion: body.draftVersion + 1 };
-    if (url.endsWith('/preview')) return { previewToken: 'preview-token-1', draftVersion: calls.filter((c) => c.url.endsWith('/draft')).length + 4, expectedRevision: 2 };
+    if (url.endsWith('/preview')) return { previewToken: 'preview-token-1', draftVersion: entry.draftVersion, expectedRevision: 2 };
     return { revision: 3, published: { revision: 3 } };
   };
   const entry = { draftVersion: 4 };
@@ -302,4 +302,20 @@ test('the service adapter makes the same draft, preview and publish calls as the
   assert.equal(calls[2].body.previewToken, 'preview-token-1'); assert.equal(calls[2].body.expectedRevision, 2);
   assert.match(out.message, /Published version 3/); assert.deepEqual(await adapter.history(), []);
   assert.equal(JSON.stringify(calls).includes('password'), false);
+});
+
+test('requirements publish refuses a preview of a different saved draft', async () => {
+  const calls = [];
+  const adapter = createServiceAdapter({
+    entry: { draftVersion: 4 },
+    async request(url) {
+      const action = url.split('/').pop();
+      calls.push(action);
+      if (action === 'draft') return { draftVersion: 5 };
+      if (action === 'preview') return { draftVersion: 6 };
+      throw new Error('Publish should never receive another browser’s draft.');
+    },
+  });
+  await assert.rejects(adapter.publish({ pathway: classPathway(), onDraftSaved: () => calls.push('saved') }), /Another session changed the draft/);
+  assert.deepEqual(calls, ['draft', 'saved', 'preview']);
 });

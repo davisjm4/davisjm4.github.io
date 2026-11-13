@@ -1,3 +1,4 @@
+import { addPracticeReturn } from '../cs-games/student/practice-return.mjs';
 import { activeProfile, device, recordGameAttempt, scopedStorage } from '../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
 import { recordGuestAttempt } from '../cs-games/student/guest/hook.mjs?v=guest-map-v1';
 /* Java Games session schema v1. Daily browser summaries. An active profile can sync scored attempts. */
@@ -448,13 +449,7 @@ export function addSessionNavigation(home = "../") {
     a.dataset.sessionLink = "true";
     header.appendChild(a);
   }
-  if (header && activeProfile && !header.querySelector("[data-profile-link]")) {
-    const a=document.createElement("a");
-    a.href="/cs-games/student/";
-    a.textContent="My class progress";
-    a.dataset.profileLink="true";
-    header.appendChild(a);
-  }
+  addPracticeReturn(header, activeProfile, '/cs-games/advanced/');
   const t = sessionTracker();
   if (t.warning) showStorageWarning(t.warning);
   startActivePractice();

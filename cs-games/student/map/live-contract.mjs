@@ -88,7 +88,7 @@ export function inputFromStudentContract(contract, {
         standardsScore:n.checkpoint.score,demonstrationType:n.checkpoint.demonstrationType
       }))
     },
-    courseId,classTitle:contract.title,enrolled:Boolean(contract.classId)&&!contract.guest,guest:contract.guest?.source==='independent',sequence:nodes.map(n=>n.id),required,progress:{nodes:progressNodes,areas},attempts,mixedActivities,
+    courseId,classId:contract.guest?null:contract.classId,classTitle:contract.title,enrolled:Boolean(contract.classId)&&!contract.guest,guest:contract.guest?.source==='independent',sequence:nodes.map(n=>n.id),required,progress:{nodes:progressNodes,areas},attempts,mixedActivities,
     proficiency:contract.proficiency,
     pacing:{mode:dated?'dated':'undated',today,currentAreaId,targets}
   };

@@ -1,7 +1,7 @@
 import {currentTeacher,mountTeacherAccount,observeTeacher,teacherRequest} from '../session.mjs';
 import {courseLabel} from '../ui-model.mjs';
-import {createRequirementsEditor} from './editor.mjs';
-import {createServiceAdapter} from './adapter.mjs';
+import {createRequirementsEditor} from './editor.mjs?v=targeted-clarity-v1';
+import {createServiceAdapter} from './adapter.mjs?v=targeted-clarity-v1';
 
 const classId=new URLSearchParams(location.search).get('class');
 const context=document.getElementById('class-context');
