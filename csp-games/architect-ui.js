@@ -9,6 +9,7 @@ import {
   addSessionNavigation,
   roundSummary,
 } from "./session.js?v=guest-map-v1";
+import { architectComponent } from "./proficiency-metadata.js?v=build6";
 export function startArchitect() {
   const $ = (id) => document.getElementById(id),
     esc = (v) =>
@@ -102,7 +103,7 @@ export function startArchitect() {
     q = generateArchitect($("mode").value);
     id = tracker.begin(q.game, q.title, q.topic, q.topicTitle, q.mode, q.modeName || q.topicTitle);
     const variant = q.structure.slice(q.mode.length + 1).split("-")[0];
-    const component = q.format === "arrange" ? q.format : q.component.replaceAll(" ", "-");
+    const component = architectComponent(q);
     tracker.annotate(id, {family:`${q.mode}:${variant}:${component}`, selectedMode:$("mode").value});
     order = [];
     selectedChoice = null;

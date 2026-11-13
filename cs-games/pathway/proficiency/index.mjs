@@ -1,8 +1,8 @@
 import { evaluateEvidence, selectRecords } from '../mastery/evaluate.mjs';
 import { assertMasteryPolicy, isChallengeConfigured, validateMasteryPolicy } from '../mastery/policy.mjs';
-import { auditedEvidenceBand, proficiencyPractice, PROFICIENCY_VERSION, rubricFor } from './catalog.mjs';
+import { auditedEvidenceBand, proficiencyPractice, PROFICIENCY_VERSION, rubricFor } from './catalog.mjs?v=build6';
 
-import { formativeFamily } from './coverage-phase2.mjs';
+import { formativeFamily } from './coverage-phase2.mjs?v=build6';
 
 export {PROFICIENCY_VERSION};
 export const PROFICIENCY_SCHEMA='cs-games.formative-proficiency/1';

@@ -2,7 +2,7 @@
 import { el } from '../../../wpr-games/workplace-readiness/online/dom.mjs';
 import { renderPathway } from '../pathway-view.mjs';
 import { createGuestStore, MESSAGES, COURSE_IDS, localDate } from './store.mjs';
-import { buildGuestView, guestCourses } from './pathway.mjs';
+import { buildGuestView, guestCourses } from './pathway.mjs?v=build6';
 import { reconcileEvents } from './evidence.mjs';
 import { afterPractice } from './suggest.mjs';
 import { activityName } from './progress.mjs';

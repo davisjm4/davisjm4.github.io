@@ -1,0 +1,1 @@
+CSP PROFICIENCY BROWSER CHECKS: 26 passed (Boolean: 9 of 70 questions tagged as Level 3 evidence)

@@ -1,0 +1,10 @@
+CAUGHT  any density counts as Level 3 evidence
+CAUGHT  a question one input can satisfy is still Level 3 evidence
+CAUGHT  counter increments count as Level 3 again
+CAUGHT  direct procedure calls count as Level 3 again
+CAUGHT  a retry or arrange question is relabelled
+CAUGHT  Iteration recommends the mode that cannot reach Level 3
+CAUGHT  Procedures asks for three models it does not have
+CAUGHT  Level 3 admits Boolean questions without the both-inputs family
+
+BUILD 6 NEGATIVE CONTROLS: 8 of 8 caught

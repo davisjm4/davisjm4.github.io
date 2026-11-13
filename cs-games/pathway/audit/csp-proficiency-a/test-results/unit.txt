@@ -1,0 +1,25 @@
+ok 1 - Boolean make questions: a Level 3 family is attached only when both inputs matter and a random guess rarely passes
+ok 2 - guessing cannot reach Boolean Level 3: the chance across the 8 answers the rule needs is negligible for tagged questions
+ok 3 - Boolean: valid sparse evidence establishes Level 3, beginner-only evidence cannot, and Level 4 stays unavailable
+ok 4 - Boolean: ordinary evaluation, dense make questions and missing family metadata earn no level
+ok 5 - List Lab: executing several shifting operations supports Level 3; simple programs, Build mode and missing family do not
+ok 6 - List Lab: index-shift reasoning is what the qualifying questions measure (misconception audit)
+ok 7 - Architect components: idiom and transcription questions are labelled as such, everything else keeps its established name
+ok 8 - Architect: the goal of a direct procedure call states the call (the reason it cannot be Level 3)
+ok 9 - Architect SELECTION: Level 3 comes from reasoning questions only, and foundational questions alone never reach it
+ok 10 - Architect ITERATION: Level 3 comes from reasoning questions only, and foundational questions alone never reach it
+ok 11 - Architect SEQUENCE: Level 3 comes from reasoning questions only, and foundational questions alone never reach it
+ok 12 - Architect ALGORITHMS: Level 3 comes from reasoning questions only, and foundational questions alone never reach it
+ok 13 - Architect PROCEDURES: Level 3 comes from reasoning questions only, and foundational questions alone never reach it
+ok 14 - Architect PROCEDURES: Level 3 needs two different composition models; one model, however often repeated, is not enough
+ok 15 - Architect: three components of the same program model do not count as breadth
+ok 16 - historical records keep their meaning: tags written before this change are still read exactly as before
+ok 17 - focused and Mixed Practice credit the same skill and tier for the same question
+ok 18 - a correct retry never inflates first-attempt accuracy
+ok 19 - missing difficulty or family metadata cannot create proficiency in any of the three games
+ok 20 - teacher-configured quantities and percentages still apply inside the supported tiers
+ok 21 - official scores and awards are untouched: formative evaluation only reads them
+ok 22 - stable skill ids, rubric version and course coverage are unchanged
+# tests 22
+# pass 22
+# fail 0
