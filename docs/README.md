@@ -1,8 +1,8 @@
 # CS Games product specification
 
-**Review draft 0.1 · November 13, 2026 · Documentation only**
+**Version 1.0 approval candidate · November 13, 2026 · Documentation only**
 
-Owner and approval authority: **Josiah Davisson, DevCat Studios**. Baseline under review: repository `main` at `aca36a50455c13c8fd3da2de6e54607c8f10f625`. This draft becomes the canonical baseline after explicit approval and merge. Product approval and permission to build, migrate, or deploy are separate decisions.
+Owner and approval authority: **Josiah Davisson, DevCat Studios**. Application evidence baseline: repository `main` at `aca36a50455c13c8fd3da2de6e54607c8f10f625`. This revision updates [draft 0.1](https://github.com/davisjm4/davisjm4.github.io/commit/57258478f759e5be18e1136b7a7d4a364775f550). It becomes the canonical baseline after explicit approval and merge. Product approval and permission to build, migrate, or deploy are separate decisions.
 
 ## Read by task
 
@@ -25,11 +25,11 @@ Owner and approval authority: **Josiah Davisson, DevCat Studios**. Baseline unde
 
 ## Start the review
 
-Read [the decision log](decisions.md) for approved and outstanding choices, [the assignment contract](teacher-directed-learning.md) for the controlling addendum, and [the roadmap](evidence-and-roadmap.md) for migration sequence. Then review the domain documents and [acceptance scenarios](acceptance-tests.md) together.
+Read [the decision log](decisions.md) for final product decisions and the conditional migration decision, [the assignment contract](teacher-directed-learning.md) for the controlling addendum, and [the roadmap](evidence-and-roadmap.md) for migration sequence. Then review the domain documents and [acceptance scenarios](acceptance-tests.md) together.
 
 ## Authority and states
 
-1. The product owner's explicit decision governs product intent. The November 13 teacher-directed learning addendum controls assignment priority and overlap.
+1. The product owner's explicit decision governs product intent. The teacher-directed learning addendum controls priority and overlap. CSG-DEC-09 through CSG-DEC-13 record the Version 1.0 review decisions.
 2. After approval, the tagged specification governs product behavior. Domain requirements own their subject, with cross-links for shared rules. Teacher-directed learning owns assignment semantics. Mastery and evidence owns scoring. Privacy and security owns trust boundaries.
 3. The checked-out code and deployed version establish current behavior. Technical runbooks govern compatible operations. A discrepancy is a recorded defect, a rollout gap, or an open decision. Track it with the affected ID and evidence.
 4. The Master Tracker indexes work, releases and verification. Audits and historical reports are evidence. Neither independently grants design approval or release authority.

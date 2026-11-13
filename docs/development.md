@@ -2,7 +2,7 @@
 
 ## CSG-DEV-01 — Change protocol
 
-**Approved drafting boundary · proposed operating baseline. Roles:** product owner, maintainers and AI contributors. Start with [the index](README.md), current task scope, applicable IDs, latest source, release SHA and tracker state. Identify the normal entry points, data owners, and prior compatibility. Read applicable canonical domains and existing runbooks. Verify the existing behavior before assuming a missing feature. Preserve shared contracts and use existing patterns. Avoid parallel components, new routes or data stores when the current contract fits.
+**Approved drafting boundary and shared-component rule · other operating details proposed. Roles:** product owner, maintainers and AI contributors. Start with [the index](README.md), current task scope, applicable IDs, latest source, release SHA and tracker state. Identify the normal entry points, data owners, and prior compatibility. Read applicable canonical domains and existing runbooks. Verify the existing behavior before assuming a missing feature. Preserve shared contracts and use existing patterns. Apply CSG-DEV-03 to every new activity or CTE pathway.
 
 1. Describe the changed behavior, requirement IDs, evidence and affected users. If conflict exists, identify both sources and the owning domain. Record a proposed decision with default and impact. Ask the product owner to resolve material policy conflicts before altering them.
 2. Tie implementation to approved scope, dependencies, and measurable acceptance. Document migration, rollback and compatibility for saved routes, student records, evidence families, published revisions and report formats.
@@ -17,6 +17,20 @@
 **Approved process · pending explicit approval. Roles:** product owner and maintainers. The product owner reviews this draft and records accepted scope and the disposition of open items. Use a documentation-only pull request for the approved version, rebase against current main as needed, and verify path/anchor integrity and a docs-only diff. After explicit merge authorization, merge and tag the initial version (recommended `cs-games-spec-v1.0.0`). Record the baseline in [the index](README.md) and Release History. Link approved IDs in the tracker only as authorized. Maintain a version note and decision history for later changes. Proposed versioning: increment major for a breaking policy or architecture change, minor for an additive approved requirement, and patch for clarification or source corrections.
 
 **Legacy policy:** retain historical reports as dated evidence and add pointers in the canonical index or legacy documents when approved. Operational runbooks remain technical references. If an older product directive conflicts, preserve history, identify the superseding decision ID, and direct readers to the canonical requirement. Keep `AGENTS.md` and `CLAUDE.md` as routing guidance. **Data/security:** no production writes, secrets or roster information in docs. **Dependencies:** CSG-TRK-01 and explicit approval. **Accessibility:** readable headings, link labels, accessible tables and text alternatives. **Acceptance:** a clean checkout resolves both root guidance files, every canonical ID and the approved version; no source-code or deployment changes enter the documentation release.
+
+## CSG-DEV-03 — Shared-component release gate
+
+**Approved · required for future releases (CSG-DEC-13). Roles:** contributors, reviewers, product owner. Every new CS Games activity or CTE pathway must use the shared navigation, mastery, reporting and My Session components wherever supported. Register course-specific content and evidence through shared contracts. A capability that is genuinely unavailable is declared and explained in the shared UI. A parallel implementation of a shared interface requires an explicit, documented product-owner exception before release.
+
+| Gate item | Required review evidence |
+| --- | --- |
+| Navigation | Shared header or role shell, role-aware Map/List/search and return where applicable, plus legacy/direct entry coverage. |
+| Mastery and evidence | Shared evidence eligibility and result labels, with practice-only or teacher-reviewable states where applicable. Test guest and class attribution independently. |
+| Reports and My Session | Shared entry, denominators, scope, print/export and applicable reset/persistence behavior. Preserve printable guest reporting. |
+| Accessibility and compatibility | Check the supported keyboard, touch, responsive and screen-reader paths. Record the tested role, activity or pathway, commit and environment. |
+| Exception | Record the exception ID, approved owner and scope, affected requirements, rationale, compatible and accessible fallback, tests, and review or retirement date in the decision log. |
+
+**States/data:** pending, passed, blocked, or approved exception with verified fallback. Record the result in release evidence before release. No credentials or learner records belong in that evidence. **Dependencies:** CSG-PRD-02, CSG-UX-01/03, CSG-CUR-01/02. **Acceptance:** CSG-AT-14 exercises a registered new activity and pathway, verifies reuse, and blocks release when a duplicate lacks an approved exception.
 
 ## Existing verification entry points
 
