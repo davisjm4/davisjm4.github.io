@@ -17,6 +17,7 @@ const { parseHTML } = createRequire(import.meta.url)(
   process.env.CSP_DOM_LIBRARY || "linkedom",
 );
 const read = (p) => fs.readFileSync(new URL(p, import.meta.url), "utf8"),
+  returnSource = read('../cs-games/student/practice-return.mjs').replace(/import[^;]+;/g, '').replace(/export /g, ''),
   sessionSource = read("./session.js").replace(/import[^;]+;/g, "").replace(/export /g, ""),
   appSource = read("./app.js")
     .replace(/import[^;]+;/g, "")
@@ -86,6 +87,8 @@ function launch(slug) {
       (captures[key] = E[key](...args))
     );
   const ctx = {
+    location: new URL('https://example.test/csp-games/' + slug + '/'),
+    URL, URLSearchParams,
     activeProfile, device, recordGameAttempt, recordGuestAttempt, scopedStorage,
     booleanMakeEvidence, selectBooleanMakeChallenge,
     createProgressStore, initializeFromSession, recordFirstSubmission,
@@ -109,6 +112,7 @@ function launch(slug) {
     clearInterval: () => {},
   };
   vm.createContext(ctx);
+  vm.runInContext(returnSource, ctx);
   vm.runInContext(sessionSource, ctx);
   if (slug === "summary") {
     let dialog = document.getElementById("reset-dialog");

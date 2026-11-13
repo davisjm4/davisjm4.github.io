@@ -44,17 +44,23 @@ test('CSG-PKG-01 practice verdict, report counts, and safe return', { timeout: 9
     await page.goto(dev.url + practice);
     await press(page, '#value-bank button');
     await press(page, '#check');
-    assert.ok(await page.$eval('#feedback', verdict => {
+    const placement = await page.$eval('#feedback', verdict => {
       const check = document.querySelector('#check');
       const trace = document.querySelector('#execution');
       const rect = verdict.getBoundingClientRect();
-      return document.activeElement === verdict && verdict.getAttribute('role') === 'status' &&
-        /^(Correct|Incorrect)\b/.test(verdict.textContent) && verdict.textContent.includes('Next Challenge') &&
-        rect.top >= 0 && rect.bottom <= innerHeight && rect.top - check.getBoundingClientRect().bottom < 120 &&
-        Boolean(verdict.compareDocumentPosition(trace) & Node.DOCUMENT_POSITION_FOLLOWING) &&
-        !trace.hidden && trace.querySelectorAll('tbody tr').length > 0 &&
-        document.documentElement.scrollWidth <= innerWidth + 1;
-    }), 'the verdict is announced, focused, and visible before the trace at ' + width);
+      return {
+        focused: document.activeElement === verdict,
+        announced: verdict.getAttribute('role') === 'status',
+        hasVerdict: /^(Correct|Incorrect)\b/.test(verdict.textContent),
+        hasNext: verdict.textContent.includes('Next Challenge'),
+        visible: rect.top >= -1 && rect.bottom <= innerHeight + 1,
+        adjacent: verdict.previousElementSibling === check && rect.top - check.getBoundingClientRect().bottom < 120,
+        precedesTrace: Boolean(verdict.compareDocumentPosition(trace) & Node.DOCUMENT_POSITION_FOLLOWING),
+        hasTrace: !trace.hidden && trace.querySelectorAll('tbody tr').length > 0,
+        fits: document.documentElement.scrollWidth <= innerWidth + 1,
+      };
+    });
+    assert.ok(Object.values(placement).every(Boolean), width + 'px: ' + JSON.stringify(placement));
     await screenshot(page, 'variable-' + width);
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
