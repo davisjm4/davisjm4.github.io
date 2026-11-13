@@ -60,11 +60,33 @@ test('course cards open course maps and search survives practice return', { time
     await page.setViewport({ width, height });
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), width + 'px');
   }
+  const replaceSearch = async text => {
+    await page.focus(search);
+    await page.keyboard.down('Control');
+    await page.keyboard.press('a');
+    await page.keyboard.up('Control');
+    await page.keyboard.type(text);
+  };
+  for (const layout of ['map', 'list']) {
+    await page.focus('[data-layout="' + layout + '"]');
+    await page.keyboard.press('Enter');
+    for (const [concept, title] of [
+      ['remainder', /Modulus/], ['find index', /Find String indices/], ['substring', /String expressions/],
+      ['nested loops', /Nested.loop/], ['parameters', /parameter shadowing/], ['conditional statements', /Follow the Branch/],
+    ]) {
+      await replaceSearch(concept);
+      assert.match(await page.$eval(result, node => node.textContent), title, concept + ' in ' + layout);
+    }
+  }
   await page.select('#guest-course-switch', 'csp');
   assert.equal(new URL(page.url()).searchParams.get('course'), 'csp');
-  await page.type(search, 'binary representation');
-  assert.match(await page.$eval(result, node => node.textContent), /binary/i);
-  assert.match(await page.$eval(result, node => node.textContent), /AP CSP/);
+  for (const layout of ['map', 'list']) {
+    await page.focus('[data-layout="' + layout + '"]');
+    await page.keyboard.press('Enter');
+    await replaceSearch('binary representation');
+    assert.match(await page.$eval(result, node => node.textContent), /binary/i);
+    assert.match(await page.$eval(result, node => node.textContent), /AP CSP/);
+  }
 });
 
 test('enrolled search launches class practice and syncs a first attempt', { timeout: 90000 }, async t => {
