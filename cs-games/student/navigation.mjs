@@ -8,6 +8,7 @@ if (nav) {
     ['Courses', '/cs-games/student/guest/?choose=1', page === 'courses'],
     ['My Session', '/cs-games/student/guest/#my-session', false],
     [activeProfile ? 'My Class' : 'Join a Class', '/cs-games/student/', page === 'class'],
+    ...(page === 'class' ? [['Student profile', '#student-profile', false]] : []),
     ['Teacher Tools', '/cs-games/teacher/', false],
   ];
   const menu = el('details', { class: 'student-nav-menu' },
