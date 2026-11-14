@@ -9,6 +9,7 @@
     "test:string-lab": "node string-lab/tests/generator.test.cjs",
     "test:variable-evidence": "node variable-lab/evidence-ui-tests.mjs && node --test ../cs-games/pathway/tests/mastery-evidence.test.mjs",
     "test:math": "node math-lab/tests.mjs",
+    "test:math-quality": "node math-lab/quality-tests.mjs",
     "test:math-expansion": "node math-lab/expansion/tests/expansion-tests.mjs && node math-lab/expansion/tests/ui-tests.mjs",
     "test:debugger-lab": "node debugger-lab/debugger-redesign-tests.mjs",
     "test:quality": "node quality-tests.mjs && node debugger-quality-tests.mjs && node debugger-behavior-tests.mjs && node loop-quality-tests.mjs && node loop-jvm-tests.mjs && node array-quality-tests.mjs && node array-lab/array-redesign-tests.mjs && node debugger-lab/debugger-redesign-tests.mjs",

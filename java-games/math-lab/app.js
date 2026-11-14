@@ -1,7 +1,7 @@
-import { mathGame, createDeck, assess } from "./engine.js?v=math-v1";
+import { mathGame, createDeck, assess } from "./engine.js?v=math-quality-v1";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=guest-map-v1";
 import { EXPANSION_MODES, DIFFICULTIES, DIFFICULTY_TITLES, createExpansionDeck, assessExpansion } from "./expansion/generator.js?v=math-exp-v1";
-import { createMixedDeck, mathEvidence } from "./mixed.js?v=math-mixed-v1";
+import { createMixedDeck, mathEvidence } from "./mixed.js?v=math-quality-v1";
 
 export function startMathLab() {
   const $ = id => document.getElementById(id);
