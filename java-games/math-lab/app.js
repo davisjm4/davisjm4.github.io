@@ -57,8 +57,9 @@ export function startMathLab(access = null) {
     const title = expansion ? q.modeTitle : mathGame.modes[q.mode];
     instance = saved?.instance;
     if (!instance || tracker.status(instance) !== "active") instance = tracker.begin("math-lab", "Math Lab", q.mode, title, q.mode, title);
-    const evidence = mathEvidence(q);
-    if (evidence) tracker.annotate(instance, { ...evidence, ...(saved ? { practiceSetting:mode, classQuestionId:saved.questionId } : {}) });
+    const metadata = mathEvidence(q);
+    const evidence = saved ? { ...metadata, practiceSetting:mode, classQuestionId:saved.questionId } : metadata;
+    if (evidence) tracker.annotate(instance, evidence);
     selected = saved?.selected ?? null;
     closed = false;
     if (saved) protectedQuestion.save({ ...saved, instance });
