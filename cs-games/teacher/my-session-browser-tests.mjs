@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import { readFileSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { startDev } from '../../wpr-games/workplace-readiness/service/dev.mjs';
 
 const require = createRequire(new URL('../../wpr-games/workplace-readiness/package.json', import.meta.url));
 const { launch } = require('./tests/browser/harness.js');
+const axeSource = readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 const day = '/cs-games/student/session/?course=advanced';
 
 async function testPage(t, options = {}) {
@@ -49,6 +51,11 @@ test('My Session preserves first attempts, print-only identity, guest history an
     await page.setViewport({ width, height: 844 });
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'viewport ' + width);
   }
+  await page.evaluate(axeSource);
+  const violations = await page.evaluate(async () => (await axe.run('#session-main', {
+    runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa'],
+  })).violations.map(({ id }) => id));
+  assert.deepEqual(violations, []);
   await page.evaluate(() => {
     window.print = () => { window.printed = document.getElementById('print-identity').textContent; };
     Object.defineProperty(navigator, 'clipboard', { value: { async writeText(value) { window.copiedSummary = value; } } });
@@ -143,4 +150,87 @@ test('My Session reads legacy formats and isolates profile and independent repor
   await page.waitForSelector('.session-table');
   assert.deepEqual((await metrics(page)).slice(0, 3), ['2', '1', '50%']);
   assert.equal(await page.$('#reset-session'), null);
+});
+
+test('real AP CSP, Robotics, Workplace Readiness and RACECES practice reaches My Session', { timeout: 90000 }, async t => {
+  const { dev, page } = await testPage(t);
+  const route = '/cs-games/student/session/?course=';
+  const activityLink = 'a[data-my-session]';
+  const openReport = async (course, title) => {
+    await page.waitForSelector(activityLink, { visible: true });
+    await Promise.all([page.waitForNavigation(), page.click(activityLink)]);
+    assert.equal(new URL(page.url()).pathname, '/cs-games/student/session/');
+    assert.equal(new URL(page.url()).searchParams.get('course'), course);
+    await page.waitForSelector('.session-table');
+    assert.equal((await metrics(page))[0], '1');
+    assert.match(await page.$eval('.session-table', table => table.textContent), title);
+  };
+  await page.goto(dev.url + '/csp-games/binary-builder/?mode=capacity&learner=guest');
+  await page.waitForSelector('#capacity-answer', { visible: true });
+  await page.type('#capacity-answer', '16');
+  await page.type('#maximum-answer', '15');
+  await page.click('#check');
+  await openReport('csp', /Binary Builder/);
+
+  await page.goto(dev.url + '/cs-games/robotics/parts-sprint/?learner=guest');
+  await page.waitForFunction(() => document.getElementById('category').options.length > 1);
+  await page.click('#start');
+  await page.waitForSelector('#answers button', { visible: true });
+  await page.click('#answers button');
+  await openReport('robotics', /Parts Sprint/);
+
+  await page.goto(dev.url + '/wpr-games/workplace-readiness/?learner=guest');
+  await page.waitForSelector('#opt-mode', { visible: true });
+  await page.select('#opt-mode', 'decision');
+  await page.click('#btn-start');
+  await page.waitForSelector('.choice', { visible: true });
+  await page.click('.choice');
+  await page.click('#btn-check');
+  await openReport('workplace', /Workplace Readiness/);
+
+  await page.goto(dev.url + '/wpr-games/raceces/?learner=guest#/identify');
+  await page.waitForSelector('button.sent', { visible: true });
+  await page.click('button.sent');
+  await page.click('#check-btn');
+  await openReport('raceces', /RACECES/);
+  await page.goto(dev.url + route + 'csp&learner=guest');
+  await page.waitForSelector('.session-table');
+  assert.equal((await metrics(page))[0], '1');
+});
+
+test('activity reports retain the original String Lab copy and Search & Sort restart', { timeout: 90000 }, async t => {
+  const { dev, page } = await testPage(t);
+  await page.goto(dev.url + '/java-games/string-lab/?learner=guest');
+  await page.waitForSelector('#choice0', { visible: true });
+  await page.click('#choice0');
+  await page.click('#checkBtn');
+  await page.click('#summaryBtn');
+  await page.waitForSelector('#summaryDlg[open]', { visible: true });
+  const summary = await page.$eval('#summaryBody', node => node.textContent);
+  assert.match(summary, /By difficulty/);
+  assert.match(summary, /By skill/);
+  await page.evaluate(() => {
+    Object.defineProperty(navigator, 'clipboard', { value: { async writeText(value) { window.copiedLegacy = value; } } });
+  });
+  await page.click('#copyBtn');
+  await page.waitForFunction(() => Boolean(window.copiedLegacy));
+  const copy = await page.evaluate(() => JSON.parse(window.copiedLegacy));
+  assert.equal(copy.attempted, 1);
+  assert.ok(copy.byDifficulty);
+
+  await page.goto(dev.url + '/java-games/search-sort-lab/?learner=guest');
+  await page.waitForSelector('#choices button', { visible: true });
+  await page.click('#choices button');
+  await page.click('#submit');
+  await page.click('#summary-toggle');
+  await page.waitForSelector('#summary:not([hidden])');
+  assert.match(await page.$eval('#summary-body', node => node.textContent), /By difficulty/);
+  await page.click('#restart');
+  await page.waitForSelector('#restart-dialog[open]');
+  await page.click('#restart-confirm');
+  assert.match(await page.$eval('#summary-body', node => node.textContent), /No answers yet/);
+  await page.goto(dev.url + day);
+  await page.waitForSelector('.session-table');
+  assert.match(await page.$eval('.session-table', table => table.textContent), /Search & Sort Lab/);
+  assert.equal((await metrics(page))[0], '2');
 });
