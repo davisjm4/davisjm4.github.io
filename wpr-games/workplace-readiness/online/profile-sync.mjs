@@ -4,7 +4,44 @@ import { BATCH_LIMIT, PROFILE_ID, PROFILE_VERSION } from './profile-model.mjs';
 
 export const device=globalThis.CSGamesProfileDevice;
 // Guest map links explicitly select local practice for this tab, even on a shared browser.
-const guestPractice=new URLSearchParams(globalThis.location?.search).get('learner')==='guest';
+const query=new URLSearchParams(globalThis.location?.search);
+const guestPractice=query.get('learner')==='guest';
+const classLaunchId=guestPractice?null:query.get('classLaunch');
+let confirmedLaunch=false;
+let blockEvidence=false;
+if(classLaunchId&&typeof document!=='undefined')void verifyActivityPage();
+
+async function verifyActivityPage(){
+  const main=document.querySelector('main')??document.body;
+  const priorInert=main.inert;
+  main.inert=true;
+  const notice=document.createElement('p');
+  notice.className='wrap';
+  notice.setAttribute('role','status');
+  notice.textContent='Checking class practice access…';
+  main.before(notice);
+  try{
+    if(!device.identity)throw new Error('Restore your profile before opening class practice.');
+    const verdict=await request('/profile/class-launch/'+encodeURIComponent(classLaunchId),{token:device.identity.token});
+    const current=new URL(location.href);
+    current.searchParams.delete('classLaunch');
+    current.searchParams.delete('returnTo');
+    const expected=new URL(verdict.destination,location.origin);
+    if(expected.origin!==current.origin||expected.pathname!==current.pathname||expected.search!==current.search)
+      throw new Error('This activity does not match your verified class launch.');
+    confirmedLaunch=true;
+    main.inert=priorInert;
+    notice.remove();
+  }catch(error){
+    blockEvidence=true;
+    notice.textContent=navigator.onLine ? (error.status?error.message:'Class access could not be verified. Check your connection and try again.') :
+      'Reconnect to check class access. Previously submitted attempts stay queued on this device.';
+    const back=document.createElement('a');
+    back.href='/cs-games/student/';
+    back.textContent='Back to My Class';
+    notice.append(' ',back);
+  }
+}
 export const activeProfile=profilesAvailable&&!guestPractice ? device.identity : null;
 const prefix=device.key('outbox.');
 let sending, timer, retryDelay=2000;
@@ -32,9 +69,10 @@ function schedule(delay=1500) {
   timer=setTimeout(syncQueuedPractice,delay);
 }
 export function queueProfileEvent(event) {
-  if (!activeProfile || !device.isCurrent()) return;
+  if (!activeProfile || !device.isCurrent() || blockEvidence || (classLaunchId&&!confirmedLaunch)) return;
+  const payload=confirmedLaunch?{...event,classLaunchId}:event;
   try {
-    localStorage.setItem(prefix+event.id,JSON.stringify(event));
+    localStorage.setItem(prefix+event.id,JSON.stringify(payload));
     status('Practice saved on this device. Sync pending.');
     schedule();
   } catch { status('This browser could not queue this attempt for sync.'); }
@@ -44,16 +82,25 @@ export async function syncQueuedPractice() {
   if (sending) return sending;
   sending=(async()=>{
     try {
+      let anyRejected=false;
       while (device.isCurrent()) {
         const keys=queueKeys().slice(0,BATCH_LIMIT);
         const events=keys.map(key=>JSON.parse(localStorage.getItem(key))).filter(Boolean);
-        if (!events.length) { retryDelay=2000; status('Practice synced.'); return true; }
-        const {accepted}=await request('/profile/sync',{token:activeProfile.token,body:{events}});
+        if (!events.length) { retryDelay=2000; if(!anyRejected)status('Practice synced.'); return true; }
+        const {accepted,rejected=[]}=await request('/profile/sync',{token:activeProfile.token,body:{events}});
         const submitted=new Set(events.map(event=>event.id));
-        if (!Array.isArray(accepted) || !accepted.length || accepted.some(id=>!submitted.has(id))) {
+        if (!Array.isArray(accepted) || !Array.isArray(rejected) || !accepted.length&&!rejected.length ||
+          [...accepted,...rejected.map(row=>row.id)].some(id=>!submitted.has(id))) {
           throw new Error('Incomplete acknowledgement.');
         }
         for (const id of accepted) localStorage.removeItem(prefix+id);
+        for(const rejection of rejected){
+          const key=prefix+rejection.id;
+          const saved=localStorage.getItem(key);
+          if(saved!==null)localStorage.setItem(device.key('unverified.'+rejection.id),saved);
+          localStorage.removeItem(key);
+        }
+        if(rejected.length){anyRejected=true;status('Some responses were kept on this device because their class launch could not be verified. They did not earn class credit.');}
       }
       return false;
     } catch (error) {

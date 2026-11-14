@@ -121,3 +121,65 @@ test('gated focus publication is atomic, checks reviewed scope, and retries one 
   assert.equal(dev.db.prepare('SELECT COUNT(*) count FROM learning_focus').get().count, 1);
   assert.equal(dev.db.prepare('SELECT COUNT(*) count FROM performance_events').get().count, 0);
 });
+
+test('owner reads and revision actions retain older grants and release them by profile', async t => {
+  const dev = await startDev({ teacherTokens: { teacher, other }, pathwayAdapters: { ENABLE_TEACHER_DIRECTED_LEARNING: '1' } });
+  t.after(async () => { await new Promise(resolve => dev.server.close(resolve)); dev.db.close(); });
+  dev.db.exec(readFileSync(new URL('../../../wpr-games/workplace-readiness/service/migrations/0008_learning_focus.sql', import.meta.url), 'utf8'));
+  async function call(path, body, token = teacher, expected = 200) {
+    const response = await fetch(dev.url + '/api/wpr' + path, {
+      method: body === undefined ? 'GET' : 'POST',
+      headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+      body: body === undefined ? undefined : JSON.stringify(body),
+    });
+    const data = await response.json();
+    assert.equal(response.status, expected, JSON.stringify(data));
+    return data;
+  }
+  const room = await call('/teacher/profiles',{title:'Lifecycle',courseId:'advanced'});
+  const learner = await call('/profile/enroll',{invite:room.invite},'');
+  const peer = await call('/profile/enroll',{invite:room.invite},'');
+  const path = '/teacher/learning-focus/' + room.id;
+  const student = '/profile/learning-focus';
+  const work = token=>call(student,undefined,token);
+  async function publish(assignment,edit) {
+    const {previewAt,previewSignature}=await call(path+'/preview',{...assignment,...(edit ? {edit} : {})});
+    return call(path+'/publish',{assignment,edit,previewAt,previewSignature,requestId:crypto.randomUUID()});
+  }
+  const a={kind:'skill',id:'node:advanced:loop-lab:looptype'};
+  const b={kind:'skill',id:'node:advanced:loop-lab:components'};
+  const one={scope:'individual',recipientIds:[learner.id],mode:'restricted',target:a};
+  const all={scope:'class',mode:'restricted',target:b};
+  const catchUp=await publish(one);
+  const whole=await publish(all);
+  await call(path,undefined,other,404);
+  await call(path+'/preview',{...one,edit:catchUp},other,404);
+  let loaded=await work(learner.token);
+  assert.deepEqual(loaded.classwork.map(row=>row.id),[whole.id]);
+  assert.deepEqual(loaded.catchUp.map(row=>row.id),[catchUp.id]);
+  assert.equal((await work(peer.token)).catchUp.length,0);
+  assert.ok(!JSON.stringify(loaded).includes(peer.id));
+  const edited=await publish({...one,mode:'advisory',target:b},catchUp);
+  loaded=await work(learner.token);
+  assert.deepEqual(loaded.allowed.map(row=>row.nodeId).sort(),[a.id,b.id].sort());
+  assert.equal(loaded.recommendations.length,1);
+  const view=await call(path);
+  assert.equal(view.activeRestrictions.length,2);
+  assert.equal(view.activeRestrictions.find(row=>row.profileId===learner.id).grants.length,2);
+  const release={requestId:crypto.randomUUID(),grants:[
+    {...whole,profileId:learner.id},{...whole,profileId:crypto.randomUUID()},
+  ]};
+  await call(path+'/release',release,other,404);
+  for(let retry=0;retry<2;retry++){
+    assert.deepEqual((await call(path+'/release',release)).results.map(row=>row.status),['released','unavailable']);
+  }
+  assert.equal((await work(learner.token)).restricted,true);
+  assert.equal((await work(peer.token)).restricted,true);
+  const command={...edited,requestId:crypto.randomUUID()};
+  await call(path+'/end',{...catchUp,requestId:crypto.randomUUID()},teacher,409);
+  const ended=await call(path+'/end',command);
+  assert.equal(ended.state,'ended');
+  assert.deepEqual(await call(path+'/end',command),ended);
+  assert.equal((await work(learner.token)).restricted,false);
+  assert.equal((await work(peer.token)).restricted,true);
+});
