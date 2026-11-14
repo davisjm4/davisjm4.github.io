@@ -1,0 +1,13 @@
+# CSG-PKG-06 · Teacher-Directed Learning
+
+Draft implementation checkpoint for CSG-TDL-01/02/04, CSG-STU-04 and CSG-SEC-03. The package depends on the deployed class and Plan workspaces. The approved requirements and [acceptance scenarios](../acceptance-tests.md#teacher-directed-learning) govern subsequent implementation.
+
+## Implemented and tested
+
+The shared pathway module normalizes published areas, skills, skill groups and activities to skill-and-activity destinations. It applies classwide work dynamically to active members, uses the stored membership snapshot for groups and individual work, and gives class work priority in the result. Recommendation grouping preserves each assignment reference and recipient lists stay out of the student result. Effective class access uses the union of all currently available assigned work when any applicable restriction is active. Completion leaves a manual grant active. Release is per grant and profile. Access to a newly added skill requires an explicit target revision, even if the area originally covered by the assignment still exists.
+
+Run `node --test cs-games/pathway/tests/assignment-access.test.mjs`. Four deterministic tests cover the policy portions of CSG-AT-TDL-01/04/05/09/12, including both creation orders, overlapping advisory/restricted work, same-game isolation, release of one grant, scheduled activation, new class members, revoked membership and stale permission. No API routes, classroom writes, or migrations are active in this checkpoint.
+
+## Next implementation step
+
+Persist versioned assignment, recipient, progress, grant and audit records under the existing Worker class ownership and active-profile checks. Treat the shared policy input as strictly server-normalized. Wire the same server decision into new launches and queued evidence validation, using an immutable server-verified class launch context for the original attempt. Keep public guest practice outside the class boundary. Preserve privacy, established evidence deduplication and concurrent retries. Add the teacher dashboard and class/individual authoring, then student focus and resume. Verify the full class workflow and related security scenarios in the disposable Worker environment before deploying. Use the existing deployment runbook for backup, isolation and migration checks. The pure policy tests do not satisfy the package release gate.
