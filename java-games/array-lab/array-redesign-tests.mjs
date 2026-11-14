@@ -152,6 +152,7 @@ const context = {
   document, window, console,
   ...A,
   generateArray: (format) => (current = A.generateArray(format, forcedVariant)),
+  advisoryCheckpoint: () => null,
   sessionTracker: () => tracker,
   addSessionNavigation: () => {},
   roundSummary: () => JSON.stringify(tracker.snapshot().totals),

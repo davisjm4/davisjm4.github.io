@@ -1,18 +1,29 @@
 import './profile-device.js?v=guest-map-v1';
 import { profilesAvailable, request } from './config.mjs';
 import { BATCH_LIMIT, PROFILE_ID, PROFILE_VERSION } from './profile-model.mjs';
+import { advisoryActivity } from '../../../cs-games/student/advisory-practice.mjs';
 
 export const device=globalThis.CSGamesProfileDevice;
 // Guest map links explicitly select local practice for this tab, even on a shared browser.
-const guestPractice=new URLSearchParams(globalThis.location?.search).get('learner')==='guest';
+const query=new URLSearchParams(globalThis.location?.search);
+const guestPractice=query.get('learner')==='guest';
 export const activeProfile=profilesAvailable&&!guestPractice ? device.identity : null;
 const prefix=device.key('outbox.');
 let sending, timer, retryDelay=2000;
+const assignment=advisoryActivity(activeProfile,query);
 const listeners=new Set();
 function status(message) { for (const listener of listeners) listener(message); }
 export function observeSync(listener) {
   listeners.add(listener);
   return ()=>listeners.delete(listener);
+}
+export function retainedPractice() {
+  if (!activeProfile || !device.isCurrent()) return [];
+  const retained=device.key('unverified.');
+  try {
+    return Object.keys(localStorage).filter(key=>key.startsWith(retained))
+      .flatMap(key=>{try{return [JSON.parse(localStorage.getItem(key))];}catch{return [];}});
+  }catch{return [];}
 }
 export function queueKeys() {
   if (!activeProfile) return [];
@@ -33,8 +44,9 @@ function schedule(delay=1500) {
 }
 export function queueProfileEvent(event) {
   if (!activeProfile || !device.isCurrent()) return;
+  const payload={...event,...(assignment?.receipt ? {assignmentReceipt:assignment.receipt} : {})};
   try {
-    localStorage.setItem(prefix+event.id,JSON.stringify(event));
+    localStorage.setItem(prefix+event.id,JSON.stringify(payload));
     status('Practice saved on this device. Sync pending.');
     schedule();
   } catch { status('This browser could not queue this attempt for sync.'); }
@@ -44,16 +56,25 @@ export async function syncQueuedPractice() {
   if (sending) return sending;
   sending=(async()=>{
     try {
+      let anyRejected=false;
       while (device.isCurrent()) {
         const keys=queueKeys().slice(0,BATCH_LIMIT);
         const events=keys.map(key=>JSON.parse(localStorage.getItem(key))).filter(Boolean);
-        if (!events.length) { retryDelay=2000; status('Practice synced.'); return true; }
-        const {accepted}=await request('/profile/sync',{token:activeProfile.token,body:{events}});
+        if (!events.length) { retryDelay=2000; if(!anyRejected)status(retainedPractice().length?'Some responses are saved on this device for recovery.':'Practice synced.'); return true; }
+        const {accepted,rejected=[]}=await request('/profile/sync',{token:activeProfile.token,body:{events}});
         const submitted=new Set(events.map(event=>event.id));
-        if (!Array.isArray(accepted) || !accepted.length || accepted.some(id=>!submitted.has(id))) {
+        if (!Array.isArray(accepted) || !Array.isArray(rejected) || !accepted.length&&!rejected.length ||
+          [...accepted,...rejected.map(row=>row.id)].some(id=>!submitted.has(id))) {
           throw new Error('Incomplete acknowledgement.');
         }
         for (const id of accepted) localStorage.removeItem(prefix+id);
+        for(const rejection of rejected){
+          const key=prefix+rejection.id;
+          const saved=localStorage.getItem(key);
+          if(saved!==null)localStorage.setItem(device.key('unverified.'+rejection.id),JSON.stringify({code:rejection.code,event:JSON.parse(saved)}));
+          localStorage.removeItem(key);
+        }
+        if(rejected.length){anyRejected=true;status('Some responses were kept on this device because their profile or evidence could not be verified. They did not earn class credit.');}
       }
       return false;
     } catch (error) {
@@ -74,8 +95,9 @@ function metadata(value) {
 export function recordGameAttempt(courseId,record,sessionId,correct,occurred) {
   if (!activeProfile || !PROFILE_ID.test(record.id) || !PROFILE_ID.test(sessionId)) return;
   const details=record.details || {};
+  const questionId=record.id;
   queueProfileEvent({version:PROFILE_VERSION,format:'game-attempt',kind:'practice',
-    id:record.id+':'+record.submissions, questionId:record.id, sessionId, courseId,
+    id:questionId+':'+record.submissions, questionId, sessionId, courseId,
     activity:record.game, attempt:record.submissions, correct:Boolean(correct), occurred:Date.parse(occurred),
     mode:metadata(details.practiceSetting || details.selectedMode || record.mode),
     assessedMode:metadata(details.practiceMode) || metadata(details.format) || metadata(details.mode) || metadata(record.mode),

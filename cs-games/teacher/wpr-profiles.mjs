@@ -1,3 +1,4 @@
+import { createTeacherFocus } from './learning-focus.mjs';
 import {DEMONSTRATION_TYPES} from '../pathway/proficiency/demonstrations.mjs';
 import {renderPathway} from '../student/pathway-view.mjs';
 import { profilesAvailable } from '../../wpr-games/workplace-readiness/online/config.mjs';
@@ -222,6 +223,7 @@ export function teacherProfiles(onClasses) {
         return [p.id,p.active?'Active':'Revoked',String(p.events),actions];
       }),'Class roster'):el('div',{class:'empty'},el('h3',{text:'No student profiles yet'}),el('p',{text:c.archived?'This class had no student profiles.':'Share the enrollment link, or issue a profile ID for a student who cannot enroll themselves.'}));
     rosterTable.querySelector?.('table')?.classList.add('stack');
+    const focusPanel= !c.archived && createTeacherFocus(c,roster);
     put(panel,
       el('div',{class:'card accent'},
         el('div',{class:'card-head'},
@@ -236,6 +238,7 @@ export function teacherProfiles(onClasses) {
           !c.archived&&task('#class-plan','Plan','Customize the pathway, practice requirements and pacing.'),
           task('#class-assessments','Practice & assessments','Create a diagnostic or targeted practice.'),
           task('#class-students','Student profiles','Enrollment, access and individual progress reports.')),previewSlot),
+      focusPanel?.root,
       el('section',{class:'card',id:'class-progress','aria-labelledby':'class-progress-title'},evidenceHeading,
         el('div',{class:'actions'},compare),evidence,comparisonReport),
       el('div',{class:'card',id:'class-students'},
@@ -289,6 +292,7 @@ export function teacherProfiles(onClasses) {
     if(focus)panel.querySelector('h3')?.focus();
     else if(location.hash==='#class-plan')panel.querySelector('#class-plan')?.scrollIntoView();
     loadPathwayStatus(c,pathwaySlot,active);
+    void focusPanel?.refresh();
   }
   async function openStudentPreview(classId,slot){
     const plan=pathways.get(classId);

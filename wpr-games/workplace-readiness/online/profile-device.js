@@ -27,7 +27,7 @@
   }
   function clear() {
     if (!identity || !isCurrent()) return;
-    for (const k of Object.keys(root.localStorage)) if (k.startsWith(prefix)) root.localStorage.removeItem(k);
+    for (const k of Object.keys(root.localStorage)) if (k.startsWith(prefix) && !k.startsWith(key('unverified.'))) root.localStorage.removeItem(k);
     root.localStorage.removeItem(activeKey);
   }
   root.CSGamesProfileDevice={identity,key,isCurrent,signIn,clear};

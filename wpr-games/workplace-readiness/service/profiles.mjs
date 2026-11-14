@@ -1,3 +1,4 @@
+import { creditFocusStatements, focusEnabled } from './learning-focus.mjs';
 import {defaultPathwayStatements,ensureClassPathway} from './default-pathways.mjs';
 import { cleanGameAttempt, courses, metadataId, practiceMetadata, profilePathway, publishedPlan, readProfileEvidence, readPracticeProgress } from './profile-evidence.mjs';
 import { DEMONSTRATION_TYPES } from '../../../cs-games/pathway/proficiency/demonstrations.mjs';
@@ -276,17 +277,20 @@ async function recordTeacherEvidence(db,classroom,profileId,input,now) {
     data:{pathwayId:plan.id,pathwayRevision:plan.revision,evidence,n:0,c:0,dimensions:[]}},now,plan.revision);
   return {accepted:true,id:input.id};
 }
-async function syncPractice(db,p,events,now) {
+async function syncPractice(db,p,events,now,trackFocus,rejected) {
   const published=await first(db,'SELECT id,head FROM class_pathways WHERE class_id=? AND head>0',p.class_id);
   const items=events.map(event=>({ ...event, kind:'practice',data:{...event.data,
-    pathwayId:published?.id ?? null,receivedUnderRevision:published?.head ?? null} }));
-  await db.batch(items.map(event=>eventInsert(db,p,event,now)));
+    pathwayId:published?.id ?? null,receivedUnderRevision:published?.head ?? null,
+    ...(event.receipt ? {assignmentReceipt:event.receipt} : {})} }));
+  if (!items.length) return {accepted:[],rejected};
+  await db.batch([...items.map(event=>eventInsert(db,p,event,now)),
+    ...(trackFocus ? creditFocusStatements(db,p,items,now) : [])]);
   const ids=[...new Set(items.map(event=>event.id))];
   const accepted=(await all(db,'SELECT id FROM performance_events WHERE profile=? AND id IN ('+
     ids.map(()=>'?').join(',')+')',p.id,...ids)).map(row=>row.id);
   if (!accepted.length) profileError(409,'The profile is inactive or its record limit was reached.');
   const found=new Set(accepted);
-  return {accepted:ids.filter(id=>found.has(id))};
+  return {accepted:ids.filter(id=>found.has(id)),...(rejected.length ? {rejected} : {})};
 }
 export async function routeProfiles(request,env,segments,readBody,now) {
   if (!profilesEnabled(env)) profileError(404,'Student profiles are unavailable.');
@@ -324,9 +328,19 @@ export async function routeProfiles(request,env,segments,readBody,now) {
   if (action==='sync' && method==='POST') {
     const input=await readBody(request);
     if (!Array.isArray(input?.events) || !input.events.length || input.events.length>BATCH_LIMIT) profileError(400,'Send 1 to 25 practice events.');
-    const events=input.events.map(event=>cleanPractice(event,now));
     await limit(db,'sync:'+p.id,now,240);
-    return syncPractice(db,p,events,now);
+    const trackFocus=focusEnabled(env), events=[], rejected=[];
+    for (const source of input.events) {
+      const event=cleanPractice(source,now);
+      if (source.learner==='guest' || source.classId!=null && source.classId!==p.class_id ||
+          source.profileId!=null && source.profileId!==p.id) {
+        rejected.push({id:event.id,code:'profile-scope'});
+        continue;
+      }
+      if (trackFocus && present(source.assignmentReceipt,PROFILE_ID)) event.receipt=source.assignmentReceipt;
+      events.push(event);
+    }
+    return syncPractice(db,p,events,now,trackFocus,rejected);
   }
   profileError(404,'Profile route not found.');
 }

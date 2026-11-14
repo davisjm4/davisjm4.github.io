@@ -1,3 +1,4 @@
+import { advisoryCheckpoint } from "../../cs-games/student/advisory-practice.mjs";
 import { originalModeNames, newModeNames, loopTypeModeNames, DIFFICULTIES, DIFFICULTY_NAMES, createLoopSession, assessLoop, distractorFor } from "./loop-engine.js?v=loop-types-v1";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=guest-map-v1";
 
@@ -16,6 +17,8 @@ function studentTraceHtml(st) {
 
 export function startLoopLab() {
   const $ = (id) => document.getElementById(id), tracker = sessionTracker();
+  const checkpoint = advisoryCheckpoint("loop-lab");
+  let instanceMode, instanceDifficulty;
   let seed;
   try { const a = new Uint32Array(1); crypto.getRandomValues(a); seed = a[0]; } catch { seed = Date.now() >>> 0; }
   const practice = createLoopSession({ seed });
@@ -30,11 +33,30 @@ export function startLoopLab() {
   const setSelected = (btn) => {
     for (const x of $("choices").querySelectorAll("[role=radio]")) { const on = x === btn; x.classList.toggle("selected", on); x.setAttribute("aria-checked", String(on)); x.tabIndex = on ? 0 : -1; }
   };
-  function next() {
+  function saveQuestion(value) {
+    if (checkpoint?.mode === instanceMode) checkpoint.save(value);
+  }
+  function checkpointQuestion() {
+    saveQuestion({q, instance, selected, difficulty:instanceDifficulty});
+  }
+  function next({restore = false} = {}) {
     const advancing = Boolean(instance);
-    if (instance) tracker.skip(instance);
-    q = practice.next({ mode: $("mode").value, difficulty: $("difficulty").value });
-    instance = tracker.begin(q.game, q.title, q.topic, q.topicTitle, q.mode, q.modeName); selected = null; closed = false;
+    const mode = $("mode").value, difficulty = $("difficulty").value;
+    const switching = instanceMode !== mode || instanceDifficulty !== difficulty;
+    if (instance && (!switching || checkpoint?.mode !== instanceMode)) tracker.skip(instance);
+    const saved = restore && checkpoint?.mode === mode ? checkpoint.read() : null;
+    const paused = saved?.q && tracker.status(saved.instance) === 'active' ? saved : null;
+    if (paused) $("difficulty").value = paused.difficulty;
+    else if (checkpoint?.mode === mode && !restore) {
+      const prior = checkpoint.read();
+      if (prior) tracker.skip(prior.instance);
+    }
+    instanceMode = mode;
+    instanceDifficulty = $("difficulty").value;
+    q = paused?.q ?? practice.next({ mode, difficulty:$("difficulty").value });
+    instance = paused?.instance ?? tracker.begin(q.game, q.title, q.topic, q.topicTitle, q.mode, q.modeName);
+    selected = paused?.selected ?? null;
+    closed = false;
     tracker.annotate(instance, { mode: q.mode, practiceSetting: $("mode").value, difficulty: q.difficulty, skill: q.concept, generatorFamily: q.reasoningFamily, seed: q.seed });
     const blockChoices = q.choiceFormat === "code" || q.choiceFormat === "block";
     $("stage").innerHTML = `<div class="challenge-meta">${esc(q.modeName)}${q.scenario ? "" : " · " + esc(q.variantName)} · ${esc(q.difficultyName)}</div><h2 id="prompt" tabindex="-1">${esc(q.prompt)}</h2>
@@ -43,7 +65,7 @@ ${q.scenario ? `<p id="loop-scenario">${esc(q.scenario)}</p>` : `<pre class="sni
 <div class="actions"><button id="check" disabled>Check Answer</button><button id="next" class="secondary">Next Challenge</button></div><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div>`;
     const buttons = [...$("choices").querySelectorAll("[role=radio]")];
     buttons.forEach((b, i) => {
-      b.onclick = () => { if (closed) return; selected = q.choices[i]; setSelected(b); $("check").disabled = false; };
+      b.onclick = () => { if (closed) return; selected = q.choices[i]; checkpointQuestion(); setSelected(b); $("check").disabled = false; };
       b.onkeydown = (e) => {
         const k = e.key; let j = null;
         if (k === "ArrowDown" || k === "ArrowRight") j = (i + 1) % buttons.length;
@@ -51,12 +73,15 @@ ${q.scenario ? `<p id="loop-scenario">${esc(q.scenario)}</p>` : `<pre class="sni
         if (j !== null) { e.preventDefault(); buttons[j].focus(); if (!closed) buttons[j].click(); }
       };
     });
+    if (selected !== null) buttons[q.choices.indexOf(selected)]?.click();
+    checkpointQuestion();
     $("check").onclick = () => {
       if (closed || selected === null) return;
       const correct = assessLoop(q, { answer: selected });
       const event = tracker.submit(instance, correct); if (!event.accepted) return;
       if (!correct) tracker.reveal(instance);
       closed = true;
+      saveQuestion(null);
       for (const b of $("stage").querySelectorAll("button")) if (b.id !== "next") b.disabled = true;
       buttons.forEach((b, i) => { b.classList.toggle("correct-answer", q.choices[i] === q.answer); b.classList.toggle("incorrect-answer", q.choices[i] === selected && selected !== q.answer); });
       const wrong = !correct ? distractorFor(q, selected) : null;
@@ -73,8 +98,8 @@ ${q.scenario ? `<p id="loop-scenario">${esc(q.scenario)}</p>` : `<pre class="sni
   try { if (new URLSearchParams(location.search).has("test")) window.__loopLab = { get q() { return q; } }; } catch {}
   const requestedMode = typeof location === 'undefined' ? null : new URLSearchParams(location.search).get('mode');
   if (requestedMode && [...$("mode").options].some(option => option.value === requestedMode)) $("mode").value = requestedMode;
-  $("mode").onchange = next; $("difficulty").onchange = next; $("new").onclick = next;
-  window.addEventListener("pagehide", () => { if (instance) tracker.skip(instance); });
-  next();
+  $("mode").onchange = () => next({restore:true}); $("difficulty").onchange = next; $("new").onclick = next;
+  window.addEventListener("pagehide", () => { if (instance && checkpoint?.mode !== instanceMode) tracker.skip(instance); });
+  next({restore:true});
 }
 startLoopLab();

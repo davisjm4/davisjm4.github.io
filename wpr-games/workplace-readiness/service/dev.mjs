@@ -53,6 +53,7 @@ export async function startDev({ port = 0, filename = ':memory:', teacherTokens,
     db.exec(readFileSync(new URL('./migrations/0006_class_creation_requests.sql',import.meta.url),'utf8'));
   }
   db.exec(readFileSync(new URL('./migrations/0007_mastery_attempts.sql',import.meta.url),'utf8'));
+  if(pathwayAdapters.ENABLE_TEACHER_DIRECTED_LEARNING==='1')db.exec(readFileSync(new URL('./migrations/0008_learning_focus.sql',import.meta.url),'utf8'));
   const DB = sqliteAdapter(db);
   const verifyLocalTeacher = token => {
     const supplied = Buffer.from(token);

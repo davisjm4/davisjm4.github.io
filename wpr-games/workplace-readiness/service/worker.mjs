@@ -1,3 +1,4 @@
+import { focusEnabled, prepareFocusPreview, publishLearningFocus, readTeacherFocus, readStudentFocus, endLearningFocus, confirmFocusCompletion, startStudentFocus, excuseFocusRecipient } from './learning-focus.mjs';
 import { pathwayRoute } from './pathways.mjs';
 import { validateSnapshot, publicAssignment, dimensions, answerReport, grade, MIN_CLASS, RETENTION_DAYS } from '../online/model.mjs';
 import { teacherIdentity, teacherSession } from './auth.mjs';
@@ -69,7 +70,8 @@ async function route(request, env, path) {
   if (path==='/health' && request.method==='GET') {
     const tables=await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('assignments','profile_classes','performance_events','pathway_revisions','mastery_attempt_states','mastery_attempts','mastery_restart_requests')").all();
     const columns=await env.DB.prepare('PRAGMA table_info(student_profiles)').all();
-    return {service:'cs-games',schema:4,databaseReady:tables.results.filter(table=>!table.name.startsWith('mastery_')).length===4 && columns.results.some(column=>column.name==='event_count'),
+    const focusTables = focusEnabled(env) ? await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('learning_focus','learning_focus_starts','learning_focus_exemptions','learning_focus_completion')").all() : null;
+    return {service:'cs-games',schema:4,advisoryAssignmentsReady:focusTables?.results.length===4,databaseReady:tables.results.filter(table=>!table.name.startsWith('mastery_')).length===4 && columns.results.some(column=>column.name==='event_count'),
       masteryHistoryReady:tables.results.filter(table=>table.name.startsWith('mastery_')).length===3,
       teacherConfigured:Boolean(env.GOOGLE_CLIENT_ID && !env.GOOGLE_CLIENT_ID.startsWith('REPLACE_') && env.TEACHER_EMAILS?.trim()),
       diagnosticsConfigured:Boolean(env.SUBMISSION_SECRET?.length>=32),profilesEnabled:profilesEnabled(env)};
@@ -79,11 +81,23 @@ async function route(request, env, path) {
   const now = Date.now(), db = env.DB, method = request.method;
   const segments = path.split('/').filter(Boolean);
   const [group, id, action] = segments;
+  if (path==='/profile/learning-focus' && method==='GET') return readStudentFocus(env,request,now);
+  if (path==='/profile/learning-focus/start' && method==='POST') return startStudentFocus(env,request,await body(request),now);
   if (group==='profile' || (group==='teacher' && id==='profiles'))
     return routeProfiles(request,env,segments,body,now);
   if (group === 'teacher') {
     const owner = await teacherIdentity(request,env);
     if (!owner) fail(401,'Teacher sign-in required.');
+    if (id==='learning-focus' && segments.length===3 && method==='GET') return readTeacherFocus(env,{owner,classId:action,now});
+    if (id==='learning-focus' && segments.length===4 && method==='POST') {
+      const action=segments[3];
+      const options={owner,classId:segments[2],input:await body(request),now};
+      if(action==='preview')return prepareFocusPreview(env,options);
+      if(action==='publish')return publishLearningFocus(env,options);
+      if(action==='end')return endLearningFocus(env,options);
+      if(action==='excuse')return excuseFocusRecipient(env,options);
+      if(action==='complete')return confirmFocusCompletion(env,options);
+    }
     if (id === 'assignments' && !action && method === 'GET') {
       const {results} = await db.prepare('SELECT id,snapshot,created FROM assignments WHERE owner=? AND expires>? ORDER BY created DESC LIMIT 100').bind(owner,now).all();
       return { assignments:results.map(r=>({ id:r.id, title:parsed(r).title, kind:parsed(r).kind, date:r.created })) };

@@ -1,3 +1,4 @@
+import { createStudentFocus } from './learning-focus.mjs';
 import { profilesAvailable,request } from '../../wpr-games/workplace-readiness/online/config.mjs';
 import { activeProfile,device,scopedStorage,syncQueuedPractice } from '../../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
 import { createPathwayClient } from '../pathway/client.mjs';
@@ -14,6 +15,7 @@ if (!profilesAvailable) {
   const storage=scopedStorage(localStorage);
   let context=activeProfile.classId ? {classId:activeProfile.classId} : null;
   let client, known, refreshing, map, mapModules;
+  const focus=createStudentFocus({root:document.getElementById('student-learning-focus'),profile:activeProfile,storage:scopedStorage(sessionStorage)});
   const classic = new URLSearchParams(location.search).get('view') === 'classic';
   const enrollmentHash = new URLSearchParams(location.hash.slice(1)).has('enroll');
   const restartRequests=new Map();
@@ -21,6 +23,7 @@ if (!profilesAvailable) {
   const mapInput=view=>mapModules.inputFromStudentContract(view,{mixedActivities:mapModules.mixedActivities});
   const render=view=>{
     panel.hidden=false;
+    focus.setPathway(view);
     if(mapModules){
       try {
         const input=mapInput(view);
@@ -76,7 +79,7 @@ if (!profilesAvailable) {
   };
   if(!classic){
     Promise.all([
-      import('./map/ui/app.mjs?v=student-navigation-v1'),
+      import('./map/ui/app.mjs?v=learning-focus-v1'),
       import('./map/live-contract.mjs?v=targeted-clarity-v1'),
       fetch('../pathway/evidence-gap-registry.json').then(response=>response.ok?response.json():null).catch(()=>null)
     ]).then(([app,contract,registry])=>{
@@ -148,6 +151,7 @@ if (!profilesAvailable) {
         context ??= await request('/profile/identity',{token});
         if (!client) connect(context.classId);
         await syncQueuedPractice();
+        await focus.refresh();
         const previous=client.current?.revision;
         const result=await client.sync();
         if (result.online && previous===result.current?.revision) say('Class pathway is up to date.');

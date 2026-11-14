@@ -286,8 +286,7 @@ test('Loop Lab attempts reach a recovered CS Games profile after reconnecting', 
   await Promise.all([second.waitForNavigation(),exactButton(second,'Restore profile','#student-profile')]);
   await second.click('header a[href="#student-profile"]');
   await second.waitForSelector('#student-profile details[open]',{visible:true});
-  await second.focus('#student-profile details[open] button:nth-of-type(2)');
-  await second.keyboard.press('Enter');
+  await exactButton(second,'View synced progress','#student-profile details[open]');
   await wait(second,'#profile-progress table');
   assert.match(await second.$eval('#profile-progress',node=>node.textContent),/Loop Lab/);
   assert.deepEqual(errors,[]);
