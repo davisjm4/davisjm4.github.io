@@ -11,7 +11,7 @@ console.log("ui.test.mjs");
 const root = new URL("../", import.meta.url);
 const html = fs.readFileSync(new URL("index.html", root), "utf8");
 const { window, document } = parseHTML(html);
-Object.assign(globalThis, { window, document, HTMLElement: window.HTMLElement, location: { search: "?seed=12345" } });
+Object.assign(globalThis, { window, document, HTMLElement: window.HTMLElement, location: new URL("https://example.test/java-games/search-sort-lab/?seed=12345") });
 globalThis.addEventListener = window.addEventListener.bind(window);
 const sessionStorage = new Map();
 globalThis.localStorage = {

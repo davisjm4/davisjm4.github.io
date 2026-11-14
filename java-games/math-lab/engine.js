@@ -98,15 +98,62 @@ export const structures = {
   reverse: ["decimal-quotient", "whole-quotient", "remainder-choice", "cast-choice", "precedence-choice"],
 };
 
-function numericChoices(answer, type, misconceptions, rng) {
-  // Deduplicate by numerical value, not by spelling (3 and 3.0 are one value).
-  const seen = new Set([numericKey(answer)]), wrong = [];
-  for (const value of misconceptions) {
-    if (!Number.isFinite(value) || seen.has(numericKey(value))) continue;
-    seen.add(numericKey(value)); wrong.push(format(value, type));
+// Results of reading one operator as another (/ as %, + as -, * as +, ...). Each is the
+// real value of the displayed expression under a specific operator confusion.
+function operatorConfusions(expression, type) {
+  const out = [], ops = [...expression.matchAll(/(?<=[\d)]\s)[-+*/%](?=\s[\d(-])/g)];
+  for (const m of ops) for (const alt of ["+", "-", "*", "/", "%"]) {
+    if (alt === m[0]) continue;
+    const swapped = expression.slice(0, m.index) + alt + expression.slice(m.index + 1);
+    try {
+      const v = evaluate(swapped).value;
+      if (Number.isFinite(v) && Math.abs(v) < 10000 && (type === "double" ? String(v).replace(/^-?\d+\.?/, "").length <= 3 : Number.isInteger(v))) out.push(v);
+    } catch { /* e.g. ArithmeticException: not a usable distractor */ }
   }
-  if (wrong.length < 3) return null;
-  return shuffle([format(answer, type), ...wrong.slice(0, 3)], rng);
+  // One integer operand misread by one (a slip while tracing): its result stays in the same
+  // range as the true answer, so the key is not recognisable by its size alone.
+  for (const m of expression.matchAll(/(?<![\d.])\d+(?![\d.])/g)) for (const d of [-1, 1]) {
+    if (/^\s*\./.test(expression.slice(m.index + m[0].length))) continue;
+    const swapped = expression.slice(0, m.index) + (Number(m[0]) + d) + expression.slice(m.index + m[0].length);
+    try {
+      const v = evaluate(swapped).value;
+      if (Number.isFinite(v) && Math.abs(v) < 10000 && (type === "double" ? String(v).replace(/^-?\d+\.?/, "").length <= 3 : Number.isInteger(v))) out.push(v);
+    } catch { /* ArithmeticException etc. */ }
+  }
+  return out;
+}
+
+function numericChoices(answer, type, misconceptions, rng, expression = "") {
+  // Deduplicate by numerical value, not by spelling (3 and 3.0 are one value).
+  const seen = new Set([numericKey(answer)]), pool = [], template = new Set(misconceptions.map(numericKey));
+  for (const value of [...misconceptions, ...operatorConfusions(expression, type)]) {
+    if (!Number.isFinite(value) || seen.has(numericKey(value))) continue;
+    seen.add(numericKey(value)); pool.push(value);
+  }
+  if (pool.length < 3) return null;
+  // Choose WHICH three misconception values appear so that the key's rank by value is
+  // not a function of the template (taking the first three always put, e.g., the
+  // nested-group key smallest). Every subset shows real misconception results; the
+  // target rank is uniform over the ranks the pool can produce.
+  const subsets = [];
+  for (let i = 0; i < pool.length; i++) for (let j = i + 1; j < pool.length; j++) for (let k = j + 1; k < pool.length; k++) {
+    const trio = [pool[i], pool[j], pool[k]];
+    subsets.push({ trio, rank: trio.filter(v => v < answer).length, own: trio.filter(v => template.has(numericKey(v))).length });
+  }
+  // A nonintegral key must keep another nonintegral choice (never "the only decimal").
+  if (!Number.isInteger(answer)) {
+    const keep = subsets.filter(x => x.trio.some(v => !Number.isInteger(v)));
+    if (!keep.length) return null;
+    subsets.length = 0; subsets.push(...keep);
+  }
+  const ranks = [...new Set(subsets.map(x => x.rank))].sort();
+  const rank = ranks[Math.floor(rng() * ranks.length)];
+  // Prefer the sets with the most template misconceptions (the named, teachable mistakes);
+  // operator-confusion / operand-slip results fill in only where the target rank needs them.
+  const atRank = subsets.filter(x => x.rank === rank), most = Math.max(...atRank.map(x => x.own));
+  const fits = atRank.filter(x => x.own >= most - 1);
+  const wrong = fits[Math.floor(rng() * fits.length)].trio.map(v => format(v, type));
+  return shuffle([format(answer, type), ...wrong], rng);
 }
 
 function build(mode, shape, rng) {
@@ -190,7 +237,7 @@ function build(mode, shape, rng) {
     } else if (shape === "nested-group") {
       expression = `${a} - (${b} + ${c}) * ${d}`;
       explanation = `Add inside the parentheses to get ${b + c}, then multiply by ${d} to get ${(b + c) * d}. Subtract that from ${a} to get ${a - (b + c) * d}.`;
-      misconceptions = [a - b + c * d, (a - (b + c)) * d, a - b - c * d, a - b + c, a + (b + c) * d];
+      misconceptions = [a - b + c * d, (a - (b + c)) * d, a - b - c * d, a - b + c, a + (b + c) * d, a - (b * d + c)];
     } else {
       c = choose([2, 4], rng); b = c * integer(1, 3, rng) + 1;
       expression = `${a} - ${b} / ${c}.0`; type = "double";
@@ -238,7 +285,7 @@ function build(mode, shape, rng) {
   } else throw Error("Unknown mode");
   const stored = store(expression, type);
   const answer = format(stored);
-  const choices = numericChoices(stored.value, type, misconceptions, rng);
+  const choices = numericChoices(stored.value, type, misconceptions, rng, expression);
   if (!choices) return null;
   return {
     mode, shape, kind: "value", expression, type, code: `${type} result = ${expression};`,
@@ -259,11 +306,18 @@ export function validateQuestion(q) {
     q.choices.every(c => Number.isFinite(Number(c))) && Math.abs(n.value) < 10000;
 }
 
+// A question whose key is just a number written in the code (a term evaluated to 0, e.g. 14 + 4 / 5)
+// can be answered without evaluating. The "integer division gives 0" lesson is kept in a small share.
+const keyIsWritten = q => q.kind === "value" && (q.expression.match(/\d+(\.\d+)?/g) || []).some(t => Number(t) === Number(q.answer));
+
 export function generate(mode, shape, rng = Math.random) {
   if (!structures[mode] || !structures[mode].includes(shape)) throw Error("Unknown Math Lab structure");
   for (let i = 0; i < 100; i++) {
     const q = build(mode, shape, rng);
-    if (q && validateQuestion(q)) return { ...q, game: "math-lab", topic: mode };
+    if (q && validateQuestion(q)) {
+      if (mode === "expressions" && keyIsWritten(q) && rng() > 0.1) continue;
+      return { ...q, game: "math-lab", topic: mode };
+    }
   }
   throw Error(`Cannot generate ${mode}/${shape}`);
 }

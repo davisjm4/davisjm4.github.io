@@ -31,6 +31,9 @@ jobs:
       - name: Trace quality repairs (cancelling operands, inert counted statements, forced-type guard)
         working-directory: java-games
         run: npm run test:trace-repair
+      - name: Math Lab distractor quality regression
+        working-directory: java-games
+        run: npm run test:math-quality
       - name: Advanced sample report
         working-directory: java-games
         run: |
