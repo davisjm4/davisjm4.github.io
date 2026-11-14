@@ -281,25 +281,29 @@ test('"no unapproved policy is activated": nothing sets an effective time or a r
   assert.equal(R.reviewRequirements(p, null, graph, { facts, acknowledged: true }).readiness.canPublish, true, 'publishing is possible, but it is a separate explicit step');
 });
 
-test('the service adapter makes the same draft, preview and publish calls as the existing pathway editor, in order, with its tokens', async () => {
+test('the service adapter publishes only an explicitly saved and previewed draft', async () => {
   const calls = [];
   const request = async (url, { token, body }) => {
     calls.push({ url, token, body });
     if (url.endsWith('/draft')) return { draftVersion: body.draftVersion + 1 };
-    if (url.endsWith('/preview')) return { previewToken: 'preview-token-1', draftVersion: entry.draftVersion, expectedRevision: 2 };
+    if (url.endsWith('/preview')) return { previewToken: 'preview-token-1', draftVersion: entry.draftVersion, expectedRevision: pathway.baseRevision };
+    if (url.endsWith('/history')) return { revisions: [] };
     return { revision: 3, published: { revision: 3 } };
   };
-  const entry = { draftVersion: 4 };
-  const adapter = createServiceAdapter({ request, token: 'teacher-session-token', entry });
   const pathway = classAt(30, 90, classPathway());
+  const entry = { draftVersion: 4, draft: pathway };
+  const adapter = createServiceAdapter({ request, token: 'teacher-session-token', entry });
   await adapter.saveDraft(pathway);
   assert.deepEqual(calls.map((c) => c.url), [`/pathways/teacher/${pathway.id}/draft`]);
   assert.equal(calls[0].token, 'teacher-session-token'); assert.equal(calls[0].body.draftVersion, 4); assert.equal(entry.draftVersion, 5);
   calls.length = 0;
-  const out = await adapter.publish({ pathway });
-  assert.deepEqual(calls.map((c) => c.url.split('/').pop()), ['draft', 'preview', 'publish']);
+  await assert.rejects(adapter.publish({ pathway }), /Preview the saved draft/);
+  assert.deepEqual(calls, []);
+  const preview = await adapter.preview(pathway);
+  const out = await adapter.publish({ pathway, preview });
+  assert.deepEqual(calls.map((c) => c.url.split('/').pop()), ['preview', 'publish']);
   assert.ok(calls.every((c) => c.token === 'teacher-session-token'));
-  assert.equal(calls[2].body.previewToken, 'preview-token-1'); assert.equal(calls[2].body.expectedRevision, 2);
+  assert.equal(calls[1].body.previewToken, 'preview-token-1'); assert.equal(calls[1].body.expectedRevision, pathway.baseRevision);
   assert.match(out.message, /Published version 3/); assert.deepEqual(await adapter.history(), []);
   assert.equal(JSON.stringify(calls).includes('password'), false);
 });
@@ -316,6 +320,8 @@ test('requirements publish refuses a preview of a different saved draft', async 
       throw new Error('Publish should never receive another browser’s draft.');
     },
   });
-  await assert.rejects(adapter.publish({ pathway: classPathway(), onDraftSaved: () => calls.push('saved') }), /Another session changed the draft/);
-  assert.deepEqual(calls, ['draft', 'saved', 'preview']);
+  const pathway = classPathway();
+  await adapter.saveDraft(pathway);
+  await assert.rejects(adapter.preview(pathway), /Another session changed the draft/);
+  assert.deepEqual(calls, ['draft', 'preview']);
 });
