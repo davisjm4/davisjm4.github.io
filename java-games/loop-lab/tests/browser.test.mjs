@@ -39,6 +39,16 @@ try {
       catch (e) { if (attempt === 2 || !/not clickable|not an Element|detached/i.test(String(e.message))) throw e; await new Promise((r) => setTimeout(r, 100)); }
     }
   };
+  await page.evaluateOnNewDocument(() => {
+    const getRandomValues = crypto.getRandomValues.bind(crypto);
+    crypto.getRandomValues = (values) => {
+      if (values instanceof Uint32Array && values.length === 1) {
+        values[0] = 2823;
+        return values;
+      }
+      return getRandomValues(values);
+    };
+  });
   await page.setViewport({ width: 1280, height: 800 });
   await page.goto(base + "?test=1", { waitUntil: "networkidle0" });
   await page.waitForSelector("#choices [role=radio]");
@@ -69,6 +79,7 @@ try {
     ok(JSON.stringify(radios.map((r) => r.text)) === JSON.stringify(cur.choices), "choice text matches");
     ok(await page.$eval("#check", (b) => b.disabled), "Check disabled before selection");
   }
+  await page.select("#difficulty", "beginner");
   await page.select("#mode", "algorithms");
   for (let i = 0; i < 50 && (await q()).targetKind !== "select-statement"; i++) await press("#next");
   const blank = await q();
