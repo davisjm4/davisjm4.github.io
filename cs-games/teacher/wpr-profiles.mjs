@@ -223,24 +223,13 @@ export function teacherProfiles(onClasses) {
         return [p.id,p.active?'Active':'Revoked',String(p.events),actions];
       }),'Class roster'):el('div',{class:'empty'},el('h3',{text:'No student profiles yet'}),el('p',{text:c.archived?'This class had no student profiles.':'Share the enrollment link, or issue a profile ID for a student who cannot enroll themselves.'}));
     rosterTable.querySelector?.('table')?.classList.add('stack');
-    const focusPanel= !c.archived && createTeacherFocus(c,roster,restricted=>{
-      const body=rosterTable.querySelector?.('tbody');
-      if(!body)return;
-      for(const row of [...body.rows]){
-        const cell=row.cells[1];
-        cell.querySelector('[data-restriction-status]')?.remove();
-        if(restricted.has(row.cells[0].textContent))cell.append(el('strong',{'data-restriction-status':'',text:' · Restricted'}));
-      }
-      const rows=[...body.rows].sort((a,b)=>Number(restricted.has(b.cells[0].textContent))-Number(restricted.has(a.cells[0].textContent)));
-      body.append(...rows);
-    });
+    const focusPanel= !c.archived && createTeacherFocus(c,roster);
     put(panel,
       el('div',{class:'card accent'},
         el('div',{class:'card-head'},
           el('div',{},el('div',{class:'eyebrow',text:'Class overview'}),el('h3',{text:c.title,tabindex:-1,style:'margin:0;font-size:1.5rem'}),
             el('div',{class:'chips'},chip(courseLabel(c.course_id),'plain'),chip(c.archived?'Archived':'Active',c.archived?'warn':'good'))),
           !c.archived&&pathways.get(c.id)?.revision>0&&act('Open student pathway',()=>openStudentPreview(c.id,previewSlot),'btn primary')),
-        focusPanel?.restrictions,
         pathwaySlot,
         credential,
         c.archived&&el('div',{class:'banner warn'},el('p',{text:'Archived. Scheduled deletion by '+new Date(c.expires).toISOString().slice(0,10)+'.'})),

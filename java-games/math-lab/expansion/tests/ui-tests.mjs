@@ -28,7 +28,6 @@ let q;
 const listeners = {};
 const context = {
   document, window: { addEventListener: (e, h) => { listeners[e] = h; } },
-  classLaunchId: null, classQuestion: () => null,
   mathGame: M.mathGame, createDeck: () => { const d = M.createDeck(); return { next: m => (q = d.next(m)) }; }, assess: M.assess,
   sessionTracker: () => tracker, addSessionNavigation: () => {}, roundSummary: () => "",
   EXPANSION_MODES: X.EXPANSION_MODES, DIFFICULTIES: X.DIFFICULTIES, DIFFICULTY_TITLES: X.DIFFICULTY_TITLES,

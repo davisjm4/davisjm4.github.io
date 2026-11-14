@@ -1,6 +1,5 @@
-import { classLaunchId, classPracticeAccess } from '../../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
-import { classQuestion, questionAccessMessage } from '../../cs-games/student/class-question.mjs';
-import { originalModeNames, newModeNames, loopTypeModeNames, DIFFICULTIES, DIFFICULTY_NAMES, createLoopSession, generateChallenge, assessLoop, distractorFor } from "./loop-engine.js?v=loop-types-v1";
+import { advisoryCheckpoint } from "../../cs-games/student/advisory-practice.mjs";
+import { originalModeNames, newModeNames, loopTypeModeNames, DIFFICULTIES, DIFFICULTY_NAMES, createLoopSession, assessLoop, distractorFor } from "./loop-engine.js?v=loop-types-v1";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=guest-map-v1";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -16,10 +15,10 @@ function studentTraceHtml(st) {
   return `<div class="trace-scroll"><table class="student-trace" aria-label="Student trace"><tr><th scope="col">Row</th>${st.columns.map((c) => `<th scope="col"><code>${esc(c)}</code></th>`).join("")}</tr>${st.rows.map((r) => `<tr><th scope="row">${esc(r.label)}</th>${r.values.map((v) => `<td><code>${esc(v)}</code></td>`).join("")}</tr>`).join("")}</table></div>`;
 }
 
-export function startLoopLab(access=null) {
-  const protectedQuestion = classQuestion(access, 'loop-lab');
-  const fixedMode = protectedQuestion?.mode;
+export function startLoopLab() {
   const $ = (id) => document.getElementById(id), tracker = sessionTracker();
+  const checkpoint = advisoryCheckpoint("loop-lab");
+  let instanceMode, instanceDifficulty;
   let seed;
   try { const a = new Uint32Array(1); crypto.getRandomValues(a); seed = a[0]; } catch { seed = Date.now() >>> 0; }
   const practice = createLoopSession({ seed });
@@ -28,55 +27,45 @@ export function startLoopLab(access=null) {
   $("main").innerHTML = `<div class="eyebrow">Java · Loops · Algorithms · Execution counts</div><h1>Loop Lab</h1><p class="intro">Predict what loops execute, how variables change, why loops stop, how much work they do, and which loop fits a programming task.</p>
 <div class="toolbar"><label>Practice mode <select id="mode"><option value="mixed" selected>Mixed Practice</option><optgroup label="Loop fundamentals">${opts(originalModeNames)}${opts(loopTypeModeNames)}</optgroup><optgroup label="Algorithms and execution counts">${opts(newModeNames)}</optgroup></select></label>
 <label>Difficulty <select id="difficulty">${DIFFICULTIES.map((d) => `<option value="${d}">${DIFFICULTY_NAMES[d]}</option>`).join("")}</select></label>
-<button id="new" class="secondary">New Challenge</button></div><p id="open-status" role="status"></p><section id="stage" class="panel"></section><p id="stats" class="stats"></p>`;
+<button id="new" class="secondary">New Challenge</button></div><section id="stage" class="panel"></section><p id="stats" class="stats"></p>`;
   addSessionNavigation("../");
   const stats = () => ($("stats").textContent = roundSummary("loop-lab", $("mode").value));
   const setSelected = (btn) => {
     for (const x of $("choices").querySelectorAll("[role=radio]")) { const on = x === btn; x.classList.toggle("selected", on); x.setAttribute("aria-checked", String(on)); x.tabIndex = on ? 0 : -1; }
   };
-  let opening=false;
-  async function next({resume=false}={}) {
-    if(opening)return;
-    if(fixedMode)$("mode").value=fixedMode;
+  function saveQuestion(value) {
+    if (checkpoint?.mode === instanceMode) checkpoint.save(value);
+  }
+  function checkpointQuestion() {
+    saveQuestion({q, instance, selected, difficulty:instanceDifficulty});
+  }
+  function next({restore = false} = {}) {
     const advancing = Boolean(instance);
-    let saved=resume?protectedQuestion?.read():null;
-    if(saved&&(saved.mode!==fixedMode||!DIFFICULTIES.includes(saved.difficulty)||!Number.isInteger(saved.seed)))saved=null;
-    const draft=saved ? generateChallenge({mode:fixedMode,difficulty:saved.difficulty,seed:saved.seed}) :
-      practice.next({mode:$("mode").value,difficulty:$("difficulty").value});
-    if(access){
-      if(instance&&tracker.status(instance)==='active'){
-        $("open-status").textContent='Finish this question before opening another.';
-        return;
-      }
-      opening=true;
-      try{
-        if (!saved) saved = { ...await protectedQuestion.open(), difficulty:draft.requestedDifficulty, seed:draft.seed };
-      }catch(error){
-        $("open-status").textContent=questionAccessMessage(error);
-        return;
-      }finally{opening=false;}
-      $("open-status").textContent='';
-    }else if(instance)tracker.skip(instance);
-    q=draft;
-    instance=saved?.instance;
-    if(!instance||tracker.status(instance)!=='active')instance=tracker.begin(q.game,q.title,q.topic,q.topicTitle,q.mode,q.modeName);
-    selected=saved?.selected??null;
-    closed=false;
-    if(saved){
-      saved.instance=instance;
-      protectedQuestion.save(saved);
+    const mode = $("mode").value, difficulty = $("difficulty").value;
+    const switching = instanceMode !== mode || instanceDifficulty !== difficulty;
+    if (instance && (!switching || checkpoint?.mode !== instanceMode)) tracker.skip(instance);
+    const saved = restore && checkpoint?.mode === mode ? checkpoint.read() : null;
+    const paused = saved?.q && tracker.status(saved.instance) === 'active' ? saved : null;
+    if (paused) $("difficulty").value = paused.difficulty;
+    else if (checkpoint?.mode === mode && !restore) {
+      const prior = checkpoint.read();
+      if (prior) tracker.skip(prior.instance);
     }
-    tracker.annotate(instance, { mode: q.mode, practiceSetting: $("mode").value, difficulty: q.difficulty, skill: q.concept, generatorFamily: q.reasoningFamily, seed: q.seed, ...(saved ? {classQuestionId:saved.questionId} : {}) });
+    instanceMode = mode;
+    instanceDifficulty = $("difficulty").value;
+    q = paused?.q ?? practice.next({ mode, difficulty:$("difficulty").value });
+    instance = paused?.instance ?? tracker.begin(q.game, q.title, q.topic, q.topicTitle, q.mode, q.modeName);
+    selected = paused?.selected ?? null;
+    closed = false;
+    tracker.annotate(instance, { mode: q.mode, practiceSetting: $("mode").value, difficulty: q.difficulty, skill: q.concept, generatorFamily: q.reasoningFamily, seed: q.seed });
     const blockChoices = q.choiceFormat === "code" || q.choiceFormat === "block";
     $("stage").innerHTML = `<div class="challenge-meta">${esc(q.modeName)}${q.scenario ? "" : " · " + esc(q.variantName)} · ${esc(q.difficultyName)}</div><h2 id="prompt" tabindex="-1">${esc(q.prompt)}</h2>
 ${q.scenario ? `<p id="loop-scenario">${esc(q.scenario)}</p>` : `<pre class="snippet loop-snippet" tabindex="0" aria-label="Java code"><code>${esc(q.code)}</code></pre>`}${studentTraceHtml(q.studentTrace)}
 <div id="choices" class="loop-choices${blockChoices ? " block-choices" : ""}" role="radiogroup" aria-labelledby="prompt"${q.scenario ? ' aria-describedby="loop-scenario"' : ""}>${q.choices.map((c, i) => `<button type="button" class="secondary loop-choice${q.choiceFormat === "code" ? " code-choice" : ""}" role="radio" aria-checked="false" tabindex="${i === 0 ? 0 : -1}" data-index="${i}"><span class="choice-text">${esc(c)}</span></button>`).join("")}</div>
 <div class="actions"><button id="check" disabled>Check Answer</button><button id="next" class="secondary">Next Challenge</button></div><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div>`;
     const buttons = [...$("choices").querySelectorAll("[role=radio]")];
-    const chosen=buttons[q.choices.indexOf(selected)];
-    if(chosen){setSelected(chosen);$("check").disabled=false;}
     buttons.forEach((b, i) => {
-      b.onclick = () => { if (closed) return; selected = q.choices[i]; if(saved)protectedQuestion.save({...saved,selected}); setSelected(b); $("check").disabled = false; };
+      b.onclick = () => { if (closed) return; selected = q.choices[i]; checkpointQuestion(); setSelected(b); $("check").disabled = false; };
       b.onkeydown = (e) => {
         const k = e.key; let j = null;
         if (k === "ArrowDown" || k === "ArrowRight") j = (i + 1) % buttons.length;
@@ -84,13 +73,15 @@ ${q.scenario ? `<p id="loop-scenario">${esc(q.scenario)}</p>` : `<pre class="sni
         if (j !== null) { e.preventDefault(); buttons[j].focus(); if (!closed) buttons[j].click(); }
       };
     });
+    if (selected !== null) buttons[q.choices.indexOf(selected)]?.click();
+    checkpointQuestion();
     $("check").onclick = () => {
       if (closed || selected === null) return;
       const correct = assessLoop(q, { answer: selected });
       const event = tracker.submit(instance, correct); if (!event.accepted) return;
       if (!correct) tracker.reveal(instance);
       closed = true;
-      protectedQuestion?.save(null);
+      saveQuestion(null);
       for (const b of $("stage").querySelectorAll("button")) if (b.id !== "next") b.disabled = true;
       buttons.forEach((b, i) => { b.classList.toggle("correct-answer", q.choices[i] === q.answer); b.classList.toggle("incorrect-answer", q.choices[i] === selected && selected !== q.answer); });
       const wrong = !correct ? distractorFor(q, selected) : null;
@@ -107,14 +98,8 @@ ${q.scenario ? `<p id="loop-scenario">${esc(q.scenario)}</p>` : `<pre class="sni
   try { if (new URLSearchParams(location.search).has("test")) window.__loopLab = { get q() { return q; } }; } catch {}
   const requestedMode = typeof location === 'undefined' ? null : new URLSearchParams(location.search).get('mode');
   if (requestedMode && [...$("mode").options].some(option => option.value === requestedMode)) $("mode").value = requestedMode;
-  if(fixedMode){
-    $("mode").value=fixedMode;
-    $("mode").disabled=true;
-    $("difficulty").disabled=true;
-  }
-  $("mode").onchange=next; $("difficulty").onchange=next; $("new").onclick=next;
-  window.addEventListener("pagehide",()=>{if(!access&&instance)tracker.skip(instance);});
-  void next({resume:true});
+  $("mode").onchange = () => next({restore:true}); $("difficulty").onchange = next; $("new").onclick = next;
+  window.addEventListener("pagehide", () => { if (instance && checkpoint?.mode !== instanceMode) tracker.skip(instance); });
+  next({restore:true});
 }
-if(classLaunchId)void classPracticeAccess.then(access=>{if(access)startLoopLab(access);});
-else startLoopLab();
+startLoopLab();

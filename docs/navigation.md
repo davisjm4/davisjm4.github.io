@@ -14,7 +14,7 @@
 
 ## CSG-NAV-03 — Contextual return and compatibility
 
-**Approved · partial. Roles:** learners. A mapped practice launch shows **Back to Course Map** and restores the source role, course, area, skill, Map/List state and applicable assignment context. Use one visible return action. Direct practice links use a safe course fallback. Breadcrumbs expose Home → Course → Activity, or the relevant teacher class hierarchy. **States/data:** map launch, deep link, stale target, changed restriction, restored position. Validate same-origin route parameters and never put credentials in return URLs. **Dependencies:** CSG-STU-03, CSG-SEC-01, CSG-TDL-04. **Acceptance:** guest and class practice return to the originating skill after an answer. Archived, unauthorized or stale context falls back to an accessible route with an explanation. Back/Forward and refresh preserve the normal history contract.
+**Approved · partial. Roles:** learners. A mapped practice launch shows **Back to Course Map** and restores the source role, course, area, skill, Map/List state and applicable assignment context. Use one visible return action. Direct practice links use a safe course fallback. Breadcrumbs expose Home → Course → Activity, or the relevant teacher class hierarchy. **States/data:** map launch, deep link, stale target, saved assignment, restored position. Validate same-origin route parameters and never put credentials in return URLs. **Dependencies:** CSG-STU-03, CSG-SEC-01, CSG-TDL-04. **Acceptance:** guest and class practice return to the originating skill after an answer. Archived, unauthorized or stale context falls back to an accessible route with an explanation. Back/Forward and refresh preserve the normal history contract.
 
 ## Sitemap
 

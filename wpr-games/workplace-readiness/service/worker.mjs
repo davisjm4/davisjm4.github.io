@@ -1,5 +1,4 @@
-import { createFocusLaunch, permitFocusQuestion, purgeFocusLaunches, verifyFocusLaunch } from './focus-launch.mjs';
-import { focusEnabled, prepareFocusPreview, publishLearningFocus, readTeacherFocus, readStudentFocus, endLearningFocus, releaseFocusGrants, confirmFocusCompletion } from './learning-focus.mjs';
+import { focusEnabled, prepareFocusPreview, publishLearningFocus, readTeacherFocus, readStudentFocus, endLearningFocus, confirmFocusCompletion, startStudentFocus, excuseFocusRecipient } from './learning-focus.mjs';
 import { pathwayRoute } from './pathways.mjs';
 import { validateSnapshot, publicAssignment, dimensions, answerReport, grade, MIN_CLASS, RETENTION_DAYS } from '../online/model.mjs';
 import { teacherIdentity, teacherSession } from './auth.mjs';
@@ -71,7 +70,8 @@ async function route(request, env, path) {
   if (path==='/health' && request.method==='GET') {
     const tables=await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('assignments','profile_classes','performance_events','pathway_revisions','mastery_attempt_states','mastery_attempts','mastery_restart_requests')").all();
     const columns=await env.DB.prepare('PRAGMA table_info(student_profiles)').all();
-    return {service:'cs-games',schema:4,databaseReady:tables.results.filter(table=>!table.name.startsWith('mastery_')).length===4 && columns.results.some(column=>column.name==='event_count'),
+    const focusTables = focusEnabled(env) ? await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('learning_focus','learning_focus_starts','learning_focus_exemptions','learning_focus_completion')").all() : null;
+    return {service:'cs-games',schema:4,advisoryAssignmentsReady:focusTables?.results.length===4,databaseReady:tables.results.filter(table=>!table.name.startsWith('mastery_')).length===4 && columns.results.some(column=>column.name==='event_count'),
       masteryHistoryReady:tables.results.filter(table=>table.name.startsWith('mastery_')).length===3,
       teacherConfigured:Boolean(env.GOOGLE_CLIENT_ID && !env.GOOGLE_CLIENT_ID.startsWith('REPLACE_') && env.TEACHER_EMAILS?.trim()),
       diagnosticsConfigured:Boolean(env.SUBMISSION_SECRET?.length>=32),profilesEnabled:profilesEnabled(env)};
@@ -81,11 +81,8 @@ async function route(request, env, path) {
   const now = Date.now(), db = env.DB, method = request.method;
   const segments = path.split('/').filter(Boolean);
   const [group, id, action] = segments;
-  if (path==='/profile/class-launch' && method==='POST') return createFocusLaunch(env,request,await body(request),now);
-  if (group==='profile' && id==='class-launch' && segments.length===3 && method==='GET') return verifyFocusLaunch(env,request,action,now);
-  if (group==='profile' && id==='class-launch' && segments.length===4 && segments[3]==='question' && method==='POST')
-    return permitFocusQuestion(env,request,action,await body(request),now);
   if (path==='/profile/learning-focus' && method==='GET') return readStudentFocus(env,request,now);
+  if (path==='/profile/learning-focus/start' && method==='POST') return startStudentFocus(env,request,await body(request),now);
   if (group==='profile' || (group==='teacher' && id==='profiles'))
     return routeProfiles(request,env,segments,body,now);
   if (group === 'teacher') {
@@ -98,7 +95,7 @@ async function route(request, env, path) {
       if(action==='preview')return prepareFocusPreview(env,options);
       if(action==='publish')return publishLearningFocus(env,options);
       if(action==='end')return endLearningFocus(env,options);
-      if(action==='release')return releaseFocusGrants(env,options);
+      if(action==='excuse')return excuseFocusRecipient(env,options);
       if(action==='complete')return confirmFocusCompletion(env,options);
     }
     if (id === 'assignments' && !action && method === 'GET') {
@@ -212,7 +209,6 @@ export default {
     await env.DB.prepare('DELETE FROM assignments WHERE expires<=?').bind(now).run();
     await env.DB.prepare('DELETE FROM receipts WHERE finished IS NULL AND created<?').bind(now-DAY).run();
     await env.DB.prepare('DELETE FROM teacher_sessions WHERE expires<=?').bind(now).run();
-    if (focusEnabled(env)) await purgeFocusLaunches(env.DB,now);
     if (profilesEnabled(env) || env.PROFILE_SCHEMA_INSTALLED==='1') await purgeProfiles(env.DB,now);
   }
 };

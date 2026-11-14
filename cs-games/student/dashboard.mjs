@@ -20,7 +20,7 @@ if (!profilesAvailable) {
   const enrollmentHash = new URLSearchParams(location.hash.slice(1)).has('enroll');
   const restartRequests=new Map();
   const say=message=>{notice.textContent=message;};
-  const mapInput=view=>({...mapModules.inputFromStudentContract(view,{mixedActivities:mapModules.mixedActivities}),classLaunch:focus.enabled});
+  const mapInput=view=>mapModules.inputFromStudentContract(view,{mixedActivities:mapModules.mixedActivities});
   const render=view=>{
     panel.hidden=false;
     focus.setPathway(view);
@@ -75,7 +75,7 @@ if (!profilesAvailable) {
     }
     panel.classList.add('student-panel');
     const openAreas=[...panel.querySelectorAll('.pathway-area[open]')].map(area=>area.dataset.areaIndex);
-    panel.replaceChildren(renderPathway(view,{onRestart:restart,openAreas,classLaunch:focus.enabled}));
+    panel.replaceChildren(renderPathway(view,{onRestart:restart,openAreas}));
   };
   if(!classic){
     Promise.all([
@@ -151,9 +151,7 @@ if (!profilesAvailable) {
         context ??= await request('/profile/identity',{token});
         if (!client) connect(context.classId);
         await syncQueuedPractice();
-        const previouslyEnabled=focus.enabled;
         await focus.refresh();
-        if(client.current&&focus.enabled!==previouslyEnabled)render(client.current);
         const previous=client.current?.revision;
         const result=await client.sync();
         if (result.online && previous===result.current?.revision) say('Class pathway is up to date.');

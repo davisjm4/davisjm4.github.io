@@ -8,8 +8,8 @@ const require=createRequire(new URL('../../wpr-games/workplace-readiness/package
 const {launch}=require('./tests/browser/harness.js');
 const axe=readFileSync(require.resolve('axe-core/axe.min.js'),'utf8');
 const teacherKey='synthetic-learning-focus-browser';
-const a='node:advanced:loop-lab:looptype';
-const b='node:advanced:loop-lab:components';
+const reverse='node:advanced:array-lab:reverse';
+const loops='node:advanced:loop-lab:components';
 
 async function press(page,scope,label){
   const button=await page.waitForFunction((scope,label)=>[...document.querySelectorAll(scope+' button, '+scope+' a')]
@@ -18,10 +18,11 @@ async function press(page,scope,label){
   await page.keyboard.press('Enter');
 }
 
-test('teacher assigns catch-up and classwork, student practices, teacher releases the remaining grant', {timeout:90000},async t=>{
+test('advisory classwork and catch-up coexist through mode changes, offline practice and return', {timeout:90000},async t=>{
   const dev=await startDev({teacherTokens:{teacher:teacherKey},pathwayAdapters:{ENABLE_TEACHER_DIRECTED_LEARNING:'1'}});
-  const browser=await launch();
-  t.after(async()=>{await browser.close();await new Promise(resolve=>dev.server.close(resolve));dev.db.close();});
+  let browser;
+  t.after(async()=>{await browser?.close();await new Promise(resolve=>dev.server.close(resolve));dev.db.close();});
+  browser=await launch();
   async function call(path,body,token=teacherKey){
     const response=await fetch(dev.url+'/api/wpr'+path,{
       method:body===undefined?'GET':'POST',
@@ -32,17 +33,14 @@ test('teacher assigns catch-up and classwork, student practices, teacher release
     assert.equal(response.status,200,JSON.stringify(data));
     return data;
   }
-  const room=await call('/teacher/profiles',{title:'Synthetic assignment workshop',courseId:'advanced'});
+  const room=await call('/teacher/profiles',{title:'Synthetic advisory workshop',courseId:'advanced'});
   const learner=await call('/profile/enroll',{invite:room.invite},'');
-  const roster=[learner];
-  for(let i=1;i<24;i++)roster.push(await call('/profile/enroll',{invite:room.invite},''));
+  for(let i=1;i<24;i++)await call('/profile/enroll',{invite:room.invite},'');
   const path='/teacher/learning-focus/'+room.id;
   const person='/teacher/profiles/'+room.id+'/students/'+learner.id;
-  await call(person+'/evidence',{id:crypto.randomUUID(),nodeId:a,revision:1,score:4,award:true,demonstrationType:'project'});
+  await call(person+'/evidence',{id:crypto.randomUUID(),nodeId:loops,revision:1,score:4,award:true,demonstrationType:'project'});
   const before=(await call(person)).verifiedEvidence;
-
   const teacher=await browser.newPage();
-  await teacher.setViewport({width:1366,height:768});
   await teacher.goto(dev.url+'/cs-games/teacher/?class='+room.id+'#classes');
   await teacher.waitForSelector('[name=teacher-key]',{timeout:5000});
   await teacher.type('[name=teacher-key]',teacherKey);
@@ -52,182 +50,118 @@ test('teacher assigns catch-up and classwork, student practices, teacher release
   const choose=(n,value)=>teacher.select(form+' label:nth-child('+n+') select',value);
   await choose(1,'individual');
   await choose(2,learner.id);
-  await choose(4,a);
-  await teacher.click(form+' [name=restricted]');
+  await choose(4,reverse);
   await press(teacher,form,'Preview assignment');
   await teacher.waitForSelector('#focus-preview h4');
-  assert.match(await teacher.$eval('#focus-preview',node=>node.textContent),/1 active profile.*Restricted navigation/);
+  assert.match(await teacher.$eval('#focus-preview',node=>node.textContent),/1 active profile.*Advisory/);
   await press(teacher,form,'Publish assignment');
-  await teacher.waitForFunction(()=>document.querySelector('#focus-restrictions')?.textContent.includes('1 restricted'));
-  await choose(4,b);
+  await teacher.waitForSelector('[data-assignment-id]');
+  const catchup=(await call(path)).items.find(item=>item.scope==='individual');
+
+  const student=await (await browser.createBrowserContext()).newPage();
+  await student.evaluateOnNewDocument(profile=>localStorage.setItem('wrg.profile.active.v1',JSON.stringify(profile)),learner);
+  student.setDefaultTimeout(10000);
+  const pageErrors=[];
+  student.on("pageerror",error=>pageErrors.push(error.message));
+  const dashboard=dev.url+'/cs-games/student/#v=area&stop=area%3Aadvanced%3Aloop-lab&skill='+encodeURIComponent(loops);
+  const work='#student-learning-focus';
+  const card=id=>work+' [data-focus-id="'+id+'"]';
+  const studentWork=()=>call('/profile/learning-focus',undefined,learner.token);
+  await student.goto(dashboard);
+  await student.waitForSelector(card(catchup.id)+' a',{visible:true});
+  await press(student,card(catchup.id),'Start Assignment');
+  await student.waitForSelector('#choices [data-answer]');
+  const reverseUrl=student.url();
+  const snapshot=()=>student.$eval('#stage',stage=>({
+    prompt:stage.querySelector('h2').textContent, code:stage.querySelector('pre')?.textContent,
+    selected:stage.querySelector('[aria-pressed=true]')?.textContent,
+  }));
+  await student.click('#choices [data-answer]');
+  const unfinished=await snapshot();
+  await student.reload();
+  await student.waitForSelector('#choices [aria-pressed=true]');
+  assert.deepEqual(await snapshot(),unfinished);
+  await student.select('#mode','element');
+  await student.waitForFunction(()=>document.querySelector('#mode').value==='element');
+  await student.select('#mode','reverse');
+  assert.deepEqual(await snapshot(),unfinished);
+
+  await choose(4,loops);
   await press(teacher,form,'Preview assignment');
   await teacher.waitForSelector('#focus-preview h4');
   assert.match(await teacher.$eval('#focus-preview',node=>node.textContent),/24 active profile.*Advisory/);
   await press(teacher,form,'Publish assignment');
   await teacher.waitForFunction(()=>document.querySelectorAll('[data-assignment-id]').length===2);
+  const classwork=(await call(path)).items.find(item=>item.scope==='class');
+  assert.deepEqual(await snapshot(),unfinished);
 
-  const student=await (await browser.createBrowserContext()).newPage();
-  await student.evaluateOnNewDocument(profile=>{
-    if(location.pathname==='/cs-games/student/')sessionStorage.setItem('synthetic-ready','1');
-    localStorage.setItem('wrg.profile.active.v1',JSON.stringify(profile));
-  },learner);
-  await student.goto(dev.url+'/cs-games/student/#v=area&stop=area%3Aadvanced%3Aloop-lab&skill='+encodeURIComponent(b));
-  student.setDefaultTimeout(10000);
-  const work='#student-learning-focus';
-  await student.waitForSelector(work+' article',{visible:true});
+  await student.goto(dev.url+'/java-games/loop-lab/?mode=components');
+  const reminder='#assignment-practice-reminder';
+  await student.waitForSelector(reminder);
+  assert.match(await student.$eval(reminder,node=>node.textContent),/assigned work.*Array Lab.*Choose the Java Statement/i);
+  assert.equal(await student.$eval('main',node=>node.inert),false);
+  assert.equal(await student.$eval(reminder+' a',node=>node.hash),'#student-learning-focus');
+  await student.evaluate(axe);
+  assert.deepEqual(await student.evaluate(async id=>(await window.axe.run(id,{
+    runOnly:['wcag2a','wcag2aa','wcag21aa'],
+  })).violations.map(v=>v.id),reminder),[]);
+  await press(student,reminder,'Continue Here');
+  assert.equal(await student.$(reminder),null);
+  assert.equal(await student.$eval('#mode',mode=>mode.disabled),false);
+  await student.setOfflineMode(true);
+  await student.select('#mode','iterations');
+  assert.equal(await student.$eval('#mode',mode=>mode.value),'iterations');
+  await student.select('#mode','components');
+  for(let i=0;i<3;i++){
+    await student.click('#choices button');
+    await student.click('#check');
+    await student.click('#next');
+    await student.waitForSelector('#choices button');
+  }
+  assert.equal(await student.$(reminder),null);
+  assert.equal(await student.evaluate(()=>Object.keys(localStorage).filter(key=>key.includes('.outbox.')).length),3);
+  await student.setOfflineMode(false);
+  await student.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
+  assert.equal((await studentWork()).classwork[0].progress,'available');
+  assert.equal((await studentWork()).catchUp[0].progress,'started');
+
+  await student.goto(dashboard);
+  await student.waitForSelector(card(classwork.id)+' a',{visible:true});
   assert.deepEqual(await student.$$eval(work+' h2',nodes=>nodes.map(n=>n.textContent)),["Today's Classwork",'Your Catch-Up Work']);
   for(const width of [320,390,768,1024,1366]){
     await student.setViewport({width,height:844});
     assert.ok(await student.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width));
   }
-  await student.evaluate(axe);
-  assert.deepEqual(await student.evaluate(async()=>(await window.axe.run('#student-learning-focus',{
-    runOnly:['wcag2a','wcag2aa','wcag21aa'],
-  })).violations.map(v=>v.id)),[]);
-  const teacherView=await call(path);
-  const catchup=teacherView.items.find(item=>item.scope==='individual');
-  const classwork=teacherView.items.find(item=>item.scope==='class');
-  await student.locator(work+' [data-focus-id="'+catchup.id+'"] a').click();
-  await student.waitForFunction(()=>location.pathname==='/java-games/loop-lab/'&&!document.querySelector('main').inert);
-  assert.ok(new URL(student.url()).searchParams.get('classLaunch'));
+  await press(student,card(classwork.id),'Start Assignment');
   await student.waitForSelector('#choices button');
-  assert.equal(await student.$eval('#mode',node=>node.disabled),true);
-  const catchUpUrl=student.url();
-  const prompt=await student.$eval('#prompt',node=>node.textContent);
+  await student.waitForFunction(id=>Object.keys(sessionStorage).some(key=>key.endsWith(':'+id+':1')),{},classwork.id);
   await student.click('#choices button');
-  const selected=await student.$eval('#choices [aria-checked=true]',node=>node.textContent);
-  await student.click('#new');
-  assert.equal(await student.$eval('#prompt',node=>node.textContent),prompt);
-  await student.reload();
-  await student.waitForSelector('#choices [aria-checked=true]');
-  assert.equal(await student.$eval('#choices [aria-checked=true]',node=>node.textContent),selected);
-  await student.click('[data-profile-link]');
-  await student.waitForSelector(work+' [data-focus-id="'+classwork.id+'"] a');
-  await student.locator(work+' [data-focus-id="'+classwork.id+'"] a').click();
-  await student.waitForFunction(()=>document.querySelector('#mode')?.value==='components'&&document.querySelector('#choices button'));
-  await student.click('[data-profile-link]');
-  await student.waitForSelector(work+' [data-focus-id="'+catchup.id+'"] a');
-  await student.locator(work+' [data-focus-id="'+catchup.id+'"] a').click();
-  await student.waitForSelector('#choices [aria-checked=true]');
-  assert.equal(await student.$eval('#prompt',node=>node.textContent),prompt);
-  assert.equal(await student.$eval('#choices [aria-checked=true]',node=>node.textContent),selected);
-  const alternate=await (await browser.createBrowserContext()).newPage();
-  alternate.setDefaultTimeout(10000);
-  await alternate.evaluateOnNewDocument(profile=>localStorage.setItem('wrg.profile.active.v1',JSON.stringify(profile)),learner);
-  const legacy=new URL(catchUpUrl);
-  legacy.searchParams.delete('classLaunch');
-  await alternate.goto(legacy.href);
-  await alternate.waitForFunction(()=>document.querySelector('main').inert&&document.body.textContent.includes('verify access'));
-  const tampered=new URL(catchUpUrl);
-  tampered.searchParams.set('mode','iterations');
-  await alternate.goto(tampered.href);
-  await alternate.waitForFunction(()=>document.querySelector('main').inert&&document.body.textContent.includes('does not match'));
-  assert.equal(await alternate.$('#choices'),null);
-  await alternate.goto(dev.url+'/java-games/loop-lab/?mode=iterations&learner=guest');
-  await alternate.waitForSelector('#choices button');
-  assert.equal(await alternate.$eval('#mode',node=>node.disabled),false);
-  await alternate.close();
-  await student.setOfflineMode(true);
   await student.click('#check');
-  assert.ok(await student.evaluate(()=>Object.keys(localStorage).some(key=>key.includes('.outbox.'))));
-  const queued=await student.evaluate(()=>Object.keys(localStorage).find(key=>key.includes('.outbox.')));
-  await student.evaluate(key=>{
-    const original=JSON.parse(localStorage.getItem(key));
-    const questionId=crypto.randomUUID();
-    const legacy={...original,questionId,id:questionId+':1',occurred:Date.now()-86400000};
-    delete legacy.classLaunchId;
-    localStorage.setItem(key.slice(0,key.lastIndexOf('outbox.')+7)+legacy.id,JSON.stringify(legacy));
-  },queued);
-  await student.setOfflineMode(false);
   await student.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
-  assert.equal(await student.evaluate(()=>Object.keys(localStorage).filter(key=>{
-    if(!key.includes('.unverified.'))return false;
-    return JSON.parse(localStorage.getItem(key)).code==='legacy-unverified';
-  }).length),1);
-  await student.click('[data-profile-link]');
-  await student.waitForFunction((id)=>document.querySelector('[data-focus-id="'+id+'"]')?.textContent.includes('Complete'),{},catchup.id);
-  await student.waitForFunction(()=>document.querySelector('#student-learning-focus')?.textContent.includes('Resume Previous Path'));
+  assert.equal((await studentWork()).classwork[0].progress,'complete');
+
+  await student.goto(dashboard);
+  await student.waitForSelector(card(catchup.id)+' a',{visible:true});
+  const previous=await student.$eval(work,node=>[...node.querySelectorAll('a')].find(a=>a.textContent==='Resume Previous Path').hash);
+  assert.match(previous,/skill=node%3Aadvanced%3Aloop-lab%3Acomponents/);
+  assert.match(await student.$eval(card(classwork.id),node=>[...node.querySelectorAll('a')].find(a=>a.textContent==='Continue From Here').hash),/skill=node%3Aadvanced%3Aloop-lab%3Acomponents/);
+  await press(student,card(catchup.id),'Resume Assignment');
+  await student.waitForSelector('#choices [aria-pressed=true]');
+  assert.equal(new URL(student.url()).pathname,new URL(reverseUrl).pathname);
+  assert.deepEqual(await snapshot(),unfinished);
+  await student.click('#submit');
+  await student.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
+  assert.equal((await studentWork()).catchUp[0].progress,'complete');
   const report=await call(person);
   assert.deepEqual(report.verifiedEvidence,before);
-  assert.equal(report.measures.find(item=>item.id===a).n,1);
-  await press(teacher,'#focus-restrictions','Review release for this grant');
-  await press(teacher,'#focus-restrictions','Confirm release');
-  await teacher.waitForFunction(()=>document.querySelector('#focus-restrictions')?.textContent.includes('0 restricted'));
-  await student.reload();
-  await student.waitForSelector(work+' article',{visible:true});
-  assert.doesNotMatch(await student.$eval(work,node=>node.textContent),/Class practice follows your active assignments/);
-});
+  assert.equal(report.measures.find(item=>item.id===loops).n,4);
 
-test('Math Lab checks actual mode and retains an authorized response after access changes', {timeout:90000}, async t=>{
-  const dev=await startDev({teacherTokens:{teacher:teacherKey},pathwayAdapters:{ENABLE_TEACHER_DIRECTED_LEARNING:'1'}});
-  const browser=await launch();
-  t.after(async()=>{await browser.close();await new Promise(resolve=>dev.server.close(resolve));dev.db.close();});
-  async function call(path,body,token=teacherKey){
-    const response=await fetch(dev.url+'/api/wpr'+path,{
-      method:body===undefined?'GET':'POST',
-      headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},
-      body:body===undefined?undefined:JSON.stringify(body),
-    });
-    const data=await response.json();
-    assert.equal(response.status,200,JSON.stringify(data));
-    return data;
-  }
-  const room=await call('/teacher/profiles',{title:'Synthetic Math Lab class',courseId:'advanced'});
-  const learner=await call('/profile/enroll',{invite:room.invite},'');
-  const path='/teacher/learning-focus/'+room.id;
-  const nodeId='node:advanced:math-lab:modulus';
-  async function assign(id,mode) {
-    const assignment={scope:'individual',mode,recipientIds:[learner.id],target:{kind:'skill',id}};
-    const {previewAt,previewSignature}=await call(path+'/preview',assignment);
-    return call(path+'/publish',{assignment,previewAt,previewSignature,requestId:crypto.randomUUID()});
-  }
-  const initial=await assign(nodeId,'restricted');
-  const verified=await call('/profile/class-launch',{
-    classId:room.id,nodeId,href:'/java-games/math-lab/?mode=modulus',assignmentId:initial.id,
-  },learner.token);
-  const page=await browser.newPage();
-  await page.evaluateOnNewDocument(profile=>localStorage.setItem('wrg.profile.active.v1',JSON.stringify(profile)),learner);
-  const url=new URL(dev.url+verified.destination);
-  url.searchParams.set('classLaunch',verified.id);
-  await page.goto(url.href);
-  await page.waitForSelector('#choices button',{visible:true});
-  const snapshot=()=>page.$eval('#stage',stage=>({
-    prompt:stage.querySelector('h2').textContent, code:stage.querySelector('pre')?.textContent,
-    choices:[...stage.querySelectorAll('#choices button')].map(button=>button.textContent),
-  }));
-  const before=await snapshot();
-  assert.equal(await page.$eval('#mode',mode=>mode.disabled),true);
-  await page.select('#mode','division');
-  await page.waitForFunction(()=>document.querySelector('#mode').value==='modulus');
-  await page.click('#choices button');
-  const selected=await page.$eval('#choices [aria-pressed=true]',button=>button.textContent);
-  await page.reload();
-  await page.waitForSelector('#choices [aria-pressed=true]',{visible:true});
-  assert.deepEqual(await snapshot(),before);
-  assert.equal(await page.$eval('#choices [aria-pressed=true]',button=>button.textContent),selected);
-
-  await assign('node:advanced:math-lab:division','restricted');
-  await call(path+'/end',{id:initial.id,revision:initial.revision,requestId:crypto.randomUUID()});
-  assert.deepEqual(await snapshot(),before);
-  await page.setOfflineMode(true);
-  await page.click('#check');
-  assert.ok(await page.evaluate(()=>Object.keys(localStorage).some(key=>key.includes('.outbox.'))));
-  await page.setOfflineMode(false);
-  await page.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
-  const records=dev.db.prepare("SELECT data FROM performance_events WHERE activity='math-lab'").all();
-  assert.equal(records.length,1);
-  assert.equal(JSON.parse(records[0].data).assessedMode,'modulus');
-  await page.click('#next');
-  await page.waitForFunction(()=>document.querySelector('#open-status').textContent.includes('access changed'));
-  assert.deepEqual(await snapshot(),before);
-  const tampered=new URL(url.href);
-  tampered.searchParams.set('mode','division');
-  await page.goto(tampered.href);
-  await page.waitForFunction(()=>document.querySelector('main').inert);
-  assert.equal(await page.$('#choices'),null);
-  await page.goto(dev.url+'/java-games/math-lab/?mode=division&learner=guest');
-  await page.waitForSelector('#choices button',{visible:true});
-  assert.equal(await page.$eval('#mode',mode=>mode.disabled),false);
-  await page.select('#mode','modulus');
-  assert.equal(await page.$eval('#mode',mode=>mode.value),'modulus');
+  const guest=await student.browserContext().newPage();
+  await guest.goto(dev.url+'/java-games/loop-lab/?mode=components&learner=guest');
+  await guest.waitForSelector('#choices button');
+  assert.equal(await guest.$(reminder),null);
+  await guest.click('#choices button');
+  await guest.click('#check');
+  assert.equal((await call(person)).measures.find(item=>item.id===loops).n,4);
+  assert.deepEqual(pageErrors,[]);
 });

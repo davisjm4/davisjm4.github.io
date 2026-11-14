@@ -13,19 +13,17 @@ const localTime=ms=>{
   return new Date(ms-date.getTimezoneOffset()*60000).toISOString().slice(0,16);
 };
 
-export function createTeacherFocus(classroom,roster,onRestrictions=()=>{}){
+export function createTeacherFocus(classroom,roster){
   const root=el('div',{id:'learning-focus',hidden:true});
-  const restrictions=el('section',{class:'card',id:'focus-restrictions','aria-labelledby':'focus-restrictions-title',hidden:true});
   const status=el('p',{role:'status',class:'muted'});
   const path='/teacher/learning-focus/'+encodeURIComponent(classroom.id);
   const command=(action,body)=>teacherRequest(path+'/'+action,{body});
   const profiles=roster.filter(p=>p.active===1).map(p=>[p.id,p.id]);
-  let state,editing=null,confirmRelease=null,refreshing;
+  let state,editing=null,refreshing;
   const scope=makeSelect(scopes);
   const recipients=makeSelect(profiles);
   const kind=makeSelect(kinds);
   const target=makeSelect([]);
-  const mode=el('input',{type:'checkbox',name:'restricted'});
   const reason=el('input',{type:'text',name:'reason',maxlength:160});
   const startAt=el('input',{type:'datetime-local',name:'start'});
   const recipientField=label('Student profiles',recipients);
@@ -36,7 +34,7 @@ export function createTeacherFocus(classroom,roster,onRestrictions=()=>{}){
     el('div',{class:'field-grid'},label('Assign to',scope),recipientField,label('Target type',kind),label('Target',target),
       label('Start time (optional)',startAt),label('Reason (optional, visible to selected students)',reason)),
     el('p',{class:'muted',text:'Enter a classroom instruction only. Keep student names and private details in school records.'}),
-    label(' Restrict navigation',mode),el('div',{class:'actions'},preview),previewPanel);
+    el('div',{class:'actions'},preview),previewPanel);
   const list=el('section',{class:'card','aria-label':'Class assignments'});
   root.append(form,status,list);
 
@@ -81,7 +79,6 @@ export function createTeacherFocus(classroom,roster,onRestrictions=()=>{}){
     kind.value=item.target.kind;
     populateTarget();
     for(const option of target.options)option.selected=(item.target.nodeIds??[item.target.id]).includes(option.value);
-    mode.checked=state.activeRestrictions.some(row=>row.grants.some(g=>g.id===item.id));
     reason.value=item.reason??'';
     startAt.value=item.startAt>Date.now()?localTime(item.startAt):'';
     change();
@@ -92,7 +89,7 @@ export function createTeacherFocus(classroom,roster,onRestrictions=()=>{}){
     void guarded(preview,async()=>{
       const assignment={scope:scope.value,recipientIds:scope.value==='class'?[]:selected(recipients),
         target:kind.value==='skill-group'?{kind:kind.value,nodeIds:selected(target)}:{kind:kind.value,id:target.value},
-        mode:mode.checked?'restricted':'advisory',...(reason.value?{reason:reason.value}:{}),
+        ...(reason.value?{reason:reason.value}:{}),
         ...(startAt.value?{startAt:new Date(startAt.value).valueOf(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone}:{})};
       const edit=editing;
       const result=await command('preview',{...assignment,...(edit?{edit}:{})});
@@ -109,78 +106,49 @@ export function createTeacherFocus(classroom,roster,onRestrictions=()=>{}){
         status.focus();
       }));
       previewPanel.replaceChildren(title,
-        el('p',{text:targetTitle(result.target)+' · '+result.activeRecipientCount+' active profile(s) · '+(result.mode==='restricted'?'Restricted navigation':'Advisory')}),
+        el('p',{text:targetTitle(result.target)+' · '+result.activeRecipientCount+' active profile(s) · '+'Advisory'}),
         result.recipientIds.length>0&&el('p',{text:result.recipientIds.join(', ')}),
-        result.mode==='restricted'&&el('p',{text:'Class navigation will allow active assigned destinations. Public independent practice remains available.'}),
-        edit&&el('p',{text:'Existing grants keep their scope until released or the assignment ends.'}),
         publish);
       title.focus();
     });
   };
-  function showRelease(entries){
-    const targets=new Set(entries.map(e=>e.id+':'+e.revision+':'+e.profileId));
-    const affected=new Set(entries.map(e=>e.profileId));
-    const remaining=state.activeRestrictions.filter(item=>affected.has(item.profileId)&&item.grants.some(grant=>!targets.has(grant.id+':'+grant.revision+':'+item.profileId))).length;
-    const requestId=crypto.randomUUID();
-    const heading=el('h4',{text:'Review release',tabindex:-1});
-    confirmRelease.replaceChildren(heading,el('p',{text:entries.length+' grant(s) will be released. '+remaining+' selected profile(s) will still have an active restriction.'}),
-      action('Confirm release',event=>void guarded(event.currentTarget,async()=>{
-        const {results}=await command('release',{requestId,grants:entries});
-        await refresh();
-        const done=results.filter(r=>r.status==='released').length;
-        status.textContent='Released '+done+' of '+results.length+' grants. '+(results.length-done)+' unavailable.';
-        status.setAttribute('tabindex','-1');status.focus();
-      })),action('Cancel release',()=>confirmRelease.replaceChildren()));
-    heading.focus();
-  }
   function render(){
-    root.hidden=restrictions.hidden=!state.enabled;
+    root.hidden=!state.enabled;
     if(!state.enabled)return;
     form.hidden=!state.pathway;
-    const entries=state.activeRestrictions.flatMap(row=>row.grants.map(grant=>({...grant,profileId:row.profileId})));
-    const checks=[];
-    confirmRelease=el('div');
-    restrictions.replaceChildren(el('h3',{id:'focus-restrictions-title',text:'Active Restrictions'}),
-      el('p',{text:state.activeRestrictions.length+' restricted student profile(s).'}));
-    if(entries.length){
-      const items=entries.map(entry=>{
-        const check=el('input',{type:'checkbox'});
-        checks.push([check,entry]);
-        return el('li',{},label(entry.profileId+' · '+targetTitle(entry.target)+' · '+scopes.find(row=>row[0]===entry.scope)[1],check),
-          action('Review release for this grant',()=>showRelease([entry])));
-      });
-      restrictions.append(el('ul',{},items),action('Review selected releases',()=>{
-        const chosen=checks.filter(([check])=>check.checked).map(([,entry])=>entry);
-        if(chosen.length)showRelease(chosen);
-        else confirmRelease.replaceChildren(el('p',{role:'status',text:'Select at least one restriction.'}));
-      }),confirmRelease);
-    }
     const serverNow=state.now;
     list.replaceChildren(el('h3',{text:'Class assignments'}),
       ...state.items.map(item=>{
         const title=targetTitle(item.target);
-        const eligible=profiles.filter(([id])=>item.scope==='class'||item.recipientIds.includes(id));
+        const excused=new Set(state.exemptions.filter(row=>row.focus_id===item.id&&row.focus_revision===item.revision).map(row=>row.profile_id));
+        const eligible=profiles.filter(([id])=>!excused.has(id)&&(item.scope==='class'||item.recipientIds.includes(id)));
         const learner=makeSelect(eligible);
         const active=item.state==='published'&&item.startAt<=serverNow;
         const itemStatus=item.state==='published'?(active?'Active':'Scheduled'):item.state;
         const report=state.progress.filter(row=>row.focus_id===item.id&&row.focus_revision===item.revision);
         return el('article',{class:'row-card','data-assignment-id':item.id},
           el('div',{},el('h4',{text:title}),el('p',{text:itemStatus+' · '+scopes.find(row=>row[0]===item.scope)[1]}),
-            el('p',{text:report.filter(row=>row.state==='complete').length+' completed'}),
-            active&&eligible.length>0&&el('div',{},label('Student for completion review',learner),
+            el('p',{text:report.filter(row=>row.state==='complete').length+' completed · '+excused.size+' excused'}),
+            active&&eligible.length>0&&el('div',{},label('Student for assignment review',learner),
               action('Confirm assignment completed',event=>void guarded(event.currentTarget,async()=>{
                 await command('complete',{id:item.id,revision:item.revision,profileId:learner.value});
                 await refresh();status.textContent='Assignment completion recorded.';
-              })))),
+              })),
+              action('Excuse student from assignment',event=>{
+                if(!confirm('Excuse this student? Their practice history will be kept.'))return;
+                void guarded(event.currentTarget,async()=>{
+                  await command('excuse',{id:item.id,revision:item.revision,profileId:learner.value});
+                  await refresh();status.textContent='Student excused from this assignment.';
+                });
+              }))),
           item.state==='published'&&el('div',{class:'actions'},action('Edit',()=>edit(item)),action(active?'End assignment':'Cancel scheduled assignment',event=>{
-            if(!confirm('End this assignment and its active restrictions?'))return;
+            if(!confirm('End this assignment? Its recorded history will be kept.'))return;
             void guarded(event.currentTarget,async()=>{
               await command('end',{id:item.id,revision:item.revision,requestId:crypto.randomUUID()});
               await refresh();status.textContent='Assignment ended.';
             });
           })));
       }));
-    onRestrictions(new Set(state.activeRestrictions.map(row=>row.profileId)));
   }
   async function refresh(){
     if(refreshing)return refreshing;
@@ -196,5 +164,5 @@ export function createTeacherFocus(classroom,roster,onRestrictions=()=>{}){
     })().finally(()=>{refreshing=null;});
     return refreshing;
   }
-  return {root,restrictions,refresh};
+  return {root,refresh};
 }

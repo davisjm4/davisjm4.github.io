@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { assignmentDestinations, classLaunchDecision, classWork, recommendedWork } from '../assignments/access.mjs';
+import { assignmentDestinations, classWork, recommendedWork } from '../assignments/access.mjs';
 
 const skill = (id, areaId, ...activityIds) => ({ id, areaId, practice: activityIds.map(activityId => ({ activityId })) });
 const pathway = { classId: 'class', nodes: [skill('A', 'first', 'shared'), skill('B', 'second', 'different'), skill('C', 'second', 'shared')] };
@@ -10,11 +10,6 @@ const make = (id, scope, nodeId, overrides = {}) => ({
   id, classId: pathway.classId, scope, recipientIds: scope === 'class' ? [] : [member.id], state: 'published',
   startAt: 50, order: 0, target: target(nodeId), destinations: assignmentDestinations(pathway, target(nodeId)), ...overrides,
 });
-const grant = (id, releasedProfileIds = []) => ({ id, active: true, releasedProfileIds });
-const decide = (items, nodeId, activityId, overrides = {}) => classLaunchDecision({
-  member, pathway, items, now: 100, fresh: true, destination: { nodeId, activityId }, ...overrides,
-});
-
 test('classwork takes priority in either creation order and group work stays with catch-up', () => {
   const individual = make('catch-up', 'individual', 'A', { startAt: 25 });
   const whole = make('classwork', 'class', 'B');
@@ -28,35 +23,18 @@ test('classwork takes priority in either creation order and group work stays wit
   }
 });
 
-test('restriction union permits advisory and restricted assignments, with isolated releases and end', () => {
-  const a = make('a', 'individual', 'A');
-  const b = make('b', 'class', 'B');
-  const restrictedA = { ...a, grant: grant('one') };
-  const restrictedB = { ...b, grant: grant('two') };
-  for (const items of [[restrictedA, b], [a, restrictedB], [restrictedA, restrictedB]]) {
-    assert.equal(decide(items, 'A', 'shared'), 'allowed');
-    assert.equal(decide(items, 'B', 'different'), 'allowed');
-    assert.equal(decide(items, 'C', 'shared'), 'restricted');
-  }
-  const released = { ...restrictedA, grant: grant('one', [member.id]) };
-  assert.equal(decide([released, restrictedB], 'A', 'shared'), 'allowed');
-  assert.equal(decide([{ ...released, state: 'ended' }, restrictedB], 'A', 'shared'), 'restricted');
-  assert.equal(decide([released, { ...restrictedB, grant: grant('two', [member.id]) }], 'C', 'shared'), 'allowed');
-  assert.equal(decide([{ ...restrictedA, completion: 'complete' }], 'C', 'shared'), 'restricted');
-  assert.equal(decide([released, restrictedB], 'A', 'shared', { fresh: false }), 'pending');
-  assert.equal(decide([], 'B', 'different', { member: { ...member, classId: 'other' } }), 'unauthorized');
-  assert.equal(decide([], 'B', 'shared'), 'unavailable');
-});
-
-test('membership, scheduling, and a class grant exemption only affect the specified recipient', () => {
-  const next = { ...member, id: 'new' };
-  const whole = make('classwork', 'class', 'B', { startAt: 150, grant: grant('whole', [member.id]) });
-  const group = make('group', 'group', 'A', { grant: grant('group') });
-  assert.deepEqual(classWork({ member: next, items: [whole, group], now: 149, pathway }).classwork, []);
-  assert.equal(decide([whole, group], 'C', 'shared', { now: 150, member: next }), 'restricted');
-  assert.equal(decide([whole], 'C', 'shared', { now: 150 }), 'allowed');
-  assert.equal(decide([whole], 'C', 'shared', { member: { ...member, active: false } }), 'unauthorized');
-  assert.equal(decide([{ ...whole, state: 'canceled' }], 'C', 'shared', { now: 150, member: next }), 'allowed');
+test('scheduling and class membership change only which work is shown', () => {
+  const next = {...member,id:'new'};
+  const whole=make('classwork','class','B',{startAt:150});
+  const latest=make('next lesson','class','B',{startAt:160});
+  const group=make('group','group','A');
+  const read=(member,now)=>classWork({member,items:[whole,latest,group],now,pathway});
+  assert.deepEqual(read(next,149).classwork,[]);
+  assert.deepEqual(read(next,160).classwork.map(row=>row.id),['next lesson','classwork']);
+  assert.deepEqual(read(next,160).catchUp,[]);
+  assert.equal(read(member,160).catchUp[0].id,'group');
+  assert.deepEqual(read({...member,active:false},160).classwork,[]);
+  assert.deepEqual(read({...member,classId:'other'},160).catchUp,[]);
 });
 
 test('area, skill group and activity target normalization respects the published checkpoint and original scope', () => {
@@ -68,9 +46,9 @@ test('area, skill group and activity target normalization respects the published
   assert.deepEqual(assignmentDestinations(pathway, { kind: 'activity', id: 'shared' }).map(d => d.nodeId), ['A', 'C']);
   assert.deepEqual(assignmentDestinations(pathway, { ...group, nodeIds: ['A', 'unknown'] }), []);
   const work = {
-    ...make('area-work', 'class', 'A', { grant: grant('area') }),
+    ...make('area-work', 'class', 'A'),
     target: { kind: 'area', id: 'first' },
   };
   const revised = { ...pathway, nodes: [...pathway.nodes, skill('D', 'first', 'new')] };
-  assert.equal(decide([work], 'D', 'new', { pathway: revised }), 'restricted');
+  assert.deepEqual(classWork({member,items:[work],now:100,pathway:revised}).classwork[0].destinations, work.destinations);
 });

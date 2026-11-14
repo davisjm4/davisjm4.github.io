@@ -38,19 +38,19 @@ test('learning focus storage is additive, immutable and tied to the existing cla
   const destinations = JSON.stringify([{ nodeId, activityId: 'loop-lab' }]);
   dev.db.prepare('INSERT INTO learning_focus(id,class_id,created) VALUES (?,?,?)').run(focusId, classroom.id, now);
   const insertRevision = dev.db.prepare(`INSERT INTO learning_focus_revisions(
-    focus_id,revision,pathway_id,pathway_revision,actor,recorded,request_id,request_digest,state,start_at,scope,target,destinations,restricted)
-    VALUES (?,?,?,?,'teacher',?,?,'synthetic-digest','published',?,'individual',?,?,1)`);
+    focus_id,revision,pathway_id,pathway_revision,actor,recorded,request_id,request_digest,state,start_at,scope,target,destinations)
+    VALUES (?,?,?,?,'teacher',?,?,'synthetic-digest','published',?,'individual',?,?)`);
   insertRevision.run(focusId, 1, plan.id, plan.head, now, requestId, now, target, destinations);
   assert.throws(() => insertRevision.run(focusId, 2, plan.id, plan.head, now, requestId, now, target, destinations), /UNIQUE/);
   assert.throws(() => dev.db.prepare("UPDATE learning_focus_revisions SET state='ended' WHERE focus_id=?").run(focusId), /immutable/);
 
   dev.db.prepare('INSERT INTO learning_focus_recipients VALUES (?,1,?)').run(focusId, profile.id);
   dev.db.prepare("INSERT INTO learning_focus_progress VALUES (?,1,?,'complete',?)").run(focusId, profile.id, now);
-  dev.db.prepare("INSERT INTO learning_focus_releases VALUES (?,1,?,'teacher',?,?)").run(focusId, profile.id, now, crypto.randomUUID());
+  dev.db.prepare("INSERT INTO learning_focus_exemptions VALUES (?,1,?,'teacher',?)").run(focusId, profile.id, now);
   assert.deepEqual(dev.db.prepare('SELECT * FROM performance_events WHERE profile=?').all(profile.id), evidence);
 
   dev.db.prepare('DELETE FROM profile_classes WHERE id=?').run(classroom.id);
-  for (const table of ['learning_focus', 'learning_focus_revisions', 'learning_focus_recipients', 'learning_focus_progress', 'learning_focus_releases']) {
+  for (const table of ['learning_focus', 'learning_focus_revisions', 'learning_focus_recipients', 'learning_focus_progress', 'learning_focus_exemptions', 'learning_focus_starts']) {
     assert.equal(dev.db.prepare('SELECT COUNT(*) count FROM ' + table).get().count, 0, table);
   }
   assert.deepEqual(dev.db.prepare('PRAGMA foreign_key_check').all(), []);

@@ -7,7 +7,6 @@ import { publishedPlan } from './profile-evidence.mjs';
 const fail = (status, message) => { throw Object.assign(new Error(message), { status }); };
 const targetKinds = new Set(['area', 'skill', 'skill-group', 'activity']);
 const scopes = new Set(['class', 'group', 'individual']);
-const modes = new Set(['advisory', 'restricted']);
 const keys = new Set(['target', 'scope', 'recipientIds', 'mode', 'startAt', 'timeZone', 'reason']);
 const stableId = value => typeof value === 'string' && value.length > 0 && value.length <= 150;
 
@@ -39,7 +38,7 @@ async function previewLearningFocus(env, { owner, classId, input, now }) {
   if (!input || Object.keys(input).some(key => !keys.has(key)) || !scopes.has(input.scope))
     fail(400, 'Choose a class, group, or individual recipient scope.');
   const mode = input.mode ?? 'advisory';
-  if (!modes.has(mode)) fail(400, 'Choose advisory or restricted access.');
+  if (mode !== 'advisory') fail(400, 'Classroom assignments are advisory.');
   const reason = input.reason == null ? null : input.reason;
   if (reason !== null && (typeof reason !== 'string' || reason.length > 160 || /[\u0000-\u001f]/.test(reason))) fail(400, 'Use a short classroom instruction for the reason.');
   const target = normalizeTarget(input.target);
@@ -99,7 +98,6 @@ export async function prepareFocusPreview(env, options) {
 }
 
 export async function publishLearningFocus(env, { owner, classId, input, now }) {
-  // The entire assignment feature remains gated until all launch and evidence paths use it.
   if (!focusEnabled(env)) fail(404, 'Learning focus is unavailable.');
   const classroom = await ownerClass(env.DB, owner, classId, now, true);
   const { requestId, assignment, previewAt, previewSignature, edit: requestedEdit } = input ?? {};
@@ -133,17 +131,15 @@ export async function publishLearningFocus(env, { owner, classId, input, now }) 
         (SELECT 1 FROM student_profiles WHERE id=selected.value AND class_id=c.id AND active=1))`;
   const classValues = [classId, owner, now, preview.pathwayId, preview.pathwayRevision,
     preview.scope, preview.activeRecipientCount, JSON.stringify(affectedIds)];
-  const preserveGrant = edit && await sameRestriction(db, focusId, edit.revision, preview);
-  const grant = Number(preview.mode === 'restricted' && !preserveGrant);
   const create = db.prepare(`INSERT INTO learning_focus(id,class_id,created)
     SELECT ?,c.id,? FROM (${verifiedClass}) c`).bind(focusId, now, ...classValues);
   const scopeCheck = edit ? `AND f.head=? AND EXISTS (${verifiedClass})` : 'AND f.created=?';
   const insert = db.prepare(`INSERT INTO learning_focus_revisions
-    (focus_id,revision,pathway_id,pathway_revision,actor,recorded,request_id,request_digest,state,start_at,scope,target,destinations,restricted,time_zone,reason)
-    SELECT f.id,?,?,?,?,?,?,?,'published',?,?,?,?,?,?,? FROM learning_focus f
+    (focus_id,revision,pathway_id,pathway_revision,actor,recorded,request_id,request_digest,state,start_at,scope,target,destinations,time_zone,reason)
+    SELECT f.id,?,?,?,?,?,?,?,'published',?,?,?,?,?,? FROM learning_focus f
     WHERE f.id=? AND f.class_id=? ${scopeCheck}`)
     .bind(revision, preview.pathwayId, preview.pathwayRevision, owner, now, requestId, digest, preview.startAt, preview.scope,
-      JSON.stringify(preview.target), JSON.stringify(preview.destinations), grant, preview.timeZone, preview.reason ?? null,
+      JSON.stringify(preview.target), JSON.stringify(preview.destinations), preview.timeZone, preview.reason ?? null,
       focusId, classId, ...(edit ? [edit.revision,...classValues] : [now]));
   const recipients = db.prepare(`INSERT INTO learning_focus_recipients(focus_id,revision,profile_id)
     SELECT r.focus_id,r.revision,item.value FROM learning_focus_revisions r JOIN json_each(?) item
@@ -176,18 +172,6 @@ async function editContext(db, classId, edit) {
   return { id: row.id, revision: row.head };
 }
 
-async function sameRestriction(db, focusId, revision, candidate) {
-  const [head, grants] = await Promise.all([
-    first(db,revisionSql+' WHERE f.id=? AND r.revision=?',focusId,revision),
-    rows(db,revisionSql+' WHERE f.id=? AND r.restricted=1',focusId),
-  ]);
-  const match = row => row.scope === candidate.scope && row.target === JSON.stringify(candidate.target) &&
-    row.destinations === JSON.stringify(candidate.destinations) &&
-    (candidate.timeZone === null ? row.start_at <= candidate.startAt : row.start_at === candidate.startAt) &&
-    JSON.parse(row.recipient_ids).sort().join(',') === [...candidate.recipientIds].sort().join(',');
-  return head && match(head) && grants.some(match);
-}
-
 function normalizeRow(row) {
   return {
     id: row.id, classId: row.class_id, revision: row.revision, state: row.state,
@@ -198,19 +182,12 @@ function normalizeRow(row) {
 }
 
 export async function focusState(db, classId) {
-  const [records, releases, progress] = await Promise.all([
-    rows(db,revisionSql+` WHERE f.class_id=? AND (r.revision=f.head OR (r.restricted=1 AND EXISTS (
-      SELECT 1 FROM learning_focus_revisions h WHERE h.focus_id=f.id AND h.revision=f.head AND h.state='published')))
-      ORDER BY r.recorded,r.focus_id,r.revision`,classId),
-    rows(db,`SELECT s.* FROM learning_focus_releases s JOIN learning_focus f ON f.id=s.focus_id WHERE f.class_id=?`,classId),
-    rows(db,`SELECT p.* FROM learning_focus_progress p JOIN learning_focus f ON f.id=p.focus_id WHERE f.class_id=?`,classId),
+  const [records, progress, exemptions] = await Promise.all([
+    rows(db,revisionSql+' WHERE f.class_id=? AND r.revision=f.head ORDER BY r.recorded,f.id',classId),
+    rows(db,'SELECT p.* FROM learning_focus_progress p JOIN learning_focus f ON f.id=p.focus_id WHERE f.class_id=?',classId),
+    rows(db,'SELECT x.focus_id,x.focus_revision,x.profile_id FROM learning_focus_exemptions x JOIN learning_focus f ON f.id=x.focus_id WHERE f.class_id=?',classId),
   ]);
-  const items = records.filter(row=>row.head===row.revision).map(normalizeRow);
-  const grants = records.filter(row=>row.restricted===1).map(row=>({
-    ...normalizeRow(row),
-    grant: { id: row.id + ':' + row.revision, active: true, releasedProfileIds: releases.filter(r=>r.focus_id===row.id&&r.grant_revision===row.revision).map(r=>r.profile_id) },
-  }));
-  return { items, grants, progress };
+  return { items:records.map(normalizeRow), progress, exemptions };
 }
 
 const memberFor = p => ({ id:p.id,classId:p.class_id,active:true });
@@ -218,21 +195,11 @@ const memberFor = p => ({ id:p.id,classId:p.class_id,active:true });
 export async function readTeacherFocus(env,{owner,classId,now}) {
   if (!focusEnabled(env)) return { enabled:false };
   await ownerClass(env.DB,owner,classId,now,true);
-  const [state,plan,roster] = await Promise.all([
+  const [state,plan] = await Promise.all([
     focusState(env.DB,classId),publishedPlan(env.DB,classId),
-    rows(env.DB,'SELECT id FROM student_profiles WHERE class_id=? AND active=1 ORDER BY id',classId),
   ]);
   const pathway = plan ? studentContract(plan,graph) : null;
-  const activeRestrictions = [];
-  for (const {id} of roster) {
-    const work = classWork({member:{id,classId,active:true},...state,now,pathway});
-    if (work.grants.length) activeRestrictions.push({
-      profileId:id, grants:state.grants.filter(item=>work.grants.includes(item.grant.id))
-        .map(({id,revision,scope,target,reason})=>({id,revision,scope,target,reason})),
-      destinations:work.allowed,
-    });
-  }
-  return {enabled:true,now,items:state.items,progress:state.progress,activeRestrictions,
+  return {enabled:true,now,items:state.items,progress:state.progress,exemptions:state.exemptions,
     pathway: pathway ? {revision:pathway.revision,areas:pathway.areas.map(({id,title})=>({id,title})),
       nodes:pathway.nodes.map(node=>({id:node.id,title:node.title,areaId:node.areaId,destinations:assignmentDestinations(pathway,{kind:'skill',id:node.id})}))} : null};
 }
@@ -247,12 +214,13 @@ export async function readStudentFocus(env,request,now) {
   const plan = await publishedPlan(env.DB,p.class_id);
   const pathway = plan ? studentContract(plan,graph) : null;
   const state = await focusState(env.DB,p.class_id);
-  const work = studentWork(p,pathway,state,now);
+  const work = studentWork(p,pathway,{...state,items:state.items.filter(item=>!state.exemptions.some(x=>
+    x.focus_id===item.id&&x.focus_revision===item.revision&&x.profile_id===p.id))},now);
   for (const item of [...work.classwork,...work.catchUp]) {
     const current = state.progress.find(row=>row.focus_id===item.id&&row.focus_revision===item.revision&&row.profile_id===p.id);
     item.progress = current?.state ?? 'available';
   }
-  return {enabled:true,restricted:work.grants.length>0,allowed:work.allowed,
+  return {enabled:true,
     classwork:work.classwork,catchUp:work.catchUp,recommendations:recommendedWork(work)};
 }
 
@@ -274,9 +242,9 @@ export async function endLearningFocus(env,{owner,classId,input,now}) {
   await editContext(env.DB,classId,{id,revision});
   try {
     const result = await env.DB.prepare(`INSERT INTO learning_focus_revisions
-      (focus_id,revision,pathway_id,pathway_revision,actor,recorded,request_id,request_digest,state,start_at,scope,target,destinations,restricted,time_zone,reason)
+      (focus_id,revision,pathway_id,pathway_revision,actor,recorded,request_id,request_digest,state,start_at,scope,target,destinations,time_zone,reason)
       SELECT f.id,r.revision+1,r.pathway_id,r.pathway_revision,?,?,?,?,
-        CASE WHEN r.start_at>? THEN 'canceled' ELSE 'ended' END,r.start_at,r.scope,r.target,r.destinations,0,r.time_zone,r.reason
+        CASE WHEN r.start_at>? THEN 'canceled' ELSE 'ended' END,r.start_at,r.scope,r.target,r.destinations,r.time_zone,r.reason
       FROM learning_focus f JOIN learning_focus_revisions r ON r.focus_id=f.id AND r.revision=f.head
       JOIN profile_classes c ON c.id=f.class_id
       WHERE f.id=? AND c.id=? AND c.owner=? AND c.archived IS NULL AND c.expires>? AND f.head=? AND r.state='published'`)
@@ -288,33 +256,6 @@ export async function endLearningFocus(env,{owner,classId,input,now}) {
     throw error;
   }
   return replay(await existing());
-}
-
-export async function releaseFocusGrants(env,{owner,classId,input,now}) {
-  if (!focusEnabled(env)) fail(404,'Learning focus is unavailable.');
-  await ownerClass(env.DB,owner,classId,now,true);
-  const {requestId,grants} = input ?? {};
-  if (!requestIdPattern.test(requestId ?? '') || !Array.isArray(grants) || !grants.length || grants.length>100 ||
-      grants.some(g=>!requestIdPattern.test(g?.id ?? '') || !requestIdPattern.test(g?.profileId ?? '') || !Number.isInteger(g?.revision)))
-    fail(400,'Choose valid student restrictions to release.');
-  const results = [];
-  for (const {id,revision,profileId} of grants) {
-    const inserted = await env.DB.prepare(`INSERT OR IGNORE INTO learning_focus_releases
-      (focus_id,grant_revision,profile_id,actor,recorded,request_id)
-      SELECT f.id,g.revision,p.id,?,?,? FROM learning_focus f
-      JOIN profile_classes c ON c.id=f.class_id JOIN student_profiles p ON p.class_id=c.id
-      JOIN learning_focus_revisions g ON g.focus_id=f.id AND g.revision=?
-      JOIN learning_focus_revisions h ON h.focus_id=f.id AND h.revision=f.head
-      WHERE f.id=? AND c.id=? AND c.owner=? AND c.archived IS NULL AND c.expires>? AND p.id=? AND p.active=1
-      AND h.state='published' AND g.state='published' AND g.restricted=1 AND g.start_at<=?
-      AND (g.scope='class' OR EXISTS(SELECT 1 FROM learning_focus_recipients r
-        WHERE r.focus_id=f.id AND r.revision=g.revision AND r.profile_id=p.id))`)
-      .bind(owner,now,requestId,revision,id,classId,owner,now,profileId,now).run();
-    const prior = inserted.meta.changes ? true : await first(env.DB,`SELECT 1 FROM learning_focus_releases r
-      JOIN learning_focus f ON f.id=r.focus_id WHERE f.class_id=? AND r.focus_id=? AND r.grant_revision=? AND r.profile_id=?`,classId,id,revision,profileId);
-    results.push({id,revision,profileId,status:prior?'released':'unavailable'});
-  }
-  return {results};
 }
 
 export async function confirmFocusCompletion(env,{owner,classId,input,now}) {
@@ -331,6 +272,7 @@ export async function confirmFocusCompletion(env,{owner,classId,input,now}) {
       JOIN profile_classes c ON c.id=f.class_id JOIN student_profiles p ON p.class_id=c.id
       WHERE f.id=? AND r.revision=? AND p.id=? AND c.id=? AND c.owner=? AND c.archived IS NULL AND c.expires>?
         AND p.active=1 AND r.state='published' AND r.start_at<=?
+        AND NOT EXISTS(SELECT 1 FROM learning_focus_exemptions x WHERE x.focus_id=f.id AND x.focus_revision=r.revision AND x.profile_id=p.id)
         AND (r.scope='class' OR EXISTS(SELECT 1 FROM learning_focus_recipients sr
           WHERE sr.focus_id=f.id AND sr.revision=r.revision AND sr.profile_id=p.id))`)
       .bind(owner,now,id,revision,profileId,classId,owner,now,now),
@@ -344,4 +286,90 @@ export async function confirmFocusCompletion(env,{owner,classId,input,now}) {
     WHERE x.focus_id=? AND x.focus_revision=? AND x.profile_id=? AND f.class_id=?`,id,revision,profileId,classId))
     fail(409,'This student or assignment is no longer active.');
   return {complete:true};
+}
+
+// A receipt links optional assignment progress to an authenticated start.
+// Ordinary practice does not depend on this request or on any assignment.
+export async function startStudentFocus(env,request,input,now) {
+  if (!focusEnabled(env)) fail(404,'Learning focus is unavailable.');
+  const profile=await studentProfile(request,env,now);
+  const {id,revision}=input ?? {};
+  if (!requestIdPattern.test(id ?? '') || !Number.isInteger(revision)) fail(400,'Choose an assignment.');
+  const db=env.DB;
+  const args=[id,revision,profile.id,profile.generation];
+  await db.batch([
+    db.prepare(`INSERT OR IGNORE INTO learning_focus_starts
+      (id,focus_id,focus_revision,profile_id,generation,recorded)
+      SELECT ?,f.id,r.revision,p.id,p.generation,? FROM learning_focus f
+      JOIN learning_focus_revisions r ON r.focus_id=f.id AND r.revision=f.head
+      JOIN profile_classes c ON c.id=f.class_id JOIN student_profiles p ON p.class_id=c.id
+      WHERE f.id=? AND r.revision=? AND p.id=? AND p.generation=?
+        AND p.active=1 AND c.archived IS NULL AND c.expires>? AND r.start_at<=? AND r.state='published'
+        AND (r.scope='class' OR EXISTS(SELECT 1 FROM learning_focus_recipients rr
+          WHERE rr.focus_id=f.id AND rr.revision=r.revision AND rr.profile_id=p.id))
+        AND NOT EXISTS(SELECT 1 FROM learning_focus_exemptions x
+          WHERE x.focus_id=f.id AND x.focus_revision=r.revision AND x.profile_id=p.id)
+        AND EXISTS(SELECT 1 FROM profile_sessions s WHERE s.digest=? AND s.profile=p.id AND s.generation=p.generation AND s.expires>?)`)
+      .bind(crypto.randomUUID(),now,...args,now,now,profile.digest,now),
+    db.prepare(`INSERT OR IGNORE INTO learning_focus_progress(focus_id,focus_revision,profile_id,state,updated)
+      SELECT focus_id,focus_revision,profile_id,'started',recorded FROM learning_focus_starts
+      WHERE focus_id=? AND focus_revision=? AND profile_id=? AND generation=?`).bind(...args),
+  ]);
+  const result=await first(db,`SELECT s.id FROM learning_focus_starts s JOIN learning_focus f ON f.id=s.focus_id
+    JOIN learning_focus_revisions r ON r.focus_id=f.id AND r.revision=f.head
+    WHERE s.focus_id=? AND s.focus_revision=? AND s.profile_id=? AND s.generation=?
+      AND r.revision=s.focus_revision AND r.state='published' AND NOT EXISTS (
+        SELECT 1 FROM learning_focus_exemptions x WHERE x.focus_id=s.focus_id AND x.focus_revision=s.focus_revision AND x.profile_id=s.profile_id)`,...args);
+  if (!result) fail(404,'This assignment is unavailable for your profile.');
+  return {receipt:result.id};
+}
+
+export function creditFocusStatements(db,profile,event,receipt,now) {
+  if (!requestIdPattern.test(receipt ?? '') || event.pathway!==profile.course_id) return [];
+  // Use the stored first independent result and the canonical node dimensions.
+  // A receipt is optional for practice and only affects the named assignment revision.
+  const sql=`INSERT OR IGNORE INTO learning_focus_completion(focus_id,focus_revision,profile_id,actor,recorded,source)
+    SELECT s.focus_id,s.focus_revision,s.profile_id,s.profile_id,?,'qualifying-practice'
+    FROM learning_focus_starts s JOIN learning_focus f ON f.id=s.focus_id
+    JOIN learning_focus_revisions r ON r.focus_id=f.id AND r.revision=s.focus_revision
+    JOIN performance_events e ON e.profile=s.profile_id AND e.id=? AND e.kind='practice'
+    WHERE s.id=? AND s.profile_id=? AND s.generation=? AND f.class_id=? AND f.head=s.focus_revision
+      AND r.state='published' AND e.occurred>=s.recorded-5000
+      AND json_extract(e.data,'$.assignmentReceipt')=s.id AND json_extract(e.data,'$.n')=1
+      AND NOT EXISTS(SELECT 1 FROM learning_focus_exemptions x
+        WHERE x.focus_id=s.focus_id AND x.focus_revision=s.focus_revision AND x.profile_id=s.profile_id)
+      AND EXISTS(SELECT 1 FROM json_each(r.destinations) dest JOIN json_each(e.data,'$.dimensions') d
+        ON json_extract(dest.value,'$.nodeId')=json_extract(d.value,'$.id')
+        WHERE json_extract(dest.value,'$.activityId')=? AND json_extract(d.value,'$.scope')='node')`;
+  return [
+    db.prepare(sql).bind(now,event.id,receipt,profile.id,profile.generation,profile.class_id,event.activity),
+    db.prepare(`INSERT INTO learning_focus_progress(focus_id,focus_revision,profile_id,state,updated)
+      SELECT c.focus_id,c.focus_revision,c.profile_id,'complete',c.recorded FROM learning_focus_completion c
+      JOIN learning_focus_starts s ON s.focus_id=c.focus_id AND s.focus_revision=c.focus_revision AND s.profile_id=c.profile_id
+      WHERE s.id=? AND s.profile_id=? AND s.generation=?
+      ON CONFLICT(focus_id,focus_revision,profile_id) DO UPDATE SET state='complete',updated=excluded.updated`)
+      .bind(receipt,profile.id,profile.generation),
+  ];
+}
+
+export async function excuseFocusRecipient(env,{owner,classId,input,now}) {
+  if (!focusEnabled(env)) fail(404,'Learning focus is unavailable.');
+  await ownerClass(env.DB,owner,classId,now,true);
+  const {id,revision,profileId}=input ?? {};
+  if (!requestIdPattern.test(id ?? '') || !requestIdPattern.test(profileId ?? '') || !Number.isInteger(revision))
+    fail(400,'Choose a student and assignment.');
+  const db=env.DB;
+  const result=await db.prepare(`INSERT OR IGNORE INTO learning_focus_exemptions
+    (focus_id,focus_revision,profile_id,actor,recorded)
+    SELECT f.id,r.revision,p.id,?,? FROM learning_focus f
+    JOIN learning_focus_revisions r ON r.focus_id=f.id AND r.revision=f.head
+    JOIN profile_classes c ON c.id=f.class_id JOIN student_profiles p ON p.class_id=c.id
+    WHERE f.id=? AND r.revision=? AND p.id=? AND c.id=? AND c.owner=? AND c.archived IS NULL AND c.expires>?
+      AND p.active=1 AND r.state='published' AND (r.scope='class' OR EXISTS(SELECT 1 FROM learning_focus_recipients rr
+        WHERE rr.focus_id=f.id AND rr.revision=r.revision AND rr.profile_id=p.id))`)
+    .bind(owner,now,id,revision,profileId,classId,owner,now).run();
+  if(!result.meta.changes && !await first(db,`SELECT 1 FROM learning_focus_exemptions x
+    JOIN learning_focus f ON f.id=x.focus_id WHERE f.class_id=? AND x.focus_id=? AND x.focus_revision=? AND x.profile_id=?`,
+    classId,id,revision,profileId)) fail(409,'This student or assignment is no longer active.');
+  return {excused:true};
 }

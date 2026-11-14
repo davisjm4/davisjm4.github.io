@@ -1,6 +1,6 @@
 # CS Games product specification
 
-**Version 1.0 · Approved November 13, 2026**
+**Version 1.0 · Approved November 13, 2026 · Advisory assignment clarification November 14, 2026**
 
 Owner and approval authority: **Josiah Davisson, DevCat Studios**. Application evidence baseline: repository `main` at `aca36a50455c13c8fd3da2de6e54607c8f10f625`. The product owner approved [the review commit](https://github.com/davisjm4/davisjm4.github.io/commit/0696117e100b2be537e6ccdf228d97d20bedc346) and resolved CSG-OPEN-13 in CSG-DEC-14. The immutable baseline is [cs-games-spec-v1.0](https://github.com/davisjm4/davisjm4.github.io/tree/cs-games-spec-v1.0/docs). Product approval and permission to build, migrate, or deploy are separate decisions.
 
@@ -13,7 +13,7 @@ Owner and approval authority: **Josiah Davisson, DevCat Studios**. Application e
 | Layout, tokens, shared controls, and accessibility | [UX and interaction standards](ux-standards.md) | CSG-UX |
 | Guest and enrolled workflows | [Student experience](student-experience.md) | CSG-STU |
 | Class instruction, planning, reports, and administration | [Teacher experience](teacher-experience.md) | CSG-TCH |
-| Assignments, switching, restrictions, and release | [Teacher-directed learning](teacher-directed-learning.md) | CSG-TDL |
+| Advisory assignments, switching, progress, and excusal | [Teacher-directed learning](teacher-directed-learning.md) | CSG-TDL |
 | First attempts, formative levels, official results, and policy versions | [Mastery and evidence](mastery-and-evidence.md) | CSG-MAS |
 | Daily practice, printable reports, and history | [Session reporting](session-reporting.md) | CSG-SES |
 | Identity, isolation, and retention | [Privacy and security](privacy-and-security.md) | CSG-SEC |
@@ -29,7 +29,7 @@ Read [the decision log](decisions.md) for approved product decisions and the eva
 
 ## Authority and states
 
-1. The product owner's explicit decision governs product intent. The teacher-directed learning addendum controls priority and overlap. CSG-DEC-09 through CSG-DEC-13 record the Version 1.0 review decisions.
+1. The product owner's explicit decision governs product intent. CSG-DEC-15 controls advisory assignments, priority, overlap, and offline practice. CSG-DEC-09 through CSG-DEC-13 record the Version 1.0 review decisions.
 2. The tagged specification governs product behavior. Domain requirements own their subject, with cross-links for shared rules. Teacher-directed learning owns assignment semantics. Mastery and evidence owns scoring. Privacy and security owns trust boundaries.
 3. The checked-out code and deployed version establish current behavior. Technical runbooks govern compatible operations. A discrepancy is a recorded defect, a rollout gap, or an open decision. Track it with the affected ID and evidence.
 4. The Master Tracker indexes work, releases and verification. Audits and historical reports are evidence. Neither independently grants design approval or release authority.

@@ -49,9 +49,9 @@ test('learning-focus preview uses the owner, published class target and active r
   ]) {
     const startAt = Date.now() + 60000;
     const preview = await post(route, {
-      scope, recipientIds, target: nextTarget, mode: 'restricted', startAt, timeZone: 'America/Los_Angeles',
+      scope, recipientIds, target: nextTarget, mode: 'advisory', startAt, timeZone: 'America/Los_Angeles',
     });
-    assert.equal(preview.mode, 'restricted');
+    assert.equal(preview.mode, 'advisory');
     assert.equal(preview.activeRecipientCount, scope === 'class' ? 2 : recipientIds.length);
     assert.equal(preview.timeZone, 'America/Los_Angeles');
     assert.equal(preview.startAt, startAt);
@@ -90,7 +90,7 @@ test('gated focus publication is atomic, checks reviewed scope, and retries one 
   const classRoute = '/teacher/profiles/' + classInfo.id;
   const route = '/teacher/learning-focus/' + classInfo.id;
   const { data: student } = await post(classRoute + '/students', {});
-  const assignment = { scope: 'individual', recipientIds: [student.id], mode: 'restricted',
+  const assignment = { scope: 'individual', recipientIds: [student.id], mode: 'advisory',
     target: { kind: 'skill', id: 'node:advanced:loop-lab:looptype' } };
   async function prepare(assignment) {
     const { status, data: preview } = await post(route + '/preview', assignment);
@@ -100,13 +100,13 @@ test('gated focus publication is atomic, checks reviewed scope, and retries one 
 
   const request = await prepare(assignment);
   assert.equal((await post(route + '/publish', request, other)).status, 404);
-  assert.equal((await post(route + '/publish', { ...request, assignment: { ...assignment, mode: 'advisory' } })).status, 409);
+  assert.equal((await post(route + '/publish', { ...request, assignment: { ...assignment, reason: 'Different classroom direction' } })).status, 409);
   assert.equal((await post(route + '/publish', { ...request, previewAt: request.previewAt - 660000 })).status, 409);
   const results = await Promise.all([post(route + '/publish', request), post(route + '/publish', request)]);
   for (const entry of results) assert.deepEqual(entry, { status: 200, data: { id: request.requestId, revision: 1 } });
-  assert.equal((await post(route + '/publish', { ...request, assignment: { ...assignment, mode: 'advisory' } })).status, 409);
+  assert.equal((await post(route + '/publish', { ...request, assignment: { ...assignment, reason: 'Different classroom direction' } })).status, 409);
   assert.equal(dev.db.prepare('SELECT COUNT(*) count FROM learning_focus').get().count, 1);
-  assert.deepEqual(dev.db.prepare('SELECT scope,restricted FROM learning_focus_revisions').get(), Object.assign(Object.create(null), { scope: 'individual', restricted: 1 }));
+  assert.deepEqual(dev.db.prepare('SELECT scope FROM learning_focus_revisions').get(), Object.assign(Object.create(null), { scope: 'individual' }));
   assert.equal(dev.db.prepare('SELECT profile_id FROM learning_focus_recipients').get().profile_id, student.id);
 
   const wholeClass = await prepare({ scope: 'class', target: assignment.target });
@@ -122,7 +122,7 @@ test('gated focus publication is atomic, checks reviewed scope, and retries one 
   assert.equal(dev.db.prepare('SELECT COUNT(*) count FROM performance_events').get().count, 0);
 });
 
-test('owner reads and revision actions retain older grants and release them by profile', async t => {
+test('owner reads and revision actions retain earlier revisions and excuse one profile', async t => {
   const dev = await startDev({ teacherTokens: { teacher, other }, pathwayAdapters: { ENABLE_TEACHER_DIRECTED_LEARNING: '1' } });
   t.after(async () => { await new Promise(resolve => dev.server.close(resolve)); dev.db.close(); });
   dev.db.exec(readFileSync(new URL('../../../wpr-games/workplace-readiness/service/migrations/0008_learning_focus.sql', import.meta.url), 'utf8'));
@@ -148,8 +148,8 @@ test('owner reads and revision actions retain older grants and release them by p
   }
   const a={kind:'skill',id:'node:advanced:loop-lab:looptype'};
   const b={kind:'skill',id:'node:advanced:loop-lab:components'};
-  const one={scope:'individual',recipientIds:[learner.id],mode:'restricted',target:a};
-  const all={scope:'class',mode:'restricted',target:b};
+  const one={scope:'individual',recipientIds:[learner.id],mode:'advisory',target:a};
+  const all={scope:'class',mode:'advisory',target:b};
   const catchUp=await publish(one);
   const whole=await publish(all);
   await call(path,undefined,other,404);
@@ -161,25 +161,21 @@ test('owner reads and revision actions retain older grants and release them by p
   assert.ok(!JSON.stringify(loaded).includes(peer.id));
   const edited=await publish({...one,mode:'advisory',target:b},catchUp);
   loaded=await work(learner.token);
-  assert.deepEqual(loaded.allowed.map(row=>row.nodeId).sort(),[a.id,b.id].sort());
+  assert.deepEqual(loaded.catchUp[0].destinations.map(row=>row.nodeId),[b.id]);
   assert.equal(loaded.recommendations.length,1);
   const view=await call(path);
-  assert.equal(view.activeRestrictions.length,2);
-  assert.equal(view.activeRestrictions.find(row=>row.profileId===learner.id).grants.length,2);
-  const release={requestId:crypto.randomUUID(),grants:[
-    {...whole,profileId:learner.id},{...whole,profileId:crypto.randomUUID()},
-  ]};
-  await call(path+'/release',release,other,404);
-  for(let retry=0;retry<2;retry++){
-    assert.deepEqual((await call(path+'/release',release)).results.map(row=>row.status),['released','unavailable']);
-  }
-  assert.equal((await work(learner.token)).restricted,true);
-  assert.equal((await work(peer.token)).restricted,true);
+  assert.equal(view.items.find(item=>item.id===edited.id).revision,2);
+  const excuse={...whole,profileId:learner.id};
+  await call(path+'/excuse',excuse,other,404);
+  assert.deepEqual(await call(path+'/excuse',excuse),{excused:true});
+  assert.deepEqual(await call(path+'/excuse',excuse),{excused:true});
+  assert.deepEqual((await work(learner.token)).classwork,[]);
+  assert.equal((await work(peer.token)).classwork.length,1);
   const command={...edited,requestId:crypto.randomUUID()};
   await call(path+'/end',{...catchUp,requestId:crypto.randomUUID()},teacher,409);
   const ended=await call(path+'/end',command);
   assert.equal(ended.state,'ended');
   assert.deepEqual(await call(path+'/end',command),ended);
-  assert.equal((await work(learner.token)).restricted,false);
-  assert.equal((await work(peer.token)).restricted,true);
+  assert.deepEqual((await work(learner.token)).catchUp,[]);
+  assert.equal((await work(peer.token)).classwork[0].id,whole.id);
 });

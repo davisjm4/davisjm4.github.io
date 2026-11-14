@@ -1,14 +1,11 @@
 import { el } from '../../wpr-games/workplace-readiness/online/dom.mjs';
 
-import { classLaunchHref, withPracticeReturn } from './practice-return.mjs';
 import { courseNames,practiceLinks } from './practice-links.mjs';
 
-function practiceActions(node,view,classLaunch){
+function practiceActions(node){
   const {links,mixed}=practiceLinks(node);
-  const href=link=>classLaunch ? classLaunchHref(withPracticeReturn(link.url,{origin:location.origin,course:view.courseId,classId:view.classId,
-    route:{view:'area',stopId:node.areaId,nodeId:node.id,layout:'list'}}),{classId:view.classId,nodeId:node.id}) : link.url;
-  return [...links.map(link=>el('a',{href:href(link),text:link.label,rel:'noreferrer'})),
-    ...(mixed?[el('a',{href:href(mixed),text:'Mixed Practice',rel:'noreferrer','aria-label':mixed.label})]:[])];
+  return [...links.map(link=>el('a',{href:link.url,text:link.label,rel:'noreferrer'})),
+    ...(mixed?[el('a',{href:mixed.url,text:'Mixed Practice',rel:'noreferrer','aria-label':mixed.label})]:[])];
 }
 
 function masteryCard(node,onRestart){
@@ -34,7 +31,7 @@ function masteryCard(node,onRestart){
     history);
 }
 
-export function renderPathway(view,{onRestart,openAreas=[],classLaunch=false}={}) {
+export function renderPathway(view,{onRestart,openAreas=[]}={}) {
   const areas=new Map(view.areas.map(area=>[area.id,area]));
   const names=new Map(view.nodes.map(node=>[node.id,node.title]));
   // Some AP CSP skills revisit the same activity across units. Keep each run of skills in its published order.
@@ -65,7 +62,7 @@ export function renderPathway(view,{onRestart,openAreas=[],classLaunch=false}={}
         node.earlierVerifiedAward&&el('small',{text:'Earlier teacher-verified mastery recorded'}),
         masteryCard(node,onRestart),
         c.score!==null&&c.score!==undefined&&el('small',{text:'Teacher assessment · '+c.score+'/4'}),
-        el('div',{class:'pathway-actions'},practiceActions(node,view,classLaunch))));
+        el('div',{class:'pathway-actions'},practiceActions(node))));
     }
     const area=areas.get(areaId),requirements=area?.practiceRequirements;
     const count=requirements?.requiredTotal>0

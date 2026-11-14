@@ -79,3 +79,9 @@ Apply additive migration `0005_teacher_sessions.sql` before deploying the Worker
 A verified Google credential is exchanged once for an opaque, two-hour teacher session. D1 keeps only the session digest, owner, verified account and expiration. The same browser tab carries the opaque token between Teacher Tools pages in session storage. The Worker rechecks the account allowlist and class ownership and revokes the session on sign-out. Student profiles use their existing independent credentials.
 
 After deployment, use an approved teacher account to sign in from My Classes, open a class and its pacing guide in the same tab, return to the class, and sign out. Confirm that both pages recognize sign-out. Use a synthetic class for draft and publication checks. For a rollback, restore the previous Pages frontend before rolling back the Worker. Leave the additive session table in place.
+
+## Advisory assignments (CSG-PKG-06)
+
+Apply additive `0008_learning_focus.sql` after confirming the target migration ledger and backup. This schema is for the revised advisory policy. If an isolated environment already applied the earlier draft of 0008, use a fresh isolated database for rehearsal. If an installed ledger reports an earlier 0008, stop and reconcile it before enabling advisory assignments. Preserve class and evidence rows.
+
+Deploy the matching Worker with `ENABLE_TEACHER_DIRECTED_LEARNING=1` after the schema is present. Verify the health response advertises `advisoryAssignmentsReady`, then run the synthetic teacher and student workflow before releasing the matching Pages build. Keep existing credentials and production configuration. An ordinary practice client can continue to sync while the assignment flag is off. If rollback is needed, disable the assignment flag and leave the additive tables and student evidence in place.

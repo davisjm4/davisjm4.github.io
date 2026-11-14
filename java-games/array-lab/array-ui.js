@@ -1,3 +1,4 @@
+import { advisoryCheckpoint } from "../../cs-games/student/advisory-practice.mjs";
 import {
   formatNames,
   generateArray,
@@ -18,6 +19,7 @@ const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({
 export function startArrayLab() {
   const $ = (id) => document.getElementById(id);
   const tracker = sessionTracker();
+  const checkpoint = advisoryCheckpoint("array-lab");
   const preferenceKey='javaArray.preferences.v1';
   let preferenceStorage;try{preferenceStorage=globalThis.localStorage;}catch{}
   let preferences={};try{preferences=JSON.parse(preferenceStorage?.getItem(preferenceKey)||'{}');}catch{}
@@ -123,6 +125,14 @@ export function startArrayLab() {
     }
   }
 
+  let instanceMode, instanceDifficulty;
+  function saveQuestion(value) {
+    if (checkpoint?.mode === instanceMode) checkpoint.save(value);
+  }
+  function checkpointQuestion() {
+    saveQuestion({question, instanceId, difficulty:instanceDifficulty, selectedAnswer, selectedCell, selectedCells, workingState});
+  }
+
   function selectCell(cell) {
     if (!active()) return;
     if (question.kind === "apply") {
@@ -141,6 +151,7 @@ export function startArrayLab() {
     paint();
     $("feedback").hidden = true;
     $("submit").disabled = !complete();
+    checkpointQuestion();
   }
 
   function complete() {
@@ -198,14 +209,25 @@ export function startArrayLab() {
     stats();
   }
 
-  function next() {
-    if (instanceId) tracker.skip(instanceId);
-    question = generateArray($("mode").value, undefined, {
+  function next({restore = false} = {}) {
+    const mode = $("mode").value, difficulty = $("difficulty").value;
+    const switching = instanceMode !== mode || instanceDifficulty !== difficulty;
+    if (instanceId && (!switching || checkpoint?.mode !== instanceMode)) tracker.skip(instanceId);
+    const saved = restore && checkpoint?.mode === mode ? checkpoint.read() : null;
+    const paused = saved?.question && tracker.status(saved.instanceId) === "active" ? saved : null;
+    if (paused) $("difficulty").value = paused.difficulty;
+    else if (checkpoint?.mode === mode && !restore) {
+      const prior = checkpoint.read();
+      if (prior) tracker.skip(prior.instanceId);
+    }
+    instanceMode = mode;
+    instanceDifficulty = $("difficulty").value;
+    question = paused?.question ?? generateArray($("mode").value, undefined, {
       difficulty: $("difficulty").value,
       history: recent,
       ...(params?.has('seed')?{seed:(Number(params.get('seed'))+challengeNumber++)>>>0}:{}),
     });
-    instanceId = tracker.begin(question.game, question.title, question.topic, question.topicTitle, question.format, formatNames[question.format]);
+    instanceId = paused?.instanceId ?? tracker.begin(question.game, question.title, question.topic, question.topicTitle, question.format, formatNames[question.format]);
     tracker.annotate(instanceId, {
       mode: question.formatName,
       practiceMode: question.format,
@@ -216,10 +238,10 @@ export function startArrayLab() {
       evidenceRevision:question.generationVersion===1&&question.difficultyEvidence?'array-compose-v1':null,
       seed: question.seed ?? null,
     });
-    selectedAnswer = null;
-    selectedCell = null;
-    selectedCells = [];
-    workingState = question.values ? [...question.values] : [];
+    selectedAnswer = paused?.selectedAnswer ?? null;
+    selectedCell = paused?.selectedCell ?? null;
+    selectedCells = paused?.selectedCells ?? [];
+    workingState = paused?.workingState ?? (question.values ? [...question.values] : []);
     closed = false;
     expiredNotice = false;
     $("feedback").hidden = true;
@@ -240,6 +262,7 @@ export function startArrayLab() {
           paint();
           $("submit").disabled = false;
           $("feedback").hidden = true;
+          checkpointQuestion();
         };
     } else {
       for (const button of $("stage").querySelectorAll("[data-cell]"))
@@ -251,6 +274,7 @@ export function startArrayLab() {
         workingState = [...question.values];
         paint();
         $("submit").disabled = true;
+        checkpointQuestion();
       };
     }
     $("submit").onclick = () => {
@@ -259,13 +283,17 @@ export function startArrayLab() {
       const event = tracker.submit(instanceId, correct);
       if (!event.accepted) return;
       if (!correct) tracker.reveal(instanceId);
+      saveQuestion(null);
       finish(correct);
     };
     $("next").onclick = next;
+    paint();
+    $("submit").disabled = !complete();
+    checkpointQuestion();
     stats();
   }
 
-  $("mode").onchange = () => {savePreferences();next();};
+  $("mode").onchange = () => {savePreferences();next({restore:true});};
   $("difficulty").onchange = () => {savePreferences();next();};
   $("new").onclick = next;
   window.addEventListener('keydown',event=>{
@@ -277,10 +305,10 @@ export function startArrayLab() {
     if(/^[1-4]$/.test(event.key)&&question.kind==='choice'){const button=controls[Number(event.key)-1];button?.click();button?.focus();return;}
     if(['ArrowRight','ArrowDown','ArrowLeft','ArrowUp'].includes(event.key)&&controls.length){event.preventDefault();const current=controls.indexOf(focused),direction=['ArrowRight','ArrowDown'].includes(event.key)?1:-1;controls[current<0?(direction>0?0:controls.length-1):(current+direction+controls.length)%controls.length].focus();}
   });
-  window.addEventListener("pagehide", () => { if (instanceId) tracker.skip(instanceId); });
+  window.addEventListener("pagehide", () => { if (instanceId && checkpoint?.mode !== instanceMode) tracker.skip(instanceId); });
   window.addEventListener('focus',checkSession);
   document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='hidden')checkSession();});
-  next();
+  next({restore:true});
 }
 
 startArrayLab();

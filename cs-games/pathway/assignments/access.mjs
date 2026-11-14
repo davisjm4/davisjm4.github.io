@@ -41,13 +41,12 @@ function applies(item, member, now) {
 }
 
 function compareAssignments(a, b) {
-  return a.order - b.order || a.startAt - b.startAt || a.id.localeCompare(b.id);
+  return a.order - b.order || b.startAt - a.startAt || a.id.localeCompare(b.id);
 }
 
-export function classWork({ member, items, grants, now, pathway }) {
-  const result = { classwork: [], catchUp: [], grants: [], allowed: [] };
+export function classWork({ member, items, now, pathway }) {
+  const result = { classwork: [], catchUp: [] };
   if (!member?.active || member.classId !== pathway?.classId) return result;
-  const allowed = new Map();
   function currentDestinations(item) {
     const original = new Set(item.destinations.map(destinationKey));
     return assignmentDestinations(pathway, item.target).filter(destination => original.has(destinationKey(destination)));
@@ -58,28 +57,10 @@ export function classWork({ member, items, grants, now, pathway }) {
     const assignment = { id: item.id, revision:item.revision, scope: item.scope, startAt: item.startAt,
       order: item.order, target: item.target, reason:item.reason, destinations };
     (item.scope === 'class' ? result.classwork : result.catchUp).push(assignment);
-    for (const destination of destinations) allowed.set(destinationKey(destination),destination);
-  }
-  // An older grant remains effective after an assignment edit. Completion leaves
-  // its restrictions in place. Release applies only to the selected profile and grant.
-  for (const item of grants ?? items) {
-    if (!item.grant?.active || !applies(item,member,now) || item.grant.releasedProfileIds.includes(member.id)) continue;
-    result.grants.push(item.grant.id);
-    for (const destination of currentDestinations(item)) allowed.set(destinationKey(destination),destination);
   }
   result.classwork.sort(compareAssignments);
   result.catchUp.sort(compareAssignments);
-  result.allowed=[...allowed.values()];
   return result;
-}
-
-export function classLaunchDecision({ member, pathway, items, grants, now, fresh, destination }) {
-  if (!member?.active || member.classId !== pathway?.classId) return 'unauthorized';
-  if (!fresh) return 'pending';
-  const key = destinationKey(destination);
-  if (!assignmentDestinations(pathway, { kind: 'skill', id: destination.nodeId }).some(item => destinationKey(item) === key)) return 'unavailable';
-  const work = classWork({ member, items, grants, now, pathway });
-  return !work.grants.length || work.allowed.some(target=>destinationKey(target)===key) ? 'allowed' : 'restricted';
 }
 
 export function recommendedWork({ classwork, catchUp }) {

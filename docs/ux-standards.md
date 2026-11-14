@@ -15,7 +15,7 @@
 | Surface | Desktop / 1366 | Chromebook / 1024 and tablet / 768 | Phone / 390 |
 | --- | --- | --- | --- |
 | Courses and maps | Compact global nav, course name and search, map/list, detail alongside where useful | Keep toolbar and selection visible; use one pane when detail crowds map | Header and one role-aware nav control; map or list first; dismissible skill sheet or full-screen detail |
-| Class dashboard | Class switcher, Active Restrictions first, scoped sections and skill matrix with adjacent detail | Keep restrictions and filters first; responsive grid or list with skill selector | Restricted profiles and release controls first; one-skill list, row menu and detail sheet/page |
+| Class dashboard | Class switcher, assignment overview, scoped sections and skill matrix with adjacent detail | Keep assignment status and filters easy to find; responsive grid or list with skill selector | Assignment status and excusal controls; one-skill list, row menu and detail sheet/page |
 | Practice | Map return, prompt, controls and verdict within task region | Keep source material reachable; isolate scroll for wide traces | Show verdict near Check and keep Next reachable; collapse trace or advanced controls after use |
 | My Session | Date/scope, key results and print/export, then breakdown | Wrap actions and keep scope persistent | Stack totals, activity sections and export; keep print action clear and reachable |
 | Forms | Persistent class/skill context and visible draft state | Split by task and collapse optional fields | Single column, logical reading order, no sticky control obscuring inputs |
