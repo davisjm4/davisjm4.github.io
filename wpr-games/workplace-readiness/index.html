@@ -16,7 +16,7 @@
     <a class="brand" href="#/" id="brand-link">Workplace Readiness Games</a>
     <nav class="top-nav" aria-label="Primary">
       <a href="#/practice" id="nav-practice">Practice</a>
-      <a href="#/summary" id="nav-summary">Performance</a>
+      <a data-my-session href="/cs-games/student/session/?course=workplace">My Session</a><a href="#/summary" id="nav-summary">Performance</a>
     </nav>
   </header>
 
@@ -95,5 +95,5 @@
       addPracticeReturn(document.querySelector('.ecosystem-nav'), activeProfile, '/wpr-games/workplace-readiness/');
     }
   </script>
-</body>
+<script type="module" src="/cs-games/student/session/activity-link.mjs?v=my-session-v1"></script></body>
 </html>

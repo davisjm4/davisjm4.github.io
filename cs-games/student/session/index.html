@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Session | CS Games</title>
+  <link rel="stylesheet" href="../../styles.css?v=student-navigation-v1">
+  <link rel="stylesheet" href="./session.css">
+  <script type="module" src="../navigation.mjs?v=my-session-v1"></script>
+  <script type="module" src="./app.mjs?v=my-session-v1"></script>
+</head>
+<body>
+  <a class="session-skip" href="#session-main">Skip to My Session</a>
+  <header class="site-header"><nav class="nav" aria-label="Main" data-student-navigation="session"><a class="brand" href="/cs-games/">CS Games</a><a href="/cs-games/student/guest/?choose=1">Courses</a><a href="/cs-games/student/">My Class</a></nav></header>
+  <main class="wrap" id="session-main">
+    <h1>My Session</h1>
+    <p id="session-scope"></p>
+    <nav class="session-actions screen-only" aria-label="Progress reports">
+      <a href="#today" aria-current="page">Today</a>
+      <a id="independent-history" href="../guest/#my-session">Independent History</a>
+      <a href="../#student-profile">Class Progress</a>
+    </nav>
+    <section id="today" aria-labelledby="today-heading">
+      <h2 id="today-heading">Today</h2>
+      <div id="course-choice" class="screen-only"></div>
+      <div id="daily-report"></div>
+      <div id="activity-reports" class="screen-only"></div>
+    </section>
+    <noscript>Enable JavaScript to read the session saved in this browser.</noscript>
+  </main>
+</body>
+</html>
