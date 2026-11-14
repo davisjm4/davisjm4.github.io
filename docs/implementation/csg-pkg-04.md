@@ -1,0 +1,15 @@
+# CSG-PKG-04 · Teacher Class Progress
+
+This pull request implements the practice comparison and contextual review portion of CSG-TCH-01/02/03. It covers CSG-AT-04 in a synthetic class and uses the existing class ownership, profile reports and assessment endpoint under CSG-SEC-01. The base is the first My Session rollout, [PR #33](https://github.com/davisjm4/davisjm4.github.io/pull/33), merge `1a3883f65c35c9d6dab06d51697be26320820591`. Its [Pages deployment](https://github.com/davisjm4/davisjm4.github.io/actions/runs/43561837180) and production guest browser check passed. Original report controls remain available for pending activity-specific parity.
+
+## Teacher workflow
+
+Open My Classes, select a class, and choose Class progress. Load skill comparison to see recorded first-attempt practice mapped to the published pathway. The selected area supplies the matrix columns. The selected skill controls the one-skill phone view, student filter and scoped CSV. Practice review uses a 10-attempt minimum and below 70% accuracy. High accuracy uses the same minimum and at least 90% accuracy. Both are instructional signals. The comparison uses the full available mapped practice history and includes the data load date and published pathway revision. It neither evaluates proficiency nor applies published practice targets.
+
+Open a cell to view that student's official score, assessment history and recent mapped practice for that skill. The existing teacher assessment form opens in context. Its save feedback and version checks still apply, and a teacher review creates the same evidence as the existing roster flow. Back to skill comparison restores focus to the originating cell. Existing class, roster and individual reports and exports remain reachable.
+
+## Verification and dependencies
+
+Run `CHROME_BIN=/path/to/chromium node --test cs-games/teacher/class-evidence-browser-tests.mjs`. The synthetic 24-profile walkthrough exercises 10/36, 44/45, 0/1 and no evidence, ignores retries, checks cross-owner access rejection, downloads the scoped CSV, verifies one 4/4 assessment in teacher and student views, and switches class without carrying the wrong scope. It tests keyboard filter and focus return, widths from 320 to 1366 CSS pixels, and axe A/AA in the comparison section. Use `CSG_COMPARISON_SCREENSHOTS` with an existing local directory to capture phone and desktop views. Physical device, native screen-reader and production teacher sign-in checks are separate from this local verification.
+
+This is a frontend-only increment. No Worker deployment, data migration or backfill is required, and the preceding Pages release can restore the previous UI. Continue the remaining CSG-AT-04 work when its dependencies are ready. Independent formative and class target results and historical-result interpretation depend on CSG-PKG-08 and CSG-DEC-14. Active restriction status and release controls depend on CSG-PKG-06. CSG-PKG-05 can advance the Plan workspace and its existing draft, preview, revision, pacing and diagnostic workflows using the class shell. Independent target evaluation remains gated by CSG-PKG-08.

@@ -5,6 +5,7 @@ import {currentTeacher,teacherRequest} from './session.mjs';
 import { csv } from '../../wpr-games/workplace-readiness/online/model.mjs';
 import { el, button, download, table, copy, options } from '../../wpr-games/workplace-readiness/online/dom.mjs';
 import { PROFILE_CSV_HEADER, profileCsv, profileCsvRows, renderProfileProgress } from '../../wpr-games/workplace-readiness/online/profile-report.mjs?v=targeted-clarity-v1';
+import { renderClassEvidence } from './class-evidence.mjs';
 import { COURSE_LABELS, courseLabel, publicationStatus, formatWhen } from './ui-model.mjs';
 
 const courseNames=COURSE_LABELS;
@@ -96,7 +97,7 @@ export function teacherProfiles(onClasses) {
   };
   function renderList() {
     classList.replaceChildren(...classes.map(c=>{
-      const card=el('button',{type:'button',class:'class-card','aria-pressed':String(c.id===selectedId),onclick:()=>openClass(c.id).catch(e=>{status.textContent=e.message;})},
+      const card=el('button',{type:'button',class:'class-card','aria-pressed':String(c.id===selectedId),onclick:()=>openClass(c.id,{focus:true}).catch(e=>{status.textContent=e.message;})},
         el('strong',{text:c.title}),el('span',{class:'sub',text:courseLabel(c.course_id)}),el('span',{class:'chips'},pathwayChip(c)));
       return card;
     }));
@@ -145,8 +146,9 @@ export function teacherProfiles(onClasses) {
       put(slot,el('div',{class:'chips'},chip(state.label,state.tone),last?chip('Last published '+formatWhen(last),'plain'):null),el('p',{class:'muted',text:state.detail}));
     } catch {put(slot,el('p',{class:'muted',text:'Pathway status is unavailable right now.'}));}
   }
-  async function openClass(id) {
+  async function openClass(id,{focus=false}={}) {
     selectedId=id;
+    put(panel,el('p',{role:'status',text:'Loading class…'}));
     const url=new URL(location.href);
     url.searchParams.set('class',id);
     history.replaceState(null,'',url);
@@ -155,6 +157,38 @@ export function teacherProfiles(onClasses) {
     const {class:c,roster}=await api(base);
     if(currentTeacher()!==session||selectedId!==id)return;
     const selected=el('div',{id:'wpr-profile-report'});
+    const evidence=el('div');
+    const comparisonReport=el('div');
+    const rosterReport=el('div');
+    const evidenceHeading=el('h3',{id:'class-progress-title',text:'Compare skill practice',tabindex:-1});
+    const compare=act('Load skill comparison',async()=>{
+      put(evidence,el('p',{role:'status',text:'Loading skill comparison…'}));
+      const plan=pathways.get(c.id);
+      let report,preview;
+      try {
+        [report,preview]=await Promise.all([
+          api(base+'/progress'),
+          plan?.revision>0 ? rq('/pathways/teacher/'+plan.id+'/student-preview') : null,
+        ]);
+      } catch(error) {
+        put(evidence,el('p',{role:'alert',text:error.message}));
+        return;
+      }
+      if(currentTeacher()!==session||selectedId!==id||!evidence.isConnected)return;
+      put(evidence,renderClassEvidence({
+        classroom:c,roster,pathway:preview?.pathway,reports:report.reports,
+        openProfile:async(profileId,node,trigger)=>{
+          comparisonReport.append(selected);
+          const person=base+'/students/'+encodeURIComponent(profileId);
+          const returnButton=button('Back to skill comparison',()=>{
+            put(selected);
+            (trigger.isConnected?trigger:evidenceHeading).focus();
+          },'btn small');
+          await showStudent(person,selected,!c.archived,{nodeId:node.id,returnButton});
+        },
+      }));
+      evidenceHeading.focus();
+    });
     const previewSlot=el('div',{id:'published-student-preview',hidden:true,tabindex:-1});
     const pathwaySlot=el('div',{id:'class-pathway-status'},el('p',{class:'muted',text:'Checking pathway status…'}));
     put(credential);
@@ -165,6 +199,7 @@ export function teacherProfiles(onClasses) {
         const person=base+'/students/'+p.id;
         const actions=el('div',{class:'actions'},
           act('View progress',async()=>{
+            rosterReport.append(selected);
             await showStudent(person,selected,!c.archived&&p.active===1);
           },'btn small'),
           !c.archived&&act('Reset access',async()=>{
@@ -192,11 +227,14 @@ export function teacherProfiles(onClasses) {
         credential,
         c.archived&&el('div',{class:'banner warn'},el('p',{text:'Archived. Scheduled deletion by '+new Date(c.expires).toISOString().slice(0,10)+'.'})),
         el('div',{class:'task-grid'},
+          el('a',{class:'task',href:'#class-progress'},el('strong',{text:'Class progress'}),el('span',{text:'Compare first attempts across students on the same skill.'})),
           !c.archived&&el('a',{class:'task',href:pacingHref(c.id)},el('strong',{text:'Customize pathway'}),el('span',{text:'Change learning goals or set practice requirements.'})),
           !c.archived&&pathways.get(c.id)?.revision>0&&el('a',{class:'task',href:'/cs-games/teacher/requirements/?class='+encodeURIComponent(c.id)},el('strong',{text:'Customize mastery requirements'}),el('span',{text:'Set optional question counts and accuracy goals.'})),
           !c.archived&&el('a',{class:'task',href:pacingHref(c.id,'calendar')},el('strong',{text:'Pacing & target dates'}),el('span',{text:'Plan privately or share optional target dates.'})),
           el('a',{class:'task',href:'#practice-online',onclick:()=>onClasses(classes,c.id)},el('strong',{text:'Practice & assessments'}),el('span',{text:'Create a diagnostic or targeted practice for students.'})),
-          el('a',{class:'task',href:'#class-students'},el('strong',{text:'Students & progress'}),el('span',{text:'Enrollment link, student profile IDs and each student’s progress.'}))),previewSlot),
+          el('a',{class:'task',href:'#class-students'},el('strong',{text:'Student profiles'}),el('span',{text:'Enrollment, access and individual progress reports.'}))),previewSlot),
+      el('section',{class:'card',id:'class-progress','aria-labelledby':'class-progress-title'},evidenceHeading,
+        el('div',{class:'actions'},compare),evidence,comparisonReport),
       el('div',{class:'card',id:'class-students'},
         el('div',{class:'card-head'},el('div',{},el('h3',{text:'Student profiles'}),el('p',{text:'Student profiles are pseudonymous. Keep your name-to-ID mapping in a school-controlled file. The roster export leaves names blank.'}))),
         el('div',{class:'stats'},stat(roster.length,'student profiles'),stat(active,'with active access'),stat(roster.length-active,'access ended')),
@@ -215,7 +253,7 @@ export function teacherProfiles(onClasses) {
             const {reports}=await api(base+'/progress');
             download('cs-games-class-progress.csv',csv([PROFILE_CSV_HEADER,...reports.flatMap(profileCsvRows)]));
           })),
-        selected),
+        rosterReport),
       el('details',{class:'more'},el('summary',{},'Manage this class',el('small',{text:'Archive, delete, support details'})),
         el('div',{class:'body'},
           !c.archived&&el('p',{class:'muted',text:'Archiving closes enrollment and ends student access. The class and its records are kept until the scheduled deletion date.'}),
@@ -233,6 +271,7 @@ export function teacherProfiles(onClasses) {
             el('p',{},'Class ID: ',el('code',{text:c.id}),' '),
             act('Copy class ID',()=>copy(c.id,status),'btn small')))));
     if(invites.has(c.id)&&!c.archived)showInvite(invites.get(c.id));
+    if(focus)panel.querySelector('h3')?.focus();
     loadPathwayStatus(c,pathwaySlot,active);
   }
   async function openStudentPreview(classId,slot){
@@ -245,21 +284,54 @@ export function teacherProfiles(onClasses) {
     slot.focus();
 
   }
-  async function showStudent(person,container,canAssess) {
+  async function showStudent(person,container,canAssess,{nodeId,returnButton}={}) {
     const session=currentTeacher();
-    const report=await api(person);
-    if(currentTeacher()!==session||!container.isConnected)return;
+    const loading=el('p',{role:'status',text:'Loading student evidence…'});
+    put(container,loading);
+    let report;
+    try {
+      report=await api(person);
+    } catch(error) {
+      if(loading.isConnected&&currentTeacher()===session) {
+        put(container,returnButton,el('p',{role:'alert',text:error.message}));
+        returnButton?.focus();
+      }
+      return;
+    }
+    if(currentTeacher()!==session||!loading.isConnected)return;
+    const heading=el('h3',{id:'profile-skill-title',tabindex:-1});
+    const summary=el('div');
     const results=el('div');
     function renderReport(data){
+      if(nodeId){
+        const node=data.pathway?.nodes.find(item=>item.id===nodeId);
+        const count=node?.practiceProgress;
+        const official=node?.checkpoint?.score;
+        const reviews=data.verifiedEvidence?.filter(item=>item.kind==='assessment'&&item.nodeIds.includes(nodeId))??[];
+        const attempts=data.attempts?.filter(item=>item.dimensions?.some(row=>row.scope==='node'&&row.id===nodeId))??[];
+        heading.textContent=(node?.title??'Skill record')+' · '+data.id;
+        put(summary,
+          el('p',{},el('strong',{text:'Teacher-reviewed score'}),' · '+(official==null?'No assessment recorded':official+'/4')),
+          el('p',{text:count&&count.attempted ? count.correct+'/'+count.attempted+' first-try responses correct' : 'No recorded first attempts for this skill.'}),
+          reviews.length&&el('details',{},el('summary',{text:'Assessment history for this skill'}),table(['Date','Score','Evidence type'],reviews.map(item=>[
+            formatWhen(Date.parse(item.timestamp)),item.score+'/4',DEMONSTRATION_TYPES[item.demonstrationType]??'Unspecified'
+          ]),'Teacher assessments')),
+          attempts.length&&el('details',{},el('summary',{text:'Recent first attempts for this skill'}),table(['Date','Result'],attempts.map(item=>[
+            formatWhen(item.occurred),item.correct?'Correct':'Incorrect'
+          ]),'First attempts among the latest 100 practice records')));
+      }
       put(results,el('p',{class:'muted',text:data.classTitle+' · '+courseLabel(data.courseId)}),
         renderProfileProgress(data),el('div',{class:'actions'},act('Download student CSV',()=>download('cs-games-profile.csv',profileCsv(data)))),
         data.pathway?renderPathway(data.pathway):el('p',{class:'banner info',text:'Publish a class pathway to view checkpoint progress and record mastery.'}));
     }
     renderReport(report);
-    put(container,results);
+    put(container,nodeId?el('section',{class:'card accent','aria-labelledby':heading.id},returnButton,heading,summary):null);
+    if(nodeId)heading.focus();
     let pathway=report.pathway;
-    if (!canAssess || !pathway?.nodes.length) return;
-    const skill=el('select',{required:true},options(pathway.nodes.map(node=>[node.id,node.title])));
+    const assessmentSkills=()=>pathway?.nodes.filter(node=>!nodeId||node.id===nodeId)??[];
+    if (!canAssess || !assessmentSkills().length) {container.append(results);return;}
+    const skillChoices=()=>options(assessmentSkills().map(node=>[node.id,node.title]));
+    const skill=el('select',{required:true},skillChoices());
     const score=el('input',{type:'number',required:true,min:0,max:4,step:0.5});
     const type=el('select',{},options([['','Choose an evidence type (optional)'],...Object.entries(DEMONSTRATION_TYPES)]));
     const award=el('input',{type:'checkbox'});
@@ -299,8 +371,8 @@ export function teacherProfiles(onClasses) {
           if(currentTeacher()!==session||!form.isConnected)return;
           renderReport(fresh);
           pathway=fresh.pathway;
-          if(!pathway?.nodes.length){form.remove();return;}
-          skill.replaceChildren(...options(pathway.nodes.map(node=>[node.id,node.title])));
+          if(!assessmentSkills().length){form.remove();return;}
+          skill.replaceChildren(...skillChoices());
           if(pathway.nodes.some(node=>node.id===values.nodeId))skill.value=values.nodeId;
         } catch {
           assessmentStatus.textContent='Assessment recorded. Open View progress again to refresh the report.';
@@ -319,7 +391,8 @@ export function teacherProfiles(onClasses) {
         }
       }
     };
-    container.append(form);
+    if(nodeId)container.append(form,results);
+    else container.append(results,form);
   }
   root.append(
     el('div',{class:'card-head'},el('div',{},el('h2',{text:'My Classes'}),el('p',{text:'Choose a class to see its status, open its learning pathway, and manage student profiles.'})),

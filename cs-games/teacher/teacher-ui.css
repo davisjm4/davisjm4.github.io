@@ -287,3 +287,17 @@ footer.footer .wrap { padding: 0 24px; }
 .tt button.class-card:hover { border-color: var(--accent); }
 
 .page-head > .account { flex: 0 0 auto; }
+
+/* Class practice comparison uses an area matrix and a one-skill table on smaller layouts. */
+#class-progress { min-width: 0; scroll-margin-top: 5rem; }
+.evidence-cell { display: grid; gap: .35rem; min-width: 8rem; justify-items: start; }
+.evidence-cell small { color: var(--muted); }
+.evidence-list { display: none; }
+.evidence-matrix :is(th, td):first-child { white-space: nowrap; }
+#class-progress :is(th, td) { overflow-wrap: anywhere; }
+@media (max-width: 720px) {
+  .evidence-matrix { display: none; }
+  .evidence-list { display: block; }
+  .evidence-list :is(th, td) { padding-inline: .5rem; }
+  .evidence-cell { min-width: 0; }
+}
