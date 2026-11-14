@@ -1,0 +1,35 @@
+.session-skip { position: absolute; transform: translateY(-200%); }
+.session-skip:focus { transform: none; background: var(--bg); padding: .5rem; z-index: 2; }
+.session-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-block: 1rem; }
+.session-actions > a { display: inline-flex; align-items: center; min-height: 44px; }
+.session-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: clamp(.75rem, 2vw, 1.5rem); margin-block: 1rem; }
+.session-card h3 { margin-top: 0; }
+.session-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: .75rem; }
+.session-metrics dd { font-size: 1.35rem; font-weight: 700; margin: 0; }
+.session-metrics dt { color: var(--muted); }
+.session-table { width: 100%; border-collapse: collapse; table-layout: fixed; overflow-wrap: anywhere; }
+.session-table caption { text-align: left; font-weight: 700; padding-block: .5rem; }
+.session-table th, .session-table td { border-bottom: 1px solid var(--line); text-align: left; padding: .4rem; }
+.session-table th:first-child { width: 39%; }
+.session-print-fields { display: flex; flex-wrap: wrap; gap: .75rem; margin-block: .5rem; }
+.session-print-fields label { display: grid; }
+.session-print-fields input, #course-filter { min-height: 44px; max-width: 100%; padding: .35rem; }
+#course-choice label { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; }
+#reset-session { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.session-dialog { max-width: min(30rem, 90vw); background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 1rem; }
+.print-only { display: none; }
+@media print {
+  :root { color-scheme: light; }
+  body { background: white; color: black; font-size: 11pt; }
+  .screen-only, .site-header, .session-skip, .session-dialog { display: none !important; }
+  .print-only { display: block; }
+  .wrap { padding: 0; max-width: none; }
+  .session-card { background: white; border-color: #aaa; }
+  .session-metrics dt { color: #333; }
+  .session-table th, .session-table td { border-color: #aaa; }
+  .session-table tr { break-inside: avoid; }
+}
+.session-actions button { min-height: 44px; font: inherit; cursor: pointer; }
+#today .session-actions .button { padding: .5rem .85rem; }
+.session-print-fields input, #course-filter { font: inherit; background: var(--bg); border: 1px solid var(--line); border-radius: .4rem; }
+.session-dialog::backdrop { background: rgb(0 0 0 / 65%); }
