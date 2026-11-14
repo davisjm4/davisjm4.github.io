@@ -1,5 +1,5 @@
 /* Loop Lab — Chromium browser test (puppeteer-core).
- * Serves a temporary site root containing ../style.css and ../session.js from the repo's java-games folder.
+ * Serves the checkout so shared navigation, profile and session modules load as they do in production.
  * Usage: JAVA_GAMES_DIR=/path/to/repo/java-games CHROME_PATH=/path/to/chrome node tests/browser.test.mjs
  *        (PUPPETEER_CORE_PATH may point at a puppeteer-core install if it is not resolvable.)
  */
@@ -20,22 +20,10 @@ const chrome = chromeCandidates.find((c) => { try { return fs.existsSync(c); } c
 if (!chrome) { console.log("SKIPPED: no Chrome/Chromium found (set CHROME_PATH)."); process.exit(0); }
 for (const f of ["style.css", "session.js"]) if (!fs.existsSync(path.join(gamesDir, f))) { console.log(`SKIPPED: ${f} not found in ${gamesDir} (set JAVA_GAMES_DIR to the repo's java-games folder).`); process.exit(0); }
 
-// temp site: /java-games/{style.css,session.js,loop-lab/...}
-const root = fs.mkdtempSync(path.join(os.tmpdir(), "loop-site-")), jg = path.join(root, "java-games");
-fs.mkdirSync(jg, { recursive: true });
-for (const f of ["style.css", "session.js"]) fs.copyFileSync(path.join(gamesDir, f), path.join(jg, f));
-// java-games/style.css imports the site-wide /csp-games/style.css; copy it when the repo has it
-const siteCss = path.join(gamesDir, "..", "csp-games", "style.css");
-if (fs.existsSync(siteCss)) { fs.mkdirSync(path.join(root, "csp-games"), { recursive: true }); fs.copyFileSync(siteCss, path.join(root, "csp-games", "style.css")); }
-fs.cpSync(lab, path.join(jg, "loop-lab"), { recursive: true, filter: (src) => !/node_modules|\/reports|\/legacy/.test(src) });
-const navigationCss = path.join(gamesDir, "..", "cs-games", "navigation.css");
-if (fs.existsSync(navigationCss)) {
-  fs.mkdirSync(path.join(root, "cs-games"), { recursive: true });
-  fs.copyFileSync(navigationCss, path.join(root, "cs-games", "navigation.css"));
-}
+const root = path.resolve(gamesDir, "..");
 const types = { ".html": "text/html", ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css", ".json": "application/json" };
 const server = http.createServer((req, res) => { const u = decodeURIComponent(new URL(req.url, "http://x").pathname); let f = path.join(root, u); if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, "index.html"); if (!fs.existsSync(f)) { res.writeHead(404); return res.end("nf"); } res.writeHead(200, { "content-type": types[path.extname(f)] || "application/octet-stream" }); fs.createReadStream(f).pipe(res); });
-await new Promise((r) => server.listen(0, r));
+await new Promise((r) => server.listen(0, "127.0.0.1", r));
 const base = `http://127.0.0.1:${server.address().port}/java-games/loop-lab/`;
 let checks = 0; const ok = (v, m) => { assert.ok(v, m); checks++; };
 const browser = await puppeteer.launch({ executablePath: chrome, headless: true, args: ["--no-sandbox"] });
@@ -60,13 +48,14 @@ try {
   ok((await page.$$eval("#difficulty option", (os) => os.length)) === 3, "three difficulty options");
   ok(await page.$("a[data-session-link]"), "Session Summary link present");
   const sessionSubs = () => page.evaluate(() => { const s = JSON.parse(localStorage.getItem("javaGames.session.v1") || "null"); return s?.games?.["loop-lab"] || null; });
-  const q = () => page.evaluate(() => { const c = window.__loopLab.q; return { prompt: c.prompt, answer: c.answer, choices: c.choices, mode: c.mode, difficulty: c.difficulty, code: c.code, scenario: c.scenario, example: c.example?.code, choiceFormat: c.choiceFormat }; });
+  const q = () => page.evaluate(() => { const c = window.__loopLab.q; return { prompt: c.prompt, answer: c.answer, choices: c.choices, mode: c.mode, difficulty: c.difficulty, code: c.code, scenario: c.scenario, example: c.example?.code, choiceFormat: c.choiceFormat, modeName: c.modeName, difficultyName: c.difficultyName, targetKind: c.targetKind }; });
   // every mode × difficulty renders correctly
   for (const mode of modeOpts) for (const d of ["beginner", "intermediate", "advanced"]) {
     await page.select("#difficulty", d); await page.select("#mode", mode);
     const cur = await q();
     if (mode !== "mixed") ok(cur.mode === mode, `${mode}: rendered challenge belongs to mode`);
     ok(cur.difficulty === d || !["algorithms", "executions", "looptype"].includes(mode), "difficulty honored");
+    ok(await page.$eval(".challenge-meta", (el) => el.textContent) === `${cur.modeName} · ${cur.difficultyName}`, "header shows only the mode and difficulty");
     if (cur.mode === "looptype") {
       ok(await page.$eval("#loop-scenario", (e) => e.textContent) === cur.scenario, "scenario shown verbatim");
       ok(!(await page.$(".loop-snippet")), "worked example stays hidden before submission");
@@ -80,6 +69,13 @@ try {
     ok(JSON.stringify(radios.map((r) => r.text)) === JSON.stringify(cur.choices), "choice text matches");
     ok(await page.$eval("#check", (b) => b.disabled), "Check disabled before selection");
   }
+  await page.select("#mode", "algorithms");
+  for (let i = 0; i < 50 && (await q()).targetKind !== "select-statement"; i++) await press("#next");
+  const blank = await q();
+  ok(blank.targetKind === "select-statement", "found a select-statement question");
+  const displayed = await page.$eval(".loop-snippet code", (element) => element.textContent);
+  ok((displayed.match(/_{4,}/g) || []).length === 1, "exactly one blank in displayed Java");
+  ok(!displayed.includes(blank.answer), "missing statement is hidden");
   // wrong answer: one scored attempt, lock, misconception note, trace
   await page.select("#mode", "executions"); await page.select("#difficulty", "beginner");
   for (let i = 0; i < 30 && !(await page.evaluate(() => !!window.__loopLab.q.trace)); i++) await press("#new");
@@ -144,7 +140,7 @@ try {
   const reloaded = await sessionSubs();
   ok(reloaded.submissions === totals.submissions && reloaded.firstTry === totals.firstTry, "session totals persist across reload");
   ok(errors.length === 0, "no page errors, console errors, or failed requests: " + errors.join(" | "));
-} finally { await browser.close(); server.close(); fs.rmSync(root, { recursive: true, force: true }); }
+} finally { await browser.close(); server.close(); }
 const v = (await import("node:child_process")).execFileSync(chrome, ["--version"], { encoding: "utf8" }).trim();
 fs.mkdirSync(path.join(lab, "reports"), { recursive: true });
 fs.writeFileSync(path.join(lab, "reports/browser-results.json"), JSON.stringify({ browser: v, checks }, null, 1));

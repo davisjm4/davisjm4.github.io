@@ -1,8 +1,8 @@
 /* The eight original Loop Lab modes, rebuilt procedurally. Every legacy variant id
  * is preserved (and now parameterized by difficulty); new structural variants are added. */
 import { J, P, V, N, lvl, range, clone, findTag, run, stmtText, loopCountExtras } from "./fam-util.js?v=loop-expansion-v2";
-import { mutate, GenReject, evaluate } from "./questions.js?v=loop-expansion-v2";
-import { tag, mark, printProgram, exprStr, walk } from "./java-model.js?v=loop-expansion-v2";
+import { mutate, GenReject, evaluate } from "./questions.js?v=loop-quality-v1";
+import { tag, mark, printProgram, exprStr, walk } from "./java-model.js?v=loop-quality-v1";
 import { applyVariety } from "./variety.js?v=loop-expansion-v2";
 
 const vname = (rng) => rng.pick(["i", "k", "n", "x", "step", "index"]);
@@ -193,7 +193,8 @@ const components = {
       case "inner-update": case "outer-condition": {
         const R = rng.int(2, 5), C = rng.int(2, 5);
         program = P([J.decl("int", acc, N(0)), tag(J.forL(J.decl("int", "row", N(0)), J.lt(V("row"), N(R)), J.inc("row"), [J.forL(J.decl("int", "col", N(0)), J.le(V("col"), N(C)), J.op("col", "+=", N(dl)), [J.inc(acc)])]), "main")]);
-        const parts = { oc: `row < ${R}`, ou: "row++", ic: `col <= ${C}`, iu: frag(updStmt("col", dl)), b: `${acc}++;` };
+        const innerUpd = J.op("col", "+=", N(dl)); // same node the printed inner header uses, so the keyed text is the displayed text
+        const parts = { oc: `row < ${R}`, ou: "row++", ic: `col <= ${C}`, iu: frag(innerUpd), b: `${acc}++;` };
         const want = variant === "inner-update" ? "iu" : "oc";
         prompt = want === "iu" ? "Select the update of the inner loop's control variable." : "Select the condition that decides whether the outer loop runs again.";
         answer = parts[want]; distractors = rng.shuffle(Object.entries(parts).filter(([k]) => k !== want)).slice(0, 3).map(([k, x]) => ({ choice: x, misconception: `role-${k}` }));
@@ -328,7 +329,7 @@ const nestedF = {
       default: throw new GenReject("variant " + variant);
     }
     return {
-      program, target, concept, template: variant, prompt: target.kind === "output" ? "What does the program print?" : target.kind === "vars" ? `What are the final values of ${target.names.join(" and ")}?` : variant === "triangular" ? "How many times does count++ execute?" : `What is the final value of ${target.name}?`, params: { variant, R, C },
+      program, target, concept, template: variant, prompt: target.kind === "output" ? "What does the program print?" : target.kind === "vars" ? `What are the final values of ${target.names.join(" and ")}?` : variant === "triangular" ? "How many times does the statement that adds 1 to count execute?" : `What is the final value of ${target.name}?`, params: { variant, R, C },
       traceLoop: "main", traceVars: ["row", ...(target.name ? [target.name] : target.names || [])],
       mutants: [...extraNested, { misconception: "boundary", program: mutate.edit(program, (q) => { const f = findTag(q, "inner"); f.c.op = { "<": "<=", "<=": "<=", ">": ">=", "==": "==" }[f.c.op] || f.c.op; findTag(q, "main").c.op = "<="; }) }, { misconception: "ignore-inner", program: mutate.edit(program, (q) => { const f = findTag(q, "inner"); f.c = J.lt(V("col"), J.add(f.init.e.t === "num" ? N(f.init.e.v) : f.init.e, N(1))); }) }, { misconception: "outer-times-inner-max", program: mutate.edit(program, (q) => { const f = findTag(q, "inner"); if (JSON.stringify(f.c).includes('"row"') || JSON.stringify(f.init).includes('"row"')) { f.c = J.lt(V("col"), N(R)); f.init.e = N(0); } else return false; }) }, { misconception: "boundary", program: mutate.boundary(program, "inner") }, { misconception: "boundary", program: mutate.boundary(program, "main") }, { misconception: "ignore-break", program: mutate.removeAll(program, "break") }, { misconception: "ignore-condition", program: mutate.ifAlways(program, "test") }],
       explain: (ans) => `The inner loop restarts for each of the ${R} outer iterations (row = 0..${R - 1}). Add up the inner work for each outer iteration: ${ans}.`,

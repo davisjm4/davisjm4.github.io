@@ -62,6 +62,8 @@ node tests/engine.test.mjs 1200 300           # correctness: per-cell counts for
 node tests/diversity.test.mjs 1000 300 5      # exact vs structural variation, sessions
 node tests/jvm.test.mjs 40 60                 # needs a JDK 17+ (JAVA_HOME) with jdk.compiler
 node tests/loop-types.test.mjs               # design rules, sessions, and runnable examples
+node tests/quality-repair.test.mjs 300        # answer exposure, header labels, displayed-text consistency, distractor ranks
+node tests/displayed-code-jvm.test.mjs 40     # compiles and runs the DISPLAYED code and checks the keyed answer (needs jdk.compiler)
 JAVA_GAMES_DIR=../ CHROME_PATH=/path/to/chrome node tests/browser.test.mjs   # needs puppeteer-core
 ```
 

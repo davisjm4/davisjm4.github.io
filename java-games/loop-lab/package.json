@@ -11,6 +11,8 @@
     "test:diversity": "node tests/diversity.test.mjs",
     "test:jvm": "node tests/jvm.test.mjs",
     "test:browser": "node tests/browser.test.mjs",
+    "test:quality-repair": "node tests/quality-repair.test.mjs",
+    "test:displayed-jvm": "node tests/displayed-code-jvm.test.mjs",
     "reports": "node tools/gen-reports.mjs"
   },
   "devDependencies": { "puppeteer-core": "^23.0.0" },

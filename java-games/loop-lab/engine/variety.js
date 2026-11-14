@@ -1,7 +1,7 @@
 /* Structural variation for the original modes. Decisions are made once per challenge and
  * applied identically to the program and every misconception mutant, so answers and
  * distractors stay consistent. */
-import { J, finalize, clone, walk, walkExpr } from "./java-model.js?v=loop-expansion-v2";
+import { J, finalize, clone, walk, walkExpr } from "./java-model.js?v=loop-quality-v1";
 
 const POOLS = {
   count: ["count", "tally", "hits", "matches"], total: ["total", "sum", "result", "acc"], product: ["product", "prod", "value"],
