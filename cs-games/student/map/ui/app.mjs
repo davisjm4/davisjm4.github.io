@@ -15,6 +15,7 @@ import { renderCourseMap } from './course-map.mjs';
 import { el } from './dom.mjs';
 import { renderListView } from './list-view.mjs';
 import { createPanelPlaceholder, createProgressPanel } from './progress-panel.mjs?v=guest-map-v1';
+import { createSkillSearch } from './search.mjs';
 import { createStage } from './stage.mjs';
 
 export function mountStudentMap(container, options) {
@@ -25,6 +26,12 @@ export function mountStudentMap(container, options) {
   let overrides = { progress: new Map(), attempts: {} };
   let deltas = new Map();
   let model, route = hashRouting ? readRoute() : { view: 'course', stopId: null, nodeId: null, layout: 'map' };
+  const searchStorageKey = () => 'cs-games:skill-search:' + (input.classId ?? 'guest') + ':' + input.courseId;
+  function restoreQuery() {
+    if (!input.guest && !input.classId) return '';
+    try { return sessionStorage.getItem(searchStorageKey()) ?? ''; } catch { return ''; }
+  }
+  let searchQuery = restoreQuery();
   let stageCtl = null, zoomLevel = 1, resizeObserver = null, lastStopId = null, destroyed = false;
   const restartIds = new Map();   // one request id per attempt, reused on retry, so a repeated click cannot start two attempts
   const live = el('p', { class: 'sr-only', role: 'status', 'aria-live': 'polite' });
@@ -114,10 +121,17 @@ export function mountStudentMap(container, options) {
       }
     },
   });
+  function showSearchSkill(node) {
+    lastStopId = node.stopId;
+    go({ view: 'area', stopId: node.stopId, nodeId: node.id }, { focus: 'panel' });
+  }
+
   function addReturnLinks(container) {
     if (!input.guest && !input.classId) return;
     for (const link of container.querySelectorAll('a[data-action^="practice"], a[data-action="mixed"]')) {
-      link.href = withPracticeReturn(link.href, { origin: location.origin, course: model.courseId, classId: input.classId, route });
+      const node = link.dataset.returnSkill ? findNode(model, link.dataset.returnSkill) : null;
+      const destination = node ? { ...route, view: 'area', stopId: node.stopId, nodeId: node.id } : route;
+      link.href = withPracticeReturn(link.href, { origin: location.origin, course: model.courseId, classId: input.classId, route: destination });
     }
   }
 
@@ -193,7 +207,18 @@ export function mountStudentMap(container, options) {
     const main = el('div', { class: 'map-main' });
     const side = el('aside', { class: 'map-side', 'aria-label': 'Skill progress' });
     const showSide = route.view === 'area' || route.nodeId;
-    root.replaceChildren(live, header, meta, el('div', { class: 'map-tools' }, toolbar, createLegend({ dated })), el('div', { class: 'map-body', 'data-side': showSide ? 'true' : 'false' }, main, showSide ? side : null));
+    const search = createSkillSearch(model, {
+      layout: route.layout, query: searchQuery, onShow: showSearchSkill,
+      onPractice: info => adapter.onPractice?.(info),
+      onQuery(query, results) {
+        searchQuery = query;
+        if (input.guest || input.classId) {
+          try { sessionStorage.setItem(searchStorageKey(), query); } catch { /* Search still works in this view. */ }
+        }
+        addReturnLinks(results);
+      },
+    });
+    root.replaceChildren(live, header, el('div', { class: 'map-tools' }, toolbar, createLegend({ dated })), search, meta, el('div', { class: 'map-body', 'data-side': showSide ? 'true' : 'false' }, main, showSide ? side : null));
 
     if (route.layout === 'map') {
       stageCtl = createStage({ label: stop ? `${stop.title} skill map` : `${model.courseTitle} course map`, onZoomChange: (z) => { zoomLevel = z; root.dataset.zoom = String(z); } });
@@ -217,6 +242,7 @@ export function mountStudentMap(container, options) {
     // Focus management: say where the student landed, and give focus back where they came from.
     if (focus === 'heading') root.querySelector('#map-heading')?.focus({ preventScroll: false });
     else if (focus === 'layout') root.querySelector('[data-layout][aria-pressed="true"]')?.focus({ preventScroll: true });
+    else if (focus === 'none' && focused?.id === 'map-skill-search') root.querySelector('#map-skill-search')?.focus({ preventScroll: true });
     else if (keepLayout) root.querySelector('[data-layout][aria-pressed="true"]')?.focus({preventScroll:true});
     else if (keepSkill&&!keepPanel) focusItem(keepSkill);
     else if (keepStop) root.querySelector(`button[data-stop-id="${CSS.escape(keepStop)}"]`)?.focus({preventScroll:true});
@@ -263,7 +289,10 @@ export function mountStudentMap(container, options) {
       input = { ...input, ...patch };
       if (label !== null) options.highlightLabel = label;
       overrides = { progress: new Map(), attempts: {} };
-      if (courseChanged) route = { view: 'course', stopId: null, nodeId: null, layout: route.layout };
+      if (courseChanged) {
+        searchQuery = restoreQuery();
+        route = { view: 'course', stopId: null, nodeId: null, layout: route.layout };
+      }
       deltas = new Map();
       if (highlight) {
         const next = buildMapModel(effectiveInput());

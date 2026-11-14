@@ -17,6 +17,7 @@ const hub=doc('cs-games/index.html');
 assert.equal(hub.querySelectorAll('.course-card').length,4);
 for(const url of ['/cs-games/csp/','/cs-games/advanced/','/wpr-games/workplace-readiness/','/cs-games/robotics/'])assert.ok(has(hub,'cs-games/index.html',url),url);
 assert.ok(hub.querySelector('#shared-tools a[href="/wpr-games/raceces/"]'));
+for(const course of ['advanced','csp','robotics','workplace'])assert.ok(hub.querySelector('.course-card a[href="./student/guest/?course='+course+'"]'));
 for(const course of ['csp','advanced','robotics']){
  const page=`cs-games/${course}/index.html`;const d=doc(page);
  assert.ok(has(d,page,'/cs-games/'));assert.ok(has(d,page,'/wpr-games/raceces/'));

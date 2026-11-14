@@ -247,3 +247,16 @@ h3 { font-size: 1.2rem; margin: 8px 0; }
 /* Keep the new three-pathway cards within narrow viewports. */
 .course-card { min-width: 0; }
 .course-card h2, .shared-tools h2 { overflow-wrap: anywhere; }
+
+.course-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+
+.student-nav-menu > summary { display: none; }
+.student-nav-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+.student-nav-links [aria-current="page"] { color: var(--accent); }
+@media (max-width: 560px) {
+  [data-student-navigation] .brand { width: auto; margin-right: auto; }
+  .student-nav-menu > summary { display: grid; place-items: center; min-height: 44px; padding: 0.25rem 0.75rem; cursor: pointer; }
+  .student-nav-menu[open] { flex: 1 0 100%; }
+  .student-nav-links { gap: 0.25rem 1rem; }
+  .student-nav-links a { display: grid; align-items: center; min-height: 44px; }
+}
