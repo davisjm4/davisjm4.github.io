@@ -1,4 +1,4 @@
-import { createFocusLaunch, permitFocusQuestion, verifyFocusLaunch } from './focus-launch.mjs';
+import { createFocusLaunch, permitFocusQuestion, purgeFocusLaunches, verifyFocusLaunch } from './focus-launch.mjs';
 import { focusEnabled, prepareFocusPreview, publishLearningFocus, readTeacherFocus, readStudentFocus, endLearningFocus, releaseFocusGrants, confirmFocusCompletion } from './learning-focus.mjs';
 import { pathwayRoute } from './pathways.mjs';
 import { validateSnapshot, publicAssignment, dimensions, answerReport, grade, MIN_CLASS, RETENTION_DAYS } from '../online/model.mjs';
@@ -212,7 +212,7 @@ export default {
     await env.DB.prepare('DELETE FROM assignments WHERE expires<=?').bind(now).run();
     await env.DB.prepare('DELETE FROM receipts WHERE finished IS NULL AND created<?').bind(now-DAY).run();
     await env.DB.prepare('DELETE FROM teacher_sessions WHERE expires<=?').bind(now).run();
-    if (focusEnabled(env)) await env.DB.prepare('DELETE FROM learning_focus_launches WHERE expires<=?').bind(now).run();
+    if (focusEnabled(env)) await purgeFocusLaunches(env.DB,now);
     if (profilesEnabled(env) || env.PROFILE_SCHEMA_INSTALLED==='1') await purgeProfiles(env.DB,now);
   }
 };

@@ -12,6 +12,7 @@ const first = (db,sql,...args) => db.prepare(sql).bind(...args).first();
 const launchId = value => typeof value==='string' && PROFILE_ID.test(value);
 const launchLifetime = 7*DAY;
 const pageOrigin = 'https://cs-games.invalid';
+const questionPermitActivities = new Set(['loop-lab','math-lab']);
 
 function resolveDestination(pathway, input) {
   const scope = pathway.nodes.filter(node=>input.nodeId ? node.id===input.nodeId : node.areaId===input.areaId);
@@ -104,7 +105,7 @@ export async function verifyFocusLaunch(env,request,id,now) {
 export async function permitFocusQuestion(env,request,id,input,now) {
   const {launch,profile}=await checkFocusLaunch(env,request,id,now);
   const mode=new URL(launch.destination,pageOrigin).searchParams.get('mode');
-  if(launch.activity!=='loop-lab'||!mode||!launchId(input?.questionId)||input.mode!==mode)
+  if(!questionPermitActivities.has(launch.activity)||!mode||!launchId(input?.questionId)||input.mode!==mode)
     fail(403,'This question does not match your verified class activity.');
   const db=env.DB;
   const result=await db.prepare(`INSERT OR IGNORE INTO learning_focus_questions(launch_id,question_id,mode)
@@ -123,20 +124,21 @@ export async function permitFocusQuestion(env,request,id,input,now) {
 }
 
 export async function verifyFocusEvidence(env,profile,event,token,now) {
-  if(!token)return false;
-  const launch=await readLaunch(env.DB,profile,token,now);
-  if(!launch||event.occurred<launch.created-60000||event.occurred>launch.expires) return false;
+  if(!launchId(token))return false;
+  const launch=await first(env.DB,'SELECT * FROM learning_focus_launches WHERE id=? AND profile_id=? AND generation=?',
+    token,profile.id,profile.generation);
+  if(!launch||event.occurred<launch.created-60000)return false;
   const supported=launch.activity===event.activity ||
     (launch.activity==='workplace-readiness'&&event.activity==='workplace-readiness-games');
   if(!supported || (event.pathway!==profile.course_id&&!(profile.course_id==='workplace'&&event.pathway==='workplace-readiness')))return false;
   const selectedMode=new URL(launch.destination,pageOrigin).searchParams.get('mode');
   let permittedQuestion=false;
-  if(launch.activity==='loop-lab'){
+  if(questionPermitActivities.has(launch.activity)){
     if(event.data.attempt!==1 || event.data.mode!==selectedMode || (selectedMode!=='mixed'&&event.data.assessedMode!==selectedMode))return false;
     permittedQuestion=Boolean(await first(env.DB,'SELECT 1 FROM learning_focus_questions WHERE launch_id=? AND question_id=? AND mode=?',
       token,event.data.questionId,selectedMode));
     if(!permittedQuestion)return false;
-  }
+  } else if(launch.expires<=now||event.occurred>launch.expires) return false;
   const nodeIds=new Set(JSON.parse(launch.node_ids));
   const measured=event.data.dimensions.filter(row=>row.scope==='node');
   const measuredIds=event.pathway==='workplace-readiness' ?
@@ -150,6 +152,18 @@ export async function verifyFocusEvidence(env,profile,event,token,now) {
   const relevant=measuredIds.length?measuredIds:[...nodeIds];
   if(!permittedQuestion&&work.grants.length&&relevant.some(id=>!work.allowed.some(d=>d.nodeId===id&&d.activityId===launch.activity)))return false;
   return {launch,measuredIds:measuredIds.filter(id=>nodeIds.has(id))};
+}
+
+// Launch expiry prevents new questions. Keep a previously issued unanswered
+// permit through class retention so reconnecting after expiry can still sync.
+export async function purgeFocusLaunches(db,now) {
+  await db.prepare(`DELETE FROM learning_focus_launches AS l WHERE l.expires<=?
+    AND NOT EXISTS (
+      SELECT 1 FROM learning_focus_questions q WHERE q.launch_id=l.id AND NOT EXISTS (
+        SELECT 1 FROM performance_events e WHERE e.profile=l.profile_id AND e.id=q.question_id||':1'
+          AND json_extract(e.data,'$.classLaunchId')=l.id
+      )
+    )`).bind(now).run();
 }
 
 export async function advanceFocus(db,profileId,assignment,state,now) {

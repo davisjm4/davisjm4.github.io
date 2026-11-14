@@ -157,3 +157,77 @@ test('teacher assigns catch-up and classwork, student practices, teacher release
   await student.waitForSelector(work+' article',{visible:true});
   assert.doesNotMatch(await student.$eval(work,node=>node.textContent),/Class practice follows your active assignments/);
 });
+
+test('Math Lab checks actual mode and retains an authorized response after access changes', {timeout:90000}, async t=>{
+  const dev=await startDev({teacherTokens:{teacher:teacherKey},pathwayAdapters:{ENABLE_TEACHER_DIRECTED_LEARNING:'1'}});
+  const browser=await launch();
+  t.after(async()=>{await browser.close();await new Promise(resolve=>dev.server.close(resolve));dev.db.close();});
+  async function call(path,body,token=teacherKey){
+    const response=await fetch(dev.url+'/api/wpr'+path,{
+      method:body===undefined?'GET':'POST',
+      headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},
+      body:body===undefined?undefined:JSON.stringify(body),
+    });
+    const data=await response.json();
+    assert.equal(response.status,200,JSON.stringify(data));
+    return data;
+  }
+  const room=await call('/teacher/profiles',{title:'Synthetic Math Lab class',courseId:'advanced'});
+  const learner=await call('/profile/enroll',{invite:room.invite},'');
+  const path='/teacher/learning-focus/'+room.id;
+  const nodeId='node:advanced:math-lab:modulus';
+  async function assign(id,mode) {
+    const assignment={scope:'individual',mode,recipientIds:[learner.id],target:{kind:'skill',id}};
+    const {previewAt,previewSignature}=await call(path+'/preview',assignment);
+    return call(path+'/publish',{assignment,previewAt,previewSignature,requestId:crypto.randomUUID()});
+  }
+  const initial=await assign(nodeId,'restricted');
+  const verified=await call('/profile/class-launch',{
+    classId:room.id,nodeId,href:'/java-games/math-lab/?mode=modulus',assignmentId:initial.id,
+  },learner.token);
+  const page=await browser.newPage();
+  await page.evaluateOnNewDocument(profile=>localStorage.setItem('wrg.profile.active.v1',JSON.stringify(profile)),learner);
+  const url=new URL(dev.url+verified.destination);
+  url.searchParams.set('classLaunch',verified.id);
+  await page.goto(url.href);
+  await page.waitForSelector('#choices button',{visible:true});
+  const snapshot=()=>page.$eval('#stage',stage=>({
+    prompt:stage.querySelector('h2').textContent, code:stage.querySelector('pre')?.textContent,
+    choices:[...stage.querySelectorAll('#choices button')].map(button=>button.textContent),
+  }));
+  const before=await snapshot();
+  assert.equal(await page.$eval('#mode',mode=>mode.disabled),true);
+  await page.select('#mode','division');
+  await page.waitForFunction(()=>document.querySelector('#mode').value==='modulus');
+  await page.click('#choices button');
+  const selected=await page.$eval('#choices [aria-pressed=true]',button=>button.textContent);
+  await page.reload();
+  await page.waitForSelector('#choices [aria-pressed=true]',{visible:true});
+  assert.deepEqual(await snapshot(),before);
+  assert.equal(await page.$eval('#choices [aria-pressed=true]',button=>button.textContent),selected);
+
+  await assign('node:advanced:math-lab:division','restricted');
+  await call(path+'/end',{id:initial.id,revision:initial.revision,requestId:crypto.randomUUID()});
+  assert.deepEqual(await snapshot(),before);
+  await page.setOfflineMode(true);
+  await page.click('#check');
+  assert.ok(await page.evaluate(()=>Object.keys(localStorage).some(key=>key.includes('.outbox.'))));
+  await page.setOfflineMode(false);
+  await page.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
+  const records=dev.db.prepare("SELECT data FROM performance_events WHERE activity='math-lab'").all();
+  assert.equal(records.length,1);
+  assert.equal(JSON.parse(records[0].data).assessedMode,'modulus');
+  await page.click('#next');
+  await page.waitForFunction(()=>document.querySelector('#open-status').textContent.includes('access changed'));
+  assert.deepEqual(await snapshot(),before);
+  const tampered=new URL(url.href);
+  tampered.searchParams.set('mode','division');
+  await page.goto(tampered.href);
+  await page.waitForFunction(()=>document.querySelector('main').inert);
+  assert.equal(await page.$('#choices'),null);
+  await page.goto(dev.url+'/java-games/math-lab/?mode=division&learner=guest');
+  await page.waitForSelector('#choices button',{visible:true});
+  assert.equal(await page.$eval('#mode',mode=>mode.disabled),false);
+  await page.select('#mode','modulus');
+  assert.equal(await page.$eval('#mode',mode=>mode.value),'modulus');
+});

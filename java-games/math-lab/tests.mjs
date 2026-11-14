@@ -125,6 +125,7 @@ Object.defineProperty(window.HTMLSelectElement.prototype, "value", {
 let q;
 const listeners = {}, context = {
   document, window: { addEventListener: (event, handler) => { listeners[event] = handler; } },
+  classLaunchId: null, classQuestion: () => null,
   mathGame: M.mathGame, createDeck: () => {
     const d = M.createDeck(rng); return { next: mode => (q = d.next(mode)) };
   }, assess: M.assess, sessionTracker: () => tracker, addSessionNavigation: () => {},

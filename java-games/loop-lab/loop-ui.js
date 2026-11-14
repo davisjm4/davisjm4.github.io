@@ -1,5 +1,5 @@
-import { classLaunchId, classPracticeAccess, activeProfile, syncQueuedPractice } from '../../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
-import { request } from '../../wpr-games/workplace-readiness/online/config.mjs';
+import { classLaunchId, classPracticeAccess } from '../../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
+import { classQuestion, questionAccessMessage } from '../../cs-games/student/class-question.mjs';
 import { originalModeNames, newModeNames, loopTypeModeNames, DIFFICULTIES, DIFFICULTY_NAMES, createLoopSession, generateChallenge, assessLoop, distractorFor } from "./loop-engine.js?v=loop-types-v1";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=guest-map-v1";
 
@@ -17,17 +17,8 @@ function studentTraceHtml(st) {
 }
 
 export function startLoopLab(access=null) {
-  const fixedMode=access ? new URL(access.destination,location.origin).searchParams.get('mode') : null;
-  const token=activeProfile?.token;
-  const resumeKey=access ? 'cs-games:loop-question:'+activeProfile.id+':'+classLaunchId : null;
-  function readQuestion(){
-    if(!resumeKey)return null;
-    try{return JSON.parse(sessionStorage.getItem(resumeKey));}catch{return null;}
-  }
-  function saveQuestion(value){
-    if(!resumeKey)return;
-    try{if(value)sessionStorage.setItem(resumeKey,JSON.stringify(value));else sessionStorage.removeItem(resumeKey);}catch{}
-  }
+  const protectedQuestion = classQuestion(access, 'loop-lab');
+  const fixedMode = protectedQuestion?.mode;
   const $ = (id) => document.getElementById(id), tracker = sessionTracker();
   let seed;
   try { const a = new Uint32Array(1); crypto.getRandomValues(a); seed = a[0]; } catch { seed = Date.now() >>> 0; }
@@ -48,7 +39,7 @@ export function startLoopLab(access=null) {
     if(opening)return;
     if(fixedMode)$("mode").value=fixedMode;
     const advancing = Boolean(instance);
-    let saved=resume?readQuestion():null;
+    let saved=resume?protectedQuestion?.read():null;
     if(saved&&(saved.mode!==fixedMode||!DIFFICULTIES.includes(saved.difficulty)||!Number.isInteger(saved.seed)))saved=null;
     const draft=saved ? generateChallenge({mode:fixedMode,difficulty:saved.difficulty,seed:saved.seed}) :
       practice.next({mode:$("mode").value,difficulty:$("difficulty").value});
@@ -59,14 +50,9 @@ export function startLoopLab(access=null) {
       }
       opening=true;
       try{
-        const questionId=saved?.questionId??crypto.randomUUID();
-        if(!saved){
-          await syncQueuedPractice();
-          await request('/profile/class-launch/'+classLaunchId+'/question',{token,body:{questionId,mode:fixedMode}});
-          saved={questionId,mode:fixedMode,difficulty:draft.requestedDifficulty,seed:draft.seed,selected:null};
-        }
+        if (!saved) saved = { ...await protectedQuestion.open(), difficulty:draft.requestedDifficulty, seed:draft.seed };
       }catch(error){
-        $("open-status").textContent=error.status?error.message:'Reconnect to verify class access before opening another question.';
+        $("open-status").textContent=questionAccessMessage(error);
         return;
       }finally{opening=false;}
       $("open-status").textContent='';
@@ -78,7 +64,7 @@ export function startLoopLab(access=null) {
     closed=false;
     if(saved){
       saved.instance=instance;
-      saveQuestion(saved);
+      protectedQuestion.save(saved);
     }
     tracker.annotate(instance, { mode: q.mode, practiceSetting: $("mode").value, difficulty: q.difficulty, skill: q.concept, generatorFamily: q.reasoningFamily, seed: q.seed, ...(saved ? {classQuestionId:saved.questionId} : {}) });
     const blockChoices = q.choiceFormat === "code" || q.choiceFormat === "block";
@@ -90,7 +76,7 @@ ${q.scenario ? `<p id="loop-scenario">${esc(q.scenario)}</p>` : `<pre class="sni
     const chosen=buttons[q.choices.indexOf(selected)];
     if(chosen){setSelected(chosen);$("check").disabled=false;}
     buttons.forEach((b, i) => {
-      b.onclick = () => { if (closed) return; selected = q.choices[i]; if(saved)saveQuestion({...saved,selected}); setSelected(b); $("check").disabled = false; };
+      b.onclick = () => { if (closed) return; selected = q.choices[i]; if(saved)protectedQuestion.save({...saved,selected}); setSelected(b); $("check").disabled = false; };
       b.onkeydown = (e) => {
         const k = e.key; let j = null;
         if (k === "ArrowDown" || k === "ArrowRight") j = (i + 1) % buttons.length;
@@ -104,7 +90,7 @@ ${q.scenario ? `<p id="loop-scenario">${esc(q.scenario)}</p>` : `<pre class="sni
       const event = tracker.submit(instance, correct); if (!event.accepted) return;
       if (!correct) tracker.reveal(instance);
       closed = true;
-      saveQuestion(null);
+      protectedQuestion?.save(null);
       for (const b of $("stage").querySelectorAll("button")) if (b.id !== "next") b.disabled = true;
       buttons.forEach((b, i) => { b.classList.toggle("correct-answer", q.choices[i] === q.answer); b.classList.toggle("incorrect-answer", q.choices[i] === selected && selected !== q.answer); });
       const wrong = !correct ? distractorFor(q, selected) : null;

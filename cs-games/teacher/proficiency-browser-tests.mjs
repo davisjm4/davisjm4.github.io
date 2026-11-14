@@ -75,7 +75,7 @@ test('real Java and AP CSP answers reach the formative student map', {timeout:90
     answer:'#value-bank [data-value]',submit:'#check',mode:'trace',difficulty:'intermediate',
     node:'node:advanced:variable-lab:trace'
   },{
-    id:'array-lab',path:'/java-games/array-lab/?mode=mixed&difficulty=intermediate&seed=1',
+    id:'array-lab',path:'/java-games/array-lab/?mode=mixed&difficulty=intermediate&seed=20',
     answer:'#stage [data-answer]',submit:'#submit',mode:'reverse',difficulty:'intermediate',requestedMode:'mixed',
     evidenceRevision:'array-compose-v1',node:'node:advanced:array-lab:reverse'
   }]);
