@@ -165,7 +165,7 @@ export function printProgram(program, opts = {}) {
     }
     if (st.t === "if") {
       if (inst) out.push("    ".repeat(depth) + `__S[${st.id}]++;`);
-      if (st.inline && !inst && st.then.length === 1 && !st.els && ["set", "inc", "print", "break", "continue"].includes(st.then[0].t)) {
+      if (st.inline && !inst && st.then.length === 1 && !st.els && !(blank !== undefined && st.then[0].id === blank) && ["set", "inc", "print", "break", "continue"].includes(st.then[0].t)) {
         lines[st.then[0].id] = out.length + 1;
         emit(depth, `if (${cond(st)}) ${simpleStr(st.then[0])};`, st.mark ? st : { ...st, mark: st.then[0].mark }); return;
       }

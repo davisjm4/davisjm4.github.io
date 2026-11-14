@@ -13,6 +13,8 @@ const suites = [
   ["JVM verification", ["tests/jvm.test.mjs", ...(quick ? ["6", "15"] : ["40", "60"])]],
   ["Browser (Chromium)", ["tests/browser.test.mjs"]],
   ["Loop type decisions and Java examples", ["tests/loop-types.test.mjs"]],
+  ["Quality repair (answer exposure, labels, displayed text, distractor ranks)", ["tests/quality-repair.test.mjs", ...(quick ? ["150"] : ["300"])]],
+  ["Displayed-code JVM verification", ["tests/displayed-code-jvm.test.mjs", ...(quick ? ["15"] : ["40"])]],
 ];
 const dir = new URL("..", import.meta.url).pathname, results = [];
 let failed = 0;

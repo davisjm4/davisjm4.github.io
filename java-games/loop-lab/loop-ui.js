@@ -1,5 +1,6 @@
 import { advisoryCheckpoint } from "../../cs-games/student/advisory-practice.mjs";
-import { originalModeNames, newModeNames, loopTypeModeNames, DIFFICULTIES, DIFFICULTY_NAMES, createLoopSession, assessLoop, distractorFor } from "./loop-engine.js?v=loop-types-v1";
+import { originalModeNames, newModeNames, loopTypeModeNames, DIFFICULTIES, DIFFICULTY_NAMES, createLoopSession, assessLoop, distractorFor } from "./loop-engine.js?v=loop-quality-v1";
+import { challengeHeaderParts } from "./loop-header.js?v=loop-quality-v1";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=guest-map-v1";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -59,7 +60,7 @@ export function startLoopLab() {
     closed = false;
     tracker.annotate(instance, { mode: q.mode, practiceSetting: $("mode").value, difficulty: q.difficulty, skill: q.concept, generatorFamily: q.reasoningFamily, seed: q.seed });
     const blockChoices = q.choiceFormat === "code" || q.choiceFormat === "block";
-    $("stage").innerHTML = `<div class="challenge-meta">${esc(q.modeName)}${q.scenario ? "" : " · " + esc(q.variantName)} · ${esc(q.difficultyName)}</div><h2 id="prompt" tabindex="-1">${esc(q.prompt)}</h2>
+    $("stage").innerHTML = `<div class="challenge-meta">${challengeHeaderParts(q).map(esc).join(" · ")}</div><h2 id="prompt" tabindex="-1">${esc(q.prompt)}</h2>
 ${q.scenario ? `<p id="loop-scenario">${esc(q.scenario)}</p>` : `<pre class="snippet loop-snippet" tabindex="0" aria-label="Java code"><code>${esc(q.code)}</code></pre>`}${studentTraceHtml(q.studentTrace)}
 <div id="choices" class="loop-choices${blockChoices ? " block-choices" : ""}" role="radiogroup" aria-labelledby="prompt"${q.scenario ? ' aria-describedby="loop-scenario"' : ""}>${q.choices.map((c, i) => `<button type="button" class="secondary loop-choice${q.choiceFormat === "code" ? " code-choice" : ""}" role="radio" aria-checked="false" tabindex="${i === 0 ? 0 : -1}" data-index="${i}"><span class="choice-text">${esc(c)}</span></button>`).join("")}</div>
 <div class="actions"><button id="check" disabled>Check Answer</button><button id="next" class="secondary">Next Challenge</button></div><div id="feedback" class="feedback" role="status" tabindex="-1" hidden></div>`;
