@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { startDev } from '../../../wpr-games/workplace-readiness/service/dev.mjs';
+import { purgeFocusLaunches } from '../../../wpr-games/workplace-readiness/service/focus-launch.mjs';
+import { sqliteAdapter, startDev } from '../../../wpr-games/workplace-readiness/service/dev.mjs';
 
 const teacher='synthetic-focus-launch-owner';
 const a='node:advanced:loop-lab:looptype';
@@ -78,12 +79,18 @@ test('class launches and queued attempts preserve scope, overlap, and one ordina
   pathwayAdapters.ENABLE_TEACHER_DIRECTED_LEARNING='1';
   assert.deepEqual((await sync([acceptedBeforeCutover])).accepted,[acceptedBeforeCutover.id]);
   assert.equal(dev.db.prepare('SELECT data FROM performance_events WHERE id=?').get(acceptedBeforeCutover.id).data,storedBefore);
+  dev.db.prepare('UPDATE learning_focus_launches SET expires=0 WHERE id=?').run(old.id);
+  await permit(old,crypto.randomUUID(),'iterations',403);
+  await purgeFocusLaunches(sqliteAdapter(dev.db),Date.now());
+  assert.ok(dev.db.prepare('SELECT 1 FROM learning_focus_launches WHERE id=?').get(old.id), 'expired launch with an open question is retained');
   const answer=await sync([guaranteed,mismatched,unverified,explicitGuest,wrongScope,unpermitted,oldEvent,modified]);
   assert.deepEqual(answer.accepted,[guaranteed.id,oldEvent.id]);
   assert.deepEqual(answer.rejected.map(item=>item.id),[mismatched.id,unverified.id,explicitGuest.id,wrongScope.id,unpermitted.id,modified.id]);
   assert.equal(answer.rejected[1].code,'legacy-unverified');
   dev.db.prepare('UPDATE learning_focus_launches SET expires=0 WHERE id=?').run(authorized.id);
-  assert.deepEqual((await sync([guaranteed])).accepted,[guaranteed.id]);
+  await purgeFocusLaunches(sqliteAdapter(dev.db),Date.now());
+  assert.equal(dev.db.prepare('SELECT 1 FROM learning_focus_launches WHERE id=?').get(old.id),undefined);
+  assert.deepEqual((await sync([guaranteed,oldEvent])).accepted,[guaranteed.id,oldEvent.id]);
   assert.equal(dev.db.prepare('SELECT count(*) n FROM performance_events').get().n,3);
   const state=await call('/profile/learning-focus',undefined,learner.token);
   assert.equal(state.classwork.find(item=>item.id===sameA.id).progress,'complete');
