@@ -1,7 +1,7 @@
 /* Count the Executions — ten reasoning families. Every prompt names exactly which
  * operation is counted (a marked statement, a condition, an update, or comparisons). */
 import { J, P, V, N, lvl, range, clone, findTag, run, stmtText, loopCountExtras } from "./fam-util.js?v=loop-quality-v1";
-import { mutate, GenReject, evaluate } from "./questions.js?v=loop-quality-v1";
+import { mutate, GenReject, evaluate } from "./questions.js?v=loop-rank-v2";
 import { tag, mark, printProgram, exprStr } from "./java-model.js?v=loop-quality-v1";
 import { applyVariety } from "./variety.js?v=loop-quality-v1";
 

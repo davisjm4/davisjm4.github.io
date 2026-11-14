@@ -1,5 +1,5 @@
 import { J, run, finalize, clone, findTag, printProgram, walk } from "./java-model.js?v=loop-quality-v1";
-import { evaluate, GenReject } from "./questions.js?v=loop-quality-v1";
+import { evaluate, GenReject } from "./questions.js?v=loop-rank-v2";
 
 export const LEVELS = ["beginner", "intermediate", "advanced"];
 export const lvl = (d) => LEVELS.indexOf(d);

@@ -5,8 +5,8 @@
  * add seeds, difficulty, recent-question avoidance, and structured metadata.
  */
 import { makeRng, hashString } from "./engine/rng.js?v=loop-expansion-v2";
-import { buildChallenge, GenReject, structuralSignature, MISCONCEPTIONS } from "./engine/questions.js?v=loop-quality-v1";
-import { originalFamilies, allowed } from "./engine/families-original.js?v=loop-quality-v1";
+import { buildChallenge, GenReject, structuralSignature, MISCONCEPTIONS } from "./engine/questions.js?v=loop-rank-v2";
+import { originalFamilies, allowed } from "./engine/families-original.js?v=loop-rank-v2";
 import { algorithmFamilies } from "./engine/families-algorithms.js?v=loop-quality-v1";
 import { executionFamilies } from "./engine/families-executions.js?v=loop-quality-v1";
 import { LEVELS } from "./engine/fam-util.js?v=loop-quality-v1";

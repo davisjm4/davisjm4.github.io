@@ -57,6 +57,7 @@ export const MISCONCEPTIONS = {
   "sum-vs-count": "This mixes up adding values with counting them (or the reverse).",
   "ignore-final-step": "This leaves out the statement that runs after the loop ends.",
   "logic-operator": "This swaps && and ||. With &&, every part of the condition must be true for another iteration; with ||, one true part is enough.",
+  "trace-slip": "Trace the condition and each update in the order Java executes them.",
   "fallback": "This value does not match any step of the trace.",
 };
 
@@ -183,7 +184,7 @@ export function structuralSignature(code, targetKind) {
 export function selectDistractors(pool, answer, rng) {
   const seen = new Set(); const cand = [];
   for (const d of pool) if (d.choice !== "" && d.choice !== answer && !seen.has(d.choice)) { seen.add(d.choice); cand.push(d); }
-  const pick = (list, n) => { const out = [], tags = new Set(); const bag = rng.shuffle(list.slice()); for (const d of bag) if (out.length < n && !tags.has(d.misconception)) { out.push(d); tags.add(d.misconception); } for (const d of bag) if (out.length < n && !out.includes(d)) out.push(d); return out; };
+  const pick = (list, n) => { const out = [], tags = new Set(); const bag = rng.shuffle(list.slice()); for (const d of bag) if (out.length < n && !tags.has(d.note || d.misconception)) { out.push(d); tags.add(d.note || d.misconception); } for (const d of bag) if (out.length < n && !out.includes(d)) out.push(d); return out; };
   if (cand.length <= 3) return cand.slice(0, 3);
   if (!/^-?\d+$/.test(answer)) return pick(cand, 3);
   const a = Number(answer), numeric = cand.every((d) => /^-?\d+$/.test(d.choice));
@@ -231,35 +232,37 @@ export function buildChallenge(spec) {
       let r2; try { r2 = run(m.program, { stepLimit: 20000 }); } catch { continue; }
       if (!r2.ok) continue;
       let value; try { value = m.target ? evaluate(m.target, m.program, r2) : evaluate(spec.target, m.program, r2); } catch { continue; }
-      if (value !== null) pool.push({ choice: value, misconception: m.misconception });
+      if (value !== null) pool.push({ choice: value, misconception: m.misconception, note: m.note });
     }
     for (const d of spec.extraDistractors || []) if (d && d.choice !== null && d.choice !== undefined) pool.push({ choice: String(d.choice), misconception: d.misconception });
-    // Automatic under-count candidate so the pool has plausible values on both sides of the answer.
-    if (["var", "body", "cond", "upd", "mark", "markSum"].includes(spec.target.kind) && /^-?\d+$/.test(answer) && !pool.some((d) => d.misconception === "missed-final")) {
-      const sp = mutate.shrink(program, spec.traceLoop || "main");
-      if (sp) { try { const r3 = run(sp, { stepLimit: 20000 }); const v3 = r3.ok ? evaluate(spec.target, sp, r3) : null; if (v3 !== null && v3 !== answer) pool.push({ choice: v3, misconception: "missed-final" }); } catch { /* candidate only */ } }
-    }
-    if (["var", "body", "cond", "upd", "mark", "markSum"].includes(spec.target.kind) && /^-?\d+$/.test(answer)) {
-      for (const delta of [1, -1]) {
-        const sp = mutate.shiftStart(program, spec.traceLoop || "main", delta); if (!sp) continue;
-        try { const r4 = run(sp, { stepLimit: 20000 }); const v4 = r4.ok ? evaluate(spec.target, sp, r4) : null; if (v4 !== null && v4 !== answer) pool.push({ choice: v4, misconception: "off-start" }); } catch { /* candidate only */ }
+    if (!spec.authoredDistractors) {
+      // Automatic under-count candidate so the pool has plausible values on both sides of the answer.
+      if (["var", "body", "cond", "upd", "mark", "markSum"].includes(spec.target.kind) && /^-?\d+$/.test(answer) && !pool.some((d) => d.misconception === "missed-final")) {
+        const sp = mutate.shrink(program, spec.traceLoop || "main");
+        if (sp) { try { const r3 = run(sp, { stepLimit: 20000 }); const v3 = r3.ok ? evaluate(spec.target, sp, r3) : null; if (v3 !== null && v3 !== answer) pool.push({ choice: v3, misconception: "missed-final" }); } catch { /* candidate only */ } }
+      }
+      if (["var", "body", "cond", "upd", "mark", "markSum"].includes(spec.target.kind) && /^-?\d+$/.test(answer)) {
+        for (const delta of [1, -1]) {
+          const sp = mutate.shiftStart(program, spec.traceLoop || "main", delta); if (!sp) continue;
+          try { const r4 = run(sp, { stepLimit: 20000 }); const v4 = r4.ok ? evaluate(spec.target, sp, r4) : null; if (v4 !== null && v4 !== answer) pool.push({ choice: v4, misconception: "off-start" }); } catch { /* candidate only */ }
+        }
+      }
+      if (["var", "body", "cond", "upd", "mark", "markSum"].includes(spec.target.kind) && /^-?\d+$/.test(answer)) {
+        // compound slip: begins one step late AND stops one step early (two independent boundary errors)
+        const half = mutate.shrink(program, spec.traceLoop || "main"), sp = half && mutate.shiftStart(half, spec.traceLoop || "main", 1);
+        if (sp) { try { const r5 = run(sp, { stepLimit: 20000 }); const v5 = r5.ok ? evaluate(spec.target, sp, r5) : null; if (v5 !== null && v5 !== answer) pool.push({ choice: v5, misconception: "missed-final" }); } catch { /* candidate only */ } }
+      }
+      if (["var", "body", "cond", "upd", "mark", "markSum"].includes(spec.target.kind) && /^-?\d+$/.test(answer)) {
+        const sp = mutate.swapLogic(program, spec.traceLoop || "main");
+        if (sp) { try { const r6 = run(sp, { stepLimit: 20000 }); const v6 = r6.ok ? evaluate(spec.target, sp, r6) : null; if (v6 !== null && v6 !== answer) pool.push({ choice: v6, misconception: "logic-operator" }); } catch { /* candidate only */ } }
+      }
+      if (["var", "body", "cond", "upd", "mark", "markSum"].includes(spec.target.kind) && /^-?\d+$/.test(answer)) {
+        const sp = mutate.flipIf(program);
+        if (sp) { try { const r7 = run(sp, { stepLimit: 20000 }); const v7 = r7.ok ? evaluate(spec.target, sp, r7) : null; if (v7 !== null && v7 !== answer) pool.push({ choice: v7, misconception: "boundary" }); } catch { /* candidate only */ } }
       }
     }
-    if (["var", "body", "cond", "upd", "mark", "markSum"].includes(spec.target.kind) && /^-?\d+$/.test(answer)) {
-      // compound slip: begins one step late AND stops one step early (two independent boundary errors)
-      const half = mutate.shrink(program, spec.traceLoop || "main"), sp = half && mutate.shiftStart(half, spec.traceLoop || "main", 1);
-      if (sp) { try { const r5 = run(sp, { stepLimit: 20000 }); const v5 = r5.ok ? evaluate(spec.target, sp, r5) : null; if (v5 !== null && v5 !== answer) pool.push({ choice: v5, misconception: "missed-final" }); } catch { /* candidate only */ } }
-    }
-    if (["var", "body", "cond", "upd", "mark", "markSum"].includes(spec.target.kind) && /^-?\d+$/.test(answer)) {
-      const sp = mutate.swapLogic(program, spec.traceLoop || "main");
-      if (sp) { try { const r6 = run(sp, { stepLimit: 20000 }); const v6 = r6.ok ? evaluate(spec.target, sp, r6) : null; if (v6 !== null && v6 !== answer) pool.push({ choice: v6, misconception: "logic-operator" }); } catch { /* candidate only */ } }
-    }
-    if (["var", "body", "cond", "upd", "mark", "markSum"].includes(spec.target.kind) && /^-?\d+$/.test(answer)) {
-      const sp = mutate.flipIf(program);
-      if (sp) { try { const r7 = run(sp, { stepLimit: 20000 }); const v7 = r7.ok ? evaluate(spec.target, sp, r7) : null; if (v7 !== null && v7 !== answer) pool.push({ choice: v7, misconception: "boundary" }); } catch { /* candidate only */ } }
-    }
     distractors = selectDistractors(pool, answer, makeRng(hashString(`${shown.code}|${answer}|${spec.prompt}`)));
-    if (distractors.length < 3 && spec.fallback !== false && /^-?\d+$/.test(answer)) {
+    if (distractors.length < 3 && !spec.authoredDistractors && spec.fallback !== false && /^-?\d+$/.test(answer)) {
       distractors = completeWithFallback(distractors, answer, makeRng(hashString(`fb|${shown.code}|${answer}|${spec.prompt}`)));
     }
   }

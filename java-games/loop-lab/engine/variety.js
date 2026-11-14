@@ -53,7 +53,7 @@ export function applyVariety(spec, rng, { convert = true, loopTag = "main" } = {
   const form = rng.pick(["plain", "plain", "compound", "expanded"]);
   const tf = (prog) => { if (!prog) return prog; let p = renameProgram(prog, map); if (toWhile) { const w = forToWhile(p, loopTag); if (w) p = w; } p = incrementForm(p, form); return finalize(p); };
   const out = { ...spec, program: tf(spec.program) };
-  out.mutants = (spec.mutants || []).map((m) => (m ? { ...m, program: tf(m.program), target: m.target ? renameTarget(m.target, map) : m.target } : m));
+  out.mutants = (spec.mutants || []).map((m) => (m ? { ...m, program: tf(m.program), note: renameText(m.note, map), target: m.target ? renameTarget(m.target, map) : m.target } : m));
   out.target = renameTarget(spec.target, map);
   out.traceVars = (spec.traceVars || []).map((v) => map[v] || v);
   out.prompt = renameText(spec.prompt, map);

@@ -1,7 +1,7 @@
 /* Standard Iteration Algorithms — ten reasoning families. Each template builds an AST,
  * a question target, and misconception mutants; answers come from the interpreter. */
 import { J, P, V, N, lvl, range, clone, findTag, run, ordinal, arrLit, selectStatement, badStep, stateTarget, stateMutants, checks, walk } from "./fam-util.js?v=loop-quality-v1";
-import { mutate, GenReject } from "./questions.js?v=loop-quality-v1";
+import { mutate, GenReject } from "./questions.js?v=loop-rank-v2";
 import { tag, mark } from "./java-model.js?v=loop-quality-v1";
 
 const choose = (rng, d, templates) => {

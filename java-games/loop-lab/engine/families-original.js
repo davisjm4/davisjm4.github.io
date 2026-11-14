@@ -1,9 +1,9 @@
 /* The eight original Loop Lab modes, rebuilt procedurally. Every legacy variant id
  * is preserved (and now parameterized by difficulty); new structural variants are added. */
 import { J, P, V, N, lvl, range, clone, findTag, run, stmtText, loopCountExtras } from "./fam-util.js?v=loop-quality-v1";
-import { mutate, GenReject, evaluate } from "./questions.js?v=loop-quality-v1";
+import { mutate, GenReject, evaluate } from "./questions.js?v=loop-rank-v2";
 import { tag, mark, printProgram, exprStr, walk } from "./java-model.js?v=loop-quality-v1";
-import { applyVariety } from "./variety.js?v=loop-quality-v1";
+import { applyVariety } from "./variety.js?v=loop-rank-v2";
 
 const vname = (rng) => rng.pick(["i", "k", "n", "x", "step", "index"]);
 const updStmt = (v, delta) => (delta === 1 ? J.inc(v) : delta === -1 ? J.dec(v) : delta > 0 ? J.op(v, "+=", N(delta)) : J.op(v, "-=", N(-delta)));
@@ -11,6 +11,64 @@ function seqOf(start, op, bound, delta) { const f = { "<": (a) => a < bound, "<=
 const oneLine = (program) => printProgram(program).code.split("\n").map((l) => l.trim()).join(" ");
 const levels = (lo, hi) => [lo, hi];
 const allowed = (variants, d) => Object.entries(variants).filter(([, v]) => lvl(d) >= v.lv[0] && lvl(d) <= v.lv[1]).map(([k]) => k);
+
+const traceMistake = (program, note, edit) => ({
+  misconception: "trace-slip", note, program: mutate.edit(program, edit),
+});
+const loopEdit = (program, note, edit) =>
+  traceMistake(program, note, (p) => edit(findTag(p, "main"), p));
+
+function advancedCountMistakes(program, variant, cv) {
+  const changedUpdate = (note, op, amount) => loopEdit(program, note, (l) => {
+    const update = l.t === "while" ? l.body.find((s) => s.name === cv) : l.upd;
+    Object.assign(update, J.op(cv, op, N(amount)));
+  });
+  switch (variant) {
+    case "multiplicative":
+      return [
+        changedUpdate("This adds the factor on each pass. The *= operator multiplies the current value by the factor.", "+=", findTag(program, "main").body[0].e.v),
+        changedUpdate("This applies the multiplication twice per pass. The body multiplies by the factor once before the next check.", "*=", findTag(program, "main").body[0].e.v ** 2),
+        loopEdit(program, "This starts counting after the first multiplication. Java tests the initial value first.", (l, p) => { p[0].e = J.mul(p[0].e, l.body[0].e); }),
+      ];
+    case "halving":
+      return [
+        changedUpdate("This subtracts 2 on each pass. The /= operator divides and keeps the integer quotient.", "-=", 2),
+        loopEdit(program, "This starts counting after the first halving. The initial value also gets a condition check.", (l, p) => { p[0].e = J.div(p[0].e, N(2)); }),
+        loopEdit(program, "This treats 0 as the only stopping value. The code stops as soon as the displayed bound fails.", (l) => { l.c.r = N(0); }),
+      ];
+    case "not-equal":
+      return [changedUpdate("This advances by 1 each time. The update jumps by the displayed step.", "+=", 1)];
+    case "two-pointer":
+      return [
+        loopEdit(program, "This leaves the left pointer fixed. The body moves both pointers on each pass.", (l) => { l.body.shift(); }),
+        loopEdit(program, "This moves the left pointer by the same amount as the right pointer. Trace the individual step written for each pointer.", (l) => { l.body[0] = J.op("lo", "+=", l.body[1].e); }),
+        loopEdit(program, "This leaves the right pointer fixed. The body moves both pointers on each pass.", (l) => { l.body.pop(); }),
+        loopEdit(program, "This counts an extra move before the first test. Both pointers start at their displayed initial values.", (l, p) => {
+          p[0].e = J.add(p[0].e, l.body[0].e);
+          p[1].e = J.sub(p[1].e, l.body[1].e);
+        }),
+      ];
+    case "compound-condition":
+      return [
+        traceMistake(program, "This starts total at zero. Include the displayed initial total before adding any counter values.", (p) => { p[0].e = N(0); }),
+        loopEdit(program, "This advances the counter both before the addition and in the for update. The displayed counter only advances in the update.", (l) => { l.body.unshift(J.inc(cv)); }),
+        loopEdit(program, "This tests only the counter limit. With &&, reaching the total limit also ends the loop.", (l) => { l.c = l.c.l; }),
+        loopEdit(program, "This tests only the total limit. With &&, reaching the counter limit also ends the loop.", (l) => { l.c = l.c.r; }),
+        loopEdit(program, "This treats the total limit as inclusive. The displayed strict comparison stops at equality.", (l) => { l.c.r.op = "<="; }),
+        loopEdit(program, "This uses either limit as permission to continue. With &&, both tests must pass.", (l) => { l.c.op = "||"; }),
+        loopEdit(program, "This checks whether the next addition would reach the cap before entering. The condition only checks the current total.", (l) => { l.c.r.l = J.add(l.c.r.l, V(cv)); }),
+        loopEdit(program, "This adds the incremented counter. The body adds the current counter before the for update.", (l) => { l.body[0].e = J.add(l.body[0].e, N(1)); }),
+      ];
+    case "body-modifies-counter":
+      return [
+        loopEdit(program, "This skips the extra increment inside the if. A matching pass advances twice.", (l) => { l.body.pop(); }),
+        loopEdit(program, "This makes the counter advance twice on every pass. The second increment depends on the if condition.", (l) => { l.body[1].c = J.b(true); }),
+        loopEdit(program, "This runs the second increment on nonmultiples of 3. The condition checks for remainder 0.", (l) => { l.body[1].c.op = "!="; }),
+      ];
+    default:
+      return [];
+  }
+}
 
 /* ---------- iterations ---------- */
 const iterations = {
@@ -39,21 +97,31 @@ const iterations = {
       }
       case "multiplicative": { const s = rng.int(1, 3), f = rng.pick([2, 3]), b = rng.int(20, 90); program = P([J.decl("int", v, N(s)), tag(J.whileL(J.lt(V(v), N(b)), [J.op(v, "*=", N(f))]), "main")]); explainSeq = (() => { const o = []; let x = s; while (x < b) { o.push(x); x *= f; } return o; })(); concept = "multiplicative update"; break; }
       case "halving": { const s = rng.int(20, 100), b = rng.pick([0, 1, 3]); program = P([J.decl("int", v, N(s)), tag(J.whileL(J.gt(V(v), N(b)), [J.op(v, "/=", N(2))]), "main")]); explainSeq = (() => { const o = []; let x = s; while (x > b) { o.push(x); x = Math.trunc(x / 2); } return o; })(); concept = "halving with integer division"; break; }
-      case "not-equal": { const s = rng.int(0, 4), dl = rng.pick([2, 3]); program = forLoop(s, "!=", s + dl * span(), dl); concept = "!= condition reached exactly"; break; }
-      case "two-pointer": { const lo = rng.int(0, 3), hi = lo + rng.int(6, 13); program = P([J.decl("int", "lo", N(lo)), J.decl("int", "hi", N(hi)), tag(J.whileL(J.lt(V("lo"), V("hi")), [J.inc("lo"), J.op("hi", "-=", N(rng.pick([1, 2])))]), "main")]); explainSeq = null; concept = "two changing variables"; break; }
-      case "compound-condition": { const b = rng.int(8, 14), cap = rng.int(10, 30); program = P([J.decl("int", "total", N(0)), tag(J.forL(J.decl("int", v, N(1)), J.and(J.le(V(v), N(b)), J.lt(V("total"), N(cap))), J.inc(v), [J.op("total", "+=", V(v))]), "main")]); explainSeq = null; concept = "two-part loop condition"; break; }
+      case "not-equal": { const s = rng.int(L === 2 ? -15 : 0, 4), dl = rng.pick([2, 3]); program = forLoop(s, "!=", s + dl * span(), dl); concept = "!= condition reached exactly"; break; }
+      case "two-pointer": { const lo = rng.int(-5, 5), hi = lo + rng.int(7, 18); program = P([J.decl("int", "lo", N(lo)), J.decl("int", "hi", N(hi)), tag(J.whileL(J.lt(V("lo"), V("hi")), [J.op("lo", "+=", N(rng.pick([1, 2]))), J.op("hi", "-=", N(rng.pick([2, 3])))]), "main")]); explainSeq = null; concept = "two changing variables"; break; }
+      case "compound-condition": { const b = rng.int(5, 11), initial = rng.int(-15, 15), fullSum = b * (b + 1) / 2, cap = initial + rng.int(Math.max(5, fullSum - 3 * b), fullSum + 3 * b); program = P([J.decl("int", "total", N(initial)), tag(J.forL(J.decl("int", v, N(1)), J.and(J.le(V(v), N(b)), J.lt(V("total"), N(cap))), J.inc(v), [J.op("total", "+=", V(v))]), "main")]); explainSeq = null; concept = "two-part loop condition"; break; }
       case "body-modifies-counter": { const b = rng.int(10, 18); program = P([J.decl("int", "count", N(0)), tag(J.forL(J.decl("int", v, N(0)), J.lt(V(v), N(b)), J.inc(v), [J.inc("count"), J.iff(J.eq(J.mod(V(v), N(3)), N(0)), [J.inc(v)], null, { tag: "test", inline: true })]), "main")]); explainSeq = null; concept = "counter changed inside the body"; break; }
       default: throw new GenReject("variant " + variant);
     }
     const loop = findTag(program, "main"), isWhile = loop.t === "while";
     const res = run(program), count = res.B[loop.id] || 0;
     const cv = loop.t === "for" ? loop.init.name : (loop.c.l.name || v);
+    const advanced = L === 2;
     return {
       program, target: { kind: "body", tag: "main" }, concept, template: variant,
       prompt: isWhile ? "How many times does the while body execute?" : "How many times does the loop execute?",
       params: { variant }, traceLoop: "main", traceVars: [...new Set([cv, ...(variant === "two-pointer" ? ["hi"] : []), ...(variant === "compound-condition" ? ["total"] : [])])],
-      mutants: [{ misconception: "boundary", program: mutate.boundary(program, "main") }, { misconception: "cond-vs-body", program, target: { kind: "cond", tag: "main" } }, variant === "body-modifies-counter" ? { misconception: "ignore-condition", program: mutate.edit(program, (q) => { findTag(q, "main").body.pop(); }) } : null, variant === "compound-condition" ? { misconception: "comparison-scope", program: mutate.edit(program, (q) => { findTag(q, "main").c = findTag(q, "main").c.l; }) } : null],
-      extraDistractors: [...loopCountExtras(program, "main"), { choice: String(count + 1), misconception: "extra-iteration" }, { choice: String(Math.max(0, count - 1)), misconception: "missed-final" }],
+      authoredDistractors: advanced,
+      mutants: [
+        { misconception: "boundary", program: mutate.boundary(program, "main") },
+        { misconception: "cond-vs-body", program, target: { kind: "cond", tag: "main" } },
+        ...advancedCountMistakes(program, variant, cv),
+      ],
+      extraDistractors: [
+        ...loopCountExtras(program, "main").filter((d) => !advanced || (Number(d.choice) >= 0 && d.misconception === "value-vs-count")),
+        { choice: String(count + 1), misconception: "extra-iteration" },
+        { choice: String(Math.max(0, count - 1)), misconception: "missed-final" },
+      ],
       explain: explainSeq ? `${cv} takes ${explainSeq.length ? explainSeq.join(", ") : "no values that satisfy the condition"}, so the body runs ${count} time${count === 1 ? "" : "s"}. The next value fails the condition.` : `Trace the condition each time it is checked; it is true ${count} time${count === 1 ? "" : "s"} before it becomes false.`,
     };
   },
@@ -244,13 +312,89 @@ const components = {
 };
 
 /* ---------- conditional ---------- */
+function conditionalMistakes(program, variant, acc) {
+  const condition = (note, edit, tag = "test") =>
+    traceMistake(program, note, (p) => edit(findTag(p, tag)));
+  const boundary = { misconception: "boundary", program: mutate.boundary(program, "main") };
+  if (variant === "break-target") {
+    return [
+      condition("This treats the exact match as an upper threshold. The loop breaks only when the square equals the target.", (test) => { test.c.op = "<"; }),
+      condition("This waits until the square exceeds the target. The exact match already triggers break.", (test) => { test.c.op = ">"; }),
+      condition("This assumes the assignment runs on the first pass. The square must match before it runs.", (test) => { test.c = J.b(true); }),
+      traceMistake(program, "This uses found directly and leaves out the final addition.", (p) => { p.at(-1).e = V("found"); }),
+      traceMistake(program, "This keeps the initial value of found, even though the condition is met and found is updated.", (p) => { findTag(p, "test").then.shift(); }),
+      traceMistake(program, "This updates found on each pass and misses the early exit. The actual assignment only runs when the condition matches.", (p) => {
+        const test = findTag(p, "test");
+        test.c = J.b(true);
+        test.then.pop();
+      }),
+    ];
+  }
+  const mistakes = [
+    boundary,
+    loopEdit(program, "This skips the starting value. The first condition check uses the displayed initial value.", (l) => { l.init.e = J.add(l.init.e, N(1)); }),
+    { misconception: "inverted-condition", program: mutate.ifInvert(program, "test") },
+    variant === "continue-even"
+      ? condition("This skips every increment. Only matching passes reach continue.", (test) => { test.c = J.b(true); })
+      : { misconception: "ignore-condition", program: mutate.ifAlways(program, "test") },
+  ];
+  if (variant === "odd-count" || variant === "continue-even") {
+    mistakes.push(condition("This compares the loop variable directly to the literal. The if compares its remainder after division by 2.", (test) => { test.c.l = V("i"); }));
+    if (variant === "odd-count") {
+      mistakes.push(condition("This adds each odd loop value. The increment adds 1 per match.", (test) => { test.then[0] = J.op(acc, "+=", V("i")); }));
+    } else {
+      mistakes.push({ misconception: "ignore-continue", program: mutate.removeAll(program, "continue") });
+      mistakes.push(loopEdit(program, "This adds each eligible loop value. The increment adds 1 per eligible pass.", (l) => { l.body[1] = J.op(acc, "+=", V("i")); }));
+    }
+  }
+  if (variant === "greater-sum" || variant === "else-count" || variant === "compound-and" || variant === "nested-if-break") {
+    mistakes.push(
+      condition("This counts the selected values. The accumulator adds the value of i itself on each selected pass.", (test) => {
+        const branch = variant === "else-count" ? test.els : test.then;
+        branch[0] = J.inc(acc);
+      }),
+      { misconception: "accum-overwrite", program: mutate.overwrite(program, acc) },
+    );
+  }
+  if (variant === "else-count") {
+    mistakes.push(condition("This adds every loop value in the else branch. An else runs only when the if condition is false.", (test) => { test.c = J.b(false); }));
+  }
+  if (variant === "greater-sum" || variant === "else-count") {
+    mistakes.push({ misconception: "boundary", program: mutate.flipIf(program) });
+  }
+  if (variant === "compound-and" || variant === "two-divisors") {
+    mistakes.push(
+      condition("This swaps && and ||. Evaluate the two tests with the displayed logical operator.", (test) => { test.c.op = test.c.op === "&&" ? "||" : "&&"; }),
+      condition("This uses only the left test. A value must be considered against both tests.", (test) => { test.c = test.c.l; }),
+      condition("This uses only the right test. A value must be considered against both tests.", (test) => { test.c = test.c.r; }),
+    );
+  }
+  if (variant === "two-divisors") {
+    mistakes.push(
+      condition("This counts only values divisible by exactly one divisor. A value divisible by both also makes || true.", (test) => { test.c.op = "!="; }),
+      loopEdit(program, "This counts a value twice if both divisibility tests match. The single if increments at most once per pass.", (l) => {
+        const [test] = l.body;
+        l.body = [J.iff(test.c.l, [J.inc(acc)]), J.iff(test.c.r, [J.inc(acc)])];
+      }),
+    );
+  }
+  if (variant === "nested-if-break") {
+    mistakes.push(
+      { misconception: "ignore-break", program: mutate.removeAll(program, "break") },
+      condition("This exits when the total equals the limit. The code uses a strict greater-than test.", (test) => { test.c.op = ">="; }, "inner"),
+      condition("This skips the addition that crosses the limit. In the code, the addition happens before break is tested.", (test) => { test.then.reverse(); }),
+      condition("This checks the limit against the current loop value. The inner if checks the running total.", (test) => { test.c.l = V("i"); }, "inner"),
+    );
+  }
+  return mistakes;
+}
 const conditionalF = {
   id: "conditional", variants: {
     "odd-count": { lv: levels(0, 1) }, "greater-sum": { lv: levels(0, 1) }, "continue-even": { lv: levels(0, 1) }, "break-target": { lv: levels(0, 1) },
     "else-count": { lv: levels(1, 2) }, "compound-and": { lv: levels(1, 2) }, "two-divisors": { lv: levels(2, 2) }, "nested-if-break": { lv: levels(2, 2) },
   },
   generate(rng, d, variant) {
-    const L = lvl(d), s = rng.int(0, 3), e = s + rng.int(5, 7 + L * 2);
+    const L = lvl(d), s = rng.int(variant === "else-count" ? -3 : 0, 3), e = s + rng.int(5, 7 + L * 2);
     const loop = (body) => tag(J.forL(J.decl("int", "i", N(s)), J.le(V("i"), N(e)), J.inc("i"), body), "main");
     let program, acc, concept;
     switch (variant) {
@@ -267,9 +411,9 @@ const conditionalF = {
     return {
       program, target: { kind: "var", name: acc }, concept, template: variant, prompt: `What is the final value of ${acc}?`, params: { variant, s, e },
       traceLoop: "main", traceVars: ["i", acc === "after" ? "found" : acc],
-      extraDistractors: variant === "break-target" ? [{ choice: String(run(program).vars.found.v), misconception: "printed-vs-final" }, { choice: "0", misconception: "initial-value" }, { choice: String(e + 1), misconception: "ignore-break" }] : variant === "odd-count" || variant === "two-divisors" ? [{ choice: String(e - s + 1), misconception: "ignore-condition" }] : [],
-      mutants: [{ misconception: "inverted-condition", program: mutate.ifInvert(program, "test") }, { misconception: "ignore-condition", program: mutate.ifAlways(program, "test") }, { misconception: "boundary", program: mutate.boundary(program, "main") }, { misconception: "ignore-break", program: mutate.removeAll(program, "break") }, { misconception: "ignore-continue", program: mutate.removeAll(program, "continue") }, { misconception: "off-start", program: mutate.edit(program, (q) => { findTag(q, "main").init.e = N(s + 1); }) }],
-      explain: (ans) => `i runs from ${s} to ${e}. Test the condition for each value and apply only the selected updates${concept.includes("break") ? "; break ends the loop the first time it runs" : ""}. Result: ${ans}.`,
+      authoredDistractors: true,
+      mutants: conditionalMistakes(program, variant, acc),
+      explain: (ans) => `The loop starts at ${s} and its upper bound is ${e}. Apply only the selected updates${concept.includes("break") ? " and stop immediately if break executes" : ""}. The final value is ${ans}.`,
     };
   },
 };
