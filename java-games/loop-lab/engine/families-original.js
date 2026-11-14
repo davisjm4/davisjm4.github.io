@@ -1,9 +1,9 @@
 /* The eight original Loop Lab modes, rebuilt procedurally. Every legacy variant id
  * is preserved (and now parameterized by difficulty); new structural variants are added. */
-import { J, P, V, N, lvl, range, clone, findTag, run, stmtText, loopCountExtras } from "./fam-util.js?v=loop-expansion-v2";
+import { J, P, V, N, lvl, range, clone, findTag, run, stmtText, loopCountExtras } from "./fam-util.js?v=loop-quality-v1";
 import { mutate, GenReject, evaluate } from "./questions.js?v=loop-quality-v1";
 import { tag, mark, printProgram, exprStr, walk } from "./java-model.js?v=loop-quality-v1";
-import { applyVariety } from "./variety.js?v=loop-expansion-v2";
+import { applyVariety } from "./variety.js?v=loop-quality-v1";
 
 const vname = (rng) => rng.pick(["i", "k", "n", "x", "step", "index"]);
 const updStmt = (v, delta) => (delta === 1 ? J.inc(v) : delta === -1 ? J.dec(v) : delta > 0 ? J.op(v, "+=", N(delta)) : J.op(v, "-=", N(-delta)));

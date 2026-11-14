@@ -5,14 +5,11 @@
  * add seeds, difficulty, recent-question avoidance, and structured metadata.
  */
 import { makeRng, hashString } from "./engine/rng.js?v=loop-expansion-v2";
-import { buildChallenge, GenReject, structuralSignature, MISCONCEPTIONS } from "./engine/questions.js?v=package-c-v2";
-// Existing family helpers still import the previous URL; both modules can
-// throw their own GenReject class when a generated candidate is discarded.
-import { GenReject as PreviousGenReject } from "./engine/questions.js?v=loop-quality-v1";
-import { originalFamilies, allowed } from "./engine/families-original.js?v=package-c-v1";
-import { algorithmFamilies } from "./engine/families-algorithms.js?v=loop-expansion-v2";
-import { executionFamilies } from "./engine/families-executions.js?v=loop-expansion-v2";
-import { LEVELS } from "./engine/fam-util.js?v=loop-expansion-v2";
+import { buildChallenge, GenReject, structuralSignature, MISCONCEPTIONS } from "./engine/questions.js?v=loop-quality-v1";
+import { originalFamilies, allowed } from "./engine/families-original.js?v=loop-quality-v1";
+import { algorithmFamilies } from "./engine/families-algorithms.js?v=loop-quality-v1";
+import { executionFamilies } from "./engine/families-executions.js?v=loop-quality-v1";
+import { LEVELS } from "./engine/fam-util.js?v=loop-quality-v1";
 import { printProgram } from "./engine/java-model.js?v=loop-quality-v1";
 
 import { loopTypeFamilies, LOOP_TYPES } from "./engine/families-loop-types.js";
@@ -80,7 +77,7 @@ export function generateChallenge({ mode = "mixed", difficulty = "beginner", see
       const c = buildChallenge(spec);
       return assemble(c, { mode: m, requestedMode: mode, difficulty: level, requestedDifficulty: difficulty, seed, variant, attempt });
     } catch (err) {
-      if (!(err instanceof GenReject) && !(err instanceof PreviousGenReject) && !/StepLimit|UnsafeDouble|^invalid challenge/.test(String(err.message))) throw err;
+      if (!(err instanceof GenReject) && !/StepLimit|UnsafeDouble|^invalid challenge/.test(String(err.message))) throw err;
       lastErr = err;
     }
   }
