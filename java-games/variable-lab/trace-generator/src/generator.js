@@ -3,8 +3,9 @@
 
 import { lit, vr, bin, not, decl, print, renderStmt, renderExpr, renderProgram, defOf, usesOf, walkExpr } from './model.js';
 import { execute, formatValue, typeCheck } from './interp.js';
-import { analyze, validateDifficulty, RULES, FAMILY_IDS, BASELINE_FAMILIES } from './analysis.js';
+import { analyze, validateDifficulty, RULES, FAMILY_IDS, BASELINE_FAMILIES } from './analysis.js?v=trace-quality-20261114';
 import { assign } from './model.js';
+import { hasCancelledOperand, answerIsConstant } from './dataflow.js';
 import { pickNames, initLiteral, intLit, charLit, stmtFor, intSideStatement, printExprFor, printOnlyStatement, CORE_POOLS } from './builders.js';
 
 export const TYPES = ['int', 'double', 'boolean', 'char', 'String'];
@@ -99,6 +100,9 @@ function checkPrefix(G, prog, from, quick) {
   const exec = execute(prog, { maxInt: INT_CAP[G.difficulty] });
   if (!exec.ok) return null;
   if (hasTrivialSelfOp(prog.slice(from))) return null;
+  // R2: an operand that algebraically cancels (time - (time + 8), z - 1 * z, bonus -= score + bonus)
+  // lets the answer be reached without tracing the earlier state, so the statement is rejected.
+  if (hasCancelledOperand(prog.slice(from))) return null;
   // no dead stores: a value may not be overwritten before anything has read it
   const readSince = {}, lastKind = {};
   for (let i = 0; i < prog.length; i++) {
@@ -264,7 +268,10 @@ function answerOf(exec, program, target) {
 function evaluateTarget(G, spec, program, target) {
   const exec = execute(program, { trace: true, maxInt: INT_CAP[G.difficulty] });
   if (!exec.ok) return null;
-  if (hasTrivialSelfOp(program)) return null;
+  if (hasTrivialSelfOp(program) || hasCancelledOperand(program)) return null;
+  // R2: a numeric answer that is the same whatever the initial values are can be written down
+  // without tracing anything (tax = total + 1.5; print(tax - total) is always 1.5).
+  if (answerIsConstant(program, target)) return null;
   for (let i = 0; i < program.length; i++) for (const nm of Object.keys(exec.steps[i].after)) {
     const v = exec.steps[i].after[nm], t = exec.types[nm];
     if (t === 'double' && !tidyDouble(v)) return null;

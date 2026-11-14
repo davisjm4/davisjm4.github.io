@@ -19,7 +19,7 @@ export function foundational2D(model,variant,grid){
   }
   if(model===7){grid[0][1]=2+Math.abs(grid[0][1])%3;const left=R('grid',0,0),right=R('grid',0,1);output=[add(left,right),sub(left,right),B('*',left,right),B('/',left,right),B('%',left,right),B('/',add(left,right),2)][v];}
   if(model===8){let col=[lit(1),sub(L('grid',0),1),B('/',L('grid',0),2),V('column'),R('grid',0,0),B('%',R('grid',0,0),L('grid',0))][v];if(v===3)ss.push(D('column',2));if(v>=4)grid[0][0]=1+Math.abs(grid[0][0])%3;
-    ss.push(D('target',col),D('saved',R('grid',0,V('target'))),S('grid',R('grid',2,0),0,V('target')),S('grid',V('saved'),2,0));output=R('grid',0,V('target'));
+    ss.push(D('target',col),D('saved',R('grid',0,V('target'))),S('grid',R('grid',2,0),0,V('target')),S('grid',V('saved'),2,0));output=sub(R('grid',0,V('target')),R('grid',2,0));
   }
   if(model===9){ss.push(If(B(['>','<','>=','<=','==','!='][v],R('grid',0,0),R('grid',0,1)),[S('grid',add(R('grid',0,0),2),0,0)],[S('grid',sub(R('grid',0,0),2),0,0)]));output=R('grid',0,0);}
   return {program:{statements:ss,output,objective:'value'},kind:'choice',prompt:'What does the final print statement display?',details:{},foundation:true};

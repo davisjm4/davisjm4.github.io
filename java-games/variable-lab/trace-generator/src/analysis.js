@@ -1,6 +1,7 @@
 // Dependency analysis (backward slicing), reasoning-family detection, difficulty metrics
 // and difficulty validation. Difficulty is evaluated on the COMPLETE generated program.
 
+import { algebraicUses, effectiveSlice } from './dataflow.js';
 import { defOf, usesOf, varsIn, walkExpr, exprDepth, hasParens, isNumeric, PREC } from './model.js';
 import { execute } from './interp.js';
 
@@ -35,7 +36,7 @@ export const RULES = Object.freeze({
 });
 
 // target: { format: 'output'|'final'|'checkpoint', index, varName? }
-export function sliceFor(program, target) {
+export function sliceFor(program, target, keep = null) {
   const relevant = new Set();
   let needed, start;
   if (target.format === 'output') { needed = new Set(varsIn(program[target.index].expr)); start = target.index - 1; }
@@ -46,18 +47,21 @@ export function sliceFor(program, target) {
     if (d && needed.has(d)) {
       relevant.add(i);
       needed.delete(d);
-      for (const u of usesOf(program[i])) needed.add(u);
+      // Only dependencies that survive algebraic cancellation keep earlier definitions alive.
+      for (const u of algebraicUses(program[i])) needed.add(u);
     }
   }
+  // `keep` (the effective slice) removes counted statements the answer demonstrably ignores.
+  if (keep) for (const i of [...relevant]) if (!keep.has(i)) relevant.delete(i);
   // Reaching-definition edges among relevant statements (+ sink)
   const nodes = [...relevant].sort((a, b) => a - b);
   const sink = target.format === 'output' ? target.index : null;
   const edges = [];
   const reach = (name, before) => { for (let j = before - 1; j >= 0; j--) if (defOf(program[j]) === name) return j; return -1; };
   for (const i of [...nodes, ...(sink !== null ? [sink] : [])]) {
-    for (const u of new Set(usesOf(program[i]))) {
+    for (const u of new Set(algebraicUses(program[i]))) {
       const j = reach(u, i);
-      if (j >= 0) edges.push([j, i, u]);
+      if (j >= 0 && relevant.has(j)) edges.push([j, i, u]);
     }
   }
   const depth = new Map();
@@ -74,7 +78,11 @@ export function sliceFor(program, target) {
 }
 
 export function analyze(program, target, opts = {}) {
-  const slice = sliceFor(program, target);
+  // R5: counted statements must matter to the answer. Statements whose removal and whose
+  // perturbation both leave the answer unchanged are demonstrated-nothing, so they are excluded
+  // from the slice (and from every metric derived from it).
+  const syntactic = sliceFor(program, target);
+  const slice = sliceFor(program, target, effectiveSlice(program, target, syntactic.relevant, { maxInt: opts.maxInt }));
   const rel = slice.nodes;
   const sinkIdx = slice.sink;
   const exec = opts.exec || execute(program, { trace: true });
