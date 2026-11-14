@@ -6,10 +6,10 @@ export const device=globalThis.CSGamesProfileDevice;
 // Guest map links explicitly select local practice for this tab, even on a shared browser.
 const query=new URLSearchParams(globalThis.location?.search);
 const guestPractice=query.get('learner')==='guest';
-const classLaunchId=guestPractice?null:query.get('classLaunch');
+export const classLaunchId=guestPractice?null:query.get('classLaunch');
 let confirmedLaunch=false;
 let blockEvidence=false;
-if(classLaunchId&&typeof document!=='undefined')void verifyActivityPage();
+export const classPracticeAccess=classLaunchId&&typeof document!=='undefined' ? verifyActivityPage() : Promise.resolve(null);
 
 async function verifyActivityPage(){
   const main=document.querySelector('main')??document.body;
@@ -28,10 +28,11 @@ async function verifyActivityPage(){
     current.searchParams.delete('returnTo');
     const expected=new URL(verdict.destination,location.origin);
     if(expected.origin!==current.origin||expected.pathname!==current.pathname||expected.search!==current.search)
-      throw new Error('This activity does not match your verified class launch.');
+      throw Object.assign(new Error('This activity does not match your verified class launch.'),{status:403});
     confirmedLaunch=true;
     main.inert=priorInert;
     notice.remove();
+    return verdict;
   }catch(error){
     blockEvidence=true;
     notice.textContent=navigator.onLine ? (error.status?error.message:'Class access could not be verified. Check your connection and try again.') :
@@ -40,16 +41,62 @@ async function verifyActivityPage(){
     back.href='/cs-games/student/';
     back.textContent='Back to My Class';
     notice.append(' ',back);
+    return null;
   }
 }
 export const activeProfile=profilesAvailable&&!guestPractice ? device.identity : null;
 const prefix=device.key('outbox.');
+let classLaunchRequired=false;
+if(activeProfile && !classLaunchId && typeof document!=='undefined'){
+  const rawReturn=query.get('returnTo');
+  let classReturn=false;
+  try{
+    const link=new URL(rawReturn,location.origin);
+    classReturn=link.origin===location.origin&&link.pathname==='/cs-games/student/'&&link.searchParams.has('class');
+  }catch{}
+  const main=document.querySelector('main');
+  const checking=classReturn&&main&&!main.inert;
+  if(checking)main.inert=true;
+  void request('/profile/identity',{token:activeProfile.token})
+    .then(result=>{
+      classLaunchRequired=result.classLaunchRequired===true;
+      if(!classReturn||!classLaunchRequired){if(checking)main.inert=false;return;}
+      showClassReturn(main);
+    })
+    .catch(error=>{
+      // Old Workers do not implement learning focus. Other failures on an
+      // explicitly class-scoped URL cannot establish a fresh permission.
+      if(error.status===404){if(checking)main.inert=false;return;}
+      if(classReturn)showClassReturn(main);
+    });
+}
+function showClassReturn(main){
+  blockEvidence=true;
+  const notice=document.createElement('p');
+  notice.className='wrap';
+  notice.setAttribute('role','status');
+  notice.textContent='Open this class activity from your pathway to verify access. ';
+  const back=document.createElement('a');
+  back.href='/cs-games/student/';
+  back.textContent='Back to My Class';
+  notice.append(back);
+  if(main)main.before(notice);
+  else document.body.prepend(notice);
+}
 let sending, timer, retryDelay=2000;
 const listeners=new Set();
 function status(message) { for (const listener of listeners) listener(message); }
 export function observeSync(listener) {
   listeners.add(listener);
   return ()=>listeners.delete(listener);
+}
+export function retainedPractice() {
+  if (!activeProfile || !device.isCurrent()) return [];
+  const retained=device.key('unverified.');
+  try {
+    return Object.keys(localStorage).filter(key=>key.startsWith(retained))
+      .flatMap(key=>{try{return [JSON.parse(localStorage.getItem(key))];}catch{return [];}});
+  }catch{return [];}
 }
 export function queueKeys() {
   if (!activeProfile) return [];
@@ -69,7 +116,7 @@ function schedule(delay=1500) {
   timer=setTimeout(syncQueuedPractice,delay);
 }
 export function queueProfileEvent(event) {
-  if (!activeProfile || !device.isCurrent() || blockEvidence || (classLaunchId&&!confirmedLaunch)) return;
+  if (!activeProfile || !device.isCurrent() || classLaunchRequired || blockEvidence || (classLaunchId&&!confirmedLaunch)) return;
   const payload=confirmedLaunch?{...event,classLaunchId}:event;
   try {
     localStorage.setItem(prefix+event.id,JSON.stringify(payload));
@@ -86,7 +133,7 @@ export async function syncQueuedPractice() {
       while (device.isCurrent()) {
         const keys=queueKeys().slice(0,BATCH_LIMIT);
         const events=keys.map(key=>JSON.parse(localStorage.getItem(key))).filter(Boolean);
-        if (!events.length) { retryDelay=2000; if(!anyRejected)status('Practice synced.'); return true; }
+        if (!events.length) { retryDelay=2000; if(!anyRejected)status(retainedPractice().length?'Some responses are saved on this device for recovery.':'Practice synced.'); return true; }
         const {accepted,rejected=[]}=await request('/profile/sync',{token:activeProfile.token,body:{events}});
         const submitted=new Set(events.map(event=>event.id));
         if (!Array.isArray(accepted) || !Array.isArray(rejected) || !accepted.length&&!rejected.length ||
@@ -97,7 +144,7 @@ export async function syncQueuedPractice() {
         for(const rejection of rejected){
           const key=prefix+rejection.id;
           const saved=localStorage.getItem(key);
-          if(saved!==null)localStorage.setItem(device.key('unverified.'+rejection.id),saved);
+          if(saved!==null)localStorage.setItem(device.key('unverified.'+rejection.id),JSON.stringify({code:rejection.code,event:JSON.parse(saved)}));
           localStorage.removeItem(key);
         }
         if(rejected.length){anyRejected=true;status('Some responses were kept on this device because their class launch could not be verified. They did not earn class credit.');}
@@ -121,8 +168,9 @@ function metadata(value) {
 export function recordGameAttempt(courseId,record,sessionId,correct,occurred) {
   if (!activeProfile || !PROFILE_ID.test(record.id) || !PROFILE_ID.test(sessionId)) return;
   const details=record.details || {};
+  const questionId=classLaunchId&&PROFILE_ID.test(details.classQuestionId) ? details.classQuestionId : record.id;
   queueProfileEvent({version:PROFILE_VERSION,format:'game-attempt',kind:'practice',
-    id:record.id+':'+record.submissions, questionId:record.id, sessionId, courseId,
+    id:questionId+':'+record.submissions, questionId, sessionId, courseId,
     activity:record.game, attempt:record.submissions, correct:Boolean(correct), occurred:Date.parse(occurred),
     mode:metadata(details.practiceSetting || details.selectedMode || record.mode),
     assessedMode:metadata(details.practiceMode) || metadata(details.format) || metadata(details.mode) || metadata(record.mode),

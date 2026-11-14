@@ -1,4 +1,4 @@
-import { createFocusLaunch, verifyFocusLaunch } from './focus-launch.mjs';
+import { createFocusLaunch, permitFocusQuestion, verifyFocusLaunch } from './focus-launch.mjs';
 import { focusEnabled, prepareFocusPreview, publishLearningFocus, readTeacherFocus, readStudentFocus, endLearningFocus, releaseFocusGrants, confirmFocusCompletion } from './learning-focus.mjs';
 import { pathwayRoute } from './pathways.mjs';
 import { validateSnapshot, publicAssignment, dimensions, answerReport, grade, MIN_CLASS, RETENTION_DAYS } from '../online/model.mjs';
@@ -83,6 +83,8 @@ async function route(request, env, path) {
   const [group, id, action] = segments;
   if (path==='/profile/class-launch' && method==='POST') return createFocusLaunch(env,request,await body(request),now);
   if (group==='profile' && id==='class-launch' && segments.length===3 && method==='GET') return verifyFocusLaunch(env,request,action,now);
+  if (group==='profile' && id==='class-launch' && segments.length===4 && segments[3]==='question' && method==='POST')
+    return permitFocusQuestion(env,request,action,await body(request),now);
   if (path==='/profile/learning-focus' && method==='GET') return readStudentFocus(env,request,now);
   if (group==='profile' || (group==='teacher' && id==='profiles'))
     return routeProfiles(request,env,segments,body,now);

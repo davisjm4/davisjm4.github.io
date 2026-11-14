@@ -1,8 +1,8 @@
 import {lit,variable as V,binary as B,read as R,length as L,declare as D,array as A,allocate,alias as F,assign as S,branch as If,loop as For,call as Call,rowReference,returnedReference,referenceEqual,arrayResult,gridResult,cellIndex,cellPair,stop,execute,canonical,javaStatements,javaExpression,javaMethods} from './ir.js';
-import {foundationQuestion} from './foundations.js';
+import {foundationQuestion} from './foundations.js?v=array-repair-20261113';
 import {foundationalPrediction} from './foundation-predict.js';
 import {foundationalTraversal} from './foundation-traversal.js';
-import {foundational2D} from './foundation-2d.js';
+import {foundational2D} from './foundation-2d.js?v=array-repair-20261113';
 import {foundationalNested} from './foundation-nested.js';
 import {foundationalReverse} from './foundation-reverse.js';
 import {foundationalReferences} from './foundation-references.js';
@@ -198,7 +198,7 @@ function arrayQuestion(mode,m,v,level,values,grid){
      if(m===5){row=mod(L('grid',0),L('grid'));col=minus(L('grid',row),1);}
      if(m===6){statements.push(rowReference('rowValues','grid',row));col=minus(L('rowValues'),1);}
      if(level){row=mod(row,L('grid'));statements.push(D('selectedRow',row),D('selectedCol',mod(plus(col,R('grid',V('selectedRow'),0)),L('grid',V('selectedRow')))));row=V('selectedRow');col=V('selectedCol');}
-     if(level===2){statements.push(add('grid',R('grid',row,0),row,col),D('nextRow',mod(R('grid',row,col),L('grid'))),add('grid',R('grid',row,col),V('nextRow'),0),If(B('>',R('grid',V('nextRow'),0),R('grid',row,col)),[S('nextRow',mod(plus(V('nextRow'),1),L('grid')))]));row=V('nextRow');col=mod(col,L('grid',row));}
+     if(level===2){statements.push(add('grid',R('grid',row,0),row,col),D('nextRow',mod(R('grid',row,col),L('grid'))),add('grid',R('grid',row,col),V('nextRow'),0),If(B('>',R('grid',V('nextRow'),0),R('grid',row,col)),[S('nextRow',mod(plus(V('nextRow'),1),L('grid')))]));row=V('nextRow');col=mod(plus(col,R('grid',row,0)),L('grid',row));}
      if(m===9&&!level){output=R('grid',row,col);}
      else{if(!level){row=mod(row,L('grid'));col=mod(col,L('grid',row));}statements.push(D('r',row),D('c',col));output=plus(times(V('r'),100),V('c'));kind='cell-2d';prompt=mode==='access-2d'?'Select the cell accessed by the final expression.':'Select the cell changed by the final assignment.';details.access=R('grid',V('r'),V('c'));
        if(mode==='update-2d')statements.push(add('grid',R('grid',V('r'),mod(plus(V('c'),1),L('grid',V('r')))),V('r'),V('c')));
@@ -219,7 +219,7 @@ function arrayQuestion(mode,m,v,level,values,grid){
      if(m===10){statements.push(rowReference('selectedRowValues','grid',row));col=mod(R('selectedRowValues',0),L('selectedRowValues'));}
      statements.push(D('r',row),D('c',col));
      if(level)statements.push(S('c',mod(plus(V('c'),R('grid',V('r'),0)),L('grid',V('r')))),add('grid',R('grid',V('r'),0),V('r'),V('c')));
-     if(level===2)statements.push(D('before',R('grid',V('r'),V('c'))),S('r',mod(R('grid',V('r'),V('c')),L('grid'))),S('c',mod(V('c'),L('grid',V('r')))),add('grid',V('before'),V('r'),V('c')),If(B('>',R('grid',V('r'),V('c')),V('before')),[S('c',mod(plus(V('c'),1),L('grid',V('r'))))]));
+     if(level===2)statements.push(D('before',R('grid',V('r'),V('c'))),S('r',mod(R('grid',V('r'),V('c')),L('grid'))),S('c',mod(plus(V('c'),R('grid',V('r'),0)),L('grid',V('r')))),add('grid',V('before'),V('r'),V('c')),If(B('>',R('grid',V('r'),V('c')),V('before')),[S('c',mod(plus(V('c'),1),L('grid',V('r'))))]));
      let rhs=m===2?R('grid',1,1):m===3?times(R('grid',V('r'),V('c')),R('grid',1,1)):plus(R('grid',V('r'),V('c')),1);
      if(m===6){statements.push(D('temp',R('grid',V('r'),V('c'))),S('grid',R('grid',0,0),V('r'),V('c')),S('grid',V('temp'),0,0));output=plus(R('grid',V('r'),V('c')),R('grid',0,0));}
      else if(m===7){statements.push(For('col',0,B('<',V('col'),L('grid',V('r'))),1,[S('grid',plus(R('grid',V('r'),V('col')),R('grid',V('r'),V('c'))),V('r'),V('col'))]));output=R('grid',V('r'),minus(L('grid',V('r')),1));}
@@ -290,7 +290,8 @@ function arrayQuestion(mode,m,v,level,values,grid){
 
 export function buildModel(mode,model,variant,difficulty,seed){
  const random=rng(seed),level=LEVELS.indexOf(difficulty);if(level<0||!MODEL_NAMES[mode])throw Error('Invalid Array Lab mode/difficulty');
- const values=Array.from({length:mode==='in-place'&&model===5?8:6},()=>Math.floor(random()*14)-(['search','traversal','in-place'].includes(mode)?4:0));
+ const beginnerIndexing=level===0&&['element','perform-update'].includes(mode),size=mode==='in-place'&&model===5?8:beginnerIndexing?5+Math.floor((random(),random())*4):6;
+ const values=Array.from({length:size},()=>Math.floor(random()*14)-(['search','traversal','in-place'].includes(mode)?4:0));
  const grid=Array.from({length:3},(_,r)=>Array.from({length:model===5||model===7?3+r:4},()=>['access-2d','update-2d'].includes(mode)?1+Math.floor(random()*13):Math.floor(random()*15)-3));
  // Close totals and deliberate ties require actual summation and tie-breaking,
  // rather than identifying a row whose entries visibly dwarf all other rows.
@@ -298,21 +299,31 @@ export function buildModel(mode,model,variant,difficulty,seed){
  if(mode==='trace-2d'&&model===3)grid[2]=grid[2].map((_,c)=>4+c%2-grid[0][c]-grid[1][c]);
  if(mode==='trace-2d'&&model===9&&level===2){grid.splice(2);grid.forEach(row=>row.splice(3));}
  if(mode==='nested'&&level===2){grid.splice(2);grid.forEach((row,r)=>row.splice(model===7?2+r:3));}
- const built=mode==='create-references'&&level===0?foundationalReferences(model,variant,values,grid):mode==='reverse'&&level===0?foundationalReverse(model,variant,values,grid):mode==='nested'&&level===0?foundationalNested(model,variant,grid):mode==='trace-2d'&&level===0?foundational2D(model,variant,grid):mode==='traversal'&&level===0?foundationalTraversal(model,variant,values):mode==='predict-update'&&level===0?foundationalPrediction(model,variant,values):level===0&&['element','perform-update','access-2d','update-2d'].includes(mode)?foundationQuestion(mode,model,variant,values,grid):arrayQuestion(mode,model,mode==='reverse'?variant:mode==='search'&&!level?variant%6:variant%12,level,values,grid);
+ const built=mode==='create-references'&&level===0?foundationalReferences(model,variant,values,grid):mode==='reverse'&&level===0?foundationalReverse(model,variant,values,grid):mode==='nested'&&level===0?foundationalNested(model,variant,grid):mode==='trace-2d'&&level===0?foundational2D(model,variant,grid):mode==='traversal'&&level===0?foundationalTraversal(model,variant,values):mode==='predict-update'&&level===0?foundationalPrediction(model,variant,values):level===0&&['element','perform-update','access-2d','update-2d'].includes(mode)?foundationQuestion(mode,model,variant,values,grid,random):arrayQuestion(mode,model,mode==='reverse'?variant:mode==='search'&&!level?variant%6:variant%12,level,values,grid);
  const coreObservation=built.program.output,route=Math.floor(variant/12)%6,ss=built.program.statements;
  // Independently composed observation routes change the actual required read or
  // the assessed target; the seed and numeric substitutions never enter the key.
  if(!built.foundation&&!built.special&&route&&built.kind==='cell-2d'){
    const transforms=[null,minus(minus(L('grid',V('r')),1),V('c')),mod(plus(V('c'),R('grid',V('r'),0)),L('grid',V('r'))),mod(times(plus(V('c'),1),2),L('grid',V('r'))),mod(plus(V('c'),L('grid')),L('grid',V('r'))),mod(minus(L('grid',V('r')),plus(V('c'),1)),L('grid',V('r')))];
    ss.splice(mode==='update-2d'?ss.length-1:ss.length,0,S('c',transforms[route]));
-   if(variant>=72)ss.splice(mode==='update-2d'?ss.length-1:ss.length,0,S('r',mod(plus(V('r'),R('grid',0,0)),L('grid'))),S('c',mod(V('c'),L('grid',V('r')))));
+   if(variant>=72)ss.splice(mode==='update-2d'?ss.length-1:ss.length,0,S('r',mod(plus(V('r'),R('grid',0,0)),L('grid'))),S('c',mod(plus(V('c'),V('r')),L('grid',V('r')))));
  }else if(!built.foundation&&!built.special&&route&&['cell','apply','swap'].includes(built.kind)){
    const transforms=[null,mod(plus(V('target'),R('values',0)),L('values')),minus(minus(L('values'),1),V('target')),mod(times(plus(V('target'),1),2),L('values')),mod(R('values',V('target')),L('values')),mod(plus(V('target'),L('values')),minus(L('values'),1))];
    ss.splice(built.kind==='swap'?built.details.insertTargetAt:built.kind==='apply'?ss.length-1:ss.length,0,S('target',transforms[route]));
  }else if(!built.foundation&&!built.special&&route&&mode!=='reverse'&&!built.program.output.op.includes('error')){
    const e=built.program.output,name=['nested','trace-2d','access-2d','update-2d'].includes(mode)?'grid':'values',first=name==='grid'?R(name,0,0):R(name,0),last=name==='grid'?R(name,minus(L(name),1),0):R(name,minus(L(name),1));
    const original=execute(built.program).answer;
-   if(typeof original==='number')built.program.output=[null,plus(e,first),minus(e,last),minus(first,e),times(e,2),plus(e,minus(first,last))][route];
+   if(typeof original==='number'){
+     // R6: a wrapper must not cancel a term of the observed expression (first - (first + result) is
+     // always -result, so the update that produced `first + result` would be irrelevant).
+     const terms=(x,sign=1,out=new Map())=>{if(x.op==='binary'&&['+','-'].includes(x.operator)){terms(x.left,sign,out);terms(x.right,x.operator==='+'?sign:-sign,out);}else{const key=JSON.stringify(x),old=out.get(key)||{net:0,seen:0};out.set(key,{net:old.net+sign,seen:old.seen+1});}return out;};
+     const cancels=x=>[...terms(x).values()].some(t=>t.seen>=2&&t.net===0);
+     // The cancelling form is replaced by its mirror against the last element, which keeps the route
+     // (and the number of distinct structures) while no longer collapsing.
+     const wrappers=[null,plus(e,first),minus(e,last),cancels(minus(first,e))?minus(last,e):minus(first,e),times(e,2),plus(e,minus(first,last))];
+     let pick=route;for(let k=0;k<5&&cancels(wrappers[pick]);k++)pick=1+(pick%5);
+     built.program.output=wrappers[pick];
+   }
    else if(typeof original==='boolean')built.program.output=[null,B('==',e,B('>',first,last)),B('!=',e,B('<',first,last)),B('==',e,B('==',first,last)),B('!=',e,B('!=',first,last)),B('==',e,B('>=',first,last))][route];
    if(mode==='in-place')built.prompt='What value does the final print statement display?';
  }
@@ -354,7 +365,8 @@ export function buildModel(mode,model,variant,difficulty,seed){
  const lengthFacts=new Set();function lengths(node){if(!node||typeof node!=='object')return;if(node.op==='length'){const data=run.states[node.name],row=node.row?.op==='literal'?node.row.value:undefined,value=!node.row?data?.length:row!==undefined?data?.[row]?.length:undefined;if(value!==undefined)lengthFacts.add(`${node.name}${node.row?`[${row}]`:''}.length is ${value}`);}Object.values(node).forEach(lengths);}lengths(built.program.output);
  const observation=built.program.output,inlineObservation=observation.op==='cell-index'?(observation.column?`Row ${javaExpression(observation.index)} and column ${javaExpression(observation.column)} select [${q.correctCell.replace(',','][')}]`:`${javaExpression(observation.index)} selects index ${q.correctCell}`):observation.op==='cell-pair'?`The exchanged indices are ${q.correctCells.join(' and ')}`:`${q.javaOutput} evaluates to ${q.expectedOutput}`;
  const explanationSteps=steps.length?steps.join('; '):[...lengthFacts,inlineObservation].join('; ');
- const rule=run.concepts.includes('independent copy')?'clone() creates a separate array object with copied element values.':run.concepts.includes('row alias')?'An int[][] contains references to row arrays. References to the same row share one array object.':run.concepts.includes('method parameter')?'Java passes a copy of an array reference. Element mutations affect the shared array; reassigning the local parameter does not reassign the caller’s variable.':built.program.statements.some(s=>s.op==='array'&&s.defaulted||s.op==='allocate'&&s.state==='allocated')?'New int array elements start at 0. Follow later assignments in order.':mode==='create-references'||run.concepts.includes('aliasing')?'Array assignment copies a reference. Aliases share one array; a new allocation creates a separate object.':mode==='in-place'?'The same array is read and written in order, so later reads can use earlier updates.':mode.includes('2d')||mode==='nested'?'Use each selected row’s own length and follow the nested conditions in execution order.':'Evaluate the indices and conditions before applying each dependent update.';
+const walkOps=(list,pred)=>list.some(s=>pred(s)||['body','yes','no'].some(k=>Array.isArray(s[k])&&walkOps(s[k],pred))),hasAlias=walkOps(built.program.statements,s=>s.op==='reference'&&s.declare!==false||s.op==='row-reference'||s.op==='returned-reference'||s.op==='call'),hasIf=walkOps(built.program.statements,s=>s.op==='if'),hasLoop=walkOps(built.program.statements,s=>s.op==='loop'),hasControl=hasIf||hasLoop,hasIndex=walkOps(built.program.statements,s=>s.op==='assign'&&s.index!==undefined||s.op==='declare'&&JSON.stringify(s.value).includes('"op":"read"'));
+ const rule=run.concepts.includes('independent copy')?'clone() creates a separate array object with copied element values.':run.concepts.includes('row alias')?'An int[][] contains references to row arrays. References to the same row share one array object.':run.concepts.includes('method parameter')?'Java passes a copy of an array reference. Element mutations affect the shared array; reassigning the local parameter does not reassign the caller’s variable.':built.program.statements.some(s=>s.op==='array'&&s.defaulted||s.op==='allocate'&&s.state==='allocated')?'New int array elements start at 0. Follow later assignments in order.':(mode==='create-references'||run.concepts.includes('aliasing'))&&hasAlias?'Array assignment copies a reference. Aliases share one array; a new allocation creates a separate object.':mode==='in-place'?'The same array is read and written in order, so later reads can use earlier updates.':mode.includes('2d')||mode==='nested'?(hasControl?`Use each selected row’s own length and follow the ${hasLoop&&hasIf?'nested loops and conditions':hasLoop?'loops':'conditions'} in execution order.`:'Use each selected row’s own length when choosing the column.'):hasIf?'Evaluate the indices and conditions before applying each dependent update.':hasIndex?'Evaluate each index expression before reading or writing the cell.':'Follow the statements in order.';
  const errorExplanations={'ArrayIndexOutOfBoundsException':'An attempted index is outside its array’s valid range, so Java throws ArrayIndexOutOfBoundsException.','NegativeArraySizeException':'Java evaluates the length expression before allocation. A negative length throws NegativeArraySizeException; it does not create an empty array.','NullPointerException':'The reference is null, so there is no array whose length or element can be read. Java throws NullPointerException.','Compile-time error':'A local reference has no automatic default value. Java rejects its use before assignment at compile time.'};
  q.explanation=run.error?errorExplanations[run.error]||run.error:built.special?`A newly allocated ${built.program.statements.find(s=>s.op==='allocate').type} array initializes every element to ${answer}. The array reference itself points to the allocated array.`:`${rule} ${explanationSteps}. ${mode==='reverse'?`The selected statement makes the final print display ${q.expectedOutput}.`:`The requested result is ${q.correctAnswer}.`}`;
  return q;

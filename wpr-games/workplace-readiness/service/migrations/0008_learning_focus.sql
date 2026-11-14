@@ -98,3 +98,10 @@ CREATE TABLE IF NOT EXISTS learning_focus_completion (
   PRIMARY KEY (focus_id, focus_revision, profile_id),
   FOREIGN KEY (focus_id,focus_revision) REFERENCES learning_focus_revisions(focus_id,revision) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS learning_focus_questions (
+  launch_id TEXT NOT NULL REFERENCES learning_focus_launches(id) ON DELETE CASCADE,
+  question_id TEXT NOT NULL,
+  mode TEXT NOT NULL,
+  PRIMARY KEY (launch_id,question_id)
+);

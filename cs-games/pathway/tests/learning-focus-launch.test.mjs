@@ -10,7 +10,8 @@ const c='node:advanced:loop-lab:iterations';
 const href=mode=>'/java-games/loop-lab/?mode='+mode;
 
 test('class launches and queued attempts preserve scope, overlap, and one ordinary evidence record', async t=>{
-  const dev=await startDev({teacherTokens:{teacher},pathwayAdapters:{ENABLE_TEACHER_DIRECTED_LEARNING:'1'}});
+  const pathwayAdapters={ENABLE_TEACHER_DIRECTED_LEARNING:'1'};
+  const dev=await startDev({teacherTokens:{teacher},pathwayAdapters});
   t.after(async()=>{await new Promise(resolve=>dev.server.close(resolve));dev.db.close();});
   dev.db.exec(readFileSync(new URL('../../../wpr-games/workplace-readiness/service/migrations/0008_learning_focus.sql',import.meta.url),'utf8'));
   async function call(path,body,token=teacher,status=200){
@@ -32,11 +33,18 @@ test('class launches and queued attempts preserve scope, overlap, and one ordina
     const {previewAt,previewSignature}=await call(path+'/preview',assignment);
     return call(path+'/publish',{assignment,previewAt,previewSignature,requestId:crypto.randomUUID()});
   }
+  const launch=(nodeId,mode,assignmentId,status=200,token=learner.token,overrides={})=>
+    call('/profile/class-launch',{classId:room.id,nodeId,href:href(mode),assignmentId,...overrides},token,status);
+  const old=await launch(c,'iterations');
+  const oldQuestion=crypto.randomUUID();
+  const permit=(launch,questionId,mode,status=200,token=learner.token)=>
+    call('/profile/class-launch/'+launch.id+'/question',{questionId,mode},token,status);
+  await permit(old,oldQuestion,'iterations');
+  await permit(old,crypto.randomUUID(),'iterations',409);
   const focusA=await assign(a,'individual','restricted');
   const focusB=await assign(b,'class','advisory');
   const sameA=await assign(a,'class','advisory');
-  const launch=(nodeId,mode,assignmentId,status=200,token=learner.token,overrides={})=>
-    call('/profile/class-launch',{classId:room.id,nodeId,href:href(mode),assignmentId,...overrides},token,status);
+  await permit(old,crypto.randomUUID(),'iterations',403);
   const authorized=await launch(a,'looptype',focusA.id);
   await launch(b,'components',focusB.id);
   await launch(c,'iterations',undefined,403);
@@ -52,15 +60,31 @@ test('class launches and queued attempts preserve scope, overlap, and one ordina
       familyId:'count-with-header',difficulty:'beginner',attempt:1,classLaunchId:authorized.id,...more};
   }
   const guaranteed=event('looptype');
+  await permit(authorized,guaranteed.questionId,'looptype',403,peer.token);
+  await permit(authorized,guaranteed.questionId,'components',403);
+  await permit(authorized,guaranteed.questionId,'looptype');
   const mismatched=event('components',{familyId:'unclassified'});
-  const unverified=event('looptype',{classLaunchId:null});
+  const unverified=event('looptype',{classLaunchId:null,occurred:Date.now()-86400000});
+  const wrongScope=event('looptype',{classId:crypto.randomUUID()});
+  const unpermitted=event('looptype');
+  const oldEvent=event('iterations',{questionId:oldQuestion,id:oldQuestion+':1',classLaunchId:old.id,familyId:'unclassified'});
+  const modified=event('components',{questionId:guaranteed.questionId,id:guaranteed.questionId+':2',attempt:2});
   const explicitGuest=event('looptype',{learner:'guest'});
   const sync=events=>call('/profile/sync',{events},learner.token);
-  const answer=await sync([guaranteed,mismatched,unverified,explicitGuest]);
-  assert.deepEqual(answer.accepted,[guaranteed.id]);
-  assert.deepEqual(answer.rejected.map(item=>item.id),[mismatched.id,unverified.id,explicitGuest.id]);
+  const acceptedBeforeCutover=event('iterations',{classLaunchId:null,familyId:'unclassified'});
+  pathwayAdapters.ENABLE_TEACHER_DIRECTED_LEARNING='0';
+  assert.deepEqual((await sync([acceptedBeforeCutover])).accepted,[acceptedBeforeCutover.id]);
+  const storedBefore=dev.db.prepare('SELECT data FROM performance_events WHERE id=?').get(acceptedBeforeCutover.id).data;
+  pathwayAdapters.ENABLE_TEACHER_DIRECTED_LEARNING='1';
+  assert.deepEqual((await sync([acceptedBeforeCutover])).accepted,[acceptedBeforeCutover.id]);
+  assert.equal(dev.db.prepare('SELECT data FROM performance_events WHERE id=?').get(acceptedBeforeCutover.id).data,storedBefore);
+  const answer=await sync([guaranteed,mismatched,unverified,explicitGuest,wrongScope,unpermitted,oldEvent,modified]);
+  assert.deepEqual(answer.accepted,[guaranteed.id,oldEvent.id]);
+  assert.deepEqual(answer.rejected.map(item=>item.id),[mismatched.id,unverified.id,explicitGuest.id,wrongScope.id,unpermitted.id,modified.id]);
+  assert.equal(answer.rejected[1].code,'legacy-unverified');
+  dev.db.prepare('UPDATE learning_focus_launches SET expires=0 WHERE id=?').run(authorized.id);
   assert.deepEqual((await sync([guaranteed])).accepted,[guaranteed.id]);
-  assert.equal(dev.db.prepare('SELECT count(*) n FROM performance_events').get().n,1);
+  assert.equal(dev.db.prepare('SELECT count(*) n FROM performance_events').get().n,3);
   const state=await call('/profile/learning-focus',undefined,learner.token);
   assert.equal(state.classwork.find(item=>item.id===sameA.id).progress,'complete');
   assert.equal(state.catchUp[0].progress,'complete');

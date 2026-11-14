@@ -1,0 +1,14 @@
+# Loop Lab repair proposal
+
+Status: scoped and ready for a first implementation. Reproduced against main `790d750` using the supplied read-only audit and targeted tests. No Loop Lab source changed.
+
+| Priority | Evidence and implementation scope |
+| --- | --- |
+| D1 · High | Algorithms Beginner seeds 50102, 50126 and 6725 display `count++` where the prompt promises a blank. Honor the blank marker in the inline conditional branch of `engine/java-model.js`. Cover inline and block forms and compile the displayed code with each candidate inserted. |
+| D2 · High | `loop-ui.js` includes the variant label in the unanswered header. In the supplied audit the Debug family identifies the keyed repair shape. Keep mode and difficulty visible and retain family information for evidence and teacher tools. Test the header before answering. |
+| D4/W1 · High | Components Intermediate seeds 1955, 3068 and 4499 key `col++` while displayed code uses `col += 1`. Derive keyed components and prompt fragments from the same rendered statement. Assert the keyed component appears in the actual displayed code and check equivalent answer forms for uniqueness. |
+| D3 · High | The supplied train/test script reproduced 94.3% rank-only accuracy for Advanced Nested. Vary rank placement through plausible misconception outcomes in the affected numeric modes. Measure held-out seeds by mode and tier. The audit's 40% threshold is a proposed verification target. Don't count lexicographic rankings as numeric evidence. |
+| W2, W3, W6, W7 · Follow-up | Test dead statements by perturbation/ablation, difficulty by the reasoning required, and fallback distractors for plausibility. Correct inconsistent body-versus-loop wording. First fix D1/D2/D4 independently. Keep intentional reasoning and distractors where they support the learning goal. |
+| W4/W5 · Teacher review | For tasks that can use `while (true)` and `break`, decide whether the lesson intends an explicit no-break constraint or compares multiple valid solutions. Review new Advanced reasoning, loop-variable scope and enhanced-versus-indexed coverage before changing curriculum classification or evidence eligibility. |
+
+Preserve stable activity and family identifiers, session and report behavior, and existing evidence. Inspect imports of the Loop Lab printer before changing rendering. Likely conflicts are the shared Java entry points if touched, and PR #36's future activity restrictions and resume adapters. No conflict with the current Array/Variable generator repairs. Release checks include visible-code JVM output, distinct and plausible distractors, existing Loop Lab suites, scoped browser feedback and keyboard checks, and proficiency/evidence regressions for any changed activity metadata. The source audit reported W2–W7 beyond these targeted reruns. Keep those observations labeled as audit inputs until the repair branch reproduces them.

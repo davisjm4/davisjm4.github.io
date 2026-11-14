@@ -53,6 +53,8 @@ jobs:
         run: npm run test:array-compose-jvm
       - name: Existing Array Lab and shared-session regressions
         run: npm run test:array-lab && node session-tests.mjs
+      - name: Array Lab instructional-quality repairs (changed cell, Beginner variation, redundant modulus, explanations)
+        run: npm run test:array-repair
       - name: Teacher export regressions
         run: node ../cs-games/teacher/qti-tests.mjs && node ../cs-games/teacher/adapters-tests.mjs
       - name: Full stress sample when requested

@@ -1,4 +1,5 @@
 import {lit,variable as V,binary as B,read as R,length as L,declare as D,array as A,assign as S,branch as If,loop as For,rowReference,rowResult,arrayResult,cellIndex,cellPair,stop} from './ir.js';
+import {execute} from './ir.js';
 
 const add=(a,b)=>B('+',a,b),sub=(a,b)=>B('-',a,b),mul=(a,b)=>B('*',a,b),div=(a,b)=>B('/',a,b),rem=(a,b)=>B('%',a,b);
 const comparisons=['>','<','>=','<=','==','!='];
@@ -6,16 +7,46 @@ const small=(basis,v)=>[
   basis,add(basis,1),sub(4,basis),mul(basis,2),div(add(basis,2),2),rem(basis,2),
 ][v];
 
-// These recipes construct a valid small index rather than wrapping an arbitrary
-// expression repeatedly in %. A recipe has at most two meaningful calculations.
-function indexRecipe(profile,v,statements,values){
-  const n=values.length;
+// R3/R8: Beginner 1D index recipes are length-aware and seed-driven. A recipe is given the
+// array length n and chooses the cell it will select from {first, second, middle, final valid
+// index}, then derives operands that produce it. The operand search skips identity and
+// self-cancelling forms (x+0, x*1, x-x ...) so each recipe still has one or two meaningful
+// calculations. Nothing here depends on the position of a question in a sequence.
+const OPS={'+':(a,b)=>a+b,'-':(a,b)=>a-b,'*':(a,b)=>a*b,'/':(a,b)=>b?Math.trunc(a/b):NaN,'%':(a,b)=>b?a%b:NaN};
+const meaningful={
+  '+':(a,b,t)=>a>=1&&b>=1,
+  '-':(a,b,t)=>b>=1&&a!==b,
+  '*':(a,b,t)=>t===0?(a>=2&&b===0||b>=2&&a===0):a>=2&&b>=2,
+  '/':(a,b,t)=>b>=2&&a>=1,
+  '%':(a,b,t)=>b>=2&&a>=b,
+};
+const pickOne=(list,random)=>list.length?list[Math.floor(random()*list.length)]:null;
+function operands(op,target,random){
+  const pairs=[];for(let a=0;a<=9;a++)for(let b=0;b<=9;b++)if(OPS[op](a,b)===target&&meaningful[op](a,b,target))pairs.push([a,b]);
+  return pickOne(pairs,random);
+}
+// Shuffled preference order over the cell classes; each recipe takes the first it can realise.
+function targetOrder(n,random,forbid0){
+  const classes=[...new Set([0,1,Math.floor(n/2),n-1])].filter(i=>!(forbid0&&i===0));
+  const shuffle=list=>list.map(x=>({x,k:random()})).sort((a,b)=>a.k-b.k).map(o=>o.x);
+  // Any other valid index is a fallback, used only when an operation cannot reach a preferred cell.
+  return [...shuffle(classes),...shuffle([...Array(n).keys()].filter(i=>!classes.includes(i)))];
+}
+const firstFeasible=(order,build)=>{for(const t of order){const r=build(t);if(r)return r;}return null;};
+const OP_LIST=['+','-','*','/','%'];
+function indexRecipe(profile,v,statements,values,random,forbid0=false,flavour){
+  const n=values.length,order=targetOrder(n,random,forbid0);
   if(profile===0){
-    return [lit(2),add(1,2),sub(4,1),mul(2,2),div(4,2),rem(5,3)][v];
+    const r=firstFeasible(order,t=>{if(v===0)return lit(t);const ab=operands(OP_LIST[v-1],t,random);return ab&&B(OP_LIST[v-1],lit(ab[0]),lit(ab[1]));});
+    return r;
   }
   if(profile===1){
-    const inputs=[[1,2],[4,1],[2,2],[4,2],[4,3],[1,1]][v];
-    statements.push(D('left',inputs[0]),D('right',inputs[1]));
+    const r=firstFeasible(order,t=>{
+      let ab;if(v===5){const options=[];for(let a=1;a<=9;a++)for(let b=1;b<=4;b++)if(a+2*b===t)options.push([a,b]);ab=pickOne(options,random);}
+      else ab=operands(OP_LIST[v],t,random);
+      return ab&&{ab};
+    });
+    statements.push(D('left',r.ab[0]),D('right',r.ab[1]));
     return [add(V('left'),V('right')),sub(V('left'),V('right')),mul(V('left'),V('right')),div(V('left'),V('right')),rem(V('left'),V('right')),add(V('left'),mul(V('right'),2))][v];
   }
   if(profile===2){
@@ -23,40 +54,61 @@ function indexRecipe(profile,v,statements,values){
     return [sub(L('values'),1),div(L('values'),2),div(sub(L('values'),1),2),rem(L('values'),4),div(add(L('values'),1),2),sub(L('values'),V('distance'))][v];
   }
   if(profile===3){
-    values[0]=1+Math.abs(values[0])%3;
-    let offset;
-    if(v===0)offset=lit(2);
-    if(v===1){statements.push(D('distance',2));offset=V('distance');}
-    if(v===2)offset=R('values',0);
-    if(v===3){statements.push(A('positions',[2,1,3]));offset=R('positions',0);}
-    if(v===4){statements.push(A('positions',[1,2,3]));offset=L('positions');}
-    if(v===5){statements.push(D('distance',1));offset=add(V('distance'),1);}
+    const k=v===5?2+Math.floor(random()*2):1+Math.floor(random()*3);let offset;
+    if(v===0)offset=lit(k);
+    if(v===1){statements.push(D('distance',k));offset=V('distance');}
+    if(v===2){values[0]=k;offset=R('values',0);}
+    if(v===3){statements.push(A('positions',[k,...Array.from({length:2},()=>1+Math.floor(random()*3))]));offset=R('positions',0);}
+    if(v===4){statements.push(A('positions',Array.from({length:k},(_,i)=>i+1)));offset=L('positions');}
+    if(v===5){statements.push(D('distance',k-1));offset=add(V('distance'),1);}
     return sub(L('values'),offset);
   }
   if(profile===4){
-    if(v===2){statements.push(D('index',L('values')),S('index',sub(V('index'),1)));return V('index');}
-    const e=[lit(2),add(1,2),sub(L('values'),1),div(L('values'),2),rem(5,3),mul(2,2)][v];
+    if(v===2){const k=1+Math.floor(random()*2);statements.push(D('index',L('values')),S('index',sub(V('index'),k)));return V('index');}
+    if(v===3){statements.push(D('index',div(L('values'),2)));return V('index');}
+    const e=firstFeasible(order,t=>{if(v===0)return lit(t);const op=[null,'+',null,null,'%','*'][v],ab=operands(op,t,random);return ab&&B(op,lit(ab[0]),lit(ab[1]));});
     statements.push(D('index',e));return V('index');
   }
   if(profile===5){
-    const initial=[1,4,2,4,5,2][v];statements.push(D('index',initial));
+    const f=[i=>i+1,i=>i-1,i=>i*2,i=>Math.trunc(i/2),i=>i%3,i=>n-i][v];
+    const ok=[i=>i>=1,i=>i>=2,i=>i>=1,i=>i>=1,i=>i>=3,i=>i>=1&&i<=n][v];
+    const r=firstFeasible(order,t=>{const options=[];for(let i=0;i<=n+2;i++)if(ok(i)&&f(i)===t&&i!==t)options.push(i);const init=pickOne(options,random);return init===null?null:{init};});
+    statements.push(D('index',r.init));
     const next=[add(V('index'),1),sub(V('index'),1),mul(V('index'),2),div(V('index'),2),rem(V('index'),3),sub(L('values'),V('index'))][v];
     statements.push(S('index',next));return V('index');
   }
   if(profile===6){
-    statements.push(D('index',0),If(B(comparisons[v],R('values',0),R('values',1)),[S('index',2)],[S('index',4)]));return V('index');
+    const a=order[0],b=order[1];
+    statements.push(D('index',0),If(B(comparisons[v],R('values',0),R('values',1)),[S('index',a)],[S('index',b)]));return V('index');
   }
   if(profile===7){
-    statements.push(A('positions',[1,2,3]));
+    const t=order[0],positions=[0,0,0];
+    const pool=order.slice(1);
+    const fillers=pool.map(x=>({x,k:random()})).sort((a,b)=>a.k-b.k).map(o=>o.x);
+    let slot=[0,1,1,1,2,1][v];
+    if(v===2){if(t===0){positions[0]=0;slot=0;}else{slot=1+Math.floor(random()*2);positions[0]=slot;}}
+    positions[slot]=t;let f=0;for(let i=0;i<3;i++)if(!(i===slot)&&!(v===2&&i===0))positions[i]=fillers[f++];
+    statements.push(A('positions',positions));
     if(v===1)statements.push(D('slot',1));
     const selector=[lit(0),V('slot'),R('positions',0),add(-1,2),sub(L('positions'),1),sub(2,1)][v];
     return R('positions',selector);
   }
-  if(profile===8){values[0]=1+Math.abs(values[0])%2;return small(R('values',0),v);}
+  if(profile===8){
+    const f=[b=>b,b=>b+1,b=>4-b,b=>b*2,b=>Math.trunc((b+2)/2),b=>b%2][v];
+    const ok=[b=>b>=1||v===0,b=>b>=1,b=>b>=0&&b<=3,b=>b>=1,b=>b>=1,b=>b>=2][v];
+    const r=firstFeasible(order,t=>{const options=[];for(let b=0;b<=2*n;b++)if(ok(b)&&f(b)===t&&b<=9)options.push(b);const basis=pickOne(options,random);return basis===null?null:{basis};});
+    values[0]=r.basis;return small(R('values',0),v);
+  }
   if(profile===9){
-    if(v===2)statements.push(D('index',L('values')));
-    if(v===3)statements.push(D('index',0),S('index',sub(V('index'),1)));
-    return [L('values'),sub(0,1),V('index'),V('index'),add(L('values'),1),sub(0,L('values'))][v];
+    // Variants are split between a valid boundary cell and an out-of-range cell. The split
+    // alternates with the stored-index flavour (variant/6), so the outcome is not a function of
+    // the operation alone, and the scheduler's variant order keeps it unpredictable in sequence.
+    // Without a variant context the legacy exception-only behaviour is kept.
+    const valid=flavour!==undefined&&(v+flavour+(v>2?1:0))%2===0;
+    if(v===2)statements.push(D('index',valid?sub(L('values'),1):L('values')));
+    if(v===3)statements.push(D('index',valid?1:0),S('index',sub(V('index'),1)));
+    const last=sub(L('values'),1);
+    return valid?[last,lit(0),V('index'),V('index'),sub(L('values'),2),sub(L('values'),3)][v]:[L('values'),sub(0,1),V('index'),V('index'),add(L('values'),1),sub(0,L('values'))][v];
   }
   // A count from one straightforward loop becomes the selected index. Six
   // routes change the visited indices or stopping condition, not the data size.
@@ -73,12 +125,12 @@ function indexRecipe(profile,v,statements,values){
   throw Error('Unknown foundational index recipe');
 }
 
-export function foundationQuestion(mode,model,variant,values,grid){
+export function foundationQuestion(mode,model,variant,values,grid,random){
   const v=variant%6,representation=Math.floor(variant/6)%2;
   if(mode==='element'||mode==='perform-update'){
     const statements=[A('values',values)];
     const profiles=mode==='element'?[0,1,2,3,4,5,6,7,8,9]:[1,2,0,8,4,5,3,6,10,7];
-    let index=indexRecipe(profiles[model],v,statements,values);
+    let index=indexRecipe(profiles[model],v,statements,values,random||(()=>0.5),mode==='perform-update'&&model===3,representation);
     // A stored index is a meaningful alternative to an inline index; it adds
     // one named state to track, without adding unrelated arithmetic.
     if(representation&&![0,2,4,5,6,9].includes(profiles[model])){statements.push(D('selected',index));index=V('selected');}
@@ -89,7 +141,15 @@ export function foundationQuestion(mode,model,variant,values,grid){
       return {program:{statements,output:cellPair('values',V('target'),0),objective:'pair'},kind:'swap',prompt:'Select the two cells exchanged by the final three assignments.',details:{},foundation:true};
     }
     statements.push(D('target',index));
-    const rhs=model===3?R('values',0):model===5?add(R('values',V('target')),1):add(R('values',V('target')),2);
+    let rhs=model===5?add(R('values',V('target')),1):add(R('values',V('target')),2);
+    if(model===3){
+      // Copy-target: the source (values[0]) must hold a different value than the target cell,
+      // otherwise the final assignment would leave the targeted cell unchanged. The target is
+      // never cell 0 (the source itself), which also keeps the semantic structure seed-independent.
+      const at=execute({statements,output:V('target')}).answer;
+      if(values[at]===values[0])values[at]+=1;
+      rhs=R('values',0);
+    }
     statements.push(S('values',rhs,V('target')));
     return {program:{statements,output:cellIndex('values',V('target')),objective:'cell'},kind:'apply',prompt:'Select the cell changed by the final assignment. Values are revealed after submission.',details:{},foundation:true};
   }

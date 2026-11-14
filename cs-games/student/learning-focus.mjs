@@ -8,13 +8,13 @@ const labels={class:'Whole class',group:'Selected group',individual:'Individual'
 const stateNames={available:'Available',started:'Started','in-progress':'In progress',complete:'Complete'};
 export function createStudentFocus({root,profile,storage}) {
   const key='learning-focus-previous:'+profile.classId;
-  let model=null, view=null, timer;
+  let model=null, view=null, timer, loading;
   function priorPosition(){
-    try {return storage.getItem(key)??'';} catch {return '';}
+    try {return storage.getItem(key);} catch {return null;}
   }
   function rememberPosition(){
     try {
-      if(!storage.getItem(key))storage.setItem(key,routeHash(readRoute()));
+      if(storage.getItem(key)===null)storage.setItem(key,routeHash(readRoute()));
     }catch {}
   }
   function returnAction(node){
@@ -69,29 +69,33 @@ export function createStudentFocus({root,profile,storage}) {
       el('h2',{text:heading}),items.map(item=>primary.has(item.id)?card(item):
         el('p',{text:title(item)+' · '+labels[item.scope]+' · '+stateNames[item.progress]+' · See the related assignment above.'})));
     const items=[...model.classwork,...model.catchUp];
-    root.hidden=!items.length&&!model.restricted&&!pending;
+    root.hidden=!items.length&&!model.restricted&&!pending&&previous===null;
     root.replaceChildren(
       ...[pending&&el('p',{role:'status',text:'Class access is awaiting verification. Reconnect before opening new practice.'}),
       model.restricted&&el('p',{role:'status',text:'Class practice follows your active assignments. You can open classwork and catch-up work.'}),
       group("Today's Classwork",model.classwork),group('Your Catch-Up Work',model.catchUp),
-      previous&&el('p',{},blocked?'Your previous pathway position is saved until class access allows it.':
-        el('a',{href:previous,text:'Resume Previous Path'}))].filter(Boolean));
+      previous!==null&&el('p',{},blocked?'Your previous pathway position is saved until class access allows it.':
+        el('a',{href:previous||location.pathname+location.search,text:'Resume Previous Path'}))].filter(Boolean));
   }
   return {
     get enabled(){return model?.enabled===true;},
-    setPathway(next){view=next;render();},
+    setPathway(next){if(view===next)return;view=next;render();},
     async refresh(){
       if(!profile||document.hidden)return;
-      clearTimeout(timer);
-      try{
-        const result=await request('/profile/learning-focus',{token:profile.token});
-        if(JSON.stringify(result)!==JSON.stringify(model)){model=result;render();}
-      }catch(error){
-        if(error.status===404)return;
-        if(error.status===401||error.status===403){model=null;root.replaceChildren();root.hidden=true;return;}
-        if(model?.enabled){model={...model,stale:true};render();}
-      }
-      timer=setTimeout(()=>this.refresh(),30000);
+      if(loading)return loading;
+      loading=(async()=>{
+        clearTimeout(timer);
+        try{
+          const result=await request('/profile/learning-focus',{token:profile.token});
+          if(JSON.stringify(result)!==JSON.stringify(model)){model=result;render();}
+        }catch(error){
+          if(error.status===404)return;
+          if(error.status===401||error.status===403){model=null;root.replaceChildren();root.hidden=true;return;}
+          if(model?.enabled){model={...model,stale:true};render();}
+        }
+        timer=setTimeout(()=>this.refresh(),30000);
+      })().finally(()=>{loading=null;});
+      return loading;
     },
   };
 }

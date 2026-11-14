@@ -1,6 +1,7 @@
 import {execute,canonical} from './ir.js';
-import {MODEL_NAMES,LEVELS} from './models.js?v=array-feedback-20261024';
+import {MODEL_NAMES,LEVELS} from './models.js?v=array-repair-20261113';
 import {redundantArithmetic} from './minimum-path.js';
+import {redundantModulus} from './bounds.js';
 
 export function analyzeDifficulty(program){
  const run=execute(program),features={operations:run.relevantOperations,arithmetic:0,comparisons:0,loops:0,loopStages:0,nesting:0,conditions:0,mutations:0,references:0,reassignments:0,requiredDataObjects:new Set(run.slice.map(e=>e.key.match(/^#(\d+):/)?.[1]).filter(x=>x!==undefined)).size,indirection:0,feedback:false,indexFeedback:false,arrayDependency:false,mutationsInteract:false,dependentLoopLimits:false,twoDimensional:false};
@@ -24,6 +25,17 @@ export function analyzeDifficulty(program){
  const intermediate=features.dependentLoopLimits||(features.arrayDependency&&features.arithmetic>0)||features.operations>=2&&(features.mutations>0||features.conditions>0||features.indirection>0||features.references>0||features.arithmetic>=3);
  return {features,minimumBand:advanced?'Advanced':intermediate?'Intermediate':'Beginner',run};
 }
+// R1: a prompt that claims a cell was "changed" must actually change it. The prompt
+// identifies the cell targeted by the final assignment; this separately checks that the
+// assigned value differs from what the cell held. Prompts worded "assigned" are exempt, so an
+// intentionally unchanged assignment remains available as a distinct objective.
+export function finalAssignmentIsNoOp(program){
+ const list=program.statements,last=list[list.length-1];
+ if(!last||last.op!=='assign'||last.index===undefined)return false;
+ const before=execute({...program,statements:list.slice(0,-1)}).states[last.name],after=execute(program).states[last.name];
+ return JSON.stringify(before)===JSON.stringify(after);
+}
+export function claimsChange(q){return ['apply','cell-2d'].includes(q.kind)&&/\bchanged\b/.test(q.prompt);}
 export function validateCandidate(q){
  const problems=[];if(!MODEL_NAMES[q.format]?.includes(q.reasoningModel))problems.push('unregistered model');if(!LEVELS.includes(q.difficulty))problems.push('invalid difficulty');
  const {run,features,minimumBand}=analyzeDifficulty(q.semanticProgram);
@@ -33,8 +45,10 @@ export function validateCandidate(q){
  if(['cell','apply'].includes(q.kind)&&(!Number.isInteger(Number(q.correctCell))||Number(q.correctCell)<0||Number(q.correctCell)>=q.values.length))problems.push('invalid cell interaction');
  if(q.kind==='swap'&&(new Set(q.correctCells).size!==2||q.correctCells.some(i=>Number(i)<0||Number(i)>=q.values.length)))problems.push('invalid swap interaction');
  if(q.kind==='cell-2d'){const [r,c]=q.correctCell.split(',').map(Number);if(!Number.isInteger(r)||!Number.isInteger(c)||!q.grid[r]||c<0||c>=q.grid[r].length)problems.push('invalid grid interaction');}
+ if(claimsChange(q)&&!run.error&&finalAssignmentIsNoOp(q.semanticProgram))problems.push('final assignment leaves the changed cell unchanged');
  if(q.code.split('\n').some(line=>/^\s*(?:for|if|while)\s*\(/.test(line)&&!line.trimEnd().endsWith('{')))problems.push('unbraced control structure');
  if(q.semanticFingerprint!==canonical(q.semanticProgram))problems.push('incorrect semantic fingerprint');
+ if(redundantModulus(q.semanticProgram).length)problems.push('modulus applied to a value already bounded by its divisor');
  if(redundantArithmetic(q.semanticProgram).length)problems.push('shorter solution cancels or repeats generated arithmetic');
  // The rubric gate is deliberately independent of the declared difficulty metadata.
  if(q.difficulty==='Intermediate'&&minimumBand==='Beginner')problems.push('minimum solution is foundational');

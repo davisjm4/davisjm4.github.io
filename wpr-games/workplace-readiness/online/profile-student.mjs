@@ -3,7 +3,7 @@ import { PROFILE_ID, PROFILE_KEY, practiceEvent } from './profile-model.mjs';
 import { el, button, download } from './dom.mjs';
 import { profileCsv, renderProfileProgress } from './profile-report.mjs?v=targeted-clarity-v1';
 
-import {device,activeProfile as identity,observeSync,queueKeys,queueProfileEvent,syncQueuedPractice as syncSoon} from './profile-sync.mjs?v=guest-map-v1';
+import {device,activeProfile as identity,observeSync,queueKeys,retainedPractice,queueProfileEvent,syncQueuedPractice as syncSoon} from './profile-sync.mjs?v=guest-map-v1';
 
 const host=document.getElementById('student-profile');
 const status=el('p',{role:'status','aria-live':'polite'});
@@ -40,6 +40,15 @@ function mount() {
       el('p',{text:'Supported attempts sync to your class profile. Queued practice uploads when this browser reconnects.'}),
       ...(!onPathway ? [el('a',{href:'/cs-games/student/',text:'Open my class pathway'})] : []),
       button('Sync practice now',syncSoon),
+      button('Save unsynced practice for recovery',()=>{
+        const pending=queueKeys().flatMap(key=>{
+          try{return [{code:'pending',event:JSON.parse(localStorage.getItem(key))}];}catch{return [];}
+        });
+        const events=[...retainedPractice(),...pending];
+        if(!events.length){say('There is no unsynced practice to save.');return;}
+        download('cs-games-practice-recovery.json',JSON.stringify({version:1,events},null,2),'application/json');
+        say('Recovery file saved. These responses do not yet count toward class progress.');
+      }),
       button('View synced progress',async()=>{
         try {
           await syncSoon();

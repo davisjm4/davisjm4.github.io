@@ -253,7 +253,7 @@ for (const [slug, g] of Object.entries(J.games)) {
           (choice) => String(choice.value) === String(wrong.answer) && choice.misconceptionId,
         );
         if (diagnosed) {
-          ok(t.$("feedback").textContent.includes(diagnosed.explanation));
+          ok(t.$("execution").textContent.includes(diagnosed.explanation));
           const latestRecord = Object.values(t.tracker.snapshot().records).at(-1);
           eq(latestRecord.details?.misconceptionId, diagnosed.misconceptionId);
         }

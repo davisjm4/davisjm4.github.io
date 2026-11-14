@@ -79,20 +79,47 @@ async function readLaunch(db,profile,id,now) {
     id,profile.id,profile.generation,now);
 }
 
-export async function verifyFocusLaunch(env,request,id,now) {
+async function checkFocusLaunch(env,request,id,now) {
   if(!focusEnabled(env))fail(404,'Class launch verification is unavailable.');
   const profile=await studentProfile(request,env,now);
   const launch=await readLaunch(env.DB,profile,id,now);
   if(!launch)fail(403,'Open this activity from your class pathway.');
   const plan=await publishedPlan(env.DB,profile.class_id);
   if(!plan)fail(404,'Your class pathway is unavailable.');
+  if(plan.id!==launch.pathway_id)fail(403,'Your class pathway changed. Open the activity again.');
   const state=await focusState(env.DB,profile.class_id);
   const work=classWork({member:{id:profile.id,classId:profile.class_id,active:true},
     ...state,now,pathway:studentContract(plan,graph)});
   const launchedNodes=JSON.parse(launch.node_ids);
   if(work.grants.length && !launchedNodes.every(nodeId=>work.allowed.some(d=>d.nodeId===nodeId&&d.activityId===launch.activity)))
     fail(403,'Your class access changed. Open an available assignment.');
-  return {id,destination:launch.destination,restricted:work.grants.length>0,expires:launch.expires};
+  return {launch,profile,restricted:work.grants.length>0};
+}
+
+export async function verifyFocusLaunch(env,request,id,now) {
+  const {launch,restricted}=await checkFocusLaunch(env,request,id,now);
+  return {id,destination:launch.destination,restricted,expires:launch.expires};
+}
+
+export async function permitFocusQuestion(env,request,id,input,now) {
+  const {launch,profile}=await checkFocusLaunch(env,request,id,now);
+  const mode=new URL(launch.destination,pageOrigin).searchParams.get('mode');
+  if(launch.activity!=='loop-lab'||!mode||!launchId(input?.questionId)||input.mode!==mode)
+    fail(403,'This question does not match your verified class activity.');
+  const db=env.DB;
+  const result=await db.prepare(`INSERT OR IGNORE INTO learning_focus_questions(launch_id,question_id,mode)
+    SELECT l.id,?,? FROM learning_focus_launches l
+    JOIN student_profiles p ON p.id=l.profile_id JOIN profile_classes c ON c.id=p.class_id
+    WHERE l.id=? AND l.expires>? AND p.active=1 AND p.generation=l.generation AND c.archived IS NULL AND c.expires>?
+      AND EXISTS (SELECT 1 FROM profile_sessions s WHERE s.digest=? AND s.profile=p.id AND s.generation=p.generation AND s.expires>?)
+      AND NOT EXISTS (
+      SELECT 1 FROM learning_focus_questions q WHERE q.launch_id=l.id AND NOT EXISTS (
+        SELECT 1 FROM performance_events e WHERE e.profile=l.profile_id AND e.id=q.question_id||':1'
+          AND json_extract(e.data,'$.classLaunchId')=l.id
+      ))`).bind(input.questionId,mode,id,now,now,profile.digest,now).run();
+  if(!result.meta.changes&&!await first(db,`SELECT 1 FROM learning_focus_questions WHERE launch_id=? AND question_id=? AND mode=?`,id,input.questionId,mode))
+    fail(409,'Submit and sync the open question before starting another, or return to your class to reopen practice.');
+  return {permitted:true};
 }
 
 export async function verifyFocusEvidence(env,profile,event,token,now) {
@@ -102,6 +129,14 @@ export async function verifyFocusEvidence(env,profile,event,token,now) {
   const supported=launch.activity===event.activity ||
     (launch.activity==='workplace-readiness'&&event.activity==='workplace-readiness-games');
   if(!supported || (event.pathway!==profile.course_id&&!(profile.course_id==='workplace'&&event.pathway==='workplace-readiness')))return false;
+  const selectedMode=new URL(launch.destination,pageOrigin).searchParams.get('mode');
+  let permittedQuestion=false;
+  if(launch.activity==='loop-lab'){
+    if(event.data.attempt!==1 || event.data.mode!==selectedMode || (selectedMode!=='mixed'&&event.data.assessedMode!==selectedMode))return false;
+    permittedQuestion=Boolean(await first(env.DB,'SELECT 1 FROM learning_focus_questions WHERE launch_id=? AND question_id=? AND mode=?',
+      token,event.data.questionId,selectedMode));
+    if(!permittedQuestion)return false;
+  }
   const nodeIds=new Set(JSON.parse(launch.node_ids));
   const measured=event.data.dimensions.filter(row=>row.scope==='node');
   const measuredIds=event.pathway==='workplace-readiness' ?
@@ -113,7 +148,7 @@ export async function verifyFocusEvidence(env,profile,event,token,now) {
   const pathway=studentContract(plan,graph);
   const work=studentWork(profile,pathway,await focusState(env.DB,profile.class_id),now);
   const relevant=measuredIds.length?measuredIds:[...nodeIds];
-  if(work.grants.length&&relevant.some(id=>!work.allowed.some(d=>d.nodeId===id&&d.activityId===launch.activity)))return false;
+  if(!permittedQuestion&&work.grants.length&&relevant.some(id=>!work.allowed.some(d=>d.nodeId===id&&d.activityId===launch.activity)))return false;
   return {launch,measuredIds:measuredIds.filter(id=>nodeIds.has(id))};
 }
 

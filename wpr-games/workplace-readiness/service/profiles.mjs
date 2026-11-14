@@ -320,7 +320,7 @@ export async function routeProfiles(request,env,segments,readBody,now) {
     return session(db,p,now);
   }
   const p=await studentProfile(request,env,now);
-  if (action==='identity' && method==='GET') return {id:p.id,classId:p.class_id,courseId:p.course_id,classTitle:p.title};
+  if (action==='identity' && method==='GET') return {id:p.id,classId:p.class_id,courseId:p.course_id,classTitle:p.title,...(focusEnabled(env)?{classLaunchRequired:true}:{})};
   if (action==='me' && method==='GET') return {...await progress(db,p.id,p.class_id),classId:p.class_id,courseId:p.course_id,classTitle:p.title};
   if (action==='signout' && method==='POST') {
     await write(db,'DELETE FROM profile_sessions WHERE digest=?',p.digest);
@@ -332,10 +332,21 @@ export async function routeProfiles(request,env,segments,readBody,now) {
     const events=input.events.map(event=>cleanPractice(event,now));
     await limit(db,'sync:'+p.id,now,240);
     if (!focusEnabled(env)) return syncPractice(db,p,events,now);
-    const allowed=[], authorized=[], rejected=[];
+    const allowed=[], authorized=[], rejected=[], acknowledged=[];
     for (let index=0;index<events.length;index++) {
       const event=events[index], source=input.events[index];
-      const validation=source.learner==='guest' ? false : await verifyFocusEvidence(env,p,event,source.classLaunchId,now);
+      const scopeMatches=source.learner!=='guest' && (source.classId==null||source.classId===p.class_id) &&
+        (source.profileId==null||source.profileId===p.id);
+      if(scopeMatches&&await first(db,"SELECT 1 FROM performance_events WHERE profile=? AND id=? AND kind='practice'",p.id,event.id)){
+        // Acknowledgement is safe even after a launch expires. The stored event is never updated.
+        acknowledged.push(event.id);
+        continue;
+      }
+      if(scopeMatches&&source.classLaunchId==null){
+        rejected.push({id:event.id,code:'legacy-unverified'});
+        continue;
+      }
+      const validation=scopeMatches && await verifyFocusEvidence(env,p,event,source.classLaunchId,now);
       if (!validation) {
         rejected.push({id:event.id,code:'class-context'});
         continue;
@@ -343,7 +354,9 @@ export async function routeProfiles(request,env,segments,readBody,now) {
       allowed.push(event);
       authorized.push(validation);
     }
-    return syncPractice(db,p,allowed,now,authorized,rejected);
+    const result=await syncPractice(db,p,allowed,now,authorized,rejected);
+    return {...result,accepted:[...new Set([...acknowledged,...result.accepted])]};
+
   }
   profileError(404,'Profile route not found.');
 }

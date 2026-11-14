@@ -4,6 +4,10 @@ on:
     paths:
       - "java-games/**"
       - ".github/workflows/trace-repair-check.yml"
+  pull_request:
+    paths:
+      - "java-games/**"
+      - ".github/workflows/trace-repair-check.yml"
   workflow_dispatch:
 jobs:
   verify:
@@ -24,6 +28,9 @@ jobs:
       - name: Trace 15k audit and JVM verification
         working-directory: java-games
         run: node variable-lab/trace-tests.mjs
+      - name: Trace quality repairs (cancelling operands, inert counted statements, forced-type guard)
+        working-directory: java-games
+        run: npm run test:trace-repair
       - name: Advanced sample report
         working-directory: java-games
         run: |

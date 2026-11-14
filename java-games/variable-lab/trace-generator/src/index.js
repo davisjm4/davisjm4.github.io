@@ -3,8 +3,8 @@
 import { Rng, mixSeed } from './rng.js';
 import { renderProgram, renderStmt } from './model.js';
 import { execute, formatValue, typeCheck } from './interp.js';
-import { analyze, validateDifficulty, RULES, FAMILIES, FAMILY_IDS, BASELINE_FAMILIES } from './analysis.js';
-import { buildCandidate, chooseObjective, TYPES, FORMATS, TYPE_WEIGHTS, FORMAT_WEIGHTS } from './generator.js';
+import { analyze, validateDifficulty, RULES, FAMILIES, FAMILY_IDS, BASELINE_FAMILIES } from './analysis.js?v=trace-quality-20261114';
+import { buildCandidate, chooseObjective, TYPES, FORMATS, TYPE_WEIGHTS, FORMAT_WEIGHTS } from './generator.js?v=trace-quality-20261114';
 import { generateDistractors, MISCONCEPTIONS } from './distractors.js';
 import { buildExplanation } from './explain.js';
 import { RecentHistory, exactSignature, semanticSignature, HISTORY_DEFAULTS } from './history.js';
@@ -32,7 +32,8 @@ export function generateTraceChallenge(options = {}) {
   const difficulty = options.difficulty || 'beginner';
   if (!DIFFICULTIES.includes(difficulty)) throw new Error(`difficulty must be one of ${DIFFICULTIES.join(', ')}`);
   const seed = (options.seed === undefined ? Math.floor(Math.random() * 0xffffffff) : options.seed) >>> 0;
-  const maxAttempts = options.maxAttempts || 120;
+  // A forced type/format narrows the objective pool, so it gets a wider attempt budget (R9).
+  const maxAttempts = options.maxAttempts || (options.type || options.format ? 400 : 120);
   const hist = RecentHistory.from(options.history ?? options.recentSignatures ?? [], options.historyOptions);
   const counts = hist.familyCounts();
   const weightOf = (f) => 1 / (1 + 0.7 * (counts[f] || 0));
