@@ -1,5 +1,5 @@
 import { advisoryCheckpoint } from "../../cs-games/student/advisory-practice.mjs";
-import { originalModeNames, newModeNames, loopTypeModeNames, DIFFICULTIES, DIFFICULTY_NAMES, createLoopSession, assessLoop, distractorFor } from "./loop-engine.js?v=loop-quality-v1";
+import { originalModeNames, newModeNames, loopTypeModeNames, DIFFICULTIES, DIFFICULTY_NAMES, createLoopSession, assessLoop, distractorFor } from "./loop-engine.js?v=loop-rank-v2";
 import { challengeHeaderParts } from "./loop-header.js?v=loop-quality-v1";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=guest-map-v1";
 
