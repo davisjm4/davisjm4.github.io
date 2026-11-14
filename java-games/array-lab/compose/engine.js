@@ -1,6 +1,6 @@
-import {certifiedPools} from './catalog.js?v=array-catalog-20261024';
-import {MODEL_NAMES,LEVELS,buildModel,rng} from './models.js?v=array-feedback-20261024';
-import {validateCandidate} from './quality.js?v=array-feedback-20261024';
+import {certifiedPools} from './catalog.js?v=array-catalog-20261113';
+import {MODEL_NAMES,LEVELS,buildModel,rng} from './models.js?v=array-repair-20261113';
+import {validateCandidate} from './quality.js?v=array-repair-20261113';
 
 export const HISTORY_KEY='javaArray.semanticHistory.v1';
 export const signatureKey=text=>{let a=2166136261,b=0x9e3779b9;for(let i=0;i<text.length;i++){const c=text.charCodeAt(i);a=Math.imul(a^c,16777619)>>>0;b=Math.imul(b^c,2246822519)>>>0;}return a.toString(16).padStart(8,'0')+b.toString(16).padStart(8,'0');};
@@ -41,6 +41,9 @@ function modelGroups(pool){if(groupedPools.has(pool))return groupedPools.get(poo
 export function generateCompositionalArray(mode='mixed',options={}){
  const difficulty=options.difficulty||'Intermediate';if(!LEVELS.includes(difficulty))throw Error('Unknown Array Lab difficulty');
  const seed=(options.seed??Math.floor(Math.random()*4294967296))>>>0,random=rng(seed),history=options.history||createArrayHistory(null),recent=history.snapshot?history.snapshot():[];
+ // The generator is a linear congruential sequence, so the first outputs of adjacent seeds are
+ // nearly identical. Discarding a few draws decorrelates scheduler choices for sequential seeds.
+ for(let burn=0;burn<4;burn++)random();
  const eligible=mode==='mixed'?Object.keys(MODEL_NAMES):[mode];if(eligible.some(m=>!MODEL_NAMES[m]))throw Error('Unknown Array Lab mode');
  const lastMode=m=>recent.findLastIndex(e=>e.mode===m);const modes=eligible.map(m=>({m,last:lastMode(m),tie:random()})).sort((a,b)=>a.last-b.last||a.tie-b.tie);
  let attempts=0;for(const {m} of modes){

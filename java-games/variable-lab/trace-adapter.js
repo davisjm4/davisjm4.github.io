@@ -1,4 +1,4 @@
-import { generateTraceChallenge, getPostSubmissionView, RecentHistory } from "./trace-generator/src/index.js";
+import { generateTraceChallenge, getPostSubmissionView, RecentHistory } from "./trace-generator/src/index.js?v=trace-quality-20261114";
 
 const HISTORY_KEY = "variableLab.traceHistory.v1";
 const storage = typeof localStorage === "undefined" ? null : localStorage;

@@ -1,11 +1,11 @@
 {
   "diagnostic": false,
-  "sourceDigest": "69ddf1ed8c9123eadc59572b15042abd09954c98e7a94d5360319e041e00398f",
+  "sourceDigest": "1cf42027489b13656eca511471d16f9124c03efba38d6d6078702041c4267694",
   "galleryCompared": 720,
-  "compiled": 8491,
+  "compiled": 8525,
   "expectedCompilationErrors": 2,
-  "outputsCompared": 8491,
-  "statesCompared": 8459,
-  "exceptionsVerified": 32,
+  "outputsCompared": 8525,
+  "statesCompared": 8496,
+  "exceptionsVerified": 29,
   "mismatches": 0
 }
