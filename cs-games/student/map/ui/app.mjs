@@ -1,4 +1,4 @@
-import { withPracticeReturn } from '../../practice-return.mjs';
+import { classLaunchHref, withPracticeReturn } from '../../practice-return.mjs';
 // The student map component. Mount it with the curriculum graph and the evaluated progress contract; it draws, it never decides.
 //
 //   const map = mountStudentMap(container, { graph, courseId, progress, attempts, pacing, mixedActivities, adapter });
@@ -131,7 +131,13 @@ export function mountStudentMap(container, options) {
     for (const link of container.querySelectorAll('a[data-action^="practice"], a[data-action="mixed"]')) {
       const node = link.dataset.returnSkill ? findNode(model, link.dataset.returnSkill) : null;
       const destination = node ? { ...route, view: 'area', stopId: node.stopId, nodeId: node.id } : route;
+      if(link.pathname==='/cs-games/student/launch/')continue;
       link.href = withPracticeReturn(link.href, { origin: location.origin, course: model.courseId, classId: input.classId, route: destination });
+      if(input.classLaunch && input.classId){
+        const nodeId=node?.id ?? link.dataset.nodeId ?? link.closest('[data-node-id]')?.dataset.nodeId;
+        const areaId=link.closest('[data-stop-id]')?.dataset.stopId ?? route.stopId;
+        link.href=classLaunchHref(link.href,{classId:input.classId,nodeId,areaId});
+      }
     }
   }
 

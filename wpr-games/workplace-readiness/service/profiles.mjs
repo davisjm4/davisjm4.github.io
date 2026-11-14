@@ -1,3 +1,5 @@
+import { focusEnabled } from './learning-focus.mjs';
+import { verifyFocusEvidence, creditFocusStatements } from './focus-launch.mjs';
 import {defaultPathwayStatements,ensureClassPathway} from './default-pathways.mjs';
 import { cleanGameAttempt, courses, metadataId, practiceMetadata, profilePathway, publishedPlan, readProfileEvidence, readPracticeProgress } from './profile-evidence.mjs';
 import { DEMONSTRATION_TYPES } from '../../../cs-games/pathway/proficiency/demonstrations.mjs';
@@ -276,17 +278,20 @@ async function recordTeacherEvidence(db,classroom,profileId,input,now) {
     data:{pathwayId:plan.id,pathwayRevision:plan.revision,evidence,n:0,c:0,dimensions:[]}},now,plan.revision);
   return {accepted:true,id:input.id};
 }
-async function syncPractice(db,p,events,now) {
+async function syncPractice(db,p,events,now,authorized=[],rejected=[]) {
   const published=await first(db,'SELECT id,head FROM class_pathways WHERE class_id=? AND head>0',p.class_id);
-  const items=events.map(event=>({ ...event, kind:'practice',data:{...event.data,
-    pathwayId:published?.id ?? null,receivedUnderRevision:published?.head ?? null} }));
-  await db.batch(items.map(event=>eventInsert(db,p,event,now)));
+  const items=events.map((event,index)=>({ ...event, kind:'practice',data:{...event.data,
+    pathwayId:authorized[index]?.launch.pathway_id ?? published?.id ?? null,
+    receivedUnderRevision:authorized[index]?.launch.pathway_revision ?? published?.head ?? null,
+    ...(authorized[index] ? {classLaunchId:authorized[index].launch.id} : {})} }));
+  if (!items.length) return {accepted:[],rejected};
+  await db.batch(items.flatMap((event,index)=>[eventInsert(db,p,event,now),...creditFocusStatements(db,p,event,authorized[index],now)]));
   const ids=[...new Set(items.map(event=>event.id))];
   const accepted=(await all(db,'SELECT id FROM performance_events WHERE profile=? AND id IN ('+
     ids.map(()=>'?').join(',')+')',p.id,...ids)).map(row=>row.id);
   if (!accepted.length) profileError(409,'The profile is inactive or its record limit was reached.');
   const found=new Set(accepted);
-  return {accepted:ids.filter(id=>found.has(id))};
+  return {accepted:ids.filter(id=>found.has(id)),...(rejected.length?{rejected}:{})};
 }
 export async function routeProfiles(request,env,segments,readBody,now) {
   if (!profilesEnabled(env)) profileError(404,'Student profiles are unavailable.');
@@ -326,7 +331,19 @@ export async function routeProfiles(request,env,segments,readBody,now) {
     if (!Array.isArray(input?.events) || !input.events.length || input.events.length>BATCH_LIMIT) profileError(400,'Send 1 to 25 practice events.');
     const events=input.events.map(event=>cleanPractice(event,now));
     await limit(db,'sync:'+p.id,now,240);
-    return syncPractice(db,p,events,now);
+    if (!focusEnabled(env)) return syncPractice(db,p,events,now);
+    const allowed=[], authorized=[], rejected=[];
+    for (let index=0;index<events.length;index++) {
+      const event=events[index], source=input.events[index];
+      const validation=source.learner==='guest' ? false : await verifyFocusEvidence(env,p,event,source.classLaunchId,now);
+      if (!validation) {
+        rejected.push({id:event.id,code:'class-context'});
+        continue;
+      }
+      allowed.push(event);
+      authorized.push(validation);
+    }
+    return syncPractice(db,p,allowed,now,authorized,rejected);
   }
   profileError(404,'Profile route not found.');
 }

@@ -38,7 +38,7 @@ export function cleanGameAttempt(event, validId) {
   const assisted=event.assisted===true;
   const independent=attempt===1 && !assisted;
   return {
-    id:event.id, occurred:event.occurred, pathway:courseId, activity,
+    id:event.id, occurred:event.occurred, pathway:courseId, activity, mappedNodes:nodeIds,
     data:{...meta, questionId, sessionId, attempt, correct, firstAttempt:attempt===1,
       assisted,n:Number(independent), c:Number(independent && correct),
       dimensions:independent ? nodeIds.map(id=>({scope:'node',id,n:1,c:Number(correct)})) : []},

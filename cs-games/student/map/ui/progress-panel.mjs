@@ -68,11 +68,11 @@ export function createProgressPanel(node, ctx) {
     : node.practice[0];
   const actions = el('div', { class: 'panel-actions' });
   if (primary) {
-    actions.append(el('a', { class: 'btn btn-primary', href: primary.url, 'data-action': 'practice', onclick: (e) => { if (ctx.onPractice({ node, url: primary.url, kind: primary.kind }) === true) e.preventDefault(); }, text: primaryLabel(node) }));
-    for (const l of node.practice.slice(1)) actions.append(el('a', { class: 'btn', href: l.url, 'data-action': 'practice-other', text: l.label, onclick: (e) => { if (ctx.onPractice({ node, url: l.url, kind: l.kind }) === true) e.preventDefault(); } }));
+    actions.append(el('a', { class: 'btn btn-primary', href: primary.url, 'data-action': 'practice', 'data-node-id': node.id, onclick: (e) => { if (ctx.onPractice({ node, url: primary.url, kind: primary.kind }) === true) e.preventDefault(); }, text: primaryLabel(node) }));
+    for (const l of node.practice.slice(1)) actions.append(el('a', { class: 'btn', href: l.url, 'data-action': 'practice-other', 'data-node-id': node.id, text: l.label, onclick: (e) => { if (ctx.onPractice({ node, url: l.url, kind: l.kind }) === true) e.preventDefault(); } }));
   } else actions.append(el('p', { class: 'muted', text: 'No practice activity is linked to this skill yet.' }));
   const mixed = ctx.stop.mixed;
-  if (mixed&&!node.practice.some(link=>link.url===mixed.url)) actions.append(el('a', { class: 'btn', href: mixed.url, 'data-action': 'mixed', text: 'Mixed Practice', 'aria-label': mixed.label, onclick: (e) => { if (ctx.onPractice({ node, url: mixed.url, kind: 'mixed' }) === true) e.preventDefault(); } }));
+  if (mixed&&!node.practice.some(link=>link.url===mixed.url)) actions.append(el('a', { class: 'btn', href: mixed.url, 'data-action': 'mixed', 'data-node-id': node.id, text: 'Mixed Practice', 'aria-label': mixed.label, onclick: (e) => { if (ctx.onPractice({ node, url: mixed.url, kind: 'mixed' }) === true) e.preventDefault(); } }));
   root.append(actions);
   if (node.mixed?.url.startsWith('/java-games/')) root.append(el('p', { class: 'muted small', text: 'Mixed Practice counts here when it asks about this skill.' }));
 

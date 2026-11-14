@@ -1,3 +1,5 @@
+import { createFocusLaunch, verifyFocusLaunch } from './focus-launch.mjs';
+import { focusEnabled, prepareFocusPreview, publishLearningFocus, readTeacherFocus, readStudentFocus, endLearningFocus, releaseFocusGrants, confirmFocusCompletion } from './learning-focus.mjs';
 import { pathwayRoute } from './pathways.mjs';
 import { validateSnapshot, publicAssignment, dimensions, answerReport, grade, MIN_CLASS, RETENTION_DAYS } from '../online/model.mjs';
 import { teacherIdentity, teacherSession } from './auth.mjs';
@@ -79,11 +81,24 @@ async function route(request, env, path) {
   const now = Date.now(), db = env.DB, method = request.method;
   const segments = path.split('/').filter(Boolean);
   const [group, id, action] = segments;
+  if (path==='/profile/class-launch' && method==='POST') return createFocusLaunch(env,request,await body(request),now);
+  if (group==='profile' && id==='class-launch' && segments.length===3 && method==='GET') return verifyFocusLaunch(env,request,action,now);
+  if (path==='/profile/learning-focus' && method==='GET') return readStudentFocus(env,request,now);
   if (group==='profile' || (group==='teacher' && id==='profiles'))
     return routeProfiles(request,env,segments,body,now);
   if (group === 'teacher') {
     const owner = await teacherIdentity(request,env);
     if (!owner) fail(401,'Teacher sign-in required.');
+    if (id==='learning-focus' && segments.length===3 && method==='GET') return readTeacherFocus(env,{owner,classId:action,now});
+    if (id==='learning-focus' && segments.length===4 && method==='POST') {
+      const action=segments[3];
+      const options={owner,classId:segments[2],input:await body(request),now};
+      if(action==='preview')return prepareFocusPreview(env,options);
+      if(action==='publish')return publishLearningFocus(env,options);
+      if(action==='end')return endLearningFocus(env,options);
+      if(action==='release')return releaseFocusGrants(env,options);
+      if(action==='complete')return confirmFocusCompletion(env,options);
+    }
     if (id === 'assignments' && !action && method === 'GET') {
       const {results} = await db.prepare('SELECT id,snapshot,created FROM assignments WHERE owner=? AND expires>? ORDER BY created DESC LIMIT 100').bind(owner,now).all();
       return { assignments:results.map(r=>({ id:r.id, title:parsed(r).title, kind:parsed(r).kind, date:r.created })) };
@@ -195,6 +210,7 @@ export default {
     await env.DB.prepare('DELETE FROM assignments WHERE expires<=?').bind(now).run();
     await env.DB.prepare('DELETE FROM receipts WHERE finished IS NULL AND created<?').bind(now-DAY).run();
     await env.DB.prepare('DELETE FROM teacher_sessions WHERE expires<=?').bind(now).run();
+    if (focusEnabled(env)) await env.DB.prepare('DELETE FROM learning_focus_launches WHERE expires<=?').bind(now).run();
     if (profilesEnabled(env) || env.PROFILE_SCHEMA_INSTALLED==='1') await purgeProfiles(env.DB,now);
   }
 };

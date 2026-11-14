@@ -41,7 +41,7 @@ export function createSuggested(model, { onShow, onPractice, stop: currentStop }
     el('p', { class: 'suggested-title' }, el('strong', { text: node.title }), el('span', { text: ` in ${stop.title}` })),
     el('div', { class: 'suggested-actions' },
       el('button', { type: 'button', class: 'btn', 'data-action': 'show-suggested', text: 'Show on map', onclick: () => onShow(node) }),
-      link ? el('a', { class: 'btn btn-primary', href: link.url, 'data-action': 'practice-suggested', text: 'Practice', 'aria-label': `Practice ${node.title}`, onclick: (e) => { if (onPractice({ node, url: link.url, kind: link.kind }) === true) e.preventDefault(); } }) : null));
+      link ? el('a', { class: 'btn btn-primary', href: link.url, 'data-action': 'practice-suggested', 'data-node-id': node.id, text: 'Practice', 'aria-label': `Practice ${node.title}`, onclick: (e) => { if (onPractice({ node, url: link.url, kind: link.kind }) === true) e.preventDefault(); } }) : null));
 }
 
 /** Only drawn when a teacher has applied dates. The undated default shows nothing about dates, so there is nothing to be late for. */

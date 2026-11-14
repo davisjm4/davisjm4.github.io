@@ -59,7 +59,7 @@ export function proficiencySuggestion(model,{onShow,onPractice,stop}){
     if(['plan-demonstration','level-4-demonstration'].includes(recommendation.kind))
       return el('button',{type:'button',class:'btn',text:label,onclick:()=>onShow(node)});
     const link=proficiencyLink(node,recommendation.practice);
-    return link?el('a',{class:secondary?'btn':'btn btn-primary',href:link.url,'data-action':'practice-recommended',text:label,
+    return link?el('a',{class:secondary?'btn':'btn btn-primary',href:link.url,'data-action':'practice-recommended','data-node-id':node.id,text:label,
       onclick:e=>{if(onPractice({node,url:link.url,kind:link.kind})===true)e.preventDefault();}})
       :el('button',{type:'button',class:'btn',text:label,onclick:()=>onShow(node)});
   };

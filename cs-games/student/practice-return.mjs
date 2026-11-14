@@ -54,3 +54,16 @@ export function addPracticeReturn(header, profile, fallback) {
     header.after(note);
   }
 }
+
+export function classLaunchHref(href, {nodeId,areaId,classId,assignmentId,returnTo}={}) {
+  const target=new URL(href,location.origin);
+  if(target.origin!==location.origin)return href;
+  // The launch service selects the registered activity. Preserve only a local
+  // destination and the independently validated course map return.
+  const params=new URLSearchParams({class:classId,activity:target.pathname+target.search+target.hash});
+  if(nodeId)params.set('skill',nodeId);
+  else if(areaId)params.set('area',areaId);
+  if(assignmentId)params.set('focus',assignmentId);
+  if(returnTo)params.set('returnTo',returnTo);
+  return '/cs-games/student/launch/?'+params;
+}
