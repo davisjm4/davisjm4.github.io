@@ -72,14 +72,14 @@ test('advisory work keeps ordinary practice, assignment completion and assessmen
   assert.deepEqual(result.rejected.map(x=>x.id),[guest.id,foreignClass.id,foreignProfile.id]);
   assert.equal((await work()).catchUp[0].progress,'started');
   assert.equal((await work()).classwork[0].progress,'available');
-  const answer=event('looptype',{assignmentReceipt:receipt});
-  assert.deepEqual((await sync([answer])).accepted,[answer.id]);
-  assert.deepEqual((await sync([answer])).accepted,[answer.id]);
+  const batch=Array.from({length:25},()=>event('looptype',{assignmentReceipt:receipt}));
+  assert.deepEqual((await sync(batch)).accepted,batch.map(e=>e.id));
+  assert.deepEqual((await sync(batch)).accepted,batch.map(e=>e.id));
   assert.equal(dev.db.prepare('SELECT count(*) n FROM learning_focus_completion').get().n,1);
   assert.equal((await work()).catchUp[0].progress,'complete');
   assert.equal((await work()).classwork[0].progress,'available');
   assert.deepEqual((await call(person)).verifiedEvidence,before);
-  assert.equal(dev.db.prepare("SELECT count(*) n FROM performance_events WHERE kind='practice'").get().n,7);
+  assert.equal(dev.db.prepare("SELECT count(*) n FROM performance_events WHERE kind='practice'").get().n,31);
   await call(path+'/complete',{...focusB,profileId:learner.id},learner.token,401);
   await call(path+'/complete',{...focusB,profileId:learner.id});
   assert.equal((await work()).classwork[0].progress,'complete');

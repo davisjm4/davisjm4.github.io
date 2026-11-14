@@ -324,31 +324,36 @@ export async function startStudentFocus(env,request,input,now) {
   return {receipt:result.id};
 }
 
-export function creditFocusStatements(db,profile,event,receipt,now) {
-  if (!requestIdPattern.test(receipt ?? '') || event.pathway!==profile.course_id) return [];
-  // Use the stored first independent result and the canonical node dimensions.
-  // A receipt is optional for practice and only affects the named assignment revision.
-  const sql=`INSERT OR IGNORE INTO learning_focus_completion(focus_id,focus_revision,profile_id,actor,recorded,source)
-    SELECT s.focus_id,s.focus_revision,s.profile_id,s.profile_id,?,'qualifying-practice'
-    FROM learning_focus_starts s JOIN learning_focus f ON f.id=s.focus_id
-    JOIN learning_focus_revisions r ON r.focus_id=f.id AND r.revision=s.focus_revision
-    JOIN performance_events e ON e.profile=s.profile_id AND e.id=? AND e.kind='practice'
-    WHERE s.id=? AND s.profile_id=? AND s.generation=? AND f.class_id=? AND f.head=s.focus_revision
-      AND r.state='published' AND e.occurred>=s.recorded-5000
-      AND json_extract(e.data,'$.assignmentReceipt')=s.id AND json_extract(e.data,'$.n')=1
-      AND NOT EXISTS(SELECT 1 FROM learning_focus_exemptions x
-        WHERE x.focus_id=s.focus_id AND x.focus_revision=s.focus_revision AND x.profile_id=s.profile_id)
-      AND EXISTS(SELECT 1 FROM json_each(r.destinations) dest JOIN json_each(e.data,'$.dimensions') d
-        ON json_extract(dest.value,'$.nodeId')=json_extract(d.value,'$.id')
-        WHERE json_extract(dest.value,'$.activityId')=? AND json_extract(d.value,'$.scope')='node')`;
+export function creditFocusStatements(db,profile,events,now) {
+  const linked=events.filter(event=>event.receipt && event.pathway===profile.course_id);
+  if (!linked.length) return [];
+  const candidates=JSON.stringify(linked.map(event=>({id:event.id,activity:event.activity,receipt:event.receipt})));
+  // Match existing canonical evidence without rewriting it or repeating D1
+  // statements for each response in a full offline batch.
   return [
-    db.prepare(sql).bind(now,event.id,receipt,profile.id,profile.generation,profile.class_id,event.activity),
+    db.prepare(`INSERT OR IGNORE INTO learning_focus_completion(focus_id,focus_revision,profile_id,actor,recorded,source)
+      SELECT s.focus_id,s.focus_revision,s.profile_id,s.profile_id,?,'qualifying-practice'
+      FROM json_each(?) submitted
+      JOIN learning_focus_starts s ON s.id=json_extract(submitted.value,'$.receipt')
+      JOIN learning_focus f ON f.id=s.focus_id
+      JOIN learning_focus_revisions r ON r.focus_id=f.id AND r.revision=s.focus_revision
+      JOIN performance_events e ON e.profile=s.profile_id AND e.id=json_extract(submitted.value,'$.id') AND e.kind='practice'
+      WHERE s.profile_id=? AND s.generation=? AND f.class_id=? AND f.head=s.focus_revision
+        AND r.state='published' AND e.occurred>=s.recorded-5000
+        AND e.activity=json_extract(submitted.value,'$.activity')
+        AND json_extract(e.data,'$.assignmentReceipt')=s.id AND json_extract(e.data,'$.n')=1
+        AND NOT EXISTS(SELECT 1 FROM learning_focus_exemptions x
+          WHERE x.focus_id=s.focus_id AND x.focus_revision=s.focus_revision AND x.profile_id=s.profile_id)
+        AND EXISTS(SELECT 1 FROM json_each(r.destinations) dest JOIN json_each(e.data,'$.dimensions') d
+          ON json_extract(dest.value,'$.nodeId')=json_extract(d.value,'$.id')
+          WHERE json_extract(dest.value,'$.activityId')=e.activity AND json_extract(d.value,'$.scope')='node')`)
+      .bind(now,candidates,profile.id,profile.generation,profile.class_id),
     db.prepare(`INSERT INTO learning_focus_progress(focus_id,focus_revision,profile_id,state,updated)
       SELECT c.focus_id,c.focus_revision,c.profile_id,'complete',c.recorded FROM learning_focus_completion c
       JOIN learning_focus_starts s ON s.focus_id=c.focus_id AND s.focus_revision=c.focus_revision AND s.profile_id=c.profile_id
-      WHERE s.id=? AND s.profile_id=? AND s.generation=?
-      ON CONFLICT(focus_id,focus_revision,profile_id) DO UPDATE SET state='complete',updated=excluded.updated`)
-      .bind(receipt,profile.id,profile.generation),
+      WHERE s.profile_id=? AND s.generation=? AND s.id IN (SELECT json_extract(value,'$.receipt') FROM json_each(?))
+      ON CONFLICT(focus_id,focus_revision,profile_id) DO UPDATE SET state='complete',updated=excluded.updated
+      WHERE learning_focus_progress.state!='complete'`).bind(profile.id,profile.generation,candidates),
   ];
 }
 

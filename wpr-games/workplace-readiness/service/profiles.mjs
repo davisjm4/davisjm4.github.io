@@ -283,8 +283,8 @@ async function syncPractice(db,p,events,now,trackFocus,rejected) {
     pathwayId:published?.id ?? null,receivedUnderRevision:published?.head ?? null,
     ...(event.receipt ? {assignmentReceipt:event.receipt} : {})} }));
   if (!items.length) return {accepted:[],rejected};
-  await db.batch(items.flatMap(event=>[eventInsert(db,p,event,now),
-    ...(trackFocus ? creditFocusStatements(db,p,event,event.receipt,now) : [])]));
+  await db.batch([...items.map(event=>eventInsert(db,p,event,now)),
+    ...(trackFocus ? creditFocusStatements(db,p,items,now) : [])]);
   const ids=[...new Set(items.map(event=>event.id))];
   const accepted=(await all(db,'SELECT id FROM performance_events WHERE profile=? AND id IN ('+
     ids.map(()=>'?').join(',')+')',p.id,...ids)).map(row=>row.id);
