@@ -21,7 +21,7 @@ export function profileClassSelect() {
   const select=el('select',{name:'profileClassId',disabled:true},options([['','Anonymous assignment']]));
   const field=el('label',{hidden:!profilesAvailable},'Student reporting',select);
   return {field,update(classes,requested){
-    const selected=requested||select.value;
+    const selected=requested??select.value;
     const active=classes.filter(c=>!c.archived);
     select.replaceChildren(...options([['','Anonymous assignment'],...active.map(c=>[c.id,'Class profile · '+c.title])]));
     select.value=active.some(c=>c.id===selected)?selected:'';
@@ -125,7 +125,7 @@ export function teacherProfiles(onClasses) {
     if(currentTeacher()!==session)return;
     classes=list.classes;
     pathways=new Map(plans.pathways.map(p=>[p.classId,p]));
-    onClasses(classes,classHint);
+    onClasses(classes,selectedId??classHint);
     renderList();
     if(!selectedId&&classHint&&classes.some(c=>c.id===classHint))await openClass(classHint);
   }
@@ -194,6 +194,11 @@ export function teacherProfiles(onClasses) {
     put(credential);
     renderList();
     const active=roster.filter(p=>p.active===1).length;
+    const task=(href,title,detail,onclick)=>el('a',{class:'task',href,...(onclick?{onclick}:{})},
+      el('strong',{text:title}),el('span',{text:detail}));
+    const practice=kind=>()=>{
+      onClasses(classes,c.archived?'':c.id,kind);
+    };
     const stat=(value,label)=>el('div',{class:'stat'},el('strong',{text:String(value)}),el('span',{text:label}));
     const rosterTable=roster.length?table(['Profile ID','Access','Recorded events','Actions'],roster.map(p=>{
         const person=base+'/students/'+p.id;
@@ -227,12 +232,10 @@ export function teacherProfiles(onClasses) {
         credential,
         c.archived&&el('div',{class:'banner warn'},el('p',{text:'Archived. Scheduled deletion by '+new Date(c.expires).toISOString().slice(0,10)+'.'})),
         el('div',{class:'task-grid'},
-          el('a',{class:'task',href:'#class-progress'},el('strong',{text:'Class progress'}),el('span',{text:'Compare first attempts across students on the same skill.'})),
-          !c.archived&&el('a',{class:'task',href:pacingHref(c.id)},el('strong',{text:'Customize pathway'}),el('span',{text:'Change learning goals or set practice requirements.'})),
-          !c.archived&&pathways.get(c.id)?.revision>0&&el('a',{class:'task',href:'/cs-games/teacher/requirements/?class='+encodeURIComponent(c.id)},el('strong',{text:'Customize mastery requirements'}),el('span',{text:'Set optional question counts and accuracy goals.'})),
-          !c.archived&&el('a',{class:'task',href:pacingHref(c.id,'calendar')},el('strong',{text:'Pacing & target dates'}),el('span',{text:'Plan privately or share optional target dates.'})),
-          el('a',{class:'task',href:'#practice-online',onclick:()=>onClasses(classes,c.id)},el('strong',{text:'Practice & assessments'}),el('span',{text:'Create a diagnostic or targeted practice for students.'})),
-          el('a',{class:'task',href:'#class-students'},el('strong',{text:'Student profiles'}),el('span',{text:'Enrollment, access and individual progress reports.'}))),previewSlot),
+          task('#class-progress','Class progress','Compare first attempts across students on the same skill.'),
+          !c.archived&&task('#class-plan','Plan','Customize the pathway, practice requirements and pacing.'),
+          task('#class-assessments','Practice & assessments','Create a diagnostic or targeted practice.'),
+          task('#class-students','Student profiles','Enrollment, access and individual progress reports.')),previewSlot),
       el('section',{class:'card',id:'class-progress','aria-labelledby':'class-progress-title'},evidenceHeading,
         el('div',{class:'actions'},compare),evidence,comparisonReport),
       el('div',{class:'card',id:'class-students'},
@@ -254,6 +257,18 @@ export function teacherProfiles(onClasses) {
             download('cs-games-class-progress.csv',csv([PROFILE_CSV_HEADER,...reports.flatMap(profileCsvRows)]));
           })),
         rosterReport),
+      !c.archived&&el('section',{class:'card',id:'class-plan','aria-labelledby':'class-plan-title'},
+        el('h3',{id:'class-plan-title',text:'Plan'}),
+        el('div',{class:'task-grid'},
+          task(pacingHref(c.id),'Customize pathway','Choose learning goals and checkpoint order.'),
+          pathways.get(c.id)?.revision>0&&task('/cs-games/teacher/requirements/?class='+encodeURIComponent(c.id),'Practice requirements','Set optional question counts and accuracy goals.'),
+          task(pacingHref(c.id,'calendar'),'Pacing & target dates','Plan privately or share optional target dates.'))),
+      el('section',{class:'card',id:'class-assessments','aria-labelledby':'class-assessments-title'},
+        el('h3',{id:'class-assessments-title',text:'Practice & assessments'}),
+        el('div',{class:'task-grid'},
+          !c.archived&&task('#practice-online','Create a diagnostic','Build a Workplace Readiness diagnostic.',practice('diagnostic')),
+          !c.archived&&task('#practice-online','Create targeted practice','Build a Workplace Readiness practice assignment.',practice('practice')),
+          task('#practice-published','Published assessments','Open reports or copy assignment links.'))),
       el('details',{class:'more'},el('summary',{},'Manage this class',el('small',{text:'Archive, delete, support details'})),
         el('div',{class:'body'},
           !c.archived&&el('p',{class:'muted',text:'Archiving closes enrollment and ends student access. The class and its records are kept until the scheduled deletion date.'}),
@@ -272,6 +287,7 @@ export function teacherProfiles(onClasses) {
             act('Copy class ID',()=>copy(c.id,status),'btn small')))));
     if(invites.has(c.id)&&!c.archived)showInvite(invites.get(c.id));
     if(focus)panel.querySelector('h3')?.focus();
+    else if(location.hash==='#class-plan')panel.querySelector('#class-plan')?.scrollIntoView();
     loadPathwayStatus(c,pathwaySlot,active);
   }
   async function openStudentPreview(classId,slot){

@@ -1,3 +1,4 @@
+import { renderPathway } from '../../student/pathway-view.mjs';
 // Teacher-controlled mastery requirements: a standalone, framework-free component. It edits the DRAFT pathway through the pure functions in
 // cs-games/pathway/requirements/ and hands the result to the host (onChange, adapter). It never stores anything itself and never publishes
 // without an explicit button press. Routine views show titles and sentences only: no identifiers, no JSON.
@@ -14,6 +15,9 @@ export function createRequirementsEditor(root, options) {
   const st = { pathway: options.pathway, published: options.published ?? null, tab: options.tab ?? 'class', areas: new Set(), skills: new Set(), areaFilter: '', search: '', ack: false, busy: false, replaceLower: false, confirm: null, history: [] };
   let savedSnapshot = adapter?.saveDraft ? JSON.stringify(st.pathway) : null;
   let operation = '';
+  let preview = null;
+  let formChanged = false;
+  const dirty = () => JSON.stringify(st.pathway) !== savedSnapshot;
   const ctx = () => createContext({ graph, published: st.published, facts });
   const ids = { head: uid('mreq-h'), tabs: uid('mreq-tabs') };
 
@@ -37,9 +41,10 @@ export function createRequirementsEditor(root, options) {
   const clearMsg = () => { alertBox.replaceChildren(); };
 
   function updatePersistence(formValid) {
+    formChanged = typeof formValid === 'boolean';
     const text = operation || (formValid === false ? 'Fix validation errors before applying these changes.'
       : formValid === true ? 'Unapplied changes. Apply these settings to include them in the draft.'
-      : JSON.stringify(st.pathway) !== savedSnapshot ? 'Unsaved changes. Open Review & publish to save the draft.'
+      : dirty() ? 'Unsaved changes. Open Review & publish to save the draft.'
       : st.published && JSON.stringify(st.published) === savedSnapshot ? `Published requirements · version ${st.published.revision}`
       : adapter?.storage === 'memory' ? 'Draft is available in this demo tab.' : 'Saved draft.');
     if (persistence.textContent !== text) persistence.textContent = text;
@@ -52,6 +57,7 @@ export function createRequirementsEditor(root, options) {
   const clone = (x) => JSON.parse(JSON.stringify(x));
   function apply(result, { done }) {
     if (!result.ok) { updatePersistence(false); alertWith(result.blocked?.length ? 'These changes cannot be applied because the requirements cannot be met.' : 'The changes could not be applied.', result.errors.map((e) => e.message)); return false; }
+    preview = null;
     st.pathway = result.pathway;
     st.ack = false;
     onChange?.(clone(st.pathway));
@@ -192,7 +198,13 @@ export function createRequirementsEditor(root, options) {
     const ackId = uid('ack');
     const ack = rev.readiness.needsAcknowledgement ? checkbox('I have read these notes and want to continue', st.ack, (v) => { st.ack = v; render(); (panel.querySelector('#publish:enabled') ?? panel.querySelector('[data-review-ack] input'))?.focus(); }, { id: ackId, disabled: st.busy, review: true }) : null;
     const publishId = 'publish';
-    const publish = el('button', { type: 'button', class: 'primary', id: publishId, disabled: !rev.readiness.canPublish || st.busy || !adapter?.publish, onclick: () => doPublish() }, 'Publish requirements');
+    const publish = el('button', { type: 'button', class: 'primary', id: publishId, disabled: !rev.readiness.canPublish || st.busy || !adapter?.publish || Boolean(adapter?.preview && !preview), onclick: () => doPublish() }, 'Publish requirements');
+    const previewButton = adapter?.preview ? el('button', {
+      type: 'button', class: 'secondary', 'data-preview-draft': '',
+      disabled: !rev.readiness.canPublish || st.busy || dirty(), onclick: () => doPreview(),
+    }, 'Preview saved draft') : null;
+    const studentPreview = preview?.studentPreview ? el('details', { class: 'mreq-details', open: true },
+      el('summary', { text: 'Student preview · unpublished draft' }), renderPathway(preview.studentPreview)) : null;
     const reasons = !rev.readiness.canPublish ? el('ul', { class: 'mreq-reasons' }, rev.readiness.reasons.map((x) => el('li', { text: x }))) : null;
     const versions = rev.pendingPolicies.length ? el('details', { class: 'mreq-details' }, el('summary', { text: `Versions that will be created on publish (${rev.pendingPolicies.length})` }),
       el('ul', {}, rev.pendingPolicies.map((p) => el('li', { text: p.label })), el('li', { class: 'mreq-hint', text: 'Earlier versions are kept. Publishing changes no student evidence and deletes nothing.' }))) : null;
@@ -204,13 +216,15 @@ export function createRequirementsEditor(root, options) {
       el('details', { class: 'mreq-details' }, el('summary', { text: 'How questions are counted' }), el('ul', {}, COUNTING_RULES.map((x) => el('li', { text: x })))),
       reasons,
       el('div', { class: 'mreq-actions' },
-        el('button', { type: 'button', class: 'secondary', 'data-save-draft': '', disabled: !rev.readiness.canSaveDraft || st.busy || !adapter?.saveDraft, onclick: () => doSaveDraft() }, 'Save draft'), publish),
+        el('button', { type: 'button', class: 'secondary', 'data-save-draft': '', disabled: !rev.readiness.canSaveDraft || st.busy || !adapter?.saveDraft, onclick: () => doSaveDraft() }, 'Save draft'), previewButton, publish),
+      studentPreview,
       !adapter ? el('p', { class: 'mreq-hint', text: 'Saving and publishing are provided by the page that hosts this tool.' }) : null);
   }
   async function doSaveDraft() {
     st.busy = true; operation = 'Saving draft…'; render();
     try {
       await adapter.saveDraft(clone(st.pathway));
+      preview = null;
       savedSnapshot = JSON.stringify(st.pathway);
       say(adapter.storage === 'memory' ? 'Draft saved for this demo tab.' : 'Draft saved. Publish to share these requirements with students.');
     } catch (error) {
@@ -220,19 +234,30 @@ export function createRequirementsEditor(root, options) {
       panel.querySelector('[data-save-draft]')?.focus({ preventScroll: true });
     }
   }
+  async function doPreview() {
+    st.busy = true; operation = 'Preparing preview…'; preview = null; render();
+    try {
+      preview = await adapter.preview(clone(st.pathway));
+      say('Preview ready. Review what students will see, then publish when ready.');
+    } catch (error) {
+      alertWith('The draft could not be previewed.', [error.message]);
+    } finally {
+      st.busy = false; operation = ''; render();
+      status.focus();
+    }
+  }
   async function doPublish() {
     st.busy = true; operation = 'Preparing to publish…'; render();
     try {
       const stamped = options.serverTimestamps ? st.pathway : stampPublishTime(st.pathway, st.published, (options.now ?? (() => new Date().toISOString()))());
-      const out = await adapter.publish({ pathway: stamped, acknowledged: st.ack, onDraftSaved: () => {
-        savedSnapshot = JSON.stringify(st.pathway);
-        operation = 'Draft saved. Publishing requirements…';
-        updatePersistence();
-      } });
+      const out = await adapter.publish({ pathway: stamped, acknowledged: st.ack, preview });
+      preview = null;
       st.pathway = out.pathway ?? stamped; st.published = out.published ?? clone(st.pathway); st.history = out.history ?? st.history; st.ack = false;
       savedSnapshot = JSON.stringify(st.pathway);
       onChange?.(clone(st.pathway)); say(out.message ?? 'Requirements published with the class pathway.');
+      if(adapter.history) void loadHistory();
     } catch (error) {
+      preview = null;
       alertWith('The requirements could not be published.', [error.message]);
     } finally {
       st.busy = false; operation = ''; render();
@@ -260,12 +285,19 @@ export function createRequirementsEditor(root, options) {
     panel.setAttribute('aria-labelledby', `${ids.tabs}-${st.tab}`);
     fill(panel, st.tab === 'class' ? classPanel() : st.tab === 'areas' ? areaPanel() : st.tab === 'skills' ? skillPanel() : reviewPanel());
   }
+  async function loadHistory() {
+    try {
+      st.history = await adapter.history() ?? [];
+      if (st.tab === 'review' && !st.busy && !panel.contains(document.activeElement)) render();
+    } catch {}
+  }
   render();
-  if (adapter?.history) Promise.resolve(adapter.history()).then((h) => { st.history = h ?? []; if (st.tab === 'review') render(); }).catch(() => {});
+  if (adapter?.history) void loadHistory();
 
   return {
+    hasUnsavedChanges: () => formChanged || dirty(),
     getPathway: () => clone(st.pathway), getPublished: () => (st.published ? clone(st.published) : null),
-    setPathway(p) { st.pathway = p; render(); }, setPublished(p) { st.published = p; render(); },
+    setPathway(p) { preview = null; st.pathway = p; render(); }, setPublished(p) { preview = null; st.published = p; render(); },
     showTab(key) { selectTab(key); }, destroy() { root.replaceChildren(); },
   };
 }

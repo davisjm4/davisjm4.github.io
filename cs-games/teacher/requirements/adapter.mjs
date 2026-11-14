@@ -46,17 +46,25 @@ export function createServiceAdapter({ request, token, entry }) {
   };
   return {
     saveDraft: draft,
-    async publish({ pathway, acknowledged, onDraftSaved }) {
-      const draftVersion = await draft(pathway);
-      onDraftSaved?.();
+    async preview(pathway) {
       const preview = await request(`/pathways/teacher/${pathway.id}/preview`, { token, body: {} });
-      if (preview.draftVersion !== draftVersion) throw new Error('Another session changed the draft. Reload before publishing.');
+      if (preview.draftVersion !== entry.draftVersion || preview.expectedRevision !== pathway.baseRevision) {
+        throw new Error('Another session changed the draft. Reload before publishing.');
+      }
+      return preview;
+    },
+    async publish({ pathway, acknowledged, preview }) {
+      if (!preview || preview.draftVersion !== entry.draftVersion) throw new Error('Preview the saved draft before publishing.');
       const result = await request(`/pathways/teacher/${pathway.id}/publish`, { token, body: { previewToken: preview.previewToken, draftVersion: preview.draftVersion, expectedRevision: preview.expectedRevision, ...(acknowledged===true?{acknowledged:true}:{}) } });
       entry.draftVersion = preview.draftVersion + 1;
       return { pathway: result.published, published: result.published, message: `Published version ${result.revision} of the class pathway, with these requirements.` };
     },
     async history() {
-      return [];
+      const { revisions } = await request(`/pathways/teacher/${entry.draft.id}/history`, { token });
+      return revisions.map(row => ({
+        revision: row.revision,
+        summary: new Date(row.created).toLocaleDateString(),
+      }));
     },
   };
 }

@@ -1,13 +1,23 @@
 import {currentTeacher,mountTeacherAccount,observeTeacher,teacherRequest} from '../session.mjs';
 import {courseLabel} from '../ui-model.mjs';
-import {createRequirementsEditor} from './editor.mjs?v=targeted-clarity-v1';
-import {createServiceAdapter} from './adapter.mjs?v=targeted-clarity-v1';
+import {createRequirementsEditor} from './editor.mjs?v=teacher-planning-v1';
+import {createServiceAdapter} from './adapter.mjs?v=teacher-planning-v1';
 
 const classId=new URLSearchParams(location.search).get('class');
 const context=document.getElementById('class-context');
 const status=document.getElementById('class-status');
 const root=document.getElementById('editor');
-if(classId)document.getElementById('class-link').href='../?class='+encodeURIComponent(classId)+'#classes';
+if(classId){
+  const back=document.getElementById('class-link');
+  back.href='../?class='+encodeURIComponent(classId)+'#class-plan';
+  back.textContent='Back to class plan';
+}
+window.addEventListener('beforeunload',event=>{
+  if(editor?.hasUnsavedChanges()&&!root.hidden){
+    event.preventDefault();
+    event.returnValue='';
+  }
+});
 mountTeacherAccount(document.getElementById('teacher-account'));
 
 let editor, owner;

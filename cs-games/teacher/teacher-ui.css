@@ -301,3 +301,5 @@ footer.footer .wrap { padding: 0 24px; }
   .evidence-list :is(th, td) { padding-inline: .5rem; }
   .evidence-cell { min-width: 0; }
 }
+
+:is(#class-plan, #class-assessments) { scroll-margin-top: 5rem; }

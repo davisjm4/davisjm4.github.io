@@ -1,4 +1,4 @@
-import { teacherProfiles, profileClassSelect } from './wpr-profiles.mjs?v=class-progress-v1';
+import { teacherProfiles, profileClassSelect } from './wpr-profiles.mjs?v=teacher-planning-v1';
 import { generateDiagnostic, availability, validateSnapshot } from './wpr-online-builder.mjs';
 import { VERSION, csv, MODES, LEVELS } from '../../wpr-games/workplace-readiness/online/model.mjs';
 import { currentTeacher, observeTeacher, mountTeacherAccount, teacherRequest } from './session.mjs';
@@ -23,7 +23,14 @@ const checks = (name,title,choices)=>el('details',{},el('summary',{text:title}),
   el('fieldset',{class:'wpr-checks'},el('legend',{text:title}),
     choices.map(([value,label])=>el('label',{},input(name,{type:'checkbox',value}),' '+label))));
 const profileClass=profileClassSelect();
-const profileManager=teacherProfiles(profileClass.update);
+const profileManager=teacherProfiles((classes,classId,kind)=>{
+  profileClass.update(classes,classId);
+  if(kind){
+    form.elements.kind.value=kind;
+    form.elements.kind.dispatchEvent(new Event('change',{bubbles:true}));
+    invalidate();
+  }
+});
 const settings = el('div',{class:'teacher-form'},
   labelled('Assignment title',input('title',{maxlength:120,value:'Workplace Readiness Diagnostic',required:true})),
   labelled('Assignment type',select('kind',[['diagnostic','Diagnostic assessment'],['practice','Targeted practice assignment']])),
