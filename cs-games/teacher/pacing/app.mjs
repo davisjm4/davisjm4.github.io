@@ -22,7 +22,8 @@ let savedSnapshot=null,lastPublishedAt=null,publishError=null,settingsDirty=fals
 const assessSel=new Set();
 const classHint=new URLSearchParams(location.search).get('class');
 if(classHint)document.querySelectorAll('a[href="../#classes"]').forEach(link=>{
-  link.href='../?class='+encodeURIComponent(classHint)+'#classes';
+  link.href='../?class='+encodeURIComponent(classHint)+(link.id==='back-to-classes'?'#class-plan':'#class-students');
+  if(link.id==='back-to-classes')link.textContent='Back to class plan';
 });
 try{store=JSON.parse(localStorage.getItem(localKey))||store;}catch{}
 
@@ -42,6 +43,12 @@ function persist(){entry.unsaved=isDirty();entry.draft=clone(p);store.selected=p
 function invalidate(){preview=null;$('publish').disabled=true;$('local-publish').disabled=true;$('changes').replaceChildren();persist();queueStatus();}
 const markSaved=()=>{savedSnapshot=entry.remote&&!entry.needsReload?JSON.stringify(p):null;};
 const isDirty=()=>!!entry.remote&&(!!entry.needsReload||(savedSnapshot!==null&&savedSnapshot!==JSON.stringify(p)));
+window.addEventListener('beforeunload',event=>{
+  if(!$('pacing-content').hidden&&(settingsDirty||isDirty())){
+    event.preventDefault();
+    event.returnValue='';
+  }
+});
 function queueStatus(){clearTimeout(statusTimer);statusTimer=setTimeout(refreshStatus,120);}
 
 /* ───────── data lookups ───────── */

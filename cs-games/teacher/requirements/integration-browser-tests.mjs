@@ -51,7 +51,14 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await see(student,'#student-pathway','Self-paced');
   assert.equal(await student.$('.practice-challenge'),null);
 
-  await Promise.all([teacher.waitForNavigation(),activate(teacher,'#class-overview a[href*="/requirements/"]')]);
+  await byText(teacher,'#class-overview','Create targeted practiceBuild a Workplace Readiness practice assignment.');
+  await wait(teacher,'#wpr-builder-form');
+  const classId=new URL(teacher.url()).searchParams.get('class');
+  assert.equal(await teacher.$eval('[name=profileClassId]', input=>input.value),classId);
+  assert.equal(await teacher.$eval('[name=kind]', input=>input.value),'practice');
+  assert.equal(await teacher.$eval('[name=feedbackTiming]', input=>input.value),'immediate');
+  await activate(teacher,'[data-view-link=classes]');
+  await Promise.all([teacher.waitForNavigation(),activate(teacher,'#class-plan a[href*="/requirements/"]')]);
   await wait(teacher,'.mreq');
   assert.equal(await teacher.$('[name=teacher-key]'),null);
   await teacher.type('input[aria-label="Minimum questions"]','30');
@@ -59,6 +66,13 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await see(teacher,'.mreq-persistence','Unapplied changes');
   await byText(teacher,'.mreq','Apply class defaults');
   await see(teacher,'.mreq-persistence','Unsaved changes');
+  const leave=new Promise(resolve=>teacher.once('dialog',async dialog=>{
+    await dialog.dismiss();
+    resolve(dialog.type());
+  }));
+  await activate(teacher,'#class-link');
+  assert.equal(await leave,'beforeunload');
+  assert.ok(new URL(teacher.url()).pathname.includes('/requirements/'));
   await see(teacher,'.mreq-status','Class defaults applied.');
   const evidence=process.env.MASTERY_EVIDENCE_DIR;
   if(evidence)mkdirSync(evidence,{recursive:true});
@@ -86,6 +100,32 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await student.reload();
   await see(student,'#student-pathway','Self-paced');
   assert.equal(await student.$('.practice-challenge'),null);
+  assert.equal(await teacher.$eval('#publish', button=>button.disabled),true);
+  await byText(teacher,'.mreq','Preview saved draft');
+  await see(teacher,'.mreq-status','Preview ready');
+  await see(teacher,'.mreq-panel','Student preview · unpublished draft');
+  async function call(path,body){
+    const response=await fetch(dev.url+'/api/wpr'+path,{
+      method:body?'POST':'GET',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},
+      body:body?JSON.stringify(body):undefined
+    });
+    assert.ok(response.ok,await response.clone().text());
+    return response.json();
+  }
+  const {pathways}=await call('/pathways/teacher');
+  const planPath='/pathways/teacher/'+pathways.find(entry=>entry.classId===classId).id;
+  const secondTab=await call(planPath);
+  await call(planPath+'/draft',{pathway:secondTab.draft,draftVersion:secondTab.draftVersion});
+  await byText(teacher,'.mreq','Publish requirements');
+  await see(teacher,'.mreq-alert','Preview the latest draft');
+  assert.equal((await call(planPath)).published.revision,1);
+  await teacher.reload();
+  await wait(teacher,'.mreq');
+  await activate(teacher,'[data-tab=review]');
+  const renewed=await teacher.$('.mreq-panel input[type=checkbox]');
+  if(renewed)await renewed.click();
+  await byText(teacher,'.mreq','Preview saved draft');
+  await see(teacher,'.mreq-status','Preview ready');
   await byText(teacher,'.mreq','Publish requirements');
   await see(teacher,'.mreq-status','Published version 2');
   await see(teacher,'.mreq-persistence','Published requirements · version 2');

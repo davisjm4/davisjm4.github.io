@@ -210,7 +210,7 @@ test('Pathway editor: dark theme, four stages, readable labels, responsive at 39
   assert.equal(await page.evaluate(() => getComputedStyle(document.body).backgroundColor), 'rgb(12, 23, 34)');
   assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.card')).backgroundColor), 'rgb(21, 37, 54)');
   // Section bar matches Teacher Tools and marks Learning Pathways.
-  assert.deepEqual(await page.$$eval('.tt-bar a', a => a.map(x => x.textContent.trim())), ['My Classes', 'Practice & Assessments', 'Learning Pathways']);
+  assert.deepEqual(await page.$$eval('.tt-bar a', a => a.map(x => x.textContent.trim())), ['Back to class plan', 'Practice & Assessments', 'Learning Pathways']);
   assert.equal(await page.$eval('.tt-bar a[aria-current]', a => a.textContent.trim()), 'Learning Pathways');
 
   // Human-readable header and status; no ids.
