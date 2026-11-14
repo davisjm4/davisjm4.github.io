@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { startDev } from '../../../wpr-games/workplace-readiness/service/dev.mjs';
 
@@ -35,6 +36,10 @@ test('learning-focus preview uses the owner, published class target and active r
   assert.equal(result.classId, classroom.id);
   assert.equal(result.activeRecipientCount, 2);
   assert.deepEqual(result.recipientIds, []);
+  assert.equal(Object.hasOwn(result, 'affectedIds'), false);
+  assert.equal((await fetch(dev.url+'/api/wpr'+route.replace(/preview$/, 'publish'), {
+    method: 'POST', headers: { Authorization: 'Bearer '+teacher }, body: '{}'
+  })).status, 404);
   assert.deepEqual(result.destinations, [{ nodeId, activityId: 'loop-lab' }]);
 
   for (const [scope, recipientIds, nextTarget] of [
@@ -62,5 +67,57 @@ test('learning-focus preview uses the owner, published class target and active r
   await post(route, { ...base, startAt: Date.now() + 60000, timeZone: 'Invalid/Zone' }, teacher, 400);
   await post(students + '/' + first.id + '/revoke', {});
   await post(route, { ...base, scope: 'individual', recipientIds: [first.id] }, teacher, 400);
+  assert.equal(dev.db.prepare('SELECT COUNT(*) count FROM performance_events').get().count, 0);
+});
+
+test('gated focus publication is atomic, checks reviewed scope, and retries one immutable record', async t => {
+  const dev = await startDev({
+    teacherTokens: { teacher, other },
+    pathwayAdapters: { ENABLE_TEACHER_DIRECTED_LEARNING: '1' },
+  });
+  t.after(async () => { await new Promise(resolve => dev.server.close(resolve)); dev.db.close(); });
+  dev.db.exec(readFileSync(new URL('../../../wpr-games/workplace-readiness/service/migrations/0008_learning_focus.sql', import.meta.url), 'utf8'));
+
+  async function post(path, body, token = teacher) {
+    const response = await fetch(dev.url + '/api/wpr' + path, {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    return { status: response.status, data: await response.json() };
+  }
+  const { data: classInfo } = await post('/teacher/profiles', { title: 'Synthetic focus publication', courseId: 'advanced' });
+  const classRoute = '/teacher/profiles/' + classInfo.id;
+  const route = '/teacher/learning-focus/' + classInfo.id;
+  const { data: student } = await post(classRoute + '/students', {});
+  const assignment = { scope: 'individual', recipientIds: [student.id], mode: 'restricted',
+    target: { kind: 'skill', id: 'node:advanced:loop-lab:looptype' } };
+  async function prepare(assignment) {
+    const { status, data: preview } = await post(route + '/preview', assignment);
+    assert.equal(status, 200, JSON.stringify(preview));
+    return { assignment, requestId: crypto.randomUUID(), previewAt: preview.previewAt, previewSignature: preview.previewSignature };
+  }
+
+  const request = await prepare(assignment);
+  assert.equal((await post(route + '/publish', request, other)).status, 404);
+  assert.equal((await post(route + '/publish', { ...request, assignment: { ...assignment, mode: 'advisory' } })).status, 409);
+  assert.equal((await post(route + '/publish', { ...request, previewAt: request.previewAt - 660000 })).status, 409);
+  const results = await Promise.all([post(route + '/publish', request), post(route + '/publish', request)]);
+  for (const entry of results) assert.deepEqual(entry, { status: 200, data: { id: request.requestId, revision: 1 } });
+  assert.equal((await post(route + '/publish', { ...request, assignment: { ...assignment, mode: 'advisory' } })).status, 409);
+  assert.equal(dev.db.prepare('SELECT COUNT(*) count FROM learning_focus').get().count, 1);
+  assert.deepEqual(dev.db.prepare('SELECT scope,restricted FROM learning_focus_revisions').get(), Object.assign(Object.create(null), { scope: 'individual', restricted: 1 }));
+  assert.equal(dev.db.prepare('SELECT profile_id FROM learning_focus_recipients').get().profile_id, student.id);
+
+  const wholeClass = await prepare({ scope: 'class', target: assignment.target });
+  await post(classRoute + '/students', {});
+  assert.equal((await post(route + '/publish', wholeClass)).status, 409);
+  const revoked = await prepare(assignment);
+  const sameCount = await prepare({ scope: 'class', target: assignment.target });
+  await post(classRoute + '/students/' + student.id + '/revoke', {});
+  await post(classRoute + '/students', {});
+  assert.equal((await post(route + '/publish', sameCount)).status, 409);
+  assert.equal((await post(route + '/publish', revoked)).status, 400);
+  assert.equal(dev.db.prepare('SELECT COUNT(*) count FROM learning_focus').get().count, 1);
   assert.equal(dev.db.prepare('SELECT COUNT(*) count FROM performance_events').get().count, 0);
 });

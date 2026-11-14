@@ -1,4 +1,4 @@
-import { previewLearningFocus } from './learning-focus.mjs';
+import { prepareFocusPreview, publishLearningFocus } from './learning-focus.mjs';
 import { pathwayRoute } from './pathways.mjs';
 import { validateSnapshot, publicAssignment, dimensions, answerReport, grade, MIN_CLASS, RETENTION_DAYS } from '../online/model.mjs';
 import { teacherIdentity, teacherSession } from './auth.mjs';
@@ -85,8 +85,11 @@ async function route(request, env, path) {
   if (group === 'teacher') {
     const owner = await teacherIdentity(request,env);
     if (!owner) fail(401,'Teacher sign-in required.');
-    if (id==='learning-focus' && segments.length===4 && segments[3]==='preview' && method==='POST') {
-      return previewLearningFocus(env,{owner,classId:action,input:await body(request),now});
+    if (id==='learning-focus' && segments.length===4 && method==='POST') {
+      const action=segments[3];
+      const options={owner,classId:segments[2],input:await body(request),now};
+      if(action==='preview')return prepareFocusPreview(env,options);
+      if(action==='publish')return publishLearningFocus(env,options);
     }
     if (id === 'assignments' && !action && method === 'GET') {
       const {results} = await db.prepare('SELECT id,snapshot,created FROM assignments WHERE owner=? AND expires>? ORDER BY created DESC LIMIT 100').bind(owner,now).all();

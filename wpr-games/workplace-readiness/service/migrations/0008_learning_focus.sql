@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS learning_focus_revisions (
   request_digest TEXT NOT NULL,
   state TEXT NOT NULL CHECK(state IN ('draft', 'published', 'ended', 'canceled')),
   start_at INTEGER NOT NULL,
+  time_zone TEXT,
   scope TEXT NOT NULL CHECK(scope IN ('class', 'group', 'individual')),
   target TEXT NOT NULL CHECK(json_valid(target)),
   destinations TEXT NOT NULL CHECK(json_valid(destinations)),
