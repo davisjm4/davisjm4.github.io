@@ -8,8 +8,8 @@
  *   - expansion modes: expansionDeck.next(mode, difficulty) (existing createExpansionDeck; the chosen difficulty applies)
  * Credit follows the question actually shown: q.mode is the node-bearing mode, and the difficulty recorded is the one presented.
  */
-import { structures } from "./engine.js?v=math-quality-v1";
-import { EXPANSION_MODES } from "./expansion/generator.js?v=math-exp-v1";
+import { structures } from "./engine.js?v=math-rank-v2";
+import { EXPANSION_MODES } from "./expansion/generator.js?v=math-rank-v2";
 
 export const MIXED_MODES = [...Object.keys(structures), ...Object.keys(EXPANSION_MODES)];
 const isExpansion = (mode) => Object.prototype.hasOwnProperty.call(EXPANSION_MODES, mode);

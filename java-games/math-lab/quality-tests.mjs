@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 import { structures, generate } from "./engine.js";
 const lcg = seed => { let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; };
 const N = 400, BOUND = 0.65;
-const RESIDUAL = { "modulus:divisible": 1.0, "expressions:product-remainder": 0.85 }; // documented limits, see audit
+const RESIDUAL = { "modulus:divisible": 0.72 }; // The deliberate mixture still includes exact multiples.
 const heuristics = {
   rank0: (v, a) => [...v].sort((x, y) => x - y).indexOf(a) === 0,
   rank1: (v, a) => [...v].sort((x, y) => x - y).indexOf(a) === 1,
@@ -39,4 +39,4 @@ for (const [mode, shapes] of Object.entries(structures)) for (const shape of sha
   const bound = RESIDUAL[`${mode}:${shape}`] ?? BOUND;
   assert.ok(count / N <= bound, `${mode}:${shape}: shortcut '${best}' picks the key ${(100 * count / N).toFixed(1)}% (> ${bound * 100}%)`);
 }
-console.log(`Math Lab quality: ${checked} questions across ${Object.values(structures).flat().length - structures.reverse.length} value structures; no answer-rank shortcut above ${BOUND * 100}% (two documented residuals); deterministic.`);
+console.log(`Math Lab quality: ${checked} questions across ${Object.values(structures).flat().length - structures.reverse.length} value structures; no answer-rank shortcut above ${BOUND * 100}% (divisibility uses its documented bound); deterministic.`);

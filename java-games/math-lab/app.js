@@ -1,7 +1,7 @@
-import { mathGame, createDeck, assess } from "./engine.js?v=math-quality-v1";
+import { mathGame, createDeck, assess } from "./engine.js?v=math-rank-v2";
 import { sessionTracker, addSessionNavigation, roundSummary } from "../session.js?v=guest-map-v1";
-import { EXPANSION_MODES, DIFFICULTIES, DIFFICULTY_TITLES, createExpansionDeck, assessExpansion } from "./expansion/generator.js?v=math-exp-v1";
-import { createMixedDeck, mathEvidence } from "./mixed.js?v=math-quality-v1";
+import { EXPANSION_MODES, DIFFICULTIES, DIFFICULTY_TITLES, createExpansionDeck, assessExpansion } from "./expansion/generator.js?v=math-rank-v2";
+import { createMixedDeck, mathEvidence } from "./mixed.js?v=math-rank-v2";
 
 export function startMathLab() {
   const $ = id => document.getElementById(id);
@@ -55,7 +55,8 @@ export function startMathLab() {
       $("feedback").hidden = false;
       $("feedback").className = "feedback " + (correct ? "good" : "bad");
       const why = !correct && q.choiceDetails ? q.choiceDetails[selected].why : null;
-      $("feedback").textContent = `${correct ? "Correct" : "Incorrect"} — correct answer: ${q.answer}\n${q.explanation}${why ? `\nYour choice matches a common mistake: ${why}.` : ""}`;
+      const computation = !correct && q.choiceFeedback?.[q.choices[selected]];
+      $("feedback").textContent = `${correct ? "Correct" : "Incorrect"} — correct answer: ${q.answer}\n${q.explanation}${why ? `\nYour choice matches a common mistake: ${why}.` : computation ? `\n${computation}` : ""}`;
       $("feedback").focus(); stats();
     };
     $("next").onclick = next;

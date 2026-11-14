@@ -73,7 +73,7 @@ try {
   const parts = [];
   for (let start = 0; start < checks.length; start += 100) {
     const body = checks.slice(start, start + 100).map((c, offset) => {
-      const declaration = c.storageType ? `${c.storageType} result = ${c.expression};` : `var result = ${c.expression};`;
+      const declaration = c.storageType ? c.question.code : `var result = ${c.expression};`;
       return `{ ${declaration} System.out.println("${start + offset}\\t" + ((Object)result).getClass().getSimpleName() + "\\t" + result); }`;
     }).join("\n");
     parts.push(`static void part${parts.length}() {\n${body}\n}`);
@@ -155,6 +155,7 @@ for (const mode of Object.keys(M.structures)) {
     eq(after.revealed, before.revealed + Number(!correct));
     ok(!$("feedback").hidden); ok($("feedback").textContent.includes(q.answer));
     ok($("feedback").textContent.includes(q.explanation)); ok($("check").disabled);
+    if (!correct && q.choiceFeedback) ok($("feedback").textContent.includes(q.choiceFeedback[q.choices[index]]));
     for (const b of $("choices").querySelectorAll("button")) { ok(b.disabled); b.onclick(); }
     $("check").onclick(); eq(tracker.snapshot().games["math-lab"].submissions, after.submissions);
     $("next").onclick();

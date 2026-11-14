@@ -1,7 +1,7 @@
 // Math Lab expansion — Mode 2: Numeric Limits, Overflow & Round-off.
 import * as P from "./java-program.js";
 import * as N from "./java-numeric.js";
-import * as H from "./gen-helpers.js";
+import * as H from "./gen-helpers.js?v=math-rank-v2";
 
 const { lit, dlit, llit, bigIntLiteral, ref, K, bin, cast, call, grp, decl, assign, incdec, print, slit, loop, neg } = P;
 const MODE = "numeric-limits";
@@ -216,7 +216,7 @@ const midpoint = {
   id: "nl.midpoint", mode: MODE, label: "Averages of two ints", skill: "Integer overflow",
   weights: { beginner: 1, intermediate: 2, advanced: 3 },
   build(rng, d) {
-    const shape = rng.pick({ beginner: ["small-odd"], intermediate: ["small-odd", "negative-odd"], advanced: ["overflow", "both"] }[d]);
+    const shape = rng.pick({ beginner: ["small-odd", "negative-odd"], intermediate: ["small-odd", "negative-odd"], advanced: ["overflow", "both"] }[d]);
     const [lo, hi, mid] = rng.pick([["low", "high", "mid"], ["left", "right", "middle"], ["first", "last", "center"]]);
     let x, y;
     if (shape === "small-odd") { x = rng.int(0, 40); y = x + 2 * rng.int(1, 30) + 1; }
@@ -231,7 +231,7 @@ const midpoint = {
       shape, program, flags: ["noOverflow", "overflowThrows", "intDivRound", "intDivFloor", "intDivReal"],
       extras: shape === "overflow" ? [{ text: String(x + Math.trunc((y - x) / 2)), misc: "safeMidpoint" }]
         : shape === "both" ? [{ text: `${x + Math.trunc((y - x) / 2)} ${x + Math.trunc((y - x) / 2)}`, misc: "noOverflow" }, { text: `${wrap(sum)} ${x + Math.trunc((y - x) / 2)}`, misc: "forgotDivide" }]
-          : [{ text: show(sum / 2), misc: "intDivReal" }, { text: show(Math.trunc(sum / 2)), misc: "divisionGivesDouble" }, { text: String(Math.floor(sum / 2)), misc: "intDivFloor" }, { text: String(Math.trunc(sum / 2) + 1), misc: "intDivRound" }],
+          : [{ text: show(sum / 2), misc: "intDivReal" }, { text: show(Math.trunc(sum / 2)), misc: "divisionGivesDouble" }, { text: String(sum), misc: "forgotDivide" }],
       prompt: "What is printed?",
       explanation: shape === "small-odd" || shape === "negative-odd"
         ? H.lines(`${lo} + ${hi} = ${sum}. int division by 2 truncates toward zero: ${sum} / 2 = ${Math.trunc(sum / 2)}.`, shape === "negative-odd" ? "For a negative sum, truncating toward zero moves up, not down." : "The .5 is discarded, not rounded.")
@@ -257,7 +257,7 @@ const intDivision = {
     let x = rng.int(7, 60);
     const y = rng.pick([2, 4, 8, rng.int(3, 9)]);
     if (x % y === 0) x++;
-    if (shape === "negative" || shape === "mixed-negative") x = -x;
+    if (shape === "negative" || shape === "mixed-negative" || (d === "beginner" && rng.chance(0.5))) x = -x;
     const clean = y === 2 || y === 4 || y === 8;  // exact double quotient
     let program, explanation;
     const q = Math.trunc(x / y);
@@ -287,11 +287,20 @@ const intDivision = {
       program = [decl("int", a, lit(x)), decl("int", b, lit(y)), print(bin("+", bin("/", ref(a), ref(b)), bin("/", ref(a), dlit(y))))];
       explanation = H.lines(`${a} / ${b} is integer division: ${q}.`, `${a} / ${show(y)} is floating-point division: ${show(x / y)}.`, `${q} + ${show(x / y)} = ${show(q + x / y)}.`);
     } else if (shape === "reassemble") {
-      const c = rng.int(2, 5);
+      const c = rng.pick([2, 3, 4, 5].filter(factor => factor !== y));
       const [qn, rn] = rng.pick([["q", "rem"], ["whole", "extra"], ["groups", "left"]]);
       program = [decl("int", a, lit(x)), decl("int", b, lit(y)), decl("int", qn, bin("/", ref(a), ref(b))), decl("int", rn, bin("%", ref(a), ref(b))),
         print(bin("+", bin("*", ref(qn), lit(c)), ref(rn)))];
-      explanation = H.lines(`${qn} = ${x} / ${y} = ${q} and ${rn} = ${x} % ${y} = ${x % y}.`, `${qn} * ${c} + ${rn} = ${q * c} + ${x % y} = ${q * c + (x % y)}.`);
+      const remainder = x % y;
+      return H.outputDraft({ shape, program, flags: ["intDivRound"], prompt: "What is printed?",
+        explanation: H.lines(`${qn} = ${x} / ${y} = ${q} and ${rn} = ${x} % ${y} = ${remainder}.`, `${qn} * ${c} + ${rn} = ${q * c} + ${remainder} = ${q * c + remainder}.`),
+        extras: [
+          { text: String(q * c), misc: "forgotRemainder" },
+          { text: String(x), misc: "usedDivisorAsFactor" },
+          { text: String(remainder * c + q), misc: "swappedQuotientRemainder" },
+          { text: String((q + remainder) * c), misc: "multipliedEntireSum" },
+        ],
+      });
     } else if (shape === "chain") {
       const c = rng.int(2, 9);
       program = [decl("int", a, lit(x)), decl("int", b, lit(y)), print(pair(bin("*", bin("/", ref(a), ref(b)), lit(c)), bin("/", bin("*", ref(a), lit(c)), ref(b))))];
@@ -312,7 +321,10 @@ const intDivision = {
         print(pair(ref(r), cast("int", grp(bin("*", bin("/", cast("double", ref(a)), ref(b)), lit(c))))))];
       explanation = H.lines(`(double) (${a} / ${b}): integer division first gives ${q}, then ${show(q)} × ${c} = ${show(q * c)}.`, `(int) ((double) ${a} / ${b} * ${c}): ${show(x / y)} × ${c} = ${show(x / y * c)}, truncated to ${Math.trunc(x / y * c)}.`);
     }
-    return H.outputDraft({ shape, program, flags: ["intDivReal", "intDivRound", "intDivFloor", "remAbs", "doubleShowsInt"], prompt: "What is printed?", explanation });
+    const extras = d === "beginner" ? [{
+      text: shape === "double-dest" ? show(x % y) : String(x % y), misc: "remainderInsteadOfQuotient",
+    }] : [];
+    return H.outputDraft({ shape, program, flags: ["intDivReal", "intDivRound", "intDivFloor", "remAbs", "doubleShowsInt"], extras, prompt: "What is printed?", explanation });
   },
 };
 
@@ -331,7 +343,10 @@ const average = {
       program = [decl("int", names[0], lit(vals[0])), decl("int", names[1], lit(vals[1])), decl("double", s, bin("/", grp(bin("+", ref(names[0]), ref(names[1]))), lit(2))), print(ref(s))];
       const sum = vals[0] + vals[1];
       explanation = H.lines(`The sum ${sum} and the 2 are both ints, so ${sum} / 2 is integer division: ${Math.trunc(sum / 2)}.`, `It is stored as ${show(Math.trunc(sum / 2))}. Writing 2.0 would give ${show(sum / 2)}.`);
-      return H.outputDraft({ shape, program, flags: ["intDivReal", "intDivRound", "doubleShowsInt"], prompt: "What is printed?", explanation });
+      return H.outputDraft({
+        shape, program, flags: ["intDivReal", "intDivRound", "doubleShowsInt"], prompt: "What is printed?", explanation,
+        extras: [{ text: show(sum % 2), misc: "remainderInsteadOfQuotient" }],
+      });
     }
     vals = [rng.int(50, 100), rng.int(50, 100), rng.int(50, 100)];
     let sum = vals[0] + vals[1] + vals[2];
