@@ -20,7 +20,7 @@ const FAMILIES = {
   "short/short-counter": { levels: LEVELS2, gen: (r, L) => { const q = generate("short", r, L); return q.family === "short-counter" ? q : null; }, tries: 40 },
 };
 const draw = (fam, L, i, extra = 0) => { const F = FAMILIES[fam]; for (let t = 0; t < (F.tries || 1); t++) { try { const q = F.gen(makeRng(HELD_OUT + extra + i * 104729 + t * 982451653 + LEVELS3.indexOf(L) * 1299709), L); if (q) return q; } catch {} } return null; };
-const sample = (fam, n = N, levels = FAMILIES[fam].levels) => { const out = []; for (const L of levels) for (let i = 0; i < n; i++) { const q = draw(fam, L, i); if (q) out.push(q); } return out; };
+const sample = (fam, n = N, levels = FAMILIES[fam].levels, offset = 0) => { const out = []; for (const L of levels) for (let i = 0; i < n; i++) { const q = draw(fam, L, i, offset); if (q) out.push(q); } return out; };
 const data = Object.fromEntries(Object.keys(FAMILIES).map(f => [f, sample(f)]));
 const sizes = Object.entries(data).map(([f, v]) => `${f.split("/")[1]}=${v.length}`).join(", ");
 
@@ -45,6 +45,16 @@ const CAPS = { // per-cue caps on the exploitable accuracy (percent). Chance is 
 };
 for (const [fam, caps] of Object.entries(CAPS)) { const m = measure(data[fam]); ok(m.n >= (fam.startsWith("short") ? 200 : 700), `${fam}: only ${m.n} usable draws`);
   for (const [cue, cap] of Object.entries(caps)) ok(m.exploit[cue] <= cap, `${fam}: ${cue} exploits ${m.exploit[cue].toFixed(1)}% (cap ${cap}%, n=${m.n})`); }
+// A second seed block isolates two cues that reliably return with joint balancing disabled.
+// Each family has a wide margin on both the repaired and mutation-control samples.
+for (const [family, cue, cap] of [
+  ["coverage/equivalent-chain", "mostSimilar", 34],
+  ["switchIf/missing-break-fix", "promptOverlap", 36],
+]) {
+  const independent = measure(sample(family, 400, LEVELS3, 12547399 - HELD_OUT));
+  ok(independent.n === 1200, `${family}: expected 1,200 independent four-choice draws`);
+  ok(independent[cue] < cap, `${family}: independent ${cue} shortcut ${independent[cue].toFixed(1)}% (cap ${cap}%)`);
+}
 // answer position stays uniform
 for (const [fam, qs] of Object.entries(data)) { const pos = [0, 0, 0, 0]; qs.forEach(q => pos[q.answer]++); const e = qs.length / 4; const chi = pos.reduce((s, x) => s + (x - e) ** 2 / e, 0); ok(chi < 16.3, `${fam}: answer position skewed (chi2 ${chi.toFixed(1)}, ${pos})`); }
 

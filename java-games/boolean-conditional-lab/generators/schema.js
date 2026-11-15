@@ -1,9 +1,9 @@
 /* Challenge assembly. Every option carries a `claim` that an independent
  * checker (real Java execution, see tests/java-verify.mjs) can evaluate. A
  * generated challenge is valid only when exactly one option's claim is true. */
-import { buildChoices } from "./core.js";
-import { print } from "./bool.js";
-import { MISCONCEPTION_FEEDBACK } from "./misconceptions.js";
+import { buildChoices } from "./core.js?v=bool-v6";
+import { print } from "./bool.js?v=bool-v6";
+import { MISCONCEPTION_FEEDBACK } from "./misconceptions.js?v=bool-v6";
 
 export const SCHEMA_VERSION = 2;
 

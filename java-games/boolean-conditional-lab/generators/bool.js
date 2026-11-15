@@ -2,7 +2,7 @@
  * Nodes: {k:"var",n} {k:"const",v} {k:"cmp",v,op,c} {k:"not",a} {k:"and",xs:[...]} {k:"or",xs:[...]}
  * and/or are n-ary and kept flattened, so "(a && b) && c" can never be printed:
  * associative chains print without parentheses. */
-import { pick, int, shuffle, reject } from "./core.js";
+import { pick, int, shuffle, reject } from "./core.js?v=bool-v6";
 
 export const V = n => ({ k: "var", n });
 export const NOT = a => ({ k: "not", a });

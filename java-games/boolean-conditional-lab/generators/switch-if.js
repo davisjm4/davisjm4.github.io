@@ -2,8 +2,8 @@
  * statements (Java 7+ for String selectors; no arrow labels, no switch
  * expressions, no pattern matching). Every snippet is simulated with Java
  * semantics; wrong answers come from simulating modeled misconceptions. */
-import { pick, int, chance, shuffle, sample, reject, retry, range, join } from "./core.js";
-import { challenge } from "./schema.js";
+import { pick, int, chance, shuffle, sample, reject, retry, range, join } from "./core.js?v=bool-v6";
+import { challenge } from "./schema.js?v=bool-v6";
 
 const MODE = "switchIf";
 const SKILL = {

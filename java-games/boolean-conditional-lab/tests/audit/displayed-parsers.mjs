@@ -28,4 +28,3 @@ export function applySwitchEdit(sw, text) { const s = clone(sw); const find = nm
   else if ((m = text.match(/^Move (.+) to the end of the switch$/))) { const i = find(m[1]); const [b] = s.blocks.splice(i, 1); s.blocks.push(b); }
   else throw new Error("unparsed option: " + text);
   return s; }
-

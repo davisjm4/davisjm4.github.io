@@ -1,9 +1,9 @@
 /* The seven original modes, rebuilt procedurally. Mode ids, kinds and choice
  * counts are unchanged (evaluate: 2 choices; identify: token select; the rest
  * 4 choices, which Teacher Tools / QTI export requires). */
-import { pick, int, chance, shuffle, sample, reject, retry, join } from "./core.js";
-import * as B from "./bool.js";
-import { challenge } from "./schema.js";
+import { pick, int, chance, shuffle, sample, reject, retry, join } from "./core.js?v=bool-v6";
+import * as B from "./bool.js?v=bool-v6";
+import { challenge } from "./schema.js?v=bool-v6";
 import { generateCoverage } from "./coverage.js";
 
 // ---------- shared: comparison/flag atoms and sound representative inputs ----------

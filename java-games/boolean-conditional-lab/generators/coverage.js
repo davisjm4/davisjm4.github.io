@@ -3,9 +3,9 @@
  * Every domain is a stated finite integer range, so reachability, coverage and
  * equivalence are decided by exhaustive evaluation over the whole domain (sound,
  * not sampled). The verifier re-runs the same exhaustive inputs on real Java. */
-import { pick, int, chance, shuffle, sample, reject, retry, range, join } from "./core.js";
-import * as B from "./bool.js";
-import { challenge } from "./schema.js";
+import { pick, int, chance, shuffle, sample, reject, retry, range, join } from "./core.js?v=bool-v6";
+import * as B from "./bool.js?v=bool-v6";
+import { challenge } from "./schema.js?v=bool-v6";
 
 const MODE = "coverage";
 const SKILL = {

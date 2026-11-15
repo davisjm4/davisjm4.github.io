@@ -1,7 +1,7 @@
 /* Truth Table Builder: 12 reasoning activities over generated expression trees. */
-import { pick, int, chance, shuffle, sample, reject, retry } from "./core.js";
-import * as B from "./bool.js";
-import { challenge, boolProgram, boolInputs, rowInput, fmtRow } from "./schema.js";
+import { pick, int, chance, shuffle, sample, reject, retry } from "./core.js?v=bool-v6";
+import * as B from "./bool.js?v=bool-v6";
+import { challenge, boolProgram, boolInputs, rowInput, fmtRow } from "./schema.js?v=bool-v6";
 
 const MODE = "truthTable";
 const NAME_SETS = [["a", "b", "c", "d"], ["p", "q", "r", "s"], ["x", "y", "z", "w"]];
