@@ -260,7 +260,13 @@ function renderNodes(){const filter=$('area-filter'),selected=filter.value;filte
     },'secondary small');
     restore.id='area-default-'+id;
     restore.setAttribute('aria-label','Restore defaults for '+title);
-    actions.append(change,restore);
+    const optional=btn('Make area optional',()=>{
+      rows.filter(c=>skillParticipation(p,c)==='required').forEach(c=>setSkillParticipation(c,'optional'));
+      edited(restore.id);
+    },'secondary small');
+    optional.disabled=required===0;
+    optional.setAttribute('aria-label','Make '+title+' optional');
+    actions.append(change,optional,restore);
     const t=table(headers);
     for(const c of rows)t.tbody.append(makeRow(c.nodeId,c));
     body.append(el('p',automatic+' automatically assessable · '+(rows.length-automatic)+' teacher-assessed · '+assigned+' included · '+required+' required'),actions,labelled(t));
