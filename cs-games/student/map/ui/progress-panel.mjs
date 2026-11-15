@@ -74,10 +74,10 @@ export function createProgressPanel(node, ctx) {
   const mixed = ctx.stop.mixed;
   if (mixed&&!node.practice.some(link=>link.url===mixed.url)) actions.append(el('a', { class: 'btn', href: mixed.url, 'data-action': 'mixed', text: 'Mixed Practice', 'aria-label': mixed.label, onclick: (e) => { if (ctx.onPractice({ node, url: mixed.url, kind: 'mixed' }) === true) e.preventDefault(); } }));
   root.append(actions);
-  if (node.mixed?.url.startsWith('/java-games/')) root.append(el('p', { class: 'muted small', text: 'Mixed Practice counts here when it asks about this skill.' }));
+  if (req && node.mixed?.url.startsWith('/java-games/')) root.append(el('p', { class: 'muted small', text: 'Mixed Practice counts here when it asks about this skill.' }));
 
   // Requirement, then this attempt.
-  if(req)root.append(el('h4', { text: 'Requirement' }), el('p', { text: requirementLine(node) }));
+  if(req || node.teacherAssessmentRequired)root.append(el('h4', { text: 'Requirement' }), el('p', { text: requirementLine(node) }));
   else if(node.practiceGoal){
     const {questions,accuracy,met}=node.practiceGoal;
     root.append(el('p',{class:'muted',text:`Practice goal · ${questions} first attempts at ${formatPercent(accuracy*100)} accuracy${met?' · met':''}`}));

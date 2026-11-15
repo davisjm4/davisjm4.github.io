@@ -1,3 +1,4 @@
+import { tierLabel } from './recommended.mjs';
 // The teacher's review: a readable table of the defaults and overrides, what changed from the published version, problems grouped by
 // kind, and whether the draft may be saved and published. No identifiers appear in any text.
 import { catalog, readLevels, resolveAll, resolveSkill, valueOf, explicitFields, sourceOf, latestPolicy, levelName, isRetired } from './levels.mjs';
@@ -29,7 +30,9 @@ export function overridesTable(pathway, graph) {
   const cat = catalog(pathway, graph), levels = readLevels(pathway), all = resolveAll(pathway, graph);
   const count = (fn) => all.filter(fn).length;
   const rows = [];
-  rows.push({ level: 'class', name: 'Class defaults', area: null, settings: levels.class ? briefSettings(resolveSkillAs(pathway, graph, 'class')) : 'Not set', set: Boolean(levels.class), own: levels.class ? ownFields(levels.class) : [], skills: count((r) => r.level === 'class') });
+  if (!levels.tiers.size || levels.class) rows.push({ level: 'class', name: 'Class defaults', area: null, settings: levels.class ? briefSettings(resolveSkillAs(pathway, graph, 'class')) : 'Not set', set: Boolean(levels.class), own: levels.class ? ownFields(levels.class) : [], skills: count((r) => r.level === 'class') });
+  for (const [id, policy] of levels.tiers) rows.push({level:'tier', name:tierLabel(id), settings:briefSettings(policy),
+    set:true, own:ownFields(policy), skills:count(r=>Object.values(r.sources).some(source=>source.level==='tier' && source.scopeId===id))});
   for (const a of cat.areas) {
     const pol = levels.areas.get(a.id);
     if (!pol) continue;
@@ -88,6 +91,7 @@ export function differences(draft, published, graph) {
       text: !a ? `${label}: new setting, ${show(b)}.` : !b ? `${label}: own setting removed (was ${show(a)}); it now follows the level above.` : `${label}: ${show(a)} changed to ${show(b)}.` });
   };
   cmp('Class defaults', lb.class, la.class);
+  for (const id of new Set([...lb.tiers.keys(), ...la.tiers.keys()])) cmp(tierLabel(id), lb.tiers.get(id), la.tiers.get(id));
   for (const id of new Set([...lb.areas.keys(), ...la.areas.keys()])) cmp(cat.areaTitle(id), lb.areas.get(id), la.areas.get(id));
   for (const id of new Set([...lb.skills.keys(), ...la.skills.keys()])) cmp(cat.nodeTitle(id), lb.skills.get(id), la.skills.get(id));
   const rb = new Map(resolveAll(before, graph).map((r) => [r.nodeId, r])), groups = new Map();
@@ -110,7 +114,8 @@ export function differences(draft, published, graph) {
  */
 export function reviewRequirements(draft, published, graph, { facts = null, acknowledged = false } = {}) {
   const table = overridesTable(draft, graph), diff = differences(draft, published, graph), assessed = assessAll(draft, graph, facts);
-  const incompleteLevels = draft.policies.filter((p) => sourceOf(p) && !isRetired(p) && latestPolicy(draft, p.id) === p && p.provisional);
+  const tiered = readLevels(draft).tiers.size > 0;
+  const incompleteLevels = draft.policies.filter((p) => sourceOf(p) && !isRetired(p) && latestPolicy(draft, p.id) === p && p.provisional && !(tiered && ['area','skill'].includes(sourceOf(p).level)));
   const problems = groupProblems([...assessed.blocked, ...assessed.draftOnly, ...assessed.warnings]);
   const pending = unpublishedPolicies(draft, published).filter((x) => x.id.startsWith('policy:req:'));
   const reasons = [];

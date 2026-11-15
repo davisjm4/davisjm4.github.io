@@ -50,7 +50,7 @@ export function progressFromPractice(practice, node) {
     explanation: { headline: '', lines: [], text: '' } };
 }
 /** The live history is closed attempts only, newest last: { number, status, answered, correct, accuracy }. */
-export const attemptsFromChallenge = (challenge) => (challenge.history ?? []).map((a) => ({ seq: a.number, status: a.status, closed: true, closedAt:a.closedAt, attempted: a.answered, correct: a.correct, accuracyPercent: a.accuracy }));
+export const attemptsFromChallenge = (challenge) => (challenge.history ?? []).map((a) => ({ seq: a.number, status: a.status, closed: true, closedAt:a.closedAt, attempted: a.answered, correct: a.correct, accuracyPercent: a.accuracy, requirement:a.requirement }));
 
 /**
  * @param contract the result of studentContract(...), called with options.mastery and options.practice when the service has them
@@ -84,7 +84,7 @@ export function inputFromStudentContract(contract, {
         id:n.id,courseId:n.courseId,areaId:n.areaId,title:n.title,objective:n.objective,
         familySelectors:n.familySelectors,standardRefs:n.standardRefs,practice:n.checkpoint.practice,
         prerequisites:n.checkpoint.prerequisites,practiceGoal:n.practiceGoal,
-        guest:n.guest,verifiedAward:Boolean(n.checkpoint.award),earlierVerifiedAward:n.earlierVerifiedAward===true,
+        guest:n.guest,teacherAssessmentRequired:n.checkpoint.requirementTier===null,verifiedAward:Boolean(n.checkpoint.award),earlierVerifiedAward:n.earlierVerifiedAward===true,
         standardsScore:n.checkpoint.score,demonstrationType:n.checkpoint.demonstrationType
       }))
     },

@@ -10,13 +10,14 @@ import {studentRequirementView} from '../../../cs-games/pathway/requirements/stu
 
 const facts=buildContentFacts({graph,registry});
 const fail=(status,message)=>{throw Object.assign(new Error(message),{status});};
-const describeAttempt=attempt=>({
+const describeAttempt=(attempt,policy)=>({
   number:attempt.seq,
   status:attempt.status,
   closedAt:attempt.closedAt,
   answered:attempt.snapshot?.counts?.attempted??0,
   correct:attempt.snapshot?.counts?.correct??0,
-  accuracy:attempt.snapshot?.counts?.accuracyPercent??null
+  accuracy:attempt.snapshot?.counts?.accuracyPercent??null,
+  ...(policy?{requirement:{questions:policy.minimumQuestions,accuracy:policy.accuracy,version:policy.version,label:policy.label}}:{})
 });
 
 // Send evaluated student-facing fields only. The engine also carries internal
@@ -25,7 +26,7 @@ function mapProgress(progress,activeAttemptId){
   const {statusReason,attemptStatus,attempt,remaining,recovery,missing,requirementChecks,
     lastCompletedAttempt,lifetime,verification,award}=progress;
   return {
-    statusReason,attemptStatus,remaining,recovery,missing,lifetime,verification,award,
+    required:progress.required,statusReason,attemptStatus,remaining,recovery,missing,lifetime,verification,award,
     attempt:attempt?{
       id:activeAttemptId,seq:attempt.seq,attempted:attempt.attempted,
       correct:attempt.correct,accuracyPercent:attempt.accuracyPercent
@@ -115,6 +116,7 @@ export async function readMasteryProgress(db,profile,pathway,assessmentEvidence,
   const [existing,policies]=profile
     ?await Promise.all([loadHistories(db,profile.id,scope),knownPolicies(db,pathway)])
     :[new Map(),[]];
+  const policyByRef=new Map([...policies,...[...skills.values()].map(skill=>skill.policy)].map(policy=>[policy.id+'@'+policy.version,policy]));
   const nodes=new Map(), progresses=[], transitions=[];
   for(const [id,{node,policy,checkpoint}] of skills){
     const prior=existing.get(id)??{version:0,history:emptyHistory(scope,id)};
@@ -131,7 +133,7 @@ export async function readMasteryProgress(db,profile,pathway,assessmentEvidence,
       ...(noSkillMapping?{practiceAvailability:'This activity is open for practice. Individual skill answers cannot be counted for this requirement yet.'}:{}),
       activeAttemptId,
       ...(profile?{mapProgress:mapProgress(result.progress,activeAttemptId)}:{}),
-      history:closed.slice(-10).map(describeAttempt),
+      history:closed.slice(-10).map(attempt=>describeAttempt(attempt,policyByRef.get(attempt.policy.id+'@'+attempt.policy.version))),
       historyCount:closed.length});
     progresses.push(result.progress);
   }

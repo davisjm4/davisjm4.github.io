@@ -10,6 +10,7 @@
 import { assessSupport, contentProfileFromGraph } from '../mastery/evaluate.mjs';
 import { toBasisPoints } from '../mastery/arithmetic.mjs';
 import { DIFFICULTY_LABELS, FIELDS } from './settings.mjs';
+import { auditRecommended, boundedPracticePools } from './recommended.mjs';
 import { engineCheck } from './policies.mjs';
 
 export const STATUS_ORDER = Object.freeze(['ok', 'warning', 'draft-only', 'blocked']);
@@ -27,18 +28,23 @@ export function buildContentFacts({ graph, registry = null, extra = {} }) {
     if (m.difficulty && m.difficulty !== 'n/a') levelsByNode.get(m.node).add(String(m.difficulty).toLowerCase());
   }
   for (const e of registry?.entries ?? []) if (e.nodeId && e.status === 'fully-supported') verifiedEvidence.add(e.nodeId);
+  if (registry) for (const row of auditRecommended(graph,registry)) if (row.tier) verifiedEvidence.add(row.nodeId);
+  const profiles = new Map();
   return {
     profileFor(nodeId) {
+      if (profiles.has(nodeId)) return profiles.get(nodeId);
       const base = contentProfileFromGraph(graph, nodeId) ?? { boundFamilyIds: null, familyBindingStatus: null, difficulties: null, bankSize: null };
       const lv = levelsByNode.get(nodeId);
       const bank = extra[nodeId]?.bankSize ?? null;
-      return {
+      const result = {
         ...base,
         difficulties: lv ? [...lv].sort() : base.difficulties,
         // assessSupport only treats a pool as a verified limit when the size is verified; estimates are handled below
         bankSize: bank && bank.basis === 'verified' ? bank.value : null,
         bank,
       };
+      profiles.set(nodeId,result);
+      return result;
     },
     practiceEvidence(nodeId) { return verifiedEvidence.has(nodeId) ? 'verified' : 'unverified'; },
   };
@@ -101,21 +107,26 @@ export function checkPolicy({ policy, effective, facts, nodeId, title }) {
 }
 export { FIELDS };
 
-import { resolveSkill, readLevels } from './levels.mjs';
+import { catalog, resolveSkill, readLevels } from './levels.mjs';
 import { buildPolicy } from './policies.mjs';
 /** Check one skill's resolved requirement: `{status, complete, problems, title}`. `facts` is from buildContentFacts (or null for no content facts). */
-export function assessSkill(pathway, nodeId, graph, facts = null, levels = readLevels(pathway)) {
-  const r = resolveSkill(pathway, nodeId, graph, levels);
+export function assessSkill(pathway, nodeId, graph, facts = null, levels = readLevels(pathway), cat = catalog(pathway, graph)) {
+  const r = resolveSkill(pathway, nodeId, graph, levels, cat);
   if (!r) return null;
   const pseudo = buildPolicy({ level: 'skill', scopeId: nodeId, version: 1, explicit: [], effective: r.effective });
-  const out = checkPolicy({ policy: pseudo, effective: r.effective, facts, nodeId, title: r.title });
+  const size = r.tier === undefined ? null : boundedPracticePools[nodeId];
+  const support = size && facts ? {
+    practiceEvidence: facts.practiceEvidence,
+    profileFor: id => ({...facts.profileFor(id),bankSize:size,bank:{value:size,basis:'verified',expandable:true}}),
+  } : facts;
+  const out = checkPolicy({ policy: pseudo, effective: r.effective, facts:support, nodeId, title: r.title });
   return { nodeId, title: r.title, areaId: r.areaId, areaTitle: r.areaTitle, ...out };
 }
 /** Check every skill. Returns {byNode, counts, blocked, draftOnly, warnings} (problem lists carry the skill title). */
 export function assessAll(pathway, graph, facts = null) {
-  const levels = readLevels(pathway), byNode = new Map(), counts = { ok: 0, warning: 0, 'draft-only': 0, blocked: 0, notSet: 0 };
+  const levels = readLevels(pathway), cat = catalog(pathway, graph), byNode = new Map(), counts = { ok: 0, warning: 0, 'draft-only': 0, blocked: 0, notSet: 0 };
   for (const id of pathway.sequence) {
-    const a = assessSkill(pathway, id, graph, facts, levels);
+    const a = assessSkill(pathway, id, graph, facts, levels, cat);
     if (!a) continue;
     byNode.set(id, a);
     if (!a.complete) counts.notSet++; else counts[a.status]++;

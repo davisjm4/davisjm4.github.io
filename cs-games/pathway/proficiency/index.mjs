@@ -135,7 +135,7 @@ export function evaluateProficiency({courseId,nodes,eventsByNode=new Map(),polic
   const skills={}, grouped=new Map();
   for(const node of nodes){
     const checkpoint=node.checkpoint;
-    const policy=checkpoint?rules.get(`${checkpoint.policyId}@${checkpoint.policyVersion}`):null;
+    const policy=checkpoint && !Object.hasOwn(checkpoint,'requirementTier')?rules.get(`${checkpoint.policyId}@${checkpoint.policyVersion}`):null;
     skills[node.id]=evaluateSkillProficiency(node,eventsByNode.get(node.id)??[],{policy});
     if(!grouped.has(node.areaId))grouped.set(node.areaId,[]);
     grouped.get(node.areaId).push(node);

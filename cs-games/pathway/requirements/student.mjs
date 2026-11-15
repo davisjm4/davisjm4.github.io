@@ -25,7 +25,7 @@ export function studentRequirementView(progress) {
     requirement: configured ? {
       headline: `Answer at least ${plural(req.minimumQuestions, 'question')} with at least ${formatPercent(req.requiredAccuracyPercent)} right on the first try.`,
       minimumQuestions: req.minimumQuestions, accuracyPercent: req.requiredAccuracyPercent, correctNeededAtMinimum: req.correctNeededAtMinimum, minimumCorrect: req.minimumCorrect,
-      keepGoing: `You can answer more than ${req.minimumQuestions} questions to raise your accuracy.`,
+      keepGoing: req.requiredAccuracyPercent === 100 ? 'A wrong first answer means you need to start a new attempt to reach 100%. Earlier attempts stay in your history.' : `You can answer more than ${req.minimumQuestions} questions to raise your accuracy.`,
       mixedNote: 'Questions from Mixed Practice count toward this skill too.',
     } : { headline: null, keepGoing: null, mixedNote: null },
     progress: configured && att ? {

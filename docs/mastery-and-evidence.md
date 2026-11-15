@@ -26,6 +26,10 @@
 
 **Approved migration policy (CSG-DEC-14):** preserve historically earned progression even if an independent evaluation yields a different level. Keep historical proficiency with its original policy context and present accurate current formative proficiency separately. Explain differences and carried-forward progression to both teachers and students. Keep original evidence intact and teacher-verified scores unchanged. Require side-by-side replay and regression tests before deploying evaluator changes.
 
+### Starting practice requirements
+
+The class setup presets and their area and skill overrides create class practice targets. They use the existing mastery attempt history, publish as versioned policies and leave formative rubric inputs unchanged. Existing published policy evaluation continues under its original behavior. CSG-PKG-08 retains ownership of historical replay and migration. Skill classifications and evidence limitations are recorded in the [default requirements audit](../cs-games/pathway/reports/DEFAULT_MASTERY_REQUIREMENTS.md).
+
 ### Current behavior and proposed migration
 
 **Current baseline:** the [shared formative evaluator](../cs-games/pathway/proficiency/index.mjs) accepts a configured teacher policy that can override tier minimum question count, accuracy and minimum correct. Policy presence also affects whether some supplemental nodes count toward area progression. The [student pathway service](../wpr-games/workplace-readiness/service/pathways.mjs) supplies published policies to the evaluator, and the baseline [test](../cs-games/pathway/tests/proficiency.test.mjs) expects a Level 3 fixture to evaluate at Level 1 with a stricter policy. The audit observed the drop in a synthetic class. The account-free guest path uses course evidence without a class policy. This coupling is a known gap against the approved behavior.

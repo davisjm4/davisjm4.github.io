@@ -1,6 +1,7 @@
 // Reading the three levels back out of a pathway, and resolving what a skill's requirement is and where each value came from.
 // There is no separate store: levels are policies in pathway.policies[] (see ids.mjs) and a skill's requirement is the policy its
 // checkpoint references. Resolution walks skill -> area -> class and takes each setting from the first level that set it.
+import { tierLabel } from './recommended.mjs';
 import { FIELDS, FIELD_DEFAULTS, cloneValue } from './settings.mjs';
 import { PROVISIONAL_ID, REQ_SCHEMA, parsePolicyId, policyIdFor } from './ids.mjs';
 
@@ -33,12 +34,13 @@ export const policyOf = (pathway, ref) => (pathway.policies ?? []).find((p) => p
 export function catalog(pathway, graph) {
   const nodes = new Map([...graph.nodes, ...(pathway.curriculumSnapshot?.nodes ?? []), ...(pathway.customNodes ?? [])].map((n) => [n.id, n]));
   const areas = new Map([...graph.areas, ...(pathway.curriculumSnapshot?.areas ?? []), ...(pathway.customAreas ?? [])].map((a) => [a.id, a]));
-  const list = [];
+  const list = [], groups = new Map();
+  const checkpoints = new Map(pathway.checkpoints.map(c => [c.nodeId,c]));
   for (const id of pathway.sequence ?? pathway.checkpoints.map((c) => c.nodeId)) {
-    const c = pathway.checkpoints.find((x) => x.nodeId === id);
+    const c = checkpoints.get(id);
     if (!c) continue;
-    let a = list.find((x) => x.id === c.areaId);
-    if (!a) { a = { id: c.areaId, title: areas.get(c.areaId)?.title ?? 'Learning area', skills: [] }; list.push(a); }
+    let a = groups.get(c.areaId);
+    if (!a) { a = { id: c.areaId, title: areas.get(c.areaId)?.title ?? 'Learning area', skills: [] }; list.push(a); groups.set(a.id,a); }
     a.skills.push({ id, title: nodes.get(id)?.title ?? nodes.get(id)?.objective ?? 'Skill', areaId: c.areaId, required: c.required });
   }
   return { areas: list, nodeTitle: (id) => nodes.get(id)?.title ?? 'Skill', areaTitle: (id) => areas.get(id)?.title ?? 'Learning area', node: (id) => nodes.get(id) ?? null,
@@ -47,16 +49,16 @@ export function catalog(pathway, graph) {
 
 /** The active (latest, not retired) requirement policies of each level. */
 export function readLevels(pathway) {
-  const out = { class: null, areas: new Map(), skills: new Map() };
+  const out = { class: null, areas: new Map(), skills: new Map(), tiers: new Map() };
   const seen = new Set();
   for (const p of pathway.policies ?? []) {
     if (seen.has(p.id)) continue;
     seen.add(p.id);
     const { level, scopeId } = parsePolicyId(p.id);
-    if (!['class', 'area', 'skill'].includes(level)) continue;
+    if (!['class', 'area', 'skill', 'tier'].includes(level)) continue;
     const latest = latestPolicy(pathway, p.id);
     if (!sourceOf(latest) || isRetired(latest)) continue;
-    if (level === 'class') out.class = latest; else if (level === 'area') out.areas.set(scopeId, latest); else out.skills.set(scopeId, latest);
+    if (level === 'class') out.class = latest; else if (level === 'area') out.areas.set(scopeId, latest); else if (level === 'tier') out.tiers.set(scopeId, latest); else out.skills.set(scopeId, latest);
   }
   return out;
 }
@@ -81,7 +83,10 @@ function entryFor(level, scopeId, policy) {
  * policy contributes it as the skill's own choice. Pass `levels` (from readLevels) to avoid reading twice.
  */
 export function chainFor(pathway, level, scopeId, levels = readLevels(pathway)) {
-  const chain = [];
+  if (level === 'tier') {
+    const policy = levels.tiers.get(scopeId);
+    return policy ? [entryFor('tier', scopeId, policy)] : [];
+  }
   const cls = levels.class ? entryFor('class', null, levels.class) : null;
   if (level === 'class') return cls ? [cls] : [];
   if (level === 'area') {
@@ -92,7 +97,14 @@ export function chainFor(pathway, level, scopeId, levels = readLevels(pathway)) 
   const s = levels.skills.get(scopeId);
   const legacy = !s && c ? legacyEntry(pathway, c) : null;
   const a = c ? levels.areas.get(c.areaId) : null;
-  return [s ? entryFor('skill', scopeId, s) : legacy, a ? entryFor('area', c.areaId, a) : null, cls].filter(Boolean).concat(chain);
+  const tier = levels.tiers.get(c?.requirementTier);
+  if (levels.tiers.size && !tier && !s && !legacy) return [];
+  const base = tier ? entryFor('tier', c.requirementTier, tier) : null;
+  if (base && c.recommendedFamilies) {
+    base.values.families = {minDistinct:c.recommendedFamilies, minCorrectEach:1};
+    base.explicit.add('families');
+  }
+  return [s ? entryFor('skill', scopeId, s) : legacy, a ? entryFor('area', c.areaId, a) : null, cls, base].filter(Boolean);
 }
 
 /** First level that set a setting wins; otherwise the system default. */
@@ -108,6 +120,7 @@ export function resolveChain(chain) {
 
 export function sourceLabel(src, cat) {
   switch (src.level) {
+    case 'tier': return tierLabel(src.scopeId);
     case 'skill': return 'Set for this skill';
     case 'area': return `Set for the ${cat.areaTitle(src.scopeId)} area`;
     case 'class': return 'Class defaults';
@@ -118,17 +131,16 @@ export function sourceLabel(src, cat) {
 export const levelName = { class: 'Class defaults', area: 'Learning area', skill: 'Skill', legacy: 'Older policy editor', default: 'Not set' };
 
 /** What one skill's requirement is, field by field, and where each value comes from. */
-export function resolveSkill(pathway, nodeId, graph, levels = readLevels(pathway)) {
+export function resolveSkill(pathway, nodeId, graph, levels = readLevels(pathway), cat = catalog(pathway, graph)) {
   const c = pathway.checkpoints.find((x) => x.nodeId === nodeId);
   if (!c) return null;
-  const cat = catalog(pathway, graph);
   const chain = chainFor(pathway, 'skill', nodeId, levels);
   const { effective, sources, complete } = resolveChain(chain);
   const top = chain[0]?.level ?? 'none';
   const winner = FIELDS.map((f) => sources[f].level).find((l) => l !== 'default') ?? 'none';
   const current = policyOf(pathway, c);
   return {
-    nodeId, areaId: c.areaId, title: cat.nodeTitle(nodeId), areaTitle: cat.areaTitle(c.areaId), required: c.required,
+    nodeId, tier: c.requirementTier, areaId: c.areaId, title: cat.nodeTitle(nodeId), areaTitle: cat.areaTitle(c.areaId), required: c.required,
     effective, sources, labels: Object.fromEntries(FIELDS.map((f) => [f, sourceLabel(sources[f], cat)])), complete,
     // where the headline numbers come from; a skill with its own policy says so even if only some settings are its own
     level: top === 'legacy' ? 'legacy' : levels.skills.has(nodeId) ? 'skill' : sources.minimumQuestions.level === 'default' ? 'none' : sources.minimumQuestions.level,
@@ -139,7 +151,8 @@ export function resolveSkill(pathway, nodeId, graph, levels = readLevels(pathway
 /** Every skill of the class, in teaching order. */
 export function resolveAll(pathway, graph) {
   const levels = readLevels(pathway);
-  return pathway.sequence.map((id) => resolveSkill(pathway, id, graph, levels)).filter(Boolean);
+  const cat = catalog(pathway, graph);
+  return pathway.sequence.map((id) => resolveSkill(pathway, id, graph, levels, cat)).filter(Boolean);
 }
 /**
  * What a level would use for each setting if nothing were set at that level, and what it uses now. Used for the editing form: it

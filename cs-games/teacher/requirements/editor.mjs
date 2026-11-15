@@ -3,7 +3,8 @@ import { renderPathway } from '../../student/pathway-view.mjs';
 // cs-games/pathway/requirements/ and hands the result to the host (onChange, adapter). It never stores anything itself and never publishes
 // without an explicit button press. Routine views show titles and sentences only: no identifiers, no JSON.
 import { COUNTING_RULES, applyToAreas, applyToClass, applyToSkills, buildContentFacts, catalog, clearSkillOverridesInAreas, copyAreaSettings, createContext, levelView,
-  overridesTable, readLevels, resetToInherited, resolveAll, reviewRequirements, stampPublishTime, SEVERITY_HEADING, briefSettings } from '../../pathway/requirements/index.mjs';
+  overridesTable, readLevels, resetToInherited, resolveAll, reviewRequirements, stampPublishTime, applyRecommended, auditRecommended, canApplyRecommended, setTierSettings, SEVERITY_HEADING, briefSettings } from '../../pathway/requirements/index.mjs';
+import { tierFields } from './tier-fields.mjs';
 import { createSettingsForm } from './form.mjs';
 import { el, fill, plural, uid } from './dom.mjs';
 
@@ -53,7 +54,7 @@ export function createRequirementsEditor(root, options) {
   // ---- shared pieces ----
   const cat = () => catalog(st.pathway, graph);
   const resolved = () => resolveAll(st.pathway, graph);
-  const sourceChip = (r) => el('span', { class: `mreq-chip level-${r.level}`, text: r.level === 'skill' ? 'Own setting' : r.level === 'area' ? 'Area setting' : r.level === 'class' ? 'Class defaults' : r.level === 'legacy' ? 'Earlier setting' : 'Not set' });
+  const sourceChip = (r) => el('span', { class: `mreq-chip level-${r.level}`, text: r.level === 'skill' ? 'Own setting' : r.level === 'area' ? 'Area setting' : r.level === 'class' ? 'Class defaults' : r.level === 'legacy' ? 'Earlier setting' : r.level === 'tier' ? r.labels.minimumQuestions : r.tier === null ? 'Teacher assessment' : 'Not set' });
   const clone = (x) => JSON.parse(JSON.stringify(x));
   function apply(result, { done }) {
     if (!result.ok) { updatePersistence(false); alertWith(result.blocked?.length ? 'These changes cannot be applied because the requirements cannot be met.' : 'The changes could not be applied.', result.errors.map((e) => e.message)); return false; }
@@ -84,7 +85,33 @@ export function createRequirementsEditor(root, options) {
   const checkbox = (label, checked, onchange, { id = uid('c'), hint = null, disabled = false, review = false } = {}) => el('label', { class: 'mreq-check', for: id, 'data-review-ack': review ? '' : undefined }, el('input', { type: 'checkbox', id, checked, disabled, onchange: (e) => onchange(e.target.checked) }), el('span', {}, label, hint ? el('small', { class: 'mreq-hint', text: ` ${hint}` }) : null));
 
   // ---- Class defaults ----
+  function tierPanel(levels) {
+    const all = resolved();
+    const fields = tierFields({valueFor:tier => levels.tiers.get(tier.id), onInput:() => updatePersistence(true),
+      description(tier) {
+        const members = all.filter(r => r.tier === tier.id);
+        const byArea = Map.groupBy(members, r => r.areaTitle);
+        const inherits = field => members.filter(r => r.sources[field].level === 'tier').length;
+        return el('div', {},
+          el('p', {text:`${plural(inherits('minimumQuestions'), 'skill')} inherit the question count. ${plural(inherits('accuracy'), 'skill')} inherit accuracy.`}),
+          members.length ? el('details', {}, el('summary', {text:`Inspect ${plural(members.length, 'assigned skill')}`}),
+            [...byArea].map(([area, skills]) => el('details', {}, el('summary', {text:area}),
+              el('ul', {}, skills.map(r => el('li', {}, `${r.title} · ${briefSettings(r.effective)}`,
+                el('button', {type:'button', class:'secondary small', 'aria-label':`Edit ${r.title}`, onclick:() => {
+                  st.skills = new Set([r.nodeId]); st.tab = 'skills'; st.areaFilter = ''; st.search = ''; render(); panel.focus();
+                }}, 'Edit override'))))))) : null);
+      }});
+    const save = el('button', {type:'button', class:'primary', onclick:() => {
+      try { apply(setTierSettings(st.pathway, fields.collect(), ctx()), {done:'Complexity presets applied to the draft.'}); }
+      catch (error) { alertWith(error.message); }
+    }}, 'Apply presets to draft');
+    return el('div', {class:'mreq-section'}, el('h3', {text:'Class complexity presets'}),
+      el('p', {text:'These configurable starting requirements reflect the work each skill asks students to do. Learning-area and skill overrides take priority for each setting.'}),
+      el('p', {text:`${plural(all.filter(r => !r.complete).length, 'skill')} currently require teacher assessment for mastery evidence.`}), fields.element, save);
+  }
   function classPanel() {
+    const levels = readLevels(st.pathway);
+    if (levels.tiers.size) return tierPanel(levels);
     const view = levelView(st.pathway, 'class', null, graph), table = overridesTable(st.pathway, graph);
     const reach = [`${plural(table.counts.usingClass, 'skill')} use${table.counts.usingClass === 1 ? 's' : ''} the class defaults.`];
     const own = table.counts.usingArea + table.counts.ownSettings + table.counts.older;
@@ -96,6 +123,9 @@ export function createRequirementsEditor(root, options) {
       el('h3', { text: 'Class defaults' }),
       el('p', { text: 'These settings apply to every skill in this class unless a learning area or an individual skill has its own.' }),
       el('p', { class: 'mreq-reach', text: reach.join(' ') }),
+      canApplyRecommended(st.pathway) ? el('div', {class:'mreq-actions'},
+        el('button', {type:'button', class:'secondary', onclick:() => apply(applyRecommended(st.pathway, ctx(), auditRecommended(graph, registry)),
+          {done:'Recommended complexity presets applied to the draft.'})}, 'Apply recommended defaults')) : null,
       form.element,
       hasLower ? checkbox('Also replace settings that learning areas or skills have chosen for the same things', st.replaceLower, (v) => { st.replaceLower = v; }, { hint: 'Left off, areas and skills keep their own choices.' }) : null,
       el('div', { class: 'mreq-actions' }, saveBtn,
@@ -113,8 +143,8 @@ export function createRequirementsEditor(root, options) {
       return el('li', { class: `mreq-item${st.areas.has(a.id) ? ' selected' : ''}` },
         el('input', { type: 'checkbox', id, checked: st.areas.has(a.id), 'aria-label': `Select ${a.title}`, onchange: (e) => { e.target.checked ? st.areas.add(a.id) : st.areas.delete(a.id); render(); panel.querySelector(`#${id}`)?.focus(); } }),
         el('label', { for: id, class: 'mreq-item-main' }, el('span', { class: 'mreq-item-title', text: a.title }),
-          el('span', { class: 'mreq-item-sub', text: `${plural(a.skills.length, 'skill')} · ${own ? briefSettings(levelView(st.pathway, 'area', a.id, graph).effective) : sample?.level === 'class' ? 'class defaults' : 'no requirement set'}` })),
-        el('span', { class: `mreq-chip ${own ? 'level-area' : 'level-class'}`, text: own ? 'Own setting' : sample?.level === 'class' ? 'Class defaults' : 'Not set' }));
+          el('span', { class: 'mreq-item-sub', text: `${plural(a.skills.length, 'skill')} · ${own ? briefSettings(levelView(st.pathway, 'area', a.id, graph).effective) : levels.tiers.size ? 'complexity presets' : sample?.level === 'class' ? 'class defaults' : 'no requirement set'}` })),
+        el('span', { class: `mreq-chip ${own ? 'level-area' : 'level-class'}`, text: own ? 'Own setting' : levels.tiers.size ? 'Complexity presets' : sample?.level === 'class' ? 'Class defaults' : 'Not set' }));
     }));
     const tools = el('div', { class: 'mreq-actions' },
       el('button', { type: 'button', class: 'secondary small', onclick: () => { c.areas.forEach((a) => st.areas.add(a.id)); render(); } }, 'Select all areas'),
@@ -124,7 +154,9 @@ export function createRequirementsEditor(root, options) {
     else {
       const views = selected.map((a) => levelView(st.pathway, 'area', a, graph));
       const first = views[0], union = [...new Set(views.flatMap((v) => v.setHere))];
-      const view = { ...first, setHere: union };
+      const labels = {...first.inheritedLabels};
+      if (levels.tiers.size) for (const field of ['minimumQuestions','accuracy']) labels[field] = 'Inherited by each skill';
+      const view = { ...first, inheritedLabels:labels, setHere: union };
       const names = selected.map((a) => c.areas.find((x) => x.id === a).title);
       const form = createSettingsForm({ level: 'area', view, graph, scopeName: names.join(', '), nodeTitle: names.length === 1 ? names[0] : 'a skill in these areas', onChange: (x) => { save.disabled = !x.ready; updatePersistence(x.valid); } });
       const save = el('button', { type: 'button', class: 'primary', disabled: !form.ready(), onclick: () => { const x = form.collect(); if (Object.keys(x.errors).length) return; apply(applyToAreas(st.pathway, selected, x.settings, ctx(), { clear: x.clear, replaceLowerOverrides: st.replaceLower }), { done: `Changes applied for ${plural(selected.length, 'learning area')}.` }); } }, `Apply to ${plural(selected.length, 'learning area')}`);
@@ -181,11 +213,13 @@ export function createRequirementsEditor(root, options) {
     const rev = reviewRequirements(st.pathway, st.published, graph, { facts, acknowledged: st.ack });
     const t = rev.table, d = rev.differences;
     const n = (k, one, many) => `${t.counts[k]} ${t.counts[k] === 1 ? one : many}`;
-    const counts = el('p', { class: 'mreq-reach', text: `${plural(t.counts.skills, 'skill')} in this class: ${n('usingClass', 'uses class defaults', 'use class defaults')}, ${n('usingArea', 'uses an area setting', 'use an area setting')}, ${n('ownSettings', 'has its own settings', 'have their own settings')}${t.counts.older ? `, ${n('older', 'uses an earlier setting', 'use earlier settings')}` : ''}, ${n('notSet', 'has no requirement', 'have no requirement')}.` });
+    const counts = el('p', { class: 'mreq-reach', text: readLevels(st.pathway).tiers.size
+      ? `${plural(t.counts.skills, 'skill')} in this class. ${plural(t.counts.notSet, 'skill')} awaiting teacher assessment.`
+      : `${plural(t.counts.skills, 'skill')} in this class: ${n('usingClass', 'uses class defaults', 'use class defaults')}, ${n('usingArea', 'uses an area setting', 'use an area setting')}, ${n('ownSettings', 'has its own settings', 'have their own settings')}${t.counts.older ? `, ${n('older', 'uses an earlier setting', 'use earlier settings')}` : ''}, ${n('notSet', 'has no requirement', 'have no requirement')}.` });
     const table = el('div', { class: 'mreq-table', role: 'table', 'aria-label': 'Defaults and overrides' },
       el('div', { class: 'mreq-tr head', role: 'row' }, ['Where', 'Requirement', 'Skills affected'].map((h) => el('div', { role: 'columnheader', text: h }))),
       t.rows.map((row) => el('div', { class: 'mreq-tr', role: 'row' },
-        el('div', { role: 'cell', 'data-label': 'Where' }, el('strong', { text: row.name }), el('span', { class: 'mreq-item-sub', text: row.level === 'class' ? 'Applies to every skill without its own setting' : row.level === 'area' ? 'Learning area' : row.level === 'legacy' ? row.note : `Skill · ${row.area}` })),
+        el('div', { role: 'cell', 'data-label': 'Where' }, el('strong', { text: row.name }), el('span', { class: 'mreq-item-sub', text: row.level === 'class' ? 'Applies to every skill without its own setting' : row.level === 'tier' ? 'Class complexity preset' : row.level === 'area' ? 'Learning area' : row.level === 'legacy' ? row.note : `Skill · ${row.area}` })),
         el('div', { role: 'cell', 'data-label': 'Requirement' }, row.settings, row.own.length && row.level !== 'class' ? el('span', { class: 'mreq-item-sub', text: `Set here: ${row.own.join(', ')}` }) : null),
         el('div', { role: 'cell', 'data-label': 'Skills affected', text: String(row.skills) }))));
     const changes = d.levels.length || d.skills.length

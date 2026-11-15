@@ -48,6 +48,7 @@ export const nodeAccessibleName = (node, options) => nodeParts(node, options).ma
 /** The teacher's requirement in one sentence, or an honest statement that none is set. */
 export function requirementLine(node) {
   const req = node.progress?.requirements;
+  if (!req && node.teacherAssessmentRequired) return 'Ask your teacher how to demonstrate this skill. Practice here does not count toward an automatic requirement.';
   if (!req) return 'No requirement is set for this skill. Your practice is still recorded.';
   const parts = [`${plural(req.minimumQuestions, 'question')} answered`, `${formatPercent(req.requiredAccuracyPercent)} right on the first try`];
   if (req.minimumCorrect) parts.push(`at least ${plural(req.minimumCorrect, 'correct answer')}`);
@@ -118,7 +119,8 @@ export function attemptLine(a, timeZone) {
   const start = formatStamp(a.openedAt, timeZone), end = formatStamp(a.closedAt, timeZone);
   const when = start && end && start !== end ? `${start} to ${end}` : start ? (a.closedAt ? start : `Started ${start}`) : null;
   const nums = a.attempted === null ? null : `${a.attempted} answered, ${a.correct} correct${a.accuracyPercent === null ? '' : ` (${formatPercent(a.accuracyPercent)})`}`;
-  return [nums, when].filter(Boolean).join(' · ');
+  const target = a.requirement ? `Target at the time: ${a.requirement.questions} questions at ${formatPercent(a.requirement.accuracy*100)}` : null;
+  return [nums, when, target].filter(Boolean).join(' · ');
 }
 export const attemptLabel = (a) => `Attempt ${a.seq}: ${ATTEMPT_STATUS_LABEL[a.status] ?? a.status}`;
 
