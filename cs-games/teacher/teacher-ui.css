@@ -303,3 +303,7 @@ footer.footer .wrap { padding: 0 24px; }
 }
 
 :is(#class-plan, #class-assessments) { scroll-margin-top: 5rem; }
+
+.class-preset-setup { grid-column: 1 / -1; }
+.class-preset-setup fieldset { margin: .6rem 0; min-width: 0; }
+.class-preset-setup .mreq-tier-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: .75rem; }

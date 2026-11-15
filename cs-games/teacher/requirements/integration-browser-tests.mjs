@@ -61,10 +61,16 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await Promise.all([teacher.waitForNavigation(),activate(teacher,'#class-plan a[href*="/requirements/"]')]);
   await wait(teacher,'.mreq');
   assert.equal(await teacher.$('[name=teacher-key]'),null);
-  await teacher.type('input[aria-label="Minimum questions"]','30');
-  await teacher.type('input[aria-label="Required accuracy as a percentage"]','90');
+  await see(teacher,'.mreq-panel','Class complexity presets');
+  const standardAccuracy='[data-tier="standard-practice"] input[name=accuracy]';
+  assert.equal(await teacher.$eval(standardAccuracy,input=>input.value),'90');
+  await teacher.focus(standardAccuracy);
+  await teacher.keyboard.down('Control');
+  await teacher.keyboard.press('a');
+  await teacher.keyboard.up('Control');
+  await teacher.type(standardAccuracy,'91');
   await see(teacher,'.mreq-persistence','Unapplied changes');
-  await byText(teacher,'.mreq','Apply class defaults');
+  await byText(teacher,'.mreq','Apply presets to draft');
   await see(teacher,'.mreq-persistence','Unsaved changes');
   const leave=new Promise(resolve=>teacher.once('dialog',async dialog=>{
     await dialog.dismiss();
@@ -73,7 +79,7 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await activate(teacher,'#class-link');
   assert.equal(await leave,'beforeunload');
   assert.ok(new URL(teacher.url()).pathname.includes('/requirements/'));
-  await see(teacher,'.mreq-status','Class defaults applied.');
+  await see(teacher,'.mreq-status','Complexity presets applied to the draft.');
   const evidence=process.env.MASTERY_EVIDENCE_DIR;
   if(evidence)mkdirSync(evidence,{recursive:true});
   const widths=[[390,844],[768,1024],[1280,900]];
@@ -99,7 +105,9 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await see(teacher,'.mreq-persistence','Saved draft.');
   await student.reload();
   await see(student,'#student-pathway','Self-paced');
-  assert.equal(await student.$('.practice-challenge'),null);
+  await activate(student,stopButton);
+  await activate(student,skillButton);
+  await see(student,panel,'30 questions answered and 90% right on the first try');
   assert.equal(await teacher.$eval('#publish', button=>button.disabled),true);
   await byText(teacher,'.mreq','Preview saved draft');
   await see(teacher,'.mreq-status','Preview ready');
@@ -139,7 +147,7 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await student.reload();
   await showLoop();
   const card=()=>student.$eval(panel,node=>node.textContent);
-  assert.match(await card(),/30 questions answered and 90% right on the first try/);
+  assert.match(await card(),/30 questions answered and 91% right on the first try/);
 
   async function answer(mode){
     await wait(student,'#choices button');
@@ -186,9 +194,26 @@ test('published requirements and real Loop Lab practice appear in the student ma
   assert.deepEqual(events.map(row=>row.dimensions.map(d=>d.id)),[
     ['node:advanced:loop-lab:looptype'],['node:advanced:loop-lab:looptype'],['node:advanced:loop-lab:components']
   ]);
-  assert.match(await student.$eval('.skill-node[data-node-id="node:advanced:loop-lab:components"]',node=>node.textContent),/1 of 30/);
+  assert.match(await student.$eval('.skill-node[data-node-id="node:advanced:loop-lab:components"]',node=>node.textContent),/1 of 50/);
 
+  // A loaded activity keeps the first answer locally while offline and syncs once on reconnection.
+  await Promise.all([student.waitForNavigation(),activate(student,focusLink)]);
+  await wait(student,'#choices button');
+  await student.setOfflineMode(true);
+  await student.click('#choices button');
+  await activate(student,'#check');
+  await student.waitForFunction(()=>Object.keys(localStorage).some(key=>key.includes('.outbox.')));
+  await student.setOfflineMode(false);
+  await student.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
+  await Promise.all([student.waitForNavigation(),activate(student,'a[data-profile-link]')]);
+  await showLoop();
+  assert.match(await card(),/3 of the 30 required questions/);
   await checkLayouts(student,'student-live-practice',panel);
+  await student.setViewport({width:390,height:844});
+  await byText(student,'.map-app','List');
+  await wait(student,'.list-view');
+  await see(student,panel,'3 of the 30 required questions');
+  await byText(student,'.map-app','Map');
   await student.evaluate(axeSource);
   assert.deepEqual(await student.evaluate(async ()=>(await axe.run('#student-pathway',{runOnly:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']})).violations.map(v=>[v.id,v.nodes.map(n=>n.target)])),[]);
   await activate(student,panel+' [data-action=restart]');
@@ -203,6 +228,6 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await activate(recovered,stopButton);
   await activate(recovered,skillButton);
   await activate(recovered,panel+' .prev summary');
-  assert.match(await recovered.$eval(panel,node=>node.innerText),/Attempt 1: You started a new attempt\s*2 answered, [0-2] correct/);
+  assert.match(await recovered.$eval(panel,node=>node.innerText),/Attempt 1: You started a new attempt\s*3 answered, [0-3] correct/);
   assert.equal(dev.db.prepare("SELECT COUNT(*) n FROM performance_events WHERE kind='assessment'").get().n,0);
 });

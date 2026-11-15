@@ -7,17 +7,19 @@
 export const REQ_SCHEMA = 'cs-games.mastery-requirement/1';
 export const PROVISIONAL_ID = 'policy:provisional';
 export const CLASS_POLICY_ID = 'policy:req:class';
-export const LEVELS = Object.freeze(['class', 'area', 'skill']);
+export const LEVELS = Object.freeze(['class', 'area', 'skill', 'tier', 'effective']);
 
 export const areaPolicyId = (areaId) => `policy:req:area:${areaId}`;
 export const skillPolicyId = (nodeId) => `policy:req:skill:${nodeId}`;
-export const policyIdFor = (level, scopeId) => (level === 'class' ? CLASS_POLICY_ID : level === 'area' ? areaPolicyId(scopeId) : skillPolicyId(scopeId));
+export const policyIdFor = (level, scopeId) => level === 'class' ? CLASS_POLICY_ID : `policy:req:${level}:${scopeId}`;
 
 /** Which level an existing policy id belongs to. Never throws. */
 export function parsePolicyId(id) {
   if (id === CLASS_POLICY_ID) return { level: 'class', scopeId: null };
   if (typeof id === 'string' && id.startsWith('policy:req:area:') && id.length > 'policy:req:area:'.length) return { level: 'area', scopeId: id.slice('policy:req:area:'.length) };
   if (typeof id === 'string' && id.startsWith('policy:req:skill:') && id.length > 'policy:req:skill:'.length) return { level: 'skill', scopeId: id.slice('policy:req:skill:'.length) };
+  const scoped = typeof id === 'string' && /^policy:req:(tier|effective):(.+)$/.exec(id);
+  if (scoped) return { level: scoped[1], scopeId: scoped[2] };
   if (id === PROVISIONAL_ID) return { level: 'provisional', scopeId: null };
   return { level: 'legacy', scopeId: null };
 }

@@ -1,3 +1,4 @@
+import { tierFields } from './requirements/tier-fields.mjs';
 import { createTeacherFocus } from './learning-focus.mjs';
 import {DEMONSTRATION_TYPES} from '../pathway/proficiency/demonstrations.mjs';
 import {renderPathway} from '../student/pathway-view.mjs';
@@ -45,8 +46,10 @@ export function teacherProfiles(onClasses) {
   },cls);
   const title=el('input',{name:'class-title',type:'text',maxlength:80,required:true,autocomplete:'off',placeholder:'For example, Period 3 Advanced CS'});
   const course=el('select',{name:'class-course'},options(Object.entries(courseNames)));
+  const presets=tierFields();
+  const customization=el('details',{class:'class-preset-setup'},el('summary',{text:'Customize starting practice requirements'}),presets.element);
   const create=el('form',{class:'field-grid'},el('label',{},'Class name',title),el('label',{},'Course',course),
-    el('div',{class:'actions',style:'align-self:end;margin:0'},el('button',{type:'submit',class:'btn primary',text:'Create class'})));
+    el('div',{class:'actions',style:'align-self:end;margin:0'},el('button',{type:'submit',class:'btn primary',text:'Create class'})),customization);
   create.onsubmit=async e=>{
     e.preventDefault();
     if(creating)return;
@@ -54,6 +57,9 @@ export function teacherProfiles(onClasses) {
     const submit=e.submitter;
     if(submit)submit.disabled=true;
     const teacher=currentTeacher();
+    let presetEdits;
+    try { if(customization.open) presetEdits=presets.collect(); }
+    catch(error){status.textContent=error.message;creating=false;if(submit)submit.disabled=false;return;}
     const courseId=course.value;
     const classTitle=title.value.trim();
     // Keep the same key if a request succeeded but the browser never received its response.
@@ -61,7 +67,7 @@ export function teacherProfiles(onClasses) {
     let retry;
     try{retry=JSON.parse(sessionStorage.getItem(retrySlot));}catch{}
     if(retry?.title!==classTitle||retry.courseId!==courseId){
-      retry={title:classTitle,courseId,creationKey:Array.from(crypto.getRandomValues(new Uint8Array(32)),b=>b.toString(16).padStart(2,'0')).join('')};
+      retry={title:classTitle,courseId,presetEdits, creationKey:Array.from(crypto.getRandomValues(new Uint8Array(32)),b=>b.toString(16).padStart(2,'0')).join('')};
     }
     try{sessionStorage.setItem(retrySlot,JSON.stringify(retry));}catch{}
     try{
@@ -72,6 +78,7 @@ export function teacherProfiles(onClasses) {
       await openClass(result.id);
       if(currentTeacher()!==teacher)return;
       title.value='';
+      customization.open=false;
       try{sessionStorage.removeItem(retrySlot);}catch{}
       status.textContent='Class created. The student pathway is ready to use.';
       panel.querySelector('h3')?.focus();
@@ -264,7 +271,7 @@ export function teacherProfiles(onClasses) {
         el('h3',{id:'class-plan-title',text:'Plan'}),
         el('div',{class:'task-grid'},
           task(pacingHref(c.id),'Customize pathway','Choose learning goals and checkpoint order.'),
-          pathways.get(c.id)?.revision>0&&task('/cs-games/teacher/requirements/?class='+encodeURIComponent(c.id),'Practice requirements','Set optional question counts and accuracy goals.'),
+          pathways.get(c.id)?.revision>0&&task('/cs-games/teacher/requirements/?class='+encodeURIComponent(c.id),'Practice requirements','Review starting requirements or publish changes.'),
           task(pacingHref(c.id,'calendar'),'Pacing & target dates','Plan privately or share optional target dates.'))),
       el('section',{class:'card',id:'class-assessments','aria-labelledby':'class-assessments-title'},
         el('h3',{id:'class-assessments-title',text:'Practice & assessments'}),

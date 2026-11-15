@@ -1,3 +1,5 @@
+import { TIERS } from '../../../cs-games/pathway/requirements/recommended.mjs';
+import { validateSettings } from '../../../cs-games/pathway/requirements/settings.mjs';
 import { creditFocusStatements, focusEnabled } from './learning-focus.mjs';
 import {defaultPathwayStatements,ensureClassPathway} from './default-pathways.mjs';
 import { cleanGameAttempt, courses, metadataId, practiceMetadata, profilePathway, publishedPlan, readProfileEvidence, readPracticeProgress } from './profile-evidence.mjs';
@@ -166,11 +168,21 @@ async function classProgress(db,classId) {
 function validateTitle(input) {
   const title=typeof input?.title==='string' ? input.title.trim() : '';
   if (!title || title.length>80 || /[\u0000-\u001f]/.test(title)) profileError(400,'Enter a class title of 1 to 80 characters.');
-  if (Object.keys(input).some(key=>!['title','courseId','creationKey'].includes(key))) profileError(400,'Send the class title and course only.');
+  if (Object.keys(input).some(key=>!['title','courseId','creationKey','presetEdits'].includes(key))) profileError(400,'Send the class title and course only.');
   const courseId=input.courseId ?? 'workplace';
   if (!courses.has(courseId)) profileError(400,'Choose a supported course.');
   if(input.creationKey!==undefined&&!present(input.creationKey,PROFILE_KEY)) profileError(400,'Invalid class creation key.');
-  return {title,courseId,creationKey:input.creationKey};
+  const presetEdits=input.presetEdits??{};
+  function validPreset([id,edit]){
+    const tier=TIERS.find(tier=>tier.id===id);
+    if(!tier||!edit||typeof edit!=='object'||Array.isArray(edit)||
+       Object.keys(edit).some(field=>!['minimumQuestions','accuracy'].includes(field)))return false;
+    const {minimumQuestions,accuracy}={minimumQuestions:tier.minimumQuestions,accuracy:tier.accuracy,...edit};
+    return typeof minimumQuestions==='number'&&typeof accuracy==='number'&&validateSettings({minimumQuestions,accuracy}).ok;
+  }
+  if(typeof presetEdits!=='object'||Array.isArray(presetEdits)||!Object.entries(presetEdits).every(validPreset))
+    profileError(400,'Enter a valid question count and first-attempt accuracy for each preset.');
+  return {title,courseId,creationKey:input.creationKey,presetEdits};
 }
 async function teacherRoute(request,env,segments,readBody,now) {
   const owner=await teacherIdentity(request,env), db=env.DB, method=request.method;
@@ -181,7 +193,7 @@ async function teacherRoute(request,env,segments,readBody,now) {
     if (method==='GET') return {classes:await all(db,`SELECT id,title,course_id,created,expires,archived FROM profile_classes
       WHERE owner=? AND expires>? ORDER BY created DESC`,owner,now)};
     if (method==='POST') {
-      const {title,courseId,creationKey}=validateTitle(await readBody(request));
+      const {title,courseId,creationKey,presetEdits}=validateTitle(await readBody(request));
       const id=crypto.randomUUID();
       // The retry key has 256 bits of client entropy. Neither it nor the enrollment link is stored in plaintext.
       const requestDigest=creationKey?await profileHash('create-class:'+creationKey):null;
@@ -191,7 +203,7 @@ async function teacherRoute(request,env,segments,readBody,now) {
         SELECT ?,?,?,?,?,?,?,? WHERE (SELECT COUNT(*) FROM profile_classes WHERE owner=? AND expires>?)<?
           AND NOT EXISTS (SELECT 1 FROM profile_classes WHERE owner=? AND creation_request=?)`)
         .bind(id,owner,title,inviteDigest,now,now+CLASS_DAYS*DAY,courseId,requestDigest,owner,now,MAX_CLASSES,owner,requestDigest);
-      const [created]=await db.batch([insert,...defaultPathwayStatements(db,{classId:id,owner,title,courseId,now})]);
+      const [created]=await db.batch([insert,...defaultPathwayStatements(db,{classId:id,owner,title,courseId,now,recommended:true,presetEdits})]);
       if(created.meta.changes)return {id,invite};
       const prior=requestDigest&&await first(db,`SELECT id,title,course_id,invite,archived,expires FROM profile_classes
         WHERE owner=? AND creation_request=?`,owner,requestDigest);

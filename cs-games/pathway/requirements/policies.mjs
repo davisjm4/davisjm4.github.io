@@ -4,11 +4,12 @@
 import { CHALLENGE_SCHEMA, validateMasteryPolicy } from '../mastery/policy.mjs';
 import { formatPercent, toBasisPoints } from '../mastery/arithmetic.mjs';
 import { FIELDS, cloneValue, presetFor, PRESETS } from './settings.mjs';
+import { tierLabel } from './recommended.mjs';
 import { REQ_SCHEMA, policyIdFor } from './ids.mjs';
 
 export const CALIBRATION_NOTE = 'teacher-defined; not system-calibrated';
 export function policyLabel(level, scopeId, effective, names = {}) {
-  const who = level === 'class' ? 'Class defaults' : level === 'area' ? (names.area ?? 'Learning area') : (names.skill ?? 'Skill');
+  const who = level === 'class' ? 'Class defaults' : level === 'area' ? (names.area ?? 'Learning area') : level === 'tier' ? tierLabel(scopeId) : (names.skill ?? 'Skill');
   if (effective.minimumQuestions == null || effective.accuracy == null) return `${who} · requirement incomplete`;
   return `${who} · ${effective.minimumQuestions} questions at ${formatPercent(toBasisPoints(effective.accuracy) / 100)}`;
 }

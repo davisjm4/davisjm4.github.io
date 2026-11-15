@@ -204,3 +204,10 @@
   .mreq-tabs [role="tab"] { justify-content: center; text-align: center; border-radius: 8px; border: 1px solid var(--m-line); }
   .mreq-tabs [role="tab"][aria-selected="true"] { border-color: var(--m-accent); }
 }
+
+.mreq-tier-fields { display: grid; gap: .75rem; margin-block: 1rem; }
+.mreq-tier-fields fieldset { min-width: 0; }
+.mreq-tier-fields fieldset > label { display: inline-grid; gap: .25rem; margin: .25rem .75rem .25rem 0; }
+.mreq-tier-fields input { max-width: 10rem; }
+.mreq-tier-fields li { margin-block: .35rem; }
+.mreq-tier-fields li button { margin-inline-start: .5rem; }

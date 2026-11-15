@@ -13,6 +13,7 @@ import { PROVISIONAL_ID, parsePolicyId, policyIdFor } from './ids.mjs';
 import { FIELDS, cloneValue, presetFor, validateSettings } from './settings.mjs';
 import { buildPolicy, engineCheck, policyContentKey } from './policies.mjs';
 import { catalog, chainFor, explicitFields, isRetired, latestPolicy, policyOf, readLevels, resolveAll, resolveChain, sourceOf, valueOf } from './levels.mjs';
+import { TIERS, auditRecommended } from './recommended.mjs';
 import { assessSkill } from './limits.mjs';
 
 const isPublished = (published, policy) => Boolean(published?.policies?.some((x) => x.id === policy.id && x.version === policy.version));
@@ -23,14 +24,13 @@ export const createContext = ({ graph, published = null, facts = null }) => ({ g
 function readIntent(pathway, levels = readLevels(pathway)) {
   const entry = (pol) => ({ explicit: new Map(explicitFields(pol).map((f) => [f, valueOf(pol, f)])) });
   return { class: levels.class ? entry(levels.class) : null,
+    tiers: new Map([...levels.tiers].map(([k, v]) => [k, entry(v)])),
     areas: new Map([...levels.areas].map(([k, v]) => [k, entry(v)])), skills: new Map([...levels.skills].map(([k, v]) => [k, entry(v)])) };
 }
-const cloneIntent = (i) => ({ class: i.class ? { explicit: new Map([...i.class.explicit].map(([k, v]) => [k, cloneValue(v)])) } : null,
-  areas: new Map([...i.areas].map(([k, v]) => [k, { explicit: new Map([...v.explicit].map(([a, b]) => [a, cloneValue(b)])) }])),
-  skills: new Map([...i.skills].map(([k, v]) => [k, { explicit: new Map([...v.explicit].map(([a, b]) => [a, cloneValue(b)])) }])) });
 const asEntry = (level, scopeId, e) => ({ level, scopeId, explicit: new Set(e.explicit.keys()), values: Object.fromEntries(e.explicit) });
 function resolveFor(intent, level, scopeId, areaOfNode) {
   const chain = [];
+  if (level === 'tier') return resolveChain([asEntry('tier', scopeId, intent.tiers.get(scopeId))]).effective;
   if (level === 'skill' && intent.skills.has(scopeId)) chain.push(asEntry('skill', scopeId, intent.skills.get(scopeId)));
   const areaId = level === 'area' ? scopeId : level === 'skill' ? areaOfNode : null;
   if (areaId && intent.areas.has(areaId)) chain.push(asEntry('area', areaId, intent.areas.get(areaId)));
@@ -46,20 +46,24 @@ function writeIntent(pathway, intent, ctx, { forceInherit = new Set() } = {}) {
   for (const a of [...intent.areas.keys()]) if (!p.checkpoints.some((c) => c.areaId === a)) intent.areas.delete(a);
   for (const s of [...intent.skills.keys()]) if (!areaOf.has(s)) intent.skills.delete(s);
   const desired = [];
+  for (const [scopeId, entry] of intent.tiers) desired.push({ level: 'tier', scopeId, entry });
   if (intent.class) desired.push({ level: 'class', scopeId: null, entry: intent.class });
   for (const k of sortedKeys(intent.areas)) desired.push({ level: 'area', scopeId: k, entry: intent.areas.get(k) });
   for (const k of sortedKeys(intent.skills)) desired.push({ level: 'skill', scopeId: k, entry: intent.skills.get(k) });
   const wanted = new Set(desired.map((d) => policyIdFor(d.level, d.scopeId)));
   const names = (d) => ({ area: d.level === 'area' ? cat.areaTitle(d.scopeId) : undefined, skill: d.level === 'skill' ? cat.nodeTitle(d.scopeId) : undefined });
-  for (const d of desired) {
+  const writePolicy = (d, effective) => {
     const id = policyIdFor(d.level, d.scopeId), cur = latestPolicy(p, id);
-    const effective = resolveFor(intent, d.level, d.scopeId, areaOf.get(d.scopeId));
-    const mk = (version) => buildPolicy({ level: d.level, scopeId: d.scopeId, version, explicit: [...d.entry.explicit.keys()], effective, names: names(d) });
-    const live = cur && !isRetired(cur);
-    if (live && policyContentKey(mk(cur.version)) === policyContentKey(cur)) continue;
-    if (cur && !isPublished(ctx.published, cur)) { p.policies[p.policies.indexOf(cur)] = mk(cur.version); continue; }
-    p.policies.push(mk(cur ? cur.version + 1 : 1));
-  }
+    const mk = (version) => buildPolicy({ level: d.level, scopeId: d.scopeId, version,
+      explicit: [...d.entry.explicit.keys()], effective, names: names(d) });
+    if (cur && !isRetired(cur) && policyContentKey(mk(cur.version)) === policyContentKey(cur)) return cur;
+    const replace = cur && !isPublished(ctx.published, cur) && cur.effectiveFrom == null;
+    const next = mk(replace ? cur.version : cur ? cur.version + 1 : 1);
+    if (replace) p.policies[p.policies.indexOf(cur)] = next;
+    else p.policies.push(next);
+    return next;
+  };
+  for (const d of desired) writePolicy(d, resolveFor(intent, d.level, d.scopeId, areaOf.get(d.scopeId)));
   // retire levels that no longer have any explicit settings
   for (const id of new Set(p.policies.map((x) => x.id))) {
     if (!['class', 'area', 'skill'].includes(parsePolicyId(id).level) || wanted.has(id)) continue;
@@ -76,10 +80,17 @@ function writeIntent(pathway, intent, ctx, { forceInherit = new Set() } = {}) {
   // point every checkpoint at the policy that applies to it
   if (!latestPolicy(p, PROVISIONAL_ID)) p.policies.unshift(clone(provisionalPolicy));
   const prov = latestPolicy(p, PROVISIONAL_ID);
+  const levels = readLevels(p);
   for (const c of p.checkpoints) {
     const cur = policyOf(p, c), isLegacy = cur && parsePolicyId(cur.id).level === 'legacy' && !forceInherit.has(c.nodeId);
     let target;
-    if (intent.skills.has(c.nodeId)) target = latestPolicy(p, policyIdFor('skill', c.nodeId));
+    if (intent.tiers.size && !isLegacy) {
+      const chain = chainFor(p, 'skill', c.nodeId, levels).filter(entry => !forceInherit.has(c.nodeId) || entry.level !== 'legacy');
+      const {effective, complete} = resolveChain(chain);
+      if (!complete) target = prov;
+      else if (chain.length === 1 && !c.recommendedFamilies && chain[0].level === 'tier' && !latestPolicy(p, policyIdFor('effective', c.nodeId))) target = chain[0].policy;
+      else target = writePolicy({level:'effective', scopeId:c.nodeId, entry:{explicit:new Map()}}, effective);
+    } else if (intent.skills.has(c.nodeId)) target = latestPolicy(p, policyIdFor('skill', c.nodeId));
     else if (isLegacy) continue;
     else if (intent.areas.has(c.areaId)) target = latestPolicy(p, policyIdFor('area', c.areaId));
     else if (intent.class) target = latestPolicy(p, policyIdFor('class', null));
@@ -91,6 +102,42 @@ function writeIntent(pathway, intent, ctx, { forceInherit = new Set() } = {}) {
 
 /** Re-derive every level policy and checkpoint reference from the explicit choices already in the pathway. Idempotent. */
 export const rematerialize = (pathway, ctx) => writeIntent(pathway, readIntent(pathway), ctx);
+
+/** Apply once to a pathway whose checkpoints have no configured policies. */
+export function canApplyRecommended(pathway) {
+  const levels = readLevels(pathway);
+  return !levels.tiers.size && !levels.class && !levels.areas.size && !levels.skills.size &&
+    pathway.checkpoints.every(checkpoint => checkpoint.policyId === PROVISIONAL_ID);
+}
+export function applyRecommended(pathway, ctx, assignments, edits = {}) {
+  if (!canApplyRecommended(pathway)) return fail(pathway, ['This pathway already has mastery requirements.']);
+  const intent = readIntent(pathway), draft = clone(pathway);
+  const byId = new Map(assignments.map(row => [row.nodeId, row]));
+  for (const checkpoint of draft.checkpoints) {
+    const row = byId.get(checkpoint.nodeId);
+    checkpoint.requirementTier = row?.tier ?? null;
+    if (row?.minDistinct) checkpoint.recommendedFamilies = row.minDistinct;
+  }
+  for (const tier of TIERS) {
+    const settings = {minimumQuestions:tier.minimumQuestions, accuracy:tier.accuracy, ...edits[tier.id]};
+    const validation = validateSettings(settings, {level:'class'});
+    if (!validation.ok) return fail(pathway, validation.errors);
+    intent.tiers.set(tier.id, {explicit:new Map(Object.entries(settings))});
+  }
+  return finish(pathway, writeIntent(draft, intent, ctx), ctx);
+}
+export function setTierSettings(pathway, edits, ctx) {
+  const intent = readIntent(pathway);
+  for (const [id, settings] of Object.entries(edits)) {
+    const tier = intent.tiers.get(id);
+    if (!tier) return fail(pathway, ['Choose a complexity preset for this class.']);
+    const validation = validateSettings(settings, {level:'class', existing:Object.fromEntries(tier.explicit)});
+    if (!validation.ok) return fail(pathway, validation.errors);
+    for (const [field, value] of Object.entries(settings)) tier.explicit.set(field, value);
+  }
+  return finish(pathway, writeIntent(pathway, intent, ctx), ctx);
+}
+export { TIERS, auditRecommended };
 
 // ---- results ---------------------------------------------------------------------------------------------------------
 const fail = (pathway, errors, extra = {}) => ({ ok: false, pathway, errors: errors.map((e) => (typeof e === 'string' ? { message: e } : e)), warnings: [], changed: [], kept: [], ...extra });
@@ -114,11 +161,11 @@ function finish(before, after, ctx, { kept = [], warnings = [] } = {}) {
   try { validatePathway(after, ctx.graph, { validateSessions: false, validateTargets: false }); } catch (e) { errors.push({ message: e.message }); }
   if (errors.length) return fail(before, errors);
   const changed = describeChanges(before, after, ctx.graph);
-  const levels = readLevels(after);
+  const levels = readLevels(after), cat = catalog(after, ctx.graph);
   const problems = { blocked: [], draftOnly: [], warnings: [] };
   const incomplete = [];
   for (const id of changed) {
-    const a = assessSkill(after, id, ctx.graph, ctx.facts, levels);
+    const a = assessSkill(after, id, ctx.graph, ctx.facts, levels, cat);
     if (!a) continue;
     if (!a.complete) { if (levels.skills.has(id) || levels.areas.size || levels.class) incomplete.push(a.title); continue; }
     for (const pr of a.problems) (pr.severity === 'blocked' ? problems.blocked : pr.severity === 'draft-only' ? problems.draftOnly : problems.warnings).push({ ...pr, nodeId: id, title: a.title });
@@ -166,7 +213,7 @@ const dropIfEmpty = (intent, level, id) => {
 export function setSettings(pathway, target, settings, ctx, { clear = [], replaceLowerOverrides = false } = {}) {
   const t = targets(pathway, target);
   if (!t.ok) return fail(pathway, [t.error]);
-  const intent = cloneIntent(readIntent(pathway)), kept = [];
+  const intent = readIntent(pathway), kept = [];
   const held = Object.fromEntries([...(intent.class?.explicit ?? [])].filter(([k]) => !clear.includes(k)));
   const check = validateSettings(settings, { level: target.level, existing: held });
   if (!check.ok) return fail(pathway, check.errors, { warnings: check.warnings });
@@ -192,7 +239,7 @@ export function setSettings(pathway, target, settings, ctx, { clear = [], replac
   if (!res.ok) return res;
   // a level must leave every skill it touches with a complete requirement
   const levels = readLevels(res.pathway), notSet = [];
-  for (const r of resolveAll(res.pathway, ctx.graph)) if (res.changed.includes(r.nodeId) && !r.complete && (levels.class || levels.areas.has(r.areaId) || levels.skills.has(r.nodeId))) notSet.push(r.title);
+  for (const r of resolveAll(res.pathway, ctx.graph)) if (res.changed.includes(r.nodeId) && !r.complete && (levels.class || (!levels.tiers.size && levels.areas.has(r.areaId)) || levels.skills.has(r.nodeId))) notSet.push(r.title);
   if (notSet.length) return fail(pathway, [`Choose both a minimum number of questions and a required accuracy. ${notSet.length === 1 ? `${notSet[0]} has` : `${notSet.length} skills have`} only one of them.`]);
   return res;
 }
@@ -204,7 +251,7 @@ export const applyToSkills = (pathway, nodeIds, settings, ctx, opts) => setSetti
 export function resetToInherited(pathway, target, ctx, { fields = null } = {}) {
   const t = targets(pathway, target);
   if (!t.ok) return fail(pathway, [t.error]);
-  const intent = cloneIntent(readIntent(pathway)), forceInherit = new Set();
+  const intent = readIntent(pathway), forceInherit = new Set();
   for (const id of t.ids) {
     const bag = target.level === 'class' ? null : target.level === 'area' ? intent.areas : intent.skills;
     const e = target.level === 'class' ? intent.class : bag.get(id);
@@ -222,7 +269,7 @@ export function clearSkillOverridesInAreas(pathway, areaIds, ctx) {
 }
 /** Copy the settings an area has chosen for itself to other areas. A source that uses the class defaults has nothing to copy. */
 export function copyAreaSettings(pathway, fromAreaId, toAreaIds, ctx) {
-  const intent = cloneIntent(readIntent(pathway)), src = intent.areas.get(fromAreaId);
+  const intent = readIntent(pathway), src = intent.areas.get(fromAreaId);
   const cat = catalog(pathway, ctx.graph);
   if (!areaIdsOf(pathway).has(fromAreaId)) return fail(pathway, ['That learning area is not in this class.']);
   if (!src || !src.explicit.size) return fail(pathway, [`${cat.areaTitle(fromAreaId)} follows the class defaults, so it has no settings of its own to copy.`]);

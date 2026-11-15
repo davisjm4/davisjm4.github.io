@@ -5,7 +5,7 @@ export { FIELDS, FIELD_LABELS, FIELD_DEFAULTS, SKILL_ONLY_FIELDS, LIMITS, DIFFIC
 export { catalog, readLevels, chainFor, resolveChain, resolveSkill, resolveAll, levelView, latestPolicy, valueOf, explicitFields, levelName } from './levels.mjs';
 export { buildPolicy, policyLabel, CALIBRATION_NOTE } from './policies.mjs';
 export { createContext, rematerialize, setSettings, applyToClass, applyToAreas, applyToSkills, resetToInherited, clearSkillOverridesInAreas, copyAreaSettings,
-  stampPublishTime, unpublishedPolicies, verifyConsistency } from './operations.mjs';
+  stampPublishTime, unpublishedPolicies, verifyConsistency, TIERS, auditRecommended, applyRecommended, canApplyRecommended, setTierSettings } from './operations.mjs';
 export { STATUS_ORDER, buildContentFacts, checkRequirement, checkPolicy, assessSkill, assessAll } from './limits.mjs';
 export { briefSettings, overridesTable, differences, groupProblems, reviewRequirements, PROBLEM_HEADINGS, SEVERITY_HEADING } from './review.mjs';
 export { STUDENT_VIEW_SCHEMA, STATUS_LABELS, studentRequirementView, previewStudentStates } from './student.mjs';

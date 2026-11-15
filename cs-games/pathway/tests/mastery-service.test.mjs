@@ -3,6 +3,7 @@ import {readFileSync} from 'node:fs';
 import {DatabaseSync} from 'node:sqlite';
 import {test} from 'node:test';
 import {setTimeout as delay} from 'node:timers/promises';
+import {profileHash} from '../../../wpr-games/workplace-readiness/service/profiles.mjs';
 import {startDev} from '../../../wpr-games/workplace-readiness/service/dev.mjs';
 import {applyToClass,applyToSkills,createContext} from '../requirements/index.mjs';
 import graph from '../curriculum-graph.json' with {type:'json'};
@@ -28,8 +29,13 @@ async function service(t){
     assert.equal(response.status,200,response.data.error);
     return response.data;
   }
-  async function classroom(title,teacher=owner){
-    const c=await ok('/teacher/profiles',teacher,{title,courseId:'advanced'});
+  async function classroom(title,teacher=owner,{legacy=false}={}){
+    let c;
+    if(legacy){
+      c={id:crypto.randomUUID(),invite:await profileHash(crypto.randomUUID())};
+      dev.db.prepare('INSERT INTO profile_classes(id,owner,title,course_id,invite,created,expires) VALUES(?,?,?,?,?,?,?)')
+        .run(c.id,teacher===owner?'owner':'other',title,'advanced',await profileHash(c.invite),Date.now(),Date.now()+86400000);
+    }else c=await ok('/teacher/profiles',teacher,{title,courseId:'advanced'});
     const student=await ok('/profile/enroll',null,{invite:c.invite});
     const route='/pathways/student/'+c.id;
     const view=(token=student.token)=>ok(route,token).then(result=>result.pathway);
@@ -62,9 +68,9 @@ function attempt({kind='loop',mode='mixed',correct=true,at=Date.now(),...extra}=
     attempt:1,correct,occurred:at,...extra};
 }
 
-test('defaults need no settings and published class and skill requirements drive the existing practice evidence',async t=>{
+test('existing unconfigured classes retain their behavior and can publish class and skill requirements',async t=>{
   const {ok,call,db,classroom}=await service(t);
-  const first=await classroom('Period 1'),second=await classroom('Period 3',other);
+  const first=await classroom('Period 1',owner,{legacy:true}),second=await classroom('Period 3',other,{legacy:true});
   const original=await first.view();
   assert.equal(original.revision,1);
   assert.equal(original.status,'Self-paced');
@@ -144,7 +150,9 @@ test('restarts are owner-scoped, durable, safe to retry and respect later policy
   const recovered=await ok('/profile/restore',null,{id:subject.student.id,recovery:subject.student.recovery});
   const old=skill(await subject.view(recovered.token),loop).masteryChallenge;
   assert.equal(old.progress.answered,0);
-  const [{closedAt,...closed}]=old.history;
+  const [{closedAt,requirement,...closed}]=old.history;
+  assert.equal(requirement.questions,20);
+  assert.equal(requirement.accuracy,0.9);
   assert.ok(Number.isFinite(Date.parse(closedAt)));
   assert.deepEqual(closed,{number:1,status:'restarted',answered:2,correct:1,accuracy:50});
   assert.equal(old.mapProgress.attempt.seq,2);

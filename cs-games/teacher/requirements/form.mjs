@@ -151,7 +151,8 @@ export function createSettingsForm({ level, view, scopeName, nodeTitle = null, p
       row.classList.toggle('is-set', set);
       chip.textContent = set ? view.labels[f] && own.has(f) ? view.labels[f] : (level === 'class' ? 'Set here (class defaults)' : level === 'area' ? 'Set for this area' : 'Set for this skill') : inheritedLabel(f);
       chip.className = `mreq-chip ${set ? 'is-set' : 'is-inherited'}`;
-      inheritedText.textContent = set ? '' : `Currently ${describeValue(f, view.inheritedValues[f])}.`;
+      inheritedText.textContent = set ? '' : inheritedLabel(f) === 'Inherited by each skill'
+        ? 'Follows each skill’s complexity preset.' : `Currently ${describeValue(f, view.inheritedValues[f])}.`;
       inheritedText.hidden = set;
       body.hidden = !set || !r.built;
       hint.hidden = !set;

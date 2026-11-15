@@ -60,7 +60,8 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   assert.match(await textOf(student,pathway),/Advanced CS journey/);
   assert.match(await textOf(student,pathway),/Self-paced/);
   const counts=JSON.parse(dev.db.prepare('SELECT snapshot FROM pathway_revisions').get().snapshot);
-  assert.match(await textOf(student,pathway+' .map-summary'),new RegExp(counts.sequence.length+' skills'));
+  const supported=counts.checkpoints.filter(checkpoint=>checkpoint.requirementTier).length;
+  assert.match(await textOf(student,pathway+' .map-summary'),new RegExp('0 of '+supported+' skills with requirements complete'));
   assert.doesNotMatch(await textOf(student,pathway),/overdue|due date|Suggested target/i);
   assert.match(await textOf(student,pathway+' .stop-open'),/Variable Lab/i);
   assert.doesNotMatch(await textOf(student,pathway),/Trace variable state0|\bfalse\b/);
@@ -119,7 +120,7 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   await student.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
   await Promise.all([student.waitForNavigation(),student.click('a[data-profile-link]')]);
   await openLoop(student);
-  assert.match(await textOf(student,'.skill-panel'),/1 answered, [01] right on the first try/);
+  assert.match(await textOf(student,'.skill-panel'),/1 of the 30 required questions/);
 
   await Promise.all([teacher.waitForNavigation(),teacher.click('#class-overview a[href$="#goals"]')]);
   assert.equal(await teacher.$('[name=teacher-key]'),null);
@@ -157,7 +158,7 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   await openLoop(student);
   const orderAfter=await student.$$eval('.skill-node',nodes=>nodes.map(node=>node.dataset.nodeId));
   assert.deepEqual(orderAfter,[orderBefore[1],orderBefore[0],...orderBefore.slice(2)]);
-  assert.match(await textOf(student,'.skill-panel'),/1 answered, [01] right on the first try/);
+  assert.match(await textOf(student,'.skill-panel'),/1 of the 30 required questions/);
   await mapHome(student);
   await see(student,pathway,'1 optional skill');
 
@@ -193,5 +194,5 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   await see(restored,pathway,'Self-paced');
   assert.equal(await restored.$(pathway+' .pacing'),null);
   await openLoop(restored);
-  assert.match(await textOf(restored,'.skill-panel'),/1 answered, [01] right on the first try/);
+  assert.match(await textOf(restored,'.skill-panel'),/1 of the 30 required questions/);
 });

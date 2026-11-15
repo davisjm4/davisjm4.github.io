@@ -157,3 +157,61 @@ test('practice survives device restore, customization, private and shared pacing
   assert.equal(skill(undated).checkpoint.targetDate,null);
   assert.deepEqual(skill(undated).practiceProgress,{attempted:1,correct:1});
 });
+
+test('recommended tier, area and skill edits inherit per field and publish through the existing revision workflow',async t=>{
+  const {ok,call,db,legacy}=await fixture(t);
+  const R=await import('../requirements/index.mjs');
+  const classroom=await ok('/teacher/profiles',owner,{title:'Synthetic mastery presets',courseId:'advanced',
+    presetEdits:{'standard-practice':{accuracy:0.91}}});
+  const profile=await ok('/profile/enroll',null,{invite:classroom.invite});
+  const courseRoute='/pathways/student/'+classroom.id;
+  const initial=(await ok(courseRoute,profile.token)).pathway;
+  const route='/pathways/teacher/'+initial.pathwayId;
+  const target=(view,id=loop)=>view.nodes.find(n=>n.id===id).masteryChallenge?.requirement;
+  assert.equal(target(initial).minimumQuestions,30);
+  assert.equal(target(initial).accuracyPercent,91);
+  assert.equal(target(initial,'node:advanced:loop-lab:components').minimumQuestions,50);
+  assert.equal(target(initial,'node:advanced:loop-lab:nested').minimumQuestions,20);
+  assert.equal(target(initial,'node:advanced:variable-lab:assemble'),undefined);
+  assert.equal(initial.proficiency.skills[loop].policy,null);
+  const {draft,published,draftVersion}=await ok(route,owner);
+  const ctx=R.createContext({graph,published});
+  const must=result=>{
+    assert.ok(result.ok,JSON.stringify(result.errors));
+    return result.pathway;
+  };
+  const area='area:advanced:loop-lab';
+  let edited=must(R.applyToAreas(draft,[area],{minimumQuestions:32},ctx));
+  edited=must(R.applyToSkills(edited,[loop],{minimumQuestions:34},ctx));
+  edited=must(R.setTierSettings(edited,{'standard-practice':{accuracy:0.92}},ctx));
+  const resolved=()=>R.resolveSkill(edited,loop,graph);
+  assert.equal(resolved().effective.minimumQuestions,34);
+  assert.equal(resolved().effective.accuracy,0.92);
+  assert.equal(resolved().sources.minimumQuestions.level,'skill');
+  assert.equal(resolved().sources.accuracy.level,'tier');
+  assert.equal(R.resolveSkill(edited,'node:advanced:loop-lab:while',graph).effective.minimumQuestions,32);
+  edited=must(R.resetToInherited(edited,{level:'skill',ids:[loop]},ctx,{fields:['minimumQuestions']}));
+  assert.equal(resolved().effective.minimumQuestions,32);
+  assert.equal(resolved().sources.minimumQuestions.level,'area');
+
+  assert.equal((await call(route+'/draft',foreign,{})).status,404);
+  await ok(route+'/draft',owner,{pathway:edited,draftVersion});
+  const {studentPreview,previewToken,expectedRevision,draftVersion:previewVersion}=await ok(route+'/preview',owner,{});
+  assert.equal(target(studentPreview).minimumQuestions,32);
+  assert.equal(target(studentPreview).accuracyPercent,92);
+  assert.equal(target((await ok(courseRoute,profile.token)).pathway).accuracyPercent,91);
+  const release=await ok(route+'/publish',owner,{previewToken,expectedRevision,draftVersion:previewVersion,acknowledged:true});
+  assert.equal(release.revision,2);
+  const updated=(await ok(courseRoute,profile.token)).pathway;
+  assert.equal(target(updated).accuracyPercent,92);
+  assert.equal(updated.proficiency.skills[loop].policy,null);
+  assert.deepEqual(updated.proficiency.skills[loop].tiers,initial.proficiency.skills[loop].tiers);
+  const initialPolicy=published.policies.find(p=>p.id==='policy:req:tier:standard-practice');
+  assert.deepEqual(release.published.policies.find(p=>p.id===initialPolicy.id&&p.version===1),initialPolicy);
+
+  const old=await legacy();
+  const oldStudent=await ok('/profile/enroll',null,{invite:old.invite});
+  assert.equal(target((await ok('/pathways/student/'+old.id,oldStudent.token)).pathway),undefined);
+  assert.equal((await call(courseRoute,oldStudent.token)).status,403);
+  assert.equal(db.prepare('SELECT COUNT(*) n FROM performance_events').get().n,0);
+});
