@@ -383,7 +383,7 @@ function conversionPool(rng, L) {
 F["convert-to-if"] = (rng, L) => {
   const { sw, ins, good, bad } = conversionPool(rng, L); if (bad.length < 3) reject("not enough wrong conversions");
   const P = { s: program(sw) }; const inputs = { s: ins.map(v => [v]) }; const types = { s: [sw.sel.type] };
-  const opts = [{ ch: good, tag: "correct" }, ...bad.slice(0, 3)];
+  const opts = [{ ch: good, tag: "correct" }, ...bad.slice(0, 7)];
   opts.forEach((o, i) => { P[`c${i}`] = chainProgram(sw, o.ch); inputs[`c${i}`] = ins.map(v => [v]); types[`c${i}`] = [sw.sel.type]; o.claim = { t: "sameAll", a: "s", b: `c${i}` }; o.text = chainText(o.ch); });
   return challenge({ ...base("convert-to-if"), rng, question: `Which if/else code behaves exactly like this switch for every possible value of ${sw.sel.name}?`, code: printSwitch(sw, null, { declareSelector: false }),
     correct: opts[0], wrong: opts.slice(1),
@@ -428,7 +428,7 @@ F["missing-break-fix"] = (rng, L) => {
   const wrong = variants.filter(v => !fixes(v)); if (wrong.length < (L === "Beginner" ? 2 : 3)) reject("few distractors");
   const P = { want: { params: [[sw.sel.type, sw.sel.name]], body: `${sw.cases.map(c => "").join("")}${(() => { const c = JSON.parse(JSON.stringify(sw)); c.cases.forEach(k => k.brk = true); return printSwitch(c, null, { declareSelector: false }); })()}\n${footer(sw)}` } };
   const inputs = { want: ins.map(v => [v]) }; const types = { want: [sw.sel.type] };
-  const opts = [correct[0], ...wrong.slice(0, 3)];
+  const opts = [correct[0], ...wrong.slice(0, 7)];
   opts.forEach((o, i) => { P[`f${i}`] = program(o.sw); inputs[`f${i}`] = ins.map(v => [v]); types[`f${i}`] = [sw.sel.type]; o.claim = { t: "sameAll", a: "want", b: `f${i}` }; });
   return challenge({ ...base("missing-break-fix"), rng, count: Math.min(4, opts.length), question: `Each value of ${sw.sel.name} should print only the letter in its own block (unmatched values print only default's letter). Which change makes the switch do that?`,
     code: printSwitch(sw, null, { declareSelector: false }), correct: opts[0], wrong: opts.slice(1),

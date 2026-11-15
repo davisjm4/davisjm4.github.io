@@ -32,6 +32,16 @@ function exprChoice(rng, o) {
   const inputs = { ref: inp };
   const seen = new Set(); const opts = [];
   for (const x of o.options) { const t = x.text ?? B.print(x.n); if (seen.has(t)) continue; seen.add(t); opts.push({ ...x, text: t }); }
+  // Audit repair BC-01: add two-slip variants (e.g. a boundary slip plus an AND/OR swap) of existing
+  // distractors so that the keyed option is not always the one closest to every other option.
+  const have = new Set(opts.map(x => x.text)); let extra = 0;
+  for (const w of shuffle(opts.filter(x => x.tag !== "correct" && !x.claim), rng)) {
+    for (const mk of [n => B.applyAt(n, B.MISTAKES["swap-and-or"], rng), n => cmpCount(n) ? flipAt(n, Math.floor(rng() * cmpCount(n))) : null]) {
+      if (extra >= 4) break; let n2; try { n2 = mk(w.n); } catch { n2 = null; } if (!n2) continue;
+      const t = B.print(n2); if (have.has(t) || same(n2, o.ref)) continue;
+      have.add(t); opts.push({ n: n2, text: t, tag: "combines-two-mistakes" }); extra++;
+    }
+  }
   const good = opts.filter(x => same(x.n, o.ref)); if (good.length !== 1 || good[0].tag !== "correct") reject("not exactly one equivalent option");
   opts.forEach((x, i) => { P[`o${i}`] = exprProgram(ints, bools, B.print(x.n)); inputs[`o${i}`] = inp; x.claim = { t: "sameAll", a: "ref", b: `o${i}` }; });
   const wrong = opts.filter(x => x.tag !== "correct"); if (wrong.length < 3) reject("few distractors");
@@ -80,13 +90,15 @@ function specMode(mode, cats, prompt) {
     const byTag = []; for (const d of ds) if (!byTag.some(x => x.tag === d.tag)) byTag.push(d); for (const d of ds) if (byTag.length < 6 && !byTag.includes(d)) byTag.push(d);
     return exprChoice(rng, { ref: s.ref, options: [{ n: s.n, tag: "correct" }, ...byTag], meta: { mode, family: `${mode}-${cat}`, skill: `Translate a requirement into a condition (${cat})`, question: prompt(s),
       code: mode === "conditions" ? s.decl.map(([t, v]) => `${t} ${v};`).join("\n") : "Choose the complete Java Boolean condition.",
-      explanation: { threshold: "Match the boundary words exactly (at least/at most include the number; more than/less than do not) and the connector (AND means &&, OR means ||).", range: "A range check needs both bounds joined by &&; including an endpoint means <= or >=.", outside: "Outside means below the lower bound OR above the upper bound; the endpoints themselves are inside.", rangeFlag: "Both bounds and the flag requirement must all hold, so every part is joined with &&.", eitherBut: "The OR group needs parentheses so the !cancelled requirement applies to both options.", groupAnd: "Without parentheses && binds before ||, which would change which values must be true.", denial: "Each listed reason on its own causes denial, so the reasons are joined with ||." }[cat],
+      explanation: { threshold: "Match the boundary words exactly (at least/at most include the number; more than/less than do not) and the connector (AND means &&, OR means ||).", range: "A range check needs both bounds joined by &&; including an endpoint means <= or >=.", outside: "Outside means below the lower bound OR above the upper bound; the endpoints themselves are inside.", rangeFlag: "Both bounds and the flag requirement must all hold, so every part is joined with &&.", eitherBut: "The OR group needs parentheses so the !cancelled requirement applies to both options.", groupAnd: "Without parentheses && binds before ||, which would change which values must be true.", denial: "Each listed reason on its own causes denial, so the reasons are joined with ||." }[cat] + ` Here, the requirement "${s.text}" is written as ${B.print(s.n)}.`,   // audit repair FB-01: tie the rule to this item
       structure: `${mode}|${cat}|${B.print(s.n).replace(/\b[A-Za-z]\w*\b/g, "v").replace(/\d+/g, "N")}`, complexity: { score: +(1 + 0.8 * B.leaves(s.n) + (B.ops(s.n).and && B.ops(s.n).or ? 1.5 : 0) + (L === "Advanced" ? 1 : 0)).toFixed(2), factors: { literals: B.leaves(s.n), category: cat } } } });
   }, 300);
 }
 const CATS_COND = { Beginner: ["threshold", "range"], Intermediate: ["threshold", "range", "outside", "rangeFlag"], Advanced: ["outside", "rangeFlag", "range", "denial"] };
 const CATS_CONSTRUCT = { Beginner: ["threshold", "denial"], Intermediate: ["eitherBut", "groupAnd", "denial", "rangeFlag", "outside"], Advanced: ["eitherBut", "groupAnd", "denial", "rangeFlag"] };
-export const conditionsFamily = specMode("conditions", CATS_COND, s => `Which condition implements the requirement? True exactly when ${s.text}.`);
+export const conditionsFamily = specMode("conditions", CATS_COND, s => s.cat === "denial"
+  ? `Which condition is true exactly when access is denied? Access is denied when ${s.text.replace(/^access is denied when /, "")}.`
+  : `Which condition implements the requirement? True exactly when ${s.text}.`);
 export const constructFamily = specMode("construct", CATS_CONSTRUCT, s => `Which condition satisfies this requirement? ${s.text[0].toUpperCase()}${s.text.slice(1)}.`);
 
 // ---------- equivalent expressions ----------
@@ -116,6 +128,19 @@ export function equivalentFamily(rng, L) {
 }
 
 // ---------- evaluate expressions (2 choices, as before) ----------
+/** Number of atoms (comparisons / Boolean variables) whose value, flipped alone, would change the result.
+ * Evaluated without short-circuiting, so it measures dependence rather than execution path. */
+function fullEval(n, env, flip, c) {
+  switch (n.k) {
+    case "var": { const v = !!env[n.n]; return c.i++ === flip ? !v : v; }
+    case "cmp": { const v = B.evaluate(n, env); return c.i++ === flip ? !v : v; }
+    case "const": return n.v;
+    case "not": return !fullEval(n.a, env, flip, c);
+    case "and": return n.xs.map(x => fullEval(x, env, flip, c)).every(Boolean);
+    default: return n.xs.map(x => fullEval(x, env, flip, c)).some(Boolean);
+  }
+}
+export function sensitivity(node, env) { const base = B.evaluate(node, env); let k = 0; for (let i = 0; i < B.leaves(node); i++) if (fullEval(node, env, i, { i: 0 }) !== base) k++; return k; }
 export function evaluateFamily(rng, L) {
   return retry(() => {
     const nb = L === "Beginner" ? 1 : L === "Intermediate" ? 2 : 3; const [v, lo, hi] = pick(NUMS, rng); const flags = sample(FLAGS, nb, rng);
@@ -125,7 +150,13 @@ export function evaluateFamily(rng, L) {
     const sub = n => n.k === "var" ? atoms[Number(n.n.slice(1))] : n.k === "not" ? B.NOT(sub(n.a)) : { k: n.k, xs: n.xs.map(sub) };
     const node = sub(t); const want = chance(0.5, rng);
     const envs = []; for (let k = lo; k <= hi; k++) for (const r of B.rows(flags)) envs.push({ ...r, [v]: k });
-    const hits = envs.filter(e => B.evaluate(node, e) === want); if (!hits.length) reject("none"); const env = pick(hits, rng);
+    const hits = envs.filter(e => B.evaluate(node, e) === want); if (!hits.length) reject("none");
+    // Audit repair EV-01: at Intermediate/Advanced the answer must not be decided by the first operand alone
+    // (e.g. "false && ...") and at least one atom must influence it (see sensitivity()).
+    const need = L === "Beginner" ? 0 : 1;   // a higher bar makes false-AND / true-OR results rare, which would let the top operator predict the answer
+    const firstDecides = e => (node.k === "and" && !B.evaluate(node.xs[0], e)) || (node.k === "or" && B.evaluate(node.xs[0], e));
+    const pool = need ? hits.filter(e => !firstDecides(e) && sensitivity(node, e) >= need) : hits; if (!pool.length) reject("no shortcut-free input");
+    const env = pick(pool, rng);
     const name = pick(["result", "eligible", "allowed", "ok", "approved", "alert", "inside", "ready"], rng);
     const code = `int ${v} = ${env[v]};\n${flags.map(f => `boolean ${f} = ${env[f]};`).join("\n")}\nboolean ${name} = ${B.print(node)};`;
     const inp = [env[v], ...flags.map(f => env[f])]; const P = { e: { params: [["int", v], ...flags.map(f => ["boolean", f])], body: `System.out.print(${B.print(node)});` } };
@@ -145,29 +176,30 @@ export function branchFamily(rng, L) {
 // ---------- short-circuit and Strings ----------
 const WORDS = ["Alex", "Maya", "Jordan", "Priya", "Sam", "Lee", "Ana", "Kai", "Noah", "Zoe", "Omar", "Ivy", "Luca", "Mina", "Theo", "Rosa"];
 export function shortFamily(rng, L) {
-  const kind = pick(L === "Beginner" ? ["equals", "reference", "case", "guard", "concat", "length"] : ["equals", "reference", "case", "null-safe", "null-guard", "guard", "counter", "ignore-case", "concat", "length", "compare"], rng);
+  const kind = pick(L === "Beginner" ? ["equals", "reference", "case", "guard", "concat", "length"] : L === "Intermediate" ? ["equals", "reference", "case", "null-safe", "null-guard", "guard", "counter", "ignore-case", "concat", "length", "compare"] : ["reference", "case", "null-safe", "null-guard", "guard", "counter", "ignore-case", "concat", "compare"], rng);
   if (kind === "guard" || kind === "counter") return retry(() => { const q = generateCoverage(rng, L === "Beginner" ? "Intermediate" : L, "short-circuit"); if (kind === "guard" && !/total/.test(q.code)) reject("kind"); if (kind === "counter" && !/hits/.test(q.code)) reject("kind"); return { ...q, mode: "short", topic: "short", family: `short-${kind}`, variant: `short-${kind}`, reasoning: `short-${kind}` }; }, 300);
   const w = pick(WORDS, rng), other = pick(WORDS.filter(x => x !== w), rng), [yes, no] = pick([["Match", "Different"], ["Same", "Not same"], ["Found", "Missing"], ["Welcome", "Denied"], ["Yes", "No"], ["Open", "Closed"], ["Valid", "Invalid"], ["Hello", "Goodbye"]], rng);
   const name = pick(["name", "user", "input", "label", "code"], rng);
   let code, ans, expl, opts;
+  const BOTH = `${yes}, then ${no}`;
   const out = (t) => ({ t: "out", p: "s", in: [], is: t });
-  if (kind === "equals") { const sameText = chance(0.6, rng); code = `String ${name} = new String("${w}");\nif (${name}.equals("${sameText ? w : other}")) System.out.println("${yes}");\nelse System.out.println("${no}");`; ans = sameText ? yes : no; expl = ".equals compares the characters, so separately created Strings with the same text are equal."; opts = [[yes, "correct"], [no, "thinks-equals-compares-references"], ["true", "prints-the-boolean"], ["It does not compile", "thinks-equals-is-invalid"]]; }
+  if (kind === "equals") { const sameText = chance(0.6, rng); code = `String ${name} = new String("${w}");\nif (${name}.equals("${sameText ? w : other}")) System.out.println("${yes}");\nelse System.out.println("${no}");`; ans = sameText ? yes : no; expl = ".equals compares the characters, so separately created Strings with the same text are equal."; opts = [[yes, "correct"], [no, "thinks-equals-compares-references"], [BOTH, "thinks-else-also-runs"], ["It does not compile", "thinks-equals-is-invalid"]]; }
   else if (kind === "reference") { const useEq = chance(0.4, rng); const sameW = !useEq || chance(0.7, rng); const w2 = sameW ? w : other;
     code = `String a = new String("${w}");\nString b = new String("${w2}");\nif (${useEq ? "a.equals(b)" : "a == b"}) System.out.println("${yes}");\nelse System.out.println("${no}");`;
     ans = useEq ? (sameW ? yes : no) : no; expl = useEq ? ".equals compares text, so two separate objects with the same characters are equal." : "Each new String(...) creates a separate object; == compares references, not text, so it is false even when the text matches.";
-    opts = [[yes, useEq ? "thinks-equals-compares-references" : "thinks-==-compares-text"], [no, useEq ? "thinks-equals-compares-references" : "thinks-==-compares-text"], ["true", "prints-the-boolean"], ["It does not compile", "thinks-==-is-invalid"]].map(([t, tag]) => [t, t === ans ? "correct" : tag]); }
-  else if (kind === "case" || kind === "ignore-case") { const input = pick([w, w.toLowerCase(), w.toUpperCase()], rng); const ic = kind === "ignore-case"; code = `String ${name} = "${input}";\nif (${name}.${ic ? "equalsIgnoreCase" : "equals"}("${w}")) System.out.println("${yes}");\nelse System.out.println("${no}");`; ans = ic || input === w ? yes : no; expl = ic ? "equalsIgnoreCase ignores letter case." : ".equals is case-sensitive: every character, including capitalization, must match."; opts = [[yes, ans === yes ? "correct" : "ignores-case-sensitivity"], [no, ans === no ? "correct" : "thinks-case-always-matters"], ["true", "prints-the-boolean"], ["It throws an exception", "fears-runtime-error"]]; }
+    opts = [[yes, useEq ? "thinks-equals-compares-references" : "thinks-==-compares-text"], [no, useEq ? "thinks-equals-compares-references" : "thinks-==-compares-text"], [BOTH, "thinks-else-also-runs"], ["It does not compile", "thinks-==-is-invalid"]].map(([t, tag]) => [t, t === ans ? "correct" : tag]); }
+  else if (kind === "case" || kind === "ignore-case") { const input = pick([w, w.toLowerCase(), w.toUpperCase()], rng); const ic = kind === "ignore-case"; code = `String ${name} = "${input}";\nif (${name}.${ic ? "equalsIgnoreCase" : "equals"}("${w}")) System.out.println("${yes}");\nelse System.out.println("${no}");`; ans = ic || input === w ? yes : no; expl = ic ? "equalsIgnoreCase ignores letter case." : ".equals is case-sensitive: every character, including capitalization, must match."; opts = [[yes, ans === yes ? "correct" : "ignores-case-sensitivity"], [no, ans === no ? "correct" : "thinks-case-always-matters"], [BOTH, "thinks-else-also-runs"], ["Nothing is printed", "thinks-no-branch-matches"]]; }
   else if (kind === "concat") { const a = w, b = pick(WORDS.filter(x => x !== w), rng); const sep = pick([" ", "", "-"], rng); const target = chance(0.55, rng) ? `${a}${sep}${b}` : pick([`${a}${b}`, `${a} ${b}`, `${b}${sep}${a}`].filter(t => t !== `${a}${sep}${b}`), rng);
-    code = `String first = "${a}";\nString last = "${b}";\nString full = first + "${sep}" + last;\nif (full.equals("${target}")) System.out.println("${yes}");\nelse System.out.println("${no}");`; ans = target === `${a}${sep}${b}` ? yes : no; expl = `full is "${a}${sep}${b}"; .equals compares every character, including spaces and order.`; opts = [[yes, "misreads-the-concatenation"], [no, "misreads-the-concatenation"], ["true", "prints-the-boolean"], ["It does not compile", "thinks-+-cannot-join-Strings"]]; }
+    code = `String first = "${a}";\nString last = "${b}";\nString full = first + "${sep}" + last;\nif (full.equals("${target}")) System.out.println("${yes}");\nelse System.out.println("${no}");`; ans = target === `${a}${sep}${b}` ? yes : no; expl = `full is "${a}${sep}${b}"; .equals compares every character, including spaces and order.`; opts = [[yes, "misreads-the-concatenation"], [no, "misreads-the-concatenation"], [BOTH, "thinks-else-also-runs"], ["It does not compile", "thinks-+-cannot-join-Strings"]]; }
   else if (kind === "length") { const str = pick([w, w.toLowerCase(), `${w} ${other}`, ""], rng); const k = int(2, 7, rng); const op = pick([">", ">=", "<", "=="], rng); const len = str.length; const v = op === ">" ? len > k : op === ">=" ? len >= k : op === "<" ? len < k : len === k;
-    code = `String ${name} = "${str}";\nif (${name}.length() ${op} ${k}) System.out.println("${yes}");\nelse System.out.println("${no}");`; ans = v ? yes : no; expl = `"${str}" has ${len} characters (spaces count), and ${len} ${op} ${k} is ${v}.`; opts = [[yes, "miscounted-length"], [no, "miscounted-length"], [String(len), "prints-the-length"], ["It throws an exception", "fears-runtime-error"]]; }
+    code = `String ${name} = "${str}";\nif (${name}.length() ${op} ${k}) System.out.println("${yes}");\nelse System.out.println("${no}");`; ans = v ? yes : no; expl = `"${str}" has ${len} characters (spaces count), and ${len} ${op} ${k} is ${v}.`; opts = [[yes, "miscounted-length"], [no, "miscounted-length"], [BOTH, "thinks-else-also-runs"], ["Nothing is printed", "thinks-no-branch-matches"]]; }
   else if (kind === "compare") { const a = w, b = other; const c = a.localeCompare(b) < 0 ? -1 : 1; const javaNeg = [...a].findIndex((ch, i) => ch !== b[i]); void javaNeg; const lt = a < b;
-    code = `String a = "${a}";\nString b = "${b}";\nif (a.compareTo(b) < 0) System.out.println("${yes}");\nelse System.out.println("${no}");`; ans = lt ? yes : no; void c; expl = `compareTo is negative when a comes before b alphabetically (by character codes): "${a}" ${lt ? "comes before" : "does not come before"} "${b}".`; opts = [[yes, "reversed-compareTo-order"], [no, "reversed-compareTo-order"], ["true", "prints-the-boolean"], ["It does not compile", "thinks-strings-cannot-be-ordered"]]; }
+    code = `String a = "${a}";\nString b = "${b}";\nif (a.compareTo(b) < 0) System.out.println("${yes}");\nelse System.out.println("${no}");`; ans = lt ? yes : no; void c; expl = `compareTo is negative when a comes before b alphabetically (by character codes): "${a}" ${lt ? "comes before" : "does not come before"} "${b}".`; opts = [[yes, "reversed-compareTo-order"], [no, "reversed-compareTo-order"], [BOTH, "thinks-else-also-runs"], ["It does not compile", "thinks-strings-cannot-be-ordered"]]; }
   else if (kind === "null-safe") { const safe = chance(0.5, rng); code = `String ${name} = null;\nif (${safe ? `"${w}".equals(${name})` : `${name}.equals("${w}")`}) System.out.println("${yes}");\nelse System.out.println("${no}");`; ans = safe ? no : "EXCEPTION:NullPointerException"; expl = safe ? "Calling equals on the non-null literal is safe; a null argument just does not match." : `Calling a method on null (${name}.equals) throws a NullPointerException.`; opts = [[yes, "thinks-null-matches"], [no, safe ? "correct" : "assumes-null-is-safe"], ["It throws a NullPointerException", safe ? "fears-null-argument" : "correct"], ["Nothing is printed", "thinks-null-skips-the-if"]]; }
   else { const n = chance(0.5, rng) ? "null" : `"${pick([w, "", "ok"], rng)}"`; const k = int(1, 4, rng); const useAnd = chance(0.7, rng); code = `String ${name} = ${n};\nif (${name} != null && ${name}.length() > ${k}) System.out.println("${yes}");\nelse System.out.println("${no}");`; const val = n !== "null" && JSON.parse(n).length > k; ans = val ? yes : no; void useAnd; expl = n === "null" ? `${name} != null is false, so && never calls length() and no exception occurs.` : `${name} is not null, so length() is checked: ${JSON.parse(n).length} > ${k} is ${val}.`; opts = [[yes, val ? "correct" : "misevaluated-length"], [no, val ? "misevaluated-length" : "correct"], ["It throws a NullPointerException", "ignores-short-circuit"], ["Nothing is printed", "thinks-false-skips-else"]]; }
   if (["concat", "length", "compare"].includes(kind)) opts = opts.map(([t, tag]) => [t, t === ans ? "correct" : tag]);
   const toText = t => t === "EXCEPTION:NullPointerException" ? "It throws a NullPointerException" : t;
-  const claimOf = t => /^\d+$/.test(t) ? out(t + "\n") : t === "It throws a NullPointerException" ? out("EXCEPTION:NullPointerException") : t === "It throws an exception" ? out("EXCEPTION:*") : t === "It does not compile" ? { t: "compileError", p: "s" } : t === "Nothing is printed" ? out("") : t === "true" ? out("true\n") : out(t + "\n");
+  const claimOf = t => /^\d+$/.test(t) ? out(t + "\n") : t === "It throws a NullPointerException" ? out("EXCEPTION:NullPointerException") : t === "It throws an exception" ? out("EXCEPTION:*") : t === "It does not compile" ? { t: "compileError", p: "s" } : t === "Nothing is printed" ? out("") : t === BOTH ? out(`${yes}\n${no}\n`) : out(t + "\n");
   const ansText = toText(ans);
   const all = opts.map(([t, tag]) => ({ text: t, tag: t === ansText ? "correct" : (tag === "correct" ? "misreads-the-comparison" : tag), claim: claimOf(t) }));
   return challenge({ mode: "short", family: `short-${kind}`, skill: "String comparison and short-circuit safety", rng, question: "What happens when this code runs?", code,
@@ -179,7 +211,9 @@ export function shortFamily(rng, L) {
 // ---------- identify conditions (token selection) ----------
 export function identifyFamily(rng, L) {
   return retry(() => {
-    const s = SPECS[pick(["threshold", "range", "rangeFlag", "eitherBut", "denial", "outside"], rng)](rng);
+    // Audit repair ID-01: the generator ignored its difficulty argument (identical output at every level).
+    const cats = { Beginner: ["threshold", "range"], Intermediate: ["threshold", "range", "rangeFlag", "outside", "denial"], Advanced: ["rangeFlag", "eitherBut", "denial", "outside"] }[L] || ["threshold", "range"];
+    const s = SPECS[pick(cats, rng)](rng);
     const n = s.n; const toks = [];
     const emit = (x, parent) => {
       if (x.k === "cmp") toks.push({ text: B.print(x), role: "cmp", op: x.op });
@@ -199,7 +233,7 @@ export function identifyFamily(rng, L) {
     if (iNot >= 0) tasks.push([iNot, "Select the operator that reverses a Boolean value.", "! changes true to false and false to true.", "not"]);
     if (iIncl >= 0 && iExcl >= 0) tasks.push([iIncl, "Select the comparison that includes its boundary value.", "<= and >= include the number itself.", "inclusive"], [iExcl, "Select the comparison that excludes its boundary value.", "< and > do not include the number itself.", "exclusive"]);
     const firstOperand = all.findIndex(t => t.role === "cmp" || t.role === "var"); const ops = all.filter(t => t.role === "cmp" || t.role === "var").map(t => t.text);
-    if (new Set(ops).size === ops.length) tasks.push([firstOperand, "Java evaluates && and || from left to right. Select the operand that is evaluated first.", "The leftmost operand is always evaluated first; short-circuiting can skip later ones.", "first-evaluated"]);
+    if (L !== "Beginner" && new Set(ops).size === ops.length) tasks.push([firstOperand, "Java evaluates && and || from left to right. Select the operand that is evaluated first.", "The leftmost operand is always evaluated first; short-circuiting can skip later ones.", "first-evaluated"]);
     if (!tasks.length) reject("no unique token");
     const [ai, question, explanation, sub] = pick(tasks, rng);
     const tokens = all.map((t, i) => ({ id: i, text: t.text, correct: i === ai }));

@@ -190,7 +190,7 @@ F["missing-cases"] = (rng, L) => {
   const opts = rangeOptions(rng, ctx.v, silent, vals, "missing");
   const mk = (vs, tag) => ({ text: rangeText(ctx.v, rangesOf(vs)), tag, claim: { t: "setWhere", p: "c", where: { silent: true }, set: vs.map(k => [k]) } });
   return challenge({ ...base("missing-cases"), rng, question: `${ctx.v} can be any int from ${ctx.lo} to ${ctx.hi}. For which values does this code print nothing?`, code: codeOf(stmts, declLine(ctx)),
-    correct: mk(silent, "correct"), wrong: opts.slice(0, 3).map(o => mk(o.vals, o.tag)),
+    correct: mk(silent, "correct"), wrong: opts.slice(0, 7).map(o => mk(o.vals, o.tag)),
     explanation: `There is no else, so a value prints nothing when every condition is false. Checking each boundary (>= includes it, < excludes it) leaves ${rangeText(ctx.v, rangesOf(silent))} unhandled.`,
     structure: `missing|${shapeOf(stmts)}`, complexity: complexity("missing-cases", stmts, 1), check: { programs: { c: progOf(stmts, [ctx.v]) }, inputs: { c: inputsOf(dom, [[ctx.v]]) } } });
 };
@@ -204,7 +204,7 @@ F["else-fallback"] = (rng, L) => {
   const mk = (vs, tag) => ({ text: rangeText(ctx.v, rangesOf(vs)), tag, claim: { t: "setWhere", p: "c", where: { is: elseLabel + "\n" }, set: vs.map(k => [k]) } });
   void labels;
   return challenge({ ...base("else-fallback"), rng, question: `${ctx.v} can be any int from ${ctx.lo} to ${ctx.hi}. Which values reach the else branch (printing "${elseLabel}")?`, code: codeOf(stmts, declLine(ctx)),
-    correct: mk(hits, "correct"), wrong: opts.slice(0, 3).map(o => mk(o.vals, o.tag)),
+    correct: mk(hits, "correct"), wrong: opts.slice(0, 7).map(o => mk(o.vals, o.tag)),
     explanation: `else runs only when every earlier condition is false. That happens for ${rangeText(ctx.v, rangesOf(hits))}.`,
     structure: `fallback|${shapeOf(stmts)}`, complexity: complexity("else-fallback", stmts, 1), check: { programs: { c: progOf(stmts, [ctx.v]) }, inputs: { c: inputsOf(dom, [[ctx.v]]) } } });
 };
@@ -339,7 +339,7 @@ F["equivalent-chain"] = (rng, L) => {
   const ctx = pick(CONTEXTS, rng); const { stmts, dom, variants } = chainPair(rng, ctx, L);
   const good = variants.filter(v => v.eq), bad = variants.filter(v => !v.eq); if (good.length !== 1 || bad.length < 3) reject("variants");
   const Pm = { c: progOf(stmts, [ctx.v]) }, inputs = { c: inputsOf(dom, [[ctx.v]]) };
-  const opts = [{ ...good[0], tag: "correct" }, ...bad.slice(0, 3)];
+  const opts = [{ ...good[0], tag: "correct" }, ...bad.slice(0, 7)];
   opts.forEach((o, i) => { Pm[`o${i}`] = progOf(o.s, [ctx.v]); inputs[`o${i}`] = inputs.c; o.text = chainNotation(o.s); o.claim = { t: "sameAll", a: "c", b: `o${i}` }; });
   return challenge({ ...base("equivalent-chain"), rng, question: `${ctx.v} can be any int from ${ctx.lo} to ${ctx.hi}. Which chain prints the same thing as this code for every value? (→ shows what each branch prints.)`, code: codeOf(stmts, declLine(ctx)),
     correct: opts[0], wrong: opts.slice(1), explanation: `Testing from the other end works only if every test is the exact complement (>= t becomes < t) and the old else becomes the new first branch's opposite. Off-by-one bounds, reversed order with the same tests, or a missing else all change some outputs.`,
@@ -382,7 +382,7 @@ F["fix-boundary"] = (rng, L) => {
   const ok = f => dom.every(e => run(f.s, e)[0] === spec(e[ctx.v]));
   const good = fixes.filter(ok); if (good.length !== 1 || good[0].tag !== "correct") reject("fix not unique");
   const Pm = { want }, inputs = { want: inputsOf(dom, [[ctx.v]]) };
-  const opts = [good[0], ...shuffle(fixes.filter(f => !ok(f)), rng).slice(0, 3)];
+  const opts = [good[0], ...shuffle(fixes.filter(f => !ok(f)), rng).slice(0, 7)];
   opts.forEach((o, i) => { Pm[`f${i}`] = progOf(o.s, [ctx.v]); inputs[`f${i}`] = inputs.want; o.claim = { t: "sameAll", a: "want", b: `f${i}` }; });
   return challenge({ ...base("fix-boundary"), rng, question: `Required behavior for ${ctx.v} from ${ctx.lo} to ${ctx.hi}: ${words}. Which single change fixes the code?`, code: codeOf(stmts, declLine(ctx)),
     correct: opts[0], wrong: opts.slice(1), explanation: `"${ts[bug]} and above" includes ${ts[bug]}, so the test must be >= ${ts[bug]}. With >, the value ${ts[bug]} falls to the next branch.`,
@@ -417,7 +417,7 @@ F.redundant = (rng, L) => {
   const s0 = JSON.parse(JSON.stringify(stmts)); s0[0].elseBody = null; opts.push({ text: `Remove the else branch`, s: s0, tag: "removes-the-fallback" });
   const s1 = JSON.parse(JSON.stringify(stmts)); s1[0].arms[0].cond = B.CMP(ctx.v, ">", ts[0]); opts.push({ text: `Change ${ctx.v} >= ${ts[0]} to ${ctx.v} > ${ts[0]}`, s: s1, tag: "boundary-change" });
   const good = opts.filter(o => same(o.s)); if (!good.length) reject("none redundant");
-  const ans = pick(good, rng); const wrong = shuffle(opts.filter(o => !same(o.s)), rng).slice(0, 3); if (wrong.length < 3) reject("few");
+  const ans = pick(good, rng); const wrong = shuffle(opts.filter(o => !same(o.s)), rng).slice(0, 7); if (wrong.length < 3) reject("few");
   const Pm = { c: progOf(stmts, [ctx.v]) }, inputs = { c: inputsOf(dom, [[ctx.v]]) };
   [ans, ...wrong].forEach((o, i) => { Pm[`o${i}`] = progOf(o.s, [ctx.v]); inputs[`o${i}`] = inputs.c; o.claim = { t: "sameAll", a: "c", b: `o${i}` }; });
   return challenge({ ...base("redundant"), rng, question: "Which change removes a redundant condition without changing what the code prints for any value?", code: codeOf(stmts, declLine(ctx)),
