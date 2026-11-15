@@ -56,3 +56,5 @@ Exact multiples, lower and upper integer boundary examples, and intentional zero
 ## Validation
 
 The full original Math Lab suite compiled and ran 4,600 student-visible expressions or declarations, including the reverse options, across 3,100 questions. The quality suite checked 10,400 generated questions. The full expansion suite checked 6,000 generated challenges across both modes and all tiers, plus 9,955 JVM checks with zero disagreements and 60 scored simulated DOM submissions. Local Chromium confirmed contextual feedback, narrow layout, difficulty switching, keyboard scoring, and offline play with loaded assets. Guest reload retains scored totals and draws a fresh unanswered question. Release and production results are recorded on the PR.
+
+The pathway audit uses one seeded random stream for multiple labs. Math Lab's change shifts later sample statistics in the regenerated coverage registry and matrix. All 128 coverage statuses, credited counts, eligible nodes, and scoring fields match the prior snapshot. The standalone Boolean and Conditional Lab's source and credit rules are untouched.
