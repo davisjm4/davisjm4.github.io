@@ -250,7 +250,7 @@ test('Pathway editor: dark theme, four stages, readable labels, responsive at 39
   await page.setViewport({ width: 390, height: 844 });
   await stage(page, 'goals');
   const mobile = await page.evaluate(() => { const td = document.querySelector('#node-table td:nth-child(2)'); return { display: getComputedStyle(td).display, label: td.dataset.label }; });
-  assert.notEqual(mobile.display, 'table-cell'); assert.equal(mobile.label, 'Minutes');
+  assert.notEqual(mobile.display, 'table-cell'); assert.equal(mobile.label, 'Participation');
   // Learning goals are grouped by area, so a phone is not handed 100+ cards at once.
   assert.ok(await page.$$eval('#node-table details', d => d.length) > 3);
   assert.ok(await page.evaluate(() => document.documentElement.scrollHeight) < 12000, 'goals stage is excessively long on a phone');
@@ -452,7 +452,7 @@ test('Pathway editor: exports, backup and copy remain available under More tools
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 900 });
   await page.goto(svc.url + '/cs-games/teacher/pacing/', { waitUntil: 'load' });
-  for (const id of ['export-json', 'export-csv', 'export-ics', 'restore', 'copy', 'reload-shared', 'history', 'calendar-file', 'mastery-settings-link', 'add-node', 'area-up', 'area-down', 'optional-area', 'remove-area', 'local-publish', 'publish', 'preview']) {
+  for (const id of ['export-json', 'export-csv', 'export-ics', 'restore', 'copy', 'reload-shared', 'history', 'calendar-file', 'mastery-settings-link', 'add-node', 'area-up', 'area-down', 'require-all-areas', 'optional-all-areas', 'local-publish', 'publish', 'preview']) {
     assert.ok(await page.$('#' + id), `#${id} still exists`);
   }
   // Unusual controls are tucked into collapsed sections rather than removed.

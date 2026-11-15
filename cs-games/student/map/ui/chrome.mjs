@@ -1,6 +1,6 @@
-import {proficiencySuggestion} from './proficiency.mjs?v=targeted-clarity-v1';
+import {proficiencySuggestion} from './proficiency.mjs?v=class-participation-v1';
 // The frame around the maps: header, view and zoom controls, legend, suggested next, and the optional pacing card.
-import { courseSummaryLine, pacingNote, stopSummaryLine } from '../copy.mjs';
+import { courseSummaryLine, pacingNote, stopSummaryLine } from '../copy.mjs?v=class-participation-v1';
 import { formatDay } from '../format.mjs';
 import { icon } from '../icons.mjs';
 import { STATES, STATE_KEYS } from '../states.mjs';
@@ -30,7 +30,10 @@ export function createLegend({ dated }) {
 }
 
 export function createSuggested(model, { onShow, onPractice, stop: currentStop }) {
-  if(model.proficiency)return proficiencySuggestion(model,{onShow,onPractice,stop:currentStop});
+  if(model.proficiency){
+    const suggestion=proficiencySuggestion(model,{onShow,onPractice,stop:currentStop});
+    if(suggestion||!model.pathwayCompletion)return suggestion;
+  }
   const s = model.suggestedNext;
   if (!s) return model.totals.required > 0 && model.totals.complete === model.totals.required && model.totals.withRequirements > 0
     ? el('p', { class: 'suggested done', text: 'Every required skill with a requirement is complete. Optional skills and review are still open.' }) : null;
@@ -60,13 +63,19 @@ export function createPacingCard(model, { onShow }) {
 
 export function createHeader(model, { route, stop, onBack }) {
   const inArea = route.view === 'area' && stop;
+  const completion=model.pathwayCompletion;
+  const summary=!inArea&&completion
+    ? completion.requiredAreas
+      ? `${completion.completedAreas} of ${completion.requiredAreas} required learning areas complete`
+      : 'No required class pathway is configured.'
+    : inArea ? stopSummaryLine(stop) : courseSummaryLine(model);
   return el('div', { class: 'map-head' },
     el('nav', { class: 'crumbs', 'aria-label': 'Where you are' },
       inArea ? el('button', { type: 'button', class: 'btn btn-quiet', 'data-action': 'back', onclick: onBack }, icon('back', { size: 18 }), el('span', { text: `${model.courseTitle} map` })) : el('span', { class: 'crumb-course', text: model.classTitle??model.courseTitle }),
       inArea ? el('span', { class: 'crumb-sep', 'aria-hidden': 'true', text: '/' }) : null,
       inArea ? el('span', { class: 'crumb-here', 'aria-current': 'page', text: stop.title }) : null),
     el('h2', { id: 'map-heading', class: 'map-title', tabindex: '-1', text: inArea ? stop.title : `${model.courseTitle} journey` }),
-    el('p', { class: 'map-summary', text: inArea ? stopSummaryLine(stop) : courseSummaryLine(model) }),
+    el('p', { class: 'map-summary', text: summary }),
     !inArea&&!model.pacing.showDates?el('span',{class:'tag',text:'Self-paced'}):null);
 }
 export { formatDay };

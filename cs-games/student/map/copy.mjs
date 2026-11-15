@@ -11,6 +11,7 @@ export const ATTEMPT_STATUS_LABEL = Object.freeze({
 /** A short line shown under a skill node. */
 export function nodeCaption(node) {
   const p = node.progress, att = p?.attempt, req = p?.requirements;
+  if(node.classParticipation&&node.teacherAssessmentRequired)return node.complete?'Teacher assessment complete':'Teacher assessment';
   switch (node.state) {
     case 'requirements-met': return 'Requirements met';
     case 'mastered': return 'Mastered';
@@ -36,7 +37,7 @@ export function nodeParts(node, { suggested = node.suggested } = {}) {
   add('caption', cap, true);
   const accuracy = att?.attempted && att.accuracyPercent !== null && att.accuracyPercent !== undefined ? formatPercent(att.accuracyPercent) : null;
   if (accuracy && ['in-progress', 'review', 'not-started'].includes(node.state)) add('detail', req ? ` questions answered, ${accuracy} right on the first try.` : `, ${accuracy} right on the first try.`, false);
-  add('optional', node.optional ? 'Optional' : '', true);
+  add('optional', node.optional ? 'Optional' : node.classParticipation ? 'Required' : '', true);
   add('suggested', suggested ? 'Suggested next' : '', true);
   if (node.delta > 0) { add('delta', `+${node.delta}`, true); add('deltaNote', ` ${node.delta === 1 ? 'question' : 'questions'} added in the last session.`, false); }
   add('target', node.target?.text ?? '', true);
@@ -127,10 +128,11 @@ export const attemptLabel = (a) => `Attempt ${a.seq}: ${ATTEMPT_STATUS_LABEL[a.s
 /** Pacing copy. Never "overdue", never "late": a target date is a goal, not a deadline. */
 export const pacingNote = 'Target dates come from your teacher. They are goals to aim for, not due dates.';
 export function stopSummaryLine(stop) {
+  if(stop.summary.label==='No required skills')return stop.summary.label;
   const s = stop.summary;
   const bits = [s.label];
   if (s.optionalTotal) bits.push(s.complete && s.optionalRemaining ? `${plural(s.optionalRemaining, 'optional skill')} still open` : `${plural(s.optionalTotal, 'optional skill')}`);
-  if (s.requiredTotal && s.practiceOnly) bits.push(`${plural(s.practiceOnly,'practice-only skill')}`);
+  if (!s.classCompletion && s.requiredTotal && s.practiceOnly) bits.push(`${plural(s.practiceOnly,'practice-only skill')}`);
   if (s.reviewRecommended) bits.push(`${s.reviewRecommended} to review`);
   return bits.join(' · ');
 }

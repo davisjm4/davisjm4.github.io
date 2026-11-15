@@ -8,7 +8,8 @@ const started = new Set(['in-progress', 'requirements-met', 'review-recommended'
  * (review-recommended) still counts as complete unless `reviewCountsAsComplete` is false, because earned mastery is never silently erased.
  */
 export function areaProgress({ area, nodes, reviewCountsAsComplete = true }) {
-  const done = (n) => n.status === 'requirements-met' || (reviewCountsAsComplete && n.status === 'review-recommended' && n.lastCompletedAttempt !== null);
+  const done = (n) => n.completionSatisfied ?? (n.status === 'requirements-met' ||
+    (reviewCountsAsComplete && n.status === 'review-recommended' && n.lastCompletedAttempt != null));
   const req = nodes.filter((n) => n.required), opt = nodes.filter((n) => !n.required);
   const completed = req.filter(done);
   const provisional = req.filter((n) => n.status === 'provisional');

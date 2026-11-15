@@ -25,10 +25,14 @@ export function buildGuestView(graph, courseId, state, { today } = {}) {
   const summary = summarizeProgress(state, graph, courseId, today);
   const practice = new Map([...summary.skills].filter(([, p]) => p.answered).map(([id, p]) => [id, { attempted: p.answered, correct: p.correct }]));
   const view = studentContract(pathway, graph, [], { practice });
+  // Independent practice has no assigned class completion requirements.
+  delete view.pathwayCompletion;
+  delete view.completionAreas;
   const suggestion = suggestNext({ nodes: view.nodes, areas: view.areas, summary, state, courseId });
   const resume = resumeTarget({ nodes: view.nodes, state, courseId, suggestion });
   view.nodes = view.nodes.map(node => {
     const p = summary.skills.get(node.id);
+    delete node.checkpoint.pathwayComplete;
     return { ...node, guest: { mark: p.mark, markSource: p.markSource, status: p.status, statusLabel: p.statusLabel, selfReported: p.selfReported,
       answered: p.answered, correct: p.correct, accuracy: p.accuracy, lastDate: p.lastDate, lowAccuracy: p.lowAccuracy,
       suggested: suggestion.primary?.nodeId === node.id, reason: suggestion.all.find(s => s.nodeId === node.id)?.reason ?? null } };

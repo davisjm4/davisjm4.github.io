@@ -60,8 +60,8 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   assert.match(await textOf(student,pathway),/Advanced CS journey/);
   assert.match(await textOf(student,pathway),/Self-paced/);
   const counts=JSON.parse(dev.db.prepare('SELECT snapshot FROM pathway_revisions').get().snapshot);
-  const supported=counts.checkpoints.filter(checkpoint=>checkpoint.requirementTier).length;
-  assert.match(await textOf(student,pathway+' .map-summary'),new RegExp('0 of '+supported+' skills with requirements complete'));
+  const requiredAreas=new Set(counts.checkpoints.filter(checkpoint=>checkpoint.required).map(checkpoint=>checkpoint.areaId)).size;
+  assert.equal(await textOf(student,pathway+' .map-summary'),'0 of '+requiredAreas+' required learning areas complete');
   assert.doesNotMatch(await textOf(student,pathway),/overdue|due date|Suggested target/i);
   assert.match(await textOf(student,pathway+' .stop-open'),/Variable Lab/i);
   assert.doesNotMatch(await textOf(student,pathway),/Trace variable state0|\bfalse\b/);
@@ -124,9 +124,9 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
 
   await Promise.all([teacher.waitForNavigation(),teacher.click('#class-overview a[href$="#goals"]')]);
   assert.equal(await teacher.$('[name=teacher-key]'),null);
-  await wait(teacher,'#node-table input[type=checkbox]');
-  const optional='#node-table input[type=checkbox]';
-  await teacher.click(optional);
+  const optional='[id="participation-node:advanced:variable-lab:trace"]';
+  await wait(teacher,optional);
+  await teacher.select(optional,'optional');
   const orderBefore=await student.$$eval('.skill-node',nodes=>nodes.map(node=>node.dataset.nodeId));
   const move=await teacher.waitForFunction(()=>{
     const buttons=[...document.querySelectorAll('#node-table button[aria-label^="Move down:"]')];

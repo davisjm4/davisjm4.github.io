@@ -74,8 +74,8 @@ function ringFor(state, progress) {
   return state === 'not-started' && frac === 0 ? null : { kind: 'questions', fraction: frac };
 }
 
-function summarizeStop(stop, areaContract) {
-  const nodes = stop.nodes, req = nodes.filter((n) => n.required && n.requirementsConfigured), opt = nodes.filter((n) => !n.required);
+function summarizeStop(stop, areaContract, classCompletion) {
+  const nodes = stop.nodes, req = nodes.filter((n) => n.required && (classCompletion || n.requirementsConfigured)), opt = nodes.filter((n) => !n.required);
   let requiredCompleted = req.filter((n) => n.complete).length, optionalCompleted = opt.filter((n) => n.complete).length;
   let source = 'derived';
   // Prefer the engine's own area roll-up when it describes exactly this stop. A stop that is only part of an area cannot use it.
@@ -87,10 +87,10 @@ function summarizeStop(stop, areaContract) {
   const mode = nodes.some((n) => n.requirementsConfigured) ? 'requirements' : 'practice';
   const complete = req.length > 0 && requiredCompleted === req.length;
   const status = complete ? 'complete' : (nodes.some((n) => n.started) ? 'in-progress' : 'not-started');
-  const label = req.length ? `${requiredCompleted} of ${req.length} requirements met` : `${practiced} of ${nodes.length} skills practiced`;
+  const label = req.length ? `${requiredCompleted} of ${req.length} requirements met` : classCompletion ? 'No required skills' : `${practiced} of ${nodes.length} skills practiced`;
   const practiceOnly = nodes.filter((n) => !n.requirementsConfigured).length;
   return { status, mode, complete, practiceOnly, requiredTotal: req.length, requiredCompleted, optionalTotal: opt.length, optionalCompleted, optionalRemaining: opt.length - optionalCompleted,
-    practiced, reviewRecommended: nodes.filter((n) => n.state === 'review').length, fraction: req.length ? requiredCompleted / req.length : practiced / nodes.length, label, source };
+    practiced, classCompletion, reviewRecommended: nodes.filter((n) => n.state === 'review').length, fraction: req.length ? requiredCompleted / req.length : practiced / nodes.length, label, source };
 }
 
 function pickNext(candidates, { preferStopId = null, dated = false } = {}) {
@@ -147,7 +147,7 @@ export function buildMapModel(input) {
     run.raw.forEach((raw, i) => {
       const progress = progressByNode.get(raw.id) ?? null;
       const { state, unrecognized } = deriveNodeState(progress);
-      const complete = countsAsComplete(state, progress);
+      const complete = raw.pathwayComplete ?? countsAsComplete(state, progress);
       const requirementsConfigured = Boolean(progress?.requirements);
       // The engine's progress object already folds the class checkpoint's `required` flag in. Without one (the zero-setup pathway)
       // the host can pass `required: { [nodeId]: false }` from its checkpoints so optional skills still read as optional.
@@ -155,10 +155,10 @@ export function buildMapModel(input) {
       const links = practiceLinks(raw, { mixedActivities,guest:input.guest });
       const target = dated ? targetFor(pacingIn.targets?.[raw.id], complete, today) : null;
       const attempted = progress?.attempt?.attempted ?? 0;
-      const started = state === 'in-progress' || state === 'review' || attempted > 0 || (progress?.lifetime?.questionsAnswered ?? 0) > 0;
+      const started = complete || state === 'in-progress' || state === 'review' || attempted > 0 || (progress?.lifetime?.questionsAnswered ?? 0) > 0;
       const view = {
         id: raw.id, title: raw.title, objective: raw.objective ?? '', areaId: raw.areaId, stopId: id, order: i + 1, orderOf: run.raw.length, courseIndex: flat.length,
-        state, unrecognized, optional: !required, required, complete, started, requirementsConfigured, practiceOnly: !requirementsConfigured,
+        state, unrecognized, classParticipation:Boolean(input.pathwayCompletion), optional: !required, required, complete, started, requirementsConfigured, practiceOnly: !requirementsConfigured,
         proficiency:input.proficiency?.skills?.[raw.id]??null,
         teacherAssessmentRequired:raw.teacherAssessmentRequired, guest:raw.guest,practiceGoal:raw.practiceGoal,verifiedAward:raw.verifiedAward||(progress?.verification==='verified'&&Boolean(progress.award?.id)),
         earlierVerifiedAward:raw.earlierVerifiedAward,standardsScore:raw.standardsScore??progress?.standards?.score,
@@ -171,7 +171,7 @@ export function buildMapModel(input) {
     });
     const mixedFrom = stop.nodes.find((n) => n.mixed)?.mixed ?? null;
     stop.mixed = mixedFrom;
-    stop.summary = summarizeStop(stop, parts === 1 ? areaContracts.get(run.areaId) : null);
+    stop.summary = summarizeStop(stop, parts === 1 ? areaContracts.get(run.areaId) : null, Boolean(input.pathwayCompletion));
     return stop;
   });
 
@@ -197,7 +197,7 @@ export function buildMapModel(input) {
     mode: flat.some((n) => n.requirementsConfigured) ? 'requirements' : 'practice',
     pacing: { mode: dated ? 'dated' : 'undated', showDates: dated, today: dated ? today : null, note: dated ? (pacingIn.note ?? null) : null, currentStopId: currentStop?.id ?? null,
       upcoming: upcoming.slice(0, 5).map((n) => n.id), reviewIds: flat.filter((n) => n.state === 'review').map((n) => n.id) },
-    stops, nodes: flat, nodeIndex, proficiency:input.proficiency, suggestedNext: next ? { nodeId: next.id, stopId: next.stopId } : null,
+    stops, nodes: flat, nodeIndex, proficiency:input.proficiency,pathwayCompletion:input.pathwayCompletion, suggestedNext: next ? { nodeId: next.id, stopId: next.stopId } : null,
     totals: { stops: stops.length, skills: flat.length, withRequirements: required.filter((n) => n.requirementsConfigured).length, completeWithRequirements: required.filter((n) => n.requirementsConfigured && n.complete).length,
       practiceOnly: required.filter((n) => !n.requirementsConfigured).length, required: required.length, optional: flat.length - required.length, complete: required.filter((n) => n.complete).length,
       started: flat.filter((n) => n.started).length, stopsComplete: stops.filter((s) => s.summary.complete).length, stopsStarted: stops.filter((s) => s.summary.status !== 'not-started').length },

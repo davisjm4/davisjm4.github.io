@@ -1,3 +1,5 @@
+import {assignedSessions,PARTICIPATION,skillParticipation} from './participation.mjs';
+import {areaProgress} from './mastery/area.mjs';
 import {dateOK,meetings} from './calendar.mjs';
 export const SCHEMA_VERSION=1;
 export const clone=x=>JSON.parse(JSON.stringify(x));
@@ -64,11 +66,13 @@ export function validatePathway(p,graph,{validateSessions=true,validateTargets=t
   if(!Array.isArray(p.customNodes)||!Array.isArray(p.customAreas)||p.customNodes.length>500||new Set(p.customNodes.map(n=>n.id)).size!==p.customNodes.length||p.customNodes.some(n=>graph.nodes.some(g=>g.id===n.id)||!n.objective||n.courseId!==p.courseId||!p.customAreas.some(a=>a.id===n.areaId)))throw new Error('Custom skills need unique IDs, objectives and class areas.');
   const nodes=new Map([...(p.curriculumSnapshot?.nodes||graph.nodes),...(p.customNodes||[])].filter(n=>n.courseId===p.courseId).map(n=>[n.id,n]));
   if(!Array.isArray(p.checkpoints)||p.checkpoints.length>1500||new Set(p.checkpoints.map(c=>c.id)).size!==p.checkpoints.length||new Set(p.checkpoints.map(c=>c.nodeId)).size!==p.checkpoints.length)throw new Error('Checkpoints need unique stable IDs and nodes.');
+  if(p.excludedAreas!==undefined&&(!Array.isArray(p.excludedAreas)||new Set(p.excludedAreas).size!==p.excludedAreas.length||
+    p.excludedAreas.some(id=>!p.checkpoints.some(c=>c.areaId===id))))throw new Error('Excluded learning areas must belong to this pathway.');
   if(!Array.isArray(p.sequence)||new Set(p.sequence).size!==p.sequence.length||p.sequence.length!==p.checkpoints.length||p.sequence.some(id=>!p.checkpoints.some(c=>c.nodeId===id)))throw new Error('Sequence must contain every checkpoint exactly once.');
   if(!Array.isArray(p.policies)||!p.policies.length)throw new Error('Mastery policies are required.');
   if(new Set(p.policies.map(x=>x.id+'@'+x.version)).size!==p.policies.length)throw new Error('Policy versions must be unique.');
   for(const policy of p.policies){if((policy.practiceGoal!==undefined&&(policy.practiceGoal!==true||!policy.provisional||!policy.minimumQuestions||policy.accuracy===null))||!Number.isInteger(policy.version)||policy.version<1||!policy.id||typeof policy.provisional!=='boolean'||!policy.coverage||Array.isArray(policy.coverage)||Object.values(policy.coverage).some(n=>!Number.isInteger(n)||n<0)||(policy.scoreTarget!==null&&(!Number.isFinite(policy.scoreTarget)||policy.scoreTarget<0||policy.scoreTarget>4))||(policy.minimumQuestions!==null&&(!Number.isInteger(policy.minimumQuestions)||policy.minimumQuestions<1))||(policy.accuracy!==null&&(!Number.isFinite(policy.accuracy)||policy.accuracy<0||policy.accuracy>1)))throw new Error('Invalid mastery policy.');}
-  for(const c of p.checkpoints){if(!nodes.has(c.nodeId)||c.pathwayId!==p.id||c.areaId!==nodes.get(c.nodeId).areaId||typeof c.required!=='boolean'||!Number.isFinite(c.minutes)||c.minutes<1||c.minutes>10000||!p.policies.some(x=>x.id===c.policyId&&x.version===c.policyVersion)||c.targetDate!==null&&!dateOK(c.targetDate))throw new Error('Invalid checkpoint.');
+  for(const c of p.checkpoints){if(!nodes.has(c.nodeId)||c.pathwayId!==p.id||c.areaId!==nodes.get(c.nodeId).areaId||typeof c.required!=='boolean'||c.participation!==undefined&&(typeof c.participation!=='string'||!Object.hasOwn(PARTICIPATION,c.participation))||!Number.isFinite(c.minutes)||c.minutes<1||c.minutes>10000||!p.policies.some(x=>x.id===c.policyId&&x.version===c.policyVersion)||c.targetDate!==null&&!dateOK(c.targetDate))throw new Error('Invalid checkpoint.');
     if(c.practiceGoalPolicyId!==undefined||c.practiceGoalPolicyVersion!==undefined){
       if(!p.policies.some(rule=>rule.practiceGoal&&rule.id===c.practiceGoalPolicyId&&rule.version===c.practiceGoalPolicyVersion))throw new Error('Invalid practice goal.');
     }
@@ -86,8 +90,8 @@ export function validatePathway(p,graph,{validateSessions=true,validateTargets=t
 }
 export function diffPathways(oldP,newP) {
   if(!oldP)return [{kind:'created',pathwayId:newP.id}];const changes=[];
-  for(const key of ['title','examDate','calendar','pacingVisibility','sequence','policies','toleranceDays','customAreas','customNodes'])if(JSON.stringify(oldP[key])!==JSON.stringify(newP[key]))changes.push({kind:key,before:oldP[key],after:newP[key]});
-  const old=new Map(oldP.checkpoints.map(c=>[c.id,c]));for(const c of newP.checkpoints){const before=old.get(c.id);if(!before)changes.push({kind:'added',id:c.id,after:c});else for(const k of ['targetDate','required','policyId','policyVersion','practiceGoalPolicyId','practiceGoalPolicyVersion','expectedMastery','minutes','prerequisites'])if(JSON.stringify(before[k])!==JSON.stringify(c[k]))changes.push({kind:k,id:c.id,before:before[k],after:c[k]});old.delete(c.id);}for(const [id,before] of old)changes.push({kind:'removed',id,before});return changes;
+  for(const key of ['title','examDate','calendar','pacingVisibility','sequence','policies','toleranceDays','customAreas','customNodes','excludedAreas'])if(JSON.stringify(oldP[key])!==JSON.stringify(newP[key]))changes.push({kind:key,before:oldP[key],after:newP[key]});
+  const old=new Map(oldP.checkpoints.map(c=>[c.id,c]));for(const c of newP.checkpoints){const before=old.get(c.id);if(!before)changes.push({kind:'added',id:c.id,after:c});else for(const k of ['targetDate','required','participation','policyId','policyVersion','practiceGoalPolicyId','practiceGoalPolicyVersion','expectedMastery','minutes','prerequisites'])if(JSON.stringify(before[k])!==JSON.stringify(c[k]))changes.push({kind:k,id:c.id,before:before[k],after:c[k]});old.delete(c.id);}for(const [id,before] of old)changes.push({kind:'removed',id,before});return changes;
 }
 // Evidence is immutable input supplied by the existing profile/reporting adapter.
 // Node completion and the 0–4 score are deliberately independent dimensions.
@@ -113,7 +117,8 @@ export function pacingStatus(p,evidence,{today=new Intl.DateTimeFormat('en-CA',{
   const checkpoints=p.checkpoints.map(c=>{const policy=p.policies.find(x=>x.id===c.policyId&&x.version===c.policyVersion);const state=evaluateNode(c.nodeId,policy,evidence,c.expectedMastery);
     const targetMet=state.completion==='complete'&&(c.expectedMastery===null||state.score!==null&&state.score>=c.expectedMastery);
     const needsAssessment=state.completion==='needs-assessment'||c.expectedMastery!==null&&state.score===null;
-    const overdue=Boolean(shared&&p.pacingVisibility===undefined&&c.required&&c.targetDate&&Date.parse(c.targetDate)+toleranceDays*86400000<Date.parse(today));return {...c,targetDate:shared?c.targetDate:null,targetLocked:shared&&c.targetLocked,...state,targetMet,needsAssessment,overdue,reason:overdue?(!targetMet?(needsAssessment?'overdue-insufficient-evidence':'overdue-low-proficiency'):'completed'):null};});
+    const participation=skillParticipation(p,c,policy);
+    const overdue=Boolean(shared&&p.pacingVisibility===undefined&&participation==='required'&&c.targetDate&&Date.parse(c.targetDate)+toleranceDays*86400000<Date.parse(today));return {...c,participation,required:participation==='required',targetDate:shared?c.targetDate:null,targetLocked:shared&&c.targetLocked,...state,targetMet,needsAssessment,overdue,reason:overdue?(!targetMet?(needsAssessment?'overdue-insufficient-evidence':'overdue-low-proficiency'):'completed'):null};});
   const required=checkpoints.filter(c=>c.required);const late=required.filter(c=>c.overdue&&!c.targetMet);
   const status=!shared?'Self-paced':p.pacingVisibility==='shared'?'Suggested targets':late.some(c=>!c.needsAssessment)?'Behind':late.length?'Insufficient Evidence / Needs Assessment':required.some(c=>c.targetMet&&c.targetDate>today)?'Ahead':required.some(c=>!c.targetDate)?'Insufficient Evidence / Needs Assessment':'On Track';
   return {status,pathwayId:p.id,revision:p.revision,calculatedAt:today,checkpoints};
@@ -135,10 +140,31 @@ export function studentContract(p,graph,evidence=[],options={}) {
       ...(options.mastery?.nodes.has(id)?{masteryChallenge:options.mastery.nodes.get(id)}:{}),
       ...(!checkpoint.award&&evidence.some(e=>e.kind==='mastery-award'&&e.eligible===true&&e.nodeIds?.includes(id))?{earlierVerifiedAward:true}:{})};
   });
+  const assigned=skills.filter(n=>n.checkpoint.participation!=='excluded');
+  const included=new Set(assigned.map(n=>n.id));
+  const completionByArea=new Map();
+  for(const skill of assigned){
+    const {checkpoint:c,masteryChallenge:challenge}=skill;
+    // The teacher-assessed route uses the existing Level 3 progression threshold.
+    // Teacher assessment and practice milestones are kept separate in the contract.
+    const assessed=c.requirementTier===null&&c.score>=3;
+    const practiceComplete=challenge?.status==='requirements-met'||
+      challenge?.mapProgress?.lastCompletedAttempt!=null||challenge?.history?.some(a=>a.status==='requirements-met')===true;
+    c.pathwayComplete=assessed||Boolean(c.award)||skill.earlierVerifiedAward===true||practiceComplete||
+      (!challenge&&c.requirementTier===undefined&&c.completion==='complete');
+    if(!completionByArea.has(skill.areaId))completionByArea.set(skill.areaId,[]);
+    completionByArea.get(skill.areaId).push({nodeId:skill.id,required:c.required,completionSatisfied:c.pathwayComplete,
+      status:challenge?.status??'provisional'});
+  }
+  const completionAreas=[...completionByArea].map(([id,nodes])=>areaProgress({area:areas.get(id),nodes}));
+  const requiredAreas=completionAreas.filter(a=>a.requiredTotal>0);
+  const completedAreas=requiredAreas.filter(a=>a.qualified);
+  const pathwayCompletion={requiredAreas:requiredAreas.length,completedAreas:completedAreas.length,
+    status:requiredAreas.length===0?'no-required-pathway':completedAreas.length===requiredAreas.length?'complete':'incomplete'};
   const shared=!!p.calendar&&p.pacingVisibility!=='private';
   return {schemaVersion:1,pathwayId:p.id,classId:p.classId,title:p.title,courseId:p.courseId,
-    revision:p.revision,graphVersion:p.graphVersion,status:state.status,calculatedAt:state.calculatedAt,
+    revision:p.revision,graphVersion:p.graphVersion,status:state.status,calculatedAt:state.calculatedAt,pathwayCompletion,completionAreas,
     areas:[...new Set(skills.map(n=>n.areaId))].map(id=>options.mastery?.areas.has(id)?{...areas.get(id),practiceRequirements:options.mastery.areas.get(id)}:areas.get(id)),
     nodes:skills,edges:p.checkpoints.flatMap(c=>c.prerequisites.map(from=>({from,to:c.nodeId,kind:'prerequisite'}))),
-    sessions:shared?p.sessions:[],policies:p.policies,examDate:shared?p.examDate:null};
+    sessions:shared?assignedSessions(p.sessions,included):[],policies:p.policies,examDate:shared?p.examDate:null};
 }

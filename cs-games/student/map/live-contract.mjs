@@ -59,7 +59,8 @@ export const attemptsFromChallenge = (challenge) => (challenge.history ?? []).ma
 export function inputFromStudentContract(contract, {
   courseTitle=courseNames[contract.courseId],today=contract.calculatedAt,mixedActivities
 }={}) {
-  const nodes = contract.nodes, courseId = contract.courseId ?? nodes[0]?.courseId;
+  const nodes = contract.nodes.filter(n=>n.checkpoint?.participation!=='excluded');
+  const courseId = contract.courseId ?? nodes[0]?.courseId;
   const targets = {}, required = {}, progressNodes = [], attempts = {};
   for (const n of nodes) {
     required[n.id] = n.checkpoint?.required !== false;
@@ -72,7 +73,7 @@ export function inputFromStudentContract(contract, {
       if(history.length)attempts[n.id]=history;
     } else if ((n.practiceProgress?.attempted ?? 0) > 0) progressNodes.push(progressFromPractice(n.practiceProgress, n));
   }
-  const areas = contract.areas.filter((a) => a.practiceRequirements).map((a) => ({ areaId: a.id, requiredTotal: a.practiceRequirements.requiredTotal, requiredCompleted: a.practiceRequirements.requiredCompleted }));
+  const areas = contract.completionAreas ?? contract.areas.filter((a) => a.practiceRequirements).map((a) => ({ areaId: a.id, requiredTotal: a.practiceRequirements.requiredTotal, requiredCompleted: a.practiceRequirements.requiredCompleted }));
   // The service strips private target dates before creating this contract.
   const dated = Object.keys(targets).length > 0;
   const currentAreaId=contract.sessions?.find(session=>session.date===today&&session.allocations?.length)?.allocations[0].areaId??null;
@@ -85,11 +86,12 @@ export function inputFromStudentContract(contract, {
         familySelectors:n.familySelectors,standardRefs:n.standardRefs,practice:n.checkpoint.practice,
         prerequisites:n.checkpoint.prerequisites,practiceGoal:n.practiceGoal,
         guest:n.guest,teacherAssessmentRequired:n.checkpoint.requirementTier===null,verifiedAward:Boolean(n.checkpoint.award),earlierVerifiedAward:n.earlierVerifiedAward===true,
+        pathwayComplete:n.checkpoint.pathwayComplete,
         standardsScore:n.checkpoint.score,demonstrationType:n.checkpoint.demonstrationType
       }))
     },
     courseId,classId:contract.guest?null:contract.classId,classTitle:contract.title,enrolled:Boolean(contract.classId)&&!contract.guest,guest:contract.guest?.source==='independent',sequence:nodes.map(n=>n.id),required,progress:{nodes:progressNodes,areas},attempts,mixedActivities,
-    proficiency:contract.proficiency,
+    proficiency:contract.proficiency,pathwayCompletion:contract.pathwayCompletion,
     pacing:{mode:dated?'dated':'undated',today,currentAreaId,targets}
   };
 }

@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../teacher-ui.css">
   <link rel="stylesheet" href="./pacing.css">
   <link rel="stylesheet" href="../../student/pathway-view.css">
-  <script type="module" src="./app.mjs?v=teacher-planning-v1"></script>
+  <script type="module" src="./app.mjs?v=class-participation-v1"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -196,21 +196,24 @@
 
     <!-- ───────── Stage 2: Learning Goals ───────── -->
     <section id="stage-goals" data-stage-panel="goals" class="card accent" aria-labelledby="goals-title" hidden>
-      <div class="card-head"><div><div class="eyebrow">Customize</div><h2 id="goals-title">Learning goals</h2><p>Each skill is checked by a checkpoint. Practice visits and time spent never award mastery. Choose what students will learn, in what order, and what is required.</p></div></div>
+      <div class="card-head"><div><div class="eyebrow">Customize</div><h2 id="goals-title">Learning Areas &amp; Skills</h2><p>Each skill is checked by a checkpoint. Practice visits and time spent never award mastery. Choose what students will learn, in what order, and what is required.</p></div></div>
       <details class="more"><summary>What the curriculum covers <small>Coverage notes</small></summary><div class="body"><p id="coverage-limits"></p></div></details>
       <div class="field-grid" style="align-items:end">
-        <label>Learning area<select id="area-filter"></select><small>Choose an area to reorder or change it as a group.</small></label>
+        <label>Learning area<select id="area-filter"></select><small>Show one area to set targets or change its order.</small></label>
         <div class="actions" style="margin:0">
           <button id="area-up" class="secondary small">Move area earlier</button>
           <button id="area-down" class="secondary small">Move area later</button>
-          <button id="optional-area" class="secondary small">Make area optional</button>
-          <button id="remove-area" class="secondary small danger">Remove area from plan</button>
         </div>
       </div>
       <form id="area-target-form" class="field-grid" hidden>
         <label>Suggested date for this area<input name="date" type="date"><small>Leave blank to clear the dates for this area.</small></label>
         <div class="actions"><button type="submit" class="secondary">Set area target in draft</button></div>
       </form>
+      <p class="hint">Required skills count toward class completion. Optional skills stay in the plan. Skills marked Not included are available through independent practice. Change question counts and accuracy in Practice Requirements.</p>
+      <div class="actions">
+        <button id="require-all-areas" type="button" class="secondary small">Require all areas and skills</button>
+        <button id="optional-all-areas" type="button" class="secondary small">Make all included skills optional</button>
+      </div>
       <div id="node-table"></div>
       <details class="more"><summary>Add your own area and skill</summary><div class="body">
         <form id="add-node">

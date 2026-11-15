@@ -71,7 +71,11 @@ export function teacherProfiles(onClasses) {
     }
     try{sessionStorage.setItem(retrySlot,JSON.stringify(retry));}catch{}
     try{
-      const result=await api('',{body:retry});
+      const result=await api('',{body:retry}).catch(error=>{
+        // A validation rejection did not create a class. Let the teacher resubmit corrected settings.
+        if(error.status===400)try{sessionStorage.removeItem(retrySlot);}catch{}
+        throw error;
+      });
       if(currentTeacher()!==teacher)return;
       if(result.invite)invites.set(result.id,result.invite);
       await refresh();
@@ -270,7 +274,7 @@ export function teacherProfiles(onClasses) {
       !c.archived&&el('section',{class:'card',id:'class-plan','aria-labelledby':'class-plan-title'},
         el('h3',{id:'class-plan-title',text:'Plan'}),
         el('div',{class:'task-grid'},
-          task(pacingHref(c.id),'Customize pathway','Choose learning goals and checkpoint order.'),
+          task(pacingHref(c.id),'Customize pathway','Include learning areas, set required skills and order checkpoints.'),
           pathways.get(c.id)?.revision>0&&task('/cs-games/teacher/requirements/?class='+encodeURIComponent(c.id),'Practice requirements','Review starting requirements or publish changes.'),
           task(pacingHref(c.id,'calendar'),'Pacing & target dates','Plan privately or share optional target dates.'))),
       el('section',{class:'card',id:'class-assessments','aria-labelledby':'class-assessments-title'},
@@ -349,7 +353,7 @@ export function teacherProfiles(onClasses) {
       }
       put(results,el('p',{class:'muted',text:data.classTitle+' · '+courseLabel(data.courseId)}),
         renderProfileProgress(data),el('div',{class:'actions'},act('Download student CSV',()=>download('cs-games-profile.csv',profileCsv(data)))),
-        data.pathway?renderPathway(data.pathway):el('p',{class:'banner info',text:'Publish a class pathway to view checkpoint progress and record mastery.'}));
+        data.pathway?renderPathway(data.pathway,{includeExcluded:true}):el('p',{class:'banner info',text:'Publish a class pathway to view checkpoint progress and record mastery.'}));
     }
     renderReport(report);
     put(container,nodeId?el('section',{class:'card accent','aria-labelledby':heading.id},returnButton,heading,summary):null);
