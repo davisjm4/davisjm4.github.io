@@ -3,9 +3,9 @@
 // identical challenge object, so Teacher Tools can reuse these generators.
 import { Rng, seedOf } from "./rng.js";
 import * as P from "./java-program.js";
-import * as H from "./gen-helpers.js";
-import { METHODS_FAMILIES } from "./families-methods.js";
-import { LIMITS_FAMILIES } from "./families-limits.js";
+import * as H from "./gen-helpers.js?v=math-rank-v2";
+import { METHODS_FAMILIES } from "./families-methods.js?v=math-rank-v2";
+import { LIMITS_FAMILIES } from "./families-limits.js?v=math-rank-v2";
 
 export const EXPANSION_MODES = {
   "math-methods": "Math Methods & Random Ranges",

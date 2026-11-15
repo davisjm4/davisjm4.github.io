@@ -264,7 +264,7 @@ const pow = {
     }
     if (shape === "nested") {
       const x = rng.int(2, 4), e1 = rng.int(2, x === 2 ? 4 : 3), e2 = 2;
-      const k = rng.int(1, 8);
+      const k = rng.pick([1, 2, 3, 4, 5, 6, 7, 8].filter(exp => exp !== e1 * e2));
       const program = [print(bin("-", call("pow", call("pow", lit(x), lit(e1)), lit(e2)), call("pow", lit(x), lit(k))))];
       const value = Math.pow(Math.pow(x, e1), e2) - Math.pow(x, k);
       return H.outputDraft({

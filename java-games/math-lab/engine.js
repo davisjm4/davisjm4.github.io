@@ -123,10 +123,10 @@ function operatorConfusions(expression, type) {
   return out;
 }
 
-function numericChoices(answer, type, misconceptions, rng, expression = "") {
+function numericChoices(answer, type, misconceptions, rng, expression, choiceFeedback) {
   // Deduplicate by numerical value, not by spelling (3 and 3.0 are one value).
   const seen = new Set([numericKey(answer)]), pool = [], template = new Set(misconceptions.map(numericKey));
-  for (const value of [...misconceptions, ...operatorConfusions(expression, type)]) {
+  for (const value of choiceFeedback ? misconceptions : [...misconceptions, ...operatorConfusions(expression, type)]) {
     if (!Number.isFinite(value) || seen.has(numericKey(value))) continue;
     seen.add(numericKey(value)); pool.push(value);
   }
@@ -159,9 +159,21 @@ function numericChoices(answer, type, misconceptions, rng, expression = "") {
 function build(mode, shape, rng) {
   let a = integer(3, 19, rng), b = integer(2, 6, rng), c = integer(2, 5, rng);
   let expression, type = "int", explanation, misconceptions;
+  let choiceFeedback;
+  function useMistakes(mistakes) {
+    misconceptions = mistakes.map(([value]) => value);
+    choiceFeedback = Object.fromEntries(mistakes.slice().reverse().map(([value, why]) => [numericKey(value), why]));
+  }
   if (mode === "modulus") {
     if (shape === "smaller") a = integer(1, b - 1, rng);
-    else if (shape === "divisible") a = b * integer(2, 5, rng);
+    else if (shape === "divisible") {
+      b = integer(3, 12, rng);
+      const multiple = b * integer(2, 6, rng);
+      a = rng() < 0.5 ? multiple : multiple + choose([-2, -1, 1, 2], rng);
+    } else if (["negative-divisor", "both-negative"].includes(shape)) {
+      b = integer(4, 13, rng);
+      a = b * integer(0, 5, rng) + integer(1, b - 1, rng);
+    }
     else { a = b * integer(1, 4, rng) + integer(1, b - 1, rng); }
     if (["negative-dividend", "both-negative"].includes(shape)) a = -a;
     if (["negative-divisor", "both-negative"].includes(shape)) b = -b;
@@ -169,6 +181,20 @@ function build(mode, shape, rng) {
     const quotient = Math.trunc(a / b), remainder = a - quotient * b;
     explanation = `${a} / ${b} truncates to ${quotient}; ${a} − (${quotient} × ${b}) leaves ${remainder}. A nonzero Java remainder has the dividend's sign.`;
     misconceptions = [quotient, a, b, -remainder, Math.abs(remainder), Math.abs(b) - Math.abs(remainder), quotient * b, remainder + Math.sign(a)];
+    if (["divisible", "negative-divisor", "both-negative"].includes(shape)) useMistakes([
+      [quotient, "This gives the integer quotient. The % operator gives what remains after removing the quotient times the divisor."],
+      [Math.abs(quotient), "This gives the magnitude of the quotient. Use the signed quotient to remove completed groups, then report what remains."],
+      [-Math.abs(quotient), "This gives a negative quotient. The remainder is the leftover after removing the completed groups."],
+      [a - Math.floor(a / b) * b, "This rounds the quotient down. Java truncates toward zero before calculating the remainder."],
+      [a - Math.round(a / b) * b, "This subtracts the nearest whole multiple. Java uses the quotient truncated toward zero."],
+      [Math.sign(b) * Math.abs(remainder), "This gives the remainder the divisor's sign. A nonzero Java remainder takes the dividend's sign."],
+      [Math.abs(remainder), "This drops the minus sign. A negative dividend produces a negative remainder when the remainder is nonzero."],
+      [b % a, "This swaps the operands. Take the remainder of the left operand divided by the right operand."],
+      [quotient * b, "This gives the multiple that is removed. Subtract the multiple from the dividend to get the remainder."],
+      [a - quotient * Math.abs(b), "This discards the divisor's sign when multiplying back. The quotient times the original divisor is the multiple to subtract."],
+      [a - (quotient + Math.sign(quotient)) * b, "This removes one group beyond the truncated quotient. Stop after the whole groups that fit in the dividend."],
+      ...(shape === "divisible" ? [[0, "This treats a near multiple as an exact multiple. Check whether subtracting the last whole multiple leaves a nonzero remainder."]] : []),
+    ]);
   } else if (mode === "division") {
     b = choose([2, 4], rng); a = b * integer(1, 5, rng) + choose([1, b - 1], rng);
     if (rng() < 0.35) a = -a;
@@ -209,7 +235,7 @@ function build(mode, shape, rng) {
         ? [Math.trunc(a / b), Math.round(a / b), a / b + Math.sign(a), Math.floor(a / b), a % b]
         : [a / b, Math.trunc(a / b), Math.round(a / b), Math.floor(a / b), Math.ceil(a / b), a % b, -Math.trunc(a / b)];
   } else if (mode === "expressions") {
-    const d = integer(2, 4, rng);
+    let d = integer(2, 4, rng);
     if (shape === "add-division") {
       expression = `${a} + ${b} / ${c}`;
       explanation = `Divide first: ${b} / ${c} is ${Math.trunc(b / c)} using integer division. Then add ${a}, giving ${evaluate(expression).value}.`;
@@ -231,13 +257,37 @@ function build(mode, shape, rng) {
       explanation = `/ and * have equal precedence, so divide left to right first: ${a} / ${b} is ${Math.trunc(a / b)}. Multiplying by ${c} gives ${Math.trunc(a / b) * c}.`;
       misconceptions = [Math.trunc(a / (b * c)), Math.trunc(a * c / b), a % b * c, Math.round(a / b) * c, Math.trunc(a / b)];
     } else if (shape === "product-remainder") {
+      c = integer(4, 13, rng);
+      if (rng() < 0.5) a = -a;
+      const product = a * b;
       expression = `${a} * ${b} % ${c}`;
       explanation = `* and % have equal precedence and run left to right. Multiply to get ${a * b}, then ${a * b} % ${c} gives ${(a * b) % c}.`;
-      misconceptions = [a * (b % c), Math.trunc(a * b / c), a * b, a % c, b % c, (a * b) % c + 1];
+      useMistakes([
+        [a * (b % c), "This groups the remainder on the right first. Multiplication and remainder have equal precedence, so the product is evaluated first."],
+        [Math.trunc(product / c), "This is the integer quotient of the product. The % operator asks for the leftover after division."],
+        [product, "This stops at the intermediate product. Apply % to the product before storing result."],
+        [a % c, "This skips the second factor. Both factors contribute to the dividend before % is applied."],
+        [b % c, "This takes the remainder of the second factor alone. First multiply both factors."],
+        [(a + b) % c, "This adds the two factors before taking the remainder. The displayed * multiplies them."],
+        [product - Math.floor(product / c) * c, "This rounds the quotient down. Java truncates toward zero, so a negative dividend can leave a negative remainder."],
+        [product - Math.round(product / c) * c, "This subtracts the nearest multiple. Java takes the quotient toward zero before finding the leftover."],
+        [c % product, "This uses the divisor as the dividend. The product is the left operand of %."],
+      ]);
     } else if (shape === "nested-group") {
+      if (rng() < 0.5) d = -d;
+      if (b !== c && rng() < 0.5) c = -c;
       expression = `${a} - (${b} + ${c}) * ${d}`;
       explanation = `Add inside the parentheses to get ${b + c}, then multiply by ${d} to get ${(b + c) * d}. Subtract that from ${a} to get ${a - (b + c) * d}.`;
-      misconceptions = [a - b + c * d, (a - (b + c)) * d, a - b - c * d, a - b + c, a + (b + c) * d, a - (b * d + c)];
+      useMistakes([
+        [a - b + c * d, "This drops the parentheses. The addition inside them happens before the multiplication or subtraction."],
+        [(a - (b + c)) * d, "This subtracts the grouped sum before multiplying. Multiply the grouped sum first."],
+        [a - (b + c * d), "This multiplies only the second addend. The factor applies to the entire parenthesized sum."],
+        [a - (b * d + c), "This multiplies only the first addend. Both addends are inside the parentheses."],
+        [a + (b + c) * d, "This adds the product. The minus sign subtracts the entire product."],
+        [a - (b + c), "This leaves out the multiplication. Multiply the grouped sum before subtracting."],
+        [a - b * d + c * d, "This subtracts only the first distributed term. Subtracting the grouped product subtracts both terms."],
+        [a - b * d - c * d - b - c, "This subtracts the sum twice, once scaled and once unscaled. Subtract the scaled sum once."],
+      ]);
     } else {
       c = choose([2, 4], rng); b = c * integer(1, 3, rng) + 1;
       expression = `${a} - ${b} / ${c}.0`; type = "double";
@@ -285,10 +335,11 @@ function build(mode, shape, rng) {
   } else throw Error("Unknown mode");
   const stored = store(expression, type);
   const answer = format(stored);
-  const choices = numericChoices(stored.value, type, misconceptions, rng, expression);
+  const choices = numericChoices(stored.value, type, misconceptions, rng, expression, choiceFeedback);
   if (!choices) return null;
   return {
     mode, shape, kind: "value", expression, type, code: `${type} result = ${expression};`,
+    ...(choiceFeedback ? { choiceFeedback: Object.fromEntries(choices.filter(choice => choice !== answer).map(choice => [choice, choiceFeedback[numericKey(Number(choice))]])) } : {}),
     prompt: "What is stored in result?", answer, choices, explanation,
     checks: [{ expression, storageType: type, expected: stored }],
   };
