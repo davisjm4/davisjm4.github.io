@@ -90,7 +90,7 @@ function summarizeStop(stop, areaContract, classCompletion) {
   const label = req.length ? `${requiredCompleted} of ${req.length} requirements met` : classCompletion ? 'No required skills' : `${practiced} of ${nodes.length} skills practiced`;
   const practiceOnly = nodes.filter((n) => !n.requirementsConfigured).length;
   return { status, mode, complete, practiceOnly, requiredTotal: req.length, requiredCompleted, optionalTotal: opt.length, optionalCompleted, optionalRemaining: opt.length - optionalCompleted,
-    practiced, reviewRecommended: nodes.filter((n) => n.state === 'review').length, fraction: req.length ? requiredCompleted / req.length : practiced / nodes.length, label, source };
+    practiced, classCompletion, reviewRecommended: nodes.filter((n) => n.state === 'review').length, fraction: req.length ? requiredCompleted / req.length : practiced / nodes.length, label, source };
 }
 
 function pickNext(candidates, { preferStopId = null, dated = false } = {}) {

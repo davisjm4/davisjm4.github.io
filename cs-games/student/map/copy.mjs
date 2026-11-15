@@ -132,7 +132,7 @@ export function stopSummaryLine(stop) {
   const s = stop.summary;
   const bits = [s.label];
   if (s.optionalTotal) bits.push(s.complete && s.optionalRemaining ? `${plural(s.optionalRemaining, 'optional skill')} still open` : `${plural(s.optionalTotal, 'optional skill')}`);
-  if (s.requiredTotal && s.practiceOnly) bits.push(`${plural(s.practiceOnly,'practice-only skill')}`);
+  if (!s.classCompletion && s.requiredTotal && s.practiceOnly) bits.push(`${plural(s.practiceOnly,'practice-only skill')}`);
   if (s.reviewRecommended) bits.push(`${s.reviewRecommended} to review`);
   return bits.join(' · ');
 }
