@@ -3,6 +3,7 @@
  * generated challenge is valid only when exactly one option's claim is true. */
 import { buildChoices } from "./core.js";
 import { print } from "./bool.js";
+import { MISCONCEPTION_FEEDBACK } from "./misconceptions.js";
 
 export const SCHEMA_VERSION = 2;
 
@@ -16,14 +17,14 @@ export const rowInput = (vars, env) => vars.map(v => !!env[v]);
  *        explanation, rng, count, structure, complexity, check:{programs, inputs}, extra}
  */
 export function challenge(o) {
-  const { choices, answer, choiceTags } = buildChoices(o.correct, o.wrong, o.rng, o.count ?? 4);
+  const { choices, answer, choiceTags } = buildChoices(o.correct, o.wrong, o.rng, o.count ?? 4, o.balanceContext ? `${o.question} ${o.code ?? ""}` : undefined);
   const all = [o.correct, ...o.wrong];
   const claims = choices.map(t => all.find(c => c.text === t).claim);
   return {
     schemaVersion: SCHEMA_VERSION,
     mode: o.mode, topic: o.mode, variant: o.family, family: o.family, reasoning: o.family, skill: o.skill,
     kind: "choice", question: o.question, code: o.code, choices, answer, answerText: choices[answer],
-    explanation: o.explanation, choiceTags, structure: o.structure, complexity: o.complexity,
+    explanation: o.explanation, choiceTags, choiceFeedback: choiceTags.map(t => t === "correct" ? null : MISCONCEPTION_FEEDBACK[t] ?? null), structure: o.structure, complexity: o.complexity,
     check: o.check ? { ...o.check, claims } : undefined,
     ...(o.extra || {}),
   };

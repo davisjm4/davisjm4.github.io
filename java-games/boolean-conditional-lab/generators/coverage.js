@@ -331,6 +331,15 @@ function chainPair(rng, ctx, L, equivalent) {
   const offBy = JSON.parse(JSON.stringify(asc)); const k = int(0, offBy[0].arms.length - 1, rng); const c = offBy[0].arms[k].cond; offBy[0].arms[k].cond = B.CMP(c.v, FLIP[c.op], c.c); variants.push([offBy, "boundary-off-by-one"]);
   const wrongOrder = [chain([...stmts[0].arms].reverse(), stmts[0].elseBody)]; variants.push([wrongOrder, "order-reversed-without-changing-tests"]);
   const noElse = [chain(asc[0].arms, null)]; variants.push([noElse, "dropped-the-else"]);
+  // Continuation repair BC-02: every arm can carry the off-by-one, and other realistic rewriting slips.
+  for (let j = 0; j < asc[0].arms.length; j++) { if (j === k) continue; const v = JSON.parse(JSON.stringify(asc)); const cj = v[0].arms[j].cond; v[0].arms[j].cond = B.CMP(cj.v, FLIP[cj.op], cj.c); variants.push([v, "boundary-off-by-one"]); }
+  const sameTestsReversedBoundary = [chain([...stmts[0].arms].map(a => ({ cond: B.CMP(a.cond.v, FLIP[a.cond.op], a.cond.c), body: a.body })), stmts[0].elseBody)]; variants.push([sameTestsReversedBoundary, "boundary-changed-in-every-test"]);
+  const swappedLabels = JSON.parse(JSON.stringify(asc)); { const a0 = swappedLabels[0].arms; if (a0.length >= 2) { const t = a0[0].body; a0[0].body = a0[1].body; a0[1].body = t; variants.push([swappedLabels, "swapped-two-results"]); } }
+  const wrongElse = JSON.parse(JSON.stringify(asc)); wrongElse[0].elseBody = [P(labels[1])]; variants.push([wrongElse, "wrong-final-else"]);
+  // Two-slip variants (a student who makes two of the common mistakes at once).
+  { const all = JSON.parse(JSON.stringify(asc)); all[0].arms.forEach(a2 => { a2.cond = B.CMP(a2.cond.v, FLIP[a2.cond.op], a2.cond.c); }); variants.push([all, "every-boundary-off-by-one"]); }
+  { const v = JSON.parse(JSON.stringify(offBy)); v[0].elseBody = null; variants.push([v, "off-by-one-and-dropped-else"]); }
+  { const v = [chain([...stmts[0].arms].reverse().map(a2 => ({ cond: B.CMP(a2.cond.v, FLIP[a2.cond.op], a2.cond.c), body: a2.body })), stmts[0].elseBody)]; variants.push([v, "reversed-order-and-off-by-one"]); }
   const dom = domainOf([[ctx.v, ctx.lo, ctx.hi]]); const same = alt => dom.every(e => outText(run(alt, e)) === outText(run(stmts, e)));
   return { stmts, dom, variants: variants.map(([s, tag]) => ({ s, tag, eq: same(s) })), ts };
 }
@@ -339,9 +348,9 @@ F["equivalent-chain"] = (rng, L) => {
   const ctx = pick(CONTEXTS, rng); const { stmts, dom, variants } = chainPair(rng, ctx, L);
   const good = variants.filter(v => v.eq), bad = variants.filter(v => !v.eq); if (good.length !== 1 || bad.length < 3) reject("variants");
   const Pm = { c: progOf(stmts, [ctx.v]) }, inputs = { c: inputsOf(dom, [[ctx.v]]) };
-  const opts = [{ ...good[0], tag: "correct" }, ...bad.slice(0, 7)];
+  const opts = [{ ...good[0], tag: "correct" }, ...bad.slice(0, 11)];
   opts.forEach((o, i) => { Pm[`o${i}`] = progOf(o.s, [ctx.v]); inputs[`o${i}`] = inputs.c; o.text = chainNotation(o.s); o.claim = { t: "sameAll", a: "c", b: `o${i}` }; });
-  return challenge({ ...base("equivalent-chain"), rng, question: `${ctx.v} can be any int from ${ctx.lo} to ${ctx.hi}. Which chain prints the same thing as this code for every value? (→ shows what each branch prints.)`, code: codeOf(stmts, declLine(ctx)),
+  return challenge({ ...base("equivalent-chain"), balanceContext: true, rng, question: `${ctx.v} can be any int from ${ctx.lo} to ${ctx.hi}. Which chain prints the same thing as this code for every value? (→ shows what each branch prints.)`, code: codeOf(stmts, declLine(ctx)),
     correct: opts[0], wrong: opts.slice(1), explanation: `Testing from the other end works only if every test is the exact complement (>= t becomes < t) and the old else becomes the new first branch's opposite. Off-by-one bounds, reversed order with the same tests, or a missing else all change some outputs.`,
     structure: `equivchain|${shapeOf(stmts)}`, complexity: complexity("equivalent-chain", stmts, 1, 1.5), check: { programs: Pm, inputs } });
 };
@@ -374,18 +383,36 @@ F["fix-boundary"] = (rng, L) => {
   const dom = domainOf([[ctx.v, ctx.lo, ctx.hi]]); const want = { params: [["int", ctx.v]], body: lines([chain(ts.map((t, i) => ({ cond: B.CMP(ctx.v, ">=", t), body: [P(labels[i])] })), [P(labels[n])])]).join("\n") };
   const fixes = [];
   const fx = (desc, mut, tag) => { const s = JSON.parse(JSON.stringify(stmts)); mut(s[0]); fixes.push({ text: desc, s, tag }); };
-  fx(`Change ${ctx.v} > ${ts[bug]} to ${ctx.v} >= ${ts[bug]}`, c => { c.arms[bug].cond = B.CMP(ctx.v, ">=", ts[bug]); }, "correct");
+  // For int values "> T-1" and ">= T" are the same test, so the keyed fix is written either way (never both).
+  const altForm = chance(0.5, rng);
+  if (altForm) fx(`Change ${ctx.v} > ${ts[bug]} to ${ctx.v} > ${ts[bug] - 1}`, c => { c.arms[bug].cond = B.CMP(ctx.v, ">", ts[bug] - 1); }, "correct");
+  else fx(`Change ${ctx.v} > ${ts[bug]} to ${ctx.v} >= ${ts[bug]}`, c => { c.arms[bug].cond = B.CMP(ctx.v, ">=", ts[bug]); }, "correct");
   fx(`Change ${ctx.v} > ${ts[bug]} to ${ctx.v} > ${ts[bug] - 2}`, c => { c.arms[bug].cond = B.CMP(ctx.v, ">", ts[bug] - 2); }, "overcorrects-the-threshold");
   const other = (bug + 1) % n; fx(`Change ${ctx.v} >= ${ts[other]} to ${ctx.v} > ${ts[other]}`, c => { c.arms[other].cond = B.CMP(ctx.v, ">", ts[other]); }, "changes-the-wrong-boundary");
   fx(`Change ${ctx.v} > ${ts[bug]} to ${ctx.v} >= ${ts[bug] + 1}`, c => { c.arms[bug].cond = B.CMP(ctx.v, ">=", ts[bug] + 1); }, "equivalent-rewrite-of-the-bug");
   fx(`Swap the order of the first two conditions`, c => { [c.arms[0], c.arms[1]] = [c.arms[1], c.arms[0]]; }, "reorders-instead-of-fixing");
+  // Continuation repair BC-02: further realistic wrong fixes so the keyed fix is not the only "natural" edit.
+  fx(`Change ${ctx.v} > ${ts[bug]} to ${ctx.v} >= ${ts[bug] - 1}`, c => { c.arms[bug].cond = B.CMP(ctx.v, ">=", ts[bug] - 1); }, "overshoots-the-boundary-downward");
+  fx(`Change ${ctx.v} > ${ts[bug]} to ${ctx.v} == ${ts[bug]}`, c => { c.arms[bug].cond = B.CMP(ctx.v, "==", ts[bug]); }, "tests-only-the-boundary-value");
+  fx(`Change ${ctx.v} > ${ts[bug]} to ${ctx.v} < ${ts[bug]}`, c => { c.arms[bug].cond = B.CMP(ctx.v, "<", ts[bug]); }, "reverses-the-comparison");
+  fx(`Change ${ctx.v} > ${ts[bug]} to ${ctx.v} > ${ts[bug] + 1}`, c => { c.arms[bug].cond = B.CMP(ctx.v, ">", ts[bug] + 1); }, "moves-the-threshold-up");
+  for (let o = 0; o < n; o++) if (o !== bug) {
+    fx(`Change ${ctx.v} >= ${ts[o]} to ${ctx.v} > ${ts[o]}`, c => { c.arms[o].cond = B.CMP(ctx.v, ">", ts[o]); }, "changes-the-wrong-boundary");
+    fx(`Change ${ctx.v} >= ${ts[o]} to ${ctx.v} >= ${ts[o] + 1}`, c => { c.arms[o].cond = B.CMP(ctx.v, ">=", ts[o] + 1); }, "shifts-the-wrong-threshold");
+    fx(`Change ${ctx.v} >= ${ts[o]} to ${ctx.v} >= ${ts[o] - 1}`, c => { c.arms[o].cond = B.CMP(ctx.v, ">=", ts[o] - 1); }, "shifts-the-wrong-threshold");
+    fx(`Change ${ctx.v} >= ${ts[o]} to ${ctx.v} == ${ts[o]}`, c => { c.arms[o].cond = B.CMP(ctx.v, "==", ts[o]); }, "tests-only-the-wrong-boundary-value");
+    fx(`Change ${ctx.v} >= ${ts[o]} to ${ctx.v} > ${ts[o] - 1}`, c => { c.arms[o].cond = B.CMP(ctx.v, ">", ts[o] - 1); }, "rewrites-the-wrong-arm-equivalently");
+    fx(`Change ${ctx.v} >= ${ts[o]} to ${ctx.v} < ${ts[o]}`, c => { c.arms[o].cond = B.CMP(ctx.v, "<", ts[o]); }, "reverses-the-wrong-comparison");
+    fx(`Change ${ctx.v} > ${ts[bug]} to ${ctx.v} >= ${ts[o]}`, c => { c.arms[bug].cond = B.CMP(ctx.v, ">=", ts[o]); }, "uses-another-branchs-threshold");
+    fx(`Change ${ctx.v} > ${ts[bug]} to ${ctx.v} > ${ts[o]}`, c => { c.arms[bug].cond = B.CMP(ctx.v, ">", ts[o]); }, "uses-another-branchs-threshold");
+  }
   const ok = f => dom.every(e => run(f.s, e)[0] === spec(e[ctx.v]));
   const good = fixes.filter(ok); if (good.length !== 1 || good[0].tag !== "correct") reject("fix not unique");
   const Pm = { want }, inputs = { want: inputsOf(dom, [[ctx.v]]) };
-  const opts = [good[0], ...shuffle(fixes.filter(f => !ok(f)), rng).slice(0, 7)];
+  const opts = [good[0], ...shuffle(fixes.filter(f => !ok(f)), rng).slice(0, 11)];
   opts.forEach((o, i) => { Pm[`f${i}`] = progOf(o.s, [ctx.v]); inputs[`f${i}`] = inputs.want; o.claim = { t: "sameAll", a: "want", b: `f${i}` }; });
-  return challenge({ ...base("fix-boundary"), rng, question: `Required behavior for ${ctx.v} from ${ctx.lo} to ${ctx.hi}: ${words}. Which single change fixes the code?`, code: codeOf(stmts, declLine(ctx)),
-    correct: opts[0], wrong: opts.slice(1), explanation: `"${ts[bug]} and above" includes ${ts[bug]}, so the test must be >= ${ts[bug]}. With >, the value ${ts[bug]} falls to the next branch.`,
+  return challenge({ ...base("fix-boundary"), balanceContext: true, rng, question: `Required behavior for ${ctx.v} from ${ctx.lo} to ${ctx.hi}: ${words}. Which single change fixes the code?`, code: codeOf(stmts, declLine(ctx)),
+    correct: opts[0], wrong: opts.slice(1), explanation: `"${ts[bug]} and above" includes ${ts[bug]}, so the test must be >= ${ts[bug]} (for ints, > ${ts[bug] - 1} is the same test). With > ${ts[bug]}, the value ${ts[bug]} falls to the next branch.`,
     structure: `fixb|${n}|${bug}`, complexity: complexity("fix-boundary", stmts, 1, 1), check: { programs: Pm, inputs } });
 };
 F["fix-order"] = (rng, L) => {
@@ -452,10 +479,12 @@ F["short-circuit"] = (rng, L) => {
   const both = (() => { let hh = hits; hh++; const r2 = second === "++hits > 0" ? hh > 0 : second.startsWith("hits++") ? hits >= hits : hh > 1; const res = and ? left && r2 : left || r2; return `${res ? "In " : ""}${hh}`; })();
   const never = `${(and ? false : left) ? "In " : ""}${hits}`;
   const prog = { params: [], body };
-  const cands = [[out, "correct"], [both, "evaluates-both-operands"], [never, "thinks-right-side-never-runs"], [`${result ? "" : "In "}${h}`, "misevaluated-condition"], [`${result ? "In " : ""}${h + 1}`, "miscounted-increment"]];
+  const cands = [[out, "correct"], [both, "evaluates-both-operands"], [never, "thinks-right-side-never-runs"], [`${result ? "" : "In "}${h}`, "misevaluated-condition"], [`${result ? "In " : ""}${h + 1}`, "miscounted-increment"],
+    // Continuation repair BC-02: more realistic misreadings of a side-effecting operand.
+    [`${result ? "In " : ""}${h + 2}`, "counts-the-increment-twice"], [`${result ? "" : "In "}${h + 1}`, "misevaluated-condition-and-miscounted"], [`${result ? "" : "In "}${hits}`, "no-increment-and-misevaluated"], ...(h >= 1 ? [[`${result ? "In " : ""}${h - 1}`, "forgets-the-increment"]] : [])];
   const uniq = []; for (const [txt, tag] of cands) if (!uniq.some(u => u.text === txt)) uniq.push({ text: txt, tag, claim: { t: "out", p: "s", in: [], is: txt } });
   if (uniq.length < 4 || uniq[0].tag !== "correct") reject("short-circuit options");
-  return challenge({ ...base("short-circuit"), rng, question: "What is printed?", code: body, correct: uniq[0], wrong: uniq.slice(1),
+  return challenge({ ...base("short-circuit"), balanceContext: true, rng, question: "What is printed?", code: body, correct: uniq[0], wrong: uniq.slice(1),
     explanation: `x > ${t} is ${left}. ${and ? (left ? "&& must also evaluate the right side, which updates hits." : "&& stops at a false left side, so the right side (and its increment) never runs.") : (left ? "|| stops at a true left side, so the increment never runs." : "|| must evaluate the right side, which updates hits.")}`,
     structure: `short-${kind}-${second.replace(/\d+/g, "N")}-${evals}`, complexity: { score: +(3 + WEIGHT["short-circuit"] + 1).toFixed(2), factors: { operands: 2, sideEffects: 1, task: WEIGHT["short-circuit"] } }, check: { programs: { s: prog }, inputs: { s: [[]] } } });
 };
