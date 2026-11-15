@@ -7,12 +7,12 @@ The deployed guest course chooser, Map and keyboard-operated List were available
 | Course | Nodes reviewed | Quick Recognition | Standard Practice | Complex Reasoning | Teacher assessment |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Advanced CS | 123 | 18 | 61 | 40 | 4 |
-| AP CSP | 58 | 0 | 6 | 3 | 49 |
+| AP CSP | 58 | 0 | 7 | 3 | 48 |
 | Workplace Readiness | 94 | 0 | 0 | 0 | 94 |
 | Robotics | 15 | 0 | 0 | 0 | 15 |
-| Total | 290 | 18 | 67 | 43 | 162 |
+| Total | 290 | 18 | 68 | 43 | 161 |
 
-The 162 exceptions comprise 11 small banks and 151 skills without enough verified evidence or coverage for this rollout. Nine AP CSP nodes use reviewed direct evidence from their activities. Other AP CSP skills remain available for practice and formative feedback where supported. Workplace class reporting can collect practice without individual automatic mastery mapping. Parts Sprint has 4–14 distinct components per category. Assigning 50 identifications to an individual category would rely on repetitions. Course Architect uses open design work. Component Challenge’s graph selectors are marked adapter-pending for automatic mastery. Variable declaration assembly remains teacher-assessed.
+The 161 exceptions comprise 11 small banks and 150 skills without enough verified evidence or coverage for this rollout. Ten AP CSP nodes use reviewed direct evidence from their activities. Newly created classes assign CSP-NUMERIC to Standard Practice (30 questions at 90% accuracy) based on reviewed Roundoff vs. Overflow Lab evidence. The [coverage audit and 290-node matrix](coverage/CLAUDE_MASTERY_COVERAGE_AUDIT.md) document the remaining assessment routes. Other AP CSP skills remain available for practice and formative feedback where supported. Workplace class reporting can collect practice without individual automatic mastery mapping. Parts Sprint has 4–14 distinct components per category. Assigning 50 identifications to an individual category would rely on repetitions. Course Architect uses open design work. Component Challenge’s graph selectors are marked adapter-pending for automatic mastery. Variable declaration assembly remains teacher-assessed.
 
 The [assignment rules](../requirements/recommended.mjs), [evidence registry](../evidence-gap-registry.json) and existing Variable/String replay and AP CSP integration tests document the coverage used for assignment. Java focused replay checked 102 registry-backed skills, with a second pass inspecting the actual scenario, source blocks and simulator inputs for the low apparent counts. For example, Loop Lab component questions identify syntax, loop-type questions select a design for a scenario, and nested loops require tracing changing state. Documentation comment repair uses an inspection and correction task, while direct documentation lookup starts at the recognition tier. Small fixed banks include Java override recognition and Documentation Lab builder. The teacher review uses bounded content facts where verified. Other generated banks can continue drawing questions. Their maximum distinct item count is unknown.
 

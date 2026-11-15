@@ -1,10 +1,10 @@
-import {FAMILIES,TOPICS} from './content.js?v=number-v3';
-import {R,add,sub,mul,div,cmp,pow,text,integer,fixed,binaryFixed,significant,represent} from './math.js?v=number-v3';
+import {FAMILIES,TOPICS} from './content.js?v=number-v4';
+import {R,add,sub,mul,div,cmp,pow,text,integer,fixed,binaryFixed,significant,represent} from './math.js?v=number-v4';
 export {FAMILIES,TOPICS};export const ANSWERS=['Overflow','Roundoff','Neither'];
 export const SKILLS=['binary-representation','numerical-range','numerical-precision','overflow','roundoff'];
 export function calculate(op,a,b){if(op==='store')return a;if(op==='add')return add(a,b);if(op==='subtract')return sub(a,b);if(op==='multiply')return mul(a,b);if(op==='divide')return div(a,b);throw Error('Unknown operation');}
 function make(format,op,a,b=R(0),note=''){return {format,op,a,b,value:calculate(op,a,b),note};}
-function integerCase(kind,j){const bits=[4,5,6,7,8,10][j],u=integer(bits),s=integer(bits,true),M=u.max.n,H=s.max.n,L=s.min.n,err=j<4,k=BigInt(j+1),I=n=>R(n);
+function integerCase(kind,j,jp){const bits=[4,5,6,7,8,10][jp],u=integer(bits),s=integer(bits,true),M=u.max.n,H=s.max.n,L=s.min.n,err=j<4,k=BigInt(jp+1),I=n=>R(n);
  switch(kind){
  case 'uinc':return make(u,'add',I(err?M:M-1n),I(1));
  case 'uadd':return make(u,'add',I(M-2n),I(err?3n+k:2n));
@@ -29,7 +29,7 @@ function integerCase(kind,j){const bits=[4,5,6,7,8,10][j],u=integer(bits),s=inte
  default:throw Error('Unknown integer family');
  }
 }
-function precisionCase(kind,j){const err=j<4,p=1+j%3,k=j+2,F=fixed(p),unit=pow(10,-p),fine=pow(10,-p-1),val=add(R(k),mul(R(err?3:0),fine)),store=(format,value,note='')=>make(format,'store',value,R(0),note);
+function precisionCase(kind,j,jp){const err=j<4,p=1+jp%3,k=jp+2,F=fixed(p),unit=pow(10,-p),fine=pow(10,-p-1),val=add(R(k),mul(R(err?3:0),fine)),store=(format,value,note='')=>make(format,'store',value,R(0),note);
  switch(kind){
  case 'decimal':return store(F,val);
  case 'dsum':return make(F,'add',R(k),err?mul(R(3),fine):unit);
@@ -41,16 +41,16 @@ function precisionCase(kind,j){const err=j<4,p=1+j%3,k=j+2,F=fixed(p),unit=pow(1
  case 'seventh':return make(F,'divide',R(err?k:7*k),R(7));
  case 'mean':return make(F,'divide',R(err?3*k+1:2*k),R(err?3:2),'The numerator is the total of the measurements; the divisor is their count.');
  case 'percent':return make(fixed(2),'divide',err?add(R(k),R(3,10)):R(k),R(100));
- case 'btenth':return store(binaryFixed(2+j%3),err?R(k,10):R(k,4));
- case 'bdyadic':return store(binaryFixed(2+j%3),R(2*j+1,2**(2+j%3+(err?1:0))));
- case 'bsum':{const bf=binaryFixed(2+j%3);return make(bf,'add',R(k),err?div(bf.step,R(2)):bf.step);}
- case 'bproduct':{const bf=binaryFixed(2+j%3);return make(bf,'multiply',bf.step,err?R(2*k+1,2):R(2));}
- case 'bthird':return make(binaryFixed(2+j%3),'divide',R(err?3*k+1:3*k),R(3));
- case 'flarge':return store(significant(10,3),R(err?1234+k:1200+100*j));
- case 'fsmall':return store(significant(10,3),R(err?1234+k:1250,100000+j%2*100000));
- case 'fadd':return make(significant(10,3),'add',R(1200+100*j),R(err?1:10));
- case 'binteger':return store(significant(2,4),R(err?33+2*j:32+4*j));
- case 'bfraction':return store(significant(2,4),R(err?33+2*j:32+4*j,64));
+ case 'btenth':return store(binaryFixed(2+jp%3),err?R(k,10):R(k,4));
+ case 'bdyadic':return store(binaryFixed(2+jp%3),R(2*jp+1,2**(2+jp%3+(err?1:0))));
+ case 'bsum':{const bf=binaryFixed(2+jp%3);return make(bf,'add',R(k),err?div(bf.step,R(2)):bf.step);}
+ case 'bproduct':{const bf=binaryFixed(2+jp%3);return make(bf,'multiply',bf.step,err?R(2*k+1,2):R(2));}
+ case 'bthird':return make(binaryFixed(2+jp%3),'divide',R(err?3*k+1:3*k),R(3));
+ case 'flarge':return store(significant(10,3),R(err?1234+k:1200+100*jp));
+ case 'fsmall':return store(significant(10,3),R(err?1234+k:1250,100000+jp%2*100000));
+ case 'fadd':return make(significant(10,3),'add',R(1200+100*jp),R(err?1:10));
+ case 'binteger':return store(significant(2,4),R(err?33+2*jp:32+4*jp));
+ case 'bfraction':return store(significant(2,4),R(err?33+2*jp:32+4*jp,64));
  default:throw Error('Unknown precision family');
  }
 }
@@ -79,7 +79,9 @@ function applicationCase(kind,j){const c=j%3,k=j+1,typical=add(R(2+k),R(k,1000))
  default:throw Error('Unknown application family');
  }return make(fmt,op,a,b,note);
 }
-export function buildQuestion(f,j){const m=f.topic==='integer'?integerCase(f.kind,j):f.topic==='precision'?precisionCase(f.kind,j):applicationCase(f.kind,j),result=represent(m.value,m.format),expression=m.op==='store'?`The exact value to save is ${text(m.value)}.`:`The calculation is ${text(m.a)} ${{add:'+',subtract:'−',multiply:'×',divide:'÷'}[m.op]} ${text(m.b)}. Its exact mathematical result is ${text(m.value)}.`,range=`Supported range: ${text(m.format.min)} through ${text(m.format.max)}.`,rule=m.format.kind==='integer'?'Only whole numbers are represented.':'Values that are not exactly representable use nearest-value storage; ties go away from zero.',focus=m.format.description;
+// The outcome index j decides whether the case errs. Width, decimal places and magnitude use a per-family rotation jp,
+// so no visible parameter predicts the answer (measured by tests/shortcut-audit).
+export function buildQuestion(f,j){const jp=(j+FAMILIES.indexOf(f))%6,m=f.topic==='integer'?integerCase(f.kind,j,jp):f.topic==='precision'?precisionCase(f.kind,j,jp):applicationCase(f.kind,j),result=represent(m.value,m.format),expression=m.op==='store'?`The exact value to save is ${text(m.value)}.`:`The calculation is ${text(m.a)} ${{add:'+',subtract:'−',multiply:'×',divide:'÷'}[m.op]} ${text(m.b)}. Its exact mathematical result is ${text(m.value)}.`,range=`Supported range: ${text(m.format.min)} through ${text(m.format.max)}.`,rule=m.format.kind==='integer'?'Only whole numbers are represented.':'Values that are not exactly representable use nearest-value storage; ties go away from zero.',focus=m.format.description;
  const scene=`${f.context} The destination uses ${focus}. ${expression} ${range} ${m.note} ${rule}`.replace(/\s+/g,' ').trim();let evidence;
  if(result.answer==='Overflow')evidence=`${text(m.value)} is ${cmp(m.value,m.format.min)<0?'below the minimum':'above the maximum'} of ${text(m.format.min)} through ${text(m.format.max)}. The destination lacks range. This is not a precision adjustment. No stored result is claimed: wrapping, saturation or an error would depend on a separately defined system policy.`;
  else evidence=result.answer==='Roundoff'?`The exact value ${text(m.value)} is within range, but it falls between supported values. This format stores ${text(result.stored)}; the absolute difference is ${text(result.difference)}. The limitation is precision, not range.`:`${text(m.value)} is within ${text(m.format.min)} through ${text(m.format.max)} and is exactly representable${m.format.kind==='integer'?' as a whole number':` with this format’s ${m.format.kind==='significant'?'significant-digit precision':text(result.step)+' step size'}`}. The stored value is unchanged, so neither limitation affects this write.`;

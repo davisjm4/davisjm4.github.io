@@ -45,6 +45,8 @@ const separatelyReviewed = {
   'tcp-udp-lab': ['CSP-TRANSPORT'],
   'analog-digital-lab': ['CSP-ANALOG'],
   'lossless-lossy-lab': ['CSP-COMPRESSION'],
+  // Reviewed in the coverage expansion: 60 families, independent BigInt oracle, bit-width shortcut removed (tests/roundoff-evidence.test.mjs).
+  'roundoff-overflow-lab': ['CSP-NUMERIC'],
   'variable-lab': [...recognition['variable-lab'], 'trace', 'identify/name', 'identify/conversion', 'identify/compatibility'],
   'string-lab': ['predict', 'trace', 'index', 'expr', 'algo', 'compare', 'loop'],
 };
