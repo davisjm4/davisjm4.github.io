@@ -34,6 +34,9 @@ jobs:
       - name: Math Lab distractor quality regression
         working-directory: java-games
         run: npm run test:math-quality
+      - name: Boolean and Conditional Lab instructional quality
+        working-directory: java-games
+        run: npm run test:boolean-repair
       - name: Advanced sample report
         working-directory: java-games
         run: |

@@ -15,17 +15,65 @@ export const range = (lo, hi) => Array.from({ length: hi - lo + 1 }, (_, i) => l
 export class Reject extends Error { constructor(why) { super(why); this.reject = true; if (globalThis.__rej) globalThis.__rej.set(why.replace(/[0-9]+/g,"#"), (globalThis.__rej.get(why.replace(/[0-9]+/g,"#"))||0)+1); } }
 export const reject = why => { throw new Reject(why); };
 
+/* Option-set balancing (audit repair BC-01). When every distractor is a single mutation of the
+ * correct answer, the keyed option is the one most similar to all the others (and often the
+ * shortest), so a student can pick it without reasoning. For 4-option challenges with a surplus
+ * of candidate distractors, the three that are shown are chosen so the keyed option's similarity
+ * rank and length rank are each uniformly random instead of always "hub" / "shortest".
+ * Deterministic: only the supplied rng is used. */
+const _tok = s => String(s).toLowerCase().match(/[a-z_]\w*|\d+|[^\s\w]+/g) || [];
+export function optionSimilarity(a, b) { const A = new Set(_tok(a)), B = new Set(_tok(b)); let i = 0; for (const x of A) if (B.has(x)) i++; return i / (A.size + B.size - i || 1); }
+/** Possible ranks [lo, hi] of values[idx] when sorted descending (0 = largest); ties widen the range. */
+function rankRange(values, idx = 0) { let g = 0, e = 0; values.forEach((v, i) => { if (i === idx) return; if (v > values[idx] + 1e-9) g++; else if (Math.abs(v - values[idx]) <= 1e-9) e++; }); return [g, g + e]; }
+const simScores = texts => texts.map((t, i) => texts.reduce((s, u, j) => s + (i === j ? 0 : optionSimilarity(t, u)), 0));
+/** Possible similarity ranks [lo, hi] of texts[0] (0 = most similar to the others). Exported for tests. */
+export const similarityRankRange = texts => rankRange(simScores(texts), 0);
+/** Choose the distractors to show. Each surface cue (numeric value when every option is a number; otherwise
+ * similarity to the other options, then text length) gets a target rank drawn uniformly from the ranks the pool
+ * can actually produce, and the candidate combinations are filtered cue by cue, so the keyed option's rank is
+ * uniform over what is attainable rather than always hub / shortest / middle-valued. */
+function balancedDistractors(correct, pool, rng, need, ctx) {
+  const cands = pool.slice(0, ctx ? 12 : 9);
+  const combos = []; const rec = (start, acc) => { if (acc.length === need) { combos.push(acc); return; } for (let i = start; i < cands.length; i++) rec(i + 1, [...acc, cands[i]]); }; rec(0, []);
+  const numeric = [correct, ...cands].every(c => /^-?\d+(\.\d+)?(\s|$)/.test(String(c.text)));
+  // Opt-in third cue (continuation repair BC-02): how many of an option's tokens already appear in the question/code.
+  const ctxSet = ctx ? new Set(_tok(ctx)) : null;
+  const cues = numeric ? [t => t.map(parseFloat)] : [simScores, ...(ctxSet ? [t => t.map(x => _tok(x).filter(w => ctxSet.has(w)).length)] : []), t => t.map(x => x.length)];
+  let live = combos.map(c => ({ c, texts: [correct.text, ...c.map(x => x.text)] }));
+  if (ctxSet) {
+    // Joint objective (opt-in families): one uniformly drawn attainable target rank per cue, then the combination
+    // that comes closest to all targets at once. Sequential filtering cannot satisfy several cues when the pool is small.
+    const per = cues.map(cue => live.map(x => rankRange(cue(x.texts))));
+    const targets = per.map(rr => { const att = [...new Set(rr.flatMap(([lo, hi]) => Array.from({ length: hi - lo + 1 }, (_, k) => lo + k)))].sort((x, y) => x - y); return att[Math.floor(rng() * att.length)]; });
+    let best = 0, bestScore = Infinity;
+    live.forEach((_, i) => {
+      // distance to each target, plus a width penalty: a tied range lets a heuristic win by luck, an exact rank does not
+      const tagVariety = new Set(live[i].c.map(x => x.tag)).size;   // prefer distractors that represent different misconceptions
+      const sc = per.reduce((sum, rr, k) => { const [lo, hi] = rr[i], t = targets[k]; return sum + (t < lo ? lo - t : t > hi ? t - hi : 0) + 0.6 * (hi - lo); }, 0) + 3 * (need - tagVariety);
+      if (sc < bestScore) { bestScore = sc; best = i; }
+    });
+    return live[best].c;
+  }
+  for (const cue of cues) {
+    const rr = live.map(x => rankRange(cue(x.texts)));
+    const attainable = [...new Set(rr.flatMap(([lo, hi]) => Array.from({ length: hi - lo + 1 }, (_, k) => lo + k)))].sort((x, y) => x - y);
+    const t = attainable[Math.floor(rng() * attainable.length)];
+    live = live.filter((_, i) => rr[i][0] <= t && t <= rr[i][1]);
+  }
+  return live[0].c;
+}
 /**
  * Build a single-select option list. `correct` is one {text, tag}; `wrong` are
  * modeled misconceptions {text, tag}. Duplicate texts and any distractor equal
  * to the answer are dropped; if fewer than `need` distinct distractors remain the
  * candidate challenge is rejected (never padded with filler like "Option 3").
  */
-export function buildChoices(correct, wrong, rng, count = 4) {
+export function buildChoices(correct, wrong, rng, count = 4, ctx) {
   const seen = new Set([correct.text]); const ds = [];
   for (const w of wrong) { if (w && w.text != null && !seen.has(w.text)) { seen.add(w.text); ds.push(w); } }
   if (ds.length < count - 1) reject(`only ${ds.length} distinct distractors`);
-  const chosen = [correct, ...ds.slice(0, count - 1)];
+  const picked = count === 4 && ds.length > 3 ? balancedDistractors(correct, ds, rng, 3, ctx) : ds.slice(0, count - 1);
+  const chosen = [correct, ...picked];
   const order = shuffle(chosen, rng);
   return { choices: order.map(c => c.text), answer: order.indexOf(correct), choiceTags: order.map(c => c.tag) };
 }

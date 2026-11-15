@@ -2,8 +2,8 @@
  * statements (Java 7+ for String selectors; no arrow labels, no switch
  * expressions, no pattern matching). Every snippet is simulated with Java
  * semantics; wrong answers come from simulating modeled misconceptions. */
-import { pick, int, chance, shuffle, sample, reject, retry, range, join } from "./core.js";
-import { challenge } from "./schema.js";
+import { pick, int, chance, shuffle, sample, reject, retry, range, join } from "./core.js?v=bool-v6";
+import { challenge } from "./schema.js?v=bool-v6";
 
 const MODE = "switchIf";
 const SKILL = {
@@ -383,7 +383,7 @@ function conversionPool(rng, L) {
 F["convert-to-if"] = (rng, L) => {
   const { sw, ins, good, bad } = conversionPool(rng, L); if (bad.length < 3) reject("not enough wrong conversions");
   const P = { s: program(sw) }; const inputs = { s: ins.map(v => [v]) }; const types = { s: [sw.sel.type] };
-  const opts = [{ ch: good, tag: "correct" }, ...bad.slice(0, 3)];
+  const opts = [{ ch: good, tag: "correct" }, ...bad.slice(0, 7)];
   opts.forEach((o, i) => { P[`c${i}`] = chainProgram(sw, o.ch); inputs[`c${i}`] = ins.map(v => [v]); types[`c${i}`] = [sw.sel.type]; o.claim = { t: "sameAll", a: "s", b: `c${i}` }; o.text = chainText(o.ch); });
   return challenge({ ...base("convert-to-if"), rng, question: `Which if/else code behaves exactly like this switch for every possible value of ${sw.sel.name}?`, code: printSwitch(sw, null, { declareSelector: false }),
     correct: opts[0], wrong: opts.slice(1),
@@ -418,7 +418,13 @@ F["missing-break-fix"] = (rng, L) => {
   mod(missIdx.length === 1 ? `Add break; at the end of ${nameOf(missIdx[0])}` : `Add break; at the end of both ${nameOf(missIdx[0])} and ${nameOf(missIdx[1])}`, c => missIdx.forEach(i => c.cases[i].brk = true), "correct");
   if (missIdx.length === 2) missIdx.forEach(i => mod(`Add break; at the end of ${nameOf(i)} only`, c => { c.cases[i].brk = true; }, "fixes-only-one-fall-through"));
   const withBreak = sw.cases.map((c, i) => i).filter(i => sw.cases[i].brk && i < sw.cases.length - 1);
-  if (withBreak.length) { const i = pick(withBreak, rng); mod(`Remove the break; from ${nameOf(i)}`, c => { c.cases[i].brk = false; }, "removes-a-needed-break"); }
+  for (const i of shuffle(withBreak, rng).slice(0, 3)) mod(`Remove the break; from ${nameOf(i)}`, c => { c.cases[i].brk = false; }, "removes-a-needed-break");
+  if (withBreak.length >= 2) { const [i, j] = shuffle(withBreak, rng).slice(0, 2).sort((x, y) => x - y); mod(`Remove the break; from both ${nameOf(i)} and ${nameOf(j)}`, c => { c.cases[i].brk = false; c.cases[j].brk = false; }, "removes-needed-breaks"); }
+  // Continuation repair BC-02: two common misconceptions about stopping fall-through.
+  mod(`Put the statements of each block inside { } braces`, () => {}, "thinks-braces-stop-fall-through");
+  { const m0 = missIdx[0]; mod(`Move ${nameOf(m0)} to the end of the switch`, c => { const [blk] = c.cases.splice(m0, 1); c.cases.push(blk); }, "moves-the-block-instead-of-adding-break");
+    if (missIdx.length === 1) { const others = sw.cases.map((_, i) => i).filter(i => i !== m0 && i < sw.cases.length - 1 && sw.cases[i].labels); if (others.length) { const o1 = pick(others, rng); mod(`Move both ${nameOf(m0)} and ${nameOf(o1)} to the end of the switch`, c => { const bl = [c.cases[Math.min(m0, o1)], c.cases[Math.max(m0, o1)]]; c.cases = c.cases.filter((_, k) => k !== m0 && k !== o1).concat(bl); }, "moves-the-blocks-instead-of-adding-break"); } }
+    if (missIdx.length === 2) { const m1 = missIdx[1]; mod(`Move both ${nameOf(m0)} and ${nameOf(m1)} to the end of the switch`, c => { const bl = [c.cases[m0], c.cases[m1]]; c.cases = c.cases.filter((_, k) => k !== m0 && k !== m1).concat(bl); }, "moves-the-blocks-instead-of-adding-break"); } }
   const dIdx = sw.cases.findIndex(c => !c.labels);
   if (dIdx >= 0) mod("Move default to the top of the switch", c => { const [d] = c.cases.splice(dIdx, 1); d.brk = false; c.cases.unshift(d); }, "moves-default");
   mod(`Add break; after the last block`, c => { const l = c.cases[c.cases.length - 1]; if (l.brk) return false; l.brk = true; }, "adds-useless-break");
@@ -428,11 +434,11 @@ F["missing-break-fix"] = (rng, L) => {
   const wrong = variants.filter(v => !fixes(v)); if (wrong.length < (L === "Beginner" ? 2 : 3)) reject("few distractors");
   const P = { want: { params: [[sw.sel.type, sw.sel.name]], body: `${sw.cases.map(c => "").join("")}${(() => { const c = JSON.parse(JSON.stringify(sw)); c.cases.forEach(k => k.brk = true); return printSwitch(c, null, { declareSelector: false }); })()}\n${footer(sw)}` } };
   const inputs = { want: ins.map(v => [v]) }; const types = { want: [sw.sel.type] };
-  const opts = [correct[0], ...wrong.slice(0, 3)];
+  const opts = [correct[0], ...wrong.slice(0, 11)];
   opts.forEach((o, i) => { P[`f${i}`] = program(o.sw); inputs[`f${i}`] = ins.map(v => [v]); types[`f${i}`] = [sw.sel.type]; o.claim = { t: "sameAll", a: "want", b: `f${i}` }; });
-  return challenge({ ...base("missing-break-fix"), rng, count: Math.min(4, opts.length), question: `Each value of ${sw.sel.name} should print only the letter in its own block (unmatched values print only default's letter). Which change makes the switch do that?`,
+  return challenge({ ...base("missing-break-fix"), balanceContext: true, rng, count: Math.min(4, opts.length), question: `Each value of ${sw.sel.name} should print only the letter in its own block (unmatched values print only default's letter). Which change makes the switch do that?`,
     code: printSwitch(sw, null, { declareSelector: false }), correct: opts[0], wrong: opts.slice(1),
-    explanation: `Fall-through happens only where a block ends without break: ${missIdx.map(nameOf).join(" and ")}. Adding break there stops execution before the next block; the other changes either do nothing or create new fall-through.`,
+    explanation: `Fall-through happens only where a block ends without break: ${missIdx.map(nameOf).join(" and ")}. Adding break there stops execution before the next block; the other changes either do nothing, or leave a fall-through in place or create a new one.`,
     structure: `fix|${missIdx.length}|${shapeOf(sw)}`, complexity: complexity(L, "missing-break-fix", sw, sw.cases[missIdx[0]].labels[0], missIdx.length),
     check: { programs: P, inputs, types } });
 };

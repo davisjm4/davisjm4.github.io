@@ -1,7 +1,7 @@
 /* Truth Table Builder: 12 reasoning activities over generated expression trees. */
-import { pick, int, chance, shuffle, sample, reject, retry } from "./core.js";
-import * as B from "./bool.js";
-import { challenge, boolProgram, boolInputs, rowInput, fmtRow } from "./schema.js";
+import { pick, int, chance, shuffle, sample, reject, retry } from "./core.js?v=bool-v6";
+import * as B from "./bool.js?v=bool-v6";
+import { challenge, boolProgram, boolInputs, rowInput, fmtRow } from "./schema.js?v=bool-v6";
 
 const MODE = "truthTable";
 const NAME_SETS = [["a", "b", "c", "d"], ["p", "q", "r", "s"], ["x", "y", "z", "w"]];
@@ -185,6 +185,9 @@ A["count-false-rows"] = (rng, L) => countRows(rng, L, false);
 // Build an intentionally constant expression f OP g with g a rewritten form of !f;
 // half the time the rewrite contains a modeled mistake so the result is NOT constant.
 function constantCandidate(rng, L, nm, wantTrue) {
+  // Decided once, outside the retry loop: deciding it inside let rejection sampling
+  // favour the constant case (about 65% of items), which made "Yes" the usual answer.
+  const constant = chance(0.5, rng);
   return retry(() => {
     const cfg = LEVELS[L];
     const nv = L === "Beginner" ? 2 : L === "Intermediate" ? int(2, 3, rng) : 3;
@@ -193,7 +196,6 @@ function constantCandidate(rng, L, nm, wantTrue) {
     if (!B.quality(f, { slack: cfg.slack }).valid) reject("f");
     let g = B.pushNot(B.NOT(f)) || B.NOT(f);
     if (chance(0.4, rng)) { const g2 = B.applyAt(g, B.SOUND.pullNot, rng) || B.applyAt(g, B.SOUND.distribute, rng); if (g2) g = g2; }
-    const constant = chance(0.5, rng);
     if (!constant) { const mk = pick(["swap-and-or", "demorgan-keep-operator", "negate-first-only"], rng); const g2 = B.applyAt(g, B.MISTAKES[mk], rng) || B.applyAt(g, B.MISTAKES["swap-and-or"], rng); if (!g2) reject("no mistake"); g = g2; }
     const e = wantTrue ? B.OR(f, g) : B.AND(f, g);
     const tv = B.truth(e, vars);

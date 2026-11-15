@@ -2,12 +2,12 @@
  * Public API is unchanged: booleanGame, generate, assess, makeRng, signature,
  * enumerateTruthTable, evaluateBooleanExpression, validateBooleanExpression.
  * New: createPracticeSession (bounded in-memory repeat avoidance). */
-import { makeRng, pick } from "./generators/core.js";
-import * as B from "./generators/bool.js";
-import { generateTruthTable } from "./generators/truth-table.js";
-import { generateSwitch } from "./generators/switch-if.js";
-import { generateCoverage } from "./generators/coverage.js";
-import { evaluateFamily, branchFamily, conditionsFamily, equivalentFamily, shortFamily, identifyFamily, constructFamily } from "./generators/legacy.js";
+import { makeRng, pick } from "./generators/core.js?v=bool-v6";
+import * as B from "./generators/bool.js?v=bool-v6";
+import { generateTruthTable } from "./generators/truth-table.js?v=bool-v6";
+import { generateSwitch } from "./generators/switch-if.js?v=bool-v6";
+import { generateCoverage } from "./generators/coverage.js?v=bool-v6";
+import { evaluateFamily, branchFamily, conditionsFamily, equivalentFamily, shortFamily, identifyFamily, constructFamily } from "./generators/legacy.js?v=bool-v6";
 
 export { makeRng };
 export const booleanGame = {
