@@ -6,6 +6,8 @@ import { summarizeProgress, GUIDANCE, STATUS } from '../progress.mjs';
 import { suggestNext, afterPractice } from '../suggest.mjs';
 import { reconcileEvents } from '../evidence.mjs';
 import { createPathway } from '../../../pathway/model.mjs';
+import { inputFromStudentContract } from '../../map/live-contract.mjs';
+import { buildMapModel } from '../../map/model.mjs';
 import { graph, newStore, javaTracker, answerWith, clock, nodesOf } from './lib.mjs';
 
 const TODAY = '2026-11-11';
@@ -63,7 +65,12 @@ test('all four course pathways open immediately in the established order, self-p
     assert.equal(v.nodes.length, skills);
     assert.equal(v.status, 'Self-paced'); assert.equal(v.courseId, id);
     assert.equal(v.sessions.length, 0); assert.equal(v.examDate, null);
+    assert.equal(v.completionAreas, undefined);
+    const map = buildMapModel(inputFromStudentContract(v));
+    assert.equal(map.pathwayCompletion, undefined);
+    assert.ok(map.nodes.every(n => !n.classParticipation));
     for (const n of v.nodes) {
+      assert.equal(n.checkpoint.pathwayComplete, undefined);
       assert.equal(n.checkpoint.targetDate, null, 'no due dates'); assert.ok(n.practice.length > 0, n.id + ' has a practice link');
       assert.ok(graph.nodes.some(g => g.id === n.id), 'ids come straight from the canonical graph');
     }
