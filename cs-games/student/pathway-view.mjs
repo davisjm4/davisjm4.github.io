@@ -31,12 +31,13 @@ function masteryCard(node,onRestart){
     history);
 }
 
-export function renderPathway(view,{onRestart,openAreas=[]}={}) {
+export function renderPathway(view,{onRestart,openAreas=[],includeExcluded=false}={}) {
   const areas=new Map(view.areas.map(area=>[area.id,area]));
   const names=new Map(view.nodes.map(node=>[node.id,node.title]));
   // Some AP CSP skills revisit the same activity across units. Keep each run of skills in its published order.
   const groups=[];
   for(const node of view.nodes){
+    if(!includeExcluded&&node.checkpoint.participation==='excluded')continue;
     const prior=groups.at(-1);
     if(prior?.areaId===node.areaId)prior.skills.push(node);
     else groups.push({areaId:node.areaId,skills:[node]});
@@ -55,7 +56,8 @@ export function renderPathway(view,{onRestart,openAreas=[]}={}) {
         standard&&el('small',{text:standard}),
         prerequisites.length>0&&el('small',{text:'Helpful first · '+prerequisites.join(', ')}),
         c.targetDate&&el('small',{text:'Suggested target · '+c.targetDate}),
-        !c.required&&el('small',{text:'Optional skill'}),
+        (view.pathwayCompletion||!c.required)&&el('small',{text:c.participation==='excluded'?'Not included in class pathway':c.required?'Required skill':'Optional skill'}),
+        view.pathwayCompletion&&c.requirementTier===null&&el('small',{text:c.pathwayComplete?'Teacher assessment complete':'Ask your teacher how to demonstrate this skill.'}),
         el('small',{text:stats}),
         goal&&!node.masteryChallenge&&el('small',{text:`Practice goal · ${goal.questions} first attempts at ${Math.round(goal.accuracy*100)}% accuracy${goal.met?' · met':''}`}),
         c.award&&el('small',{text:'Verified mastery awarded'}),
@@ -64,14 +66,17 @@ export function renderPathway(view,{onRestart,openAreas=[]}={}) {
         c.score!==null&&c.score!==undefined&&el('small',{text:'Teacher assessment · '+c.score+'/4'}),
         el('div',{class:'pathway-actions'},practiceActions(node))));
     }
-    const area=areas.get(areaId),requirements=area?.practiceRequirements;
+    const area=areas.get(areaId),requirements=view.completionAreas?.find(a=>a.areaId===areaId)??area?.practiceRequirements;
     const count=requirements?.requiredTotal>0
-      ?' · '+requirements.requiredCompleted+' of '+requirements.requiredTotal+' practice requirements met':'';
+      ?' · '+requirements.requiredCompleted+' of '+requirements.requiredTotal+(view.pathwayCompletion?' required skills complete':' practice requirements met'):view.pathwayCompletion?' · No required skills':'';
     return el('details',{class:'pathway-area','data-area-index':index,open:openAreas.length?openAreas.includes(String(index)):index===0},
       el('summary',{},el('strong',{text:area?.title||'Learning area'}),' · '+skills.length+' skills'+count),list);
   });
   return el('div',{class:'class-pathway'},el('h2',{text:view.title}),
     el('p',{text:[courseNames[view.courseId],view.status==='Self-paced'?'Self-paced':view.status].filter(Boolean).join(' · ')}),
     el('p',{text:'Follow the suggested order or explore any skill. Open an activity, then return here to see synced practice.'}),
+    view.pathwayCompletion&&el('p',{text:view.pathwayCompletion.requiredAreas
+      ? `${view.pathwayCompletion.completedAreas} of ${view.pathwayCompletion.requiredAreas} required learning areas complete`
+      : 'No required class pathway is configured.'}),
     sections);
 }

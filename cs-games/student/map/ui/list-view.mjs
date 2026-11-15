@@ -1,6 +1,6 @@
 // The accessible alternative to the drawn map. Same model, same states, same panel: a plain nested list that works with a keyboard,
 // a screen reader, or any zoom level. Every skill in the course (or area) can be opened and practiced from here.
-import { nodeCaption, stopSummaryLine } from '../copy.mjs';
+import { nodeCaption, stopSummaryLine } from '../copy.mjs?v=class-participation-v1';
 import { icon } from '../icons.mjs';
 import { STATES } from '../states.mjs';
 import { el } from './dom.mjs';
@@ -13,7 +13,7 @@ function skillRow(node, { onSelect, onPractice, selectedId }) {
       nodeArt({ state: node.state, optional: node.optional, ring: node.ring, order: node.order, size: 40 }),
       el('span', { class: 'row-text' },
         el('span', { class: 'row-title' }, el('span', { class: 'sr-only', text: `Skill ${node.order} of ${node.orderOf}: ` }), node.title),
-        el('span', { class: 'row-meta', text: [STATES[node.state].label, node.optional ? 'Optional' : null, cap && cap !== STATES[node.state].label ? cap : null, node.delta > 0 ? `+${node.delta} questions` : null, node.target?.text ?? null, node.suggested ? 'Suggested next' : null].filter(Boolean).join(' · ') }))),
+        el('span', { class: 'row-meta', text: [STATES[node.state].label, node.optional ? 'Optional' : node.classParticipation ? 'Required' : null, cap && cap !== STATES[node.state].label ? cap : null, node.delta > 0 ? `+${node.delta} questions` : null, node.target?.text ?? null, node.suggested ? 'Suggested next' : null].filter(Boolean).join(' · ') }))),
     link ? el('a', { class: 'btn btn-small', href: link.url, 'data-action': 'practice', 'aria-label': `Practice ${node.title}`, text: 'Practice', onclick: (e) => { if (onPractice({ node, url: link.url, kind: link.kind }) === true) e.preventDefault(); } }) : el('span', { class: 'muted small', text: 'No activity linked' }));
 }
 

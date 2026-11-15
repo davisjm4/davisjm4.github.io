@@ -1,3 +1,4 @@
+import {skillParticipation} from '../../../cs-games/pathway/participation.mjs';
 import graph from '../../../cs-games/pathway/curriculum-graph.json' with {type:'json'};
 import {areaProgress} from '../../../cs-games/pathway/mastery/area.mjs';
 import {activeAttempt,emptyHistory,restartAttempt} from '../../../cs-games/pathway/mastery/attempts.mjs';
@@ -120,9 +121,10 @@ export async function readMasteryProgress(db,profile,pathway,assessmentEvidence,
   const nodes=new Map(), progresses=[], transitions=[];
   for(const [id,{node,policy,checkpoint}] of skills){
     const prior=existing.get(id)??{version:0,history:emptyHistory(scope,id)};
+    const participation=skillParticipation(pathway,checkpoint,policy);
     const result=nodeProgress({node,policy,history:prior.history,events:byNode.get(id)??[],now,policies,
       contentProfile:facts.profileFor(id),assessmentEvidence,
-      required:checkpoint.required!==false&&policy.challenge.requiredForAreaCompletion});
+      required:participation==='required'});
     if(profile&&result.changes.length)transitions.push(transitionStatements(db,profile,pathway,prior,result.history));
     const current=activeAttempt(result.history);
     const student=studentRequirementView(result.progress);
@@ -135,7 +137,7 @@ export async function readMasteryProgress(db,profile,pathway,assessmentEvidence,
       ...(profile?{mapProgress:mapProgress(result.progress,activeAttemptId)}:{}),
       history:closed.slice(-10).map(attempt=>describeAttempt(attempt,policyByRef.get(attempt.policy.id+'@'+attempt.policy.version))),
       historyCount:closed.length});
-    progresses.push(result.progress);
+    if(participation!=='excluded')progresses.push(result.progress);
   }
   let stable=true;
   for(let offset=0;offset<transitions.length;offset+=20){

@@ -215,3 +215,91 @@ test('recommended tier, area and skill edits inherit per field and publish throu
   assert.equal((await call(courseRoute,oldStudent.token)).status,403);
   assert.equal(db.prepare('SELECT COUNT(*) n FROM performance_events').get().n,0);
 });
+
+test('published class participation controls completion without changing practice or official evidence', async t=>{
+  const {ok,call,db}=await fixture(t);
+  const {setAreaIncluded,setSkillParticipation}=await import('../participation.mjs');
+  const {inputFromStudentContract}=await import('../../student/map/live-contract.mjs');
+  const {buildMapModel}=await import('../../student/map/model.mjs');
+  const classroom=await ok('/teacher/profiles',owner,{title:'Synthetic participation',courseId:'advanced'});
+  const student=await ok('/profile/enroll',null,{invite:classroom.invite});
+  const studentRoute='/pathways/student/'+classroom.id;
+  const get=async(token=student.token)=>(await ok(studentRoute,token)).pathway;
+  const initial=await get();
+  const teacherRoute='/pathways/teacher/'+initial.pathwayId;
+  const manual='node:advanced:variable-lab:assemble';
+  const manualArea='area:advanced:variable-lab';
+  const loopArea='area:advanced:loop-lab';
+  const checkpoint=(plan,id)=>plan.checkpoints.find(c=>c.nodeId===id);
+  const skill=(view,id)=>view.nodes.find(n=>n.id===id);
+  const {draft}=await ok(teacherRoute,owner);
+  assert.equal(skill(initial,manual).checkpoint.required,true);
+  assert.equal(skill(initial,manual).checkpoint.pathwayComplete,false);
+  assert.equal(initial.pathwayCompletion.completedAreas,0);
+
+  const practiceId=crypto.randomUUID();
+  await ok('/profile/sync',student.token,{events:[{version:1,format:'game-attempt',kind:'practice',
+    id:practiceId+':1',questionId:practiceId,sessionId:crypto.randomUUID(),courseId:'advanced',activity:'loop-lab',
+    mode:'mixed',assessedMode:'looptype',familyId:'count-with-header',difficulty:'beginner',
+    attempt:1,correct:true,occurred:Date.now()}]});
+  const assessmentRoute='/teacher/profiles/'+classroom.id+'/students/'+student.id+'/evidence';
+  const assessment={id:crypto.randomUUID(),nodeId:manual,score:4,award:true,revision:1,demonstrationType:'project'};
+  assert.equal((await call(assessmentRoute,foreign,assessment)).status,404);
+  await ok(assessmentRoute,owner,assessment);
+  const evidence=()=>db.prepare('SELECT id,data FROM performance_events WHERE profile=? ORDER BY id').all(student.id);
+  const originalEvidence=evidence();
+
+  async function publish(plan,verifyPreview){
+    const {draftVersion}=await ok(teacherRoute,owner);
+    await ok(teacherRoute+'/draft',owner,{pathway:plan,draftVersion});
+    const preview=await ok(teacherRoute+'/preview',owner,{});
+    verifyPreview?.(preview);
+    const release=await ok(teacherRoute+'/publish',owner,{
+      previewToken:preview.previewToken,expectedRevision:preview.expectedRevision,draftVersion:preview.draftVersion,acknowledged:true});
+    return release.published;
+  }
+
+  // Leave one demonstrated skill required, one optional skill unfinished, and one excluded.
+  const optional='node:advanced:variable-lab:trace';
+  const excluded=draft.checkpoints.find(c=>c.areaId===manualArea&&![manual,optional].includes(c.nodeId)).nodeId;
+  for(const c of draft.checkpoints)if(c.areaId===manualArea&&c.nodeId!==manual)setSkillParticipation(c,'optional');
+  setSkillParticipation(checkpoint(draft,excluded),'excluded');
+  for(const id of new Set(draft.checkpoints.map(c=>c.areaId)))if(id!==manualArea)setAreaIncluded(draft,id,false);
+  assert.equal((await call(teacherRoute+'/draft',foreign,{})).status,404);
+  let published=await publish(draft,preview=>{
+    assert.ok(preview.changes.some(change=>change.kind==='excludedAreas'));
+    assert.ok(preview.changes.some(change=>change.kind==='participation'));
+    assert.equal(preview.studentPreview.pathwayCompletion.requiredAreas,1);
+  });
+  let view=await get();
+  assert.deepEqual(view.pathwayCompletion,{requiredAreas:1,completedAreas:1,status:'complete'});
+  const map=buildMapModel(inputFromStudentContract(view));
+  assert.equal(map.stops.length,1);
+  assert.equal(map.stops[0].summary.requiredCompleted,1);
+  assert.equal(map.nodeIndex[optional].optional,true);
+  assert.equal(map.nodeIndex[optional].complete,false);
+  assert.equal(map.nodeIndex[excluded],undefined);
+  assert.equal(map.nodeIndex[loop],undefined);
+  assert.equal(skill(view,manual).checkpoint.score,4);
+  assert.equal(skill(view,loop).practiceProgress.attempted,1);
+
+  setAreaIncluded(published,manualArea,false);
+  published=await publish(published);
+  view=await get();
+  assert.equal(view.pathwayCompletion.status,'no-required-pathway');
+  assert.equal(buildMapModel(inputFromStudentContract(view)).nodes.length,0);
+  setAreaIncluded(published,manualArea,true);
+  setAreaIncluded(published,loopArea,true);
+  setSkillParticipation(checkpoint(published,optional),'default');
+  published=await publish(published);
+  const restored=await ok('/profile/restore',null,{id:student.id,recovery:student.recovery});
+  view=await get(restored.token);
+  assert.equal(skill(view,manual).checkpoint.score,4);
+  assert.equal(skill(view,manual).checkpoint.pathwayComplete,true);
+  assert.equal(skill(view,optional).checkpoint.participation,'required');
+  assert.equal(skill(view,excluded).checkpoint.participation,'excluded');
+  assert.equal(skill(view,loop).masteryChallenge.requirement.minimumQuestions,30);
+  assert.equal(skill(view,loop).practiceProgress.attempted,1);
+  assert.equal(view.pathwayCompletion.status,'incomplete');
+  assert.deepEqual(evidence(),originalEvidence);
+});

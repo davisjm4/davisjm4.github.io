@@ -2,7 +2,7 @@ import { createStudentFocus } from './learning-focus.mjs';
 import { profilesAvailable,request } from '../../wpr-games/workplace-readiness/online/config.mjs';
 import { activeProfile,device,scopedStorage,syncQueuedPractice } from '../../wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1';
 import { createPathwayClient } from '../pathway/client.mjs';
-import { renderPathway } from './pathway-view.mjs?v=learning-map-v2';
+import { renderPathway } from './pathway-view.mjs?v=class-participation-v1';
 
 const notice=document.getElementById('student-connection');
 const panel=document.getElementById('student-pathway');
@@ -21,7 +21,14 @@ if (!profilesAvailable) {
   const restartRequests=new Map();
   const say=message=>{notice.textContent=message;};
   const mapInput=view=>mapModules.inputFromStudentContract(view,{mixedActivities:mapModules.mixedActivities});
+  const explore=document.createElement('a');
+  explore.className='btn';
+  explore.textContent='Explore the full course independently';
+  explore.hidden=true;
+  panel.before(explore);
   const render=view=>{
+    explore.href='./guest/?course='+encodeURIComponent(view.courseId);
+    explore.hidden=false;
     panel.hidden=false;
     focus.setPathway(view);
     if(mapModules){
@@ -79,8 +86,8 @@ if (!profilesAvailable) {
   };
   if(!classic){
     Promise.all([
-      import('./map/ui/app.mjs?v=learning-focus-v1'),
-      import('./map/live-contract.mjs?v=targeted-clarity-v1'),
+      import('./map/ui/app.mjs?v=class-participation-v1'),
+      import('./map/live-contract.mjs?v=class-participation-v1'),
       fetch('../pathway/evidence-gap-registry.json').then(response=>response.ok?response.json():null).catch(()=>null)
     ]).then(([app,contract,registry])=>{
       const mixedActivities=registry?new Set(registry.entries.filter(entry=>entry.mixedReaches===true).map(entry=>entry.game)):undefined;

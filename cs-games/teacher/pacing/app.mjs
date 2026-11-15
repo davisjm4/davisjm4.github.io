@@ -1,4 +1,5 @@
-import {renderPathway} from '../../student/pathway-view.mjs';
+import {renderPathway} from '../../student/pathway-view.mjs?v=class-participation-v1';
+import {PARTICIPATION,setAreaIncluded,setSkillParticipation,skillParticipation} from '../../pathway/participation.mjs';
 import {DAY_TYPES,importCalendar,applyImport,bulkDates} from '../../pathway/calendar.mjs';
 import {createPathway,clone,validatePathway,diffPathways,studentContract,removePacing} from '../../pathway/model.mjs';
 import {generatePacing,exportCSV,exportICS,groupedView} from '../../pathway/pacing.mjs';
@@ -210,19 +211,61 @@ function renderSchedule(){
 
 /* ───────── stage 2: learning goals ───────── */
 function renderNodes(){const filter=$('area-filter'),selected=filter.value;filter.replaceChildren(option('','All areas'),...allAreas().filter(a=>p.checkpoints.some(c=>c.areaId===a.id)).map(a=>option(a.id,a.title)));filter.value=[...filter.options].some(o=>o.value===selected)?selected:'';
-  const headers=['Skill','Minutes','Target date','Required','Expected score (0–4)','Order'];
+  const headers=['Skill','Participation','Minutes','Target date','Expected score (0–4)','Order'];
+  const automaticallyAssessable=c=>c.requirementTier!=null||c.requirementTier===undefined&&
+    p.policies.some(rule=>rule.id===c.policyId&&rule.version===c.policyVersion&&rule.challenge);
+  const openGroups=new Set([...$('node-table').querySelectorAll('details[open]')].map(d=>d.dataset.areaId));
+  const firstRender=!$('node-table').childElementCount;
+  const edited=(focusId)=>{invalidate();renderNodes();renderStudent();refreshStatus();if(focusId)$(focusId)?.focus();};
   const makeRow=(id,c)=>{const n=node(id),tr=el('tr'),title=el('td',undefined,{class:'node-title'});title.append(el('strong',n.title),el('small',area(c.areaId)),el('small',c.standardRefs.map(x=>x.id).join(', ')||'Teacher-defined learning goal'));
     const control=(type,value,label,change,attrs={})=>{const td=el('td'),input=el('input',undefined,{type,'aria-label':label,...attrs});if(type==='checkbox')input.checked=value;else input.value=value??'';input.onchange=()=>run(()=>{change(type==='checkbox'?input.checked:input.value);invalidate();renderStudent();});td.append(input);return td;};
-    tr.append(title,control('number',c.minutes,'Minutes for '+n.title,v=>c.minutes=Number(v),{min:1,max:10000}),p.calendar?control('date',c.targetDate,'Target date for '+n.title,v=>{c.targetDate=v||null;c.targetLocked=!!v;},{min:p.calendar.start,max:p.examDate||p.calendar.end}):el('td','—'),control('checkbox',c.required,'Required: '+n.title,v=>c.required=v),control('number',c.expectedMastery,'Expected 0–4 score for '+n.title,v=>c.expectedMastery=v===''?null:Number(v),{min:0,max:4,step:.5}));
-    const actions=el('td'),box=el('div',undefined,{class:'order-actions'}),pos=p.sequence.indexOf(id);for(const [text,delta]of [['↑',-1],['↓',1]]){const b=btn(text,()=>{const j=pos+delta;if(j<0||j>=p.sequence.length)return;[p.sequence[pos],p.sequence[j]]=[p.sequence[j],p.sequence[pos]];invalidate();renderNodes();renderStudent();});b.setAttribute('aria-label',(delta<0?'Move up: ':'Move down: ')+n.title);box.append(b);}box.append(btn('Remove',()=>{
-      removeGoals([id]);
-    },'quiet small'));
+    const status=el('td'),participation=el('select',undefined,{'aria-label':'Participation for '+n.title,id:'participation-'+id});
+    const excluded=p.excludedAreas?.includes(c.areaId);
+    participation.append(...Object.entries(PARTICIPATION).map(([value,label])=>option(value,label)),option('default','Restore recommended default'));
+    participation.value=skillParticipation(p,c);
+    participation.disabled=Boolean(excluded);
+    participation.onchange=()=>run(()=>{setSkillParticipation(c,participation.value);edited(participation.id);});
+    status.append(participation);
+    title.append(el('small',automaticallyAssessable(c)?'Automatically assessable':'Teacher assessment'));
+    tr.append(title,status,control('number',c.minutes,'Minutes for '+n.title,v=>c.minutes=Number(v),{min:1,max:10000}),p.calendar?control('date',c.targetDate,'Target date for '+n.title,v=>{c.targetDate=v||null;c.targetLocked=!!v;},{min:p.calendar.start,max:p.examDate||p.calendar.end}):el('td','—'),control('number',c.expectedMastery,'Expected 0–4 score for '+n.title,v=>c.expectedMastery=v===''?null:Number(v),{min:0,max:4,step:.5}));
+    const actions=el('td'),box=el('div',undefined,{class:'order-actions'}),pos=p.sequence.indexOf(id);for(const [text,delta]of [['↑',-1],['↓',1]]){const b=btn(text,()=>{const j=pos+delta;if(j<0||j>=p.sequence.length)return;[p.sequence[pos],p.sequence[j]]=[p.sequence[j],p.sequence[pos]];invalidate();renderNodes();renderStudent();});b.setAttribute('aria-label',(delta<0?'Move up: ':'Move down: ')+n.title);box.append(b);}
     actions.append(box);tr.append(actions);return tr;};
-  // Skills stay in plan order; consecutive skills from one area share a collapsible group.
-  const groups=[];for(const id of p.sequence){const c=p.checkpoints.find(c=>c.nodeId===id);if(filter.value&&c.areaId!==filter.value)continue;const last=groups.at(-1);if(last&&last.areaId===c.areaId)last.rows.push([id,c]);else groups.push({areaId:c.areaId,rows:[[id,c]]});}
-  const out=groups.map((g,i)=>{const t=table(headers);for(const [id,c] of g.rows)t.tbody.append(makeRow(id,c));labelled(t);
-    if(filter.value||groups.length===1)return t.wrap;
-    const d=el('details',undefined,{class:'more'});if(i===0)d.open=true;d.append(el('summary',area(g.areaId)+' · '+g.rows.length+(g.rows.length===1?' skill':' skills')));const body=el('div',undefined,{class:'body'});body.append(t.wrap);d.append(body);return d;});
+  const groups=new Map();
+  const checkpoints=new Map(p.checkpoints.map(c=>[c.nodeId,c]));
+  for(const id of p.sequence){
+    const c=checkpoints.get(id);
+    if(filter.value&&c.areaId!==filter.value)continue;
+    if(!groups.has(c.areaId))groups.set(c.areaId,[]);
+    groups.get(c.areaId).push(c);
+  }
+  const out=[...groups].map(([id,rows],i)=>{
+    const title=area(id), excluded=p.excludedAreas?.includes(id);
+    const required=rows.filter(c=>skillParticipation(p,c)==='required').length;
+    const assigned=rows.filter(c=>skillParticipation(p,c)!=='excluded').length;
+    const automatic=rows.filter(automaticallyAssessable).length;
+    const d=el('details',undefined,{class:'more','data-area-id':id});
+    d.open=Boolean(filter.value)||openGroups.has(id)||firstRender&&i===0;
+    d.append(el('summary',title+' · '+rows.length+' skills · '+(!assigned?'Not included':required?required+' required':'Included · not required')));
+    const body=el('div',undefined,{class:'body'}),actions=el('div',undefined,{class:'actions'});
+    const change=btn(excluded?'Include area':'Exclude area',()=>{
+      setAreaIncluded(p,id,Boolean(excluded));edited(change.id);
+    },'secondary small');
+    change.id='area-inclusion-'+id;
+    change.setAttribute('aria-label',(excluded?'Include ':'Exclude ')+title);
+    const restore=btn('Restore area defaults',()=>{
+      if(!confirm('Restore the recommended participation for every skill in '+title+'?'))return;
+      setAreaIncluded(p,id,true);
+      rows.forEach(c=>setSkillParticipation(c,'default'));
+      edited(restore.id);
+    },'secondary small');
+    restore.id='area-default-'+id;
+    restore.setAttribute('aria-label','Restore defaults for '+title);
+    actions.append(change,restore);
+    const t=table(headers);
+    for(const c of rows)t.tbody.append(makeRow(c.nodeId,c));
+    body.append(el('p',automatic+' automatically assessable · '+(rows.length-automatic)+' teacher-assessed · '+assigned+' included · '+required+' required'),actions,labelled(t));
+    d.append(body);return d;
+  });
   $('node-table').replaceChildren(...(out.length?out:[el('p','No skills in this area.',{class:'hint'})]));
   const targets=$('area-target-form');
   targets.hidden=!p.calendar||!filter.value;
@@ -241,10 +284,10 @@ function renderStudent(source=p,isDraft=publicationStatus({published:entry.publi
 function renderOverrides(){const t=table(['Date','Type','School / rotation','Minutes','Description','Actions']);for(const o of p.calendar?.overrides||[]){const tr=el('tr');for(const text of [formatDate(o.date)||o.date,o.dayType,(o.schoolDay===false?'Closed':'Instructional')+(o.nonRotation?' / does not advance rotation':'')+(o.rotation?' · '+o.rotation:''),o.minutes??'Default',o.label||''])tr.append(el('td',String(text)));const td=el('td');td.append(btn('Edit',()=>{const f=$('day-edit').elements;f.from.value=f.to.value=o.date;f.type.value=o.dayType;f.minutes.value=o.minutes??'';f.label.value=o.label||'';f.rotation.value=o.rotation||'';f.nonRotation.value=String(o.nonRotation??'');f.schoolDay.value=String(o.schoolDay??'');resetPicker(o.assessmentNodeIds||[]);f.from.scrollIntoView({block:'center'});},'secondary small'),btn('Clear',()=>{p.calendar.overrides=p.calendar.overrides.filter(x=>x.date!==o.date);recalculate();},'secondary small'));tr.append(td);t.tbody.append(tr);}
   $('override-count').textContent=p.calendar?.overrides.length?p.calendar.overrides.length+(p.calendar.overrides.length===1?' special date':' special dates'):'No special dates yet';
   $('overrides').replaceChildren(p.calendar?.overrides.length?labelled(t):el('p','Closures, tests and special dates you add will appear here.',{class:'hint'}));}
-const KIND_LABELS={created:'New class pathway',title:'Class name',examDate:'Exam date',calendar:'Calendar and schedule',pacingVisibility:'Student target date visibility',sequence:'Skill order',policies:'Mastery policies',toleranceDays:'Pacing tolerance',customAreas:'Your own areas',customNodes:'Your own skills',added:'Skill added',targetDate:'Target date',required:'Required',policyId:'Mastery policy',policyVersion:'Mastery policy version',practiceGoalPolicyId:'Practice goal',practiceGoalPolicyVersion:'Practice goal version',expectedMastery:'Expected score',minutes:'Minutes',prerequisites:'Prerequisites'};
+const KIND_LABELS={created:'New class pathway',title:'Class name',examDate:'Exam date',calendar:'Calendar and schedule',pacingVisibility:'Student target date visibility',sequence:'Skill order',policies:'Mastery policies',toleranceDays:'Pacing tolerance',customAreas:'Your own areas',customNodes:'Your own skills',added:'Skill added',targetDate:'Target date',excludedAreas:'Excluded learning areas',participation:'Skill participation',required:'Required',policyId:'Mastery policy',policyVersion:'Mastery policy version',practiceGoalPolicyId:'Practice goal',practiceGoalPolicyVersion:'Practice goal version',expectedMastery:'Expected score',minutes:'Minutes',prerequisites:'Prerequisites'};
 function renderChanges(changes){
   const t=table(['What changed','Before','After']);
-  const describe=(kind,value)=>{if(value===null||value===undefined)return 'Not set';if(kind==='practiceGoalPolicyId')return 'Practice goal';if(kind==='policyId')return p.policies.find(policy=>policy.id===value)?.label||'Earlier setting';if(kind==='required')return value?'Required':'Optional';if(kind==='sequence')return value.map(id=>node(id)?.title||id).join(' → ');if(kind==='policies')return value.map(x=>x.label+' · version '+x.version+' · '+(x.provisional?'provisional':'teacher-activated')+' · questions '+(x.minimumQuestions??'not set')+' · accuracy '+(x.accuracy===null?'not set':Math.round(x.accuracy*100)+'%')).join('\n');if(kind==='calendar')return formatDate(value.start)+' through '+formatDate(value.end)+' · '+value.minutes+' minutes · '+scheduleSummary(value).split(' · ')[0]+' · '+value.overrides.length+' special dates';if(Array.isArray(value))return value.length+' entries';if(typeof value==='object')return value.title||'Updated configuration';return String(value);};
+  const describe=(kind,value)=>{if(value===null||value===undefined)return 'Not set';if(kind==='practiceGoalPolicyId')return 'Practice goal';if(kind==='policyId')return p.policies.find(policy=>policy.id===value)?.label||'Earlier setting';if(kind==='excludedAreas')return value.map(area).join(', ')||'None';if(kind==='participation')return PARTICIPATION[value];if(kind==='required')return value?'Required':'Optional';if(kind==='sequence')return value.map(id=>node(id)?.title||id).join(' → ');if(kind==='policies')return value.map(x=>x.label+' · version '+x.version+' · '+(x.provisional?'provisional':'teacher-activated')+' · questions '+(x.minimumQuestions??'not set')+' · accuracy '+(x.accuracy===null?'not set':Math.round(x.accuracy*100)+'%')).join('\n');if(kind==='calendar')return formatDate(value.start)+' through '+formatDate(value.end)+' · '+value.minutes+' minutes · '+scheduleSummary(value).split(' · ')[0]+' · '+value.overrides.length+' special dates';if(Array.isArray(value))return value.length+' entries';if(typeof value==='object')return value.title||'Updated configuration';return String(value);};
   const add=(label,before,after)=>{const row=el('tr');for(const text of [label,before,after])row.append(el('td',text));t.tbody.append(row);};
   for(const c of changes){const checkpoint=p.checkpoints.find(x=>x.id===c.id),label=checkpoint?node(checkpoint.nodeId)?.title||'Skill':'';add((KIND_LABELS[c.kind]||c.kind)+(label?': '+label:''),describe(c.kind,c.before),c.kind==='created'?p.title+' · '+p.checkpoints.length+' skill checkpoints':describe(c.kind,c.after));
     if(c.kind==='calendar'){const old=new Map((c.before?.overrides||[]).map(o=>[o.date,o])),next=new Map((c.after?.overrides||[]).map(o=>[o.date,o]));for(const date of new Set([...old.keys(),...next.keys()]))if(JSON.stringify(old.get(date))!==JSON.stringify(next.get(date))){const display=o=>o?(o.dayType||'New Instruction')+' · '+(o.minutes??'default')+' minutes'+(o.nonRotation?' · does not advance rotation':''):'Default school/class schedule';add(formatDate(date)||date,display(old.get(date)),display(next.get(date)));}}
@@ -263,7 +306,7 @@ function refreshStatus(){
   if(lastPublishedAt)chips.push(chip('Last published '+formatWhen(lastPublishedAt),'plain'));
   if(publishError)chips.push(chip('Publication error','bad'));
   $('revision-badge').replaceChildren(...chips);
-  const required=p.checkpoints.filter(c=>c.required).length;
+  const required=p.checkpoints.filter(c=>skillParticipation(p,c)==='required').length;
   $('step-calendar-note').textContent=p.calendar?scheduleSummary(p.calendar).split(' · ').slice(0,-1).join(' · '):'Optional · self-paced';
   $('step-goals-note').textContent=required+' required '+(required===1?'skill':'skills');
   $('step-pacing-note').textContent=(p.capacity?.meetings||0)+' class meetings';
@@ -360,16 +403,6 @@ $('remove-pacing').onclick=()=>run(()=>{
   message('Pacing removed from the draft. Publish changes to return students to a self-paced pathway.');
 });
 
-function removeGoals(ids){
-  const removed=new Set(ids);
-  p.checkpoints=p.checkpoints.filter(c=>!removed.has(c.nodeId)).map(c=>({...c,prerequisites:c.prerequisites.filter(id=>!removed.has(id))}));
-  p.sequence=p.sequence.filter(id=>!removed.has(id));
-  p.sessions=[];
-  $('recalculate-from').value=p.calendar?.start||'';
-  recalculate();
-  message('Learning goals removed from the draft. Past practice and assessment records are kept.');
-}
-
 $('area-target-form').onsubmit=e=>{
   e.preventDefault();
   run(()=>{
@@ -389,11 +422,16 @@ $('calendar-file').onchange=()=>run(async()=>{const file=$('calendar-file').file
   for(const e of imported){const tr=el('tr');tr.append(el('td',e.date),el('td',e.label));const type=el('select',undefined,{'aria-label':'Classification for '+e.date});type.append(...DAY_TYPES.map(v=>option(v,v)));type.value=e.dayType;type.onchange=()=>{e.dayType=type.value;e.schoolDay=e.dayType!=='No Class';e.confirmed=false;check.checked=false;};const td=el('td');td.append(type);tr.append(td);const min=el('input',undefined,{type:'number',min:0,max:1440,'aria-label':'Minutes for '+e.date});min.value=e.minutes??'';min.onchange=()=>e.minutes=min.value===''?null:Number(min.value);const mt=el('td');mt.append(min);tr.append(mt);const check=el('input',undefined,{type:'checkbox','aria-label':'Confirm classification for '+e.date});check.checked=e.confirmed;check.onchange=()=>e.confirmed=check.checked;const ct=el('td');ct.append(check);tr.append(ct);t.tbody.append(tr);}
   $('import-preview').replaceChildren(el('p',imported.length+' school dates. Confirm uncertain classifications and shortened minutes before applying.'),labelled(t),btn('Confirm import & apply',()=>{p.calendar=applyImport(p.calendar,imported);recalculate();$('import-preview').replaceChildren();},'primary'));});
 for(const [buttonId,delta]of [['area-up',-1],['area-down',1]])$(buttonId).onclick=()=>run(()=>{const selected=$('area-filter').value;if(!selected)throw new Error('Select an area first.');const areas=[...new Set(p.sequence.map(id=>p.checkpoints.find(c=>c.nodeId===id).areaId))],i=areas.indexOf(selected),j=i+delta;if(j<0||j>=areas.length)return;[areas[i],areas[j]]=[areas[j],areas[i]];p.sequence=areas.flatMap(a=>p.sequence.filter(id=>p.checkpoints.find(c=>c.nodeId===id).areaId===a));invalidate();renderNodes();renderStudent(p,true);message('Area reordered in your draft. Update the schedule in Step 3 to recalculate dates.');});
-$('optional-area').onclick=()=>run(()=>{if(!$('area-filter').value)throw new Error('Select an area first.');for(const c of p.checkpoints)if(c.areaId===$('area-filter').value)c.required=false;invalidate();renderNodes();renderStudent(p,true);});
-$('remove-area').onclick=()=>run(()=>{
-  const id=$('area-filter').value;
-  if(!id)throw new Error('Select an area first.');
-  removeGoals(p.checkpoints.filter(c=>c.areaId===id).map(c=>c.nodeId));
+$('require-all-areas').onclick=()=>run(()=>{
+  if(!confirm('Include every area and make every skill required in this draft?'))return;
+  delete p.excludedAreas;
+  p.checkpoints.forEach(c=>setSkillParticipation(c,'required'));
+  invalidate();renderNodes();renderStudent();refreshStatus();
+});
+$('optional-all-areas').onclick=()=>run(()=>{
+  if(!confirm('Make every currently included skill optional in this draft?'))return;
+  p.checkpoints.filter(c=>skillParticipation(p,c)!=='excluded').forEach(c=>setSkillParticipation(c,'optional'));
+  invalidate();renderNodes();renderStudent();refreshStatus();
 });
 $('add-node').onsubmit=e=>{e.preventDefault();run(()=>{const f=$('add-node').elements;let a=p.customAreas.find(a=>a.title===f.area.value);if(!a){a={id:'area:custom:'+crypto.randomUUID(),title:f.area.value,courseId:p.courseId};p.customAreas.push(a);}const id='node:custom:'+crypto.randomUUID(),refs=list(f.standards.value).map(s=>{const i=s.indexOf(':');if(i<1)throw new Error('Use registry:id for standard references.');return {registry:s.slice(0,i),id:s.slice(i+1)};});const n={id,areaId:a.id,courseId:p.courseId,title:f.objective.value,objective:f.objective.value,standardRefs:refs,primaryObjectives:refs.length?refs:[{registry:'teacher-objective',id,label:f.objective.value}],practice:f.url.value?[{activityId:'teacher-assigned',url:f.url.value}]:[],prerequisites:list(f.prerequisites.value),familySelectors:[],estimatedMinutes:Number(f.minutes.value),estimateProvisional:true};p.customNodes.push(n);p.sequence.push(id);p.checkpoints.push({id:'checkpoint:'+p.id+':'+id,pathwayId:p.id,areaId:a.id,nodeId:id,standardRefs:n.standardRefs,primaryObjectives:n.primaryObjectives,targetDate:null,targetLocked:false,required:true,policyId:p.policies[0].id,policyVersion:p.policies[0].version,expectedMastery:null,practice:n.practice,prerequisites:n.prerequisites,minutes:n.estimatedMinutes,revision:p.revision});recalculate();f.reset?.();});};
 $('preview').onclick=()=>run(async()=>{await saveRemote();if(connected){preview=await teacherRequest('/pathways/teacher/'+p.id+'/preview',{body:{}});renderChanges(preview.changes);$('publish').disabled=false;}else{preview={changes:diffPathways(entry.published,p)};renderChanges(preview.changes);$('local-publish').disabled=false;}renderStudent(p,true,preview.studentPreview);refreshStatus();message('Preview ready. Review deadlines, requirements, protected windows and what students will see.');},'publish');

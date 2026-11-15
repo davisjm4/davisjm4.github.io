@@ -1,3 +1,4 @@
+import {assignedSessions,skillParticipation} from './participation.mjs';
 import {meetings} from './calendar.mjs';
 import {clone,validatePathway,prerequisiteOrder} from './model.mjs';
 export function generatePacing(input,graph,{from=input.calendar?.start}={}) {
@@ -6,12 +7,16 @@ export function generatePacing(input,graph,{from=input.calendar?.start}={}) {
   const end=p.examDate??p.calendar.end;
   const nodes=new Map([...(p.curriculumSnapshot?.nodes||graph.nodes),...(p.customNodes||[])].map(n=>[n.id,n]));
   for(const c of p.checkpoints)for(const dep of c.prerequisites)if(!byNode.has(dep))warnings.push('Prerequisite '+dep+' is outside this plan. Assess prior knowledge or add the missing skill.');
+  const participation=new Map(p.checkpoints.map(c=>[c.nodeId,skillParticipation(p,c)]));
+  const assigned=p.sequence.filter(id=>participation.get(id)!=='excluded');
+  const included=new Set(assigned);
   const sequence=prerequisiteOrder(p.sequence,id=>byNode.get(id).prerequisites);
   if(JSON.stringify(sequence)!==JSON.stringify(p.sequence)){
     warnings.push('The schedule teaches prerequisite skills before dependent skills.');
     if(p.pacingVisibility===undefined)p.sequence=sequence;
   }
-  const remaining=new Map(p.checkpoints.map(c=>[c.nodeId,c.minutes]));const introduced=new Set();const sessions=(p.sessions||[]).filter(s=>s.date<from&&s.date<=end).map(clone);
+  const remaining=new Map(assigned.map(id=>[id,byNode.get(id).minutes]));const introduced=new Set();
+  const sessions=assignedSessions((p.sessions||[]).filter(s=>s.date<from&&s.date<=end).map(clone),included);
   for(const s of sessions)for(const a of s.allocations||[]){introduced.add(a.nodeId);remaining.set(a.nodeId,Math.max(0,(remaining.get(a.nodeId)||0)-a.minutes));}
   for(const c of p.checkpoints)if(!c.targetLocked&&(!c.targetDate||c.targetDate>=from))c.targetDate=null;
   const all=meetings(p.calendar).filter(m=>m.meets&&m.date<=end);let instructionMinutes=0,protectedMinutes=0;
@@ -26,7 +31,7 @@ export function generatePacing(input,graph,{from=input.calendar?.start}={}) {
       if(dayType==='Quiz / Testing'||dayType==='Semester / Final Exam')s.diagnostic='Teacher-assigned assessment / reassessment';
     }else{
       instructionMinutes+=m.minutes;let available=m.minutes;
-      for(const id of sequence){const left=remaining.get(id);if(left<=0)continue;
+      for(const id of sequence){if(!included.has(id))continue;const left=remaining.get(id);if(left<=0)continue;
         const c=byNode.get(id);if(c.prerequisites.some(d=>remaining.has(d)&&remaining.get(d)>0))continue;
         if(dayType==='Guided Practice'&&!introduced.has(id))continue;
         const used=Math.min(available,left);if(!used)break;
@@ -40,7 +45,7 @@ export function generatePacing(input,graph,{from=input.calendar?.start}={}) {
     }
     sessions.push(s);
   }
-  const unscheduled=p.checkpoints.filter(c=>remaining.get(c.nodeId)>0).map(c=>({nodeId:c.nodeId,required:c.required,remainingMinutes:remaining.get(c.nodeId)}));
+  const unscheduled=p.checkpoints.filter(c=>remaining.get(c.nodeId)>0).map(c=>({nodeId:c.nodeId,required:participation.get(c.nodeId)==='required',remainingMinutes:remaining.get(c.nodeId)}));
   const deficit=unscheduled.filter(c=>c.required).reduce((n,c)=>n+c.remainingMinutes,0);
   if(deficit)warnings.push('Required content needs '+deficit+' additional minutes. Extend the exam date, increase meeting minutes, revise time estimates, or explicitly make selected nodes optional. No requirements have been removed.');
   if(p.examDate&&!all.some(m=>m.date===p.examDate))warnings.push('The target exam date is not a class meeting. Choose a meeting date to reserve an exam session.');

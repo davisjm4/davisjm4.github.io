@@ -1,5 +1,6 @@
 // Reads a stored class pathway (the existing model.mjs shape) and returns mastery progress for every checkpoint and area.
 // Nothing is written: `histories` in, `histories` out. The caller decides whether and where to persist them.
+import { skillParticipation } from '../participation.mjs';
 import { areaProgress } from './area.mjs';
 import { emptyHistory } from './attempts.mjs';
 import { contentProfileFromGraph } from './evaluate.mjs';
@@ -22,11 +23,12 @@ export function pathwayProgress({ graph, pathway, profileId, rawEvents = [], his
     const node = nodes.get(checkpoint.nodeId), r = policyForCheckpoint(pathway, checkpoint);
     if (!r.ok) { problems.push({ nodeId: checkpoint.nodeId, errors: r.errors }); continue; }
     const history = nextHistories[node.id] ?? emptyHistory(scope, node.id);
-    const out = nodeProgress({ node, policy: r.policy, history, events: norm.events, now, policies: known, contentProfile: contentProfileFromGraph(graph, node.id), assessmentEvidence, carryOver, firstWindow, required: checkpoint.required !== false && r.policy.challenge.requiredForAreaCompletion });
+    const participation = skillParticipation(pathway, checkpoint, r.policy);
+    const out = nodeProgress({ node, policy: r.policy, history, events: norm.events, now, policies: known, contentProfile: contentProfileFromGraph(graph, node.id), assessmentEvidence, carryOver, firstWindow, required: participation === 'required' });
     nextHistories[node.id] = out.history;
-    results.push(out.progress);
+    results.push({ ...out.progress, participation });
   }
-  const areaResults = [...areas.values()].filter((a) => results.some((n) => n.areaId === a.id)).map((a) => areaProgress({ area: a, nodes: results.filter((n) => n.areaId === a.id), reviewCountsAsComplete }));
+  const areaResults = [...areas.values()].filter((a) => results.some((n) => n.areaId === a.id)).map((a) => areaProgress({ area: a, nodes: results.filter((n) => n.areaId === a.id && n.participation !== 'excluded'), reviewCountsAsComplete }));
   return { schema: PATHWAY_PROGRESS_SCHEMA, scope, pathwayId: pathway.id, revision: pathway.revision, calculatedAt: now, normalization: { counts: norm.counts, rejected: norm.rejected }, nodes: results, areas: areaResults, histories: nextHistories, problems };
 }
 function policyForCheckpointless(raw) { const v = validateMasteryPolicy(raw); return v.ok ? v.policy : null; }

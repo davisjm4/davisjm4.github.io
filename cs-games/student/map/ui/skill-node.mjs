@@ -1,7 +1,7 @@
 // One skill, drawn once. The same art is used in the area map, the legend, and the list view, so the symbols always agree.
 // State is never carried by colour alone: every state has its own glyph, its own ring pattern, and a text label.
 import { ICON_PATHS } from '../icons.mjs';
-import { nodeParts } from '../copy.mjs';
+import { nodeParts } from '../copy.mjs?v=class-participation-v1';
 import { STATES } from '../states.mjs';
 import { el, svg } from './dom.mjs';
 

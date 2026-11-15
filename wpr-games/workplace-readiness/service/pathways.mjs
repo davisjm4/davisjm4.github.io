@@ -51,7 +51,7 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
     // Include the current attempt version so a restart on another device invalidates this client's cached view.
     const attemptVersion=profile?await db.prepare('SELECT COALESCE(SUM(version),0) value FROM mastery_attempt_states WHERE profile_id=?')
       .bind(profile.id).first():{value:0};
-    const cacheKey='progress-v4:'+PROFICIENCY_SCHEMA+':'+PROFICIENCY_VERSION+':'+p.id+':'+p.head+':'+(identity.evidenceCount??0)+':'+(identity.eventCount??0)+':'+attemptVersion.value+':'+today;
+    const cacheKey='progress-v5:'+PROFICIENCY_SCHEMA+':'+PROFICIENCY_VERSION+':'+p.id+':'+p.head+':'+(identity.evidenceCount??0)+':'+(identity.eventCount??0)+':'+attemptVersion.value+':'+today;
     if(!action&&!testAdapter&&new URL(request.url).searchParams.get('known')===cacheKey)return {unchanged:true,cacheKey};
     const row=await db.prepare('SELECT snapshot FROM pathway_revisions WHERE pathway_id=? AND revision=?').bind(p.id,p.head).first();
     const pathway=parse(row);

@@ -50,10 +50,14 @@ export function demonstrationDetails(node,{courseId,enrolled}){
 export function proficiencySuggestion(model,{onShow,onPractice,stop}){
   const guidance=stop?model.proficiency.byArea[stop.areaId]:model.proficiency.recommendation;
   if(!guidance)return null;
-  const {primary:next,extension,browseNext}=guidance;
+  const visible=recommendation=>recommendation&&model.nodeIndex[recommendation.nodeId]&&
+    (!model.pathwayCompletion||!model.nodeIndex[recommendation.nodeId].optional);
+  const next=visible(guidance.primary)?guidance.primary:null;
+  const extension=visible(guidance.extension)?guidance.extension:null;
+  const browseNext=visible(guidance.browseNext)?guidance.browseNext:null;
   if(!next&&!extension&&!browseNext)return null;
   const area=stop&&model.proficiency.areas[stop.areaId];
-  const ready=area?.readyToAdvance;
+  const ready=!model.pathwayCompletion&&area?.readyToAdvance;
   const action=(recommendation,label,secondary=false)=>{
     const node=model.nodeIndex[recommendation.nodeId];
     if(['plan-demonstration','level-4-demonstration'].includes(recommendation.kind))
