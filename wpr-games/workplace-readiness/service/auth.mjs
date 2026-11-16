@@ -110,7 +110,7 @@ export async function teacherSession(request, env, readBody) {
   const reject = () => { throw Object.assign(new Error('Sign in with an authorized teacher account.'), {status:401}); };
   if (request.method === 'POST') {
     if (accountsEnabled(env) && !env.verifyLocalTeacher) {
-      if (!request.body) rejectTeacher();
+      if (!request.headers.get('Content-Type')?.toLowerCase().startsWith('application/json')) rejectTeacher();
       const {mode} = (await readBody(request, 2048)) ?? {};
       if (!['signup', 'signin'].includes(mode)) rejectTeacher();
       return createSession(env, await googleTeacher(request, env, mode, verifyGoogle));
