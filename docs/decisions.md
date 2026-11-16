@@ -44,3 +44,17 @@ The IDs below preserve links from draft 0.1. The approved defaults govern produc
 | ID | Disposition | Required pre-deployment evidence |
 | --- | --- | --- |
 | CSG-OPEN-13 | Resolved by CSG-DEC-14. Carry forward historically earned progression. Keep historical results with their original policy context and show accurate current formative proficiency separately. Explain differences to teachers and students. Preserve original evidence and teacher-verified mastery scores. | Side-by-side legacy and independent evaluator replay and passing regression tests under CSG-AT-13. Document unavailable historical provenance without inventing results. Evaluator implementation, data migration and deployment require separate authorization. |
+
+
+## November 16, 2026 — teacher registration and navigation request
+
+**CSG-REQ-16 · Product-owner requested direction (implementation pending).** Permit new teachers to self-register with a verified email address, including school email, instead of requiring a manually maintained preauthorized teacher email list. Teacher Tools has a single role-aware navigation account control: when signed out, **Sign Up** and **Sign In**; when signed in, **Signed in as [name or email]** and **Sign Out**. Remove the repeated page-level Google sign-in presentation. Keep home **Join a Class / Sign In** for student join/recovery and the separate **Teacher Tools** destination. Add Workplace Readiness to the shared UX backlog without conflating it with PR #49's mastery evidence release.
+
+**Current conflict:** CSG-SEC-01 explicitly preserves the production Google-account allowlist. That policy remains active until a tested replacement has received a separate release decision. User-visible registration must never provide access to another teacher's class, roster or student evidence.
+
+| Open decision | Recommended default pending implementation approval | Gate |
+| --- | --- | --- |
+| CSG-OPEN-14 · Self-registration method and account policy | Support Google identity where available and offer a verified-email/passwordless onboarding route for users whose work/personal emails cannot access the existing Google login. Treat email verification as identity proofing, not authorization to another teacher's classes. Avoid passwords and unmanaged account linking. | Decide supported identity providers, school-email edge cases, duplicate-email/provider linking, account recovery, anti-abuse controls, and any required domain/teacher-verification restrictions before replacing allowlist-only authentication or changing D1. |
+| CSG-OPEN-15 · Teacher sign-in UX and release split | Make the single account navigation control shared by Teacher Tools sections and separate editor routes. Use explicit signed-out/active/expired/offline states and a working Sign Out. | Confirm route, browser/session and accessibility behavior in tests, then ship compatible frontend and Worker changes. The documentation request does not authorize a production authentication migration. |
+
+Track implementation, acceptance and WPR usability scope in [the development roadmap](evidence-and-roadmap.md#november-16-2026--product-owner-backlog-teacher-accounts-navigation-workplace-readiness-ux).
