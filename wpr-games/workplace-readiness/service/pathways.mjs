@@ -1,5 +1,6 @@
 import {loadEvidence,readMasteryProgress,restartMasteryPractice} from './mastery-attempts.mjs';
 import {evaluateProficiency,PROFICIENCY_SCHEMA,PROFICIENCY_VERSION} from '../../../cs-games/pathway/proficiency/index.mjs';
+import {compareOutcomes} from '../../../cs-games/pathway/proficiency/independent.mjs';
 import {buildContentFacts} from '../../../cs-games/pathway/requirements/limits.mjs';
 import {reviewRequirements} from '../../../cs-games/pathway/requirements/review.mjs';
 import {isRequirementPolicy} from '../../../cs-games/pathway/requirements/ids.mjs';
@@ -72,6 +73,24 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
       eventsByNode:practiceEvidence?.byNode,
       pacingTargets:Object.fromEntries(view.nodes.map(node=>[node.id,node.checkpoint.targetDate]))
     });
+    // Experimental shadow comparison. OFF unless explicitly enabled in a test/staging Worker.
+    // No new client fields, grading changes, writes, per-student logging, or cached outcomes.
+    if(profile && hasAutomatedRubrics && env.PROFICIENCY_SHADOW === '1'){
+      try {
+        const shadow=compareOutcomes({
+          courseId:pathway.courseId,nodes:view.nodes,policies:pathway.policies,
+          eventsByNode:practiceEvidence?.byNode
+        });
+        console.info('cs-games.proficiency-shadow',JSON.stringify({
+          schema:shadow.schema,course:pathway.courseId,
+          nodes:shadow.summary.nodes,differ:shadow.summary.differ,
+          legacyLower:shadow.summary.legacyLower,legacyHigher:shadow.summary.legacyHigher
+        }));
+      }catch {
+        // Shadow errors must never change a student's current result or availability.
+        console.warn('cs-games.proficiency-shadow unavailable');
+      }
+    }
     const digest=await hash(JSON.stringify({status:view.status,nodes:view.nodes.map(n=>n.checkpoint)}));
     await db.prepare('INSERT OR IGNORE INTO pathway_status_history(pathway_id,profile_id,revision,digest,status,created) VALUES(?,?,?,?,?,?)')
       .bind(p.id,identity.profileId,p.head,digest,view.status,Date.now()).run();
