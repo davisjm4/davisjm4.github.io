@@ -15,9 +15,14 @@ const has=(d,p,url)=>[...d.querySelectorAll('a[href]')].some(a=>target(a,p)===ur
 const sandbox={window:{}};vm.runInNewContext(read('cs-games/catalog.js'),sandbox);const catalog=sandbox.window.CSGamesCatalog;
 const hub=doc('cs-games/index.html');
 assert.equal(hub.querySelectorAll('.course-card').length,4);
-for(const url of ['/cs-games/csp/','/cs-games/advanced/','/wpr-games/workplace-readiness/','/cs-games/robotics/'])assert.ok(has(hub,'cs-games/index.html',url),url);
+assert.ok(hub.querySelector('.teacher-entry[href="./teacher/"]'),'Teacher Tools should be directly available in the header');
+assert.equal(hub.querySelectorAll('.home-nav a').length,2,'Only brand and Teacher Tools belong in the homepage header');
+assert.equal(hub.querySelector('.how'),null,'No competing Explore/Join panel on the homepage');
+assert.equal(hub.querySelectorAll('.course-actions a').length,0,'No duplicate Browse activities actions on the homepage');
 assert.ok(hub.querySelector('#shared-tools a[href="/wpr-games/raceces/"]'));
 for(const course of ['advanced','csp','robotics','workplace'])assert.ok(hub.querySelector('.course-card a[href="./student/guest/?course='+course+'"]'));
+for(const coursePath of ['csp','advanced','robotics'])assert.ok(fs.existsSync(path.join(root,'cs-games',coursePath,'index.html')),'Legacy course catalog must remain reachable');
+assert.ok(fs.existsSync(path.join(root,'wpr-games/workplace-readiness/index.html')),'Legacy Workplace catalog must remain reachable');
 for(const course of ['csp','advanced','robotics']){
  const page=`cs-games/${course}/index.html`;const d=doc(page);
  assert.ok(has(d,page,'/cs-games/'));assert.ok(has(d,page,'/wpr-games/raceces/'));
