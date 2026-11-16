@@ -58,3 +58,7 @@ The IDs below preserve links from draft 0.1. The approved defaults govern produc
 | CSG-OPEN-15 · Teacher sign-in UX and release split | Make the single account navigation control shared by Teacher Tools sections and separate editor routes. Use explicit signed-out/active/expired/offline states and a working Sign Out. | Confirm route, browser/session and accessibility behavior in tests, then ship compatible frontend and Worker changes. The documentation request does not authorize a production authentication migration. |
 
 Track implementation, acceptance and WPR usability scope in [the development roadmap](evidence-and-roadmap.md#november-16-2026--product-owner-backlog-teacher-accounts-navigation-workplace-readiness-ux).
+
+### Teacher registration implementation approval
+
+The November 16 P0 implementation request authorizes a separate review PR under CSG-REQ-16 and resolves the implementation scope of CSG-OPEN-14/15. Verified Google identities and passwordless mailbox codes may create separate teacher accounts with no approval or domain restriction. Existing Google accounts retain their owners and class records. Sign-in and recovery use the original provider. Account linking, class migration, and merging are outside this scope. Registration uses a single Teacher Tools account control. Production authentication, Worker and D1 changes still require approval after staging.

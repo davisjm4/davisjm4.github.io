@@ -8,6 +8,10 @@ preview_urls = false
 ALLOWED_ORIGINS = "https://davisjm4.github.io"
 GOOGLE_CLIENT_ID = "REPLACE_WITH_GOOGLE_OAUTH_WEB_CLIENT_ID"
 ENABLE_STUDENT_PROFILES = "1"
+ENABLE_TEACHER_ACCOUNTS = "0"
+PAUSE_TEACHER_SIGNUP = "0"
+# Set TEACHER_MAIL_FROM to a verified Resend sender when enabling teacher accounts.
+# Set TEACHER_AUTH_SECRET and TEACHER_MAIL_API_KEY as Worker secrets.
 PROFILE_SCHEMA_INSTALLED = "1"
 
 [[d1_databases]]

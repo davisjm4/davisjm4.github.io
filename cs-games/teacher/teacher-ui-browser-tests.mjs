@@ -57,12 +57,14 @@ async function clickByText(page, scope, text) {
   await page.keyboard.press('Enter');
 }
 async function signInHub(page) {
+  await clickByText(page, '#teacher-account', 'Sign In');
   await page.waitForSelector('[name="teacher-key"]');
   await page.type('[name="teacher-key"]', token);
   await clickByText(page, '#teacher-account', 'Sign in to development service');
   await page.waitForSelector('#wpr-teacher-profiles:not([hidden]) .class-card', { timeout: 10000 });
 }
 async function signInEditor(page) {
+  await clickByText(page, '#auth', 'Sign In');
   await page.waitForSelector('input[aria-label="Development teacher token"]',{visible:true,timeout:10000});
   await page.type('input[aria-label="Development teacher token"]', token);
   await clickByText(page, '#auth', 'Sign in to development service');
@@ -490,7 +492,6 @@ test('teacher session survives class navigation, expires safely, and resumes uns
   });
   svc.db.prepare('UPDATE teacher_sessions SET expires=?').run(Date.now()-1);
   await page.click('#save');
-  await page.waitForSelector('#auth [name=teacher-key]',{visible:true});
   await signInEditor(page);
   assert.equal(await page.$eval('#settings [name=minutes]',input=>input.value),'73');
   await page.click('#save');
@@ -501,8 +502,14 @@ test('teacher session survives class navigation, expires safely, and resumes uns
   await page.waitForSelector('#class-students',{visible:true});
   assert.equal(await page.$('[name=teacher-key]'),null);
   assert.equal(svc.db.prepare('SELECT COUNT(*) AS n FROM profile_classes').get().n,1);
-  await page.focus('#teacher-account .account-control button');
-  await page.keyboard.press('Enter');
+
+  assert.equal(await page.$eval('#teacher-sections #teacher-account',node=>Boolean(node)),true);
+  await clickByText(page, '#teacher-account', 'Account Settings');
+  await page.waitForSelector('#teacher-account dialog[open]',{visible:true});
+  await page.keyboard.press('Escape');
+  await page.waitForSelector('#teacher-account dialog[open]',{hidden:true});
+  await clickByText(page, '#teacher-account', 'Sign Out');
+  await clickByText(page, '#teacher-account', 'Sign In');
   await page.waitForSelector('#teacher-account [name=teacher-key]',{visible:true});
   assert.equal(await page.$eval('#wpr-teacher-profiles',root=>root.hidden),true);
 });

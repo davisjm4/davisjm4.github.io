@@ -54,15 +54,16 @@ export async function startDev({ port = 0, filename = ':memory:', teacherTokens,
   }
   db.exec(readFileSync(new URL('./migrations/0007_mastery_attempts.sql',import.meta.url),'utf8'));
   if(pathwayAdapters.ENABLE_TEACHER_DIRECTED_LEARNING==='1')db.exec(readFileSync(new URL('./migrations/0008_learning_focus.sql',import.meta.url),'utf8'));
+  db.exec(readFileSync(new URL('./migrations/0009_teacher_accounts.sql',import.meta.url),'utf8'));
   const DB = sqliteAdapter(db);
-  const verifyLocalTeacher = token => {
+  const verifyLocalTeacher = teacherTokens && (token => {
     const supplied = Buffer.from(token);
     for (const [name,secret] of Object.entries(teacherTokens)) {
       const expected = Buffer.from(secret);
       if (expected.length >= 24 && supplied.length === expected.length && timingSafeEqual(supplied,expected)) return name;
     }
     return null;
-  };
+  });
   let origin;
   const server = createServer(async (req,res) => {
     const url = new URL(req.url,origin);

@@ -1,0 +1,23 @@
+name: Teacher registration tests
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/teacher-registration-tests.yml'
+      - 'cs-games/teacher/**'
+      - 'wpr-games/workplace-readiness/service/**'
+permissions:
+  contents: read
+jobs:
+  teacher-registration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Test registration, session lifecycle and backend isolation
+        run: node --test cs-games/teacher/teacher-registration-tests.mjs cs-games/teacher/teacher-session-tests.mjs cs-games/teacher/cs-games-backend-tests.mjs
+      - run: npm ci --prefix wpr-games/workplace-readiness
+      - name: Test account navigation and session expiry in Chrome
+        run: CHROME_BIN="$(command -v google-chrome)" node --test --test-name-pattern='teacher session survives' cs-games/teacher/teacher-ui-browser-tests.mjs
