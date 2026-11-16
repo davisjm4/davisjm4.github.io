@@ -199,7 +199,7 @@ export function mountStudentMap(container, options) {
     const meta = el('div', { class: 'map-meta' },
       route.view === 'area' ? mixedCard(stop) : null,
       stop?adapter.guestAreaControls?.(stop):null,
-      createSuggested(model, { stop, onShow: (n) => { if (route.view === 'area' && n.stopId === route.stopId) select(n, { scroll: true, focusPanel: false }); else { lastStopId = n.stopId; route = { ...route, view: 'area', stopId: n.stopId, nodeId: n.id }; writeHash(false); render({ focus: 'panel' }); } }, onPractice: (i) => adapter.onPractice?.(i) }),
+      ...(input.mapFirst?[]:[createSuggested(model, { stop, onShow: (n) => { if (route.view === 'area' && n.stopId === route.stopId) select(n, { scroll: true, focusPanel: false }); else { lastStopId = n.stopId; route = { ...route, view: 'area', stopId: n.stopId, nodeId: n.id }; writeHash(false); render({ focus: 'panel' }); } }, onPractice: (i) => adapter.onPractice?.(i) })]),
       createPacingCard(model, { onShow: (n) => { route = { ...route, view: 'area', stopId: n.stopId, nodeId: n.id }; lastStopId = n.stopId; writeHash(false); render({ focus: 'panel' }); } }),
       sessionCard());
     const showZoom = route.layout === 'map';
@@ -220,9 +220,19 @@ export function mountStudentMap(container, options) {
     });
     const body = el('div', { class: 'map-body', 'data-side': showSide ? 'true' : 'false' }, main, showSide ? side : null);
     const tools = el('div', { class: 'map-tools' }, toolbar, createLegend({ dated }));
-    // Independent course pages may prioritize the interactive map over secondary suggestion cards.
-    // Keep DOM and keyboard order consistent with visual order.
-    root.replaceChildren(live, header, tools, search, ...(input.mapFirst ? [body, meta] : [meta, body]));
+    const shortcuts = input.mapFirst ? el('div', { class: 'map-shortcuts', role: 'group', 'aria-label': 'Learning map shortcuts' },
+      el('button', { type: 'button', class: 'btn btn-primary', text: 'Suggested Next', onclick: () => {
+        const target = model.suggestedNext?.nodeId;
+        if (target) { const n = findNode(model, target); if (n) { lastStopId = n.stopId; go({ view: 'area', stopId: n.stopId, nodeId: n.id }, { focus: 'panel' }); } }
+        else announce('No suggested next skill is available.');
+      } }),
+      el('button', { type: 'button', class: 'btn', text: 'Jump to Current', disabled: !input.currentNodeId, title: input.currentNodeId ? 'Go to your last selected skill' : 'Choose a skill to set your current position', onclick: () => {
+        const n = findNode(model, input.currentNodeId);
+        if (n) { lastStopId = n.stopId; go({ view: 'area', stopId: n.stopId, nodeId: n.id }, { focus: 'panel' }); }
+        else announce('Choose a skill to set your current position.');
+      } })) : null;
+    // Keep visual and keyboard order consistent: shortcuts and map first, skill search afterward.
+    root.replaceChildren(live, header, tools, ...(input.mapFirst ? [shortcuts, body, search, meta] : [search, meta, body]));
 
     if (route.layout === 'map') {
       stageCtl = createStage({ label: stop ? `${stop.title} skill map` : `${model.courseTitle} course map`, onZoomChange: (z) => { zoomLevel = z; root.dataset.zoom = String(z); } });
