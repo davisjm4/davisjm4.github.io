@@ -218,7 +218,11 @@ export function mountStudentMap(container, options) {
         addReturnLinks(results);
       },
     });
-    root.replaceChildren(live, header, el('div', { class: 'map-tools' }, toolbar, createLegend({ dated })), search, meta, el('div', { class: 'map-body', 'data-side': showSide ? 'true' : 'false' }, main, showSide ? side : null));
+    const body = el('div', { class: 'map-body', 'data-side': showSide ? 'true' : 'false' }, main, showSide ? side : null);
+    const tools = el('div', { class: 'map-tools' }, toolbar, createLegend({ dated }));
+    // Independent course pages may prioritize the interactive map over secondary suggestion cards.
+    // Keep DOM and keyboard order consistent with visual order.
+    root.replaceChildren(live, header, tools, search, ...(input.mapFirst ? [body, meta] : [meta, body]));
 
     if (route.layout === 'map') {
       stageCtl = createStage({ label: stop ? `${stop.title} skill map` : `${model.courseTitle} course map`, onZoomChange: (z) => { zoomLevel = z; root.dataset.zoom = String(z); } });
