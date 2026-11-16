@@ -100,7 +100,11 @@ test('course cards open course maps and search survives practice return', { time
       }
     }
   }
-  await page.select('#guest-course-switch', 'csp');
+  // Course switching now happens from the Courses destination, not above the Advanced CS map.
+  assert.equal(await page.$('#guest-course-switch'), null);
+  await page.goto(dev.url + '/cs-games/');
+  await Promise.all([page.waitForNavigation(), page.click('.course-card a[href*="course=csp"]')]);
+  await page.waitForSelector('.map-app');
   assert.equal(new URL(page.url()).searchParams.get('course'), 'csp');
   for (const layout of ['map', 'list']) {
     await page.focus('[data-layout="' + layout + '"]');
