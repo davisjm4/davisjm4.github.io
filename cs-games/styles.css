@@ -357,3 +357,33 @@ h3 { font-size: 1.2rem; margin: 8px 0; }
   .home-page .student-entry,
   .home-page .teacher-entry { font-size: .84rem; }
 }
+
+/* Course selection stays a compact 2×2 grid on phones, not a long vertical stack. */
+.home-page .course-name-short { display: none; }
+@media (max-width: 820px) {
+  .home-page .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .home-page .course-grid { gap: 10px; }
+  .home-page .course-card {
+    padding: 14px;
+    min-height: 160px;
+    gap: 14px;
+  }
+  .home-page .course-name-full { display: none; }
+  .home-page .course-name-short { display: inline; }
+  .home-page .course-card h2 { font-size: clamp(1.03rem, 4.3vw, 1.25rem); line-height: 1.23; margin: 0; overflow-wrap: normal; }
+  .home-page .course-card p { display: none; }
+  .home-page .course-link {
+    width: 100%;
+    min-height: 42px;
+    padding: 8px 10px;
+    font-size: .88rem;
+    gap: 5px;
+  }
+  .home-page .course-card .course-link > span { flex-shrink: 0; }
+}
+@media (max-width: 380px) {
+  .home-page .course-card { min-height: 154px; padding: 12px; }
+  .home-page .course-link { font-size: .8rem; padding: 8px; }
+}
