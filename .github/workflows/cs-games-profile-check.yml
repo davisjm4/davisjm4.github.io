@@ -1,10 +1,10 @@
 name: CS Games backend integration
 on:
   pull_request:
-    paths: ['cs-games/student/**', 'cs-games/teacher/**', 'cs-games/pathway/**', 'java-games/session.js', 'csp-games/session.js', 'wpr-games/workplace-readiness/**', '.github/workflows/cs-games-profile-check.yml']
+    paths: ['cs-games/student/**', 'cs-games/teacher/**', 'cs-games/pathway/**', 'java-games/session.js', 'csp-games/session.js', 'csp-games/roundoff-overflow-lab/**', 'csp-games/exam-readiness/mapping.js', 'wpr-games/workplace-readiness/**', '.github/workflows/cs-games-profile-check.yml']
   push:
     branches: [main]
-    paths: ['cs-games/student/**', 'cs-games/teacher/**', 'cs-games/pathway/**', 'java-games/session.js', 'csp-games/session.js', 'wpr-games/workplace-readiness/**', '.github/workflows/cs-games-profile-check.yml']
+    paths: ['cs-games/student/**', 'cs-games/teacher/**', 'cs-games/pathway/**', 'java-games/session.js', 'csp-games/session.js', 'csp-games/roundoff-overflow-lab/**', 'csp-games/exam-readiness/mapping.js', 'wpr-games/workplace-readiness/**', '.github/workflows/cs-games-profile-check.yml']
   workflow_dispatch:
 permissions:
   contents: read
