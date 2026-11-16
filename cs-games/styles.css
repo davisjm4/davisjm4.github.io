@@ -327,3 +327,33 @@ h3 { font-size: 1.2rem; margin: 8px 0; }
 @media (prefers-reduced-motion: reduce) {
   .home-page .course-card { transition: none; }
 }
+
+/* Student and teacher entry points remain visible at every viewport width. */
+.home-page .home-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+.home-page .student-entry {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 9px 4px;
+  color: var(--accent);
+  font-weight: 750;
+  white-space: nowrap;
+}
+.home-page .student-entry:hover,
+.home-page .student-entry:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 680px) {
+  .home-page .home-nav { flex-wrap: wrap; }
+  .home-page .home-header-actions { flex: 1 0 100%; justify-content: space-between; }
+  .home-page .student-entry { padding-left: 0; }
+}
+@media (max-width: 360px) {
+  .home-page .home-header-actions { gap: 4px 8px; }
+  .home-page .student-entry,
+  .home-page .teacher-entry { font-size: .84rem; }
+}
