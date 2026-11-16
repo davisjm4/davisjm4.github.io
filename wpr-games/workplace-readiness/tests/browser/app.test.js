@@ -375,8 +375,9 @@ test('performance: first interactive within budget and bundle size reasonable', 
   await closePage(p);
 });
 
-test('hosting: works from a GitHub Pages subfolder, a host root and file:// with relative paths only', { timeout: 120000 }, async () => {
+test('hosting: works from a GitHub Pages subfolder, a host root and file:// with relative paths only', { timeout: 120000 }, async t => {
   const rootServer = await serve('');
+  t.after(() => rootServer.srv.close());
   const targets = [['subfolder', url], ['root', rootServer.url], ['file', 'file://' + path.join(__dirname, '..', '..', 'index.html')]];
   for (const [label, target] of targets) {
     const ctx = browser.createBrowserContext ? await browser.createBrowserContext() : await browser.createIncognitoBrowserContext();
@@ -389,5 +390,4 @@ test('hosting: works from a GitHub Pages subfolder, a host root and file:// with
     assert.deepEqual(external, [], label + ' made external requests');
     await ctx.close();
   }
-  rootServer.srv.close();
 });

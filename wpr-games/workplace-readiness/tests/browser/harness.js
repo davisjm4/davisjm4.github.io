@@ -2,6 +2,8 @@
 /* Browser test harness: serves the app over HTTP (like GitHub Pages) and launches headless Chromium. */
 const http = require('http'), fs = require('fs'), path = require('path');
 const ROOT = path.join(__dirname, '..', '..');
+const SHARED_ROOT = path.resolve(ROOT, '../../cs-games');
+const WPR_ROUTE = '/wpr-games/workplace-readiness';
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.md': 'text/markdown' };
 
 function serve(prefix) {
@@ -9,11 +11,15 @@ function serve(prefix) {
   return new Promise(resolve => {
     const srv = http.createServer((req, res) => {
       let p = decodeURIComponent(req.url.split('?')[0]);
-      if (prefix && p.startsWith(prefix)) p = p.slice(prefix.length);
+      for (const route of [prefix, WPR_ROUTE]) {
+        if (route && (p === route || p.startsWith(route + '/'))) { p = p.slice(route.length); break; }
+      }
       if (p === '' || p === '/') p = '/index.html';
       if (p === '/favicon.ico') { res.writeHead(204); return res.end(); }
-      const f = p === '/cs-games/navigation.css' ? path.resolve(ROOT, '../../cs-games/navigation.css') : path.join(ROOT, p);
-      if ((!f.startsWith(ROOT) && p !== '/cs-games/navigation.css') || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); return res.end('not found'); }
+      const shared = p.startsWith('/cs-games/');
+      const root = shared ? SHARED_ROOT : ROOT;
+      const f = path.resolve(root, '.' + (shared ? p.slice('/cs-games'.length) : p));
+      if (!f.startsWith(root + path.sep) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); return res.end('not found'); }
       res.writeHead(200, { 'Content-Type': TYPES[path.extname(f)] || 'application/octet-stream' });
       fs.createReadStream(f).pipe(res);
     }).listen(0, '127.0.0.1', () => resolve({ srv, url: 'http://127.0.0.1:' + srv.address().port + prefix + '/' }));
