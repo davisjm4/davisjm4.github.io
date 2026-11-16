@@ -6,6 +6,9 @@ import {readFileSync, mkdtempSync, existsSync, rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {setTimeout as delay} from 'node:timers/promises';
+import graph from '../pathway/curriculum-graph.json' with {type:'json'};
+import {TIERS} from '../pathway/requirements/recommended.mjs';
+import {WPR_AUTOMATIC} from '../pathway/mastery/wpr-automatic.mjs';
 import {startDev} from '../../wpr-games/workplace-readiness/service/dev.mjs';
 const require=createRequire(new URL('../../wpr-games/workplace-readiness/package.json',import.meta.url));
 const {launch}=require('./tests/browser/harness.js');
@@ -319,7 +322,6 @@ test('WPR practice syncs only its primary skill to the enrolled student Map and 
 
   await student.goto(url+'/wpr-games/workplace-readiness/');
   await wait(student,'#opt-skill');
-  await student.select('#opt-skill','listening-and-speaking');
   await student.select('#opt-mode','decision');
   await student.click('#btn-start');
   let primary;
@@ -338,7 +340,7 @@ test('WPR practice syncs only its primary skill to the enrolled student Map and 
     if(q.primary&&q.tags.length>1) primary=q.primary;
     if(!primary) await student.click('#btn-next');
   }
-  assert.ok(primary,'the focused practice must show an eligible multi-tag question');
+  assert.ok(primary,'the practice stream must show an eligible multi-tag question');
   await student.evaluate(async()=>{
     const {syncQueuedPractice}=await import('/wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1');
     await syncQueuedPractice();
@@ -354,11 +356,13 @@ test('WPR practice syncs only its primary skill to the enrolled student Map and 
 
   await student.goto(url+'/cs-games/student/');
   const skill='[data-node-id="node:workplace:'+primary+'"]';
-  const area='.stop-open[data-stop-id="area:workplace:listening-and-speaking"]';
-  const progress=()=>student.waitForFunction((skill,count)=>{
+  const node=graph.nodes.find(n=>n.id==='node:workplace:'+primary);
+  const area='.stop-open[data-stop-id="'+node.areaId+'"]';
+  const target=TIERS.find(tier=>tier.id===WPR_AUTOMATIC[primary]).minimumQuestions;
+  const progress=()=>student.waitForFunction((skill,count,target)=>{
     const panel=document.querySelector('.skill-panel'+skill);
-    return panel?.innerText.includes(count+' of 20');
-  },{timeout:10000},skill,expected.get(primary));
+    return [...(panel?.querySelectorAll('.stats dd')??[])].some(d=>d.textContent===count+' of '+target);
+  },{timeout:10000},skill,expected.get(primary),target);
   await exactButton(student,'Map','#student-pathway');
   if(await student.$('.skill-node'+skill)===null){
     await wait(student,area);
