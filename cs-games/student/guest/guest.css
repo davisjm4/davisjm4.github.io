@@ -83,3 +83,20 @@ li.guest-suggested { box-shadow: -4px 0 0 var(--accent); padding-left: .6rem; }
 
 .guest-course-switch { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
 .guest-course-switch select { max-width: 100%; min-height: 44px; font: inherit; color: inherit; background: var(--panel); border: 1px solid var(--line); border-radius: .5rem; padding: .375rem .625rem; }
+
+/* Independent Advanced CS: put the learning map first without changing class pathways. */
+body[data-guest-course="advanced"] .guest-wrap { padding-top: 18px; }
+body[data-guest-course="advanced"] .guest-wrap > h1 { font-size: 1.4rem; margin: 0 0 4px; }
+body[data-guest-course="advanced"] .guest-wrap > .lede { font-size: .9rem; line-height: 1.35; margin: 0 0 10px; }
+body[data-guest-course="advanced"] .guest-join { display: none; }
+body[data-guest-course="advanced"] .guest-course-switch { margin-bottom: 6px; }
+body[data-guest-course="advanced"] .guest-map-host { margin-top: 4px; }
+body[data-guest-course="advanced"] .map-app .map-head { margin-bottom: 6px; }
+body[data-guest-course="advanced"] .map-app .crumbs { min-height: 30px; }
+body[data-guest-course="advanced"] .map-app .map-meta { margin-top: 14px; }
+@media (max-width: 560px) {
+  body[data-guest-course="advanced"] .guest-wrap { padding-top: 12px; }
+  body[data-guest-course="advanced"] .guest-wrap > h1 { font-size: 1.25rem; }
+  body[data-guest-course="advanced"] .map-app .map-title { font-size: 1.35rem; }
+  body[data-guest-course="advanced"] .map-app .map-viewport { height: clamp(410px, 68dvh, 720px); }
+}
