@@ -1,4 +1,5 @@
 @import url("../csp-games/style.css?v=platform-java-v3");
+@import url("../cs-games/practice/shell.css?v=1");
 
 .compiler-diagnostic {
   font-family: monospace;
