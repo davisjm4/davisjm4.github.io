@@ -20,7 +20,7 @@ assert.ok(hub.querySelector('.student-entry[href="./student/"]'),'Join a Class /
 assert.equal(hub.querySelectorAll('.home-nav a').length,3,'Only brand, Join a Class, and Teacher Tools belong in the homepage header');
 assert.equal(hub.querySelector('.how'),null,'No competing Explore/Join panel on the homepage');
 assert.equal(hub.querySelectorAll('.course-actions a').length,0,'No duplicate Browse activities actions on the homepage');
-assert.ok(hub.querySelector('#shared-tools a[href="/wpr-games/raceces/"]'));
+assert.equal(hub.querySelector('#shared-tools'),null,'The homepage footer should not feature RACECES');
 for(const course of ['advanced','csp','robotics','workplace'])assert.ok(hub.querySelector('.course-card a[href="./student/guest/?course='+course+'"]'));
 for(const coursePath of ['csp','advanced','robotics'])assert.ok(fs.existsSync(path.join(root,'cs-games',coursePath,'index.html')),'Legacy course catalog must remain reachable');
 assert.ok(fs.existsSync(path.join(root,'wpr-games/workplace-readiness/index.html')),'Legacy Workplace catalog must remain reachable');
