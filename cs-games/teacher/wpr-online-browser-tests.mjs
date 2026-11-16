@@ -7,8 +7,6 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {setTimeout as delay} from 'node:timers/promises';
 import graph from '../pathway/curriculum-graph.json' with {type:'json'};
-import {TIERS} from '../pathway/requirements/recommended.mjs';
-import {WPR_AUTOMATIC} from '../pathway/mastery/wpr-automatic.mjs';
 import {startDev} from '../../wpr-games/workplace-readiness/service/dev.mjs';
 const require=createRequire(new URL('../../wpr-games/workplace-readiness/package.json',import.meta.url));
 const {launch}=require('./tests/browser/harness.js');
@@ -295,7 +293,7 @@ test('Loop Lab attempts reach a recovered CS Games profile after reconnecting', 
   assert.deepEqual(errors,[]);
 });
 
-test('WPR practice syncs only its primary skill to the enrolled student Map and List', {timeout:90000}, async t=>{
+test('WPR issues a server-checked question, reveals comparisons after scoring and leaves Map/List mastery uncredited', {timeout:90000}, async t=>{
   const {url,server,db}=await startDev({teacherTokens:{teacher:token}});
   let browser;
   t.after(async()=>{
@@ -321,48 +319,40 @@ test('WPR practice syncs only its primary skill to the enrolled student Map and 
   await Promise.all([student.waitForNavigation(),exactButton(student,'I saved my recovery credential')]);
 
   await student.goto(url+'/wpr-games/workplace-readiness/');
-  await wait(student,'#opt-skill');
-  await student.select('#opt-mode','decision');
-  await student.click('#btn-start');
-  let primary;
-  const expected=new Map();
-  for(let i=0;i<25&&!primary;i++){
-    await wait(student,'#btn-check');
-    const q=await student.evaluate(async()=>{
-      const {primaryAttribution}=await import('/cs-games/pathway/wpr-primary-concepts.mjs');
-      const item=WRG.app.state().current;
-      return {primary:primaryAttribution(item)?.conceptId, best:item.key.bestId, tags:item.concepts};
-    });
-    await student.click('.choice[data-id="'+q.best+'"]');
-    await student.click('#btn-check');
-    await wait(student,'#btn-next');
-    if(q.primary) expected.set(q.primary,(expected.get(q.primary)??0)+1);
-    if(q.primary&&q.tags.length>1) primary=q.primary;
-    if(!primary) await student.click('#btn-next');
-  }
-  assert.ok(primary,'the practice stream must show an eligible multi-tag question');
-  await student.evaluate(async()=>{
-    const {syncQueuedPractice}=await import('/wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1');
-    await syncQueuedPractice();
-  });
-  await student.waitForFunction(()=>!Object.keys(localStorage).some(k=>k.includes('.outbox.')),{timeout:10000});
-  const rows=db.prepare("SELECT data FROM performance_events WHERE json_extract(data,'$.evidenceRevision')='wpr-primary-v1'").all();
-  assert.equal(rows.length,[...expected.values()].reduce((a,b)=>a+b,0));
-  for(const row of rows){
-    const data=JSON.parse(row.data);
-    assert.ok(expected.has(data.topic));
-    assert.deepEqual(data.dimensions,[{scope:'node',id:'node:workplace:'+data.topic,n:1,c:1}]);
-  }
+  await exactButton(student,'Try server-checked practice');
+  await wait(student,'#verified-wpr #btn-check');
+  assert.equal(await student.$('#verified-wpr .feedback'),null);
+  await student.evaluate(()=>[...document.querySelectorAll('#verified-wpr .choice')].find(o=>o.textContent.includes('Help the coworker begin')).click());
+  await student.click('#verified-wpr #btn-check');
+  await wait(student,'#verified-wpr .feedback');
+  assert.match(await student.$eval('#verified-wpr .feedback',node=>node.textContent),/Best professional response.*posted response/);
+  const row=db.prepare("SELECT data FROM performance_events WHERE json_extract(data,'$.format')='wpr-issued-v1'").get();
+  const stored=JSON.parse(row.data);
+  assert.equal(stored.topic,'workplace-safety:emergency-protocols');
+  assert.equal(stored.correct,true);
+  assert.deepEqual(stored.dimensions,[]);
+  await student.click('#verified-wpr #btn-next');
+  await student.waitForFunction(()=>document.querySelector('#verified-wpr .scenario')?.textContent.includes('Mina'));
+  await student.setOfflineMode(true);
+  await student.evaluate(()=>[...document.querySelectorAll('#verified-wpr .choice')].find(o=>o.textContent.includes('Credit Mina for designing')).click());
+  await student.click('#verified-wpr #btn-check');
+  await student.waitForFunction(()=>document.querySelector('#verified-wpr')?.textContent.includes('Response saved on this device'));
+  assert.equal(await student.$('#verified-wpr .feedback'),null);
+  await student.setOfflineMode(false);
+  await student.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
+  const delayed=db.prepare("SELECT data FROM performance_events WHERE json_extract(data,'$.topic')='teamwork:respect-contributions'").get();
+  assert.ok(delayed);
+  assert.equal(JSON.parse(delayed.data).correct,true);
 
   await student.goto(url+'/cs-games/student/');
+  const primary=stored.topic;
   const skill='[data-node-id="node:workplace:'+primary+'"]';
   const node=graph.nodes.find(n=>n.id==='node:workplace:'+primary);
   const area='.stop-open[data-stop-id="'+node.areaId+'"]';
-  const target=TIERS.find(tier=>tier.id===WPR_AUTOMATIC[primary]).minimumQuestions;
-  const progress=()=>student.waitForFunction((skill,count,target)=>{
+  const progress=()=>student.waitForFunction(skill=>{
     const panel=document.querySelector('.skill-panel'+skill);
-    return [...(panel?.querySelectorAll('.stats dd')??[])].some(d=>d.textContent===count+' of '+target);
-  },{timeout:10000},skill,expected.get(primary),target);
+    return /teacher/i.test(panel?.textContent??'') && !panel?.querySelector('.stats');
+  },{timeout:10000},skill);
   await exactButton(student,'Map','#student-pathway');
   if(await student.$('.skill-node'+skill)===null){
     await wait(student,area);

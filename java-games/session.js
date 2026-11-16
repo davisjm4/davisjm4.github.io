@@ -442,14 +442,15 @@ export function addSessionNavigation(home = "../") {
   if (typeof document === "undefined") return;
   const header =
     document.querySelector("header") || document.querySelector("nav");
+  const sharedShell = document.body.classList.contains("practice-shell");
   if (header && !header.querySelector("[data-my-session]")) {
     const entry = document.createElement("a");
     entry.href = "/cs-games/student/session/?course=advanced" + (activeProfile ? "" : "&learner=guest");
-    entry.textContent = "My Session";
+    entry.textContent = sharedShell ? "View Session" : "My Session";
     entry.dataset.mySession = "true";
     header.appendChild(entry);
   }
-  if (header && !header.querySelector("[data-session-link]")) {
+  if (!sharedShell && header && !header.querySelector("[data-session-link]")) {
     const a = document.createElement("a");
     a.href = home + "session-summary/";
     a.textContent = "Session Summary";

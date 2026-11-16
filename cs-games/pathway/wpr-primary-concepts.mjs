@@ -16,7 +16,6 @@
  * No educator has reviewed this table. The attribution tests assert each primary is one of the unit's own tags and that no other tag
  * is credited. Pure functions; no DOM, no storage, no network.
  */
-import { WPR_AUTOMATIC, WPR_PERFORMANCE_ONLY, isAutomatic } from "./mastery/wpr-automatic.mjs";
 
 export const ATTRIBUTION_VERSION = 1;
 export const WPR_PRACTICE_ACTIVITY = "workplace-readiness";
@@ -498,7 +497,6 @@ export const COMPOSED_PRIMARY = Object.freeze({
  }
 });
 
-export { WPR_AUTOMATIC, WPR_PERFORMANCE_ONLY, isAutomatic };
 
 const split = (entry) => { const [conceptId, confidence] = entry.split("|"); return { conceptId, confidence }; };
 
@@ -536,16 +534,4 @@ export function reviewedPrimary(question) {
   if (!entry) return null;
   if (Array.isArray(question.concepts) && !question.concepts.includes(entry.conceptId)) return null;
   return { key, conceptId: entry.conceptId, confidence: entry.confidence };
-}
-
-/* The single concept a displayed question earns node credit for, or null. Null when there is no reviewed primary or its node is not enabled. */
-export function primaryAttribution(question) {
-  const primary = reviewedPrimary(question);
-  return primary && isAutomatic(primary.conceptId) ? primary : null;
-}
-
-/* Server check: may an event that names this reasoning key credit this concept? Never true for a concept the table does not name or a node that is not enabled. */
-export function verifyPrimary(key, conceptId) {
-  const entry = primaryForKey(key);
-  return Boolean(entry) && entry.conceptId === conceptId && isAutomatic(conceptId);
 }

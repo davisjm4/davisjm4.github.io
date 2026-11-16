@@ -1,5 +1,8 @@
 # Workplace Readiness mastery evidence review
 
+> The later [PR #49 repair](PR49_REPAIR.md) documents authenticated scoring and the automated coverage decision. The original findings below describe the earlier draft.
+
+
 Release status is **held**. The integration branch exercises the 30 proposed defaults in synthetic tests. A Workplace Readiness educator must approve the eligible reasoning units, and the service must bind node credit to the actual scored question before activation. Production remains on PR #48 with zero automatic Workplace Readiness nodes.
 
 ## Provenance and coverage

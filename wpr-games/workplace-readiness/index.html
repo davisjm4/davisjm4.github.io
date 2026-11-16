@@ -41,6 +41,7 @@
         <button type="button" class="btn" id="btn-continue" hidden>Continue practice</button>
         <button type="button" class="btn quiet" id="btn-home-summary" hidden>View session summary</button>
       </div>
+      <section id="verified-wpr" hidden aria-label="Server-checked class practice"></section>
       <p class="privacy">Guest practice stays on this device. If you sign into a class profile, your teacher can see your synced progress by profile ID.</p>
     </section>
 
@@ -82,10 +83,10 @@
   <script src="online/profile-device.js?v=guest-map-v1"></script>
   <script src="js/app/storage.js?v=profile-scope-v1"></script>
   <script src="js/app/session.js"></script>
-  <script src="js/app/ui.js"></script>
+  <script src="js/app/ui.js?v=wpr-issued-v1"></script>
   <script src="js/app/targeted.js"></script>
-  <script src="js/app/app.js?v=wpr-node-evidence-v1"></script>
-  <script>if (location.protocol !== 'file:') import('./online/student.mjs?v=wpr-node-evidence-v1');</script>
+  <script src="js/app/app.js?v=wpr-issued-v1"></script>
+  <script>if (location.protocol !== 'file:') import('./online/student.mjs?v=wpr-issued-v1');</script>
   <script type="module">
     if (location.protocol !== 'file:' && new URLSearchParams(location.search).has('returnTo')) {
       const [{ activeProfile }, { addPracticeReturn }] = await Promise.all([

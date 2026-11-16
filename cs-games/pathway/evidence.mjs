@@ -1,5 +1,4 @@
 import {resolveRecord} from '../../csp-games/exam-readiness/mapping.js';
-import {verifyPrimary} from './wpr-primary-concepts.mjs';
 // Called by a trusted source grader/profile adapter, never from a page visit.
 // requestedMode may be Mixed; assessedMode and source family identify the actual question.
 export function questionEvidence(graph,event,{trusted=false}={}) {
@@ -12,10 +11,7 @@ export function questionEvidence(graph,event,{trusted=false}={}) {
     nodeIds=graph.nodes.filter(n=>n.courseId==='robotics'&&n.familySelectors.some(s=>
       s.activityId===event.activityId&&s.category===event.topic&&s.modes?.includes(assessedMode))).map(n=>n.id);
   }else if(event.courseId==='workplace'){
-    // Workplace Readiness: the client names the reasoning unit (familyId) and its primary concept (topic). Credit only the one node of a concept the
-    // attribution table justifies for that unit; every other tag of the question, and every unverified claim, earns nothing.
-    if(verifyPrimary(event.familyId,event.topic))nodeIds=graph.nodes.filter(n=>n.courseId==='workplace'&&n.practice.some(a=>a.activityId===event.activityId)&&
-      n.familySelectors.some(s=>s.activityId===event.activityId&&s.conceptId===event.topic)).map(n=>n.id);
+    // Workplace node credit comes only from the service's issued-question adapter.
   }else if(event.nodeIds){nodeIds=event.nodeIds.filter(id=>graph.nodes.some(n=>n.id===id&&n.practice.some(a=>a.activityId===event.activityId)));}
   else nodeIds=graph.nodes.filter(n=>n.familySelectors.some(s=>s.activityId===event.activityId&&(s.modeId===assessedMode||s.modeIds?.includes(assessedMode)))).map(n=>n.id);
   const family=graph.questionFamilies.filter(f=>f.activityId===event.activityId&&f.sourceFamilyId===event.familyId);

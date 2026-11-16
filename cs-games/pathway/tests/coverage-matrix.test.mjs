@@ -24,10 +24,10 @@ test('automatic and pending rows match the candidate recommendation rules', () =
   const tiers = new Map(auditRecommended(graph, registry).map(r => [r.nodeId, r.tier]));
   for (const row of matrix.rows) {
     const auto = row.status === 'already-automatic' || row.status === 'newly-validated';
-    const pending = row.status === 'pending-educator-review';
-    assert.equal(Boolean(tiers.get(row.nodeId)), auto || pending, row.nodeId);
+    const pending = row.status === 'insufficient-diversity';
+    assert.equal(Boolean(tiers.get(row.nodeId)), auto, row.nodeId);
     if (pending) assert.equal(row.currentRoute, 'teacher-assessment', row.nodeId);
-    assert.equal(row.proposedTier, tiers.get(row.nodeId) ?? '', row.nodeId);
+    if (!pending) assert.equal(row.proposedTier, tiers.get(row.nodeId) ?? '', row.nodeId);
   }
 });
 
@@ -43,7 +43,7 @@ test('every exception has a category, status, rationale, recommendation and conf
 
 test('only measured nodes may claim high confidence; no unmeasured node gets a tier', () => {
   for (const r of matrix.rows.filter(r => r.currentRoute === 'teacher-assessment' && r.confidence === 'high')) assert.ok(r.measuredDistinct, `${r.nodeId} high confidence needs a measured value`);
-  for (const r of matrix.rows.filter(r => r.currentRoute === 'teacher-assessment' && r.status !== 'pending-educator-review')) assert.equal(r.proposedTier, '', r.nodeId);
+  for (const r of matrix.rows.filter(r => r.currentRoute === 'teacher-assessment' && r.status !== 'insufficient-diversity')) assert.equal(r.proposedTier, '', r.nodeId);
 });
 
 test('summary totals add up', () => {

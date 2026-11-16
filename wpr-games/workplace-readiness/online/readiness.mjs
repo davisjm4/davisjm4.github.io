@@ -1,6 +1,5 @@
 import { VERSION, performanceCsv, evidence, dimensions, isId } from './model.mjs';
 import { queuePractice } from './profile-student.mjs?v=guest-map-v1';
-import { queueNodeAttempt } from './node-evidence.mjs?v=wpr-node-evidence-v1';
 import { el, button, pct, table, download } from './dom.mjs';
 const W = globalThis.WRG;
 const KEY = W.profileDevice?.key('wrg.readiness.v1') || 'wrg.readiness.v1';
@@ -137,9 +136,8 @@ function recordDimension(d, right) {
   arr.push(right?1:0);
   if (arr.length>30) arr.shift();
 }
-export function recordPractice(q, right, context = {}) {
+export function recordPractice(q, right) {
   queuePractice(q,right);
-  queueNodeAttempt(q,right,context);
   const skill = W.content.skills.find(s=>s.id===q.skill);
   for (const d of dimensions({skillId:q.skill,topic:skill?.name,tags:q.tags})) {
     recordDimension(d,right);

@@ -1,9 +1,5 @@
-// Data only: which Workplace Readiness concepts earn automatic practice credit, and at which starting requirement tier.
-/* Concepts whose reviewed question bank passes the activation rules in audit/wpr-mastery/coverage.mjs (at least 4 distinct reasoning units,
- * 3 of them high confidence, 2 question modes, no more than 10 required questions per unit, and no answer-length shortcut), with the requirement tier their questions
- * warrant. Only these concepts earn node credit and a starting requirement. Every other Workplace Readiness skill stays teacher-assessed.
- * The list is regenerated from the catalog; the coverage test fails when the two disagree. */
-export const WPR_AUTOMATIC = Object.freeze({
+// Proposed tiers are historical inputs. Runtime recommendations use the separate release allowlist below.
+export const WPR_CANDIDATE_TIERS = Object.freeze({
  "big-picture-thinking:impacts-of-actions": "complex-reasoning",
  "career-and-life-management:benefits-and-resources": "complex-reasoning",
  "career-and-life-management:qualifications-and-advancement": "complex-reasoning",
@@ -35,7 +31,8 @@ export const WPR_AUTOMATIC = Object.freeze({
  "teamwork:team-communication": "complex-reasoning",
  "workplace-safety:emergency-protocols": "complex-reasoning"
 });
-export const isAutomatic = (conceptId) => Object.hasOwn(WPR_AUTOMATIC, conceptId);
+// The release validator must certify enough independent units before a tier is enabled.
+export const WPR_AUTOMATIC = Object.freeze({});
 
 /* Concepts whose title names a performed or demonstrated behaviour (the coverage audit's judgment, pending educator confirmation).
  * Scenario questions can show knowledge of the expectation, not the behaviour, so these never become automatic. */

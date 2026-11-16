@@ -15,9 +15,15 @@ const has=(d,p,url)=>[...d.querySelectorAll('a[href]')].some(a=>target(a,p)===ur
 const sandbox={window:{}};vm.runInNewContext(read('cs-games/catalog.js'),sandbox);const catalog=sandbox.window.CSGamesCatalog;
 const hub=doc('cs-games/index.html');
 assert.equal(hub.querySelectorAll('.course-card').length,4);
-for(const url of ['/cs-games/csp/','/cs-games/advanced/','/wpr-games/workplace-readiness/','/cs-games/robotics/'])assert.ok(has(hub,'cs-games/index.html',url),url);
-assert.ok(hub.querySelector('#shared-tools a[href="/wpr-games/raceces/"]'));
+assert.ok(hub.querySelector('.teacher-entry[href="./teacher/"]'),'Teacher Tools should be directly available in the header');
+assert.ok(hub.querySelector('.student-entry[href="./student/"]'),'Join a Class / Sign In should open the existing class entry');
+assert.equal(hub.querySelectorAll('.home-nav a').length,3,'Only brand, Join a Class, and Teacher Tools belong in the homepage header');
+assert.equal(hub.querySelector('.how'),null,'No competing Explore/Join panel on the homepage');
+assert.equal(hub.querySelectorAll('.course-actions a').length,0,'No duplicate Browse activities actions on the homepage');
+assert.equal(hub.querySelector('#shared-tools'),null,'The homepage footer should not feature RACECES');
 for(const course of ['advanced','csp','robotics','workplace'])assert.ok(hub.querySelector('.course-card a[href="./student/guest/?course='+course+'"]'));
+for(const coursePath of ['csp','advanced','robotics'])assert.ok(fs.existsSync(path.join(root,'cs-games',coursePath,'index.html')),'Legacy course catalog must remain reachable');
+assert.ok(fs.existsSync(path.join(root,'wpr-games/workplace-readiness/index.html')),'Legacy Workplace catalog must remain reachable');
 for(const course of ['csp','advanced','robotics']){
  const page=`cs-games/${course}/index.html`;const d=doc(page);
  assert.ok(has(d,page,'/cs-games/'));assert.ok(has(d,page,'/wpr-games/raceces/'));
@@ -56,5 +62,19 @@ for(const [p,urls] of [
 assert.ok(doc('wpr-games/raceces/index.html').querySelector('#subject-select'));
 for(const id of ['opt-skill','opt-mode','opt-difficulty','nav-summary','brand-link'])assert.ok(doc('wpr-games/workplace-readiness/index.html').getElementById(id));
 assert.equal(doc('wpr-games/workplace-readiness/index.html').getElementById('brand-link').getAttribute('href'),'#/');
-assert.equal(doc('wpr-games/raceces/index.html').querySelector('a[href="/cs-games/#shared-tools"]').textContent,'Shared Tools');
+assert.equal(doc('wpr-games/raceces/index.html').querySelector('a[href="/wpr-games/workplace-readiness/"]').textContent,'Workplace Readiness');
 console.log('PASS hub, four pathways, shared RACECES, WPR skill-selection return, subject selector, summaries and legacy routes. No navigation code accesses storage.');
+
+
+const sharedShell=read('cs-games/practice/shell.css');
+assert.ok(sharedShell.includes('body.practice-shell #stage .actions > #feedback'),'Shared practice shell keeps feedback adjacent to question controls');
+assert.ok(read('java-games/style.css').includes('cs-games/practice/shell.css'),'Java practice uses the shared shell');
+assert.ok(read('java-games/app.js').includes("document.body.classList.add('practice-shell')"),'Java engine opts into the shell');
+assert.ok(read('java-games/app.js').includes('<button id="show" class="secondary" hidden>Show Answer</button>'),'Java solutions should not be revealed before answering');
+assert.ok(read('java-games/app.js').includes('$("show").hidden = false; // The student has submitted an answer.'),'A scored first response can unlock the optional reveal');
+assert.ok(doc('java-games/loop-lab/index.html').body.classList.contains('practice-shell'),'Loop Lab opts into shared shell');
+const roundoffShell=doc('csp-games/roundoff-overflow-lab/index.html');
+assert.ok(roundoffShell.body.classList.contains('practice-shell'),'Roundoff Lab opts into shared shell');
+assert.ok(roundoffShell.querySelector('[data-my-session]'),'Roundoff Lab offers View Session');
+assert.equal(roundoffShell.querySelector('[data-session-link]'),null,'Roundoff Lab has no duplicate Session Summary link');
+console.log('PASS shared practice shell integration and first-answer solution gating.');

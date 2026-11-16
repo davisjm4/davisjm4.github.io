@@ -1,10 +1,12 @@
+import { mountIssuedPractice } from './issued-practice.mjs';
 import { request } from './config.mjs';
-import { addReport, displayReport, feedbackNodes } from './readiness.mjs?v=wpr-node-evidence-v1';
+import { addReport, displayReport, feedbackNodes } from './readiness.mjs?v=wpr-issued-v1';
 import { el, button } from './dom.mjs';
 
 const id=new URL(location.href).searchParams.get('assignment');
 let memory = {};
 if (id) init();
+else mountIssuedPractice();
 async function init() {
   const host=document.getElementById('assignment-body');
   host.hidden=false;

@@ -10,7 +10,7 @@ if (nav) {
   try { hasClass ||= classProfileActive(localStorage); } catch { /* The class page handles unavailable storage. */ }
   const links = [
     ['Courses', '/cs-games/student/guest/?choose=1', page === 'courses'],
-    ['My Session', '/cs-games/student/session/' + (independent ? '?learner=guest' : ''), page === 'session'],
+    ...(page === 'courses' ? [] : [['My Session', '/cs-games/student/session/' + (independent ? '?learner=guest' : ''), page === 'session']]),
     [hasClass ? 'My Class' : 'Join a Class', '/cs-games/student/', page === 'class'],
     ...(page === 'class' ? [['Student profile', '#student-profile', false]] : []),
     ['Teacher Tools', '/cs-games/teacher/', false],
@@ -29,5 +29,6 @@ if (nav) {
       menu.querySelector('summary').focus();
     }
   });
-  nav.replaceChildren(el('a', { class: 'brand', href: '/cs-games/', text: 'CS Games', 'aria-current': page === 'home' ? 'page' : undefined }), menu);
+  nav.replaceChildren(el('a', { class: 'brand', href: '/cs-games/', text: 'CS Games', 'aria-current': page === 'home' ? 'page' : undefined }),
+    ...(page === 'courses' ? [el('a', { class: 'guest-session-nav', href: '/cs-games/student/session/?learner=guest', text: 'View Session' })] : []), menu);
 }

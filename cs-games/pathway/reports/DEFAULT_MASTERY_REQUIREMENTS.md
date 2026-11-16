@@ -1,5 +1,8 @@
 # Default class practice requirements
 
+> The later [PR #49 repair](wpr-mastery/PR49_REPAIR.md) documents authenticated scoring and the automated coverage decision. The original findings below describe the earlier draft.
+
+
 > Workplace Readiness status. The [draft evidence review](wpr-mastery/INDEPENDENT_REVIEW.md) documents 30 proposed requirements held pending educator approval and question-level integrity validation. The deployed classification remains 129 automatic nodes out of 290.
 
 
