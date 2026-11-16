@@ -15,7 +15,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=targeted-clarity-v1";
+} from "./session.js?v=shared-shell-v1";
 const esc = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -41,6 +41,7 @@ if (!slug) {
   addSessionNavigation("./");
 } else startGame();
 function startGame() {
+  document.body.classList.add('practice-shell');
   const game = J.games[slug],
     tracker = sessionTracker(),
     params = typeof URLSearchParams !== "undefined" && typeof location !== "undefined"
@@ -140,7 +141,7 @@ function startGame() {
           : q.kind === "assemble"
             ? `<details class="muted"><summary>Introductory type convention</summary><p>${esc(q.convention)}</p></details><div class="builder-fields">${q.fields.map((f) => `<label>${f.label}<select id="piece-${f.id}"><option value="" selected>Choose…</option>${f.choices.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join("")}</select></label>`).join("")}</div><pre id="assembly-preview">Choose declaration pieces.</pre>`
             : `<pre id="java-code" class="snippet">${q.kind === "select" ? renderNode(q.root) : esc(q.code)}</pre>${q.kind === "select" ? '<p>Tap a component; Expand Selection includes its surrounding statement or loop.</p><div class="row"><button id="expand" class="secondary" disabled>Expand Selection</button><button id="clear" class="secondary">Clear Selection</button></div><pre id="selected-text">No component selected.</pre>' : ""}`
-      }${slug === "array-lab" && q.kind !== "collection" ? `<h3>Starting collection</h3><div class="collection-row collection-start">${q.initial.map((v, i) => `<div class="collection-item"><small>index ${i}</small><button>${v}</button></div>`).join("")}</div>` : ""}${q.kind === "collection" ? '<div id="collection-editor"></div>' : ""}${q.kind === "value" ? `<div id="value-bank" class="row">${q.choices.map((v, i) => `<button class="secondary" data-value="${i}">${esc(v)}</button>`).join("")}</div>` : ""}${q.kind === "multi" ? `<div id="grid" class="java-grid">${q.cells.map((c) => `<button class="secondary" data-cell="${esc(c.id)}" aria-pressed="false">${esc(c.label)}</button>`).join("")}</div>` : ""}<div class="actions"><button id="check">Check Answer</button><div id="feedback" class="feedback" role="status" aria-atomic="true" tabindex="-1" hidden></div><button id="next" class="secondary">Next Challenge</button><button id="show" class="secondary">Show Answer</button>${q.trace ? '<button id="watch" class="secondary" hidden disabled>Watch Execution</button>' : ""}</div><section id="execution" hidden></section>`;
+      }${slug === "array-lab" && q.kind !== "collection" ? `<h3>Starting collection</h3><div class="collection-row collection-start">${q.initial.map((v, i) => `<div class="collection-item"><small>index ${i}</small><button>${v}</button></div>`).join("")}</div>` : ""}${q.kind === "collection" ? '<div id="collection-editor"></div>' : ""}${q.kind === "value" ? `<div id="value-bank" class="row">${q.choices.map((v, i) => `<button class="secondary" data-value="${i}">${esc(v)}</button>`).join("")}</div>` : ""}${q.kind === "multi" ? `<div id="grid" class="java-grid">${q.cells.map((c) => `<button class="secondary" data-cell="${esc(c.id)}" aria-pressed="false">${esc(c.label)}</button>`).join("")}</div>` : ""}<div class="actions"><button id="check">Check Answer</button><div id="feedback" class="feedback" role="status" aria-atomic="true" tabindex="-1" hidden></div><button id="next" class="secondary">Skip Question</button><button id="show" class="secondary" hidden>Show Answer</button>${q.trace ? '<button id="watch" class="secondary" hidden disabled>Watch Execution</button>' : ""}</div><section id="execution" hidden></section>`;
     function set(value) {
       if (!active()) return;
       selected = value;
@@ -307,6 +308,7 @@ function startGame() {
     paint();
     for (const el of $("stage").querySelectorAll("button,select,input")) el.disabled = true;
     $("next").disabled = false;
+    $("next").textContent = "Next Question";
     message(
       false,
       `Incorrect. Correct answer: ${q.answer}. Review the execution trace below or choose Next Challenge.`,
@@ -343,6 +345,7 @@ function startGame() {
         return;
       }
       wrong++;
+      $("show").hidden = false; // The student has submitted an answer.
       message(
         false,
         `Not quite. Hint ${Math.min(3, wrong)}: ${J.hint(q, wrong, r, lastWrong)}\nRetry independently, skip, or choose Show Answer.`,
@@ -389,6 +392,7 @@ function startGame() {
     for (const el of $("stage").querySelectorAll("button,select,input"))
       el.disabled = true;
     $("next").disabled = false;
+    $("next").textContent = "Next Question";
     if ($("watch")) {
       $("watch").hidden = false;
       $("watch").disabled = false;
