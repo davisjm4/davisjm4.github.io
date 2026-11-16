@@ -16,7 +16,8 @@ const sandbox={window:{}};vm.runInNewContext(read('cs-games/catalog.js'),sandbox
 const hub=doc('cs-games/index.html');
 assert.equal(hub.querySelectorAll('.course-card').length,4);
 assert.ok(hub.querySelector('.teacher-entry[href="./teacher/"]'),'Teacher Tools should be directly available in the header');
-assert.equal(hub.querySelectorAll('.home-nav a').length,2,'Only brand and Teacher Tools belong in the homepage header');
+assert.ok(hub.querySelector('.student-entry[href="./student/"]'),'Join a Class / Sign In should open the existing class entry');
+assert.equal(hub.querySelectorAll('.home-nav a').length,3,'Only brand, Join a Class, and Teacher Tools belong in the homepage header');
 assert.equal(hub.querySelector('.how'),null,'No competing Explore/Join panel on the homepage');
 assert.equal(hub.querySelectorAll('.course-actions a').length,0,'No duplicate Browse activities actions on the homepage');
 assert.ok(hub.querySelector('#shared-tools a[href="/wpr-games/raceces/"]'));
