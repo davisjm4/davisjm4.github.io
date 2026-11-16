@@ -235,12 +235,12 @@ function render({ focus, fresh = false } = {}) {
     pathwayEl = renderPathway(view, { openAreas: openAreas.size ? [...openAreas] : [defaultIndex] });
     decoratePathway(pathwayEl, view, { onMark, onLaunch, trackedIds: trackingKnown() ? TRACKED_NODE_IDS : null });
   }else{
-    const input={...inputFromStudentContract(view,{mixedActivities}),mapFirst:courseId==='advanced'};
+    const input={...inputFromStudentContract(view,{mixedActivities}),mapFirst:courseId==='advanced',currentNodeId:store.state().position[courseId]?.nodeId??null};
     if(map)map.update(input);
     else map=mountStudentMap(mapHost,{...input,adapter});
   }
-  app.replaceChildren(...[courseChooser(), classic?el('section',{class:'student-panel guest-pathway','aria-label':'Learning pathway'},pathwayEl):mapHost,
-    jumpControl(), coverageNote(), pickUp(), afterPracticeCard(), summaryPanel(), storagePanel(state)].filter(Boolean)); // replaceChildren(null) would print "null"
+  app.replaceChildren(...[courseId==='advanced'?null:courseChooser(), classic?el('section',{class:'student-panel guest-pathway','aria-label':'Learning pathway'},pathwayEl):mapHost,
+    jumpControl(), coverageNote(), courseId==='advanced'?null:pickUp(), afterPracticeCard(), summaryPanel(), storagePanel(state)].filter(Boolean)); // replaceChildren(null) would print "null"
   lastStamp = store.state().updated;
   syncStorageNote();
   if (focus) (app.querySelector(`[data-control="${CSS.escape(focus)}"]`) || app.querySelector(`[data-course="${CSS.escape(String(focus).replace('course:', ''))}"]`))?.focus({ preventScroll: true });
