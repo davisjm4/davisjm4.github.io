@@ -62,7 +62,7 @@ for(const [p,urls] of [
 assert.ok(doc('wpr-games/raceces/index.html').querySelector('#subject-select'));
 for(const id of ['opt-skill','opt-mode','opt-difficulty','nav-summary','brand-link'])assert.ok(doc('wpr-games/workplace-readiness/index.html').getElementById(id));
 assert.equal(doc('wpr-games/workplace-readiness/index.html').getElementById('brand-link').getAttribute('href'),'#/');
-assert.equal(doc('wpr-games/raceces/index.html').querySelector('a[href="/cs-games/#shared-tools"]').textContent,'Shared Tools');
+assert.equal(doc('wpr-games/raceces/index.html').querySelector('a[href="/wpr-games/workplace-readiness/"]').textContent,'Workplace Readiness');
 console.log('PASS hub, four pathways, shared RACECES, WPR skill-selection return, subject selector, summaries and legacy routes. No navigation code accesses storage.');
 
 
