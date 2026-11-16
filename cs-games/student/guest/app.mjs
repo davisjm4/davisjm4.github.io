@@ -224,6 +224,8 @@ function render({ focus, fresh = false } = {}) {
   if (pathwayEl && !fresh) openAreas = new Set([...app.querySelectorAll('details.pathway-area[open]')].map(d => d.dataset.areaIndex));
   const state = refreshState();
   document.body.dataset.guestCourse = courseId || '';
+  const heading = document.querySelector('.guest-wrap > h1');
+  if (heading) heading.textContent = courseId === 'advanced' ? 'Advanced Computer Science' : 'Explore on your own';
   if (!courseId) { app.replaceChildren(courseChooser(state), storagePanel(state)); syncStorageNote(); return; }
   view = buildGuestView(graph, courseId, state, { today: localDate(Date.now()) });
   const launch = sessionGet();
