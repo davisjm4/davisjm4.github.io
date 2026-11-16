@@ -15,7 +15,7 @@ import {
   sessionTracker,
   addSessionNavigation,
   roundSummary,
-} from "./session.js?v=targeted-clarity-v1";
+} from "./session.js?v=shared-shell-v1";
 const esc = (s) =>
   String(s).replace(
     /[&<>"']/g,
