@@ -123,6 +123,8 @@ test('CSG-PKG-01 inline assessment handles an unsuccessful write and records a s
   const profile = await req('/' + classroom.id + '/students', {});
   const profilePath = '/' + classroom.id + '/students/' + profile.id;
   await page.goto(dev.url + '/cs-games/teacher/?class=' + classroom.id + '#classes');
+  await pressText(page, '#teacher-account button', 'Sign In');
+  await page.waitForSelector('[name=teacher-key]',{visible:true});
   await page.type('[name=teacher-key]', teacherToken);
   await pressText(page, '#teacher-account button', 'Sign in to development service');
   await sees(page, '#class-pathway-status', /Students have access to the default pathway/);

@@ -52,7 +52,6 @@ test('teacher compares a 24-profile class, reviews one skill, records an officia
   const page = await browser.newPage();
   await page.setViewport({ width: 1366, height: 768 });
   await page.goto(dev.url + '/cs-games/teacher/?class=' + classroom.id + '#classes');
-  await page.type('[name=teacher-key]', teacherToken);
   async function pressText(selector, label) {
     const handle = await page.waitForFunction((selector, label) =>
       Array.from(document.querySelectorAll(selector)).find(node => node.textContent.trim() === label && node.offsetWidth && !node.disabled),
@@ -60,6 +59,9 @@ test('teacher compares a 24-profile class, reviews one skill, records an officia
     await handle.evaluate(node => node.focus());
     await page.keyboard.press('Enter');
   }
+  await pressText('#teacher-account button', 'Sign In');
+  await page.waitForSelector('[name=teacher-key]',{visible:true});
+  await page.type('[name=teacher-key]', teacherToken);
   await pressText('#teacher-account button', 'Sign in to development service');
   await pressText('#class-progress button', 'Load skill comparison');
   const section = '#class-progress';

@@ -31,6 +31,7 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   const student=await device.newPage();
   await teacher.setViewport({width:1280,height:900});
   await teacher.goto(dev.url+'/cs-games/teacher/');
+  await clickText(teacher,'#teacher-account','Sign In');
   await wait(teacher,'[name=teacher-key]');
   await teacher.type('[name=teacher-key]',token);
   await clickText(teacher,'#teacher-account','Sign in to development service');

@@ -127,18 +127,18 @@ test('two self-registered teachers and the existing Google owner have isolated w
     dev.db.prepare('INSERT INTO assignments(id,owner,snapshot,created,expires) VALUES(?,?,?,?,?)')
       .run(assignment,active.owner,JSON.stringify({title:'Private diagnostic',kind:'diagnostic',questions:[]}),Date.now(),Date.now()+60_000);
     assert.deepEqual((await ok('/teacher/assignments',opts)).assignments.map(item=>item.id),[assignment]);
-    assert.equal((await ok('/teacher/assignments/'+assignment,opts)).title,'Private diagnostic');
+    assert.equal((await ok('/teacher/'+assignment,opts)).title,'Private diagnostic');
     created.push({root,student,pathway,assignment});
   }
   for (const [active, foreign] of [[first,created[1]],[second,created[0]]]) {
     const opts = {token:active.token};
     for (const path of [foreign.root,foreign.root+'/progress',foreign.root+'/students/'+foreign.student.id,
-      '/pathways/teacher/'+foreign.pathway.id,'/teacher/assignments/'+foreign.assignment]) {
+      '/pathways/teacher/'+foreign.pathway.id,'/teacher/'+foreign.assignment]) {
       assert.equal((await call(path,opts)).status,404,path);
     }
     assert.equal((await call(foreign.root,{...opts,method:'DELETE'})).status,404);
     assert.equal((await call(foreign.root+'/students',{...opts,body:{}})).status,404);
-    assert.equal((await call('/teacher/assignments/'+foreign.assignment,{...opts,method:'DELETE'})).status,404);
+    assert.equal((await call('/teacher/'+foreign.assignment,{...opts,method:'DELETE'})).status,404);
   }
 
   settings.PAUSE_TEACHER_SIGNUP = '1';

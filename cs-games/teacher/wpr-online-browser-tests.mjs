@@ -40,6 +40,8 @@ test('teacher publishes exact three-topic diagnostic, student takes it, teacher 
   for(const p of [teacher,student]) p.on('pageerror',e=>errors.push(e.message));
   await teacher.goto(url+'/cs-games/teacher/#practice',{waitUntil:'load'});
   await wait(teacher,'#wpr-builder-form');
+  await exactButton(teacher,'Sign In');
+  await teacher.waitForSelector('[name="teacher-key"]',{visible:true});
   await teacher.type('[name="teacher-key"]',token);
   await exactButton(teacher,'Sign in to development service');
   await teacher.waitForSelector('#wpr-active-report');
@@ -148,6 +150,8 @@ test('a student joins, practices offline, restores on another device and leaves 
   const target='?practice=1&topics=attire-ppe&modes=decision';
 
   await teacher.goto(url+'/cs-games/teacher/',{waitUntil:'load'});
+  await exactButton(teacher,'Sign In');
+  await teacher.waitForSelector('[name="teacher-key"]',{visible:true});
   await teacher.type('[name="teacher-key"]',token);
   await exactButton(teacher,'Sign in to development service');
   await wait(teacher,'#wpr-teacher-profiles [name="class-title"]');
@@ -253,6 +257,8 @@ test('Loop Lab attempts reach a recovered CS Games profile after reconnecting', 
   const errors=[];
   for(const page of [teacher,first,second]) page.on('pageerror',error=>errors.push(error.message));
   await teacher.goto(url+'/cs-games/teacher/');
+  await exactButton(teacher,'Sign In');
+  await teacher.waitForSelector('[name="teacher-key"]',{visible:true});
   await teacher.type('[name="teacher-key"]',token);
   await exactButton(teacher,'Sign in to development service');
   await wait(teacher,'[name="class-title"]');

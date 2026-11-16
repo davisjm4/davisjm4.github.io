@@ -30,6 +30,7 @@ test('a teacher publishes participation settings and the student can leave and r
   const student=await (await browser.createBrowserContext()).newPage();
   await teacher.setViewport({width:1280,height:900});
   await teacher.goto(dev.url+'/cs-games/teacher/');
+  await pressNamed(teacher,'Sign In');
   await wait(teacher,'[name=teacher-key]');
   await teacher.type('[name=teacher-key]',token);
   await pressNamed(teacher,'Sign in to development service');
