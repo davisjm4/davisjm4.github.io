@@ -9,6 +9,8 @@ import graph from '../../curriculum-graph.json' with {type: 'json'};
 import registry from '../../evidence-gap-registry.json' with {type: 'json'};
 import {auditRecommended, boundedPracticePools} from '../../requirements/recommended.mjs';
 import {resolveRecord} from '../../../../csp-games/exam-readiness/mapping.js';
+import {WPR_PERFORMANCE_ONLY} from '../../mastery/wpr-automatic.mjs';
+import {loadCatalog as loadWpr, measure as measureWpr} from '../wpr-mastery/coverage.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../../../..');
@@ -34,12 +36,13 @@ const componentModes = {};
 for (const s of SCENARIOS) (componentModes[s.mode] ??= new Set()).add(s.family);
 
 // ---------------------------------------------------------------------------------------------------------- judgments
-const NO_ADAPTER = 'No scored game-attempt event with a concept reaches node credit (Workplace page sends a legacy class-report event; questionEvidence has no Workplace branch).';
+// Workplace Readiness: a scored game-attempt event now credits the one primary assessed concept of a question, for concepts whose bank passed
+// the activation rules (audit/wpr-mastery/coverage.mjs). The per-node facts below come from that measurement.
+const wprPrimary = new Map(measureWpr(loadWpr()).rows.map(r => [r.conceptId, r]));
+const WPR_GATED = 'A reviewed primary-concept rule and a game-attempt adapter exist; node credit is withheld until this concept passes the activation rules.';
 // Workplace concepts whose title names a performed or demonstrated behaviour. Multiple-choice practice can show knowledge of the
 // expectation, not the behaviour. Educator confirmation required (judgment, not measurement).
-const WPR_PERFORMANCE = new Set(['listening-and-speaking:presenting', 'listening-and-speaking:nonverbal-cues', 'professionalism:self-representation',
-  'professionalism:appearance', 'professionalism:punctuality-attendance', 'work-ethic:diligence', 'work-ethic:dependability',
-  'initiative-and-self-direction:minimal-supervision']);
+const WPR_PERFORMANCE = new Set(WPR_PERFORMANCE_ONLY);
 
 const cspProbe = (game, mode, topic, details = {}) => ({game, mode, topic, details});
 // category: A-E; objective: yes|partly|no; probe is executed against resolveRecord and must return skill/quality.
@@ -115,6 +118,16 @@ for (const node of graph.nodes) {
     practiceActivities: node.practice.map(p => p.activityId).join('+'),
     scoredModes: node.familySelectors.map(s => (s.modeIds ?? (s.modeId ? [s.modeId] : s.category ? [s.category] : s.conceptId ? [s.conceptId] : [])).join('/')).filter(Boolean).join(';'),
     verifiedFamilyCount: node.familyIds.length, repairImplemented: 'no', proposedTier: '', minDistinct: ''};
+  if (r.tier && node.courseId === 'workplace') {
+    const w = wprPrimary.get(node.familySelectors[0].conceptId);
+    rows.push({...base, currentRoute: 'teacher-assessment', reasonCode: 'educator-approval-pending', category: 'B', status: 'pending-educator-review', mixedMapsCorrectly: 'tested: Mixed Practice credits the primary concept of the question shown',
+      firstAttemptEvidence: 'candidate replay tested', whyNotEnabled: 'Educator approval and question-level evidence integrity are pending.', objectivelyAssessable: 'candidate (situational judgment)', bankMeetsRequirement: 'passes the candidate capacity rules; instructional review pending',
+      measuredDistinct: `${w.keyCount} primary reasoning units (${w.highKeys} high confidence), ${w.modeCount} modes`,
+      recommendation: 'Review the generated items and approve the primary reasoning units before activating this tier for new classes.', confidence: 'medium',
+      proposedTier: r.tier, minDistinct: r.minDistinct, repairImplemented: 'yes',
+      evidenceSource: 'cs-games/pathway/tests/wpr-primary-concept.test.mjs; wpr-primary-concept-service.test.mjs; audit/wpr-mastery/coverage.mjs'});
+    continue;
+  }
   if (r.tier) {
     const isNew = node.id.endsWith(':CSP-NUMERIC');
     rows.push({...base, currentRoute: 'automatic:' + r.tier, reasonCode: '', category: isNew ? 'A' : '', status: isNew ? 'newly-validated' : 'already-automatic',
@@ -146,15 +159,18 @@ for (const node of graph.nodes) {
       evidenceSource: 'csp-games/exam-readiness/mapping.js probe' + (c.inet ? '; csp-games/internet-layers-lab real bank' : '')});
   } else if (node.courseId === 'workplace') {
     const concept = node.familySelectors[0].conceptId, cap = wprCapacity[concept];
-    const perf = WPR_PERFORMANCE.has(concept), shallow = cap.signatures < 30;
-    const cat = perf ? 'E' : shallow ? 'C' : 'B';
-    Object.assign(row, {category: cat, objectivelyAssessable: perf ? 'knowledge only' : 'yes (situational judgment)', confidence: perf ? 'medium' : 'medium',
-      bankMeetsRequirement: cap.signatures >= 50 ? 'yes (50+)' : cap.signatures >= 30 ? 'yes for 30, not 50' : 'no (below 30)',
-      measuredDistinct: `${cap.signatures} signatures, ${cap.families} families, B/I/A ${cap.beginner}/${cap.intermediate}/${cap.advanced}`, firstAttemptEvidence: 'no: ' + NO_ADAPTER,
-      whyNotEnabled: NO_ADAPTER + ' Most units carry 2-3 concept tags with no designated primary concept, so crediting every tag would credit several nodes for one answer.',
+    const perf = WPR_PERFORMANCE.has(concept), w = wprPrimary.get(concept);
+    const cat = perf ? 'E' : !w.keyCount ? 'D' : w.reviewOnly ? 'B' : 'C';
+    Object.assign(row, {category: cat, objectivelyAssessable: perf ? 'knowledge only' : 'yes (situational judgment)', confidence: 'medium',
+      bankMeetsRequirement: perf ? 'n/a' : 'no',
+      measuredDistinct: `${cap.signatures} tagged signatures, ${cap.families} families, B/I/A ${cap.beginner}/${cap.intermediate}/${cap.advanced}; ${w.keyCount} primary reasoning units (${w.highKeys} high confidence)`,
+      firstAttemptEvidence: 'no: ' + WPR_GATED, repairImplemented: 'adapter and primary-concept rule: yes; node not enabled',
+      whyNotEnabled: w.reasons.join('; ') + '.',
       recommendation: perf ? 'Keep teacher-assessed for the performed behaviour; scenario practice stays formative knowledge practice. Educator to confirm.'
-        : shallow ? 'Expand this concept (fewer than 30 distinct signatures) and add a reviewed primary-concept rule plus a game-attempt adapter.' : 'Needs a reviewed primary-concept rule per question and a game-attempt adapter; depth is sufficient.',
-      evidenceSource: 'cs-games/pathway/audit/coverage/wpr-concept-capacity.cjs (real hybrid library)'});
+        : cat === 'D' ? 'No question has this concept as its primary assessed concept. Write questions whose decisive reasoning is this concept, or keep teacher-assessed.'
+        : cat === 'B' ? 'Enough reasoning units; educator review of the medium-confidence primary assignments is needed before enabling.'
+        : 'Add reasoning units whose primary concept is this one, or revise option lengths where that is the stated reason.',
+      evidenceSource: 'cs-games/pathway/audit/wpr-mastery/coverage.mjs; cs-games/pathway/audit/coverage/wpr-concept-capacity.cjs (real hybrid library)'});
   } else {
     if (act === 'parts-sprint') {
       const cat = node.familySelectors[0].category, n = Object.values(parts.PARTS).filter(p => p.category === cat).length;
@@ -186,6 +202,7 @@ const summary = {
   byStatus: tally(rows, r => r.status), originalExceptions: 162, remainingTeacherRoute: rows.filter(r => r.currentRoute === 'teacher-assessment').length,
   exceptionsByCategory: tally(exceptions, r => r.category), byCourseStatus: tally(rows, r => r.course + '|' + r.status),
   byCourseCategory: tally(exceptions, r => r.course + '|' + r.category), byArea: tally(rows, r => r.course + '|' + r.area + '|' + r.status),
+  pendingWorkplaceByTier: tally(rows.filter(r => r.status === 'pending-educator-review'), r => r.proposedTier),
   nodesAutomatic: rows.filter(r => r.status === 'already-automatic' || r.status === 'newly-validated').length,
 };
 const json = JSON.stringify({schema: 'cs-games.coverage-matrix/1', summary, rows}, null, 1) + '\n';

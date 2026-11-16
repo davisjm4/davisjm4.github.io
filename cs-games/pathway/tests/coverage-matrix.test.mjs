@@ -20,11 +20,13 @@ test('every graph node has exactly one row', () => {
   assert.equal(matrix.rows.length, 290);
 });
 
-test('automatic rows match the recommendation rules; no row is automatic without a tier', () => {
+test('automatic and pending rows match the candidate recommendation rules', () => {
   const tiers = new Map(auditRecommended(graph, registry).map(r => [r.nodeId, r.tier]));
   for (const row of matrix.rows) {
     const auto = row.status === 'already-automatic' || row.status === 'newly-validated';
-    assert.equal(Boolean(tiers.get(row.nodeId)), auto, row.nodeId);
+    const pending = row.status === 'pending-educator-review';
+    assert.equal(Boolean(tiers.get(row.nodeId)), auto || pending, row.nodeId);
+    if (pending) assert.equal(row.currentRoute, 'teacher-assessment', row.nodeId);
     assert.equal(row.proposedTier, tiers.get(row.nodeId) ?? '', row.nodeId);
   }
 });
@@ -41,12 +43,13 @@ test('every exception has a category, status, rationale, recommendation and conf
 
 test('only measured nodes may claim high confidence; no unmeasured node gets a tier', () => {
   for (const r of matrix.rows.filter(r => r.currentRoute === 'teacher-assessment' && r.confidence === 'high')) assert.ok(r.measuredDistinct, `${r.nodeId} high confidence needs a measured value`);
-  for (const r of matrix.rows.filter(r => r.currentRoute === 'teacher-assessment')) assert.equal(r.proposedTier, '', r.nodeId);
+  for (const r of matrix.rows.filter(r => r.currentRoute === 'teacher-assessment' && r.status !== 'pending-educator-review')) assert.equal(r.proposedTier, '', r.nodeId);
 });
 
 test('summary totals add up', () => {
   const s = matrix.summary, sum = o => Object.values(o).reduce((a, b) => a + b, 0);
   assert.equal(sum(s.byStatus), 290);
   assert.equal(sum(s.exceptionsByCategory), 162);
-  assert.equal(s.nodesAutomatic + s.remainingTeacherRoute, 290);
+  assert.equal(s.nodesAutomatic + s.remainingTeacherRoute, graph.nodes.length);
+  assert.deepEqual(s.pendingWorkplaceByTier, { 'complex-reasoning': 29, 'standard-practice': 1 });
 });

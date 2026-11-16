@@ -1,6 +1,7 @@
 // Only assign targets where a scored source and its assessed-mode attribution have
 // been reviewed. Unlisted formats stay open for practice and teacher assessment.
 import { suggestedConfigurations } from '../mastery/suggestions.mjs';
+import { WPR_AUTOMATIC } from '../mastery/wpr-automatic.mjs';
 
 export const TIERS = Object.freeze(suggestedConfigurations.map(({tier, label, minimumQuestions, accuracy}) =>
   Object.freeze({id:tier, label, minimumQuestions, accuracy})));
@@ -77,9 +78,11 @@ export function auditRecommended(graph, registry) {
   return graph.nodes.map(node => {
     const [, , activity, mode] = node.id.split(':');
     const rows = entries.get(node.id) ?? [];
-    const verified = rows.length > 0 || separatelyReviewed[activity]?.includes(mode) === true;
+    // Workplace Readiness: only concepts whose primary-concept question bank passed the activation rules, at the tier their questions warrant.
+    const workplaceTier = node.courseId === 'workplace' ? WPR_AUTOMATIC[node.familySelectors[0]?.conceptId] ?? null : null;
+    const verified = rows.length > 0 || separatelyReviewed[activity]?.includes(mode) === true || workplaceTier !== null;
     const shortfall = smallBanks[activity]?.includes(mode) === true;
-    const tier = !verified || shortfall ? null
+    const tier = !verified || shortfall ? null : workplaceTier ? workplaceTier
       : recognition[activity]?.includes(mode) ? 'quick-recognition'
       : reasoning[activity]?.includes(mode) ? 'complex-reasoning' : 'standard-practice';
     // Source-family binding and the focused replay must both support the rule.

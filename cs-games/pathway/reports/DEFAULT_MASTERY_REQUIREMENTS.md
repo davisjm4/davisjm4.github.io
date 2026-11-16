@@ -1,5 +1,8 @@
 # Default class practice requirements
 
+> Workplace Readiness status. The [draft evidence review](wpr-mastery/INDEPENDENT_REVIEW.md) documents 30 proposed requirements held pending educator approval and question-level integrity validation. The deployed classification remains 129 automatic nodes out of 290.
+
+
 CSG-TCH-04, CSG-STU-03 and CSG-MAS-01/03. Baseline `e931fac` (PR #44).
 
 The deployed guest course chooser, Map and keyboard-operated List were available before this change. The hosted Worker advertised profile and mastery history support. Hosted Teacher Tools requested a Google teacher session. The baseline class-creation code and isolated database tests showed the full undated pathway published on creation, with all checkpoints provisionally configured and no practice threshold. The existing editor, normalization and first-attempt de-duplication, area roll-up, restart history, offline profile outbox and teacher assessment records are reused.

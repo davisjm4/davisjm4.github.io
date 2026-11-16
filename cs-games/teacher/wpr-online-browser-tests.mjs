@@ -184,7 +184,7 @@ test('a student joins, practices offline, restores on another device and leaves 
   assert.equal(db.prepare('SELECT COUNT(*) AS n FROM performance_events').get().n,0);
   await first.setOfflineMode(false);
   await first.waitForFunction(()=>!Object.keys(localStorage).some(k=>k.includes('.outbox.')));
-  assert.equal(db.prepare('SELECT COUNT(*) AS n FROM performance_events').get().n,1);
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM performance_events WHERE json_extract(data,'$.evidenceRevision') IS NULL").get().n,1);
   assert.deepEqual(await guestStats(),guest);
 
   await second.goto(wpr,{waitUntil:'load'});
@@ -290,4 +290,86 @@ test('Loop Lab attempts reach a recovered CS Games profile after reconnecting', 
   await wait(second,'#profile-progress table');
   assert.match(await second.$eval('#profile-progress',node=>node.textContent),/Loop Lab/);
   assert.deepEqual(errors,[]);
+});
+
+test('WPR practice syncs only its primary skill to the enrolled student Map and List', {timeout:90000}, async t=>{
+  const {url,server,db}=await startDev({teacherTokens:{teacher:token}});
+  let browser;
+  t.after(async()=>{
+    await browser?.close();
+    await new Promise(resolve=>server.close(resolve));
+    db.close();
+  });
+  browser=await launch();
+  const teacher=await browser.newPage();
+  const student=await (await browser.createBrowserContext()).newPage();
+  await teacher.goto(url+'/cs-games/teacher/');
+  await wait(teacher,'[name="teacher-key"]');
+  await teacher.type('[name="teacher-key"]',token);
+  await exactButton(teacher,'Sign in to development service');
+  await wait(teacher,'[name="class-title"]');
+  await teacher.type('[name="class-title"]','Synthetic WPR evidence browser');
+  await teacher.select('[name="class-course"]','workplace');
+  await exactButton(teacher,'Create class');
+  const invite=await (await wait(teacher,'#wpr-teacher-profiles a[href*="#enroll="]')).evaluate(a=>a.href);
+  await student.goto(invite);
+  await exactButton(student,'Enroll in this class');
+  await wait(student,'.wpr-profile-secret');
+  await Promise.all([student.waitForNavigation(),exactButton(student,'I saved my recovery credential')]);
+
+  await student.goto(url+'/wpr-games/workplace-readiness/');
+  await wait(student,'#opt-skill');
+  await student.select('#opt-skill','listening-and-speaking');
+  await student.select('#opt-mode','decision');
+  await student.click('#btn-start');
+  let primary;
+  const expected=new Map();
+  for(let i=0;i<25&&!primary;i++){
+    await wait(student,'#btn-check');
+    const q=await student.evaluate(async()=>{
+      const {primaryAttribution}=await import('/cs-games/pathway/wpr-primary-concepts.mjs');
+      const item=WRG.app.state().current;
+      return {primary:primaryAttribution(item)?.conceptId, best:item.key.bestId, tags:item.concepts};
+    });
+    await student.click('.choice[data-id="'+q.best+'"]');
+    await student.click('#btn-check');
+    await wait(student,'#btn-next');
+    if(q.primary) expected.set(q.primary,(expected.get(q.primary)??0)+1);
+    if(q.primary&&q.tags.length>1) primary=q.primary;
+    if(!primary) await student.click('#btn-next');
+  }
+  assert.ok(primary,'the focused practice must show an eligible multi-tag question');
+  await student.evaluate(async()=>{
+    const {syncQueuedPractice}=await import('/wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1');
+    await syncQueuedPractice();
+  });
+  await student.waitForFunction(()=>!Object.keys(localStorage).some(k=>k.includes('.outbox.')),{timeout:10000});
+  const rows=db.prepare("SELECT data FROM performance_events WHERE json_extract(data,'$.evidenceRevision')='wpr-primary-v1'").all();
+  assert.equal(rows.length,[...expected.values()].reduce((a,b)=>a+b,0));
+  for(const row of rows){
+    const data=JSON.parse(row.data);
+    assert.ok(expected.has(data.topic));
+    assert.deepEqual(data.dimensions,[{scope:'node',id:'node:workplace:'+data.topic,n:1,c:1}]);
+  }
+
+  await student.goto(url+'/cs-games/student/');
+  const skill='[data-node-id="node:workplace:'+primary+'"]';
+  const area='.stop-open[data-stop-id="area:workplace:listening-and-speaking"]';
+  const progress=()=>student.waitForFunction((skill,count)=>{
+    const panel=document.querySelector('.skill-panel'+skill);
+    return panel?.innerText.includes(count+' of 20');
+  },{timeout:10000},skill,expected.get(primary));
+  await exactButton(student,'Map','#student-pathway');
+  if(await student.$('.skill-node'+skill)===null){
+    await wait(student,area);
+    await student.$eval(area,button=>button.click());
+  }
+  await wait(student,'.skill-node'+skill);
+  await student.$eval('.skill-node'+skill,button=>button.click());
+  await progress();
+  await exactButton(student,'List','#student-pathway');
+  const listSkill='li'+skill+' .skill-row-open';
+  await wait(student,listSkill);
+  await student.$eval(listSkill,button=>button.click());
+  await progress();
 });

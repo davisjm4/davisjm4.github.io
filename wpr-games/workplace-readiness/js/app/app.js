@@ -53,7 +53,7 @@
         var result = GR.grade(current, resp);
         if (result.ok) {
           tracker.record({ skill: current.skill, category: current.category, mode: current.mode, difficulty: current.difficulty, tags: current.tags }, result.correct);
-          W.readiness?.recordPractice(current, result.correct);
+          W.readiness?.recordPractice(current, result.correct, { seed: tracker.data.seed });
           tracker.data.index = gen.index;
           save(); UI.renderStatbar(tracker);
         }
