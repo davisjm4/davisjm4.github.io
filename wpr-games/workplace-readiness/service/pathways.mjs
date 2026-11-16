@@ -1,5 +1,6 @@
 import {loadEvidence,readMasteryProgress,restartMasteryPractice} from './mastery-attempts.mjs';
 import {evaluateProficiency,PROFICIENCY_SCHEMA,PROFICIENCY_VERSION} from '../../../cs-games/pathway/proficiency/index.mjs';
+import {shadowComparisonSummary} from '../../../cs-games/pathway/proficiency/shadow.mjs';
 import {buildContentFacts} from '../../../cs-games/pathway/requirements/limits.mjs';
 import {reviewRequirements} from '../../../cs-games/pathway/requirements/review.mjs';
 import {isRequirementPolicy} from '../../../cs-games/pathway/requirements/ids.mjs';
@@ -72,6 +73,20 @@ export async function pathwayRoute(request,env,path,{body,teacherIdentity}) {
       eventsByNode:practiceEvidence?.byNode,
       pacingTargets:Object.fromEntries(view.nodes.map(node=>[node.id,node.checkpoint.targetDate]))
     });
+    // Opt-in aggregate shadow only: no identifiers, no response changes, no writes.
+    // The existing proficiency response remains authoritative.
+    if(profile&&hasAutomatedRubrics&&env.CSG_PROFICIENCY_SHADOW==='1'){
+      try{
+        const shadow=shadowComparisonSummary({
+          courseId:pathway.courseId,nodes:view.nodes,eventsByNode:practiceEvidence?.byNode,
+          policies:pathway.policies
+        },true);
+        console.info('csg-proficiency-shadow',JSON.stringify(shadow));
+      }catch{
+        // A shadow-only failure must never block student progress or reveal evidence in logs.
+        console.warn('csg-proficiency-shadow-unavailable');
+      }
+    }
     const digest=await hash(JSON.stringify({status:view.status,nodes:view.nodes.map(n=>n.checkpoint)}));
     await db.prepare('INSERT OR IGNORE INTO pathway_status_history(pathway_id,profile_id,revision,digest,status,created) VALUES(?,?,?,?,?,?)')
       .bind(p.id,identity.profileId,p.head,digest,view.status,Date.now()).run();
