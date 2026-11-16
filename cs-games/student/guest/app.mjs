@@ -223,6 +223,7 @@ function clear() {
 function render({ focus, fresh = false } = {}) {
   if (pathwayEl && !fresh) openAreas = new Set([...app.querySelectorAll('details.pathway-area[open]')].map(d => d.dataset.areaIndex));
   const state = refreshState();
+  document.body.dataset.guestCourse = courseId || '';
   if (!courseId) { app.replaceChildren(courseChooser(state), storagePanel(state)); syncStorageNote(); return; }
   view = buildGuestView(graph, courseId, state, { today: localDate(Date.now()) });
   const launch = sessionGet();
@@ -232,7 +233,7 @@ function render({ focus, fresh = false } = {}) {
     pathwayEl = renderPathway(view, { openAreas: openAreas.size ? [...openAreas] : [defaultIndex] });
     decoratePathway(pathwayEl, view, { onMark, onLaunch, trackedIds: trackingKnown() ? TRACKED_NODE_IDS : null });
   }else{
-    const input=inputFromStudentContract(view,{mixedActivities});
+    const input={...inputFromStudentContract(view,{mixedActivities}),mapFirst:courseId==='advanced'};
     if(map)map.update(input);
     else map=mountStudentMap(mapHost,{...input,adapter});
   }
