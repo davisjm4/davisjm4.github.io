@@ -240,7 +240,7 @@ function render({ focus, fresh = false } = {}) {
     else map=mountStudentMap(mapHost,{...input,adapter});
   }
   app.replaceChildren(...[courseId==='advanced'?null:courseChooser(), classic?el('section',{class:'student-panel guest-pathway','aria-label':'Learning pathway'},pathwayEl):mapHost,
-    jumpControl(), coverageNote(), courseId==='advanced'?null:pickUp(), afterPracticeCard(), summaryPanel(), storagePanel(state)].filter(Boolean)); // replaceChildren(null) would print "null"
+    jumpControl(), coverageNote(), courseId==='advanced'?null:pickUp(), afterPracticeCard(), courseId==='advanced'&&!classic?null:summaryPanel(), storagePanel(state)].filter(Boolean)); // replaceChildren(null) would print "null"
   lastStamp = store.state().updated;
   syncStorageNote();
   if (focus) (app.querySelector(`[data-control="${CSS.escape(focus)}"]`) || app.querySelector(`[data-course="${CSS.escape(String(focus).replace('course:', ''))}"]`))?.focus({ preventScroll: true });
