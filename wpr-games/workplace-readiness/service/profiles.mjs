@@ -380,7 +380,7 @@ export async function routeProfiles(request,env,segments,readBody,now) {
       }
       const event=verified ? await scoreIssuedPractice(env.SUBMISSION_SECRET,p,source,now) : cleanPractice(source,now);
       if (!event) { rejected.push({id:source.id,code:'invalid-workplace-issuance'}); continue; }
-      if (trackFocus && present(source.assignmentReceipt,PROFILE_ID)) event.receipt=source.assignmentReceipt;
+      if (!verified && trackFocus && present(source.assignmentReceipt,PROFILE_ID)) event.receipt=source.assignmentReceipt;
       events.push(event);
     }
     return syncPractice(db,p,events,now,trackFocus,rejected);

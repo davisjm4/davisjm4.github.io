@@ -52,7 +52,7 @@ export async function issuePractice(secret, profile, itemId, now) {
 
 export async function scoreIssuedPractice(secret, profile, event, now) {
   const {permit, id, response, version, presented} = event;
-  const permitted = new Set(['format','kind','id','version','presented','permit','response','classId','profileId','learner']);
+  const permitted = new Set(['format','kind','id','version','presented','permit','response','classId','profileId','learner','assignmentReceipt']);
   if (profile.course_id!=='workplace' || event.kind!=='practice' ||
       Object.keys(event).some(field => !permitted.has(field)) ||
       typeof permit!=='string' || !/^[\w-]{1,2048}\.[\w-]{43}$/.test(permit) ||
