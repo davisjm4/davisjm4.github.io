@@ -1,0 +1,38 @@
+/* CS Games Practice Shell v1: opt-in presentation shared by different lab engines.
+   The engine owns the question, scoring, evidence, feedback and next-question behavior. */
+body.practice-shell main { max-width: 900px; padding-top: 20px; }
+body.practice-shell main > h1 { font-size: clamp(1.7rem, 4.5vw, 2.45rem); line-height: 1.15; margin: 8px 0; }
+body.practice-shell main > .intro { font-size: .95rem; line-height: 1.45; margin: 8px 0 16px; }
+body.practice-shell main > .eyebrow { font-size: .75rem; }
+body.practice-shell .toolbar {
+  display: flex; flex-wrap: wrap; align-items: end;
+  gap: 10px; padding: 12px 0 16px; margin: 0 0 14px;
+}
+body.practice-shell .toolbar > label { flex: 1 1 190px; display: grid; gap: 5px; align-items: start; font-size: .87rem; font-weight: 700; }
+body.practice-shell .toolbar > label select { width: 100%; min-height: 44px; }
+body.practice-shell .toolbar > button { min-height: 44px; }
+body.practice-shell #stage { margin: 10px 0 15px; padding: clamp(14px, 3vw, 24px); }
+body.practice-shell #stage > h2, body.practice-shell [id="scenario-title"] { font-size: clamp(1.18rem, 3vw, 1.4rem); margin: 8px 0; }
+body.practice-shell #stage pre, body.practice-shell .panel pre { max-width: 100%; overflow-x: auto; font-size: .95rem; }
+body.practice-shell #stage .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+body.practice-shell #stage .actions > #check { order: 1; }
+body.practice-shell #stage .actions > #feedback {
+  order: 2; flex: 1 0 100%; margin: 0; padding: 12px 14px;
+  border-radius: 10px; line-height: 1.5; overflow-wrap: anywhere;
+}
+body.practice-shell #stage .actions > #next { order: 3; }
+body.practice-shell #stage .actions > #show { order: 4; }
+body.practice-shell #stage .actions > #watch { order: 5; }
+body.practice-shell .feedback:focus { outline: none; }
+body.practice-shell .feedback:focus-visible { outline: 3px solid var(--gold, #ffd37d); outline-offset: 3px; }
+body.practice-shell .ecosystem-header { gap: 10px; }
+body.practice-shell .ecosystem-header a { min-height: 40px; display: inline-flex; align-items: center; }
+body.practice-shell button:focus-visible, body.practice-shell a:focus-visible, body.practice-shell select:focus-visible { outline-offset: 3px; }
+body.practice-shell [hidden] { display: none !important; }
+@media (max-width: 560px) {
+  body.practice-shell main { padding: 14px 14px 40px; }
+  body.practice-shell .toolbar { gap: 8px; }
+  body.practice-shell .toolbar > label { flex-basis: 130px; }
+  body.practice-shell #stage .actions > button { flex: 1 1 auto; }
+  body.practice-shell .ecosystem-header { padding: 10px 14px; }
+}
