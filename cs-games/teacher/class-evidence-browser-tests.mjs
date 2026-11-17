@@ -63,6 +63,8 @@ test('teacher compares a 24-profile class, reviews one skill, records an officia
   await page.waitForSelector('[name=teacher-key]',{visible:true});
   await page.type('[name=teacher-key]', teacherToken);
   await pressText('#teacher-account button', 'Sign in to development service');
+  await page.evaluate(()=>{location.hash='#class-progress';});
+  await page.waitForSelector('#class-progress',{visible:true});
   await pressText('#class-progress button', 'Load skill comparison');
   const section = '#class-progress';
   await page.waitForSelector(section + ' .evidence-matrix table', { visible: true });
@@ -133,6 +135,8 @@ test('teacher compares a 24-profile class, reviews one skill, records an officia
   assert.equal(learner.pathway.nodes.find(node => node.id === nodeId).checkpoint.score, 4);
   await pressText(report + ' button', 'Back to skill comparison');
   assert.ok(await page.$eval(opener, node => node === document.activeElement));
+  await page.evaluate(()=>{location.hash='#classes';});
+  await page.waitForSelector('.class-card',{visible:true});
   await page.click('.class-card:nth-child(1)');
   await page.waitForFunction(() => document.querySelector('#class-overview h3')?.textContent === 'Second synthetic class');
   assert.equal(new URL(page.url()).searchParams.get('class'), secondClass.id);
