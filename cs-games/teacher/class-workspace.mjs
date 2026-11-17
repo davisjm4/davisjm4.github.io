@@ -62,7 +62,7 @@ export function installClassWorkspace({root,classList,panel,getSelectedId,render
       'class-assignments':focus,
       'class-plan':panel.querySelector('#class-plan'),
       'class-assessments':panel.querySelector('#class-assessments'),
-      'class-manage':panel.querySelector('details.more')
+      'class-manage':panel.querySelector('#class-manage')
     };
     const activeSection=sectionMap[route]||sectionMap['class-overview'];
     if(route==='class-manage'&&activeSection?.tagName==='DETAILS')activeSection.open=true;
