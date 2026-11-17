@@ -82,8 +82,7 @@ test('teacher publishes exact three-topic diagnostic, student takes it, teacher 
   await a11y(student,'#assignment-body');
   const remediation=await student.$eval('#assignment-body a[href*="topics=attire-ppe"]',e=>e.href);
   await student.goto(remediation,{waitUntil:'load'});
-  await wait(student,'#targeted-options input[value="attire-ppe"]');
-  assert.equal(await student.$eval('#targeted-options input[value="attire-ppe"]',e=>e.checked),true);
+  // Direct practice links immediately open the relevant question rather than a configuration form.
   await student.waitForFunction(()=>!document.querySelector('#view-practice')?.hidden);
   assert.equal(await student.evaluate(()=>WRG.app.state().current.tags.some(t=>t.topicId==='attire-ppe')),true);
   assert.equal(await student.evaluate(()=>document.documentElement.scrollWidth),360);
