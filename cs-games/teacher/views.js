@@ -21,8 +21,8 @@
     if (classPages.test(id)) return {view:'classes',sub:null,target:null};
     if (practiceIds.has(id)) return {view:'practice',sub:id,target:null};
     if (views.some(v=>v.getAttribute('data-view')===id)) return {view:id,sub:null,target:null};
-    var node=id&&document.getElementById(id);
-    var owner=node&&node.closest('[data-view]');
+    var node=id ? document.getElementById(id) : null;
+    var owner=node ? node.closest('[data-view]') : null;
     if (owner?.getAttribute('data-view')==='practice') {
       var section=node.closest('#practice-online, #practice-published, #practice-canvas');
       return {view:'practice',sub:section?.id||null,target:section?.id===id?null:id};
