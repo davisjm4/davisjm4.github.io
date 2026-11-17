@@ -135,10 +135,18 @@ test('Teacher Tools: three views, readable class overview, no raw identifiers, s
   assert.match(overview, /Unpublished changes/); assert.match(overview, /Last published/); assert.match(overview, /Open student pathway/);
   assert.doesNotMatch(overview, UUID, 'class overview must not show a raw id'); assert.doesNotMatch(overview, RAW_ID);
   assert.doesNotMatch(overview, /\bfalse\b|undefined|\[object/i);
-  // Real counts only: three profiles were issued.
+  // Class workspaces are addressable and show one pane at a time.
+  assert.equal(await page.evaluate(()=>location.hash),'#class-overview');
+  assert.equal(await page.$eval('#class-progress',e=>e.hidden),true);
+  await page.click('.class-workspace-nav a[href="#class-students"]');
+  await page.waitForFunction(()=>!document.querySelector('#class-students')?.hidden);
   assert.equal(await page.$eval('#class-students .stat strong', e => e.textContent), '3');
   // Student profile IDs are an intentional feature and stay visible in student management.
   assert.match(await visibleText(page, '#class-students table'), UUID);
+  await page.click('.class-workspace-nav a[href="#class-manage"]');
+  await page.waitForFunction(()=>!document.querySelector('#class-manage')?.hidden);
+  assert.equal(await page.$eval('#class-manage',e=>e.open),true);
+  await page.click('.class-workspace-nav a[href="#class-overview"]');
   // Troubleshooting details hold the technical id, collapsed by default.
   assert.equal(await page.$eval('#class-troubleshooting', e => e.closest('details').open), false);
   assert.match(await page.$eval('#class-troubleshooting', e => e.textContent), new RegExp(seeded.classId));
@@ -150,11 +158,13 @@ test('Teacher Tools: three views, readable class overview, no raw identifiers, s
   const list = await visibleText(page, '#pathway-class-list');
   assert.match(list, /CS Games Test/); assert.match(list, /Pathway published/); assert.doesNotMatch(list, UUID);
 
-  // Archived classes no longer print the stray text "false".
+  // Archived classes remain available, but are excluded from the active list.
   const archived = await svc.api('/teacher/profiles', { title: 'Old class', courseId: 'robotics' });
   await svc.api(`/teacher/profiles/${archived.id}/archive`, {});
   await page.evaluate(() => { location.hash = '#classes'; });
   await clickByText(page, '#wpr-teacher-profiles', 'Refresh classes');
+  await page.waitForFunction(() => ![...document.querySelectorAll('.class-card')].some(c => c.textContent.includes('Old class')));
+  await page.click('a[href="#class-archived"]');
   await page.waitForFunction(() => [...document.querySelectorAll('.class-card')].some(c => c.textContent.includes('Old class')));
   await page.evaluate(() => [...document.querySelectorAll('.class-card')].find(c => c.textContent.includes('Old class')).click());
   await page.waitForFunction(() => document.querySelector('#class-overview')?.innerText.includes('Archived'));
@@ -499,6 +509,8 @@ test('teacher session survives class navigation, expires safely, and resumes uns
   assert.equal(svc.db.prepare('SELECT head FROM class_pathways WHERE id=?').get(seeded.pathwayId).head,1);
   assert.equal(JSON.parse(svc.db.prepare('SELECT draft FROM class_pathways WHERE id=?').get(seeded.pathwayId).draft).calendar.minutes,73);
   await page.goto(hub+'?class='+seeded.classId+'#classes');
+  await page.waitForSelector('#class-overview',{visible:true});
+  await page.click('.class-workspace-nav a[href="#class-students"]');
   await page.waitForSelector('#class-students',{visible:true});
   assert.equal(await page.$('[name=teacher-key]'),null);
   assert.equal(svc.db.prepare('SELECT COUNT(*) AS n FROM profile_classes').get().n,1);
