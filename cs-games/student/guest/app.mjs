@@ -225,7 +225,7 @@ function render({ focus, fresh = false } = {}) {
   const state = refreshState();
   document.body.dataset.guestCourse = courseId || '';
   const heading = document.querySelector('.guest-wrap > h1');
-  if (heading) heading.textContent = courseId === 'advanced' ? 'Advanced Computer Science' : 'Explore on your own';
+  if (heading) heading.textContent = courseId ? (courseNames[courseId]||guestCourses(graph).find(c=>c.id===courseId)?.title||'Your learning journey') : 'Explore on your own';
   if (!courseId) { app.replaceChildren(courseChooser(state), storagePanel(state)); syncStorageNote(); return; }
   view = buildGuestView(graph, courseId, state, { today: localDate(Date.now()) });
   const launch = sessionGet();
@@ -235,12 +235,12 @@ function render({ focus, fresh = false } = {}) {
     pathwayEl = renderPathway(view, { openAreas: openAreas.size ? [...openAreas] : [defaultIndex] });
     decoratePathway(pathwayEl, view, { onMark, onLaunch, trackedIds: trackingKnown() ? TRACKED_NODE_IDS : null });
   }else{
-    const input={...inputFromStudentContract(view,{mixedActivities}),mapFirst:courseId==='advanced',currentNodeId:store.state().position[courseId]?.nodeId??null};
+    const input={...inputFromStudentContract(view,{mixedActivities}),mapFirst:true,currentNodeId:store.state().position[courseId]?.nodeId??null};
     if(map)map.update(input);
     else map=mountStudentMap(mapHost,{...input,adapter});
   }
-  app.replaceChildren(...[courseId==='advanced'?null:courseChooser(), classic?el('section',{class:'student-panel guest-pathway','aria-label':'Learning pathway'},pathwayEl):mapHost,
-    jumpControl(), coverageNote(), courseId==='advanced'?null:pickUp(), afterPracticeCard(), courseId==='advanced'&&!classic?null:summaryPanel(), storagePanel(state)].filter(Boolean)); // replaceChildren(null) would print "null"
+  app.replaceChildren(...[classic?el('section',{class:'student-panel guest-pathway','aria-label':'Learning pathway'},pathwayEl):mapHost,
+    jumpControl(), coverageNote(), classic?pickUp():null, afterPracticeCard(), summaryPanel(), storagePanel(state)].filter(Boolean)); // replaceChildren(null) would print "null"
   lastStamp = store.state().updated;
   syncStorageNote();
   if (focus) (app.querySelector(`[data-control="${CSS.escape(focus)}"]`) || app.querySelector(`[data-course="${CSS.escape(String(focus).replace('course:', ''))}"]`))?.focus({ preventScroll: true });
