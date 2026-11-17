@@ -45,6 +45,7 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await teacher.type('[name=class-title]','Period 5 Advanced CS');
   await teacher.select('[name=class-course]','advanced');
   await byText(teacher,'#wpr-teacher-profiles','Create class');
+  await byText(teacher,'#wpr-teacher-profiles','Invite Students');
   const enrollment=await (await wait(teacher,'#class-overview a[href*="#enroll="]')).evaluate(node=>node.href);
   await student.goto(enrollment);
   await byText(student,'#student-profile','Enroll in this class');
@@ -55,7 +56,7 @@ test('published requirements and real Loop Lab practice appear in the student ma
 
   await teacher.evaluate(()=>{location.hash='#class-assessments';});
   await teacher.waitForSelector('#class-assessments',{visible:true});
-  await activate(teacher,'#class-assessments a[href="#practice-online"]:nth-of-type(2)');
+  await activate(teacher,'#class-assessments a[href="#practice-targeted"]');
   await wait(teacher,'#wpr-builder-form');
   const classId=new URL(teacher.url()).searchParams.get('class');
   assert.equal(await teacher.$eval('[name=profileClassId]', input=>input.value),classId);
