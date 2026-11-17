@@ -20,17 +20,18 @@ function stopArt(stop) {
 }
 
 /** @returns {{content: Node[], width:number, height:number, cols:number}} */
-export function renderCourseMap(model, { width, onOpenStop, onPractice }) {
-  const layout = serpentine(model.stops.length, { width, cellW: 200, cellH: 262, padX: 28, padY: 40, maxCols: 5, wobble: 14 });
-  const travelled = model.stops.findIndex((s) => !s.summary.complete);
-  const content = [createBackdrop({ width: layout.width, height: layout.height, points: layout.points, motif: 'dots', travelled: travelled < 0 ? model.stops.length : travelled, bulge: 150 })];
-  model.stops.forEach((stop, i) => {
+export function renderCourseMap(model, { width, onOpenStop, onPractice, visibleStopIds = null }) {
+  const stops = visibleStopIds ? model.stops.filter(s=>visibleStopIds.includes(s.id)) : model.stops;
+  const layout = serpentine(stops.length, { width, cellW: 200, cellH: 262, padX: 28, padY: 40, maxCols: 5, wobble: 14 });
+  const travelled = stops.findIndex((s) => !s.summary.complete);
+  const content = [createBackdrop({ width: layout.width, height: layout.height, points: layout.points, motif: 'dots', travelled: travelled < 0 ? stops.length : travelled, bulge: 150 })];
+  stops.forEach((stop, i) => {
     const { x, y } = layout.points[i];
     const isNext = model.suggestedNext?.stopId === stop.id, isCurrent = model.pacing.currentStopId === stop.id;
     const button = el('button', { type: 'button', class: 'stop-open', 'data-map-item': 'stop', 'data-stop-id': stop.id, 'data-x': x, 'data-y': y, onclick: () => onOpenStop(stop) },
       stopArt(stop),
-      el('span', { class: 'stop-num', 'aria-hidden': 'true', text: String(i + 1) }),
-      el('span', { class: 'sr-only', text: `Stop ${i + 1} of ${model.stops.length}: ` }),
+      el('span', { class: 'stop-num', 'aria-hidden': 'true', text: String(stop.index + 1) }),
+      el('span', { class: 'sr-only', text: `Learning area ${stop.index + 1} of ${model.stops.length}: ` }),
       el('span', { class: 'stop-title', text: stop.title }),
       el('span', { class: 'stop-sub', text: stopSummaryLine(stop) }));
     const flags = [stop.summary.complete ? el('span', { class: 'flag flag-done' }, icon('check', { size: 14 }), el('span', { text: 'Complete' })) : null,

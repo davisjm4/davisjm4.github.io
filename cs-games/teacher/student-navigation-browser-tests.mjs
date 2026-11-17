@@ -28,6 +28,17 @@ test('course cards open course maps and search survives practice return', { time
     await Promise.all([page.waitForNavigation(), page.click('.course-card a[href*="course=' + course + '"]')]);
     await page.waitForSelector('.map-app');
     assert.equal(new URL(page.url()).searchParams.get('course'), course);
+    if(course==='robotics')assert.equal(await page.$('.map-unit-picker'),null);
+    else {
+      await page.waitForSelector('.map-unit-picker button[aria-pressed="true"]');
+      const original=await page.$$eval('.map-app .stop',nodes=>nodes.length);
+      const choices=await page.$$('.map-unit-picker button');
+      assert.ok(choices.length>=4,course+' should expose at least four curricular groups, saw '+choices.length);
+      await choices[1].click();
+      await page.waitForFunction(()=>document.querySelectorAll('.map-unit-picker button[aria-pressed="true"]').length===1);
+      const next=await page.$$eval('.map-app .stop',nodes=>nodes.length);
+      assert.ok(original>0&&next>0&&next<30,'Curriculum grouping exposes smaller collections of areas');
+    }
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), course);
   }
 
