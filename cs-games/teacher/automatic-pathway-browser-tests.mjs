@@ -35,6 +35,7 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   await wait(teacher,'[name=teacher-key]');
   await teacher.type('[name=teacher-key]',token);
   await clickText(teacher,'#teacher-account','Sign in to development service');
+  await teacher.evaluate(()=>{location.hash='#class-create';});
   await wait(teacher,'[name=class-title]');
   const began=Date.now();
   await teacher.type('[name=class-title]','Period 3 Advanced CS');
