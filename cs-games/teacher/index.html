@@ -7,7 +7,7 @@
   <title>Teacher Tools | CS Games</title>
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="./teacher.css">
-  <link rel="stylesheet" href="./teacher-ui.css?v=teacher-planning-v1">
+  <link rel="stylesheet" href="./teacher-ui.css?v=teacher-class-routes-v2">
   <script type="module" src="./teacher.js?v=loop-types-v1"></script>
   <script type="module" src="./wpr-online.mjs?v=class-participation-v1"></script>
   <link rel="stylesheet" href="../student/pathway-view.css">
@@ -19,6 +19,8 @@
       <a class="brand" href="../">CS Games</a>
       <a href="../csp/">AP CSP</a>
       <a href="../advanced/">Advanced CS</a>
+      <a href="../wpr/">Workplace Readiness</a>
+      <a href="../robotics/">Robotics</a>
       <a class="active" aria-current="page" href="./">Teacher Tools</a>
     </nav>
   </header>
@@ -56,11 +58,12 @@
       <div class="card flat" style="padding:0;border:0;margin-top:0">
         <h2 id="practice-title">Practice &amp; Assessments</h2>
         <p class="muted">Create an online diagnostic or targeted practice for students, review what you have published, or export questions to Canvas.</p>
-        <div class="chips" role="group" aria-label="Jump to a task">
+        <div class="chips" role="navigation" aria-label="Assessment workflows">
           <a class="btn small" href="#practice-online">Create online diagnostic or practice</a>
           <a class="btn small" href="#practice-published">Published assessments</a>
           <a class="btn small" href="#practice-canvas">Export a quiz to Canvas</a>
         </div>
+        <p><a id="practice-back" class="btn quiet small" href="#practice" hidden>← All assessment tools</a></p>
       </div>
       <section id="practice-online" class="card accent" aria-label="Create an online diagnostic or targeted practice">
         <div id="wpr-online"></div>
@@ -133,7 +136,7 @@
     </section>
   </main>
   <footer class="footer"><div class="wrap">CS Games · Teacher Tools. Questions and files remain in this browser until downloaded.</div></footer>
-  <script src="./views.js?v=ux-v1"></script>
+  <script src="./views.js?v=ux-routing-v2"></script>
   <script src="../../java-games/string-lab/js/rng.js?v=string-lab-1.1.1"></script>
   <script src="../../java-games/string-lab/js/words.js?v=string-lab-1.1.1"></script>
   <script src="../../java-games/string-lab/js/java-ast.js?v=string-lab-1.1.1"></script>
