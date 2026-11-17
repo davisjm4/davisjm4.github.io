@@ -120,6 +120,7 @@ test('teacher publishes exact three-topic diagnostic, student takes it, teacher 
     const attempt=await post('/start',{browser:randomUUID()});
     await post('/submit',{token:attempt.token,answers});
   }
+  await teacher.evaluate(()=>{location.hash='#practice-published';});
   await exactButton(teacher,'Class report');
   await teacher.waitForFunction(()=>document.querySelector('#wpr-active-report')?.textContent.includes('5 completed submissions'),{timeout:10000});
   await exactButton(teacher,'Create targeted practice');
