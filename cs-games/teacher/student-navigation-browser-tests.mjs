@@ -33,7 +33,7 @@ test('course cards open course maps and search survives practice return', { time
       await page.waitForSelector('.map-unit-picker button[aria-pressed="true"]');
       const original=await page.$eval('.map-app .stop',nodes=>nodes.length);
       const choices=await page.$('.map-unit-picker button');
-      assert.ok(choices.length>=4);
+      assert.ok(choices.length>=4,course+' should expose at least four curricular groups, saw '+choices.length);
       await choices[1].click();
       await page.waitForFunction(()=>document.querySelectorAll('.map-unit-picker button[aria-pressed="true"]').length===1);
       const next=await page.$eval('.map-app .stop',nodes=>nodes.length);
