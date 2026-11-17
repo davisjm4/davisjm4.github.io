@@ -287,7 +287,7 @@ export function teacherProfiles(onClasses) {
           !c.archived&&task('#practice-online','Create a diagnostic','Build a Workplace Readiness diagnostic.',practice('diagnostic')),
           !c.archived&&task('#practice-online','Create targeted practice','Build a Workplace Readiness practice assignment.',practice('practice')),
           task('#practice-published','Published assessments','Open reports or copy assignment links.'))),
-      el('details',{class:'more'},el('summary',{},'Manage this class',el('small',{text:'Archive, delete, support details'})),
+      el('details',{class:'more',id:'class-manage'},el('summary',{},'Manage this class',el('small',{text:'Archive, delete, support details'})),
         el('div',{class:'body'},
           !c.archived&&el('p',{class:'muted',text:'Archiving closes enrollment and ends student access. The class and its records are kept until the scheduled deletion date.'}),
           el('div',{class:'actions'},
