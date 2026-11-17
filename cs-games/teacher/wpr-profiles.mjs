@@ -209,6 +209,8 @@ export function teacherProfiles(onClasses) {
     const pathwaySlot=el('div',{id:'class-pathway-status'},el('p',{class:'muted',text:'Checking pathway status…'}));
     put(credential);
     renderList();
+    // Direct class-scoped assessment routes retain the currently opened class.
+    onClasses(classes,c.archived?'':c.id);
     const active=roster.filter(p=>p.active===1).length;
     const task=(href,title,detail,onclick)=>el('a',{class:'task',href,...(onclick?{onclick}:{})},
       el('strong',{text:title}),el('span',{text:detail}));
