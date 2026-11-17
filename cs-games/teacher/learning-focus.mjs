@@ -113,9 +113,11 @@ export function createTeacherFocus(classroom,roster){
     });
   };
   function render(){
+    root.dataset.available=state.enabled?'true':'false';
     root.hidden=!state.enabled;
     if(!state.enabled)return;
-    form.hidden=!state.pathway;
+    form.hidden=!state.pathway||location.hash==='#class-assignments';
+    list.hidden=location.hash==='#class-focus';
     const serverNow=state.now;
     list.replaceChildren(el('h3',{text:'Class assignments'}),
       ...state.items.map(item=>{
