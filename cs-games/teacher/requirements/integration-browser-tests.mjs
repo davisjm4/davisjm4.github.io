@@ -40,6 +40,7 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await wait(teacher,'[name=teacher-key]');
   await teacher.type('[name=teacher-key]',token);
   await byText(teacher,'#teacher-account','Sign in to development service');
+  await teacher.evaluate(()=>{location.hash='#class-create';});
   await wait(teacher,'[name=class-title]');
   await teacher.type('[name=class-title]','Period 5 Advanced CS');
   await teacher.select('[name=class-course]','advanced');
@@ -58,7 +59,8 @@ test('published requirements and real Loop Lab practice appear in the student ma
   assert.equal(await teacher.$eval('[name=profileClassId]', input=>input.value),classId);
   assert.equal(await teacher.$eval('[name=kind]', input=>input.value),'practice');
   assert.equal(await teacher.$eval('[name=feedbackTiming]', input=>input.value),'immediate');
-  await activate(teacher,'[data-view-link=classes]');
+  await teacher.evaluate(()=>{location.hash='#class-plan';});
+  await teacher.waitForSelector('#class-plan',{visible:true});
   await Promise.all([teacher.waitForNavigation(),activate(teacher,'#class-plan a[href*="/requirements/"]')]);
   await wait(teacher,'.mreq');
   assert.equal(await teacher.$('[name=teacher-key]'),null);
