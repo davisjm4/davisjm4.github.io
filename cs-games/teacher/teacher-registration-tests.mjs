@@ -7,9 +7,7 @@ test('two self-registered teachers and the existing Google owner have isolated w
     ENABLE_TEACHER_ACCOUNTS:'1',
     GOOGLE_CLIENT_ID:'fictional-cs-games-client',
     TEACHER_EMAILS:'legacy@gmail.com',
-    TEACHER_AUTH_SECRET:'synthetic-rate-limit-secret'.repeat(2),
-    TEACHER_MAIL_API_KEY:'synthetic-mail-key',
-    TEACHER_MAIL_FROM:'CS Games Test <codes@fixture.example>'
+    TEACHER_AUTH_SECRET:'synthetic-rate-limit-secret'.repeat(2)
   };
   const dev = await startDev({pathwayAdapters:settings});
   t.after(async () => {
@@ -68,7 +66,7 @@ test('two self-registered teachers and the existing Google owner have isolated w
   const fallbackCredential = await googleToken(school,'10004');
   const migration = dev.db.prepare('SELECT COUNT(*) AS count FROM teacher_accounts');
   assert.equal(migration.get().count,0);
-  assert.deepEqual(await ok('/teacher/registration'),{enabled:true,signup:true,email:true});
+  assert.deepEqual(await ok('/teacher/registration'),{enabled:true,signup:true,email:false});
 
   settings.ENABLE_TEACHER_ACCOUNTS = '0';
   assert.equal((await google(googleCredential)).status,401);
@@ -80,7 +78,11 @@ test('two self-registered teachers and the existing Google owner have isolated w
   assert.equal((await google(googleCredential,'signin')).status,401);
   assert.equal((await google(invalidCredential)).status,401);
   assert.equal((await google(fallbackCredential)).status,401);
-  assert.equal((await call('/teacher/session',{token:legacyCredential,method:'POST'})).status,401);
+  assert.equal((await call('/teacher/session',{token:googleCredential,method:'POST'})).status,401);
+  const cachedPageSession = await ok('/teacher/session',{
+    token:await googleToken('legacy@gmail.com','10003'),method:'POST'
+  });
+  assert.equal(cachedPageSession.owner,originalSession.owner);
   const {status:registered,data:first} = await google(googleCredential);
   assert.equal(registered,200,JSON.stringify(first));
   assert.equal(first.owner,'google:10001');
@@ -90,6 +92,9 @@ test('two self-registered teachers and the existing Google owner have isolated w
   assert.equal(legacy.status,200,JSON.stringify(legacy.data));
   assert.equal(legacy.data.owner,originalSession.owner);
 
+  settings.TEACHER_MAIL_API_KEY = 'synthetic-mail-key';
+  settings.TEACHER_MAIL_FROM = 'CS Games Test <codes@fixture.example>';
+  assert.deepEqual(await ok('/teacher/registration'),{enabled:true,signup:true,email:true});
   assert.equal((await email('signup','send',school,undefined,{origin:'https://unrelated.example'})).status,403);
   assert.equal((await email('signup','send',school.toUpperCase())).status,200);
   const signupCode = mailbox.get(school);
