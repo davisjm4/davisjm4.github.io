@@ -53,7 +53,9 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await see(student,'#student-pathway','Self-paced');
   assert.equal(await student.$('.practice-challenge'),null);
 
-  await teacher.evaluate(()=>{location.hash='#practice-online';});
+  await teacher.evaluate(()=>{location.hash='#class-assessments';});
+  await teacher.waitForSelector('#class-assessments',{visible:true});
+  await byText(teacher,'#class-assessments','Create targeted practice');
   await wait(teacher,'#wpr-builder-form');
   const classId=new URL(teacher.url()).searchParams.get('class');
   assert.equal(await teacher.$eval('[name=profileClassId]', input=>input.value),classId);
