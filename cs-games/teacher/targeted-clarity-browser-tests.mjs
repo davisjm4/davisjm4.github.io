@@ -128,6 +128,8 @@ test('CSG-PKG-01 inline assessment handles an unsuccessful write and records a s
   await page.type('[name=teacher-key]', teacherToken);
   await pressText(page, '#teacher-account button', 'Sign in to development service');
   await sees(page, '#class-pathway-status', /Students have access to the default pathway/);
+  await page.evaluate(()=>{location.hash='#class-students';});
+  await page.waitForSelector('#class-students',{visible:true});
   await pressText(page, '#class-students button', 'View progress');
   const form = '#wpr-profile-report form';
   const score = form + ' input[type=number]';
