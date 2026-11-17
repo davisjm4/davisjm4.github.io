@@ -161,7 +161,9 @@ test('a student joins, practices offline, restores on another device and leaves 
   await exactButton(teacher,'Create class');
   const invite=await (await wait(teacher,'#wpr-teacher-profiles a[href*="#enroll="]')).evaluate(x=>x.href);
   await teacher.waitForFunction(()=>document.querySelector('[name="profileClassId"]')?.options.length===2);
-  assert.equal(await teacher.$eval('[name="profileClassId"]',e=>e.value),'');
+  const currentId=new URL(teacher.url()).searchParams.get('class');
+  assert.equal(await teacher.$eval('[name="profileClassId"]',e=>e.value),currentId);
+  await teacher.select('[name="profileClassId"]','');
 
   const guestStats=()=>first.evaluate(()=>JSON.parse(localStorage.getItem('wrg.v1')).stats);
   await first.goto(wpr+target,{waitUntil:'load'});
