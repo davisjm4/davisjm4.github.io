@@ -16,6 +16,7 @@ import { el } from './dom.mjs';
 import { renderListView } from './list-view.mjs?v=class-participation-v1';
 import { createPanelPlaceholder, createProgressPanel } from './progress-panel.mjs?v=guest-map-v1';
 import { createSkillSearch } from './search.mjs';
+import { groupCourseStops } from '../course-groups.mjs';
 import { createStage } from './stage.mjs';
 
 export function mountStudentMap(container, options) {
@@ -33,6 +34,30 @@ export function mountStudentMap(container, options) {
   }
   let searchQuery = restoreQuery();
   let stageCtl = null, zoomLevel = 1, resizeObserver = null, lastStopId = null, destroyed = false;
+  let activeGroupId = null;
+  const groups = () => input.guest ? groupCourseStops(model) : [];
+  function selectedGroup() {
+    const all = groups();
+    if(all.length<2)return null;
+    if(!all.some(g=>g.id===activeGroupId)){
+      const current=input.currentNodeId ? findNode(model,input.currentNodeId)?.stopId : model.suggestedNext?.stopId;
+      activeGroupId=all.find(g=>g.stops.some(s=>s.id===current))?.id||all[0].id;
+    }
+    return all.find(g=>g.id===activeGroupId);
+  }
+  function groupPicker() {
+    if(route.view!=='course')return null;
+    const all=groups();
+    if(all.length<2)return null;
+    const selected=selectedGroup();
+    return el('nav',{class:'map-unit-picker','aria-label':'Choose a learning unit'},
+      el('p',{class:'map-unit-heading',text:model.courseId==='csp'?'Choose an AP CSP Big Idea':'Choose a learning unit'}),
+      el('div',{class:'map-unit-buttons'},
+        all.map(g=>el('button',{type:'button',class:'btn btn-quiet','data-unit-id':g.id,
+          'aria-pressed':g.id===selected?.id?'true':'false',
+          text:g.label+' · '+g.stops.length+' areas',
+          onclick:()=>{activeGroupId=g.id;render({focus:'group'});announce('Showing '+g.label+'.');}}))));
+  }
   const restartIds = new Map();   // one request id per attempt, reused on retry, so a repeated click cannot start two attempts
   const live = el('p', { class: 'sr-only', role: 'status', 'aria-live': 'polite' });
   const root = el('div', { class: 'map-app' });
@@ -70,7 +95,12 @@ export function mountStudentMap(container, options) {
     render({ focus });
   }
   const openStop = (stop) => { lastStopId = stop.id; go({ view: 'area', stopId: stop.id, nodeId: null }, { focus: 'heading' }); };
-  const backToCourse = () => go({ view: 'course', stopId: null, nodeId: null }, { focus: 'stop' });
+  const backToCourse = () => {
+    const stopId=lastStopId||route.stopId;
+    const match=groups().find(g=>g.stops.some(s=>s.id===stopId));
+    if(match)activeGroupId=match.id;
+    go({ view: 'course', stopId: null, nodeId: null }, { focus: 'stop' });
+  };
   const setLayout = (layout) => go({ layout }, { replace: true, focus: 'layout' });
 
   function select(node, { focusPanel = true, scroll = false } = {}) {
@@ -175,7 +205,9 @@ export function mountStudentMap(container, options) {
     const stop = route.view === 'area' ? findStop(model, route.stopId) : null;
     const drawn = stop
       ? renderAreaMap(model, stop, { width, selectedId: route.nodeId, onSelect: (n) => select(n) })
-      : renderCourseMap(model, { width, onOpenStop: openStop, onPractice: (info) => adapter.onPractice?.(info) });
+      : renderCourseMap(model, { width, onOpenStop: openStop,
+          visibleStopIds:selectedGroup()?.stops.map(s=>s.id)||null,
+          onPractice: (info) => adapter.onPractice?.(info) });
     stageCtl.viewport.style.setProperty('--h', stop ? stop.identity.hue : 190);
     stageCtl.setContent(drawn.content, drawn.width, drawn.height);
     stageCtl.viewport.dataset.cols = String(drawn.cols);
@@ -232,7 +264,10 @@ export function mountStudentMap(container, options) {
         else announce('Choose a skill to set your current position.');
       } })) : null;
     // Keep visual and keyboard order consistent: shortcuts and map first, skill search afterward.
-    root.replaceChildren(live, header, tools, ...(input.mapFirst ? [shortcuts, body, search, meta] : [search, meta, body]));
+    const unitChooser=groupPicker();
+    root.replaceChildren(live,header,tools,...(input.mapFirst
+      ? [shortcuts,unitChooser,body,search,meta].filter(Boolean)
+      : [unitChooser,search,meta,body].filter(Boolean)));
 
     if (route.layout === 'map') {
       stageCtl = createStage({ label: stop ? `${stop.title} skill map` : `${model.courseTitle} course map`, onZoomChange: (z) => { zoomLevel = z; root.dataset.zoom = String(z); } });
@@ -246,7 +281,7 @@ export function mountStudentMap(container, options) {
       }
     } else {
       stageCtl = null;
-      const stops = stop ? [stop] : model.stops;
+      const stops = stop ? [stop] : selectedGroup()?.stops||model.stops;
       main.append(renderListView(model, stops, { onSelect: (n) => select(n), onOpenStop: openStop, onPractice: (i) => adapter.onPractice?.(i), selectedId: route.nodeId, showStopButton: !stop }));
     }
     addReturnLinks(root);
@@ -255,6 +290,7 @@ export function mountStudentMap(container, options) {
 
     // Focus management: say where the student landed, and give focus back where they came from.
     if (focus === 'heading') root.querySelector('#map-heading')?.focus({ preventScroll: false });
+    else if(focus==='group') root.querySelector('.map-unit-picker [aria-pressed="true"]')?.focus({preventScroll:true});
     else if (focus === 'layout') root.querySelector('[data-layout][aria-pressed="true"]')?.focus({ preventScroll: true });
     else if (focus === 'none' && focused?.id === 'map-skill-search') root.querySelector('#map-skill-search')?.focus({ preventScroll: true });
     else if (keepLayout) root.querySelector('[data-layout][aria-pressed="true"]')?.focus({preventScroll:true});
@@ -304,6 +340,7 @@ export function mountStudentMap(container, options) {
       if (label !== null) options.highlightLabel = label;
       overrides = { progress: new Map(), attempts: {} };
       if (courseChanged) {
+        activeGroupId=null;
         searchQuery = restoreQuery();
         route = { view: 'course', stopId: null, nodeId: null, layout: route.layout };
       }
