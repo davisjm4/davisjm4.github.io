@@ -82,13 +82,12 @@ test('teacher publishes exact three-topic diagnostic, student takes it, teacher 
   await a11y(student,'#assignment-body');
   const remediation=await student.$eval('#assignment-body a[href*="topics=attire-ppe"]',e=>e.href);
   await student.goto(remediation,{waitUntil:'load'});
-  await wait(student,'#targeted-options input[value="attire-ppe"]');
-  assert.equal(await student.$eval('#targeted-options input[value="attire-ppe"]',e=>e.checked),true);
-  await exactButton(student,'Start shared practice');
+  // Direct practice links immediately open the relevant question rather than a configuration form.
+  await student.waitForFunction(()=>!document.querySelector('#view-practice')?.hidden);
   assert.equal(await student.evaluate(()=>WRG.app.state().current.tags.some(t=>t.topicId==='attire-ppe')),true);
   assert.equal(await student.evaluate(()=>document.documentElement.scrollWidth),360);
   await student.goto(url+'/wpr-games/workplace-readiness/?practice=1&topics=workplace-relationships&subtopics=management-conflict&difficulty=intermediate&modes=decision',{waitUntil:'load'});
-  await exactButton(student,'Start shared practice');
+  await student.waitForFunction(()=>!document.querySelector('#view-practice')?.hidden);
   assert.equal(await student.evaluate(()=>{const c=WRG.app.state().current;return c.difficulty==='intermediate'&&c.mode==='decision'&&c.tags.some(t=>t.subtopicId==='management-conflict');}),true);
   await student.goto(url+'/wpr-games/workplace-readiness/#/summary',{waitUntil:'load'});
   await wait(student,'#readiness-body .wpr-table-scroll');
@@ -99,6 +98,7 @@ test('teacher publishes exact three-topic diagnostic, student takes it, teacher 
   const cdp=await student.createCDPSession();
   await cdp.send('Page.setDownloadBehavior',{behavior:'allow',downloadPath:downloadDir});
   await exactButton(student,'CSV','#readiness-body');
+  await student.click('#readiness-body .wpr-performance-tools > summary');
   await exactButton(student,'Save readiness backup');
   const backup=join(downloadDir,'wpr-readiness-backup.json'), exportPath=join(downloadDir,'wpr-performance.csv');
   for(let attempt=0;attempt<40&&(!existsSync(backup)||!existsSync(exportPath));attempt++) await delay(50);
@@ -109,6 +109,7 @@ test('teacher publishes exact three-topic diagnostic, student takes it, teacher 
   await student.reload({waitUntil:'load'});
   await student.waitForFunction(()=>document.querySelector('#readiness-body')?.textContent.includes('Complete a teacher assignment'));
   student.once('dialog',d=>d.accept());
+  await student.click('#readiness-body .wpr-performance-tools > summary');
   const uploader=await student.waitForSelector('#readiness-body input[type=file]');
   await uploader.uploadFile(backup);
   await student.waitForFunction(()=>document.querySelector('#readiness-body')?.textContent.includes('Assessment history'));
@@ -159,7 +160,7 @@ test('a student joins, practices offline, restores on another device and leaves 
 
   const guestStats=()=>first.evaluate(()=>JSON.parse(localStorage.getItem('wrg.v1')).stats);
   await first.goto(wpr+target,{waitUntil:'load'});
-  await exactButton(first,'Start shared practice');
+  await first.waitForFunction(()=>!document.querySelector('#view-practice')?.hidden);
   await wait(first,'.choice[role="radio"]');
   await first.tap('.choice[role="radio"]');
   await first.tap('#btn-check');
@@ -175,7 +176,7 @@ test('a student joins, practices offline, restores on another device and leaves 
   assert.match(studentPathway,/Self-paced/);
   const id=db.prepare('SELECT id FROM student_profiles').get().id;
   await first.goto(wpr+target,{waitUntil:'load'});
-  await exactButton(first,'Start shared practice');
+  await first.waitForFunction(()=>!document.querySelector('#view-practice')?.hidden);
   await wait(first,'.choice[role="radio"]');
   await first.setOfflineMode(true);
   await first.tap('.choice[role="radio"]');

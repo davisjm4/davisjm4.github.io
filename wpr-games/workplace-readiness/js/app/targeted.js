@@ -61,13 +61,11 @@
       update();
     });
     subs.box.addEventListener('change', changed);
-    const status = h('p', { role: 'status' });
-    host.append(h('details', { open: selected('topics').length > 0 }, h('summary', { text: 'Target specific topics' }), h('p', { text: 'Choose one or more topics. If you select subtopics, practice is limited to those subtopics.' }), topics.box, subs.box),
-      h('button', { type: 'button', class: 'btn', text: 'Copy practice link', onclick: async () => {
-        const url = new URL(practiceLink(W.ui.readOptions()), root.location.href).href;
-        try { await navigator.clipboard.writeText(url); status.textContent = 'Practice link copied.'; }
-        catch { status.replaceChildren(h('a', { href: url, text: url })); }
-      } }), status);
+    // Assignment and practice links are created in Teacher Tools, not student practice.
+    host.append(h('details', { open: selected('topics').length > 0 },
+      h('summary', { text: 'Target specific topics' }),
+      h('p', { text: 'Choose topics or subtopics to focus your practice.' }),
+      topics.box, subs.box));
     const linkedFilters = [['opt-skill','skills'], ['opt-mode','modes'], ['opt-context','contexts']];
     for (const [id,key] of linkedFilters) {
       const select = document.getElementById(id);
