@@ -65,6 +65,7 @@ export function installClassWorkspace({root,classList,panel,getSelectedId,render
       'class-manage':panel.querySelector('details.more')
     };
     const activeSection=sectionMap[route]||sectionMap['class-overview'];
+    if(route==='class-manage'&&activeSection?.tagName==='DETAILS')activeSection.open=true;
     for(const section of new Set(Object.values(sectionMap))) {
       if(!section)continue;
       if(section===focus) {
