@@ -1,10 +1,12 @@
-import {UNITS,SCALES,STORAGE_KEY,LIMITS,clone,fmt,convert,scaleRatio,pageSize,recommend,geometry,validateDesign,checkDesign,preset,snapshot,compare,markdown,validateBackup,diagramName} from './core.mjs';
+import {UNITS,SCALES,STORAGE_KEY,LIMITS,clone,fmt,convert,scaleRatio,pageSize,recommend,geometry,corners,validateDesign,checkDesign,preset,snapshot,compare,markdown,validateBackup,diagramName} from './core.mjs';
 import {diagram,xml as esc} from './diagram.mjs';
+import {previewFrames,previewFailures} from './visual-test.mjs';
 const $=id=>document.getElementById(id);
 const REQUIRED_MEASUREMENTS=['robot.width','robot.length','robot.clearance','area.width','area.length','area.margin'];
 const newProject=()=>{const p=preset();p.title='My Robo Rally course';p.description='';p.segments=[];p.obstacles=[];return p;};
 let design=newProject(),tests=[],selected=0,stage=0,past=[],future=[],formal=false,zoom=1,panX=0,panY=0,storageOK=true,notebookTests=[];
 let measured=new Set(),demo=false;
+let simulation={frames:[],index:0,raf:0,playing:false,last:0,failures:new Map()};
 const readyToMeasure=()=>REQUIRED_MEASUREMENTS.every(path=>measured.has(path));
 const meaningfulChange=(a,b)=>['robot','area','start','segments','obstacles','lane'].some(key=>JSON.stringify(a[key])!==JSON.stringify(b[key]));
 function requireEvidence(){
@@ -20,7 +22,7 @@ function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify({version:
 try{const saved=localStorage.getItem(STORAGE_KEY);if(saved){const raw=JSON.parse(saved),r=validateBackup(raw);design=r.design;tests=r.tests.map(t=>({...t,diagram:diagram(t.design)}));measured=new Set(Array.isArray(raw.measured)?raw.measured.filter(x=>REQUIRED_MEASUREMENTS.includes(x)):REQUIRED_MEASUREMENTS);demo=raw.demo===true;}}catch{storageOK=false;$('storage-status').textContent='Saved data could not be loaded and has not been replaced. Import a backup or download your current work before leaving.';}
 function commit(next,controls=false){const e=validateDesign(next);if(e.length){announce(e[0]);return false;}if(JSON.stringify(next)===JSON.stringify(design))return true;
 if(demo&&meaningfulChange(design,next))demo=false;
-past.push(clone(design));if(past.length>60)past.shift();future=[];design=next;formal=false;if(storageOK)persist();render(controls);return true;}
+past.push(clone(design));if(past.length>60)past.shift();future=[];clearSimulation(false);design=next;formal=false;if(storageOK)persist();render(controls);return true;}
 function edit(fn,controls=false){const p=clone(design);fn(p);return commit(p,controls);}
 function confirmAction(title,message,fn){const d=$('confirm');$('confirm-title').textContent=title;$('confirm-message').textContent=message;d.returnValue='cancel';d.showModal();d.addEventListener('close',()=>{if(d.returnValue==='confirm')fn();},{once:true});}
 const num=(label,path,v,unit=true,min=0,max=50000)=>{
@@ -34,10 +36,90 @@ if(stage===2){h+=`<details id="start-setup" ${p.segments.length?'':'open'}><summ
 if(stage>=3)h+='<p>Read the live calculations and independent results, then save your engineering evidence below.</p><button id="go-design">Edit geometry</button><button id="go-scale">Edit scale &amp; paper</button><button id="go-measure">Edit measurements</button><button id="go-tests">Tests &amp; notebook ↓</button><h3>Build your physical course</h3><p>Use the same floor origin and transfer every length and radius. Build rounded endpoint and turn pads. Mark arrows, start and finish. Drive slowly, measure differences and record observations.</p>';
 $('stage-controls').innerHTML=h;}
 function calculations(){const p=design,n=p.scale,u=p.unit,d=pageSize(p.page),r=recommend(p),s=geometry(p).segments[selected];let h=`<div class="formula"><strong>Drawing = actual ÷ N</strong><p>1:${fmt(n)} means 1 cm drawing = ${fmt(n)} cm actual.</p><p>Floor width: ${fmt(p.area.width/UNITS[u])} ${u} × ${UNITS[u]} = ${fmt(p.area.width)} mm.</p><p>${fmt(p.area.width)} ÷ ${fmt(n)} = <strong>${fmt(p.area.width/n)} mm on drawing</strong>.</p><p>Floor length: ${fmt(p.area.length)} ÷ ${fmt(n)} = ${fmt(p.area.length/n)} mm.</p><p>Robot width: ${fmt(p.robot.width)} ÷ ${fmt(n)} = ${fmt(p.robot.width/n)} mm.</p><p>Robot length: ${fmt(p.robot.length)} ÷ ${fmt(n)} = ${fmt(p.robot.length/n)} mm.</p></div><div class="formula"><strong>Choose a practical scale</strong><p>Sheet ${fmt(d.width)} × ${fmt(d.height)} mm; ${p.page.margin} mm margins → usable ${fmt(d.usableWidth)} × ${fmt(d.usableHeight)} mm.</p><p>Required N = max(${fmt(p.area.width)}/${fmt(d.usableWidth)}, ${fmt(p.area.length)}/${fmt(d.usableHeight)}) = ${fmt(r.required)}.</p><p>Recommended: 1:${r.standard}. Larger denominator → smaller drawing.</p></div>`;if(s){const k=s.segment;h+=`<div class="formula"><strong>Segment ${selected+1}</strong>${k.type==='arc'?`<p>Arc = r × θπ/180 = ${fmt(k.radius)} × ${k.angle}π/180 = ${fmt(s.length)} mm actual.</p><p>Radius ${fmt(k.radius)} ÷ ${n} = ${fmt(k.radius/n)} mm drawing.</p>`:k.type==='rotate'?`<p>In-place ${k.direction} ${k.angle}°; no position change or travel distance.</p>`:''}<p>${fmt(s.length)} mm actual ÷ ${n} = ${fmt(s.length/n)} mm drawing.</p><p>Actual = drawing × N: ${fmt(s.length/n)} × ${n} = ${fmt(s.length)} mm (full stored precision).</p></div>`;}$('calculations').innerHTML=h;}
-function draw(){ $('drawing').innerHTML=diagram(design,{screen:true,selected,grid:$('grid').checked,dimensions:$('dimensions').checked,robot:$('robot').checked,labels:$('labels').value});const svg=$('drawing').querySelector('svg'),v=svg.viewBox.baseVal,w=v.width/zoom,h=v.height/zoom;svg.setAttribute('viewBox',`${v.x+(v.width-w)/2+panX} ${v.y+(v.height-h)/2+panY} ${w} ${h}`);$('zoom-label').textContent=Math.round(zoom*100)+'% view';$('scale-badge').textContent='Scale 1:'+fmt(design.scale);}
+const NS='http://www.w3.org/2000/svg';
+function clearSimulation(restore=true){
+ if(simulation.raf)cancelAnimationFrame(simulation.raf);
+ simulation={frames:[],index:0,raf:0,playing:false,last:0,failures:new Map()};
+ const status=$('preview-status');
+ if(status)status.textContent='Preview reset. Digital geometry checks, not physical robot movement, determine reported pass/fail outcomes.';
+ const play=$('preview-play');if(play)play.textContent='Play geometric preview';
+ if(restore&&$('drawing'))draw();
+}
+function paintPreview(frame){
+ if(!frame)return;
+ const g=$('drawing').querySelector('svg > g');if(!g)return;
+ let overlay=g.querySelector('[data-visual-robot]');
+ if(!overlay){
+  overlay=document.createElementNS(NS,'g');overlay.setAttribute('data-visual-robot','true');
+  for(const id of ['safety','body']){
+   const poly=document.createElementNS(NS,'polygon');poly.setAttribute('data-part',id);
+   poly.setAttribute('stroke-width',String(Math.max(5,Math.min(25,design.robot.width/18))));
+   poly.setAttribute('stroke',id==='safety'?'#0b789c':'#664500');
+   poly.setAttribute('fill',id==='safety'?'#2ca6c622':'#ffd166c9');
+   if(id==='safety')poly.setAttribute('stroke-dasharray','22 14');
+   overlay.append(poly);
+  }
+  g.append(overlay);
+ }
+ const setPoints=(poly,w,l)=>poly.setAttribute('points',corners(frame.pose,w,l).map(p=>p.x+','+p.y).join(' '));
+ setPoints(overlay.querySelector('[data-part="safety"]'),design.robot.width+2*design.robot.clearance,design.robot.length+2*design.robot.clearance);
+ setPoints(overlay.querySelector('[data-part="body"]'),design.robot.width,design.robot.length);
+ const bad=simulation.failures.has(frame.segment);
+ overlay.querySelector('[data-part="body"]').setAttribute('stroke',bad&&frame.end?'#c73329':'#664500');
+}
+function initSimulation(){
+ if(!readyToMeasure())throw Error('Enter your own required measurements before previewing the course.');
+ if(demo)throw Error('Modify the instructional example before using the geometric preview.');
+ if(!design.segments.length)throw Error('Add at least one connected segment in Stage 3.');
+ clearSimulation(false);
+ const frames=previewFrames(design);
+ const {groups}=previewFailures(design);
+ simulation={frames,index:0,raf:0,playing:false,last:0,failures:groups};
+ draw();
+}
+function previewStep(){
+ if(!simulation.frames.length)initSimulation();
+ if(simulation.index>=simulation.frames.length){
+  $('preview-status').textContent='Preview complete. Compare the digital geometry results with your measurements, then plan revisions.';
+  return true;
+ }
+ const frame=simulation.frames[simulation.index++];
+ paintPreview(frame);
+ const warning=frame.end?simulation.failures.get(frame.segment):null;
+ if(warning?.length){
+  simulation.playing=false;
+  $('preview-play').textContent='Continue geometric preview';
+  $('preview-status').textContent='Segment '+frame.segment+' flagged by the geometric checker: '+warning[0]+' The diagram is not a physical collision simulation.';
+  return true;
+ }
+ $('preview-status').textContent='Geometric preview: segment '+frame.segment+' of '+design.segments.length+'. This visual movement is illustrative, not a physical test.';
+ return simulation.index>=simulation.frames.length;
+}
+function previewTick(now){
+ if(!simulation.playing)return;
+ if(now-simulation.last>=60){
+  simulation.last=now;
+  if(previewStep()){simulation.playing=false;simulation.raf=0;return;}
+ }
+ simulation.raf=requestAnimationFrame(previewTick);
+}
+function previewPlay(){
+ if(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches){
+  $('preview-status').textContent='Reduced motion is enabled. Use Step to next position instead.';
+  return;
+ }
+ if(simulation.playing){
+  simulation.playing=false;if(simulation.raf)cancelAnimationFrame(simulation.raf);
+  simulation.raf=0;$('preview-play').textContent='Resume geometric preview';return;
+ }
+ if(!simulation.frames.length||simulation.index>=simulation.frames.length)initSimulation();
+ simulation.playing=true;simulation.last=0;$('preview-play').textContent='Pause geometric preview';
+ simulation.raf=requestAnimationFrame(previewTick);
+}
+function draw(){ $('drawing').innerHTML=diagram(design,{screen:true,selected,grid:$('grid').checked,dimensions:$('dimensions').checked,robot:$('robot').checked&&!simulation.frames.length,labels:$('labels').value});const svg=$('drawing').querySelector('svg'),v=svg.viewBox.baseVal,w=v.width/zoom,h=v.height/zoom;svg.setAttribute('viewBox',`${v.x+(v.width-w)/2+panX} ${v.y+(v.height-h)/2+panY} ${w} ${h}`);$('zoom-label').textContent=Math.round(zoom*100)+'% view';$('scale-badge').textContent='Scale 1:'+fmt(design.scale);if(simulation.frames.length)paintPreview(simulation.frames[Math.max(0,simulation.index-1)]);}
 function segments(){const p=design,g=geometry(p);$('course-summary').innerHTML=`<p><strong>${p.segments.length} segments · ${fmt(g.total/UNITS[p.unit])} ${p.unit} actual path · ${fmt(g.total/p.scale)} mm drawing</strong></p>`;$('segment-list').innerHTML=`<table><caption>Text alternative to the drawing; in-place turns have zero path length.</caption><thead><tr><th>Edit</th><th>Geometry</th><th>Actual / drawing path</th><th>Endpoint (mm)</th></tr></thead><tbody>${g.segments.map(s=>`<tr><td><button data-select="${s.index}" aria-pressed="${selected===s.index}">Edit ${s.index+1}</button></td><td>${s.segment.type}${s.segment.direction?' '+s.segment.direction+' '+s.segment.angle+'°':''}${s.segment.radius?'<br>r '+fmt(s.segment.radius/UNITS[p.unit])+' '+p.unit+' / '+fmt(s.segment.radius/p.scale)+' mm drawing':''}<br>lane ${fmt((s.segment.lane||p.lane)/UNITS[p.unit])} ${p.unit}</td><td>${fmt(s.length/UNITS[p.unit])} ${p.unit}<br>${fmt(s.length/p.scale)} mm drawing</td><td>(${fmt(s.end.x)}, ${fmt(s.end.y)})<br>${fmt(s.end.h*180/Math.PI)}°</td></tr>`).join('')}</tbody></table>`;}
 function results(){const r=checkDesign(design);$('check-label').textContent=formal?`Formal check: ${r.failures} failures, ${r.warnings} warnings. Save Test to preserve it.`:'Preliminary live feedback — not a saved test.';$('checks').innerHTML=r.checks.map(c=>`<div class="checkrow"><strong>${esc(c.key)}</strong> <span class="status ${c.status.split(' ')[0]}">${c.status}</span><p>${esc(c.message)}</p></div>`).join('');}
-function render(controls=true){const missing=REQUIRED_MEASUREMENTS.filter(path=>!measured.has(path));
+function render(controls=true){if(simulation.frames.length)clearSimulation(false);const missing=REQUIRED_MEASUREMENTS.filter(path=>!measured.has(path));
 $('measurement-status').textContent=missing.length
   ? 'Required measurements still blank: '+missing.map(path=>path.replace('robot.','Robot ').replace('area.','Floor ')).join(', ')+'. The drawing uses illustration dimensions until you enter yours.'
   : demo?'Instructional example loaded. Revise measured geometry before testing.':'Own measurements entered. Record a design goal and prediction in the notebook before a formal test.';
@@ -63,6 +145,9 @@ else if(el.id==='add-kind')$('new-length-field').hidden=el.value!=='straight';
 else if(['grid','dimensions','robot','labels'].includes(el.id))draw();});
 document.addEventListener('click',e=>{const el=e.target.closest('button,[data-segment]');if(!el)return;const d=el.dataset;if(d.stage!==undefined){stage=Number(d.stage);render();if(stage>=4){$('test-workspace').open=true;$('test-workspace').scrollIntoView();}return;}if(d.select!==undefined||d.segment!==undefined){selected=Number(d.select??d.segment);stage=2;render();return;}if(d.removeObstacle!==undefined){edit(p=>p.obstacles.splice(Number(d.removeObstacle),1),true);return;}if(d.pan){const a=300/zoom;panX+=d.pan==='left'?-a:d.pan==='right'?a:0;panY+=d.pan==='up'?-a:d.pan==='down'?a:0;draw();return;}if(d.diagram){const t=tests.find(t=>t.number===Number(d.diagram));download(t.diagram||diagram(t.design),diagramName(t),'image/svg+xml');return;}if(d.restore){const t=tests.find(t=>t.number===Number(d.restore));confirmAction('Revise saved design?','Replace current workspace with this saved design? Tests remain unchanged.',()=>{commit(clone(t.design),true);notes();announce(`Loaded test ${t.number}; the next save creates a new record.`);});return;}
 try{switch(el.id){
+ case 'preview-play':previewPlay();break;
+ case 'preview-step':if(simulation.playing){simulation.playing=false;if(simulation.raf)cancelAnimationFrame(simulation.raf);simulation.raf=0;}previewStep();break;
+ case 'preview-reset':clearSimulation();break;
 case 'add-obstacle':if(design.obstacles.length>=LIMITS.obstacles)throw Error('Maximum 30 obstacles.');edit(p=>p.obstacles.push({x:0,y:0,width:Math.min(300,p.area.width),length:Math.min(300,p.area.length)}),true);break;
 case 'add-segment':{if(design.segments.length>=LIMITS.segments)throw Error('Maximum 100 segments.');
 const [type,direction]=$('add-kind').value.split('-');
