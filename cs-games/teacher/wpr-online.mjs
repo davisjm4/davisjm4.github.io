@@ -232,7 +232,7 @@ async function openReport(id) {
           form.elements.reporting.disabled=false;form.elements.reporting.checked=true;
           form.elements.title.value=r.name+' · Targeted Practice';
           quotas.replaceChildren();addQuota('topic:'+r.id,Math.min(5,availability(filters(),{scope:'topic',id:r.id}).questions));
-          invalidate();form.elements.title.focus();
+          invalidate();location.hash='#practice-online';requestAnimationFrame(()=>form.elements.title.focus());
         })));
     }
     panel.append(el('h4',{text:'Frequently missed questions'}));
