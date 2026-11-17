@@ -20,17 +20,17 @@
     id=aliases[id]||id;
     if (classPages.test(id)) return {view:'classes',sub:null,target:null};
     if (practiceIds.has(id)) return {view:'practice',sub:id,target:null};
-    if (views.some(v=>v.dataset.view===id)) return {view:id,sub:null,target:null};
+    if (views.some(v=>v.getAttribute('data-view')===id)) return {view:id,sub:null,target:null};
     var node=id&&document.getElementById(id);
     var owner=node&&node.closest('[data-view]');
-    if (owner?.dataset.view==='practice') {
+    if (owner?.getAttribute('data-view')==='practice') {
       var section=node.closest('#practice-online, #practice-published, #practice-canvas');
       return {view:'practice',sub:section?.id||null,target:section?.id===id?null:id};
     }
-    return owner ? {view:owner.dataset.view,sub:null,target:id} : {view:'classes',sub:null,target:null};
+    return owner ? {view:owner.getAttribute('data-view'),sub:null,target:id} : {view:'classes',sub:null,target:null};
   }
   function show(view,sub) {
-    views.forEach(v=>{v.hidden=v.dataset.view!==view;});
+    views.forEach(v=>{v.hidden=v.getAttribute('data-view')!==view;});
     links.forEach(a=>{
       if (a.dataset.viewLink===view) a.setAttribute('aria-current','page');
       else a.removeAttribute('aria-current');
