@@ -89,6 +89,8 @@ test('a teacher publishes participation settings and the student can leave and r
   await Promise.all([student.waitForNavigation(),activate(student,'a[href="./guest/?course=advanced"]')]);
   await wait(student,'[data-layout=list]');
   await activate(student,'[data-layout=list]');
+  await wait(student,'[data-unit-id="advanced-control"]');
+  await activate(student,'[data-unit-id="advanced-control"]');
   await wait(student,'li[data-node-id="node:advanced:loop-lab:looptype"]');
   assert.doesNotMatch(await student.$eval('.map-summary',node=>node.textContent),/required learning areas complete/);
   await activate(student,'.student-nav-menu summary');
