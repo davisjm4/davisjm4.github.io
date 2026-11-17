@@ -194,3 +194,24 @@ details summary { cursor: pointer; color: var(--muted); min-height: 2.5rem; disp
 .wpr-profile-form label { display: grid; gap: .25rem; }
 .wpr-profile-form input { min-width: 0; }
 .wpr-profile-secret, #profile-progress h3 { overflow-wrap: anywhere; }
+
+/* Student Workplace Readiness: evidence cards replace horizontally scrolling skill tables. */
+.wpr-skill-card-grid {
+  display: grid; gap: .8rem;
+  grid-template-columns: repeat(auto-fit,minmax(min(100%,18rem),1fr));
+  margin: 1rem 0 1.5rem;
+}
+.wpr-skill-card { min-width: 0; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--panel); padding: .85rem 1rem; }
+.wpr-skill-card h3 { margin: 0 0 .75rem; font-size: 1.02rem; overflow-wrap: anywhere; }
+.wpr-skill-facts { margin: 0; display: grid; gap: .55rem; }
+.wpr-skill-facts > div { display: grid; gap: .15rem; border-top: 1px solid var(--border); padding-top: .45rem; }
+.wpr-skill-facts dt { color: var(--muted); font-size: .85rem; font-weight: 600; }
+.wpr-skill-facts dd { margin: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.wpr-skill-next { margin-top: .75rem; }
+.wpr-skill-next a { min-height: 44px; display: inline-flex; align-items: center; }
+.wpr-topic-details > summary { font-size: 1.04rem; font-weight: 700; padding: .45rem 0; }
+.wpr-performance-tools { border: 1px solid var(--border); border-radius: .65rem; padding: .45rem .75rem; }
+.wpr-performance-tools > .wpr-controls { margin-block: .6rem; }
+@media print { .wpr-skill-card-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .wpr-skill-card { break-inside: avoid; color: #000; background: #fff; } }
