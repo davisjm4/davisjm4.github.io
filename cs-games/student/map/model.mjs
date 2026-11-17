@@ -157,7 +157,7 @@ export function buildMapModel(input) {
       const attempted = progress?.attempt?.attempted ?? 0;
       const started = complete || state === 'in-progress' || state === 'review' || attempted > 0 || (progress?.lifetime?.questionsAnswered ?? 0) > 0;
       const view = {
-        id: raw.id, title: raw.title, objective: raw.objective ?? '', areaId: raw.areaId, stopId: id, order: i + 1, orderOf: run.raw.length, courseIndex: flat.length,
+        id: raw.id, title: raw.title, objective: raw.objective ?? '', curriculumRefs: raw.standardRefs ?? [], areaId: raw.areaId, stopId: id, order: i + 1, orderOf: run.raw.length, courseIndex: flat.length,
         state, unrecognized, classParticipation:Boolean(input.pathwayCompletion), optional: !required, required, complete, started, requirementsConfigured, practiceOnly: !requirementsConfigured,
         proficiency:input.proficiency?.skills?.[raw.id]??null,
         teacherAssessmentRequired:raw.teacherAssessmentRequired, guest:raw.guest,practiceGoal:raw.practiceGoal,verifiedAward:raw.verifiedAward||(progress?.verification==='verified'&&Boolean(progress.award?.id)),
