@@ -1,4 +1,5 @@
 import { tierFields } from './requirements/tier-fields.mjs';
+import { installClassWorkspace } from './class-workspace.mjs';
 import { createTeacherFocus } from './learning-focus.mjs';
 import {DEMONSTRATION_TYPES} from '../pathway/proficiency/demonstrations.mjs';
 import {renderPathway} from '../student/pathway-view.mjs';
@@ -108,12 +109,14 @@ export function teacherProfiles(onClasses) {
     return p.revision>0?chip(p.isDefault?'Default pathway ready':'Pathway published','good'):chip('Pathway not published','warn');
   };
   function renderList() {
-    classList.replaceChildren(...classes.map(c=>{
+    const archived=pages.route()==='class-archived';
+    classList.replaceChildren(...classes.filter(c=>Boolean(c.archived)===archived).map(c=>{
       const card=el('button',{type:'button',class:'class-card','aria-pressed':String(c.id===selectedId),onclick:()=>openClass(c.id,{focus:true}).catch(e=>{status.textContent=e.message;})},
         el('strong',{text:c.title}),el('span',{class:'sub',text:courseLabel(c.course_id)}),el('span',{class:'chips'},pathwayChip(c)));
       return card;
     }));
-    if(!classes.length)put(classList,el('div',{class:'empty',style:'grid-column:1/-1'},el('h3',{text:'No classes yet'}),el('p',{text:'Create your first class below. Students join with an enrollment link.'})));
+    if(!classes.some(c=>Boolean(c.archived)===archived))put(classList,el('div',{class:'empty',style:'grid-column:1/-1'},
+      el('h3',{text:archived?'No archived classes':'No active classes'}),el('p',{text:archived?'Archived classes will appear here.':'Create your first class to get started.'})));
     const list=document.getElementById('pathway-class-list');
     if(list){
       const active=classes.filter(c=>!c.archived);
@@ -140,6 +143,7 @@ export function teacherProfiles(onClasses) {
     onClasses(classes,selectedId??classHint);
     renderList();
     if(!selectedId&&classHint&&classes.some(c=>c.id===classHint))await openClass(classHint);
+    pages.display();
   }
   async function loadPathwayStatus(c,slot,activeStudents) {
     const entry=pathways.get(c.id);
@@ -300,10 +304,13 @@ export function teacherProfiles(onClasses) {
             el('p',{},'Class ID: ',el('code',{text:c.id}),' '),
             act('Copy class ID',()=>copy(c.id,status),'btn small')))));
     if(invites.has(c.id)&&!c.archived)showInvite(invites.get(c.id));
+    if(!Object.hasOwn({'class-overview':1,'class-progress':1,'class-students':1,'class-focus':1,
+      'class-assignments':1,'class-plan':1,'class-assessments':1,'class-manage':1},location.hash.slice(1)))
+      location.hash='#class-overview';
+    pages.display();
     if(focus)panel.querySelector('h3')?.focus();
-    else if(location.hash==='#class-plan')panel.querySelector('#class-plan')?.scrollIntoView();
     loadPathwayStatus(c,pathwaySlot,active);
-    void focusPanel?.refresh();
+    void focusPanel?.refresh().then(pages.display);
   }
   async function openStudentPreview(classId,slot){
     const plan=pathways.get(classId);
@@ -431,6 +438,7 @@ export function teacherProfiles(onClasses) {
     status,classList,panel,
     el('section',{class:'card','aria-labelledby':'add-class-title'},el('h3',{id:'add-class-title',text:'Create a class'}),
       el('p',{class:'muted',text:'Enter a class name only. Do not enter student names. Class profiles store pseudonymous learning records.'}),create));
+  const pages=installClassWorkspace({root,classList,panel,getSelectedId:()=>selectedId,renderList});
   function clear(){
     classes=[];pathways.clear();invites.clear();selectedId=null;
     root.hidden=true;
