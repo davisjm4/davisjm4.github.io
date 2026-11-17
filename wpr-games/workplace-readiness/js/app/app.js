@@ -165,7 +165,10 @@
     }, 1000);
     doc.addEventListener('visibilitychange', function () { if (doc.hidden) save(); });
     root.addEventListener('pagehide', save);
-    render();
+    // A teacher or pathway-selected practice link opens its first question directly.
+    // Manual unfiltered visits continue to show the practice chooser.
+    if(shared && checkOptions())startPractice(UI.readOptions(),true);
+    else render();
   }
 
   W.app = { lib: lib, hybrid: hyb, tracker: tracker, store: store, startPractice: startPractice, state: function () { return { current: current, gen: gen, route: route }; } };
