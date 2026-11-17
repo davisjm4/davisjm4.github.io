@@ -124,7 +124,9 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   await openLoop(student);
   assert.match(await textOf(student,'.skill-panel'),/1 of the 30 required questions/);
 
-  await Promise.all([teacher.waitForNavigation(),teacher.click('#class-overview a[href$="#goals"]')]);
+  await teacher.evaluate(()=>{location.hash='#class-plan';});
+  await teacher.waitForSelector('#class-plan',{visible:true});
+  await Promise.all([teacher.waitForNavigation(),teacher.click('#class-plan a[href$="#goals"]')]);
   assert.equal(await teacher.$('[name=teacher-key]'),null);
   const optional='[id="participation-node:advanced:variable-lab:trace"]';
   await wait(teacher,optional);
