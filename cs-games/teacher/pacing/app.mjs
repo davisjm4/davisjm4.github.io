@@ -215,7 +215,6 @@ function renderNodes(){const filter=$('area-filter'),selected=filter.value;filte
   const automaticallyAssessable=c=>c.requirementTier!=null||c.requirementTier===undefined&&
     p.policies.some(rule=>rule.id===c.policyId&&rule.version===c.policyVersion&&rule.challenge);
   const openGroups=new Set([...$('node-table').querySelectorAll('details[open]')].map(d=>d.dataset.areaId));
-  const firstRender=!$('node-table').childElementCount;
   const edited=(focusId)=>{invalidate();renderNodes();renderStudent();refreshStatus();if(focusId)$(focusId)?.focus();};
   const makeRow=(id,c)=>{const n=node(id),tr=el('tr'),title=el('td',undefined,{class:'node-title'});title.append(el('strong',n.title),el('small',area(c.areaId)),el('small',c.standardRefs.map(x=>x.id).join(', ')||'Teacher-defined learning goal'));
     const control=(type,value,label,change,attrs={})=>{const td=el('td'),input=el('input',undefined,{type,'aria-label':label,...attrs});if(type==='checkbox')input.checked=value;else input.value=value??'';input.onchange=()=>run(()=>{change(type==='checkbox'?input.checked:input.value);invalidate();renderStudent();});td.append(input);return td;};
@@ -244,7 +243,7 @@ function renderNodes(){const filter=$('area-filter'),selected=filter.value;filte
     const assigned=rows.filter(c=>skillParticipation(p,c)!=='excluded').length;
     const automatic=rows.filter(automaticallyAssessable).length;
     const d=el('details',undefined,{class:'more','data-area-id':id});
-    d.open=Boolean(filter.value)||openGroups.has(id)||firstRender&&i===0;
+    d.open=openGroups.has(id);
     d.append(el('summary',title+' · '+rows.length+' skills · '+(!assigned?'Not included':required?required+' required':'Included · not required')));
     const body=el('div',undefined,{class:'body'}),actions=el('div',undefined,{class:'actions'});
     const change=btn(excluded?'Include area':'Exclude area',()=>{
@@ -285,7 +284,7 @@ function renderNodes(){const filter=$('area-filter'),selected=filter.value;filte
 /* ───────── stage 4: review & publish ───────── */
 function renderStudent(source=p,isDraft=publicationStatus({published:entry.published,draft:p}).key!=='published',contract=studentContract(source,graph)){
   $('student-source').textContent=isDraft?'Draft preview (not published)':'Published pathway';
-  $('student-view').replaceChildren(renderPathway(contract));
+  $('student-view').replaceChildren(renderPathway(contract,{collapseAll:true}));
 }
 function renderOverrides(){const t=table(['Date','Type','School / rotation','Minutes','Description','Actions']);for(const o of p.calendar?.overrides||[]){const tr=el('tr');for(const text of [formatDate(o.date)||o.date,o.dayType,(o.schoolDay===false?'Closed':'Instructional')+(o.nonRotation?' / does not advance rotation':'')+(o.rotation?' · '+o.rotation:''),o.minutes??'Default',o.label||''])tr.append(el('td',String(text)));const td=el('td');td.append(btn('Edit',()=>{const f=$('day-edit').elements;f.from.value=f.to.value=o.date;f.type.value=o.dayType;f.minutes.value=o.minutes??'';f.label.value=o.label||'';f.rotation.value=o.rotation||'';f.nonRotation.value=String(o.nonRotation??'');f.schoolDay.value=String(o.schoolDay??'');resetPicker(o.assessmentNodeIds||[]);f.from.scrollIntoView({block:'center'});},'secondary small'),btn('Clear',()=>{p.calendar.overrides=p.calendar.overrides.filter(x=>x.date!==o.date);recalculate();},'secondary small'));tr.append(td);t.tbody.append(tr);}
   $('override-count').textContent=p.calendar?.overrides.length?p.calendar.overrides.length+(p.calendar.overrides.length===1?' special date':' special dates'):'No special dates yet';
