@@ -79,7 +79,7 @@
     bar.appendChild(stat(s.completed, 'done'));
     bar.appendChild(stat(s.correct, 'right first try'));
     bar.appendChild(stat(acc === null ? '–' : pct(s.correct, s.completed) + '%', 'accuracy'));
-    bar.appendChild(stat(tracker.formatTime(), 'active time'));
+    bar.appendChild(stat(tracker.formatTime(), 'total active practice time'));
     var dots = h('span', { class: 'dots', role: 'img', 'aria-label': s.recent.length ? 'Last ' + s.recent.length + ' results: ' + s.recent.reduce(function (a, b) { return a + b; }, 0) + ' right' : 'No results yet' });
     s.recent.forEach(function (r) { dots.appendChild(h('span', { class: 'dot ' + (r ? 'ok' : 'miss') })); });
     bar.appendChild(dots);
