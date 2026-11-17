@@ -30,3 +30,20 @@
  .journal > summary span { display: block; margin-top: .3rem; }
  .segment-editor button.primary { width: 100%; }
 }
+
+/* Deterministic digital-only geometric preview. */
+.visual-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+  margin-top: .65rem; padding: .75rem; background: var(--panel, #183044);
+  border: 1px solid var(--line, #425364); border-radius: .7rem; }
+.visual-controls button { min-height: 44px; padding-inline: .8rem; }
+.visual-controls p { flex: 1 1 100%; margin: .25rem 0 0; line-height: 1.4; }
+#drawing svg [data-visual-robot] { pointer-events: none; }
+@media (max-width: 560px) {
+  .visual-controls { display: grid; grid-template-columns: 1fr 1fr; }
+  .visual-controls button { white-space: normal; }
+  .visual-controls #preview-play { grid-column: 1/-1; }
+  .visual-controls p { grid-column: 1/-1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #drawing svg [data-visual-robot] { animation: none !important; transition: none !important; }
+}

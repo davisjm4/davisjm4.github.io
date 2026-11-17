@@ -20,6 +20,8 @@ jobs:
       - run: ROBOTICS_EVIDENCE=/tmp/robotics-validation node cs-games/robotics/parts-sprint/tests/engine-tests.mjs
       - run: node java-games/session-tests.mjs
       - run: node cs-games/robotics/course-architect/tests/validation.mjs
+      - run: node --test cs-games/robotics/course-architect/tests/visual-preview.test.mjs
+      - run: node --check cs-games/robotics/course-architect/app.mjs
       - run: npm --prefix java-games install --ignore-scripts --no-audit --no-fund --package-lock=false
       - run: node cs-games/robotics/course-architect/tests/ui-tests.mjs
 
