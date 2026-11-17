@@ -34,6 +34,7 @@ test('a teacher publishes participation settings and the student can leave and r
   await wait(teacher,'[name=teacher-key]');
   await teacher.type('[name=teacher-key]',token);
   await pressNamed(teacher,'Sign in to development service');
+  await teacher.evaluate(()=>{location.hash='#class-create';});
   await wait(teacher,'[name=class-title]');
   await teacher.type('[name=class-title]','Synthetic participation browser');
   await teacher.select('[name=class-course]','advanced');
