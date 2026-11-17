@@ -35,7 +35,7 @@ export function mountStudentMap(container, options) {
   let searchQuery = restoreQuery();
   let stageCtl = null, zoomLevel = 1, resizeObserver = null, lastStopId = null, destroyed = false;
   let activeGroupId = null;
-  const groups = () => input.guest ? groupCourseStops(model) : [];
+  const groups = () => input.guest ? groupCourseStops(model,input.curriculumGraph) : [];
   function selectedGroup() {
     const all = groups();
     if(all.length<2)return null;
