@@ -521,6 +521,11 @@ test('teacher session survives class navigation, expires safely, and resumes uns
   await page.keyboard.press('Escape');
   await page.waitForSelector('#teacher-account dialog[open]',{hidden:true});
   await clickByText(page, '#teacher-account', 'Sign Out');
+  await page.waitForFunction(()=>[...document.querySelectorAll('#teacher-account button')].some(b=>b.textContent.trim()==='Sign In'),{timeout:6000})
+    .catch(async error=>{
+      const state=await page.$eval('#teacher-account',node=>({text:node.innerText,buttons:[...node.querySelectorAll('button')].map(b=>b.innerText)}));
+      throw Error('Sign-out navigation did not return: '+JSON.stringify(state)+'; '+error.message);
+    });
   await clickByText(page, '#teacher-account', 'Sign In');
   await page.waitForSelector('#teacher-account [name=teacher-key]',{visible:true});
   assert.equal(await page.$eval('#wpr-teacher-profiles',root=>root.hidden),true);
