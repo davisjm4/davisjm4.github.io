@@ -22,21 +22,23 @@ const BIG_IDEAS=[
   ['4','Big Idea 4 · Computer Systems & Networks'],
   ['5','Big Idea 5 · Impact of Computing']
 ];
-function cspIdea(stop){
+function cspIdea(stop,original){
  const votes=new Map();
  for(const node of stop.nodes){
-  for(const ref of node.curriculumRefs||[]){
+  const refs=node.curriculumRefs?.length?node.curriculumRefs:original?.get(node.id)||[];
+  for(const ref of refs){
    const first=String(ref.label||'').match(/^([1-5])\./)?.[1];
    if(first)votes.set(first,(votes.get(first)||0)+1);
   }
  }
  return [...votes].sort((a,b)=>b[1]-a[1])[0]?.[0]||'1';
 }
-export function groupCourseStops(model){
+export function groupCourseStops(model,sourceGraph){
+ const sourceStandards=new Map((sourceGraph?.nodes||[]).map(n=>[n.id,n.standardRefs||[]]));
  const result=[];
  if(model.courseId==='csp'){
    for(const [id,label] of BIG_IDEAS)result.push({id:'csp-'+id,label,stops:[]});
-   for(const stop of model.stops)result.find(g=>g.id==='csp-'+cspIdea(stop)).stops.push(stop);
+   for(const stop of model.stops)result.find(g=>g.id==='csp-'+cspIdea(stop,sourceStandards)).stops.push(stop);
  }else{
    const config=CATEGORIES[model.courseId];
    if(!config)return [];
