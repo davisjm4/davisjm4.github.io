@@ -41,6 +41,7 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   await teacher.type('[name=class-title]','Period 3 Advanced CS');
   await teacher.select('[name=class-course]','advanced');
   await clickText(teacher,'#wpr-teacher-profiles','Create class');
+  await clickText(teacher,'#wpr-teacher-profiles','Invite Students');
   const invite=await (await wait(teacher,'#class-overview a[href*="#enroll="]')).evaluate(node=>node.href);
   assert.ok(Date.now()-began<60000);
   t.diagnostic('Synthetic class creation reached the enrollment link in '+(Date.now()-began)+' ms.');
@@ -48,6 +49,7 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   const classId=dev.db.prepare('SELECT id FROM profile_classes').get().id;
   const head=()=>dev.db.prepare('SELECT head FROM class_pathways WHERE class_id=?').get(classId).head;
   assert.equal(head(),1);
+  await teacher.click('.class-workspace-nav a[href="#class-overview"]');
   await clickText(teacher,'#class-overview','Open student pathway');
   await wait(teacher,'#published-student-preview .pathway-area');
   assert.match(await textOf(teacher,'#published-student-preview'),/Advanced CS · Self-paced/);

@@ -7,12 +7,14 @@
   var aliases = { 'wpr-online':'practice-online', 'wpr-teacher-profiles':'classes',
     'quiz-settings':'practice-canvas', 'add-class-title':'class-create' };
   var classPages = /^class-(overview|progress|students|focus|assignments|plan|assessments|manage|create|archived)$/;
-  var practiceIds = new Set(['practice-online','practice-published','practice-canvas']);
+  var practiceIds = new Set(['practice-online','practice-diagnostic','practice-targeted','practice-published','practice-results','practice-canvas']);
   var practicePanels = {
     'practice-online': document.getElementById('practice-online'),
     'practice-published': document.getElementById('practice-published'),
     'practice-canvas': document.getElementById('practice-canvas')
   };
+  practicePanels['practice-diagnostic']=practicePanels['practice-targeted']=practicePanels['practice-online'];
+  practicePanels['practice-results']=practicePanels['practice-published'];
 
   function resolve(hash) {
     var id;
@@ -35,7 +37,12 @@
       if (a.dataset.viewLink===view) a.setAttribute('aria-current','page');
       else a.removeAttribute('aria-current');
     });
-    Object.entries(practicePanels).forEach(([id,panel])=>{if(panel)panel.hidden=sub!==id;});
+    new Set(Object.values(practicePanels)).forEach(panel=>{if(panel)panel.hidden=panel!==practicePanels[sub];});
+    document.getElementById('practice-menu').hidden=Boolean(sub);
+    var published=document.getElementById('published-title');
+    if(published)published.textContent=sub==='practice-results'?'Review Results':'Published Assessments';
+    document.getElementById('practice-published').classList.toggle('results-view',sub==='practice-results');
+    document.getElementById('published-intro').textContent=sub==='practice-results'?'Choose an assessment to see student results.':'Find published assessments and share their student links.';
     ['quiz-summary','preview'].forEach(id=>{
       var element=document.getElementById(id);
       if (!element) return;
@@ -62,7 +69,7 @@
       var t=document.getElementById(r.target);
       if(t && !t.hidden) { t.scrollIntoView(); return; }
     }
-    if(initial)return;
+    if(initial||r.view==='classes')return;
     window.scrollTo(0,0);
     var heading=r.sub ? practicePanels[r.sub]?.querySelector('h2') :
       document.querySelector('[data-view="'+r.view+'"] h2');

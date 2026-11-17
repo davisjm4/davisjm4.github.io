@@ -59,6 +59,19 @@ test('teacher publishes exact three-topic diagnostic, student takes it, teacher 
   assert.equal(await teacher.$$eval('#wpr-online-preview details',d=>d.length),9);
   await teacher.click('#wpr-online-preview details summary');
   await exactButton(teacher,'Regenerate question 1');
+  await teacher.evaluate(()=>{
+    const fetchOnce=window.fetch;
+    window.fetch=(url,options)=>{
+      if(String(url).endsWith('/teacher/assignments')&&options?.method==='POST'){
+        window.fetch=fetchOnce;
+        return Promise.resolve(Response.json({error:'Temporary connection problem.'},{status:503}));
+      }
+      return fetchOnce(url,options);
+    };
+  });
+  await exactButton(teacher,'Publish online assignment');
+  await teacher.waitForFunction(()=>document.querySelector('#wpr-online')?.innerText.includes('Your assessment is still here'));
+  assert.equal(await teacher.$$eval('#wpr-online-preview details',d=>d.length),9);
   await exactButton(teacher,'Publish online assignment');
   const share=await teacher.waitForSelector('a[href*="?assignment="]',{timeout:10000}).catch(async error=>{
     const status=await teacher.$$eval('#wpr-online [role=status]',nodes=>nodes.map(node=>node.textContent));
@@ -121,7 +134,7 @@ test('teacher publishes exact three-topic diagnostic, student takes it, teacher 
     await post('/submit',{token:attempt.token,answers});
   }
   await teacher.evaluate(()=>{location.hash='#practice-published';});
-  await exactButton(teacher,'Class report');
+  await exactButton(teacher,'Review results');
   await teacher.waitForFunction(()=>document.querySelector('#wpr-active-report')?.textContent.includes('5 completed submissions'),{timeout:10000});
   await exactButton(teacher,'Create targeted practice');
   assert.equal(await teacher.$eval('#wpr-builder-form [name="kind"]',e=>e.value),'practice');
@@ -158,7 +171,9 @@ test('a student joins, practices offline, restores on another device and leaves 
   await teacher.evaluate(()=>{location.hash='#class-create';});
   await wait(teacher,'#wpr-teacher-profiles [name="class-title"]');
   await teacher.type('[name="class-title"]','Period 5');
+  await teacher.select('[name="class-course"]','workplace');
   await exactButton(teacher,'Create class');
+  await (await wait(teacher,'#class-overview .banner a[href="#class-students"]')).click();
   const invite=await (await wait(teacher,'#wpr-teacher-profiles a[href*="#enroll="]')).evaluate(x=>x.href);
   await teacher.waitForFunction(()=>document.querySelector('[name="profileClassId"]')?.options.length===2);
   const currentId=new URL(teacher.url()).searchParams.get('class');
@@ -272,6 +287,7 @@ test('Loop Lab attempts reach a recovered CS Games profile after reconnecting', 
   await teacher.type('[name="class-title"]','Synthetic Java class');
   await teacher.select('[name="class-course"]','advanced');
   await exactButton(teacher,'Create class');
+  await (await wait(teacher,'#class-overview .banner a[href="#class-students"]')).click();
   const link=await (await wait(teacher,'#wpr-teacher-profiles a[href*="#enroll="]')).evaluate(node=>node.href);
   assert.equal(new URL(link).pathname,'/cs-games/student/');
   await first.goto(link);

@@ -29,12 +29,14 @@ export function installClassWorkspace({root,classList,panel,getSelectedId,render
   const activeLink=el('a',{href:'#classes',class:'btn small',text:'Active Classes'});
   if(headerActions)headerActions.insertBefore(activeLink,headerActions.firstChild?.nextSibling||null);
   if(headerActions)headerActions.insertBefore(archiveLink,headerActions.lastChild);
+  const heading=root.querySelector('.card-head h2');
   const caption=el('p',{class:'muted',id:'class-list-caption'});
   classList.before(caption);
   const pages=Object.entries(CLASS_PAGES);
   function nav() {
     return el('nav',{class:'class-workspace-nav','aria-label':'Class workspace'},
       el('a',{href:'#classes',class:'btn small',text:'← My Classes'}),
+      el('strong',{class:'class-workspace-name',text:panel.querySelector('.card.accent h3')?.textContent}),
       ...pages.map(([id,name])=>el('a',{href:'#'+id,class:'btn quiet small',text:name})));
   }
   function display() {
@@ -48,11 +50,17 @@ export function installClassWorkspace({root,classList,panel,getSelectedId,render
       ? 'Archived classes are retained for review, separately from active classes.'
       : 'Active classes · Choose one to open its workspace.';
     createPanel.hidden=route!=='class-create';
+    heading.closest('.card-head').hidden=!listing;
+    heading.textContent=route==='class-archived'?'Archived Classes':'My Classes';
+    activeLink.hidden=route!=='class-archived';
+    archiveLink.hidden=route==='class-archived';
+    createLink.hidden=route==='class-archived';
     panel.hidden=!hasDetail;
     activeLink.setAttribute('aria-current',route==='classes'?'page':'false');
     archiveLink.setAttribute('aria-current',route==='class-archived'?'page':'false');
     if(!hasDetail)return;
     if(!panel.querySelector('.class-workspace-nav'))panel.prepend(nav());
+    panel.querySelector('.class-workspace-name').hidden=route==='class-overview';
     const focus=panel.querySelector('#learning-focus');
     const sectionMap={
       'class-overview':panel.querySelector('.card.accent'),
@@ -65,7 +73,8 @@ export function installClassWorkspace({root,classList,panel,getSelectedId,render
       'class-manage':panel.querySelector('#class-manage')
     };
     const activeSection=sectionMap[route]||sectionMap['class-overview'];
-    if(route==='class-manage'&&activeSection?.tagName==='DETAILS')activeSection.open=true;
+    const manage=sectionMap['class-manage'];
+    if(manage?.tagName==='DETAILS')manage.open=route==='class-manage';
     for(const section of new Set(Object.values(sectionMap))) {
       if(!section)continue;
       if(section===focus) {
@@ -87,7 +96,15 @@ export function installClassWorkspace({root,classList,panel,getSelectedId,render
       else a.removeAttribute('aria-current');
     });
   }
-  function handleLocation(){renderList();display();}
+  function handleLocation(){
+    renderList();display();
+    if(root.hidden || root.closest('[data-view]')?.hidden)return;
+    const route=classRoute();
+    const target=route==='class-create'?createPanel.querySelector('h2,h3'):
+      panel.hidden?heading:panel.querySelector('section:not([hidden]) h3, .card.accent:not([hidden]) h3');
+    target?.setAttribute('tabindex','-1');
+    target?.focus();
+  }
   window.addEventListener('hashchange',handleLocation);
   window.addEventListener('popstate',handleLocation);
   return {display,route:classRoute};

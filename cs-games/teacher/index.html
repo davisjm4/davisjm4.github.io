@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="./teacher.css">
   <link rel="stylesheet" href="./teacher-ui.css?v=teacher-class-routes-v2">
   <script type="module" src="./teacher.js?v=loop-types-v1"></script>
-  <script type="module" src="./wpr-online.mjs?v=class-participation-v1"></script>
+  <script type="module" src="./wpr-online.mjs?v=teacher-journeys-v1"></script>
   <link rel="stylesheet" href="../student/pathway-view.css">
 </head>
 <body>
@@ -55,21 +55,22 @@
 
     <!-- ───────── Practice & Assessments ───────── -->
     <section id="practice" data-view="practice" aria-labelledby="practice-title">
-      <div class="card flat" style="padding:0;border:0;margin-top:0">
+      <div id="practice-menu">
         <h2 id="practice-title">Practice &amp; Assessments</h2>
-        <p class="muted">Create an online diagnostic or targeted practice for students, review what you have published, or export questions to Canvas.</p>
-        <div class="chips" role="navigation" aria-label="Assessment workflows">
-          <a class="btn small" href="#practice-online">Create online diagnostic or practice</a>
-          <a class="btn small" href="#practice-published">Published assessments</a>
-          <a class="btn small" href="#practice-canvas">Export a quiz to Canvas</a>
-        </div>
-        <p><a id="practice-back" class="btn quiet small" href="#practice" hidden>← All assessment tools</a></p>
+        <nav class="task-grid" aria-label="Assessment workflows">
+          <a class="task" href="#practice-diagnostic"><strong>Create Online Diagnostic</strong><span>Measure Workplace Readiness skills and share a student link.</span></a>
+          <a class="task" href="#practice-targeted"><strong>Create Targeted Practice</strong><span>Give students practice on selected Workplace Readiness skills.</span></a>
+          <a class="task" href="#practice-published"><strong>View Published Assessments</strong><span>Find and share links you’ve already published.</span></a>
+          <a class="task" href="#practice-results"><strong>Review Results</strong><span>Choose an assessment and open its results.</span></a>
+          <a class="task" href="#practice-canvas"><strong>Export to Canvas / QTI</strong><span>Download a quiz to import into Canvas.</span></a>
+        </nav>
       </div>
+      <p><a id="practice-back" class="btn quiet small" href="#practice" hidden>← All assessment tools</a></p>
       <section id="practice-online" class="card accent" aria-label="Create an online diagnostic or targeted practice">
         <div id="wpr-online"></div>
       </section>
       <section id="practice-published" class="card" aria-labelledby="published-title">
-        <div class="card-head"><div><h2 id="published-title">Published assessments</h2><p>Open class reports, copy student links, or remove an assignment.</p></div></div>
+        <div class="card-head"><div><h2 id="published-title">Published assessments</h2><p id="published-intro">Find published assessments and share their student links.</p></div></div>
         <div id="published-assessments"><p class="muted">Sign in to see the assessments you have published.</p></div>
       </section>
       <section id="practice-canvas" class="card gold" aria-labelledby="canvas-title">
@@ -136,7 +137,7 @@
     </section>
   </main>
   <footer class="footer"><div class="wrap">CS Games · Teacher Tools. Questions and files remain in this browser until downloaded.</div></footer>
-  <script src="./views.js?v=ux-routing-v2"></script>
+  <script src="./views.js?v=teacher-journeys-v1"></script>
   <script src="../../java-games/string-lab/js/rng.js?v=string-lab-1.1.1"></script>
   <script src="../../java-games/string-lab/js/words.js?v=string-lab-1.1.1"></script>
   <script src="../../java-games/string-lab/js/java-ast.js?v=string-lab-1.1.1"></script>

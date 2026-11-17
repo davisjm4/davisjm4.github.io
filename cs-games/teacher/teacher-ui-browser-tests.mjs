@@ -162,7 +162,7 @@ test('Teacher Tools: three views, readable class overview, no raw identifiers, s
   const archived = await svc.api('/teacher/profiles', { title: 'Old class', courseId: 'robotics' });
   await svc.api(`/teacher/profiles/${archived.id}/archive`, {});
   await page.evaluate(() => { location.hash = '#classes'; });
-  await clickByText(page, '#wpr-teacher-profiles', 'Refresh classes');
+  await clickByText(page, '#wpr-teacher-profiles', 'Refresh Classes');
   await page.waitForFunction(() => ![...document.querySelectorAll('.class-card')].some(c => c.textContent.includes('Old class')));
   await page.click('a[href="#class-archived"]');
   await page.waitForFunction(() => [...document.querySelectorAll('.class-card')].some(c => c.textContent.includes('Old class')));
@@ -551,4 +551,42 @@ test('integrated graph exposes new Advanced CS skills in the pathway assessment 
     await control.click();
     assert.ok((await page.$eval('input[name=assessmentNodes]',input=>input.value.split(','))).includes(id));
   }
+});
+
+test('Teacher Tools: empty dashboard, direct create and class diagnostic, refresh and Back on mobile', { timeout: 60000 }, async t => {
+  const svc = await service(t);
+  const browser = await launch();
+  t.after(() => browser.close());
+  const page = await browser.newPage();
+  await page.setViewport({ width: 390, height: 844 });
+  await page.goto(svc.url + '/cs-games/teacher/#classes');
+  await clickByText(page, '#teacher-account', 'Sign In');
+  await page.waitForSelector('[name="teacher-key"]', { visible:true });
+  await page.type('[name="teacher-key"]', token);
+  await clickByText(page, '#teacher-account', 'Sign in to development service');
+  await page.waitForFunction(() => document.querySelector('.class-grid')?.innerText.includes('No active classes'));
+  await clickByText(page, '#wpr-teacher-profiles', 'Create Class');
+  await page.waitForSelector('#class-create', { visible:true });
+  assert.equal(await page.$eval('[name="class-course"]', field => field.value), '');
+  assert.equal(await page.$eval('#add-class-title', heading => document.activeElement === heading), true);
+  assert.deepEqual(await axeViolations(page, '#class-create'), []);
+  await page.type('[name="class-title"]', 'Period 2 AP CSP');
+  await page.select('[name="class-course"]', 'csp');
+  await clickByText(page, '#class-create', 'Create class');
+  await page.waitForFunction(() => document.querySelector('#class-overview')?.innerText.includes('Default pathway published'));
+  const overview = page.url();
+  const classId = new URL(overview).searchParams.get('class');
+  assert.match(classId, UUID);
+  await page.click('#class-overview .task[href="#practice-diagnostic"]');
+  await page.waitForSelector('#practice-online', { visible:true });
+  assert.equal(new URL(page.url()).hash, '#practice-diagnostic');
+  assert.equal(await page.$eval('[name="profileClassId"]', field => field.value), classId);
+  assert.equal(await page.$eval('[name="kind"]', field => field.closest('label').hidden), true);
+  assert.deepEqual(await axeViolations(page, '#practice-online'), []);
+  assert.ok(await overflow(page) <= 1);
+  await page.reload();
+  await page.waitForFunction(id => document.querySelector('[name="profileClassId"]')?.value === id, {}, classId);
+  await page.goBack();
+  await page.waitForFunction(() => document.querySelector('#class-overview')?.innerText.includes('Period 2 AP CSP'));
+  assert.equal(page.url(), overview);
 });
