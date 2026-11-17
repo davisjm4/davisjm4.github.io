@@ -331,3 +331,27 @@ footer.footer .wrap { padding: 0 24px; }
   .tt-bar-inner:has(.teacher-nav-account) { flex-wrap: wrap; }
   .tt-bar-inner > .teacher-nav-account { flex-basis: 100%; }
 }
+
+/* Focused class workspace: one actionable page per class route, not a scroll wall. */
+.class-workspace-nav {
+  display: flex; flex-wrap: wrap; gap: .45rem;
+  align-items: center; margin: .8rem 0 1.15rem;
+  padding: .7rem; border: 1px solid var(--line);
+  border-radius: 12px; background: var(--field);
+}
+.class-workspace-nav .btn { min-height: 44px; display: inline-flex; align-items: center; }
+.class-workspace-nav [aria-current="page"] {
+  border-color: var(--accent); font-weight: 750;
+  text-decoration: underline; text-underline-offset: .25rem;
+}
+#class-list-caption { margin: .35rem 0 .8rem; }
+#class-create { max-width: 960px; }
+#class-create > h3 { margin-block-start: 0; }
+#class-overview > [hidden], #wpr-teacher-profiles [hidden] { display: none !important; }
+#class-overview .class-workspace-nav + .card { margin-top: 0; }
+#class-assessments .task-grid, #class-plan .task-grid { margin-top: .75rem; }
+@media (max-width: 560px) {
+  .class-workspace-nav { gap: .35rem; padding: .5rem; }
+  .class-workspace-nav .btn { flex: 1 1 135px; justify-content: center; text-align: center; }
+  #class-create { padding: 1rem; }
+}
