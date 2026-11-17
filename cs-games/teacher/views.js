@@ -40,7 +40,10 @@
       var element=document.getElementById(id);
       if (!element) return;
       // Keep the quiz's own hidden state when it is the active workflow.
-      if (sub!=='practice-canvas') element.hidden=true;
+      if (sub!=='practice-canvas') {
+        if(!element.hidden)element.dataset.routeHidden='true';
+        element.hidden=true;
+      }
       else if (element.dataset.routeHidden==='true') { element.hidden=false; delete element.dataset.routeHidden; }
     });
     document.querySelectorAll('#practice [href^="#practice-"]').forEach(a=>{
