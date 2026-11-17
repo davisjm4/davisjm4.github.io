@@ -235,7 +235,7 @@ function render({ focus, fresh = false } = {}) {
     pathwayEl = renderPathway(view, { openAreas: openAreas.size ? [...openAreas] : [defaultIndex] });
     decoratePathway(pathwayEl, view, { onMark, onLaunch, trackedIds: trackingKnown() ? TRACKED_NODE_IDS : null });
   }else{
-    const input={...inputFromStudentContract(view,{mixedActivities}),mapFirst:true,currentNodeId:store.state().position[courseId]?.nodeId??null};
+    const input={...inputFromStudentContract(view,{mixedActivities}),curriculumGraph:graph,mapFirst:true,currentNodeId:store.state().position[courseId]?.nodeId??null};
     if(map)map.update(input);
     else map=mountStudentMap(mapHost,{...input,adapter});
   }
