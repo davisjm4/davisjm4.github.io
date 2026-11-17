@@ -113,18 +113,25 @@ function showDashboard() {
     const seq=data.practice[idFor(d)]||[];
     return {n:seq.length,c:seq.reduce((a,b)=>a+b,0)};
   };
-  const render = d => {
-    const key=idFor(d), [latest,prev] = latestByDimension.get(key)||[], practice=practiceFor(d);
-    return [d.name,latest?pct(latest.n,latest.c)+' · '+latest.c+'/'+latest.n:'—',
-      pct(practice.n,practice.c)+' · '+practice.c+'/'+practice.n,statusCell(latest||practice),
-      progressText(latest,prev),practiceLink(d),marks(d)];
+  const card=d=>{
+    const key=idFor(d),[latest,prev]=latestByDimension.get(key)||[],practice=practiceFor(d);
+    const fact=(label,value)=>el('div',{},el('dt',{text:label}),el('dd',{},value));
+    return el('article',{class:'wpr-skill-card'},
+      el('h3',{text:d.name}),
+      el('dl',{class:'wpr-skill-facts'},
+        fact('Latest diagnostic',latest?pct(latest.n,latest.c)+' · '+latest.c+'/'+latest.n:'Not assessed'),
+        fact('Recent practice',pct(practice.n,practice.c)+' · '+practice.c+'/'+practice.n),
+        fact('Practice guidance',statusCell(latest||practice)),
+        fact('Reassessment change',progressText(latest,prev))),
+      el('div',{class:'wpr-skill-next'},practiceLink(d)));
   };
-  const headers=['Area','Latest diagnostic','Recent practice','Evidence','Reassessment change','Next action','Self-reported plans'];
-  panel.append(el('h2',{text:'Practice progress & readiness'}),el('p',{text:'Recent practice uses up to 30 first attempts per area. The evidence label uses your latest diagnostic for that area when available.'}),
-    table(headers,groups.filter(x=>x.scope==='skill').map(render),'Official skills'));
-  for (const t of W.content.topics) {
-    panel.append(el('details',{},el('summary',{text:t.name}),table(headers,
-      groups.filter(d=>d.id===t.id||d.topicId===t.id).map(render),t.name+' topics and subtopics')));
+  const cards=items=>el('div',{class:'wpr-skill-card-grid'},items.map(card));
+  panel.append(el('h2',{text:'Practice progress & readiness'}),
+    el('p',{text:'Recent practice uses up to 30 first attempts per area. Teacher-assigned mastery is tracked separately.'}),
+    cards(groups.filter(x=>x.scope==='skill')));
+  for(const t of W.content.topics){
+    panel.append(el('details',{class:'wpr-topic-details'},el('summary',{text:t.name}),
+      cards(groups.filter(d=>d.id===t.id||d.topicId===t.id))));
   }
 }
 function recordDimension(d, right) {
