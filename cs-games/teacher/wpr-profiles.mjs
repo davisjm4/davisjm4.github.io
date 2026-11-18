@@ -1,4 +1,5 @@
 import { tierFields } from './requirements/tier-fields.mjs';
+import { CLASS_PAGES, installClassWorkspace } from './class-workspace.mjs';
 import { createTeacherFocus } from './learning-focus.mjs';
 import {DEMONSTRATION_TYPES} from '../pathway/proficiency/demonstrations.mjs';
 import {renderPathway} from '../student/pathway-view.mjs';
@@ -13,19 +14,19 @@ import { COURSE_LABELS, courseLabel, publicationStatus, formatWhen } from './ui-
 const courseNames=COURSE_LABELS;
 const enrollUrl=invite=>new URL('/cs-games/student/'+'#enroll='+invite,location.href).href;
 const path='/teacher/profiles';
-const classHint=new URLSearchParams(location.search).get('class');
+const classInUrl=()=>new URLSearchParams(location.search).get('class');
 const pacingHref=(id,stage='goals')=>'/cs-games/teacher/pacing/?class='+encodeURIComponent(id)+'#'+stage;
 const credentialText=({id,recovery})=>'Profile ID: '+id+'\nRecovery credential: '+recovery+'\nShare privately with this student only.';
 const chip=(text,tone='plain')=>el('span',{class:'chip '+tone,text});
 // Native replaceChildren() turns `false` into the text "false"; this drops empty children first.
 const put=(node,...children)=>{node.replaceChildren(...children.flat().filter(x=>x!=null&&x!==false));return node;};
 export function profileClassSelect() {
-  const select=el('select',{name:'profileClassId',disabled:true},options([['','Anonymous assignment']]));
-  const field=el('label',{hidden:!profilesAvailable},'Student reporting',select);
+  const select=el('select',{name:'profileClassId',disabled:true},options([['','Independent link (no class)']]));
+  const field=el('label',{hidden:!profilesAvailable},'Assign to',select);
   return {field,update(classes,requested){
     const selected=requested??select.value;
     const active=classes.filter(c=>!c.archived);
-    select.replaceChildren(...options([['','Anonymous assignment'],...active.map(c=>[c.id,'Class profile · '+c.title])]));
+    select.replaceChildren(...options([['','Independent link (no class)'],...active.map(c=>[c.id,c.title])]));
     select.value=active.some(c=>c.id===selected)?selected:'';
     select.disabled=!active.length;
   }};
@@ -45,22 +46,31 @@ export function teacherProfiles(onClasses) {
     finally {clicked.disabled=false;}
   },cls);
   const title=el('input',{name:'class-title',type:'text',maxlength:80,required:true,autocomplete:'off',placeholder:'For example, Period 3 Advanced CS'});
-  const course=el('select',{name:'class-course'},options(Object.entries(courseNames)));
+  const course=el('select',{name:'class-course',required:true,'aria-describedby':'class-course-help'},options([['','Choose a course'],...Object.entries(courseNames)]));
+  const createError=el('p',{role:'alert',class:'creation-error',tabindex:-1,hidden:true});
+  let createdClass;
+  const showCreateError=message=>{
+    createError.textContent=message;
+    createError.hidden=!message;
+    if(message)createError.focus();
+  };
   const presets=tierFields();
   const customization=el('details',{class:'class-preset-setup'},el('summary',{text:'Customize starting practice requirements'}),presets.element);
-  const create=el('form',{class:'field-grid'},el('label',{},'Class name',title),el('label',{},'Course',course),
-    el('div',{class:'actions',style:'align-self:end;margin:0'},el('button',{type:'submit',class:'btn primary',text:'Create class'})),customization);
+  const create=el('form',{class:'field-grid'},el('label',{},'Class name',title),el('div',{},el('label',{},'Course',course),el('small',{id:'class-course-help',text:'This sets the starting pathway for your students.'})),
+    el('div',{class:'actions',style:'align-self:end;margin:0'},el('button',{type:'submit',class:'btn primary',text:'Create class'})),customization,createError);
   create.onsubmit=async e=>{
     e.preventDefault();
     if(creating)return;
     creating=true;
+    showCreateError('');
     const submit=e.submitter;
     if(submit)submit.disabled=true;
     const teacher=currentTeacher();
     let presetEdits;
     try { if(customization.open) presetEdits=presets.collect(); }
-    catch(error){status.textContent=error.message;creating=false;if(submit)submit.disabled=false;return;}
+    catch(error){showCreateError(error.message);creating=false;if(submit)submit.disabled=false;return;}
     const courseId=course.value;
+    let saved=false;
     const classTitle=title.value.trim();
     // Keep the same key if a request succeeded but the browser never received its response.
     const retrySlot='cs-games:create-class:'+teacher?.owner;
@@ -78,15 +88,15 @@ export function teacherProfiles(onClasses) {
       });
       if(currentTeacher()!==teacher)return;
       if(result.invite)invites.set(result.id,result.invite);
+      saved=true;
+      createdClass=result.id;
       await refresh();
-      await openClass(result.id);
+      await openClass(result.id,{focus:true});
       if(currentTeacher()!==teacher)return;
       title.value='';
       customization.open=false;
       try{sessionStorage.removeItem(retrySlot);}catch{}
-      status.textContent='Class created. The student pathway is ready to use.';
-      panel.querySelector('h3')?.focus();
-    }catch(e){status.textContent=e.message;}
+    }catch(e){showCreateError((saved?'Check My Classes before retrying. ':'Your entries are saved here. Check the details and try again. ')+e.message);}
     finally{creating=false;if(submit)submit.disabled=false;}
   };
   function showInvite(invite) {
@@ -108,12 +118,14 @@ export function teacherProfiles(onClasses) {
     return p.revision>0?chip(p.isDefault?'Default pathway ready':'Pathway published','good'):chip('Pathway not published','warn');
   };
   function renderList() {
-    classList.replaceChildren(...classes.map(c=>{
+    const archived=pages.route()==='class-archived';
+    classList.replaceChildren(...classes.filter(c=>Boolean(c.archived)===archived).map(c=>{
       const card=el('button',{type:'button',class:'class-card','aria-pressed':String(c.id===selectedId),onclick:()=>openClass(c.id,{focus:true}).catch(e=>{status.textContent=e.message;})},
         el('strong',{text:c.title}),el('span',{class:'sub',text:courseLabel(c.course_id)}),el('span',{class:'chips'},pathwayChip(c)));
       return card;
     }));
-    if(!classes.length)put(classList,el('div',{class:'empty',style:'grid-column:1/-1'},el('h3',{text:'No classes yet'}),el('p',{text:'Create your first class below. Students join with an enrollment link.'})));
+    if(!classes.some(c=>Boolean(c.archived)===archived))put(classList,el('div',{class:'empty',style:'grid-column:1/-1'},
+      el('h3',{text:archived?'No archived classes':'No active classes'}),el('p',{text:archived?'Archived classes will appear here.':'Create your first class to get started.'})));
     const list=document.getElementById('pathway-class-list');
     if(list){
       const active=classes.filter(c=>!c.archived);
@@ -137,9 +149,11 @@ export function teacherProfiles(onClasses) {
     if(currentTeacher()!==session)return;
     classes=list.classes;
     pathways=new Map(plans.pathways.map(p=>[p.classId,p]));
-    onClasses(classes,selectedId??classHint);
+    const classHint=classInUrl();
+    onClasses(classes,classHint);
     renderList();
-    if(!selectedId&&classHint&&classes.some(c=>c.id===classHint))await openClass(classHint);
+    if(!selectedId&&classHint&&classes.some(c=>c.id===classHint)&&!location.hash.startsWith('#practice'))await openClass(classHint);
+    pages.display();
   }
   async function loadPathwayStatus(c,slot,activeStudents) {
     const entry=pathways.get(c.id);
@@ -158,12 +172,16 @@ export function teacherProfiles(onClasses) {
       put(slot,el('div',{class:'chips'},chip(state.label,state.tone),last?chip('Last published '+formatWhen(last),'plain'):null),el('p',{class:'muted',text:state.detail}));
     } catch {put(slot,el('p',{class:'muted',text:'Pathway status is unavailable right now.'}));}
   }
-  async function openClass(id,{focus=false}={}) {
+  async function openClass(id,{focus=false,preserveRoute=false}={}) {
     selectedId=id;
     put(panel,el('p',{role:'status',text:'Loading class…'}));
     const url=new URL(location.href);
     url.searchParams.set('class',id);
-    history.replaceState(null,'',url);
+    if(focus){
+      url.hash='class-overview';
+      history.pushState(null,'',url);
+      window.scrollTo(0,0);
+    } else if(!preserveRoute) history.replaceState(null,'',url);
     const session=currentTeacher();
     const base='/'+id;
     const {class:c,roster}=await api(base);
@@ -205,12 +223,12 @@ export function teacherProfiles(onClasses) {
     const pathwaySlot=el('div',{id:'class-pathway-status'},el('p',{class:'muted',text:'Checking pathway status…'}));
     put(credential);
     renderList();
+    // Direct class-scoped assessment routes retain the currently opened class.
+    onClasses(classes,c.archived?'':c.id);
     const active=roster.filter(p=>p.active===1).length;
     const task=(href,title,detail,onclick)=>el('a',{class:'task',href,...(onclick?{onclick}:{})},
       el('strong',{text:title}),el('span',{text:detail}));
-    const practice=kind=>()=>{
-      onClasses(classes,c.archived?'':c.id,kind);
-    };
+
     const stat=(value,label)=>el('div',{class:'stat'},el('strong',{text:String(value)}),el('span',{text:label}));
     const rosterTable=roster.length?table(['Profile ID','Access','Recorded events','Actions'],roster.map(p=>{
         const person=base+'/students/'+p.id;
@@ -241,13 +259,17 @@ export function teacherProfiles(onClasses) {
           el('div',{},el('div',{class:'eyebrow',text:'Class overview'}),el('h3',{text:c.title,tabindex:-1,style:'margin:0;font-size:1.5rem'}),
             el('div',{class:'chips'},chip(courseLabel(c.course_id),'plain'),chip(c.archived?'Archived':'Active',c.archived?'warn':'good'))),
           !c.archived&&pathways.get(c.id)?.revision>0&&act('Open student pathway',()=>openStudentPreview(c.id,previewSlot),'btn primary')),
+        createdClass===c.id&&el('div',{class:'banner good',role:'status'},
+          el('strong',{text:'Class created'}),
+          el('p',{text:courseLabel(c.course_id)+' · Default pathway published and ready for students.'}),
+          el('div',{class:'actions'},el('a',{class:'btn primary',href:'#class-students',text:'Invite Students'}),
+            el('a',{class:'btn',href:pacingHref(c.id),text:'Customize Pathway'}))),
         pathwaySlot,
-        credential,
         c.archived&&el('div',{class:'banner warn'},el('p',{text:'Archived. Scheduled deletion by '+new Date(c.expires).toISOString().slice(0,10)+'.'})),
         el('div',{class:'task-grid'},
           task('#class-progress','Class progress','Compare first attempts across students on the same skill.'),
           !c.archived&&task('#class-plan','Plan','Customize the pathway, practice requirements and pacing.'),
-          task('#class-assessments','Practice & assessments','Create a diagnostic or targeted practice.'),
+          !c.archived&&task('#practice-diagnostic','Create Online Diagnostic','Build and share a Workplace Readiness diagnostic.'),
           task('#class-students','Student profiles','Enrollment, access and individual progress reports.')),previewSlot),
       focusPanel?.root,
       el('section',{class:'card',id:'class-progress','aria-labelledby':'class-progress-title'},evidenceHeading,
@@ -263,6 +285,7 @@ export function teacherProfiles(onClasses) {
             if(selectedId===c.id)showInvite(invite);
           },'btn primary'),
           act('Issue student profile ID',async()=>{const result=await api(base+'/students',{body:{}});await openClass(id);showRecovery(result);})),
+        credential,
         rosterTable,
         el('div',{class:'actions'},
           act('Download roster CSV',()=>download('cs-games-roster.csv',csv([['profile_id','student_name'],...roster.map(p=>[p.id,''])]))),
@@ -280,10 +303,10 @@ export function teacherProfiles(onClasses) {
       el('section',{class:'card',id:'class-assessments','aria-labelledby':'class-assessments-title'},
         el('h3',{id:'class-assessments-title',text:'Practice & assessments'}),
         el('div',{class:'task-grid'},
-          !c.archived&&task('#practice-online','Create a diagnostic','Build a Workplace Readiness diagnostic.',practice('diagnostic')),
-          !c.archived&&task('#practice-online','Create targeted practice','Build a Workplace Readiness practice assignment.',practice('practice')),
+          !c.archived&&task('#practice-diagnostic','Create Online Diagnostic','Build a Workplace Readiness diagnostic.'),
+          !c.archived&&task('#practice-targeted','Create Targeted Practice','Build a Workplace Readiness practice assignment.'),
           task('#practice-published','Published assessments','Open reports or copy assignment links.'))),
-      el('details',{class:'more'},el('summary',{},'Manage this class',el('small',{text:'Archive, delete, support details'})),
+      el('details',{class:'more',id:'class-manage'},el('summary',{},'Manage this class',el('small',{text:'Archive, delete, support details'})),
         el('div',{class:'body'},
           !c.archived&&el('p',{class:'muted',text:'Archiving closes enrollment and ends student access. The class and its records are kept until the scheduled deletion date.'}),
           el('div',{class:'actions'},
@@ -300,10 +323,13 @@ export function teacherProfiles(onClasses) {
             el('p',{},'Class ID: ',el('code',{text:c.id}),' '),
             act('Copy class ID',()=>copy(c.id,status),'btn small')))));
     if(invites.has(c.id)&&!c.archived)showInvite(invites.get(c.id));
+    if(!Object.hasOwn({'class-overview':1,'class-progress':1,'class-students':1,'class-focus':1,
+      'class-assignments':1,'class-plan':1,'class-assessments':1,'class-manage':1},location.hash.slice(1)))
+      location.hash='#class-overview';
+    pages.display();
     if(focus)panel.querySelector('h3')?.focus();
-    else if(location.hash==='#class-plan')panel.querySelector('#class-plan')?.scrollIntoView();
     loadPathwayStatus(c,pathwaySlot,active);
-    void focusPanel?.refresh();
+    void focusPanel?.refresh().then(pages.display);
   }
   async function openStudentPreview(classId,slot){
     const plan=pathways.get(classId);
@@ -426,13 +452,23 @@ export function teacherProfiles(onClasses) {
     else container.append(results,form);
   }
   root.append(
-    el('div',{class:'card-head'},el('div',{},el('h2',{text:'My Classes'}),el('p',{text:'Choose a class to see its status, open its learning pathway, and manage student profiles.'})),
-      el('div',{class:'actions'},el('a',{class:'btn small',href:'#add-class-title',text:'Create a class'}),act('Refresh classes',refresh,'btn small'))),
+    el('div',{class:'card-head'},el('div',{},el('h2',{text:'My Classes'})),
+      el('div',{class:'actions'},el('a',{class:'btn small',href:'#add-class-title',text:'Create Class'}),act('Refresh Classes',refresh,'btn small'))),
     status,classList,panel,
-    el('section',{class:'card','aria-labelledby':'add-class-title'},el('h3',{id:'add-class-title',text:'Create a class'}),
-      el('p',{class:'muted',text:'Enter a class name only. Do not enter student names. Class profiles store pseudonymous learning records.'}),create));
+    el('section',{class:'card','aria-labelledby':'add-class-title'},el('a',{href:'#classes',class:'btn quiet small',text:'← My Classes'}),
+      el('h2',{id:'add-class-title',text:'Create Class'}),
+      el('p',{class:'muted',text:'Enter a class name and choose a course. CS Games publishes the default pathway for you. You can customize it and invite students after creating the class.'}),create));
+  const pages=installClassWorkspace({root,classList,panel,getSelectedId:()=>selectedId,renderList});
+  window.addEventListener('popstate',()=>{
+    if(!currentTeacher())return;
+    const id=classInUrl();
+    if(location.hash.startsWith('#practice'))onClasses(classes,id??'');
+    else if(id&&id!==selectedId&&classes.some(c=>c.id===id)&&Object.hasOwn(CLASS_PAGES,pages.route())){
+      void openClass(id,{preserveRoute:true}).catch(error=>{status.textContent=error.message;});
+    }
+  });
   function clear(){
-    classes=[];pathways.clear();invites.clear();selectedId=null;
+    classes=[];pathways.clear();invites.clear();selectedId=null;createdClass=null;
     root.hidden=true;
     put(panel);put(credential);put(classList);
     onClasses([]);

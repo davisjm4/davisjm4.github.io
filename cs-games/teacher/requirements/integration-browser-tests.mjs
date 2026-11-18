@@ -46,10 +46,12 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await wait(teacher,'[name=teacher-key]');
   await teacher.type('[name=teacher-key]',token);
   await byText(teacher,'#teacher-account','Sign in to development service');
+  await teacher.evaluate(()=>{location.hash='#class-create';});
   await wait(teacher,'[name=class-title]');
   await teacher.type('[name=class-title]','Period 5 Advanced CS');
   await teacher.select('[name=class-course]','advanced');
   await byText(teacher,'#wpr-teacher-profiles','Create class');
+  await byText(teacher,'#wpr-teacher-profiles','Invite Students');
   const enrollment=await (await wait(teacher,'#class-overview a[href*="#enroll="]')).evaluate(node=>node.href);
   await student.goto(enrollment);
   await byText(student,'#student-profile','Enroll in this class');
@@ -58,13 +60,16 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await see(student,'#student-pathway','Self-paced');
   assert.equal(await student.$('.practice-challenge'),null);
 
-  await byText(teacher,'#class-overview','Create targeted practiceBuild a Workplace Readiness practice assignment.');
+  await teacher.evaluate(()=>{location.hash='#class-assessments';});
+  await teacher.waitForSelector('#class-assessments',{visible:true});
+  await activate(teacher,'#class-assessments a[href="#practice-targeted"]');
   await wait(teacher,'#wpr-builder-form');
   const classId=new URL(teacher.url()).searchParams.get('class');
   assert.equal(await teacher.$eval('[name=profileClassId]', input=>input.value),classId);
   assert.equal(await teacher.$eval('[name=kind]', input=>input.value),'practice');
   assert.equal(await teacher.$eval('[name=feedbackTiming]', input=>input.value),'immediate');
-  await activate(teacher,'[data-view-link=classes]');
+  await teacher.evaluate(()=>{location.hash='#class-plan';});
+  await teacher.waitForSelector('#class-plan',{visible:true});
   await Promise.all([teacher.waitForNavigation(),activate(teacher,'#class-plan a[href*="/requirements/"]')]);
   await wait(teacher,'.mreq');
   assert.equal(await teacher.$('[name=teacher-key]'),null);

@@ -34,6 +34,7 @@ test('a teacher publishes participation settings and the student can leave and r
   await wait(teacher,'[name=teacher-key]');
   await teacher.type('[name=teacher-key]',token);
   await pressNamed(teacher,'Sign in to development service');
+  await teacher.evaluate(()=>{location.hash='#class-create';});
   await wait(teacher,'[name=class-title]');
   await teacher.type('[name=class-title]','Synthetic participation browser');
   await teacher.select('[name=class-course]','advanced');
@@ -49,8 +50,11 @@ test('a teacher publishes participation settings and the student can leave and r
   await editComplex('25');
   await pressNamed(teacher,'Create class');
   await hasText(teacher,'#wpr-teacher-profiles','only 21 different questions exist');
+  assert.equal(await teacher.$eval('[name=class-title]',e=>e.value),'Synthetic participation browser');
+  assert.equal(await teacher.$eval('[name=class-course]',e=>e.value),'advanced');
   await editComplex('19');
   await pressNamed(teacher,'Create class');
+  await activate(teacher,'#class-overview .banner a[href="#class-students"]');
   const enrollment=await (await wait(teacher,'#class-overview a[href*="#enroll="]')).evaluate(node=>node.href);
   const classId=new URL(teacher.url()).searchParams.get('class');
   await teacher.goto(dev.url+'/cs-games/teacher/pacing/?class='+classId+'#goals');

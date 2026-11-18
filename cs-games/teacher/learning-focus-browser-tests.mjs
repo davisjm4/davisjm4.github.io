@@ -46,6 +46,7 @@ test('advisory classwork and catch-up coexist through mode changes, offline prac
   await teacher.waitForSelector('[name=teacher-key]',{timeout:5000});
   await teacher.type('[name=teacher-key]',teacherKey);
   await press(teacher,'#teacher-account','Sign in to development service');
+  await teacher.evaluate(()=>{location.hash='#class-focus';});
   const form='#focus-form';
   await teacher.waitForSelector(form,{visible:true});
   const choose=(n,value)=>teacher.select(form+' label:nth-child('+n+') select',value);

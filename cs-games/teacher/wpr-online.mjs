@@ -1,4 +1,4 @@
-import { teacherProfiles, profileClassSelect } from './wpr-profiles.mjs?v=class-participation-v1';
+import { teacherProfiles, profileClassSelect } from './wpr-profiles.mjs?v=teacher-journeys-v1';
 import { generateDiagnostic, availability, validateSnapshot } from './wpr-online-builder.mjs';
 import { VERSION, csv, MODES, LEVELS } from '../../wpr-games/workplace-readiness/online/model.mjs';
 import { currentTeacher, observeTeacher, mountTeacherAccount, teacherRequest } from './session.mjs';
@@ -12,10 +12,12 @@ const assignmentPath = '/wpr-games/workplace-readiness/?assignment=';
 const modeNames = {decision:'Workplace Decisions',nextstep:'Best Next Step',order:'Put the Steps in Order',find:'Find the Problem'};
 let questions = [], generated = null;
 const status = el('p',{role:'status','aria-live':'polite',id:'wpr-builder-status'});
-const publishStatus = el('p',{role:'status'});
+const publishStatus = el('div',{role:'status',tabindex:-1});
+const publishFeedback = el('p',{role:'status'});
 const preview = el('div',{id:'wpr-online-preview'});
 const auth = el('div',{id:'wpr-teacher-auth'});
 const reports = el('div',{id:'wpr-class-reports'});
+const reportFeedback = el('p',{role:'status'});
 const input = (name,props)=>el('input',{name,...props});
 const select = (name,choices)=>el('select',{name},options(choices));
 const labelled = (text,control)=>el('label',{},text,control);
@@ -23,28 +25,26 @@ const checks = (name,title,choices)=>el('details',{},el('summary',{text:title}),
   el('fieldset',{class:'wpr-checks'},el('legend',{text:title}),
     choices.map(([value,label])=>el('label',{},input(name,{type:'checkbox',value}),' '+label))));
 const profileClass=profileClassSelect();
-const profileManager=teacherProfiles((classes,classId,kind)=>{
-  profileClass.update(classes,classId);
-  if(kind){
-    form.elements.kind.value=kind;
-    form.elements.kind.dispatchEvent(new Event('change',{bubbles:true}));
-    invalidate();
-  }
-});
+const profileManager=teacherProfiles((classes,classId)=>profileClass.update(classes,classId));
+const assessmentHeading=el('h2',{text:'Create an online diagnostic or practice'});
+const assessmentIntro=el('p',{class:'muted'});
+const details=el('details',{class:'span-all'},el('summary',{text:'Optional settings'}));
 const settings = el('div',{class:'teacher-form'},
   labelled('Assignment title',input('title',{maxlength:120,value:'Workplace Readiness Diagnostic',required:true})),
   labelled('Assignment type',select('kind',[['diagnostic','Diagnostic assessment'],['practice','Targeted practice assignment']])),
-  labelled('Difficulty',select('difficulty',LEVELS.map(x=>[x,x[0].toUpperCase()+x.slice(1)]))),
+  profileClass.field);
+details.append(labelled('Difficulty',select('difficulty',LEVELS.map(x=>[x,x[0].toUpperCase()+x.slice(1)]))),
   labelled('Feedback timing',select('feedbackTiming',[['after','After submission'],['immediate','After each answer']])),
   labelled('Retakes',select('retakes',[['once','One completed attempt per browser or class profile'],['repeat','Allow repeat attempts']])),
-  labelled('Optional closing date',input('closes',{type:'datetime-local'})),profileClass.field);
-const form = el('form',{id:'wpr-builder-form'},settings,
+  labelled('Optional closing date',input('closes',{type:'datetime-local'})));
+details.append(
   el('div',{class:'wpr-checks'},
     el('label',{},input('shuffle',{type:'checkbox',checked:true}),' Shuffle question order'),
     el('label',{},input('reporting',{type:'checkbox',checked:true}),' Collect anonymous class totals')),
   checks('skills','Filter by official skill (optional)',W.content.skills.map(s=>[s.id,s.name])),
   checks('contexts','Filter by career setting (optional)',W.content.contexts.map(c=>[c.id,c.name||c.label])),
   checks('modes','Filter by practice mode (optional)',MODES.map(m=>[m,modeNames[m]])));
+const form = el('form',{id:'wpr-builder-form'},settings);
 const quotaOptions = [
   ['all','Mixed Workplace Readiness'],
   ...W.content.topics.flatMap(t=>[['topic:'+t.id,t.name],...t.subtopics.map(([id,name])=>['subtopic:'+id,t.name+' / '+name])]),
@@ -113,21 +113,27 @@ function showPreview() {
 }
 const publish=button('Publish online assignment',async()=>{
   const a=snapshot(), error=validateSnapshot(a);
+  publishStatus.replaceChildren();
   if (error) {publishStatus.textContent=error;return;}
   if (!currentTeacher()) {publishStatus.textContent='Sign in as a teacher to publish.';return;}
   publish.disabled=true;
   try {
     const {id}=await teacherRequest('/teacher/assignments',{body:a});
     const url=new URL(assignmentPath+id,location.href).href;
-    publishStatus.replaceChildren(el('a',{href:url,text:'Open student assignment'}),' ',
-      button('Copy student link',()=>copy(url,status)));
-    refreshAssignments();
-  } catch(e) {publishStatus.textContent=e.message;}
+    publishStatus.replaceChildren(el('strong',{text:'Assessment published.'}),
+      el('p',{text:a.profileClassId?'Students in the selected class can open the link with their profile.':'Anyone with the link can open this independent assessment.'}),
+      el('div',{class:'actions'},button('Copy student link',()=>copy(url,publishFeedback)),
+        el('a',{class:'btn',href:url,text:'Open student assignment'}),
+        el('a',{class:'btn',href:'#practice-results',text:'Review Results'})),publishFeedback);
+    publishStatus.focus({preventScroll:true});
+    publishStatus.scrollIntoView({block:'center'});
+    void refreshAssignments();
+  } catch(e) {publishStatus.textContent='Could not publish. '+e.message+' Your assessment is still here. Try publishing again.';publishStatus.focus();}
   finally {publish.disabled=false;}
 },'btn primary');
 publish.disabled=true;
 form.append(el('h3',{text:'Question distribution'}),el('p',{text:'Add one group for each skill, topic, or subtopic you want to measure. The builder fills each group with distinct questions.'}),quotas,
-  el('div',{class:'actions'},button('Add coverage group',()=>{addQuota();invalidate();}),
+  details,el('div',{class:'actions'},button('Add coverage group',()=>{addQuota();invalidate();}),
     el('button',{type:'submit',text:'Generate / regenerate assessment'})));
 form.addEventListener('change',e=>{
   if (e.target.name==='kind' && e.target.value==='practice') form.elements.feedbackTiming.value='immediate';
@@ -152,7 +158,25 @@ form.addEventListener('submit',e=>{
     generated=selection;showPreview();
   } catch(e) {invalidate();status.textContent=e.message;}
 });
-host.append(el('h2',{text:'Create an online diagnostic or practice'}),el('p',{class:'muted',text:'Build a Workplace Readiness diagnostic or tracked practice assignment. A published link opens a frozen set of questions. Anonymous assignments are available to any student with the link.'}),
+function showAssessmentRoute(){
+  const kind=location.hash==='#practice-diagnostic'?'diagnostic':location.hash==='#practice-targeted'?'practice':null;
+  const field=form.elements.kind.closest('label');
+  field.hidden=Boolean(kind);
+  assessmentHeading.textContent=kind==='diagnostic'?'Create Online Diagnostic':kind==='practice'?'Create Targeted Practice':'Create an online diagnostic or practice';
+  assessmentIntro.textContent='Workplace Readiness · Choose a class for student-profile reporting or share an independent link.';
+  if(kind&&form.elements.kind.value!==kind){
+    const previous=form.elements.kind.value;
+    const defaultTitle=value=>value==='practice'?'Workplace Readiness Targeted Practice':'Workplace Readiness Diagnostic';
+    if(form.elements.title.value===defaultTitle(previous))form.elements.title.value=defaultTitle(kind);
+    form.elements.kind.value=kind;
+    form.elements.feedbackTiming.value=kind==='practice'?'immediate':'after';
+    form.elements.kind.dispatchEvent(new Event('change',{bubbles:true}));
+    publishStatus.replaceChildren();
+  }
+}
+window.addEventListener('hashchange',showAssessmentRoute);
+showAssessmentRoute();
+host.append(assessmentHeading,assessmentIntro,
   form,status,preview,el('div',{class:'actions'},publish),publishStatus);
 (slot('teacher-account')||host).append(auth);
 if (slot('published-assessments')) slot('published-assessments').replaceChildren(reports); else host.append(reports);
@@ -163,7 +187,7 @@ mountTeacherAccount(auth);
 observeTeacher(active=>{
   if(!active){
     profileManager.clear();
-    reports.replaceChildren();
+    reports.replaceChildren(el('p',{text:'Sign in to see your published assessments and results.'}));
     publishStatus.replaceChildren();
     return;
   }
@@ -182,15 +206,15 @@ async function refreshAssignments(propagate=false) {
       reports.append(el('div',{class:'row-card'},
         el('div',{},el('strong',{text:a.title}),el('small',{text:kindNames[a.kind]||'Online assignment'})),
         el('div',{class:'actions'},
-          button('Class report',()=>openReport(a.id)),
-          button('Copy student link',()=>copy(url,status)),
+          button('Review results',()=>openReport(a.id)),
+          button('Copy student link',()=>copy(url,reportFeedback),'btn published-only'),
           button('Delete assignment',async()=>{
             if (!confirm('Delete '+a.title+' and its class totals?')) return;
             try {await teacherRequest('/teacher/'+a.id,{method:'DELETE'});await refreshAssignments();}
             catch(e) {status.textContent=e.message;}
-          },'btn danger'))));
+          },'btn danger published-only'))));
     }
-    reports.append(el('div',{id:'wpr-active-report',tabindex:-1}));
+    reports.append(reportFeedback,el('div',{id:'wpr-active-report',tabindex:-1}));
   } catch(e) {if (propagate) throw e;status.textContent=e.message;}
 }
 function aggregateCsv(data) {
@@ -232,7 +256,7 @@ async function openReport(id) {
           form.elements.reporting.disabled=false;form.elements.reporting.checked=true;
           form.elements.title.value=r.name+' · Targeted Practice';
           quotas.replaceChildren();addQuota('topic:'+r.id,Math.min(5,availability(filters(),{scope:'topic',id:r.id}).questions));
-          invalidate();form.elements.title.focus();
+          invalidate();location.hash='#practice-targeted';requestAnimationFrame(()=>form.elements.title.focus());
         })));
     }
     panel.append(el('h4',{text:'Frequently missed questions'}));

@@ -31,7 +31,7 @@ function masteryCard(node,onRestart){
     history);
 }
 
-export function renderPathway(view,{onRestart,openAreas=[],includeExcluded=false}={}) {
+export function renderPathway(view,{onRestart,openAreas=[],includeExcluded=false,collapseAll=false}={}) {
   const areas=new Map(view.areas.map(area=>[area.id,area]));
   const names=new Map(view.nodes.map(node=>[node.id,node.title]));
   // Some AP CSP skills revisit the same activity across units. Keep each run of skills in its published order.
@@ -69,7 +69,7 @@ export function renderPathway(view,{onRestart,openAreas=[],includeExcluded=false
     const area=areas.get(areaId),requirements=view.completionAreas?.find(a=>a.areaId===areaId)??area?.practiceRequirements;
     const count=requirements?.requiredTotal>0
       ?' · '+requirements.requiredCompleted+' of '+requirements.requiredTotal+(view.pathwayCompletion?' required skills complete':' practice requirements met'):view.pathwayCompletion?' · No required skills':'';
-    return el('details',{class:'pathway-area','data-area-index':index,open:openAreas.length?openAreas.includes(String(index)):index===0},
+    return el('details',{class:'pathway-area','data-area-index':index,open:!collapseAll&&(openAreas.length?openAreas.includes(String(index)):index===0)},
       el('summary',{},el('strong',{text:area?.title||'Learning area'}),' · '+skills.length+' skills'+count),list);
   });
   return el('div',{class:'class-pathway'},el('h2',{text:view.title}),
