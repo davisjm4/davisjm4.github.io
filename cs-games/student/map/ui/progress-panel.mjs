@@ -1,4 +1,4 @@
-import {demonstrationDetails,proficiencyDetails,proficiencyLink} from './proficiency.mjs?v=guest-map-v1';
+import {demonstrationDetails,proficiencyDetails,proficiencyLink} from './proficiency.mjs?v=map-progression-v1';
 // The skill progress panel. It renders the evaluated progress contract and explains it in plain language.
 // It never calculates: questions left, accuracy, and "correct in a row" all arrive from the engine's recovery object.
 import { attemptLabel, attemptLine, checklist, detailLines, exampleNotice, isClosedAttempt, leadText, lifetimeLine, optionalBlurb, practiceSummary, requirementLine, whatsLeft } from '../copy.mjs';
@@ -32,7 +32,7 @@ export function createProgressPanel(node, ctx) {
 
   root.append(el('div', { class: 'panel-top' },
     el('p', { class: 'panel-crumb', text: `${ctx.stop.title} · Skill ${node.order} of ${node.orderOf}` }),
-    el('button', { type: 'button', class: 'icon-btn panel-close', 'aria-label': 'Close skill details', onclick: ctx.onClose }, icon('close', { size: 20 }))));
+    el('button', { type: 'button', class: 'btn panel-close', onclick: ctx.onClose }, icon('back', { size: 18 }), 'Back to skills')));
   root.append(el('h3', { id: titleId, class: 'panel-title', tabindex: '-1', text: node.title }));
   if(node.objective&&node.objective!==node.title)root.append(el('p',{class:'muted',text:node.objective}));
   root.append(el('p', { class: 'badge-row' }, stateBadge(node.state, { optional: node.optional }),
@@ -40,14 +40,22 @@ export function createProgressPanel(node, ctx) {
     node.example ? el('span', { class: 'tag tag-example', text: 'Example requirement' }) : null));
   if (node.optional) root.append(el('p', { class: 'muted', text: optionalBlurb }));
 
-  if(ctx.guestSkillControls&&node.guest)root.append(ctx.guestSkillControls(node));
+  const goal = node.skillTarget;
+  if (goal && !goal.complete) root.append(el('section', {class:'skill-target'},
+    el('h4',{text:goal.label}), el('p',{text:goal.count}),
+    el('progress', {max:100,value:Math.floor(goal.fraction*100),'aria-label':goal.label,'aria-valuetext':`${goal.count}. ${goal.summary}.`}),
+    el('p',{text:`${goal.correct} right on the first try · ${formatPercent(goal.accuracy)} accuracy required${goal.accuracyPercent==null?'':` · ${formatPercent(goal.accuracyPercent)} so far`}`}),
+    goal.detail.length?el('details',{},el('summary',{text:'What still counts toward this target'}),
+      el('ul',{},goal.detail.map(text=>el('li',{text})))):null));
   const formative=proficiencyDetails(node);
   if(formative)root.append(formative);
 
   // What the engine says, in its own words first.
   if(!ctx.model.guest)root.append(el('p', { class: 'lead', text: leadText(node) }));
   for (const line of detailLines(node)) root.append(el('p', { class: 'muted', text: line }));
-  if (node.state === 'requirements-met' && !detailLines(node).some((l) => /practice milestone/.test(l))) root.append(el('p', { class: 'note', text: STATES['requirements-met'].blurb }));
+  if (node.complete && (ctx.model.guest || ctx.model.pathwayCompletion)) root.append(el('p',{class:'ok',
+    text:ctx.model.enrolled?'You completed this skill for your class pathway.':'You met the formative target for this skill.'}));
+  else if (node.state === 'requirements-met' && !detailLines(node).some((l) => /practice milestone/.test(l))) root.append(el('p', { class: 'note', text: STATES['requirements-met'].blurb }));
   if (node.state === 'mastered') root.append(el('p', { class: 'note', text: `${STATES.mastered.blurb}${p.award?.issuedAt ? ` (${formatStamp(p.award.issuedAt, ctx.timeZone)})` : ''}` }));
   else if(node.verifiedAward)root.append(el('p',{class:'note',text:'Verified mastery recorded for this skill.'}));
   else if(node.earlierVerifiedAward)root.append(el('p',{class:'note',text:'Earlier verified mastery stays in your history.'}));
@@ -58,22 +66,32 @@ export function createProgressPanel(node, ctx) {
     root.append(el('h4', { text: 'What’s left' }));
     root.append(el('ul', { class: 'left' }, left.map((l) => el('li', { 'data-kind': l.kind },
       l.text, l.long && ctx.canRestart ? el('span', { class: 'muted', text: ' That is a lot of answers; starting a new attempt is another option.' }) : null))));
-  } else if (node.state === 'requirements-met' || node.state === 'mastered') {
+  } else if (!node.complete && (node.state === 'requirements-met' || node.state === 'mastered')) {
     root.append(el('p', { class: 'ok', text: 'Nothing is left for this requirement.' }));
   }
   // Practice.
-  const goal=node.proficiency?.goal;
-  const primary = goal&&!node.proficiency.goalMet
-    ? proficiencyLink(node,node.proficiency.tiers[goal]?.practice)
+  const tier=node.proficiency?.goal;
+  const primary = tier&&!node.proficiency.goalMet&&!ctx.model.enrolled
+    ? proficiencyLink(node,node.proficiency.tiers[tier]?.practice)
     : node.practice[0];
   const actions = el('div', { class: 'panel-actions' });
+  const next = node.complete ? ctx.next : null;
+  if (next) actions.append(el('button',{type:'button',class:'btn btn-primary','data-action':'next-learning',
+    text:next.stopId===node.stopId?'Next skill · '+next.title:'Next area · '+ctx.model.stops.find(stop=>stop.id===next.stopId).baseTitle,
+    onclick:()=>ctx.onNext(next)}));
   if (primary) {
-    actions.append(el('a', { class: 'btn btn-primary', href: primary.url, 'data-action': 'practice', onclick: (e) => { if (ctx.onPractice({ node, url: primary.url, kind: primary.kind }) === true) e.preventDefault(); }, text: primaryLabel(node) }));
+    const extension = node.complete && node.proficiency?.extensionAvailable;
+    const practice = extension ? proficiencyLink(node,node.proficiency.tiers.advanced.practice) ?? primary : primary;
+    actions.append(el('a', { class: node.complete ? 'btn' : 'btn btn-primary', href: practice.url, 'data-action': 'practice',
+      onclick: (e) => { if (ctx.onPractice({ node, url: practice.url, kind: practice.kind }) === true) e.preventDefault(); },
+      text: extension ? 'Optional Level 4 practice' : primaryLabel(node) }));
     for (const l of node.practice.slice(1)) actions.append(el('a', { class: 'btn', href: l.url, 'data-action': 'practice-other', text: l.label, onclick: (e) => { if (ctx.onPractice({ node, url: l.url, kind: l.kind }) === true) e.preventDefault(); } }));
   } else actions.append(el('p', { class: 'muted', text: 'No practice activity is linked to this skill yet.' }));
   const mixed = ctx.stop.mixed;
   if (mixed&&!node.practice.some(link=>link.url===mixed.url)) actions.append(el('a', { class: 'btn', href: mixed.url, 'data-action': 'mixed', text: 'Mixed Practice', 'aria-label': mixed.label, onclick: (e) => { if (ctx.onPractice({ node, url: mixed.url, kind: 'mixed' }) === true) e.preventDefault(); } }));
-  root.append(actions);
+  if (node.complete) root.insertBefore(actions,root.querySelector('.proficiency-details,.lead')||null);
+  else root.append(actions);
+  if(ctx.guestSkillControls&&node.guest)root.append(ctx.guestSkillControls(node));
   if (req && node.mixed?.url.startsWith('/java-games/')) root.append(el('p', { class: 'muted small', text: 'Mixed Practice counts here when it asks about this skill.' }));
 
   // Requirement, then this attempt.

@@ -82,6 +82,8 @@ test('a teacher publishes participation settings and the student can leave and r
   await wait(student,'[data-layout=list]');
   await activate(student,'[data-layout=list]');
   await hasText(student,'.map-summary','required learning areas complete');
+  await activate(student,'[data-unit-id="advanced-foundations"]');
+  await activate(student,'[data-stop-id="area:advanced:math-lab"] [data-action=open-stop]');
   assert.equal(await student.$('li[data-node-id="node:advanced:loop-lab:looptype"]'),null);
   assert.equal(await student.$('li[data-node-id="node:advanced:math-lab:modulus"]'),null);
   assert.equal(await student.$eval('li[data-node-id="node:advanced:math-lab:division"]',n=>n.dataset.optional),'true');
@@ -91,6 +93,7 @@ test('a teacher publishes participation settings and the student can leave and r
   await activate(student,'[data-layout=list]');
   await wait(student,'[data-unit-id="advanced-control"]');
   await activate(student,'[data-unit-id="advanced-control"]');
+  await activate(student,'[data-stop-id="area:advanced:loop-lab"] [data-action=open-stop]');
   await wait(student,'li[data-node-id="node:advanced:loop-lab:looptype"]');
   assert.doesNotMatch(await student.$eval('.map-summary',node=>node.textContent),/required learning areas complete/);
   await activate(student,'.student-nav-menu summary');

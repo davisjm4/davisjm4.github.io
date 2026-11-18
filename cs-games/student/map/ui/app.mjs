@@ -6,15 +6,15 @@ import { withPracticeReturn } from '../../practice-return.mjs';
 //
 // Every piece of progress shown comes from `progress` (cs-games.mastery-progress/1 objects). Nothing is stored by this component
 // except where the student is (the URL hash) and, for the demo, transient simulated attempts held in memory.
-import { buildMapModel, findNode, findStop, normalizeProgress } from '../model.mjs?v=class-participation-v1';
+import { buildMapModel, findNode, findStop, normalizeProgress } from '../model.mjs?v=map-progression-v1';
 import { readRoute, routeHash } from '../route.mjs';
 import { plural } from '../format.mjs';
-import { createPacingCard, createHeader, createLegend, createSuggested, createToolbar } from './chrome.mjs?v=class-participation-v1';
+import { createPacingCard, createHeader, createLegend, createSuggested, createToolbar } from './chrome.mjs?v=map-progression-v1';
 import { renderAreaMap } from './area-map.mjs';
-import { renderCourseMap } from './course-map.mjs';
+import { renderCourseMap, renderUnitMap, unitLabel } from './course-map.mjs';
 import { el } from './dom.mjs';
-import { renderListView } from './list-view.mjs?v=class-participation-v1';
-import { createPanelPlaceholder, createProgressPanel } from './progress-panel.mjs?v=guest-map-v1';
+import { renderListView } from './list-view.mjs?v=map-progression-v1';
+import { createPanelPlaceholder, createProgressPanel } from './progress-panel.mjs?v=map-progression-v1';
 import { createSkillSearch } from './search.mjs';
 import { groupCourseStops } from '../course-groups.mjs';
 import { createStage } from './stage.mjs';
@@ -34,29 +34,22 @@ export function mountStudentMap(container, options) {
   }
   let searchQuery = restoreQuery();
   let stageCtl = null, zoomLevel = 1, resizeObserver = null, lastStopId = null, destroyed = false;
-  let activeGroupId = null;
-  const groups = () => input.guest ? groupCourseStops(model,input.curriculumGraph) : [];
-  function selectedGroup() {
-    const all = groups();
-    if(all.length<2)return null;
-    if(!all.some(g=>g.id===activeGroupId)){
-      const current=input.currentNodeId ? findNode(model,input.currentNodeId)?.stopId : model.suggestedNext?.stopId;
-      activeGroupId=all.find(g=>g.stops.some(s=>s.id===current))?.id||all[0].id;
-    }
-    return all.find(g=>g.id===activeGroupId);
-  }
-  function groupPicker() {
-    if(route.view!=='course')return null;
-    const all=groups();
-    if(all.length<2)return null;
-    const selected=selectedGroup();
-    return el('nav',{class:'map-unit-picker','aria-label':'Choose a learning unit'},
-      el('p',{class:'map-unit-heading',text:model.courseId==='csp'?'Choose an AP CSP Big Idea':'Choose a learning unit'}),
-      el('div',{class:'map-unit-buttons'},
-        all.map(g=>el('button',{type:'button',class:'btn btn-quiet','data-unit-id':g.id,
-          'aria-pressed':g.id===selected?.id?'true':'false',
-          text:g.label+' · '+g.stops.length+' areas',
-          onclick:()=>{activeGroupId=g.id;render({focus:'group'});announce('Showing '+g.label+'.');}}))));
+  let lastUnitId = null;
+  let units = [];
+  const groupForStop = stopId => units.find(group=>group.stops.some(stop=>stop.id===stopId));
+  const selectedGroup = () => route.view==='unit' ? units.find(group=>group.id===route.unitId) : null;
+  const openUnit = group => {
+    lastUnitId = group.id;
+    go({view:'unit',unitId:group.id,stopId:null,nodeId:null},{focus:'heading'});
+  };
+  function nextAfter(node) {
+    if (!node?.complete) return null;
+    const candidates = model.nodes.filter(candidate => candidate.required && !candidate.complete &&
+      (candidate.proficiency?.goal || candidate.teacherAssessmentRequired || candidate.requirementsConfigured ||
+        (candidate.practice.length && !candidate.started)));
+    return candidates.find(candidate=>candidate.stopId===node.stopId && candidate.courseIndex>node.courseIndex) ??
+      candidates.find(candidate=>candidate.stopId===node.stopId) ??
+      candidates.find(candidate=>candidate.courseIndex>node.courseIndex) ?? candidates[0] ?? null;
   }
   const restartIds = new Map();   // one request id per attempt, reused on retry, so a repeated click cannot start two attempts
   const live = el('p', { class: 'sr-only', role: 'status', 'aria-live': 'polite' });
@@ -71,9 +64,12 @@ export function mountStudentMap(container, options) {
   }
   function build() {
     model = buildMapModel(effectiveInput());
+    units = input.guest || input.enrolled ? groupCourseStops(model,input.curriculumGraph) : [];
+    if(input.enrolled) units.sort((a,b)=>a.stops[0].index-b.stops[0].index);
     for (const n of model.nodes) n.delta = deltas.get(n.id) ?? 0;
     for (const s of model.stops) s.delta = s.nodes.reduce((t, n) => t + n.delta, 0);
     // Make the route valid for this model.
+    if (route.view==='unit' && !selectedGroup()) route={...route,view:'course',unitId:null};
     if (route.nodeId && !findNode(model, route.nodeId)) route = { ...route, nodeId: null };
     if (route.nodeId && route.view === 'area' && findNode(model, route.nodeId).stopId !== route.stopId) route = { ...route, stopId: findNode(model, route.nodeId).stopId };
     if (route.view === 'area' && !findStop(model, route.stopId)) route = { ...route, view: 'course', stopId: null };
@@ -96,10 +92,20 @@ export function mountStudentMap(container, options) {
   }
   const openStop = (stop) => { lastStopId = stop.id; go({ view: 'area', stopId: stop.id, nodeId: null }, { focus: 'heading' }); };
   const backToCourse = () => {
-    const stopId=lastStopId||route.stopId;
-    const match=groups().find(g=>g.stops.some(s=>s.id===stopId));
-    if(match)activeGroupId=match.id;
-    go({ view: 'course', stopId: null, nodeId: null }, { focus: 'stop' });
+    if (route.view==='area') lastUnitId=groupForStop(route.stopId)?.id??null;
+    go({view:'course',unitId:null,stopId:null,nodeId:null},{focus:units.length?'unit':'stop'});
+  };
+  const backToParent = () => {
+    if (route.view==='area') {
+      lastStopId=route.stopId;
+      const parent=groupForStop(route.stopId);
+      if(parent) {
+        lastUnitId=parent.id;
+        go({view:'unit',unitId:parent.id,stopId:null,nodeId:null},{focus:'stop'});
+        return;
+      }
+    }
+    backToCourse();
   };
   const setLayout = (layout) => go({ layout }, { replace: true, focus: 'layout' });
 
@@ -113,8 +119,9 @@ export function mountStudentMap(container, options) {
     }
     const sameStop = route.stopId === node.stopId;
     route = { ...route, nodeId: node.id, stopId: route.view === 'area' ? node.stopId : route.stopId };
-    writeHash(true);
+    writeHash(false);
     if ((route.view === 'area' && !sameStop) || !root.querySelector('.map-side')) { render({ focus: 'panel', keepScroll: true }); return; }
+    if (stageCtl && route.view==='area') drawStage(root.querySelector('.map-main'));
     updateSelection(); renderSide(focusPanel);
     if (scroll && stageCtl) stageCtl.scrollToItem(stageCtl.items().find((i) => i.dataset.nodeId === node.id));
   }
@@ -126,8 +133,9 @@ export function mountStudentMap(container, options) {
   }
   function focusItem(nodeId) { root.querySelector(`button[data-node-id="${CSS.escape(nodeId)}"], li[data-node-id="${CSS.escape(nodeId)}"] .skill-row-open`)?.focus({ preventScroll: true }); }
 
-  const panelCtx = (stop) => ({
-    stop, model, timeZone, guestSkillControls:adapter.guestSkillControls, canRestart: typeof adapter.restartAttempt === 'function',
+  const panelCtx = (stop, node) => ({
+    stop, model, timeZone, next:nextAfter(node), onNext:showSearchSkill,
+    guestSkillControls:adapter.guestSkillControls, canRestart: typeof adapter.restartAttempt === 'function',
     onPractice: (info) => adapter.onPractice?.(info) === true,
     onClose: () => select(null), onSelectNode: (id) => select(findNode(model, id), { scroll: true }),
     async onRestart(node) {
@@ -159,7 +167,8 @@ export function mountStudentMap(container, options) {
   function addReturnLinks(container) {
     if (!input.guest && !input.classId) return;
     for (const link of container.querySelectorAll('a[data-action^="practice"], a[data-action="mixed"]')) {
-      const node = link.dataset.returnSkill ? findNode(model, link.dataset.returnSkill) : null;
+      const skill = link.dataset.returnSkill ?? link.closest('.skill-panel')?.dataset.nodeId;
+      const node = skill && link.dataset.action!=='mixed' ? findNode(model, skill) : null;
       const destination = node ? { ...route, view: 'area', stopId: node.stopId, nodeId: node.id } : route;
       link.href = withPracticeReturn(link.href, { origin: location.origin, course: model.courseId, classId: input.classId, route: destination });
     }
@@ -173,7 +182,7 @@ export function mountStudentMap(container, options) {
     if (node) {
       const stop = findStop(model, node.stopId);
       side.dataset.empty = 'false';
-      const panel = createProgressPanel(node, panelCtx(stop));
+      const panel = createProgressPanel(node, panelCtx(stop,node));
       side.append(panel);
       addReturnLinks(panel);
       root.dataset.panel = 'open';
@@ -204,11 +213,14 @@ export function mountStudentMap(container, options) {
     const width = Math.max(260, Math.floor(stageCtl.viewport.clientWidth || main.clientWidth || 360));
     const stop = route.view === 'area' ? findStop(model, route.stopId) : null;
     const drawn = stop
-      ? renderAreaMap(model, stop, { width, selectedId: route.nodeId, onSelect: (n) => select(n) })
+      ? renderAreaMap(model, stop, { width, selectedId: route.nodeId, onSelect: (n) => select(n),
+          nextId:nextAfter(findNode(model,route.nodeId))?.id ?? stop.suggestedNodeId })
+      : route.view==='course' && units.length ? renderUnitMap(units,model,{width,onOpenUnit:openUnit})
       : renderCourseMap(model, { width, onOpenStop: openStop,
           visibleStopIds:selectedGroup()?.stops.map(s=>s.id)||null,
           onPractice: (info) => adapter.onPractice?.(info) });
     stageCtl.viewport.style.setProperty('--h', stop ? stop.identity.hue : 190);
+    if (!stop) stageCtl.viewport.style.setProperty('--map-height',drawn.height+'px');
     stageCtl.setContent(drawn.content, drawn.width, drawn.height);
     stageCtl.viewport.dataset.cols = String(drawn.cols);
     return drawn;
@@ -227,7 +239,10 @@ export function mountStudentMap(container, options) {
     root.dataset.view = route.view; root.dataset.layout = route.layout; root.dataset.mode = model.mode; root.dataset.pacing = model.pacing.mode;
     if (stop) root.style.setProperty('--h', stop.identity.hue); else root.style.removeProperty('--h');
     const dated = model.pacing.showDates;
-    const header = createHeader(model, { route, stop, onBack: backToCourse });
+    const unit = selectedGroup();
+    const courseUnits = route.view==='course' ? units : [];
+    const header = createHeader(model, { stop, unit, parent:stop ? groupForStop(stop.id) : null, hasUnits:units.length>0,
+      onBack:backToParent, onCourse:backToCourse });
     const meta = el('div', { class: 'map-meta' },
       route.view === 'area' ? mixedCard(stop) : null,
       stop?adapter.guestAreaControls?.(stop):null,
@@ -250,27 +265,25 @@ export function mountStudentMap(container, options) {
         addReturnLinks(results);
       },
     });
-    const body = el('div', { class: 'map-body', 'data-side': showSide ? 'true' : 'false' }, main, showSide ? side : null);
-    const tools = el('div', { class: 'map-tools' }, toolbar, createLegend({ dated }));
-    const shortcuts = input.mapFirst ? el('div', { class: 'map-shortcuts', role: 'group', 'aria-label': 'Learning map shortcuts' },
+    const body = el('div', { class: 'map-body', 'data-side': showSide ? 'true' : 'false' }, showSide ? side : null, main);
+    const tools = el('div', { class: 'map-tools' }, toolbar);
+    const legend = createLegend({dated});
+    const shortcuts = input.mapFirst && (model.suggestedNext || input.currentNodeId) ? el('div', { class: 'map-shortcuts', role: 'group', 'aria-label': 'Learning map shortcuts' },
       el('button', { type: 'button', class: 'btn btn-primary', text: 'Suggested Next', onclick: () => {
         const target = model.suggestedNext?.nodeId;
         if (target) { const n = findNode(model, target); if (n) { lastStopId = n.stopId; go({ view: 'area', stopId: n.stopId, nodeId: n.id }, { focus: 'panel' }); } }
         else announce('No suggested next skill is available.');
       } }),
-      el('button', { type: 'button', class: 'btn', text: 'Jump to Current', disabled: !input.currentNodeId, title: input.currentNodeId ? 'Go to your last selected skill' : 'Choose a skill to set your current position', onclick: () => {
+      input.currentNodeId ? el('button', { type: 'button', class: 'btn', text: 'Jump to Current', title:'Go to your last selected skill', onclick: () => {
         const n = findNode(model, input.currentNodeId);
         if (n) { lastStopId = n.stopId; go({ view: 'area', stopId: n.stopId, nodeId: n.id }, { focus: 'panel' }); }
         else announce('Choose a skill to set your current position.');
-      } })) : null;
+      } }) : null) : null;
     // Keep visual and keyboard order consistent: shortcuts and map first, skill search afterward.
-    const unitChooser=groupPicker();
-    root.replaceChildren(live,header,tools,...(input.mapFirst
-      ? [shortcuts,unitChooser,body,search,meta].filter(Boolean)
-      : [unitChooser,search,meta,body].filter(Boolean)));
+    root.replaceChildren(live,header,tools,body,...[shortcuts,search,legend,meta].filter(Boolean));
 
     if (route.layout === 'map') {
-      stageCtl = createStage({ label: stop ? `${stop.title} skill map` : `${model.courseTitle} course map`, onZoomChange: (z) => { zoomLevel = z; root.dataset.zoom = String(z); } });
+      stageCtl = createStage({ label: stop ? `${stop.title} skill map` : unit ? `${unit.label} area map` : `${model.courseTitle} course map`, onZoomChange: (z) => { zoomLevel = z; root.dataset.zoom = String(z); } });
       stageCtl.zoom = zoomLevel;
       main.append(stageCtl.viewport);
       drawStage(main);
@@ -281,8 +294,10 @@ export function mountStudentMap(container, options) {
       }
     } else {
       stageCtl = null;
-      const stops = stop ? [stop] : selectedGroup()?.stops||model.stops;
-      main.append(renderListView(model, stops, { onSelect: (n) => select(n), onOpenStop: openStop, onPractice: (i) => adapter.onPractice?.(i), selectedId: route.nodeId, showStopButton: !stop }));
+      const stops = stop ? [stop] : unit?.stops??model.stops;
+      if(courseUnits.length) main.append(el('ol',{class:'unit-list'},courseUnits.map((group,index)=>
+        el('li',{},el('button',{type:'button',class:'btn','data-unit-id':group.id,onclick:()=>openUnit(group)},...unitLabel(group,index,model))))));
+      else main.append(renderListView(model, stops, { onSelect: (n) => select(n), onOpenStop: openStop, onPractice: (i) => adapter.onPractice?.(i), selectedId: route.nodeId, showStopButton: !stop, showSkills:!unit }));
     }
     addReturnLinks(root);
     if (showSide) renderSide(focus === 'panel'||Boolean(keepPanel));
@@ -290,7 +305,7 @@ export function mountStudentMap(container, options) {
 
     // Focus management: say where the student landed, and give focus back where they came from.
     if (focus === 'heading') root.querySelector('#map-heading')?.focus({ preventScroll: false });
-    else if(focus==='group') root.querySelector('.map-unit-picker [aria-pressed="true"]')?.focus({preventScroll:true});
+    else if(focus==='unit' && lastUnitId) root.querySelector(`[data-unit-id="${CSS.escape(lastUnitId)}"]`)?.focus();
     else if (focus === 'layout') root.querySelector('[data-layout][aria-pressed="true"]')?.focus({ preventScroll: true });
     else if (focus === 'none' && focused?.id === 'map-skill-search') root.querySelector('#map-skill-search')?.focus({ preventScroll: true });
     else if (keepLayout) root.querySelector('[data-layout][aria-pressed="true"]')?.focus({preventScroll:true});
@@ -307,16 +322,16 @@ export function mountStudentMap(container, options) {
   const onHash = () => {
     if (!hashRouting || location.hash==='#student-profile') return;
     const next = readRoute();
-    if (next.view === route.view && next.stopId === route.stopId && next.nodeId === route.nodeId && next.layout === route.layout) return;
-    route = next; build(); render({ focus: 'none' });
+    if (next.view === route.view && next.unitId === route.unitId && next.stopId === route.stopId && next.nodeId === route.nodeId && next.layout === route.layout) return;
+    route = next; build(); render({ focus: route.nodeId ? 'panel' : 'heading' });
   };
   window.addEventListener('hashchange', onHash);
   window.addEventListener('popstate', onHash);
 
-  const hadMapContext = route.view === 'area' || route.nodeId !== null;
-  const wantedStop = route.stopId, wantedNode = route.nodeId;
+  const hadMapContext = route.view !== 'course' || route.nodeId !== null;
+  const wantedStop = route.stopId, wantedNode = route.nodeId, wantedView=route.view;
   build();
-  const stale = hadMapContext && (wantedStop !== route.stopId || wantedNode !== route.nodeId);
+  const stale = hadMapContext && (wantedStop !== route.stopId || wantedNode !== route.nodeId || wantedView!==route.view);
   if (stale) writeHash(true);
   render();
   if ((input.guest || input.classId) && route.nodeId) requestAnimationFrame(() => {
@@ -340,7 +355,7 @@ export function mountStudentMap(container, options) {
       if (label !== null) options.highlightLabel = label;
       overrides = { progress: new Map(), attempts: {} };
       if (courseChanged) {
-        activeGroupId=null;
+        lastUnitId=null;
         searchQuery = restoreQuery();
         route = { view: 'course', stopId: null, nodeId: null, layout: route.layout };
       }
@@ -352,7 +367,7 @@ export function mountStudentMap(container, options) {
       }
       build(); writeHash(true); render({ focus: 'none', keepScroll: true });
     },
-    select: (nodeId) => { const n = findNode(model, nodeId); if (n) { if (route.view === 'course') { lastStopId = n.stopId; route = { ...route, view: 'area', stopId: n.stopId, nodeId: n.id }; writeHash(false); render({ focus: 'panel' }); } else select(n, { scroll: true }); } },
+    select: (nodeId) => { const n = findNode(model, nodeId); if (n) { if (route.view !== 'area') showSearchSkill(n); else select(n, { scroll: true }); } },
     openStop: (stopId) => { const s = findStop(model, stopId); if (s) openStop(s); },
     showCourse: backToCourse, setLayout,
     destroy() { destroyed = true; resizeObserver?.disconnect(); window.removeEventListener('hashchange', onHash); window.removeEventListener('popstate', onHash); container.replaceChildren(); },

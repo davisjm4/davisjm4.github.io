@@ -18,7 +18,9 @@ export function recordGuestAttempt(courseId, { store } = {}) {
   return (record, _sessionId, correct, occurred) => {
     try {
       const event = guestEventFromAttempt(courseId, record, correct, occurred);
-      return event ? (store || guestStore()).addEvent(event) : false;
+      const recorded = event ? (store || guestStore()).addEvent(event) : false;
+      if (recorded && typeof window !== 'undefined') window.dispatchEvent(new Event('csg:guest-practice'));
+      return recorded;
     } catch { return false; }
   };
 }

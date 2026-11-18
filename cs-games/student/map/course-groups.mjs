@@ -1,4 +1,4 @@
-// Presentation-only curriculum groupings for independent maps.
+// Presentation-only curriculum groupings for student maps.
 // These do not rename areas/skills, change assignments, or modify mastery/evidence.
 const CATEGORIES={
   advanced:[

@@ -86,7 +86,7 @@ if (!profilesAvailable) {
   };
   if(!classic){
     Promise.all([
-      import('./map/ui/app.mjs?v=class-participation-v1'),
+      import('./map/ui/app.mjs?v=map-progression-v1'),
       import('./map/live-contract.mjs?v=class-participation-v1'),
       fetch('../pathway/evidence-gap-registry.json').then(response=>response.ok?response.json():null).catch(()=>null)
     ]).then(([app,contract,registry])=>{

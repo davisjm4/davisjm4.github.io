@@ -170,7 +170,7 @@ test('a student joins, practices offline, restores on another device and leaves 
   await exactButton(first,'Enroll in this class');
   const recovery=await (await wait(first,'.wpr-profile-secret')).evaluate(e=>e.textContent);
   await Promise.all([first.waitForNavigation({waitUntil:'load'}),exactButton(first,'I saved my recovery credential')]);
-  await wait(first,'#student-pathway .stop-open');
+  await wait(first,'#student-pathway .unit-node');
   const studentPathway=await first.$eval('#student-pathway',e=>e.textContent);
   assert.match(studentPathway,/Workplace Readiness journey/);
   assert.match(studentPathway,/Self-paced/);
