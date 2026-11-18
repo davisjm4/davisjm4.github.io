@@ -42,7 +42,7 @@ export function startArrayLab() {
       </label>
       <label>Difficulty
         <select id="difficulty" aria-label="Challenge difficulty">
-          <option>Beginner</option><option selected>Intermediate</option><option>Advanced</option>
+          <option>Beginner</option><option>Intermediate</option><option>Advanced</option>
         </select>
       </label>
       <button id="new" class="secondary">New Challenge</button>
@@ -52,10 +52,12 @@ export function startArrayLab() {
     <p id="stats" class="stats"></p>`;
 
   addSessionNavigation("../");
-  const requestedMode=params?.get('mode')||params?.get('format')||preferences.mode;
-  const requestedDifficulty=params?.get('difficulty')||preferences.difficulty;
+  const requestedMode=params?.get('mode')||params?.get('format')||preferences?.mode;
+  const difficulties=['Beginner','Intermediate','Advanced'];
+  const difficultyOption=value=>difficulties.find(level=>level.toLowerCase()===value?.toString().toLowerCase());
+  const explicitDifficulty=difficultyOption(params?.get('difficulty'));
   if(requestedMode==='mixed'||Object.hasOwn(formatNames,requestedMode))$("mode").value=requestedMode;
-  const level=['Beginner','Intermediate','Advanced'].find(d=>d.toLowerCase()===String(requestedDifficulty).toLowerCase());if(level)$("difficulty").value=level;
+  $("difficulty").value=explicitDifficulty??difficultyOption(preferences?.difficulty)??'Beginner';
   const savePreferences=()=>{try{preferenceStorage?.setItem(preferenceKey,JSON.stringify({mode:$("mode").value,difficulty:$("difficulty").value}));}catch{}};
   const active = () => {if(closed)return false;if(tracker.status(instanceId)==='active')return true;expireChallenge();return false;};
   const stats = () => { $("stats").textContent = roundSummary("array-lab", $("mode").value); };
@@ -214,7 +216,8 @@ export function startArrayLab() {
     const switching = instanceMode !== mode || instanceDifficulty !== difficulty;
     if (instanceId && (!switching || checkpoint?.mode !== instanceMode)) tracker.skip(instanceId);
     const saved = restore && checkpoint?.mode === mode ? checkpoint.read() : null;
-    const paused = saved?.question && tracker.status(saved.instanceId) === "active" ? saved : null;
+    const paused = saved?.question && (!explicitDifficulty || saved.difficulty === explicitDifficulty) &&
+      tracker.status(saved.instanceId) === "active" ? saved : null;
     if (paused) $("difficulty").value = paused.difficulty;
     else if (checkpoint?.mode === mode && !restore) {
       const prior = checkpoint.read();
