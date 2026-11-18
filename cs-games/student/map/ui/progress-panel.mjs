@@ -71,7 +71,7 @@ export function createProgressPanel(node, ctx) {
   }
   // Practice.
   const tier=node.proficiency?.goal;
-  const primary = tier&&!node.proficiency.goalMet&&!node.requirementsConfigured
+  const primary = tier&&!node.proficiency.goalMet
     ? proficiencyLink(node,node.proficiency.tiers[tier]?.practice)
     : node.practice[0];
   const actions = el('div', { class: 'panel-actions' });
