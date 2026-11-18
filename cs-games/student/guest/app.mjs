@@ -2,11 +2,11 @@
 import { el } from '../../../wpr-games/workplace-readiness/online/dom.mjs';
 import { renderPathway } from '../pathway-view.mjs';
 import { createGuestStore, MESSAGES, COURSE_IDS, localDate } from './store.mjs';
-import { buildGuestView, guestCourses } from './pathway.mjs?v=class-participation-v1';
+import { buildGuestView, guestCourses } from './pathway.mjs?v=map-progression-v1';
 import { reconcileEvents } from './evidence.mjs';
 import { afterPractice } from './suggest.mjs';
 import { activityName } from './progress.mjs';
-import { mountStudentMap } from '../map/ui/app.mjs?v=advanced-map-layout-v2';
+import { mountStudentMap } from '../map/ui/app.mjs?v=map-progression-v1';
 import { inputFromStudentContract } from '../map/live-contract.mjs?v=targeted-clarity-v1';
 import { decoratePathway, markButtons, practiceHref } from './decorate.mjs';
 import { classProfileActive } from './class-state.mjs';
@@ -88,11 +88,12 @@ const adapter={
   guestSkillControls(node){
     const g=node.guest;
     return el('div',{class:'guest-skill-controls'},
-      el('p',{class:'muted',text:g.answered?`${g.correct} of ${g.answered} correct on the first try`:'No practice recorded for this skill yet.'}),
+      g.answered?el('p',{class:'muted',text:`All practice · ${g.correct} of ${g.answered} right on the first try`}):null,
       g.selfReported&&el('p',{class:'guest-note',text:g.selfReported}),
       trackingKnown()&&!TRACKED_NODE_IDS.has(node.id)&&el('p',{class:'muted',text:'This activity may not update skill progress automatically. You can still practice and plan a demonstration.'}),
-      markButtons({id:node.id,label:node.title,current:g.markSource==='skill'?g.mark:null,inherited:g.markSource==='area'?g.mark:null,
-        scope:'node',onMark:(id,mark)=>onMark(id,mark,'node',{nodeId:id,areaId:node.areaId})}));
+      el('details',{},el('summary',{text:'Add a note for yourself'}),
+        markButtons({id:node.id,label:node.title,current:g.markSource==='skill'?g.mark:null,inherited:g.markSource==='area'?g.mark:null,
+          scope:'node',onMark:(id,mark)=>onMark(id,mark,'node',{nodeId:id,areaId:node.areaId})})));
   }
 };
 const courseNames={advanced:'Advanced Computer Science',csp:'AP Computer Science Principles'};
@@ -225,7 +226,7 @@ function render({ focus, fresh = false } = {}) {
   const state = refreshState();
   document.body.dataset.guestCourse = courseId || '';
   const heading = document.querySelector('.guest-wrap > h1');
-  if (heading) heading.textContent = courseId === 'advanced' ? 'Advanced Computer Science' : 'Explore on your own';
+  if (heading) heading.textContent = courseId ? (courseNames[courseId]||guestCourses(graph).find(c=>c.id===courseId)?.title||'Your learning journey') : 'Explore on your own';
   if (!courseId) { app.replaceChildren(courseChooser(state), storagePanel(state)); syncStorageNote(); return; }
   view = buildGuestView(graph, courseId, state, { today: localDate(Date.now()) });
   const launch = sessionGet();
@@ -235,12 +236,12 @@ function render({ focus, fresh = false } = {}) {
     pathwayEl = renderPathway(view, { openAreas: openAreas.size ? [...openAreas] : [defaultIndex] });
     decoratePathway(pathwayEl, view, { onMark, onLaunch, trackedIds: trackingKnown() ? TRACKED_NODE_IDS : null });
   }else{
-    const input={...inputFromStudentContract(view,{mixedActivities}),mapFirst:courseId==='advanced',currentNodeId:store.state().position[courseId]?.nodeId??null};
+    const input={...inputFromStudentContract(view,{mixedActivities}),curriculumGraph:graph,mapFirst:true,currentNodeId:store.state().position[courseId]?.nodeId??null};
     if(map)map.update(input);
     else map=mountStudentMap(mapHost,{...input,adapter});
   }
-  app.replaceChildren(...[courseId==='advanced'?null:courseChooser(), classic?el('section',{class:'student-panel guest-pathway','aria-label':'Learning pathway'},pathwayEl):mapHost,
-    jumpControl(), coverageNote(), courseId==='advanced'?null:pickUp(), afterPracticeCard(), courseId==='advanced'&&!classic?null:summaryPanel(), storagePanel(state)].filter(Boolean)); // replaceChildren(null) would print "null"
+  app.replaceChildren(...[classic?el('section',{class:'student-panel guest-pathway','aria-label':'Learning pathway'},pathwayEl):mapHost,
+    jumpControl(), coverageNote(), classic?pickUp():null, afterPracticeCard(), summaryPanel(), storagePanel(state)].filter(Boolean)); // replaceChildren(null) would print "null"
   lastStamp = store.state().updated;
   syncStorageNote();
   if (focus) (app.querySelector(`[data-control="${CSS.escape(focus)}"]`) || app.querySelector(`[data-course="${CSS.escape(String(focus).replace('course:', ''))}"]`))?.focus({ preventScroll: true });

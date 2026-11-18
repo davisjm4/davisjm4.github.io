@@ -43,7 +43,8 @@ export function buildGuestView(graph, courseId, state, { today } = {}) {
     if (!pick || guidance.primary?.kind === 'continue-learning' ||
         !['marked','start','low','review'].includes(pick.code) && guidance.primary?.tier) return;
     const skill=proficiency.skills[pick.nodeId];
-    const tier=skill.goalMet?null:skill.goal;
+    if(skill.goalMet)return;
+    const tier=skill.goal;
     guidance.primary={kind:'guest-practice',nodeId:pick.nodeId,areaId:pick.areaId,tier,practice:skill.tiers[tier]?.practice??null,reason:pick.reason};
   };
   applySuggestion(proficiency.recommendation,suggestion.primary);

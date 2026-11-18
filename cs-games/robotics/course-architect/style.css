@@ -7,3 +7,43 @@
 #drawing{width:100%;min-width:0;aspect-ratio:auto;height:clamp(260px,35vw,650px)}
 #checks{max-height:560px;overflow:auto;padding-right:8px;scrollbar-gutter:stable}
 #checks:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+
+/* Notebook-first, learner-owned Robo Rally workflow. */
+.journal { margin: 1rem 0 1.35rem; border-left: 4px solid var(--accent, #40d4b7); }
+.journal > summary { display: flex; gap: .65rem; flex-wrap: wrap; align-items: center; cursor: pointer;
+  font-size: 1.05rem; padding: .6rem .35rem; min-height: 44px; }
+.journal > summary span { font-size: .88rem; color: var(--muted, #a5bac5); font-weight: 400; }
+.journal-body { padding: .5rem .35rem 1rem; }
+.journal-body h2 { margin-block-start: .35rem; }
+#measurement-status { margin-top: 1rem; padding: .75rem 1rem; line-height: 1.45; }
+.race-note { max-width: 75ch; }
+.segment-editor { border: 1px solid var(--line, #506170); border-radius: .75rem; margin-top: 1rem;
+  padding: 1rem; display: grid; gap: .65rem; }
+.segment-editor h3, .segment-editor p { margin: 0; }
+.segment-editor button.primary { min-height: 46px; width: fit-content; }
+#start-setup { border: 1px solid var(--line, #506170); border-radius: .75rem; padding: .6rem .8rem; }
+#start-setup summary { cursor: pointer; padding: .5rem 0; min-height: 44px; font-weight: 700; }
+#start-setup[open] > :last-child { margin-bottom: .5rem; }
+#new-length-field[hidden] { display: none; }
+@media (max-width: 700px) {
+ .journal > summary { display: block; }
+ .journal > summary span { display: block; margin-top: .3rem; }
+ .segment-editor button.primary { width: 100%; }
+}
+
+/* Deterministic digital-only geometric preview. */
+.visual-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+  margin-top: .65rem; padding: .75rem; background: var(--panel, #183044);
+  border: 1px solid var(--line, #425364); border-radius: .7rem; }
+.visual-controls button { min-height: 44px; padding-inline: .8rem; }
+.visual-controls p { flex: 1 1 100%; margin: .25rem 0 0; line-height: 1.4; }
+#drawing svg [data-visual-robot] { pointer-events: none; }
+@media (max-width: 560px) {
+  .visual-controls { display: grid; grid-template-columns: 1fr 1fr; }
+  .visual-controls button { white-space: normal; }
+  .visual-controls #preview-play { grid-column: 1/-1; }
+  .visual-controls p { grid-column: 1/-1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #drawing svg [data-visual-robot] { animation: none !important; transition: none !important; }
+}

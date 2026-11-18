@@ -1,5 +1,6 @@
 import {DEMONSTRATION_TYPES,demonstrationGuide} from '../../../pathway/proficiency/demonstrations.mjs';
 import {el} from './dom.mjs';
+import {tierLevels} from '../skill-target.mjs';
 
 export function proficiencyLink(node,selection){
   const base=node.practice.find(link=>link.activityId===selection?.activityId);
@@ -11,8 +12,6 @@ export function proficiencyLink(node,selection){
   return {...base,url:url.pathname+url.search+url.hash};
 }
 
-const tierLevels={beginner:2,intermediate:3,advanced:4};
-
 export function proficiencyDetails(node){
   const result=node.proficiency;
   if(!result)return null;
@@ -20,13 +19,17 @@ export function proficiencyDetails(node){
   return el('section',{class:'proficiency-details'},
     el('h4',{text:'Formative proficiency'}),
     available.length?el('p',{'data-formative-level':result.level,text:`Level ${result.level} · ${result.label}`}):null,
-    available.length?el('ul',{},available.map(([tier,detail])=>{
+    available.length?el('details',{},el('summary',{text:'How the proficiency levels are earned'}),
+      el('p',{text:'Each level uses its own qualifying questions. Answers count for the skill and level they assess. Level 3 can be demonstrated even when the Level 2 evidence set is incomplete.'}),
+      el('ul',{},available.map(([tier,detail])=>{
       const missing=detail.missing?.subskills.map(item=>item.label)??[];
       return el('li',{},
         el('strong',{text:`Level ${tierLevels[tier]} · ${detail.status==='demonstrated'?'Demonstrated':`${detail.answered}/${detail.minimumQuestions} answers`}`}),
-        el('span',{text:` · ${detail.correct} correct · ${Math.round(detail.accuracy*100)}% target`}),
+        el('span',{text:` · ${detail.correct} right on the first try · ${Math.round(detail.accuracy*100)}% accuracy required`}),
+        detail.minimumFamilies?el('p',{class:'muted',text:`Correct answers across ${detail.minimumFamilies} different question types.`}):null,
+        detail.practice?.difficulty?el('p',{class:'muted',text:`Practice difficulty for this evidence: ${detail.practice.difficulty}.`}):null,
         missing.length?el('p',{class:'muted',text:`Practice needed in ${missing.join(' and ')}.`}):null);
-    })):el('p',{class:'muted',text:node.practice.length?'Use a demonstration for this skill. The game is available for practice.':'Use a demonstration to show your understanding of this skill.'}));
+    }))):el('p',{class:'muted',text:node.practice.length?'Use a demonstration for this skill. The game is available for practice.':'Use a demonstration to show your understanding of this skill.'}));
 }
 
 export function demonstrationDetails(node,{courseId,enrolled}){
@@ -52,9 +55,9 @@ export function proficiencySuggestion(model,{onShow,onPractice,stop}){
   if(!guidance)return null;
   const visible=recommendation=>recommendation&&model.nodeIndex[recommendation.nodeId]&&
     (!model.pathwayCompletion||!model.nodeIndex[recommendation.nodeId].optional);
-  const next=visible(guidance.primary)?guidance.primary:null;
+  const next=visible(guidance.primary)&&!model.nodeIndex[guidance.primary.nodeId].complete?guidance.primary:null;
   const extension=visible(guidance.extension)?guidance.extension:null;
-  const browseNext=visible(guidance.browseNext)?guidance.browseNext:null;
+  const browseNext=visible(guidance.browseNext)&&!model.nodeIndex[guidance.browseNext.nodeId].complete?guidance.browseNext:null;
   if(!next&&!extension&&!browseNext)return null;
   const area=stop&&model.proficiency.areas[stop.areaId];
   const ready=!model.pathwayCompletion&&area?.readyToAdvance;

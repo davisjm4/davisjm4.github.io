@@ -32,6 +32,20 @@ function java(tier,count=30){
   });
 }
 const skill=records=>evaluateSkillProficiency(trace,records);
+test('five perfect Trace answers earn Level 2 only with eligible beginner variety',()=>{
+  const beginner=java('beginner',5);
+  assert.equal(skill(beginner).level,2);
+  const intermediate=java('intermediate',5);
+  assert.equal(skill(intermediate).tiers.beginner.answered,0);
+  assert.equal(skill(intermediate).tiers.intermediate.correct,5);
+  assert.equal(skill(intermediate).level,1);
+  const repeatedFamily=java('beginner').filter(row=>row.familyId===beginner[0].familyId).slice(0,5);
+  assert.equal(repeatedFamily.length,5);
+  const narrow=skill(repeatedFamily);
+  assert.equal(narrow.tiers.beginner.correct,5);
+  assert.equal(narrow.tiers.beginner.missing.families.needed,1);
+  assert.equal(narrow.level,1);
+});
 test('trace tiers enforce difficulty, first attempts, and breadth using real generator metadata',()=>{
   const beginner=java('beginner'), intermediate=java('intermediate'), advanced=java('advanced');
   assert.equal(skill(beginner).level,2);

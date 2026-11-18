@@ -96,22 +96,18 @@
     var f = UI.readOptions(), eligible = hyb ? W.selector.eligibleUnits(hyb, f) : G.eligibleTemplates(lib, f), n = eligible.length;
     var note = doc.getElementById('options-note'), start = doc.getElementById('btn-start');
     if ((f.topics?.length || f.subtopics?.length) && (!hyb || W.selector.capacity(hyb, f).families < 3)) {
-      note.textContent = 'Fewer than three reasoning families match. Mix difficulty or mode, change the setting, or choose more topics.';
-      start.disabled = true; return 0;
+      note.textContent='This selection has limited question variety. Add a topic or choose a different mode.';
+      start.disabled=true;return 0;
     }
-    if (!n) { note.textContent = 'No challenges match these choices. Try mixed modes or difficulty.'; start.disabled = true; }
-    else if (hyb) {
-      var cap = W.selector.capacity(hyb, f);
-      note.textContent = (cap.signatures < 20
-        ? cap.signatures + ' distinct reasoning problems match this selection. Underlying ideas will repeat during a 20-question session; broaden the skill, mode, difficulty, or setting filters for more variety.'
-        : cap.signatures + ' distinct reasoning problems match this selection. The generator avoids repeating any of them within 20 questions.') + ' ' + cap.families + ' reasoning families.';
-      start.disabled = false;
+    if (!n) {
+      note.textContent='No questions match these choices. Try a different topic or mixed difficulty.';
+      start.disabled=true;
     } else {
-      var patterns = new Set(eligible.map(function (t) { return t.family + ':' + t.pattern; })).size;
-      note.textContent = patterns < 20
-        ? n + ' authored challenges across ' + patterns + ' distinct reasoning patterns. This selection will repeat underlying ideas during a 20-question session; broaden the skill, mode, difficulty, or setting filters for more variety.'
-        : n + ' authored challenges across ' + patterns + ' distinct reasoning patterns. The generator spaces those patterns across the first 20 questions when possible.';
-      start.disabled = false;
+      var variety=hyb?W.selector.capacity(hyb,f).signatures:new Set(eligible.map(t=>t.family+':'+t.pattern)).size;
+      note.textContent=variety<20
+        ? 'Some examples may repeat with these filters. Broaden the selection for more variety.'
+        : 'Ready to practice. Your questions will vary within the selected topics.';
+      start.disabled=false;
     }
     return n;
   }
@@ -169,7 +165,10 @@
     }, 1000);
     doc.addEventListener('visibilitychange', function () { if (doc.hidden) save(); });
     root.addEventListener('pagehide', save);
-    render();
+    // A teacher or pathway-selected practice link opens its first question directly.
+    // Manual unfiltered visits continue to show the practice chooser.
+    if(shared && checkOptions())startPractice(UI.readOptions(),true);
+    else render();
   }
 
   W.app = { lib: lib, hybrid: hyb, tracker: tracker, store: store, startPractice: startPractice, state: function () { return { current: current, gen: gen, route: route }; } };
