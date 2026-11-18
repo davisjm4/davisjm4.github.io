@@ -202,8 +202,13 @@ test('independent learner follows the unit trail and sees eligible practice, com
   assert.equal(await page.$('.stop-open'),null);
   for (const [device,width,height] of [['desktop',1440,900],['chromebook',1366,768],['mobile',390,844]]) {
     await page.setViewport({width,height});
+    await page.waitForFunction(() => {
+      const viewport = document.querySelector('.map-viewport');
+      const stage = viewport?.querySelector('.stage');
+      return viewport && Math.abs(stage?.offsetWidth - viewport.clientWidth) <= 12 &&
+        document.documentElement.scrollWidth <= innerWidth + 1;
+    }, {timeout:5000});
     if(evidence)await page.screenshot({path:evidence+'/'+device+'-course.png'});
-    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   }
   await activate('.unit-node','Foundations & Logic');
   await wait('.map-app[data-view=unit]');
