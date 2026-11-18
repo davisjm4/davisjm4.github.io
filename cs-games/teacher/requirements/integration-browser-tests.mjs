@@ -11,6 +11,12 @@ const {launch}=require('./tests/browser/harness.js');
 const axeSource=readFileSync(require.resolve('axe-core/axe.min.js'),'utf8');
 const token='synthetic-mastery-browser-teacher';
 const stopButton='.stop-open[data-stop-id="area:advanced:loop-lab"]';
+async function openLoopArea(page){
+  await wait(page,'.map-app');
+  const unit=await page.$('[data-unit-id=advanced-control]');
+  if(unit)await activate(page,'[data-unit-id=advanced-control]');
+  await activate(page,stopButton);
+}
 const skillButton='.skill-node[data-node-id="node:advanced:loop-lab:looptype"]';
 const panel='.skill-panel[data-node-id="node:advanced:loop-lab:looptype"]';
 const focusLink=panel+' a[data-action=practice]';
@@ -105,7 +111,7 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await see(teacher,'.mreq-persistence','Saved draft.');
   await student.reload();
   await see(student,'#student-pathway','Self-paced');
-  await activate(student,stopButton);
+  await openLoopArea(student);
   await activate(student,skillButton);
   await see(student,panel,'30 questions answered and 90% right on the first try');
   assert.equal(await teacher.$eval('#publish', button=>button.disabled),true);
@@ -140,7 +146,7 @@ test('published requirements and real Loop Lab practice appear in the student ma
 
   const showLoop=async()=>{
     await wait(student,'#student-pathway .map-app');
-    if(await student.$(skillButton)===null)await activate(student,stopButton);
+    if(await student.$(skillButton)===null)await openLoopArea(student);
     if(await student.$(panel)===null)await activate(student,skillButton);
     await wait(student,panel+' .checks');
   };
@@ -157,7 +163,10 @@ test('published requirements and real Loop Lab practice appear in the student ma
     await student.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
   }
   await Promise.all([student.waitForNavigation(),activate(student,focusLink)]);
+  await see(student,'.live-skill-progress','0 of 30 qualifying answers');
+  await see(student,'.live-skill-progress','91% accuracy required');
   await answer('looptype');
+  await see(student,'.live-skill-progress','1 of 30 qualifying answers');
   assert.equal(await student.$eval('a[data-profile-link]',link=>link.textContent),'Back to Course Map');
   await Promise.all([student.waitForNavigation(),activate(student,'a[data-profile-link]')]);
   await wait(student,panel);
@@ -225,7 +234,7 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await recovered.type('[name=id]',dev.db.prepare('SELECT id FROM student_profiles').get().id);
   await recovered.type('[name=recovery]',recovery);
   await Promise.all([recovered.waitForNavigation(),byText(recovered,'#student-profile','Restore profile')]);
-  await activate(recovered,stopButton);
+  await openLoopArea(recovered);
   await activate(recovered,skillButton);
   await activate(recovered,panel+' .prev summary');
   assert.match(await recovered.$eval(panel,node=>node.innerText),/Attempt 1: You started a new attempt\s*3 answered, [0-3] correct/);

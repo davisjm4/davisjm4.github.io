@@ -1,7 +1,7 @@
 // One skill, drawn once. The same art is used in the area map, the legend, and the list view, so the symbols always agree.
 // State is never carried by colour alone: every state has its own glyph, its own ring pattern, and a text label.
 import { ICON_PATHS } from '../icons.mjs';
-import { nodeParts } from '../copy.mjs?v=class-participation-v1';
+import { nodeParts } from '../copy.mjs?v=map-progression-v1';
 import { STATES } from '../states.mjs';
 import { el, svg } from './dom.mjs';
 
@@ -9,7 +9,7 @@ const R = 31, C = 2 * Math.PI * R;
 /** @returns {SVGSVGElement} 72x72 drawing for a state. `ring` is {fraction} for a requirement arc, or null. */
 export function nodeArt({ state, optional = false, ring = null, order = null, size = 72, label = null }) {
   const glyph = STATES[state]?.glyph ?? 'number';
-  const body = optional
+  const body = optional && state !== 'requirements-met'
     ? svg('rect', { class: 'body', x: -20, y: -20, width: 40, height: 40, rx: 9, transform: 'translate(36 36) rotate(45)' })
     : svg('circle', { class: 'body', cx: 36, cy: 36, r: 25 });
   const g = glyph === 'number'

@@ -86,10 +86,12 @@
 .map-app .map-main { min-width: 0; }
 @media (min-width: 1024px) {
   .map-app .map-body[data-side='true'] { grid-template-columns: minmax(0, 1fr) 410px; align-items: start; }
+  .map-app .map-body[data-side='true'] .map-main { grid-row: 1; grid-column: 1; }
+  .map-app .map-body[data-side='true'] .map-side { grid-row: 1; grid-column: 2; }
   .map-app .map-side { position: sticky; top: 12px; max-height: calc(100dvh - 24px); overflow: auto; }
 }
 @media (max-width: 1023.98px) {
-  .map-app .map-side { position: fixed; inset: auto 0 0 0; z-index: 30; max-height: 76dvh; overflow: auto; background: var(--panel); border-top: 1px solid var(--line); border-radius: 20px 20px 0 0; box-shadow: 0 -14px 44px rgba(0, 0, 0, .55); overscroll-behavior: contain; }
+  .map-app .map-side { grid-row: 1; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
   .map-app .map-side[data-empty='true'] { display: none; }
   .map-app[data-panel='open'] .map-main { padding-bottom: 8px; }
 }
@@ -308,17 +310,35 @@
   border-bottom: 1px solid var(--line);
 }
 
-/* Independent map grouping: a small, swipeable unit selector instead of a 40-area wall. */
-.map-unit-picker { min-width: 0; margin: .55rem 0 .9rem; padding: .35rem 0; }
-.map-unit-heading { font-weight: 750; font-size: .9rem; margin: 0 0 .35rem; }
-.map-unit-buttons { display: flex; gap: .5rem; overflow-x: auto; overscroll-behavior-inline: contain;
-  scroll-snap-type: x proximity; padding: .2rem .15rem .6rem; scrollbar-width: thin; }
-.map-unit-buttons button { flex: 0 0 auto; min-height: 44px; max-width: 100%; scroll-snap-align: start;
-  white-space: nowrap; }
-.map-unit-buttons [aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 -3px 0 var(--accent); font-weight: 800; }
-.map-unit-picker button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-@media (max-width: 560px) {
- .map-unit-picker { margin: .3rem 0 .45rem; }
- .map-unit-buttons { gap: .35rem; }
- .map-unit-buttons button { padding: .55rem .7rem; font-size: .86rem; }
+/* Curriculum units are the first stops on the course trail. */
+.map-app .unit-node { position: absolute; transform: translate(-50%, -38px); width: 144px;
+  display: grid; justify-items: center; gap: 5px; color: var(--ink); border: 0; background: transparent;
+  font: inherit; cursor: pointer; text-align: center; padding: 4px; border-radius: 14px; }
+.map-app .unit-node:hover { background: var(--panel-2); }
+.map-app .unit-node strong { line-height: 1.15; }
+.map-app .unit-node small, .map-app .unit-list small { color: var(--muted); }
+.map-app .unit-circle { width: 64px; height: 64px; display: grid; place-items: center; border-radius: 50%;
+  color: var(--ink); background: var(--panel-2); border: 3px solid var(--area); font-size: 1.45rem; font-weight: 800; }
+.map-app .unit-next { color: var(--gold); font-size: .78rem; font-weight: 800; }
+.map-app .unit-list { list-style: none; padding: 0; display: grid; gap: .65rem; }
+.map-app .unit-list button { display: flex; justify-content: start; flex-wrap: wrap; gap: .65rem; width: 100%; text-align: left; }
+.map-app .unit-list .unit-circle { width: 36px; height: 36px; font-size: 1rem; }
+.map-app .map-back { margin-bottom: .25rem; }
+.map-app .crumbs { flex-wrap: wrap; gap: .3rem; }
+.map-app .stop { width: 144px; }
+.map-app .stop-art { width: 76px; height: 76px; }
+.map-app .stop-num { left: 9px; }
+.map-app .skill-node .node-art { width: 62px; height: 62px; }
+.map-app .skill-node { transform: translate(-50%, -37px); }
+.map-app .skill-node .node-art[data-state="requirements-met"] .body {
+  fill: hsl(var(--h) 72% 68%); stroke: hsl(var(--h) 80% 78%);
+}
+.map-app .skill-node .node-art[data-state="requirements-met"] .glyph { stroke-width: 3.4; }
+.map-app .skill-target progress { width: 100%; accent-color: var(--ok); }
+.map-app .skill-target h4, .map-app .skill-target p { margin-block: .4rem; }
+.map-app[data-view="course"] .map-viewport, .map-app[data-view="unit"] .map-viewport { height: min(66dvh, var(--map-height, 500px)); }
+.map-app .map-tools:has(> .toolbar:only-child) { grid-template-columns: 1fr; }
+.map-app .crumbs:empty { display: none; }
+@media (max-width: 600px) {
+  .map-app[data-panel="open"] .map-main { padding-bottom: 0; }
 }
