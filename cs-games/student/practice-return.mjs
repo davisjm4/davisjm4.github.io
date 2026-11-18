@@ -47,6 +47,8 @@ export function addPracticeReturn(header, profile, fallback) {
   link.textContent = target ? 'Back to Course Map' : stale ? 'Back to Course' : 'My class progress';
   link.dataset.profileLink = 'true';
   header.append(link);
+  if (target && readRoute(new URL(target,current.origin).hash).nodeId)
+    void import('./practice-progress.mjs').then(({mountPracticeProgress})=>mountPracticeProgress(target,profile)).catch(()=>{});
   if (stale) {
     const note = document.createElement('p');
     note.className = 'muted';

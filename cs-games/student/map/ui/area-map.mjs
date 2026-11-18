@@ -6,8 +6,8 @@ import { createSkillNode } from './skill-node.mjs';
 import { createBackdrop } from './trail.mjs';
 
 /** @returns {{content: Node[], width:number, height:number, cols:number, hue:number}} */
-export function renderAreaMap(model, stop, { width, selectedId, onSelect }) {
-  const layout = serpentine(stop.nodes.length, { width, cellW: 132, cellH: 206, padX: 22, padY: 48, maxCols: 6, wobble: 10 });
+export function renderAreaMap(model, stop, { width, selectedId, onSelect, nextId }) {
+  const layout = serpentine(stop.nodes.length, { width, cellW: 132, cellH: 152, padX: 14, padY: 18, maxCols: 6, wobble: 7 });
   // A segment is "travelled" when the skill it leaves is complete, counted from the start of the trail.
   const firstOpen = stop.nodes.findIndex((n) => !n.complete);
   const travelled = firstOpen === -1 ? stop.nodes.length - 1 : firstOpen;
@@ -17,7 +17,8 @@ export function renderAreaMap(model, stop, { width, selectedId, onSelect }) {
   ];
   stop.nodes.forEach((node, i) => {
     const { x, y } = layout.points[i];
-    const b = createSkillNode(node, { x, y, onSelect, selected: node.id === selectedId });
+    const shown = nextId ? {...node,suggested:node.id===nextId} : node;
+    const b = createSkillNode(shown, { x, y, onSelect, selected: node.id === selectedId });
     b.dataset.x = x; b.dataset.y = y;
     content.push(b);
   });

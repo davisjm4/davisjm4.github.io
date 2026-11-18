@@ -2,11 +2,11 @@
 import { el } from '../../../wpr-games/workplace-readiness/online/dom.mjs';
 import { renderPathway } from '../pathway-view.mjs';
 import { createGuestStore, MESSAGES, COURSE_IDS, localDate } from './store.mjs';
-import { buildGuestView, guestCourses } from './pathway.mjs?v=class-participation-v1';
+import { buildGuestView, guestCourses } from './pathway.mjs?v=map-progression-v1';
 import { reconcileEvents } from './evidence.mjs';
 import { afterPractice } from './suggest.mjs';
 import { activityName } from './progress.mjs';
-import { mountStudentMap } from '../map/ui/app.mjs?v=advanced-map-layout-v2';
+import { mountStudentMap } from '../map/ui/app.mjs?v=map-progression-v1';
 import { inputFromStudentContract } from '../map/live-contract.mjs?v=targeted-clarity-v1';
 import { decoratePathway, markButtons, practiceHref } from './decorate.mjs';
 import { classProfileActive } from './class-state.mjs';
@@ -88,11 +88,12 @@ const adapter={
   guestSkillControls(node){
     const g=node.guest;
     return el('div',{class:'guest-skill-controls'},
-      el('p',{class:'muted',text:g.answered?`${g.correct} of ${g.answered} correct on the first try`:'No practice recorded for this skill yet.'}),
+      g.answered?el('p',{class:'muted',text:`All practice · ${g.correct} of ${g.answered} right on the first try`}):null,
       g.selfReported&&el('p',{class:'guest-note',text:g.selfReported}),
       trackingKnown()&&!TRACKED_NODE_IDS.has(node.id)&&el('p',{class:'muted',text:'This activity may not update skill progress automatically. You can still practice and plan a demonstration.'}),
-      markButtons({id:node.id,label:node.title,current:g.markSource==='skill'?g.mark:null,inherited:g.markSource==='area'?g.mark:null,
-        scope:'node',onMark:(id,mark)=>onMark(id,mark,'node',{nodeId:id,areaId:node.areaId})}));
+      el('details',{},el('summary',{text:'Add a note for yourself'}),
+        markButtons({id:node.id,label:node.title,current:g.markSource==='skill'?g.mark:null,inherited:g.markSource==='area'?g.mark:null,
+          scope:'node',onMark:(id,mark)=>onMark(id,mark,'node',{nodeId:id,areaId:node.areaId})})));
   }
 };
 const courseNames={advanced:'Advanced Computer Science',csp:'AP Computer Science Principles'};

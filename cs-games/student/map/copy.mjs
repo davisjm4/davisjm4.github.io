@@ -12,6 +12,8 @@ export const ATTEMPT_STATUS_LABEL = Object.freeze({
 export function nodeCaption(node) {
   const p = node.progress, att = p?.attempt, req = p?.requirements;
   if(node.classParticipation&&node.teacherAssessmentRequired)return node.complete?'Teacher assessment complete':'Teacher assessment';
+  if (node.complete && node.proficiency?.level >= 3) return `Complete · L${node.proficiency.level}`;
+  if (node.skillTarget && !node.complete && node.ring?.fraction > 0) return node.skillTarget.count;
   switch (node.state) {
     case 'requirements-met': return 'Requirements met';
     case 'mastered': return 'Mastered';
@@ -35,7 +37,8 @@ export function nodeParts(node, { suggested = node.suggested } = {}) {
   add('state', `. ${STATES[node.state].label}.`, false);
   const cap = nodeCaption(node);
   add('caption', cap, true);
-  const accuracy = att?.attempted && att.accuracyPercent !== null && att.accuracyPercent !== undefined ? formatPercent(att.accuracyPercent) : null;
+  const accuracy = !node.skillTarget && att?.attempted && att.accuracyPercent !== null && att.accuracyPercent !== undefined ? formatPercent(att.accuracyPercent) : null;
+  if (node.skillTarget && !node.complete) add('detail', `. ${node.skillTarget.summary}.`, false);
   if (accuracy && ['in-progress', 'review', 'not-started'].includes(node.state)) add('detail', req ? ` questions answered, ${accuracy} right on the first try.` : `, ${accuracy} right on the first try.`, false);
   add('optional', node.optional ? 'Optional' : node.classParticipation ? 'Required' : '', true);
   add('suggested', suggested ? 'Suggested next' : '', true);
