@@ -28,6 +28,23 @@ test('course cards open course maps and search survives practice return', { time
     await Promise.all([page.waitForNavigation(), page.click('.course-card a[href*="course=' + course + '"]')]);
     await page.waitForSelector('.map-app');
     assert.equal(new URL(page.url()).searchParams.get('course'), course);
+    if(course==='robotics'){
+      assert.equal(await page.$('.unit-node'),null);
+      assert.ok(await page.$('.stop-open'));
+    }
+    else {
+      const choices=await page.$$('.map-app .unit-node');
+      assert.ok(choices.length>=4,course+' should expose at least four curricular groups, saw '+choices.length);
+      if(course==='csp')assert.equal(choices.length,5);
+      await choices[1].evaluate(node=>node.click());
+      await page.waitForSelector('.map-app[data-view=unit] .stop-open');
+      const next=await page.$$eval('.map-app .stop',nodes=>nodes.length);
+      assert.ok(next>0&&next<30,'Opening a unit exposes its collection of areas');
+      await page.reload();
+      await page.waitForSelector('.map-app[data-view=unit] .stop-open');
+      await page.$eval('[data-action=back]',button=>button.click());
+      await page.waitForSelector('.map-app[data-view=course] .unit-node');
+    }
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), course);
   }
 
@@ -156,4 +173,134 @@ test('enrolled search launches class practice and syncs a first attempt', { time
   await page.waitForSelector('.skill-panel[data-node-id="node:advanced:math-lab:modulus"]');
   assert.equal(await page.$eval('#map-skill-search', input => input.value), 'modulus');
   assert.equal(dev.db.prepare('SELECT COUNT(*) AS count FROM performance_events').get().count, 1);
+});
+
+test('independent learner follows the unit trail and sees eligible practice, completion, and the next skill', {timeout:90000}, async t => {
+  const {generateTrace} = await import('../../java-games/variable-lab/trace-adapter.js');
+  const {guestEventFromAttempt} = await import('../student/guest/evidence.mjs');
+  const {mkdirSync} = await import('node:fs');
+  const dev = await startDev({});
+  const browser = await launch();
+  t.after(async () => { await browser.close(); await new Promise(resolve=>dev.server.close(resolve)); dev.db.close(); });
+  const page = await browser.newPage();
+  const evidence = process.env.STUDENT_MAP_EVIDENCE;
+  if (evidence) mkdirSync(evidence,{recursive:true});
+  const wait = selector => page.waitForSelector(selector,{visible:true,timeout:10000});
+  const activate = async (selector, label) => {
+    const control = await page.waitForFunction((selector,label)=>[...document.querySelectorAll(selector)]
+      .find(node=>node.innerText.includes(label) && node.offsetWidth),{timeout:10000},selector,label);
+    await control.evaluate(node=>node.focus());
+    await page.keyboard.press('Enter');
+  };
+  const map = dev.url+'/cs-games/student/guest/?course=advanced';
+  const trace = '[data-node-id="node:advanced:variable-lab:trace"]';
+  const parent = '[data-action=back]';
+  await page.setViewport({width:390,height:844});
+  await page.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}]);
+  await page.goto(map);
+  await wait('.unit-node');
+  assert.equal(await page.$('.stop-open'),null);
+  for (const [device,width,height] of [['desktop',1440,900],['chromebook',1366,768],['mobile',390,844]]) {
+    await page.setViewport({width,height});
+    await page.waitForFunction(() => {
+      const viewport = document.querySelector('.map-viewport');
+      const stage = viewport?.querySelector('.stage');
+      return viewport && Math.abs(stage?.offsetWidth - viewport.clientWidth) <= 12 &&
+        document.documentElement.scrollWidth <= innerWidth + 1;
+    }, {timeout:5000});
+    if(evidence)await page.screenshot({path:evidence+'/'+device+'-course.png'});
+  }
+  await activate('.unit-node','Foundations & Logic');
+  await wait('.map-app[data-view=unit]');
+  assert.match(new URL(page.url()).hash,/unit=advanced-foundations/);
+  if(evidence)await page.screenshot({path:evidence+'/mobile-unit.png'});
+  await activate('.stop-open','Variable Lab');
+  await wait('.skill-node'+trace);
+  if(evidence)await page.screenshot({path:evidence+'/mobile-area.png'});
+  assert.equal(await page.evaluate(()=>document.activeElement.id),'map-heading');
+  await activate('.skill-node','Trace variable state');
+  await wait('.skill-panel'+trace);
+  const skillUrl = page.url();
+  await page.goBack();
+  await wait('.skill-node'+trace);
+  assert.equal(await page.$('.skill-panel'+trace),null);
+  await page.goForward();
+  await wait('.skill-panel'+trace);
+  const timestamps = Date.now()-10000;
+  const events = Array.from({length:10},(_,index)=>{
+    const question = generateTrace({difficulty:'intermediate',seed:index+1});
+    return guestEventFromAttempt('advanced',{
+      id:'synthetic-trace-'+index,game:'variable-lab',mode:'mixed',submissions:1,topic:question.topic,
+      details:{difficulty:question.difficulty,practiceMode:'trace',family:question.traceFamily}
+    },index!==0,new Date(timestamps+index).toISOString());
+  });
+  async function setFixture(rows) {
+    await page.evaluate(rows=>{
+      const key = 'cs-games:guest:v1';
+      const state = JSON.parse(localStorage.getItem(key));
+      localStorage.setItem(key,JSON.stringify({...state,events:rows}));
+    },rows);
+    if (page.url()===skillUrl) await page.reload(); else await page.goto(skillUrl);
+    await wait('.skill-panel'+trace);
+  }
+  await setFixture(events.slice(0,5));
+  assert.match(await page.$eval('.skill-panel .skill-target',node=>node.innerText),/5 of 8 qualifying answers/);
+  const practice = '.skill-panel a[data-action=practice]';
+  await wait(practice);
+  await Promise.all([page.waitForNavigation(),activate(practice,'Continue practicing')]);
+  await wait('.live-skill-progress progress');
+  assert.ok(await page.$eval('.live-skill-progress',node=>Boolean(node.compareDocumentPosition(document.querySelector('#stage'))&Node.DOCUMENT_POSITION_FOLLOWING)));
+  assert.match(await page.$eval('.live-skill-progress',node=>node.innerText),/4 right on the first try/);
+  await page.click('#value-bank [data-value]');
+  await page.click('#check');
+  await page.waitForFunction(()=>document.querySelector('.live-skill-progress')?.innerText.includes('6 of 8 qualifying answers'));
+  if(evidence)await page.screenshot({path:evidence+'/mobile-practice.png'});
+  await page.evaluate(axeSource);
+  assert.deepEqual(await page.evaluate(async ()=>(await axe.run('.live-skill-progress',{runOnly:['wcag2a','wcag2aa','wcag21aa']})).violations.map(v=>v.id)),[]);
+  await setFixture(events);
+  assert.equal(await page.$eval('.skill-node'+trace,node=>node.dataset.state),'requirements-met');
+  await wait('[data-action=next-learning]');
+  assert.equal(await page.$eval('.skill-node[data-suggested=true]',node=>node.dataset.nodeId),'node:advanced:variable-lab:identify/type');
+  assert.match(await page.$eval(practice,node=>node.innerText),/Optional Level 4/);
+  await activate('.proficiency-details summary','How the proficiency levels');
+  assert.match(await page.$eval('.proficiency-details',node=>node.innerText),/Level 2 · 0\/5 answers/);
+  if(evidence)await page.screenshot({path:evidence+'/mobile-completed.png'});
+  if(evidence){
+    await page.setViewport({width:1440,height:900});
+    await page.screenshot({path:evidence+'/desktop-completed.png'});
+    await page.setViewport({width:390,height:844});
+  }
+  await page.evaluate(axeSource);
+  assert.deepEqual(await page.evaluate(async ()=>(await axe.run('.map-app',{runOnly:['wcag2a','wcag2aa','wcag21aa']})).violations.map(v=>[v.id,v.nodes.map(n=>n.target)])),[]);
+  await activate('[data-action=next-learning]','Next skill');
+  assert.notEqual(await page.$eval('.skill-panel',node=>node.dataset.nodeId),'node:advanced:variable-lab:trace');
+  await activate('.panel-close','Back to skills');
+  await activate(parent,'Back to Foundations & Logic');
+  await wait('.map-app[data-view=unit]');
+  await activate('[data-layout=list]','List');
+  await activate('.stop-item button','Open');
+  await wait('.skill-row'+trace);
+  await page.reload();
+  await wait('.map-app[data-layout=list] .skill-row'+trace);
+});
+
+test('Array Lab uses Beginner for a fresh launch and honors explicit and saved difficulty', {timeout:60000}, async t => {
+  const dev = await startDev({});
+  const browser = await launch();
+  t.after(async () => { await browser.close(); await new Promise(resolve=>dev.server.close(resolve)); dev.db.close(); });
+  const page = await browser.newPage();
+  const lab = dev.url+'/java-games/array-lab/';
+  const read = async () => {
+    await page.waitForSelector('#stage .challenge-meta');
+    return page.$eval('#difficulty',node=>node.value);
+  };
+  await page.goto(lab+'?learner=guest');
+  assert.equal(await read(),'Beginner');
+  await page.select('#difficulty','Advanced');
+  await page.reload();
+  assert.equal(await read(),'Advanced');
+  await page.goto(lab+'?difficulty=Intermediate&learner=guest');
+  assert.equal(await read(),'Intermediate');
+  await page.goto(lab+'?learner=guest');
+  assert.equal(await read(),'Advanced');
 });

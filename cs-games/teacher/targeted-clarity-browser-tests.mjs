@@ -80,6 +80,7 @@ test('CSG-PKG-01 practice verdict, report counts, and safe return', { timeout: 9
 
   await page.goto(dev.url + guestMap);
   await press(page, '[data-layout=list]');
+  await press(page, '[data-unit-id=advanced-foundations]');
   await press(page, '[data-stop-id="area:advanced:variable-lab"] button');
   await press(page, '.skill-row-open');
   const practiceLink = '.skill-panel a[data-action=practice]';

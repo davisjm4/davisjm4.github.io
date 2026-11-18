@@ -3,9 +3,12 @@ import { queuePractice } from './profile-student.mjs?v=guest-map-v1';
 import { el, button, pct, table, download } from './dom.mjs';
 const W = globalThis.WRG;
 const KEY = W.profileDevice?.key('wrg.readiness.v1') || 'wrg.readiness.v1';
-const empty = () => ({version:VERSION,reports:[],practice:{},marks:{},settings:{min:3,focus:0.6,ready:0.8}});
+// Student-facing suggestions are fixed guidance, separate from teacher class mastery.
+const STUDY_GUIDE=Object.freeze({min:3,focus:0.6,ready:0.8});
+const empty = () => ({version:VERSION,reports:[],practice:{},marks:{},settings:{...STUDY_GUIDE}});
 const safeParse = key => {try {return JSON.parse(localStorage.getItem(key));} catch {return null;}};
 let data = safeParse(KEY) || empty();
+data.settings={...STUDY_GUIDE}; // Older learner-selected thresholds no longer change guidance.
 let persistent = true;
 function save() {
   if (W.profileDevice?.identity && !W.profileDevice.isCurrent()) return;
@@ -74,17 +77,6 @@ function showDashboard() {
   const panel = document.getElementById('readiness-body');
   if (!panel) return;
   const notices = el('p',{role:'status'});
-  const settings = el('form',{class:'wpr-controls'});
-  const controls = [['min','Minimum questions',data.settings.min,3,25],['focus','Focused practice below (%)',Math.round(data.settings.focus*100),10,99],['ready','Readiness at (%)',Math.round(data.settings.ready*100),11,100]];
-  for (const [id,label,value,min,max] of controls) settings.append(el('label',{},label,' ',el('input',{name:id,type:'number',value,min,max,required:true})));
-  settings.append(el('button',{class:'btn',text:'Apply thresholds'}));
-  settings.addEventListener('submit',e=>{
-    e.preventDefault();
-    const f = new FormData(settings);
-    const next = {min:+f.get('min'),focus:+f.get('focus')/100,ready:+f.get('ready')/100};
-    if (next.focus>=next.ready) {notices.textContent='Set readiness above the focused practice threshold.';return;}
-    data.settings = next;save();showDashboard();
-  });
   const file = el('input',{type:'file',accept:'.json,application/json','aria-label':'Restore performance backup',onchange:async e=>{
     try {
       const chosen = e.target.files[0];
@@ -92,15 +84,19 @@ function showDashboard() {
       const value = JSON.parse(await chosen.text());
       if (!validBackup(value)) throw new Error();
       if (!confirm('Replace this browser’s readiness records with the selected backup?')) return;
-      data=value;save();showDashboard();
+      data=value;data.settings={...STUDY_GUIDE};save();showDashboard();
     } catch {notices.textContent='This file is not a valid Workplace Readiness backup.';}
   }});
   panel.replaceChildren(
-    el('p',{text:'Readiness thresholds guide your practice. They do not represent official exam passing scores.'}),
-    settings,notices,
-    el('div',{class:'wpr-controls'},button('Save readiness backup',()=>download('wpr-readiness-backup.json',JSON.stringify(data),'application/json')),
-      el('label',{},'Restore backup ',file),button('Print performance page',()=>window.print())),
-    el('p',{},el('a',{href:'https://docs.google.com/spreadsheets/d/1LzUzmvtuJqRHy1EKDDBQA4tP91ieu52dt67ypbFnkVg/copy',target:'_blank',rel:'noopener noreferrer',text:'Make a copy of the Google Sheets readiness tracker'})));
+    el('p',{text:'These labels suggest what to practice next. They are not official scores or teacher-set mastery requirements.'}),
+    notices,
+    el('details',{class:'wpr-performance-tools'},el('summary',{text:'Backups, printing and optional tracker'}),
+      el('div',{class:'wpr-controls'},
+        button('Save readiness backup',()=>download('wpr-readiness-backup.json',JSON.stringify(data),'application/json')),
+        el('label',{},'Restore backup ',file),
+        button('Print performance page',()=>window.print())),
+      el('p',{},el('a',{href:'https://docs.google.com/spreadsheets/d/1LzUzmvtuJqRHy1EKDDBQA4tP91ieu52dt67ypbFnkVg/copy',
+        target:'_blank',rel:'noopener noreferrer',text:'Make a copy of the Google Sheets readiness tracker'}))));
   if (!persistent) panel.append(el('p',{class:'notice',text:'This browser could not save readiness data. Download a backup before closing.'}));
   panel.append(el('h2',{text:'Diagnostic results & assigned practice'}));
   const reportHistory=historyRows();
@@ -117,18 +113,25 @@ function showDashboard() {
     const seq=data.practice[idFor(d)]||[];
     return {n:seq.length,c:seq.reduce((a,b)=>a+b,0)};
   };
-  const render = d => {
-    const key=idFor(d), [latest,prev] = latestByDimension.get(key)||[], practice=practiceFor(d);
-    return [d.name,latest?pct(latest.n,latest.c)+' · '+latest.c+'/'+latest.n:'—',
-      pct(practice.n,practice.c)+' · '+practice.c+'/'+practice.n,statusCell(latest||practice),
-      progressText(latest,prev),practiceLink(d),marks(d)];
+  const card=d=>{
+    const key=idFor(d),[latest,prev]=latestByDimension.get(key)||[],practice=practiceFor(d);
+    const fact=(label,value)=>el('div',{},el('dt',{text:label}),el('dd',{},value));
+    return el('article',{class:'wpr-skill-card'},
+      el('h3',{text:d.name}),
+      el('dl',{class:'wpr-skill-facts'},
+        fact('Latest diagnostic',latest?pct(latest.n,latest.c)+' · '+latest.c+'/'+latest.n:'Not assessed'),
+        fact('Recent practice',pct(practice.n,practice.c)+' · '+practice.c+'/'+practice.n),
+        fact('Practice guidance',statusCell(latest||practice)),
+        fact('Reassessment change',progressText(latest,prev))),
+      el('div',{class:'wpr-skill-next'},practiceLink(d)));
   };
-  const headers=['Area','Latest diagnostic','Recent practice','Evidence','Reassessment change','Next action','Self-reported plans'];
-  panel.append(el('h2',{text:'Practice progress & readiness'}),el('p',{text:'Recent practice uses up to 30 first attempts per area. The evidence label uses your latest diagnostic for that area when available.'}),
-    table(headers,groups.filter(x=>x.scope==='skill').map(render),'Official skills'));
-  for (const t of W.content.topics) {
-    panel.append(el('details',{},el('summary',{text:t.name}),table(headers,
-      groups.filter(d=>d.id===t.id||d.topicId===t.id).map(render),t.name+' topics and subtopics')));
+  const cards=items=>el('div',{class:'wpr-skill-card-grid'},items.map(card));
+  panel.append(el('h2',{text:'Practice progress & readiness'}),
+    el('p',{text:'Recent practice uses up to 30 first attempts per area. Teacher-assigned mastery is tracked separately.'}),
+    cards(groups.filter(x=>x.scope==='skill')));
+  for(const t of W.content.topics){
+    panel.append(el('details',{class:'wpr-topic-details'},el('summary',{text:t.name}),
+      cards(groups.filter(d=>d.id===t.id||d.topicId===t.id))));
   }
 }
 function recordDimension(d, right) {

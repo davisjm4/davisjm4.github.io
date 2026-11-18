@@ -57,14 +57,14 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   const recovery=await (await wait(student,'.wpr-profile-secret')).evaluate(node=>node.textContent);
   await Promise.all([student.waitForNavigation(),clickText(student,'#student-profile','I saved my recovery credential')]);
   const pathway='#student-pathway';
-  await wait(student,pathway+' .stop-open');
+  await wait(student,pathway+' .unit-node');
   assert.match(await textOf(student,pathway),/Advanced CS journey/);
   assert.match(await textOf(student,pathway),/Self-paced/);
   const counts=JSON.parse(dev.db.prepare('SELECT snapshot FROM pathway_revisions').get().snapshot);
   const requiredAreas=new Set(counts.checkpoints.filter(checkpoint=>checkpoint.required).map(checkpoint=>checkpoint.areaId)).size;
   assert.equal(await textOf(student,pathway+' .map-summary'),'0 of '+requiredAreas+' required learning areas complete');
   assert.doesNotMatch(await textOf(student,pathway),/overdue|due date|Suggested target/i);
-  assert.match(await textOf(student,pathway+' .stop-open'),/Variable Lab/i);
+  assert.match(await textOf(student,pathway+' .unit-node'),/Foundations & Logic/i);
   assert.doesNotMatch(await textOf(student,pathway),/Trace variable state0|\bfalse\b/);
 
   const screens=[[390,844],[768,1024],[1280,900],[1366,768]];
@@ -89,12 +89,12 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
     await student.screenshot({path:join(evidenceDir,'before-student-1366.png')});
     await student.goto(dev.url+'/cs-games/student/');
   }
-  await wait(student,pathway+' .stop-open');
+  await wait(student,pathway+' .unit-node');
   await student.evaluate(axeSource);
   assert.deepEqual(await student.evaluate(async selector=>(await axe.run(selector,{runOnly:['wcag2a','wcag2aa']})).violations.map(item=>item.id),pathway),[]);
   await clickText(student,pathway,'List');
-  const listRows=await student.$$eval(pathway+' .skill-row',items=>items.length);
-  assert.equal(listRows,counts.sequence.length);
+  const listRows=await student.$$eval(pathway+' .unit-list li',items=>items.length);
+  assert.equal(listRows,4);
   assert.equal(await student.$eval(pathway+' button[data-layout=list]',button=>button===document.activeElement),true);
   assert.deepEqual(await student.evaluate(async selector=>(await axe.run(selector,{runOnly:['wcag2a','wcag2aa','wcag21a','wcag21aa']})).violations.map(item=>item.id),pathway),[]);
   await clickText(student,pathway,'Map');
@@ -103,6 +103,8 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   async function openLoop(page){
     await wait(page,pathway+' .map-app');
     if(await page.$(loopNode)===null){
+      const unit=await page.$('[data-unit-id=advanced-control]');
+      if(unit)await unit.evaluate(button=>button.click());
       await wait(page,loopStop);
       await page.$eval(loopStop,button=>button.click());
     }
@@ -151,9 +153,9 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   await publish(2);
   const mapHome=async page=>{
     await wait(page,pathway+' .map-app');
-    const back=await page.$('[data-action=back]');
-    if(back)await back.evaluate(button=>button.click());
-    await wait(page,pathway+' .stop-open');
+    const course=await page.$('.crumbs button');
+    if(course)await course.evaluate(button=>button.click());
+    await wait(page,pathway+' .unit-node');
   };
   await student.reload();
   await openLoop(student);
