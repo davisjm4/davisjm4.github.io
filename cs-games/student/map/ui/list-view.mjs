@@ -9,7 +9,7 @@ import { nodeArt } from './skill-node.mjs';
 
 function skillRow(node, { onSelect, onPractice, selectedId }) {
   const target = node.proficiency;
-  const link = !node.classParticipation && target?.goal && !target.goalMet
+  const link = !node.requirementsConfigured && target?.goal && !target.goalMet
     ? proficiencyLink(node,target.tiers[target.goal]?.practice) : node.practice[0];
   const cap = nodeCaption(node);
   return el('li', { class: 'skill-row', 'data-state': node.state, 'data-node-id': node.id, 'data-optional': node.optional ? 'true' : 'false' },
