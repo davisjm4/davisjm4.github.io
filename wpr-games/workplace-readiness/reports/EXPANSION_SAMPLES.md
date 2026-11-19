@@ -530,7 +530,7 @@ Primary objective: `integrity:laws-and-regulations`. Settings: agriculture, auto
 >
 > *Put these tasks in a sensible order.*
 > - (step) Take the item off the shelf
-> - (step) Record what was removed
+> - (step) Record what was removed and who you notified
 > - (step) Tell the site foreman what you found
 > - (step) Read the notice to match the item
 
