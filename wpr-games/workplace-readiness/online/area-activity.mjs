@@ -31,7 +31,7 @@ async function mount(){
   coverage.textContent=patterns.size?`${patterns.size} reasoning patterns practiced this round. Objective coverage is checked separately from accuracy.`:'Questions rotate through this area’s available reasoning patterns.';
   next.hidden=!areaMet&&answered<8;
  }
- next.onclick=()=>{roundStart={...counts()};patterns=new Set();globalThis.WRG.app.startPractice({...globalThis.WRG.app.tracker.data.filters,skills:[slug],count:8},true);paint();};
+ next.onclick=()=>{const sameRoute=location.hash==='#/practice';roundStart={...counts()};patterns=new Set();globalThis.WRG.app.startPractice({...globalThis.WRG.app.tracker.data.filters,skills:[slug],count:8},true);if(sameRoute)dispatchEvent(new Event('csg:wpr-area-round'));paint();};
  addEventListener('csg:wpr-answer',event=>{if(event.detail.question.skill===slug){patterns.add(event.detail.question.reasoning??event.detail.question.family);paint();}});
  addEventListener('csg:wpr-question',paint);paint();
  // Keep the completion action reachable when the existing round ends at its summary.

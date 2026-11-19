@@ -13,13 +13,13 @@ test('enrolled area opens signed procedural practice, retains an offline respons
  const back='/cs-games/student/?class='+c.id+'&course=workplace#v=unit&unit=workplace-professional';
  await page.goto(dev.url+'/wpr-games/workplace-readiness/?practice=1&skills=creativity-and-innovation&area=area:workplace:creativity-and-innovation&count=8&returnTo='+encodeURIComponent(back));
  await page.waitForFunction(()=>document.body.innerText.includes('Server-checked practice. Mastery eligibility remains separate.'));
- assert.ok(issued);assert.equal(issued.question.key,undefined);
+ await page.waitForFunction(()=>!!globalThis.__issuedTestId);assert.ok(issued);assert.equal(issued.question.key,undefined);
  const claim=JSON.parse(Buffer.from(issued.permit.split('.')[0],'base64url').toString()),q=proceduralQuestion(claim.sourceId,claim.seed),answer=grader.solve(q);
  if(answer.optionId)await page.click('.choice[data-id="'+answer.optionId+'"]');else if(answer.segmentId)await page.click('.choice[data-id="'+answer.segmentId+'"]');else for(let i=0;i<answer.order.length;i++){while(await page.$$eval('.step',(els,id)=>els.findIndex(e=>e.dataset.id===id),answer.order[i])>i)await page.click('.step[data-id="'+answer.order[i]+'"] .up');}
  await page.setOfflineMode(true);await page.click('#btn-check');await page.waitForFunction(()=>document.body.innerText.includes('Response saved on this device. Reconnect'));
  assert.equal(dev.db.prepare("SELECT COUNT(*) n FROM performance_events WHERE kind='practice'").get().n,0);
  assert.equal(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.includes('.outbox.')).length),1);
- await page.setOfflineMode(false);await page.evaluate(()=>dispatchEvent(new Event('online')));await page.waitForSelector('.feedback',{visible:true,timeout:15000});
+ await page.setOfflineMode(false);await page.evaluate(()=>dispatchEvent(new Event('online')));await page.waitForSelector('.feedback',{visible:true,timeout:15000}).catch(async error=>{throw new Error(error.message+' '+await page.$eval('#view-practice',e=>e.innerText)+' '+await page.evaluate(()=>JSON.stringify(Object.fromEntries(Object.entries(localStorage).filter(([k])=>k.includes('outbox')||k.includes('unverified'))))));});
  assert.equal(dev.db.prepare("SELECT COUNT(*) n FROM performance_events WHERE kind='practice'").get().n,1);
  const data=JSON.parse(dev.db.prepare("SELECT data FROM performance_events WHERE kind='practice'").get().data);assert.equal(data.correct,true);assert.ok(data.dimensions.every(d=>d.scope!=='node'));
  assert.match(await page.$eval('.area-progress',e=>e.innerText),/1 of 8 questions/);
@@ -41,6 +41,8 @@ test('reviewed area Level 3 fills its check, suggests another area and survives 
  assert.match(await page.$eval('.area-progress',e=>e.innerText),/Level 4 is optional/);
  const next=await page.$eval('.area-progress>a:not([hidden])',e=>e.href);assert.ok(next);
  assert.ok(await page.$eval('.area-progress',e=>[...e.querySelectorAll('a')].some(a=>!a.hidden&&a.textContent.startsWith('Next area'))));
- await page.$$eval('.area-progress button',buttons=>buttons.find(b=>b.textContent==='Optional extension practice').click());
+ const reissued=page.waitForResponse(r=>r.url().endsWith('/profile/wpr-procedural')&&r.request().method()==='POST'&&r.status()===200);
+ await page.$$eval('.area-progress button',buttons=>buttons.find(b=>b.textContent==='Optional extension practice').click());await reissued;
+ await page.waitForFunction(()=>document.body.innerText.includes('Server-checked practice. Mastery eligibility remains separate.'));
  assert.deepEqual(dev.db.prepare("SELECT id,data FROM performance_events WHERE kind='assessment' ORDER BY id").all(),before);
 });

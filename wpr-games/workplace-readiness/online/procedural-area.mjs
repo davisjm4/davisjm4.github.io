@@ -12,13 +12,14 @@ export async function mountProceduralArea(skill){
   let result=await submitIssuedResponse(event);
   if(!result.pending)return result;
   status.textContent='Response saved on this device. Reconnect to receive server-checked feedback.';
-  return new Promise(resolve=>{let waiting=false,done=false;
+  return new Promise(resolve=>{let waiting=false,done=false,timer;
    const retry=async()=>{if(waiting||done)return;waiting=true;
     const result=await submitIssuedResponse(event);waiting=false;
-    if(!result.pending){done=true;stop();removeEventListener('online',retry);resolve(result);}
+    if(!result.pending){done=true;clearTimeout(timer);stop();removeEventListener('online',retry);resolve(result);}
+    else if(navigator.onLine){clearTimeout(timer);timer=setTimeout(retry,2000);}
    };
    const stop=observeSync(message=>{if(message==='Practice synced.')void retry();});
-   addEventListener('online',retry);void syncQueuedPractice();
+   addEventListener('online',retry);void syncQueuedPractice().then(()=>{if(navigator.onLine)void retry();});
   });
  }
  async function show(){
@@ -44,6 +45,7 @@ export async function mountProceduralArea(skill){
    });
   }catch{if(version===serial){status.replaceChildren('Reconnect to request the next server-checked scenario. ',el('button',{type:'button',class:'btn',text:'Try again',onclick:show}));}}
  }
+ addEventListener('csg:wpr-area-round',()=>{answered=0;void show();});
  addEventListener('hashchange',()=>{if(location.hash==='#/practice'){answered=0;void show();}else serial++;});
  await show();return true;
 }
