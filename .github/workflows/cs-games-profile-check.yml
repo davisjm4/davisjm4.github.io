@@ -20,7 +20,8 @@ jobs:
       - run: node --test cs-games/teacher/cs-games-backend-tests.mjs cs-games/teacher/wpr-profile-tests.mjs cs-games/teacher/wpr-online-tests.mjs cs-games/pathway/tests/*.test.mjs cs-games/student/guest/tests/*.test.mjs cs-games/student/map/search.test.mjs cs-games/student/map/workplace-area.test.mjs
       - run: node wpr-games/workplace-readiness/tools/build-procedural-content.mjs --check
       - run: npm ci --ignore-scripts --prefix wpr-games/workplace-readiness
-      - run: CHROME_BIN="$(command -v google-chrome)" node --test --test-name-pattern='Teacher Tools: three views' cs-games/teacher/teacher-ui-browser-tests.mjs
+      - run: |
+          CHROME_BIN="$(command -v google-chrome)" node --test --test-name-pattern='Teacher Tools: three views' cs-games/teacher/teacher-ui-browser-tests.mjs
       - run: WPR_AREA_EVIDENCE_DIR=artifacts/wpr-area MASTERY_RECOVERY_EVIDENCE_DIR=artifacts/mastery-recovery CHROME_BIN="$(command -v google-chrome)" node --test --test-concurrency=1 cs-games/teacher/wpr-online-browser-tests.mjs cs-games/teacher/automatic-pathway-browser-tests.mjs cs-games/teacher/pathway-participation-browser-tests.mjs cs-games/teacher/requirements/integration-browser-tests.mjs cs-games/teacher/proficiency-browser-tests.mjs cs-games/teacher/csp-build6-browser-tests.mjs cs-games/teacher/targeted-clarity-browser-tests.mjs cs-games/teacher/student-navigation-browser-tests.mjs cs-games/teacher/mastery-recovery-browser-tests.mjs cs-games/teacher/wpr-area-browser-tests.mjs cs-games/teacher/wpr-procedural-browser-tests.mjs cs-games/teacher/my-session-browser-tests.mjs cs-games/teacher/class-evidence-browser-tests.mjs cs-games/teacher/learning-focus-browser-tests.mjs
 
       - run: npm run validate --prefix wpr-games/workplace-readiness
