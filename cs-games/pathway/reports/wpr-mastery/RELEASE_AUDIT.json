@@ -4,21 +4,22 @@
     {
       "key": "a:BIG-D-002",
       "conceptId": "big-picture-thinking:impacts-of-actions",
-      "examples": 12,
-      "choice": 12,
+      "examples": 11,
+      "choice": 11,
       "position": [
+        1,
         2,
-        4,
         3,
-        3
+        5
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
+        "agriculture",
         "business",
-        "construction",
         "culinary",
+        "education",
         "hospitality",
         "manufacturing",
         "media",
@@ -30,26 +31,23 @@
     {
       "key": "a:BIG-D-003",
       "conceptId": "big-picture-thinking:impacts-of-actions",
-      "examples": 13,
-      "choice": 13,
+      "examples": 6,
+      "choice": 6,
       "position": [
         0,
-        6,
-        6,
-        1
+        3,
+        1,
+        2
       ],
       "lengthCue": 0,
-      "shortCue": 13,
+      "shortCue": 6,
       "wordingCue": 0,
       "contexts": [
-        "construction",
+        "business",
         "culinary",
         "education",
-        "engineering",
-        "healthcare",
         "hospitality",
-        "manufacturing",
-        "retail"
+        "media"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -57,7 +55,7 @@
     {
       "key": "a:BIG-O-001",
       "conceptId": "big-picture-thinking:impacts-of-actions",
-      "examples": 29,
+      "examples": 20,
       "choice": 0,
       "position": [
         0,
@@ -69,14 +67,13 @@
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
         "automotive",
-        "business",
         "construction",
         "culinary",
+        "engineering",
         "healthcare",
         "hospitality",
-        "it",
+        "manufacturing",
         "media",
         "retail"
       ],
@@ -101,6 +98,7 @@
         "agriculture",
         "automotive",
         "business",
+        "education",
         "engineering",
         "healthcare",
         "hospitality",
@@ -113,13 +111,13 @@
     {
       "key": "a:CAR-D-003",
       "conceptId": "career-and-life-management:qualifications-and-advancement",
-      "examples": 7,
-      "choice": 7,
+      "examples": 8,
+      "choice": 8,
       "position": [
         2,
         2,
-        2,
-        1
+        4,
+        0
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -127,8 +125,10 @@
       "contexts": [
         "culinary",
         "education",
+        "engineering",
         "healthcare",
         "hospitality",
+        "it",
         "media"
       ],
       "flags": [],
@@ -169,7 +169,7 @@
     {
       "key": "a:CAR-F-002",
       "conceptId": "career-and-life-management:benefits-and-resources",
-      "examples": 38,
+      "examples": 39,
       "choice": 0,
       "position": [
         0,
@@ -204,10 +204,10 @@
       "examples": 6,
       "choice": 6,
       "position": [
+        2,
         1,
         1,
-        1,
-        3
+        2
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -250,7 +250,7 @@
     {
       "key": "a:CAR-O-001",
       "conceptId": "career-and-life-management:qualifications-and-advancement",
-      "examples": 36,
+      "examples": 35,
       "choice": 0,
       "position": [
         0,
@@ -281,7 +281,7 @@
     {
       "key": "a:CAR-O-002",
       "conceptId": "career-and-life-management:qualifications-and-advancement",
-      "examples": 51,
+      "examples": 49,
       "choice": 0,
       "position": [
         0,
@@ -317,8 +317,8 @@
       "choice": 10,
       "position": [
         2,
-        4,
-        3,
+        2,
+        5,
         1
       ],
       "lengthCue": 10,
@@ -328,7 +328,6 @@
         "agriculture",
         "business",
         "culinary",
-        "education",
         "engineering",
         "healthcare",
         "hospitality"
@@ -343,8 +342,8 @@
       "choice": 13,
       "position": [
         4,
-        3,
         4,
+        3,
         2
       ],
       "lengthCue": 0,
@@ -352,6 +351,7 @@
       "wordingCue": 0,
       "contexts": [
         "automotive",
+        "business",
         "construction",
         "culinary",
         "education",
@@ -368,7 +368,7 @@
     {
       "key": "a:CLA-O-001",
       "conceptId": "continuous-learning-and-adaptability:learning-resources",
-      "examples": 81,
+      "examples": 80,
       "choice": 0,
       "position": [
         0,
@@ -400,25 +400,22 @@
     {
       "key": "a:CON-D-001",
       "conceptId": "conflict-resolution:diplomatic-negotiation",
-      "examples": 11,
-      "choice": 11,
+      "examples": 7,
+      "choice": 7,
       "position": [
         0,
-        4,
+        1,
         3,
-        4
+        3
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "construction",
         "culinary",
         "education",
-        "engineering",
-        "it",
+        "healthcare",
         "manufacturing",
-        "media",
         "retail"
       ],
       "flags": [],
@@ -427,46 +424,22 @@
     {
       "key": "a:CON-D-101",
       "conceptId": "conflict-resolution:diplomatic-negotiation",
-      "examples": 6,
-      "choice": 6,
+      "examples": 9,
+      "choice": 9,
       "position": [
-        1,
-        1,
+        2,
+        3,
         1,
         3
       ],
-      "lengthCue": 6,
+      "lengthCue": 9,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "business",
-        "hospitality",
-        "manufacturing",
-        "media"
-      ],
-      "flags": [],
-      "disposition": "retained-for-ordinary-practice"
-    },
-    {
-      "key": "a:CON-D-102",
-      "conceptId": "conflict-resolution:when-to-escalate",
-      "examples": 11,
-      "choice": 11,
-      "position": [
-        6,
-        3,
-        0,
-        2
-      ],
-      "lengthCue": 11,
-      "shortCue": 0,
-      "wordingCue": 0,
-      "contexts": [
-        "automotive",
+        "construction",
         "education",
-        "healthcare",
+        "engineering",
         "hospitality",
-        "it",
         "manufacturing",
         "media",
         "retail"
@@ -475,23 +448,22 @@
       "disposition": "retained-for-ordinary-practice"
     },
     {
-      "key": "a:CON-D-105",
-      "conceptId": "conflict-resolution:diplomatic-negotiation",
-      "examples": 9,
-      "choice": 9,
+      "key": "a:CON-D-102",
+      "conceptId": "conflict-resolution:when-to-escalate",
+      "examples": 4,
+      "choice": 4,
       "position": [
+        0,
         1,
-        5,
         2,
         1
       ],
-      "lengthCue": 0,
+      "lengthCue": 4,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "business",
-        "education",
-        "engineering",
+        "hospitality",
         "it",
         "media"
       ],
@@ -499,9 +471,37 @@
       "disposition": "retained-for-ordinary-practice"
     },
     {
+      "key": "a:CON-D-105",
+      "conceptId": "conflict-resolution:diplomatic-negotiation",
+      "examples": 16,
+      "choice": 16,
+      "position": [
+        4,
+        4,
+        1,
+        7
+      ],
+      "lengthCue": 0,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "agriculture",
+        "business",
+        "construction",
+        "education",
+        "engineering",
+        "healthcare",
+        "it",
+        "manufacturing",
+        "retail"
+      ],
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
+    },
+    {
       "key": "a:CON-F-001",
       "conceptId": "conflict-resolution:diplomatic-negotiation",
-      "examples": 28,
+      "examples": 22,
       "choice": 0,
       "position": [
         0,
@@ -517,14 +517,12 @@
         "automotive",
         "construction",
         "culinary",
-        "education",
         "engineering",
         "healthcare",
         "hospitality",
         "it",
         "manufacturing",
-        "media",
-        "retail"
+        "media"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -532,22 +530,22 @@
     {
       "key": "a:CON-N-001",
       "conceptId": "conflict-resolution:when-to-escalate",
-      "examples": 10,
-      "choice": 10,
+      "examples": 8,
+      "choice": 8,
       "position": [
-        2,
-        4,
         1,
+        4,
+        0,
         3
       ],
-      "lengthCue": 1,
+      "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "business",
-        "education",
         "engineering",
+        "healthcare",
         "hospitality",
         "it"
       ],
@@ -557,7 +555,7 @@
     {
       "key": "a:CON-O-001",
       "conceptId": "conflict-resolution:diplomatic-negotiation",
-      "examples": 45,
+      "examples": 44,
       "choice": 0,
       "position": [
         0,
@@ -589,20 +587,19 @@
     {
       "key": "a:CTP-D-001",
       "conceptId": "critical-thinking-and-problem-solving:analyze-problems",
-      "examples": 8,
-      "choice": 8,
+      "examples": 6,
+      "choice": 6,
       "position": [
         0,
-        4,
+        3,
         2,
-        2
+        1
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
-        "business",
         "construction",
         "hospitality",
         "manufacturing"
@@ -613,22 +610,19 @@
     {
       "key": "a:CTP-N-001",
       "conceptId": "critical-thinking-and-problem-solving:analyze-problems",
-      "examples": 8,
-      "choice": 8,
+      "examples": 5,
+      "choice": 5,
       "position": [
-        5,
-        3,
-        0,
+        2,
+        2,
+        1,
         0
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
-        "business",
-        "culinary",
-        "healthcare",
+        "construction",
         "hospitality",
         "manufacturing",
         "media"
@@ -639,13 +633,13 @@
     {
       "key": "a:CUS-D-001",
       "conceptId": "customer-service-orientation:courteous-knowledgeable",
-      "examples": 9,
-      "choice": 9,
+      "examples": 10,
+      "choice": 10,
       "position": [
         2,
         2,
-        3,
-        2
+        2,
+        4
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -654,6 +648,7 @@
         "agriculture",
         "business",
         "culinary",
+        "hospitality",
         "it",
         "media",
         "retail"
@@ -668,16 +663,16 @@
       "choice": 9,
       "position": [
         2,
-        4,
+        3,
         0,
-        3
+        4
       ],
       "lengthCue": 9,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
+        "automotive",
         "business",
-        "culinary",
         "hospitality",
         "retail"
       ],
@@ -719,15 +714,15 @@
     {
       "key": "a:CUS-N-002",
       "conceptId": "customer-service-orientation:courteous-knowledgeable",
-      "examples": 9,
-      "choice": 9,
+      "examples": 8,
+      "choice": 8,
       "position": [
         1,
         2,
         4,
-        2
+        1
       ],
-      "lengthCue": 9,
+      "lengthCue": 8,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -745,7 +740,7 @@
     {
       "key": "a:CUS-O-001",
       "conceptId": "customer-service-orientation:courteous-knowledgeable",
-      "examples": 52,
+      "examples": 53,
       "choice": 0,
       "position": [
         0,
@@ -777,7 +772,7 @@
     {
       "key": "a:DIV-F-001",
       "conceptId": "respect-for-diversity:individual-differences",
-      "examples": 46,
+      "examples": 49,
       "choice": 0,
       "position": [
         0,
@@ -809,20 +804,18 @@
     {
       "key": "a:EFF-D-001",
       "conceptId": "efficiency-and-productivity:prioritize-tasks",
-      "examples": 7,
-      "choice": 7,
+      "examples": 4,
+      "choice": 4,
       "position": [
-        3,
-        0,
         2,
-        2
+        0,
+        1,
+        1
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "automotive",
-        "culinary",
         "hospitality",
         "it",
         "retail"
@@ -833,7 +826,7 @@
     {
       "key": "a:EFF-F-001",
       "conceptId": "efficiency-and-productivity:prioritize-tasks",
-      "examples": 58,
+      "examples": 31,
       "choice": 0,
       "position": [
         0,
@@ -850,6 +843,7 @@
         "business",
         "construction",
         "culinary",
+        "education",
         "engineering",
         "healthcare",
         "hospitality",
@@ -864,24 +858,20 @@
     {
       "key": "a:EFF-N-002",
       "conceptId": "efficiency-and-productivity:prioritize-tasks",
-      "examples": 10,
-      "choice": 10,
+      "examples": 4,
+      "choice": 4,
       "position": [
-        3,
-        3,
+        1,
         2,
-        2
+        1,
+        0
       ],
-      "lengthCue": 10,
+      "lengthCue": 4,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
         "automotive",
-        "education",
-        "healthcare",
         "hospitality",
-        "it",
         "manufacturing",
         "media"
       ],
@@ -891,23 +881,22 @@
     {
       "key": "a:ILI-D-001",
       "conceptId": "information-literacy:evaluate-credibility",
-      "examples": 10,
-      "choice": 10,
+      "examples": 6,
+      "choice": 6,
       "position": [
-        2,
-        3,
+        0,
         1,
-        4
+        3,
+        2
       ],
-      "lengthCue": 10,
+      "lengthCue": 6,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "automotive",
+        "agriculture",
         "construction",
         "culinary",
-        "hospitality",
-        "retail"
+        "hospitality"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -915,22 +904,21 @@
     {
       "key": "a:ILI-D-002",
       "conceptId": "information-literacy:evaluate-credibility",
-      "examples": 11,
-      "choice": 11,
+      "examples": 7,
+      "choice": 7,
       "position": [
-        1,
+        0,
         4,
-        4,
-        2
+        0,
+        3
       ],
-      "lengthCue": 10,
+      "lengthCue": 7,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
-        "business",
-        "education",
-        "healthcare",
+        "automotive",
+        "construction",
+        "culinary",
         "it",
         "manufacturing",
         "retail"
@@ -941,7 +929,7 @@
     {
       "key": "a:ILI-F-001",
       "conceptId": "information-literacy:evaluate-credibility",
-      "examples": 30,
+      "examples": 24,
       "choice": 0,
       "position": [
         0,
@@ -954,6 +942,7 @@
       "wordingCue": 0,
       "contexts": [
         "agriculture",
+        "automotive",
         "business",
         "construction",
         "culinary",
@@ -962,7 +951,6 @@
         "healthcare",
         "hospitality",
         "it",
-        "manufacturing",
         "media",
         "retail"
       ],
@@ -972,21 +960,19 @@
     {
       "key": "a:ILI-N-001",
       "conceptId": "information-literacy:evaluate-credibility",
-      "examples": 6,
-      "choice": 6,
+      "examples": 3,
+      "choice": 3,
       "position": [
         1,
+        0,
         1,
-        3,
         1
       ],
-      "lengthCue": 6,
+      "lengthCue": 3,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
-        "engineering",
-        "healthcare",
         "it",
         "retail"
       ],
@@ -999,8 +985,8 @@
       "examples": 12,
       "choice": 12,
       "position": [
-        6,
-        2,
+        4,
+        4,
         1,
         3
       ],
@@ -1009,11 +995,10 @@
       "wordingCue": 0,
       "contexts": [
         "automotive",
-        "business",
         "culinary",
         "education",
-        "engineering",
         "it",
+        "manufacturing",
         "media",
         "retail"
       ],
@@ -1023,7 +1008,7 @@
     {
       "key": "a:INI-O-001",
       "conceptId": "initiative-and-self-direction:identify-needs",
-      "examples": 32,
+      "examples": 35,
       "choice": 0,
       "position": [
         0,
@@ -1054,21 +1039,20 @@
     {
       "key": "a:INT-D-001",
       "conceptId": "integrity:honesty-and-fairness",
-      "examples": 14,
-      "choice": 14,
+      "examples": 9,
+      "choice": 9,
       "position": [
-        4,
-        4,
-        3,
-        3
+        1,
+        2,
+        2,
+        4
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "automotive",
-        "culinary",
-        "education",
+        "engineering",
         "hospitality",
         "it",
         "manufacturing",
@@ -1080,24 +1064,23 @@
     {
       "key": "a:INT-D-002",
       "conceptId": "integrity:honesty-and-fairness",
-      "examples": 8,
-      "choice": 8,
+      "examples": 6,
+      "choice": 6,
       "position": [
-        3,
         2,
-        2,
-        1
+        0,
+        0,
+        4
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "education",
-        "engineering",
-        "healthcare",
-        "hospitality",
+        "automotive",
+        "culinary",
+        "it",
         "manufacturing",
-        "retail"
+        "media"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1105,25 +1088,22 @@
     {
       "key": "a:INT-D-003",
       "conceptId": "integrity:honesty-and-fairness",
-      "examples": 12,
-      "choice": 12,
+      "examples": 4,
+      "choice": 4,
       "position": [
-        4,
-        5,
-        1,
+        0,
+        2,
+        0,
         2
       ],
-      "lengthCue": 12,
+      "lengthCue": 4,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "automotive",
         "construction",
-        "culinary",
         "education",
-        "hospitality",
-        "it",
-        "media"
+        "healthcare",
+        "retail"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1131,7 +1111,7 @@
     {
       "key": "a:INT-F-001",
       "conceptId": "integrity:honesty-and-fairness",
-      "examples": 28,
+      "examples": 17,
       "choice": 0,
       "position": [
         0,
@@ -1150,7 +1130,6 @@
         "culinary",
         "education",
         "engineering",
-        "healthcare",
         "hospitality",
         "manufacturing",
         "media",
@@ -1162,22 +1141,21 @@
     {
       "key": "a:INT-N-001",
       "conceptId": "integrity:honesty-and-fairness",
-      "examples": 14,
-      "choice": 14,
+      "examples": 12,
+      "choice": 12,
       "position": [
-        3,
         4,
-        3,
-        4
+        4,
+        2,
+        2
       ],
-      "lengthCue": 14,
+      "lengthCue": 12,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "automotive",
         "culinary",
-        "education",
         "engineering",
         "it",
         "manufacturing",
@@ -1189,27 +1167,19 @@
     {
       "key": "a:ISE-D-101",
       "conceptId": "information-security:security-procedures",
-      "examples": 12,
-      "choice": 12,
+      "examples": 1,
+      "choice": 1,
       "position": [
-        3,
-        5,
-        3,
+        0,
+        0,
+        0,
         1
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
-        "automotive",
-        "construction",
-        "culinary",
-        "engineering",
-        "healthcare",
-        "manufacturing",
-        "media",
-        "retail"
+        "education"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1220,21 +1190,20 @@
       "examples": 6,
       "choice": 6,
       "position": [
-        1,
-        4,
-        1,
-        0
+        0,
+        0,
+        2,
+        4
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
+        "automotive",
         "construction",
         "education",
-        "healthcare",
-        "hospitality",
-        "it"
+        "manufacturing"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1242,7 +1211,7 @@
     {
       "key": "a:ISE-F-001",
       "conceptId": "information-security:cyber-threats",
-      "examples": 39,
+      "examples": 17,
       "choice": 0,
       "position": [
         0,
@@ -1264,7 +1233,6 @@
         "healthcare",
         "hospitality",
         "it",
-        "manufacturing",
         "media"
       ],
       "flags": [],
@@ -1273,7 +1241,7 @@
     {
       "key": "a:ISE-F-002",
       "conceptId": "information-security:cyber-threats",
-      "examples": 37,
+      "examples": 18,
       "choice": 0,
       "position": [
         0,
@@ -1289,15 +1257,12 @@
         "automotive",
         "business",
         "construction",
-        "culinary",
         "education",
         "engineering",
         "healthcare",
         "hospitality",
         "it",
-        "manufacturing",
-        "media",
-        "retail"
+        "manufacturing"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1305,22 +1270,19 @@
     {
       "key": "a:ISE-N-002",
       "conceptId": "information-security:security-procedures",
-      "examples": 7,
-      "choice": 7,
+      "examples": 3,
+      "choice": 3,
       "position": [
-        2,
-        2,
-        2,
-        1
+        3,
+        0,
+        0,
+        0
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "automotive",
-        "healthcare",
-        "hospitality",
-        "media",
+        "business",
         "retail"
       ],
       "flags": [],
@@ -1329,7 +1291,7 @@
     {
       "key": "a:ISE-O-001",
       "conceptId": "information-security:security-procedures",
-      "examples": 36,
+      "examples": 21,
       "choice": 0,
       "position": [
         0,
@@ -1349,7 +1311,6 @@
         "healthcare",
         "hospitality",
         "it",
-        "manufacturing",
         "media",
         "retail"
       ],
@@ -1359,24 +1320,20 @@
     {
       "key": "a:ITE-D-001",
       "conceptId": "information-technology:cloud-and-file-sharing",
-      "examples": 6,
-      "choice": 6,
+      "examples": 2,
+      "choice": 2,
       "position": [
-        2,
         1,
-        2,
+        0,
+        0,
         1
       ],
-      "lengthCue": 6,
+      "lengthCue": 2,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "automotive",
-        "education",
-        "engineering",
-        "healthcare",
         "hospitality",
-        "it"
+        "manufacturing"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1384,24 +1341,25 @@
     {
       "key": "a:ITE-D-002",
       "conceptId": "information-technology:software-and-applications",
-      "examples": 9,
-      "choice": 9,
+      "examples": 7,
+      "choice": 7,
       "position": [
         3,
-        3,
+        1,
         1,
         2
       ],
       "lengthCue": 0,
-      "shortCue": 9,
+      "shortCue": 7,
       "wordingCue": 0,
       "contexts": [
+        "automotive",
         "culinary",
         "education",
         "engineering",
         "hospitality",
         "it",
-        "media"
+        "manufacturing"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1409,13 +1367,13 @@
     {
       "key": "a:ITE-D-101",
       "conceptId": "information-technology:software-and-applications",
-      "examples": 7,
-      "choice": 7,
+      "examples": 5,
+      "choice": 5,
       "position": [
-        1,
+        0,
         2,
         2,
-        2
+        1
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -1423,10 +1381,9 @@
       "contexts": [
         "automotive",
         "business",
-        "construction",
         "culinary",
-        "manufacturing",
-        "retail"
+        "engineering",
+        "hospitality"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1434,25 +1391,21 @@
     {
       "key": "a:ITE-D-102",
       "conceptId": "information-technology:software-and-applications",
-      "examples": 9,
-      "choice": 9,
+      "examples": 3,
+      "choice": 3,
       "position": [
         1,
+        0,
         2,
-        6,
         0
       ],
       "lengthCue": 0,
-      "shortCue": 9,
+      "shortCue": 3,
       "wordingCue": 0,
       "contexts": [
+        "automotive",
         "construction",
-        "education",
-        "engineering",
-        "hospitality",
-        "it",
-        "manufacturing",
-        "retail"
+        "media"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1460,13 +1413,82 @@
     {
       "key": "a:ITE-D-103",
       "conceptId": "information-technology:software-and-applications",
-      "examples": 14,
-      "choice": 14,
+      "examples": 3,
+      "choice": 3,
       "position": [
-        4,
+        1,
         2,
-        3,
-        5
+        0,
+        0
+      ],
+      "lengthCue": 0,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "hospitality",
+        "retail"
+      ],
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
+    },
+    {
+      "key": "a:ITE-D-104",
+      "conceptId": "information-technology:software-and-applications",
+      "examples": 6,
+      "choice": 6,
+      "position": [
+        1,
+        0,
+        1,
+        4
+      ],
+      "lengthCue": 6,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "automotive",
+        "business",
+        "culinary",
+        "education",
+        "manufacturing"
+      ],
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
+    },
+    {
+      "key": "a:ITE-D-105",
+      "conceptId": "information-technology:software-and-applications",
+      "examples": 5,
+      "choice": 5,
+      "position": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "lengthCue": 5,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "culinary",
+        "education",
+        "hospitality",
+        "manufacturing",
+        "retail"
+      ],
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
+    },
+    {
+      "key": "a:ITE-D-106",
+      "conceptId": "information-technology:software-and-applications",
+      "examples": 6,
+      "choice": 6,
+      "position": [
+        0,
+        1,
+        1,
+        4
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -1476,84 +1498,7 @@
         "automotive",
         "business",
         "construction",
-        "culinary",
-        "education",
-        "engineering",
-        "healthcare",
-        "hospitality",
-        "manufacturing",
-        "media"
-      ],
-      "flags": [],
-      "disposition": "retained-for-ordinary-practice"
-    },
-    {
-      "key": "a:ITE-D-104",
-      "conceptId": "information-technology:software-and-applications",
-      "examples": 1,
-      "choice": 1,
-      "position": [
-        1,
-        0,
-        0,
-        0
-      ],
-      "lengthCue": 1,
-      "shortCue": 0,
-      "wordingCue": 0,
-      "contexts": [
-        "business"
-      ],
-      "flags": [],
-      "disposition": "retained-for-ordinary-practice"
-    },
-    {
-      "key": "a:ITE-D-105",
-      "conceptId": "information-technology:software-and-applications",
-      "examples": 9,
-      "choice": 9,
-      "position": [
-        1,
-        1,
-        3,
-        4
-      ],
-      "lengthCue": 9,
-      "shortCue": 0,
-      "wordingCue": 0,
-      "contexts": [
-        "culinary",
-        "healthcare",
-        "hospitality",
-        "it",
-        "media",
-        "retail"
-      ],
-      "flags": [],
-      "disposition": "retained-for-ordinary-practice"
-    },
-    {
-      "key": "a:ITE-D-106",
-      "conceptId": "information-technology:software-and-applications",
-      "examples": 9,
-      "choice": 9,
-      "position": [
-        2,
-        2,
-        1,
-        4
-      ],
-      "lengthCue": 0,
-      "shortCue": 0,
-      "wordingCue": 0,
-      "contexts": [
-        "automotive",
-        "business",
-        "construction",
-        "education",
-        "it",
-        "manufacturing",
-        "retail"
+        "engineering"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1565,20 +1510,19 @@
       "choice": 6,
       "position": [
         1,
-        2,
+        1,
         3,
-        0
+        1
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
-        "automotive",
         "culinary",
         "education",
         "engineering",
-        "manufacturing"
+        "manufacturing",
+        "media"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1586,26 +1530,19 @@
     {
       "key": "a:ITE-D-109",
       "conceptId": "information-technology:troubleshooting",
-      "examples": 8,
-      "choice": 8,
+      "examples": 2,
+      "choice": 2,
       "position": [
-        0,
-        3,
         1,
-        4
+        0,
+        0,
+        1
       ],
-      "lengthCue": 8,
+      "lengthCue": 2,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
-        "automotive",
-        "culinary",
-        "engineering",
-        "healthcare",
-        "hospitality",
-        "media",
-        "retail"
+        "hospitality"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1613,7 +1550,7 @@
     {
       "key": "a:ITE-F-001",
       "conceptId": "information-technology:software-and-applications",
-      "examples": 58,
+      "examples": 27,
       "choice": 0,
       "position": [
         0,
@@ -1627,13 +1564,11 @@
       "contexts": [
         "agriculture",
         "automotive",
-        "business",
         "construction",
         "culinary",
         "education",
         "engineering",
         "healthcare",
-        "hospitality",
         "it",
         "manufacturing",
         "media",
@@ -1645,23 +1580,21 @@
     {
       "key": "a:ITE-N-001",
       "conceptId": "information-technology:troubleshooting",
-      "examples": 8,
-      "choice": 8,
+      "examples": 5,
+      "choice": 5,
       "position": [
-        1,
         2,
-        4,
+        1,
+        1,
         1
       ],
-      "lengthCue": 8,
+      "lengthCue": 5,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "construction",
-        "education",
         "healthcare",
-        "manufacturing",
         "retail"
       ],
       "flags": [],
@@ -1670,7 +1603,7 @@
     {
       "key": "a:ITE-O-001",
       "conceptId": "information-technology:troubleshooting",
-      "examples": 87,
+      "examples": 46,
       "choice": 0,
       "position": [
         0,
@@ -1684,7 +1617,6 @@
       "contexts": [
         "agriculture",
         "automotive",
-        "business",
         "construction",
         "culinary",
         "education",
@@ -1706,11 +1638,38 @@
       "choice": 9,
       "position": [
         0,
-        4,
-        3,
+        2,
+        5,
         2
       ],
       "lengthCue": 0,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "business",
+        "construction",
+        "culinary",
+        "education",
+        "healthcare",
+        "hospitality",
+        "it",
+        "manufacturing"
+      ],
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
+    },
+    {
+      "key": "a:JST-D-003",
+      "conceptId": "job-specific-tools-and-technologies:safe-use",
+      "examples": 9,
+      "choice": 9,
+      "position": [
+        3,
+        3,
+        2,
+        1
+      ],
+      "lengthCue": 9,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -1726,34 +1685,9 @@
       "disposition": "retained-for-ordinary-practice"
     },
     {
-      "key": "a:JST-D-003",
-      "conceptId": "job-specific-tools-and-technologies:safe-use",
-      "examples": 8,
-      "choice": 8,
-      "position": [
-        1,
-        3,
-        3,
-        1
-      ],
-      "lengthCue": 8,
-      "shortCue": 0,
-      "wordingCue": 0,
-      "contexts": [
-        "construction",
-        "culinary",
-        "education",
-        "healthcare",
-        "it",
-        "manufacturing"
-      ],
-      "flags": [],
-      "disposition": "retained-for-ordinary-practice"
-    },
-    {
       "key": "a:JST-F-001",
       "conceptId": "job-specific-tools-and-technologies:safe-use",
-      "examples": 59,
+      "examples": 60,
       "choice": 0,
       "position": [
         0,
@@ -1788,17 +1722,17 @@
       "examples": 6,
       "choice": 6,
       "position": [
-        1,
         2,
+        0,
         3,
-        0
+        1
       ],
       "lengthCue": 6,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "culinary",
-        "hospitality",
+        "healthcare",
         "it"
       ],
       "flags": [],
@@ -1807,7 +1741,7 @@
     {
       "key": "a:JST-O-001",
       "conceptId": "job-specific-tools-and-technologies:safe-use",
-      "examples": 87,
+      "examples": 89,
       "choice": 0,
       "position": [
         0,
@@ -1842,16 +1776,17 @@
       "examples": 12,
       "choice": 12,
       "position": [
-        5,
-        3,
+        6,
         2,
-        2
+        3,
+        1
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "automotive",
+        "business",
         "education",
         "engineering",
         "healthcare",
@@ -1870,9 +1805,9 @@
       "choice": 12,
       "position": [
         4,
+        4,
         3,
-        3,
-        2
+        1
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -1892,7 +1827,7 @@
     {
       "key": "a:LIS-F-001",
       "conceptId": "listening-and-speaking:audience-and-setting",
-      "examples": 54,
+      "examples": 55,
       "choice": 0,
       "position": [
         0,
@@ -1928,8 +1863,8 @@
       "position": [
         1,
         1,
-        2,
-        1
+        3,
+        0
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -1939,7 +1874,7 @@
         "business",
         "education",
         "engineering",
-        "manufacturing"
+        "it"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -1947,7 +1882,7 @@
     {
       "key": "a:PRO-F-001",
       "conceptId": "professionalism:etiquette",
-      "examples": 46,
+      "examples": 47,
       "choice": 0,
       "position": [
         0,
@@ -1982,10 +1917,10 @@
       "examples": 15,
       "choice": 15,
       "position": [
-        1,
+        2,
         6,
         5,
-        3
+        2
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -2003,23 +1938,25 @@
     {
       "key": "a:RAW-D-003",
       "conceptId": "reading-and-writing:interpret-documents",
-      "examples": 11,
-      "choice": 11,
+      "examples": 12,
+      "choice": 12,
       "position": [
-        2,
+        3,
         4,
         2,
         3
       ],
       "lengthCue": 0,
-      "shortCue": 11,
+      "shortCue": 12,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
-        "automotive",
         "business",
+        "construction",
         "education",
+        "engineering",
         "healthcare",
+        "hospitality",
         "manufacturing",
         "media"
       ],
@@ -2060,7 +1997,7 @@
     {
       "key": "a:RAW-F-002",
       "conceptId": "reading-and-writing:clarity",
-      "examples": 45,
+      "examples": 40,
       "choice": 0,
       "position": [
         0,
@@ -2076,15 +2013,13 @@
         "automotive",
         "business",
         "construction",
-        "culinary",
         "education",
         "engineering",
         "healthcare",
         "hospitality",
         "it",
         "manufacturing",
-        "media",
-        "retail"
+        "media"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -2095,10 +2030,10 @@
       "examples": 9,
       "choice": 9,
       "position": [
-        0,
-        3,
+        1,
         2,
-        4
+        4,
+        2
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -2107,8 +2042,10 @@
         "business",
         "construction",
         "culinary",
+        "education",
         "healthcare",
-        "it",
+        "hospitality",
+        "manufacturing",
         "media"
       ],
       "flags": [],
@@ -2122,15 +2059,14 @@
       "position": [
         2,
         1,
-        2,
-        2
+        3,
+        1
       ],
       "lengthCue": 7,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "business",
-        "culinary",
+        "construction",
         "education",
         "manufacturing",
         "media",
@@ -2174,23 +2110,23 @@
     {
       "key": "a:SAF-N-001",
       "conceptId": "workplace-safety:emergency-protocols",
-      "examples": 6,
-      "choice": 6,
+      "examples": 7,
+      "choice": 7,
       "position": [
         1,
-        2,
-        2,
+        1,
+        4,
         1
       ],
-      "lengthCue": 6,
+      "lengthCue": 7,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "automotive",
+        "business",
         "culinary",
-        "it",
-        "retail"
+        "it"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -2198,7 +2134,7 @@
     {
       "key": "a:SAF-O-002",
       "conceptId": "workplace-safety:emergency-protocols",
-      "examples": 23,
+      "examples": 24,
       "choice": 0,
       "position": [
         0,
@@ -2219,8 +2155,7 @@
         "hospitality",
         "it",
         "manufacturing",
-        "media",
-        "retail"
+        "media"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -2232,8 +2167,8 @@
       "choice": 10,
       "position": [
         1,
-        4,
-        3,
+        5,
+        2,
         2
       ],
       "lengthCue": 10,
@@ -2241,10 +2176,10 @@
       "wordingCue": 0,
       "contexts": [
         "agriculture",
+        "automotive",
         "construction",
         "culinary",
         "education",
-        "engineering",
         "healthcare",
         "hospitality",
         "it",
@@ -2256,7 +2191,7 @@
     {
       "key": "a:TEA-F-001",
       "conceptId": "teamwork:expectations-roles-goals",
-      "examples": 69,
+      "examples": 70,
       "choice": 0,
       "position": [
         0,
@@ -2291,8 +2226,8 @@
       "examples": 7,
       "choice": 7,
       "position": [
-        0,
         2,
+        0,
         1,
         4
       ],
@@ -2300,8 +2235,8 @@
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
+        "automotive",
         "construction",
-        "culinary",
         "engineering",
         "hospitality",
         "manufacturing"
@@ -2332,7 +2267,6 @@
         "education",
         "engineering",
         "healthcare",
-        "hospitality",
         "it",
         "manufacturing",
         "media",
@@ -2344,22 +2278,21 @@
     {
       "key": "c:big-change-request/flag-wider-impact",
       "conceptId": "big-picture-thinking:impacts-of-actions",
-      "examples": 26,
-      "choice": 26,
+      "examples": 17,
+      "choice": 17,
       "position": [
         3,
-        7,
         5,
-        11
+        5,
+        4
       ],
-      "lengthCue": 24,
+      "lengthCue": 15,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
+        "automotive",
         "business",
         "culinary",
-        "education",
         "engineering",
         "healthcare",
         "hospitality",
@@ -2367,32 +2300,28 @@
         "manufacturing",
         "media"
       ],
-      "flags": [
-        "answer-length-shortcut"
-      ],
-      "disposition": "excluded-from-mastery"
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
     },
     {
       "key": "c:big-closing-impacts/flag-wider-impact",
       "conceptId": "big-picture-thinking:impacts-of-actions",
-      "examples": 8,
-      "choice": 8,
+      "examples": 5,
+      "choice": 5,
       "position": [
-        1,
-        1,
-        1,
-        5
+        0,
+        0,
+        2,
+        3
       ],
-      "lengthCue": 8,
-      "shortCue": 0,
+      "lengthCue": 0,
+      "shortCue": 1,
       "wordingCue": 0,
       "contexts": [
-        "automotive",
+        "agriculture",
         "business",
-        "education",
         "engineering",
-        "healthcare",
-        "retail"
+        "media"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -2400,28 +2329,22 @@
     {
       "key": "c:big-closing-impacts/reduce-waste",
       "conceptId": "big-picture-thinking:impacts-of-actions",
-      "examples": 22,
-      "choice": 22,
+      "examples": 6,
+      "choice": 6,
       "position": [
-        6,
-        3,
-        6,
-        7
+        2,
+        2,
+        1,
+        1
       ],
-      "lengthCue": 11,
-      "shortCue": 4,
+      "lengthCue": 0,
+      "shortCue": 1,
       "wordingCue": 0,
       "contexts": [
-        "automotive",
-        "business",
+        "agriculture",
         "construction",
-        "culinary",
-        "education",
         "engineering",
-        "healthcare",
         "hospitality",
-        "it",
-        "manufacturing",
         "retail"
       ],
       "flags": [
@@ -2432,13 +2355,13 @@
     {
       "key": "c:big-supplier-switch/full-cost",
       "conceptId": "big-picture-thinking:impacts-of-actions",
-      "examples": 43,
-      "choice": 43,
+      "examples": 26,
+      "choice": 26,
       "position": [
-        16,
-        6,
         7,
-        14
+        5,
+        8,
+        6
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -2454,7 +2377,6 @@
         "healthcare",
         "hospitality",
         "it",
-        "manufacturing",
         "media",
         "retail"
       ],
@@ -2466,15 +2388,15 @@
     {
       "key": "c:car-next-step/plan-for-qualification",
       "conceptId": "career-and-life-management:qualifications-and-advancement",
-      "examples": 34,
-      "choice": 34,
+      "examples": 30,
+      "choice": 30,
       "position": [
-        11,
-        7,
+        8,
         5,
-        11
+        8,
+        9
       ],
-      "lengthCue": 15,
+      "lengthCue": 13,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -2483,7 +2405,7 @@
         "business",
         "culinary",
         "education",
-        "engineering",
+        "healthcare",
         "hospitality",
         "it",
         "manufacturing",
@@ -2498,13 +2420,13 @@
     {
       "key": "c:car-next-step/protect-wellness",
       "conceptId": "career-and-life-management:wellness-and-finances",
-      "examples": 54,
-      "choice": 54,
+      "examples": 51,
+      "choice": 51,
       "position": [
-        13,
-        22,
-        8,
-        11
+        10,
+        20,
+        12,
+        9
       ],
       "lengthCue": 17,
       "shortCue": 0,
@@ -2532,15 +2454,15 @@
     {
       "key": "c:car-next-step/seek-feedback",
       "conceptId": "career-and-life-management:qualifications-and-advancement",
-      "examples": 37,
-      "choice": 37,
+      "examples": 40,
+      "choice": 40,
       "position": [
-        12,
-        6,
-        11,
-        8
+        14,
+        10,
+        7,
+        9
       ],
-      "lengthCue": 4,
+      "lengthCue": 6,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -2569,9 +2491,9 @@
       "examples": 16,
       "choice": 16,
       "position": [
-        7,
-        3,
+        1,
         4,
+        9,
         2
       ],
       "lengthCue": 16,
@@ -2582,11 +2504,10 @@
         "business",
         "culinary",
         "education",
-        "engineering",
         "healthcare",
-        "hospitality",
         "it",
-        "media"
+        "media",
+        "retail"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -2594,15 +2515,15 @@
     {
       "key": "c:car-paycheck/avoid-high-cost-credit",
       "conceptId": "career-and-life-management:wellness-and-finances",
-      "examples": 44,
-      "choice": 44,
+      "examples": 45,
+      "choice": 45,
       "position": [
+        12,
         11,
-        11,
-        15,
-        7
+        13,
+        9
       ],
-      "lengthCue": 32,
+      "lengthCue": 36,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -2629,13 +2550,13 @@
     {
       "key": "c:car-paycheck/meet-benefit-deadline",
       "conceptId": "career-and-life-management:benefits-and-resources",
-      "examples": 68,
-      "choice": 68,
+      "examples": 63,
+      "choice": 63,
       "position": [
-        12,
         13,
-        25,
-        18
+        15,
+        20,
+        15
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -2663,16 +2584,16 @@
     {
       "key": "c:car-paycheck/plan-finances",
       "conceptId": "career-and-life-management:wellness-and-finances",
-      "examples": 66,
-      "choice": 66,
+      "examples": 67,
+      "choice": 67,
       "position": [
-        18,
         15,
-        16,
-        17
+        19,
+        14,
+        19
       ],
       "lengthCue": 0,
-      "shortCue": 1,
+      "shortCue": 3,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
@@ -2700,40 +2621,12 @@
       "examples": 29,
       "choice": 29,
       "position": [
-        3,
-        5,
-        13,
-        8
+        2,
+        11,
+        6,
+        10
       ],
-      "lengthCue": 2,
-      "shortCue": 0,
-      "wordingCue": 0,
-      "contexts": [
-        "automotive",
-        "construction",
-        "education",
-        "engineering",
-        "healthcare",
-        "hospitality",
-        "it",
-        "manufacturing",
-        "media"
-      ],
-      "flags": [],
-      "disposition": "retained-for-ordinary-practice"
-    },
-    {
-      "key": "c:car-paycheck/understand-pay",
-      "conceptId": "career-and-life-management:wellness-and-finances",
-      "examples": 59,
-      "choice": 59,
-      "position": [
-        15,
-        16,
-        13,
-        15
-      ],
-      "lengthCue": 15,
+      "lengthCue": 5,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -2751,6 +2644,37 @@
         "media",
         "retail"
       ],
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
+    },
+    {
+      "key": "c:car-paycheck/understand-pay",
+      "conceptId": "career-and-life-management:wellness-and-finances",
+      "examples": 61,
+      "choice": 61,
+      "position": [
+        18,
+        10,
+        13,
+        20
+      ],
+      "lengthCue": 21,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "agriculture",
+        "automotive",
+        "business",
+        "construction",
+        "culinary",
+        "education",
+        "engineering",
+        "hospitality",
+        "it",
+        "manufacturing",
+        "media",
+        "retail"
+      ],
       "flags": [
         "Payroll and rest-break steps are independent in the given scenario.",
         "near-duplicate-best-option"
@@ -2760,16 +2684,16 @@
     {
       "key": "c:cla-new-system/act-on-feedback",
       "conceptId": "continuous-learning-and-adaptability:acting-on-feedback",
-      "examples": 48,
-      "choice": 48,
+      "examples": 51,
+      "choice": 51,
       "position": [
-        7,
         14,
-        13,
-        14
+        9,
+        15,
+        13
       ],
       "lengthCue": 0,
-      "shortCue": 1,
+      "shortCue": 2,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
@@ -2794,13 +2718,13 @@
     {
       "key": "c:cla-new-system/use-learning-resources",
       "conceptId": "continuous-learning-and-adaptability:learning-resources",
-      "examples": 46,
-      "choice": 46,
+      "examples": 48,
+      "choice": 48,
       "position": [
-        8,
-        12,
+        10,
         14,
-        12
+        14,
+        10
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -2815,7 +2739,6 @@
         "engineering",
         "healthcare",
         "hospitality",
-        "it",
         "manufacturing",
         "media",
         "retail"
@@ -2828,24 +2751,24 @@
     {
       "key": "c:cla-review-feedback/act-on-feedback",
       "conceptId": "continuous-learning-and-adaptability:acting-on-feedback",
-      "examples": 23,
-      "choice": 23,
+      "examples": 22,
+      "choice": 22,
       "position": [
+        5,
+        5,
         4,
-        6,
-        6,
-        7
+        8
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
         "business",
         "construction",
         "culinary",
         "education",
-        "healthcare",
+        "engineering",
+        "hospitality",
         "it",
         "manufacturing",
         "media",
@@ -2859,13 +2782,13 @@
     {
       "key": "c:cla-review-feedback/check-progress",
       "conceptId": "continuous-learning-and-adaptability:acting-on-feedback",
-      "examples": 22,
-      "choice": 22,
+      "examples": 23,
+      "choice": 23,
       "position": [
-        5,
         6,
+        7,
         4,
-        7
+        6
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -2888,15 +2811,15 @@
     {
       "key": "c:cla-review-feedback/close-skill-gap",
       "conceptId": "continuous-learning-and-adaptability:learning-resources",
-      "examples": 36,
-      "choice": 36,
+      "examples": 35,
+      "choice": 35,
       "position": [
-        9,
-        17,
-        7,
-        3
+        12,
+        12,
+        5,
+        6
       ],
-      "lengthCue": 32,
+      "lengthCue": 31,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -2922,13 +2845,13 @@
     {
       "key": "c:cla-review-feedback/understand-feedback",
       "conceptId": "continuous-learning-and-adaptability:acting-on-feedback",
-      "examples": 44,
-      "choice": 44,
+      "examples": 46,
+      "choice": 46,
       "position": [
+        9,
+        9,
         12,
-        6,
-        12,
-        14
+        16
       ],
       "lengthCue": 16,
       "shortCue": 0,
@@ -2956,13 +2879,13 @@
     {
       "key": "c:con-performance-concern/escalate-after-trying",
       "conceptId": "conflict-resolution:when-to-escalate",
-      "examples": 31,
-      "choice": 31,
+      "examples": 22,
+      "choice": 22,
       "position": [
-        10,
         6,
-        6,
-        9
+        4,
+        5,
+        7
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -2975,7 +2898,6 @@
         "education",
         "engineering",
         "hospitality",
-        "it",
         "manufacturing",
         "media",
         "retail"
@@ -2991,13 +2913,13 @@
       "examples": 75,
       "choice": 75,
       "position": [
-        25,
-        11,
-        16,
-        23
+        19,
+        21,
+        17,
+        18
       ],
       "lengthCue": 0,
-      "shortCue": 9,
+      "shortCue": 15,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
@@ -3022,45 +2944,41 @@
     {
       "key": "c:con-shared-task-dispute/escalate-recurring-conflict",
       "conceptId": "conflict-resolution:when-to-escalate",
-      "examples": 20,
-      "choice": 20,
+      "examples": 17,
+      "choice": 17,
       "position": [
-        1,
-        8,
-        6,
-        5
+        4,
+        4,
+        5,
+        4
       ],
-      "lengthCue": 20,
+      "lengthCue": 17,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "automotive",
-        "business",
         "construction",
+        "culinary",
         "education",
         "engineering",
-        "healthcare",
         "hospitality",
         "manufacturing",
-        "media",
-        "retail"
+        "media"
       ],
-      "flags": [
-        "answer-length-shortcut"
-      ],
-      "disposition": "excluded-from-mastery"
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
     },
     {
       "key": "c:con-shared-task-dispute/move-conflict-private",
       "conceptId": "conflict-resolution:diplomatic-negotiation",
-      "examples": 39,
-      "choice": 39,
+      "examples": 38,
+      "choice": 38,
       "position": [
         11,
+        12,
         7,
-        11,
-        10
+        8
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -3088,13 +3006,13 @@
     {
       "key": "c:con-shared-task-dispute/seek-to-understand",
       "conceptId": "conflict-resolution:diplomatic-negotiation",
-      "examples": 48,
-      "choice": 48,
+      "examples": 30,
+      "choice": 30,
       "position": [
-        8,
-        18,
         11,
-        11
+        5,
+        9,
+        5
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -3108,11 +3026,9 @@
         "education",
         "engineering",
         "healthcare",
-        "hospitality",
         "it",
         "manufacturing",
-        "media",
-        "retail"
+        "media"
       ],
       "flags": [
         "near-duplicate-best-option"
@@ -3122,13 +3038,13 @@
     {
       "key": "c:ctp-deadline-obstacles/obtain-missing-information",
       "conceptId": "critical-thinking-and-problem-solving:analyze-problems",
-      "examples": 37,
-      "choice": 37,
+      "examples": 22,
+      "choice": 22,
       "position": [
-        11,
-        10,
-        7,
-        9
+        4,
+        6,
+        6,
+        6
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -3145,7 +3061,6 @@
         "hospitality",
         "it",
         "manufacturing",
-        "media",
         "retail"
       ],
       "flags": [
@@ -3156,13 +3071,41 @@
     {
       "key": "c:ctp-recurring-errors/address-cause-not-symptom",
       "conceptId": "critical-thinking-and-problem-solving:analyze-problems",
-      "examples": 12,
-      "choice": 12,
+      "examples": 15,
+      "choice": 15,
       "position": [
-        3,
-        2,
         4,
+        2,
+        6,
         3
+      ],
+      "lengthCue": 0,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "agriculture",
+        "automotive",
+        "business",
+        "construction",
+        "education",
+        "engineering",
+        "healthcare",
+        "hospitality",
+        "media"
+      ],
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
+    },
+    {
+      "key": "c:ctp-recurring-errors/evidence-before-blame",
+      "conceptId": "critical-thinking-and-problem-solving:analyze-problems",
+      "examples": 30,
+      "choice": 30,
+      "position": [
+        9,
+        5,
+        7,
+        9
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -3175,35 +3118,6 @@
         "engineering",
         "healthcare",
         "hospitality",
-        "it",
-        "media",
-        "retail"
-      ],
-      "flags": [],
-      "disposition": "retained-for-ordinary-practice"
-    },
-    {
-      "key": "c:ctp-recurring-errors/evidence-before-blame",
-      "conceptId": "critical-thinking-and-problem-solving:analyze-problems",
-      "examples": 40,
-      "choice": 40,
-      "position": [
-        14,
-        8,
-        6,
-        12
-      ],
-      "lengthCue": 0,
-      "shortCue": 0,
-      "wordingCue": 0,
-      "contexts": [
-        "agriculture",
-        "automotive",
-        "business",
-        "construction",
-        "culinary",
-        "education",
-        "engineering",
         "it",
         "manufacturing",
         "media",
@@ -3217,13 +3131,13 @@
     {
       "key": "c:ctp-recurring-errors/follow-the-evidence",
       "conceptId": "critical-thinking-and-problem-solving:analyze-problems",
-      "examples": 25,
-      "choice": 25,
+      "examples": 14,
+      "choice": 14,
       "position": [
-        9,
-        4,
+        1,
         5,
-        7
+        6,
+        2
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -3232,12 +3146,12 @@
         "automotive",
         "construction",
         "culinary",
+        "education",
         "engineering",
         "healthcare",
         "hospitality",
         "it",
-        "media",
-        "retail"
+        "media"
       ],
       "flags": [
         "near-duplicate-best-option"
@@ -3247,20 +3161,18 @@
     {
       "key": "c:ctp-recurring-errors/gather-evidence",
       "conceptId": "critical-thinking-and-problem-solving:analyze-problems",
-      "examples": 28,
-      "choice": 28,
+      "examples": 14,
+      "choice": 14,
       "position": [
-        6,
-        6,
-        6,
-        10
+        5,
+        4,
+        3,
+        2
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
-        "automotive",
         "business",
         "construction",
         "culinary",
@@ -3280,23 +3192,22 @@
     {
       "key": "c:cus-counter-request/acknowledge-feelings",
       "conceptId": "customer-service-orientation:courteous-knowledgeable",
-      "examples": 59,
-      "choice": 59,
+      "examples": 60,
+      "choice": 60,
       "position": [
-        18,
-        16,
-        10,
+        12,
+        19,
+        14,
         15
       ],
       "lengthCue": 0,
-      "shortCue": 5,
+      "shortCue": 12,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "automotive",
         "business",
         "construction",
-        "culinary",
         "education",
         "engineering",
         "healthcare",
@@ -3314,15 +3225,15 @@
     {
       "key": "c:cus-counter-request/find-accurate-answer",
       "conceptId": "customer-service-orientation:courteous-knowledgeable",
-      "examples": 23,
-      "choice": 23,
+      "examples": 25,
+      "choice": 25,
       "position": [
-        7,
-        6,
-        6,
-        4
+        8,
+        5,
+        5,
+        7
       ],
-      "lengthCue": 8,
+      "lengthCue": 10,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -3347,26 +3258,25 @@
     {
       "key": "c:cus-counter-request/stay-within-authority",
       "conceptId": "customer-service-orientation:courteous-knowledgeable",
-      "examples": 22,
-      "choice": 22,
+      "examples": 23,
+      "choice": 23,
       "position": [
-        5,
-        6,
-        6,
-        5
+        7,
+        8,
+        4,
+        4
       ],
-      "lengthCue": 8,
+      "lengthCue": 7,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "automotive",
-        "business",
         "construction",
         "culinary",
-        "education",
-        "healthcare",
+        "engineering",
         "hospitality",
+        "it",
         "manufacturing",
         "media",
         "retail"
@@ -3380,13 +3290,13 @@
     {
       "key": "c:div-serving-everyone/adapt-communication",
       "conceptId": "respect-for-diversity:individual-differences",
-      "examples": 31,
-      "choice": 31,
+      "examples": 36,
+      "choice": 36,
       "position": [
-        8,
+        6,
         9,
-        8,
-        6
+        7,
+        14
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -3402,6 +3312,7 @@
         "healthcare",
         "hospitality",
         "it",
+        "manufacturing",
         "media",
         "retail"
       ],
@@ -3413,15 +3324,15 @@
     {
       "key": "c:div-serving-everyone/remove-barrier",
       "conceptId": "respect-for-diversity:individual-differences",
-      "examples": 67,
-      "choice": 67,
+      "examples": 63,
+      "choice": 63,
       "position": [
-        16,
+        19,
+        9,
         15,
-        16,
         20
       ],
-      "lengthCue": 32,
+      "lengthCue": 29,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -3450,9 +3361,9 @@
       "examples": 60,
       "choice": 60,
       "position": [
-        10,
         13,
-        18,
+        14,
+        14,
         19
       ],
       "lengthCue": 0,
@@ -3481,13 +3392,13 @@
     {
       "key": "c:div-team-project/remove-barrier",
       "conceptId": "respect-for-diversity:individual-differences",
-      "examples": 65,
-      "choice": 65,
+      "examples": 64,
+      "choice": 64,
       "position": [
-        16,
+        13,
         15,
-        17,
-        17
+        20,
+        16
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -3515,15 +3426,15 @@
     {
       "key": "c:eff-morning-plan/prioritize-deadline",
       "conceptId": "efficiency-and-productivity:prioritize-tasks",
-      "examples": 66,
-      "choice": 66,
+      "examples": 38,
+      "choice": 38,
       "position": [
-        14,
-        16,
-        19,
-        17
+        9,
+        10,
+        12,
+        7
       ],
-      "lengthCue": 4,
+      "lengthCue": 1,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -3552,20 +3463,19 @@
       "examples": 6,
       "choice": 6,
       "position": [
-        3,
+        0,
         1,
-        2,
-        0
+        3,
+        2
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "construction",
-        "education",
+        "business",
+        "engineering",
         "it",
-        "manufacturing",
-        "media"
+        "retail"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -3577,21 +3487,21 @@
       "choice": 8,
       "position": [
         1,
-        2,
         3,
-        2
+        1,
+        3
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
-        "automotive",
-        "culinary",
+        "construction",
         "education",
+        "engineering",
+        "hospitality",
         "it",
-        "media",
-        "retail"
+        "media"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -3599,20 +3509,19 @@
     {
       "key": "c:ili-finding-answer/verify-unsourced-claim",
       "conceptId": "information-literacy:evaluate-credibility",
-      "examples": 5,
-      "choice": 5,
+      "examples": 3,
+      "choice": 3,
       "position": [
-        1,
-        3,
         0,
-        1
+        1,
+        2,
+        0
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "automotive",
-        "it",
         "media",
         "retail"
       ],
@@ -3622,12 +3531,12 @@
     {
       "key": "c:ili-report-data/verify-data-source",
       "conceptId": "information-literacy:evaluate-credibility",
-      "examples": 45,
-      "choice": 45,
+      "examples": 35,
+      "choice": 35,
       "position": [
-        14,
-        13,
-        9,
+        10,
+        10,
+        6,
         9
       ],
       "lengthCue": 0,
@@ -3656,13 +3565,13 @@
     {
       "key": "c:ili-service-schedule/check-currency",
       "conceptId": "information-literacy:evaluate-credibility",
-      "examples": 52,
-      "choice": 52,
+      "examples": 39,
+      "choice": 39,
       "position": [
-        13,
         9,
-        16,
-        14
+        11,
+        6,
+        13
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -3673,7 +3582,6 @@
         "business",
         "construction",
         "culinary",
-        "education",
         "engineering",
         "healthcare",
         "hospitality",
@@ -3690,13 +3598,13 @@
     {
       "key": "c:ili-service-schedule/verify-against-source",
       "conceptId": "information-literacy:evaluate-credibility",
-      "examples": 49,
-      "choice": 49,
+      "examples": 38,
+      "choice": 38,
       "position": [
+        8,
         12,
-        12,
-        11,
-        14
+        9,
+        9
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -3708,7 +3616,6 @@
         "construction",
         "culinary",
         "education",
-        "engineering",
         "healthcare",
         "hospitality",
         "it",
@@ -3724,27 +3631,26 @@
     {
       "key": "c:ini-finished-early/find-needed-work",
       "conceptId": "initiative-and-self-direction:identify-needs",
-      "examples": 28,
-      "choice": 28,
+      "examples": 22,
+      "choice": 22,
       "position": [
-        8,
-        9,
-        7,
-        4
+        6,
+        2,
+        5,
+        9
       ],
       "lengthCue": 0,
-      "shortCue": 8,
+      "shortCue": 9,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "automotive",
         "business",
-        "construction",
-        "culinary",
         "education",
         "healthcare",
         "hospitality",
         "it",
+        "manufacturing",
         "media",
         "retail"
       ],
@@ -3756,49 +3662,16 @@
     {
       "key": "c:ini-finished-early/help-where-needed",
       "conceptId": "initiative-and-self-direction:identify-needs",
-      "examples": 19,
-      "choice": 19,
+      "examples": 23,
+      "choice": 23,
       "position": [
-        4,
-        8,
         6,
-        1
+        4,
+        7,
+        6
       ],
       "lengthCue": 0,
-      "shortCue": 15,
-      "wordingCue": 0,
-      "contexts": [
-        "automotive",
-        "business",
-        "construction",
-        "culinary",
-        "education",
-        "engineering",
-        "healthcare",
-        "hospitality",
-        "it",
-        "manufacturing",
-        "media",
-        "retail"
-      ],
-      "flags": [
-        "near-duplicate-best-option"
-      ],
-      "disposition": "excluded-from-mastery"
-    },
-    {
-      "key": "c:int-closing-count/disclose-own-role",
-      "conceptId": "integrity:honesty-and-fairness",
-      "examples": 30,
-      "choice": 30,
-      "position": [
-        7,
-        7,
-        11,
-        5
-      ],
-      "lengthCue": 0,
-      "shortCue": 0,
+      "shortCue": 18,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
@@ -3811,9 +3684,38 @@
         "healthcare",
         "hospitality",
         "it",
-        "manufacturing",
-        "media",
-        "retail"
+        "media"
+      ],
+      "flags": [
+        "answer-length-shortcut",
+        "near-duplicate-best-option"
+      ],
+      "disposition": "excluded-from-mastery"
+    },
+    {
+      "key": "c:int-closing-count/disclose-own-role",
+      "conceptId": "integrity:honesty-and-fairness",
+      "examples": 18,
+      "choice": 18,
+      "position": [
+        8,
+        2,
+        6,
+        2
+      ],
+      "lengthCue": 0,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "agriculture",
+        "automotive",
+        "business",
+        "culinary",
+        "engineering",
+        "healthcare",
+        "hospitality",
+        "it",
+        "media"
       ],
       "flags": [
         "near-duplicate-best-option"
@@ -3823,16 +3725,16 @@
     {
       "key": "c:int-closing-count/refuse-to-falsify",
       "conceptId": "integrity:honesty-and-fairness",
-      "examples": 53,
-      "choice": 53,
+      "examples": 40,
+      "choice": 40,
       "position": [
-        18,
-        8,
+        6,
         12,
-        15
+        11,
+        11
       ],
       "lengthCue": 0,
-      "shortCue": 19,
+      "shortCue": 14,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
@@ -3857,26 +3759,23 @@
     {
       "key": "c:int-everyday-requests/keep-accurate-records",
       "conceptId": "integrity:honesty-and-fairness",
-      "examples": 9,
-      "choice": 9,
+      "examples": 7,
+      "choice": 7,
       "position": [
-        3,
-        4,
         2,
-        0
+        1,
+        1,
+        3
       ],
-      "lengthCue": 3,
+      "lengthCue": 4,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "business",
-        "construction",
+        "agriculture",
+        "automotive",
         "culinary",
-        "education",
-        "hospitality",
-        "it",
-        "manufacturing",
-        "media"
+        "healthcare",
+        "hospitality"
       ],
       "flags": [],
       "disposition": "retained-for-ordinary-practice"
@@ -3884,19 +3783,20 @@
     {
       "key": "c:int-shared-report/correct-own-error",
       "conceptId": "integrity:honesty-and-fairness",
-      "examples": 54,
-      "choice": 54,
+      "examples": 32,
+      "choice": 32,
       "position": [
-        12,
-        16,
-        17,
-        9
+        5,
+        10,
+        11,
+        6
       ],
       "lengthCue": 0,
-      "shortCue": 27,
+      "shortCue": 13,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
+        "automotive",
         "business",
         "construction",
         "culinary",
@@ -3917,27 +3817,24 @@
     {
       "key": "c:int-shared-report/disclose-limits",
       "conceptId": "integrity:honesty-and-fairness",
-      "examples": 26,
-      "choice": 26,
+      "examples": 16,
+      "choice": 16,
       "position": [
-        9,
         4,
-        5,
-        8
+        2,
+        6,
+        4
       ],
       "lengthCue": 0,
-      "shortCue": 1,
+      "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "automotive",
-        "business",
-        "culinary",
+        "construction",
         "education",
-        "engineering",
         "hospitality",
         "manufacturing",
-        "media",
         "retail"
       ],
       "flags": [],
@@ -3946,15 +3843,15 @@
     {
       "key": "c:int-shared-report/refuse-to-falsify",
       "conceptId": "integrity:honesty-and-fairness",
-      "examples": 83,
-      "choice": 83,
+      "examples": 50,
+      "choice": 50,
       "position": [
-        26,
-        21,
-        15,
-        21
+        14,
+        8,
+        13,
+        15
       ],
-      "lengthCue": 28,
+      "lengthCue": 20,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -3980,51 +3877,42 @@
     {
       "key": "c:ise-data-request/keep-records",
       "conceptId": "information-security:security-procedures",
-      "examples": 29,
-      "choice": 29,
+      "examples": 8,
+      "choice": 8,
       "position": [
-        4,
-        7,
-        9,
-        9
+        2,
+        1,
+        2,
+        3
       ],
-      "lengthCue": 25,
+      "lengthCue": 8,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "automotive",
-        "business",
-        "construction",
-        "culinary",
-        "education",
-        "engineering",
-        "healthcare",
         "hospitality",
         "it",
-        "manufacturing",
         "media",
         "retail"
       ],
-      "flags": [
-        "answer-length-shortcut"
-      ],
-      "disposition": "excluded-from-mastery"
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
     },
     {
       "key": "c:ise-data-request/use-approved-channel",
       "conceptId": "information-security:security-procedures",
-      "examples": 45,
-      "choice": 45,
+      "examples": 28,
+      "choice": 28,
       "position": [
-        8,
-        10,
-        13,
-        14
+        7,
+        6,
+        6,
+        9
       ],
-      "lengthCue": 7,
+      "lengthCue": 8,
       "shortCue": 0,
-      "wordingCue": 34,
+      "wordingCue": 21,
       "contexts": [
         "agriculture",
         "automotive",
@@ -4035,9 +3923,7 @@
         "engineering",
         "healthcare",
         "hospitality",
-        "it",
         "manufacturing",
-        "media",
         "retail"
       ],
       "flags": [
@@ -4049,15 +3935,15 @@
     {
       "key": "c:ise-data-request/verify-identity",
       "conceptId": "information-security:security-procedures",
-      "examples": 67,
-      "choice": 67,
+      "examples": 38,
+      "choice": 38,
       "position": [
-        16,
-        13,
-        18,
-        20
+        10,
+        9,
+        7,
+        12
       ],
-      "lengthCue": 28,
+      "lengthCue": 15,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -4083,13 +3969,13 @@
     {
       "key": "c:ise-suspicious-email/avoid-unexpected-attachment",
       "conceptId": "information-security:cyber-threats",
-      "examples": 26,
-      "choice": 26,
+      "examples": 16,
+      "choice": 16,
       "position": [
-        7,
         6,
-        7,
-        6
+        3,
+        4,
+        3
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -4102,11 +3988,9 @@
         "culinary",
         "education",
         "engineering",
-        "healthcare",
-        "hospitality",
         "it",
         "manufacturing",
-        "media"
+        "retail"
       ],
       "flags": [
         "near-duplicate-best-option"
@@ -4116,25 +4000,21 @@
     {
       "key": "c:ise-suspicious-email/contain-threat",
       "conceptId": "information-security:security-procedures",
-      "examples": 11,
-      "choice": 11,
+      "examples": 6,
+      "choice": 6,
       "position": [
-        6,
-        0,
-        4,
+        1,
+        2,
+        2,
         1
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
-        "automotive",
-        "business",
-        "engineering",
-        "healthcare",
-        "it",
-        "media",
+        "education",
+        "hospitality",
+        "manufacturing",
         "retail"
       ],
       "flags": [],
@@ -4143,27 +4023,24 @@
     {
       "key": "c:ise-suspicious-email/protect-credentials",
       "conceptId": "information-security:cyber-threats",
-      "examples": 31,
-      "choice": 31,
+      "examples": 15,
+      "choice": 15,
       "position": [
-        4,
-        8,
-        10,
-        9
+        7,
+        3,
+        2,
+        3
       ],
-      "lengthCue": 16,
+      "lengthCue": 5,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
+        "automotive",
         "business",
-        "construction",
         "culinary",
         "education",
         "engineering",
-        "healthcare",
-        "hospitality",
-        "it",
         "manufacturing",
         "media",
         "retail"
@@ -4180,130 +4057,23 @@
       "choice": 15,
       "position": [
         5,
-        2,
+        5,
         3,
-        5
+        2
       ],
-      "lengthCue": 9,
+      "lengthCue": 11,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
+        "automotive",
         "business",
         "construction",
         "education",
         "engineering",
         "healthcare",
-        "hospitality",
-        "it",
-        "manufacturing"
-      ],
-      "flags": [
-        "near-duplicate-best-option"
-      ],
-      "disposition": "excluded-from-mastery"
-    },
-    {
-      "key": "c:ise-workstation/avoid-unknown-device",
-      "conceptId": "information-security:security-procedures",
-      "examples": 8,
-      "choice": 8,
-      "position": [
-        2,
-        0,
-        4,
-        2
-      ],
-      "lengthCue": 8,
-      "shortCue": 0,
-      "wordingCue": 0,
-      "contexts": [
-        "agriculture",
-        "construction",
-        "culinary",
-        "education",
-        "manufacturing",
-        "media"
-      ],
-      "flags": [],
-      "disposition": "retained-for-ordinary-practice"
-    },
-    {
-      "key": "c:ise-workstation/protect-credentials",
-      "conceptId": "information-security:security-procedures",
-      "examples": 7,
-      "choice": 7,
-      "position": [
-        1,
-        2,
-        2,
-        2
-      ],
-      "lengthCue": 0,
-      "shortCue": 0,
-      "wordingCue": 0,
-      "contexts": [
-        "automotive",
-        "business",
-        "construction",
-        "engineering",
         "it",
         "manufacturing",
-        "retail"
-      ],
-      "flags": [],
-      "disposition": "retained-for-ordinary-practice"
-    },
-    {
-      "key": "c:ise-workstation/report-security-mistake",
-      "conceptId": "information-security:security-procedures",
-      "examples": 9,
-      "choice": 9,
-      "position": [
-        2,
-        2,
-        5,
-        0
-      ],
-      "lengthCue": 2,
-      "shortCue": 0,
-      "wordingCue": 0,
-      "contexts": [
-        "agriculture",
-        "automotive",
-        "education",
-        "engineering",
-        "hospitality",
-        "manufacturing",
-        "retail"
-      ],
-      "flags": [],
-      "disposition": "retained-for-ordinary-practice"
-    },
-    {
-      "key": "c:ite-printer-trouble/check-simple-causes",
-      "conceptId": "information-technology:troubleshooting",
-      "examples": 17,
-      "choice": 17,
-      "position": [
-        5,
-        5,
-        6,
-        1
-      ],
-      "lengthCue": 0,
-      "shortCue": 0,
-      "wordingCue": 0,
-      "contexts": [
-        "agriculture",
-        "automotive",
-        "business",
-        "construction",
-        "culinary",
-        "education",
-        "engineering",
-        "healthcare",
-        "hospitality",
         "media",
         "retail"
       ],
@@ -4313,15 +4083,111 @@
       "disposition": "excluded-from-mastery"
     },
     {
+      "key": "c:ise-workstation/avoid-unknown-device",
+      "conceptId": "information-security:security-procedures",
+      "examples": 3,
+      "choice": 3,
+      "position": [
+        0,
+        2,
+        0,
+        1
+      ],
+      "lengthCue": 3,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "culinary",
+        "hospitality",
+        "media"
+      ],
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
+    },
+    {
+      "key": "c:ise-workstation/protect-credentials",
+      "conceptId": "information-security:security-procedures",
+      "examples": 5,
+      "choice": 5,
+      "position": [
+        1,
+        0,
+        3,
+        1
+      ],
+      "lengthCue": 0,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "automotive",
+        "construction",
+        "education",
+        "engineering",
+        "retail"
+      ],
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
+    },
+    {
+      "key": "c:ise-workstation/report-security-mistake",
+      "conceptId": "information-security:security-procedures",
+      "examples": 5,
+      "choice": 5,
+      "position": [
+        1,
+        0,
+        2,
+        2
+      ],
+      "lengthCue": 0,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "business",
+        "engineering",
+        "healthcare",
+        "it"
+      ],
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
+    },
+    {
+      "key": "c:ite-printer-trouble/check-simple-causes",
+      "conceptId": "information-technology:troubleshooting",
+      "examples": 7,
+      "choice": 7,
+      "position": [
+        0,
+        2,
+        4,
+        1
+      ],
+      "lengthCue": 0,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "automotive",
+        "business",
+        "construction",
+        "healthcare",
+        "manufacturing",
+        "media"
+      ],
+      "flags": [
+        "near-duplicate-best-option"
+      ],
+      "disposition": "excluded-from-mastery"
+    },
+    {
       "key": "c:ite-printer-trouble/escalate-with-details",
       "conceptId": "information-technology:troubleshooting",
-      "examples": 21,
-      "choice": 21,
+      "examples": 15,
+      "choice": 15,
       "position": [
-        6,
-        0,
-        6,
-        9
+        5,
+        5,
+        2,
+        3
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -4329,11 +4195,10 @@
       "contexts": [
         "agriculture",
         "business",
-        "culinary",
-        "engineering",
+        "construction",
+        "education",
         "healthcare",
         "hospitality",
-        "it",
         "manufacturing",
         "media",
         "retail"
@@ -4344,51 +4209,19 @@
     {
       "key": "c:ite-printer-trouble/narrow-down-cause",
       "conceptId": "information-technology:troubleshooting",
-      "examples": 31,
-      "choice": 31,
+      "examples": 21,
+      "choice": 21,
       "position": [
-        8,
+        4,
         7,
-        8,
-        8
+        6,
+        4
       ],
       "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
-        "automotive",
-        "business",
-        "construction",
-        "culinary",
-        "education",
-        "engineering",
-        "healthcare",
-        "hospitality",
-        "manufacturing",
-        "media",
-        "retail"
-      ],
-      "flags": [
-        "near-duplicate-best-option"
-      ],
-      "disposition": "excluded-from-mastery"
-    },
-    {
-      "key": "c:ite-printer-trouble/read-the-error",
-      "conceptId": "information-technology:troubleshooting",
-      "examples": 23,
-      "choice": 23,
-      "position": [
-        5,
-        7,
-        5,
-        6
-      ],
-      "lengthCue": 14,
-      "shortCue": 0,
-      "wordingCue": 0,
-      "contexts": [
         "automotive",
         "business",
         "construction",
@@ -4399,11 +4232,40 @@
         "hospitality",
         "it",
         "manufacturing",
+        "media"
+      ],
+      "flags": [
+        "near-duplicate-best-option"
+      ],
+      "disposition": "excluded-from-mastery"
+    },
+    {
+      "key": "c:ite-printer-trouble/read-the-error",
+      "conceptId": "information-technology:troubleshooting",
+      "examples": 16,
+      "choice": 16,
+      "position": [
+        5,
+        4,
+        3,
+        4
+      ],
+      "lengthCue": 11,
+      "shortCue": 0,
+      "wordingCue": 0,
+      "contexts": [
+        "agriculture",
+        "automotive",
+        "business",
+        "construction",
+        "culinary",
+        "engineering",
+        "hospitality",
+        "manufacturing",
         "media",
         "retail"
       ],
       "flags": [
-        "answer-length-shortcut",
         "near-duplicate-best-option"
       ],
       "disposition": "excluded-from-mastery"
@@ -4411,13 +4273,13 @@
     {
       "key": "c:ite-sharing-file/choose-right-tool",
       "conceptId": "information-technology:software-and-applications",
-      "examples": 35,
-      "choice": 35,
+      "examples": 26,
+      "choice": 26,
       "position": [
-        12,
-        6,
-        11,
-        6
+        7,
+        10,
+        4,
+        5
       ],
       "lengthCue": 0,
       "shortCue": 5,
@@ -4428,7 +4290,8 @@
         "business",
         "construction",
         "culinary",
-        "healthcare",
+        "education",
+        "engineering",
         "hospitality",
         "it",
         "manufacturing",
@@ -4443,29 +4306,27 @@
     {
       "key": "c:ite-sharing-file/confirm-correct-version",
       "conceptId": "information-technology:cloud-and-file-sharing",
-      "examples": 48,
-      "choice": 48,
+      "examples": 29,
+      "choice": 29,
       "position": [
-        13,
-        15,
-        12,
+        6,
+        10,
+        5,
         8
       ],
       "lengthCue": 0,
-      "shortCue": 32,
+      "shortCue": 19,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "automotive",
         "business",
-        "construction",
         "culinary",
         "education",
         "engineering",
         "healthcare",
         "hospitality",
         "it",
-        "manufacturing",
         "media",
         "retail"
       ],
@@ -4478,13 +4339,13 @@
     {
       "key": "c:ite-sharing-file/limit-access",
       "conceptId": "information-technology:cloud-and-file-sharing",
-      "examples": 45,
-      "choice": 45,
+      "examples": 23,
+      "choice": 23,
       "position": [
-        9,
-        10,
-        12,
-        14
+        7,
+        3,
+        7,
+        6
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -4494,9 +4355,10 @@
         "automotive",
         "business",
         "construction",
-        "education",
+        "culinary",
         "engineering",
         "healthcare",
+        "hospitality",
         "it",
         "manufacturing",
         "media",
@@ -4510,44 +4372,40 @@
     {
       "key": "c:ite-sharing-file/maintain-software",
       "conceptId": "information-technology:software-and-applications",
-      "examples": 22,
-      "choice": 22,
+      "examples": 13,
+      "choice": 13,
       "position": [
-        7,
-        7,
         5,
+        1,
+        4,
         3
       ],
-      "lengthCue": 22,
+      "lengthCue": 13,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
-        "automotive",
-        "construction",
         "culinary",
         "education",
+        "healthcare",
         "hospitality",
         "it",
         "manufacturing",
         "media",
         "retail"
       ],
-      "flags": [
-        "answer-length-shortcut"
-      ],
-      "disposition": "excluded-from-mastery"
+      "flags": [],
+      "disposition": "retained-for-ordinary-practice"
     },
     {
       "key": "c:ite-sharing-file/protect-confidential-data",
       "conceptId": "information-technology:cloud-and-file-sharing",
-      "examples": 71,
-      "choice": 71,
+      "examples": 44,
+      "choice": 44,
       "position": [
-        15,
-        18,
-        20,
-        18
+        11,
+        13,
+        7,
+        13
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -4579,10 +4437,10 @@
       "examples": 24,
       "choice": 24,
       "position": [
-        4,
+        2,
         5,
-        4,
-        11
+        5,
+        12
       ],
       "lengthCue": 24,
       "shortCue": 0,
@@ -4591,12 +4449,12 @@
         "agriculture",
         "automotive",
         "business",
-        "construction",
+        "culinary",
         "education",
         "engineering",
         "healthcare",
+        "it",
         "manufacturing",
-        "media",
         "retail"
       ],
       "flags": [
@@ -4607,13 +4465,13 @@
     {
       "key": "c:jst-equipment-use/control-hazard-first",
       "conceptId": "job-specific-tools-and-technologies:safe-use",
-      "examples": 123,
-      "choice": 123,
+      "examples": 121,
+      "choice": 121,
       "position": [
-        31,
-        34,
-        27,
-        31
+        37,
+        25,
+        32,
+        27
       ],
       "lengthCue": 64,
       "shortCue": 0,
@@ -4641,21 +4499,22 @@
     {
       "key": "c:jst-equipment-use/read-instructions",
       "conceptId": "job-specific-tools-and-technologies:safe-use",
-      "examples": 42,
-      "choice": 42,
+      "examples": 48,
+      "choice": 48,
       "position": [
-        9,
-        13,
-        12,
-        8
+        10,
+        15,
+        14,
+        9
       ],
       "lengthCue": 0,
-      "shortCue": 13,
+      "shortCue": 15,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "automotive",
         "business",
+        "construction",
         "culinary",
         "education",
         "engineering",
@@ -4674,15 +4533,15 @@
     {
       "key": "c:jst-equipment-use/wear-required-gear",
       "conceptId": "job-specific-tools-and-technologies:safe-use",
-      "examples": 68,
-      "choice": 68,
+      "examples": 67,
+      "choice": 67,
       "position": [
-        16,
-        12,
-        14,
-        26
+        18,
+        9,
+        15,
+        25
       ],
-      "lengthCue": 5,
+      "lengthCue": 6,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -4707,13 +4566,13 @@
     {
       "key": "c:lis-group-update/fit-the-setting",
       "conceptId": "listening-and-speaking:audience-and-setting",
-      "examples": 34,
-      "choice": 34,
+      "examples": 33,
+      "choice": 33,
       "position": [
         7,
-        8,
+        9,
         6,
-        13
+        11
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -4725,7 +4584,7 @@
         "construction",
         "culinary",
         "education",
-        "healthcare",
+        "engineering",
         "hospitality",
         "it",
         "manufacturing",
@@ -4740,13 +4599,13 @@
     {
       "key": "c:lis-group-update/match-audience",
       "conceptId": "listening-and-speaking:audience-and-setting",
-      "examples": 32,
-      "choice": 32,
+      "examples": 34,
+      "choice": 34,
       "position": [
-        3,
-        11,
-        6,
-        12
+        7,
+        9,
+        7,
+        11
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -4775,13 +4634,13 @@
     {
       "key": "c:lis-spoken-instructions/confirm-missed-detail",
       "conceptId": "listening-and-speaking:active-listening",
-      "examples": 39,
-      "choice": 39,
+      "examples": 37,
+      "choice": 37,
       "position": [
-        12,
+        13,
         11,
-        5,
-        11
+        3,
+        10
       ],
       "lengthCue": 6,
       "shortCue": 0,
@@ -4793,7 +4652,6 @@
         "construction",
         "culinary",
         "education",
-        "engineering",
         "healthcare",
         "hospitality",
         "it",
@@ -4812,12 +4670,12 @@
       "examples": 64,
       "choice": 64,
       "position": [
-        14,
-        22,
-        16,
-        12
+        18,
+        21,
+        10,
+        15
       ],
-      "lengthCue": 24,
+      "lengthCue": 19,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -4843,12 +4701,12 @@
     {
       "key": "c:lis-spoken-instructions/request-recap",
       "conceptId": "listening-and-speaking:active-listening",
-      "examples": 40,
-      "choice": 40,
+      "examples": 37,
+      "choice": 37,
       "position": [
-        10,
-        6,
-        13,
+        7,
+        3,
+        16,
         11
       ],
       "lengthCue": 11,
@@ -4877,23 +4735,24 @@
     {
       "key": "c:lis-spoken-instructions/summarize-back",
       "conceptId": "listening-and-speaking:active-listening",
-      "examples": 14,
-      "choice": 14,
+      "examples": 18,
+      "choice": 18,
       "position": [
+        2,
+        9,
         4,
-        7,
-        1,
-        2
+        3
       ],
-      "lengthCue": 10,
+      "lengthCue": 12,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
-        "automotive",
+        "business",
         "culinary",
         "education",
         "healthcare",
+        "hospitality",
         "it",
         "manufacturing",
         "media",
@@ -4905,16 +4764,16 @@
     {
       "key": "c:pro-client-meeting/give-full-attention",
       "conceptId": "professionalism:etiquette",
-      "examples": 53,
-      "choice": 53,
+      "examples": 59,
+      "choice": 59,
       "position": [
-        12,
-        14,
-        11,
-        16
+        13,
+        20,
+        16,
+        10
       ],
       "lengthCue": 0,
-      "shortCue": 18,
+      "shortCue": 17,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
@@ -4939,13 +4798,13 @@
     {
       "key": "c:pro-client-meeting/show-courtesy",
       "conceptId": "professionalism:etiquette",
-      "examples": 33,
-      "choice": 33,
+      "examples": 31,
+      "choice": 31,
       "position": [
         8,
         11,
         7,
-        7
+        5
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -4960,7 +4819,6 @@
         "engineering",
         "healthcare",
         "hospitality",
-        "it",
         "manufacturing",
         "media",
         "retail"
@@ -4971,12 +4829,12 @@
     {
       "key": "c:pro-office-etiquette/avoid-gossip",
       "conceptId": "professionalism:etiquette",
-      "examples": 10,
-      "choice": 10,
+      "examples": 11,
+      "choice": 11,
       "position": [
         3,
         3,
-        3,
+        4,
         1
       ],
       "lengthCue": 7,
@@ -4984,7 +4842,9 @@
       "wordingCue": 0,
       "contexts": [
         "agriculture",
+        "automotive",
         "business",
+        "engineering",
         "manufacturing",
         "retail"
       ],
@@ -4999,8 +4859,8 @@
       "position": [
         3,
         2,
-        4,
-        1
+        5,
+        0
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -5012,6 +4872,7 @@
         "culinary",
         "education",
         "engineering",
+        "healthcare",
         "manufacturing",
         "retail"
       ],
@@ -5026,8 +4887,8 @@
       "position": [
         4,
         1,
-        2,
-        3
+        1,
+        4
       ],
       "lengthCue": 10,
       "shortCue": 0,
@@ -5035,6 +4896,7 @@
       "contexts": [
         "business",
         "engineering",
+        "healthcare",
         "hospitality",
         "media",
         "retail"
@@ -5045,21 +4907,20 @@
     {
       "key": "c:pro-office-etiquette/respect-shared-space",
       "conceptId": "professionalism:etiquette",
-      "examples": 8,
-      "choice": 8,
+      "examples": 9,
+      "choice": 9,
       "position": [
         2,
-        3,
-        0,
+        2,
+        2,
         3
       ],
       "lengthCue": 0,
-      "shortCue": 8,
+      "shortCue": 9,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
         "automotive",
-        "business",
         "construction",
         "culinary",
         "hospitality",
@@ -5071,20 +4932,19 @@
     {
       "key": "c:pro-office-etiquette/show-courtesy",
       "conceptId": "professionalism:etiquette",
-      "examples": 6,
-      "choice": 6,
+      "examples": 5,
+      "choice": 5,
       "position": [
+        0,
+        3,
         1,
-        2,
-        2,
         1
       ],
-      "lengthCue": 6,
+      "lengthCue": 5,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
-        "automotive",
         "education",
         "hospitality",
         "it"
@@ -5095,15 +4955,15 @@
     {
       "key": "c:raw-delay-email/organize-for-reader",
       "conceptId": "reading-and-writing:clarity",
-      "examples": 29,
-      "choice": 29,
+      "examples": 25,
+      "choice": 25,
       "position": [
+        7,
         5,
-        8,
-        5,
+        2,
         11
       ],
-      "lengthCue": 10,
+      "lengthCue": 8,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -5129,15 +4989,15 @@
     {
       "key": "c:raw-delay-email/verify-before-writing",
       "conceptId": "reading-and-writing:clarity",
-      "examples": 89,
-      "choice": 89,
+      "examples": 94,
+      "choice": 94,
       "position": [
-        16,
-        20,
+        30,
+        22,
         19,
-        34
+        23
       ],
-      "lengthCue": 50,
+      "lengthCue": 56,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -5167,17 +5027,17 @@
       "examples": 19,
       "choice": 19,
       "position": [
-        6,
-        3,
+        5,
         4,
-        6
+        3,
+        7
       ],
       "lengthCue": 16,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
         "agriculture",
-        "business",
+        "construction",
         "culinary",
         "education",
         "engineering",
@@ -5194,13 +5054,13 @@
     {
       "key": "c:raw-reading-procedure/clarify-unknown-term",
       "conceptId": "reading-and-writing:interpret-documents",
-      "examples": 16,
-      "choice": 16,
+      "examples": 13,
+      "choice": 13,
       "position": [
         4,
-        4,
+        2,
         3,
-        5
+        4
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -5208,7 +5068,7 @@
       "contexts": [
         "agriculture",
         "automotive",
-        "construction",
+        "business",
         "culinary",
         "education",
         "engineering",
@@ -5225,12 +5085,12 @@
     {
       "key": "c:raw-reading-procedure/read-warnings-fully",
       "conceptId": "reading-and-writing:interpret-documents",
-      "examples": 35,
-      "choice": 35,
+      "examples": 39,
+      "choice": 39,
       "position": [
+        10,
         9,
-        9,
-        5,
+        8,
         12
       ],
       "lengthCue": 0,
@@ -5242,7 +5102,6 @@
         "business",
         "construction",
         "culinary",
-        "education",
         "engineering",
         "healthcare",
         "hospitality",
@@ -5259,15 +5118,15 @@
     {
       "key": "c:raw-reading-procedure/resolve-conflicting-documents",
       "conceptId": "reading-and-writing:interpret-documents",
-      "examples": 37,
-      "choice": 37,
+      "examples": 38,
+      "choice": 38,
       "position": [
-        6,
-        6,
         7,
-        18
+        8,
+        8,
+        15
       ],
-      "lengthCue": 6,
+      "lengthCue": 7,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -5293,15 +5152,15 @@
     {
       "key": "c:saf-chemical-task/emergency-response",
       "conceptId": "workplace-safety:emergency-protocols",
-      "examples": 59,
-      "choice": 59,
+      "examples": 58,
+      "choice": 58,
       "position": [
-        15,
-        14,
+        11,
         16,
-        14
+        18,
+        13
       ],
-      "lengthCue": 5,
+      "lengthCue": 4,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -5327,27 +5186,26 @@
     {
       "key": "c:saf-chemical-task/report-after",
       "conceptId": "workplace-safety:emergency-protocols",
-      "examples": 14,
-      "choice": 14,
+      "examples": 11,
+      "choice": 11,
       "position": [
-        4,
         2,
-        6,
-        2
+        1,
+        4,
+        4
       ],
-      "lengthCue": 7,
+      "lengthCue": 3,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
-        "agriculture",
         "automotive",
         "business",
+        "culinary",
         "education",
         "engineering",
-        "healthcare",
         "hospitality",
-        "manufacturing",
-        "media"
+        "media",
+        "retail"
       ],
       "flags": [
         "Routine restocking does not assess emergency protocols."
@@ -5357,15 +5215,15 @@
     {
       "key": "c:tea-short-staffed/channel-frustration",
       "conceptId": "teamwork:team-communication",
-      "examples": 38,
-      "choice": 38,
+      "examples": 36,
+      "choice": 36,
       "position": [
-        10,
         8,
+        9,
         12,
-        8
+        7
       ],
-      "lengthCue": 1,
+      "lengthCue": 0,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -5391,15 +5249,15 @@
     {
       "key": "c:tea-short-staffed/get-status-first",
       "conceptId": "teamwork:team-communication",
-      "examples": 44,
-      "choice": 44,
+      "examples": 42,
+      "choice": 42,
       "position": [
-        4,
-        12,
+        3,
         11,
-        17
+        13,
+        15
       ],
-      "lengthCue": 4,
+      "lengthCue": 3,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -5428,10 +5286,10 @@
       "examples": 16,
       "choice": 16,
       "position": [
-        2,
+        3,
         2,
         3,
-        9
+        8
       ],
       "lengthCue": 0,
       "shortCue": 16,
@@ -5441,9 +5299,7 @@
         "automotive",
         "business",
         "construction",
-        "culinary",
         "education",
-        "engineering",
         "healthcare",
         "hospitality",
         "it",
@@ -5457,15 +5313,15 @@
     {
       "key": "c:tea-team-project/agree-roles",
       "conceptId": "teamwork:expectations-roles-goals",
-      "examples": 67,
-      "choice": 67,
+      "examples": 68,
+      "choice": 68,
       "position": [
         21,
-        16,
         13,
-        17
+        15,
+        19
       ],
-      "lengthCue": 2,
+      "lengthCue": 4,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -5491,15 +5347,15 @@
     {
       "key": "c:tea-team-project/clarify-goal",
       "conceptId": "teamwork:expectations-roles-goals",
-      "examples": 64,
-      "choice": 64,
+      "examples": 63,
+      "choice": 63,
       "position": [
         15,
-        19,
-        17,
-        13
+        13,
+        18,
+        17
       ],
-      "lengthCue": 24,
+      "lengthCue": 21,
       "shortCue": 0,
       "wordingCue": 0,
       "contexts": [
@@ -5525,13 +5381,13 @@
     {
       "key": "c:tea-team-project/communicate-overlap",
       "conceptId": "teamwork:team-communication",
-      "examples": 76,
-      "choice": 76,
+      "examples": 68,
+      "choice": 68,
       "position": [
-        21,
+        18,
         17,
         16,
-        22
+        17
       ],
       "lengthCue": 0,
       "shortCue": 0,
@@ -5559,16 +5415,16 @@
     {
       "key": "c:tea-team-project/recognize-contribution",
       "conceptId": "teamwork:respect-contributions",
-      "examples": 15,
-      "choice": 15,
+      "examples": 16,
+      "choice": 16,
       "position": [
-        3,
-        5,
+        2,
+        6,
         4,
-        3
+        4
       ],
       "lengthCue": 0,
-      "shortCue": 15,
+      "shortCue": 16,
       "wordingCue": 0,
       "contexts": [
         "automotive",
@@ -5579,6 +5435,7 @@
         "healthcare",
         "hospitality",
         "it",
+        "manufacturing",
         "retail"
       ],
       "flags": [],
@@ -5587,13 +5444,13 @@
     {
       "key": "c:tea-team-project/support-teammate",
       "conceptId": "teamwork:respect-contributions",
-      "examples": 26,
-      "choice": 26,
+      "examples": 28,
+      "choice": 28,
       "position": [
         5,
-        6,
         8,
-        7
+        6,
+        9
       ],
       "lengthCue": 19,
       "shortCue": 0,
@@ -5606,6 +5463,7 @@
         "culinary",
         "engineering",
         "healthcare",
+        "hospitality",
         "it",
         "manufacturing",
         "media",
@@ -5625,7 +5483,7 @@
       "tier": "complex-reasoning",
       "minimum": 20,
       "originalUnits": 7,
-      "retainedUnits": 4,
+      "retainedUnits": 5,
       "repairedUnits": 0,
       "authoredUnits": 0,
       "serverScoreableUnits": 0,
@@ -5690,7 +5548,7 @@
       "tier": "complex-reasoning",
       "minimum": 20,
       "originalUnits": 5,
-      "retainedUnits": 2,
+      "retainedUnits": 3,
       "repairedUnits": 0,
       "authoredUnits": 0,
       "serverScoreableUnits": 0,
@@ -5794,7 +5652,7 @@
       "tier": "complex-reasoning",
       "minimum": 20,
       "originalUnits": 11,
-      "retainedUnits": 8,
+      "retainedUnits": 9,
       "repairedUnits": 20,
       "authoredUnits": 20,
       "serverScoreableUnits": 20,
@@ -5820,7 +5678,7 @@
       "tier": "complex-reasoning",
       "minimum": 20,
       "originalUnits": 10,
-      "retainedUnits": 8,
+      "retainedUnits": 9,
       "repairedUnits": 20,
       "authoredUnits": 20,
       "serverScoreableUnits": 20,

@@ -357,12 +357,12 @@
             "Trash bags by the back door are spilling onto the sidewalk, and {workplace|the} promised neighbors to keep trash in closed bins."
           ],
           "short": "the trash on the sidewalk",
-          "action": "Put the trash in the closed bins, keeping the promise made to the neighbors.",
+          "action": "Put the trash in the closed bins, as promised to the neighbors.",
           "reason": "The workplace's reputation in the neighborhood depends on keeping its promises. A few minutes now protects that relationship.",
           "lesson": "Your everyday actions shape how the community sees your workplace.",
           "shortcut": [
             {
-              "text": "Leave the bags for the morning crew, since it is late.",
+              "text": "Leave the bags for the morning crew, since it is late and they start early.",
               "why": "Overnight, the trash stays on the sidewalk and breaks the promise to neighbors.",
               "mis": "Small messes outside do not affect the business."
             }
@@ -385,7 +385,7 @@
           "lesson": "Small wastes repeated every night become big costs for the organization.",
           "shortcut": [
             {
-              "text": "Leave it on, since one night of power costs almost nothing.",
+              "text": "Leave it on, since one night of power costs almost nothing and it may be needed tomorrow.",
               "why": "Habits repeat. One night becomes every night, and the cost adds up.",
               "mis": "Small costs do not matter to a business."
             }
@@ -403,12 +403,12 @@
             "A sealed box of unused {supply.plural} has been thrown in the trash."
           ],
           "short": "the sealed box in the trash",
-          "action": "Take the sealed box out of the trash and return it to the supply shelf.",
+          "action": "Return the sealed box from the trash to the supply shelf.",
           "reason": "Unused supplies cost money to replace. Returning them protects the budget everyone depends on.",
           "lesson": "Treat the organization's resources as if your own budget depended on them.",
           "shortcut": [
             {
-              "text": "Leave it, since someone must have had a reason to throw it out.",
+              "text": "Leave it in the trash, since someone must have had a reason to throw it out.",
               "why": "A sealed, unused box has value. If there is a reason, it can be checked tomorrow.",
               "mis": "Whatever is in the trash must be waste."
             }
@@ -426,12 +426,12 @@
             "This is the third night this week the closing list has been left half done."
           ],
           "short": "the repeated half-done closing",
-          "action": "Finish the list, then let {lead|the} know it keeps happening so the routine can be fixed.",
+          "action": "Finish the list, then tell {lead|the} this keeps happening.",
           "reason": "Fixing tonight's gaps helps once. Telling the lead about the pattern helps fix the routine for every night.",
           "lesson": "Look beyond the single incident to the pattern behind it.",
           "shortcut": [
             {
-              "text": "Finish the list again and say nothing, since it is easier.",
+              "text": "Finish the list again and say nothing, since that is quicker than raising the problem.",
               "why": "Quietly covering a repeated gap leaves the cause in place.",
               "mis": "Covering a problem is the same as solving it."
             }
@@ -445,12 +445,12 @@
       },
       "generic": [
         {
-          "text": "Write a note about it and leave everything as it is.",
+          "text": "Write a note about the problem on the whiteboard and leave everything as it is.",
           "why": "A note does not fix a problem you can handle in minutes.",
           "mis": "Writing a note is the same as handling it."
         },
         {
-          "text": "Text {coworker} to come back and handle it.",
+          "text": "Text {coworker} to come back tonight and handle it.",
           "why": "You are the one closing. Calling someone back is not necessary for a task you can do.",
           "mis": "Closing problems belong to whoever caused them."
         }

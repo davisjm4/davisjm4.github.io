@@ -1,0 +1,322 @@
+{
+ "skill": "information-security",
+ "kits": [
+  {
+   "id": "ise-responsible-technology",
+   "skill": "information-security",
+   "family": "information-security.cx-using-technology-responsibly",
+   "familyName": "Using technology responsibly",
+   "framework": "competing-priorities",
+   "concepts": [
+    "information-security:ethical-technology-use",
+    "information-security:confidentiality"
+   ],
+   "contexts": "any",
+   "setup": [
+    "You work as {role|a} at {workplace|a}, where the technology policy sets rules for records, recordings and tools.",
+    "As {role|a} at {workplace|a}, you use workplace technology under a policy that sets rules for how it is used."
+   ],
+   "detail": [
+    "It is a normal weekday.",
+    "Your station is near the front."
+   ],
+   "pressure": [
+    "{coworker3} says the policy is just a formality.",
+    "You are in a hurry to finish before break."
+   ],
+   "tiers": {
+    "1": "Looking at records you have no work reason to see harms the people in them.",
+    "2": "Recording people needs their agreement before it starts.",
+    "3": "Internal conversations stay inside the workplace unless the policy says otherwise.",
+    "4": "Use only materials the workplace has permission to use.",
+    "5": "Check anything a tool writes before it goes out under your name."
+   },
+   "issues": [
+    {
+     "id": "snoop",
+     "tier": 1,
+     "rule": "open-records-only-for-your-tasks",
+     "principle": "ise.no-curiosity-lookups",
+     "fact": [
+      "You can open records of people you do not work with, and the policy says records are opened only for assigned tasks."
+     ],
+     "short": "the record you have no task for",
+     "action": "Close the record and keep to your assigned tasks.",
+     "brief": "close the record and stick to your tasks",
+     "reason": "Access is recorded, and people trust the workplace to protect their records from curiosity.",
+     "lesson": "Open records only for your assigned tasks, even when nothing stops you.",
+     "shortcut": [
+      {
+       "text": "Look just once out of curiosity, since nobody checks who opens records.",
+       "brief": "look at the record once out of curiosity",
+       "why": "The policy limits access to assigned tasks, and the system keeps a log of who looked.",
+       "mis": "Access that goes unnoticed is allowed."
+      }
+     ],
+     "clear": [
+      "You already closed a record you had no task for without reading it."
+     ],
+     "done": "the record is already closed"
+    },
+    {
+     "id": "recording",
+     "tier": 2,
+     "rule": "get-agreement-before-recording",
+     "principle": "ise.agree-before-recording",
+     "fact": [
+      "{coworker} suggests secretly recording a meeting on a phone, and the policy says recordings need everyone's agreement."
+     ],
+     "short": "the secret recording",
+     "action": "Decline, and suggest asking everyone for agreement or taking written notes.",
+     "brief": "decline and offer written notes",
+     "reason": "Recording without agreement breaks the policy and the trust of the people in the meeting.",
+     "lesson": "Record people only with their agreement, or take written notes instead.",
+     "shortcut": [
+      {
+       "text": "Record it quietly, since it is only for your own notes.",
+       "brief": "record the meeting quietly",
+       "why": "The policy needs everyone's agreement, and a private recording can still be shared by mistake.",
+       "mis": "A recording for personal use needs no one's agreement."
+      }
+     ],
+     "clear": [
+      "Everyone in a meeting already agreed to have it recorded."
+     ],
+     "done": "everyone already agreed to the recording"
+    },
+    {
+     "id": "screenshot",
+     "tier": 3,
+     "rule": "keep-internal-chat-inside",
+     "principle": "ise.no-internal-chat-on-social-media",
+     "fact": [
+      "You want to post a screenshot of an internal chat on social media, and the policy says internal chats stay inside the workplace."
+     ],
+     "short": "the screenshot of the internal chat",
+     "action": "Skip the post, or describe your point without sharing the chat.",
+     "brief": "skip the post or describe it without the chat",
+     "reason": "An internal chat can hold details that were meant for coworkers only, even when it seems harmless.",
+     "lesson": "Keep internal conversations inside the workplace, even when you only want to share a funny moment.",
+     "shortcut": [
+      {
+       "text": "Post it with the names blurred, since nobody will be identified.",
+       "brief": "post the screenshot with names blurred",
+       "why": "A blurred screenshot still shares internal information that the policy keeps inside.",
+       "mis": "Blurring names makes sharing allowed."
+      }
+     ],
+     "clear": [
+      "You already deleted your draft post of an internal chat screenshot."
+     ],
+     "done": "the screenshot post is already dropped"
+    },
+    {
+     "id": "image",
+     "tier": 4,
+     "rule": "use-only-cleared-materials",
+     "principle": "ise.use-cleared-images",
+     "fact": [
+      "You want to put a website photo on a flyer, and the guide allows only images the workplace has permission to use."
+     ],
+     "short": "the website photo for the flyer",
+     "action": "Use an image the workplace has permission for, or ask {lead|the} to confirm.",
+     "brief": "use a cleared image or ask {lead|the}",
+     "reason": "Having permission is what the guide requires, and a quick question settles whether the photo qualifies.",
+     "lesson": "Use only images and materials the workplace has permission to use.",
+     "shortcut": [
+      {
+       "text": "Use the photo and credit the website underneath it.",
+       "brief": "use the photo and credit the website",
+       "why": "Credit does not replace permission, which is what the guide asks for.",
+       "mis": "Naming the source makes any image fair to use."
+      }
+     ],
+     "clear": [
+      "{Lead|the} already confirmed the workplace has permission to use a website photo."
+     ],
+     "done": "the photo is already cleared"
+    },
+    {
+     "id": "draft",
+     "tier": 5,
+     "rule": "review-tool-drafts",
+     "principle": "ise.review-tool-drafts-before-sending",
+     "fact": [
+      "You used a writing tool to draft a customer message, and the policy says staff are responsible for anything they send."
+     ],
+     "short": "the draft written by a tool",
+     "action": "Read and correct the draft before sending it, since you are responsible for it.",
+     "brief": "check and fix the draft",
+     "reason": "A tool can get details wrong or sound sure when it is not, and you answer for what goes out.",
+     "lesson": "Check anything a tool writes before it goes out under your name.",
+     "shortcut": [
+      {
+       "text": "Send it as written, since the tool is built to write well.",
+       "brief": "send the draft as written",
+       "why": "Tools can make errors, and the policy makes you responsible for what you send.",
+       "mis": "A tool's draft needs no review."
+      }
+     ],
+     "clear": [
+      "You already checked and corrected a customer message drafted by a tool."
+     ],
+     "done": "the draft is already checked"
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations involves a technology rule that applies to you.",
+    "lesson": "The technology policy applies to what you open, record, share, copy and send."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} what they usually do and do the same.",
+     "why": "A coworker's habit is not the policy, and it may break the rule.",
+     "mis": "Common practice matches the policy."
+    },
+    {
+     "text": "Do it now and mention it to {lead|the} afterward.",
+     "why": "The policy sets the rule beforehand, and telling someone later does not undo a breach.",
+     "mis": "It is easier to ask forgiveness than permission."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Stop using all workplace technology until {lead|the} reviews the whole policy with you.",
+     "why": "The concern is specific. Stopping everything delays work the policy allows.",
+     "mis": "Any rule question means stopping all technology use."
+    }
+   ],
+   "process": {
+    "setup": [
+     "You want to add an outside photo to a flyer your team is preparing."
+    ],
+    "steps": [
+     {
+      "id": "find",
+      "text": "Find a photo that fits the flyer",
+      "core": true
+     },
+     {
+      "id": "check",
+      "text": "Confirm the workplace has permission",
+      "core": true
+     },
+     {
+      "id": "place",
+      "text": "Add the photo to the flyer",
+      "core": true
+     },
+     {
+      "id": "show",
+      "text": "Show {lead|the} the finished flyer"
+     }
+    ],
+    "rel": [
+     [
+      "find",
+      "check",
+      "You need a specific photo before you can check it."
+     ],
+     [
+      "check",
+      "place",
+      "Permission comes before the photo goes on the flyer."
+     ],
+     [
+      "place",
+      "show",
+      "The finished flyer includes the photo."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Choose the image, confirm permission, place it, then share the result."
+   },
+   "doc": {
+    "type": "procedure",
+    "title": [
+     "Technology reminders"
+    ],
+    "intro": [
+     "You are checking a reminder sheet before it is posted near the computers."
+    ],
+    "prompt": [
+     "Which line gives advice that breaks the policy?",
+     "Which line is the problem?"
+    ],
+    "lesson": "Technology reminders must match the workplace policy on records, recordings, chats, images and drafts.",
+    "lines": [
+     {
+      "id": "records",
+      "text": "Open records only when your assigned task needs them.",
+      "fine": "Limits access to a work reason.",
+      "bad": [
+       {
+        "id": "records-curious",
+        "level": "beginner",
+        "text": "Open any record you can reach if you are curious.",
+        "why": "Access is limited to assigned tasks, however easy it is to reach other records.",
+        "principle": "ise.doc-curiosity-lookup"
+       }
+      ]
+     },
+     {
+      "id": "record",
+      "text": "Record a meeting only when everyone has agreed.",
+      "fine": "Respects the people being recorded.",
+      "bad": [
+       {
+        "id": "record-secret",
+        "level": "intermediate",
+        "text": "Record a meeting quietly if the recording is only for you.",
+        "why": "Everyone's agreement is needed, even when the recording is private.",
+        "principle": "ise.doc-secret-recording"
+       }
+      ]
+     },
+     {
+      "id": "chat",
+      "text": "Keep internal chats inside the workplace.",
+      "fine": "Protects details meant for coworkers.",
+      "bad": [
+       {
+        "id": "chat-post",
+        "level": "advanced",
+        "text": "Share an internal chat online if you hide the names.",
+        "why": "The details still leave the workplace, so hiding names does not make it allowed.",
+        "principle": "ise.doc-blurred-chat"
+       }
+      ]
+     },
+     {
+      "id": "draft",
+      "text": "Check anything a tool writes before you send it.",
+      "fine": "Makes you responsible for what goes out."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims",
+     "policy-stated-in-scenario"
+    ],
+    "notes": "All rules are stated as this workplace's policy; no recording or image-use law is cited. Tiers: records, recordings, internal chats, cleared materials, tool drafts."
+   },
+   "exclusive": [
+    [
+     "screenshot",
+     "image"
+    ],
+    [
+     "screenshot",
+     "draft"
+    ],
+    [
+     "image",
+     "draft"
+    ]
+   ]
+  }
+ ]
+}

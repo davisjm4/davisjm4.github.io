@@ -1,0 +1,337 @@
+{
+ "skill": "integrity",
+ "kits": [
+  {
+   "id": "int-rules-and-regulations",
+   "skill": "integrity",
+   "family": "integrity.cx-following-posted-rules",
+   "familyName": "Following the rules the workplace must meet",
+   "framework": "competing-priorities",
+   "concepts": [
+    "integrity:laws-and-regulations",
+    "integrity:policies-and-procedures"
+   ],
+   "contexts": [
+    "agriculture",
+    "automotive",
+    "construction",
+    "culinary",
+    "healthcare",
+    "hospitality",
+    "manufacturing",
+    "retail"
+   ],
+   "setup": [
+    "You work as {role|a} at {workplace|a}, where a compliance guide lists the rules every employee follows.",
+    "As {role|a} at {workplace|a}, you follow a compliance guide that spells out required rules for your work."
+   ],
+   "detail": [
+    "It is a normal weekday.",
+    "{Lead|the} is on the floor today."
+   ],
+   "pressure": [
+    "{coworker3} says nobody ever checks these rules.",
+    "You are in the middle of a busy afternoon."
+   ],
+   "tiers": {
+    "1": "An item that could hurt customers comes off the floor before anything else.",
+    "2": "Work that needs a current certificate cannot go on without one.",
+    "3": "A false or missing record misleads everyone who relies on it.",
+    "4": "Requests for personal records follow a set route for a reason.",
+    "5": "A missing required notice should be restored, but it can wait behind urgent problems."
+   },
+   "issues": [
+    {
+     "id": "recall",
+     "tier": 1,
+     "rule": "remove-recalled-item",
+     "principle": "int.pull-recalled-item",
+     "fact": [
+      "The compliance guide says recalled items come off the sales floor at once, and a recall notice just listed an item on your shelf."
+     ],
+     "short": "the recalled item on the shelf",
+     "action": "Pull the item from the shelf and tell {lead|the} right away.",
+     "brief": "pull the item and tell {lead|the}",
+     "reason": "A recall notice means the item may harm customers, so it comes off the floor before anything else.",
+     "lesson": "When a notice says an item is unsafe, remove it first and report it.",
+     "shortcut": [
+      {
+       "text": "Finish stocking the aisle first and pull the item at the end of your shift.",
+       "brief": "pull it after stocking",
+       "why": "Customers could buy the item while you finish, and the guide says to remove it at once.",
+       "mis": "Routine work should be finished before acting on a notice."
+      }
+     ],
+     "clear": [
+      "{Lead|the} already pulled an item named in a recall notice and logged it."
+     ],
+     "done": "the recalled item is already off the shelf"
+    },
+    {
+     "id": "permit",
+     "tier": 2,
+     "rule": "stop-without-current-certificate",
+     "principle": "int.stop-when-certificate-expired",
+     "fact": [
+      "Your certificate to run {equipment|the} expired yesterday, and the compliance guide says only staff with a current certificate may run it."
+     ],
+     "short": "the expired certificate",
+     "action": "Stop running it and ask {lead|the} how to renew your certificate.",
+     "brief": "stop and ask to renew the certificate",
+     "reason": "The guide allows only staff with a current certificate, so recent training does not cover you until it is renewed.",
+     "lesson": "If a required certificate has expired, stop that task and get it renewed.",
+     "shortcut": [
+      {
+       "text": "Keep running it until the renewal paperwork arrives, since you were certified recently.",
+       "brief": "keep running it until renewal",
+       "why": "An expired certificate means you are no longer cleared under the guide, however recently it ran out.",
+       "mis": "A certificate that expired recently still counts."
+      }
+     ],
+     "clear": [
+      "Your certificate to run {equipment|the} was already renewed, and {lead|the} confirmed it is on file."
+     ],
+     "done": "the certificate is already renewed"
+    },
+    {
+     "id": "log",
+     "tier": 3,
+     "rule": "record-honestly-even-if-late",
+     "principle": "int.late-record-with-note",
+     "fact": [
+      "You did yesterday's inspection but left the log blank, and the guide says each log is completed on the day of inspection."
+     ],
+     "short": "the blank inspection log",
+     "action": "Complete the log with today's date and a note that it was filled in late.",
+     "brief": "log it today and note it was late",
+     "reason": "A late entry that says it is late keeps the record true. A backdated entry would be a false record.",
+     "lesson": "Complete required records honestly, even when late, and never backdate them.",
+     "shortcut": [
+      {
+       "text": "Fill in the log with yesterday's date so it looks complete.",
+       "brief": "backdate the log entry",
+       "why": "Backdating makes a false record, even when the inspection really happened.",
+       "mis": "A complete-looking log matters more than an honest one."
+      }
+     ],
+     "clear": [
+      "The late inspection log was already completed with a note saying it was filled in late."
+     ],
+     "done": "the late log entry is already recorded"
+    },
+    {
+     "id": "privacy",
+     "tier": 4,
+     "rule": "route-record-requests",
+     "principle": "int.send-record-requests-to-privacy-office",
+     "fact": [
+      "A customer asks for a copy of everything recorded about them, and the compliance guide says these requests go to the privacy office."
+     ],
+     "short": "the customer's request for records",
+     "action": "Tell the customer how to send the request to the privacy office.",
+     "brief": "point them to the privacy office",
+     "reason": "The guide sends these requests to people trained to decide what can be released.",
+     "lesson": "Send requests for personal records through the route the guide names.",
+     "shortcut": [
+      {
+       "text": "Print what you can find and hand it over so the customer is not kept waiting.",
+       "brief": "hand over what you can find",
+       "why": "You might release information the privacy office would have held back.",
+       "mis": "Helping quickly means handing over whatever you can find."
+      }
+     ],
+     "clear": [
+      "The privacy office already has a customer's request for their records."
+     ],
+     "done": "the privacy office already has the request"
+    },
+    {
+     "id": "notice",
+     "tier": 5,
+     "rule": "keep-required-notice-posted",
+     "principle": "int.keep-required-notice-posted",
+     "fact": [
+      "The compliance guide says the required notice in the break room must stay posted, and it has fallen off the wall."
+     ],
+     "short": "the fallen notice",
+     "action": "Put the notice back up and mention it to {lead|the}.",
+     "brief": "repost the notice and mention it",
+     "reason": "A required notice only helps if people can see it, and telling {lead|the} stops it from happening again.",
+     "lesson": "Keep required notices visible and report it when one comes down.",
+     "shortcut": [
+      {
+       "text": "Leave it on the table, since everyone already knows what it says.",
+       "brief": "leave it on the table",
+       "why": "Not everyone has read it, and the guide says it must stay posted.",
+       "mis": "A rule everyone knows needs no notice."
+      }
+     ]
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations involves a rule in the guide that applies to every employee.",
+    "lesson": "The rules in a compliance guide apply to everyone who works there."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} what they usually do and copy that.",
+     "why": "A coworker's habit is not the guide, and it may be out of date.",
+     "mis": "Common practice matches the written rules."
+    },
+    {
+     "text": "Wait for someone to point out the problem before you act.",
+     "why": "The guide applies to you now, and waiting leaves the problem in place.",
+     "mis": "Rules only matter once someone notices."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Stop all your work until {lead|the} reviews every rule in the guide with you.",
+     "why": "The problem is specific, and stopping everything delays work that is allowed.",
+     "mis": "Any rule question means stopping all work."
+    }
+   ],
+   "process": {
+    "setup": [
+     "A recall notice lists an item that is on the shelves where you work."
+    ],
+    "steps": [
+     {
+      "id": "read",
+      "text": "Read the notice to match the item",
+      "core": true
+     },
+     {
+      "id": "pull",
+      "text": "Take the item off the shelf",
+      "core": true
+     },
+     {
+      "id": "tell",
+      "text": "Tell {lead|the} what you found"
+     },
+     {
+      "id": "record",
+      "text": "Record what was removed",
+      "core": true
+     }
+    ],
+    "rel": [
+     [
+      "read",
+      "pull",
+      "You need to be sure which item before you remove it."
+     ],
+     [
+      "read",
+      "tell",
+      "Your report should say which item the notice means."
+     ],
+     [
+      "pull",
+      "record",
+      "Record what was actually removed."
+     ],
+     [
+      "tell",
+      "record",
+      "The record should include who was told."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Match the item, remove it, report it, then keep the record."
+   },
+   "doc": {
+    "type": "procedure",
+    "title": [
+     "Compliance reminders"
+    ],
+    "intro": [
+     "You are checking a reminder sheet before it is posted in the break room."
+    ],
+    "prompt": [
+     "Which line gives advice that breaks the guide?",
+     "Which line is the problem?"
+    ],
+    "lesson": "Reminder sheets must match what the compliance guide actually requires.",
+    "lines": [
+     {
+      "id": "recall",
+      "text": "Take recalled items off the sales floor at once and tell your lead.",
+      "fine": "Keeps unsafe items away from customers.",
+      "bad": [
+       {
+        "id": "recall-late",
+        "level": "advanced",
+        "text": "Take recalled items off the sales floor at the end of your shift.",
+        "why": "Customers could buy the item in the meantime. The guide says to remove it at once.",
+        "principle": "int.doc-recall-late"
+       }
+      ]
+     },
+     {
+      "id": "cert",
+      "text": "Stop work that needs a certificate once yours has expired.",
+      "fine": "Keeps work within what you are cleared to do.",
+      "bad": [
+       {
+        "id": "cert-grace",
+        "level": "beginner",
+        "text": "Keep doing work that needs a certificate for a week after it expires.",
+        "why": "The guide allows only staff with a current certificate, with no grace week.",
+        "principle": "int.doc-cert-grace"
+       }
+      ]
+     },
+     {
+      "id": "log",
+      "text": "Complete each inspection log on the day of the inspection.",
+      "fine": "Keeps the record close to the event.",
+      "bad": [
+       {
+        "id": "log-backdate",
+        "level": "intermediate",
+        "text": "If you miss a log, fill it in later with the earlier date.",
+        "why": "Backdating makes a false record. A late entry should show its real date.",
+        "principle": "int.doc-backdate-log"
+       }
+      ]
+     },
+     {
+      "id": "privacy",
+      "text": "Send requests for personal records to the privacy office.",
+      "fine": "Sends requests to the people who decide what can be released."
+     },
+     {
+      "id": "notice",
+      "text": "Keep required notices posted where employees can see them.",
+      "fine": "Makes sure everyone can read the rule."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims",
+     "policy-stated-in-scenario"
+    ],
+    "notes": "Every rule is stated as what this workplace's compliance guide says. No statute is cited or implied. Tiers: safety, then certificate, then record accuracy, then privacy route, then notices."
+   },
+   "exclusive": [
+    [
+     "log",
+     "privacy"
+    ],
+    [
+     "log",
+     "notice"
+    ],
+    [
+     "privacy",
+     "notice"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,345 @@
+{
+ "skill": "creativity-and-innovation",
+ "kits": [
+  {
+   "id": "cre-why-originality-matters",
+   "skill": "creativity-and-innovation",
+   "family": "creativity-and-innovation.cx-why-originality-matters",
+   "familyName": "Why original ideas matter at work",
+   "framework": "competing-priorities",
+   "concepts": [
+    "creativity-and-innovation:value-of-creativity",
+    "creativity-and-innovation:contribute-ideas"
+   ],
+   "contexts": "any",
+   "setup": [
+    "You work as {role|a} at {workplace|a}, where the team is looking for fresh ideas.",
+    "As {role|a} at {workplace|a}, you are asked to help the team stand out."
+   ],
+   "detail": [
+    "It is a normal weekday.",
+    "It is the middle of the afternoon."
+   ],
+   "pressure": [
+    "{coworker3} says it is not worth the trouble.",
+    "You are in a hurry to finish."
+   ],
+   "tiers": {
+    "1": "A good idea starts with a real need that people have.",
+    "2": "Originality means building your own version, not copying.",
+    "3": "Feedback can reshape an idea instead of ending it.",
+    "4": "A small test shows whether an unusual idea works.",
+    "5": "Standing out comes from something customers actually notice."
+   },
+   "issues": [
+    {
+     "id": "need",
+     "tier": 1,
+     "rule": "start-from-a-real-need",
+     "principle": "cre.start-from-a-customer-need",
+     "fact": [
+      "Customers keep asking for something the workplace does not offer, and you have an idea for a small new service."
+     ],
+     "short": "your idea for a new service",
+     "action": "Write up the idea with the customer requests and give it to {lead|the}.",
+     "brief": "write up the idea with the requests",
+     "reason": "Requests from real customers show that the idea answers a need, which makes it easier to take seriously.",
+     "lesson": "Back an idea with the real need it answers.",
+     "shortcut": [
+      {
+       "text": "Wait until someone asks you for ideas before you mention it.",
+       "brief": "wait until someone asks",
+       "why": "The team cannot use an idea nobody hears, and the customer requests are the strongest part of it.",
+       "mis": "Ideas only count when management asks."
+      }
+     ],
+     "clear": [
+      "You already gave {lead|the} your service idea along with the customer requests."
+     ],
+     "done": "the idea is already shared"
+    },
+    {
+     "id": "copy",
+     "tier": 2,
+     "rule": "build-your-own-version",
+     "principle": "cre.take-inspiration-not-copies",
+     "fact": [
+      "A competitor's flyer has a clever layout, and you are designing the workplace's own flyer."
+     ],
+     "short": "the competitor's flyer layout",
+     "action": "Take inspiration from the layout, but design your own for this workplace.",
+     "brief": "borrow the inspiration and design your own",
+     "reason": "A copied layout makes your workplace look like the competitor, while your own version shows what is different.",
+     "lesson": "Learn from good ideas, then build something that is yours.",
+     "shortcut": [
+      {
+       "text": "Copy the layout exactly, since it already works.",
+       "brief": "copy the layout exactly",
+       "why": "A copy hides what is different about your workplace and is not original work.",
+       "mis": "If it works for them, copying is the safest choice."
+      }
+     ],
+     "clear": [
+      "You already designed a flyer of your own that takes inspiration from the competitor's."
+     ],
+     "done": "the flyer design is already your own"
+    },
+    {
+     "id": "feedback",
+     "tier": 3,
+     "rule": "reshape-after-feedback",
+     "principle": "cre.reshape-an-idea-after-feedback",
+     "fact": [
+      "{Lead|the} said your idea would not work as described, but added that one part of it could help."
+     ],
+     "short": "the part of your idea that could help",
+     "action": "Ask which part could help, and reshape the idea around it.",
+     "brief": "ask which part helps and reshape the idea",
+     "reason": "An idea that is partly useful is a starting point, and the person who spotted it can help you improve it.",
+     "lesson": "Use feedback to improve an idea instead of dropping it.",
+     "shortcut": [
+      {
+       "text": "Drop the idea, since it was turned down.",
+       "brief": "drop the idea",
+       "why": "One part was called useful, so dropping all of it wastes what could be built on.",
+       "mis": "A turned-down idea has no value."
+      }
+     ],
+     "clear": [
+      "You already reshaped the idea around the part that {lead|the} liked."
+     ],
+     "done": "the idea is already reshaped"
+    },
+    {
+     "id": "test",
+     "tier": 4,
+     "rule": "try-a-small-test",
+     "principle": "cre.test-an-unusual-idea-small",
+     "fact": [
+      "You have an unusual idea for the lobby display, and {lead|the} is open to a small test."
+     ],
+     "short": "the idea for the lobby display",
+     "action": "Try it in a small test and ask customers what they think.",
+     "brief": "try a small test and ask customers",
+     "reason": "A small test shows whether an unusual idea works before the whole display depends on it.",
+     "lesson": "Test unusual ideas on a small scale and learn from the results.",
+     "shortcut": [
+      {
+       "text": "Wait until you are sure it will work before trying anything.",
+       "brief": "wait until you are sure",
+       "why": "You cannot be sure without trying, and waiting leaves a possibly good idea unused.",
+       "mis": "An idea should be perfect before it is tried."
+      }
+     ],
+     "clear": [
+      "You already ran a small test of the display idea and collected comments."
+     ],
+     "done": "the test is already done"
+    },
+    {
+     "id": "stand-out",
+     "tier": 5,
+     "rule": "stand-out-in-a-way-customers-notice",
+     "principle": "cre.stand-out-in-a-way-customers-notice",
+     "fact": [
+      "The team is asked how to stand out from a nearby competitor that offers a very similar service."
+     ],
+     "short": "the ways to stand out from the competitor",
+     "action": "Suggest something customers would notice that the competitor does not offer.",
+     "brief": "suggest something customers would notice",
+     "reason": "Customers choose what they can see is different, so a visible difference does more than a small price change.",
+     "lesson": "Look for differences that customers can see and value.",
+     "shortcut": [
+      {
+       "text": "Suggest lowering prices below the competitor's.",
+       "brief": "suggest lowering prices",
+       "why": "A price cut can be copied quickly, and it does not show what is different about your workplace.",
+       "mis": "The lowest price is the only way to compete."
+      }
+     ]
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations involves how an original idea is found, shaped and tested.",
+    "lesson": "Original ideas come from real needs, are built in your own way, improve with feedback and are tested small."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} what they usually do and copy that.",
+     "why": "A coworker's habit is not the written guide, and it may be out of date.",
+     "mis": "Common practice is the same as the rule."
+    },
+    {
+     "text": "Wait until {lead|the} brings it up before you act.",
+     "why": "The guide applies to you now, and waiting leaves the problem in place.",
+     "mis": "Someone else will raise it if it matters."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Refuse to suggest any idea unless it has already been proven to work elsewhere.",
+     "why": "The point is to find new ideas. Waiting for proof elsewhere stops original work.",
+     "mis": "Only proven ideas are worth suggesting."
+    }
+   ],
+   "process": {
+    "setup": [
+     "You have an idea that might improve how the workplace helps customers."
+    ],
+    "steps": [
+     {
+      "id": "need",
+      "text": "Note the customer need behind it",
+      "core": true
+     },
+     {
+      "id": "draft",
+      "text": "Write a short description of the idea",
+      "core": true
+     },
+     {
+      "id": "share",
+      "text": "Share it with {lead|the}",
+      "core": true
+     },
+     {
+      "id": "test",
+      "text": "Run a small test if {lead|the} agrees"
+     }
+    ],
+    "rel": [
+     [
+      "need",
+      "draft",
+      "The description should explain the need."
+     ],
+     [
+      "draft",
+      "share",
+      "You share what you wrote."
+     ],
+     [
+      "share",
+      "test",
+      "A test needs agreement first."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Name the need, describe the idea, share it, then test it small."
+   },
+   "doc": {
+    "type": "note",
+    "title": [
+     "Notes on creative ideas"
+    ],
+    "intro": [
+     "You are reading a coworker's draft advice on creative ideas at work."
+    ],
+    "prompt": [
+     "Which line gives advice that would hurt creativity?",
+     "Which line is the problem?"
+    ],
+    "lesson": "Creative work starts with needs, builds on feedback and tests ideas small.",
+    "lines": [
+     {
+      "id": "need",
+      "text": "Start from a need that real customers have.",
+      "fine": "Keeps ideas useful.",
+      "bad": [
+       {
+        "id": "need-skip",
+        "level": "beginner",
+        "text": "Pick an idea you like and look for customers who want it later.",
+        "why": "An idea that starts without a real need is harder to use.",
+        "principle": "cre.doc-idea-without-need"
+       }
+      ]
+     },
+     {
+      "id": "own",
+      "text": "Learn from good ideas, then build your own version.",
+      "fine": "Keeps your workplace's work original.",
+      "bad": [
+       {
+        "id": "own-copy",
+        "level": "intermediate",
+        "text": "Copy ideas that work for others so you do not waste time.",
+        "why": "A copy hides what is different about your workplace.",
+        "principle": "cre.doc-copy-others"
+       }
+      ]
+     },
+     {
+      "id": "feedback",
+      "text": "Use feedback to reshape an idea.",
+      "fine": "Turns criticism into improvement.",
+      "bad": [
+       {
+        "id": "feedback-drop",
+        "level": "advanced",
+        "text": "Drop an idea once someone says it will not work as described.",
+        "why": "Part of it might help, and feedback can show which part.",
+        "principle": "cre.doc-drop-after-feedback"
+       }
+      ]
+     },
+     {
+      "id": "test",
+      "text": "Test unusual ideas on a small scale first.",
+      "fine": "Limits the risk."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims"
+    ],
+    "notes": "Everyday creativity only; no product, brand or outside program is named. Tiers: real need, own version, feedback, small test, standing out."
+   },
+   "exclusive": [
+    [
+     "need",
+     "copy"
+    ],
+    [
+     "need",
+     "feedback"
+    ],
+    [
+     "need",
+     "test"
+    ],
+    [
+     "need",
+     "stand-out"
+    ],
+    [
+     "copy",
+     "feedback"
+    ],
+    [
+     "copy",
+     "test"
+    ],
+    [
+     "copy",
+     "stand-out"
+    ],
+    [
+     "feedback",
+     "test"
+    ],
+    [
+     "feedback",
+     "stand-out"
+    ],
+    [
+     "test",
+     "stand-out"
+    ]
+   ]
+  }
+ ]
+}

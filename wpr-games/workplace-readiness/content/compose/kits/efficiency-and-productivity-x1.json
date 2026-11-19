@@ -1,0 +1,324 @@
+{
+ "skill": "efficiency-and-productivity",
+ "kits": [
+  {
+   "id": "eff-care-for-equipment",
+   "skill": "efficiency-and-productivity",
+   "family": "efficiency-and-productivity.cx-keeping-equipment-working",
+   "familyName": "Keeping equipment working and lasting",
+   "framework": "competing-priorities",
+   "concepts": [
+    "efficiency-and-productivity:capital-resources",
+    "efficiency-and-productivity:work-plan"
+   ],
+   "contexts": [
+    "agriculture",
+    "automotive",
+    "construction",
+    "culinary",
+    "healthcare",
+    "manufacturing",
+    "retail"
+   ],
+   "setup": [
+    "You work as {role|a} at {workplace|a}. You are trained to care for a portable vacuum using its manufacturer's instructions."
+   ],
+   "detail": [
+    "It is a normal weekday.",
+    "It is the middle of the afternoon."
+   ],
+   "pressure": [
+    "{coworker3} says it is not worth the trouble.",
+    "You are in a hurry to finish."
+   ],
+   "tiers": {
+    "1": "A machine that may be failing can hurt someone or break down in use.",
+    "2": "Service due dates exist to prevent failures before heavy use.",
+    "3": "Routine care keeps equipment efficient and extends its life.",
+    "4": "A log is how the next person knows how much use a machine has had.",
+    "5": "Good storage protects equipment between jobs."
+   },
+   "issues": [
+    {
+     "id": "noise",
+     "tier": 1,
+     "rule": "stop-and-report-new-noise",
+     "principle": "eff.report-new-noise",
+     "fact": [
+      "The portable vacuum has started making a grinding sound, and the maintenance guide says unusual noises are reported before more use."
+     ],
+     "short": "the new grinding sound",
+     "action": "Stop using it and report the noise to {lead|the}.",
+     "brief": "stop and report the noise",
+     "reason": "A new grinding sound can mean a part is failing, and more use can make the damage worse.",
+     "lesson": "Stop and report a new problem with equipment instead of running it until it fails.",
+     "shortcut": [
+      {
+       "text": "Keep running it until your shift ends, since it still works.",
+       "brief": "keep running it until your shift ends",
+       "why": "Running a failing part can cause more damage or injury, and the guide says to report first.",
+       "mis": "If it still works, it is fine."
+      }
+     ],
+     "clear": [
+      "You already stopped the machine and reported the grinding sound."
+     ],
+     "done": "the noise is already reported"
+    },
+    {
+     "id": "service",
+     "tier": 2,
+     "rule": "service-before-heavy-use",
+     "principle": "eff.service-before-heavy-use",
+     "fact": [
+      "The sticker on the portable vacuum shows service was due last week, and the guide says overdue equipment is serviced before heavy use."
+     ],
+     "short": "the overdue service",
+     "action": "Ask {lead|the} to schedule service before using it for heavy work.",
+     "brief": "ask for service before heavy use",
+     "reason": "Service finds small problems before heavy use turns them into failures.",
+     "lesson": "Get overdue equipment serviced before you ask it to do heavy work.",
+     "shortcut": [
+      {
+       "text": "Use it for the big job first and schedule service afterward.",
+       "brief": "do the big job first",
+       "why": "Heavy use is when an overdue machine is most likely to fail, and the guide says to service it first.",
+       "mis": "Service can wait until after the big job."
+      }
+     ],
+     "clear": [
+      "{Lead|the} already scheduled the overdue service for the machine."
+     ],
+     "done": "the overdue service is already scheduled"
+    },
+    {
+     "id": "filter",
+     "tier": 3,
+     "rule": "do-routine-care",
+     "principle": "eff.clean-the-filter-on-schedule",
+     "fact": [
+      "You are trained to clean the portable vacuum's filter using its manufacturer's isolation and cleaning instructions, and today it is due."
+     ],
+     "short": "the weekly filter cleaning",
+     "action": "Follow the trained isolation and cleaning procedure for the filter.",
+     "brief": "clean the filter now",
+     "reason": "A clogged filter makes the motor work harder, which wastes energy and shortens its life.",
+     "lesson": "Do routine care on schedule, even when the equipment seems fine.",
+     "shortcut": [
+      {
+       "text": "Skip it this week, since the machine seems fine.",
+       "brief": "skip the cleaning this week",
+       "why": "Problems from a dirty filter build up quietly, and the guide sets weekly cleaning for that reason.",
+       "mis": "If a machine seems fine, care can wait."
+      }
+     ],
+     "clear": [
+      "The filter was already cleaned this week."
+     ],
+     "done": "the filter is already cleaned"
+    },
+    {
+     "id": "log",
+     "tier": 4,
+     "rule": "record-hours-of-use",
+     "principle": "eff.log-hours-of-use",
+     "fact": [
+      "The guide says to log each machine's hours of use, and you just used the portable vacuum for four hours."
+     ],
+     "short": "the unlogged four hours of use",
+     "action": "Record the four hours in the machine's log.",
+     "brief": "log the four hours",
+     "reason": "Hours of use tell the next person when service is due, and only you know your hours.",
+     "lesson": "Record equipment use so others can plan service.",
+     "shortcut": [
+      {
+       "text": "Skip the log, since someone else will probably fill it in.",
+       "brief": "skip the log entry",
+       "why": "Nobody else knows your hours, so the record would be wrong or missing.",
+       "mis": "Someone else will take care of it."
+      }
+     ],
+     "clear": [
+      "The four hours of use were already recorded in the log."
+     ],
+     "done": "the use is already logged"
+    },
+    {
+     "id": "store",
+     "tier": 5,
+     "rule": "store-equipment-properly",
+     "principle": "eff.store-equipment-in-its-case",
+     "fact": [
+      "The guide says portable equipment goes back in its case after use, and you have finished with the portable vacuum."
+     ],
+     "short": "the equipment left out after use",
+     "action": "Clean it and put it back in its case before you leave.",
+     "brief": "clean it and return it to its case",
+     "reason": "Equipment stored in its case is protected from knocks, dust and damp between jobs.",
+     "lesson": "Clean and store equipment properly after each use.",
+     "shortcut": [
+      {
+       "text": "Leave it out so it is ready for tomorrow.",
+       "brief": "leave it out for tomorrow",
+       "why": "Equipment left out gets knocked, dirty or damp, and the guide says to store it in its case.",
+       "mis": "Leaving it out saves time."
+      }
+     ]
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations involves equipment care that needs a response.",
+    "lesson": "Equipment lasts longer and works better when problems are reported and routine care is done on schedule."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} what they usually do and copy that.",
+     "why": "A coworker's habit is not the written guide, and it may be out of date.",
+     "mis": "Common practice is the same as the rule."
+    },
+    {
+     "text": "Wait until {lead|the} brings it up before you act.",
+     "why": "The guide applies to you now, and waiting leaves the problem in place.",
+     "mis": "Someone else will raise it if it matters."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Stop using every machine in the area until each one has been fully serviced.",
+     "why": "The concern is specific. Stopping everything delays work that safe equipment can do.",
+     "mis": "One problem means all equipment is unsafe."
+    }
+   ],
+   "process": {
+    "setup": [
+     "You have finished using a portable vacuum. You are trained to follow its manufacturer's isolation and cleaning instructions before storage."
+    ],
+    "steps": [
+     {
+      "id": "off",
+      "text": "Follow the trained shutdown and isolation procedure",
+      "core": true
+     },
+     {
+      "id": "clean",
+      "text": "Clean it using the manufacturer's instructions",
+      "core": true
+     },
+     {
+      "id": "case",
+      "text": "Put it back in its case",
+      "core": true
+     },
+     {
+      "id": "log",
+      "text": "Record the hours of use"
+     }
+    ],
+    "rel": [
+     [
+      "off",
+      "clean",
+      "Switch off before you clean."
+     ],
+     [
+      "clean",
+      "case",
+      "Store it clean."
+     ],
+     [
+      "off",
+      "log",
+      "Log the use once it has stopped."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Switch off, clean, store, and log the use."
+   },
+   "doc": {
+    "type": "procedure",
+    "title": [
+     "Equipment care reminders"
+    ],
+    "intro": [
+     "You are checking a reminder sheet before it is posted near the equipment."
+    ],
+    "prompt": [
+     "Which line gives advice that would harm the equipment?",
+     "Which line is the problem?"
+    ],
+    "lesson": "Good equipment care means reporting problems, servicing on time, doing routine care and logging use.",
+    "lines": [
+     {
+      "id": "noise",
+      "text": "Stop and report any new noise from equipment.",
+      "fine": "Catches failing parts early.",
+      "bad": [
+       {
+        "id": "noise-run",
+        "level": "beginner",
+        "text": "Keep running equipment that makes a new noise until it stops working.",
+        "why": "Running a failing part can cause more damage or injury.",
+        "principle": "eff.doc-run-noisy-equipment"
+       }
+      ]
+     },
+     {
+      "id": "service",
+      "text": "Service overdue equipment before heavy use.",
+      "fine": "Prevents failures when they matter most.",
+      "bad": [
+       {
+        "id": "service-later",
+        "level": "intermediate",
+        "text": "Do the heavy job first and service overdue equipment afterward.",
+        "why": "Heavy use is when an overdue machine is most likely to fail.",
+        "principle": "eff.doc-service-after-heavy-use"
+       }
+      ]
+     },
+     {
+      "id": "log",
+      "text": "Log your hours of use after each job.",
+      "fine": "Helps others plan service.",
+      "bad": [
+       {
+        "id": "log-skip",
+        "level": "advanced",
+        "text": "Skip the use log when you expect a coworker to fill it in.",
+        "why": "Only the person who used it knows the hours, so the log would be wrong.",
+        "principle": "eff.doc-skip-use-log"
+       }
+      ]
+     },
+     {
+      "id": "store",
+      "text": "Follow the trained isolation and cleaning procedure before storing portable equipment.",
+      "fine": "Protects it between jobs."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims"
+    ],
+    "notes": "Equipment care only; no manufacturer or standard is named. Tiers: failing part, overdue service, routine care, logging, storage."
+   },
+   "exclusive": [
+    [
+     "filter",
+     "log"
+    ],
+    [
+     "filter",
+     "store"
+    ],
+    [
+     "log",
+     "store"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,318 @@
+{
+ "skill": "information-security",
+ "kits": [
+  {
+   "id": "ise-acceptable-use-limits",
+   "skill": "information-security",
+   "family": "information-security.cx-acceptable-use-limits",
+   "familyName": "Keeping personal use out of work technology",
+   "framework": "competing-priorities",
+   "concepts": [
+    "information-security:acceptable-use",
+    "information-security:security-procedures"
+   ],
+   "contexts": "any",
+   "setup": [
+    "You work as {role|a} at {workplace|a}, where an acceptable-use policy sets limits on work equipment, networks and accounts.",
+    "As {role|a} at {workplace|a}, you use work technology under an acceptable-use policy."
+   ],
+   "detail": [
+    "It is a normal weekday.",
+    "It is the middle of the afternoon."
+   ],
+   "pressure": [
+    "{coworker3} says it is not worth the trouble.",
+    "You are in a hurry to finish."
+   ],
+   "tiers": {
+    "1": "Work files belong on approved accounts only.",
+    "2": "Work equipment is for work purposes.",
+    "3": "The work network is for work; personal streaming has its own network.",
+    "4": "Personal devices stay off work computers.",
+    "5": "Personal social media belongs in breaks."
+   },
+   "issues": [
+    {
+     "id": "files",
+     "tier": 1,
+     "rule": "keep-work-files-on-approved-accounts",
+     "principle": "ise.no-work-files-to-personal-email",
+     "fact": [
+      "You want to email a work file to your personal address to finish at home, and the policy keeps work files on approved accounts."
+     ],
+     "short": "the work file you want to take home",
+     "action": "Ask {lead|the} how to reach the file from home on approved tools.",
+     "brief": "ask how to reach the file on approved tools",
+     "reason": "A copy in a personal inbox is outside the workplace's control, even if you delete the email later.",
+     "lesson": "Keep work files on approved accounts, and ask for approved ways to work from home.",
+     "shortcut": [
+      {
+       "text": "Send it to yourself and delete the email afterward.",
+       "brief": "email it to yourself and delete it",
+       "why": "The file sits on an account the workplace does not control until you delete it, and the policy forbids it.",
+       "mis": "A temporary copy outside approved accounts is harmless."
+      }
+     ],
+     "clear": [
+      "{Lead|the} already showed you how to reach the work file from home on approved tools."
+     ],
+     "done": "the file is already reachable on approved tools"
+    },
+    {
+     "id": "print",
+     "tier": 2,
+     "rule": "work-equipment-for-work",
+     "principle": "ise.no-side-business-printing",
+     "fact": [
+      "{coworker} asks you to print flyers for a side business on the work printer, and the policy limits work equipment to work purposes."
+     ],
+     "short": "the flyers for the side business",
+     "action": "Decline politely and suggest a copy shop.",
+     "brief": "decline politely and suggest a copy shop",
+     "reason": "Work equipment and supplies are paid for by the workplace, and personal projects are not part of the work.",
+     "lesson": "Use work equipment only for work, even for a small favor.",
+     "shortcut": [
+      {
+       "text": "Print a few, since it uses very little paper.",
+       "brief": "print a few flyers",
+       "why": "The policy limits the printer to work purposes, however small the amount.",
+       "mis": "A small amount of personal use is allowed."
+      }
+     ],
+     "clear": [
+      "{coworker} already printed the flyers somewhere else."
+     ],
+     "done": "the flyers are already printed elsewhere"
+    },
+    {
+     "id": "stream",
+     "tier": 3,
+     "rule": "use-the-right-network",
+     "principle": "ise.stream-only-on-the-guest-network",
+     "fact": [
+      "You want to stream a video on your break, and the policy allows streaming only on the guest network."
+     ],
+     "short": "the video you want to stream",
+     "action": "Stream on the guest network using your own device.",
+     "brief": "use the guest network on your own device",
+     "reason": "Streaming uses a lot of the work network's capacity, and the guest network exists for personal use.",
+     "lesson": "Use the network the policy names for the kind of use you have in mind.",
+     "shortcut": [
+      {
+       "text": "Stream on the work network, since it is your break.",
+       "brief": "stream on the work network",
+       "why": "The policy limits streaming to the guest network at all times, including breaks.",
+       "mis": "Rules about the network pause during breaks."
+      }
+     ],
+     "clear": [
+      "You already moved your video to the guest network."
+     ],
+     "done": "the video is already on the guest network"
+    },
+    {
+     "id": "charge",
+     "tier": 4,
+     "rule": "keep-personal-devices-off-work-computers",
+     "principle": "ise.no-charging-phones-from-work-computers",
+     "fact": [
+      "You want to charge your phone from the workstation's USB port, and the policy keeps personal devices off work computers."
+     ],
+     "short": "the phone you want to charge",
+     "action": "Charge it from a wall outlet in the break room instead.",
+     "brief": "use a wall outlet in the break room",
+     "reason": "A phone plugged into a work computer can pass data or harmful software in either direction.",
+     "lesson": "Keep personal devices off work computers, even for charging.",
+     "shortcut": [
+      {
+       "text": "Plug it into the workstation, since it only needs power.",
+       "brief": "plug the phone into the workstation",
+       "why": "A USB port can carry data as well as power, and the policy keeps personal devices off work computers.",
+       "mis": "Charging is the same as plugging in only power."
+      }
+     ],
+     "clear": [
+      "Your phone is already charging from a wall outlet."
+     ],
+     "done": "the phone is already charging at the wall"
+    },
+    {
+     "id": "social",
+     "tier": 5,
+     "rule": "personal-media-in-breaks",
+     "principle": "ise.personal-social-media-in-breaks",
+     "fact": [
+      "A notification from a personal social account appears while you are mid-task, and the policy allows personal social media only on breaks."
+     ],
+     "short": "the personal notification",
+     "action": "Finish your task and check the notification on your break.",
+     "brief": "finish the task and check it on your break",
+     "reason": "A quick reply can turn into a long one, and the policy keeps personal use for breaks.",
+     "lesson": "Keep personal social media for breaks.",
+     "shortcut": [
+      {
+       "text": "Reply quickly, since it only takes a minute.",
+       "brief": "reply right away",
+       "why": "The policy allows personal social media only on breaks, however short the reply.",
+       "mis": "A short reply does not count as personal use."
+      }
+     ]
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations involves personal use of work technology that the policy limits.",
+    "lesson": "Work files, equipment, networks and computers are for work, with personal use kept to approved places and times."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} what they usually do and copy that.",
+     "why": "A coworker's habit is not the written guide, and it may be out of date.",
+     "mis": "Common practice is the same as the rule."
+    },
+    {
+     "text": "Wait until {lead|the} brings it up before you act.",
+     "why": "The guide applies to you now, and waiting leaves the problem in place.",
+     "mis": "Someone else will raise it if it matters."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Refuse to use any work technology until the whole policy has been reviewed with you.",
+     "why": "The concern is specific. Refusing all work technology stops allowed work.",
+     "mis": "Any policy question means stopping all technology use."
+    }
+   ],
+   "process": {
+    "setup": [
+     "You want to work on a file at home."
+    ],
+    "steps": [
+     {
+      "id": "ask",
+      "text": "Ask {lead|the} about approved ways to work from home",
+      "core": true
+     },
+     {
+      "id": "set",
+      "text": "Set up access with the approved tool",
+      "core": true
+     },
+     {
+      "id": "work",
+      "text": "Work on the file at home",
+      "core": true
+     },
+     {
+      "id": "close",
+      "text": "Save it back to the approved account"
+     }
+    ],
+    "rel": [
+     [
+      "ask",
+      "set",
+      "Setup follows the approved method you were told."
+     ],
+     [
+      "set",
+      "work",
+      "You need access before you can work."
+     ],
+     [
+      "work",
+      "close",
+      "Save back once the work is done."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Ask, set up the approved way, work, and save back."
+   },
+   "doc": {
+    "type": "procedure",
+    "title": [
+     "Acceptable-use reminders"
+    ],
+    "intro": [
+     "You are checking a reminder sheet before it is posted near the printer."
+    ],
+    "prompt": [
+     "Which line gives advice that breaks the policy?",
+     "Which line is the problem?"
+    ],
+    "lesson": "Acceptable use keeps work files, equipment, networks and computers for work.",
+    "lines": [
+     {
+      "id": "files",
+      "text": "Keep work files on approved accounts.",
+      "fine": "Keeps files under the workplace's control.",
+      "bad": [
+       {
+        "id": "files-home",
+        "level": "beginner",
+        "text": "Email work files to your own address if you need them at home.",
+        "why": "A personal inbox is outside the workplace's control.",
+        "principle": "ise.doc-email-files-home"
+       }
+      ]
+     },
+     {
+      "id": "print",
+      "text": "Use the work printer for work only.",
+      "fine": "Protects work resources.",
+      "bad": [
+       {
+        "id": "print-favor",
+        "level": "intermediate",
+        "text": "Use the work printer for small personal jobs.",
+        "why": "The policy limits equipment to work purposes, whatever the size.",
+        "principle": "ise.doc-small-personal-printing"
+       }
+      ]
+     },
+     {
+      "id": "stream",
+      "text": "Stream video only on the guest network.",
+      "fine": "Protects the work network.",
+      "bad": [
+       {
+        "id": "stream-break",
+        "level": "advanced",
+        "text": "Stream on the work network during breaks.",
+        "why": "The limit applies on breaks as well.",
+        "principle": "ise.doc-stream-on-break"
+       }
+      ]
+     },
+     {
+      "id": "charge",
+      "text": "Charge personal phones from wall outlets.",
+      "fine": "Keeps devices off computers."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims",
+     "policy-stated-in-scenario"
+    ],
+    "notes": "All limits are stated as this workplace's acceptable-use policy; no law or specific product is named. Tiers: work files, work equipment, networks, personal devices, personal media."
+   },
+   "exclusive": [
+    [
+     "stream",
+     "charge"
+    ],
+    [
+     "stream",
+     "social"
+    ],
+    [
+     "charge",
+     "social"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,330 @@
+{
+ "skill": "integrity",
+ "kits": [
+  {
+   "id": "int-trust-has-consequences",
+   "skill": "integrity",
+   "family": "integrity.cx-why-trust-matters",
+   "familyName": "Why trustworthiness matters at work",
+   "framework": "competing-priorities",
+   "concepts": [
+    "integrity:importance-of-integrity",
+    "integrity:honesty-and-fairness"
+   ],
+   "contexts": "any",
+   "setup": [
+    "You work as {role|a} at {workplace|a}, where people rely on what staff say and sign.",
+    "As {role|a} at {workplace|a}, you notice moments when being straightforward is harder than going along."
+   ],
+   "detail": [
+    "It is a normal weekday.",
+    "It is the middle of the afternoon."
+   ],
+   "pressure": [
+    "{coworker3} says it is not worth the trouble.",
+    "You are in a hurry to finish."
+   ],
+   "tiers": {
+    "1": "Signing for something you did not verify can put people at risk.",
+    "2": "A missed promise to a customer costs trust that is hard to rebuild.",
+    "3": "Reporting what you saw helps the workplace keep results fair.",
+    "4": "A mistake in your favor still needs to be corrected.",
+    "5": "Admitting what you do not know builds more trust than guessing."
+   },
+   "issues": [
+    {
+     "id": "sign",
+     "tier": 1,
+     "rule": "sign-only-what-you-verified",
+     "principle": "int.sign-only-what-you-saw",
+     "fact": [
+      "{coworker} asks you to sign that a safety check was done, but you did not see it done."
+     ],
+     "short": "the signature for the safety check",
+     "action": "Decline to sign until you have seen the check done or can verify it.",
+     "brief": "decline to sign until it is verified",
+     "reason": "A signature tells others a check happened. If it did not, people could be at risk and trust in every signature drops.",
+     "lesson": "Sign only for what you have seen or can verify.",
+     "shortcut": [
+      {
+       "text": "Sign it, since {coworker} is usually reliable.",
+       "brief": "sign it because {coworker} is reliable",
+       "why": "A reliable person can still miss a check, and your signature would say you knew it was done.",
+       "mis": "Past reliability replaces checking."
+      }
+     ],
+     "clear": [
+      "You already saw the safety check done and signed for it."
+     ],
+     "done": "the safety check is already verified"
+    },
+    {
+     "id": "callback",
+     "tier": 2,
+     "rule": "keep-your-promises",
+     "principle": "int.keep-a-callback-promise",
+     "fact": [
+      "You told a customer you would call back today, and you will not have an answer until tomorrow."
+     ],
+     "short": "the promised callback",
+     "action": "Call today to say you do not have the answer yet and give a new time.",
+     "brief": "call today with an update and a new time",
+     "reason": "A short call keeps your word and lets the customer plan, even without the answer.",
+     "lesson": "Keep your promise in the way that you still can, and say honestly where things stand.",
+     "shortcut": [
+      {
+       "text": "Skip the call, since you have nothing to report.",
+       "brief": "skip the call",
+       "why": "The customer is waiting for a call you promised, and silence suggests the promise did not matter.",
+       "mis": "A promise with no news is not a promise."
+      }
+     ],
+     "clear": [
+      "You already called the customer to give an update and a new time."
+     ],
+     "done": "the customer is already updated"
+    },
+    {
+     "id": "numbers",
+     "tier": 3,
+     "rule": "report-what-you-saw",
+     "principle": "int.report-results-gained-by-skipping-steps",
+     "fact": [
+      "{coworker3} is being praised for results you know came from skipping a required step."
+     ],
+     "short": "the praised results",
+     "action": "Tell {lead|the} what you saw, without guessing why it happened.",
+     "brief": "tell {lead|the} what you saw",
+     "reason": "Fair results depend on everyone following the same steps, and {lead|the} can only check what is reported.",
+     "lesson": "Report what you saw so results stay fair, and leave out guesses about motives.",
+     "shortcut": [
+      {
+       "text": "Keep quiet, since it is not your work being measured.",
+       "brief": "stay quiet because it is not your work",
+       "why": "Others who followed the steps are measured against results that were not earned the same way.",
+       "mis": "Only your own results are your concern."
+      }
+     ],
+     "clear": [
+      "{Lead|the} already knows how {coworker3} reached those results."
+     ],
+     "done": "the results are already reported"
+    },
+    {
+     "id": "invoice",
+     "tier": 4,
+     "rule": "correct-a-mistake-in-your-favor",
+     "principle": "int.correct-an-invoice-error-in-your-favor",
+     "fact": [
+      "A supplier's invoice is $50 lower than the quote because of a mistake, and your team could keep the savings."
+     ],
+     "short": "the invoice that is $50 too low",
+     "action": "Tell the supplier about the error before you pay.",
+     "brief": "tell the supplier about the error",
+     "reason": "A mistake in your favor is still a mistake, and the supplier will want to know and remember that you told them.",
+     "lesson": "Correct mistakes that favor you as well as those that hurt you.",
+     "shortcut": [
+      {
+       "text": "Pay the lower amount, since the mistake was the supplier's.",
+       "brief": "pay the lower amount",
+       "why": "The amount is wrong whoever made the error, and keeping the difference is not honest.",
+       "mis": "A mistake that helps you is your good luck."
+      }
+     ],
+     "clear": [
+      "The supplier already corrected the $50 invoice error."
+     ],
+     "done": "the invoice is already corrected"
+    },
+    {
+     "id": "guess",
+     "tier": 5,
+     "rule": "admit-what-you-dont-know",
+     "principle": "int.admit-what-you-do-not-know",
+     "fact": [
+      "A customer asks a question you cannot fully answer, and a confident guess might sound more helpful."
+     ],
+     "short": "the question you cannot fully answer",
+     "action": "Say what you know, say what you will check, and follow up.",
+     "brief": "say what you know and promise to check",
+     "reason": "A wrong answer given with confidence costs more trust than an honest 'I will find out'.",
+     "lesson": "Admit what you do not know and then find out.",
+     "shortcut": [
+      {
+       "text": "Give your best guess confidently so they are not left waiting.",
+       "brief": "give a confident guess",
+       "why": "A wrong guess sounds the same as a right one until it fails the customer.",
+       "mis": "Sounding sure is better than being right."
+      }
+     ]
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations involves a moment when being straightforward matters.",
+    "lesson": "People rely on what you say and sign, so being straightforward protects them and the trust others place in you."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} what they usually do and copy that.",
+     "why": "A coworker's habit is not the written guide, and it may be out of date.",
+     "mis": "Common practice is the same as the rule."
+    },
+    {
+     "text": "Wait until {lead|the} brings it up before you act.",
+     "why": "The guide applies to you now, and waiting leaves the problem in place.",
+     "mis": "Someone else will raise it if it matters."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Refuse to sign or promise anything at work ever again.",
+     "why": "The concern is specific. Refusing everything stops useful work and does not help anyone.",
+     "mis": "Never committing to anything is the safest way to be trusted."
+    }
+   ],
+   "process": {
+    "setup": [
+     "You find out that a report you handed in has a wrong total."
+    ],
+    "steps": [
+     {
+      "id": "check",
+      "text": "Check which total is wrong",
+      "core": true
+     },
+     {
+      "id": "fix",
+      "text": "Correct the report",
+      "core": true
+     },
+     {
+      "id": "tell",
+      "text": "Tell {lead|the} what was wrong and fixed",
+      "core": true
+     },
+     {
+      "id": "note",
+      "text": "Note how you will check next time"
+     }
+    ],
+    "rel": [
+     [
+      "check",
+      "fix",
+      "Know what is wrong before you fix it."
+     ],
+     [
+      "fix",
+      "tell",
+      "Report what you fixed."
+     ],
+     [
+      "check",
+      "note",
+      "Understand the mistake before deciding how to prevent a repeat."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Check, correct, tell, then change your habit."
+   },
+   "doc": {
+    "type": "note",
+    "title": [
+     "Notes on being trustworthy"
+    ],
+    "intro": [
+     "You are reading a coworker's draft advice on being trustworthy at work."
+    ],
+    "prompt": [
+     "Which line gives advice that would harm trust?",
+     "Which line is the problem?"
+    ],
+    "lesson": "Trust is built by signing only what you verified, keeping promises and correcting mistakes, even when they favor you.",
+    "lines": [
+     {
+      "id": "sign",
+      "text": "Sign only for what you have seen or can verify.",
+      "fine": "Keeps signatures meaningful.",
+      "bad": [
+       {
+        "id": "sign-trust",
+        "level": "beginner",
+        "text": "Sign for coworkers you trust without checking.",
+        "why": "A signature says you knew, and trust is not the same as knowing.",
+        "principle": "int.doc-sign-without-checking"
+       }
+      ]
+     },
+     {
+      "id": "promise",
+      "text": "Keep your promises, or update people before you miss one.",
+      "fine": "Protects customer trust.",
+      "bad": [
+       {
+        "id": "promise-quiet",
+        "level": "intermediate",
+        "text": "If you have no news for a customer, skip the promised update.",
+        "why": "The customer is still waiting, and silence breaks the promise.",
+        "principle": "int.doc-skip-promised-update"
+       }
+      ]
+     },
+     {
+      "id": "mistake",
+      "text": "Correct a mistake even when it favors you.",
+      "fine": "Keeps dealings honest.",
+      "bad": [
+       {
+        "id": "mistake-keep",
+        "level": "advanced",
+        "text": "Keep a benefit that came from someone else's mistake.",
+        "why": "The benefit is not yours, and it can damage trust if found later.",
+        "principle": "int.doc-keep-a-mistaken-benefit"
+       }
+      ]
+     },
+     {
+      "id": "know",
+      "text": "Say when you do not know something, then find out.",
+      "fine": "Builds trust."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims",
+     "policy-stated-in-scenario"
+    ],
+    "notes": "Everyday trust scenarios only. Rules are stated as what the situation requires; no law, statute or discipline is cited. Tiers: signing, promises, fair results, mistakes in your favor, honest uncertainty."
+   },
+   "exclusive": [
+    [
+     "callback",
+     "numbers"
+    ],
+    [
+     "callback",
+     "invoice"
+    ],
+    [
+     "callback",
+     "guess"
+    ],
+    [
+     "numbers",
+     "invoice"
+    ],
+    [
+     "numbers",
+     "guess"
+    ],
+    [
+     "invoice",
+     "guess"
+    ]
+   ]
+  }
+ ]
+}

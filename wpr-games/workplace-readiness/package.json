@@ -9,7 +9,7 @@
     "docs": "node tools/gen-docs.js && node tools/run-report.js",
     "sweep": "node tools/sweep.js",
     "coverage": "node tools/coverage.js",
-    "test:unit": "node --test tests/core.test.js tests/validator.test.js tests/generator.test.js tests/grader.test.js tests/app-logic.test.js tests/audit.test.js",
+    "test:unit": "node --test tests/core.test.js tests/validator.test.js tests/generator.test.js tests/grader.test.js tests/app-logic.test.js tests/audit.test.js tests/content-expansion.test.js",
     "test:browser": "node --test tests/browser/app.test.js tests/browser/compose.test.js",
     "test": "npm run build && npm run validate && npm run test:unit && npm run test:compose && npm run test:browser",
     "test:compose": "node --test tests/compose-engine.test.js tests/compose-numeric-oracle.test.js tests/compose-bulk.test.js tests/compose-diversity.test.js",

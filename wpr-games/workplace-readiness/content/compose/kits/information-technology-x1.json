@@ -1,0 +1,327 @@
+{
+ "skill": "information-technology",
+ "kits": [
+  {
+   "id": "ite-new-technology",
+   "skill": "information-technology",
+   "family": "information-technology.cx-trying-new-technology",
+   "familyName": "Trying new technology at work",
+   "framework": "competing-priorities",
+   "concepts": [
+    "information-technology:emerging-technology",
+    "information-technology:software-and-applications"
+   ],
+   "contexts": [
+    "business",
+    "education",
+    "healthcare",
+    "hospitality",
+    "manufacturing",
+    "media",
+    "retail",
+    "it"
+   ],
+   "setup": [
+    "You work as {role|a} at {workplace|a}, where staff are starting to try new technology tools.",
+    "As {role|a} at {workplace|a}, you are among the first to try new technology tools your team is considering."
+   ],
+   "detail": [
+    "A tool demo was shown at last week's meeting.",
+    "It is a normal weekday."
+   ],
+   "pressure": [
+    "{coworker3} says everyone else is already using these tools.",
+    "You are behind on a deadline."
+   ],
+   "tiers": {
+    "1": "Protecting private information comes before trying anything new.",
+    "2": "A new tool needs approval before real work goes into it.",
+    "3": "Check what a new tool produces before relying on it.",
+    "4": "Ask for training before using an unfamiliar feature on live work.",
+    "5": "Sharing a good idea about a tool can wait behind urgent problems."
+   },
+   "issues": [
+    {
+     "id": "data",
+     "tier": 1,
+     "rule": "keep-private-data-out-of-new-tools",
+     "principle": "ite.no-private-data-in-new-tool",
+     "fact": [
+      "{coworker} wants to paste customer details into a new online tool, and the policy says customer details stay in approved systems."
+     ],
+     "short": "the customer details going into the new tool",
+     "action": "Keep the customer details out of the tool and tell {lead|the} you want it reviewed.",
+     "brief": "keep the details out and ask for a review",
+     "reason": "Details pasted into an unapproved tool leave the workplace's control and cannot be taken back.",
+     "lesson": "Keep private information in approved systems, however useful a new tool looks.",
+     "shortcut": [
+      {
+       "text": "Paste only a few of the details, since a small amount is not much risk.",
+       "brief": "paste only a few details",
+       "why": "Even a few customer details leave approved systems, which the policy does not allow.",
+       "mis": "A small amount of private data is harmless."
+      }
+     ],
+     "clear": [
+      "{Lead|the} already told {coworker} to keep customer details out of a new online tool."
+     ],
+     "done": "the customer details are already protected"
+    },
+    {
+     "id": "approval",
+     "tier": 2,
+     "rule": "get-approval-before-new-tool",
+     "principle": "ite.approve-before-real-work",
+     "fact": [
+      "You found a scheduling app online that could save time, and the policy says new tools need approval before real work goes in."
+     ],
+     "short": "the unapproved scheduling app",
+     "action": "Ask {lead|the} to approve the app before any real work goes into it.",
+     "brief": "ask for approval before using it",
+     "reason": "Approval lets someone check security and cost before the team depends on a tool.",
+     "lesson": "Get a new tool approved before putting real work into it.",
+     "shortcut": [
+      {
+       "text": "Try it with this week's real schedule to see whether it is worth asking about.",
+       "brief": "test it on the real schedule",
+       "why": "Real work in an unapproved tool breaks the policy and can be hard to move out.",
+       "mis": "You need to try a tool before you can ask about it."
+      }
+     ],
+     "clear": [
+      "{Lead|the} already approved a scheduling app for use at work."
+     ],
+     "done": "the app is already approved"
+    },
+    {
+     "id": "check",
+     "tier": 3,
+     "rule": "verify-tool-output",
+     "principle": "ite.check-new-tool-output",
+     "fact": [
+      "A new tool summarized a report for you, but the summary's totals do not match the totals in the report's table."
+     ],
+     "short": "the summary that does not match the report",
+     "action": "Compare the summary with the report and correct the totals before using it.",
+     "brief": "check the summary against the report",
+     "reason": "New tools can produce confident mistakes. Checking against the source is how you find them.",
+     "lesson": "Check a new tool's output against the source before relying on it.",
+     "shortcut": [
+      {
+       "text": "Use the summary as it is, since a new tool is probably more accurate than people.",
+       "brief": "use the summary as it is",
+       "why": "The totals disagree, so at least one is wrong. Only the source can settle it.",
+       "mis": "New technology is more accurate than people."
+      }
+     ],
+     "clear": [
+      "You already compared a tool-written summary with its report and fixed the totals."
+     ],
+     "done": "the totals are already checked"
+    },
+    {
+     "id": "training",
+     "tier": 4,
+     "rule": "get-training-first",
+     "principle": "ite.train-before-live-use",
+     "fact": [
+      "The new system has a feature you are not trained on, and the guide says untrained staff should not use it on live records."
+     ],
+     "short": "the feature you have not been trained on",
+     "action": "Ask {lead|the} for training before using the feature on live records.",
+     "brief": "ask for training first",
+     "reason": "Untrained use on live records can change things that are hard to undo.",
+     "lesson": "Ask for training before using an unfamiliar feature on live records.",
+     "shortcut": [
+      {
+       "text": "Learn it on live records and undo anything that goes wrong.",
+       "brief": "learn it on live records",
+       "why": "Some changes cannot be undone, and the guide does not allow untrained use on live records.",
+       "mis": "Mistakes on live records are easy to reverse."
+      }
+     ],
+     "clear": [
+      "You already finished training for a new system feature."
+     ],
+     "done": "the training is already complete"
+    },
+    {
+     "id": "pilot",
+     "tier": 5,
+     "rule": "start-with-a-small-trial",
+     "principle": "ite.pilot-before-rollout",
+     "fact": [
+      "You think a new tool could help the whole team, and {lead|the} says new tools are tried first with one small group."
+     ],
+     "short": "your idea to use the tool across the team",
+     "action": "Suggest a small trial with one group, as {lead|the} described.",
+     "brief": "suggest a small trial first",
+     "reason": "A small trial shows what works before everyone depends on the tool.",
+     "lesson": "Try a new tool with a small group before rolling it out.",
+     "shortcut": [
+      {
+       "text": "Set it up for the whole team tonight so everyone benefits right away.",
+       "brief": "roll it out to everyone tonight",
+       "why": "Skipping the trial means problems reach everyone at once.",
+       "mis": "Faster rollout is always better."
+      }
+     ]
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations involves a new tool that needs a response from you.",
+    "lesson": "New technology still follows the workplace's rules for data, approval and checking."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} how they use the tool and do the same.",
+     "why": "A coworker's habit is not the policy, and they may be using it unsafely.",
+     "mis": "If others use a tool, it must be allowed."
+    },
+    {
+     "text": "Wait until the tool causes a problem, then ask {lead|the} about it.",
+     "why": "Waiting means the problem can happen before anyone has checked the tool.",
+     "mis": "Questions can wait until something goes wrong."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Refuse to use any new tool until {lead|the} approves every one on the market.",
+     "why": "The concern is one specific tool. Refusing all of them blocks approved work.",
+     "mis": "Every new tool is off limits."
+    }
+   ],
+   "process": {
+    "setup": [
+     "{Lead|the} asks you to find out whether a new tool could help your team."
+    ],
+    "steps": [
+     {
+      "id": "need",
+      "text": "Name the problem the tool should solve",
+      "core": true
+     },
+     {
+      "id": "ask",
+      "text": "Ask {lead|the} to approve a trial",
+      "core": true
+     },
+     {
+      "id": "trial",
+      "text": "Try it with one small group"
+     },
+     {
+      "id": "check",
+      "text": "Check the results against current work",
+      "core": true
+     }
+    ],
+    "rel": [
+     [
+      "need",
+      "ask",
+      "The request should explain what the tool is for."
+     ],
+     [
+      "ask",
+      "trial",
+      "A trial needs approval first."
+     ],
+     [
+      "trial",
+      "check",
+      "You can only check results after trying it."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Name the need, get approval, try it small, then check the results."
+   },
+   "doc": {
+    "type": "procedure",
+    "title": [
+     "Trying new tools"
+    ],
+    "intro": [
+     "You are reviewing a draft guide for staff who want to try new tools."
+    ],
+    "prompt": [
+     "Which line gives unsafe advice?",
+     "Which line is the problem?"
+    ],
+    "lesson": "A guide to new tools must protect private data, require approval and check results.",
+    "lines": [
+     {
+      "id": "data",
+      "text": "Keep customer details out of tools that are not approved.",
+      "fine": "Protects private information.",
+      "bad": [
+       {
+        "id": "data-test",
+        "level": "beginner",
+        "text": "Test a new tool with real customer details to see how well it works.",
+        "why": "Real customer details should stay in approved systems, even for a test.",
+        "principle": "ite.doc-real-data-in-test"
+       }
+      ]
+     },
+     {
+      "id": "approve",
+      "text": "Ask for approval before putting real work into a new tool.",
+      "fine": "Lets the workplace check the tool first.",
+      "bad": [
+       {
+        "id": "approve-later",
+        "level": "intermediate",
+        "text": "Start using a new tool and ask for approval if it works well.",
+        "why": "Approval comes before real work goes in, not after the tool proves itself.",
+        "principle": "ite.doc-approval-after-use"
+       }
+      ]
+     },
+     {
+      "id": "check",
+      "text": "Check what a new tool produces against the original source.",
+      "fine": "Catches mistakes before they spread.",
+      "bad": [
+       {
+        "id": "check-skip",
+        "level": "advanced",
+        "text": "Trust a new tool's results once it has been right a few times.",
+        "why": "A few correct results do not show it will be right next time. Check each time that it matters.",
+        "principle": "ite.doc-trust-after-few-results"
+       }
+      ]
+     },
+     {
+      "id": "trial",
+      "text": "Try a new tool with one small group before the whole team.",
+      "fine": "Limits the effect of any problems."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims",
+     "policy-stated-in-scenario"
+    ],
+    "notes": "Rules are stated as this workplace's policy. No product, vendor or law is named. Tiers: private data, approval, checking output, training, trial."
+   },
+   "exclusive": [
+    [
+     "check",
+     "training"
+    ],
+    [
+     "check",
+     "pilot"
+    ],
+    [
+     "training",
+     "pilot"
+    ]
+   ]
+  }
+ ]
+}

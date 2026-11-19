@@ -1,0 +1,317 @@
+{
+ "skill": "critical-thinking-and-problem-solving",
+ "kits": [
+  {
+   "id": "ctp-compare-solutions",
+   "skill": "critical-thinking-and-problem-solving",
+   "family": "critical-thinking-and-problem-solving.cx-comparing-possible-fixes",
+   "familyName": "Comparing possible fixes before choosing one",
+   "framework": "competing-priorities",
+   "concepts": [
+    "critical-thinking-and-problem-solving:evaluate-solutions",
+    "critical-thinking-and-problem-solving:implement-action"
+   ],
+   "contexts": "any",
+   "setup": [
+    "You work as {role|a} at {workplace|a}, and the team is choosing between possible fixes for a recurring problem.",
+    "As {role|a} at {workplace|a}, you are asked to help compare fixes for a problem the team keeps having."
+   ],
+   "detail": [
+    "It is a normal weekday.",
+    "It is the middle of the afternoon."
+   ],
+   "pressure": [
+    "{coworker3} says it is not worth the trouble.",
+    "You are in a hurry to finish."
+   ],
+   "tiers": {
+    "1": "A fix must keep every safety feature in place.",
+    "2": "A set budget is a firm limit on what can be chosen.",
+    "3": "A fix that treats the cause beats one that hides the symptom.",
+    "4": "An untried fix gets a small trial before it is used everywhere.",
+    "5": "When fixes look equal, the evidence decides."
+   },
+   "issues": [
+    {
+     "id": "guard",
+     "tier": 1,
+     "rule": "keep-safety-features",
+     "principle": "ctp.reject-fixes-that-remove-safety-features",
+     "fact": [
+      "Two fixes would speed up packing, but one removes a safety guard, and {lead|the} says fixes must keep every safety feature."
+     ],
+     "short": "the fix that removes the guard",
+     "action": "Choose the fix that keeps the guard in place.",
+     "brief": "choose the fix that keeps the guard",
+     "reason": "A fix that removes protection solves one problem by creating a more serious one.",
+     "lesson": "Rule out fixes that remove safety features before comparing anything else.",
+     "shortcut": [
+      {
+       "text": "Choose the faster fix, since speed is the goal.",
+       "brief": "choose the faster fix",
+       "why": "Speed does not outweigh the safety feature, and {lead|the} has said fixes must keep it.",
+       "mis": "The goal of a fix is the only thing that matters."
+      }
+     ],
+     "clear": [
+      "The team already dropped the fix that removes the guard."
+     ],
+     "done": "the guard-removing fix is already ruled out"
+    },
+    {
+     "id": "budget",
+     "tier": 2,
+     "rule": "stay-inside-the-budget",
+     "principle": "ctp.choose-fixes-within-budget",
+     "fact": [
+      "Three fixes would stop a leak, {lead|the} set a budget of $200, and one fix costs $350."
+     ],
+     "short": "the fix that costs $350",
+     "action": "Choose among the fixes that fit the $200 budget.",
+     "brief": "choose among the fixes under $200",
+     "reason": "A fix over the budget cannot be bought, so it is not a real choice.",
+     "lesson": "Keep to the limits that are set before you compare fixes.",
+     "shortcut": [
+      {
+       "text": "Choose the $350 fix, since it is the most thorough.",
+       "brief": "choose the $350 fix",
+       "why": "The budget is a limit, and a fix that cannot be paid for does not solve the problem.",
+       "mis": "The most thorough fix is always the best."
+      }
+     ],
+     "clear": [
+      "The $350 fix was already ruled out for going over the budget."
+     ],
+     "done": "the over-budget fix is already ruled out"
+    },
+    {
+     "id": "cause",
+     "tier": 3,
+     "rule": "treat-the-cause",
+     "principle": "ctp.prefer-a-fix-for-the-cause",
+     "fact": [
+      "A printer jams every day, one fix only clears the jam, and another fixes why the paper keeps catching."
+     ],
+     "short": "the daily printer jams",
+     "action": "Choose the fix that stops the paper from catching.",
+     "brief": "choose the fix that treats the cause",
+     "reason": "A fix that treats the cause stops the problem returning, while clearing jams only hides it.",
+     "lesson": "Prefer a fix that treats the cause of a repeating problem.",
+     "shortcut": [
+      {
+       "text": "Choose the quick fix and clear the jams as they happen.",
+       "brief": "choose the quick fix",
+       "why": "The jams will keep coming back, and each one takes time again.",
+       "mis": "A quick fix is the same as a solution."
+      }
+     ],
+     "clear": [
+      "The team already chose the fix that stops the paper from catching."
+     ],
+     "done": "the cause-treating fix is already chosen"
+    },
+    {
+     "id": "trial",
+     "tier": 4,
+     "rule": "trial-an-untried-fix",
+     "principle": "ctp.trial-an-untried-fix",
+     "fact": [
+      "A fix has not been tried before, and {lead|the} says untried fixes get a small trial first."
+     ],
+     "short": "the untried fix",
+     "action": "Run a small trial of the fix first.",
+     "brief": "run a small trial first",
+     "reason": "A small trial shows whether the fix works and what it changes, before everyone depends on it.",
+     "lesson": "Try an untested fix on a small scale before using it widely.",
+     "shortcut": [
+      {
+       "text": "Use it everywhere now, since it should work.",
+       "brief": "use it everywhere now",
+       "why": "Problems then appear everywhere at once, and the guide wants a trial first.",
+       "mis": "If it should work, it will work."
+      }
+     ],
+     "clear": [
+      "The untried fix already passed a small trial."
+     ],
+     "done": "the trial is already done"
+    },
+    {
+     "id": "evidence",
+     "tier": 5,
+     "rule": "let-the-evidence-decide",
+     "principle": "ctp.compare-fixes-by-the-logged-evidence",
+     "fact": [
+      "Two fixes look equal, but the log shows one would have prevented 8 of last month's 10 problems, the other 2."
+     ],
+     "short": "the choice between two equal-looking fixes",
+     "action": "Choose the fix that addresses most of the logged problems.",
+     "brief": "choose the fix that addresses the most logged problems",
+     "reason": "The log shows which fix would have helped most, which is better than how the fixes look.",
+     "lesson": "Use the evidence you have to choose between fixes that look similar.",
+     "shortcut": [
+      {
+       "text": "Choose whichever fix is easier to explain.",
+       "brief": "choose the easier to explain",
+       "why": "Ease of explaining does not show which fix would help more.",
+       "mis": "The simplest explanation is the best fix."
+      }
+     ]
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations involves comparing fixes before choosing one.",
+    "lesson": "Compare fixes against safety, limits, causes, trials and evidence before choosing one."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} what they usually do and copy that.",
+     "why": "A coworker's habit is not the written guide, and it may be out of date.",
+     "mis": "Common practice is the same as the rule."
+    },
+    {
+     "text": "Wait until {lead|the} brings it up before you act.",
+     "why": "The guide applies to you now, and waiting leaves the problem in place.",
+     "mis": "Someone else will raise it if it matters."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Refuse to choose any fix until every possible fix has been tested.",
+     "why": "The point is to choose with the information you have. Testing everything delays the fix.",
+     "mis": "A choice needs every option tested."
+    }
+   ],
+   "process": {
+    "setup": [
+     "The team needs to choose a fix for a repeating problem."
+    ],
+    "steps": [
+     {
+      "id": "limits",
+      "text": "Write down the safety and budget limits",
+      "core": true
+     },
+     {
+      "id": "list",
+      "text": "List the possible fixes",
+      "core": true
+     },
+     {
+      "id": "compare",
+      "text": "Compare the fixes against the limits and the evidence",
+      "core": true
+     },
+     {
+      "id": "choose",
+      "text": "Choose a fix to trial"
+     }
+    ],
+    "rel": [
+     [
+      "limits",
+      "compare",
+      "Compare fixes against the limits you wrote down."
+     ],
+     [
+      "list",
+      "compare",
+      "You compare fixes you have listed."
+     ],
+     [
+      "compare",
+      "choose",
+      "Choose after comparing."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Write the limits, list the fixes, compare them, then choose one to trial."
+   },
+   "doc": {
+    "type": "note",
+    "title": [
+     "Notes on choosing a fix"
+    ],
+    "intro": [
+     "You are reading a coworker's draft advice on choosing between fixes."
+    ],
+    "prompt": [
+     "Which line gives advice that leads to a poor choice?",
+     "Which line is the problem?"
+    ],
+    "lesson": "A good choice compares fixes against safety, budget, cause and evidence.",
+    "lines": [
+     {
+      "id": "safety",
+      "text": "Rule out fixes that remove safety features.",
+      "fine": "Keeps people protected.",
+      "bad": [
+       {
+        "id": "safety-speed",
+        "level": "beginner",
+        "text": "Pick the fastest fix even if it removes a safety feature.",
+        "why": "A fix that removes protection creates a worse problem.",
+        "principle": "ctp.doc-fastest-fix-over-safety"
+       }
+      ]
+     },
+     {
+      "id": "budget",
+      "text": "Keep to the budget set for the fix.",
+      "fine": "Keeps choices realistic.",
+      "bad": [
+       {
+        "id": "budget-best",
+        "level": "intermediate",
+        "text": "Pick the most thorough fix even if it goes over the budget.",
+        "why": "A fix that cannot be paid for is not an option.",
+        "principle": "ctp.doc-over-budget-fix"
+       }
+      ]
+     },
+     {
+      "id": "cause",
+      "text": "Prefer the fix that treats the cause.",
+      "fine": "Stops the problem coming back.",
+      "bad": [
+       {
+        "id": "cause-quick",
+        "level": "advanced",
+        "text": "Prefer the quick fix that clears each problem as it appears.",
+        "why": "The problem will keep returning.",
+        "principle": "ctp.doc-quick-fix-over-cause"
+       }
+      ]
+     },
+     {
+      "id": "trial",
+      "text": "Try an untested fix on a small scale first.",
+      "fine": "Limits the risk."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims"
+    ],
+    "notes": "Everyday decision-making only; no named method or framework. Tiers: safety, budget, cause, trial, evidence."
+   },
+   "exclusive": [
+    [
+     "cause",
+     "trial"
+    ],
+    [
+     "cause",
+     "evidence"
+    ],
+    [
+     "trial",
+     "evidence"
+    ]
+   ]
+  }
+ ]
+}
