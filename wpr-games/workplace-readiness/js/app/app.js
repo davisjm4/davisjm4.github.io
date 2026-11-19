@@ -47,6 +47,7 @@
     try { current = gen.next(); }
     catch (e) { UI.clear(doc.getElementById('ticket-slot')).appendChild(UI.h('p', { class: 'notice', text: 'Could not build a challenge for these choices. Go back and try mixing modes or difficulty.' })); return; }
     UI.renderStatbar(tracker);
+    root.dispatchEvent(new CustomEvent('csg:wpr-question',{detail:{question:current,index:gen.index}}));
     UI.renderTicket(doc.getElementById('ticket-slot'), current, lib, {
       check: function (resp) {
         tracker.touch();
@@ -56,6 +57,7 @@
           W.readiness?.recordPractice(current, result.correct);
           tracker.data.index = gen.index;
           save(); UI.renderStatbar(tracker);
+          root.dispatchEvent(new CustomEvent('csg:wpr-answer',{detail:{question:current,correct:result.correct,index:gen.index}}));
         }
         return result;
       },

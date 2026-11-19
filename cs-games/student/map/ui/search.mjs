@@ -7,19 +7,20 @@ export function createSkillSearch(model, { layout, query, onQuery, onShow, onPra
   const results = el('ul', { class: 'map-search-results', 'aria-label': 'Matching skills' });
   function render() {
     const term = input.value.trim();
-    const matches = searchSkills(model, term);
+    let matches = searchSkills(model, term);
+    if(model.courseId==='workplace')matches=[...new Map(matches.map(match=>[match.stop.id,match])).values()];
     status.textContent = !term ? '' : !matches.length ? 'No matching skills in this course.'
       : matches.length === 1 ? '1 matching skill.' : matches.length + ' matching skills.';
     results.hidden = !matches.length;
     results.replaceChildren(...matches.map(({ node, stop, match }) => {
-      const link = node.practice[0];
+      const link = model.courseId==='workplace'?null:node.practice[0];
       const practiceLabel = link?.kind === 'open' ? 'Open activity' : 'Practice';
       return el('li', {},
-        el('strong', { text: node.title }),
+        el('strong', { text: model.courseId==='workplace'?stop.title:node.title }),
         el('small', { text: [model.courseTitle, stop.baseTitle, 'Matches ' + match].filter(Boolean).join(' · ') }),
         el('div', { class: 'suggested-actions' },
           el('button', { class: 'btn', type: 'button', 'aria-label': 'Show ' + node.title + ' on ' + layout,
-            text: layout === 'list' ? 'Show in List' : 'Show on Map', onclick: () => onShow(node) }),
+            text: model.courseId==='workplace'?'Start area practice':layout === 'list' ? 'Show in List' : 'Show on Map', onclick: () => onShow(node) }),
           link ? el('a', { class: 'btn', href: link.url, 'data-action': 'practice-search', 'data-return-skill': node.id, 'aria-label': practiceLabel + ' for ' + node.title, text: practiceLabel,
             onclick: event => { if (onPractice({ node, url: link.url, kind: link.kind }) === true) event.preventDefault(); } })
             : el('small', { text: 'Practice activity unavailable' })));

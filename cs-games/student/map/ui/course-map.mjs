@@ -35,12 +35,12 @@ const R = 42, C = 2 * Math.PI * R;
 function stopArt(stop) {
   const s = stop.summary;
   const arc = s.fraction > 0 ? svg('circle', { class: 'arc', cx: 48, cy: 48, r: R, 'stroke-dasharray': `${(s.fraction * C).toFixed(2)} ${C.toFixed(2)}`, transform: 'rotate(-90 48 48)' }) : null;
-  const g = icon(stop.identity.icon, { size: 40 });
+  const g = icon(stop.summary.complete?'check':stop.identity.icon, { size: 40 });
   const holder = svg('g', { transform: 'translate(28 28)' });
   while (g.firstChild) holder.append(g.firstChild);
   for (const a of ['stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'fill']) holder.setAttribute(a, g.getAttribute(a));
   holder.setAttribute('transform', 'translate(28 28) scale(1.667)');
-  return svg('svg', { class: 'stop-art', viewBox: '0 0 96 96', width: 96, height: 96, 'aria-hidden': 'true', focusable: 'false', 'data-ring': s.mode },
+  return svg('svg', { class: 'stop-art', viewBox: '0 0 96 96', width: 96, height: 96, 'aria-hidden': 'true', focusable: 'false', 'data-ring': s.mode,'data-complete':s.complete?'true':'false' },
     svg('circle', { class: 'track', cx: 48, cy: 48, r: R }), arc, svg('circle', { class: 'body', cx: 48, cy: 48, r: 34 }), holder);
 }
 
