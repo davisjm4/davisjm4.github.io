@@ -106,7 +106,7 @@ test('scoring: one scored attempt per question; answers cannot be changed after 
 });
 
 test('ordering: buttons, keyboard and pointer-drag all reorder; valid alternates are accepted', T, async () => {
-  const p = await newPage();
+  const p = await newPage({ w: 1366, h: 1100 });
   await startWith(p, { skill: 'skill:workplace-safety', mode: 'order' });
   let c = await current(p);
   // keep going until we reach the 5-step hazard template with three valid orders
@@ -122,8 +122,10 @@ test('ordering: buttons, keyboard and pointer-drag all reorder; valid alternates
   const afterBtn = await ids(); assert.deepEqual([afterBtn[1], afterBtn[2]], [before[2], before[1]]);
   await p.focus('.step:nth-child(3) .grip'); await p.keyboard.press('ArrowUp'); // keyboard
   const afterKey = await ids(); assert.deepEqual([afterKey[1], afterKey[2]], [afterBtn[2], afterBtn[1]]);
-  const grip = await p.$('.step:nth-child(1) .grip'), box = await grip.boundingBox();    // pointer drag to the bottom
+  await p.$eval('.steps', list => list.scrollIntoView({ block: 'center' }));
+  const grip = await p.$('.step:nth-child(1) .grip'), box = await grip.boundingBox();
   const lastBox = await (await p.$('.step:nth-child(5)')).boundingBox();
+  assert.ok(box.y >= 0 && lastBox.y + lastBox.height <= p.viewport().height, 'the full drag path is visible');
   await p.mouse.move(box.x + box.width / 2, box.y + box.height / 2); await p.mouse.down();
   await p.mouse.move(box.x + 5, lastBox.y + lastBox.height - 4, { steps: 12 }); await p.mouse.up();
   const afterDrag = await ids(); assert.equal(afterDrag[4], afterKey[0], 'dragged item moved to the end');
@@ -179,7 +181,7 @@ test('filters: Mathematics Advanced has generated content and preserves its sele
   const p = await newPage();
   await p.select('#opt-skill', 'skill:mathematics'); await p.select('#opt-difficulty', 'advanced');
   assert.equal(await p.$eval('#btn-start', e => e.disabled), false);
-  assert.match(await p.$eval('#options-note', e => e.textContent), /distinct reasoning problems/);
+  assert.match(await p.$eval('#options-note', e => e.textContent), /questions will vary within the selected topics/);
   await p.click('#btn-start'); await p.waitForSelector('#btn-check');
   const c = await p.evaluate(() => WRG.app.state().current);
   assert.equal(c.skill, 'mathematics');
@@ -375,8 +377,9 @@ test('performance: first interactive within budget and bundle size reasonable', 
   await closePage(p);
 });
 
-test('hosting: works from a GitHub Pages subfolder, a host root and file:// with relative paths only', { timeout: 120000 }, async () => {
+test('hosting: works from a GitHub Pages subfolder, a host root and file:// with relative paths only', { timeout: 120000 }, async t => {
   const rootServer = await serve('');
+  t.after(() => rootServer.srv.close());
   const targets = [['subfolder', url], ['root', rootServer.url], ['file', 'file://' + path.join(__dirname, '..', '..', 'index.html')]];
   for (const [label, target] of targets) {
     const ctx = browser.createBrowserContext ? await browser.createBrowserContext() : await browser.createIncognitoBrowserContext();
@@ -389,5 +392,4 @@ test('hosting: works from a GitHub Pages subfolder, a host root and file:// with
     assert.deepEqual(external, [], label + ' made external requests');
     await ctx.close();
   }
-  rootServer.srv.close();
 });

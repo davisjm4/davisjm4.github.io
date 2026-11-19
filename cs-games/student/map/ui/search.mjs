@@ -2,6 +2,8 @@ import { searchSkills } from '../search.mjs';
 import { el } from './dom.mjs';
 
 export function createSkillSearch(model, { layout, query, onQuery, onShow, onPractice }) {
+  const workplace=model.courseId==='workplace';
+  const noun=workplace?'learning areas':'skills';
   const input = el('input', { id: 'map-skill-search', type: 'search', value: query, maxlength: 120, autocomplete: 'off' });
   const status = el('p', { class: 'muted small', role: 'status' });
   const results = el('ul', { class: 'map-search-results', 'aria-label': 'Matching skills' });
@@ -9,8 +11,8 @@ export function createSkillSearch(model, { layout, query, onQuery, onShow, onPra
     const term = input.value.trim();
     let matches = searchSkills(model, term);
     if(model.courseId==='workplace')matches=[...new Map(matches.map(match=>[match.stop.id,match])).values()];
-    status.textContent = !term ? '' : !matches.length ? 'No matching skills in this course.'
-      : matches.length === 1 ? '1 matching skill.' : matches.length + ' matching skills.';
+    status.textContent = !term ? '' : !matches.length ? `No matching ${noun} in this course.`
+      : matches.length === 1 ? workplace?'1 matching area.':'1 matching skill.' : matches.length + ' matching skills.';
     results.hidden = !matches.length;
     results.replaceChildren(...matches.map(({ node, stop, match }) => {
       const link = model.courseId==='workplace'?null:node.practice[0];
@@ -28,6 +30,6 @@ export function createSkillSearch(model, { layout, query, onQuery, onShow, onPra
   }
   input.addEventListener('input', () => { render(); onQuery(input.value, results); });
   render();
-  return el('search', { class: 'map-skill-search', 'aria-label': 'Find skills in ' + model.courseTitle },
-    el('label', { for: input.id, text: 'Search skills in ' + model.courseTitle }), input, status, results);
+  return el('search', { class: 'map-skill-search', 'aria-label': 'Find '+noun+' in ' + model.courseTitle },
+    el('label', { for: input.id, text: 'Search '+noun+' in ' + model.courseTitle }), input, status, results);
 }

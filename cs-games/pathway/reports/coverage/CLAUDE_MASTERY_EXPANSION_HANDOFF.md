@@ -1,5 +1,8 @@
 # Handoff: mastery evidence coverage expansion (first wave)
 
+> Workplace Readiness status. The [draft evidence review](../wpr-mastery/INDEPENDENT_REVIEW.md) documents 30 proposed requirements held pending educator approval and question-level integrity validation. The deployed classification remains 129 automatic nodes out of 290.
+
+
 Baseline `main` `651d07a364ba0cd3550c6cd8f883a890555a4106` (PR #46 merged). Branch `fix/claude-mastery-evidence-coverage`. Final commit hash is in the delivery summary and in `COMMITS.txt` inside the evidence archive. Not pushed, merged or deployed; the Master Tracker was not updated.
 
 ## What changed (and nothing else)
