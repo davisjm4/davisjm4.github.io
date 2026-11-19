@@ -157,6 +157,7 @@ test('Teacher Tools: three views, readable class overview, no raw identifiers, s
   await page.evaluate(() => [...document.querySelectorAll('.class-card')].find(c => c.textContent.includes('Old class')).click());
   await page.waitForFunction(() => document.querySelector('#class-overview')?.innerText.includes('Archived'));
   assert.doesNotMatch(await visibleText(page, '#class-overview'), /\bfalse\b/);
+  assert.doesNotMatch(await visibleText(page, '#wpr-teacher-profiles'), /refresh is not a function|focusPanel/);
   assert.deepEqual(errors, []);
 });
 

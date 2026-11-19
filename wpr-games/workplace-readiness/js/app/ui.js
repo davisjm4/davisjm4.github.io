@@ -292,7 +292,7 @@
     } else if (c.mode === 'find') {
       controls.buttons.forEach(function (b) {
         var id = b.getAttribute('data-id');
-        if (id === c.key.problemId) tag(b, 'is-best', 'The problem');
+        if (id === (result.problemId ?? c.key?.problemId)) tag(b, 'is-best', 'The problem');
         else if (id === resp.segmentId) tag(b, 'is-mine', 'Your choice');
       });
     } else {
