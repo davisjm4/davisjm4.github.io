@@ -1,13 +1,20 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import {createRequire} from 'node:module';
 import {startDev} from '../../wpr-games/workplace-readiness/service/dev.mjs';
-import {proceduralQuestion} from '../../wpr-games/workplace-readiness/service/procedural-practice.mjs';
+import {proceduralQuestion,chooseProceduralSource,issueProceduralPractice} from '../../wpr-games/workplace-readiness/service/procedural-practice.mjs';
 import grader from '../../wpr-games/workplace-readiness/js/core/grader.js';
 const require=createRequire(new URL('../../wpr-games/workplace-readiness/package.json',import.meta.url));const {launch}=require('./tests/browser/harness.js');
-test('enrolled area opens signed procedural practice, retains an offline response and shows server feedback after sync',{timeout:90000},async t=>{
- const owner='synthetic-procedural-browser';const dev=await startDev({teacherTokens:{owner}});let browser;t.after(async()=>{await browser?.close();await new Promise(r=>dev.server.close(r));dev.db.close();});
+test('enrolled Find the Problem practice retains an offline response and reveals server feedback without a local key',{timeout:90000},async t=>{
+ const owner='synthetic-procedural-browser',secret='synthetic-find-question-signing-secret-00001';const dev=await startDev({teacherTokens:{owner},submissionSecret:secret});let browser;t.after(async()=>{await browser?.close();await new Promise(r=>dev.server.close(r));dev.db.close();});
  const call=async(path,token,body)=>{const res=await fetch(dev.url+'/api/wpr'+path,{method:'POST',headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},body:JSON.stringify(body)});const data=await res.json();assert.equal(res.status,200,JSON.stringify(data));return data;};
  const c=await call('/teacher/profiles',owner,{title:'Procedural browser class',courseId:'workplace'}),profile=await call('/profile/enroll',null,{invite:c.invite});
+ // Select a deterministic real signed Find fixture. Sync/scoring still use the real service;
+ // only the first issuance response is fixed so every run exercises the key-free renderer.
+ const seed=Array.from({length:1000},(_,i)=>'find-feedback-'+i).find(s=>proceduralQuestion(chooseProceduralSource('creativity-and-innovation',[],s),s)?.mode==='find');assert.ok(seed);
+ const randomUUID=crypto.randomUUID.bind(crypto),values=[seed,randomUUID()];let fixture;
+ try{crypto.randomUUID=()=>values.shift()??randomUUID();fixture=await issueProceduralPractice(secret,{id:profile.id,class_id:c.id,generation:0,course_id:'workplace'},'creativity-and-innovation');}finally{crypto.randomUUID=randomUUID;}
+ assert.equal(fixture.question.mode,'find');
  browser=await launch();const page=await browser.newPage();let issued;
+ let usedFixture=false;await page.setRequestInterception(true);page.on('request',request=>{if(!usedFixture&&request.url().endsWith('/profile/wpr-procedural')&&request.method()==='POST'){usedFixture=true;void request.respond({status:200,contentType:'application/json',body:JSON.stringify(fixture)});}else void request.continue();});
  page.on('response',async response=>{if(response.url().endsWith('/profile/wpr-procedural')&&response.request().method()==='POST'&&response.status()===200){issued=await response.json();await page.evaluate(id=>globalThis.__issuedTestId=id,issued.id);}});
  await page.goto(dev.url+'/cs-games/');await page.evaluate(profile=>{localStorage.setItem('wrg.profile.active.v1',JSON.stringify(profile));localStorage.setItem('cs-games:guest:v1','{"synthetic-isolation":"unchanged"}');},profile);
  const back='/cs-games/student/?class='+c.id+'&course=workplace#v=unit&unit=workplace-professional';
@@ -20,6 +27,7 @@ test('enrolled area opens signed procedural practice, retains an offline respons
  assert.equal(dev.db.prepare("SELECT COUNT(*) n FROM performance_events WHERE kind='practice'").get().n,0);
  assert.equal(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.includes('.outbox.')).length),1);
  await page.setOfflineMode(false);await page.evaluate(()=>dispatchEvent(new Event('online')));await page.waitForSelector('.feedback',{visible:true,timeout:15000}).catch(async error=>{throw new Error(error.message+' '+await page.$eval('#view-practice',e=>e.innerText)+' '+await page.evaluate(()=>JSON.stringify(Object.fromEntries(Object.entries(localStorage).filter(([k])=>k.includes('outbox')||k.includes('unverified'))))));});
+ assert.equal(await page.$eval('.choice.is-best',e=>e.dataset.id),answer.segmentId);
  assert.equal(dev.db.prepare("SELECT COUNT(*) n FROM performance_events WHERE kind='practice'").get().n,1);
  const data=JSON.parse(dev.db.prepare("SELECT data FROM performance_events WHERE kind='practice'").get().data);assert.equal(data.correct,true);assert.ok(data.dimensions.every(d=>d.scope!=='node'));
  assert.match(await page.$eval('.area-progress',e=>e.innerText),/1 of 8 questions/);
