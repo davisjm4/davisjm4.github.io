@@ -1,3 +1,5 @@
+import {issueProceduralPractice,scoreProceduralPractice,proceduralSkills} from './procedural-practice.mjs';
+import { practiceItems, issuePractice, scoreIssuedPractice } from './issued-practice.mjs';
 import { TIERS } from '../../../cs-games/pathway/requirements/recommended.mjs';
 import { validateSettings } from '../../../cs-games/pathway/requirements/settings.mjs';
 import { creditFocusStatements, focusEnabled } from './learning-focus.mjs';
@@ -298,11 +300,22 @@ async function syncPractice(db,p,events,now,trackFocus,rejected) {
   await db.batch([...items.map(event=>eventInsert(db,p,event,now)),
     ...(trackFocus ? creditFocusStatements(db,p,items,now) : [])]);
   const ids=[...new Set(items.map(event=>event.id))];
-  const accepted=(await all(db,'SELECT id FROM performance_events WHERE profile=? AND id IN ('+
-    ids.map(()=>'?').join(',')+')',p.id,...ids)).map(row=>row.id);
+  const accepted=(await all(db,"SELECT id, json_extract(data,'$.response') response, json_extract(data,'$.contentVersion') content_version FROM performance_events WHERE profile=? AND id IN ("+
+    ids.map(()=>'?').join(',')+')',p.id,...ids));
   if (!accepted.length) profileError(409,'The profile is inactive or its record limit was reached.');
-  const found=new Set(accepted);
-  return {accepted:ids.filter(id=>found.has(id)),...(rejected.length ? {rejected} : {})};
+  const found=new Map(accepted.map(row=>[row.id,row]));
+  const scored={};
+  const acceptedIds=[];
+  for (const id of ids) {
+    const row=found.get(id);
+    if (!row) continue;
+    const verified=items.filter(item=>item.id===id && item.feedback);
+    const saved=verified.find(item=>item.data.response===row.response && item.data.contentVersion===row.content_version);
+    if (verified.length && !saved) { rejected.push({id,code:'first-response-already-recorded'}); continue; }
+    if (saved) scored[id]=saved.feedback;
+    acceptedIds.push(id);
+  }
+  return {accepted:acceptedIds,...(Object.keys(scored).length ? {scored} : {}),...(rejected.length ? {rejected} : {})};
 }
 export async function routeProfiles(request,env,segments,readBody,now) {
   if (!profilesEnabled(env)) profileError(404,'Student profiles are unavailable.');
@@ -337,19 +350,53 @@ export async function routeProfiles(request,env,segments,readBody,now) {
     await write(db,'DELETE FROM profile_sessions WHERE digest=?',p.digest);
     return {signedOut:true};
   }
+  if(action==='wpr-procedural'&&method==='GET'){
+    if(p.course_id!=='workplace')profileError(403,'Workplace Readiness enrollment required.');
+    return {format:'wpr-procedural-v2',skills:proceduralSkills,masteryEligible:false};
+  }
+  if(action==='wpr-procedural'&&method==='POST'){
+    const input=await readBody(request);
+    if(p.course_id!=='workplace'||!input||typeof input.skillId!=='string'||Object.keys(input).some(k=>k!=='skillId'))profileError(400,'Choose a Workplace Readiness area.');
+    await limit(db,'wpr-issue:'+p.id,now,60);
+    const rows=await all(db,`SELECT data FROM performance_events WHERE profile=? AND pathway='workplace' AND json_extract(data,'$.format')='wpr-procedural-v2' ORDER BY occurred DESC,id DESC LIMIT 150`,p.id);
+    const recent=rows.reverse().map(row=>{const data=JSON.parse(row.data);return {sourceId:data.sourceId,reasoning:data.familyId,concept:data.topic,correct:data.correct};});
+    const issued=await issueProceduralPractice(env.SUBMISSION_SECRET,p,input.skillId,recent,now);
+    if(!issued)profileError(404,'No server-checked practice is available for this area.');
+    return issued;
+  }
+  if (action==='wpr-issue' && method==='GET') {
+    if (p.course_id!=='workplace') profileError(403,'Workplace Readiness enrollment required.');
+    return {items:practiceItems};
+  }
+  if (action==='wpr-issue' && method==='POST') {
+    const { itemId }=await readBody(request) || {};
+    if (typeof itemId!=='string' || p.course_id!=='workplace') profileError(400,'Choose a Workplace Readiness practice question.');
+    await limit(db,'wpr-issue:'+p.id,now,60);
+    const issued=await issuePractice(env.SUBMISSION_SECRET,p,itemId,now);
+    if (!issued) profileError(404,'This practice question is unavailable.');
+    return issued;
+  }
   if (action==='sync' && method==='POST') {
     const input=await readBody(request);
     if (!Array.isArray(input?.events) || !input.events.length || input.events.length>BATCH_LIMIT) profileError(400,'Send 1 to 25 practice events.');
     await limit(db,'sync:'+p.id,now,240);
     const trackFocus=focusEnabled(env), events=[], rejected=[];
     for (const source of input.events) {
-      const event=cleanPractice(source,now);
+      if (!source || typeof source!=='object') profileError(400,'Invalid practice event.');
       if (source.learner==='guest' || source.classId!=null && source.classId!==p.class_id ||
           source.profileId!=null && source.profileId!==p.id) {
-        rejected.push({id:event.id,code:'profile-scope'});
+        rejected.push({id:source.id,code:'profile-scope'});
         continue;
       }
-      if (trackFocus && present(source.assignmentReceipt,PROFILE_ID)) event.receipt=source.assignmentReceipt;
+      const procedural=source.format==='wpr-procedural-v2';
+      const verified=source.format==='wpr-issued-v1'||procedural;
+      if (!verified && source.format==='game-attempt' && source.courseId==='workplace') {
+        rejected.push({id:source.id,code:'unverified-workplace-attempt'});
+        continue;
+      }
+      const event=procedural?await scoreProceduralPractice(env.SUBMISSION_SECRET,p,source,now):verified ? await scoreIssuedPractice(env.SUBMISSION_SECRET,p,source,now) : cleanPractice(source,now);
+      if (!event) { rejected.push({id:source.id,code:'invalid-workplace-issuance'}); continue; }
+      if (!verified && trackFocus && present(source.assignmentReceipt,PROFILE_ID)) event.receipt=source.assignmentReceipt;
       events.push(event);
     }
     return syncPractice(db,p,events,now,trackFocus,rejected);

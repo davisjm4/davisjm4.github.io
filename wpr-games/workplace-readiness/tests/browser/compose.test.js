@@ -41,13 +41,13 @@ async function answer(p, correct) {
 }
 const next = async p => { await p.click('#btn-next'); await p.waitForSelector('#btn-check'); };
 
-test('loads the compositional generator with no console errors and shows capacity on the home screen', T, async () => {
+test('loads the compositional generator with no console errors and keeps capacity out of student instructions', T, async () => {
   const p = await newPage();
   assert.deepEqual(p.__errors, []);
   assert.equal(await p.evaluate(() => !!WRG.app.hybrid && WRG.app.hybrid.catalog.units.length > 3000), true);
-  assert.match(await p.$eval('#options-note', e => e.textContent), /distinct reasoning problems/);
+  assert.match(await p.$eval('#options-note', e => e.textContent), /questions will vary within the selected topics/);
   await p.select('#opt-skill', 'skill:integrity'); await p.select('#opt-difficulty', 'advanced');
-  const n = +(await p.$eval('#options-note', e => e.textContent)).match(/^(\d+)/)[1];
+  const n = await p.evaluate(()=>WRG.selector.capacity(WRG.app.hybrid,{skills:['integrity'],difficulty:'advanced'}).signatures);
   assert.ok(n >= 20, 'Integrity Advanced capacity ' + n);
   await p.__ctx.close();
 });

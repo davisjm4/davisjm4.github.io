@@ -6,6 +6,7 @@ import {readFileSync, mkdtempSync, existsSync, rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {setTimeout as delay} from 'node:timers/promises';
+import graph from '../pathway/curriculum-graph.json' with {type:'json'};
 import {startDev} from '../../wpr-games/workplace-readiness/service/dev.mjs';
 const require=createRequire(new URL('../../wpr-games/workplace-readiness/package.json',import.meta.url));
 const {launch}=require('./tests/browser/harness.js');
@@ -185,7 +186,7 @@ test('a student joins, practices offline, restores on another device and leaves 
   assert.equal(db.prepare('SELECT COUNT(*) AS n FROM performance_events').get().n,0);
   await first.setOfflineMode(false);
   await first.waitForFunction(()=>!Object.keys(localStorage).some(k=>k.includes('.outbox.')));
-  assert.equal(db.prepare('SELECT COUNT(*) AS n FROM performance_events').get().n,1);
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM performance_events WHERE json_extract(data,'$.evidenceRevision') IS NULL").get().n,1);
   assert.deepEqual(await guestStats(),guest);
 
   await second.goto(wpr,{waitUntil:'load'});
@@ -291,4 +292,67 @@ test('Loop Lab attempts reach a recovered CS Games profile after reconnecting', 
   await wait(second,'#profile-progress table');
   assert.match(await second.$eval('#profile-progress',node=>node.textContent),/Loop Lab/);
   assert.deepEqual(errors,[]);
+});
+
+test('WPR issues a server-checked question, reveals comparisons after scoring and leaves Map/List mastery uncredited', {timeout:90000}, async t=>{
+  const {url,server,db}=await startDev({teacherTokens:{teacher:token}});
+  let browser;
+  t.after(async()=>{
+    await browser?.close();
+    await new Promise(resolve=>server.close(resolve));
+    db.close();
+  });
+  browser=await launch();
+  const teacher=await browser.newPage();
+  const student=await (await browser.createBrowserContext()).newPage();
+  await teacher.goto(url+'/cs-games/teacher/');
+  await wait(teacher,'[name="teacher-key"]');
+  await teacher.type('[name="teacher-key"]',token);
+  await exactButton(teacher,'Sign in to development service');
+  await wait(teacher,'[name="class-title"]');
+  await teacher.type('[name="class-title"]','Synthetic WPR evidence browser');
+  await teacher.select('[name="class-course"]','workplace');
+  await exactButton(teacher,'Create class');
+  const invite=await (await wait(teacher,'#wpr-teacher-profiles a[href*="#enroll="]')).evaluate(a=>a.href);
+  await student.goto(invite);
+  await exactButton(student,'Enroll in this class');
+  await wait(student,'.wpr-profile-secret');
+  await Promise.all([student.waitForNavigation(),exactButton(student,'I saved my recovery credential')]);
+
+  await student.goto(url+'/wpr-games/workplace-readiness/');
+  await exactButton(student,'Try server-checked practice');
+  await wait(student,'#verified-wpr #btn-check');
+  assert.equal(await student.$('#verified-wpr .feedback'),null);
+  await student.evaluate(()=>[...document.querySelectorAll('#verified-wpr .choice')].find(o=>o.textContent.includes('Help the coworker begin')).click());
+  await student.click('#verified-wpr #btn-check');
+  await wait(student,'#verified-wpr .feedback');
+  assert.match(await student.$eval('#verified-wpr .feedback',node=>node.textContent),/Best professional response.*posted response/);
+  const row=db.prepare("SELECT data FROM performance_events WHERE json_extract(data,'$.format')='wpr-issued-v1'").get();
+  const stored=JSON.parse(row.data);
+  assert.equal(stored.topic,'workplace-safety:emergency-protocols');
+  assert.equal(stored.correct,true);
+  assert.deepEqual(stored.dimensions,[]);
+  await student.click('#verified-wpr #btn-next');
+  await student.waitForFunction(()=>document.querySelector('#verified-wpr .scenario')?.textContent.includes('Mina'));
+  await student.setOfflineMode(true);
+  await student.evaluate(()=>[...document.querySelectorAll('#verified-wpr .choice')].find(o=>o.textContent.includes('Credit Mina for designing')).click());
+  await student.click('#verified-wpr #btn-check');
+  await student.waitForFunction(()=>document.querySelector('#verified-wpr')?.textContent.includes('Response saved on this device'));
+  assert.equal(await student.$('#verified-wpr .feedback'),null);
+  await student.setOfflineMode(false);
+  await student.waitForFunction(()=>!Object.keys(localStorage).some(key=>key.includes('.outbox.')));
+  const delayed=db.prepare("SELECT data FROM performance_events WHERE json_extract(data,'$.topic')='teamwork:respect-contributions'").get();
+  assert.ok(delayed);
+  assert.equal(JSON.parse(delayed.data).correct,true);
+
+  await student.goto(url+'/cs-games/student/');
+  // The area is now the student-facing destination; objectives stay in the contract.
+  await wait(student,'.unit-node');
+  await student.$$eval('.unit-node',buttons=>buttons.find(button=>button.textContent.includes('Safety & Literacy')).click());
+  const area='.stop-open[data-stop-id="area:workplace:workplace-safety"]';
+  await wait(student,area);assert.match(await student.$eval(area,e=>e.innerText),/mastery needs reviewed evidence/);
+  await exactButton(student,'List','#student-pathway');assert.equal(await student.$('.skill-list'),null);
+  const c=await student.evaluate(async()=>{const {request}=await import('/wpr-games/workplace-readiness/online/config.mjs');const {activeProfile}=await import('/wpr-games/workplace-readiness/online/profile-sync.mjs?v=guest-map-v1');return (await request('/pathways/student/'+activeProfile.classId,{token:activeProfile.token})).pathway;});
+  assert.equal(c.nodes.filter(n=>n.courseId==='workplace').length,94);
+  assert.ok(c.nodes.filter(n=>n.areaId==='area:workplace:workplace-safety').every(n=>!n.checkpoint.pathwayComplete));
 });

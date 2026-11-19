@@ -165,6 +165,7 @@ function afterPracticeCard() {
 }
 
 function summaryPanel() {
+  if(courseId==='workplace')return el('section',{id:'my-session',class:'student-panel',tabindex:'-1'},el('h2',{text:'Area practice and mastery'}),el('p',{text:'Your practice rounds remain available in My Session. Reviewed mastery is shown on each learning area.'}),el('a',{href:'/cs-games/student/session/?course=workplace&learner=guest',text:'View practice history'}));
   const g = view.guest, t = g.totals;
   const row = (k, v) => [el('dt', { text: k }), el('dd', { text: v })];
   const recent = g.recent;
@@ -180,6 +181,7 @@ function summaryPanel() {
 
 const trackingKnown = () => graph.version === TRACKED_GRAPH_VERSION; // the data describes one graph release; never guess for another
 function coverageNote() {
+  if(courseId==='workplace')return el('p',{class:'guest-coverage',text:'Choose one of 22 learning areas. Practice rounds support learning; mastery uses reviewed evidence and your teacher’s requirements.'});
   if (!trackingKnown()) return el('p', { class: 'guest-coverage', text: 'Some activities do not report skill-level results yet. They stay open for practice but may not update the numbers above.' });
   const tracked = view.nodes.filter(n => TRACKED_NODE_IDS.has(n.id)).length, total = view.nodes.length;
   const extra = courseId === 'workplace' ? ' Workplace Readiness activities are open for practice here but do not report skill-level results to this page yet.' : tracked < total ? ' The other skills are open for practice and are marked below.' : '';
@@ -237,7 +239,8 @@ function render({ focus, fresh = false } = {}) {
   const launch = sessionGet();
   if (launch && launch.courseId === courseId) { if (view.guest.totals.answered > launch.answered) { afterCard = launch.nodeId; sessionSet(null); } }
   const defaultIndex = String(groupIndex(view, view.guest.resume?.nodeId ?? view.nodes[0].id));
-  if(classic){
+  const useClassic=classic&&courseId!=='workplace';
+  if(useClassic){
     pathwayEl = renderPathway(view, { openAreas: openAreas.size ? [...openAreas] : [defaultIndex] });
     decoratePathway(pathwayEl, view, { onMark, onLaunch, trackedIds: trackingKnown() ? TRACKED_NODE_IDS : null });
   }else{
@@ -245,8 +248,8 @@ function render({ focus, fresh = false } = {}) {
     if(map)map.update(input);
     else map=mountStudentMap(mapHost,{...input,adapter});
   }
-  app.replaceChildren(...[classic?el('section',{class:'student-panel guest-pathway','aria-label':'Learning pathway'},pathwayEl):mapHost,
-    classic?jumpControl():null, coverageNote(), classic?pickUp():null, afterPracticeCard(), summaryPanel(), storagePanel(state)].filter(Boolean)); // replaceChildren(null) would print "null"
+  app.replaceChildren(...[useClassic?el('section',{class:'student-panel guest-pathway','aria-label':'Learning pathway'},pathwayEl):mapHost,
+    useClassic?jumpControl():null, coverageNote(), useClassic?pickUp():null, afterPracticeCard(), summaryPanel(), storagePanel(state)].filter(Boolean)); // replaceChildren(null) would print "null"
   lastStamp = store.state().updated;
   syncStorageNote();
   if (focus) (app.querySelector(`[data-control="${CSS.escape(focus)}"]`) || app.querySelector(`[data-course="${CSS.escape(String(focus).replace('course:', ''))}"]`))?.focus({ preventScroll: true });

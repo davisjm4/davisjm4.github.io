@@ -1,0 +1,71 @@
+import {items as securityProcedures} from './issued-bank/security-procedures.mjs';
+import {items as honestyAndFairness} from './issued-bank/honesty-and-fairness.mjs';
+import {items as evaluateCredibility} from './issued-bank/evaluate-credibility.mjs';
+import {items as softwareAndApplications} from './issued-bank/software-and-applications.mjs';
+import {items as interpretDocuments} from './issued-bank/interpret-documents.mjs';
+import {items as safeToolUse} from './issued-bank/safe-tool-use.mjs';
+
+// Frozen revisions for known attribution defects. Each comparison depends on facts in the
+// scenario, and may recognize reasonable alternatives. These three keep their original ids
+// and content, so their issued versions and historical responses are unchanged.
+const repaired = [
+  {
+    id:'chemical-response',
+    family:'repaired:emergency-eyewash',
+    concept:'workplace-safety:emergency-protocols',
+    context:'healthcare',
+    scenario:'During cleanup, a coworker gets cleaning solution in their eyes. The posted instructions say to start the eyewash immediately and ask someone else to call the supervisor. Two coworkers are beside you, and the spill is away from the eyewash.',
+    prompt:'What is the best immediate response?',
+    choices:[
+      'Help the coworker begin using the eyewash and ask someone nearby to call the supervisor.',
+      'Call the supervisor yourself, then help the coworker use the eyewash.',
+      'Ask someone to block access to the spill while you find the label before helping the coworker.',
+      'Tell a coworker to set up the eyewash while you look for the written incident form.',
+    ],
+    best:0,
+    why:'Starting the eyewash promptly follows the posted response. A second person can notify the supervisor at the same time.',
+    comparison:['Addresses both immediate priorities in parallel.','Notification is appropriate, but doing it first delays rinsing.','Blocking access may help others, but the spill does not block the immediate response.','Reporting is useful after immediate care has started.'],
+  },
+  {
+    id:'credit-team-contribution',
+    family:'repaired:credit-overlooked-contribution',
+    concept:'teamwork:respect-contributions',
+    context:'business',
+    scenario:'A team built a successful demo. The slide credits only the presenter. Mina designed the examples that persuaded the client. The slide can still be edited and the team agreed to identify who contributed the work.',
+    prompt:'Which action best respects Mina’s contribution?',
+    choices:[
+      'Thank the whole team at the start and leave the prepared credit slide as it is.',
+      'Credit Mina for designing the examples on the slide and thank the presenter for delivering them.',
+      'Thank Mina privately after the demo and leave the presenter as the only person named.',
+      'Ask the presenter to thank Mina at the next team meeting and keep the client slide brief.',
+    ],
+    best:1,
+    why:'Specific, timely attribution recognizes the distinct contributions in the deliverable the team agreed to use.',
+    comparison:['A group thank-you supports morale, but it leaves the individual credit inaccurate.','Acknowledges each role in the same context as the original credit.','The private thanks is considerate, but it does not correct the slide.','Recognition at the next meeting helps internally, but it leaves the client-facing credit incomplete.'],
+  },
+  {
+    id:'applied-reading-priority',
+    family:'repaired:interpret-approval-procedure',
+    concept:'reading-and-writing:interpret-documents',
+    context:'business',
+    scenario:'A coordinator needs to change a client delivery date. The service guide reads: “Record the proposed date as pending. Obtain the client lead’s approval. Once approved, update the delivery calendar and notify the warehouse.” The proposed date is already recorded as pending.',
+    prompt:'What is the most appropriate next step under the written procedure?',
+    choices:[
+      'Update the delivery calendar as tentative and ask the client lead to confirm it.',
+      'Notify the warehouse that approval is pending and ask it to prepare for the new date.',
+      'Ask the client lead to approve the pending date and leave the delivery calendar unchanged.',
+      'Review the dates with the warehouse, then ask its supervisor to authorize the change.',
+    ],
+    best:2,
+    why:'The documented dependency is approval from the client lead before changing the calendar or sending the warehouse notification.',
+    comparison:['Tentative labeling can help in another workflow. This procedure says to wait for approval before updating the calendar.','Advance notice may be useful when permitted. This procedure places warehouse notification after approval.','Uses the named approver and preserves the pending status.','A warehouse review may be useful, but its supervisor is not the approver named in the guide.'],
+  },
+];
+
+// Authored families, one file per skill. Each family is one distinct professional decision.
+// Appending keeps every earlier id, family and content digest unchanged.
+export const authoredItems = [
+  ...securityProcedures, ...honestyAndFairness, ...evaluateCredibility,
+  ...softwareAndApplications, ...interpretDocuments, ...safeToolUse,
+];
+export const items = [...repaired, ...authoredItems];

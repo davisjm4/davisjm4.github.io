@@ -217,6 +217,8 @@ test('activity reports retain the original String Lab copy and Search & Sort res
   const copy = await page.evaluate(() => JSON.parse(window.copiedLegacy));
   assert.equal(copy.attempted, 1);
   assert.ok(copy.byDifficulty);
+  // The legacy dialog updates before the asynchronously imported shared bridge.
+  await page.waitForFunction(()=>window.JavaGamesSessionBridge?.snapshot()?.game?.attempted===1);
 
   await page.goto(dev.url + '/java-games/search-sort-lab/?learner=guest');
   await page.waitForSelector('#choices button', { visible: true });

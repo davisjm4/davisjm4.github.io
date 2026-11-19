@@ -1,0 +1,25 @@
+{
+  "method": "Draft pass, mechanical gate (authored-bank.mjs), then a separate critical pass per family asking: unresolved tie for best? invented rule or fact? wrong primary skill? arithmetic or calendar ambiguity? Single reader (the drafting model, in a separate pass). Agreement is evidence, not proof.",
+  "limits": ["No independent evaluator or human reviewer was used.", "Keys were not tested against student data.", "Fail-closed rule: a family that cannot be repaired is excluded, none were excluded this session because every flagged defect was repairable."],
+  "repairs": [
+    {"family": "authored:sec-clean-desk-end-of-day", "defect": "best answer relied on an invented fact (note 'no longer needed')", "repair": "keyed answer now locks both items; scenario facts unchanged"},
+    {"family": "authored:sec-shared-login", "defect": "distractor (count stock yourself) was a possible tie with the key", "repair": "replaced with a distractor that misattributes work under your account"},
+    {"family": "authored:int-assessment-answers", "defect": "distractor 'describe hardest topics' was borderline-permitted", "repair": "replaced with sharing specific exam situations, clearly confidential content"},
+    {"family": "authored:sw-expired-trial", "defect": "'within one business day' did not clearly beat the deadline", "repair": "IT page now states same-afternoon assignment"},
+    {"family": "authored:sw-cloud-outage-offline", "defect": "explanation contradicted timeline (booking 'last night' would be on a 6 a.m. list)", "repair": "booking moved to 8 a.m. today; key, why and comparison rewritten"},
+    {"family": "authored:doc-business-day-deadline", "defect": "counting convention ambiguous; wrong-reasoning distractor inconsistent with its stated count", "repair": "contract states counting starts next business day; distractor recomputed (Wednesday)"},
+    {"family": "authored:tool-ladder-rating", "defect": "two-trip distractor met the rating (230+20=250), a tie with the key", "repair": "person weight 245 lb; every carried load exceeds the rating"},
+    {"family": "authored:ili-reviews-same-day", "defect": "prompt asked for a conclusion but options were source labels", "repair": "prompt and options aligned"},
+    {"family": "authored:tool-power-strip-daisy-chain", "defect": "two options were near inverses of each other", "repair": "one replaced with a surge-protector rationale"}
+  ],
+  "systematic_repairs": [
+    "Scenario-echo cue: best answers reused the scenario's procedure wording; shortened keys and added scenario vocabulary to distractors until the unique-top share was at most 50 percent in every skill.",
+    "Length cue: after echo repairs several skills drifted toward a shorter key (shortest-is-best 0.40 in four skills, at the limit); not worse than that.",
+    "Absolute-word cue: distractors containing never/ignore/nothing were reworded."
+  ],
+  "excluded": [],
+  "known_remaining_ambiguity": [
+    "authored:tool-thermometer-calibration: 'use the probe, only two weeks overdue' is weaker than the key but is not violated by the second stated rule; a reader could argue partial defensibility.",
+    "Evaluate Credibility: about half of keys resolve to consulting the authoritative source the scenario names, which may teach a pattern."
+  ]
+}

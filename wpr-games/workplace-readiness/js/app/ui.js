@@ -207,7 +207,8 @@
     if (c.scenario) ticket.appendChild(h('p', { class: 'scenario', text: c.scenario }));
     var body, getResponse, ready = function () { return true; }, controls = null, checkBtn;
     var question = h('h2', { class: 'question', id: 'q', text: c.prompt });
-    function updateReady() { checkBtn.disabled = !ready(); }
+    var checking = false;
+    function updateReady() { checkBtn.disabled = checking || !ready(); }
 
     if (c.mode === 'decision' || c.mode === 'nextstep') {
       ticket.appendChild(question);
@@ -239,10 +240,23 @@
     actions.appendChild(checkBtn); ticket.appendChild(actions);
     checkBtn.disabled = !ready();
 
-    checkBtn.addEventListener('click', function () {
+    checkBtn.addEventListener('click', async function () {
       if (checkBtn.disabled) return;
-      var resp = getResponse(), result = handlers.check(resp);
-      if (!result || !result.ok) return;
+      checking = true;
+      updateReady();
+      var resp = getResponse(), result;
+      try { result = await handlers.check(resp); }
+      catch (error) { result = { status: error.message }; }
+      if (!result || !result.ok) {
+        checking = result?.pending === true;
+        updateReady();
+        if (checking) controls.lock();
+        if (result?.status) {
+          actions.querySelector('[role="status"]')?.remove();
+          actions.appendChild(h('p', { role: 'status', text: result.status }));
+        }
+        return;
+      }
       controls.lock();
       reveal(c, result, controls, resp);
       var fb = feedbackBlock(result);
@@ -272,7 +286,7 @@
     if (c.mode === 'decision' || c.mode === 'nextstep') {
       controls.buttons.forEach(function (b) {
         var id = b.getAttribute('data-id');
-        if (id === c.key.bestId) tag(b, 'is-best', 'Best answer');
+        if (id === (result.bestId ?? c.key.bestId)) tag(b, 'is-best', 'Best answer');
         else if (id === resp.optionId) tag(b, 'is-mine', 'Your choice');
       });
     } else if (c.mode === 'find') {

@@ -284,7 +284,7 @@ export function mountStudentMap(container, options) {
     });
     const body = el('div', { class: 'map-body', 'data-side': showSide ? 'true' : 'false' }, showSide ? side : null, main);
     const tools = el('div', { class: 'map-tools' }, toolbar);
-    const legend = createLegend({dated});
+    const legend = model.courseId==='workplace'?el('details',{class:'legend'},el('summary',{text:'What the area rings mean'}),el('p',{text:'A ring shows reviewed progress toward Level 3 for the area. A filled check marks completion. Eight-question practice rounds and optional Level 4 extension are separate from your teacher’s requirements.'})):createLegend({dated});
     const shortcuts = input.mapFirst && (model.suggestedNext || input.currentNodeId) ? el('div', { class: 'map-shortcuts', role: 'group', 'aria-label': 'Learning map shortcuts' },
       el('button', { type: 'button', class: 'btn btn-primary', text: 'Suggested Next', onclick: () => {
         const target = model.suggestedNext?.nodeId;
