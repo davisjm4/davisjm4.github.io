@@ -62,7 +62,7 @@ test('earlier demonstrated levels and official scores survive separate attempts;
  storage.setItem('wrg.profile.synthetic.official',JSON.stringify({score:4}));
  store.startMasteryAttempt({nodeId:string.id,courseId:'advanced',requestId:'new-string'});
  const now=tick();store.addEvent(raw(string,101,{correct:false,at:now}));
- const result=evalState(string,store.state());assert.equal(result.level,2);assert.equal(result.tiers.beginner.retained,true);assert.equal(result.tiers.intermediate.answered,1);
+ const result=evalState(string,store.state());assert.equal(result.level,2);assert.equal(result.tiers.beginner.retained,true);assert.equal(result.highestDemonstratedDifficulty,'beginner');assert.equal(result.tiers.intermediate.answered,1);
  assert.equal(storage.getItem('wrg.profile.synthetic.official'),'{"score":4}');assert.deepEqual(store.state().events.slice(0,10),prior.events);
  assert.equal(evaluateSkillProficiency({...string,checkpoint:{score:3}},guestEvidenceByNode(graph,store.state().events,'advanced').get(string.id),{attemptStarts:store.state().formativeAttempts}).standardsScore,3);
  const other=createGuestStore({storage:memoryStorage()});assert.equal(other.state().formativeAttempts.length,0);
@@ -96,4 +96,11 @@ test('a legacy game tab cannot erase the separately retained mastery-attempt bou
  const fresh=createGuestStore({storage});assert.equal(fresh.state().formativeAttempts.length,1);
  assert.equal(evalState(trace,fresh.state()).tiers.intermediate.answered,0);
  fresh.clear();assert.equal(fresh.state().formativeAttempts.length,0);
+});
+
+test('a duplicate question cannot gain a second first-try credit across an attempt boundary',()=>{
+ const {store,tick}=fixture();const old=raw(string,0,{correct:false});store.addEvent(old);
+ store.startMasteryAttempt({nodeId:string.id,courseId:'advanced',requestId:'duplicate-check'});
+ store.addEvent({...old,id:'changed-event-id',correct:true,occurred:tick()});
+ assert.equal(evalState(string,store.state()).tiers.intermediate.answered,0);
 });

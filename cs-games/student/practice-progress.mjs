@@ -29,9 +29,9 @@ export async function mountPracticeProgress(returnTo, profile) {
   const scopeNote=el('p',{class:'muted'});
   section.append(title,scopeNote,summary,meter,remaining,checks,warning,correctPractice,details,restart,status,back);
   function updateContext(context={}) {
-    const difficulty=context.difficulty??document.querySelector('input[name=difficulty]:checked')?.value??new URL(location.href).searchParams.get('difficulty');
+    const difficulty=String(context.difficulty??document.querySelector('input[name=difficulty]:checked, select#difficulty, select[name=difficulty]')?.value??new URL(location.href).searchParams.get('difficulty')??'').toLowerCase();
     const expected=currentTarget?.difficulty;
-    const mode=context.mode??document.querySelector('input[name=mode]:checked')?.value;
+    const mode=context.mode??document.querySelector('input[name=mode]:checked, select#mode, select[name=mode]')?.value;
     const targetMode=currentTarget?.practice?.mode;
     warning.textContent=expected&&difficulty&&difficulty!==expected
       ?`You are practicing ${difficulty}. This does not count toward the ${expected} question requirement shown above. Use the target practice link.`

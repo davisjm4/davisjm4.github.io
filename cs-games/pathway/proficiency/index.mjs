@@ -84,14 +84,14 @@ export function evaluateSkillProficiency(node,events,{policy=null,attemptStarts=
   const starts=attemptStarts.filter(a=>a.nodeId===node.id&&a.courseId===node.courseId&&Number.isFinite(Date.parse(a.at)))
     .sort((a,b)=>Date.parse(a.at)-Date.parse(b.at));
   if(!starts.length)return evaluateSingleAttempt(node,events,{policy});
-  firstPractice(events,node.id); // Validate the entire scope before partitioning it.
+  const unique=firstPractice(events,node.id).events; // Scope and first submission are global across attempts.
   const windows=[-Infinity,...starts.map(a=>Date.parse(a.at)),Infinity];
   const claimed=new Set(starts.flatMap(a=>a.evidenceIds??[]));
   const results=windows.slice(0,-1).map((from,i)=>{
     const closed=starts[i]?.evidenceIds;
     const ids=closed?new Set(closed):null;
-    const records=ids?events.filter(e=>ids.has(e.id)):
-      events.filter(e=>e.ts>=from&&e.ts<windows[i+1]&&!claimed.has(e.id));
+    const records=ids?unique.filter(e=>ids.has(e.id)):
+      unique.filter(e=>e.ts>=from&&e.ts<windows[i+1]&&!claimed.has(e.id));
     return evaluateSingleAttempt(node,records,{policy});
   });
   const current=results.at(-1), earlier=results.slice(0,-1);
@@ -100,9 +100,10 @@ export function evaluateSkillProficiency(node,events,{policy=null,attemptStarts=
     const prior=earlier.find(r=>r.tiers[tier].status==='demonstrated');
     if(prior&&tiers[tier].status!=='demonstrated')tiers[tier]={...prior.tiers[tier],retained:true,currentAttempt:tiers[tier]};
   }
-  const level=Math.max(...results.map(r=>r.level));
+  const level=tiers.advanced.status==='demonstrated'&&tiers.intermediate.status==='demonstrated'?4:Math.max(...results.map(r=>r.level));
   const goalMet=results.some(r=>r.goalMet);
   return {...current,tiers,level,label:LEVEL_LABELS[level],goalMet,
+    highestDemonstratedDifficulty:[...difficulties].reverse().find(tier=>tiers[tier].status==='demonstrated')??null,
     advancementMet:results.some(r=>r.advancementMet),
     extensionAvailable:level===3&&current.standardsScore!==4&&current.tiers.advanced.status!=='unavailable',
     attempt:{id:starts.at(-1).id,number:starts.length+1,startedAt:starts.at(-1).at},
