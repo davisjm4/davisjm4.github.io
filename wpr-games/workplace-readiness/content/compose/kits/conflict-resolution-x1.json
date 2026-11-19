@@ -1,0 +1,329 @@
+{
+ "skill": "conflict-resolution",
+ "kits": [
+  {
+   "id": "con-working-across-differences",
+   "skill": "conflict-resolution",
+   "family": "conflict-resolution.cx-working-across-differences",
+   "familyName": "Working well with people who are different from you",
+   "framework": "competing-priorities",
+   "concepts": [
+    "conflict-resolution:personality-and-culture",
+    "conflict-resolution:work-style-differences"
+   ],
+   "contexts": "any",
+   "setup": [
+    "You work as {role|a} at {workplace|a}, on a team where people have different personalities, backgrounds and ways of working.",
+    "As {role|a} at {workplace|a}, you work with coworkers whose styles and backgrounds differ from yours."
+   ],
+   "detail": [
+    "It is a normal weekday.",
+    "It is the middle of the afternoon."
+   ],
+   "pressure": [
+    "{coworker3} says it is not worth the trouble.",
+    "You are in a hurry to finish."
+   ],
+   "tiers": {
+    "1": "A remark that makes a coworker uncomfortable is raised directly and privately.",
+    "2": "Do not guess what a silence means; ask.",
+    "3": "Differences in style are handled with a format that works for both people.",
+    "4": "Reasonable requests that keep the work covered can be met.",
+    "5": "Using a person's name correctly is a basic sign of respect and can follow other fixes."
+   },
+   "issues": [
+    {
+     "id": "joke",
+     "tier": 1,
+     "rule": "raise-uncomfortable-remarks-privately",
+     "principle": "con.raise-a-remark-privately",
+     "fact": [
+      "{coworker} joked about how you speak, and you felt uncomfortable, though it was not clear that {coworker} meant harm."
+     ],
+     "short": "the joke about how you speak",
+     "action": "Tell {coworker} privately that the joke bothered you and ask them to stop.",
+     "brief": "tell {coworker} privately and ask them to stop",
+     "reason": "A private, calm request gives {coworker} the chance to change without an audience.",
+     "lesson": "Raise a remark that bothers you directly and privately.",
+     "shortcut": [
+      {
+       "text": "Laugh along and then avoid {coworker} from now on.",
+       "brief": "laugh along and avoid {coworker}",
+       "why": "Avoiding {coworker} leaves the problem in place and hurts the working relationship.",
+       "mis": "Staying silent makes the problem go away."
+      }
+     ],
+     "clear": [
+      "You already told {coworker} privately that the joke bothered you, and it stopped."
+     ],
+     "done": "the joke is already addressed"
+    },
+    {
+     "id": "silence",
+     "tier": 2,
+     "rule": "ask-instead-of-assuming",
+     "principle": "con.ask-instead-of-assuming",
+     "fact": [
+      "{coworker} did not answer your invitation to the team lunch, so you assumed they were not interested, though they may not have seen it."
+     ],
+     "short": "the unanswered lunch invitation",
+     "action": "Ask {coworker} directly and offer another way to share plans.",
+     "brief": "ask {coworker} directly about the lunch",
+     "reason": "A silence can mean many things, including that a message was missed.",
+     "lesson": "Ask instead of assuming what a coworker's silence means.",
+     "shortcut": [
+      {
+       "text": "Stop inviting {coworker}, since they seem uninterested.",
+       "brief": "stop inviting {coworker}",
+       "why": "An assumption can leave a coworker out for a reason that was never true.",
+       "mis": "No reply means no interest."
+      }
+     ],
+     "clear": [
+      "You already asked {coworker} about the team lunch and they said they missed the message."
+     ],
+     "done": "the lunch question is already asked"
+    },
+    {
+     "id": "meetings",
+     "tier": 3,
+     "rule": "build-a-format-for-both-styles",
+     "principle": "con.agree-a-format-for-different-styles",
+     "fact": [
+      "{coworker} likes to talk ideas through aloud while you prefer to think quietly first, and meetings feel tense."
+     ],
+     "short": "the tension in meetings",
+     "action": "Suggest a format with a short quiet thinking time and then open discussion.",
+     "brief": "suggest quiet thinking time and then discussion",
+     "reason": "A shared format lets both styles contribute without either person being told to change who they are.",
+     "lesson": "Handle style differences with a format that works for both people.",
+     "shortcut": [
+      {
+       "text": "Tell {coworker} to talk less in meetings.",
+       "brief": "ask {coworker} to talk less",
+       "why": "It asks one person to change, and it treats a working style as a fault.",
+       "mis": "One person's style is the right one."
+      }
+     ],
+     "clear": [
+      "You and {coworker} already agreed on a meeting format that suits you both."
+     ],
+     "done": "the meeting format is already agreed"
+    },
+    {
+     "id": "day-off",
+     "tier": 4,
+     "rule": "meet-reasonable-requests",
+     "principle": "con.swap-shifts-for-an-important-day",
+     "fact": [
+      "A coworker wants a day off that matters to their family, and {lead|the} says swaps are fine if the work stays covered."
+     ],
+     "short": "the coworker's request for the day off",
+     "action": "Offer to swap shifts, as {lead|the} described.",
+     "brief": "offer to swap shifts",
+     "reason": "{Lead|the} has already said swaps are allowed, so you can help without any extra approval.",
+     "lesson": "Help meet a reasonable request when the rules already allow a way.",
+     "shortcut": [
+      {
+       "text": "Tell them everyone works the schedule as posted.",
+       "brief": "say the schedule is fixed",
+       "why": "{Lead|the} has said swaps are allowed, so the schedule is not fixed.",
+       "mis": "A posted schedule never changes."
+      }
+     ],
+     "clear": [
+      "{Coworker} already arranged a shift swap for a day that matters to their family."
+     ],
+     "done": "the day off is already arranged"
+    },
+    {
+     "id": "name",
+     "tier": 5,
+     "rule": "use-names-correctly",
+     "principle": "con.learn-to-say-a-name-correctly",
+     "fact": [
+      "You keep mispronouncing a new coworker's name, and they have corrected you twice."
+     ],
+     "short": "the mispronounced name",
+     "action": "Ask them to say it again, practice it, and use it correctly.",
+     "brief": "ask for the name again and practice it",
+     "reason": "Using someone's name correctly shows that you value them, and practicing is a small effort.",
+     "lesson": "Learn to say a coworker's name correctly instead of changing it.",
+     "shortcut": [
+      {
+       "text": "Use a nickname you find easier, since they seem friendly.",
+       "brief": "use a nickname you find easier",
+       "why": "Replacing a name without being asked can make a coworker feel unseen.",
+       "mis": "A friendly coworker will not mind a changed name."
+      }
+     ]
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations involves working respectfully with a coworker who is different from you.",
+    "lesson": "Working across differences means asking, speaking directly and finding ways that suit everyone."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} what they usually do and copy that.",
+     "why": "A coworker's habit is not the written guide, and it may be out of date.",
+     "mis": "Common practice is the same as the rule."
+    },
+    {
+     "text": "Wait until {lead|the} brings it up before you act.",
+     "why": "The guide applies to you now, and waiting leaves the problem in place.",
+     "mis": "Someone else will raise it if it matters."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Never speak to {coworker} again so there can be no more misunderstandings.",
+     "why": "The concern is a specific misunderstanding. Cutting off contact makes teamwork impossible.",
+     "mis": "Avoiding someone prevents conflict."
+    }
+   ],
+   "process": {
+    "setup": [
+     "You and a coworker disagree about how to run team meetings."
+    ],
+    "steps": [
+     {
+      "id": "listen",
+      "text": "Ask your coworker how they like meetings to run",
+      "core": true
+     },
+     {
+      "id": "share",
+      "text": "Explain how you like them to run",
+      "core": true
+     },
+     {
+      "id": "propose",
+      "text": "Propose a format that suits both",
+      "core": true
+     },
+     {
+      "id": "try",
+      "text": "Try the format at the next meeting"
+     }
+    ],
+    "rel": [
+     [
+      "share",
+      "propose",
+      "A format builds on what both of you said."
+     ],
+     [
+      "propose",
+      "try",
+      "Try the format once it is agreed."
+     ],
+     [
+      "listen",
+      "propose",
+      "A shared proposal considers your coworker's view too."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Hear both preferences, propose a shared format, then try it."
+   },
+   "doc": {
+    "type": "note",
+    "title": [
+     "Notes on working with different people"
+    ],
+    "intro": [
+     "You are reading a coworker's draft advice on working with people who are different."
+    ],
+    "prompt": [
+     "Which line gives advice that would make working relationships worse?",
+     "Which line is the problem?"
+    ],
+    "lesson": "Good teamwork asks questions, speaks directly and adjusts the way the team works.",
+    "lines": [
+     {
+      "id": "ask",
+      "text": "Ask a coworker what their silence means before you decide.",
+      "fine": "Prevents false assumptions.",
+      "bad": [
+       {
+        "id": "ask-assume",
+        "level": "beginner",
+        "text": "Decide a coworker is not interested when they do not reply.",
+        "why": "A missed message or busy day can explain a silence.",
+        "principle": "con.doc-assume-silence"
+       }
+      ]
+     },
+     {
+      "id": "direct",
+      "text": "Raise a remark that bothers you directly and privately.",
+      "fine": "Gives the person a chance to change.",
+      "bad": [
+       {
+        "id": "direct-avoid",
+        "level": "intermediate",
+        "text": "Avoid a coworker who bothers you instead of raising it.",
+        "why": "The problem stays and the relationship suffers.",
+        "principle": "con.doc-avoid-instead-of-raise"
+       }
+      ]
+     },
+     {
+      "id": "format",
+      "text": "Find a meeting format that works for different styles.",
+      "fine": "Lets everyone contribute.",
+      "bad": [
+       {
+        "id": "format-one",
+        "level": "advanced",
+        "text": "Tell the louder coworker to talk less so meetings feel calmer.",
+        "why": "It treats one style as the problem when both can fit in a shared format.",
+        "principle": "con.doc-tell-one-to-change"
+       }
+      ]
+     },
+     {
+      "id": "name",
+      "text": "Learn to say a coworker's name correctly.",
+      "fine": "Shows respect."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims"
+    ],
+    "notes": "Respect and communication only; no group is described by traits, and no cultural or legal rules are stated. Each difference is an individual preference stated in the scenario. Tiers: remarks, assumptions, styles, requests, names."
+   },
+   "exclusive": [
+    [
+     "silence",
+     "meetings"
+    ],
+    [
+     "silence",
+     "day-off"
+    ],
+    [
+     "silence",
+     "name"
+    ],
+    [
+     "meetings",
+     "day-off"
+    ],
+    [
+     "meetings",
+     "name"
+    ],
+    [
+     "day-off",
+     "name"
+    ]
+   ]
+  }
+ ]
+}

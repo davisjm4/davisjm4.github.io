@@ -1,0 +1,326 @@
+{
+ "skill": "information-technology",
+ "kits": [
+  {
+   "id": "ite-handling-devices",
+   "skill": "information-technology",
+   "family": "information-technology.cx-handling-work-devices",
+   "familyName": "Looking after work devices and accessories",
+   "framework": "competing-priorities",
+   "concepts": [
+    "information-technology:hardware-and-devices",
+    "information-technology:software-and-applications"
+   ],
+   "contexts": [
+    "business",
+    "education",
+    "healthcare",
+    "hospitality",
+    "manufacturing",
+    "media",
+    "retail",
+    "it"
+   ],
+   "setup": [
+    "You work as {role|a} at {workplace|a}, where you use laptops, tablets and other devices under a device-care guide.",
+    "As {role|a} at {workplace|a}, you look after work devices following a device-care guide."
+   ],
+   "detail": [
+    "It is a normal weekday.",
+    "It is the middle of the afternoon."
+   ],
+   "pressure": [
+    "{coworker3} says it is not worth the trouble.",
+    "You are in a hurry to finish."
+   ],
+   "tiers": {
+    "1": "A device that may be a fire or injury risk is taken out of use first.",
+    "2": "Liquid and power do not mix, so power goes off before cleaning.",
+    "3": "Approved accessories protect the device and its data.",
+    "4": "Devices left out overnight can be lost or tampered with.",
+    "5": "Routine maintenance keeps devices running well."
+   },
+   "issues": [
+    {
+     "id": "battery",
+     "tier": 1,
+     "rule": "take-damaged-battery-out-of-use",
+     "principle": "ite.swollen-battery",
+     "fact": [
+      "The laptop battery is swollen. Your guide says to stop use, keep clear, and call trained support without handling the device."
+     ],
+     "short": "the swollen battery",
+     "action": "Stop using it, keep others away, and contact trained support.",
+     "brief": "stop use and contact trained support without handling it",
+     "reason": "A damaged battery can be hazardous, so trained staff must handle it under the device and emergency instructions.",
+     "lesson": "Do not handle a damaged battery; stop use, keep clear, and contact trained support.",
+     "shortcut": [
+      {
+       "text": "Keep using it on battery power only, since it is not plugged in.",
+       "brief": "keep using it on battery",
+       "why": "A swollen battery is a risk whether or not it is plugged in, and the guide says to unplug and report.",
+       "mis": "If it is unplugged, it is safe to use."
+      }
+     ],
+     "clear": [
+      "The laptop with the swollen battery was already unplugged and reported."
+     ],
+     "done": "the swollen battery is already reported"
+    },
+    {
+     "id": "spill",
+     "tier": 2,
+     "rule": "power-off-before-cleaning",
+     "principle": "ite.power-off-before-cleaning-a-spill",
+     "fact": [
+      "Liquid spilled on a work device. Your guide says to keep clear and call trained support without touching wet electrical equipment."
+     ],
+     "short": "the spill on the keyboard",
+     "action": "Keep clear of the wet device and contact trained support.",
+     "brief": "keep clear of the wet device and contact trained support",
+     "reason": "Touching wet electrical equipment can be hazardous; trained support follows the appropriate isolation and cleaning instructions.",
+     "lesson": "Keep clear of wet electrical equipment and have trained support handle it.",
+     "shortcut": [
+      {
+       "text": "Wipe it quickly while the device is on, to save time.",
+       "brief": "wipe it while the device is on",
+       "why": "Liquid reaching powered parts can damage the device, and the guide says to shut down first.",
+       "mis": "Speed matters more than switching off."
+      }
+     ],
+     "clear": [
+      "The device was already shut down and unplugged after the spill."
+     ],
+     "done": "the device is already powered off"
+    },
+    {
+     "id": "cable",
+     "tier": 3,
+     "rule": "use-the-supplied-accessory",
+     "principle": "ite.use-the-supplied-cable",
+     "fact": [
+      "You need to connect a label printer, and the guide says to use the supplied cable, not another cable you have."
+     ],
+     "short": "the cable for the label printer",
+     "action": "Use the cable supplied with the printer.",
+     "brief": "use the supplied cable",
+     "reason": "The supplied cable is made for the printer, while another that fits may carry less power or data.",
+     "lesson": "Use the accessories supplied or approved for a device.",
+     "shortcut": [
+      {
+       "text": "Use your own cable, since it fits the port.",
+       "brief": "use your own cable",
+       "why": "A cable that fits is not always built for the same power or data, and the guide names the supplied one.",
+       "mis": "If it fits, it works the same."
+      }
+     ],
+     "clear": [
+      "You already connected the label printer with its supplied cable."
+     ],
+     "done": "the printer is already connected with the supplied cable"
+    },
+    {
+     "id": "cabinet",
+     "tier": 4,
+     "rule": "store-portable-devices-securely",
+     "principle": "ite.lock-up-portable-devices",
+     "fact": [
+      "The guide says portable devices are kept in the locked cabinet overnight, and you are closing with a tablet still out."
+     ],
+     "short": "the tablet left out",
+     "action": "Put the tablet in the locked cabinet and lock it.",
+     "brief": "put the tablet in the locked cabinet",
+     "reason": "A device left out overnight can be taken, damaged or tampered with, even in a locked building.",
+     "lesson": "Store portable devices as the guide describes before you leave.",
+     "shortcut": [
+      {
+       "text": "Leave it on the desk, since the building is locked.",
+       "brief": "leave the tablet on the desk",
+       "why": "Other people may be in the building overnight, and the guide says to use the locked cabinet.",
+       "mis": "A locked building protects everything inside it."
+      }
+     ],
+     "clear": [
+      "The tablet was already locked in the cabinet."
+     ],
+     "done": "the tablet is already locked away"
+    },
+    {
+     "id": "restart",
+     "tier": 5,
+     "rule": "do-routine-maintenance",
+     "principle": "ite.restart-devices-weekly",
+     "fact": [
+      "A device has asked for a restart for two days, and the guide says devices are restarted at least weekly."
+     ],
+     "short": "the restart that has been postponed",
+     "action": "Save your work and restart the device today.",
+     "brief": "save your work and restart",
+     "reason": "Restarting clears small problems and finishes pending updates before they cause trouble.",
+     "lesson": "Do routine maintenance on schedule, even when the device seems fine.",
+     "shortcut": [
+      {
+       "text": "Keep postponing it, since the device still works.",
+       "brief": "keep postponing the restart",
+       "why": "Updates and small faults build up until the device fails, and the guide sets a weekly restart.",
+       "mis": "If it works, it does not need maintenance."
+      }
+     ]
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations involves a work device that needs care.",
+    "lesson": "Keeping devices safe and working means removing hazards, powering off before cleaning, using approved parts, locking them up and doing routine maintenance."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} what they usually do and copy that.",
+     "why": "A coworker's habit is not the written guide, and it may be out of date.",
+     "mis": "Common practice is the same as the rule."
+    },
+    {
+     "text": "Wait until {lead|the} brings it up before you act.",
+     "why": "The guide applies to you now, and waiting leaves the problem in place.",
+     "mis": "Someone else will raise it if it matters."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Stop using every device in the building until each has been inspected.",
+     "why": "The concern is specific. Stopping all devices delays work that safe devices can do.",
+     "mis": "One device problem means all devices are unsafe."
+    }
+   ],
+   "process": {
+    "setup": [
+     "A work device has had a liquid spill. Your guide limits handling wet electrical equipment to trained support staff."
+    ],
+    "steps": [
+     {
+      "id": "off",
+      "text": "Keep clear and warn others away",
+      "core": true
+     },
+     {
+      "id": "unplug",
+      "text": "Report the device location and spill to trained support",
+      "core": true
+     },
+     {
+      "id": "clean",
+      "text": "Wait for trained staff to isolate and inspect it",
+      "core": true
+     },
+     {
+      "id": "report",
+      "text": "Resume use only after support confirms it is safe"
+     }
+    ],
+    "rel": [
+     [
+      "off",
+      "unplug",
+      "Keep clear while you report the spill."
+     ],
+     [
+      "unplug",
+      "clean",
+      "Support needs the report before handling the device."
+     ],
+     [
+      "clean",
+      "report",
+      "Wait for inspection and clearance before using the device."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Keep clear, report, wait for inspection, and resume only after clearance."
+   },
+   "doc": {
+    "type": "procedure",
+    "title": [
+     "Device care reminders"
+    ],
+    "intro": [
+     "You are checking a reminder sheet before it is posted by the charging station."
+    ],
+    "prompt": [
+     "Which line gives advice that could damage a device or hurt someone?",
+     "Which line is the problem?"
+    ],
+    "lesson": "Device care keeps hazards, liquid and power apart and keeps portable devices secure.",
+    "lines": [
+     {
+      "id": "battery",
+      "text": "Keep clear of a swollen battery and contact trained support.",
+      "fine": "Leaves hazardous device handling to trained staff.",
+      "bad": [
+       {
+        "id": "battery-use",
+        "level": "beginner",
+        "text": "Keep using a device with a swollen battery if it is not plugged in.",
+        "why": "A swollen battery is a risk even without power.",
+        "principle": "ite.doc-use-swollen-battery"
+       }
+      ]
+     },
+     {
+      "id": "spill",
+      "text": "Keep clear of wet electrical equipment and contact trained support.",
+      "fine": "Avoids touching wet electrical equipment.",
+      "bad": [
+       {
+        "id": "spill-wipe",
+        "level": "intermediate",
+        "text": "Wipe up a spill while the device is on to save time.",
+        "why": "Liquid reaching powered parts can damage it.",
+        "principle": "ite.doc-wipe-while-on"
+       }
+      ]
+     },
+     {
+      "id": "cable",
+      "text": "Use the cable that came with the equipment.",
+      "fine": "Matches power and data needs.",
+      "bad": [
+       {
+        "id": "cable-any",
+        "level": "advanced",
+        "text": "Use any cable that fits the port.",
+        "why": "A cable that fits may not carry the right power or data.",
+        "principle": "ite.doc-any-cable-that-fits"
+       }
+      ]
+     },
+     {
+      "id": "store",
+      "text": "Lock portable devices away overnight.",
+      "fine": "Prevents loss or tampering."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims"
+    ],
+    "notes": "Device care only; no manufacturer or standard is named. Tiers: damaged battery, liquid and power, supplied accessories, secure storage, routine restart."
+   },
+   "exclusive": [
+    [
+     "cable",
+     "cabinet"
+    ],
+    [
+     "cable",
+     "restart"
+    ],
+    [
+     "cabinet",
+     "restart"
+    ]
+   ]
+  }
+ ]
+}

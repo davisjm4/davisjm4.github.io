@@ -1,0 +1,289 @@
+{
+ "skill": "information-literacy",
+ "kits": [
+  {
+   "id": "ili-fit-to-the-task",
+   "skill": "information-literacy",
+   "family": "information-literacy.cx-fitting-information-to-the-task",
+   "familyName": "Choosing information that fits the task",
+   "framework": "competing-priorities",
+   "concepts": [
+    "information-literacy:judge-relevance",
+    "information-literacy:use-information"
+   ],
+   "contexts": [
+    "agriculture",
+    "automotive",
+    "business",
+    "construction",
+    "manufacturing",
+    "retail"
+   ],
+   "setup": [
+    "You work as {role|a} at {workplace|a}, and you are looking up information to finish a task.",
+    "As {role|a} at {workplace|a}, you need the right information to answer a request."
+   ],
+   "detail": [
+    "It is a normal weekday.",
+    "It is the middle of the afternoon."
+   ],
+   "pressure": [
+    "{coworker3} says it is not worth the trouble.",
+    "You are in a hurry to finish."
+   ],
+   "tiers": {
+    "1": "Information about the wrong product can cause harm if you act on it.",
+    "2": "An answer for the wrong situation misleads the person who asked.",
+    "3": "A source written for another audience can hide the answer.",
+    "4": "Extra numbers can bury the point of a report."
+   },
+   "issues": [
+    {
+     "id": "safety-tip",
+     "tier": 1,
+     "rule": "match-the-product",
+     "principle": "ili.match-tip-to-your-product",
+     "fact": [
+      "You found three safety tips online, but only one names the product your workplace uses."
+     ],
+     "short": "the safety tips for other products",
+     "action": "Use the tip that names your product, and check it against the product's label.",
+     "brief": "use the tip for your product and check the label",
+     "reason": "Tips for a different product may not apply, and acting on them could cause harm.",
+     "lesson": "Use information only if it fits the exact product or situation you have.",
+     "shortcut": [
+      {
+       "text": "Combine all three tips so nothing is missed.",
+       "brief": "combine all three tips",
+       "why": "Tips for other products may not fit yours, and mixing them can create a hazard.",
+       "mis": "More information is always better."
+      }
+     ],
+     "clear": [
+      "You already matched the tip to your product and checked its label."
+     ],
+     "done": "the tip is already checked against the label"
+    },
+    {
+     "id": "model",
+     "tier": 2,
+     "rule": "match-the-model",
+     "principle": "ili.match-listing-to-the-exact-model",
+     "fact": [
+      "A customer asks whether a part fits their model, and the page you found lists parts for similar models."
+     ],
+     "short": "the parts page for similar models",
+     "action": "Find the listing for the customer's exact model before you answer.",
+     "brief": "find the listing for the exact model",
+     "reason": "Similar models can differ in small ways that decide whether a part fits.",
+     "lesson": "Look for information about the exact item, not a similar one.",
+     "shortcut": [
+      {
+       "text": "Tell them it fits, since similar models usually share parts.",
+       "brief": "say it fits because the models are similar",
+       "why": "Small differences between models decide whether a part fits.",
+       "mis": "Similar means the same."
+      }
+     ],
+     "clear": [
+      "You already found the listing for the customer's exact model."
+     ],
+     "done": "the exact listing is already found"
+    },
+    {
+     "id": "audience",
+     "tier": 3,
+     "rule": "match-the-audience",
+     "principle": "ili.pick-a-source-for-the-reader",
+     "fact": [
+      "A new coworker asks how to clock in, and the only guide you found is written for payroll staff."
+     ],
+     "short": "the guide written for payroll staff",
+     "action": "Write or find simple clock-in steps for a new employee.",
+     "brief": "find simple clock-in steps",
+     "reason": "A guide for payroll staff is full of details a new coworker does not need and may bury the steps.",
+     "lesson": "Choose or write information that suits the person who will use it.",
+     "shortcut": [
+      {
+       "text": "Hand over the payroll guide, since it contains the answer somewhere.",
+       "brief": "hand over the payroll guide",
+       "why": "The answer is buried among details that do not apply to a new coworker.",
+       "mis": "Having the answer somewhere is enough."
+      }
+     ],
+     "clear": [
+      "You already wrote simple clock-in steps for the new coworker."
+     ],
+     "done": "the clock-in steps are already written"
+    },
+    {
+     "id": "scope",
+     "tier": 4,
+     "rule": "match-the-scope",
+     "principle": "ili.use-only-the-period-you-need",
+     "fact": [
+      "Your report on this month's sales needs only this month's numbers, but the file you found covers the whole year."
+     ],
+     "short": "the full-year sales file",
+     "action": "Use only this month's numbers, and note where they came from.",
+     "brief": "use only this month's numbers",
+     "reason": "Extra numbers can hide the point of a report and make it harder to read.",
+     "lesson": "Use the part of the information that fits the task and leave the rest out.",
+     "shortcut": [
+      {
+       "text": "Include the whole year, so the reader has more to look at.",
+       "brief": "include the whole year",
+       "why": "Extra numbers bury the point, and the reader has to find the part that matters.",
+       "mis": "More data always makes a better report."
+      }
+     ]
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations involves information that has to fit the task before you use it.",
+    "lesson": "Check that information fits the exact product, situation, reader and scope before using it."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} what they usually do and copy that.",
+     "why": "A coworker's habit is not the written guide, and it may be out of date.",
+     "mis": "Common practice is the same as the rule."
+    },
+    {
+     "text": "Wait until {lead|the} brings it up before you act.",
+     "why": "The guide applies to you now, and waiting leaves the problem in place.",
+     "mis": "Someone else will raise it if it matters."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Refuse to answer until every possible source has been checked and compared.",
+     "why": "The task needs the fitting source, not every source. Waiting delays the answer.",
+     "mis": "A good answer needs every source."
+    }
+   ],
+   "process": {
+    "setup": [
+     "A customer asks a question that needs a short written answer."
+    ],
+    "steps": [
+     {
+      "id": "read",
+      "text": "Read exactly what the customer asked",
+      "core": true
+     },
+     {
+      "id": "find",
+      "text": "Find information about that exact item",
+      "core": true
+     },
+     {
+      "id": "trim",
+      "text": "Keep only the part that answers it",
+      "core": true
+     },
+     {
+      "id": "send",
+      "text": "Send the answer to the customer"
+     }
+    ],
+    "rel": [
+     [
+      "read",
+      "find",
+      "You cannot look for the right information before you know the question."
+     ],
+     [
+      "find",
+      "trim",
+      "Trim the information you actually found."
+     ],
+     [
+      "trim",
+      "send",
+      "Send only the trimmed answer."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Know the question, find the exact information, trim it, then send it."
+   },
+   "doc": {
+    "type": "note",
+    "title": [
+     "Notes on finding information"
+    ],
+    "intro": [
+     "You are reading a coworker's draft advice on picking information for a task."
+    ],
+    "prompt": [
+     "Which line gives advice that does not fit the task?",
+     "Which line is the problem?"
+    ],
+    "lesson": "Information has to fit the exact product, situation and reader before it is useful.",
+    "lines": [
+     {
+      "id": "product",
+      "text": "Check that a tip names the product you are using.",
+      "fine": "Prevents acting on advice for something else.",
+      "bad": [
+       {
+        "id": "product-mix",
+        "level": "beginner",
+        "text": "Follow any tip that mentions a similar product.",
+        "why": "A tip for a similar product may not fit yours and could cause harm.",
+        "principle": "ili.doc-similar-product"
+       }
+      ]
+     },
+     {
+      "id": "reader",
+      "text": "Write steps that suit the person who will use them.",
+      "fine": "Makes the answer usable.",
+      "bad": [
+       {
+        "id": "reader-expert",
+        "level": "intermediate",
+        "text": "Give new coworkers the full expert guide so nothing is left out.",
+        "why": "Details they do not need can hide the steps they do.",
+        "principle": "ili.doc-expert-guide"
+       }
+      ]
+     },
+     {
+      "id": "scope",
+      "text": "Include only the numbers the report needs.",
+      "fine": "Keeps the point clear.",
+      "bad": [
+       {
+        "id": "scope-all",
+        "level": "advanced",
+        "text": "Include every number you found so readers can decide what matters.",
+        "why": "The writer should choose what matters. Extra numbers hide the point.",
+        "principle": "ili.doc-all-numbers"
+       }
+      ]
+     },
+     {
+      "id": "exact",
+      "text": "Look up the exact model before answering a customer.",
+      "fine": "Avoids guessing from similar items."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims"
+    ],
+    "notes": "Everyday information choices only; no source rankings or claims about outside organizations. Tiers: wrong product, wrong model, wrong audience, wrong scope."
+   },
+   "exclusive": [
+    [
+     "audience",
+     "scope"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,39 @@
+{
+  "provenance": "Issued by b03e898 / PR66 protocol before composition integration; synthetic test key only.",
+  "issued": {
+    "id": "wpr-proc:00b58436-6b44-4606-8579-9547ab906d81",
+    "version": "WTHTjRXH_aRKHxZWLzwnf3pvGfC7R3gjLKcHJaf2lsI",
+    "presented": "440hPrQxa4CIlipYFRvowoKr66l-1tdvrqKNbpoj114",
+    "question": {
+      "scenario": "You work as a front desk associate at a hotel. While doing the shift handoff checklist, you notice a step that your team repeats every day and that adds about ten minutes without improving the result. You have an idea for a simpler way. Changing the shift handoff checklist is up to your front office supervisor.",
+      "prompt": "What should you do first?",
+      "mode": "nextstep",
+      "skill": "creativity-and-innovation",
+      "difficulty": "intermediate",
+      "context": "hospitality",
+      "options": [
+        {
+          "id": "o1",
+          "text": "Tell coworkers how pointless the step is, and hope the comment eventually reaches someone who is able to change it."
+        },
+        {
+          "id": "o2",
+          "text": "Start using your simpler method tomorrow without telling anyone, and see whether results improve."
+        },
+        {
+          "id": "o3",
+          "text": "Describe the extra step and your simpler idea to your front office supervisor, with an example of the time it costs."
+        },
+        {
+          "id": "o4",
+          "text": "Wait for the next scheduled improvement project, since fixing processes is not your job."
+        }
+      ]
+    },
+    "format": "wpr-procedural-v2",
+    "permit": "eyJpZCI6Indwci1wcm9jOjAwYjU4NDM2LTZiNDQtNDYwNi04NTc5LTk1NDdhYjkwNmQ4MSIsInNvdXJjZUlkIjoiYTpDUkUtTi0wMDEiLCJzZWVkIjoiNGEzMTMyNGQtNGY5MC00NjBkLWJhNmMtODBjNzIxZjAxYmVjIiwicHJvZmlsZSI6InN5bnRoZXRpYy1wcm9maWxlIiwiY2xhc3NJZCI6InN5bnRoZXRpYy1jbGFzcyIsImdlbmVyYXRpb24iOjAsImlzc3VlZCI6MTc5NTAwMzIwMDAwMCwiZXhwaXJlcyI6MTc5NTYwODAwMDAwMCwidmVyc2lvbiI6IldUSFRqUlhIX2FSS0h4WldMenduZjNwdkdmQzdSM2dqTEtjSEphZjJsc0kiLCJwcmVzZW50ZWQiOiI0NDBoUHJReGE0Q0lsaXBZRlJ2b3dvS3I2NmwtMXRkdnJxS05icG9qMTE0IiwiZXZhbHVhdGlvbiI6IkpqVC1rRU9PUl8wN0h3eVZ6T1cwZjQzV3FGa2w0UXBJMWY2Njk1OTJTTnMifQ.S6aO_pOBG6F_nx3oENdZeGCar_n1NLnAu6nenCUpqCA"
+  },
+  "response": {
+    "optionId": "o3"
+  }
+}

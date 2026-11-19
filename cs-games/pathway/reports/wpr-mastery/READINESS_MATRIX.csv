@@ -1,10 +1,10 @@
 skill,tier,required_questions,composed_families_retained,server_scoreable_families,content_quality_status,automatic_mastery_eligible,remaining_gap
-big-picture-thinking:impacts-of-actions,complex-reasoning,20,4,0,not authored,no,20 more independently server-scoreable families (authored 0; 4 composed families are practice-only)
+big-picture-thinking:impacts-of-actions,complex-reasoning,20,5,0,not authored,no,20 more independently server-scoreable families (authored 0; 5 composed families are practice-only)
 career-and-life-management:benefits-and-resources,complex-reasoning,20,3,0,not authored,no,20 more independently server-scoreable families (authored 0; 3 composed families are practice-only)
 career-and-life-management:qualifications-and-advancement,complex-reasoning,20,4,0,not authored,no,20 more independently server-scoreable families (authored 0; 4 composed families are practice-only)
 career-and-life-management:wellness-and-finances,complex-reasoning,20,3,0,not authored,no,20 more independently server-scoreable families (authored 0; 3 composed families are practice-only)
 conflict-resolution:diplomatic-negotiation,complex-reasoning,20,5,0,not authored,no,20 more independently server-scoreable families (authored 0; 5 composed families are practice-only)
-conflict-resolution:when-to-escalate,complex-reasoning,20,2,0,not authored,no,20 more independently server-scoreable families (authored 0; 2 composed families are practice-only)
+conflict-resolution:when-to-escalate,complex-reasoning,20,3,0,not authored,no,20 more independently server-scoreable families (authored 0; 3 composed families are practice-only)
 continuous-learning-and-adaptability:acting-on-feedback,complex-reasoning,20,2,0,not authored,no,20 more independently server-scoreable families (authored 0; 2 composed families are practice-only)
 continuous-learning-and-adaptability:learning-resources,complex-reasoning,20,2,0,not authored,no,20 more independently server-scoreable families (authored 0; 2 composed families are practice-only)
 critical-thinking-and-problem-solving:analyze-problems,complex-reasoning,20,3,0,not authored,no,20 more independently server-scoreable families (authored 0; 3 composed families are practice-only)
@@ -12,9 +12,9 @@ customer-service-orientation:courteous-knowledgeable,complex-reasoning,20,5,0,no
 efficiency-and-productivity:prioritize-tasks,complex-reasoning,20,3,0,not authored,no,20 more independently server-scoreable families (authored 0; 3 composed families are practice-only)
 information-literacy:evaluate-credibility,complex-reasoning,20,7,20,gate-passed; single-reader adversarial review,not yet (WPR_AUTOMATIC intentionally empty),"none for content; needs release review, rebase and activation decision"
 information-security:cyber-threats,complex-reasoning,20,2,0,not authored,no,20 more independently server-scoreable families (authored 0; 2 composed families are practice-only)
-information-security:security-procedures,complex-reasoning,20,8,20,gate-passed; single-reader adversarial review,not yet (WPR_AUTOMATIC intentionally empty),"none for content; needs release review, rebase and activation decision"
+information-security:security-procedures,complex-reasoning,20,9,20,gate-passed; single-reader adversarial review,not yet (WPR_AUTOMATIC intentionally empty),"none for content; needs release review, rebase and activation decision"
 information-technology:cloud-and-file-sharing,complex-reasoning,20,2,0,not authored,no,20 more independently server-scoreable families (authored 0; 2 composed families are practice-only)
-information-technology:software-and-applications,complex-reasoning,20,8,20,gate-passed; single-reader adversarial review,not yet (WPR_AUTOMATIC intentionally empty),"none for content; needs release review, rebase and activation decision"
+information-technology:software-and-applications,complex-reasoning,20,9,20,gate-passed; single-reader adversarial review,not yet (WPR_AUTOMATIC intentionally empty),"none for content; needs release review, rebase and activation decision"
 information-technology:troubleshooting,complex-reasoning,20,4,0,not authored,no,20 more independently server-scoreable families (authored 0; 4 composed families are practice-only)
 initiative-and-self-direction:identify-needs,complex-reasoning,20,2,0,not authored,no,20 more independently server-scoreable families (authored 0; 2 composed families are practice-only)
 integrity:honesty-and-fairness,complex-reasoning,20,7,20,gate-passed; single-reader adversarial review,not yet (WPR_AUTOMATIC intentionally empty),"none for content; needs release review, rebase and activation decision"

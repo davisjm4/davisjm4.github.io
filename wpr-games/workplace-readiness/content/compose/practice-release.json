@@ -1,0 +1,20 @@
+{
+  "description": "Practice-only server release of the fifteen procedural expansion kits. This is not automatic mastery eligibility.",
+  "files": [
+    "big-picture-thinking-x1.json",
+    "conflict-resolution-x1.json",
+    "creativity-and-innovation-x1.json",
+    "critical-thinking-x1.json",
+    "efficiency-and-productivity-x1.json",
+    "efficiency-and-productivity-x2.json",
+    "information-literacy-x1.json",
+    "information-security-x1.json",
+    "information-security-x2.json",
+    "information-security-x3.json",
+    "information-technology-x1.json",
+    "information-technology-x2.json",
+    "integrity-x1.json",
+    "integrity-x2.json",
+    "work-ethic-x1.json"
+  ]
+}

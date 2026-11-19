@@ -1,0 +1,2377 @@
+{
+ "areas": 22,
+ "objectives": 94,
+ "matrix": [
+  {
+   "skill": "creativity-and-innovation",
+   "concept": "creativity-and-innovation:contribute-ideas",
+   "label": "Brainstorming and contributing ideas, strategies and solutions",
+   "primaryReasoningKeys": 12,
+   "taggedReasoningKeys": 31,
+   "composedPrimary": 10,
+   "authoredPrimary": 2,
+   "kits": 3,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "creativity-and-innovation",
+   "concept": "creativity-and-innovation:improve-processes",
+   "label": "Developing or improving products, services or processes",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 11,
+   "composedPrimary": 9,
+   "authoredPrimary": 2,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "creativity-and-innovation",
+   "concept": "creativity-and-innovation:allocate-resources",
+   "label": "Identifying and allocating available resources creatively",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 11,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "creativity-and-innovation",
+   "concept": "creativity-and-innovation:value-of-creativity",
+   "label": "Recognizing why originality matters in a workplace setting",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 21,
+   "composedPrimary": 9,
+   "authoredPrimary": 0,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "critical-thinking-and-problem-solving",
+   "concept": "critical-thinking-and-problem-solving:analyze-problems",
+   "label": "Recognizing and analyzing the real problem (including root cause)",
+   "primaryReasoningKeys": 24,
+   "taggedReasoningKeys": 26,
+   "composedPrimary": 22,
+   "authoredPrimary": 2,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "critical-thinking-and-problem-solving",
+   "concept": "critical-thinking-and-problem-solving:evaluate-solutions",
+   "label": "Evaluating potential solutions and the resources they need",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 20,
+   "composedPrimary": 9,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "critical-thinking-and-problem-solving",
+   "concept": "critical-thinking-and-problem-solving:logical-decisions",
+   "label": "Using a logical approach to decide",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 15,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "critical-thinking-and-problem-solving",
+   "concept": "critical-thinking-and-problem-solving:implement-action",
+   "label": "Carrying out and checking an effective course of action",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 21,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "initiative-and-self-direction",
+   "concept": "initiative-and-self-direction:proactive-decisions",
+   "label": "Making proactive, independent decisions within one's role",
+   "primaryReasoningKeys": 12,
+   "taggedReasoningKeys": 22,
+   "composedPrimary": 11,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "initiative-and-self-direction",
+   "concept": "initiative-and-self-direction:identify-needs",
+   "label": "Identifying workplace needs before they become problems",
+   "primaryReasoningKeys": 2,
+   "taggedReasoningKeys": 14,
+   "composedPrimary": 0,
+   "authoredPrimary": 2,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "initiative-and-self-direction",
+   "concept": "initiative-and-self-direction:minimal-supervision",
+   "label": "Completing tasks with minimal direct supervision",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 21,
+   "composedPrimary": 9,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": true,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "skill": "initiative-and-self-direction",
+   "concept": "initiative-and-self-direction:apply-solutions",
+   "label": "Applying a solution once a need is identified",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 13,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "integrity",
+   "concept": "integrity:laws-and-regulations",
+   "label": "Complying with local, state and federal requirements (taught only when the scenario states the rule)",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 10,
+   "composedPrimary": 9,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "integrity",
+   "concept": "integrity:policies-and-procedures",
+   "label": "Adhering to workplace policies and procedures",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 30,
+   "composedPrimary": 9,
+   "authoredPrimary": 0,
+   "kits": 3,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "integrity",
+   "concept": "integrity:honesty-and-fairness",
+   "label": "Being honest and fair toward others, including accurate reporting",
+   "primaryReasoningKeys": 19,
+   "taggedReasoningKeys": 38,
+   "composedPrimary": 15,
+   "authoredPrimary": 4,
+   "kits": 4,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "integrity",
+   "concept": "integrity:respect-for-property",
+   "label": "Treating the property and resources of others with respect",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 17,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "integrity",
+   "concept": "integrity:importance-of-integrity",
+   "label": "Seeing the workplace consequences of acting with or without integrity",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 25,
+   "composedPrimary": 9,
+   "authoredPrimary": 0,
+   "kits": 3,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "work-ethic",
+   "concept": "work-ethic:diligence",
+   "label": "Persisting to finish a task well",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 11,
+   "composedPrimary": 10,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": true,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "skill": "work-ethic",
+   "concept": "work-ethic:dependability",
+   "label": "Being reliable about commitments and coverage",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 22,
+   "composedPrimary": 10,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": true,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "skill": "work-ethic",
+   "concept": "work-ethic:accountability",
+   "label": "Accounting for one's own decisions and actions",
+   "primaryReasoningKeys": 3,
+   "taggedReasoningKeys": 23,
+   "composedPrimary": 0,
+   "authoredPrimary": 3,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "work-ethic",
+   "concept": "work-ethic:accepting-consequences",
+   "label": "Accepting the consequences of one's decisions and actions",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 20,
+   "composedPrimary": 9,
+   "authoredPrimary": 0,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "conflict-resolution",
+   "concept": "conflict-resolution:diplomatic-negotiation",
+   "label": "Negotiating diplomatic solutions and compromises",
+   "primaryReasoningKeys": 14,
+   "taggedReasoningKeys": 15,
+   "composedPrimary": 9,
+   "authoredPrimary": 5,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "conflict-resolution",
+   "concept": "conflict-resolution:work-style-differences",
+   "label": "Handling conflicts rooted in different work styles",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 20,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "conflict-resolution",
+   "concept": "conflict-resolution:performance-concerns",
+   "label": "Raising and responding to performance concerns constructively",
+   "primaryReasoningKeys": 14,
+   "taggedReasoningKeys": 14,
+   "composedPrimary": 11,
+   "authoredPrimary": 3,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "conflict-resolution",
+   "concept": "conflict-resolution:personality-and-culture",
+   "label": "Handling conflicts rooted in personality or cultural differences",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 22,
+   "composedPrimary": 9,
+   "authoredPrimary": 0,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "conflict-resolution",
+   "concept": "conflict-resolution:when-to-escalate",
+   "label": "Deciding when a supervisor needs to be involved",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 23,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "listening-and-speaking",
+   "concept": "listening-and-speaking:nonverbal-cues",
+   "label": "Reading and using nonverbal cues",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 8,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": true,
+   "flags": [
+    "thin-primary-reasoning",
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "skill": "listening-and-speaking",
+   "concept": "listening-and-speaking:active-listening",
+   "label": "Active listening: clarifying questions and paraphrasing",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 8,
+   "composedPrimary": 6,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "listening-and-speaking",
+   "concept": "listening-and-speaking:presenting",
+   "label": "Public speaking and giving presentations",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 11,
+   "composedPrimary": 9,
+   "authoredPrimary": 2,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": true,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "skill": "listening-and-speaking",
+   "concept": "listening-and-speaking:audience-and-setting",
+   "label": "Fitting message, method and detail to the audience and setting",
+   "primaryReasoningKeys": 2,
+   "taggedReasoningKeys": 12,
+   "composedPrimary": 0,
+   "authoredPrimary": 2,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "respect-for-diversity",
+   "concept": "respect-for-diversity:individual-differences",
+   "label": "Recognizing differences such as age, culture, ability, viewpoint and background",
+   "primaryReasoningKeys": 17,
+   "taggedReasoningKeys": 19,
+   "composedPrimary": 16,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "respect-for-diversity",
+   "concept": "respect-for-diversity:valuing-differences",
+   "label": "Showing respect for and valuing those differences at work",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 11,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "respect-for-diversity",
+   "concept": "respect-for-diversity:own-bias",
+   "label": "Noticing and checking one's own assumptions and bias",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 17,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "respect-for-diversity",
+   "concept": "respect-for-diversity:collaborating",
+   "label": "Collaborating with people whose backgrounds and views differ",
+   "primaryReasoningKeys": 3,
+   "taggedReasoningKeys": 13,
+   "composedPrimary": 0,
+   "authoredPrimary": 3,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "customer-service-orientation",
+   "concept": "customer-service-orientation:internal-and-external",
+   "label": "Serving both internal customers (coworkers) and external customers",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 11,
+   "composedPrimary": 10,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "customer-service-orientation",
+   "concept": "customer-service-orientation:prioritize-service",
+   "label": "Prioritizing service among competing demands",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 19,
+   "composedPrimary": 7,
+   "authoredPrimary": 0,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "customer-service-orientation",
+   "concept": "customer-service-orientation:anticipate-needs",
+   "label": "Anticipating the needs of customers and coworkers",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 8,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "customer-service-orientation",
+   "concept": "customer-service-orientation:courteous-knowledgeable",
+   "label": "Giving courteous, accurate, helpful service and handling complaints",
+   "primaryReasoningKeys": 5,
+   "taggedReasoningKeys": 23,
+   "composedPrimary": 0,
+   "authoredPrimary": 5,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "teamwork",
+   "concept": "teamwork:expectations-roles-goals",
+   "label": "Establishing expectations, roles and goals",
+   "primaryReasoningKeys": 12,
+   "taggedReasoningKeys": 12,
+   "composedPrimary": 10,
+   "authoredPrimary": 2,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "teamwork",
+   "concept": "teamwork:share-responsibility",
+   "label": "Contributing to team success by sharing responsibility",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 9,
+   "composedPrimary": 6,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "teamwork",
+   "concept": "teamwork:respect-contributions",
+   "label": "Respecting the thoughts and contributions of teammates",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 19,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "teamwork",
+   "concept": "teamwork:team-communication",
+   "label": "Keeping teammates informed so the work stays coordinated",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 17,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "big-picture-thinking",
+   "concept": "big-picture-thinking:role-in-mission",
+   "label": "Connecting one's own work to the organization's mission",
+   "primaryReasoningKeys": 3,
+   "taggedReasoningKeys": 21,
+   "composedPrimary": 0,
+   "authoredPrimary": 3,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "big-picture-thinking",
+   "concept": "big-picture-thinking:impacts-of-actions",
+   "label": "Weighing social, economic and environmental effects of actions",
+   "primaryReasoningKeys": 24,
+   "taggedReasoningKeys": 25,
+   "composedPrimary": 22,
+   "authoredPrimary": 2,
+   "kits": 3,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "big-picture-thinking",
+   "concept": "big-picture-thinking:organization-structure",
+   "label": "Understanding organizational structure, culture, policies and procedures",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 19,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "big-picture-thinking",
+   "concept": "big-picture-thinking:community-and-industry",
+   "label": "Seeing the organization's place in its community, industry and economy",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 24,
+   "composedPrimary": 9,
+   "authoredPrimary": 0,
+   "kits": 3,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "career-and-life-management",
+   "concept": "career-and-life-management:qualifications-and-advancement",
+   "label": "Education, qualifications and advancement planning",
+   "primaryReasoningKeys": 14,
+   "taggedReasoningKeys": 14,
+   "composedPrimary": 10,
+   "authoredPrimary": 4,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "career-and-life-management",
+   "concept": "career-and-life-management:benefits-and-resources",
+   "label": "Using benefits and professional resources (unions, associations, assistance programs, insurance, retirement)",
+   "primaryReasoningKeys": 2,
+   "taggedReasoningKeys": 17,
+   "composedPrimary": 0,
+   "authoredPrimary": 2,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "career-and-life-management",
+   "concept": "career-and-life-management:wellness-and-finances",
+   "label": "Managing stress, self-care and personal finances",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 20,
+   "composedPrimary": 5,
+   "authoredPrimary": 2,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "career-and-life-management",
+   "concept": "career-and-life-management:smart-goals",
+   "label": "Setting specific, measurable, attainable, realistic, time-bound goals",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 14,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "continuous-learning-and-adaptability",
+   "concept": "continuous-learning-and-adaptability:learning-resources",
+   "label": "Choosing learning resources (publications, workshops, networks, trade organizations)",
+   "primaryReasoningKeys": 2,
+   "taggedReasoningKeys": 17,
+   "composedPrimary": 0,
+   "authoredPrimary": 2,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "continuous-learning-and-adaptability",
+   "concept": "continuous-learning-and-adaptability:acting-on-feedback",
+   "label": "Changing performance based on feedback (being coachable)",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 17,
+   "composedPrimary": 9,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "continuous-learning-and-adaptability",
+   "concept": "continuous-learning-and-adaptability:credentials",
+   "label": "Pursuing industry credentials and certifications",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 11,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "continuous-learning-and-adaptability",
+   "concept": "continuous-learning-and-adaptability:changing-requirements",
+   "label": "Adapting to changing job requirements",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 8,
+   "composedPrimary": 6,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "efficiency-and-productivity",
+   "concept": "efficiency-and-productivity:work-plan",
+   "label": "Developing a plan of work",
+   "primaryReasoningKeys": 12,
+   "taggedReasoningKeys": 31,
+   "composedPrimary": 11,
+   "authoredPrimary": 1,
+   "kits": 3,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "efficiency-and-productivity",
+   "concept": "efficiency-and-productivity:prioritize-tasks",
+   "label": "Telling high-priority from low-priority tasks",
+   "primaryReasoningKeys": 3,
+   "taggedReasoningKeys": 17,
+   "composedPrimary": 0,
+   "authoredPrimary": 3,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "efficiency-and-productivity",
+   "concept": "efficiency-and-productivity:adapt-goals",
+   "label": "Adapting work goals to the time and resources available",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 13,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "efficiency-and-productivity",
+   "concept": "efficiency-and-productivity:human-resources",
+   "label": "Using people's strengths and respecting their goals",
+   "primaryReasoningKeys": 5,
+   "taggedReasoningKeys": 6,
+   "composedPrimary": 5,
+   "authoredPrimary": 0,
+   "kits": 1,
+   "modes": "decision+nextstep",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "few-formats"
+   ]
+  },
+  {
+   "skill": "efficiency-and-productivity",
+   "concept": "efficiency-and-productivity:capital-resources",
+   "label": "Maintaining equipment so it lasts and works efficiently",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 15,
+   "composedPrimary": 9,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "efficiency-and-productivity",
+   "concept": "efficiency-and-productivity:natural-resources",
+   "label": "Using responsible, sustainable practices",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 15,
+   "composedPrimary": 9,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-literacy",
+   "concept": "information-literacy:locate-sources",
+   "label": "Locating information efficiently",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 25,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 3,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "information-literacy",
+   "concept": "information-literacy:evaluate-credibility",
+   "label": "Judging credibility, authority and whether information is current",
+   "primaryReasoningKeys": 23,
+   "taggedReasoningKeys": 28,
+   "composedPrimary": 19,
+   "authoredPrimary": 4,
+   "kits": 3,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-literacy",
+   "concept": "information-literacy:judge-relevance",
+   "label": "Judging whether information fits the task at hand",
+   "primaryReasoningKeys": 8,
+   "taggedReasoningKeys": 28,
+   "composedPrimary": 8,
+   "authoredPrimary": 0,
+   "kits": 3,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-literacy",
+   "concept": "information-literacy:use-information",
+   "label": "Using information effectively to complete work tasks",
+   "primaryReasoningKeys": 5,
+   "taggedReasoningKeys": 26,
+   "composedPrimary": 5,
+   "authoredPrimary": 0,
+   "kits": 3,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-security",
+   "concept": "information-security:information-formats",
+   "label": "Protecting information in every format (paper and electronic)",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 28,
+   "composedPrimary": 9,
+   "authoredPrimary": 0,
+   "kits": 3,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-security",
+   "concept": "information-security:cyber-threats",
+   "label": "Recognizing cybersecurity risks, threats and vulnerabilities",
+   "primaryReasoningKeys": 8,
+   "taggedReasoningKeys": 8,
+   "composedPrimary": 5,
+   "authoredPrimary": 3,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-security",
+   "concept": "information-security:ethical-technology-use",
+   "label": "Using technology and social networks ethically; managing personal information",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 11,
+   "composedPrimary": 9,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-security",
+   "concept": "information-security:acceptable-use",
+   "label": "Following workplace acceptable-use policies",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 19,
+   "composedPrimary": 9,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-security",
+   "concept": "information-security:confidentiality",
+   "label": "Protecting confidentiality (logins, customer information)",
+   "primaryReasoningKeys": 19,
+   "taggedReasoningKeys": 40,
+   "composedPrimary": 18,
+   "authoredPrimary": 1,
+   "kits": 4,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-security",
+   "concept": "information-security:security-procedures",
+   "label": "Following workplace security procedures, including reporting incidents",
+   "primaryReasoningKeys": 3,
+   "taggedReasoningKeys": 37,
+   "composedPrimary": 0,
+   "authoredPrimary": 3,
+   "kits": 4,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "information-technology",
+   "concept": "information-technology:hardware-and-devices",
+   "label": "Hardware and devices, including peripherals",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 17,
+   "composedPrimary": 9,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-technology",
+   "concept": "information-technology:software-and-applications",
+   "label": "Choosing and using software and applications",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 37,
+   "composedPrimary": 0,
+   "authoredPrimary": 7,
+   "kits": 3,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-technology",
+   "concept": "information-technology:cloud-and-file-sharing",
+   "label": "Cloud-based services and file-sharing practices",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 11,
+   "composedPrimary": 9,
+   "authoredPrimary": 2,
+   "kits": 1,
+   "modes": "decision+find+nextstep",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-technology",
+   "concept": "information-technology:emerging-technology",
+   "label": "Responding sensibly to emerging technologies",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 10,
+   "composedPrimary": 9,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "information-technology",
+   "concept": "information-technology:troubleshooting",
+   "label": "Troubleshooting protocols and techniques",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 10,
+   "composedPrimary": 6,
+   "authoredPrimary": 4,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "job-specific-tools-and-technologies",
+   "concept": "job-specific-tools-and-technologies:select-right-tool",
+   "label": "Selecting the right tool, machine or technology for a task",
+   "primaryReasoningKeys": 13,
+   "taggedReasoningKeys": 22,
+   "composedPrimary": 12,
+   "authoredPrimary": 1,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "job-specific-tools-and-technologies",
+   "concept": "job-specific-tools-and-technologies:safe-use",
+   "label": "Using tools within training, authorization and manufacturer guidance",
+   "primaryReasoningKeys": 12,
+   "taggedReasoningKeys": 12,
+   "composedPrimary": 7,
+   "authoredPrimary": 5,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "mathematics",
+   "concept": "mathematics:basic-calculations",
+   "label": "Percentages, fractions, averages, measurement, conversions and money transactions",
+   "primaryReasoningKeys": 16,
+   "taggedReasoningKeys": 49,
+   "composedPrimary": 15,
+   "authoredPrimary": 1,
+   "kits": 4,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "mathematics",
+   "concept": "mathematics:job-task-math",
+   "label": "Estimating supplies and completing expense or order calculations",
+   "primaryReasoningKeys": 47,
+   "taggedReasoningKeys": 62,
+   "composedPrimary": 41,
+   "authoredPrimary": 6,
+   "kits": 5,
+   "modes": "decision+find+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "mathematics",
+   "concept": "mathematics:personal-finance",
+   "label": "Understanding wages, paycheck deductions, taxes and receipts",
+   "primaryReasoningKeys": 3,
+   "taggedReasoningKeys": 20,
+   "composedPrimary": 0,
+   "authoredPrimary": 3,
+   "kits": 1,
+   "modes": "decision+nextstep",
+   "levels": "advanced+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning",
+    "few-formats",
+    "missing-difficulty-levels"
+   ]
+  },
+  {
+   "skill": "professionalism",
+   "concept": "professionalism:punctuality-attendance",
+   "label": "Punctuality, attendance and meeting schedule expectations",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 9,
+   "composedPrimary": 6,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": true,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "skill": "professionalism",
+   "concept": "professionalism:etiquette",
+   "label": "Workplace and online etiquette, language and manners",
+   "primaryReasoningKeys": 15,
+   "taggedReasoningKeys": 22,
+   "composedPrimary": 13,
+   "authoredPrimary": 2,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "professionalism",
+   "concept": "professionalism:self-representation",
+   "label": "Introducing oneself and representing oneself professionally",
+   "primaryReasoningKeys": 4,
+   "taggedReasoningKeys": 23,
+   "composedPrimary": 0,
+   "authoredPrimary": 4,
+   "kits": 2,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": true,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "skill": "professionalism",
+   "concept": "professionalism:appearance",
+   "label": "Meeting grooming and dress expectations",
+   "primaryReasoningKeys": 4,
+   "taggedReasoningKeys": 10,
+   "composedPrimary": 0,
+   "authoredPrimary": 4,
+   "kits": 1,
+   "modes": "decision+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": true,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "skill": "reading-and-writing",
+   "concept": "reading-and-writing:interpret-documents",
+   "label": "Reading and interpreting workplace documents",
+   "primaryReasoningKeys": 13,
+   "taggedReasoningKeys": 13,
+   "composedPrimary": 8,
+   "authoredPrimary": 5,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "reading-and-writing",
+   "concept": "reading-and-writing:clarity",
+   "label": "Writing messages that convey meaning clearly",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 17,
+   "composedPrimary": 9,
+   "authoredPrimary": 2,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "reading-and-writing",
+   "concept": "reading-and-writing:tone-and-audience",
+   "label": "Using a professional tone suited to the audience",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 11,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "reading-and-writing",
+   "concept": "reading-and-writing:conventions",
+   "label": "Grammar, formatting and workplace conventions (such as email signatures)",
+   "primaryReasoningKeys": 2,
+   "taggedReasoningKeys": 12,
+   "composedPrimary": 0,
+   "authoredPrimary": 2,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "workplace-safety",
+   "concept": "workplace-safety:safety-guidelines",
+   "label": "Following safety standards and instructor, employer and manufacturer guidelines",
+   "primaryReasoningKeys": 14,
+   "taggedReasoningKeys": 18,
+   "composedPrimary": 13,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "workplace-safety",
+   "concept": "workplace-safety:safety-data-sheets",
+   "label": "Using safety data sheets (SDS) when provided",
+   "primaryReasoningKeys": 13,
+   "taggedReasoningKeys": 13,
+   "composedPrimary": 12,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "workplace-safety",
+   "concept": "workplace-safety:ppe",
+   "label": "Identifying and using personal protective equipment",
+   "primaryReasoningKeys": 5,
+   "taggedReasoningKeys": 18,
+   "composedPrimary": 0,
+   "authoredPrimary": 5,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "workplace-safety",
+   "concept": "workplace-safety:universal-precautions",
+   "label": "Using universal precautions against bloodborne pathogens",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 13,
+   "composedPrimary": 0,
+   "authoredPrimary": 1,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "skill": "workplace-safety",
+   "concept": "workplace-safety:identify-hazards",
+   "label": "Identifying and reporting risks and hazards",
+   "primaryReasoningKeys": 4,
+   "taggedReasoningKeys": 18,
+   "composedPrimary": 0,
+   "authoredPrimary": 4,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": []
+  },
+  {
+   "skill": "workplace-safety",
+   "concept": "workplace-safety:emergency-protocols",
+   "label": "Following emergency protocols such as evacuation routes",
+   "primaryReasoningKeys": 2,
+   "taggedReasoningKeys": 14,
+   "composedPrimary": 0,
+   "authoredPrimary": 2,
+   "kits": 1,
+   "modes": "decision+find+nextstep+order",
+   "levels": "advanced+beginner+intermediate",
+   "performanceTitle": false,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  }
+ ],
+ "areaRollup": [
+  {
+   "area": "creativity-and-innovation",
+   "name": "Creativity and Innovation",
+   "objectives": 4,
+   "primaryKeys": 33,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "creativity-and-innovation:allocate-resources"
+   ]
+  },
+  {
+   "area": "critical-thinking-and-problem-solving",
+   "name": "Critical Thinking and Problem Solving",
+   "objectives": 4,
+   "primaryKeys": 36,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "critical-thinking-and-problem-solving:logical-decisions",
+    "critical-thinking-and-problem-solving:implement-action"
+   ]
+  },
+  {
+   "area": "initiative-and-self-direction",
+   "name": "Initiative and Self-Direction",
+   "objectives": 4,
+   "primaryKeys": 25,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "initiative-and-self-direction:identify-needs",
+    "initiative-and-self-direction:apply-solutions"
+   ]
+  },
+  {
+   "area": "integrity",
+   "name": "Integrity",
+   "objectives": 5,
+   "primaryKeys": 48,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "integrity:respect-for-property"
+   ]
+  },
+  {
+   "area": "work-ethic",
+   "name": "Work Ethic",
+   "objectives": 4,
+   "primaryKeys": 34,
+   "minObjectiveKeys": 3,
+   "thinObjectives": [
+    "work-ethic:accountability"
+   ]
+  },
+  {
+   "area": "conflict-resolution",
+   "name": "Conflict Resolution",
+   "objectives": 5,
+   "primaryKeys": 39,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "conflict-resolution:work-style-differences",
+    "conflict-resolution:when-to-escalate"
+   ]
+  },
+  {
+   "area": "listening-and-speaking",
+   "name": "Listening and Speaking",
+   "objectives": 4,
+   "primaryKeys": 21,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "listening-and-speaking:nonverbal-cues",
+    "listening-and-speaking:audience-and-setting"
+   ]
+  },
+  {
+   "area": "respect-for-diversity",
+   "name": "Respect for Diversity",
+   "objectives": 4,
+   "primaryKeys": 22,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "respect-for-diversity:valuing-differences",
+    "respect-for-diversity:own-bias",
+    "respect-for-diversity:collaborating"
+   ]
+  },
+  {
+   "area": "customer-service-orientation",
+   "name": "Customer Service Orientation",
+   "objectives": 4,
+   "primaryKeys": 24,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "customer-service-orientation:anticipate-needs"
+   ]
+  },
+  {
+   "area": "teamwork",
+   "name": "Teamwork",
+   "objectives": 4,
+   "primaryKeys": 21,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "teamwork:respect-contributions",
+    "teamwork:team-communication"
+   ]
+  },
+  {
+   "area": "big-picture-thinking",
+   "name": "Big-Picture Thinking",
+   "objectives": 4,
+   "primaryKeys": 37,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "big-picture-thinking:role-in-mission",
+    "big-picture-thinking:organization-structure"
+   ]
+  },
+  {
+   "area": "career-and-life-management",
+   "name": "Career and Life Management",
+   "objectives": 4,
+   "primaryKeys": 24,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "career-and-life-management:benefits-and-resources",
+    "career-and-life-management:smart-goals"
+   ]
+  },
+  {
+   "area": "continuous-learning-and-adaptability",
+   "name": "Continuous Learning and Adaptability",
+   "objectives": 4,
+   "primaryKeys": 20,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "continuous-learning-and-adaptability:learning-resources",
+    "continuous-learning-and-adaptability:credentials"
+   ]
+  },
+  {
+   "area": "efficiency-and-productivity",
+   "name": "Efficiency and Productivity",
+   "objectives": 6,
+   "primaryKeys": 41,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "efficiency-and-productivity:prioritize-tasks",
+    "efficiency-and-productivity:adapt-goals"
+   ]
+  },
+  {
+   "area": "information-literacy",
+   "name": "Information Literacy",
+   "objectives": 4,
+   "primaryKeys": 37,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "information-literacy:locate-sources"
+   ]
+  },
+  {
+   "area": "information-security",
+   "name": "Information Security",
+   "objectives": 6,
+   "primaryKeys": 59,
+   "minObjectiveKeys": 3,
+   "thinObjectives": [
+    "information-security:security-procedures"
+   ]
+  },
+  {
+   "area": "information-technology",
+   "name": "Information Technology",
+   "objectives": 5,
+   "primaryKeys": 48,
+   "minObjectiveKeys": 7,
+   "thinObjectives": []
+  },
+  {
+   "area": "job-specific-tools-and-technologies",
+   "name": "Job-Specific Tools and Technologies",
+   "objectives": 2,
+   "primaryKeys": 25,
+   "minObjectiveKeys": 12,
+   "thinObjectives": []
+  },
+  {
+   "area": "mathematics",
+   "name": "Mathematics",
+   "objectives": 3,
+   "primaryKeys": 66,
+   "minObjectiveKeys": 3,
+   "thinObjectives": [
+    "mathematics:personal-finance"
+   ]
+  },
+  {
+   "area": "professionalism",
+   "name": "Professionalism",
+   "objectives": 4,
+   "primaryKeys": 30,
+   "minObjectiveKeys": 4,
+   "thinObjectives": []
+  },
+  {
+   "area": "reading-and-writing",
+   "name": "Reading and Writing",
+   "objectives": 4,
+   "primaryKeys": 27,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "reading-and-writing:tone-and-audience",
+    "reading-and-writing:conventions"
+   ]
+  },
+  {
+   "area": "workplace-safety",
+   "name": "Workplace Safety",
+   "objectives": 6,
+   "primaryKeys": 39,
+   "minObjectiveKeys": 1,
+   "thinObjectives": [
+    "workplace-safety:universal-precautions",
+    "workplace-safety:emergency-protocols"
+   ]
+  }
+ ],
+ "gaps": [
+  {
+   "rank": 1,
+   "concept": "listening-and-speaking:nonverbal-cues",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 8,
+   "flags": [
+    "thin-primary-reasoning",
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "rank": 2,
+   "concept": "customer-service-orientation:anticipate-needs",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 8,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 3,
+   "concept": "creativity-and-innovation:allocate-resources",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 11,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 4,
+   "concept": "respect-for-diversity:valuing-differences",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 11,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 5,
+   "concept": "continuous-learning-and-adaptability:credentials",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 11,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 6,
+   "concept": "reading-and-writing:tone-and-audience",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 11,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 7,
+   "concept": "initiative-and-self-direction:apply-solutions",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 13,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 8,
+   "concept": "efficiency-and-productivity:adapt-goals",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 13,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 9,
+   "concept": "workplace-safety:universal-precautions",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 13,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 10,
+   "concept": "career-and-life-management:smart-goals",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 14,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 11,
+   "concept": "critical-thinking-and-problem-solving:logical-decisions",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 15,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 12,
+   "concept": "integrity:respect-for-property",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 17,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 13,
+   "concept": "respect-for-diversity:own-bias",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 17,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 14,
+   "concept": "teamwork:team-communication",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 17,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 15,
+   "concept": "teamwork:respect-contributions",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 19,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 16,
+   "concept": "big-picture-thinking:organization-structure",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 19,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 17,
+   "concept": "conflict-resolution:work-style-differences",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 20,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 18,
+   "concept": "critical-thinking-and-problem-solving:implement-action",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 21,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 19,
+   "concept": "conflict-resolution:when-to-escalate",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 23,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 20,
+   "concept": "information-literacy:locate-sources",
+   "primaryReasoningKeys": 1,
+   "taggedReasoningKeys": 25,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 21,
+   "concept": "listening-and-speaking:audience-and-setting",
+   "primaryReasoningKeys": 2,
+   "taggedReasoningKeys": 12,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 22,
+   "concept": "reading-and-writing:conventions",
+   "primaryReasoningKeys": 2,
+   "taggedReasoningKeys": 12,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 23,
+   "concept": "initiative-and-self-direction:identify-needs",
+   "primaryReasoningKeys": 2,
+   "taggedReasoningKeys": 14,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 24,
+   "concept": "workplace-safety:emergency-protocols",
+   "primaryReasoningKeys": 2,
+   "taggedReasoningKeys": 14,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 25,
+   "concept": "career-and-life-management:benefits-and-resources",
+   "primaryReasoningKeys": 2,
+   "taggedReasoningKeys": 17,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 26,
+   "concept": "continuous-learning-and-adaptability:learning-resources",
+   "primaryReasoningKeys": 2,
+   "taggedReasoningKeys": 17,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 27,
+   "concept": "respect-for-diversity:collaborating",
+   "primaryReasoningKeys": 3,
+   "taggedReasoningKeys": 13,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 28,
+   "concept": "efficiency-and-productivity:prioritize-tasks",
+   "primaryReasoningKeys": 3,
+   "taggedReasoningKeys": 17,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 29,
+   "concept": "mathematics:personal-finance",
+   "primaryReasoningKeys": 3,
+   "taggedReasoningKeys": 20,
+   "flags": [
+    "thin-primary-reasoning",
+    "few-formats",
+    "missing-difficulty-levels"
+   ]
+  },
+  {
+   "rank": 30,
+   "concept": "big-picture-thinking:role-in-mission",
+   "primaryReasoningKeys": 3,
+   "taggedReasoningKeys": 21,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 31,
+   "concept": "work-ethic:accountability",
+   "primaryReasoningKeys": 3,
+   "taggedReasoningKeys": 23,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 32,
+   "concept": "information-security:security-procedures",
+   "primaryReasoningKeys": 3,
+   "taggedReasoningKeys": 37,
+   "flags": [
+    "thin-primary-reasoning"
+   ]
+  },
+  {
+   "rank": 33,
+   "concept": "professionalism:appearance",
+   "primaryReasoningKeys": 4,
+   "taggedReasoningKeys": 10,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "rank": 34,
+   "concept": "workplace-safety:identify-hazards",
+   "primaryReasoningKeys": 4,
+   "taggedReasoningKeys": 18,
+   "flags": []
+  },
+  {
+   "rank": 35,
+   "concept": "professionalism:self-representation",
+   "primaryReasoningKeys": 4,
+   "taggedReasoningKeys": 23,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "rank": 36,
+   "concept": "efficiency-and-productivity:human-resources",
+   "primaryReasoningKeys": 5,
+   "taggedReasoningKeys": 6,
+   "flags": [
+    "few-formats"
+   ]
+  },
+  {
+   "rank": 37,
+   "concept": "workplace-safety:ppe",
+   "primaryReasoningKeys": 5,
+   "taggedReasoningKeys": 18,
+   "flags": []
+  },
+  {
+   "rank": 38,
+   "concept": "customer-service-orientation:courteous-knowledgeable",
+   "primaryReasoningKeys": 5,
+   "taggedReasoningKeys": 23,
+   "flags": []
+  },
+  {
+   "rank": 39,
+   "concept": "information-literacy:use-information",
+   "primaryReasoningKeys": 5,
+   "taggedReasoningKeys": 26,
+   "flags": []
+  },
+  {
+   "rank": 40,
+   "concept": "listening-and-speaking:active-listening",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 8,
+   "flags": []
+  },
+  {
+   "rank": 41,
+   "concept": "continuous-learning-and-adaptability:changing-requirements",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 8,
+   "flags": []
+  },
+  {
+   "rank": 42,
+   "concept": "teamwork:share-responsibility",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 9,
+   "flags": []
+  },
+  {
+   "rank": 43,
+   "concept": "professionalism:punctuality-attendance",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 9,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "rank": 44,
+   "concept": "customer-service-orientation:prioritize-service",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 19,
+   "flags": []
+  },
+  {
+   "rank": 45,
+   "concept": "career-and-life-management:wellness-and-finances",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 20,
+   "flags": []
+  },
+  {
+   "rank": 46,
+   "concept": "information-technology:software-and-applications",
+   "primaryReasoningKeys": 7,
+   "taggedReasoningKeys": 37,
+   "flags": []
+  },
+  {
+   "rank": 47,
+   "concept": "information-security:cyber-threats",
+   "primaryReasoningKeys": 8,
+   "taggedReasoningKeys": 8,
+   "flags": []
+  },
+  {
+   "rank": 48,
+   "concept": "information-literacy:judge-relevance",
+   "primaryReasoningKeys": 8,
+   "taggedReasoningKeys": 28,
+   "flags": []
+  },
+  {
+   "rank": 49,
+   "concept": "work-ethic:accepting-consequences",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 20,
+   "flags": []
+  },
+  {
+   "rank": 50,
+   "concept": "creativity-and-innovation:value-of-creativity",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 21,
+   "flags": []
+  },
+  {
+   "rank": 51,
+   "concept": "conflict-resolution:personality-and-culture",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 22,
+   "flags": []
+  },
+  {
+   "rank": 52,
+   "concept": "big-picture-thinking:community-and-industry",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 24,
+   "flags": []
+  },
+  {
+   "rank": 53,
+   "concept": "integrity:importance-of-integrity",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 25,
+   "flags": []
+  },
+  {
+   "rank": 54,
+   "concept": "information-security:information-formats",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 28,
+   "flags": []
+  },
+  {
+   "rank": 55,
+   "concept": "integrity:policies-and-procedures",
+   "primaryReasoningKeys": 9,
+   "taggedReasoningKeys": 30,
+   "flags": []
+  },
+  {
+   "rank": 56,
+   "concept": "integrity:laws-and-regulations",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 10,
+   "flags": []
+  },
+  {
+   "rank": 57,
+   "concept": "information-technology:emerging-technology",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 10,
+   "flags": []
+  },
+  {
+   "rank": 58,
+   "concept": "information-technology:troubleshooting",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 10,
+   "flags": []
+  },
+  {
+   "rank": 59,
+   "concept": "information-security:ethical-technology-use",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 11,
+   "flags": []
+  },
+  {
+   "rank": 60,
+   "concept": "efficiency-and-productivity:capital-resources",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 15,
+   "flags": []
+  },
+  {
+   "rank": 61,
+   "concept": "efficiency-and-productivity:natural-resources",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 15,
+   "flags": []
+  },
+  {
+   "rank": 62,
+   "concept": "continuous-learning-and-adaptability:acting-on-feedback",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 17,
+   "flags": []
+  },
+  {
+   "rank": 63,
+   "concept": "information-technology:hardware-and-devices",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 17,
+   "flags": []
+  },
+  {
+   "rank": 64,
+   "concept": "information-security:acceptable-use",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 19,
+   "flags": []
+  },
+  {
+   "rank": 65,
+   "concept": "critical-thinking-and-problem-solving:evaluate-solutions",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 20,
+   "flags": []
+  },
+  {
+   "rank": 66,
+   "concept": "initiative-and-self-direction:minimal-supervision",
+   "primaryReasoningKeys": 10,
+   "taggedReasoningKeys": 21,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "rank": 67,
+   "concept": "creativity-and-innovation:improve-processes",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 11,
+   "flags": []
+  },
+  {
+   "rank": 68,
+   "concept": "work-ethic:diligence",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 11,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "rank": 69,
+   "concept": "listening-and-speaking:presenting",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 11,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "rank": 70,
+   "concept": "customer-service-orientation:internal-and-external",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 11,
+   "flags": []
+  },
+  {
+   "rank": 71,
+   "concept": "information-technology:cloud-and-file-sharing",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 11,
+   "flags": []
+  },
+  {
+   "rank": 72,
+   "concept": "reading-and-writing:clarity",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 17,
+   "flags": []
+  },
+  {
+   "rank": 73,
+   "concept": "work-ethic:dependability",
+   "primaryReasoningKeys": 11,
+   "taggedReasoningKeys": 22,
+   "flags": [
+    "knowledge-not-performance"
+   ]
+  },
+  {
+   "rank": 74,
+   "concept": "teamwork:expectations-roles-goals",
+   "primaryReasoningKeys": 12,
+   "taggedReasoningKeys": 12,
+   "flags": []
+  },
+  {
+   "rank": 75,
+   "concept": "job-specific-tools-and-technologies:safe-use",
+   "primaryReasoningKeys": 12,
+   "taggedReasoningKeys": 12,
+   "flags": []
+  },
+  {
+   "rank": 76,
+   "concept": "initiative-and-self-direction:proactive-decisions",
+   "primaryReasoningKeys": 12,
+   "taggedReasoningKeys": 22,
+   "flags": []
+  },
+  {
+   "rank": 77,
+   "concept": "creativity-and-innovation:contribute-ideas",
+   "primaryReasoningKeys": 12,
+   "taggedReasoningKeys": 31,
+   "flags": []
+  },
+  {
+   "rank": 78,
+   "concept": "efficiency-and-productivity:work-plan",
+   "primaryReasoningKeys": 12,
+   "taggedReasoningKeys": 31,
+   "flags": []
+  },
+  {
+   "rank": 79,
+   "concept": "reading-and-writing:interpret-documents",
+   "primaryReasoningKeys": 13,
+   "taggedReasoningKeys": 13,
+   "flags": []
+  },
+  {
+   "rank": 80,
+   "concept": "workplace-safety:safety-data-sheets",
+   "primaryReasoningKeys": 13,
+   "taggedReasoningKeys": 13,
+   "flags": []
+  },
+  {
+   "rank": 81,
+   "concept": "job-specific-tools-and-technologies:select-right-tool",
+   "primaryReasoningKeys": 13,
+   "taggedReasoningKeys": 22,
+   "flags": []
+  },
+  {
+   "rank": 82,
+   "concept": "conflict-resolution:performance-concerns",
+   "primaryReasoningKeys": 14,
+   "taggedReasoningKeys": 14,
+   "flags": []
+  },
+  {
+   "rank": 83,
+   "concept": "career-and-life-management:qualifications-and-advancement",
+   "primaryReasoningKeys": 14,
+   "taggedReasoningKeys": 14,
+   "flags": []
+  },
+  {
+   "rank": 84,
+   "concept": "conflict-resolution:diplomatic-negotiation",
+   "primaryReasoningKeys": 14,
+   "taggedReasoningKeys": 15,
+   "flags": []
+  },
+  {
+   "rank": 85,
+   "concept": "workplace-safety:safety-guidelines",
+   "primaryReasoningKeys": 14,
+   "taggedReasoningKeys": 18,
+   "flags": []
+  },
+  {
+   "rank": 86,
+   "concept": "professionalism:etiquette",
+   "primaryReasoningKeys": 15,
+   "taggedReasoningKeys": 22,
+   "flags": []
+  },
+  {
+   "rank": 87,
+   "concept": "mathematics:basic-calculations",
+   "primaryReasoningKeys": 16,
+   "taggedReasoningKeys": 49,
+   "flags": []
+  },
+  {
+   "rank": 88,
+   "concept": "respect-for-diversity:individual-differences",
+   "primaryReasoningKeys": 17,
+   "taggedReasoningKeys": 19,
+   "flags": []
+  },
+  {
+   "rank": 89,
+   "concept": "integrity:honesty-and-fairness",
+   "primaryReasoningKeys": 19,
+   "taggedReasoningKeys": 38,
+   "flags": []
+  },
+  {
+   "rank": 90,
+   "concept": "information-security:confidentiality",
+   "primaryReasoningKeys": 19,
+   "taggedReasoningKeys": 40,
+   "flags": []
+  },
+  {
+   "rank": 91,
+   "concept": "information-literacy:evaluate-credibility",
+   "primaryReasoningKeys": 23,
+   "taggedReasoningKeys": 28,
+   "flags": []
+  },
+  {
+   "rank": 92,
+   "concept": "big-picture-thinking:impacts-of-actions",
+   "primaryReasoningKeys": 24,
+   "taggedReasoningKeys": 25,
+   "flags": []
+  },
+  {
+   "rank": 93,
+   "concept": "critical-thinking-and-problem-solving:analyze-problems",
+   "primaryReasoningKeys": 24,
+   "taggedReasoningKeys": 26,
+   "flags": []
+  },
+  {
+   "rank": 94,
+   "concept": "mathematics:job-task-math",
+   "primaryReasoningKeys": 47,
+   "taggedReasoningKeys": 62,
+   "flags": []
+  }
+ ]
+}

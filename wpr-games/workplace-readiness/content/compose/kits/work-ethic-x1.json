@@ -1,0 +1,334 @@
+{
+ "skill": "work-ethic",
+ "kits": [
+  {
+   "id": "wet-owning-mistakes",
+   "skill": "work-ethic",
+   "family": "work-ethic.cx-owning-your-mistakes",
+   "familyName": "Owning a mistake and its consequences",
+   "framework": "competing-priorities",
+   "concepts": [
+    "work-ethic:accepting-consequences",
+    "work-ethic:dependability"
+   ],
+   "contexts": [
+    "culinary",
+    "hospitality",
+    "manufacturing",
+    "retail"
+   ],
+   "setup": [
+    "You work as {role|a} at {workplace|a}, and you have just realized you made a mistake at work.",
+    "As {role|a} at {workplace|a}, you notice that something you did earlier caused a problem."
+   ],
+   "detail": [
+    "It is late in the afternoon.",
+    "{Lead|the} is nearby."
+   ],
+   "pressure": [
+    "{coworker3} says nobody has noticed, so you can leave it.",
+    "You are worried about how this will look."
+   ],
+   "tiers": {
+    "1": "Fix a hazard you caused before you explain it.",
+    "2": "People waiting on your work need early warning when it will be late.",
+    "3": "Do not let someone else carry blame for your mistake.",
+    "4": "Repair the effect of a mistake on the person it affected.",
+    "5": "Changing how you work prevents the next mistake and can follow the urgent fixes."
+   },
+   "issues": [
+    {
+     "id": "hazard",
+     "tier": 1,
+     "rule": "fix-hazard-then-report",
+     "principle": "wor.fix-hazard-you-caused",
+     "fact": [
+      "You forgot to mark a wet floor, and a customer nearly slipped, though nobody was hurt."
+     ],
+     "short": "the unmarked wet floor",
+     "action": "Put out the warning sign now, then tell {lead|the} what happened.",
+     "brief": "mark the floor and report the lapse",
+     "reason": "The hazard is still there, so it is fixed first. Reporting lets {lead|the} stop a repeat.",
+     "lesson": "If your mistake created a hazard, make it safe first and then report it.",
+     "shortcut": [
+      {
+       "text": "Mark the floor and say nothing, since no one was hurt.",
+       "brief": "mark the floor and say nothing",
+       "why": "Reporting lets {lead|the} prevent a repeat, and quiet fixes hide a pattern.",
+       "mis": "If nobody is hurt, nothing needs reporting."
+      }
+     ],
+     "clear": [
+      "A warning sign is already standing on the floor you forgot to mark."
+     ],
+     "done": "the floor is already marked"
+    },
+    {
+     "id": "late",
+     "tier": 2,
+     "rule": "warn-early-when-late",
+     "principle": "wor.warn-early-when-late",
+     "fact": [
+      "You promised a task by today but started it late, so it will not be finished on time."
+     ],
+     "short": "the task that will be late",
+     "action": "Tell {lead|the} now, explain what happened, and offer a new time.",
+     "brief": "tell {lead|the} and offer a new time",
+     "reason": "Early notice lets others adjust. Silence leaves them depending on work that is not coming.",
+     "lesson": "If you will miss a deadline, say so early and offer a new time.",
+     "shortcut": [
+      {
+       "text": "Wait until the deadline passes and hope nobody asks.",
+       "brief": "wait and hope nobody asks about the task",
+       "why": "Others may be counting on the work, and silence takes away their chance to adjust.",
+       "mis": "Silence is better than admitting a late start."
+      }
+     ],
+     "clear": [
+      "You already told {lead|the} that your late task would miss its deadline, and it was moved."
+     ],
+     "done": "the deadline is already moved"
+    },
+    {
+     "id": "blame",
+     "tier": 3,
+     "rule": "do-not-let-others-carry-blame",
+     "principle": "wor.own-it-when-blamed",
+     "fact": [
+      "{coworker} is being blamed for a stock shortage that came from your counting mistake."
+     ],
+     "short": "the blame placed on {coworker}",
+     "action": "Tell {lead|the} the miscount was yours and offer to fix the count.",
+     "brief": "own the miscount and fix it",
+     "reason": "Staying quiet leaves someone else carrying your mistake. Owning it clears them and fixes the count.",
+     "lesson": "Own your mistake rather than let someone else take the blame.",
+     "shortcut": [
+      {
+       "text": "Let it go, since the shortage is already assigned to {coworker}.",
+       "brief": "let {coworker} take the blame",
+       "why": "Staying quiet leaves someone else carrying a mistake that was yours.",
+       "mis": "A mistake belongs to whoever is blamed."
+      }
+     ],
+     "clear": [
+      "{Lead|the} already knows your counting mistake caused the stock shortage."
+     ],
+     "done": "the miscount is already owned"
+    },
+    {
+     "id": "repair",
+     "tier": 4,
+     "rule": "make-it-right-for-the-customer",
+     "principle": "wor.repair-the-customer-effect",
+     "fact": [
+      "A customer's order went to the wrong address because of your typo, and a replacement can ship today."
+     ],
+     "short": "the order sent to the wrong address",
+     "action": "Send the replacement today and tell the customer what went wrong.",
+     "brief": "send a replacement and explain",
+     "reason": "A clear explanation with a real fix shows the customer that the mistake is being handled.",
+     "lesson": "Fix the effect of your mistake on the person it affected, and be clear about what happened.",
+     "shortcut": [
+      {
+       "text": "Blame the delivery service and wait for the customer to complain.",
+       "brief": "blame the delivery service",
+       "why": "The mistake was yours, and waiting leaves the customer without their order.",
+       "mis": "Blaming someone else protects your reputation."
+      }
+     ],
+     "clear": [
+      "A replacement for the misdirected order already shipped and the customer was told."
+     ],
+     "done": "the replacement already shipped"
+    },
+    {
+     "id": "learn",
+     "tier": 5,
+     "rule": "change-how-you-work",
+     "principle": "wor.change-your-method",
+     "fact": [
+      "You made the same data-entry mistake twice this week, and {lead|the} offered a short checklist to use."
+     ],
+     "short": "the repeated data-entry mistake",
+     "action": "Use the checklist and ask {lead|the} to check your next few entries.",
+     "brief": "use the checklist and ask {lead|the} to check",
+     "reason": "A specific change in how you work does more than trying harder, and checks show whether it is working.",
+     "lesson": "Change how you work after a repeated mistake, instead of just promising to be careful.",
+     "shortcut": [
+      {
+       "text": "Just try to be more careful without changing how you work.",
+       "brief": "just try to be more careful",
+       "why": "Good intentions rarely change a habit without a specific change in method.",
+       "mis": "Effort alone prevents repeated mistakes."
+      }
+     ]
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations is a mistake or its effect that you need to deal with.",
+    "lesson": "Owning a mistake means fixing it, saying so, and changing what caused it."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} whether they would mention it if they were you.",
+     "why": "Someone else's opinion does not fix the problem or tell the right person.",
+     "mis": "The right move depends on what others would do."
+    },
+    {
+     "text": "Fix it quietly so nobody has a reason to bring it up.",
+     "why": "A quiet fix leaves out the people who need to know what happened.",
+     "mis": "Mistakes are best fixed in private."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Stop all your work for the day until {lead|the} decides what should happen to you.",
+     "why": "The problem has a specific fix. Stopping everything delays other work.",
+     "mis": "A mistake means stopping all work."
+    }
+   ],
+   "process": {
+    "setup": [
+     "You discover that an order you entered earlier has the wrong quantity."
+    ],
+    "steps": [
+     {
+      "id": "confirm",
+      "text": "Confirm what the order should say",
+      "core": true
+     },
+     {
+      "id": "fix",
+      "text": "Correct the quantity in the system",
+      "core": true
+     },
+     {
+      "id": "tell",
+      "text": "Tell {lead|the} what you found and fixed",
+      "core": true
+     },
+     {
+      "id": "habit",
+      "text": "Choose one check to prevent a repeat"
+     }
+    ],
+    "rel": [
+     [
+      "confirm",
+      "fix",
+      "You need the right number before you correct it."
+     ],
+     [
+      "fix",
+      "tell",
+      "Your report should say what you fixed."
+     ],
+     [
+      "confirm",
+      "habit",
+      "Understand the mistake before deciding how to prevent a repeat."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Confirm the facts, fix it, tell the right person, then change your method."
+   },
+   "doc": {
+    "type": "note",
+    "title": [
+     "Notes on owning a mistake"
+    ],
+    "intro": [
+     "You are reading a coworker's draft advice about handling mistakes."
+    ],
+    "prompt": [
+     "Which line gives advice that avoids responsibility?",
+     "Which line is the problem?"
+    ],
+    "lesson": "Taking responsibility means fixing the problem, telling the right person and changing the cause.",
+    "lines": [
+     {
+      "id": "hazard",
+      "text": "If your mistake creates a hazard, make it safe first and then report it.",
+      "fine": "Protects people before anything else.",
+      "bad": [
+       {
+        "id": "hazard-later",
+        "level": "beginner",
+        "text": "If your mistake creates a hazard, finish your task before dealing with it.",
+        "why": "A hazard stays dangerous until it is fixed, so it comes first.",
+        "principle": "wor.doc-hazard-later"
+       }
+      ]
+     },
+     {
+      "id": "late",
+      "text": "If you will miss a deadline, tell people early and offer a new time.",
+      "fine": "Gives others time to adjust.",
+      "bad": [
+       {
+        "id": "late-silent",
+        "level": "intermediate",
+        "text": "If you will miss a deadline, wait and see whether anyone asks.",
+        "why": "Waiting takes away the time others need to adjust.",
+        "principle": "wor.doc-late-silent"
+       }
+      ]
+     },
+     {
+      "id": "blame",
+      "text": "If someone is blamed for your mistake, tell the person in charge.",
+      "fine": "Keeps blame with the right person.",
+      "bad": [
+       {
+        "id": "blame-shift",
+        "level": "advanced",
+        "text": "If someone is already blamed for your mistake, leave it so you avoid more trouble.",
+        "why": "The other person carries the cost of your mistake, which is not fair to them.",
+        "principle": "wor.doc-blame-shift"
+       }
+      ]
+     },
+     {
+      "id": "learn",
+      "text": "After a repeated mistake, change how you work, not just how hard you try.",
+      "fine": "Targets the cause."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims"
+    ],
+    "notes": "Everyday workplace mistakes only. Priorities: hazards, early warning, fairness to others, repair, prevention. No disciplinary or legal consequences are described."
+   },
+   "exclusive": [
+    [
+     "late",
+     "blame"
+    ],
+    [
+     "late",
+     "repair"
+    ],
+    [
+     "late",
+     "learn"
+    ],
+    [
+     "blame",
+     "repair"
+    ],
+    [
+     "blame",
+     "learn"
+    ],
+    [
+     "repair",
+     "learn"
+    ]
+   ]
+  }
+ ]
+}

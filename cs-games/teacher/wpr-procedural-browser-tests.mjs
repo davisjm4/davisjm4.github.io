@@ -9,10 +9,10 @@ test('enrolled Find the Problem practice retains an offline response and reveals
  const c=await call('/teacher/profiles',owner,{title:'Procedural browser class',courseId:'workplace'}),profile=await call('/profile/enroll',null,{invite:c.invite});
  // Select a deterministic real signed Find fixture. Sync/scoring still use the real service;
  // only the first issuance response is fixed so every run exercises the key-free renderer.
- const seed=Array.from({length:1000},(_,i)=>'find-feedback-'+i).find(s=>proceduralQuestion(chooseProceduralSource('creativity-and-innovation',[],s),s)?.mode==='find');assert.ok(seed);
+ const seed=Array.from({length:1000},(_,i)=>'find-feedback-'+i).find(s=>proceduralQuestion(chooseProceduralSource('creativity-and-innovation',[],s),s)?.mode==='find'&&chooseProceduralSource('creativity-and-innovation',[],s).startsWith('compose:'));assert.ok(seed);
  const randomUUID=crypto.randomUUID.bind(crypto),values=[seed,randomUUID()];let fixture;
  try{crypto.randomUUID=()=>values.shift()??randomUUID();fixture=await issueProceduralPractice(secret,{id:profile.id,class_id:c.id,generation:0,course_id:'workplace'},'creativity-and-innovation');}finally{crypto.randomUUID=randomUUID;}
- assert.equal(fixture.question.mode,'find');
+ assert.equal(fixture.question.mode,'find');assert.ok(JSON.parse(Buffer.from(fixture.permit.split('.')[0],'base64url').toString()).sourceId.startsWith('compose:'));
  browser=await launch();const page=await browser.newPage();let issued;
  let usedFixture=false;await page.setRequestInterception(true);page.on('request',request=>{if(!usedFixture&&request.url().endsWith('/profile/wpr-procedural')&&request.method()==='POST'){usedFixture=true;void request.respond({status:200,contentType:'application/json',body:JSON.stringify(fixture)});}else void request.continue();});
  page.on('response',async response=>{if(response.url().endsWith('/profile/wpr-procedural')&&response.request().method()==='POST'&&response.status()===200){issued=await response.json();await page.evaluate(id=>globalThis.__issuedTestId=id,issued.id);}});

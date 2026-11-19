@@ -1,0 +1,318 @@
+{
+ "skill": "information-security",
+ "kits": [
+  {
+   "id": "ise-every-format",
+   "skill": "information-security",
+   "family": "information-security.cx-protecting-every-format",
+   "familyName": "Protecting information on paper, screens and in talk",
+   "framework": "competing-priorities",
+   "concepts": [
+    "information-security:information-formats",
+    "information-security:confidentiality"
+   ],
+   "contexts": "any",
+   "setup": [
+    "You work as {role|a} at {workplace|a}, where confidential information appears on paper, on screens and in conversation.",
+    "As {role|a} at {workplace|a}, you handle confidential information in several forms during the day."
+   ],
+   "detail": [
+    "It is a normal weekday.",
+    "It is the middle of the afternoon."
+   ],
+   "pressure": [
+    "{coworker3} says it is not worth the trouble.",
+    "You are in a hurry to finish."
+   ],
+   "tiers": {
+    "1": "Information anyone can see right now should be covered first.",
+    "2": "Conversations can be overheard, so move before you talk.",
+    "3": "Personal devices are outside the workplace's control.",
+    "4": "Files in transit need a sealed, labeled cover.",
+    "5": "Retired storage still holds information until it is wiped."
+   },
+   "issues": [
+    {
+     "id": "board",
+     "tier": 1,
+     "rule": "erase-before-leaving",
+     "principle": "ise.erase-whiteboard-before-leaving",
+     "fact": [
+      "Customer names and account numbers are still on the whiteboard after a meeting, and the policy says boards are erased before leaving."
+     ],
+     "short": "the information left on the whiteboard",
+     "action": "Erase the whiteboard before you leave the room.",
+     "brief": "erase the whiteboard",
+     "reason": "Cleaners, visitors and other staff also use the room, and an erased board shows nothing.",
+     "lesson": "Cover or erase information in view before you leave a shared space.",
+     "shortcut": [
+      {
+       "text": "Leave it up, since only staff come into this room.",
+       "brief": "leave the board as it is",
+       "why": "Visitors and cleaners also enter, and the policy says to erase it.",
+       "mis": "Only employees ever see the room."
+      }
+     ],
+     "clear": [
+      "The whiteboard was already erased after the meeting."
+     ],
+     "done": "the whiteboard is already erased"
+    },
+    {
+     "id": "talk",
+     "tier": 2,
+     "rule": "private-area-for-account-talk",
+     "principle": "ise.talk-about-accounts-in-private",
+     "fact": [
+      "You are on the phone about a customer's account in a public area, and the policy says to discuss accounts only in private."
+     ],
+     "short": "the call in the public area",
+     "action": "Move to a private area before continuing the call.",
+     "brief": "move somewhere private for the call",
+     "reason": "People nearby can hear details you would never show them on paper.",
+     "lesson": "Discuss confidential details only where others cannot overhear.",
+     "shortcut": [
+      {
+       "text": "Lower your voice and keep talking where you are.",
+       "brief": "lower your voice and keep talking",
+       "why": "A quiet voice can still be overheard, and the policy requires a private area.",
+       "mis": "Speaking softly is the same as speaking privately."
+      }
+     ],
+     "clear": [
+      "You already moved to a private area for the call."
+     ],
+     "done": "the call is already in a private area"
+    },
+    {
+     "id": "photo",
+     "tier": 3,
+     "rule": "keep-confidential-info-off-personal-devices",
+     "principle": "ise.no-photos-of-confidential-paper",
+     "fact": [
+      "You want to photograph a handwritten customer list to send to yourself, and the policy keeps confidential information off personal devices."
+     ],
+     "short": "the photo of the customer list",
+     "action": "Skip the photo and ask {lead|the} how to copy the list on an approved device.",
+     "brief": "skip the photo and ask about an approved copy",
+     "reason": "A photo on a personal phone leaves the workplace's control, even if you plan to delete it.",
+     "lesson": "Keep confidential information off personal devices, whatever the format.",
+     "shortcut": [
+      {
+       "text": "Take the photo and delete it as soon as you have used the list.",
+       "brief": "take the photo and delete it later",
+       "why": "The photo sits on a device the workplace does not control until you delete it, and the policy forbids it.",
+       "mis": "A temporary copy on a personal phone is harmless."
+      }
+     ],
+     "clear": [
+      "You already deleted the photo and asked about an approved copy."
+     ],
+     "done": "the photo is already dropped"
+    },
+    {
+     "id": "mail",
+     "tier": 4,
+     "rule": "seal-and-label-files-in-transit",
+     "principle": "ise.seal-files-for-transit",
+     "fact": [
+      "Customer paper files must go to another branch, and the policy says files travel only in a sealed, labeled envelope."
+     ],
+     "short": "the files going to the other branch",
+     "action": "Seal the files in a labeled envelope before they leave.",
+     "brief": "seal the files in a labeled envelope",
+     "reason": "A sealed, labeled envelope protects the files on the way and shows where they should go.",
+     "lesson": "Send paper files only in the sealed, labeled cover the policy describes.",
+     "shortcut": [
+      {
+       "text": "Send them in an open folder so the other branch can check them quickly.",
+       "brief": "send the files in an open folder",
+       "why": "An open folder can lose pages or be read in transit, and the policy requires a sealed envelope.",
+       "mis": "Faster to open means better for the receiver."
+      }
+     ],
+     "clear": [
+      "The files were already sealed in a labeled envelope."
+     ],
+     "done": "the files are already sealed"
+    },
+    {
+     "id": "drive",
+     "tier": 5,
+     "rule": "hand-retired-storage-to-it",
+     "principle": "ise.wipe-retired-drives",
+     "fact": [
+      "An old storage drive from your workstation is being thrown away, and the policy says retired drives go to IT for wiping."
+     ],
+     "short": "the retired storage drive",
+     "action": "Give the drive to IT to be wiped instead of throwing it away.",
+     "brief": "give the drive to IT for wiping",
+     "reason": "Deleted files can often be recovered, so only a proper wipe makes retired storage safe.",
+     "lesson": "Hand retired storage to IT instead of throwing it out.",
+     "shortcut": [
+      {
+       "text": "Delete the files yourself and put the drive in the trash.",
+       "brief": "delete the files and trash the drive",
+       "why": "Deleted files can often be recovered, and the policy sends retired drives to IT.",
+       "mis": "Deleting files removes them for good."
+      }
+     ]
+    }
+   ],
+   "proceed": {
+    "text": "Carry on with your regular work, since nothing here needs action.",
+    "why": "Each of these situations involves confidential information in a format that needs protecting.",
+    "lesson": "Protect confidential information on paper, screens and in conversation alike."
+   },
+   "generic": [
+    {
+     "text": "Ask {coworker2} what they usually do and copy that.",
+     "why": "A coworker's habit is not the written guide, and it may be out of date.",
+     "mis": "Common practice is the same as the rule."
+    },
+    {
+     "text": "Wait until {lead|the} brings it up before you act.",
+     "why": "The guide applies to you now, and waiting leaves the problem in place.",
+     "mis": "Someone else will raise it if it matters."
+    }
+   ],
+   "overcaution": [
+    {
+     "text": "Stop handling all paper and electronic files until {lead|the} reviews the whole policy with you.",
+     "why": "The concern is specific. Stopping everything delays work the policy allows.",
+     "mis": "Any rule question means stopping all handling."
+    }
+   ],
+   "process": {
+    "setup": [
+     "Customer paper files must be sent to another branch."
+    ],
+    "steps": [
+     {
+      "id": "gather",
+      "text": "Gather the files that must go",
+      "core": true
+     },
+     {
+      "id": "seal",
+      "text": "Seal them in a labeled envelope",
+      "core": true
+     },
+     {
+      "id": "hand",
+      "text": "Hand the envelope to the courier",
+      "core": true
+     },
+     {
+      "id": "note",
+      "text": "Write down what was sent"
+     }
+    ],
+    "rel": [
+     [
+      "gather",
+      "seal",
+      "You need the files before you can seal them."
+     ],
+     [
+      "seal",
+      "hand",
+      "Hand over the envelope only once it is sealed."
+     ],
+     [
+      "gather",
+      "note",
+      "The note lists what you gathered."
+     ]
+    ],
+    "alternatesReviewed": true,
+    "lesson": "Gather, seal and label, hand over, and keep a note."
+   },
+   "doc": {
+    "type": "procedure",
+    "title": [
+     "Information protection reminders"
+    ],
+    "intro": [
+     "You are checking a reminder sheet before it is posted by the copier."
+    ],
+    "prompt": [
+     "Which line gives advice that breaks the policy?",
+     "Which line is the problem?"
+    ],
+    "lesson": "Protect confidential information on paper, on screens and in conversation.",
+    "lines": [
+     {
+      "id": "board",
+      "text": "Erase whiteboards that show customer information before you leave.",
+      "fine": "Covers information in view.",
+      "bad": [
+       {
+        "id": "board-stay",
+        "level": "beginner",
+        "text": "Leave customer information on the whiteboard if only staff use the room.",
+        "why": "Visitors and cleaners also use the room, so the board is erased.",
+        "principle": "ise.doc-board-left-up"
+       }
+      ]
+     },
+     {
+      "id": "talk",
+      "text": "Talk about customer accounts only where nobody can overhear.",
+      "fine": "Stops conversations from leaking information.",
+      "bad": [
+       {
+        "id": "talk-quiet",
+        "level": "intermediate",
+        "text": "Talk about customer accounts anywhere if you keep your voice low.",
+        "why": "A low voice can still be overheard, so the call moves to a private area.",
+        "principle": "ise.doc-quiet-voice"
+       }
+      ]
+     },
+     {
+      "id": "mail",
+      "text": "Send paper files only in sealed, labeled envelopes.",
+      "fine": "Protects files in transit.",
+      "bad": [
+       {
+        "id": "mail-open",
+        "level": "advanced",
+        "text": "Send paper files in an open folder when the other branch is waiting.",
+        "why": "Open folders can lose pages or be read in transit.",
+        "principle": "ise.doc-open-folder"
+       }
+      ]
+     },
+     {
+      "id": "drive",
+      "text": "Give old storage devices to IT to be wiped.",
+      "fine": "Makes sure nothing can be recovered."
+     }
+    ]
+   },
+   "review": {
+    "status": "approved",
+    "checks": [
+     "no-jurisdiction-claims",
+     "policy-stated-in-scenario"
+    ],
+    "notes": "Each rule is stated as this workplace's policy; no statute is cited. Tiers: visible information, overheard talk, personal devices, files in transit, retired storage."
+   },
+   "exclusive": [
+    [
+     "photo",
+     "mail"
+    ],
+    [
+     "photo",
+     "drive"
+    ],
+    [
+     "mail",
+     "drive"
+    ]
+   ]
+  }
+ ]
+}
