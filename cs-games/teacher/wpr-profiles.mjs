@@ -303,7 +303,7 @@ export function teacherProfiles(onClasses) {
     if(focus)panel.querySelector('h3')?.focus();
     else if(location.hash==='#class-plan')panel.querySelector('#class-plan')?.scrollIntoView();
     loadPathwayStatus(c,pathwaySlot,active);
-    void focusPanel?.refresh();
+    void focusPanel?.refresh?.();
   }
   async function openStudentPreview(classId,slot){
     const plan=pathways.get(classId);
