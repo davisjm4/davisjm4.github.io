@@ -37,7 +37,7 @@ function evaluateTier(node,tier,rule,records,teacherPolicy){
   };
 }
 
-export function evaluateSkillProficiency(node,events,{policy=null}={}){
+function evaluateSingleAttempt(node,events,{policy=null}={}){
   const {role,supplemental=false,tiers:rules}=rubricFor(node);
   const {events:records,ignored}=firstPractice(events,node.id);
   const classified=new Map(difficulties.map(tier=>[tier,[]]));
@@ -76,6 +76,40 @@ export function evaluateSkillProficiency(node,events,{policy=null}={}){
     },
     policy:teacherPolicy?{id:teacherPolicy.id,version:teacherPolicy.version}:null
   };
+}
+
+/** Explicit browser-local formative attempts. Boundaries never alter the source events.
+ * Class practice keeps its existing authenticated, server-owned attempt lifecycle. */
+export function evaluateSkillProficiency(node,events,{policy=null,attemptStarts=[]}={}) {
+  const starts=attemptStarts.filter(a=>a.nodeId===node.id&&a.courseId===node.courseId&&Number.isFinite(Date.parse(a.at)))
+    .sort((a,b)=>Date.parse(a.at)-Date.parse(b.at));
+  if(!starts.length)return evaluateSingleAttempt(node,events,{policy});
+  const unique=firstPractice(events,node.id).events; // Scope and first submission are global across attempts.
+  const windows=[-Infinity,...starts.map(a=>Date.parse(a.at)),Infinity];
+  const claimed=new Set(starts.flatMap(a=>a.evidenceIds??[]));
+  const results=windows.slice(0,-1).map((from,i)=>{
+    const closed=starts[i]?.evidenceIds;
+    const ids=closed?new Set(closed):null;
+    const records=ids?unique.filter(e=>ids.has(e.id)):
+      unique.filter(e=>e.ts>=from&&e.ts<windows[i+1]&&!claimed.has(e.id));
+    return evaluateSingleAttempt(node,records,{policy});
+  });
+  const current=results.at(-1), earlier=results.slice(0,-1);
+  const tiers={...current.tiers};
+  for(const tier of difficulties){
+    const prior=earlier.find(r=>r.tiers[tier].status==='demonstrated');
+    if(prior&&tiers[tier].status!=='demonstrated')tiers[tier]={...prior.tiers[tier],retained:true,currentAttempt:tiers[tier]};
+  }
+  const level=tiers.advanced.status==='demonstrated'&&tiers.intermediate.status==='demonstrated'?4:Math.max(...results.map(r=>r.level));
+  const goalMet=results.some(r=>r.goalMet);
+  return {...current,tiers,level,label:LEVEL_LABELS[level],goalMet,
+    highestDemonstratedDifficulty:[...difficulties].reverse().find(tier=>tiers[tier].status==='demonstrated')??null,
+    advancementMet:results.some(r=>r.advancementMet),
+    extensionAvailable:level===3&&current.standardsScore!==4&&current.tiers.advanced.status!=='unavailable',
+    attempt:{id:starts.at(-1).id,number:starts.length+1,startedAt:starts.at(-1).at},
+    attemptHistory:earlier.map((result,i)=>({number:i+1,closedAt:starts[i].at,level:result.level,goalMet:result.goalMet,
+      goal:result.goal,answered:result.tiers[result.goal]?.answered??0,correct:result.tiers[result.goal]?.correct??0,
+      rubricVersion:PROFICIENCY_VERSION}))};
 }
 
 function firstPractice(events,nodeId){
@@ -128,7 +162,7 @@ function countsForAdvancement(node,skill){
 
 /** Shared entry point for a published class or an independent learner. Pass
  * nodes in curriculum order and normalized evidence for exactly one learner. */
-export function evaluateProficiency({courseId,nodes,eventsByNode=new Map(),policies=[],familiarity,pacingTargets,skipFamiliar}){
+export function evaluateProficiency({courseId,nodes,eventsByNode=new Map(),policies=[],familiarity,pacingTargets,skipFamiliar,attemptStarts=[]}){
   const scopes=new Set([...eventsByNode.values()].flatMap(events=>events.map(event=>JSON.stringify(event.scope))));
   if(scopes.size>1)throw new Error('Formative proficiency requires one student scope.');
   const rules=new Map(policies.map(policy=>[`${policy.id}@${policy.version}`,policy]));
@@ -136,7 +170,7 @@ export function evaluateProficiency({courseId,nodes,eventsByNode=new Map(),polic
   for(const node of nodes){
     const checkpoint=node.checkpoint;
     const policy=checkpoint && !Object.hasOwn(checkpoint,'requirementTier')?rules.get(`${checkpoint.policyId}@${checkpoint.policyVersion}`):null;
-    skills[node.id]=evaluateSkillProficiency(node,eventsByNode.get(node.id)??[],{policy});
+    skills[node.id]=evaluateSkillProficiency(node,eventsByNode.get(node.id)??[],{policy,attemptStarts});
     if(!grouped.has(node.areaId))grouped.set(node.areaId,[]);
     grouped.get(node.areaId).push(node);
   }

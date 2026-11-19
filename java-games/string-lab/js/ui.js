@@ -84,6 +84,7 @@
     el.check.disabled = true; el.actions.hidden = false;
     var hint = $('keyHint'); if (hint) hint.hidden = false;
     renderStats();
+    root.dispatchEvent(new CustomEvent('csg:practice-context',{detail:{difficulty:ch.difficulty,mode:ch.mode,skill:ch.skill}}));
   }
 
   function loadNext(userInitiated) {
@@ -208,15 +209,21 @@
   }
 
   // ---- wiring
+  function saveSettings() {
+    try { root.localStorage.setItem('stringLab.preferences.v1',JSON.stringify(settings)); } catch(e) {}
+    var url=new URL(root.location.href);
+    url.searchParams.set('difficulty',settings.difficulty);url.searchParams.set('mode',settings.mode);
+    root.history.replaceState(root.history.state,'',url.pathname+url.search+url.hash);
+  }
   function syncRadios() {
     Array.prototype.forEach.call(doc.querySelectorAll('input[name=mode]'), function (r) { r.checked = r.value === settings.mode; });
     Array.prototype.forEach.call(doc.querySelectorAll('input[name=difficulty]'), function (r) { r.checked = r.value === settings.difficulty; });
   }
   doc.querySelectorAll('input[name=mode]').forEach(function (r) {
-    r.addEventListener('change', function () { settings.mode = r.value; try { root.localStorage.setItem('stringLab.preferences.v1', JSON.stringify(settings)); } catch (e) {} gen.setMode(r.value); loadNext(true); });
+    r.addEventListener('change', function () { settings.mode = r.value; saveSettings(); gen.setMode(r.value); loadNext(true); });
   });
   doc.querySelectorAll('input[name=difficulty]').forEach(function (r) {
-    r.addEventListener('change', function () { settings.difficulty = r.value; try { root.localStorage.setItem('stringLab.preferences.v1', JSON.stringify(settings)); } catch (e) {} gen.setDifficulty(r.value); loadNext(true); });
+    r.addEventListener('change', function () { settings.difficulty = r.value; saveSettings(); gen.setDifficulty(r.value); loadNext(true); });
   });
   el.choices.addEventListener('change', function (e) { if (e.target && e.target.name === 'answer') select(parseInt(e.target.value, 10)); });
   el.form.addEventListener('submit', function (e) { e.preventDefault(); check(); });

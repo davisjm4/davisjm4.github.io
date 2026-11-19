@@ -14,3 +14,10 @@
 .live-skill-progress p:empty { display: none; }
 .live-skill-progress summary { padding-block: .55rem; cursor: pointer; }
 .live-skill-progress a { color: #a8e9fa; display: inline-flex; align-items: center; min-height: 44px; }
+
+.live-skill-progress ul {padding-left:1.2rem;margin:.45rem 0;}
+.live-skill-progress li {margin:.25rem 0;}
+.live-skill-progress .qualification-warning {border-left:4px solid #ffce72;padding:.5rem;color:#ffe2ad;}
+.live-skill-progress .qualification-warning:empty {display:none;}
+.live-skill-progress button {min-height:44px;margin:.25rem;padding:.5rem .7rem;white-space:normal;}
+.live-skill-progress a {overflow-wrap:anywhere;}

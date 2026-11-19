@@ -38,7 +38,7 @@ export function buildGuestView(graph, courseId, state, { today } = {}) {
       suggested: suggestion.primary?.nodeId === node.id, reason: suggestion.all.find(s => s.nodeId === node.id)?.reason ?? null } };
   });
   const familiarity = Object.fromEntries(view.nodes.filter(n => n.guest.mark === 'familiar').map(n => [n.id, true]));
-  const proficiency = evaluateProficiency({courseId, nodes:view.nodes, familiarity, skipFamiliar:true, eventsByNode:guestEvidenceByNode(graph,state.events,courseId)});
+  const proficiency = evaluateProficiency({courseId, nodes:view.nodes, familiarity, skipFamiliar:true, attemptStarts:state.formativeAttempts??[], eventsByNode:guestEvidenceByNode(graph,state.events,courseId)});
   const applySuggestion = (guidance, pick) => {
     if (!pick || guidance.primary?.kind === 'continue-learning' ||
         !['marked','start','low','review'].includes(pick.code) && guidance.primary?.tier) return;

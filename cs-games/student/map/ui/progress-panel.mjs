@@ -42,7 +42,8 @@ export function createProgressPanel(node, ctx) {
 
   const goal = node.skillTarget;
   if (goal && !goal.complete) root.append(el('section', {class:'skill-target'},
-    el('h4',{text:goal.label}), el('p',{text:goal.count}),
+    el('h4',{text:goal.label}), el('p',{text:`Attempt ${goal.attemptNumber} · ${goal.count}`}),
+    el('ul',{'aria-label':'Qualification requirements'},goal.qualification.map(check=>el('li',{'data-requirement':check.kind,text:check.text}))),
     el('progress', {max:100,value:Math.floor(goal.fraction*100),'aria-label':goal.label,'aria-valuetext':`${goal.count}. ${goal.summary}.`}),
     el('p',{text:`${goal.correct} right on the first try · ${formatPercent(goal.accuracy)} accuracy required${goal.accuracyPercent==null?'':` · ${formatPercent(goal.accuracyPercent)} so far`}`}),
     goal.detail.length?el('details',{},el('summary',{text:'What still counts toward this target'}),

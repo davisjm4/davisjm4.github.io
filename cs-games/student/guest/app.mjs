@@ -1,9 +1,10 @@
 /* Independent-learner page. Everything here runs in the browser; the only request is a same-origin GET of the curriculum graph. */
+import { masteryAttemptControl } from '../mastery-attempt-control.mjs';
 import { el } from '../../../wpr-games/workplace-readiness/online/dom.mjs';
 import { renderPathway } from '../pathway-view.mjs';
 import { createGuestStore, MESSAGES, COURSE_IDS, localDate } from './store.mjs';
 import { buildGuestView, guestCourses } from './pathway.mjs?v=map-progression-v1';
-import { reconcileEvents } from './evidence.mjs';
+import { guestEvidenceByNode, reconcileEvents } from './evidence.mjs';
 import { afterPractice } from './suggest.mjs';
 import { activityName } from './progress.mjs';
 import { mountStudentMap } from '../map/ui/app.mjs?v=map-progression-v1';
@@ -88,6 +89,10 @@ const adapter={
   guestSkillControls(node){
     const g=node.guest;
     return el('div',{class:'guest-skill-controls'},
+      node.skillTarget&&!node.skillTarget.complete&&node.skillTarget.answered>0?masteryAttemptControl(async()=>{
+        store.startMasteryAttempt({nodeId:node.id,courseId,requestId:crypto.randomUUID(),expectedAttemptId:node.proficiency?.attempt?.id??null,evidenceIds:(guestEvidenceByNode(graph,store.state().events,courseId).get(node.id)??[]).map(e=>e.id)});
+        render();say('New mastery attempt started. Earlier evidence stays in your history.');
+      }):null,
       g.answered?el('p',{class:'muted',text:`All practice · ${g.correct} of ${g.answered} right on the first try`}):null,
       g.selfReported&&el('p',{class:'guest-note',text:g.selfReported}),
       trackingKnown()&&!TRACKED_NODE_IDS.has(node.id)&&el('p',{class:'muted',text:'This activity may not update skill progress automatically. You can still practice and plan a demonstration.'}),

@@ -19,7 +19,7 @@ export function recordGuestAttempt(courseId, { store } = {}) {
     try {
       const event = guestEventFromAttempt(courseId, record, correct, occurred);
       const recorded = event ? (store || guestStore()).addEvent(event) : false;
-      if (recorded && typeof window !== 'undefined') window.dispatchEvent(new Event('csg:guest-practice'));
+      if ((recorded || (store || guestStore()).info.warning) && typeof window !== 'undefined') window.dispatchEvent(new Event('csg:guest-practice'));
       return recorded;
     } catch { return false; }
   };
