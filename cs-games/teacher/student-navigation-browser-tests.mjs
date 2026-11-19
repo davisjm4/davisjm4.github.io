@@ -164,8 +164,10 @@ test('enrolled search launches class practice and syncs a first attempt', { time
   await Promise.all([page.waitForNavigation(), page.keyboard.press('Enter')]);
   assert.equal(new URL(page.url()).searchParams.get('learner'), null);
   assert.equal(new URL(page.url()).searchParams.get('mode'), 'modulus');
+  await page.waitForSelector('.live-skill-progress',{visible:true});
   await page.click('button.choice');
   await page.click('#check');
+  await page.waitForFunction(()=>document.querySelector('.live-skill-progress')?.innerText.includes('1 of'));
   await page.waitForFunction(() => !Object.keys(localStorage).some(key => key.includes('.outbox.')));
   await page.waitForSelector('a[data-profile-link]');
   await page.focus('a[data-profile-link]');

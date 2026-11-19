@@ -18,6 +18,10 @@ export function proficiencyDetails(node){
   const available=Object.entries(result.tiers).filter(([,detail])=>detail.status!=='unavailable');
   return el('section',{class:'proficiency-details'},
     el('h4',{text:'Formative proficiency'}),
+    node.progress?.requirements?el('p',{class:'muted',text:'These formative levels use their own evidence rubric. Your teacher-configured class practice target and official teacher score are shown separately.'}):null,
+    result.attempt?el('p',{text:`Current mastery attempt ${result.attempt.number} · started ${new Date(result.attempt.startedAt).toLocaleString()}`}):null,
+    result.attemptHistory?.length?el('details',{},el('summary',{text:'Earlier mastery attempts'}),
+      el('ul',{},result.attemptHistory.map(a=>el('li',{text:`Attempt ${a.number}: ${a.correct} of ${a.answered} right on the first try for its target · Level ${a.level} · closed ${new Date(a.closedAt).toLocaleString()}`})))):null,
     available.length?el('p',{'data-formative-level':result.level,text:`Level ${result.level} · ${result.label}`}):null,
     available.length?el('details',{},el('summary',{text:'How the proficiency levels are earned'}),
       el('p',{text:'Each level uses its own qualifying questions. Answers count for the skill and level they assess. Level 3 can be demonstrated even when the Level 2 evidence set is incomplete.'}),

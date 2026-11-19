@@ -11,6 +11,7 @@
  */
 export const GUEST_KEY = 'cs-games:guest:v1';
 export const GUEST_SCHEMA = 1;
+export const ATTEMPTS_KEY = 'cs-games:guest:mastery-attempts:v1';
 export const BACKUP_FORMAT = 'cs-games-guest-progress';
 export const LIMITS = Object.freeze({ events: 2500, hardEvents: 5000, compactBatch: 800, importBytes: 2_000_000, marks: 2000 });
 export const MARK_STATES = Object.freeze(['familiar', 'needs-practice', 'start-here']);
@@ -34,7 +35,7 @@ const meta = v => (typeof v === 'string' && META.test(v) ? v : null);
 const fail = why => { throw new Error('Invalid guest progress: ' + why); };
 
 export const emptyState = ms => ({ schema: GUEST_SCHEMA, created: iso(ms), updated: iso(ms), tracking: false, course: null,
-  position: {}, marks: {}, events: [], archive: {}, archiveTotals: { answered: 0, correct: 0, byCourse: {} }, dropped: 0 });
+  position: {}, marks: {}, events: [], formativeAttempts: [], archive: {}, archiveTotals: { answered: 0, correct: 0, byCourse: {} }, dropped: 0 });
 
 // Allowlist sanitizer: builds a new object from known fields only. Unknown fields (including anything that looks like
 // an award, score, verification or eligibility flag) are never copied. Returns null for an unusable event.
@@ -76,6 +77,13 @@ export function cleanState(x, { keepCredit = true } = {}) {
   if (!Array.isArray(x.events) || x.events.length > LIMITS.hardEvents) fail('events');
   const seen = new Set(), events = [];
   for (const raw of x.events) { const e = cleanEvent(raw, { keepCredit }); if (e && !seen.has(e.id)) { seen.add(e.id); events.push(e); } }
+  const formativeAttempts = [];
+  if(x.formativeAttempts!==undefined && (!Array.isArray(x.formativeAttempts)||x.formativeAttempts.length>5000)) fail('attempt boundaries');
+  const attemptIds=new Set();
+  for(const a of x.formativeAttempts??[]){
+    if(!a||typeof a.id!=='string'||typeof a.nodeId!=='string'||!ID.test(a.id)||!ID.test(a.nodeId)||!COURSE_IDS.includes(a.courseId)||!isoOk(a.at)) fail('attempt boundary');
+    if(!attemptIds.has(a.id)){attemptIds.add(a.id);formativeAttempts.push({id:a.id,nodeId:a.nodeId,courseId:a.courseId,at:a.at,...(Array.isArray(a.evidenceIds)&&a.evidenceIds.length<=LIMITS.hardEvents&&a.evidenceIds.every(id=>typeof id==='string'&&ID.test(id))?{evidenceIds:[...new Set(a.evidenceIds)]}:{})});}
+  }
   const archive = {};
   for (const [id, a] of Object.entries(x.archive && typeof x.archive === 'object' && !Array.isArray(x.archive) ? x.archive : fail('archive'))) {
     if (!ID.test(id) || !a || !int(a.answered) || !int(a.correct) || a.correct > a.answered || !DATE.test(a.first) || !DATE.test(a.last)) fail('archive');
@@ -88,14 +96,16 @@ export function cleanState(x, { keepCredit = true } = {}) {
     if (COURSE_IDS.includes(c) && v && int(v.answered) && int(v.correct) && v.correct <= v.answered) byCourse[c] = { answered: v.answered, correct: v.correct };
   }
   return { schema: GUEST_SCHEMA, created: x.created, updated: x.updated, tracking: x.tracking === true,
-    course: COURSE_IDS.includes(x.course) ? x.course : null, position, marks, events, archive,
+    course: COURSE_IDS.includes(x.course) ? x.course : null, position, marks, events, formativeAttempts, archive,
     archiveTotals: { answered: t.answered, correct: t.correct, byCourse }, dropped: int(x.dropped) ? x.dropped : 0 };
 }
 
 // Fold the oldest resolved events into per-skill totals. Events that were never resolved against the graph keep their raw detail.
 function compact(state, count) {
+  const pinned=new Set((state.formativeAttempts??[]).flatMap(a=>a.evidenceIds??[]));
+  const attemptedCourses=new Set((state.formativeAttempts??[]).map(a=>a.courseId));
   const keep = [], fold = [];
-  for (const e of state.events) (fold.length < count && e.nodeIds ? fold : keep).push(e);
+  for (const e of state.events) (fold.length < count && e.nodeIds && !pinned.has(e.id) && !attemptedCourses.has(e.courseId) ? fold : keep).push(e);
   for (const e of fold) {
     for (const id of e.nodeIds) {
       const a = state.archive[id] ??= { answered: 0, correct: 0, first: e.date, last: e.date };
@@ -116,6 +126,8 @@ export function mergeStates(current, incoming, ms) {
   const byId = new Map(out.events.map(e => [e.id, e]));
   let added = 0;
   for (const e of incoming.events) if (!byId.has(e.id)) { byId.set(e.id, e); added++; }
+  out.formativeAttempts=[...new Map([...(out.formativeAttempts??[]),...(incoming.formativeAttempts??[])].map(a=>[a.id,a])).values()];
+  if(out.formativeAttempts.length&&byId.size>LIMITS.hardEvents)throw new Error('This backup would exceed saved evidence capacity. Export both histories and keep them separately.');
   out.events = [...byId.values()].sort((a, b) => a.occurred - b.occurred || (a.id < b.id ? -1 : 1)).slice(-LIMITS.hardEvents);
   for (const [id, m] of Object.entries(incoming.marks)) if (!out.marks[id] || m.at > out.marks[id].at) out.marks[id] = m;
   for (const [c, p] of Object.entries(incoming.position)) if (!out.position[c] || p.at > out.position[c].at) out.position[c] = p;
@@ -154,7 +166,19 @@ export function createGuestStore({ storage, now = () => Date.now(), onWarning = 
     let raw;
     try { raw = storage.getItem(GUEST_KEY); } catch { volatile = true; memory = emptyState(now()); warn(MESSAGES.unavailable); return memory; }
     if (raw == null) return emptyState(now());
-    try { return cleanState(JSON.parse(raw)); } catch {
+    try {
+      const state=cleanState(JSON.parse(raw));
+      // A previously opened game may still write the legacy guest schema. Keep boundaries
+      // separately too, so that writer cannot silently turn a new attempt cumulative again.
+      try {
+        const savedAttempts=storage.getItem(ATTEMPTS_KEY);
+        if(savedAttempts){
+          const retained=cleanState({...state,formativeAttempts:JSON.parse(savedAttempts)}).formativeAttempts;
+          state.formativeAttempts=[...new Map([...state.formativeAttempts,...retained].map(a=>[a.id,a])).values()];
+        }
+      } catch { warn('Saved mastery-attempt boundaries could not be read. Your answers are intact. Restore a progress backup before starting another attempt.'); }
+      return state;
+    } catch {
       try { storage.setItem(GUEST_KEY + ':corrupt', String(raw).slice(0, 200000)); } catch { /* keeping a copy is best effort */ }
       recovered = true; warn(MESSAGES.corrupt);
       return emptyState(now());
@@ -166,10 +190,14 @@ export function createGuestStore({ storage, now = () => Date.now(), onWarning = 
     if (state.events.length > LIMITS.hardEvents) { state.dropped += state.events.length - LIMITS.hardEvents; state.events = state.events.slice(-LIMITS.hardEvents); }
     if (volatile) { memory = state; return false; }
     for (let attempt = 0; attempt < 4; attempt++) {
-      try { storage.setItem(GUEST_KEY, JSON.stringify(state)); return true; } catch {
-        if (attempt === 3 || state.events.length === 0) break;
+      try { storage.setItem(GUEST_KEY, JSON.stringify(state)); if(state.formativeAttempts.length)storage.setItem(ATTEMPTS_KEY,JSON.stringify(state.formativeAttempts)); return true; } catch {
+        if (attempt === 3 || state.events.length === 0 || state.formativeAttempts.length) break;
         if (!compact(state, Math.ceil(state.events.length / 3))) { // nothing resolved to fold: drop the oldest unresolved detail
-          const drop = Math.ceil(state.events.length / 4); state.events = state.events.slice(drop); state.dropped += drop;
+          const pinned=new Set((state.formativeAttempts??[]).flatMap(a=>a.evidenceIds??[]));
+          let drop=Math.ceil(state.events.length/4),removed=0;
+          state.events=state.events.filter(e=>{if(drop>0&&!pinned.has(e.id)){drop--;removed++;return false;}return true;});
+          if(!removed)break; // Never discard a closed attempt's evidence to make room.
+          state.dropped+=removed;
         }
         warn(MESSAGES.full);
       }
@@ -209,6 +237,7 @@ export function createGuestStore({ storage, now = () => Date.now(), onWarning = 
       if (!event) return false;
       const current = load(); // read first: a visitor who has not opted in must not get a record written
       if (!current.tracking || current.events.some(e => e.id === event.id)) return false;
+      if(current.formativeAttempts.length&&current.events.length>=LIMITS.hardEvents){warn('Saved mastery evidence is full. Export a backup; this answer could not be saved.');return false;}
       let added = false;
       update(s => {
         if (!s.tracking || s.events.some(e => e.id === event.id)) return;
@@ -216,9 +245,25 @@ export function createGuestStore({ storage, now = () => Date.now(), onWarning = 
       });
       return added;
     },
+    startMasteryAttempt({nodeId,courseId,requestId,expectedAttemptId=null,evidenceIds=null}) {
+      return update(s=>{
+        if(!s.tracking||typeof nodeId!=='string'||typeof requestId!=='string'||!ID.test(nodeId)||!COURSE_IDS.includes(courseId)||!ID.test(requestId))throw new Error('Choose a skill with saved practice.');
+        if(s.formativeAttempts.some(a=>a.id===requestId))return;
+        const mine=s.formativeAttempts.filter(a=>a.nodeId===nodeId&&a.courseId===courseId);
+        if((mine.at(-1)?.id??null)!==expectedAttemptId)throw new Error('This attempt changed. Refresh before starting another.');
+        const after=mine.at(-1)?Date.parse(mine.at(-1).at):-Infinity;
+        if(!s.events.some(e=>e.courseId===courseId&&e.occurred>=after))throw new Error('Answer a question before starting another attempt.');
+        if(s.formativeAttempts.length>=5000)throw new Error('Save a backup before continuing; the attempt history is full.');
+        const claimed=new Set(mine.flatMap(a=>a.evidenceIds??[]));
+        const allowed=evidenceIds?new Set(evidenceIds):null;
+        const closing=s.events.filter(e=>e.courseId===courseId&&e.occurred>=after&&!claimed.has(e.id)&&(!allowed||allowed.has(e.id))).map(e=>e.id);
+        if(!closing.length)throw new Error('Answer a qualifying question before starting another attempt.');
+        s.formativeAttempts.push({id:requestId,nodeId,courseId,at:iso(Math.max(now(),(mine.at(-1)?Date.parse(mine.at(-1).at):0)+1)),evidenceIds:closing});
+      });
+    },
     clear() {
       memory = null;
-      try { storage?.removeItem(GUEST_KEY); storage?.removeItem(GUEST_KEY + ':corrupt'); } catch { /* ignore */ }
+      try { storage?.removeItem(GUEST_KEY); storage?.removeItem(GUEST_KEY + ':corrupt'); storage?.removeItem(ATTEMPTS_KEY); } catch { /* ignore */ }
       recovered = false; warning = volatile && !storage ? MESSAGES.unavailable : '';
       return emptyState(now());
     },
