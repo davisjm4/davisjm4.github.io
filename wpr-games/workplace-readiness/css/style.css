@@ -215,3 +215,7 @@ details summary { cursor: pointer; color: var(--muted); min-height: 2.5rem; disp
 .wpr-performance-tools > .wpr-controls { margin-block: .6rem; }
 @media print { .wpr-skill-card-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .wpr-skill-card { break-inside: avoid; color: #000; background: #fff; } }
+.area-progress{border:1px solid var(--border,#3e5669);border-radius:12px;padding:14px;margin:12px 0;background:#152b3b;overflow-wrap:anywhere}
+.area-progress progress{width:100%;height:14px;accent-color:#65ddc2}
+.area-progress p{margin:.5rem 0}.area-progress .btn{min-height:44px}.area-progress details{margin-top:.6rem}
+#view-practice>h1{font-size:clamp(1.35rem,4vw,1.9rem);line-height:1.2;margin:.65rem 0}

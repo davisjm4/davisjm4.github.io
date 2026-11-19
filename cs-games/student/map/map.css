@@ -342,3 +342,6 @@
 @media (max-width: 600px) {
   .map-app[data-panel="open"] .map-main { padding-bottom: 0; }
 }
+
+.map-app .stop-art[data-complete=true] .body {fill:hsl(var(--h) 62% 38%);stroke:hsl(var(--h) 75% 65%);}
+.map-app .stop-art[data-complete=true] g {stroke:#fff;stroke-width:3;}

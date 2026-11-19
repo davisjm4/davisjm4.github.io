@@ -131,6 +131,7 @@ export const attemptLabel = (a) => `Attempt ${a.seq}: ${ATTEMPT_STATUS_LABEL[a.s
 /** Pacing copy. Never "overdue", never "late": a target date is a goal, not a deadline. */
 export const pacingNote = 'Target dates come from your teacher. They are goals to aim for, not due dates.';
 export function stopSummaryLine(stop) {
+  if(stop.summary.mode==='area-mastery')return stop.summary.label;
   if(stop.summary.label==='No required skills')return stop.summary.label;
   const s = stop.summary;
   const bits = [s.label];
@@ -140,6 +141,7 @@ export function stopSummaryLine(stop) {
   return bits.join(' · ');
 }
 export function courseSummaryLine(model) {
+  if(model.courseId==='workplace')return `${model.stops.length} learning areas. Choose a unit, then start an area.`;
   const t = model.totals;
   if (model.mode === 'requirements') {
     const rest = t.practiceOnly ? ` ${plural(t.practiceOnly, 'other skill')} ${t.practiceOnly === 1 ? 'shows' : 'show'} practice only.` : '';

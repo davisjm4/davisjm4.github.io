@@ -1,3 +1,4 @@
+import {workplaceAreaSummary,workplaceAreaLink} from '../workplace-area.mjs';
 import { withPracticeReturn } from '../../practice-return.mjs';
 // The student map component. Mount it with the curriculum graph and the evaluated progress contract; it draws, it never decides.
 //
@@ -64,6 +65,12 @@ export function mountStudentMap(container, options) {
   }
   function build() {
     model = buildMapModel(effectiveInput());
+    if(model.courseId==='workplace'){
+      for(const stop of model.stops)stop.summary=workplaceAreaSummary(stop);
+      const nextArea=model.stops.find(stop=>!stop.summary.complete&&stop.nodes.some(n=>n.required&&n.practice.length))??model.stops.find(stop=>!stop.summary.complete&&stop.nodes.some(n=>n.practice.length));
+      const next=nextArea?.nodes.find(n=>n.required&&n.practice.length)??nextArea?.nodes.find(n=>n.practice.length);
+      model.suggestedNext=next?{nodeId:next.id,stopId:nextArea.id}:null;
+    }
     units = input.guest || input.enrolled ? groupCourseStops(model,input.curriculumGraph) : [];
     if(input.enrolled) units.sort((a,b)=>a.stops[0].index-b.stops[0].index);
     for (const n of model.nodes) n.delta = deltas.get(n.id) ?? 0;
@@ -90,7 +97,15 @@ export function mountStudentMap(container, options) {
     writeHash(replace);
     render({ focus });
   }
-  const openStop = (stop) => { lastStopId = stop.id; go({ view: 'area', stopId: stop.id, nodeId: null }, { focus: 'heading' }); };
+  const launchWorkplaceArea = stop => {
+    const parent=groupForStop(stop.id);
+    const target=new URL(input.guest?'/cs-games/student/guest/':'/cs-games/student/',location.origin);
+    target.searchParams.set('course','workplace');if(input.classId)target.searchParams.set('class',input.classId);
+    target.hash=routeHash({view:parent?'unit':'course',unitId:parent?.id,layout:route.layout});
+    const url=workplaceAreaLink(stop,{guest:input.guest,origin:location.origin,returnTo:target.pathname+target.search+target.hash});
+    if(url && adapter.onPractice?.({stop,url,kind:'workplace-area'})!==true)location.assign(url);
+  };
+  const openStop = (stop) => { if(model.courseId==='workplace'){launchWorkplaceArea(stop);return;} lastStopId = stop.id; go({ view: 'area', stopId: stop.id, nodeId: null }, { focus: 'heading' }); };
   const backToCourse = () => {
     if (route.view==='area') lastUnitId=groupForStop(route.stopId)?.id??null;
     go({view:'course',unitId:null,stopId:null,nodeId:null},{focus:units.length?'unit':'stop'});
@@ -160,6 +175,7 @@ export function mountStudentMap(container, options) {
     },
   });
   function showSearchSkill(node) {
+    if(model.courseId==='workplace'){openStop(findStop(model,node.stopId));return;}
     lastStopId = node.stopId;
     go({ view: 'area', stopId: node.stopId, nodeId: node.id }, { focus: 'panel' });
   }
@@ -236,6 +252,7 @@ export function mountStudentMap(container, options) {
     const prev = stageCtl ? { left: stageCtl.viewport.scrollLeft, top: stageCtl.viewport.scrollTop } : null;
     resizeObserver?.disconnect(); resizeObserver = null;
     const stop = route.view === 'area' ? findStop(model, route.stopId) : null;
+    if(model.courseId==='workplace'&&stop){launchWorkplaceArea(stop);return;}
     root.dataset.view = route.view; root.dataset.layout = route.layout; root.dataset.mode = model.mode; root.dataset.pacing = model.pacing.mode;
     if (stop) root.style.setProperty('--h', stop.identity.hue); else root.style.removeProperty('--h');
     const dated = model.pacing.showDates;
@@ -271,12 +288,12 @@ export function mountStudentMap(container, options) {
     const shortcuts = input.mapFirst && (model.suggestedNext || input.currentNodeId) ? el('div', { class: 'map-shortcuts', role: 'group', 'aria-label': 'Learning map shortcuts' },
       el('button', { type: 'button', class: 'btn btn-primary', text: 'Suggested Next', onclick: () => {
         const target = model.suggestedNext?.nodeId;
-        if (target) { const n = findNode(model, target); if (n) { lastStopId = n.stopId; go({ view: 'area', stopId: n.stopId, nodeId: n.id }, { focus: 'panel' }); } }
+        if (target) { const n = findNode(model, target); if(model.courseId==='workplace'&&n){openStop(findStop(model,n.stopId));return;} if(model.courseId==='workplace'&&n){openStop(findStop(model,n.stopId));return;} if (n) { lastStopId = n.stopId; go({ view: 'area', stopId: n.stopId, nodeId: n.id }, { focus: 'panel' }); } }
         else announce('No suggested next skill is available.');
       } }),
       input.currentNodeId ? el('button', { type: 'button', class: 'btn', text: 'Jump to Current', title:'Go to your last selected skill', onclick: () => {
         const n = findNode(model, input.currentNodeId);
-        if (n) { lastStopId = n.stopId; go({ view: 'area', stopId: n.stopId, nodeId: n.id }, { focus: 'panel' }); }
+        if(model.courseId==='workplace'&&n){openStop(findStop(model,n.stopId));return;} if (n) { lastStopId = n.stopId; go({ view: 'area', stopId: n.stopId, nodeId: n.id }, { focus: 'panel' }); }
         else announce('Choose a skill to set your current position.');
       } }) : null) : null;
     // Keep visual and keyboard order consistent: shortcuts and map first, skill search afterward.
@@ -297,7 +314,7 @@ export function mountStudentMap(container, options) {
       const stops = stop ? [stop] : unit?.stops??model.stops;
       if(courseUnits.length) main.append(el('ol',{class:'unit-list'},courseUnits.map((group,index)=>
         el('li',{},el('button',{type:'button',class:'btn','data-unit-id':group.id,onclick:()=>openUnit(group)},...unitLabel(group,index,model))))));
-      else main.append(renderListView(model, stops, { onSelect: (n) => select(n), onOpenStop: openStop, onPractice: (i) => adapter.onPractice?.(i), selectedId: route.nodeId, showStopButton: !stop, showSkills:!unit }));
+      else main.append(renderListView(model, stops, { onSelect: (n) => select(n), onOpenStop: openStop, onPractice: (i) => adapter.onPractice?.(i), selectedId: route.nodeId, showStopButton: !stop, showSkills:model.courseId!=='workplace'&&!unit }));
     }
     addReturnLinks(root);
     if (showSide) renderSide(focus === 'panel'||Boolean(keepPanel));
