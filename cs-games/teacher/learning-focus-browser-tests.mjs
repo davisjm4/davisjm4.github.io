@@ -42,6 +42,7 @@ test('advisory classwork and catch-up coexist through mode changes, offline prac
   const before=(await call(person)).verifiedEvidence;
   const teacher=await browser.newPage();
   await teacher.goto(dev.url+'/cs-games/teacher/?class='+room.id+'#classes');
+  await press(teacher,'#teacher-account','Sign In');
   await teacher.waitForSelector('[name=teacher-key]',{timeout:5000});
   await teacher.type('[name=teacher-key]',teacherKey);
   await press(teacher,'#teacher-account','Sign in to development service');

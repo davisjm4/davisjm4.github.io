@@ -1,8 +1,9 @@
 import { focusEnabled, prepareFocusPreview, publishLearningFocus, readTeacherFocus, readStudentFocus, endLearningFocus, confirmFocusCompletion, startStudentFocus, excuseFocusRecipient } from './learning-focus.mjs';
 import { pathwayRoute } from './pathways.mjs';
 import { validateSnapshot, publicAssignment, dimensions, answerReport, grade, MIN_CLASS, RETENTION_DAYS } from '../online/model.mjs';
-import { teacherIdentity, teacherSession } from './auth.mjs';
+import { teacherAccountRoute, teacherIdentity, teacherSession } from './auth.mjs';
 import { routeProfiles, profilesEnabled, ownerClass, studentProfile, saveProfileAssessment, purgeProfiles } from './profiles.mjs';
+import { accountsEnabled, purgeTeacherAuth } from './teacher-accounts.mjs';
 const DAY = 86400000;
 const UUID = /^[0-9a-f-]{36}$/;
 const hex = b => Array.from(new Uint8Array(b), x=>x.toString(16).padStart(2,'0')).join('');
@@ -73,10 +74,11 @@ async function route(request, env, path) {
     const focusTables = focusEnabled(env) ? await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('learning_focus','learning_focus_starts','learning_focus_exemptions','learning_focus_completion')").all() : null;
     return {service:'cs-games',schema:4,advisoryAssignmentsReady:focusTables?.results.length===4,databaseReady:tables.results.filter(table=>!table.name.startsWith('mastery_')).length===4 && columns.results.some(column=>column.name==='event_count'),
       masteryHistoryReady:tables.results.filter(table=>table.name.startsWith('mastery_')).length===3,
-      teacherConfigured:Boolean(env.GOOGLE_CLIENT_ID && !env.GOOGLE_CLIENT_ID.startsWith('REPLACE_') && env.TEACHER_EMAILS?.trim()),
+      teacherConfigured:Boolean(env.GOOGLE_CLIENT_ID && !env.GOOGLE_CLIENT_ID.startsWith('REPLACE_') && (accountsEnabled(env) || env.TEACHER_EMAILS?.trim())),
       diagnosticsConfigured:Boolean(env.SUBMISSION_SECRET?.length>=32),profilesEnabled:profilesEnabled(env)};
   }
-  if (path==='/teacher/session') return teacherSession(request,env);
+  if (path==='/teacher/session') return teacherSession(request,env,body);
+  if (['/teacher/registration','/teacher/email','/teacher/sessions'].includes(path)) return teacherAccountRoute(request,env,path,body);
   if (path.startsWith('/pathways/')) return pathwayRoute(request,env,path,{body:request=>body(request,1800000),teacherIdentity});
   const now = Date.now(), db = env.DB, method = request.method;
   const segments = path.split('/').filter(Boolean);
@@ -209,6 +211,7 @@ export default {
     await env.DB.prepare('DELETE FROM assignments WHERE expires<=?').bind(now).run();
     await env.DB.prepare('DELETE FROM receipts WHERE finished IS NULL AND created<?').bind(now-DAY).run();
     await env.DB.prepare('DELETE FROM teacher_sessions WHERE expires<=?').bind(now).run();
+    await purgeTeacherAuth(env,now);
     if (profilesEnabled(env) || env.PROFILE_SCHEMA_INSTALLED==='1') await purgeProfiles(env.DB,now);
   }
 };

@@ -238,7 +238,15 @@ test('missing difficulty or family metadata cannot create proficiency in any of 
 });
 
 test('teacher-configured quantities and percentages still apply inside the supported tiers',()=>{
-  const sparse=collect(()=>booleanDraw(),30,d=>d.m.family).map(d=>d.event);
+  const samples=collect(()=>booleanDraw(),30,d=>d.m.family).map(d=>d.event);
+  // Cover the rubric's family requirement before testing a larger answer count.
+  const families=[...new Map(samples.map(event=>[event.familyId,event])).values()];
+  assert.ok(families.length>=2,'the fixture must contain two eligible families');
+  const selected=new Set(families.map(event=>event.id));
+  const sparse=[...families,...samples.filter(event=>!selected.has(event.id))].map((event,index)=>{
+    const ts=Date.parse('2026-11-11T12:00:00Z')+index;
+    return {...event,ts,timestamp:new Date(ts).toISOString()};
+  });
   const policy={id:'teacher:class',version:3,minimumQuestions:12,accuracy:.9,provisional:false,challenge:{}};
   const strict=level(BOOLEAN,sparse.slice(0,10),{policy});
   assert.equal(strict.tiers.intermediate.minimumQuestions,12);assert.equal(strict.tiers.intermediate.accuracy,.9);

@@ -1,0 +1,42 @@
+name: Teacher registration tests
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/teacher-registration-tests.yml'
+      - 'cs-games/teacher/**'
+      - 'wpr-games/workplace-readiness/service/**'
+permissions:
+  contents: read
+jobs:
+  teacher-registration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Test registration, session lifecycle and backend isolation
+        run: node --test cs-games/teacher/teacher-registration-tests.mjs cs-games/teacher/teacher-session-tests.mjs cs-games/teacher/cs-games-backend-tests.mjs
+      - run: npm ci --ignore-scripts --prefix wpr-games/workplace-readiness
+      - name: Test account navigation and session expiry in Chrome
+        run: CHROME_BIN="$(command -v google-chrome)" node --test --test-name-pattern='teacher session survives' cs-games/teacher/teacher-ui-browser-tests.mjs
+  worker-and-d1-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: wpr-games/workplace-readiness/service
+    env:
+      WRANGLER_SEND_METRICS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate Worker bundle and D1 migration in an isolated local runtime
+        run: |
+          sed 's/REPLACE_WITH_D1_DATABASE_UUID/00000000-0000-4000-8000-000000000009/' wrangler.example.toml > wrangler.registration-ci.toml
+          npm exec --yes --package=wrangler@4.160.0 -- wrangler deploy --dry-run --config wrangler.registration-ci.toml --outdir "$RUNNER_TEMP/cs-games-worker"
+          npm exec --yes --package=wrangler@4.160.0 -- wrangler d1 migrations apply DB --local --config wrangler.registration-ci.toml --persist-to "$RUNNER_TEMP/cs-games-d1"
+          npm exec --yes --package=wrangler@4.160.0 -- wrangler d1 execute DB --local --config wrangler.registration-ci.toml --persist-to "$RUNNER_TEMP/cs-games-d1" --command "INSERT INTO teacher_auth_limits(key,expires,attempts) VALUES('synthetic',1,1) ON CONFLICT(key,expires) DO UPDATE SET attempts=attempts+1 WHERE attempts<4 RETURNING attempts;"

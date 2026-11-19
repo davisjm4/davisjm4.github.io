@@ -42,6 +42,7 @@ test('published requirements and real Loop Lab practice appear in the student ma
   const student=await (await browser.createBrowserContext()).newPage();
   await teacher.setViewport({width:1280,height:900});
   await teacher.goto(dev.url+'/cs-games/teacher/');
+  await byText(teacher,'#teacher-account','Sign In');
   await wait(teacher,'[name=teacher-key]');
   await teacher.type('[name=teacher-key]',token);
   await byText(teacher,'#teacher-account','Sign in to development service');

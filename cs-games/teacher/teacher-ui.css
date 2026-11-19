@@ -307,3 +307,27 @@ footer.footer .wrap { padding: 0 24px; }
 .class-preset-setup { grid-column: 1 / -1; }
 .class-preset-setup fieldset { margin: .6rem 0; min-width: 0; }
 .class-preset-setup .mreq-tier-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: .75rem; }
+
+/* Shared account control across Teacher Tools and its editors. */
+.teacher-nav-account { margin-inline-start: auto; padding: 6px 0; min-width: 0; }
+.teacher-nav-account .account-control { justify-content: flex-end; align-items: center; }
+.teacher-nav-account .account-name { overflow-wrap: anywhere; }
+.teacher-nav-account .account-status { margin: 0; }
+.teacher-nav-account .account-status:not(:empty) { margin-block-start: 4px; }
+.teacher-account-dialog {
+  box-sizing: border-box; width: min(420px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px); overflow: auto;
+  padding: 20px; border: 1px solid var(--line); border-radius: 12px;
+  background: var(--panel); color: var(--ink);
+}
+.teacher-account-dialog::backdrop { background: rgb(0 0 0 / 65%); }
+.teacher-account-dialog h2 { margin-block-start: 0; }
+.teacher-account-dialog form { margin-block: 12px 0; }
+.teacher-account-dialog .teacher-email-form { display: grid; gap: 8px; }
+.teacher-account-dialog label { min-width: 0; }
+.teacher-account-dialog label[hidden] { display: none; }
+.teacher-account-dialog input { display: block; box-sizing: border-box; width: 100%; }
+@media (max-width: 850px) {
+  .tt-bar-inner:has(.teacher-nav-account) { flex-wrap: wrap; }
+  .tt-bar-inner > .teacher-nav-account { flex-basis: 100%; }
+}
