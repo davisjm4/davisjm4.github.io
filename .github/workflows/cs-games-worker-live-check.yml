@@ -1,0 +1,54 @@
+name: CS Games Worker live verification
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/cs-games-worker-live-check.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - name: Check live assets and observe sanitized Worker error counts
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs'; import assert from 'node:assert/strict';
+          const api='https://api.cloudflare.com/client/v4/accounts/'+process.env.CLOUDFLARE_ACCOUNT_ID+'/workers/scripts/cs-games-api';
+          async function cf(route,method='GET',body) {
+            const r=await fetch(api+route,{method,headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN,...(body?{'Content-Type':'application/json'}:{})},body,signal:AbortSignal.timeout(30000)});
+            const j=await r.json();if(!r.ok||!j.success)throw Error('Cloudflare '+route+' HTTP '+r.status+' codes '+j.errors?.map(e=>e.code).join(','));return j.result;
+          }
+          const report={checkedAt:new Date().toISOString(),assets:[],logEvents:0,exceptions:0,errorLogs:0,failedOutcomes:0};
+          const current=(await cf('/deployments')).deployments[0];report.deploymentId=current.id;report.versions=current.versions;
+          for(const file of ['wpr-games/workplace-readiness/index.html','wpr-games/workplace-readiness/js/data/compose-bundle.js','wpr-games/workplace-readiness/content/compose/practice-release.json']) {
+            const r=await fetch('https://davisjm4.github.io/'+file,{signal:AbortSignal.timeout(30000)});assert.equal(r.status,200);
+            assert(Buffer.from(await r.arrayBuffer()).equals(fs.readFileSync(file)),file+' differs from production');report.assets.push({file,exactMatch:true});
+          }
+          let tail,socket;
+          try {
+            tail=await cf('/tails','POST',JSON.stringify({filters:[]}));
+            socket=new WebSocket(tail.url,'trace-v1');socket.binaryType='arraybuffer';
+            await new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error('Tail connection timed out')),10000);socket.addEventListener('open',()=>{clearTimeout(timeout);socket.send(JSON.stringify({debug:false}));resolve();},{once:true});socket.addEventListener('error',()=>{clearTimeout(timeout);reject(Error('Tail connection failed'));},{once:true});});
+            socket.addEventListener('message',event=>{
+              try {const e=JSON.parse(typeof event.data==='string'?event.data:new TextDecoder().decode(event.data));if(!e.outcome)return;report.logEvents++;report.exceptions+=(e.exceptions||[]).length;report.errorLogs+=(e.logs||[]).filter(l=>l.level==='error').length;if(e.outcome!=='ok')report.failedOutcomes++;}catch{}
+            });
+            for(let i=0;i<5;i++){const r=await fetch('https://cs-games-api.cs-games-davisjm4.workers.dev/api/wpr/health',{headers:{Origin:'https://davisjm4.github.io'},signal:AbortSignal.timeout(30000)});assert.equal(r.status,200);const h=await r.json();assert(h.databaseReady&&h.teacherConfigured&&h.diagnosticsConfigured&&h.masteryHistoryReady);}
+            await new Promise(resolve=>setTimeout(resolve,8000));
+            report.tailStatus=report.logEvents?'observed':'connected-no-events';
+          } catch(error) {report.tailStatus='unavailable';report.tailReason=error.message;}
+          finally {socket?.close();if(tail)await cf('/tails/'+tail.id,'DELETE');}
+          console.log(JSON.stringify(report,null,2));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Live verification: '+JSON.stringify(report)+'\n');
+          assert.equal(report.exceptions,0);assert.equal(report.errorLogs,0);assert.equal(report.failedOutcomes,0);
+          JS
