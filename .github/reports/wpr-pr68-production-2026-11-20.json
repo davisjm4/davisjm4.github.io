@@ -1,0 +1,176 @@
+{
+  "startedAt": "2026-11-20T14:15:24.960Z",
+  "environment": "production",
+  "syntheticOnly": true,
+  "checks": [
+    {
+      "name": "four synthetic profiles in the intended class/course scopes",
+      "passed": true
+    },
+    {
+      "name": "live catalog retains all 22 WPR areas and disables automatic mastery",
+      "passed": true
+    },
+    {
+      "name": "published pathway retains all 94 objective IDs",
+      "passed": true
+    },
+    {
+      "name": "both cross-class directions and cross-course access are rejected",
+      "passed": true
+    },
+    {
+      "name": "all 22 areas issue signed key-free scenarios and score correctly in production",
+      "passed": true
+    },
+    {
+      "name": "replay, altered first response, identity tampering and guest/class contamination cannot rewrite saved attempts",
+      "passed": true
+    },
+    {
+      "name": "all 15 new composition kits and all four response formats issued and scored through ordinary area selection",
+      "passed": true
+    },
+    {
+      "name": "seven-day permit survives delayed synchronization after recovery into a different session",
+      "passed": true
+    },
+    {
+      "name": "session revocation leaves the recovered session working",
+      "passed": true
+    },
+    {
+      "name": "published revision, teacher policies and checkpoint assessments survive additional practice",
+      "passed": true
+    }
+  ],
+  "issued": 65,
+  "scored": 64,
+  "correct": 56,
+  "incorrect": 8,
+  "kits": [
+    "big-community-and-industry",
+    "con-working-across-differences",
+    "cre-why-originality-matters",
+    "ctp-compare-solutions",
+    "eff-care-for-equipment",
+    "eff-sustainable-practices",
+    "ili-fit-to-the-task",
+    "int-rules-and-regulations",
+    "int-trust-has-consequences",
+    "ise-acceptable-use-limits",
+    "ise-every-format",
+    "ise-responsible-technology",
+    "ite-handling-devices",
+    "ite-new-technology",
+    "wet-owning-mistakes"
+  ],
+  "formats": [
+    "decision",
+    "find",
+    "nextstep",
+    "order"
+  ],
+  "areas": 22,
+  "objectiveIds": 94,
+  "distinctPrimaryObjectives": 33,
+  "syntheticIssuanceCounts": {
+    "a": 0,
+    "b": 55,
+    "c": 9
+  },
+  "completedAt": "2026-11-20T14:16:39.895Z",
+  "status": "passed",
+  "browserRound": {
+    "questions": 8,
+    "correct": 8,
+    "resetToZero": true,
+    "priorAttemptsRetained": true,
+    "teacherScore": 3,
+    "teacherPoliciesPreserved": true
+  },
+  "liveRemediation": {
+    "questions": 8,
+    "noImmediateThreePatternRepeats": true,
+    "primaryObjectives": 3
+  },
+  "guestClassIsolation": {
+    "guestBrowserAnswerRecorded": true,
+    "classAttemptsUnchanged": true,
+    "retainedClassAttempts": 8
+  },
+  "validationLimits": [
+    "Original pre-expansion permit fixture and full browser offline/reconnect were verified in CI. Production verified unchanged legacy content version, retained secret binding, and delayed signed submission after session recovery; no physical offline-device test was performed."
+  ],
+  "cleanup": {
+    "syntheticClassesArchived": 3,
+    "syntheticProfilesDeniedAfterArchive": 4,
+    "denialStatuses": [
+      401,
+      401,
+      401,
+      401
+    ],
+    "existingClassesUnchanged": 7,
+    "recordsDeleted": false
+  },
+  "finalVerifiedAt": "2026-11-20T14:24:16.321Z",
+  "workerVersion": "aa88f09a-f552-4766-89a6-c5f40e19ecf8",
+  "deploymentId": "c7a89074-e9bd-4f52-bd18-910cb67c3f4f",
+  "workerSourceCommit": "63bc0248ddd67edb3af995a99ea2be6b27fe93ef",
+  "contentReleaseCommit": "5a154fe692cfd499d0b6a98aa311a256021df621",
+  "rollbackVersion": "f1d77ece-66e4-4fd8-80ab-eae8c89a2cff",
+  "dataIntegrity": {
+    "databaseMigrations": 0,
+    "productionSecretsChanged": 0,
+    "authenticationPolicyChanges": 0,
+    "realStudentRecordsModified": 0,
+    "teacherReviewedSyntheticScorePreserved": 3,
+    "teacherPoliciesUnchanged": true,
+    "automaticWprMasteryEnabled": false
+  },
+  "teacherAuthentication": "Production Google sign-in verified; three synthetic classes, four profiles and one synthetic teacher assessment created through normal Teacher Tools UI.",
+  "frontendVerification": "Production HTML, compose-bundle.js and practice-release.json exactly matched merged assets.",
+  "postTestLiveLogs": {
+    "checkedAt": "2026-11-20T14:21:30.233Z",
+    "assets": [
+      {
+        "file": "wpr-games/workplace-readiness/index.html",
+        "exactMatch": true
+      },
+      {
+        "file": "wpr-games/workplace-readiness/js/data/compose-bundle.js",
+        "exactMatch": true
+      },
+      {
+        "file": "wpr-games/workplace-readiness/content/compose/practice-release.json",
+        "exactMatch": true
+      }
+    ],
+    "logEvents": 2,
+    "exceptions": 0,
+    "errorLogs": 0,
+    "failedOutcomes": 0,
+    "deploymentId": "c7a89074-e9bd-4f52-bd18-910cb67c3f4f",
+    "versions": [
+      {
+        "version_id": "aa88f09a-f552-4766-89a6-c5f40e19ecf8",
+        "percentage": 100
+      }
+    ],
+    "tailStatus": "observed"
+  },
+  "releaseWorkflow": "https://github.com/davisjm4/davisjm4.github.io/actions/runs/44696461685",
+  "liveVerificationWorkflow": "https://github.com/davisjm4/davisjm4.github.io/actions/runs/44696921727/attempts/2",
+  "ciValidation": {
+    "targetedTestsPassed": 14,
+    "preExpansionPermitFixture": true,
+    "priorPr68BrowserOfflineReconnect": true,
+    "localDeploymentFaultCasesPassed": 4
+  },
+  "followUpReviews": [
+    "32 thin objectives remain a separate content-expansion backlog.",
+    "Qualified safety review, older-kit ordering/context audit, physical classroom devices and assistive-technology review remain open."
+  ],
+  "rollbackProcedure": "Select cs-games-api > Deployments > the retained version f1d77ece-66e4-4fd8-80ab-eae8c89a2cff > Rollback. This restores code at 100% traffic without reverting D1 or rotating secrets. The previous Worker will not issue the new composition kits."
+}
