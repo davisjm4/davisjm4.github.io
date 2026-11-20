@@ -2,7 +2,10 @@ name: CS Games Worker production
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/cs-games-worker-production.yml']
+    paths:
+      - '.github/workflows/cs-games-worker-production.yml'
+      - '.github/scripts/cs-games-worker-release.mjs'
+      - 'wpr-games/workplace-readiness/service/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -10,32 +13,30 @@ concurrency:
   group: cs-games-worker-production
   cancel-in-progress: false
 jobs:
-  inspect:
+  deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24'
-      - name: Inspect existing Worker without changing production
+      - name: Validate signed scenarios, permit compatibility and recovery
+        run: |
+          node wpr-games/workplace-readiness/tools/build-procedural-content.mjs --check
+          node --test cs-games/pathway/tests/wpr-procedural.test.mjs cs-games/pathway/tests/mastery-attempt-recovery.test.mjs
+      - name: Deploy code while preserving production configuration
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          node --input-type=module <<'JS'
-          import fs from 'node:fs';
-          const token=process.env.CLOUDFLARE_API_TOKEN, account=process.env.CLOUDFLARE_ACCOUNT_ID;
-          if(!token || !account) throw new Error('Both Cloudflare repository secrets are required.');
-          const base='https://api.cloudflare.com/client/v4/accounts/'+account+'/workers/scripts/cs-games-api';
-          async function get(path) {
-            const r=await fetch(base+path,{headers:{Authorization:'Bearer '+token},signal:AbortSignal.timeout(30000)});
-            const data=await r.json();
-            if(!r.ok || !data.success) throw new Error('Cloudflare '+path+' HTTP '+r.status+' codes '+JSON.stringify(data.errors?.map(e=>e.code)));
-            return data.result;
-          }
-          const settings=await get('/settings');
-          const deployments=await get('/deployments');
-          console.log(JSON.stringify({commit:process.env.GITHUB_SHA,compatibility_date:settings.compatibility_date,compatibility_flags:settings.compatibility_flags,bindings:settings.bindings?.map(b=>({name:b.name,type:b.type,...(b.type==='plain_text'?{text:b.text}:{}),...(b.type==='d1'?{databaseId:b.id}:{} )})),observability:settings.observability,logpush:settings.logpush,deployments},null,2));
-          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Inspected cs-games-api. No production changes.\n');
-          JS
+        run: node .github/scripts/cs-games-worker-release.mjs
+      - name: Retain deployment IDs, checks and rollback result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cs-games-worker-release
+          path: ${{ runner.temp }}/cs-games-worker-release/release-report.json
+          if-no-files-found: ignore
+          retention-days: 30
