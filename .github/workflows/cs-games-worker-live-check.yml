@@ -51,4 +51,6 @@ jobs:
           console.log(JSON.stringify(report,null,2));
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Live verification: '+JSON.stringify(report)+'\n');
           assert.equal(report.exceptions,0);assert.equal(report.errorLogs,0);assert.equal(report.failedOutcomes,0);
+          // All requests and tail cleanup are awaited; do not keep the runner alive for an idle WebSocket.
+          process.exit(0);
           JS
