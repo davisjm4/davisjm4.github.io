@@ -104,13 +104,20 @@ try {
   // Recheck for concurrent dashboard/configuration changes before the only code write.
   assert.deepEqual(await deployment(),previous,'Production changed during preflight');
   assert.equal(canonical(await state()),canonical(before),'Production settings changed during preflight');
+  const versionsBefore=new Set((await cf('/versions')).items.map(v=>v.id));
   const form=new FormData();
   form.set('metadata',new Blob([JSON.stringify({main_module:moduleName})],{type:'application/json'}));
   form.set(moduleName,new Blob([code],{type:'application/javascript+module'}),moduleName);
   mutationStarted=true;
   await cf('/content',{method:'PUT',body:form});
+  // Content replacement uploads a version; traffic activation is a separate operation.
+  const addedVersions=(await cf('/versions')).items.filter(v=>!versionsBefore.has(v.id));
+  assert.equal(addedVersions.length,1,'Expected exactly one newly uploaded Worker version');
+  const versionId=addedVersions[0].id;
+  assert.equal(canonical(await state()),canonical(before),'Upload changed production configuration');
+  await cf('/deployments',{method:'POST',body:JSON.stringify({strategy:'percentage',versions:[{version_id:versionId,percentage:100}],annotations:{'workers/message':`CS Games WPR release ${sha}; code only, settings preserved`}})});
   report.current=await deployment();
-  assert.notEqual(report.current.versionId,previous.versionId,'Content upload did not activate a new Worker version');
+  assert.equal(report.current.versionId,versionId,'Activation did not select the uploaded Worker version');
   assert.equal(canonical(await state()),canonical(before),'Remote bindings, settings or triggers changed');
   assert.equal(digest(await liveModule(moduleName)),report.bundleSha256,'Deployed code differs from the Wrangler bundle');
   report.checks.push(...await smoke());
