@@ -62,7 +62,7 @@ async function smoke() {
   return checks;
 }
 async function liveModule(name) {
-  const response=await fetch(api+'/content',{headers:{Authorization:`Bearer ${token}`},signal:AbortSignal.timeout(60000)});
+  const response=await fetch(api,{headers:{Authorization:`Bearer ${token}`},signal:AbortSignal.timeout(60000)});
   assert.equal(response.status,200,'Read live module content');
   if (response.headers.get('content-type')?.includes('multipart/form-data')) {
     const parts=await response.formData();
