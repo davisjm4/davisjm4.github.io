@@ -258,7 +258,7 @@ export function mountStudentMap(container, options) {
   }
 
   function drawStage(main) {
-    const width = Math.max(260, Math.floor(stageCtl.viewport.clientWidth || main.clientWidth || 360));
+    const width = Math.max(160, Math.floor(stageCtl.viewport.clientWidth || main.clientWidth || 360));
     const stop = route.view === 'area' ? findStop(model, route.stopId) : null;
     const drawn = stop
       ? renderAreaMap(model, stop, { width, selectedId: route.nodeId, onSelect: (n) => select(n),

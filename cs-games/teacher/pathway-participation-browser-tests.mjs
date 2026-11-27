@@ -85,7 +85,7 @@ test('a teacher publishes participation settings and the student can leave and r
   await activate(student,'[data-unit-id="advanced-foundations"]');
   await Promise.all([student.waitForNavigation(),activate(student,'[data-stop-id="area:advanced:math-lab"] [data-action=open-stop]')]);
   await wait(student,'select[aria-label="Current skill"]');
-  const ids=await student.$eval('select[aria-label="Current skill"] option',options=>options.map(o=>o.value));
+  const ids=await student.$$eval('select[aria-label="Current skill"] option',options=>options.map(o=>o.value));
   assert.ok(!ids.includes('node:advanced:loop-lab:looptype'));
   assert.ok(!ids.includes('node:advanced:math-lab:modulus'));
   assert.ok(ids.includes('node:advanced:math-lab:division'));

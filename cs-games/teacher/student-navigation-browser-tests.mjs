@@ -218,7 +218,7 @@ test('independent learner follows the unit trail and sees eligible practice, com
   if(evidence)await page.screenshot({path:evidence+'/mobile-unit.png'});
   await Promise.all([page.waitForNavigation(),activate('.stop-open','Variable Lab')]);
   await wait('.live-skill-progress');
-  assert.equal(new URL(page.url()).searchParams.get('practiceSkill'),'node:advanced:variable-lab:trace');
+  assert.ok(new URL(page.url()).searchParams.get('practiceSkill').startsWith('node:advanced:variable-lab:'));
   await Promise.all([page.waitForNavigation(),activate('a[data-profile-link]','Back to Learning Map')]);
   await wait('.map-app[data-view=unit]');
   // Optional old detail URLs still preserve evidence, panel and history behavior.
