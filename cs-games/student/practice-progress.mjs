@@ -1,3 +1,4 @@
+import {nextPracticeNode} from './map/activity-routing.mjs';
 import {buildMapModel} from './map/model.mjs';
 import {inputFromStudentContract} from './map/live-contract.mjs';
 import {practiceLinks} from './practice-links.mjs';
@@ -81,7 +82,7 @@ export async function mountPracticeProgress(returnTo, profile) {
       field.addEventListener('change',()=>{try{localStorage.setItem(key,field.value);}catch{status.textContent='Notes could not be saved in this browser.';}});
       learning.querySelector('div').append(notes,field);
     }
-    const next=choices.find(n=>n.required&&!n.complete&&n.id!==node.id) ?? model.nodes.find(n=>n.required&&!n.complete&&n.stopId!==node.stopId&&n.practice.length);
+    const next=nextPracticeNode(model,node,choices);
     nextLink.hidden=!node.complete||!next;
     if(next){nextLink.href=routeForSkill(next);nextLink.textContent=next.stopId===node.stopId?'Continue to next skill: '+next.title:'Continue to next activity: '+model.stops.find(s=>s.id===next.stopId).title;}
     voluntary.hidden=!node.complete;

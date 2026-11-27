@@ -10,6 +10,7 @@ const base=process.env.BASE||'http://127.0.0.1:8123';const shots=process.env.SHO
 const browser=await chromium.launch({executablePath:process.env.CHROME_BIN});const errors=[],results=[];
 try{
 for(const width of [320,390,768,1024,1366]){
+ let nextSkill=null;
  const ctx=await browser.newContext({viewport:{width,height:900}}),page=await ctx.newPage();page.on('pageerror',e=>errors.push(e.message));
  await page.goto(base+'/cs-games/student/guest/?choose=1');await page.locator('[data-course=csp]').click();
  assert.match(await page.locator('[data-unit-id=csp-2]').innerText(),/7 activities/);
@@ -41,11 +42,13 @@ for(const width of [320,390,768,1024,1366]){
   }
   await page.waitForFunction(()=>document.querySelector('.live-skill-progress progress').value===100);
   assert.ok(await page.getByRole('link',{name:/Continue to next activity/}).isVisible());
+  nextSkill=new URL(await page.getByRole('link',{name:/Continue to next activity/}).getAttribute('href'),base).searchParams.get('practiceSkill');
   await page.screenshot({path:shots+'/390-rgb-complete.png',fullPage:true});
  }
  await page.getByRole('link',{name:'Back to Learning Map',exact:true}).click();await page.waitForSelector('.stop-open');
  assert.equal(new URL(page.url()).hash,'#v=unit&unit=csp-2');
  if(width===1024)assert.equal(await page.locator('.map-viewport').getAttribute('data-zoom'),'1.25');
+ if(nextSkill)assert.equal(await page.locator('.stop[data-suggested=true]').getAttribute('data-stop-id'),'area:csp:'+nextSkill.split(':')[2]);
  if(width===390){assert.equal(await page.locator('[data-stop-id="area:csp:rgb-color-builder"] .stop-art').getAttribute('data-complete'),'true');await page.screenshot({path:shots+'/390-completed-node.png',fullPage:true});}
  await page.locator('.stop-open[data-stop-id="area:csp:ascii-binary-builder"]').click();await page.waitForSelector('main');assert.match(page.url(),/ascii-binary-builder/);
  await page.getByRole('link',{name:'Back to Learning Map',exact:true}).click();await page.locator('.stop-open[data-stop-id="area:csp:binary-builder"]').click();
