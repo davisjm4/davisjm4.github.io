@@ -1,0 +1,192 @@
+{
+  "checkedAt": "2026-11-27T10:04:35.414Z",
+  "codeCommit": "9c3588cf52237c4715eb5cb9e27d193abffb689e",
+  "assets": [
+    {
+      "path": "cs-games/student/index.html",
+      "expected": "864871d46e3325c1ee4d79854b1f696a2580c8e6d5e3850106c50abfac7a3785",
+      "actual": "864871d46e3325c1ee4d79854b1f696a2580c8e6d5e3850106c50abfac7a3785",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/guest/index.html",
+      "expected": "e0ea30322cb02f2d125cb7d12494c920ac1ca00deb0587841c534a6fd447220d",
+      "actual": "e0ea30322cb02f2d125cb7d12494c920ac1ca00deb0587841c534a6fd447220d",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/guest/app.mjs",
+      "expected": "0cd476464e5c8e0a2e9ef5b23050db73334eb2461dae6404b294d9af204c76cb",
+      "actual": "0cd476464e5c8e0a2e9ef5b23050db73334eb2461dae6404b294d9af204c76cb",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/dashboard.mjs",
+      "expected": "18cbb9078164308c7eb710ac993a1112dff7b06c74262e81d6e439931a661b17",
+      "actual": "18cbb9078164308c7eb710ac993a1112dff7b06c74262e81d6e439931a661b17",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/map/model.mjs",
+      "expected": "e03d5051f4296a7a7dfffe5a57e8a3bee6f3708a006dfd5eb9af772fbe8c3a97",
+      "actual": "e03d5051f4296a7a7dfffe5a57e8a3bee6f3708a006dfd5eb9af772fbe8c3a97",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/map/layout.mjs",
+      "expected": "5c945c93645292624d93c912bbf83ef949d91cfd3b83ba2748a48c9728249846",
+      "actual": "5c945c93645292624d93c912bbf83ef949d91cfd3b83ba2748a48c9728249846",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/map/map.css",
+      "expected": "ec26c77a39f6082c47188f5fa5d7583209b5eb517fce4081ec8c907d76c7cbc8",
+      "actual": "ec26c77a39f6082c47188f5fa5d7583209b5eb517fce4081ec8c907d76c7cbc8",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/map/activity-routing.mjs",
+      "expected": "9876878cf655c6a48fda750ddf4df0cb0e31d9e44587596ab8e36ea8ea17037f",
+      "actual": "9876878cf655c6a48fda750ddf4df0cb0e31d9e44587596ab8e36ea8ea17037f",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/map/ui/app.mjs",
+      "expected": "4e89bfca4957c5e07e33273f2f8dfa2fb4ad09a551e2243b5862443f6c77c37e",
+      "actual": "4e89bfca4957c5e07e33273f2f8dfa2fb4ad09a551e2243b5862443f6c77c37e",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/map/ui/chrome.mjs",
+      "expected": "e02c052e193dbe2e8f4c6968b5d726b8de3a8b8b031f8fa76b1a0cb29654e1df",
+      "actual": "e02c052e193dbe2e8f4c6968b5d726b8de3a8b8b031f8fa76b1a0cb29654e1df",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/map/ui/course-map.mjs",
+      "expected": "bd7831c13f843ac694ff65a3a73a8871ce2383f529033457fd84d77f344b8845",
+      "actual": "bd7831c13f843ac694ff65a3a73a8871ce2383f529033457fd84d77f344b8845",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/practice-return.mjs",
+      "expected": "0c2553c8b7c6af91ae5e12a6d680153c290cf9409199c09afad5dfc653dd953f",
+      "actual": "0c2553c8b7c6af91ae5e12a6d680153c290cf9409199c09afad5dfc653dd953f",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/practice-progress.mjs",
+      "expected": "b04d0daa24b1385b0fe073e5ec4dc7e78676004a287f32a11d0ad979cbc31a9f",
+      "actual": "b04d0daa24b1385b0fe073e5ec4dc7e78676004a287f32a11d0ad979cbc31a9f",
+      "match": true
+    },
+    {
+      "path": "cs-games/student/practice-progress.css",
+      "expected": "17a6c92502520f1506eb70a63cd259915e07f85e70e461013148080cb62e2f12",
+      "actual": "17a6c92502520f1506eb70a63cd259915e07f85e70e461013148080cb62e2f12",
+      "match": true
+    },
+    {
+      "path": "csp-games/rgb-color-builder/app.js",
+      "expected": "10247f6c9dba72733d9d312950c53dcf8fcfee9b662c71fad0eac723ab28e9bd",
+      "actual": "10247f6c9dba72733d9d312950c53dcf8fcfee9b662c71fad0eac723ab28e9bd",
+      "match": true
+    },
+    {
+      "path": "csp-games/rgb-color-builder/assessment.js",
+      "expected": "d3f55cceee8ce02dca6925ea2e8c2449a01a3a5e9e713aeed132255e36c536eb",
+      "actual": "d3f55cceee8ce02dca6925ea2e8c2449a01a3a5e9e713aeed132255e36c536eb",
+      "match": true
+    },
+    {
+      "path": "csp-games/rgb-color-builder/style.css",
+      "expected": "55725770d177b7779546e23d038bd904410e28187ac81736251e3bc2c829b1d6",
+      "actual": "55725770d177b7779546e23d038bd904410e28187ac81736251e3bc2c829b1d6",
+      "match": true
+    },
+    {
+      "path": "cs-games/pathway/curriculum-graph.json",
+      "expected": "6a3a7bae8aaa4a9318d086785134145bc014883d37b68dba76cefe6de1092006",
+      "actual": "6a3a7bae8aaa4a9318d086785134145bc014883d37b68dba76cefe6de1092006",
+      "match": true
+    },
+    {
+      "path": "cs-games/pathway/proficiency/coverage-phase2.mjs",
+      "expected": "94c913881d665e80d062094ef294a718e5e536938860aba203cd068db218e95a",
+      "actual": "94c913881d665e80d062094ef294a718e5e536938860aba203cd068db218e95a",
+      "match": true
+    },
+    {
+      "path": "cs-games/pathway/requirements/recommended.mjs",
+      "expected": "154b8f901d873bcc903bc422cacc1a3b34339d1aa03cf9c00fb90978c5118b6d",
+      "actual": "154b8f901d873bcc903bc422cacc1a3b34339d1aa03cf9c00fb90978c5118b6d",
+      "match": true
+    }
+  ],
+  "status": "released-production-verified",
+  "primaryCommit": "bd3db28b4d9ad8229c6e87f5d9c05cdec0e9a0f8",
+  "pullRequests": [
+    69,
+    70
+  ],
+  "pagesRuns": [
+    45977598417,
+    45978712240
+  ],
+  "worker": {
+    "run": 45977600474,
+    "version": "954ebbc8-87b4-4093-baa0-5666bb94a252",
+    "deployment": "a33ec6b4-caa3-479f-bfc3-80adb37e67ab",
+    "bundleSha256": "c5b219f6bb10ebc2fdb29e251585034bbb72a731c05a1a46d97a3d83785b78ab",
+    "configurationFingerprint": "a8427fd4f6435850d9f6bf4437fdebd697299c644515a64367aa15319a5320ac",
+    "rollbackVersion": "aa88f09a-f552-4766-89a6-c5f40e19ecf8",
+    "verification": "live bundle/settings match; health200, unauthenticated401, disallowed-origin403"
+  },
+  "browserAcceptance": {
+    "run": 45978167246,
+    "journeys": 8,
+    "widths": [
+      320,
+      390,
+      768,
+      1024,
+      1366
+    ],
+    "screenshots": 16,
+    "artifact": "https://github.com/davisjm4/davisjm4.github.io/actions/runs/45978167246/artifacts/15187823219",
+    "isolatedClassRun": 45976782597
+  },
+  "liveBrowser": {
+    "course": "csp",
+    "threeSelectionRGB": true,
+    "directASCII": true,
+    "binaryNodes": 1,
+    "binarySkills": 3,
+    "representationMode": "pixels",
+    "dataActivities": 7,
+    "dataSkills": 11,
+    "rgbIndependentCorrectResponses": 8,
+    "rgbEvaluatedTargetCompleted": true,
+    "solidCheck": true,
+    "mapRecommendation": "Binary Builder",
+    "completionRecommendation": "Binary Builder",
+    "completionLinkLaunchesBinary": true,
+    "returnToOrigin": true
+  },
+  "compatibility": {
+    "skillIdsRetained": 290,
+    "consolidatedCspActivities": 8,
+    "dataMigration": false,
+    "evidenceDeletion": false,
+    "attemptReset": false,
+    "teacherThresholdChange": false,
+    "authChange": false,
+    "unrelatedPullRequestsMerged": false
+  },
+  "limitations": [
+    "Five viewport widths are Chromium layout tests; physical Android, Chromebook, touch and native screen-reader classroom checks remain.",
+    "Other unreviewed automated rubrics remain demonstration based; complete list is in REPORT.md and course-audit.json.",
+    "Existing evaluator coupling CSG-PKG-08 is not migrated.",
+    "Authenticated production class acceptance was not repeated; real-client/Worker isolated class synchronization passed."
+  ]
+}

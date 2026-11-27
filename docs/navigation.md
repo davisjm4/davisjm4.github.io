@@ -36,7 +36,7 @@ Logical destinations are the target. Exact new paths and redirects are implement
 
 ## CSG-NAV-04 — Meaningful activity choices
 
-**Approved 2026-11-27 · implementation candidate PR #69.** Course and unit nodes open maps. A learning area opens another map only when it offers distinct activities. One or several skills served by one game launch that activity directly; a compact in-game skill control and contextual guidance retain individual objectives and targets. A demonstration-only destination opens its instructions. Curriculum, evidence and navigation hierarchies can differ.
+**Approved and released 2026-11-27 · PR #69 and #70.** Course and unit nodes open maps. A learning area opens another map only when it offers distinct activities. One or several skills served by one game launch that activity directly; a compact in-game skill control and contextual guidance retain individual objectives and targets. A demonstration-only destination opens its instructions. Curriculum, evidence and navigation hierarchies can differ. See the [release audit and verification](../cs-games/reports/activity-navigation/REPORT.md).
 
 Combine repeated activity areas in first-occurrence navigation order. Preserve the published flat skill sequence, stable skill IDs, evidence, active attempts, teacher overrides, required/optional flags and official results. Legacy continuation-stop URLs alias the canonical activity. WPR topics remain distinct meaningful choices despite sharing an application. Counts explicitly distinguish displayed/required/completed activities from underlying skills and skill targets, using the same authorized pathway model.
 

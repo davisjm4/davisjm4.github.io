@@ -1,6 +1,15 @@
 # Activity navigation and assessment release
 
-Scope approved by Josiah Davisson on 2026-11-27. Baseline main: e7ed5556b7cf076713c17c2d3d1d15c7af1a2924. [PR #69](https://github.com/davisjm4/davisjm4.github.io/pull/69). Release status: candidate; production verification pending. First browser acceptance: [45973815924](https://github.com/davisjm4/davisjm4.github.io/actions/runs/45973815924), eight journeys passed and 15 screenshots retained in its artifact.
+Scope approved by Josiah Davisson on 2026-11-27. Baseline main: e7ed5556b7cf076713c17c2d3d1d15c7af1a2924. **Released and production verified 2026-11-27.** [PR #69](https://github.com/davisjm4/davisjm4.github.io/pull/69) merged as bd3db28b4d9ad8229c6e87f5d9c05cdec0e9a0f8; [PR #70](https://github.com/davisjm4/davisjm4.github.io/pull/70) aligns completion recommendations with the map and merged as 9c3588cf52237c4715eb5cb9e27d193abffb689e. [Production verification receipt](live-verification.json).
+
+## Release verification
+
+- All six required PR #69 checks and all four PR #70 checks passed before merging. Existing core, CSP, WPR, teacher, QTI, accessibility and browser suites passed; no unresolved new test failures.
+- Pages deployments [45977598417](https://github.com/davisjm4/davisjm4.github.io/actions/runs/45977598417) and [45978712240](https://github.com/davisjm4/davisjm4.github.io/actions/runs/45978712240) succeeded. Twenty critical live runtime files byte-match the final code commit.
+- Existing Worker deployment workflow [45977600474](https://github.com/davisjm4/davisjm4.github.io/actions/runs/45977600474) released the additive RGB source registration as version 954ebbc8-87b4-4093-baa0-5666bb94a252. Bundle hash and settings preservation checks passed; health 200, unauthenticated teacher/student 401 and unapproved-origin 403 passed. No migration, credential, authentication or published-policy changes. Prior version aa88f09a-f552-4766-89a6-c5f40e19ecf8 is retained for rollback. PR #70 changes frontend routing only.
+- Live public browser: course chooser → AP CSP → Data → RGB launched practice in three selections. ASCII launched directly. One Binary node retained all three skill options; selecting representation opened Pixel representation. Return restored Data, with seven activities and eleven skills. Eight independently answered RGB tasks advanced the existing evaluated target to completion; the map showed its solid completed check and suggested Binary. The completion link was then verified to recommend and launch Binary consistently with the map.
+- Final browser acceptance [45978167246](https://github.com/davisjm4/davisjm4.github.io/actions/runs/45978167246) passed eight journeys. [Sixteen mobile/tablet/Chromebook/desktop screenshots and browser logs](https://github.com/davisjm4/davisjm4.github.io/actions/runs/45978167246/artifacts/15187823219) cover five viewport widths and representative activities from all four courses. [Primary package screenshots and isolated class acceptance](https://github.com/davisjm4/davisjm4.github.io/actions/runs/45976782597/artifacts/15186924395) are also retained.
+- Isolated class browser verification used the real client and dev Worker: direct RGB practice, evidence synchronization, unchanged class requirements and official 2.5 score, guest/class isolation, and return passed. This release did not repeat authenticated teacher/class production acceptance or use real student records.
 
 ## Navigation comparison
 
@@ -113,7 +122,7 @@ Deferred rubric reviews above require instructional validation of mode/family co
 ## Validation and compatibility
 
 - Baseline: 457 pathway/guest tests passed on unchanged main.
-- Candidate: 466 pathway/guest tests passed before RGB source registration; full final checks tracked in PR #69.
+- Primary package: 466 pathway/guest tests passed before RGB source registration; final backend run passed 479 Node tests, one teacher view and 27 integrated browser journeys. WPR passed 137 unit/content, 102 composition and 36 standalone browser tests. Full CSP suite passed. PR #70 adds the tenth targeted activity-navigation regression.
 - Existing RGB DOM suite: 451 assertions passed.
 - Session DOM harness: existing regex stripped a dynamic import and caused a SyntaxError on unchanged main. Restricted removal to static import declarations; 155 checks passed in isolation (152 with full-suite session fixture state).
 - Numeric RGB oracle checks all 256 channel values across all six tasks. Mapping tests exercise the real guest normalizer/evaluator and reject legacy visual-match evidence.
