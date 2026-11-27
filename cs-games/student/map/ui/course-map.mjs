@@ -8,6 +8,8 @@ import { createBackdrop } from './trail.mjs';
 
 export function renderUnitMap(groups, model, {width,onOpenUnit}) {
   const layout = serpentine(groups.length,{width,cellW:152,cellH:230,padX:12,padY:16,maxCols:4,wobble:8});
+  // Points locate circle centres; reserve the labels below the final circle.
+  layout.height += 96;
   const content = [createBackdrop({width,height:layout.height,points:layout.points,motif:'dots',travelled:0,bulge:84})];
   groups.forEach((group,index)=>{
     const {x,y} = layout.points[index];
@@ -48,6 +50,7 @@ function stopArt(stop) {
 export function renderCourseMap(model, { width, onOpenStop, onPractice, visibleStopIds = null }) {
   const stops = visibleStopIds ? model.stops.filter(s=>visibleStopIds.includes(s.id)) : model.stops;
   const layout = serpentine(stops.length, { width, cellW: 150, cellH: 204, padX: 12, padY: 22, maxCols: 5, wobble: 8 });
+  layout.height += 96;
   const travelled = stops.findIndex((s) => !s.summary.complete);
   const content = [createBackdrop({ width: layout.width, height: layout.height, points: layout.points, motif: 'dots', travelled: travelled < 0 ? stops.length : travelled, bulge: 150 })];
   stops.forEach((stop, i) => {

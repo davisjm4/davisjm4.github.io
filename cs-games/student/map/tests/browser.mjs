@@ -13,11 +13,13 @@ for(const width of [320,390,768,1024,1366]){
  const ctx=await browser.newContext({viewport:{width,height:900}}),page=await ctx.newPage();page.on('pageerror',e=>errors.push(e.message));
  await page.goto(base+'/cs-games/student/guest/?choose=1');await page.locator('[data-course=csp]').click();
  assert.match(await page.locator('[data-unit-id=csp-2]').innerText(),/7 activities/);
+ assert.ok(await page.locator('.unit-node').evaluateAll(nodes=>nodes.every(node=>node.getBoundingClientRect().bottom<=node.closest('.stage').getBoundingClientRect().bottom+1)),'unit labels must fit before the following controls');
  await page.locator('[data-unit-id=csp-2]').click();
  assert.equal(await page.locator('.stop-open').count(),7);assert.equal(await page.locator('.stop-title').filter({hasText:/^Binary Builder$/}).count(),1);
  assert.match(await page.locator('#map-heading').innerText(),/Data/);
  const bounds=await page.locator('.map-viewport').evaluate(el=>({height:el.clientHeight,scroll:el.scrollHeight,overflow:getComputedStyle(el).overflowY,body:document.documentElement.scrollWidth,width:innerWidth}));
  assert.equal(bounds.overflow,'visible');assert.ok(bounds.body<=bounds.width+2,JSON.stringify(bounds));
+ assert.ok(await page.locator('.stop').evaluateAll(nodes=>nodes.every(node=>node.getBoundingClientRect().bottom<=node.closest('.stage').getBoundingClientRect().bottom+1)),'activity labels must fit before the following controls');
  await page.screenshot({path:shots+`/${width}-data-map.png`,fullPage:true});
  if(width===1024)await page.getByRole('button',{name:'Zoom in',exact:true}).click();
  await page.locator('.stop-open[data-stop-id="area:csp:rgb-color-builder"]').click();
