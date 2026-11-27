@@ -171,7 +171,35 @@
     "mapRecommendation": "Binary Builder",
     "completionRecommendation": "Binary Builder",
     "completionLinkLaunchesBinary": true,
-    "returnToOrigin": true
+    "returnToOrigin": true,
+    "otherCourses": [
+      {
+        "course": "advanced",
+        "activity": "Variable Lab",
+        "selections": 3,
+        "currentSkillAndProgressVisible": true,
+        "returnToOrigin": true
+      },
+      {
+        "course": "robotics",
+        "activity": "VEX Parts Sprint",
+        "selectionsToActivity": 2,
+        "existingRaceSettingsRetained": true,
+        "startedTask": true,
+        "eightInternalSkills": true,
+        "demonstrationGuidanceVisible": true,
+        "returnToOrigin": true
+      },
+      {
+        "course": "workplace",
+        "activity": "Creativity and Innovation",
+        "selections": 3,
+        "practiceQuestionVisible": true,
+        "reviewedEvidenceGuidanceVisible": true,
+        "returnToOrigin": true
+      }
+    ],
+    "allFourCourseLaunchesVerified": true
   },
   "compatibility": {
     "skillIdsRetained": 290,
