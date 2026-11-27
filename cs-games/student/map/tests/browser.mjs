@@ -19,8 +19,10 @@ for(const width of [320,390,768,1024,1366]){
  const bounds=await page.locator('.map-viewport').evaluate(el=>({height:el.clientHeight,scroll:el.scrollHeight,overflow:getComputedStyle(el).overflowY,body:document.documentElement.scrollWidth,width:innerWidth}));
  assert.equal(bounds.overflow,'visible');assert.ok(bounds.body<=bounds.width+2,JSON.stringify(bounds));
  await page.screenshot({path:shots+`/${width}-data-map.png`,fullPage:true});
+ if(width===1024)await page.getByRole('button',{name:'Zoom in',exact:true}).click();
  await page.locator('.stop-open[data-stop-id="area:csp:rgb-color-builder"]').click();
  await page.waitForSelector('#rgb-code-question:not([hidden])');await page.waitForSelector('.live-skill-progress:not([hidden])');
+ if(width===390){await page.goBack();await page.waitForSelector('.stop-open');assert.equal(new URL(page.url()).hash,'#v=unit&unit=csp-2');await page.goForward();await page.waitForSelector('.live-skill-progress:not([hidden])');}
  assert.equal(new URL(page.url()).searchParams.get('practiceSkill'),'node:csp:rgb-color-builder:CSP-RGB');
  assert.equal(await page.locator('.live-skill-progress progress').count(),1);
  assert.ok(await page.getByRole('link',{name:'Back to Learning Map',exact:true}).isVisible());
@@ -41,6 +43,7 @@ for(const width of [320,390,768,1024,1366]){
  }
  await page.getByRole('link',{name:'Back to Learning Map',exact:true}).click();await page.waitForSelector('.stop-open');
  assert.equal(new URL(page.url()).hash,'#v=unit&unit=csp-2');
+ if(width===1024)assert.equal(await page.locator('.map-viewport').getAttribute('data-zoom'),'1.25');
  if(width===390){assert.equal(await page.locator('[data-stop-id="area:csp:rgb-color-builder"] .stop-art').getAttribute('data-complete'),'true');await page.screenshot({path:shots+'/390-completed-node.png',fullPage:true});}
  await page.locator('.stop-open[data-stop-id="area:csp:ascii-binary-builder"]').click();await page.waitForSelector('main');assert.match(page.url(),/ascii-binary-builder/);
  await page.getByRole('link',{name:'Back to Learning Map',exact:true}).click();await page.locator('.stop-open[data-stop-id="area:csp:binary-builder"]').click();

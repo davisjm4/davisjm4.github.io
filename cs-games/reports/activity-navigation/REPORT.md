@@ -1,6 +1,6 @@
 # Activity navigation and assessment release
 
-Scope approved by Josiah Davisson on 2026-11-27. Baseline main: e7ed5556b7cf076713c17c2d3d1d15c7af1a2924. [PR #69](https://github.com/davisjm4/davisjm4.github.io/pull/69). Release status: candidate; production verification pending.
+Scope approved by Josiah Davisson on 2026-11-27. Baseline main: e7ed5556b7cf076713c17c2d3d1d15c7af1a2924. [PR #69](https://github.com/davisjm4/davisjm4.github.io/pull/69). Release status: candidate; production verification pending. First browser acceptance: [45973815924](https://github.com/davisjm4/davisjm4.github.io/actions/runs/45973815924), eight journeys passed and 15 screenshots retained in its artifact.
 
 ## Navigation comparison
 
@@ -44,7 +44,7 @@ Counts use the same displayed stop and skill data. Data shows seven activities a
 
 The complete machine-readable [course audit](course-audit.json) includes every activity and stable skill ID. It distinguishes shared formative rubric coverage from general question logging. A game can log daily practice without providing a valid automatic formative tier. WPR's issued-question scoring and teacher-reviewed area completion are separate from the guest rubric catalog and are retained.
 
-RGB now includes six exact response tasks: binary-to-hex, hex-to-binary, decimal-to-hex, decimal-to-binary, hex-to-decimal, and RGB channel changes. All three channels must be correct. Qualifying first responses use assessment mode, audited family IDs, and evidence revision rgb-objective-v1. Existing application-rubric criteria are reused, including required binary, hexadecimal and channel outcomes. No teacher thresholds, overrides, official results or active attempts are changed. The RGB source can use the existing standard preset for newly configured targets; existing published policies are not backfilled. Perceptual editor matches, exploratory toggles, skips, retries, assistance and unknown families cannot establish this formative proficiency. Level 4 remains a demonstration option.
+RGB now includes six exact response tasks: binary-to-hex, hex-to-binary, decimal-to-hex, decimal-to-binary, hex-to-decimal, and RGB channel changes. All three channels must be correct. Qualifying first responses use assessment mode, audited family IDs, and evidence revision rgb-objective-v1. Existing application-rubric criteria are reused, including required binary, hexadecimal and channel outcomes. No teacher thresholds, overrides, official results or active attempts are changed. The RGB source can use the existing standard preset for newly configured targets; existing published policies are not backfilled. The exploratory editor provides live code readouts and is tagged as guided/assisted practice, retaining daily metrics while excluding new visual matches from skill evidence. Perceptual editor matches, exploratory toggles, skips, retries, assistance and unknown families cannot establish this formative proficiency. Level 4 remains a demonstration option.
 
 | Course | Activity | Skills needing rubric/source review | Current route |
 | --- | --- | --- | --- |
@@ -118,7 +118,7 @@ Deferred rubric reviews above require instructional validation of mode/family co
 - Session DOM harness: existing regex stripped a dynamic import and caused a SyntaxError on unchanged main. Restricted removal to static import declarations; 155 checks passed in isolation (152 with full-suite session fixture state).
 - Numeric RGB oracle checks all 256 channel values across all six tasks. Mapping tests exercise the real guest normalizer/evaluator and reject legacy visual-match evidence.
 - Browser acceptance records 320, 390, 768, 1024 and 1366 CSS px screenshots, direct launches, internal Binary skills, counts, progress, completed check and return. Actions artifacts contain browser output and screenshots.
-- Existing backend integration journeys cover published class requirements, excluded skills, teacher scores, archived classes, recovery, offline queues and scope isolation. Their results remain separately recorded by PR checks.
+- Five older integration journeys initially failed because they expected the removed activity-to-skill menu. Their navigation steps now use direct launch or explicitly exercise preserved legacy detail URLs; underlying override, order, evidence and exclusion assertions remain. Existing backend integration journeys cover published class requirements, excluded skills, teacher scores, archived classes, recovery, offline queues and scope isolation. Their results remain separately recorded by PR checks.
 
 No data migration, evidence deletion, account linking, authentication cutover, or unrelated PR merge. The only server release dependency is the shared RGB rubric/source registration bundled into the existing Worker workflow. Rollback is a code revert; original evidence and published policies remain intact.
 

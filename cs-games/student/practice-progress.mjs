@@ -40,13 +40,14 @@ export async function mountPracticeProgress(returnTo, profile) {
   function updateContext(context={}) {
     const difficulty=String(context.difficulty??document.querySelector('input[name=difficulty]:checked, select#difficulty, select[name=difficulty]')?.value??new URL(location.href).searchParams.get('difficulty')??'').toLowerCase();
     const expected=currentTarget?.difficulty;
-    const mode=context.mode??document.querySelector('input[name=mode]:checked, select#mode, select[name=mode]')?.value;
+    const mode=context.mode??main.querySelector('[data-assessed-mode]:not([hidden])')?.dataset.assessedMode??document.querySelector('input[name=mode]:checked, select#mode, select[name=mode]')?.value;
     const targetMode=currentTarget?.practice?.mode;
     warning.textContent=expected&&difficulty&&difficulty!==expected
       ?`You are practicing ${difficulty}. This does not count toward the ${expected} question requirement shown above. Use the target practice link.`
       :targetMode&&mode&&mode!==targetMode?mode==='mixed'
         ?'Mixed Practice counts only when the question assesses this skill at its qualifying difficulty.'
         :'This question is for a different skill. Use the target practice link to work toward the target shown above.':'';
+    correctPractice.hidden=!currentPractice||!warning.textContent;
   }
   window.addEventListener('csg:practice-context',event=>updateContext(event.detail));
   document.addEventListener('change',()=>updateContext());
@@ -84,6 +85,7 @@ export async function mountPracticeProgress(returnTo, profile) {
     nextLink.hidden=!node.complete||!next;
     if(next){nextLink.href=routeForSkill(next);nextLink.textContent=next.stopId===node.stopId?'Continue to next skill: '+next.title:'Continue to next activity: '+model.stops.find(s=>s.id===next.stopId).title;}
     voluntary.hidden=!node.complete;
+    if(node.standardsScore!=null)scopeNote.textContent=`Official teacher score: ${node.standardsScore} of 4. Formative proficiency and the class practice target are separate.`;
     if(!node.skillTarget){
       section.hidden=false;title.textContent=node.title;
       summary.textContent='Practice available. Plan a demonstration to show this skill.';

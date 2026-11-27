@@ -26,11 +26,12 @@ export function gradeCode(question,answers) {
 export function mountCodeAssessment(tracker) {
   const studio=document.querySelector('.studio');
   if(!studio)return;
+  studio.dataset.assessedMode='explore';
   const chooser=document.createElement('label');chooser.textContent='Practice type ';
   const select=document.createElement('select');select.id='practice-type';
   for(const [value,label]of [['assessment','Code questions — measured understanding'],['explore','Explore and match colors']]){const option=document.createElement('option');option.value=value;option.textContent=label;select.append(option);}
   chooser.append(select);document.querySelector('.mode-bar').before(chooser);
-  const section=document.createElement('section');section.className='panel question-card';section.id='rgb-code-question';
+  const section=document.createElement('section');section.className='panel question-card';section.id='rgb-code-question';section.dataset.assessedMode='assessment';
   const heading=document.createElement('h2');heading.textContent='Construct and interpret RGB codes';
   const note=document.createElement('p');note.textContent='Answer independently. Exact conversions and channel reasoning support proficiency; visual matches remain exploratory practice.';
   const task=document.createElement('p');task.id='code-task';

@@ -217,4 +217,4 @@ export function buildMapModel(input) {
   };
 }
 export const findNode = (model, id) => model.nodeIndex[id] ?? null;
-export const findStop = (model, id) => model.stops.find((s) => s.id === String(id).replace(/~\d+$/, '')) ?? null;
+export const findStop = (model, id) => model.stops.find(s=>s.id===id) ?? model.stops.find(s=>s.id===String(id).replace(/~\d+$/, '')) ?? null;
