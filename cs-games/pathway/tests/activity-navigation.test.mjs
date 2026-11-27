@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import graph from '../curriculum-graph.json' with {type:'json'};
 import {buildMapModel,findStop} from '../../student/map/model.mjs';
-import {activityDestination,activityCounts} from '../../student/map/activity-routing.mjs';
+import {activityDestination,activityCounts,nextPracticeNode} from '../../student/map/activity-routing.mjs';
 import {groupCourseStops} from '../../student/map/course-groups.mjs';
 import {inputFromStudentContract} from '../../student/map/live-contract.mjs';
 import {createPathway,studentContract} from '../model.mjs';
@@ -74,4 +74,14 @@ test('RGB visual similarity, unknown families and legacy binary/hex matches neve
  assert.equal(auditedEvidenceBand(node,{activityId:'rgb-color-builder',assessedMode:'assessment',familyId:'rgb-code:binary-to-hex'}),null);
  assert.equal(guestEventFromAttempt('csp',{id:'retry',game:'rgb-color-builder',submissions:2},true,Date.now()),null);
  assert.equal(guestEventFromAttempt('csp',{id:'assisted',game:'rgb-color-builder',submissions:1,details:{assisted:true}},true,Date.now()),null);
+});
+
+test('activity completion follows the shared map recommendation before an earlier unrelated activity',()=>{
+ const current={id:'rgb',stopId:'color',complete:true,required:true,practice:[{}]};
+ const earlier={id:'vocab',stopId:'words',complete:false,required:true,practice:[{}]};
+ const recommended={id:'binary',stopId:'numbers',complete:false,required:true,practice:[{}]};
+ const model={nodes:[earlier,recommended,current],nodeIndex:{vocab:earlier,binary:recommended,rgb:current},suggestedNext:{nodeId:'binary'}};
+ assert.equal(nextPracticeNode(model,current,[current]),recommended);
+ assert.equal(nextPracticeNode(model,current,[current,{...recommended,id:'internal',stopId:'color'}]).id,'internal');
+ recommended.required=false;assert.equal(nextPracticeNode(model,current,[current]),earlier);
 });

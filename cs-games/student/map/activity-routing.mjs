@@ -21,3 +21,12 @@ export function activityCounts(stops) {
     requiredSkills:stops.reduce((sum,s)=>sum+s.nodes.filter(n=>n.required).length,0),
     completedSkills:stops.reduce((sum,s)=>sum+s.nodes.filter(n=>n.required&&n.complete).length,0)};
 }
+
+// Use the map's evaluated recommendation after the current activity's required
+// skills. This is navigation only; the shared evaluator owns completion.
+export function nextPracticeNode(model,current,choices=[]) {
+  const eligible=n=>n&&n.id!==current.id&&n.required&&!n.complete&&n.practice.length;
+  const recommended=model.nodeIndex[model.suggestedNext?.nodeId];
+  return choices.find(eligible) ?? (eligible(recommended)?recommended:null) ??
+    model.nodes.find(n=>eligible(n)&&n.stopId!==current.stopId) ?? null;
+}
