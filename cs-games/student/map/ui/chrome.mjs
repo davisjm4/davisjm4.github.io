@@ -1,3 +1,4 @@
+import {activityCounts} from '../activity-routing.mjs';
 import {proficiencySuggestion} from './proficiency.mjs?v=map-progression-v1';
 // The frame around the maps: header, view and zoom controls, legend, suggested next, and the optional pacing card.
 import { courseSummaryLine, pacingNote, stopSummaryLine } from '../copy.mjs?v=map-progression-v1';
@@ -64,7 +65,7 @@ export function createPacingCard(model, { onShow }) {
 export function createHeader(model, { stop, unit, parent, hasUnits, onBack, onCourse }) {
   const heading=stop?.title ?? unit?.label.replace(/^\d+ · /,'') ?? `${model.courseTitle} journey`;
   const completion=model.pathwayCompletion;
-  const summary=stop ? stopSummaryLine(stop) : unit ? `${unit.stops.length} learning areas` : completion
+  const summary=stop ? stopSummaryLine(stop) : unit ? `${unit.stops.length} activities · ${activityCounts(unit.stops).skills} skills` : completion
     ? completion.requiredAreas
       ? `${completion.completedAreas} of ${completion.requiredAreas} required learning areas complete${model.totals.optional ? ` · ${model.totals.optional} optional skill${model.totals.optional===1?'':'s'}` : ''}`
       : 'No required class pathway is configured.'

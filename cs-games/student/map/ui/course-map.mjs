@@ -1,3 +1,4 @@
+import {activityCounts} from '../activity-routing.mjs';
 // View A: the whole course as one journey. Each learning area is a place on a winding trail.
 import { stopSummaryLine } from '../copy.mjs';
 import { icon } from '../icons.mjs';
@@ -6,7 +7,9 @@ import { el, svg } from './dom.mjs';
 import { createBackdrop } from './trail.mjs';
 
 export function renderUnitMap(groups, model, {width,onOpenUnit}) {
-  const layout = serpentine(groups.length,{width,cellW:152,cellH:170,padX:12,padY:16,maxCols:4,wobble:8});
+  const layout = serpentine(groups.length,{width,cellW:152,cellH:230,padX:12,padY:16,maxCols:4,wobble:8});
+  // Points locate circle centres; reserve the labels below the final circle.
+  layout.height += 96;
   const content = [createBackdrop({width,height:layout.height,points:layout.points,motif:'dots',travelled:0,bulge:84})];
   groups.forEach((group,index)=>{
     const {x,y} = layout.points[index];
@@ -19,9 +22,8 @@ export function renderUnitMap(groups, model, {width,onOpenUnit}) {
 
 export function unitLabel(group,index,model) {
   const next = group.stops.some(stop=>stop.id===model.suggestedNext?.stopId);
-  const included = group.stops.filter(stop=>stop.summary.requiredTotal);
-  const complete = included.filter(stop=>stop.summary.complete).length;
-  const counts = included.length ? `${complete} of ${included.length} areas complete` : `${group.stops.length} learning areas`;
+  const totals=activityCounts(group.stops);
+  const counts=`${totals.activities} activities · ${totals.completedActivities}/${totals.requiredActivities} required complete · ${totals.completedSkills}/${totals.requiredSkills} skill targets met`;
   return [
     el('span',{class:'unit-circle','aria-hidden':'true',text:String(index+1)}),
     el('strong',{text:group.label.replace(/^\d+ · /,'')}),
@@ -48,6 +50,7 @@ function stopArt(stop) {
 export function renderCourseMap(model, { width, onOpenStop, onPractice, visibleStopIds = null }) {
   const stops = visibleStopIds ? model.stops.filter(s=>visibleStopIds.includes(s.id)) : model.stops;
   const layout = serpentine(stops.length, { width, cellW: 150, cellH: 204, padX: 12, padY: 22, maxCols: 5, wobble: 8 });
+  layout.height += 96;
   const travelled = stops.findIndex((s) => !s.summary.complete);
   const content = [createBackdrop({ width: layout.width, height: layout.height, points: layout.points, motif: 'dots', travelled: travelled < 0 ? stops.length : travelled, bulge: 150 })];
   stops.forEach((stop, i) => {

@@ -1,0 +1,33 @@
+name: Activity navigation acceptance
+on:
+  pull_request:
+    paths: ['cs-games/student/**','cs-games/pathway/proficiency/**','cs-games/pathway/tests/**','csp-games/rgb-color-builder/**','.github/workflows/activity-navigation-check.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+defaults:
+  run:
+    shell: bash -eo pipefail {0}
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts --prefix csp-games
+      - run: node --test cs-games/pathway/tests/*.test.mjs cs-games/student/guest/tests/*.test.mjs
+      - run: npm install --prefix /tmp/map-browser --no-package-lock playwright@1.62.1
+      - run: node /tmp/map-browser/node_modules/playwright/cli.js install --with-deps chromium
+      - run: node cs-games/student/map/tests/browser.mjs | tee /tmp/activity-navigation-browser.json
+      - run: node cs-games/student/map/tests/class-browser.mjs | tee /tmp/activity-navigation-class.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: activity-navigation-browser-evidence
+          path: |
+            cs-games/reports/activity-navigation/screenshots
+            /tmp/activity-navigation-browser.json
+            /tmp/activity-navigation-class.txt

@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';
+import {startDev} from '../../../../wpr-games/workplace-readiness/service/dev.mjs';
+const {chromium}=await import(process.env.PLAYWRIGHT||'/tmp/map-browser/node_modules/playwright/index.mjs');
+const owner='synthetic-navigation-owner-token-2026';const dev=await startDev({teacherTokens:{owner}});const browser=await chromium.launch({executablePath:process.env.CHROME_BIN});
+const call=async(path,token,body)=>{const r=await fetch(dev.url+'/api/wpr'+path,{method:body===undefined?'GET':'POST',headers:{...(token?{Authorization:'Bearer '+token}:{}),...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined});const data=await r.json();assert.equal(r.status,200,JSON.stringify(data));return data;};
+try{
+ const c=await call('/teacher/profiles',owner,{title:'Synthetic RGB navigation',courseId:'csp'});
+ const profile={...await call('/profile/enroll',null,{invite:c.invite}),classId:c.id,courseId:'csp'};
+ const initial=(await call('/pathways/student/'+c.id,profile.token)).pathway;
+ const rgbId='node:csp:rgb-color-builder:CSP-RGB',original=initial.nodes.find(n=>n.id===rgbId);
+ assert.ok(original.masteryChallenge?.requirement?.minimumQuestions>0,'RGB must use existing class preset');
+ await call('/teacher/profiles/'+c.id+'/students/'+profile.id+'/evidence',owner,{id:crypto.randomUUID(),nodeId:rgbId,score:2.5,award:false,revision:initial.revision});
+ const page=await browser.newPage({viewport:{width:390,height:900}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(dev.url+'/cs-games/');await page.evaluate(profile=>{localStorage.setItem('wrg.profile.active.v1',JSON.stringify(profile));localStorage.setItem('cs-games:guest:v1',JSON.stringify({marker:'separate-guest-store'}));},profile);
+ const guestBefore=await page.evaluate(()=>localStorage.getItem('cs-games:guest:v1'));
+ await page.goto(dev.url+'/cs-games/student/?class='+c.id+'&course=csp#v=unit&unit=csp-2');
+ await page.locator('.stop-open[data-stop-id="area:csp:rgb-color-builder"]').click();
+ await page.waitForSelector('.live-skill-progress:not([hidden])');
+ assert.match(await page.locator('.live-skill-progress').innerText(),/Class practice target/);
+ const task=await page.locator('#code-task').innerText();assert.match(task,/two hexadecimal/);
+ const answers=task.replace('Convert ','').split(' to ')[0].split(' / ').map(v=>parseInt(v,2).toString(16).padStart(2,'0'));
+ for(const [i,color]of ['Red','Green','Blue'].entries())await page.getByLabel(color+' code answer',{exact:true}).fill(answers[i]);
+ await page.getByRole('button',{name:'Check Code',exact:true}).click();
+ await page.waitForFunction(()=>document.querySelector('.live-skill-progress').textContent.includes('1 of '));
+ const after=(await call('/pathways/student/'+c.id,profile.token)).pathway.nodes.find(n=>n.id===rgbId);
+ assert.equal(after.masteryChallenge.progress.answered,1);assert.equal(after.masteryChallenge.requirement.minimumQuestions,original.masteryChallenge.requirement.minimumQuestions);
+ assert.equal(after.masteryChallenge.requirement.accuracyPercent,original.masteryChallenge.requirement.accuracyPercent);
+ assert.equal(after.checkpoint.score,2.5);
+ assert.equal(await page.evaluate(()=>localStorage.getItem('cs-games:guest:v1')),guestBefore);
+ const shots=process.env.SHOTS||'cs-games/reports/activity-navigation/screenshots';fs.mkdirSync(shots,{recursive:true});await page.screenshot({path:shots+'/390-class-rgb.png',fullPage:true});
+ await page.getByRole('link',{name:'Back to Learning Map',exact:true}).click();await page.waitForSelector('.stop-open');assert.equal(new URL(page.url()).hash,'#v=unit&unit=csp-2');
+ assert.deepEqual(errors,[]);console.log('PASS synthetic enrolled RGB: direct launch, shared configured target, real first-attempt sync, retained 2.5 official score and guest isolation.');
+}finally{await browser.close();await new Promise(r=>dev.server.close(r));dev.db.close();}

@@ -130,13 +130,14 @@ for (const node of graph.nodes) {
     continue;
   }
   if (r.tier) {
-    const isNew = node.id.endsWith(':CSP-NUMERIC');
+    const rgb=node.id.endsWith(':CSP-RGB');
+    const isNew = rgb || node.id.endsWith(':CSP-NUMERIC');
     rows.push({...base, currentRoute: 'automatic:' + r.tier, reasonCode: '', category: isNew ? 'A' : '', status: isNew ? 'newly-validated' : 'already-automatic',
-      mixedMapsCorrectly: reg?.measured?.mixedDrawn ? `${reg.measured.mixedCreditedToIntendedNode}/${reg.measured.mixedDrawn}` : isNew ? 'tested: all 4 filters credit CSP-NUMERIC' : 'covered by existing tests',
-      firstAttemptEvidence: 'yes', whyNotEnabled: '', objectivelyAssessable: 'yes', bankMeetsRequirement: 'accepted by PR #46 review', measuredDistinct: reg?.measured?.distinctFamiliesBound ?? '',
+      mixedMapsCorrectly: reg?.measured?.mixedDrawn ? `${reg.measured.mixedCreditedToIntendedNode}/${reg.measured.mixedDrawn}` : isNew ? rgb ? 'tested: exact code assessment only; guided exploration excluded' : 'tested: all 4 filters credit CSP-NUMERIC' : 'covered by existing tests',
+      firstAttemptEvidence: 'yes', whyNotEnabled: '', objectivelyAssessable: 'yes', bankMeetsRequirement: rgb ? 'procedural exact code tasks; existing standard preset' : 'accepted by PR #46 review', measuredDistinct: rgb ? '6 reasoning families; all 256 channel values independently checked' : reg?.measured?.distinctFamiliesBound ?? '',
       recommendation: isNew ? 'Standard practice 30 at 90%; pinned for new classes only.' : 'None.', confidence: isNew ? 'high' : 'as reviewed in PR #46',
       proposedTier: r.tier, minDistinct: r.minDistinct, repairImplemented: isNew ? 'yes' : 'no',
-      evidenceSource: isNew ? 'cs-games/pathway/tests/roundoff-evidence.test.mjs; csp-games/roundoff-overflow-lab/tests.mjs (36,867 assertions, independent BigInt oracle)' : 'PR #46 requirements/recommended.mjs and evidence-gap-registry.json'});
+      evidenceSource: rgb ? 'cs-games/pathway/tests/activity-navigation.test.mjs; cs-games/student/map/tests/class-browser.mjs' : isNew ? 'cs-games/pathway/tests/roundoff-evidence.test.mjs; csp-games/roundoff-overflow-lab/tests.mjs (36,867 assertions, independent BigInt oracle)' : 'PR #46 requirements/recommended.mjs and evidence-gap-registry.json'});
     continue;
   }
   const row = {...base, currentRoute: 'teacher-assessment', reasonCode: r.reason, firstAttemptEvidence: '', mixedMapsCorrectly: 'not measured'};

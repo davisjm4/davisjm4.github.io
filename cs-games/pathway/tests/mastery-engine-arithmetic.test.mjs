@@ -142,7 +142,7 @@ test('policy digest is stable under key order and changes when a requirement cha
 
 test('no mastery policy is attached to anything by default; examples and suggestions are inert', () => {
   assert.equal(graph.nodes.length, 290);
-  assert.equal(graph.questionFamilies.length, 453);
+  assert.equal(graph.questionFamilies.length, 459);
   assert.ok(graph.nodes.every((n) => !('policy' in n) && !('policyId' in n) && !('masteryPolicy' in n)), 'the curriculum graph carries no policy');
   const p = newPathway();
   assert.deepEqual(p.policies.map((x) => x.id), ['policy:provisional']);

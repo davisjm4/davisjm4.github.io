@@ -1,11 +1,11 @@
 // The map model. Pure: no DOM, no clock, no network. Everything a component draws comes from here, and everything here comes from
 // three read-only inputs: the curriculum graph, the evaluated progress contract, and an optional pacing overlay.
 //
-//   Course -> stop (a run of skills in one learning area) -> skill (node) -> practice activity
+//   Course -> unit -> activity (aggregated area) -> direct practice with stable skill context
 //
 // Order is the order of the pathway sequence (or, without one, of graph.nodes). `graph.areas` is NOT the curriculum order: for Advanced CS
-// it is alphabetical-ish, while graph.nodes follows the established order. An area whose skills are split by other areas (8 AP CSP areas)
-// becomes one stop per run so the journey never reorders the course.
+// it is alphabetical-ish, while graph.nodes follows the established order. Navigation groups an area at its first occurrence,
+// while the flat skill sequence and each skill's original courseIndex remain in published order.
 import { areaIdentity } from './identity.mjs';
 import { daysUntil, formatDay } from './format.mjs';
 import { practiceLinks } from '../practice-links.mjs';
@@ -91,8 +91,9 @@ function summarizeStop(stop, areaContract, classCompletion) {
   const independent = nodes.some(node=>node.guest);
   const label = req.length ? `${requiredCompleted} of ${req.length} ${independent?'skill targets':'requirements'} met` : classCompletion ? 'No required skills' : `${practiced} of ${nodes.length} skills practiced`;
   const practiceOnly = nodes.filter((n) => !n.requirementsConfigured && !n.proficiency?.goal).length;
+  const targetFraction = req.length ? req.reduce((sum,n)=>sum+(n.complete?1:n.skillTarget?.fraction??n.ring?.fraction??0),0)/req.length : practiced/nodes.length;
   return { status, mode, complete, practiceOnly, requiredTotal: req.length, requiredCompleted, optionalTotal: opt.length, optionalCompleted, optionalRemaining: opt.length - optionalCompleted,
-    practiced, classCompletion, reviewRecommended: nodes.filter((n) => n.state === 'review').length, fraction: req.length ? requiredCompleted / req.length : practiced / nodes.length, label, source };
+    practiced, classCompletion, reviewRecommended: nodes.filter((n) => n.state === 'review').length, fraction: complete?1:Math.min(.99,targetFraction), label, source };
 }
 
 function pickNext(candidates, { preferStopId = null, dated = false } = {}) {
@@ -127,10 +128,11 @@ export function buildMapModel(input) {
   const prereqTitle = new Map(graph.nodes.map((n) => [n.id, n.title]));
 
   const ordered = orderNodes(graph.nodes.filter((n) => n.courseId === courseId), input.sequence, warnings);
-  // Runs of the same area become stops.
+  // Activity navigation is independent of curriculum sequencing. Combine all
+  // occurrences of an area, retaining first occurrence order and stable skills.
   const runs = [];
   for (const node of ordered) {
-    const last = runs.at(-1);
+    const last = runs.find(run => run.areaId === node.areaId);
     if (last && last.areaId === node.areaId) last.raw.push(node); else runs.push({ areaId: node.areaId, raw: [node] });
   }
   const runCount = new Map();
@@ -162,7 +164,7 @@ export function buildMapModel(input) {
       const attempted = progress?.attempt?.attempted ?? 0;
       const started = complete || state === 'in-progress' || state === 'review' || attempted > 0 || (progress?.lifetime?.questionsAnswered ?? 0) > 0;
       const view = {
-        id: raw.id, title: raw.title, objective: raw.objective ?? '', curriculumRefs: raw.standardRefs ?? [], areaId: raw.areaId, stopId: id, order: i + 1, orderOf: run.raw.length, courseIndex: flat.length,
+        id: raw.id, title: raw.title, objective: raw.objective ?? '', curriculumRefs: raw.standardRefs ?? [], areaId: raw.areaId, stopId: id, order: i + 1, orderOf: run.raw.length, courseIndex: ordered.indexOf(raw),
         state, unrecognized, classParticipation:Boolean(input.pathwayCompletion), optional: !required, required, complete, started, requirementsConfigured, practiceOnly: !requirementsConfigured,
         proficiency,
         teacherAssessmentRequired:raw.teacherAssessmentRequired, guest:raw.guest,practiceGoal:raw.practiceGoal,verifiedAward:raw.verifiedAward||(progress?.verification==='verified'&&Boolean(progress.award?.id)),
@@ -182,6 +184,7 @@ export function buildMapModel(input) {
     return stop;
   });
 
+  flat.sort((a,b)=>a.courseIndex-b.courseIndex);
   // Pacing overlay. In the default undated pathway nothing about dates reaches the model.
   const currentStop = dated && pacingIn.currentAreaId
     ? (stops.find((s) => s.areaId === pacingIn.currentAreaId && !s.summary.complete) ?? stops.find((s) => s.areaId === pacingIn.currentAreaId) ?? null) : null;
@@ -214,4 +217,4 @@ export function buildMapModel(input) {
   };
 }
 export const findNode = (model, id) => model.nodeIndex[id] ?? null;
-export const findStop = (model, id) => model.stops.find((s) => s.id === id) ?? null;
+export const findStop = (model, id) => model.stops.find(s=>s.id===id) ?? model.stops.find(s=>s.id===String(id).replace(/~\d+$/, '')) ?? null;

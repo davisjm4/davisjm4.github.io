@@ -33,3 +33,13 @@ Logical destinations are the target. Exact new paths and redirects are implement
 | Shared tools | `/wpr-games/raceces/` linked from Home’s Shared Practice Tools section and from Workplace Readiness | Shared Tools → RACECES and a prominent Workplace Readiness entry. No standalone homepage section. |
 
 **Preserve:** Map/List, scoped browse/search, direct activities, saved report links, anonymous diagnostics and Canvas links. Retire duplicate entry controls after replacements work. Keep compact area jumping until the parity gate passes.
+
+## CSG-NAV-04 — Meaningful activity choices
+
+**Approved 2026-11-27 · implementation candidate PR #69.** Course and unit nodes open maps. A learning area opens another map only when it offers distinct activities. One or several skills served by one game launch that activity directly; a compact in-game skill control and contextual guidance retain individual objectives and targets. A demonstration-only destination opens its instructions. Curriculum, evidence and navigation hierarchies can differ.
+
+Combine repeated activity areas in first-occurrence navigation order. Preserve the published flat skill sequence, stable skill IDs, evidence, active attempts, teacher overrides, required/optional flags and official results. Legacy continuation-stop URLs alias the canonical activity. WPR topics remain distinct meaningful choices despite sharing an application. Counts explicitly distinguish displayed/required/completed activities from underlying skills and skill targets, using the same authorized pathway model.
+
+Mapped practice shows Back to Learning Map, restoring the originating unit/activity map, Map/List and safe scope. Restore scroll and zoom when session state is available. At default scale prefer document scrolling; explicit zoom retains map panning. Details, notes, demonstration planning and optional Level 4 remain accessible without a mandatory skill screen. Existing restrictions and guest/class evidence separation apply to every route.
+
+**Acceptance:** CSG-AT-15. [Audit and compatibility mapping](../cs-games/reports/activity-navigation/REPORT.md).

@@ -216,7 +216,13 @@ test('independent learner follows the unit trail and sees eligible practice, com
   await wait('.map-app[data-view=unit]');
   assert.match(new URL(page.url()).hash,/unit=advanced-foundations/);
   if(evidence)await page.screenshot({path:evidence+'/mobile-unit.png'});
-  await activate('.stop-open','Variable Lab');
+  await Promise.all([page.waitForNavigation(),activate('.stop-open','Variable Lab')]);
+  await wait('.live-skill-progress');
+  assert.ok(new URL(page.url()).searchParams.get('practiceSkill').startsWith('node:advanced:variable-lab:'));
+  await Promise.all([page.waitForNavigation(),activate('a[data-profile-link]','Back to Learning Map')]);
+  await wait('.map-app[data-view=unit]');
+  // Optional old detail URLs still preserve evidence, panel and history behavior.
+  await page.goto(map+'#v=area&stop=area%3Aadvanced%3Avariable-lab');
   await wait('.skill-node'+trace);
   if(evidence)await page.screenshot({path:evidence+'/mobile-area.png'});
   assert.equal(await page.evaluate(()=>document.activeElement.id),'map-heading');
@@ -275,15 +281,18 @@ test('independent learner follows the unit trail and sees eligible practice, com
   await page.evaluate(axeSource);
   assert.deepEqual(await page.evaluate(async ()=>(await axe.run('.map-app',{runOnly:['wcag2a','wcag2aa','wcag21aa']})).violations.map(v=>[v.id,v.nodes.map(n=>n.target)])),[]);
   await activate('[data-action=next-learning]','Next skill');
-  assert.notEqual(await page.$eval('.skill-panel',node=>node.dataset.nodeId),'node:advanced:variable-lab:trace');
-  await activate('.panel-close','Back to skills');
+  await wait('.live-skill-progress');
+  assert.notEqual(new URL(page.url()).searchParams.get('practiceSkill'),'node:advanced:variable-lab:trace');
+  await Promise.all([page.waitForNavigation(),activate('a[data-profile-link]','Back to Learning Map')]);
   await activate(parent,'Back to Foundations & Logic');
   await wait('.map-app[data-view=unit]');
   await activate('[data-layout=list]','List');
-  await activate('.stop-item button','Open');
-  await wait('.skill-row'+trace);
+  await Promise.all([page.waitForNavigation(),activate('.stop-item button','Open')]);
+  await wait('.live-skill-progress');
+  await Promise.all([page.waitForNavigation(),activate('a[data-profile-link]','Back to Learning Map')]);
+  await wait('.map-app[data-layout=list] .stop-item');
   await page.reload();
-  await wait('.map-app[data-layout=list] .skill-row'+trace);
+  await wait('.map-app[data-layout=list] .stop-item');
 });
 
 test('Array Lab uses Beginner for a fresh launch and honors explicit and saved difficulty', {timeout:60000}, async t => {

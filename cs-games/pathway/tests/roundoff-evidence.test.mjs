@@ -142,6 +142,7 @@ test('shortcut audit: no visible parameter predicts the answer beyond the topic 
 test('the recommendation now treats CSP-NUMERIC as verified practice at the standard tier and leaves unreviewed nodes alone', () => {
   const rows = auditRecommended(graph, registry), by = Object.fromEntries(rows.map(r => [r.nodeId, r]));
   assert.equal(by[NUMERIC.id].tier, 'standard-practice');
-  for (const key of ['RGB', 'CHARACTERS', 'BINARY', 'CAPACITY', 'REPRESENTATION'])
+  assert.equal(by[graph.nodes.find(n=>n.id.endsWith(':CSP-RGB')).id].tier,'standard-practice','RGB exact code assessment was subsequently reviewed');
+  for (const key of ['CHARACTERS', 'BINARY', 'CAPACITY', 'REPRESENTATION'])
     assert.equal(by[graph.nodes.find(n => n.id.endsWith(':CSP-' + key)).id].tier, null, `${key} stays unreviewed`);
 });

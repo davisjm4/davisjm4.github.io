@@ -134,7 +134,7 @@ test('the practice content is never touched: question families and the curriculu
   let p = base();
   p = R.applyToSkills(p, [NODE.trace2d], { families: { minDistinct: 12, minCorrectEach: 1 } }, ctxFor()).pathway;
   p = R.applyToSkills(p, [NODE.modulus], { minimumQuestions: 99 }, ctxFor({ extra: bank(NODE.modulus, 5, 'verified', true) })).pathway;
-  assert.equal(graph.questionFamilies.length, 453); assert.equal(graph.nodes.length, 290);
+  assert.equal(graph.questionFamilies.length, 459); assert.equal(graph.nodes.length, 290);
   assert.equal(JSON.stringify(graph.questionFamilies), familiesBefore);
   assert.equal(fs.readFileSync(new URL('../curriculum-graph.json', import.meta.url), 'utf8'), before);
   assert.equal(JSON.stringify(p).includes('questionFamilies'), false, 'a class pathway never stores or copies question families');
