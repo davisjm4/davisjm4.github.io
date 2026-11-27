@@ -8,7 +8,7 @@ export function codeQuestion(index,rgb) {
   const binary=rgb.map(n=>byte(n,2)),hex=rgb.map(n=>byte(n,16));
   const source=family==='binary-to-hex'?binary.join(' / '):family==='hex-to-binary'||family==='code-to-decimal'?'#'+hex.join(''):rgb.join(', ');
   const base=family.endsWith('to-hex')?16:family.endsWith('to-binary')?2:10;
-  const channel=index%3,delta=rgb[channel]>127?-32:32;
+  const channel=Math.floor(index/RGB_CODE_FAMILIES.length)%3,delta=rgb[channel]>127?-32:32;
   const values=[...rgb];if(family==='channel-change')values[channel]+=delta;
   const task=family==='channel-change'?`Start with RGB(${source}). ${delta>0?'Increase':'Decrease'} the ${['red','green','blue'][channel]} channel by 32. Give all three resulting decimal channels.`:
     `Convert ${source} to ${base===16?'two hexadecimal digits per channel':base===2?'eight binary bits per channel':'decimal channel values'}. Keep red, green, blue order.`;

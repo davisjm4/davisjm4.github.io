@@ -48,10 +48,10 @@ test('optional unfinished Level 4 cannot select ahead of an unfinished required 
 });
 test('RGB exact answers independently round-trip all 256 channel values and six reasoning families',()=>{
  for(let n=0;n<256;n++)for(let i=0;i<6;i++){
-  const q=codeQuestion(i,[n,255-n,n]);assert.ok(gradeCode(q,q.answers));
+  const index=i+6*(n%3),q=codeQuestion(index,[n,255-n,n]);assert.ok(gradeCode(q,q.answers));
   assert.ok(!gradeCode(q,['wrong','wrong','wrong']));
   if(i<5)assert.deepEqual(q.answers.map(a=>parseInt(a,q.base)),[n,255-n,n]);
-  else {const expected=[n,255-n,n];expected[i%3]+=expected[i%3]>127?-32:32;assert.deepEqual(q.answers.map(Number),expected);}
+  else {const expected=[n,255-n,n];const channel=Math.floor(index/6)%3;expected[channel]+=expected[channel]>127?-32:32;assert.deepEqual(q.answers.map(Number),expected);}
  }
  assert.equal(RGB_CODE_FAMILIES.length,6);
 });
