@@ -158,6 +158,16 @@ for(const [key,mode] of Object.entries({BINARY:'representation',CAPACITY:'capaci
       ?'beginner':null);
 }
 
+// New objective source uses the existing application evidence standard. Visual
+// matching (binary/hex modes) is deliberately excluded, including old records.
+const rgbCodeFamilies=['binary-to-hex','hex-to-binary','decimal-to-hex','decimal-to-binary','code-to-decimal','channel-change'].map(f=>'rgb-code:'+f);
+add('node:csp:rgb-color-builder:CSP-RGB',core({intermediate:{...applied('rgb-color-builder','assessment'),outcomes:[
+  {id:'binary',label:'Convert binary channel representations',match:{familyIds:['rgb-code:binary-to-hex','rgb-code:hex-to-binary','rgb-code:decimal-to-binary']},minExposure:1,minCorrect:1},
+  {id:'hex',label:'Convert hexadecimal channel representations',match:{familyIds:['rgb-code:binary-to-hex','rgb-code:hex-to-binary','rgb-code:decimal-to-hex']},minExposure:1,minCorrect:1},
+  {id:'channels',label:'Interpret RGB channel values',match:{familyIds:['rgb-code:code-to-decimal','rgb-code:channel-change']},minExposure:1,minCorrect:1}
+]}}),(_node,event)=>event.activityId==='rgb-color-builder'&&event.assessedMode==='assessment'&&
+  event.evidenceRevision==='rgb-objective-v1'&&rgbCodeFamilies.includes(event.familyId)?'intermediate':null);
+
 export const phase2Rubric = node => coverage.get(node.id)?.rubric;
 export const phase2Difficulty = (node,event) => coverage.get(node.id)?.classify(node,event)??null;
 export function formativeFamily(event){

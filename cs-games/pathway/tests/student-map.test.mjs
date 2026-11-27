@@ -22,18 +22,13 @@ test('every course follows its published sequence without dates or requirements'
   }
 });
 
-test('AP CSP continuation stops retain the same identity and published order',()=>{
-  const pathway=make('csp');
-  const map=model(studentContract(pathway,graph));
-  const repeated=map.stops.filter(stop=>stop.parts>1);
-  assert.ok(repeated.length>0);
-  for(const stop of repeated.filter(stop=>stop.part>1)){
-    const start=repeated.find(prior=>prior.areaId===stop.areaId&&prior.part===1);
-    assert.ok(start.index<stop.index);
-    assert.equal(start.baseTitle,stop.baseTitle);
-    assert.deepEqual(start.identity,stop.identity);
-    assert.match(stop.title,/continued/);
-  }
+test('AP CSP activities combine nonadjacent skills while preserving published order',()=>{
+  const pathway=make('csp'), map=model(studentContract(pathway,graph));
+  assert.equal(new Set(map.stops.map(s=>s.areaId)).size,map.stops.length);
+  assert.deepEqual(map.nodes.map(n=>n.id),pathway.sequence);
+  const binary=map.stops.filter(s=>s.areaId==='area:csp:binary-builder');
+  assert.equal(binary.length,1);assert.equal(binary[0].nodes.length,3);
+  assert.equal(binary[0].title,'Binary Builder');
 });
 
 test('practice advances the suggestion and reordering leaves evidence on the stable skill ID',()=>{

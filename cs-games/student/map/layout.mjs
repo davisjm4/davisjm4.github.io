@@ -14,7 +14,7 @@ export function serpentine(count, { width, cellW, cellH, padX = 24, padY = 28, m
   for (let i = 0; i < count; i++) {
     const row = Math.floor(i / cols), k = i % cols, col = row % 2 === 0 ? k : cols - 1 - k;
     // A single column zigzags left and right so one-column phone layouts still read as a trail rather than a straight list.
-    const x = cols === 1 ? padX + usable * (0.3 + 0.4 * (i % 2 === 0 ? 0 : 1)) : padX + stepX * col + stepX / 2;
+    const x = cols === 1 ? padX + usable * (0.38 + 0.24 * (i % 2 === 0 ? 0 : 1)) : padX + stepX * col + stepX / 2;
     const bob = wobble ? Math.sin(i * 1.7) * wobble : 0;
     points.push({ x: Math.round(x), y: Math.round(padY + cellH * row + cellH / 2 + bob), row, col });
   }

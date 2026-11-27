@@ -1,3 +1,5 @@
+import {activityDestination} from '../activity-routing.mjs';
+import {proficiencyLink} from './proficiency.mjs';
 import {workplaceAreaSummary,workplaceAreaLink} from '../workplace-area.mjs';
 import { withPracticeReturn } from '../../practice-return.mjs';
 // The student map component. Mount it with the curriculum graph and the evaluated progress contract; it draws, it never decides.
@@ -79,6 +81,7 @@ export function mountStudentMap(container, options) {
     if (route.view==='unit' && !selectedGroup()) route={...route,view:'course',unitId:null};
     if (route.nodeId && !findNode(model, route.nodeId)) route = { ...route, nodeId: null };
     if (route.nodeId && route.view === 'area' && findNode(model, route.nodeId).stopId !== route.stopId) route = { ...route, stopId: findNode(model, route.nodeId).stopId };
+    if (route.view === 'area' && findStop(model, route.stopId)) route.stopId=findStop(model,route.stopId).id;
     if (route.view === 'area' && !findStop(model, route.stopId)) route = { ...route, view: 'course', stopId: null };
   }
 
@@ -105,7 +108,30 @@ export function mountStudentMap(container, options) {
     const url=workplaceAreaLink(stop,{guest:input.guest,origin:location.origin,returnTo:target.pathname+target.search+target.hash});
     if(url && adapter.onPractice?.({stop,url,kind:'workplace-area'})!==true)location.assign(url);
   };
-  const openStop = (stop) => { if(model.courseId==='workplace'){launchWorkplaceArea(stop);return;} lastStopId = stop.id; go({ view: 'area', stopId: stop.id, nodeId: null }, { focus: 'heading' }); };
+  function launchSkill(stop, node, link) {
+    if (!link) return;
+    const parent=groupForStop(stop.id);
+    const returnRoute=route.view==='area'?{...route,nodeId:null}:{view:parent?'unit':'course',unitId:parent?.id,layout:route.layout};
+    rememberView();
+    let url=withPracticeReturn(link.url,{origin:location.origin,course:model.courseId,classId:input.classId,route:returnRoute});
+    const target=new URL(url,location.origin);
+    target.searchParams.set('practiceSkill',node.id);
+    url=target.pathname+target.search+target.hash;
+    if(adapter.onPractice?.({stop,node,url,kind:link.kind})!==true)location.assign(url);
+  }
+  const viewKey=()=> 'cs-games:map-view:'+ (input.classId??'guest')+':'+input.courseId;
+  function rememberView(){try{sessionStorage.setItem(viewKey(),JSON.stringify({hash:routeHash(route),scroll:window.scrollY,zoom:zoomLevel,left:stageCtl?.viewport.scrollLeft??0,top:stageCtl?.viewport.scrollTop??0}));}catch{}}
+  const openStop = (stop) => {
+    if(model.courseId==='workplace'){rememberView();launchWorkplaceArea(stop);return;}
+    const destination=activityDestination(stop,stop.suggestedNodeId);
+    if(destination.kind==='practice'){
+      const n=destination.node,selection=n.skillTarget?.practice;
+      const link=selection?.activityId===destination.activityId?proficiencyLink(n,selection):destination.link;
+      launchSkill(stop,n,link);return;
+    }
+    lastStopId=stop.id;
+    go({view:'area',stopId:stop.id,nodeId:destination.kind==='demonstration'?stop.nodes[0]?.id:null},{focus:destination.kind==='demonstration'?'panel':'heading'});
+  };
   const backToCourse = () => {
     if (route.view==='area') lastUnitId=groupForStop(route.stopId)?.id??null;
     go({view:'course',unitId:null,stopId:null,nodeId:null},{focus:units.length?'unit':'stop'});
@@ -149,7 +175,7 @@ export function mountStudentMap(container, options) {
   function focusItem(nodeId) { root.querySelector(`button[data-node-id="${CSS.escape(nodeId)}"], li[data-node-id="${CSS.escape(nodeId)}"] .skill-row-open`)?.focus({ preventScroll: true }); }
 
   const panelCtx = (stop, node) => ({
-    stop, model, timeZone, next:nextAfter(node), onNext:showSearchSkill,
+    stop, model, timeZone, next:nextAfter(node), onNext:practiceSkill,
     guestSkillControls:adapter.guestSkillControls, canRestart: typeof adapter.restartAttempt === 'function',
     onPractice: (info) => adapter.onPractice?.(info) === true,
     onClose: () => select(null), onSelectNode: (id) => select(findNode(model, id), { scroll: true }),
@@ -174,6 +200,12 @@ export function mountStudentMap(container, options) {
       }
     },
   });
+  function practiceSkill(node) {
+    if(model.courseId==='workplace'){openStop(findStop(model,node.stopId));return;}
+    const link=proficiencyLink(node,node.skillTarget?.practice);
+    if(link){launchSkill(findStop(model,node.stopId),node,link);return;}
+    showSearchSkill(node);
+  }
   function showSearchSkill(node) {
     if(model.courseId==='workplace'){openStop(findStop(model,node.stopId));return;}
     lastStopId = node.stopId;
@@ -229,7 +261,7 @@ export function mountStudentMap(container, options) {
     const width = Math.max(260, Math.floor(stageCtl.viewport.clientWidth || main.clientWidth || 360));
     const stop = route.view === 'area' ? findStop(model, route.stopId) : null;
     const drawn = stop
-      ? renderAreaMap(model, stop, { width, selectedId: route.nodeId, onSelect: (n) => select(n),
+      ? renderAreaMap(model, stop, { width, selectedId: route.nodeId, onSelect: (n) => practiceSkill(n),
           nextId:nextAfter(findNode(model,route.nodeId))?.id ?? stop.suggestedNodeId })
       : route.view==='course' && units.length ? renderUnitMap(units,model,{width,onOpenUnit:openUnit})
       : renderCourseMap(model, { width, onOpenStop: openStop,
@@ -288,12 +320,12 @@ export function mountStudentMap(container, options) {
     const shortcuts = input.mapFirst && (model.suggestedNext || input.currentNodeId) ? el('div', { class: 'map-shortcuts', role: 'group', 'aria-label': 'Learning map shortcuts' },
       el('button', { type: 'button', class: 'btn btn-primary', text: 'Suggested Next', onclick: () => {
         const target = model.suggestedNext?.nodeId;
-        if (target) { const n = findNode(model, target); if(model.courseId==='workplace'&&n){openStop(findStop(model,n.stopId));return;} if(model.courseId==='workplace'&&n){openStop(findStop(model,n.stopId));return;} if (n) { lastStopId = n.stopId; go({ view: 'area', stopId: n.stopId, nodeId: n.id }, { focus: 'panel' }); } }
+        if (target) { const n = findNode(model, target); if(model.courseId==='workplace'&&n){openStop(findStop(model,n.stopId));return;} if(model.courseId==='workplace'&&n){openStop(findStop(model,n.stopId));return;} if(n)practiceSkill(n); }
         else announce('No suggested next skill is available.');
       } }),
       input.currentNodeId ? el('button', { type: 'button', class: 'btn', text: 'Jump to Current', title:'Go to your last selected skill', onclick: () => {
         const n = findNode(model, input.currentNodeId);
-        if(model.courseId==='workplace'&&n){openStop(findStop(model,n.stopId));return;} if (n) { lastStopId = n.stopId; go({ view: 'area', stopId: n.stopId, nodeId: n.id }, { focus: 'panel' }); }
+        if(model.courseId==='workplace'&&n){openStop(findStop(model,n.stopId));return;} if(n)practiceSkill(n);
         else announce('Choose a skill to set your current position.');
       } }) : null) : null;
     // Keep visual and keyboard order consistent: shortcuts and map first, skill search afterward.
@@ -314,7 +346,7 @@ export function mountStudentMap(container, options) {
       const stops = stop ? [stop] : unit?.stops??model.stops;
       if(courseUnits.length) main.append(el('ol',{class:'unit-list'},courseUnits.map((group,index)=>
         el('li',{},el('button',{type:'button',class:'btn','data-unit-id':group.id,onclick:()=>openUnit(group)},...unitLabel(group,index,model))))));
-      else main.append(renderListView(model, stops, { onSelect: (n) => select(n), onOpenStop: openStop, onPractice: (i) => adapter.onPractice?.(i), selectedId: route.nodeId, showStopButton: !stop, showSkills:model.courseId!=='workplace'&&!unit }));
+      else main.append(renderListView(model, stops, { onSelect: (n) => practiceSkill(n), onOpenStop: openStop, onPractice: (i) => adapter.onPractice?.(i), selectedId: route.nodeId, showStopButton: !stop, showSkills:model.courseId!=='workplace'&&!unit }));
     }
     addReturnLinks(root);
     if (showSide) renderSide(focus === 'panel'||Boolean(keepPanel));
@@ -351,6 +383,9 @@ export function mountStudentMap(container, options) {
   const stale = hadMapContext && (wantedStop !== route.stopId || wantedNode !== route.nodeId || wantedView!==route.view);
   if (stale) writeHash(true);
   render();
+  try { const saved=JSON.parse(sessionStorage.getItem(viewKey()));
+    if(saved?.hash===routeHash(route)) {zoomLevel=saved.zoom??1;if(stageCtl){stageCtl.zoom=zoomLevel;stageCtl.viewport.scrollTo(saved.left,saved.top);}requestAnimationFrame(()=>window.scrollTo(0,saved.scroll));}
+  } catch {}
   if ((input.guest || input.classId) && route.nodeId) requestAnimationFrame(() => {
     if (document.activeElement === document.body) root.querySelector('.panel-title')?.focus();
   });

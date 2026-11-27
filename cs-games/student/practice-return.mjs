@@ -44,10 +44,10 @@ export function addPracticeReturn(header, profile, fallback) {
 
   const link = document.createElement('a');
   link.href = target || (stale ? fallback : classPath);
-  link.textContent = target ? 'Back to Course Map' : stale ? 'Back to Course' : 'My class progress';
+  link.textContent = target ? 'Back to Learning Map' : stale ? 'Back to Course' : 'My class progress';
   link.dataset.profileLink = 'true';
   header.append(link);
-  if (target && readRoute(new URL(target,current.origin).hash).nodeId)
+  if (target && (current.searchParams.get('practiceSkill') || readRoute(new URL(target,current.origin).hash).nodeId))
     void import('./practice-progress.mjs').then(({mountPracticeProgress})=>mountPracticeProgress(target,profile)).catch(()=>{});
   if (stale) {
     const note = document.createElement('p');

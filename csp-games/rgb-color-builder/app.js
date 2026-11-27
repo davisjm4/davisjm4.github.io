@@ -70,3 +70,7 @@ $('hint').onclick=()=>{if(!guard())return;$('hint-text').textContent=E.hint(curr
 newColor();
 // Exports support deterministic DOM integration tests; no target-revealing UI control.
 export const state=()=>({current,student:[...student],recordId,submitted,solved,tracker});
+
+// Keep the original exploratory editor and its daily metrics intact.
+import {mountCodeAssessment} from './assessment.js';
+mountCodeAssessment(tracker);

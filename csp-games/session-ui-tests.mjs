@@ -17,7 +17,7 @@ const { parseHTML } = createRequire(import.meta.url)(
   process.env.CSP_DOM_LIBRARY || "linkedom",
 );
 const read = (p) => fs.readFileSync(new URL(p, import.meta.url), "utf8"),
-  returnSource = read('../cs-games/student/practice-return.mjs').replace(/import[^;]+;/g, '').replace(/export /g, ''),
+  returnSource = read('../cs-games/student/practice-return.mjs').replace(/^import[^;]+;/gm, '').replace(/export /g, ''),
   sessionSource = read("./session.js").replace(/import[^;]+;/g, "").replace(/export /g, ""),
   appSource = read("./app.js")
     .replace(/import[^;]+;/g, "")

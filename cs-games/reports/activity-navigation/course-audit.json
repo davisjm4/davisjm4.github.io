@@ -1,0 +1,1317 @@
+[
+  {
+    "courseId": "advanced",
+    "activities": [
+      {
+        "id": "area:advanced:variable-lab",
+        "title": "Variable Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:variable-lab:trace",
+          "node:advanced:variable-lab:identify/type",
+          "node:advanced:variable-lab:identify/name",
+          "node:advanced:variable-lab:identify/operator",
+          "node:advanced:variable-lab:identify/value",
+          "node:advanced:variable-lab:identify/declaration",
+          "node:advanced:variable-lab:identify/initialization",
+          "node:advanced:variable-lab:identify/assignment-operator",
+          "node:advanced:variable-lab:identify/assignment",
+          "node:advanced:variable-lab:identify/declaration-only",
+          "node:advanced:variable-lab:identify/stored",
+          "node:advanced:variable-lab:identify/conversion",
+          "node:advanced:variable-lab:identify/compatibility",
+          "node:advanced:variable-lab:assemble"
+        ],
+        "automated": [
+          "node:advanced:variable-lab:trace",
+          "node:advanced:variable-lab:identify/type",
+          "node:advanced:variable-lab:identify/name",
+          "node:advanced:variable-lab:identify/operator",
+          "node:advanced:variable-lab:identify/value",
+          "node:advanced:variable-lab:identify/declaration",
+          "node:advanced:variable-lab:identify/initialization",
+          "node:advanced:variable-lab:identify/assignment-operator",
+          "node:advanced:variable-lab:identify/assignment",
+          "node:advanced:variable-lab:identify/declaration-only",
+          "node:advanced:variable-lab:identify/stored",
+          "node:advanced:variable-lab:identify/conversion",
+          "node:advanced:variable-lab:identify/compatibility",
+          "node:advanced:variable-lab:assemble"
+        ],
+        "demonstration": []
+      },
+      {
+        "id": "area:advanced:math-lab",
+        "title": "Math Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:math-lab:modulus",
+          "node:advanced:math-lab:division",
+          "node:advanced:math-lab:casting",
+          "node:advanced:math-lab:expressions",
+          "node:advanced:math-lab:reverse",
+          "node:advanced:math-lab:math-methods",
+          "node:advanced:math-lab:numeric-limits"
+        ],
+        "automated": [
+          "node:advanced:math-lab:modulus",
+          "node:advanced:math-lab:division",
+          "node:advanced:math-lab:casting",
+          "node:advanced:math-lab:expressions",
+          "node:advanced:math-lab:reverse"
+        ],
+        "demonstration": [
+          "node:advanced:math-lab:math-methods",
+          "node:advanced:math-lab:numeric-limits"
+        ]
+      },
+      {
+        "id": "area:advanced:boolean-conditional-lab",
+        "title": "Boolean & Conditional Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:boolean-conditional-lab:branch",
+          "node:advanced:boolean-conditional-lab:conditions",
+          "node:advanced:boolean-conditional-lab:equivalent",
+          "node:advanced:boolean-conditional-lab:short",
+          "node:advanced:boolean-conditional-lab:construct",
+          "node:advanced:boolean-conditional-lab:evaluate",
+          "node:advanced:boolean-conditional-lab:identify",
+          "node:advanced:boolean-conditional-lab:truthTable",
+          "node:advanced:boolean-conditional-lab:switchIf",
+          "node:advanced:boolean-conditional-lab:coverage"
+        ],
+        "automated": [
+          "node:advanced:boolean-conditional-lab:branch",
+          "node:advanced:boolean-conditional-lab:conditions",
+          "node:advanced:boolean-conditional-lab:equivalent",
+          "node:advanced:boolean-conditional-lab:construct",
+          "node:advanced:boolean-conditional-lab:evaluate",
+          "node:advanced:boolean-conditional-lab:identify",
+          "node:advanced:boolean-conditional-lab:truthTable",
+          "node:advanced:boolean-conditional-lab:switchIf"
+        ],
+        "demonstration": [
+          "node:advanced:boolean-conditional-lab:short",
+          "node:advanced:boolean-conditional-lab:coverage"
+        ]
+      },
+      {
+        "id": "area:advanced:string-lab",
+        "title": "String Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:string-lab:predict",
+          "node:advanced:string-lab:trace",
+          "node:advanced:string-lab:index",
+          "node:advanced:string-lab:expr",
+          "node:advanced:string-lab:algo",
+          "node:advanced:string-lab:compare",
+          "node:advanced:string-lab:loop"
+        ],
+        "automated": [
+          "node:advanced:string-lab:predict",
+          "node:advanced:string-lab:trace",
+          "node:advanced:string-lab:index",
+          "node:advanced:string-lab:expr"
+        ],
+        "demonstration": [
+          "node:advanced:string-lab:algo",
+          "node:advanced:string-lab:compare",
+          "node:advanced:string-lab:loop"
+        ]
+      },
+      {
+        "id": "area:advanced:loop-lab",
+        "title": "Loop Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:loop-lab:looptype",
+          "node:advanced:loop-lab:components",
+          "node:advanced:loop-lab:iterations",
+          "node:advanced:loop-lab:while",
+          "node:advanced:loop-lab:final",
+          "node:advanced:loop-lab:choose",
+          "node:advanced:loop-lab:conditional",
+          "node:advanced:loop-lab:nested",
+          "node:advanced:loop-lab:debug",
+          "node:advanced:loop-lab:algorithms",
+          "node:advanced:loop-lab:executions"
+        ],
+        "automated": [
+          "node:advanced:loop-lab:looptype",
+          "node:advanced:loop-lab:components",
+          "node:advanced:loop-lab:final",
+          "node:advanced:loop-lab:conditional",
+          "node:advanced:loop-lab:nested"
+        ],
+        "demonstration": [
+          "node:advanced:loop-lab:iterations",
+          "node:advanced:loop-lab:while",
+          "node:advanced:loop-lab:choose",
+          "node:advanced:loop-lab:debug",
+          "node:advanced:loop-lab:algorithms",
+          "node:advanced:loop-lab:executions"
+        ]
+      },
+      {
+        "id": "area:advanced:array-lab",
+        "title": "Array Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:array-lab:element",
+          "node:advanced:array-lab:predict-update",
+          "node:advanced:array-lab:perform-update",
+          "node:advanced:array-lab:search",
+          "node:advanced:array-lab:traversal",
+          "node:advanced:array-lab:access-2d",
+          "node:advanced:array-lab:update-2d",
+          "node:advanced:array-lab:nested",
+          "node:advanced:array-lab:reverse",
+          "node:advanced:array-lab:create-references",
+          "node:advanced:array-lab:in-place",
+          "node:advanced:array-lab:trace-2d"
+        ],
+        "automated": [
+          "node:advanced:array-lab:element",
+          "node:advanced:array-lab:predict-update",
+          "node:advanced:array-lab:perform-update",
+          "node:advanced:array-lab:search",
+          "node:advanced:array-lab:traversal",
+          "node:advanced:array-lab:access-2d",
+          "node:advanced:array-lab:update-2d",
+          "node:advanced:array-lab:nested",
+          "node:advanced:array-lab:reverse",
+          "node:advanced:array-lab:create-references",
+          "node:advanced:array-lab:in-place",
+          "node:advanced:array-lab:trace-2d"
+        ],
+        "demonstration": []
+      },
+      {
+        "id": "area:advanced:arraylist-lab",
+        "title": "ArrayList Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:arraylist-lab:access",
+          "node:advanced:arraylist-lab:insert-remove",
+          "node:advanced:arraylist-lab:search-size",
+          "node:advanced:arraylist-lab:traverse",
+          "node:advanced:arraylist-lab:compare"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:advanced:arraylist-lab:access",
+          "node:advanced:arraylist-lab:insert-remove",
+          "node:advanced:arraylist-lab:search-size",
+          "node:advanced:arraylist-lab:traverse",
+          "node:advanced:arraylist-lab:compare"
+        ]
+      },
+      {
+        "id": "area:advanced:linkedlist-lab",
+        "title": "LinkedList Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:linkedlist-lab:trace",
+          "node:advanced:linkedlist-lab:collections",
+          "node:advanced:linkedlist-lab:references"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:advanced:linkedlist-lab:trace",
+          "node:advanced:linkedlist-lab:collections",
+          "node:advanced:linkedlist-lab:references"
+        ]
+      },
+      {
+        "id": "area:advanced:method-constructor-lab",
+        "title": "Method & Constructor Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:method-constructor-lab:identify-method",
+          "node:advanced:method-constructor-lab:identify-constructor",
+          "node:advanced:method-constructor-lab:match-call",
+          "node:advanced:method-constructor-lab:return",
+          "node:advanced:method-constructor-lab:constructors",
+          "node:advanced:method-constructor-lab:returned-values",
+          "node:advanced:method-constructor-lab:fix",
+          "node:advanced:method-constructor-lab:access"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:advanced:method-constructor-lab:identify-method",
+          "node:advanced:method-constructor-lab:identify-constructor",
+          "node:advanced:method-constructor-lab:match-call",
+          "node:advanced:method-constructor-lab:return",
+          "node:advanced:method-constructor-lab:constructors",
+          "node:advanced:method-constructor-lab:returned-values",
+          "node:advanced:method-constructor-lab:fix",
+          "node:advanced:method-constructor-lab:access"
+        ]
+      },
+      {
+        "id": "area:advanced:class-object-lab",
+        "title": "Class & Object Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:class-object-lab:structure",
+          "node:advanced:class-object-lab:defaults",
+          "node:advanced:class-object-lab:constructors",
+          "node:advanced:class-object-lab:getters",
+          "node:advanced:class-object-lab:setters",
+          "node:advanced:class-object-lab:this",
+          "node:advanced:class-object-lab:independent",
+          "node:advanced:class-object-lab:aliases",
+          "node:advanced:class-object-lab:equality",
+          "node:advanced:class-object-lab:parameters",
+          "node:advanced:class-object-lab:static",
+          "node:advanced:class-object-lab:tostring",
+          "node:advanced:class-object-lab:reverse"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:advanced:class-object-lab:structure",
+          "node:advanced:class-object-lab:defaults",
+          "node:advanced:class-object-lab:constructors",
+          "node:advanced:class-object-lab:getters",
+          "node:advanced:class-object-lab:setters",
+          "node:advanced:class-object-lab:this",
+          "node:advanced:class-object-lab:independent",
+          "node:advanced:class-object-lab:aliases",
+          "node:advanced:class-object-lab:equality",
+          "node:advanced:class-object-lab:parameters",
+          "node:advanced:class-object-lab:static",
+          "node:advanced:class-object-lab:tostring",
+          "node:advanced:class-object-lab:reverse"
+        ]
+      },
+      {
+        "id": "area:advanced:inheritance-polymorphism-lab",
+        "title": "Inheritance & Polymorphism Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:inheritance-polymorphism-lab:abstract",
+          "node:advanced:inheritance-polymorphism-lab:hierarchy",
+          "node:advanced:inheritance-polymorphism-lab:override",
+          "node:advanced:inheritance-polymorphism-lab:tracer",
+          "node:advanced:inheritance-polymorphism-lab:debug"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:advanced:inheritance-polymorphism-lab:abstract",
+          "node:advanced:inheritance-polymorphism-lab:hierarchy",
+          "node:advanced:inheritance-polymorphism-lab:override",
+          "node:advanced:inheritance-polymorphism-lab:tracer",
+          "node:advanced:inheritance-polymorphism-lab:debug"
+        ]
+      },
+      {
+        "id": "area:advanced:search-sort-lab",
+        "title": "Search & Sort Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:search-sort-lab:binary",
+          "node:advanced:search-sort-lab:selection",
+          "node:advanced:search-sort-lab:insertion",
+          "node:advanced:search-sort-lab:merge",
+          "node:advanced:search-sort-lab:name",
+          "node:advanced:search-sort-lab:compare"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:advanced:search-sort-lab:binary",
+          "node:advanced:search-sort-lab:selection",
+          "node:advanced:search-sort-lab:insertion",
+          "node:advanced:search-sort-lab:merge",
+          "node:advanced:search-sort-lab:name",
+          "node:advanced:search-sort-lab:compare"
+        ]
+      },
+      {
+        "id": "area:advanced:recursion-lab",
+        "title": "Recursion Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:recursion-lab:base",
+          "node:advanced:recursion-lab:returns",
+          "node:advanced:recursion-lab:output",
+          "node:advanced:recursion-lab:arrays",
+          "node:advanced:recursion-lab:debug",
+          "node:advanced:recursion-lab:searchsort"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:advanced:recursion-lab:base",
+          "node:advanced:recursion-lab:returns",
+          "node:advanced:recursion-lab:output",
+          "node:advanced:recursion-lab:arrays",
+          "node:advanced:recursion-lab:debug",
+          "node:advanced:recursion-lab:searchsort"
+        ]
+      },
+      {
+        "id": "area:advanced:debugger-lab",
+        "title": "Debugger Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:debugger-lab:correction",
+          "node:advanced:debugger-lab:statement",
+          "node:advanced:debugger-lab:explanation",
+          "node:advanced:debugger-lab:test",
+          "node:advanced:debugger-lab:exception"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:advanced:debugger-lab:correction",
+          "node:advanced:debugger-lab:statement",
+          "node:advanced:debugger-lab:explanation",
+          "node:advanced:debugger-lab:test",
+          "node:advanced:debugger-lab:exception"
+        ]
+      },
+      {
+        "id": "area:advanced:documentation-lab",
+        "title": "Documentation Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:documentation-lab:inspector",
+          "node:advanced:documentation-lab:docs",
+          "node:advanced:documentation-lab:detective",
+          "node:advanced:documentation-lab:editor",
+          "node:advanced:documentation-lab:builder"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:advanced:documentation-lab:inspector",
+          "node:advanced:documentation-lab:docs",
+          "node:advanced:documentation-lab:detective",
+          "node:advanced:documentation-lab:editor",
+          "node:advanced:documentation-lab:builder"
+        ]
+      },
+      {
+        "id": "area:advanced:robot-algorithms",
+        "title": "Robot Algorithms",
+        "kind": "practice",
+        "skillIds": [
+          "node:advanced:robot-algorithms:predict",
+          "node:advanced:robot-algorithms:loops",
+          "node:advanced:robot-algorithms:conditionals",
+          "node:advanced:robot-algorithms:methods",
+          "node:advanced:robot-algorithms:build",
+          "node:advanced:robot-algorithms:debug"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:advanced:robot-algorithms:predict",
+          "node:advanced:robot-algorithms:loops",
+          "node:advanced:robot-algorithms:conditionals",
+          "node:advanced:robot-algorithms:methods",
+          "node:advanced:robot-algorithms:build",
+          "node:advanced:robot-algorithms:debug"
+        ]
+      }
+    ],
+    "requiredActivities": 16,
+    "completedActivities": 0,
+    "skills": 123,
+    "requiredSkills": 123,
+    "completedSkills": 0
+  },
+  {
+    "courseId": "csp",
+    "activities": [
+      {
+        "id": "area:csp:vocabulary-fill-in-lab",
+        "title": "AP CSP Vocabulary Fill-in Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:vocabulary-fill-in-lab:CSP-PURPOSE",
+          "node:csp:vocabulary-fill-in-lab:CSP-DEVELOPMENT",
+          "node:csp:vocabulary-fill-in-lab:CSP-COLLABORATION",
+          "node:csp:vocabulary-fill-in-lab:CSP-DESIGN",
+          "node:csp:vocabulary-fill-in-lab:CSP-DOCUMENTATION",
+          "node:csp:vocabulary-fill-in-lab:CSP-LIBRARIES",
+          "node:csp:vocabulary-fill-in-lab:CSP-UNDECIDABLE"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:vocabulary-fill-in-lab:CSP-PURPOSE",
+          "node:csp:vocabulary-fill-in-lab:CSP-DEVELOPMENT",
+          "node:csp:vocabulary-fill-in-lab:CSP-COLLABORATION",
+          "node:csp:vocabulary-fill-in-lab:CSP-DESIGN",
+          "node:csp:vocabulary-fill-in-lab:CSP-DOCUMENTATION",
+          "node:csp:vocabulary-fill-in-lab:CSP-LIBRARIES",
+          "node:csp:vocabulary-fill-in-lab:CSP-UNDECIDABLE"
+        ]
+      },
+      {
+        "id": "area:csp:test-case-builder",
+        "title": "Test Case Builder",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:test-case-builder:CSP-FUNCTION",
+          "node:csp:test-case-builder:CSP-TESTING",
+          "node:csp:test-case-builder:CSP-DEBUGGING"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:test-case-builder:CSP-FUNCTION",
+          "node:csp:test-case-builder:CSP-TESTING",
+          "node:csp:test-case-builder:CSP-DEBUGGING"
+        ]
+      },
+      {
+        "id": "area:csp:create-task-lab",
+        "title": "Create Performance Task Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:create-task-lab:CSP-INPUT",
+          "node:csp:create-task-lab:CSP-OUTPUT",
+          "node:csp:create-task-lab:CSP-PPR",
+          "node:csp:create-task-lab:CSP-STUDENT-PROCEDURE"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:create-task-lab:CSP-INPUT",
+          "node:csp:create-task-lab:CSP-OUTPUT",
+          "node:csp:create-task-lab:CSP-PPR",
+          "node:csp:create-task-lab:CSP-STUDENT-PROCEDURE"
+        ]
+      },
+      {
+        "id": "area:csp:binary-builder",
+        "title": "Binary Builder",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:binary-builder:CSP-BINARY",
+          "node:csp:binary-builder:CSP-CAPACITY",
+          "node:csp:binary-builder:CSP-REPRESENTATION"
+        ],
+        "automated": [
+          "node:csp:binary-builder:CSP-BINARY",
+          "node:csp:binary-builder:CSP-CAPACITY",
+          "node:csp:binary-builder:CSP-REPRESENTATION"
+        ],
+        "demonstration": []
+      },
+      {
+        "id": "area:csp:rgb-color-builder",
+        "title": "RGB Color Code Builder",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:rgb-color-builder:CSP-RGB"
+        ],
+        "automated": [
+          "node:csp:rgb-color-builder:CSP-RGB"
+        ],
+        "demonstration": []
+      },
+      {
+        "id": "area:csp:ascii-binary-builder",
+        "title": "ASCII Binary Name Builder",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:ascii-binary-builder:CSP-CHARACTERS"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:ascii-binary-builder:CSP-CHARACTERS"
+        ]
+      },
+      {
+        "id": "area:csp:analog-digital-lab",
+        "title": "Analog vs. Digital Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:analog-digital-lab:CSP-ANALOG"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:analog-digital-lab:CSP-ANALOG"
+        ]
+      },
+      {
+        "id": "area:csp:roundoff-overflow-lab",
+        "title": "Roundoff vs. Overflow Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:roundoff-overflow-lab:CSP-NUMERIC"
+        ],
+        "automated": [
+          "node:csp:roundoff-overflow-lab:CSP-NUMERIC"
+        ],
+        "demonstration": []
+      },
+      {
+        "id": "area:csp:lossless-lossy-lab",
+        "title": "Lossless vs. Lossy Compression Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:lossless-lossy-lab:CSP-COMPRESSION"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:lossless-lossy-lab:CSP-COMPRESSION"
+        ]
+      },
+      {
+        "id": "area:csp:data-detective",
+        "title": "Data Detective",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:data-detective:CSP-ANALYSIS",
+          "node:csp:data-detective:CSP-VISUALIZATION",
+          "node:csp:data-detective:CSP-TRANSFORM"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:data-detective:CSP-ANALYSIS",
+          "node:csp:data-detective:CSP-VISUALIZATION",
+          "node:csp:data-detective:CSP-TRANSFORM"
+        ]
+      },
+      {
+        "id": "area:csp:code-concepts",
+        "title": "Code Concepts",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:code-concepts:CSP-VARIABLES",
+          "node:csp:code-concepts:CSP-EXPRESSIONS",
+          "node:csp:code-concepts:CSP-PROCEDURES",
+          "node:csp:code-concepts:CSP-PARAMETERS"
+        ],
+        "automated": [
+          "node:csp:code-concepts:CSP-VARIABLES",
+          "node:csp:code-concepts:CSP-PROCEDURES",
+          "node:csp:code-concepts:CSP-PARAMETERS"
+        ],
+        "demonstration": [
+          "node:csp:code-concepts:CSP-EXPRESSIONS"
+        ]
+      },
+      {
+        "id": "area:csp:boolean-gatekeeper",
+        "title": "Boolean Gatekeeper",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:boolean-gatekeeper:CSP-BOOLEAN"
+        ],
+        "automated": [
+          "node:csp:boolean-gatekeeper:CSP-BOOLEAN"
+        ],
+        "demonstration": []
+      },
+      {
+        "id": "area:csp:algorithm-architect",
+        "title": "Algorithm Architect",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:algorithm-architect:CSP-SELECTION",
+          "node:csp:algorithm-architect:CSP-ITERATION",
+          "node:csp:algorithm-architect:CSP-SEQUENCE"
+        ],
+        "automated": [
+          "node:csp:algorithm-architect:CSP-SELECTION",
+          "node:csp:algorithm-architect:CSP-ITERATION",
+          "node:csp:algorithm-architect:CSP-SEQUENCE"
+        ],
+        "demonstration": []
+      },
+      {
+        "id": "area:csp:trivial-nontrivial",
+        "title": "Trivial or Non-Trivial?",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:trivial-nontrivial:CSP-ALGORITHMS"
+        ],
+        "automated": [
+          "node:csp:trivial-nontrivial:CSP-ALGORITHMS"
+        ],
+        "demonstration": []
+      },
+      {
+        "id": "area:csp:list-lab",
+        "title": "List Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:list-lab:CSP-LISTS"
+        ],
+        "automated": [
+          "node:csp:list-lab:CSP-LISTS"
+        ],
+        "demonstration": []
+      },
+      {
+        "id": "area:csp:response-builder",
+        "title": "Response Builder",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:response-builder:CSP-DATA-ABSTRACTION",
+          "node:csp:response-builder:CSP-PROCEDURAL-ABSTRACTION"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:response-builder:CSP-DATA-ABSTRACTION",
+          "node:csp:response-builder:CSP-PROCEDURAL-ABSTRACTION"
+        ]
+      },
+      {
+        "id": "area:csp:binary-search-hunt",
+        "title": "Binary Search Hunt",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:binary-search-hunt:CSP-SEARCH"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:binary-search-hunt:CSP-SEARCH"
+        ]
+      },
+      {
+        "id": "area:csp:simulation-lab",
+        "title": "Simulation Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:simulation-lab:CSP-RANDOM",
+          "node:csp:simulation-lab:CSP-SIMULATION"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:simulation-lab:CSP-RANDOM",
+          "node:csp:simulation-lab:CSP-SIMULATION"
+        ]
+      },
+      {
+        "id": "area:csp:algorithm-race",
+        "title": "Algorithm Race",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:algorithm-race:CSP-EFFICIENCY"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:algorithm-race:CSP-EFFICIENCY"
+        ]
+      },
+      {
+        "id": "area:csp:internet-layers-lab",
+        "title": "Internet Layers & Protocol Roles Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:internet-layers-lab:CSP-SYSTEMS",
+          "node:csp:internet-layers-lab:CSP-PROTOCOLS",
+          "node:csp:internet-layers-lab:CSP-IP",
+          "node:csp:internet-layers-lab:CSP-DNS",
+          "node:csp:internet-layers-lab:CSP-PACKETS",
+          "node:csp:internet-layers-lab:CSP-SECURE-NETWORKS"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:internet-layers-lab:CSP-SYSTEMS",
+          "node:csp:internet-layers-lab:CSP-PROTOCOLS",
+          "node:csp:internet-layers-lab:CSP-IP",
+          "node:csp:internet-layers-lab:CSP-DNS",
+          "node:csp:internet-layers-lab:CSP-PACKETS",
+          "node:csp:internet-layers-lab:CSP-SECURE-NETWORKS"
+        ]
+      },
+      {
+        "id": "area:csp:tcp-udp-lab",
+        "title": "TCP vs. UDP Decision Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:tcp-udp-lab:CSP-TRANSPORT"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:tcp-udp-lab:CSP-TRANSPORT"
+        ]
+      },
+      {
+        "id": "area:csp:network-breaker",
+        "title": "Network Breaker",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:network-breaker:CSP-RESILIENCE"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:network-breaker:CSP-RESILIENCE"
+        ]
+      },
+      {
+        "id": "area:csp:parallel-processing-race",
+        "title": "Parallel Processing Race",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:parallel-processing-race:CSP-PARALLEL"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:parallel-processing-race:CSP-PARALLEL"
+        ]
+      },
+      {
+        "id": "area:csp:ai-ethics-lab",
+        "title": "AI Ethics Scenario Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:ai-ethics-lab:CSP-IMPACTS",
+          "node:csp:ai-ethics-lab:CSP-BIAS",
+          "node:csp:ai-ethics-lab:CSP-ETHICS",
+          "node:csp:ai-ethics-lab:CSP-PRIVACY"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:ai-ethics-lab:CSP-IMPACTS",
+          "node:csp:ai-ethics-lab:CSP-BIAS",
+          "node:csp:ai-ethics-lab:CSP-ETHICS",
+          "node:csp:ai-ethics-lab:CSP-PRIVACY"
+        ]
+      },
+      {
+        "id": "area:csp:digital-divide-lab",
+        "title": "Digital Divide Scenario Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:digital-divide-lab:CSP-DIVIDE"
+        ],
+        "automated": [
+          "node:csp:digital-divide-lab:CSP-DIVIDE"
+        ],
+        "demonstration": []
+      },
+      {
+        "id": "area:csp:computing-impact-lab",
+        "title": "Computing Impact Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:computing-impact-lab:CSP-CROWD"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:computing-impact-lab:CSP-CROWD"
+        ]
+      },
+      {
+        "id": "area:csp:copyright-creative-commons-lab",
+        "title": "Copyright & Creative Commons Lab",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:copyright-creative-commons-lab:CSP-RIGHTS"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:copyright-creative-commons-lab:CSP-RIGHTS"
+        ]
+      },
+      {
+        "id": "area:csp:cybersecurity-defender",
+        "title": "Cybersecurity Defender",
+        "kind": "practice",
+        "skillIds": [
+          "node:csp:cybersecurity-defender:CSP-SECURITY"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:csp:cybersecurity-defender:CSP-SECURITY"
+        ]
+      }
+    ],
+    "requiredActivities": 28,
+    "completedActivities": 0,
+    "skills": 58,
+    "requiredSkills": 58,
+    "completedSkills": 0
+  },
+  {
+    "courseId": "workplace",
+    "activities": [
+      {
+        "id": "area:workplace:creativity-and-innovation",
+        "title": "Creativity and Innovation",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:creativity-and-innovation:contribute-ideas",
+          "node:workplace:creativity-and-innovation:improve-processes",
+          "node:workplace:creativity-and-innovation:allocate-resources",
+          "node:workplace:creativity-and-innovation:value-of-creativity"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:creativity-and-innovation:contribute-ideas",
+          "node:workplace:creativity-and-innovation:improve-processes",
+          "node:workplace:creativity-and-innovation:allocate-resources",
+          "node:workplace:creativity-and-innovation:value-of-creativity"
+        ]
+      },
+      {
+        "id": "area:workplace:critical-thinking-and-problem-solving",
+        "title": "Critical Thinking and Problem Solving",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:critical-thinking-and-problem-solving:analyze-problems",
+          "node:workplace:critical-thinking-and-problem-solving:evaluate-solutions",
+          "node:workplace:critical-thinking-and-problem-solving:logical-decisions",
+          "node:workplace:critical-thinking-and-problem-solving:implement-action"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:critical-thinking-and-problem-solving:analyze-problems",
+          "node:workplace:critical-thinking-and-problem-solving:evaluate-solutions",
+          "node:workplace:critical-thinking-and-problem-solving:logical-decisions",
+          "node:workplace:critical-thinking-and-problem-solving:implement-action"
+        ]
+      },
+      {
+        "id": "area:workplace:initiative-and-self-direction",
+        "title": "Initiative and Self-Direction",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:initiative-and-self-direction:proactive-decisions",
+          "node:workplace:initiative-and-self-direction:identify-needs",
+          "node:workplace:initiative-and-self-direction:minimal-supervision",
+          "node:workplace:initiative-and-self-direction:apply-solutions"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:initiative-and-self-direction:proactive-decisions",
+          "node:workplace:initiative-and-self-direction:identify-needs",
+          "node:workplace:initiative-and-self-direction:minimal-supervision",
+          "node:workplace:initiative-and-self-direction:apply-solutions"
+        ]
+      },
+      {
+        "id": "area:workplace:integrity",
+        "title": "Integrity",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:integrity:laws-and-regulations",
+          "node:workplace:integrity:policies-and-procedures",
+          "node:workplace:integrity:honesty-and-fairness",
+          "node:workplace:integrity:respect-for-property",
+          "node:workplace:integrity:importance-of-integrity"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:integrity:laws-and-regulations",
+          "node:workplace:integrity:policies-and-procedures",
+          "node:workplace:integrity:honesty-and-fairness",
+          "node:workplace:integrity:respect-for-property",
+          "node:workplace:integrity:importance-of-integrity"
+        ]
+      },
+      {
+        "id": "area:workplace:work-ethic",
+        "title": "Work Ethic",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:work-ethic:diligence",
+          "node:workplace:work-ethic:dependability",
+          "node:workplace:work-ethic:accountability",
+          "node:workplace:work-ethic:accepting-consequences"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:work-ethic:diligence",
+          "node:workplace:work-ethic:dependability",
+          "node:workplace:work-ethic:accountability",
+          "node:workplace:work-ethic:accepting-consequences"
+        ]
+      },
+      {
+        "id": "area:workplace:conflict-resolution",
+        "title": "Conflict Resolution",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:conflict-resolution:diplomatic-negotiation",
+          "node:workplace:conflict-resolution:work-style-differences",
+          "node:workplace:conflict-resolution:performance-concerns",
+          "node:workplace:conflict-resolution:personality-and-culture",
+          "node:workplace:conflict-resolution:when-to-escalate"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:conflict-resolution:diplomatic-negotiation",
+          "node:workplace:conflict-resolution:work-style-differences",
+          "node:workplace:conflict-resolution:performance-concerns",
+          "node:workplace:conflict-resolution:personality-and-culture",
+          "node:workplace:conflict-resolution:when-to-escalate"
+        ]
+      },
+      {
+        "id": "area:workplace:listening-and-speaking",
+        "title": "Listening and Speaking",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:listening-and-speaking:nonverbal-cues",
+          "node:workplace:listening-and-speaking:active-listening",
+          "node:workplace:listening-and-speaking:presenting",
+          "node:workplace:listening-and-speaking:audience-and-setting"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:listening-and-speaking:nonverbal-cues",
+          "node:workplace:listening-and-speaking:active-listening",
+          "node:workplace:listening-and-speaking:presenting",
+          "node:workplace:listening-and-speaking:audience-and-setting"
+        ]
+      },
+      {
+        "id": "area:workplace:respect-for-diversity",
+        "title": "Respect for Diversity",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:respect-for-diversity:individual-differences",
+          "node:workplace:respect-for-diversity:valuing-differences",
+          "node:workplace:respect-for-diversity:own-bias",
+          "node:workplace:respect-for-diversity:collaborating"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:respect-for-diversity:individual-differences",
+          "node:workplace:respect-for-diversity:valuing-differences",
+          "node:workplace:respect-for-diversity:own-bias",
+          "node:workplace:respect-for-diversity:collaborating"
+        ]
+      },
+      {
+        "id": "area:workplace:customer-service-orientation",
+        "title": "Customer Service Orientation",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:customer-service-orientation:internal-and-external",
+          "node:workplace:customer-service-orientation:prioritize-service",
+          "node:workplace:customer-service-orientation:anticipate-needs",
+          "node:workplace:customer-service-orientation:courteous-knowledgeable"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:customer-service-orientation:internal-and-external",
+          "node:workplace:customer-service-orientation:prioritize-service",
+          "node:workplace:customer-service-orientation:anticipate-needs",
+          "node:workplace:customer-service-orientation:courteous-knowledgeable"
+        ]
+      },
+      {
+        "id": "area:workplace:teamwork",
+        "title": "Teamwork",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:teamwork:expectations-roles-goals",
+          "node:workplace:teamwork:share-responsibility",
+          "node:workplace:teamwork:respect-contributions",
+          "node:workplace:teamwork:team-communication"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:teamwork:expectations-roles-goals",
+          "node:workplace:teamwork:share-responsibility",
+          "node:workplace:teamwork:respect-contributions",
+          "node:workplace:teamwork:team-communication"
+        ]
+      },
+      {
+        "id": "area:workplace:big-picture-thinking",
+        "title": "Big-Picture Thinking",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:big-picture-thinking:role-in-mission",
+          "node:workplace:big-picture-thinking:impacts-of-actions",
+          "node:workplace:big-picture-thinking:organization-structure",
+          "node:workplace:big-picture-thinking:community-and-industry"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:big-picture-thinking:role-in-mission",
+          "node:workplace:big-picture-thinking:impacts-of-actions",
+          "node:workplace:big-picture-thinking:organization-structure",
+          "node:workplace:big-picture-thinking:community-and-industry"
+        ]
+      },
+      {
+        "id": "area:workplace:career-and-life-management",
+        "title": "Career and Life Management",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:career-and-life-management:qualifications-and-advancement",
+          "node:workplace:career-and-life-management:benefits-and-resources",
+          "node:workplace:career-and-life-management:wellness-and-finances",
+          "node:workplace:career-and-life-management:smart-goals"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:career-and-life-management:qualifications-and-advancement",
+          "node:workplace:career-and-life-management:benefits-and-resources",
+          "node:workplace:career-and-life-management:wellness-and-finances",
+          "node:workplace:career-and-life-management:smart-goals"
+        ]
+      },
+      {
+        "id": "area:workplace:continuous-learning-and-adaptability",
+        "title": "Continuous Learning and Adaptability",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:continuous-learning-and-adaptability:learning-resources",
+          "node:workplace:continuous-learning-and-adaptability:acting-on-feedback",
+          "node:workplace:continuous-learning-and-adaptability:credentials",
+          "node:workplace:continuous-learning-and-adaptability:changing-requirements"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:continuous-learning-and-adaptability:learning-resources",
+          "node:workplace:continuous-learning-and-adaptability:acting-on-feedback",
+          "node:workplace:continuous-learning-and-adaptability:credentials",
+          "node:workplace:continuous-learning-and-adaptability:changing-requirements"
+        ]
+      },
+      {
+        "id": "area:workplace:efficiency-and-productivity",
+        "title": "Efficiency and Productivity",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:efficiency-and-productivity:work-plan",
+          "node:workplace:efficiency-and-productivity:prioritize-tasks",
+          "node:workplace:efficiency-and-productivity:adapt-goals",
+          "node:workplace:efficiency-and-productivity:human-resources",
+          "node:workplace:efficiency-and-productivity:capital-resources",
+          "node:workplace:efficiency-and-productivity:natural-resources"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:efficiency-and-productivity:work-plan",
+          "node:workplace:efficiency-and-productivity:prioritize-tasks",
+          "node:workplace:efficiency-and-productivity:adapt-goals",
+          "node:workplace:efficiency-and-productivity:human-resources",
+          "node:workplace:efficiency-and-productivity:capital-resources",
+          "node:workplace:efficiency-and-productivity:natural-resources"
+        ]
+      },
+      {
+        "id": "area:workplace:information-literacy",
+        "title": "Information Literacy",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:information-literacy:locate-sources",
+          "node:workplace:information-literacy:evaluate-credibility",
+          "node:workplace:information-literacy:judge-relevance",
+          "node:workplace:information-literacy:use-information"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:information-literacy:locate-sources",
+          "node:workplace:information-literacy:evaluate-credibility",
+          "node:workplace:information-literacy:judge-relevance",
+          "node:workplace:information-literacy:use-information"
+        ]
+      },
+      {
+        "id": "area:workplace:information-security",
+        "title": "Information Security",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:information-security:information-formats",
+          "node:workplace:information-security:cyber-threats",
+          "node:workplace:information-security:ethical-technology-use",
+          "node:workplace:information-security:acceptable-use",
+          "node:workplace:information-security:confidentiality",
+          "node:workplace:information-security:security-procedures"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:information-security:information-formats",
+          "node:workplace:information-security:cyber-threats",
+          "node:workplace:information-security:ethical-technology-use",
+          "node:workplace:information-security:acceptable-use",
+          "node:workplace:information-security:confidentiality",
+          "node:workplace:information-security:security-procedures"
+        ]
+      },
+      {
+        "id": "area:workplace:information-technology",
+        "title": "Information Technology",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:information-technology:hardware-and-devices",
+          "node:workplace:information-technology:software-and-applications",
+          "node:workplace:information-technology:cloud-and-file-sharing",
+          "node:workplace:information-technology:emerging-technology",
+          "node:workplace:information-technology:troubleshooting"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:information-technology:hardware-and-devices",
+          "node:workplace:information-technology:software-and-applications",
+          "node:workplace:information-technology:cloud-and-file-sharing",
+          "node:workplace:information-technology:emerging-technology",
+          "node:workplace:information-technology:troubleshooting"
+        ]
+      },
+      {
+        "id": "area:workplace:job-specific-tools-and-technologies",
+        "title": "Job-Specific Tools and Technologies",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:job-specific-tools-and-technologies:select-right-tool",
+          "node:workplace:job-specific-tools-and-technologies:safe-use"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:job-specific-tools-and-technologies:select-right-tool",
+          "node:workplace:job-specific-tools-and-technologies:safe-use"
+        ]
+      },
+      {
+        "id": "area:workplace:mathematics",
+        "title": "Mathematics",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:mathematics:basic-calculations",
+          "node:workplace:mathematics:job-task-math",
+          "node:workplace:mathematics:personal-finance"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:mathematics:basic-calculations",
+          "node:workplace:mathematics:job-task-math",
+          "node:workplace:mathematics:personal-finance"
+        ]
+      },
+      {
+        "id": "area:workplace:professionalism",
+        "title": "Professionalism",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:professionalism:punctuality-attendance",
+          "node:workplace:professionalism:etiquette",
+          "node:workplace:professionalism:self-representation",
+          "node:workplace:professionalism:appearance"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:professionalism:punctuality-attendance",
+          "node:workplace:professionalism:etiquette",
+          "node:workplace:professionalism:self-representation",
+          "node:workplace:professionalism:appearance"
+        ]
+      },
+      {
+        "id": "area:workplace:reading-and-writing",
+        "title": "Reading and Writing",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:reading-and-writing:interpret-documents",
+          "node:workplace:reading-and-writing:clarity",
+          "node:workplace:reading-and-writing:tone-and-audience",
+          "node:workplace:reading-and-writing:conventions"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:reading-and-writing:interpret-documents",
+          "node:workplace:reading-and-writing:clarity",
+          "node:workplace:reading-and-writing:tone-and-audience",
+          "node:workplace:reading-and-writing:conventions"
+        ]
+      },
+      {
+        "id": "area:workplace:workplace-safety",
+        "title": "Workplace Safety",
+        "kind": "practice",
+        "skillIds": [
+          "node:workplace:workplace-safety:safety-guidelines",
+          "node:workplace:workplace-safety:safety-data-sheets",
+          "node:workplace:workplace-safety:ppe",
+          "node:workplace:workplace-safety:universal-precautions",
+          "node:workplace:workplace-safety:identify-hazards",
+          "node:workplace:workplace-safety:emergency-protocols"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:workplace:workplace-safety:safety-guidelines",
+          "node:workplace:workplace-safety:safety-data-sheets",
+          "node:workplace:workplace-safety:ppe",
+          "node:workplace:workplace-safety:universal-precautions",
+          "node:workplace:workplace-safety:identify-hazards",
+          "node:workplace:workplace-safety:emergency-protocols"
+        ]
+      }
+    ],
+    "requiredActivities": 22,
+    "completedActivities": 0,
+    "skills": 94,
+    "requiredSkills": 94,
+    "completedSkills": 0
+  },
+  {
+    "courseId": "robotics",
+    "activities": [
+      {
+        "id": "area:robotics:parts-sprint",
+        "title": "VEX Parts Sprint",
+        "kind": "practice",
+        "skillIds": [
+          "node:robotics:parts-sprint:structure",
+          "node:robotics:parts-sprint:fasteners",
+          "node:robotics:parts-sprint:spacing",
+          "node:robotics:parts-sprint:motion",
+          "node:robotics:parts-sprint:transmission",
+          "node:robotics:parts-sprint:wheels",
+          "node:robotics:parts-sprint:tools",
+          "node:robotics:parts-sprint:electronics"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:robotics:parts-sprint:structure",
+          "node:robotics:parts-sprint:fasteners",
+          "node:robotics:parts-sprint:spacing",
+          "node:robotics:parts-sprint:motion",
+          "node:robotics:parts-sprint:transmission",
+          "node:robotics:parts-sprint:wheels",
+          "node:robotics:parts-sprint:tools",
+          "node:robotics:parts-sprint:electronics"
+        ]
+      },
+      {
+        "id": "area:robotics:course-architect",
+        "title": "Robo Rally Course Architect",
+        "kind": "practice",
+        "skillIds": [
+          "node:robotics:course-architect:scale",
+          "node:robotics:course-architect:geometry",
+          "node:robotics:course-architect:testing"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:robotics:course-architect:scale",
+          "node:robotics:course-architect:geometry",
+          "node:robotics:course-architect:testing"
+        ]
+      },
+      {
+        "id": "area:robotics:component-challenge",
+        "title": "VEX Component Challenge",
+        "kind": "practice",
+        "skillIds": [
+          "node:robotics:component-challenge:choose",
+          "node:robotics:component-challenge:troubleshoot",
+          "node:robotics:component-challenge:solution",
+          "node:robotics:component-challenge:tools"
+        ],
+        "automated": [],
+        "demonstration": [
+          "node:robotics:component-challenge:choose",
+          "node:robotics:component-challenge:troubleshoot",
+          "node:robotics:component-challenge:solution",
+          "node:robotics:component-challenge:tools"
+        ]
+      }
+    ],
+    "requiredActivities": 3,
+    "completedActivities": 0,
+    "skills": 15,
+    "requiredSkills": 15,
+    "completedSkills": 0
+  }
+]

@@ -127,10 +127,11 @@ export function buildMapModel(input) {
   const prereqTitle = new Map(graph.nodes.map((n) => [n.id, n.title]));
 
   const ordered = orderNodes(graph.nodes.filter((n) => n.courseId === courseId), input.sequence, warnings);
-  // Runs of the same area become stops.
+  // Activity navigation is independent of curriculum sequencing. Combine all
+  // occurrences of an area, retaining first occurrence order and stable skills.
   const runs = [];
   for (const node of ordered) {
-    const last = runs.at(-1);
+    const last = runs.find(run => run.areaId === node.areaId);
     if (last && last.areaId === node.areaId) last.raw.push(node); else runs.push({ areaId: node.areaId, raw: [node] });
   }
   const runCount = new Map();
@@ -162,7 +163,7 @@ export function buildMapModel(input) {
       const attempted = progress?.attempt?.attempted ?? 0;
       const started = complete || state === 'in-progress' || state === 'review' || attempted > 0 || (progress?.lifetime?.questionsAnswered ?? 0) > 0;
       const view = {
-        id: raw.id, title: raw.title, objective: raw.objective ?? '', curriculumRefs: raw.standardRefs ?? [], areaId: raw.areaId, stopId: id, order: i + 1, orderOf: run.raw.length, courseIndex: flat.length,
+        id: raw.id, title: raw.title, objective: raw.objective ?? '', curriculumRefs: raw.standardRefs ?? [], areaId: raw.areaId, stopId: id, order: i + 1, orderOf: run.raw.length, courseIndex: ordered.indexOf(raw),
         state, unrecognized, classParticipation:Boolean(input.pathwayCompletion), optional: !required, required, complete, started, requirementsConfigured, practiceOnly: !requirementsConfigured,
         proficiency,
         teacherAssessmentRequired:raw.teacherAssessmentRequired, guest:raw.guest,practiceGoal:raw.practiceGoal,verifiedAward:raw.verifiedAward||(progress?.verification==='verified'&&Boolean(progress.award?.id)),
@@ -182,6 +183,7 @@ export function buildMapModel(input) {
     return stop;
   });
 
+  flat.sort((a,b)=>a.courseIndex-b.courseIndex);
   // Pacing overlay. In the default undated pathway nothing about dates reaches the model.
   const currentStop = dated && pacingIn.currentAreaId
     ? (stops.find((s) => s.areaId === pacingIn.currentAreaId && !s.summary.complete) ?? stops.find((s) => s.areaId === pacingIn.currentAreaId) ?? null) : null;
@@ -214,4 +216,4 @@ export function buildMapModel(input) {
   };
 }
 export const findNode = (model, id) => model.nodeIndex[id] ?? null;
-export const findStop = (model, id) => model.stops.find((s) => s.id === id) ?? null;
+export const findStop = (model, id) => model.stops.find((s) => s.id === String(id).replace(/~\d+$/, '')) ?? null;

@@ -1,3 +1,4 @@
+import {activityCounts} from '../activity-routing.mjs';
 // View A: the whole course as one journey. Each learning area is a place on a winding trail.
 import { stopSummaryLine } from '../copy.mjs';
 import { icon } from '../icons.mjs';
@@ -6,7 +7,7 @@ import { el, svg } from './dom.mjs';
 import { createBackdrop } from './trail.mjs';
 
 export function renderUnitMap(groups, model, {width,onOpenUnit}) {
-  const layout = serpentine(groups.length,{width,cellW:152,cellH:170,padX:12,padY:16,maxCols:4,wobble:8});
+  const layout = serpentine(groups.length,{width,cellW:152,cellH:230,padX:12,padY:16,maxCols:4,wobble:8});
   const content = [createBackdrop({width,height:layout.height,points:layout.points,motif:'dots',travelled:0,bulge:84})];
   groups.forEach((group,index)=>{
     const {x,y} = layout.points[index];
@@ -19,9 +20,8 @@ export function renderUnitMap(groups, model, {width,onOpenUnit}) {
 
 export function unitLabel(group,index,model) {
   const next = group.stops.some(stop=>stop.id===model.suggestedNext?.stopId);
-  const included = group.stops.filter(stop=>stop.summary.requiredTotal);
-  const complete = included.filter(stop=>stop.summary.complete).length;
-  const counts = included.length ? `${complete} of ${included.length} areas complete` : `${group.stops.length} learning areas`;
+  const totals=activityCounts(group.stops);
+  const counts=`${totals.activities} activities · ${totals.completedActivities}/${totals.requiredActivities} required complete · ${totals.completedSkills}/${totals.requiredSkills} skill targets met`;
   return [
     el('span',{class:'unit-circle','aria-hidden':'true',text:String(index+1)}),
     el('strong',{text:group.label.replace(/^\d+ · /,'')}),

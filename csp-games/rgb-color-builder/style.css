@@ -4,3 +4,8 @@ header{flex-wrap:wrap} main{max-width:1080px} h1{font-size:clamp(2rem,4.8vw,3.3r
 @media(max-width:430px){.bit-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.bit-control button{min-height:46px}.swatch{height:110px}}
 /* Keep the comparison visible while working farther down the editor. */
 .swatches{position:sticky;top:0;background:var(--panel);z-index:1;padding-top:8px}
+#rgb-code-question form { display: flex; flex-wrap: wrap; align-items: end; gap: 1rem; }
+#rgb-code-question label { display: grid; gap: .3rem; }
+#rgb-code-question input { width: 10ch; min-height: 44px; font: inherit; }
+#practice-type { min-height: 44px; max-width: 100%; }
+[hidden] { display: none !important; }

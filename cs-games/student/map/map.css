@@ -345,3 +345,9 @@
 
 .map-app .stop-art[data-complete=true] .body {fill:hsl(var(--h) 62% 38%);stroke:hsl(var(--h) 75% 65%);}
 .map-app .stop-art[data-complete=true] g {stroke:#fff;stroke-width:3;}
+
+/* At normal scale the document owns scrolling. Zoom explicitly enables panning. */
+.map-app .map-viewport[data-zoom="1"],
+.map-app .map-viewport[data-zoom="0.9"] { height: auto; overflow: visible; scrollbar-gutter: auto; }
+.map-app .map-viewport[data-zoom="1"] .stage-sizer,
+.map-app .map-viewport[data-zoom="0.9"] .stage-sizer { max-width: 100%; }
