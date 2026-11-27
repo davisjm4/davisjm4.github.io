@@ -6,6 +6,9 @@ on:
       - '.github/workflows/cs-games-worker-production.yml'
       - '.github/scripts/cs-games-worker-release.mjs'
       - 'wpr-games/workplace-readiness/service/**'
+      - 'cs-games/pathway/proficiency/**'
+      - 'cs-games/pathway/requirements/recommended.mjs'
+      - 'cs-games/pathway/curriculum-graph.json'
   workflow_dispatch:
 permissions:
   contents: read

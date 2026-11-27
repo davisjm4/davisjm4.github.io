@@ -39,6 +39,7 @@ const reasoning = {
 // Existing replay tests cover these sources outside the Java gap registry.
 // Keep sources with only exploratory or weak evidence outside this list.
 const separatelyReviewed = {
+  'rgb-color-builder': ['CSP-RGB'],
   'list-lab': ['CSP-LISTS'],
   'algorithm-architect': ['CSP-ITERATION', 'CSP-SELECTION', 'CSP-SEQUENCE'],
   'boolean-gatekeeper': ['CSP-BOOLEAN'],

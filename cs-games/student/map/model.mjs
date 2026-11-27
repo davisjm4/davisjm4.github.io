@@ -1,11 +1,11 @@
 // The map model. Pure: no DOM, no clock, no network. Everything a component draws comes from here, and everything here comes from
 // three read-only inputs: the curriculum graph, the evaluated progress contract, and an optional pacing overlay.
 //
-//   Course -> stop (a run of skills in one learning area) -> skill (node) -> practice activity
+//   Course -> unit -> activity (aggregated area) -> direct practice with stable skill context
 //
 // Order is the order of the pathway sequence (or, without one, of graph.nodes). `graph.areas` is NOT the curriculum order: for Advanced CS
-// it is alphabetical-ish, while graph.nodes follows the established order. An area whose skills are split by other areas (8 AP CSP areas)
-// becomes one stop per run so the journey never reorders the course.
+// it is alphabetical-ish, while graph.nodes follows the established order. Navigation groups an area at its first occurrence,
+// while the flat skill sequence and each skill's original courseIndex remain in published order.
 import { areaIdentity } from './identity.mjs';
 import { daysUntil, formatDay } from './format.mjs';
 import { practiceLinks } from '../practice-links.mjs';
@@ -91,8 +91,9 @@ function summarizeStop(stop, areaContract, classCompletion) {
   const independent = nodes.some(node=>node.guest);
   const label = req.length ? `${requiredCompleted} of ${req.length} ${independent?'skill targets':'requirements'} met` : classCompletion ? 'No required skills' : `${practiced} of ${nodes.length} skills practiced`;
   const practiceOnly = nodes.filter((n) => !n.requirementsConfigured && !n.proficiency?.goal).length;
+  const targetFraction = req.length ? req.reduce((sum,n)=>sum+(n.complete?1:n.skillTarget?.fraction??n.ring?.fraction??0),0)/req.length : practiced/nodes.length;
   return { status, mode, complete, practiceOnly, requiredTotal: req.length, requiredCompleted, optionalTotal: opt.length, optionalCompleted, optionalRemaining: opt.length - optionalCompleted,
-    practiced, classCompletion, reviewRecommended: nodes.filter((n) => n.state === 'review').length, fraction: req.length ? requiredCompleted / req.length : practiced / nodes.length, label, source };
+    practiced, classCompletion, reviewRecommended: nodes.filter((n) => n.state === 'review').length, fraction: complete?1:Math.min(.99,targetFraction), label, source };
 }
 
 function pickNext(candidates, { preferStopId = null, dated = false } = {}) {

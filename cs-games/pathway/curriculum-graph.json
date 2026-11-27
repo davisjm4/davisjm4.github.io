@@ -6115,8 +6115,15 @@
       "estimatedMinutes": 100,
       "complexity": "application",
       "estimateProvisional": true,
-      "familyIds": [],
-      "familyBindingStatus": "question-adapter-required"
+      "familyIds": [
+        "family:node:csp:rgb-color-builder:CSP-RGB:rgb-code:binary-to-hex",
+        "family:node:csp:rgb-color-builder:CSP-RGB:rgb-code:hex-to-binary",
+        "family:node:csp:rgb-color-builder:CSP-RGB:rgb-code:decimal-to-hex",
+        "family:node:csp:rgb-color-builder:CSP-RGB:rgb-code:decimal-to-binary",
+        "family:node:csp:rgb-color-builder:CSP-RGB:rgb-code:code-to-decimal",
+        "family:node:csp:rgb-color-builder:CSP-RGB:rgb-code:channel-change"
+      ],
+      "familyBindingStatus": "source-family-ids"
     },
     {
       "id": "node:csp:binary-builder:CSP-REPRESENTATION",
@@ -17423,6 +17430,60 @@
       "activityId": "robot-algorithms",
       "sourceFamilyId": "debug:order",
       "label": "order"
+    },
+    {
+      "id": "family:node:csp:rgb-color-builder:CSP-RGB:rgb-code:binary-to-hex",
+      "nodeIds": [
+        "node:csp:rgb-color-builder:CSP-RGB"
+      ],
+      "activityId": "rgb-color-builder",
+      "sourceFamilyId": "rgb-code:binary-to-hex",
+      "label": "binary-to-hex"
+    },
+    {
+      "id": "family:node:csp:rgb-color-builder:CSP-RGB:rgb-code:hex-to-binary",
+      "nodeIds": [
+        "node:csp:rgb-color-builder:CSP-RGB"
+      ],
+      "activityId": "rgb-color-builder",
+      "sourceFamilyId": "rgb-code:hex-to-binary",
+      "label": "hex-to-binary"
+    },
+    {
+      "id": "family:node:csp:rgb-color-builder:CSP-RGB:rgb-code:decimal-to-hex",
+      "nodeIds": [
+        "node:csp:rgb-color-builder:CSP-RGB"
+      ],
+      "activityId": "rgb-color-builder",
+      "sourceFamilyId": "rgb-code:decimal-to-hex",
+      "label": "decimal-to-hex"
+    },
+    {
+      "id": "family:node:csp:rgb-color-builder:CSP-RGB:rgb-code:decimal-to-binary",
+      "nodeIds": [
+        "node:csp:rgb-color-builder:CSP-RGB"
+      ],
+      "activityId": "rgb-color-builder",
+      "sourceFamilyId": "rgb-code:decimal-to-binary",
+      "label": "decimal-to-binary"
+    },
+    {
+      "id": "family:node:csp:rgb-color-builder:CSP-RGB:rgb-code:code-to-decimal",
+      "nodeIds": [
+        "node:csp:rgb-color-builder:CSP-RGB"
+      ],
+      "activityId": "rgb-color-builder",
+      "sourceFamilyId": "rgb-code:code-to-decimal",
+      "label": "code-to-decimal"
+    },
+    {
+      "id": "family:node:csp:rgb-color-builder:CSP-RGB:rgb-code:channel-change",
+      "nodeIds": [
+        "node:csp:rgb-color-builder:CSP-RGB"
+      ],
+      "activityId": "rgb-color-builder",
+      "sourceFamilyId": "rgb-code:channel-change",
+      "label": "channel-change"
     }
   ],
   "coverageLimits": [

@@ -9,15 +9,15 @@ import { withPracticeReturn } from '../../practice-return.mjs';
 //
 // Every piece of progress shown comes from `progress` (cs-games.mastery-progress/1 objects). Nothing is stored by this component
 // except where the student is (the URL hash) and, for the demo, transient simulated attempts held in memory.
-import { buildMapModel, findNode, findStop, normalizeProgress } from '../model.mjs?v=map-progression-v1';
+import { buildMapModel, findNode, findStop, normalizeProgress } from '../model.mjs?v=activity-navigation-v1';
 import { readRoute, routeHash } from '../route.mjs';
 import { plural } from '../format.mjs';
-import { createPacingCard, createHeader, createLegend, createSuggested, createToolbar } from './chrome.mjs?v=map-progression-v1';
+import { createPacingCard, createHeader, createLegend, createSuggested, createToolbar } from './chrome.mjs?v=activity-navigation-v1';
 import { renderAreaMap } from './area-map.mjs';
 import { renderCourseMap, renderUnitMap, unitLabel } from './course-map.mjs';
 import { el } from './dom.mjs';
-import { renderListView } from './list-view.mjs?v=map-progression-v1';
-import { createPanelPlaceholder, createProgressPanel } from './progress-panel.mjs?v=map-progression-v1';
+import { renderListView } from './list-view.mjs?v=activity-navigation-v1';
+import { createPanelPlaceholder, createProgressPanel } from './progress-panel.mjs?v=activity-navigation-v1';
 import { createSkillSearch } from './search.mjs';
 import { groupCourseStops } from '../course-groups.mjs';
 import { createStage } from './stage.mjs';

@@ -21,7 +21,7 @@ function newColor(message='') {
   ensureGenerator();if(recordId)tracker.skip(recordId);
   current=generator.next($('mode').value);student=[0,0,0];submitted=false;solved=false;lastChecked=null;
   recordId=tracker.begin(slug,title,current.mode,labels[current.mode],current.mode,labels[current.mode]);
-  tracker.annotate(recordId,{skills:E.SKILLS,representation:current.mode,selection:current.selection,targetRGB:current.rgb,targetHex:E.hex(current.rgb),family:current.family,distanceFromPrevious:current.distanceFromPrevious,generatorFallback:current.fallback});
+  tracker.annotate(recordId,{assisted:true,evidenceRevision:'rgb-exploration-v1',skills:E.SKILLS,representation:current.mode,selection:current.selection,targetRGB:current.rgb,targetHex:E.hex(current.rgb),family:current.family,distanceFromPrevious:current.distanceFromPrevious,generatorFallback:current.fallback});
   persistHistory();$('representation').textContent=labels[current.mode];
   $('target-swatch').style.backgroundColor=E.css(current.rgb);
   $('target-swatch').setAttribute('aria-label','Target color to match; exact values hidden until matched');
