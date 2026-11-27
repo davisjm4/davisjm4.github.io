@@ -130,7 +130,8 @@ test('advisory classwork and catch-up coexist through mode changes, offline prac
   assert.deepEqual(await student.$$eval(work+' h2',nodes=>nodes.map(n=>n.textContent)),["Today's Classwork",'Your Catch-Up Work']);
   for(const width of [320,390,768,1024,1366]){
     await student.setViewport({width,height:844});
-    assert.ok(await student.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width));
+    const sizing=await student.evaluate(()=>({width:innerWidth,body:document.documentElement.scrollWidth,overflow:[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1&&e.getBoundingClientRect().width).slice(0,12).map(e=>({tag:e.tagName,id:e.id,classes:String(e.className),right:e.getBoundingClientRect().right,width:e.getBoundingClientRect().width}))}));
+    assert.ok(sizing.body<=sizing.width+1,JSON.stringify(sizing));
   }
   await press(student,card(classwork.id),'Start Assignment');
   await student.waitForSelector('#choices button');

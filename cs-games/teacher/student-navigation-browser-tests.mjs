@@ -283,14 +283,16 @@ test('independent learner follows the unit trail and sees eligible practice, com
   await activate('[data-action=next-learning]','Next skill');
   await wait('.live-skill-progress');
   assert.notEqual(new URL(page.url()).searchParams.get('practiceSkill'),'node:advanced:variable-lab:trace');
-  await activate('.panel-close','Back to skills');
+  await Promise.all([page.waitForNavigation(),activate('a[data-profile-link]','Back to Learning Map')]);
   await activate(parent,'Back to Foundations & Logic');
   await wait('.map-app[data-view=unit]');
   await activate('[data-layout=list]','List');
-  await activate('.stop-item button','Open');
-  await wait('.skill-row'+trace);
+  await Promise.all([page.waitForNavigation(),activate('.stop-item button','Open')]);
+  await wait('.live-skill-progress');
+  await Promise.all([page.waitForNavigation(),activate('a[data-profile-link]','Back to Learning Map')]);
+  await wait('.map-app[data-layout=list] .stop-item');
   await page.reload();
-  await wait('.map-app[data-layout=list] .skill-row'+trace);
+  await wait('.map-app[data-layout=list] .stop-item');
 });
 
 test('Array Lab uses Beginner for a fresh launch and honors explicit and saved difficulty', {timeout:60000}, async t => {

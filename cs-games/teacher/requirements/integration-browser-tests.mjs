@@ -92,7 +92,8 @@ test('published requirements and real Loop Lab practice appear in the student ma
   async function checkLayouts(page,name,selector){
     for(const [width,height] of widths){
       await page.setViewport({width,height});
-      assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' overflows at '+width+'px');
+      const sizing=await page.evaluate(()=>({width:innerWidth,body:document.documentElement.scrollWidth,overflow:[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1&&e.getBoundingClientRect().width).slice(0,12).map(e=>({tag:e.tagName,id:e.id,classes:String(e.className),right:e.getBoundingClientRect().right,width:e.getBoundingClientRect().width}))}));
+    assert.ok(sizing.body<=sizing.width+1,JSON.stringify(sizing));
       if(evidence){
         await page.$eval(selector,node=>node.scrollIntoView({block:'start',behavior:'instant'}));
         await page.screenshot({path:join(evidence,name+'-'+width+'.png')});
