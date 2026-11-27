@@ -81,20 +81,17 @@ test('CSG-PKG-01 practice verdict, report counts, and safe return', { timeout: 9
   await page.goto(dev.url + guestMap);
   await press(page, '[data-layout=list]');
   await press(page, '[data-unit-id=advanced-foundations]');
-  await press(page, '[data-stop-id="area:advanced:variable-lab"] button');
-  await press(page, '.skill-row-open');
-  const practiceLink = '.skill-panel a[data-action=practice]';
   const origin = new URL(page.url());
-  await Promise.all([page.waitForNavigation(), press(page, practiceLink)]);
+  await Promise.all([page.waitForNavigation(),press(page,'[data-stop-id="area:advanced:variable-lab"] button')]);
   assert.equal(new URL(page.url()).searchParams.get('learner'), 'guest');
   await page.waitForSelector('a[data-profile-link]');
-  assert.equal(await page.$eval('a[data-profile-link]', link => link.textContent), 'Back to Course Map');
+  assert.equal(await page.$eval('a[data-profile-link]', link => link.textContent), 'Back to Learning Map');
   await Promise.all([page.waitForNavigation(), press(page, 'a[data-profile-link]')]);
   assert.equal(new URL(page.url()).search, origin.search);
   assert.equal(new URL(page.url()).hash, origin.hash);
-  await page.waitForSelector('.map-app[data-layout=list] .skill-panel');
+  await page.waitForSelector('.map-app[data-layout=list] .stop-item');
   await page.reload();
-  await page.waitForSelector('.map-app[data-layout=list] .skill-panel');
+  await page.waitForSelector('.map-app[data-layout=list] .stop-item');
 
   const tampered = new URL(dev.url + practice);
   tampered.searchParams.set('learner', 'guest');

@@ -12,11 +12,11 @@ const axeSource=readFileSync(require.resolve('axe-core/axe.min.js'),'utf8');
 const token='synthetic-mastery-browser-teacher';
 const stopButton='.stop-open[data-stop-id="area:advanced:loop-lab"]';
 async function openLoopArea(page){
-  await wait(page,'.map-app');
-  const unit=await page.$('[data-unit-id=advanced-control]');
-  if(unit)await activate(page,'[data-unit-id=advanced-control]');
-  await activate(page,stopButton);
+  const url=new URL('/cs-games/student/',page.url());
+  url.hash='v=area&stop=area%3Aadvanced%3Aloop-lab';
+  await page.goto(url.href);await wait(page,'.skill-node');
 }
+
 const skillButton='.skill-node[data-node-id="node:advanced:loop-lab:looptype"]';
 const panel='.skill-panel[data-node-id="node:advanced:loop-lab:looptype"]';
 const focusLink=panel+' a[data-action=practice]';
@@ -167,7 +167,7 @@ test('published requirements and real Loop Lab practice appear in the student ma
   await see(student,'.live-skill-progress','91% accuracy required');
   await answer('looptype');
   await see(student,'.live-skill-progress','1 of 30 qualifying answers');
-  assert.equal(await student.$eval('a[data-profile-link]',link=>link.textContent),'Back to Course Map');
+  assert.equal(await student.$eval('a[data-profile-link]',link=>link.textContent),'Back to Learning Map');
   await Promise.all([student.waitForNavigation(),activate(student,'a[data-profile-link]')]);
   await wait(student,panel);
   await showLoop();

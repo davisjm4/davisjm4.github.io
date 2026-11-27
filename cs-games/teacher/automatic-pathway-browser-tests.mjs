@@ -100,17 +100,11 @@ test('teacher creates a class, student enrolls and practices, teacher publishes 
   const loopStop=pathway+' .stop-open[data-stop-id="area:advanced:loop-lab"]';
   const loopNode=pathway+' .skill-node[data-node-id="node:advanced:loop-lab:looptype"]';
   async function openLoop(page){
-    await wait(page,pathway+' .map-app');
-    if(await page.$(loopNode)===null){
-      const unit=await page.$('[data-unit-id=advanced-control]');
-      if(unit)await unit.evaluate(button=>button.click());
-      await wait(page,loopStop);
-      await page.$eval(loopStop,button=>button.click());
-    }
-    if(await page.$('.skill-panel[data-node-id="node:advanced:loop-lab:looptype"]')===null){
-      await wait(page,loopNode);
-      await page.$eval(loopNode,button=>button.click());
-    }
+    // Retain optional legacy skill-detail coverage; primary activity launches
+    // are exercised by the activity-navigation browser suite.
+    const url=new URL('/cs-games/student/',dev.url);
+    url.hash='v=area&stop=area%3Aadvanced%3Aloop-lab&skill=node%3Aadvanced%3Aloop-lab%3Alooptype';
+    await page.goto(url.href);
     await wait(page,'.skill-panel [data-action=practice]');
   }
   await openLoop(student);

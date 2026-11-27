@@ -261,7 +261,7 @@ export function mountStudentMap(container, options) {
     const width = Math.max(260, Math.floor(stageCtl.viewport.clientWidth || main.clientWidth || 360));
     const stop = route.view === 'area' ? findStop(model, route.stopId) : null;
     const drawn = stop
-      ? renderAreaMap(model, stop, { width, selectedId: route.nodeId, onSelect: (n) => practiceSkill(n),
+      ? renderAreaMap(model, stop, { width, selectedId: route.nodeId, onSelect: (n) => select(n),
           nextId:nextAfter(findNode(model,route.nodeId))?.id ?? stop.suggestedNodeId })
       : route.view==='course' && units.length ? renderUnitMap(units,model,{width,onOpenUnit:openUnit})
       : renderCourseMap(model, { width, onOpenStop: openStop,
@@ -346,7 +346,7 @@ export function mountStudentMap(container, options) {
       const stops = stop ? [stop] : unit?.stops??model.stops;
       if(courseUnits.length) main.append(el('ol',{class:'unit-list'},courseUnits.map((group,index)=>
         el('li',{},el('button',{type:'button',class:'btn','data-unit-id':group.id,onclick:()=>openUnit(group)},...unitLabel(group,index,model))))));
-      else main.append(renderListView(model, stops, { onSelect: (n) => practiceSkill(n), onOpenStop: openStop, onPractice: (i) => adapter.onPractice?.(i), selectedId: route.nodeId, showStopButton: !stop, showSkills:model.courseId!=='workplace'&&!unit }));
+      else main.append(renderListView(model, stops, { onSelect: (n) => select(n), onOpenStop: openStop, onPractice: (i) => adapter.onPractice?.(i), selectedId: route.nodeId, showStopButton: !stop, showSkills:model.courseId!=='workplace'&&!unit }));
     }
     addReturnLinks(root);
     if (showSide) renderSide(focus === 'panel'||Boolean(keepPanel));
